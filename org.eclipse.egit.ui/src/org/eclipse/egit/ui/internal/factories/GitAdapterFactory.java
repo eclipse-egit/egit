@@ -18,6 +18,7 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.runtime.IAdapterFactory;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.egit.ui.internal.history.GitHistoryPageSource;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
@@ -80,7 +81,8 @@ public class GitAdapterFactory implements IAdapterFactory {
 			GitModelObject obj = (GitModelObject) adaptableObject;
 
 			if (obj instanceof GitModelBlob) {
-				IResource res = root.getFileForLocation(obj.getLocation());
+				IResource res = ResourceUtil.getFileForLocation(obj
+						.getLocation());
 				if (res == null)
 					res = root.getFile(obj.getLocation());
 

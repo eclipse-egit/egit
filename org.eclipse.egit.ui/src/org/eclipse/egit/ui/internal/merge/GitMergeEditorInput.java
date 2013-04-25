@@ -23,21 +23,20 @@ import org.eclipse.compare.structuremergeviewer.IDiffContainer;
 import org.eclipse.compare.structuremergeviewer.IDiffElement;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.FileEditableRevision;
 import org.eclipse.egit.ui.internal.FileRevisionTypedElement;
+import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput.EmptyTypedElement;
 import org.eclipse.egit.ui.internal.LocalFileRevision;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput.EmptyTypedElement;
 import org.eclipse.jface.operation.IRunnableContext;
 import org.eclipse.jgit.api.RebaseCommand;
 import org.eclipse.jgit.dircache.DirCacheEntry;
@@ -330,9 +329,8 @@ public class GitMergeEditorInput extends CompareEditorInput {
 				// if the file is not conflicting (as it was auto-merged)
 				// we will show the auto-merged (local) version
 
-				IPath locationPath = new Path(fit.getEntryFile().getPath());
-				final IFile file = ResourcesPlugin.getWorkspace().getRoot()
-						.getFileForLocation(locationPath);
+				IFile file = ResourceUtil.getFileForLocation(repository,
+						fit.getEntryPathString());
 				if (file == null)
 					// TODO in the future, we should be able to show a version
 					// for a non-workspace file as well
