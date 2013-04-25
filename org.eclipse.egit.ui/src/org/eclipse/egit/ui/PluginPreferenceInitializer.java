@@ -16,6 +16,7 @@ import java.io.File;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
+import org.eclipse.egit.ui.internal.history.FindToolbar;
 import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.util.FS;
@@ -71,7 +72,8 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.RESOURCEHISTORY_REV_SPLIT, UIPreferences.intArrayToString(w));
 
 		store.setDefault(UIPreferences.FINDTOOLBAR_IGNORE_CASE, true);
-		store.setDefault(UIPreferences.FINDTOOLBAR_FIND_IN, 2);
+		store.setDefault(UIPreferences.FINDTOOLBAR_FIND_IN,
+				FindToolbar.PREFS_FINDIN_ALL);
 		store.setDefault(UIPreferences.COMMIT_DIALOG_HARD_WRAP_MESSAGE, true);
 		store.setDefault(UIPreferences.COMMIT_DIALOG_SIGNED_OFF_BY, false);
 
