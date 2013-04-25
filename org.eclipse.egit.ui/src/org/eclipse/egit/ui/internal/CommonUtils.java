@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
- * Copyright (C) 2011, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2011, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2011, Bernard Leach <leachbj@bouncycastle.org>
  *
  * All rights reserved. This program and the accompanying materials
@@ -18,6 +18,8 @@ import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.commands.common.CommandException;
 import org.eclipse.core.expressions.EvaluationContext;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.jface.util.Policy;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.ui.ISources;
@@ -83,6 +85,20 @@ public class CommonUtils {
 	public static final Comparator<Ref> REF_ASCENDING_COMPARATOR = new Comparator<Ref>() {
 		public int compare(Ref o1, Ref o2) {
 			return STRING_ASCENDING_COMPARATOR.compare(o1.getName(), o2.getName());
+		}
+	};
+
+	/**
+	 * Comparator for comparing {@link IResource} by the result of
+	 * {@link IResource#getName()}.
+	 */
+	public static final Comparator<IResource> RESOURCE_NAME_COMPARATOR = new Comparator<IResource>() {
+		@SuppressWarnings("unchecked")
+		private final Comparator<String> stringComparator = Policy
+				.getComparator();
+
+		public int compare(IResource r1, IResource r2) {
+			return stringComparator.compare(r1.getName(), r2.getName());
 		}
 	};
 

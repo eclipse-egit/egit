@@ -4,7 +4,7 @@
  * Copyright (C) 2006, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
- * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, François Rey <eclipse.org_@_francois_._rey_._name>
  *
  * All rights reserved. This program and the accompanying materials
@@ -39,6 +39,7 @@ import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.TextSelection;
@@ -75,6 +76,7 @@ import org.eclipse.ui.ide.ResourceUtil;
  * A helper class for Team Actions on Git controlled projects
  */
 abstract class RepositoryActionHandler extends AbstractHandler {
+
 	private IEvaluationContext evaluationContext;
 
 	private IStructuredSelection mySelection;
@@ -110,9 +112,17 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		Set<IProject> ret = new LinkedHashSet<IProject>();
 		for (ResourceMapping mapping : (ResourceMapping[]) getSelectedAdaptables(
 				selection, ResourceMapping.class)) {
-			IProject[] projects = mapping.getProjects();
-			if (projects != null)
-				ret.addAll(Arrays.asList(projects));
+			IProject[] mappedProjects = mapping.getProjects();
+			if (mappedProjects != null && mappedProjects.length != 0) {
+				// Some mappings (WorkingSetResourceMapping) return the projects
+				// in unpredictable order. Sort them like the navigator to
+				// correspond to the order the user usually sees.
+				List<IProject> projects = new ArrayList<IProject>(
+						Arrays.asList(mappedProjects));
+				Collections
+						.sort(projects, CommonUtils.RESOURCE_NAME_COMPARATOR);
+				ret.addAll(projects);
+			}
 		}
 		return ret;
 	}
@@ -722,5 +732,4 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 			this.path = path;
 		}
 	}
-
 }
