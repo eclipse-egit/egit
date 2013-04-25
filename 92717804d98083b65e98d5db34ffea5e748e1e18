@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX//t8s\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-04-25T23:01:48Z",
+      "side": 1,
+      "message": "I haven\u0027t groked the synchronize mode yet. Does this mean I have to?",
+      "revId": "92717804d98083b65e98d5db34ffea5e748e1e18",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//t8o\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-04-25T23:01:48Z",
+      "side": 1,
+      "message": "Too many changes in one commit.",
+      "revId": "92717804d98083b65e98d5db34ffea5e748e1e18",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
