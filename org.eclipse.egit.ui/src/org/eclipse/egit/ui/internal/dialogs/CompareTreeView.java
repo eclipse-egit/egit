@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 SAP AG and others.
+ * Copyright (c) 2011, 2013 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -140,7 +140,8 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 	private static final Image FOLDER_IMAGE = PlatformUI.getWorkbench()
 			.getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER);
 
-	private final Image SAME_CONTENT = UIIcons.ELCL16_SYNCED.createImage();
+	private final Image SAME_CONTENT = new Image(FILE_IMAGE.getDevice(),
+			FILE_IMAGE, SWT.IMAGE_DISABLE);
 
 	private Image ADDED = UIIcons.ELCL16_ADD.createImage();
 
@@ -214,7 +215,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 				buildTrees(false);
 			}
 		};
-		showEqualsAction.setImageDescriptor(UIIcons.ELCL16_SYNCED);
+		showEqualsAction.setImageDescriptor(UIIcons.ELCL16_FILTER);
 		showEqualsAction.setEnabled(false);
 		actionsToDispose.add(showEqualsAction);
 		getViewSite().getActionBars().getToolBarManager().add(showEqualsAction);
@@ -827,7 +828,10 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 				return UIIcons.ELCL16_DELETE;
 			}
 			if (equalContentPaths.contains(elementPath)) {
-				return UIIcons.ELCL16_SYNCED;
+				ImageDescriptor imageDesc = super.decorateImage(baseImage,
+						element);
+				return ImageDescriptor.createWithFlags(imageDesc,
+						SWT.IMAGE_DISABLE);
 			}
 			return super.decorateImage(baseImage, element);
 		}
