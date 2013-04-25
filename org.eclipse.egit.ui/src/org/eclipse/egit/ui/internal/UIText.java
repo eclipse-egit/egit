@@ -1713,6 +1713,9 @@ public class UIText extends NLS {
 	public static String HistoryPage_findbar_ignorecase;
 
 	/** */
+	public static String HistoryPage_findbar_all;
+
+	/** */
 	public static String HistoryPage_findbar_commit;
 
 	/** */
@@ -1723,6 +1726,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String HistoryPage_findbar_committer;
+
+	/** */
+	public static String HistoryPage_findbar_changeto_all;
 
 	/** */
 	public static String HistoryPage_findbar_changeto_commit;
