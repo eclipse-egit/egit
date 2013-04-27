@@ -139,6 +139,11 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 			write(new byte[] { (byte) b });
 		}
 
+		@Override
+		public void flush() throws IOException {
+			flushLine();
+		}
+
 		protected void flushLine() throws IOException {
 			if (lineBuffer.length() > 0) {
 				write(lineBuffer.toString());
