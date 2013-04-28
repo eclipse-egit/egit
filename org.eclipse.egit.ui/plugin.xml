@@ -932,7 +932,7 @@
                </count>
                <iterate>
                   <adapt
-                        type="org.eclipse.jgit.storage.file.ReflogEntry">
+                        type="org.eclipse.jgit.lib.ReflogEntry">
                   </adapt>
                </iterate>
             </and>
@@ -950,7 +950,7 @@
                </count>
                <iterate>
                   <adapt
-                        type="org.eclipse.jgit.storage.file.ReflogEntry">
+                        type="org.eclipse.jgit.lib.ReflogEntry">
                   </adapt>
                </iterate>
             </and>
@@ -1748,7 +1748,7 @@
                </count>
                <iterate>
                   <adapt
-                        type="org.eclipse.jgit.storage.file.ReflogEntry">
+                        type="org.eclipse.jgit.lib.ReflogEntry">
                   </adapt>
                </iterate>
             </and>
