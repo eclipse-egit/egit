@@ -128,8 +128,12 @@ public class RepositoryUtil {
 							CheckoutEntry checkoutEntry = entry.parseCheckout();
 							if (checkoutEntry != null) {
 								Ref ref = repository.getRef(checkoutEntry.getToBranch());
-								if (ref != null)
+								if (ref != null) {
+									if (ref.getObjectId().getName()
+											.equals(commitId))
+										return checkoutEntry.getToBranch();
 									ref = repository.peel(ref);
+								}
 								if (ref != null) {
 									ObjectId id = ref.getPeeledObjectId();
 									if (id != null && id.getName().equals(commitId))
