@@ -284,7 +284,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				.getDisplay());
 
 		Label addLabel = new Label(optionsArea, SWT.NONE);
-		Image addImage = UIIcons.CREATE_REPOSITORY.createImage();
+		Image addImage = UIIcons.NEW_REPOSITORY.createImage();
 		UIUtils.hookDisposal(addLabel, addImage);
 		addLabel.setImage(addImage);
 		Hyperlink addLink = toolkit.createHyperlink(optionsArea,
@@ -320,7 +320,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				.grab(true, false).applyTo(cloneLink);
 
 		Label createLabel = new Label(optionsArea, SWT.NONE);
-		Image createImage = UIIcons.NEW_REPOSITORY.createImage();
+		Image createImage = UIIcons.CREATE_REPOSITORY.createImage();
 		UIUtils.hookDisposal(createLabel, createImage);
 		createLabel.setImage(createImage);
 		Hyperlink createLink = toolkit.createHyperlink(optionsArea,
