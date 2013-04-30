@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX//sYw\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-04-30T15:27:21Z",
+      "side": 1,
+      "message": "Please format the commit message according to common Git practice, see here (short separate title line):\n\nhttp://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "revId": "c7ec18611bbaf05838778802c964ba5f08a64e0e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
