@@ -19,7 +19,6 @@ package org.eclipse.egit.ui.internal;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.CompareUI;
@@ -63,6 +62,7 @@ import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheEditor;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.CoreConfig.AutoCRLF;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectInserter;
@@ -71,9 +71,12 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.WorkingTreeOptions;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
+import org.eclipse.jgit.util.IO;
+import org.eclipse.jgit.util.io.EolCanonicalizingInputStream;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
@@ -600,55 +603,20 @@ public class CompareUtils {
 	}
 
 	private static ITypedElement getIndexTypedElement(
-			final Repository repository, final String gitPath,
-			String encoding) throws IOException {
-		DirCache dc = repository.lockDirCache();
-		final DirCacheEntry entry;
-		try {
-			entry = dc.getEntry(gitPath);
-		} finally {
-			dc.unlock();
-		}
-
+			final Repository repository, final String gitPath, String encoding) {
 		IFileRevision nextFile = GitFileRevision.inIndex(repository, gitPath);
 		final EditableRevision next = new EditableRevision(nextFile, encoding);
 
 		IContentChangeListener listener = new IContentChangeListener() {
 			public void contentChanged(IContentChangeNotifier source) {
 				final byte[] newContent = next.getModifiedContent();
-				DirCache cache = null;
-				try {
-					cache = repository.lockDirCache();
-					DirCacheEditor editor = cache.editor();
-					if (newContent.length == 0)
-						editor.add(new DirCacheEditor.DeletePath(gitPath));
-					else
-						editor.add(new DirCacheEntryEditor(gitPath,
-								repository, entry, newContent));
-					try {
-						editor.commit();
-					} catch (RuntimeException e) {
-						if (e.getCause() instanceof IOException)
-							throw (IOException) e.getCause();
-						else
-							throw e;
-					}
-
-				} catch (IOException e) {
-					Activator.handleError(
-							UIText.CompareWithIndexAction_errorOnAddToIndex, e,
-							true);
-				} finally {
-					if (cache != null)
-						cache.unlock();
-				}
+				setIndexEntryContents(repository, gitPath, newContent);
 			}
 		};
 
 		next.addContentChangeListener(listener);
 		return next;
 	}
-
 
 
 	/**
@@ -763,45 +731,98 @@ public class CompareUtils {
 		}
 	}
 
+	/**
+	 * Set contents on index entry of specified path. Line endings of contents
+	 * are canonicalized if configured.
+	 *
+	 * @param repository
+	 * @param gitPath
+	 * @param newContent
+	 *            content with working directory line endings
+	 */
+	private static void setIndexEntryContents(final Repository repository,
+			final String gitPath, final byte[] newContent) {
+		DirCache cache = null;
+		try {
+			cache = repository.lockDirCache();
+			DirCacheEditor editor = cache.editor();
+			if (newContent.length == 0) {
+				editor.add(new DirCacheEditor.DeletePath(gitPath));
+			} else {
+				int length;
+				byte[] content;
+				WorkingTreeOptions workingTreeOptions = repository.getConfig()
+						.get(WorkingTreeOptions.KEY);
+				AutoCRLF autoCRLF = workingTreeOptions.getAutoCRLF();
+				switch (autoCRLF) {
+				case FALSE:
+					content = newContent;
+					length = newContent.length;
+					break;
+				case INPUT:
+				case TRUE:
+					EolCanonicalizingInputStream in = new EolCanonicalizingInputStream(
+							new ByteArrayInputStream(newContent), true);
+					// Canonicalization should lead to same or shorter length
+					// (CRLF to LF), so we don't have to expand the byte[].
+					content = new byte[newContent.length];
+					length = IO.readFully(in, content, 0);
+					break;
+				default:
+					throw new IllegalArgumentException(
+							"Unknown autocrlf option " + autoCRLF); //$NON-NLS-1$
+				}
+
+				editor.add(new DirCacheEntryEditor(gitPath, repository,
+						content, length));
+			}
+			try {
+				editor.commit();
+			} catch (RuntimeException e) {
+				if (e.getCause() instanceof IOException)
+					throw (IOException) e.getCause();
+				else
+					throw e;
+			}
+
+		} catch (IOException e) {
+			Activator.handleError(
+					UIText.CompareWithIndexAction_errorOnAddToIndex, e, true);
+		} finally {
+			if (cache != null)
+				cache.unlock();
+		}
+	}
+
 	private static class DirCacheEntryEditor extends DirCacheEditor.PathEdit {
 
 		private final Repository repo;
 
-		private final DirCacheEntry oldEntry;
-
-		private final byte[] newContent;
+		private final byte[] content;
+		private final int contentLength;
 
 		public DirCacheEntryEditor(String path, Repository repo,
-				DirCacheEntry oldEntry, byte[] newContent) {
+				byte[] content, int contentLength) {
 			super(path);
 			this.repo = repo;
-			this.oldEntry = oldEntry;
-			this.newContent = newContent;
+			this.content = content;
+			this.contentLength = contentLength;
 		}
 
 		@Override
 		public void apply(DirCacheEntry ent) {
 			ObjectInserter inserter = repo.newObjectInserter();
-			if (oldEntry != null)
-				ent.copyMetaData(oldEntry);
-			else
+			if (ent.getFileMode() != FileMode.REGULAR_FILE)
 				ent.setFileMode(FileMode.REGULAR_FILE);
 
-			ent.setLength(newContent.length);
+			ent.setLength(contentLength);
 			ent.setLastModified(System.currentTimeMillis());
-			InputStream in = new ByteArrayInputStream(newContent);
 			try {
-				ent.setObjectId(inserter.insert(Constants.OBJ_BLOB,
-						newContent.length, in));
+				ent.setObjectId(inserter.insert(Constants.OBJ_BLOB, content, 0,
+						contentLength));
 				inserter.flush();
 			} catch (IOException ex) {
 				throw new RuntimeException(ex);
-			} finally {
-				try {
-					in.close();
-				} catch (IOException e) {
-					// ignore here
-				}
 			}
 		}
 	}
