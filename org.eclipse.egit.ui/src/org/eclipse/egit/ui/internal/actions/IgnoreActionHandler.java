@@ -2,6 +2,7 @@
  * Copyright (C) 2009, Alex Blewitt <alex.blewitt@gmail.com>
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2013, François Rey <eclipse.org_@_francois_._rey_._name>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -32,12 +33,5 @@ public class IgnoreActionHandler extends RepositoryActionHandler {
 		IgnoreOperationUI operation = new IgnoreOperationUI(paths);
 		operation.run();
 		return null;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		// Do not consult Team.isIgnoredHint here because the user
-		// should be allowed to add ignored resources to .gitignore
-		return true;
 	}
 }
