@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX//reE\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/actions/LinkedResourcesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-05-02T22:29:38Z",
+      "side": 1,
+      "message": "Odd. What does FB say?  It shouldn\u0027t complain if you just leave out hashCode. Why should it be here in the first place?",
+      "revId": "e7d153ba145f326da00edba4289a95e2e8ebeca6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//reI\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/actions/LinkedResourcesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-05-02T22:29:38Z",
+      "side": 1,
+      "message": "not much point in having toString for non-parameterized test cases, is there and we don\u0027t have warnings enabled for test code so, why the comment?",
+      "revId": "e7d153ba145f326da00edba4289a95e2e8ebeca6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//rd4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/DiscardChangesActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-05-02T22:29:38Z",
+      "side": 1,
+      "message": "Good change on its own I believe or mention the implication for non-linked resources in the commit message,",
+      "revId": "e7d153ba145f326da00edba4289a95e2e8ebeca6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
