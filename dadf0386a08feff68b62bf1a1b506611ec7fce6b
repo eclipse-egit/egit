@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX//rRU\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2013-05-03T14:37:14Z",
+      "side": 1,
+      "message": "I fail to see how this relates to stronger test for linked resources. Did you really mean to commit this into this change set?",
+      "revId": "dadf0386a08feff68b62bf1a1b506611ec7fce6b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//rRQ\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitProjectSetCapabilityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2013-05-03T14:37:14Z",
+      "side": 1,
+      "message": "I fail to see how this relates to stronger test for linked resources. Did you really mean to commit this into this change set?",
+      "revId": "dadf0386a08feff68b62bf1a1b506611ec7fce6b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
