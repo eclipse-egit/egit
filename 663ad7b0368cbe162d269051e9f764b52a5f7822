@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOPX//rVw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/IgnoreActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2013-05-03T13:05:03Z",
+      "side": 0,
+      "message": "I believe this modification belongs to this change set: without it this action will be enabled when a linked resource that points to something outside a project and repository is part of the selection. That\u0027s one of the class I had to change after creating the new unit test.\nWhat impact do you see on non-linked resources that should be mentioned?",
+      "revId": "663ad7b0368cbe162d269051e9f764b52a5f7822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//rd8\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/IgnoreActionHandler.java",
         "patchSetId": 1

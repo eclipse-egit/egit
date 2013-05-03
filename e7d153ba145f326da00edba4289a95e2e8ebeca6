@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//rXE\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/actions/LinkedResourcesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2013-05-03T13:05:03Z",
+      "side": 1,
+      "message": "I just deleted this code: it\u0027s a leftover from DecoratableResourceAdapterTest.java which I used as a template to start with. Maybe we should do the same there.",
+      "revId": "e7d153ba145f326da00edba4289a95e2e8ebeca6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//reI\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/actions/LinkedResourcesTest.java",
         "patchSetId": 1
@@ -36,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//rW8\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/actions/LinkedResourcesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2013-05-03T13:05:03Z",
+      "side": 1,
+      "message": "I just deleted this code: it\u0027s a leftover from DecoratableResourceAdapterTest.java which I used as a template to start with. Maybe we should do the same there.",
+      "revId": "e7d153ba145f326da00edba4289a95e2e8ebeca6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//rd4\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/DiscardChangesActionHandler.java",
         "patchSetId": 1
@@ -47,6 +81,23 @@
       "writtenOn": "2013-05-02T22:29:38Z",
       "side": 1,
       "message": "Good change on its own I believe or mention the implication for non-linked resources in the commit message,",
+      "revId": "e7d153ba145f326da00edba4289a95e2e8ebeca6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//rV0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/DiscardChangesActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2013-05-03T13:05:03Z",
+      "side": 1,
+      "message": "I believe this modification belongs to this change set: without it this action will be enabled when a linked resource that points to something outside a project and repository is selected. That\u0027s one of the class I had to change after creating the new unit test: it failed because the logic of isEnabled() was wrong. It was wrong because it used to test the repository of the project containing a linked resource instead of testing the repository containing the target resource.\nWhat impact do you see on non-linked resources that should be mentioned?",
       "revId": "e7d153ba145f326da00edba4289a95e2e8ebeca6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
