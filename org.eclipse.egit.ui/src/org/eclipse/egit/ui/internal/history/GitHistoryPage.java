@@ -66,6 +66,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jgit.diff.DiffConfig;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
@@ -1801,9 +1802,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		if (paths == null || paths.isEmpty())
 			throw new IllegalArgumentException("paths must not be null nor empty"); //$NON-NLS-1$
 
+		DiffConfig diffConfig = currentRepo.getConfig().get(DiffConfig.KEY);
+
 		List<TreeFilter> followFilters = new ArrayList<TreeFilter>(paths.size());
 		for (String path : paths)
-			followFilters.add(createFollowFilter(path));
+			followFilters.add(createFollowFilter(path, diffConfig));
 
 		if (followFilters.size() == 1)
 			return followFilters.get(0);
@@ -1811,8 +1814,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		return OrTreeFilter.create(followFilters);
 	}
 
-	private FollowFilter createFollowFilter(String path) {
-		FollowFilter followFilter = FollowFilter.create(path);
+	private FollowFilter createFollowFilter(String path, DiffConfig diffConfig) {
+		FollowFilter followFilter = FollowFilter.create(path, diffConfig);
 		followFilter.setRenameCallback(new RenameCallback() {
 			@Override
 			public void renamed(DiffEntry entry) {
