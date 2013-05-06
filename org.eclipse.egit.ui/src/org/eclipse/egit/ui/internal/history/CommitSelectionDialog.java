@@ -33,6 +33,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jgit.diff.DiffConfig;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Constants;
@@ -255,10 +256,11 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 		for (IResource resource : filterResources) {
 			RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
 			if (mapping != null) {
+				DiffConfig diffConfig = mapping.getRepository().getConfig().get(DiffConfig.KEY);
 				String path = mapping.getRepoRelativePath(resource);
 				if (path != null && !"".equals(path)) { //$NON-NLS-1$
 					if (resource.getType() == IResource.FILE)
-						filters.add(FollowFilter.create(path));
+						filters.add(FollowFilter.create(path, diffConfig));
 					else
 						filters.add(AndTreeFilter.create(
 								PathFilter.create(path), TreeFilter.ANY_DIFF));
