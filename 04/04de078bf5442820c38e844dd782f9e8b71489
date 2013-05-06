@@ -1,0 +1,9 @@
+Code-Review+2: Tomasz Zarna <tomasz.zarna@tasktop.com>
+IP-Clean+1: Tomasz Zarna <tomasz.zarna@tasktop.com>
+Verified+1: Tomasz Zarna <tomasz.zarna@tasktop.com>
+Verified+1: Hudson CI
+Submitted-by: Tomasz Zarna <tomasz.zarna@tasktop.com>
+Submitted-at: Mon, 06 May 2013 15:59:04 -0400
+Reviewed-on: https://git.eclipse.org/r/12545
+Project: egit/egit
+Branch: refs/heads/master
