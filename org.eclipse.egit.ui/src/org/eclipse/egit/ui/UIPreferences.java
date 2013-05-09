@@ -179,6 +179,15 @@ public class UIPreferences {
 	public static final String STAGING_VIEW_SYNC_SELECTION = "StagingView_SyncWithSelection"; //$NON-NLS-1$
 	/** */
 	public static final String STAGING_VIEW_FILENAME_MODE = "StagingView_FileNameMode"; //$NON-NLS-1$
+	/**
+	 * @since 3.0
+	 */
+	public static final String STAGING_VIEW_PRESENTATION_UNSTAGED = "StagingView_PresentationUnstaged"; //$NON-NLS-1$
+
+	/**
+	 * @since 3.0
+	 */
+	public static final String STAGING_VIEW_PRESENTATION_STAGED = "StagingView_PresentationStaged"; //$NON-NLS-1$
 	/** */
 	public static final String PAGE_COMMIT_PREFERENCES = "org.eclipse.egit.ui.internal.preferences.CommitDialogPreferencePage"; //$NON-NLS-1$
 	/** */
