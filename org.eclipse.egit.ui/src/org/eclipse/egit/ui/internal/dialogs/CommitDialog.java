@@ -34,9 +34,9 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.AdaptableFileTreeIterator;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CachedCheckboxTreeViewer;
@@ -327,6 +327,9 @@ public class CommitDialog extends TitleAreaDialog {
 
 	private static final String SHOW_UNTRACKED_PREF = "CommitDialog.showUntracked"; //$NON-NLS-1$
 
+	private static final String DIALOG_SETTINGS_SECTION_NAME = Activator
+			.getPluginId() + ".COMMIT_DIALOG_SECTION"; //$NON-NLS-1$
+
 	/**
 	 * A constant used for the 'commit and push button' button
 	 */
@@ -583,6 +586,17 @@ public class CommitDialog extends TitleAreaDialog {
 		Control help = super.createHelpControl(parent);
 		toolkit.adapt(help, false, false);
 		return help;
+	}
+
+	@Override
+	protected IDialogSettings getDialogBoundsSettings() {
+		IDialogSettings settings = Activator.getDefault().getDialogSettings();
+		IDialogSettings section = settings
+				.getSection(DIALOG_SETTINGS_SECTION_NAME);
+		if (section == null) {
+			section = settings.addNewSection(DIALOG_SETTINGS_SECTION_NAME);
+		}
+		return section;
 	}
 
 	/**
