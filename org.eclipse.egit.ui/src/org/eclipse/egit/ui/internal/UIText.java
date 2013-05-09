@@ -4627,6 +4627,15 @@ public class UIText extends NLS {
 	public static String StagingView_DeleteItemMenuLabel;
 
 	/** */
+	public static String StagingView_Flat;
+
+	/** */
+	public static String StagingView_Tree;
+
+	/** */
+	public static String StagingView_Compressed;
+
+	/** */
 	public static String StagingViewContentProvider_SubmoduleError;
 
 	/** */
