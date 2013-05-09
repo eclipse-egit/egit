@@ -228,6 +228,12 @@ public class UIIcons {
 	/** Hierarchy layout icon */
 	public final static ImageDescriptor HIERARCHY;
 
+	/** Flat presentation icon */
+	public final static ImageDescriptor FLAT;
+
+	/** Compressed presentation icon */
+	public final static ImageDescriptor COMPRESSED;
+
 	/** base URL */
 	public final static URL base;
 
@@ -308,6 +314,8 @@ public class UIIcons {
 		CLEAN = map("obj16/clean_obj.gif"); //$NON-NLS-1$
 		STASH = map("obj16/stash.png"); //$NON-NLS-1$
 		HIERARCHY = map("elcl16/hierarchicalLayout.gif"); //$NON-NLS-1$
+		FLAT = map("elcl16/flatLayout.gif"); //$NON-NLS-1$
+		COMPRESSED = map("elcl16/compressedLayout.gif"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {
