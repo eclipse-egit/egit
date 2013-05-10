@@ -16,6 +16,7 @@ import java.io.File;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
+import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.util.FS;
 
@@ -96,6 +97,10 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.BLAME_IGNORE_WHITESPACE, false);
 		store.setDefault(UIPreferences.REMOTE_CONNECTION_TIMEOUT, 30 /* seconds */);
 		store.setDefault(UIPreferences.STAGING_VIEW_FILENAME_MODE, true);
+		store.setDefault(UIPreferences.STAGING_VIEW_PRESENTATION_UNSTAGED,
+				StagingView.PRESENTATION_FLAT);
+		store.setDefault(UIPreferences.STAGING_VIEW_PRESENTATION_STAGED,
+				StagingView.PRESENTATION_FLAT);
 		store.setDefault(UIPreferences.CLONE_WIZARD_STORE_SECURESTORE, false);
 		store.setDefault(UIPreferences.COMMIT_DIALOG_HISTORY_SIZE, 10);
 		store.setDefault(UIPreferences.CHECKOUT_PROJECT_RESTORE, true);
