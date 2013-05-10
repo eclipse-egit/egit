@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPn//+rQ\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-10T22:46:55Z",
+      "side": 1,
+      "message": "remove duplicated information in commit message",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//+rM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-10T22:46:55Z",
+      "side": 1,
+      "message": "this change will probably not reach 3.0 since it requires a CQ (formal IP review by Eclipse IP team) so this should be rather @since 3.1",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//+rI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-10T22:46:55Z",
+      "side": 1,
+      "message": "@since 3.1",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//+rA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingFolderEntry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-10T22:46:55Z",
+      "side": 1,
+      "message": "style nit: fix line endings, we always use unix line endings (\\n) and UTF-8 character encoding",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//+q8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingFolderEntry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-10T22:46:55Z",
+      "side": 1,
+      "message": "how about folders which are located in the repository but not in the workspace ? The staging view is supporting non-workspace files and folders though platform will not auto-refresh them since it doesn\u0027t generate resource change events for non-workspace resources",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//+q4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingFolderEntry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-10T22:46:55Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use curly braces around single line blocks",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//+q0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-10T22:46:55Z",
+      "side": 1,
+      "message": "style nit: no braces here",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//+qw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-10T22:46:55Z",
+      "side": 1,
+      "message": "style nit: no braces around single line block",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//+qs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-10T22:46:55Z",
+      "side": 1,
+      "message": "style nit: no braces around single line block",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//+qk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-10T22:46:55Z",
+      "side": 1,
+      "message": "style nit: no braces around single line block, more of these below",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//+qc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-10T22:46:55Z",
+      "side": 1,
+      "message": "remove dead code",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
