@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOPn//+qM\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-10T22:54:27Z",
+      "side": 1,
+      "message": "commit message header is too long see http://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPn//+rQ\u003d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
