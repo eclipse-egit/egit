@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPn//+pk\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-11T00:04:06Z",
+      "side": 1,
+      "message": "this is filtering not search",
+      "revId": "cc8c6b6e254801244adc5a901bb8c5836965235a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//+ps\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-11T00:04:06Z",
+      "side": 1,
+      "message": "couldn\u0027t the thread class be inlined as an anonymous class ?",
+      "revId": "cc8c6b6e254801244adc5a901bb8c5836965235a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//+qA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewSearchThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-11T00:04:06Z",
+      "side": 1,
+      "message": "s/EXEC_LOCK/lock/",
+      "revId": "cc8c6b6e254801244adc5a901bb8c5836965235a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//+p4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewSearchThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-11T00:04:06Z",
+      "side": 1,
+      "message": "s/Ix/Index/ this is more readable",
+      "revId": "cc8c6b6e254801244adc5a901bb8c5836965235a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//+p8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewSearchThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-11T00:04:06Z",
+      "side": 1,
+      "message": "this method is used only once hence I\u0027d inline it",
+      "revId": "cc8c6b6e254801244adc5a901bb8c5836965235a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//+qE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewSearchThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-11T00:04:06Z",
+      "side": 1,
+      "message": "style nit: no braces around single line blocks",
+      "revId": "cc8c6b6e254801244adc5a901bb8c5836965235a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
