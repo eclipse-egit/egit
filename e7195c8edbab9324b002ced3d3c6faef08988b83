@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPn//+kw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-05-12T11:21:05Z",
+      "side": 1,
+      "message": "What happens when you go from high to low resolution, e.g. a projector? Is the size clipped to the screen size?",
+      "revId": "e7195c8edbab9324b002ced3d3c6faef08988b83",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
