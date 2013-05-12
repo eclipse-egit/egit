@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPn//+iE\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-12T22:00:16Z",
+      "side": 1,
+      "message": "this commit message looks like you got a rebase -i wrong,\nyour first change Ic62087e7220eb6b490d5e31ef9f563fd77cbc4e9 was already accepted and merged into master, so you probably need to fetch updates from the server and rebase the remaining changes appropriately.\n\nLet me know if you need help to sort this out.\n\nAlso it seems you didn\u0027t yet address my comments on patchset 5",
+      "revId": "5ad8818600b9d96d3457cfae3e12035c4d7e010d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
