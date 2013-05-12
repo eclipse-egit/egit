@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOPn//+h4\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-12T22:07:50Z",
+      "side": 1,
+      "message": "style nit: we put reference to the bug into the footer, see example in http://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "revId": "e7195c8edbab9324b002ced3d3c6faef08988b83",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//+h0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-12T22:07:50Z",
+      "side": 1,
+      "message": "style nit: we do not use braces around single line blocks",
+      "revId": "e7195c8edbab9324b002ced3d3c6faef08988b83",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPn//+kw\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
         "patchSetId": 1
