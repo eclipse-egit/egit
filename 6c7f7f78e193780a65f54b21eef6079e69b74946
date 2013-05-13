@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPn//+Ns\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 656
+      },
+      "writtenOn": "2013-05-13T21:21:09Z",
+      "side": 1,
+      "message": "If I change this to @since 3.1, I get \"Invalid @since 3.1 tag on STAGING_VIEW_PRESENTATION_UNSTAGED; expecting @since 3.0\".  If I omit @since altogether, I get \"Missing @since tag on...\"",
+      "parentUuid": "AABOPn//+rM\u003d",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPn//+rI\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIPreferences.java",
         "patchSetId": 5
@@ -87,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPn//+NI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingFolderEntry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 656
+      },
+      "writtenOn": "2013-05-13T21:21:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPn//+rA\u003d",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPn//+q8\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingFolderEntry.java",
         "patchSetId": 5
@@ -98,6 +134,24 @@
       "writtenOn": "2013-05-10T22:46:55Z",
       "side": 1,
       "message": "how about folders which are located in the repository but not in the workspace ? The staging view is supporting non-workspace files and folders though platform will not auto-refresh them since it doesn\u0027t generate resource change events for non-workspace resources",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//+XU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingFolderEntry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 656
+      },
+      "writtenOn": "2013-05-13T21:21:09Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be a problem.  If the folder is not in the workspace, it will return null (similar to StagingEntry.getFile), which means it won\u0027t be decorated to indicate problems, etc.",
+      "parentUuid": "AABOPn//+q8\u003d",
       "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -121,6 +175,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPn//+NM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingFolderEntry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 656
+      },
+      "writtenOn": "2013-05-13T21:21:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPn//+q4\u003d",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPn//+q0\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 5
@@ -132,6 +204,24 @@
       "writtenOn": "2013-05-10T22:46:55Z",
       "side": 1,
       "message": "style nit: no braces here",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//+NE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 656
+      },
+      "writtenOn": "2013-05-13T21:21:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPn//+q0\u003d",
       "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -155,6 +245,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPn//+NA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 656
+      },
+      "writtenOn": "2013-05-13T21:21:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPn//+qw\u003d",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPn//+qs\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
         "patchSetId": 5
@@ -166,6 +274,24 @@
       "writtenOn": "2013-05-10T22:46:55Z",
       "side": 1,
       "message": "style nit: no braces around single line block",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//+M8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 656
+      },
+      "writtenOn": "2013-05-13T21:21:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPn//+qs\u003d",
       "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -189,6 +315,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPn//+M4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 656
+      },
+      "writtenOn": "2013-05-13T21:21:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPn//+qk\u003d",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPn//+qc\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
         "patchSetId": 5
@@ -200,6 +344,24 @@
       "writtenOn": "2013-05-10T22:46:55Z",
       "side": 1,
       "message": "remove dead code",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//+M0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 656
+      },
+      "writtenOn": "2013-05-13T21:21:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPn//+qc\u003d",
       "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
