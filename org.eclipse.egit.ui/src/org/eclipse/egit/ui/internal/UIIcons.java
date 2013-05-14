@@ -32,6 +32,9 @@ public class UIIcons {
 	/** Decoration for resource removed from the index but not commit. */
 	public final static ImageDescriptor OVR_STAGED_REMOVE;
 
+	/** Decoration for resource that was removed and added with another name */
+	public static final ImageDescriptor OVR_STAGED_RENAME;
+
 	/** Decoration for resource not being tracked by Git */
 	public final static ImageDescriptor OVR_UNTRACKED;
 
@@ -236,6 +239,7 @@ public class UIIcons {
 		OVR_STAGED = map("ovr/staged.gif"); //$NON-NLS-1$
 		OVR_STAGED_ADD = map("ovr/staged_added.gif"); //$NON-NLS-1$
 		OVR_STAGED_REMOVE = map("ovr/staged_removed.gif"); //$NON-NLS-1$
+		OVR_STAGED_RENAME = map("ovr/staged_renamed.gif"); //$NON-NLS-1$
 		OVR_UNTRACKED = map("ovr/untracked.gif"); //$NON-NLS-1$
 		OVR_CONFLICT = map("ovr/conflict.gif"); //$NON-NLS-1$
 		OVR_ASSUMEVALID = map("ovr/assume_valid.gif"); //$NON-NLS-1$
