@@ -16,6 +16,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
@@ -37,12 +38,16 @@ public class FileDiffContentProvider implements IStructuredContentProvider {
 
 	private TreeFilter markTreeFilter = TreeFilter.ALL;
 
+	private Repository repo;
+
 	public void inputChanged(final Viewer newViewer, final Object oldInput,
 			final Object newInput) {
 		if (newInput != null) {
+			repo = ((CommitFileDiffViewer) newViewer).getRepository();
 			walk = ((CommitFileDiffViewer) newViewer).getTreeWalk();
 			commit = (RevCommit) newInput;
 		} else {
+			repo = null;
 			walk = null;
 			commit = null;
 		}
@@ -65,7 +70,7 @@ public class FileDiffContentProvider implements IStructuredContentProvider {
 	public Object[] getElements(final Object inputElement) {
 		if (diff == null && walk != null && commit != null)
 			try {
-				diff = FileDiff.compute(walk, commit, markTreeFilter);
+				diff = FileDiff.compute(repo, walk, commit, markTreeFilter);
 			} catch (IOException err) {
 				Activator.handleError(NLS.bind(UIText.FileDiffContentProvider_errorGettingDifference,
 						commit.getId()), err, false);
