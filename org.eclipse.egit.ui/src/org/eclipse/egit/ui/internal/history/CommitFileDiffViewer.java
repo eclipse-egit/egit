@@ -224,7 +224,7 @@ public class CommitFileDiffViewer extends TableViewer {
 					return;
 				final IStructuredSelection iss = (IStructuredSelection) s;
 				for (Iterator<FileDiff> it = iss.iterator(); it.hasNext();) {
-					String relativePath = it.next().getPath();
+					String relativePath = it.next().getNewPath();
 					String path = new Path(getRepository().getWorkTree()
 							.getAbsolutePath()).append(relativePath)
 							.toOSString();
@@ -330,7 +330,8 @@ public class CommitFileDiffViewer extends TableViewer {
 			if (sel.size() == 1) {
 				FileDiff diff = (FileDiff) sel.getFirstElement();
 				String path = new Path(getRepository().getWorkTree()
-						.getAbsolutePath()).append(diff.getPath()).toOSString();
+						.getAbsolutePath()).append(diff.getNewPath())
+						.toOSString();
 				compareWorkingTreeVersion.setEnabled(new File(path).exists()
 						&& !submoduleSelected);
 			} else
@@ -396,7 +397,7 @@ public class CommitFileDiffViewer extends TableViewer {
 		List<Object> elements = new ArrayList<Object>();
 		for (Object selectedElement : selection.toList()) {
 			FileDiff fileDiff = (FileDiff) selectedElement;
-			IPath path = workTreePath.append(fileDiff.getPath());
+			IPath path = workTreePath.append(fileDiff.getNewPath());
 			IFile file = ResourceUtil.getFileForLocation(path);
 			if (file != null)
 				elements.add(file);
@@ -423,7 +424,7 @@ public class CommitFileDiffViewer extends TableViewer {
 			IWorkbenchWindow window = PlatformUI.getWorkbench()
 					.getActiveWorkbenchWindow();
 			IWorkbenchPage page = window.getActivePage();
-			IFileRevision rev = CompareUtils.getFileRevision(d.getPath(), d
+			IFileRevision rev = CompareUtils.getFileRevision(d.getNewPath(), d
 					.getChange().equals(ChangeType.DELETE) ? d.getCommit()
 					.getParent(0) : d.getCommit(), getRepository(), d
 					.getChange().equals(ChangeType.DELETE) ? d.getBlobs()[0]
@@ -434,7 +435,7 @@ public class CommitFileDiffViewer extends TableViewer {
 			else {
 				String message = NLS.bind(
 						UIText.CommitFileDiffViewer_notContainedInCommit, d
-								.getPath(), d.getCommit().getId().getName());
+.getNewPath(), d.getCommit().getId().getName());
 				Activator.showError(message, null);
 			}
 		} catch (IOException e) {
@@ -453,20 +454,21 @@ public class CommitFileDiffViewer extends TableViewer {
 			IWorkbenchPage page = window.getActivePage();
 			RevCommit commit = d.getChange().equals(ChangeType.DELETE) ? d
 					.getCommit().getParent(0) : d.getCommit();
-			IFileRevision rev = CompareUtils.getFileRevision(d.getPath(),
+			IFileRevision rev = CompareUtils.getFileRevision(d.getNewPath(),
 					commit, getRepository(),
 					d.getChange().equals(ChangeType.DELETE) ? d.getBlobs()[0]
 							: d.getBlobs()[d.getBlobs().length - 1]);
 			if (rev != null) {
 				BlameOperation op = new BlameOperation(getRepository(),
-						rev.getStorage(new NullProgressMonitor()), d.getPath(),
+						rev.getStorage(new NullProgressMonitor()),
+						d.getNewPath(),
 						commit, window.getShell(), page);
 				JobUtil.scheduleUserJob(op, UIText.ShowBlameHandler_JobName,
 						JobFamilies.BLAME);
 			} else {
 				String message = NLS.bind(
 						UIText.CommitFileDiffViewer_notContainedInCommit,
-						d.getPath(), d.getCommit().getId().getName());
+						d.getNewPath(), d.getCommit().getId().getName());
 				Activator.showError(message, null);
 			}
 		} catch (IOException e) {
@@ -479,7 +481,8 @@ public class CommitFileDiffViewer extends TableViewer {
 	}
 
 	void showTwoWayFileDiff(final FileDiff d) {
-		final String p = d.getPath();
+		final String np = d.getNewPath();
+		final String op = d.getOldPath();
 		final RevCommit c = d.getCommit();
 
 		// extract commits
@@ -506,7 +509,7 @@ public class CommitFileDiffViewer extends TableViewer {
 
 
 		// determine (from a local available file) if a model compare is possible
-		IFile file = ResourceUtil.getFileForLocation(getRepository(), p);
+		IFile file = ResourceUtil.getFileForLocation(getRepository(), np);
 		if (file != null && leftCommit != null && rightCommit != null) {
 			if (!CompareUtils.canDirectlyOpenInCompare(file)) {
 				try {
@@ -521,8 +524,10 @@ public class CommitFileDiffViewer extends TableViewer {
 			}
 		}
 
-		final ITypedElement base = createTypedElement(p, leftCommit, baseObjectId);
-		final ITypedElement next = createTypedElement(p, rightCommit, rightObjectId);
+		final ITypedElement base = createTypedElement(op, leftCommit,
+				baseObjectId);
+		final ITypedElement next = createTypedElement(np, rightCommit,
+				rightObjectId);
 		CompareUtils.openInCompare(site.getWorkbenchWindow().getActivePage(),
 				new GitCompareFileRevisionEditorInput(next, base, null));
 	}
@@ -537,7 +542,7 @@ public class CommitFileDiffViewer extends TableViewer {
 	}
 
 	void showWorkingDirectoryFileDiff(final FileDiff d) {
-		final String p = d.getPath();
+		final String p = d.getNewPath();
 		final RevCommit commit = d.getCommit();
 
 		if (commit == null) {
@@ -575,7 +580,7 @@ public class CommitFileDiffViewer extends TableViewer {
 		return walker;
 	}
 
-	private Repository getRepository() {
+	Repository getRepository() {
 		if (db == null)
 			throw new IllegalStateException("Repository has not been set"); //$NON-NLS-1$
 		return db;
@@ -616,7 +621,7 @@ public class CommitFileDiffViewer extends TableViewer {
 			final FileDiff d = itr.next();
 			if (r.length() > 0)
 				r.append(LINESEP);
-			r.append(d.getPath());
+			r.append(d.getNewPath());
 		}
 
 		clipboard.setContents(new Object[] { r.toString() },
