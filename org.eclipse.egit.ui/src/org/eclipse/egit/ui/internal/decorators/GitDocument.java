@@ -9,6 +9,7 @@
 package org.eclipse.egit.ui.internal.decorators;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.WeakHashMap;
@@ -21,6 +22,9 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.text.Document;
+import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.jgit.diff.RenameDetector;
+import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
@@ -28,10 +32,12 @@ import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
+import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.RepositoryProvider;
@@ -141,8 +147,27 @@ class GitDocument extends Document implements RefsChangedListener {
 			}
 			rw = new RevWalk(repository);
 			RevCommit baselineCommit;
+			ObjectReader reader = null;
+			String oldPath = gitPath;
+
 			try {
+				reader = repository.newObjectReader();
 				baselineCommit = rw.parseCommit(commitId);
+				TreeWalk walk = new TreeWalk(repository);
+				CanonicalTreeParser baseLineIterator = new CanonicalTreeParser();
+				baseLineIterator.reset(reader, baselineCommit.getTree());
+				walk.addTree(baseLineIterator);
+				walk.addTree(new DirCacheIterator(repository.readDirCache()));
+				List<DiffEntry> diffs = DiffEntry.scan(walk, true);
+				RenameDetector renameDetector = new RenameDetector(repository);
+				renameDetector.addAll(diffs);
+				List<DiffEntry> renames = renameDetector.compute();
+				for (DiffEntry e : renames) {
+					if (e.getNewPath().equals(gitPath)) {
+						oldPath = e.getOldPath();
+						break;
+					}
+				}
 			} catch (IOException err) {
 				String msg = NLS
 						.bind(UIText.GitDocument_errorLoadCommit, new Object[] {
@@ -150,6 +175,10 @@ class GitDocument extends Document implements RefsChangedListener {
 				Activator.logError(msg, err);
 				setResolved(null, null, null, ""); //$NON-NLS-1$
 				return;
+			} finally {
+				if (reader != null)
+					reader.release();
+				rw.dispose();
 			}
 			RevTree treeId = baselineCommit.getTree();
 			if (treeId.equals(lastTree)) {
@@ -160,7 +189,7 @@ class GitDocument extends Document implements RefsChangedListener {
 				return;
 			}
 
-			tw = TreeWalk.forPath(repository, gitPath, treeId);
+			tw = TreeWalk.forPath(repository, oldPath, treeId);
 			if (tw == null) {
 				if (GitTraceLocation.QUICKDIFF.isActive())
 					GitTraceLocation
