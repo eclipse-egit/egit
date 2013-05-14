@@ -66,7 +66,7 @@ Import-Package: org.eclipse.egit.core;version="[3.0.0,3.1.0)",
  org.eclipse.jgit.treewalk.filter;version="[3.0.0,3.1.0)",
  org.eclipse.jgit.util;version="[3.0.0,3.1.0)",
  org.eclipse.jgit.util.io;version="[3.0.0,3.1.0)"
-Export-Package: org.eclipse.egit.ui;version="3.0.0",
+Export-Package: org.eclipse.egit.ui;version="3.0.0";x-internal:=true,
  org.eclipse.egit.ui.internal;version="3.0.0";x-friends:="org.eclipse.egit.import",
  org.eclipse.egit.ui.internal.actions;version="3.0.0";x-internal:=true,
  org.eclipse.egit.ui.internal.blame;version="3.0.0";x-internal:=true,
