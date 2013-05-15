@@ -228,6 +228,9 @@ public class UIIcons {
 	/** Hierarchy layout icon */
 	public final static ImageDescriptor HIERARCHY;
 
+	/** Git bash icon */
+	public final static ImageDescriptor GIT_BASH;
+
 	/** base URL */
 	public final static URL base;
 
@@ -308,6 +311,7 @@ public class UIIcons {
 		CLEAN = map("obj16/clean_obj.gif"); //$NON-NLS-1$
 		STASH = map("obj16/stash.png"); //$NON-NLS-1$
 		HIERARCHY = map("elcl16/hierarchicalLayout.gif"); //$NON-NLS-1$
+		GIT_BASH = map("obj16/git-bash.gif"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {

@@ -470,6 +470,15 @@
                id="org.eclipse.egit.ui.keyword.git">
          </keywordReference>
       </page>
+      <page
+            category="org.eclipse.egit.ui.GitPreferences"
+            class="org.eclipse.egit.ui.internal.preferences.ConsolePreferencePage"
+            id="org.eclipse.egit.ui.internal.preferences.ConsolePreferencePage"
+            name="Console">
+        <keywordReference
+               id="org.eclipse.egit.ui.keyword.git">
+         </keywordReference>
+      </page>
    </extension>
 
    <extension point="org.eclipse.ui.propertyPages">
@@ -5121,5 +5130,13 @@
            id="org.eclipse.egit.ui.internal.reflog.CopyCommand"
            name="%ReflogCopyCommandName">
      </command>
+  </extension>
+  <extension
+        point="org.eclipse.ui.console.consoleFactories">
+     <consoleFactory
+           class="org.eclipse.egit.ui.internal.console.GitBashConsoleFactory"
+           icon="icons/obj16/git-bash.gif"
+           label="Git Bash">
+     </consoleFactory>
   </extension>
 </plugin>
