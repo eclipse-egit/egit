@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPn//95k\u003d",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-15T08:16:48Z",
+      "side": 1,
+      "message": "use x-friends instead in order to grant access to the egit bundles needing access to the core packages",
+      "revId": "a6362d7ab833aac2704aa36eb41c3ec3e9adff38",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//95g\u003d",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-15T08:16:48Z",
+      "side": 1,
+      "message": "use x-friends instead in order to grant access to the egit ui test bundle needing access to the ui packages",
+      "revId": "a6362d7ab833aac2704aa36eb41c3ec3e9adff38",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
