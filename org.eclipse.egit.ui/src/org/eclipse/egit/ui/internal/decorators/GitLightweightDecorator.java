@@ -321,6 +321,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 
 		private static ImageDescriptor stagedRemovedImage;
 
+		private static ImageDescriptor stagedRenamedImage;
+
 		private static ImageDescriptor conflictImage;
 
 		private static ImageDescriptor assumeValidImage;
@@ -335,6 +337,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 			stagedAddedImage = new CachedImageDescriptor(UIIcons.OVR_STAGED_ADD);
 			stagedRemovedImage = new CachedImageDescriptor(
 					UIIcons.OVR_STAGED_REMOVE);
+			stagedRenamedImage = new CachedImageDescriptor(
+					UIIcons.OVR_STAGED_RENAME);
 			conflictImage = new CachedImageDescriptor(UIIcons.OVR_CONFLICT);
 			assumeValidImage = new CachedImageDescriptor(UIIcons.OVR_ASSUMEVALID);
 			dirtyImage = new CachedImageDescriptor(UIIcons.OVR_DIRTY);
@@ -453,6 +457,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 						overlay = stagedAddedImage;
 					else if (staged == Staged.REMOVED)
 						overlay = stagedRemovedImage;
+					else if (staged == Staged.RENAMED)
+						overlay = stagedRenamedImage;
 					else
 						overlay = stagedImage;
 				}

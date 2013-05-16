@@ -69,6 +69,11 @@ public class DecoratableResource implements IDecoratableResource {
 	protected boolean assumeValid = false;
 
 	/**
+	 * Flag indicating whether the resource has been renamed
+	 */
+	protected boolean renamed;
+
+	/**
 	 * Constructs a new decoratable resource
 	 *
 	 * This object represents the state of a resource used as a basis for

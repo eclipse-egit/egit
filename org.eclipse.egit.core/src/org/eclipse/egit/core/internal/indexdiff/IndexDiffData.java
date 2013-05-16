@@ -8,13 +8,23 @@
  *******************************************************************************/
 package org.eclipse.egit.core.internal.indexdiff;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.EclipseGitProgressTransformer;
+import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.jgit.diff.RenameDetector;
 import org.eclipse.jgit.lib.IndexDiff;
+import org.eclipse.jgit.lib.Repository;
 
 /**
  * This immutable class is used to store the data of an {@link IndexDiff}
@@ -43,12 +53,19 @@ public class IndexDiffData {
 
 	private final Set<String> ignored;
 
+	private final Map<String, DiffEntry> renames = new TreeMap<String, DiffEntry>();
+
+	private final Map<String, DiffEntry> diffs;
+
 	private final Collection<IResource> changedResources;
 
 	/**
 	 * @param indexDiff
+	 * @param monitor
+	 * @param repo
 	 */
-	public IndexDiffData(IndexDiff indexDiff) {
+	public IndexDiffData(IndexDiff indexDiff, IProgressMonitor monitor,
+			Repository repo) {
 		added = Collections.unmodifiableSet(new HashSet<String>(indexDiff
 				.getAdded()));
 		changed = Collections.unmodifiableSet(new HashSet<String>(indexDiff
@@ -61,17 +78,20 @@ public class IndexDiffData {
 				.getModified()));
 		untracked = Collections.unmodifiableSet(new HashSet<String>(indexDiff
 				.getUntracked()));
-		untrackedFolders = Collections.unmodifiableSet(getUntrackedFolders(indexDiff));
+		untrackedFolders = Collections
+				.unmodifiableSet(getUntrackedFolders(indexDiff));
 		conflicts = Collections.unmodifiableSet(new HashSet<String>(indexDiff
 				.getConflicting()));
 		ignored = Collections.unmodifiableSet(new HashSet<String>(indexDiff
 				.getIgnoredNotInIndex()));
+		diffs = Collections.unmodifiableMap(indexDiff.getDiffs());
 		changedResources = null;
+		computeRenames(monitor, repo);
 	}
 
 	private Set<String> getUntrackedFolders(IndexDiff indexDiff) {
 		HashSet<String> result = new HashSet<String>();
-		for (String folder:indexDiff.getUntrackedFolders())
+		for (String folder : indexDiff.getUntrackedFolders())
 			result.add(folder + "/"); //$NON-NLS-1$
 		return result;
 	}
@@ -86,11 +106,14 @@ public class IndexDiffData {
 	 *            collection of changed files / folders. folders must end with /
 	 * @param changedResources
 	 * @param diffForChangedFiles
+	 * @param monitor
+	 * @param repo
 	 */
 	public IndexDiffData(IndexDiffData baseDiff,
 			Collection<String> changedFiles,
 			Collection<IResource> changedResources,
-			IndexDiff diffForChangedFiles) {
+			IndexDiff diffForChangedFiles, IProgressMonitor monitor,
+			Repository repo) {
 		this.changedResources = Collections
 				.unmodifiableCollection(new HashSet<IResource>(changedResources));
 		Set<String> added2 = new HashSet<String>(baseDiff.getAdded());
@@ -100,6 +123,8 @@ public class IndexDiffData {
 		Set<String> modified2 = new HashSet<String>(baseDiff.getModified());
 		Set<String> untracked2 = new HashSet<String>(baseDiff.getUntracked());
 		Set<String> conflicts2 = new HashSet<String>(baseDiff.getConflicting());
+		Map<String, DiffEntry> diffs2 = new TreeMap<String, DiffEntry>(
+				baseDiff.getDiffs());
 
 		mergeList(added2, changedFiles, diffForChangedFiles.getAdded());
 		mergeList(changed2, changedFiles, diffForChangedFiles.getChanged());
@@ -107,13 +132,15 @@ public class IndexDiffData {
 		mergeList(missing2, changedFiles, diffForChangedFiles.getMissing());
 		mergeList(modified2, changedFiles, diffForChangedFiles.getModified());
 		mergeList(untracked2, changedFiles, diffForChangedFiles.getUntracked());
+		mergeList(diffs2, changedFiles, diffForChangedFiles.getDiffs());
+
 		Set<String> untrackedFolders2 = mergeUntrackedFolders(
 				baseDiff.getUntrackedFolders(), changedFiles,
 				getUntrackedFolders(diffForChangedFiles));
 		mergeList(conflicts2, changedFiles,
 				diffForChangedFiles.getConflicting());
-		Set<String> ignored2 = mergeIgnored(baseDiff.getIgnoredNotInIndex(), changedFiles,
-				diffForChangedFiles.getIgnoredNotInIndex());
+		Set<String> ignored2 = mergeIgnored(baseDiff.getIgnoredNotInIndex(),
+				changedFiles, diffForChangedFiles.getIgnoredNotInIndex());
 
 		added = Collections.unmodifiableSet(added2);
 		changed = Collections.unmodifiableSet(changed2);
@@ -124,6 +151,27 @@ public class IndexDiffData {
 		untrackedFolders = Collections.unmodifiableSet(untrackedFolders2);
 		conflicts = Collections.unmodifiableSet(conflicts2);
 		ignored = Collections.unmodifiableSet(ignored2);
+		diffs = Collections.unmodifiableMap(diffs2);
+		computeRenames(monitor, repo);
+	}
+
+	private void computeRenames(IProgressMonitor monitor, Repository repo) {
+		monitor.beginTask("Rename computations", diffs.size()); //$NON-NLS-1$
+		RenameDetector renameDetector = new RenameDetector(repo);
+		renameDetector.addAll(diffs.values());
+		try {
+			List<DiffEntry> renameList = renameDetector
+					.compute(new EclipseGitProgressTransformer(monitor));
+			for (DiffEntry e : renameList) {
+				if (e.getNewPath() != null)
+					renames.put(e.getNewPath(), e);
+				else
+					renames.put(e.getOldPath(), e);
+			}
+		} catch (IOException e) {
+			Activator.logError("Rename detection failed", e); //$NON-NLS-1$
+		}
+		monitor.done();
 	}
 
 	private void mergeList(Set<String> baseList,
@@ -139,8 +187,23 @@ public class IndexDiffData {
 		}
 	}
 
-	private static Set<String> mergeUntrackedFolders(Set<String> oldUntrackedFolders,
-			Collection<String> changedFiles, Set<String> newUntrackedFolders) {
+	private void mergeList(Map<String, DiffEntry> baseList,
+			Collection<String> changedFiles,
+			Map<String, DiffEntry> listForChangedFiles) {
+		for (String file : changedFiles) {
+			if (baseList.keySet().contains(file)) {
+				if (!listForChangedFiles.keySet().contains(file))
+					baseList.remove(file);
+			} else {
+				if (listForChangedFiles.keySet().contains(file))
+					baseList.put(file, listForChangedFiles.get(file));
+			}
+		}
+	}
+
+	private static Set<String> mergeUntrackedFolders(
+			Set<String> oldUntrackedFolders, Collection<String> changedFiles,
+			Set<String> newUntrackedFolders) {
 		Set<String> merged = new HashSet<String>();
 		for (String oldUntrackedFolder : oldUntrackedFolders) {
 			boolean changeInUntrackedFolder = isAnyFileContainedInFolder(
@@ -172,9 +235,11 @@ public class IndexDiffData {
 		return merged;
 	}
 
-	private static boolean isAnyPrefixOf(String pathToCheck, Collection<String> possiblePrefixes) {
+	private static boolean isAnyPrefixOf(String pathToCheck,
+			Collection<String> possiblePrefixes) {
 		for (String possiblePrefix : possiblePrefixes)
-			if (pathToCheck.startsWith(possiblePrefix) || possiblePrefix.equals(pathToCheck + '/'))
+			if (pathToCheck.startsWith(possiblePrefix)
+					|| possiblePrefix.equals(pathToCheck + '/'))
 				return true;
 		return false;
 	}
@@ -222,8 +287,8 @@ public class IndexDiffData {
 	}
 
 	/**
-	 * @return list of folders containing only untracked files/folders
-	 * The folder paths end with /
+	 * @return list of folders containing only untracked files/folders The
+	 *         folder paths end with /
 	 */
 	public Set<String> getUntrackedFolders() {
 		return untrackedFolders;
@@ -263,8 +328,7 @@ public class IndexDiffData {
 		dumpList(builder, "untrackedFolders", untrackedFolders); //$NON-NLS-1$
 		dumpList(builder, "conflicts", conflicts); //$NON-NLS-1$
 		dumpList(builder, "ignored", ignored); //$NON-NLS-1$
-		dumpResourceList(builder,
-				"changedResources", changedResources); //$NON-NLS-1$
+		dumpResourceList(builder, "changedResources", changedResources); //$NON-NLS-1$
 		return builder.toString();
 	}
 
@@ -292,4 +356,14 @@ public class IndexDiffData {
 		builder.append(NEW_LINE);
 	}
 
+	Map<String, DiffEntry> getDiffs() {
+		return diffs;
+	}
+
+	/**
+	 * @return rename information
+	 */
+	public Map<String, DiffEntry> getRenames() {
+		return renames;
+	}
 }
