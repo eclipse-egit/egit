@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPn//86c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiff.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-18T22:36:22Z",
+      "side": 1,
+      "message": "style nit: no braces here",
+      "revId": "a997f60814bb4e783c916c20d4f243e3e1d994be",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//86Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiff.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-18T22:36:22Z",
+      "side": 1,
+      "message": "style nit: no braces here",
+      "revId": "a997f60814bb4e783c916c20d4f243e3e1d994be",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
