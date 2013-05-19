@@ -5122,4 +5122,22 @@
            name="%ReflogCopyCommandName">
      </command>
   </extension>
+   <extension
+        point="org.eclipse.team.core.bundleImporters">
+    <importer
+           id="org.eclipse.egit.core.importer"
+           name="%gitBundleImporter"
+           repository="org.eclipse.egit.core.GitProvider">
+        <supports
+              prefix="scm:git:">
+        </supports>
+     </importer>
+   </extension>
+   <extension
+         point="org.eclipse.team.ui.scmUrlImportPages">
+      <scmUrlImportPage
+            importer="org.eclipse.egit.core.importer"
+            page="org.eclipse.egit.ui.internal.importing.GitScmUrlImportWizardPage">
+      </scmUrlImportPage>
+   </extension>
 </plugin>

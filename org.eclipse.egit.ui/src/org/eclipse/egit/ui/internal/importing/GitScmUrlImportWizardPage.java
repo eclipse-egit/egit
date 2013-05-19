@@ -8,12 +8,13 @@
  * Contributors:
  *    Tomasz Zarna <Tomasz.Zarna@pl.ibm.com> - initial implementation
  *******************************************************************************/
-package org.eclipse.egit.internal.importing;
+package org.eclipse.egit.ui.internal.importing;
 
 import java.net.URI;
 
 import org.eclipse.egit.core.internal.GitURI;
 import org.eclipse.egit.ui.internal.SWTUtils;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -107,8 +108,8 @@ public class GitScmUrlImportWizardPage extends WizardPage implements
 	 * Constructs the page.
 	 */
 	public GitScmUrlImportWizardPage() {
-		super("git", Messages.GitScmUrlImportWizardPage_title, null); //$NON-NLS-1$
-		setDescription(Messages.GitScmUrlImportWizardPage_description);
+		super("git", UIText.GitScmUrlImportWizardPage_title, null); //$NON-NLS-1$
+		setDescription(UIText.GitScmUrlImportWizardPage_description);
 	}
 
 	/* (non-Javadoc)
@@ -118,8 +119,10 @@ public class GitScmUrlImportWizardPage extends WizardPage implements
 		Composite comp = SWTUtils.createHVFillComposite(parent, SWTUtils.MARGINS_NONE, 1);
 		Composite group = SWTUtils.createHFillComposite(comp, SWTUtils.MARGINS_NONE, 1);
 
-		Button versions = SWTUtils.createRadioButton(group, Messages.GitScmUrlImportWizardPage_importVersion);
-		useMaster = SWTUtils.createRadioButton(group, Messages.GitScmUrlImportWizardPage_importMaster);
+		Button versions = SWTUtils.createRadioButton(group,
+				UIText.GitScmUrlImportWizardPage_importVersion);
+		useMaster = SWTUtils.createRadioButton(group,
+				UIText.GitScmUrlImportWizardPage_importMaster);
 		SelectionListener listener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				bundlesViewer.refresh(true);
@@ -205,7 +208,8 @@ public class GitScmUrlImportWizardPage extends WizardPage implements
 	 * Updates the count of bundles that will be imported
 	 */
 	private void updateCount() {
-		counterLabel.setText(NLS.bind(Messages.GitScmUrlImportWizardPage_counter, Integer.valueOf(descriptions.length)));
+		counterLabel.setText(NLS.bind(UIText.GitScmUrlImportWizardPage_counter,
+				Integer.valueOf(descriptions.length)));
 		counterLabel.getParent().layout();
 	}
 

@@ -4770,6 +4770,21 @@ public class UIText extends NLS {
 	/** */
 	public static String GitModelSynchronizeParticipant_noCachedSourceVariant;
 
+	/** */
+	public static String GitScmUrlImportWizardPage_title;
+
+	/** */
+	public static String GitScmUrlImportWizardPage_description;
+
+	/** */
+	public static String GitScmUrlImportWizardPage_importMaster;
+
+	/** */
+	public static String GitScmUrlImportWizardPage_importVersion;
+
+	/** */
+	public static String GitScmUrlImportWizardPage_counter;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
