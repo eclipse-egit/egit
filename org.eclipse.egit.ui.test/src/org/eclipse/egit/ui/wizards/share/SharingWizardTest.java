@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, SAP AG
+ * Copyright (c) 2010, 2013 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -78,8 +78,6 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 				ResourcesPlugin.getWorkspace().getRoot().getLocation().toFile()
 						.getAbsoluteFile().toString());
 
-		if (bot.activeView().getTitle().equals("Welcome"))
-			bot.viewByTitle("Welcome").close();
 		bot.perspectiveById("org.eclipse.jdt.ui.JavaPerspective").activate();
 		bot.viewByTitle("Package Explorer").show();
 
@@ -174,8 +172,8 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 
 		String repopath = workspace.getRoot().getProject(projectName0)
 				.getLocation().append(Constants.DOT_GIT).toOSString();
-		existingOrNewPage
-				.assertContents(true, projectName0, projectPath, repopath, "");
+		existingOrNewPage.assertContents(true, projectName0, projectPath,
+				".git", "");
 		existingOrNewPage.assertEnabling(false, false, true);
 
 		assertTrue((new File(repopath)).exists());
