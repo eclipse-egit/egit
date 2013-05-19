@@ -16,6 +16,24 @@
       "revId": "fba31ed7bb17b78cfefc347c2a1ce5c1ea1dc937",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//84s\u003d",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-05-19T21:34:41Z",
+      "side": 0,
+      "message": "It\u0027s creating the egit p2 repository packaging all bundles and features. It was created only on platform versions the import feature could be built on (Juno \u0026 Kepler but not on Indigo) since Tycho doesn\u0027t allow conditional packaging, it always wants all the features/bundles listed in the repository\u0027s category.xml and fails the build if any is missing.\n\nNow with this change all supported platform versions (Juno \u0026 Kepler) provide the necessary API for the import feature hence packaging the p2 repository doesn\u0027t need to depend on the platform version any longer. So the repository module is now moved to the global modules section (see below) to ensure it\u0027s built always.",
+      "parentUuid": "AABOPn//858\u003d",
+      "revId": "fba31ed7bb17b78cfefc347c2a1ce5c1ea1dc937",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
