@@ -1629,6 +1629,21 @@ public class UIText extends NLS {
 	public static String ResetQuickdiffBaselineHandler_NoTargetMessage;
 
 	/** */
+	public static String ResetTargetSelectionDialog_AuthorLabel;
+
+	/** */
+	public static String ResetTargetSelectionDialog_CommitLabel;
+
+	/** */
+	public static String ResetTargetSelectionDialog_CommitterLabel;
+
+	/** */
+	public static String ResetTargetSelectionDialog_ExpressionLabel;
+
+	/** */
+	public static String ResetTargetSelectionDialog_ExpressionTooltip;
+
+	/** */
 	public static String ResetTargetSelectionDialog_ResetButton;
 
 	/** */
@@ -1660,6 +1675,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String ResetTargetSelectionDialog_SelectBranchForResetMessage;
+
+	/** */
+	public static String ResetTargetSelectionDialog_SubjectLabel;
+
+	/** */
+	public static String ResetTargetSelectionDialog_UnresolvableExpressionError;
 
 	/** */
 	public static String ResetTargetSelectionDialog_WindowTitle;

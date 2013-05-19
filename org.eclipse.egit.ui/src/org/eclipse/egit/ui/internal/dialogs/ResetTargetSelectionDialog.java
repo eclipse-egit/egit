@@ -27,6 +27,8 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.util.GitDateFormatter;
+import org.eclipse.jgit.util.GitDateFormatter.Format;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
@@ -61,6 +63,9 @@ public class ResetTargetSelectionDialog extends AbstractBranchSelectionDialog {
 
 	private Label committer;
 
+	private final GitDateFormatter gitDateFormatter = new GitDateFormatter(
+			Format.LOCALE);
+
 	/**
 	 * Construct a dialog to select a branch to reset to
 	 *
@@ -84,25 +89,25 @@ public class ResetTargetSelectionDialog extends AbstractBranchSelectionDialog {
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(g2);
 		g2.setLayout(new GridLayout(2, false));
 		Label label = new Label(g2, SWT.NONE);
-		label.setText("Reset to (expression):"); //$NON-NLS-1$
+		label.setText(UIText.ResetTargetSelectionDialog_ExpressionLabel);
 		anySha1 = new Text(g2, SWT.BORDER);
-		anySha1.setToolTipText("Any git expression evaluating to a commit-ish"); //$NON-NLS-1$
+		anySha1.setToolTipText(UIText.ResetTargetSelectionDialog_ExpressionTooltip);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(anySha1);
 
 		Group g3 = new Group(g2, SWT_NONE);
 		GridDataFactory.fillDefaults().grab(true, false).span(2, 1).applyTo(g3);
 		g3.setLayout(new GridLayout(2, false));
-		new Label(g3, SWT.NONE).setText("SHA-1:"); //$NON-NLS-1$
-		sha1 = new Label(g3, SWT.BORDER);
+		new Label(g3, SWT.NONE).setText(UIText.ResetTargetSelectionDialog_CommitLabel);
+		sha1 = new Label(g3, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(sha1);
-		new Label(g3, SWT.NONE).setText("Subject:"); //$NON-NLS-1$
-		subject = new Label(g3, SWT.BORDER);
+		new Label(g3, SWT.NONE).setText(UIText.ResetTargetSelectionDialog_SubjectLabel);
+		subject = new Label(g3, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(subject);
-		new Label(g3, SWT.NONE).setText("Author:"); //$NON-NLS-1$
-		author = new Label(g3, SWT.BORDER);
+		new Label(g3, SWT.NONE).setText(UIText.ResetTargetSelectionDialog_AuthorLabel);
+		author = new Label(g3, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(author);
-		new Label(g3, SWT.NONE).setText("Committer:"); //$NON-NLS-1$
-		committer = new Label(g3, SWT.BORDER);
+		new Label(g3, SWT.NONE).setText(UIText.ResetTargetSelectionDialog_CommitterLabel);
+		committer = new Label(g3, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(committer);
 
 		Group g = new Group(main, SWT.NONE);
@@ -130,7 +135,8 @@ public class ResetTargetSelectionDialog extends AbstractBranchSelectionDialog {
 					ObjectId resolved = repo.resolve(text+"^{commit}"); //$NON-NLS-1$
 					if (resolved == null) {
 						setMessage(
-								"Unresolvable expression ", IMessageProvider.ERROR); //$NON-NLS-1$
+								UIText.ResetTargetSelectionDialog_UnresolvableExpressionError,
+								IMessageProvider.ERROR);
 						getButton(OK).setEnabled(false);
 						parsedCommitish = null;
 						sha1.setText(""); //$NON-NLS-1$
@@ -150,11 +156,11 @@ public class ResetTargetSelectionDialog extends AbstractBranchSelectionDialog {
 						author.setText(commit.getAuthorIdent().getName()
 								+ " <" //$NON-NLS-1$
 								+ commit.getAuthorIdent().getEmailAddress()
-								+ "> " + commit.getAuthorIdent().getWhen()); //$NON-NLS-1$
+								+ "> " + gitDateFormatter.formatDate(commit.getAuthorIdent())); //$NON-NLS-1$
 						committer.setText(commit.getCommitterIdent().getName()
 								+ " <" //$NON-NLS-1$
 								+ commit.getCommitterIdent().getEmailAddress()
-								+ " >" + commit.getCommitterIdent().getWhen()); //$NON-NLS-1$
+								+ "> " + gitDateFormatter.formatDate(commit.getCommitterIdent())); //$NON-NLS-1$
 						rw.dispose();
 					}
 				} catch (IOException e1) {
