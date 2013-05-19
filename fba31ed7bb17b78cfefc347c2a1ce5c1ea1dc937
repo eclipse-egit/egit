@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPn//858\u003d",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2013-05-19T03:54:58Z",
+      "side": 0,
+      "message": "What\u0027s the egit.repository module? Is it related to egit.import?",
+      "revId": "fba31ed7bb17b78cfefc347c2a1ce5c1ea1dc937",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
