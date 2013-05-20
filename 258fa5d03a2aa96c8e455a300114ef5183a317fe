@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPn//8v0\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1673,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-05-20T22:52:51Z",
+      "side": 1,
+      "message": "Changing this felt logical, BUT where is it used? Is anyone  of these handlers used? The effective change is at line 2757",
+      "revId": "258fa5d03a2aa96c8e455a300114ef5183a317fe",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
