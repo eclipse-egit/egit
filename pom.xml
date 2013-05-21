@@ -76,19 +76,6 @@
 
   <profiles>
     <profile>
-      <id>platform-indigo</id>
-      <activation>
-        <property>
-          <name>platform-version-name</name>
-          <value>indigo</value>
-        </property>
-      </activation>
-      <properties>
-        <target-platform>egit-3.7</target-platform>
-        <platform-version>[3.7,3.8)</platform-version>
-      </properties>
-    </profile>
-    <profile>
       <id>platform-juno</id>
       <activation>
         <property>
@@ -100,11 +87,6 @@
         <target-platform>egit-4.2</target-platform>
         <platform-version>[3.8,3.9)</platform-version>
       </properties>
-      <modules>
-        <module>org.eclipse.egit.import</module>
-        <module>org.eclipse.egit.import-feature</module>
-        <module>org.eclipse.egit.repository</module>
-      </modules>
     </profile>
     <profile>
       <id>platform-kepler</id>
@@ -119,11 +101,6 @@
         <target-platform>egit-4.3</target-platform>
         <platform-version>[3.9,4.0)</platform-version>
       </properties>
-      <modules>
-        <module>org.eclipse.egit.import</module>
-        <module>org.eclipse.egit.import-feature</module>
-        <module>org.eclipse.egit.repository</module>
-      </modules>
     </profile>
     <profile>
       <id>platform-kepler-staging</id>
@@ -137,11 +114,6 @@
         <target-platform>egit-4.3-staging</target-platform>
         <platform-version>[3.9,4.0)</platform-version>
       </properties>
-      <modules>
-        <module>org.eclipse.egit.import</module>
-        <module>org.eclipse.egit.import-feature</module>
-        <module>org.eclipse.egit.repository</module>
-      </modules>
     </profile>
     <profile>
       <id>static-checks</id>
@@ -178,6 +150,8 @@
     <module>org.eclipse.egit.mylyn.ui.test</module>
 
     <module>org.eclipse.egit.source-feature</module>
+
+    <module>org.eclipse.egit.repository</module>
   </modules>
 
   <pluginRepositories>
