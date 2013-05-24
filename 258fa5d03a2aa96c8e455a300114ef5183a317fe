@@ -16,6 +16,41 @@
       "revId": "258fa5d03a2aa96c8e455a300114ef5183a317fe",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//7iU\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1673,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-05-24T19:35:48Z",
+      "side": 1,
+      "message": "Maybe that is the one being checked when you invoke \"Stash Changes\" via quick access (Ctrl+3)? I\u0027m not sure though.",
+      "parentUuid": "AABOPn//8v0\u003d",
+      "revId": "258fa5d03a2aa96c8e455a300114ef5183a317fe",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//7ic\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoriesViewPropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-05-24T19:35:48Z",
+      "side": 1,
+      "message": "I thought the above should already be covered by the reflection magic in ResourcePropertyTester.testRepositoryState? See change I5c72f66ceac7678a03c85794251304a3db82d196 (by you :)).",
+      "revId": "258fa5d03a2aa96c8e455a300114ef5183a317fe",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
