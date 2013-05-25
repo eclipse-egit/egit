@@ -51,6 +51,24 @@
       "revId": "258fa5d03a2aa96c8e455a300114ef5183a317fe",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//7ZI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoriesViewPropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-05-25T11:13:48Z",
+      "side": 1,
+      "message": "My memory is good, but it\u0027s a bit short.",
+      "parentUuid": "AABOPn//7ic\u003d",
+      "revId": "258fa5d03a2aa96c8e455a300114ef5183a317fe",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
