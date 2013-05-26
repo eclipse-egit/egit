@@ -545,7 +545,7 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 					}
 				// if nothing else, we start the search from the default folder for repositories
 				if (EMPTY_STRING.equals(dialog.getFilterPath()))
-					dialog.setFilterPath(Activator.getDefault().getPreferenceStore().getString(UIPreferences.DEFAULT_REPO_DIR));
+					dialog.setFilterPath(UIUtils.getDefaultRepositoryDir());
 				String result = dialog.open();
 				if (result != null)
 					uriText.setText("file:///" + result); //$NON-NLS-1$
