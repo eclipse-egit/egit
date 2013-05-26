@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPn//7UU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchConfigurationDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-05-26T23:04:56Z",
+      "side": 1,
+      "message": "Yes, will fix.",
+      "parentUuid": "AABOPn//7VQ\u003d",
+      "revId": "cb3323dc8edd45b83843bd08f90ea27e11178c26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPn//7VU\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchConfigurationDialog.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-05-26T22:07:12Z",
       "side": 1,
       "message": "what\u0027s the purpose of showing local branches for a remote ?",
+      "revId": "cb3323dc8edd45b83843bd08f90ea27e11178c26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//7UQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchConfigurationDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-05-26T23:04:56Z",
+      "side": 1,
+      "message": "Yeah, I thought maybe it\u0027s better than nothing. On second thought, let\u0027s just show nothing.",
+      "parentUuid": "AABOPn//7VU\u003d",
       "revId": "cb3323dc8edd45b83843bd08f90ea27e11178c26",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
