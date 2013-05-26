@@ -16,6 +16,24 @@
       "revId": "8e71bab45f43cec453d71e4c2cf72ce191356c97",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//7WE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/EditableRevision.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-05-26T20:55:47Z",
+      "side": 1,
+      "message": "Just to reduce the number of unnecessary copies. It\u0027s also not copied in BufferedResourceNode (from org.eclipse.compare).",
+      "parentUuid": "AABOPn//7WU\u003d",
+      "revId": "8e71bab45f43cec453d71e4c2cf72ce191356c97",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
