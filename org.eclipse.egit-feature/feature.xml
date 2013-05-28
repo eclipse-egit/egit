@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.egit"
       label="%featureName"
-      version="3.0.0.qualifier"
+      version="3.0.0.201305281830-rc2"
       provider-name="%providerName"
       plugin="org.eclipse.egit">
 
