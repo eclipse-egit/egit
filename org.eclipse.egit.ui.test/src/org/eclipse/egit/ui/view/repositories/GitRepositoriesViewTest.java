@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2012 SAP AG and others.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -400,7 +400,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	@Test
-	public void testLinkWithSelection() throws Exception {
+	public void testLinkWithSelectionNavigator() throws Exception {
 		deleteAllProjects();
 		shareProjects(repositoryFile);
 		SWTBotPerspective perspective = null;
@@ -421,9 +421,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 			assertTrue(tree.selection().get(0, 0).startsWith(REPO1));
 
 			// activate the link with selection
-			getOrOpenView().toolbarButton(
-					myUtil.getPluginLocalizedValue("LinkWithSelectionCommand"))
-					.click();
+			toggleLinkWithSelection();
 
 			// the selection should be still be root
 			assertTrue(tree.selection().get(0, 0).startsWith(REPO1));
@@ -437,9 +435,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 			assertTrue(tree.selection().get(0, 0).equals(PROJ1));
 
 			// deactivate the link with selection
-			getOrOpenView().toolbarButton(
-					myUtil.getPluginLocalizedValue("LinkWithSelectionCommand"))
-					.click();
+			toggleLinkWithSelection();
 
 		} finally {
 			if (perspective != null)
@@ -453,7 +449,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 	 * @throws Exception
 	 */
 	@Test
-	public void testLinkWithEditor() throws Exception {
+	public void testLinkWithSelectionEditor() throws Exception {
 		deleteAllProjects();
 		shareProjects(repositoryFile);
 		SWTBotPerspective perspective = null;
@@ -485,7 +481,8 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 			assertTrue(tree.selection().get(0, 0).startsWith(REPO1));
 
 			// activate the link with selection
-			getOrOpenView().toolbarButton("Link with Editor").click();
+			toggleLinkWithSelection();
+
 			bot.editorByTitle(FILE2).show();
 			// the selection should have changed to the latest editor
 			TestUtil.waitUntilTreeHasSelectedNodeWithText(bot, tree, FILE2, 10000);
@@ -495,7 +492,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 			TestUtil.waitUntilTreeHasSelectedNodeWithText(bot, tree, FILE1, 10000);
 
 			// deactivate the link with editor
-			getOrOpenView().toolbarButton("Link with Editor").click();
+			toggleLinkWithSelection();
 
 			bot.editorByTitle(FILE2).show();
 			// the selection should be still be test.txt
@@ -511,8 +508,8 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 			assertEquals(FILE1, bot.activeEditor().getTitle());
 
 			// activate again
-			SWTBotView repoView = getOrOpenView();
-			repoView.toolbarButton("Link with Editor").click();
+			toggleLinkWithSelection();
+
 			// make sure focus is here
 			// tried to remove this waitInUI but failed.
 			// tried setting focus, waiting for focus, joining RepositoriesView
@@ -529,7 +526,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 			TestUtil.waitUntilEditorIsActive(bot, bot.editorByTitle(FILE1), 10000);
 
 			// deactivate the link with editor
-			getOrOpenView().toolbarButton("Link with Editor").click();
+			toggleLinkWithSelection();
 
 			myRepoViewUtil.getWorkdirItem(tree, repositoryFile).expand()
 					.getNode(PROJ1).expand().getNode(FOLDER).expand().getNode(
@@ -661,6 +658,12 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		folder = findWorkdirNode(tree, PROJ2, FOLDER);
 		assertThat(folder.getNodes(), not(hasItem(FILE1)));
 		assertThat(folder.getNodes(), hasItem(FILE2));
+	}
+
+	private void toggleLinkWithSelection() throws Exception {
+		getOrOpenView().toolbarButton(
+				myUtil.getPluginLocalizedValue("LinkWithSelectionCommand"))
+				.click();
 	}
 
 	private SWTBotTreeItem findWorkdirNode(SWTBotTree tree, String... nodes) throws Exception {
