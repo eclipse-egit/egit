@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2012, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2012, 2013 Mathias Kinzler <mathias.kinzler@sap.com>
  * and other copyright owners as documented in the project's IP log.
  *
  * All rights reserved. This program and the accompanying materials
@@ -13,6 +13,9 @@
 package org.eclipse.egit.ui.internal.dialogs;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
@@ -24,8 +27,12 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
+import org.eclipse.jgit.transport.RefSpec;
+import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -45,9 +52,9 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 
 	private final String myTitle;
 
-	private Combo branchText;
-
 	private Combo remoteText;
+
+	private Combo branchText;
 
 	private Button rebase;
 
@@ -73,32 +80,29 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(main);
 		GridDataFactory.fillDefaults().grab(true, false).indent(5, 5)
 				.applyTo(main);
-		Label branchLabel = new Label(main, SWT.NONE);
-		branchLabel.setText(UIText.BranchConfigurationDialog_UpstreamBranchLabel);
-		branchText = new Combo(main, SWT.BORDER);
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(branchText);
-
-		try {
-			for (Ref ref : myRepository.getRefDatabase()
-					.getRefs(Constants.R_HEADS).values())
-				branchText.add(ref.getName());
-			for (Ref ref : myRepository.getRefDatabase()
-					.getRefs(Constants.R_REMOTES).values())
-				branchText.add(ref.getName());
-		} catch (IOException e) {
-			Activator.logError(UIText.BranchConfigurationDialog_ExceptionGettingRefs, e);
-		}
 
 		Label remoteLabel = new Label(main, SWT.NONE);
 		remoteLabel.setText(UIText.BranchConfigurationDialog_RemoteLabel);
 		remoteText = new Combo(main, SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(remoteText);
 
+		Label branchLabel = new Label(main, SWT.NONE);
+		branchLabel.setText(UIText.BranchConfigurationDialog_UpstreamBranchLabel);
+		branchText = new Combo(main, SWT.BORDER);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(branchText);
+
 		// TODO do we have a constant somewhere?
 		remoteText.add("."); //$NON-NLS-1$
 		for (String remote : myConfig
 				.getSubsections(ConfigConstants.CONFIG_REMOTE_SECTION))
 			remoteText.add(remote);
+
+		remoteText.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updateBranchItems();
+			}
+		});
 
 		rebase = new Button(main, SWT.CHECK);
 		GridDataFactory.fillDefaults().span(2, 1).applyTo(rebase);
@@ -117,6 +121,7 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 		if (remote == null)
 			remote = ""; //$NON-NLS-1$
 		remoteText.setText(remote);
+		updateBranchItems();
 
 		boolean rebaseFlag = myConfig.getBoolean(
 				ConfigConstants.CONFIG_BRANCH_SECTION, myBranchName,
@@ -126,6 +131,63 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 		applyDialogFont(main);
 		// return result;
 		return main;
+	}
+
+	private void updateBranchItems() {
+		String branchTextBefore = branchText.getText();
+		branchText.removeAll();
+		addBranchItems();
+		branchText.setText(branchTextBefore);
+	}
+
+	private void addBranchItems() {
+		String remote = remoteText.getText();
+		try {
+			if (remote.equals(".") || remote.length() == 0) //$NON-NLS-1$
+				// Add local branches only. Fetching from "." and then merging a
+				// remote ref does not make much sense, so don't offer it. If
+				// the user wants that, it can be entered manually.
+				addBranchItemsForLocal();
+			else
+				addBranchItemsForRemote(remote);
+		} catch (IOException e) {
+			Activator.logError(
+					UIText.BranchConfigurationDialog_ExceptionGettingRefs, e);
+		} catch (URISyntaxException e) {
+			Activator.logError(
+					UIText.BranchConfigurationDialog_ExceptionGettingRefs, e);
+		}
+	}
+
+	private void addBranchItemsForLocal() throws IOException {
+		Collection<Ref> localRefs = myRepository.getRefDatabase()
+				.getRefs(Constants.R_HEADS).values();
+		for (Ref ref : localRefs)
+			branchText.add(ref.getName());
+	}
+
+	private void addBranchItemsForRemote(String remote) throws IOException,
+			URISyntaxException {
+		RemoteConfig remoteConfig = new RemoteConfig(myConfig, remote);
+		List<RefSpec> fetchSpecs = remoteConfig.getFetchRefSpecs();
+		if (fetchSpecs.isEmpty()) {
+			return;
+		}
+
+		Collection<Ref> allRefs = myRepository.getRefDatabase()
+				.getRefs(Constants.R_REFS).values();
+		for (Ref ref : allRefs) {
+			for (RefSpec fetchSpec : fetchSpecs) {
+				// Fetch specs map remote ref names (source) to local ref names
+				// (destination). We want to get remote ref names, so expand
+				// destination to source.
+				if (fetchSpec.matchDestination(ref)) {
+					RefSpec source = fetchSpec.expandFromDestination(ref);
+					String refNameOnRemote = source.getSource();
+					branchText.add(refNameOnRemote);
+				}
+			}
+		}
 	}
 
 	@Override

@@ -1670,7 +1670,7 @@
                            </test>
                         </not>
                         <test
-                              property="GitRepository.isSafe">
+                              property="GitRepository.canStash">
                         </test>
                         <test
                               property="GitRepository.containsHead">
@@ -2754,7 +2754,7 @@
                            </test>
                         </not>
                         <test
-                              property="GitRepository.isSafe">
+                              property="GitRepository.canStash">
                         </test>
                         <test
                               property="GitRepository.containsHead">
@@ -4469,7 +4469,7 @@
             class="org.eclipse.egit.ui.internal.repository.tree.RepositoriesViewPropertyTester"
             id="org.eclipse.egit.ui.RepositoryTester"
             namespace="GitRepository"
-            properties="isBare,isSafe,canCommit,canAmend,canResetHead,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase,canContinueRebase,isSubmodule,containsHead"
+            properties="isBare,isSafe,canCommit,canAmend,canResetHead,canStash,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase,canContinueRebase,isSubmodule,containsHead"
             type="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
       </propertyTester>
       <propertyTester
@@ -5122,4 +5122,22 @@
            name="%ReflogCopyCommandName">
      </command>
   </extension>
+   <extension
+        point="org.eclipse.team.core.bundleImporters">
+    <importer
+           id="org.eclipse.egit.core.importer"
+           name="%gitBundleImporter"
+           repository="org.eclipse.egit.core.GitProvider">
+        <supports
+              prefix="scm:git:">
+        </supports>
+     </importer>
+   </extension>
+   <extension
+         point="org.eclipse.team.ui.scmUrlImportPages">
+      <scmUrlImportPage
+            importer="org.eclipse.egit.core.importer"
+            page="org.eclipse.egit.ui.internal.importing.GitScmUrlImportWizardPage">
+      </scmUrlImportPage>
+   </extension>
 </plugin>

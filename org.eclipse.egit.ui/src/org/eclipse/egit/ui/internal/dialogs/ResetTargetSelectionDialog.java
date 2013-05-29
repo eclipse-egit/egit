@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,29 +11,60 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
+import java.io.IOException;
+
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.api.ResetCommand.ResetType;
+import org.eclipse.jgit.lib.AbbreviatedObjectId;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.util.GitDateFormatter;
+import org.eclipse.jgit.util.GitDateFormatter.Format;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 /**
  * Dialog for selecting a reset target.
  */
 public class ResetTargetSelectionDialog extends AbstractBranchSelectionDialog {
 
+	private static final int SWT_NONE = 0;
 	private ResetType resetType = ResetType.MIXED;
+	private Text anySha1;
+	private String parsedCommitish;
+
+	private Label subject;
+
+	private Label author;
+
+	private Label sha1;
+
+	private Label committer;
+
+	private final GitDateFormatter gitDateFormatter = new GitDateFormatter(
+			Format.LOCALE);
 
 	/**
 	 * Construct a dialog to select a branch to reset to
@@ -53,11 +84,104 @@ public class ResetTargetSelectionDialog extends AbstractBranchSelectionDialog {
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(1, false));
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(main);
+
+		Group g2 = new Group(main, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(g2);
+		g2.setLayout(new GridLayout(2, false));
+		Label label = new Label(g2, SWT.NONE);
+		label.setText(UIText.ResetTargetSelectionDialog_ExpressionLabel);
+		anySha1 = new Text(g2, SWT.BORDER);
+		anySha1.setToolTipText(UIText.ResetTargetSelectionDialog_ExpressionTooltip);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(anySha1);
+
+		Group g3 = new Group(g2, SWT_NONE);
+		GridDataFactory.fillDefaults().grab(true, false).span(2, 1).applyTo(g3);
+		g3.setLayout(new GridLayout(2, false));
+		new Label(g3, SWT.NONE).setText(UIText.ResetTargetSelectionDialog_CommitLabel);
+		sha1 = new Label(g3, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(sha1);
+		new Label(g3, SWT.NONE).setText(UIText.ResetTargetSelectionDialog_SubjectLabel);
+		subject = new Label(g3, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(subject);
+		new Label(g3, SWT.NONE).setText(UIText.ResetTargetSelectionDialog_AuthorLabel);
+		author = new Label(g3, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(author);
+		new Label(g3, SWT.NONE).setText(UIText.ResetTargetSelectionDialog_CommitterLabel);
+		committer = new Label(g3, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(committer);
+
 		Group g = new Group(main, SWT.NONE);
 		g.setText(UIText.ResetTargetSelectionDialog_ResetTypeGroup);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(g);
 		g.setLayout(new GridLayout(1, false));
 
+		anySha1.addFocusListener(new FocusListener() {
+			public void focusLost(FocusEvent e) {
+				// Do nothing
+			}
+			public void focusGained(FocusEvent e) {
+				branchTree.setSelection(null);
+			}
+		});
+		anySha1.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				String text = anySha1.getText();
+				if (text.length() == 0) {
+					parsedCommitish = null;
+					setMessage(""); //$NON-NLS-1$
+					return;
+				}
+				try {
+					ObjectId resolved = repo.resolve(text+"^{commit}"); //$NON-NLS-1$
+					if (resolved == null) {
+						setMessage(
+								UIText.ResetTargetSelectionDialog_UnresolvableExpressionError,
+								IMessageProvider.ERROR);
+						getButton(OK).setEnabled(false);
+						parsedCommitish = null;
+						sha1.setText(""); //$NON-NLS-1$
+						subject.setText(""); //$NON-NLS-1$
+						author.setText(""); //$NON-NLS-1$
+						committer.setText(""); //$NON-NLS-1$
+						return;
+					} else {
+						setMessage(""); //$NON-NLS-1$
+						parsedCommitish = text;
+						getButton(OK).setEnabled(true);
+						RevWalk rw = new RevWalk(repo);
+						RevCommit commit = rw.parseCommit(resolved);
+						sha1.setText(AbbreviatedObjectId.fromObjectId(commit)
+								.name());
+						subject.setText(commit.getShortMessage());
+						author.setText(commit.getAuthorIdent().getName()
+								+ " <" //$NON-NLS-1$
+								+ commit.getAuthorIdent().getEmailAddress()
+								+ "> " + gitDateFormatter.formatDate(commit.getAuthorIdent())); //$NON-NLS-1$
+						committer.setText(commit.getCommitterIdent().getName()
+								+ " <" //$NON-NLS-1$
+								+ commit.getCommitterIdent().getEmailAddress()
+								+ "> " + gitDateFormatter.formatDate(commit.getCommitterIdent())); //$NON-NLS-1$
+						rw.dispose();
+					}
+				} catch (IOException e1) {
+					setMessage(e1.getMessage(), IMessageProvider.ERROR);
+					getButton(OK).setEnabled(false);
+					parsedCommitish = null;
+				}
+			}
+		});
+		branchTree.addSelectionChangedListener(new ISelectionChangedListener() {
+
+			public void selectionChanged(SelectionChangedEvent event) {
+				if (!event.getSelection().isEmpty()) {
+					String refName = refNameFromDialog();
+					if (refName != null) {
+						anySha1.setText(refName);
+						anySha1.selectAll();
+					}
+				}
+			}
+		});
 		Button soft = new Button(g, SWT.RADIO);
 		soft.setText(UIText.ResetTargetSelectionDialog_ResetTypeSoftButton);
 		soft.addListener(SWT.Selection, new Listener() {
@@ -133,5 +257,13 @@ public class ResetTargetSelectionDialog extends AbstractBranchSelectionDialog {
 	@Override
 	protected String getMessageText() {
 		return UIText.ResetTargetSelectionDialog_SelectBranchForResetMessage;
+	}
+
+	@Override
+	public String getRefName() {
+		String selected = super.getRefName();
+		if (selected != null)
+			return selected;
+		return parsedCommitish;
 	}
 }

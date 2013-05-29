@@ -44,7 +44,7 @@ public class CompareWithIndexActionHandler extends RepositoryActionHandler {
 			return null;
 		final IPath[] locations = getSelectedLocations(event);
 
-		if (locations.length == 1 && locations[0].toFile().isFile()) {
+		if (locations.length == 1 && !locations[0].toFile().isDirectory()) {
 			final IPath baseLocation = locations[0];
 			final ITypedElement base = getBaseTypeElement(baseLocation);
 			final ITypedElement next;

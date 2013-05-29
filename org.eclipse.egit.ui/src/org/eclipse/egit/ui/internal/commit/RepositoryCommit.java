@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011, 2012 GitHub Inc. and others.
+ *  Copyright (c) 2011, 2013 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -154,7 +154,8 @@ public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
 			try {
 				for (RevCommit parent : commit.getParents())
 					revWalk.parseBody(parent);
-				diffs = FileDiff.compute(treewalk, commit, TreeFilter.ALL);
+				diffs = FileDiff.compute(repository, treewalk, commit,
+						TreeFilter.ALL);
 			} catch (IOException e) {
 				diffs = new FileDiff[0];
 			} finally {
@@ -221,14 +222,21 @@ public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
 		styled.append(": "); //$NON-NLS-1$
 		styled.append(commit.getShortMessage());
 
-		PersonIdent person = commit.getAuthorIdent();
-		if (person == null)
-			person = commit.getCommitterIdent();
-		if (person != null)
-			styled.append(MessageFormat.format(
-					UIText.RepositoryCommit_UserAndDate, person.getName(),
-					formatDate(person.getWhen())),
-					StyledString.QUALIFIER_STYLER);
+		PersonIdent author = commit.getAuthorIdent();
+		PersonIdent committer = commit.getCommitterIdent();
+		if (author != null && committer != null) {
+			if (author.getName().equals(committer.getName())) {
+				styled.append(MessageFormat.format(
+						UIText.RepositoryCommit_AuthorDate, author.getName(),
+						formatDate(author.getWhen())),
+						StyledString.QUALIFIER_STYLER);
+			} else {
+				styled.append(MessageFormat.format(
+						UIText.RepositoryCommit_AuthorDateCommitter,
+						author.getName(), formatDate(author.getWhen()),
+						committer.getName()), StyledString.QUALIFIER_STYLER);
+			}
+		}
 		return styled;
 	}
 

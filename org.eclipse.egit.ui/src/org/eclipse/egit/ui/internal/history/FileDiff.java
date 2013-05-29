@@ -13,6 +13,8 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.resources.IResource;
@@ -29,6 +31,7 @@ import org.eclipse.jgit.diff.EditList;
 import org.eclipse.jgit.diff.MyersDiff;
 import org.eclipse.jgit.diff.RawText;
 import org.eclipse.jgit.diff.RawTextComparator;
+import org.eclipse.jgit.diff.RenameDetector;
 import org.eclipse.jgit.errors.CorruptObjectException;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
@@ -66,19 +69,22 @@ public class FileDiff extends WorkbenchAdapter {
 	/**
 	 * Computer file diffs for specified tree walk and commit
 	 *
+	 * @param repository
 	 * @param walk
 	 * @param commit
-	 * @param markTreeFilters optional filters for marking entries, see {@link #isMarked(int)}
+	 * @param markTreeFilters
+	 *            optional filters for marking entries, see
+	 *            {@link #isMarked(int)}
 	 * @return non-null but possibly empty array of file diffs
 	 * @throws MissingObjectException
 	 * @throws IncorrectObjectTypeException
 	 * @throws CorruptObjectException
 	 * @throws IOException
 	 */
-	public static FileDiff[] compute(final TreeWalk walk,
-			final RevCommit commit, final TreeFilter... markTreeFilters)
-			throws MissingObjectException, IncorrectObjectTypeException,
-			CorruptObjectException, IOException {
+	public static FileDiff[] compute(final Repository repository,
+			final TreeWalk walk, final RevCommit commit,
+			final TreeFilter... markTreeFilters) throws MissingObjectException,
+			IncorrectObjectTypeException, CorruptObjectException, IOException {
 		final ArrayList<FileDiff> r = new ArrayList<FileDiff>();
 
 		if (commit.getParentCount() > 0)
@@ -91,8 +97,24 @@ public class FileDiff extends WorkbenchAdapter {
 
 		if (walk.getTreeCount() <= 2) {
 			List<DiffEntry> entries = DiffEntry.scan(walk, false, markTreeFilters);
-			for (DiffEntry entry : entries) {
-				final FileDiff d = new FileDiff(commit, entry);
+			List<DiffEntry> xentries = new LinkedList<DiffEntry>(entries);
+			RenameDetector detector = new RenameDetector(repository);
+			detector.addAll(entries);
+			List<DiffEntry> renames = detector.compute(walk.getObjectReader(),
+					org.eclipse.jgit.lib.NullProgressMonitor.INSTANCE);
+			for (DiffEntry m : renames) {
+				final FileDiff d = new FileDiff(commit, m);
+				r.add(d);
+				for (Iterator<DiffEntry> i = xentries.iterator(); i.hasNext();) {
+					DiffEntry n = i.next();
+					if (m.getOldPath().equals(n.getOldPath()))
+						i.remove();
+					else if (m.getNewPath().equals(n.getNewPath()))
+						i.remove();
+				}
+			}
+			for (DiffEntry m : xentries) {
+				final FileDiff d = new FileDiff(commit, m);
 				r.add(d);
 			}
 		}
@@ -188,9 +210,10 @@ public class FileDiff extends WorkbenchAdapter {
 			throw new UnsupportedOperationException(
 					"Not supported yet if the number of parents is different from one"); //$NON-NLS-1$
 
-		String projectRelativePath = getProjectRelativePath(db, getPath());
-		d.append("diff --git ").append(projectRelativePath).append(" ") //$NON-NLS-1$ //$NON-NLS-2$
-			.append(projectRelativePath).append("\n"); //$NON-NLS-1$
+		String projectRelativeNewPath = getProjectRelativePath(db, getNewPath());
+		String projectRelativeOldPath = getProjectRelativePath(db, getOldPath());
+		d.append("diff --git ").append(projectRelativeOldPath).append(" ") //$NON-NLS-1$ //$NON-NLS-2$
+				.append(projectRelativeNewPath).append("\n"); //$NON-NLS-1$
 		final ObjectId id1 = getBlobs()[0];
 		final ObjectId id2 = getBlobs()[1];
 		final FileMode mode1 = getModes()[0];
@@ -211,7 +234,7 @@ public class FileDiff extends WorkbenchAdapter {
 			d.append("--- /dev/null\n"); //$NON-NLS-1$
 		else {
 			d.append("--- "); //$NON-NLS-1$
-			d.append(getProjectRelativePath(db, getPath()));
+			d.append(getProjectRelativePath(db, getOldPath()));
 			d.append("\n"); //$NON-NLS-1$
 		}
 
@@ -219,7 +242,7 @@ public class FileDiff extends WorkbenchAdapter {
 			d.append("+++ /dev/null\n"); //$NON-NLS-1$
 		else {
 			d.append("+++ "); //$NON-NLS-1$
-			d.append(getProjectRelativePath(db, getPath()));
+			d.append(getProjectRelativePath(db, getNewPath()));
 			d.append("\n"); //$NON-NLS-1$
 		}
 
@@ -258,10 +281,25 @@ public class FileDiff extends WorkbenchAdapter {
 	 * Get path
 	 *
 	 * @return path
+	 * @deprecated Use {@link #getOldPath()} or {@link #getNewPath()}
 	 */
 	public String getPath() {
 		if (ChangeType.DELETE.equals(diffEntry.getChangeType()))
 			return diffEntry.getOldPath();
+		return diffEntry.getNewPath();
+	}
+
+	/**
+	 * @return the new path or null for a deleted file
+	 */
+	public String getOldPath() {
+		return diffEntry.getOldPath();
+	}
+
+	/**
+	 * @return the old path or null for a completely new file
+	 */
+	public String getNewPath() {
 		return diffEntry.getNewPath();
 	}
 
@@ -304,9 +342,11 @@ public class FileDiff extends WorkbenchAdapter {
 
 	/**
 	 * Whether the mark tree filter with the specified index matched during scan
-	 * or not, see {@link #compute(TreeWalk, RevCommit, TreeFilter...)}.
+	 * or not, see
+	 * {@link #compute(Repository, TreeWalk, RevCommit, TreeFilter...)}.
 	 *
-	 * @param index the tree filter index to check
+	 * @param index
+	 *            the tree filter index to check
 	 * @return true if it was marked, false otherwise
 	 */
 	public boolean isMarked(int index) {
@@ -350,6 +390,9 @@ public class FileDiff extends WorkbenchAdapter {
 		case DELETE:
 			return new DecorationOverlayDescriptor(base,
 					UIIcons.OVR_STAGED_REMOVE, IDecoration.BOTTOM_RIGHT);
+		case RENAME:
+			return new DecorationOverlayDescriptor(base,
+					UIIcons.OVR_STAGED_RENAME, IDecoration.BOTTOM_RIGHT);
 		default:
 			return base;
 		}

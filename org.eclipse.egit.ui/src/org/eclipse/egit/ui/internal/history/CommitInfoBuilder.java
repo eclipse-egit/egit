@@ -412,7 +412,7 @@ public class CommitInfoBuilder {
 				if (monitor.isCanceled())
 					throw new OperationCanceledException();
 				if (currentDiff.getBlobs().length == 2) {
-					String path = currentDiff.getPath();
+					String path = currentDiff.getNewPath();
 					monitor.setTaskName(NLS.bind(
 							UIText.CommitMessageViewer_BuildDiffTaskName, path));
 					currentEncoding[0] = CompareCoreUtils.getResourceEncoding(db,

@@ -21,6 +21,7 @@ import org.eclipse.egit.core.op.ResetOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.actions.ResetActionHandler;
 import org.eclipse.egit.ui.internal.repository.SelectResetTypePage;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -52,10 +53,15 @@ public class ResetCommand extends
 			throw new ExecutionException(e1.getMessage(), e1);
 		}
 		final String targetBranch;
-		if (node.getObject() instanceof Ref)
-			targetBranch = ((Ref) node.getObject()).getName();
-		else
-			targetBranch = currentBranch;
+		if (!(node.getObject() instanceof Ref))
+			// Use same dialog as for project when a repository is selected
+			// allowing reset to any commit
+			return new ResetActionHandler().execute(event);
+
+		// If a ref is selected in the repository view, only reset to
+		// that ref will be possible.
+		targetBranch = ((Ref) node.getObject()).getName();
+
 		final String repoName = Activator.getDefault().getRepositoryUtil()
 				.getRepositoryName(node.getRepository());
 
