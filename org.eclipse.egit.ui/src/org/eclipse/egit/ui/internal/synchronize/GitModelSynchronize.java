@@ -55,7 +55,7 @@ public class GitModelSynchronize {
 	/**
 	 * Launches Git Model synchronize operation for synchronizing a set of
 	 * resources in the workspace with a remote reference.
-	 *
+	 * 
 	 * @param file
 	 *            the file to synchronize (will also be used to lookup resouce
 	 *            mappings)

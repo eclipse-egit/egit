@@ -21,7 +21,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
@@ -58,8 +57,8 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 			if (gsd.getPathFilter() == null)
 				roots.addAll(gsd.getProjects());
 			else
-				for (IContainer container : gsd.getIncludedPaths())
-					roots.add(container.getProject());
+				for (IResource resource : gsd.getIncludedPaths())
+					roots.add(resource.getProject());
 
 		return roots.toArray(new IResource[roots.size()]);
 	}
