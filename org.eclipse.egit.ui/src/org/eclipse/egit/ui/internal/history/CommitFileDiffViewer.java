@@ -21,6 +21,7 @@ import java.util.Set;
 
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -37,7 +38,6 @@ import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.blame.BlameOperation;
-import org.eclipse.egit.ui.internal.synchronize.GitModelSynchronize;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
@@ -53,6 +53,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -504,26 +505,33 @@ public class CommitFileDiffViewer extends TableViewer {
 			rightObjectId = d.getBlobs()[1];
 		}
 
-
-		// determine (from a local available file) if a model compare is possible
-		IFile file = ResourceUtil.getFileForLocation(getRepository(), p);
-		if (file != null && leftCommit != null && rightCommit != null) {
-			if (!CompareUtils.canDirectlyOpenInCompare(file)) {
-				try {
-					GitModelSynchronize.synchronizeModelBetweenRefs(file,
-							getRepository(), leftCommit.getName(),
-							rightCommit.getName());
-				} catch (Exception e) {
-					Activator.logError(UIText.GitHistoryPage_openFailed, e);
-					Activator.showError(UIText.GitHistoryPage_openFailed, null);
+		IWorkbenchPage page = site.getWorkbenchWindow().getActivePage();
+		if (leftCommit != null && rightCommit != null) {
+			IFile file = ResourceUtil.getFileForLocation(getRepository(), p);
+			try {
+				if (file != null) {
+					IResource[] resources = new IResource[] { file, };
+					CompareUtils.compare(resources, getRepository(),
+							leftCommit.getName(), rightCommit.getName(), false,
+							page);
+				} else {
+					IPath location = new Path(getRepository().getWorkTree()
+							.getAbsolutePath()).append(p);
+					CompareUtils.compare(location, getRepository(),
+							leftCommit.getName(), rightCommit.getName(), false,
+							page);
 				}
-				return;
+			} catch (Exception e) {
+				Activator.logError(UIText.GitHistoryPage_openFailed, e);
+				Activator.showError(UIText.GitHistoryPage_openFailed, null);
 			}
+			return;
 		}
 
+		// still happens on initial commits
 		final ITypedElement base = createTypedElement(p, leftCommit, baseObjectId);
 		final ITypedElement next = createTypedElement(p, rightCommit, rightObjectId);
-		CompareUtils.openInCompare(site.getWorkbenchWindow().getActivePage(),
+		CompareUtils.openInCompare(page,
 				new GitCompareFileRevisionEditorInput(next, base, null));
 	}
 
@@ -549,19 +557,16 @@ public class CommitFileDiffViewer extends TableViewer {
 		IFile file = ResourceUtil.getFileForLocation(getRepository(), p);
 		try {
 			if (file != null) {
-				if (!CompareUtils.canDirectlyOpenInCompare(file))
-					GitModelSynchronize.synchronizeModelWithWorkspace(file,
-							getRepository(), commit.getName());
-				else
-					CompareUtils.compareWorkspaceWithRef(getRepository(), file,
-							commit.getName(), null);
+				final IResource[] resources = new IResource[] { file, };
+				CompareUtils.compare(resources, getRepository(),
+						Constants.HEAD, commit.getName(), true, activePage);
 			} else {
 				IPath path = new Path(getRepository().getWorkTree()
 						.getAbsolutePath()).append(p);
 				File ioFile = path.toFile();
 				if (ioFile.exists())
-					CompareUtils.compareLocalWithRef(getRepository(), ioFile,
-							commit.getName(), activePage);
+					CompareUtils.compare(path, getRepository(), Constants.HEAD,
+							commit.getName(), true, activePage);
 			}
 		} catch (IOException e) {
 			Activator.logError(UIText.GitHistoryPage_openFailed, e);
