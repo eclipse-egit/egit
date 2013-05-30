@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2011, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
- * Copyright (C) 2012, Laurent Goubet <laurent.goubet@obeo.fr>
+ * Copyright (C) 2012, 2013 Laurent Goubet <laurent.goubet@obeo.fr>
  * Copyright (C) 2012, Gunnar Wagenknecht <gunnar@wagenknecht.org>
  *
  * All rights reserved. This program and the accompanying materials
@@ -191,15 +191,16 @@ public class ResourceUtil {
 
 	/**
 	 * This will query all model providers for those that are enabled on the
-	 * given file and list all mappings available for that file.
+	 * given resource and list all mappings available for that resource.
 	 *
-	 * @param file
-	 *            The file for which we need the associated resource mappings.
+	 * @param resource
+	 *            The resource for which we need the associated resource
+	 *            mappings.
 	 * @param context
 	 *            Context from which remote content could be retrieved.
 	 * @return All mappings available for that file.
 	 */
-	public static ResourceMapping[] getResourceMappings(IFile file,
+	public static ResourceMapping[] getResourceMappings(IResource resource,
 			ResourceMappingContext context) {
 		final IModelProviderDescriptor[] modelDescriptors = ModelProvider
 				.getModelProviderDescriptors();
@@ -208,12 +209,12 @@ public class ResourceUtil {
 		for (IModelProviderDescriptor candidate : modelDescriptors) {
 			try {
 				final IResource[] resources = candidate
-						.getMatchingResources(new IResource[] { file, });
+						.getMatchingResources(new IResource[] { resource, });
 				if (resources.length > 0) {
 					// get mappings from model provider if there are matching resources
 					final ModelProvider model = candidate.getModelProvider();
 					final ResourceMapping[] modelMappings = model.getMappings(
-							file, context, null);
+							resource, context, null);
 					for (ResourceMapping mapping : modelMappings)
 						mappings.add(mapping);
 				}

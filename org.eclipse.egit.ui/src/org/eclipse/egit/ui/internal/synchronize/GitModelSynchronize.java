@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2010, 2012 Dariusz Luksza <dariusz@luksza.org>.
- * Copyright (C) 2012, Laurent Goubet <laurent.goubet@obeo.fr>
+ * Copyright (C) 2012, 2013 Laurent Goubet <laurent.goubet@obeo.fr>
  * Copyright (C) 2012, Gunnar Wagenknecht <gunnar@wagenknecht.org>
  *
  * All rights reserved. This program and the accompanying materials
@@ -12,30 +12,37 @@ package org.eclipse.egit.ui.internal.synchronize;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.RemoteResourceMappingContext;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.resources.mapping.ResourceMappingContext;
+import org.eclipse.core.resources.mapping.ResourceTraversal;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.synchronize.GitResourceVariantTreeSubscriber;
 import org.eclipse.egit.core.synchronize.GitSubscriberMergeContext;
 import org.eclipse.egit.core.synchronize.GitSubscriberResourceMappingContext;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.jgit.lib.Constants;
+import org.eclipse.egit.ui.internal.dialogs.CompareTreeView;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.team.core.subscribers.SubscriberScopeManager;
@@ -43,6 +50,7 @@ import org.eclipse.team.ui.TeamUI;
 import org.eclipse.team.ui.synchronize.ISynchronizeParticipant;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -53,53 +61,99 @@ public class GitModelSynchronize {
 	private static final String GIT_PROVIDER_ID = "org.eclipse.egit.core.GitProvider"; //$NON-NLS-1$
 
 	/**
-	 * Launches Git Model synchronize operation for synchronizing a set of
-	 * resources in the workspace with a remote reference.
+	 * This can be used to open the synchronize view for the given set of
+	 * resources, comparing the given revisions together.
+	 * <p>
+	 * Note that this falls back to the git tree compare view if the destination
+	 * revision is the index.
+	 * </p>
 	 *
-	 * @param file
-	 *            the file to synchronize (will also be used to lookup resouce
-	 *            mappings)
+	 * @param resources
+	 *            The set of resources to synchronize. Can be empty (in which
+	 *            case we'll synchronize the whole repository).
 	 * @param repository
-	 *            the repository
-	 * @param refName
-	 *            the reference to synchronize with
+	 *            The repository to load file revisions from.
+	 * @param srcRev
+	 *            Source revision of the synchronization (or "left" side).
+	 * @param dstRev
+	 *            Destination revision of the synchronization ("right" side).
+	 * @param includeLocal
+	 *            If <code>true</code>, this will use local data for the "left"
+	 *            side of the synchronization.
 	 * @throws IOException
 	 */
-	public static final void synchronizeModelWithWorkspace(IFile file,
-			Repository repository, String refName) throws IOException {
-		synchronizeModel(file, new GitSynchronizeData(repository,
-				Constants.HEAD, refName, true));
+	public static final void synchronize(IResource[] resources,
+			Repository repository, String srcRev, String dstRev,
+			boolean includeLocal) throws IOException {
+		final Set<IResource> includedResources = new HashSet<IResource>(
+				Arrays.asList(resources));
+		final Set<ResourceMapping> allMappings = new HashSet<ResourceMapping>();
+
+		Set<IResource> newResources = new HashSet<IResource>(
+				includedResources);
+		do {
+			final Set<IResource> copy = newResources;
+			newResources = new HashSet<IResource>();
+			for (IResource resource : copy) {
+				ResourceMapping[] mappings = ResourceUtil.getResourceMappings(
+						resource, ResourceMappingContext.LOCAL_CONTEXT);
+				allMappings.addAll(Arrays.asList(mappings));
+				newResources.addAll(collectResources(mappings));
+			}
+		} while (includedResources.addAll(newResources));
+
+		if (dstRev == GitFileRevision.INDEX) {
+			final IResource[] resourcesArray = includedResources
+					.toArray(new IResource[includedResources.size()]);
+			openGitTreeCompare(resourcesArray, srcRev,
+					CompareTreeView.INDEX_VERSION, includeLocal);
+		} else if (srcRev == GitFileRevision.INDEX) {
+			// Even git tree compare cannot handle index as source...
+			// Synchronize using the local data for now.
+			final ResourceMapping[] mappings = allMappings
+					.toArray(new ResourceMapping[allMappings.size()]);
+			final GitSynchronizeData data = new GitSynchronizeData(repository,
+					srcRev, dstRev, true);
+			launch(new GitSynchronizeDataSet(data), mappings);
+		} else {
+			final ResourceMapping[] mappings = allMappings
+					.toArray(new ResourceMapping[allMappings.size()]);
+			final GitSynchronizeData data = new GitSynchronizeData(repository,
+					srcRev, dstRev, includeLocal);
+			launch(new GitSynchronizeDataSet(data), mappings);
+		}
 	}
 
-	/**
-	 * Launches Git Model synchronize operation for synchronizing a set of
-	 * resources in the workspace with a remote reference.
-	 *
-	 * @param file
-	 *            the file to synchronize (will also be used to lookup resouce
-	 *            mappings)
-	 * @param repository
-	 *            the repository
-	 * @param sourceRef
-	 *            the source reference
-	 * @param destinationRef
-	 *            the destination reference
-	 * @throws IOException
-	 */
-	public static final void synchronizeModelBetweenRefs(IFile file,
-			Repository repository, String sourceRef, String destinationRef) throws IOException {
-		synchronizeModel(file, new GitSynchronizeData(repository,
-				sourceRef, destinationRef, false));
+	private static Set<IResource> collectResources(ResourceMapping[] mappings) {
+		final Set<IResource> resources = new HashSet<IResource>();
+		ResourceMappingContext context = ResourceMappingContext.LOCAL_CONTEXT;
+		for (ResourceMapping mapping : mappings) {
+			try {
+				ResourceTraversal[] traversals = mapping.getTraversals(context,
+						new NullProgressMonitor());
+				for (ResourceTraversal traversal : traversals)
+					resources.addAll(Arrays.asList(traversal.getResources()));
+			} catch (CoreException e) {
+				Activator.logError(e.getMessage(), e);
+			}
+		}
+		return resources;
 	}
 
-	private static void synchronizeModel(IFile file, final GitSynchronizeData data) {
-		final GitSynchronizeDataSet dataSet = new GitSynchronizeDataSet(data);
-
-		// use all available local mappings for proper model support
-		final ResourceMapping[] mappings = ResourceUtil.getResourceMappings(
-				file, ResourceMappingContext.LOCAL_CONTEXT);
-
-		GitModelSynchronize.launch(dataSet, mappings);
+	private static void openGitTreeCompare(IResource[] resources,
+			String srcRev, String dstRev, boolean includeLocal) {
+		CompareTreeView view;
+		try {
+			view = (CompareTreeView) PlatformUI.getWorkbench()
+					.getActiveWorkbenchWindow().getActivePage()
+					.showView(CompareTreeView.ID);
+			if (includeLocal)
+				view.setInput(resources, dstRev);
+			else
+				view.setInput(resources, srcRev, dstRev);
+		} catch (PartInitException e) {
+			Activator.handleError(e.getMessage(), e, true);
+		}
 	}
 
 	/**
@@ -135,7 +189,6 @@ public class GitModelSynchronize {
 	 */
 	public static final void launch(final GitSynchronizeDataSet gsdSet,
 			ResourceMapping[] mappings) {
-
 		IWorkbenchWindow window = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
 
