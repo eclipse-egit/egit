@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2013, Laurent Goubet <laurent.goubet@obeo.fr>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,7 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -28,7 +28,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
@@ -47,7 +46,6 @@ import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.team.ui.history.IHistoryPage;
 import org.eclipse.team.ui.history.IHistoryView;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -68,13 +66,6 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 			throw new ExecutionException(
 					UIText.AbstractHistoryCommanndHandler_NoInputMessage);
 		return (((IHistoryView) part).getHistoryPage().getInput());
-	}
-
-	protected void openInCompare(ExecutionEvent event, CompareEditorInput input)
-			throws ExecutionException {
-		IWorkbenchPage workBenchPage = HandlerUtil
-				.getActiveWorkbenchWindowChecked(event).getActivePage();
-		CompareUtils.openInCompare(workBenchPage, input);
 	}
 
 	protected Repository getRepository(ExecutionEvent event)
