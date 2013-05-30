@@ -2,6 +2,7 @@
  * Copyright (C) 2011, Bernard Leach <leachbj@bouncycastle.org>
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2013, laurent Goubet <laurent.goubet@obeo.fr>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,17 +14,16 @@ package org.eclipse.egit.ui.internal.actions;
 import java.io.IOException;
 import java.util.Collections;
 
-import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CompareUtils;
-import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Constants;
@@ -45,27 +45,26 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 		// assert all resources map to the same repository
 		if (repository == null)
 			return null;
-		final IPath[] locations = getSelectedLocations(event);
-		final IPath baseLocation = locations[0];
-		final String gitPath = RepositoryMapping.getMapping(baseLocation)
-				.getRepoRelativePath(baseLocation);
-		ITypedElement base;
+
+		IWorkbenchPage workBenchPage = HandlerUtil
+				.getActiveWorkbenchWindowChecked(event).getActivePage();
+		IResource[] resources = getSelectedResources();
 		try {
-			base = CompareUtils.getIndexTypedElement(repository, gitPath);
+			if (resources.length > 0)
+				CompareUtils.compare(resources, repository,
+						GitFileRevision.INDEX, Constants.HEAD, false,
+						workBenchPage);
+			else {
+				IPath[] locations = getSelectedLocations(event);
+				if (locations.length > 0)
+					CompareUtils.compare(locations[0], repository,
+							GitFileRevision.INDEX, Constants.HEAD, false,
+							workBenchPage);
+			}
 		} catch (IOException e) {
-			Activator.handleError(e.getMessage(), e, true);
-			return null;
+			Activator.handleError(
+					UIText.CompareWithRefAction_errorOnSynchronize, e, true);
 		}
-
-		ITypedElement next = CompareUtils.getHeadTypedElement(repository, gitPath);
-		if (next == null)
-			return null;
-
-		final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
-				base, next, null);
-
-		IWorkbenchPage workBenchPage = HandlerUtil.getActiveWorkbenchWindowChecked(event).getActivePage();
-		CompareUtils.openInCompare(workBenchPage, in);
 
 		return null;
 	}
