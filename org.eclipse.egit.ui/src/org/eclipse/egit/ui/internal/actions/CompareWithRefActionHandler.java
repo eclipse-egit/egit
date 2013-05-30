@@ -18,18 +18,16 @@ import java.io.IOException;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.CompareTargetSelectionDialog;
-import org.eclipse.egit.ui.internal.dialogs.CompareTreeView;
-import org.eclipse.egit.ui.internal.synchronize.GitModelSynchronize;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * The "compare with ref" action. This action opens a diff editor comparing the
@@ -46,51 +44,22 @@ public class CompareWithRefActionHandler extends RepositoryActionHandler {
 		CompareTargetSelectionDialog dlg = new CompareTargetSelectionDialog(
 				getShell(event), repo, resources.length == 1 ? resources[0]
 						.getFullPath().lastSegment() : null);
-		if (dlg.open() == Window.OK) {
+		if (dlg.open() != Window.OK)
+			return null;
 
-			if (resources.length == 1 && resources[0] instanceof IFile) {
-				final IFile baseFile = (IFile) resources[0];
+		final String refName = dlg.getRefName();
 
-				if (CompareUtils.canDirectlyOpenInCompare(baseFile)) {
-					showSingleFileComparison(baseFile, dlg.getRefName());
-				} else {
-					synchronizeModel(baseFile, repo, dlg.getRefName());
-				}
-			} else {
-				CompareTreeView view;
-				try {
-					view = (CompareTreeView) PlatformUI.getWorkbench()
-							.getActiveWorkbenchWindow().getActivePage()
-							.showView(CompareTreeView.ID);
-					view.setInput(resources, dlg.getRefName());
-				} catch (PartInitException e) {
-					Activator.handleError(e.getMessage(), e, true);
-				}
-			}
+		IWorkbenchPage workBenchPage = HandlerUtil
+				.getActiveWorkbenchWindowChecked(event).getActivePage();
+		try {
+			CompareUtils
+					.compare(resources, repo, Constants.HEAD, refName, true, workBenchPage);
+		} catch (IOException e) {
+			Activator.handleError(
+					UIText.CompareWithRefAction_errorOnSynchronize, e, true);
 		}
+
 		return null;
-	}
-
-	private void showSingleFileComparison(IFile file, String refName) {
-		try {
-			CompareUtils.compareWorkspaceWithRef(getRepository(), file,
-					refName, null);
-		} catch (IOException e) {
-			Activator.handleError(
-					UIText.CompareWithRefAction_errorOnSynchronize, e, true);
-		}
-	}
-
-	private void synchronizeModel(final IFile file, Repository repo,
-			String refName) {
-		try {
-			GitModelSynchronize.synchronizeModelWithWorkspace(file, repo,
-					refName);
-		} catch (IOException e) {
-			Activator.handleError(
-					UIText.CompareWithRefAction_errorOnSynchronize, e, true);
-			return;
-		}
 	}
 
 	@Override
