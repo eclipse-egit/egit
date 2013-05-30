@@ -20,7 +20,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
@@ -69,9 +68,9 @@ public class GitSynchronizeWizard extends Wizard {
 				GitSynchronizeData data = new GitSynchronizeData(
 						repo, HEAD, branchesEntry.getValue(),
 						shouldIncludeLocal);
-				Set<IContainer> containers = getSelectedContainers(repo);
-				if (containers != null && containers.size() > 0)
-					data.setIncludedPaths(containers);
+				Set<IResource> resources = getSelectedResources(repo);
+				if (resources != null && resources.size() > 0)
+					data.setIncludedResources(resources);
 				gsdSet.add(data);
 			} catch (IOException e) {
 				Activator.logError(e.getMessage(), e);
@@ -86,12 +85,12 @@ public class GitSynchronizeWizard extends Wizard {
 		return true;
 	}
 
-	private Set<IContainer> getSelectedContainers(Repository repo) {
+	private Set<IResource> getSelectedResources(Repository repo) {
 		ISelectionService selectionService = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getSelectionService();
 		ISelection selection = selectionService.getSelection();
 		if (selection instanceof IStructuredSelection) {
-			Set<IContainer> result = new HashSet<IContainer>();
+			Set<IResource> result = new HashSet<IResource>();
 			IStructuredSelection sel = (IStructuredSelection) selection;
 			if (sel.size() == 0)
 				return null;
@@ -111,7 +110,7 @@ public class GitSynchronizeWizard extends Wizard {
 					Repository selRepo = RepositoryMapping.getMapping(res)
 							.getRepository();
 					if (workTree.equals(selRepo.getWorkTree()))
-						result.add((IContainer) res);
+						result.add(res);
 				}
 			}
 

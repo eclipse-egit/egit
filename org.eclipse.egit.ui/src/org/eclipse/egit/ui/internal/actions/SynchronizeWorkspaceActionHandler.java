@@ -50,7 +50,7 @@ public class SynchronizeWorkspaceActionHandler extends RepositoryActionHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IResource[] resources = getSelectedResources(event);
-		Map<Repository, Set<IContainer>> containerMap = mapContainerResources(resources);
+		Map<Repository, Set<IResource>> containerMap = mapContainerResources(resources);
 
 		if (containerMap.isEmpty())
 			return null;
@@ -58,14 +58,14 @@ public class SynchronizeWorkspaceActionHandler extends RepositoryActionHandler {
 		boolean launchFetch = Activator.getDefault().getPreferenceStore()
 				.getBoolean(UIPreferences.SYNC_VIEW_FETCH_BEFORE_LAUNCH);
 		GitSynchronizeDataSet gsdSet = new GitSynchronizeDataSet();
-		for (Entry<Repository, Set<IContainer>> entry : containerMap.entrySet())
+		for (Entry<Repository, Set<IResource>> entry : containerMap.entrySet())
 			try {
 				Repository repo = entry.getKey();
 				String dstRef = getDstRef(repo, launchFetch);
 				GitSynchronizeData data = new GitSynchronizeData(repo, HEAD, dstRef, true);
-				Set<IContainer> containers = entry.getValue();
+				Set<IResource> containers = entry.getValue();
 				if (!containers.isEmpty())
-					data.setIncludedPaths(containers);
+					data.setIncludedResources(containers);
 
 				gsdSet.add(data);
 			} catch (IOException e) {
@@ -77,24 +77,24 @@ public class SynchronizeWorkspaceActionHandler extends RepositoryActionHandler {
 		return null;
 	}
 
-	private Map<Repository, Set<IContainer>> mapContainerResources(
+	private Map<Repository, Set<IResource>> mapContainerResources(
 			IResource[] resources) {
-		Map<Repository, Set<IContainer>> result = new HashMap<Repository, Set<IContainer>>();
+		Map<Repository, Set<IResource>> result = new HashMap<Repository, Set<IResource>>();
 
 		for (IResource resource : resources) {
 			RepositoryMapping rm = RepositoryMapping.getMapping(resource);
 			if (rm == null)
 				continue; // Linked resources may not be in a repo
 			if (resource instanceof IProject)
-				result.put(rm.getRepository(), new HashSet<IContainer>());
+				result.put(rm.getRepository(), new HashSet<IResource>());
 			else if (resource instanceof IContainer) {
-				Set<IContainer> containers = result.get(rm.getRepository());
+				Set<IResource> containers = result.get(rm.getRepository());
 				if (containers == null) {
-					containers = new HashSet<IContainer>();
+					containers = new HashSet<IResource>();
 					result.put(rm.getRepository(), containers);
-					containers.add((IContainer) resource);
+					containers.add(resource);
 				} else if (containers.size() > 0)
-					containers.add((IContainer) resource);
+					containers.add(resource);
 			}
 		}
 
