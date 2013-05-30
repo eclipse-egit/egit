@@ -544,13 +544,13 @@ public class GitResourceVariantTreeSubscriber extends
 		final GitSynchronizeData d = gsds.getData(proj);
 		if (d == null)
 			return false;
-		final Set<IContainer> includedPaths = d.getIncludedPaths();
-		if (includedPaths == null)
+		final Set<? extends IResource> includedResources = d.getIncludedResources();
+		if (includedResources == null)
 			return true;
 
 		IPath path = res.getLocation();
-		for (IContainer container : includedPaths)
-			if (container.getLocation().isPrefixOf(path))
+		for (IResource resource : includedResources)
+			if (resource.getLocation().isPrefixOf(path))
 				return true;
 
 		return false;

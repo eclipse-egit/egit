@@ -63,8 +63,8 @@ public class GitSynchronizeDataSet implements Iterable<GitSynchronizeData> {
 	 */
 	public void add(GitSynchronizeData data) {
 		gsdSet.add(data);
-		if (data.getIncludedPaths() != null
-				&& data.getIncludedPaths().size() > 0)
+		if (data.getIncludedResources() != null
+				&& data.getIncludedResources().size() > 0)
 			containsFolderLevelSynchronizationRequest = true;
 
 		for (IProject proj : data.getProjects()) {

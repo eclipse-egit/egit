@@ -301,15 +301,16 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 			RepositoryMapping mapping = RepositoryMapping.findRepositoryMapping(repo);
 			if (mapping != null) {
 				IMemento child = memento.createChild(DATA_NODE_KEY);
-				child.putString(CONTAINER_PATH_KEY, getPathForContainer(mapping.getContainer()));
+				child.putString(CONTAINER_PATH_KEY,
+						getPathForResource(mapping.getContainer()));
 				child.putString(SRC_REV_KEY, gsd.getSrcRev());
 				child.putString(DST_REV_KEY, gsd.getDstRev());
 				child.putBoolean(INCLUDE_LOCAL_KEY, gsd.shouldIncludeLocal());
-				Set<IContainer> includedPaths = gsd.getIncludedPaths();
+				Set<? extends IResource> includedPaths = gsd.getIncludedResources();
 				if (includedPaths != null && !includedPaths.isEmpty()) {
 					IMemento paths = child.createChild(INCLUDED_PATHS_NODE_KEY);
-					for (IContainer container : includedPaths) {
-						String path = getPathForContainer(container);
+					for (IResource resource : includedPaths) {
+						String path = getPathForResource(resource);
 						paths.createChild(INCLUDED_PATH_KEY).putString(
 								INCLUDED_PATH_KEY, path);
 					}
@@ -367,12 +368,12 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 			String dstRev = child.getString(DST_REV_KEY);
 			boolean includeLocal = getBoolean(
 					child.getBoolean(INCLUDE_LOCAL_KEY), true);
-			Set<IContainer> includedPaths = getIncludedPaths(child);
+			Set<IResource> includedResources = getIncludedResources(child);
 			try {
 				GitSynchronizeData data = new GitSynchronizeData(repo, srcRev,
 						dstRev, includeLocal);
-				if (includedPaths != null)
-					data.setIncludedPaths(includedPaths);
+				if (includedResources != null)
+					data.setIncludedResources(includedResources);
 				gsds.add(data);
 			} catch (IOException e) {
 				Activator.logError(e.getMessage(), e);
@@ -398,13 +399,13 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 		return value != null ? value.booleanValue() : defaultValue;
 	}
 
-	private String getPathForContainer(IContainer container) {
-		return container.getLocation().toPortableString();
+	private String getPathForResource(IResource resource) {
+		return resource.getLocation().toPortableString();
 	}
 
-	private Set<IContainer> getIncludedPaths(IMemento memento) {
+	private Set<IResource> getIncludedResources(IMemento memento) {
 		IMemento child = memento.getChild(INCLUDED_PATHS_NODE_KEY);
-		Set<IContainer> result = new HashSet<IContainer>();
+		Set<IResource> result = new HashSet<IResource>();
 		if (child != null) {
 			IMemento[] pathNode = child.getChildren(INCLUDED_PATH_KEY);
 			if (pathNode != null) {
