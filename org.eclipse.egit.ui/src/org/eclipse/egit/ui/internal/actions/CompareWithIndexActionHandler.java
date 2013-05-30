@@ -2,6 +2,7 @@
  * Copyright (C) 2009, Yann Simon <yann.simon.fr@gmail.com>
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2013, Laurent Goubet <laurent.goubet@obeo.fr>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,23 +14,17 @@ package org.eclipse.egit.ui.internal.actions;
 
 import java.io.IOException;
 
-import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.egit.core.internal.util.ResourceUtil;
-import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CompareUtils;
-import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.dialogs.CompareTreeView;
-import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
-import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -39,39 +34,30 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class CompareWithIndexActionHandler extends RepositoryActionHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		final Repository repository = getRepository(true, event);
 		// assert all resources map to the same repository
-		if (getRepository(true, event) == null)
+		if (repository == null)
 			return null;
-		final IPath[] locations = getSelectedLocations(event);
 
-		if (locations.length == 1 && locations[0].toFile().isFile()) {
-			final IPath baseLocation = locations[0];
-			final ITypedElement base = getBaseTypeElement(baseLocation);
-			final ITypedElement next;
-			try {
-				next = getIndexTypedElement(baseLocation);
-			} catch (IOException e) {
-				Activator.handleError(
-						UIText.CompareWithIndexAction_errorOnAddToIndex, e,
-						true);
-				return null;
+		IWorkbenchPage workBenchPage = HandlerUtil
+				.getActiveWorkbenchWindowChecked(event).getActivePage();
+		final IResource[] resources = getSelectedResources(event);
+		try {
+			if (resources.length > 0)
+				CompareUtils.compare(resources, repository, Constants.HEAD,
+						GitFileRevision.INDEX, true, workBenchPage);
+			else {
+				IPath[] locations = getSelectedLocations(event);
+				if (locations.length > 0)
+					CompareUtils.compare(locations[0], repository,
+							Constants.HEAD, GitFileRevision.INDEX, false,
+							workBenchPage);
 			}
-
-			final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
-					base, next, null);
-			IWorkbenchPage workBenchPage = HandlerUtil.getActiveWorkbenchWindowChecked(event).getActivePage();
-			CompareUtils.openInCompare(workBenchPage, in);
-		} else {
-			CompareTreeView view;
-			try {
-				view = (CompareTreeView) PlatformUI.getWorkbench()
-						.getActiveWorkbenchWindow().getActivePage().showView(
-								CompareTreeView.ID);
-				view.setInput(getSelectedResources(event), CompareTreeView.INDEX_VERSION);
-			} catch (PartInitException e) {
-				Activator.handleError(e.getMessage(), e, true);
-			}
+		} catch (IOException e) {
+			Activator.handleError(
+					UIText.CompareWithRefAction_errorOnSynchronize, e, true);
 		}
+
 		return null;
 	}
 
@@ -79,26 +65,5 @@ public class CompareWithIndexActionHandler extends RepositoryActionHandler {
 	@Override
 	public boolean isEnabled() {
 		return selectionMapsToSingleRepository();
-	}
-
-	private ITypedElement getBaseTypeElement(final IPath baseLocation) {
-		IFile file = ResourceUtil.getFileForLocation(baseLocation);
-		if (file != null)
-			return SaveableCompareEditorInput.createFileElement(file);
-		else
-			return new LocalNonWorkspaceTypedElement(baseLocation);
-	}
-
-	private ITypedElement getIndexTypedElement(final IPath location) throws IOException {
-		IFile file = ResourceUtil.getFileForLocation(location);
-		if (file != null)
-			return CompareUtils.getIndexTypedElement(file);
-		else {
-			RepositoryMapping mapping = RepositoryMapping.getMapping(location);
-			if (mapping != null)
-				return CompareUtils.getIndexTypedElement(mapping.getRepository(), mapping.getRepoRelativePath(location));
-			else
-				return null;
-		}
 	}
 }
