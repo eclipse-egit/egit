@@ -6,6 +6,7 @@
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, 2013 François Rey <eclipse.org_@_francois_._rey_._name>
+ * Copyright (C) 2013 Laurent Goubet <laurent.goubet@obeo.fr>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -185,21 +186,6 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 			ret.add(repositoryMapping.getRepository());
 		}
 		return ret.toArray(new Repository[ret.size()]);
-	}
-
-	/**
-	 * List the projects with selected resources, if all projects are connected
-	 * to a Git repository.
-	 *
-	 * @param event
-	 *
-	 * @return the tracked projects affected by the current resource selection
-	 * @throws ExecutionException
-	 */
-	protected IProject[] getProjectsInRepositoryOfSelectedResources(
-			ExecutionEvent event) throws ExecutionException {
-		IStructuredSelection selection = getSelection(event);
-		return getProjectsInRepositoryOfSelectedResources(selection);
 	}
 
 	/**
