@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2010, 2013 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -113,11 +113,6 @@ public class GitModelRepository extends GitModelObjectContainer implements HasPr
 	@Override
 	public int getKind() {
 		return Differencer.CHANGE;
-	}
-
-	@Override
-	public boolean isContainer() {
-		return true;
 	}
 
 	@Override
