@@ -242,6 +242,13 @@ public class ProjectReferenceImporter {
 			URIish existingUrl = new URIish(remoteUrl);
 			if (existingUrl.equals(url))
 				return true;
+
+			// try URLs without user name, since often project sets contain
+			// anonymous URLs, and remote URL might be anonymous as well
+			URIish anonExistingUrl = existingUrl.setUser(null);
+			URIish anonUrl = url.setUser(null);
+			if (anonExistingUrl.equals(anonUrl))
+				return true;
 		}
 		return false;
 	}
