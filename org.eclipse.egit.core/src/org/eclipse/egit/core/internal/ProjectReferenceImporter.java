@@ -264,8 +264,10 @@ public class ProjectReferenceImporter {
 								.append(IProjectDescription.DESCRIPTION_FILE_NAME));
 				final IProject project = root.getProject(projectDescription
 						.getName());
-				project.create(projectDescription, monitor);
-				importedProjects.add(project);
+				if (!project.exists()) {
+					project.create(projectDescription, monitor);
+					importedProjects.add(project);
+				}
 
 				project.open(monitor);
 				final ConnectProviderOperation connectProviderOperation = new ConnectProviderOperation(
