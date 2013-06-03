@@ -1,0 +1,9 @@
+Code-Review+2: Dani Megert <Daniel_Megert@ch.ibm.com>
+IP-Clean+1: Dani Megert <Daniel_Megert@ch.ibm.com>
+Verified+1: Dani Megert <Daniel_Megert@ch.ibm.com>
+Code-Review-1: Hudson CI
+Submitted-by: Dani Megert <Daniel_Megert@ch.ibm.com>
+Submitted-at: Mon, 03 Jun 2013 12:04:41 -0400
+Reviewed-on: https://git.eclipse.org/r/13487
+Project: egit/egit
+Branch: refs/heads/stable-3.0
