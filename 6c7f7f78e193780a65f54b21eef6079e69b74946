@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPn//4RA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-06-05T15:05:04Z",
+      "side": 1,
+      "message": "yeah, this doesn\u0027t yet work since we didn\u0027t update the version on the master branch yet, but we don\u0027t need these @since tags anymore after rebasing onto origin/master since we declared everything x-internal with 3.0",
+      "parentUuid": "AABOPn//+Ns\u003d",
+      "revId": "6c7f7f78e193780a65f54b21eef6079e69b74946",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPn//+rI\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIPreferences.java",
         "patchSetId": 5
