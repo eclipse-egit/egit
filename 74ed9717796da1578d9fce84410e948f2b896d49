@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPn//4QI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-06-06T07:19:33Z",
+      "side": 1,
+      "message": "we don\u0027t need these @since tags anymore after rebasing onto origin/master since we declared everything x-internal with 3.0",
+      "revId": "74ed9717796da1578d9fce84410e948f2b896d49",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//4Qw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingFolderEntry.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-06-06T07:19:33Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks, more of these below",
+      "revId": "74ed9717796da1578d9fce84410e948f2b896d49",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//4Pk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-06-06T07:19:33Z",
+      "side": 1,
+      "message": "style nit: no braces here",
+      "revId": "74ed9717796da1578d9fce84410e948f2b896d49",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//4Qc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-06-06T07:19:33Z",
+      "side": 1,
+      "message": "style nit: no braces here",
+      "revId": "74ed9717796da1578d9fce84410e948f2b896d49",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//4P0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-06-06T07:19:33Z",
+      "side": 1,
+      "message": "style nit: no braces here",
+      "revId": "74ed9717796da1578d9fce84410e948f2b896d49",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//4Pw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-06-06T07:19:33Z",
+      "side": 1,
+      "message": "style nit: no braces here",
+      "revId": "74ed9717796da1578d9fce84410e948f2b896d49",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//4Ps\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-06-06T07:19:33Z",
+      "side": 1,
+      "message": "style nit: no braces here",
+      "revId": "74ed9717796da1578d9fce84410e948f2b896d49",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//4Po\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-06-06T07:19:33Z",
+      "side": 1,
+      "message": "style nit: no braces here",
+      "revId": "74ed9717796da1578d9fce84410e948f2b896d49",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
