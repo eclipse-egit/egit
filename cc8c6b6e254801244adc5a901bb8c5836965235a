@@ -101,6 +101,23 @@
       "revId": "cc8c6b6e254801244adc5a901bb8c5836965235a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//4Co\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1619,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-06-06T09:38:17Z",
+      "side": 1,
+      "message": "this is filtering not searching -\u003e s/Find/Filter files/",
+      "revId": "cc8c6b6e254801244adc5a901bb8c5836965235a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
