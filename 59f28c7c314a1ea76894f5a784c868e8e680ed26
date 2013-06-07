@@ -16,6 +16,24 @@
       "revId": "59f28c7c314a1ea76894f5a784c868e8e680ed26",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//3ps\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ProjectReferenceImporter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2013-06-07T20:43:26Z",
+      "side": 1,
+      "message": "Somehow caused by automatic formatter.",
+      "parentUuid": "AABOPn//3w0\u003d",
+      "revId": "59f28c7c314a1ea76894f5a784c868e8e680ed26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
