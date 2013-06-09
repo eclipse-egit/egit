@@ -11,6 +11,7 @@ package org.eclipse.egit.ui.internal.history.command;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -20,6 +21,7 @@ import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
@@ -42,7 +44,26 @@ public class CreateBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 					.getFirstElement();
 			wiz = new CreateBranchWizard(repo, commit.name());
 		} else {
-			Ref branch = branches.get(0);
+			// prefer to create new branch based on a remote tracking branch
+			Collections.sort(branches, new Comparator<Ref>() {
+
+				public int compare(Ref o1, Ref o2) {
+					String refName1 = o1.getName();
+					String refName2 = o2.getName();
+					if (refName1.startsWith(Constants.R_REMOTES)) {
+						if (refName2.startsWith(Constants.R_HEADS))
+							return -1;
+						else
+							return refName1.compareTo(refName2);
+					} else {
+						if (refName2.startsWith(Constants.R_REMOTES))
+							return 1;
+						else
+							return refName1.compareTo(refName2);
+					}
+				}
+			});
+			Ref branch = branches.get(0).getLeaf();
 			wiz = new CreateBranchWizard(repo, branch.getName());
 		}
 
