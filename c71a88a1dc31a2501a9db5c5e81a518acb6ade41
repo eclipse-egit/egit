@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPn//3ck\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-06-10T13:43:41Z",
+      "side": 1,
+      "message": "It seems reasonable to stop visiting children if the project is not shared.\n\nHowever, I don\u0027t know if this change fixes the bugs. The fact if the project is shared with git is also checked inside the method RepositoryUtil.isIgnored used below.",
+      "revId": "c71a88a1dc31a2501a9db5c5e81a518acb6ade41",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
