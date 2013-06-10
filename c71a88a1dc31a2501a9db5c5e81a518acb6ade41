@@ -16,6 +16,24 @@
       "revId": "c71a88a1dc31a2501a9db5c5e81a518acb6ade41",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//3cI\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-06-10T14:23:11Z",
+      "side": 1,
+      "message": "you are right, I changed the commit message accordingly and updated the bugs which were referenced from PS 1",
+      "parentUuid": "AABOPn//3ck\u003d",
+      "revId": "c71a88a1dc31a2501a9db5c5e81a518acb6ade41",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
