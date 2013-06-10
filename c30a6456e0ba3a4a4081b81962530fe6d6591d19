@@ -16,6 +16,24 @@
       "revId": "c30a6456e0ba3a4a4081b81962530fe6d6591d19",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPn//3cQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/CreateBranchOnCommitHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-06-10T14:22:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPn//3dM\u003d",
+      "revId": "c30a6456e0ba3a4a4081b81962530fe6d6591d19",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
