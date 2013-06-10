@@ -168,7 +168,7 @@
 			</li>
 			<li>
 				<a href="Tasks.html#Branching">Branch</a>, 
-				<a href="Reference.html#Create_Branch...">Create Branch</a> - Checkout a branch or create a branch.
+				<a href="#Create_Branch...">Create Branch</a> - Checkout a branch or create a branch.
 			</li>
 			<li>
 				<b>Change Credentials</b> - Change logon credentials of a Fetch or Push Specification, credentials are stored per URL in the Eclipse Secure Store.
@@ -176,7 +176,7 @@
 			<li>
 				<b>Checkout</b> - Checkout a 
 				<a href="Tasks.html#Check-out_of_Branches_and_Tags">Branch, Tag</a>, 
-				<a href="Reference.html#Checkout">Commit</a> or Reference.
+				<a href="#Checkout">Commit</a> or Reference.
 			</li>
 			<li>
 				<a href="Tasks.html#Cherry_Picking">Cherry-pick</a> - Cherry-pick a single commit onto the tip of the currently checked out branch.
@@ -209,7 +209,7 @@
 				<b>Disconnect</b> - Disconnect the attached Git Team Provider from this project. The git repository still exists but is no longer integrated with Eclipse.
 			</li>
 			<li>
-				<a href="Reference.html#Git_Ignore">Ignore</a> - Add files to .gitignore so that git ignores them.
+				<a href="#Git_Ignore">Ignore</a> - Add files to .gitignore so that git ignores them.
 			</li>
 			<li>
 				<a href="#Method_for_importing_Projects">Import Projects</a> - Import projects into the Eclipse workbench.
@@ -261,7 +261,7 @@
 				<a href="Tasks.html#Resetting_your_current_HEAD">Reset</a> - Reset the current HEAD, Index or Working Tree.
 			</li>
 			<li>
-				<a href="Reference.html#History_View">Show in History</a> - Show the selected resource in the History View.
+				<a href="#History_View">Show in History</a> - Show the selected resource in the History View.
 			</li>
 			<li>
 				<a href="Tasks.html#Managing_Repositories">Show in Repositories View</a> - Show the selected resource in the Repositories View.
@@ -381,7 +381,7 @@
 		<p>It is possible to compare the contents of two commits filtered by the current input by selecting the two commits and right-clicking on 
 			<b>Compare with each other</b>. If the current input is not a file, there is an additional menu action 
 			<b>Compare with each other in Tree</b>. The first action opens an Eclipse compare editor, the second opens the 
-			<a href="Reference.html#Git_Tree_Compare_View">Git Tree Compare View</a>.
+			<a href="#Git_Tree_Compare_View">Git Tree Compare View</a>.
 		</p>
 		<p>Furthermore, it is possible to select any number of commits and right-click 
 			<b>Open</b> to see all versions of the file corresponding to the selected commits (one editor will be opened per version).
@@ -808,8 +808,8 @@
 		</p>
 		<h2 id="Refspecs">Refspecs</h2>
 		<p>A "refspec" is used by fetch and push operations to describe the mapping between remote 
-			<a href="Reference.html#Git_References">Ref</a> and local 
-			<a href="Reference.html#Git_References">Ref</a>. Semantically they define how local branches or tags are mapped to branches or tags in a remote repository. In native git they are combined with a colon in the format &lt;src&gt;:&lt;dst&gt;, preceded by an optional plus sign, + to denote forced update. In EGit they can be displayed and also edited in tabular form in the 
+			<a href="#Git_References">Ref</a> and local 
+			<a href="#Git_References">Ref</a>. Semantically they define how local branches or tags are mapped to branches or tags in a remote repository. In native git they are combined with a colon in the format &lt;src&gt;:&lt;dst&gt;, preceded by an optional plus sign, + to denote forced update. In EGit they can be displayed and also edited in tabular form in the 
 			<a href="Tasks.html#Push_Ref_Specifications">Push Ref Specification</a> and the 
 			<a href="Tasks.html#Fetch_Ref_Specifications">Fetch Ref Specification</a> and other dialogs.
 		</p>
@@ -819,7 +819,7 @@
 		<pre>HEAD:refs/heads/master
 </pre>
 		<p>This means that the currently checked out branch (as signified by the HEAD Reference, see 
-			<a href="Reference.html#Git_References">Git References</a>) will be pushed into the master branch of the remote repository.
+			<a href="#Git_References">Git References</a>) will be pushed into the master branch of the remote repository.
 		</p>
 		<h3 id="Fetch_Refspecs">Fetch Refspecs</h3>
 		<p>A typical example for a Fetch RefSpec could be</p>
@@ -839,13 +839,13 @@
 		</ul>
 		<p>A Remote first of all defines a 
 			<b>name</b> for the repository whose branches you track, this is important since you may want to track branches from different repositories so the name helps to understand what repository a certain operation is dealing with. In addition 
-			<a href="Reference.html#Refspecs">Refspecs</a> specified for a given Remote define a 
+			<a href="#Refspecs">Refspecs</a> specified for a given Remote define a 
 			<b>mapping of branches and tags</b> in your local repository to branches and tags in the remote repository. You may want to use different mappings for inbound or outbound transport operations hence there are 
 			<a href="Tasks.html#Cloning_Remote_Repositories">editors</a> to define Fetch and Push Configurations available in EGit.
 		</p>
 		<h2 id="Git_Ignore">Git Ignore</h2>
 		<p><code>.gitignore</code> files located in the working tree specify files that intentionally should not be tracked by git. They only concern files that are not yet tracked by git. In order to ignore uncommitted changes in already tracked files refer to the 
-			<a href="Reference.html#Menu_Actions">assume unchanged action</a>.
+			<a href="#Menu_Actions">assume unchanged action</a>.
 		</p>
 		<p>Each line in <code>.gitignore</code> files defines a pattern. Git checks ignore patterns following the hierarchy of the working tree from highest to lowest. Patterns defined in higher level <code>.gitignore</code> files are overridden by those defined in lower levels.
 			Files which shall be ignored for all working on a given project are usually included in the project's repository to easily share them in the team.</p>
@@ -869,7 +869,7 @@
 		</ul>
 		<p>The EGit 
 			<b>Ignore</b> 
-			<a href="Reference.html#Menu_Actions">menu action</a> adds the selected resource to the <code>.gitignore</code> file in the resource's parent directory. To enter other ignore patterns use a text editor.
+			<a href="#Menu_Actions">menu action</a> adds the selected resource to the <code>.gitignore</code> file in the resource's parent directory. To enter other ignore patterns use a text editor.
 		</p>
 		<p>
 			<b>Note:</b> EGit does not yet respect <code>.gitignore</code> files outside Eclipse projects, so if you have a repository containing multiple projects you should add a <code>.gitignore</code> file for each project instead of a single one in the root directory.

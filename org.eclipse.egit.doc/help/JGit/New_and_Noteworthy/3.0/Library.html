@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>JGit 3.0 New and Noteworthy - Library</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">Library</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="Commands.html" title="Commands">
+						<img alt="Previous" border="0" src="../../../images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Command-Line.html" title="Command Line">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">Commands</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Command Line</td>
+			</tr>
+		</table><hr/>
+		<h1 id="Library">Library</h1>
+		<ul>
+			<li>Add <tt>isRebasing</tt> to <tt>RepositoryState</tt> for checking whether the repository is in a rebasing state.</li>
+			<li>Don't verify host name when <tt>http.sslVerify</tt> is set to <tt>false</tt> (
+				<a href="https://git.eclipse.org/r/r/I42f509fea8e4ac89fad646aec3dfbf1753ae7e3d" target="egit_external">change I42f509f</a>).
+			</li>
+			<li>Allow to provide OutputStream for push so that server messages can be written to it while they're coming in (
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=398404" target="egit_external">bug 398404</a>).
+			</li>
+			<li><tt>IndexDiff</tt> provides stage information for conflicting entries, e.g. <tt>BOTH_MODIFIED</tt> (
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=403697" target="egit_external">bug 403697</a>).
+			</li>
+			<li>Behave more like C Git when fetching tags by not updating existing tags unless explicitly specified (
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=388095" target="egit_external">bug 388095</a>).
+			</li>
+			<li>Basic Java 7 support (
+				<a href="https://git.eclipse.org/r/#/c/9378/" target="egit_external">change I3d6580d</a>). Internal only (read: symlink support not visisble)
+			</li>
+			<li>Fix GC which could corrupt repository on Windows if run twice on the exact same repository content (
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=389305" target="egit_external">bug 389305</a>).
+			</li>
+			<li>Fix internal "Delete" errors on Windows with checkout/reset, etc (
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=403685" target="egit_external">bug 403685</a>).
+			</li>
+			<li>Fix <tt>Rebase/Cherry</tt> pick failing because/when new directory already exists (
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=402834" target="egit_external">bug 402834</a>).
+			</li>
+			<li>Fix <tt>Amend</tt> of merge commit to not reverse parent order (
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=392670" target="egit_external">bug 392670</a>).
+			</li>
+			<li>Fix <tt>TreeFilter</tt> if one folder name is a prefix of another folder (
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=362430" target="egit_external">bug 362430</a>).
+			</li>
+			<li>Fix 8000 byte file checking out as zero byte file if <tt>core.autocrlf</tt> = <tt>true</tt> (
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=405672" target="egit_external">bug 405672</a>).
+			</li>
+			<li>Fix NPE in <tt>DiffFormatter</tt> when DiffEntry.oldId is null (
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=407743" target="egit_external">bug 407743</a>).
+			</li>
+			<li>Do not cherry-pick merge commits during rebase (
+				<a href="https://git.eclipse.org/r/#/c/10548/" target="egit_external">change I61239d2</a>).
+			</li>
+		</ul><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="Commands.html" title="Commands">
+						<img alt="Previous" border="0" src="../../../images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center">
+					<a href="3.0.html" title="JGit 3.0 New and Noteworthy">
+						<img alt="JGit 3.0 New and Noteworthy" border="0" src="../../../images/home.gif"/>
+					</a>
+				</td>
+				<td style="width: 20%" align="right">
+					<a href="Command-Line.html" title="Command Line">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">Commands</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Command Line</td>
+			</tr>
+		</table>
+	</body>
+</html>

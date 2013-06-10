@@ -297,7 +297,7 @@
 		</p>
 		<h4 id="Cloning_from_specific_locations">Cloning from specific locations</h4>
 		<p>The Clone wizard of EGit can be extended by other plugins in order to search for repositories on specific backends which host git repositories. Currently such an extension is available for Github and soon will be available for Gerrit. For both you need to install the respective Mylyn connectors. The Gerrit Mylyn connector extension then will also configure the remote repository for the work with Gerrit. This can also be done or changed later from the Git Repositories View, see 
-			<a href="Tasks.html#Gerrit_Configuration">Gerrit Configuration</a>.
+			<a href="#Gerrit_Configuration">Gerrit Configuration</a>.
 		</p>
 		<p>When you have installed such an extension, the Clone wizard opens with a selection page where you can choose between different sources of the repository to clone:</p>
 		<p>
@@ -309,7 +309,7 @@
 			<a href="#Upstream_Configuration">Upstream Configuration</a>", the most convenient way for pushing relies on this upstream configuration.
 		</p>
 		<p>Typically local branches are created based on a remote tracking branch. Since the remote tracking branch is associated with a remote and the remote contains the information required to access the corresponding remote repository, it is possible to automatically create this upstream configuration while creating the local branch (see 
-			<a href="Tasks.html#Branching">Branching</a> for more information).
+			<a href="#Branching">Branching</a> for more information).
 		</p>
 		<p>When pushing upstream from the local branch, push requires no further parameters and hence can be performed without showing another dialog based on the stored upstream configuration.</p>
 		<p>In order to push upstream, right-click on a project and select 
@@ -338,12 +338,12 @@
 		</p>
 		<p>The "Add" will open a small wizard that helps in the creation of the RefSpecs. You can also paste a RefSpec from the clipboard into the list.</p>
 		<p>Clicking on the "Advanced" control will show/hide an "Edit (Advanced...)" button that allows for more complex RefSpec editing similar to the 
-			<a href="Tasks.html#Push_Wizard">Push Wizard</a> below.
+			<a href="#Push_Wizard">Push Wizard</a> below.
 		</p>
 		<p>The buttons in the lower button bar allow you to save your changes and do the push immediately, save the changes without fetching, dry-run (push without saving the configuration), revert your changes, and Cancel.</p>
 		<h4 id="Direct_Push">Direct Push</h4>
 		<p>Alternatively, you can use 
-			<a href="Tasks.html#Direct_Fetch_and_Push_Support">Direct Push Support</a> on a Push Specification of a Remote.
+			<a href="#Direct_Fetch_and_Push_Support">Direct Push Support</a> on a Push Specification of a Remote.
 		</p>
 		<h4 id="Push_Wizard">Push Wizard</h4>
 		<p>The most powerful (but also most complex) way is using the Push Wizard 
@@ -482,7 +482,7 @@
 			<a href="#Upstream_Configuration">Upstream Configuration</a>", the most convenient way for fetching relies on this upstream configuration.
 		</p>
 		<p>A local branch is typically created based on a remote tracking branch. Since the remote tracking branch is associated with a remote and this remote contains the information required to access the remote repository, it is possible to automatically create this upstream configuration while creating the local branch (see 
-			<a href="Tasks.html#Branching">Branching</a> for more information).
+			<a href="#Branching">Branching</a> for more information).
 		</p>
 		<p>When fetching from upstream, this persisted configuration can be used to fetch automatically without the need to provide further parameters in a dialog.</p>
 		<p>In order to fetch from upstream, click 
@@ -509,12 +509,12 @@
 		</p>
 		<p>The "Add" button will open a small wizard that helps in the creation of the RefSpecs. You can also paste a RefSpec from the clipboard into the list.</p>
 		<p>Clicking on the "Advanced" control will show/hide an "Edit (Advanced...)" button that allows for more complex RefSpec editing similar to the 
-			<a href="Tasks.html#Fetch_Wizard">Fetch Wizard</a>.
+			<a href="#Fetch_Wizard">Fetch Wizard</a>.
 		</p>
 		<p>The buttons in the lower button bar allow you to save your changes and do the fetch immediately, save the changes without fetching, dry-run (fetch without saving the configuration), revert your changes, and Cancel.</p>
 		<h4 id="Direct_Fetch">Direct Fetch</h4>
 		<p>Another way for fetching is to use 
-			<a href="Tasks.html#Direct_Fetch_and_Push_Support">Direct Fetch Support</a> on a Fetch Specification of a Remote.
+			<a href="#Direct_Fetch_and_Push_Support">Direct Fetch Support</a> on a Fetch Specification of a Remote.
 		</p>
 		<h4 id="Fetch_Wizard">Fetch Wizard</h4>
 		<p>The most powerful (but also most complex) way is using the Fetch Wizard
@@ -632,7 +632,7 @@
 				<b>Pull</b> to pull new changes from the upstream branch your local branch is tracking. This also works if resources are selected from more than one repository.
 			</li>
 			<li>Whenever you create a local branch based on a remote tracking branch EGit can configure a tracking relationship so that subsequent pulls will fetch and then merge or rebase (depending on the configuration of this tracking relationship) the changes from the tracked upstream branch; see 
-				<a href="Tasks.html#Branching">Branching</a> for details.
+				<a href="#Branching">Branching</a> for details.
 			</li>
 		</ul>
 		<p>Ad-hoc selection of the upstream branch to pull from is not yet supported by EGit.</p>
@@ -687,7 +687,7 @@
 				<br/>"refs/changes/" + (last two digits from change number) + / + (change number) + / + (revision number)
 			</li>
 			<li>In the "Actions to perform after fetch" you can decide what to do after the change has been fetched; you can either create and checkout a branch pointing to the change, create and checkout a tag pointing to the change, or simply checkout the change (thus making HEAD detached); the last option does nothing after fetch, but you will be able to find the commit pertaining to the change at FETCH_HEAD (go to the Repositories View and find FETCH_HEAD under the References node of your Repository, see 
-				<a href="Tasks.html#Inspecting_References">Inspecting References </a>).
+				<a href="#Inspecting_References">Inspecting References </a>).
 				<br/>The name for the branch or tag is suggested by the dialog but can be overwritten as needed.
 				<br/>Since deletion of tags is currently not supported in EGit, we suggest to use local branches rather than tags for the time being. Since the Repositories view allows to group branches hierarchically using "/" as hierarchy separator, the suggested names can come in very handy when dealing with large numbers of changes.
 			</li>
@@ -788,7 +788,7 @@
 		</p>
 		<p>To analyze the contents of a specific commit you should use the 
 			<a href="Reference.html#History_View">History View</a> which supports this task much better, see task 
-			<a href="Tasks.html#Inspecting_Commits">Inspecting Commits</a>.
+			<a href="#Inspecting_Commits">Inspecting Commits</a>.
 		</p>
 		<h4 id="Compare_editor_and_Git_Tree_Compare_View">Compare editor and Git Tree Compare View</h4>
 		<p>If you use any of the submenu actions of 
@@ -940,7 +940,7 @@
 			<li>modified files (marked with "&gt;" in front of the filename)</li>
 		</ul>
 		<p>For details see 
-			<a href="Tasks.html#Label_Decorations">Label Decorations</a>.
+			<a href="#Label_Decorations">Label Decorations</a>.
 		</p>
 		<p>Here is an example in the Package Explorer for</p>
 		<ul>
@@ -1042,6 +1042,9 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<p>
 			<img border="0" src="images/Egit-0.9-commit-dialog-amend.png"/>
 		</p>
+		<ul>
+			<li>Note: UI has changed (June 2013) use toolbar in the upper right.</li>
+		</ul>
 		<p>The commit message of your previous commit (the one you want to replace) is filled into the "Commit Message" field. This gives you the chance not only to correct errors in the content of the version-controlled files but to also correct errors (e.g. typos) in the commit message describing your change.</p>
 		<p>As an alternative to amending you could just commit the corrected version as a subsequent commit. But the first commit containing the typo is of no use to anybody and in order not to clutter the history of your project with unneeded commits you should amend the commit.</p>
 		<p>Be aware that amending commits which are already published to other repositories may cause trouble. Once you have pushed a commit to a remote repository or your local repository was cloned by somebody else, you should be very careful with amending commits. In this case publishing a second commit which corrects the first one is probably a better solution. Otherwise inform all others that you amended a published commit so that they can react accordingly.</p>
@@ -1121,14 +1124,14 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<p>Thus, before starting to change the local repository, the first step is typically to create a local branch. Local branches are "based upon" either a commit or a remote tracking branch.</p>
 		<p>The second option is recommended when working with remote repositories, as it simplifies the task of synchronizing the local changes with the remote ones by adding so-called "upstream configuration" to the new local branch.</p>
 		<p>See 
-			<a href="Tasks.html#Branch_Creation_Dialog">Branch Creation dialog</a> for more details.
+			<a href="#Branch_Creation_Dialog">Branch Creation dialog</a> for more details.
 		</p>
 		<h4 id="Upstream_configuration">Upstream configuration</h4>
 		<p>Each local branch which is based on a local tracking branch can have some additional configuration indicating the remote repository, the remote branch, and the so-called pull strategy. See 
-			<a href="Tasks.html#Branch_Creation_Dialog">Branch Creation dialog</a> for more details.
+			<a href="#Branch_Creation_Dialog">Branch Creation dialog</a> for more details.
 		</p>
 		<p>Typically, this configuration is created automatically when creating the local branch based on a remote tracking branch. However, it can be displayed and edited in the 
-			<a href="Tasks.html#Repository_Configuration">repository configuration</a> or by clicking 
+			<a href="#Repository_Configuration">repository configuration</a> or by clicking 
 			<b>Show In &gt; Properties</b> on a branch in the Repositories View.
 		</p>
 		<h3 id="Checking_out_an_existing_Branch">Checking out an existing Branch</h3>
@@ -1167,7 +1170,7 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		</ul>
 		<h3 id="Creating_a_New_Local_Branch">Creating a New Local Branch</h3>
 		<p>This is always done with the 
-			<a href="Tasks.html#Branch_Creation_Dialog">Branch Creation dialog</a>. The newly created branch can optionally be checked out by selecting a check box on the dialog.
+			<a href="#Branch_Creation_Dialog">Branch Creation dialog</a>. The newly created branch can optionally be checked out by selecting a check box on the dialog.
 		</p>
 		<h4 id="From_the_team_menu">From the team menu</h4>
 		<ul>
@@ -1179,7 +1182,7 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 				<b>Create Branch...</b>.
 			</li>
 			<li>The 
-				<a href="Tasks.html#Branch_Creation_Dialog">Branch Creation dialog</a> will be opened.
+				<a href="#Branch_Creation_Dialog">Branch Creation dialog</a> will be opened.
 			</li>
 		</ul>
 		<h4 id="From_the_Repositories_View">From the Repositories View</h4>
@@ -1188,7 +1191,7 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 				<b>Create Branch...</b> on the "Branches" node or on any "Branch", "Tag" or "References" node.
 			</li>
 			<li>The 
-				<a href="Tasks.html#Branch_Creation_Dialog">Branch Creation dialog</a> will be opened.
+				<a href="#Branch_Creation_Dialog">Branch Creation dialog</a> will be opened.
 			</li>
 		</ul>
 		<h4 id="From_the_History_View_2">From the History View</h4>
@@ -1197,7 +1200,7 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 				<b>Create Branch...</b>
 			</li>
 			<li>The 
-				<a href="Tasks.html#Branch_Creation_Dialog">Branch Creation dialog</a> will be opened
+				<a href="#Branch_Creation_Dialog">Branch Creation dialog</a> will be opened
 			</li>
 		</ul>
 		<h3 id="Renaming_an_Existing_Branch">Renaming an Existing Branch</h3>
@@ -1276,7 +1279,7 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 			<li>None: When pulling, no specific upstream configuration will be done for the new branch; however, if a default remote exists (a remote with name "origin", pull will try to use the configuration of this remote; this is the default if the new branch is not based on a remote tracking branch</li>
 		</ul>
 		<p>You may view and edit the upstream configuration in the 
-			<a href="Tasks.html#Repository_Configuration">repository configuration</a> or by selecting 
+			<a href="#Repository_Configuration">repository configuration</a> or by selecting 
 			<b>Show In &gt; Properties</b> on a branch in the Repositories View.
 		</p>
 		<p>EGit also supports the git configuration parameter <code>branch.autosetuprebase</code>, set it to <code>always</code> if you want to use the rebase pull strategy by default. If you set this in the repository configuration this is used for all local branches created based on a remote tracking branch in this repository, if you set it in your user configuration it will be used for all your repositories.</p>
@@ -1301,7 +1304,7 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<p>On the dialog, select a branch or a tag you want to merge with your current branch.</p>
 		<h4 id="Starting_merge_from_the_Git_Repositories_View">Starting merge from the Git Repositories View</h4>
 		<p>You can trigger a merge from any branch and tag node and from the repository node if you have checked out a local branch. See 
-			<a href="Tasks.html#Merging_a_Branch_or_a_Tag">Merging a Branch or a Tag</a> for further details.
+			<a href="#Merging_a_Branch_or_a_Tag">Merging a Branch or a Tag</a> for further details.
 		</p>
 		<h4 id="Possible_merge_results">Possible merge results</h4>
 		<p>After pressing the Merge button, the following scenarios can occur:</p>
@@ -1314,7 +1317,7 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 			</li>
 			<li>
 				<i>Real merge</i>: When neither of the conditions above apply egit triggers a merge of the commits. There are two possible outcomes: If no conflicts occur the current branch will point to a newly created merge commit; if conflicts occur the conflicting files will be marked with label decorators (see 
-				<a href="Tasks.html#Resolving_a_merge_conflict">Resolving a merge conflict</a> for further actions in case of merge conflicts).
+				<a href="#Resolving_a_merge_conflict">Resolving a merge conflict</a> for further actions in case of merge conflicts).
 			</li>
 		</ul>
 		<h5 id="Merge_Result_dialog">Merge Result dialog</h5>
@@ -1407,7 +1410,7 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<h3 id="Aborting_Merge">Aborting Merge</h3>
 		<p>If a merge resulted in conflicts you can abort the merge with a hard reset to the current branch. This can be done in state "Conflicts" and in state "Merged", i.e. before and after you have resolved the conflicts.</p>
 		<p>The hard reset can be done from the team menu, the Git Repositories View or the History View. See 
-			<a href="Tasks.html#Revert_all_local_and_staged_changes">Revert all local and staged changes</a> for more details.
+			<a href="#Revert_all_local_and_staged_changes">Revert all local and staged changes</a> for more details.
 		</p>
 		<p>
 			<br/>
@@ -1613,7 +1616,7 @@ Sein oder nicht sein
 		</p>
 		<ul>
 			<li>Resolve the conflicts by editing the corresponding sources as described in 
-				<a href="Tasks.html#Resolving_a_merge_conflict">Resolving a merge conflict</a>
+				<a href="#Resolving_a_merge_conflict">Resolving a merge conflict</a>
 			</li>
 			<li>
 				<b>Team &gt; Add</b> the files you edited to mark the conflicts resolved
@@ -1784,7 +1787,7 @@ Sein oder nicht sein
 		</p>
 		<h4 id="Cloning_a_Repository_2">Cloning a Repository</h4>
 		<p>In order to clone a Repository, refer to 
-			<a href="Tasks.html#Cloning_a_Repository">Cloning remote Repositories</a>. After a successful clone operation, the newly cloned Repository should appear in the Git Repositories View automatically.
+			<a href="#Cloning_a_Repository">Cloning remote Repositories</a>. After a successful clone operation, the newly cloned Repository should appear in the Git Repositories View automatically.
 		</p>
 		<p>You can also use the 
 			<b>Clone a Git Repository</b> button from the view's toolbar to start the Clone wizard:
@@ -1793,7 +1796,7 @@ Sein oder nicht sein
 			<img border="0" src="images/RepoMgrCloneRepositoryIcon.png"/>
 		</p>
 		<p>Please refer to 
-			<a href="Tasks.html#Cloning_a_Repository">Cloning remote Repositories</a> about how to use the wizard.
+			<a href="#Cloning_a_Repository">Cloning remote Repositories</a> about how to use the wizard.
 		</p>
 		<h4 id="Creating_a_Repository">Creating a Repository</h4>
 		<p>You can create a new, empty repository on the local file system. This is useful if you later on want to create one or more new projects below this repository. Another usecase is to create a new bare repository where you can push to. Use the 
@@ -1865,7 +1868,7 @@ Sein oder nicht sein
 			<b>Import Existing Projects</b> wizard. If the import is started from the "Repository" or the "Working Directory" node, the working directory of the repository is set as context, otherwise the directory corresponding to the currently selected "Folder" node.
 		</p>
 		<p>The details of project import are discussed in 
-			<a href="Tasks.html#Use_the_New_Projects_Wizard">Use the New Projects Wizard</a>.
+			<a href="#Use_the_New_Projects_Wizard">Use the New Projects Wizard</a>.
 		</p>
 		<h4 id="Branch_and_Tag_Support">Branch and Tag Support</h4>
 		<p>The "Branches" node allows to create, browse, checkout and delete local and remote branches. The "Tags" node allows to browse and check out tags. Both the "Branches" node and the "Tags" node allow to merge the branch or tag into the currently checked out branch and also to synchronize with the currently checked out branch.</p>
@@ -1877,7 +1880,7 @@ Sein oder nicht sein
 		<p>Branches and tags can be checked out by either double-clicking on the respective node or by selecting the corresponding context menu entry.</p>
 		<h5 id="Creation_and_Deletion_of_Branches">Creation and Deletion of Branches</h5>
 		<p>Local branches can be created using the 
-			<a href="Tasks.html#Branch_Creation_Dialog">Branch Creation Dialog</a>. The wizard is opened by right-clicking on the "Branches", the "Local Branches" on any "Branch" and "Tag" node).
+			<a href="#Branch_Creation_Dialog">Branch Creation Dialog</a>. The wizard is opened by right-clicking on the "Branches", the "Local Branches" on any "Branch" and "Tag" node).
 		</p>
 		<p>Branch deletion is done using the corresponding context menu entry.</p>
 		<h5 id="Rebasing_2">Rebasing</h5>
@@ -1886,7 +1889,7 @@ Sein oder nicht sein
 		</p>
 		<h5 id="Merging_a_Branch_or_a_Tag">Merging a Branch or a Tag</h5>
 		<p>You can trigger a merge from any branch and tag node and from the repository node if you have checked out a local branch. See 
-			<a href="Tasks.html#Merging">Merging</a> for further details of the merging features.
+			<a href="#Merging">Merging</a> for further details of the merging features.
 		</p>
 		<ul>
 			<li>When you select any branch node other than the currently checked out branch or any tag node, use 
@@ -1896,7 +1899,7 @@ Sein oder nicht sein
 		<ul>
 			<li>When you select the repository node or the currently checked out branch, use 
 				<b>Merge...</b> to open the merge dialog. The merge dialog is described at 
-				<a href="Tasks.html#Merging_a_branch_or_a_tag_into_the_current_branch">Merging a branch or a tag into the current branch</a>.
+				<a href="#Merging_a_branch_or_a_tag_into_the_current_branch">Merging a branch or a tag into the current branch</a>.
 			</li>
 		</ul>
 		<h5 id="Synchronizing_with_a_Branch_or_a_Tag">Synchronizing with a Branch or a Tag</h5>
@@ -1911,7 +1914,7 @@ Sein oder nicht sein
 		<h5 id="Resetting_to_a_Branch_or_a_Tag">Resetting to a Branch or a Tag</h5>
 		<p>Right click and select 
 			<b>Reset...</b> on any branch or tag. This opens a dialog which lets you decide on the reset type. See 
-			<a href="Tasks.html#Resetting_your_current_HEAD">Resetting you current HEAD</a> for further details.
+			<a href="#Resetting_your_current_HEAD">Resetting you current HEAD</a> for further details.
 		</p>
 		<h5 id=".22Detached.22_HEAD">"Detached" HEAD</h5>
 		<p>If HEAD is "detached", i.e. is not pointing to the tip of a local branch but to a commit or tag, then none or several "checked-out" markers may appear in the tree, since any number of remote branch or tags may point to the currently checked out commit. The state you are in while your HEAD is detached is not recorded by any branch (which is natural --- you are not on any branch).</p>
@@ -1963,11 +1966,11 @@ Sein oder nicht sein
 		<p>The "Fetch" node contains a so called fetch specification and the "Push" node contains a so called push specification.</p>
 		<p>A default fetch specification is created when the repository is cloned. You can edit the fetch specification with the menu entry 
 			<b>Configure Fetch...</b>. This opens a wizard. On the first page you can edit the Fetch URI. Ob the second page you can determine the fetch ref specifications, see 
-			<a href="Tasks.html#Fetch_Ref_Specifications">Fetch Ref Specifications</a>.
+			<a href="#Fetch_Ref_Specifications">Fetch Ref Specifications</a>.
 		</p>
 		<p>You can create or edit a push specification with the menu entry 
 			<b>Configure Push...</b>. This opens a wizard. On the first page you can edit the Push URIs. If a fetch is specified the fetch URI is automatically included into the push specification and no additional Push URI is needed. On the second page you can determine the push ref specifications, see 
-			<a href="Tasks.html#Push_Ref_Specifications">Push Ref Specifications</a>.
+			<a href="#Push_Ref_Specifications">Push Ref Specifications</a>.
 		</p>
 		<h5 id="Adding_a_Remote_Configuration">Adding a Remote Configuration</h5>
 		<p>This is done using a context menu action on the "Remotes" node. A wizard is started asking for the name of the new configuration and whether to configure Fetch, Push, or both:</p>
@@ -1982,7 +1985,7 @@ Sein oder nicht sein
 		</p>
 		<p>Click 
 			<b>Change...</b> to open a dialog that allows you to select a URI. The next step is to define the Remote Specification for the fetch URI. See 
-			<a href="Tasks.html#Fetch_Ref_Specifications">Fetch Ref Specifications</a> about the details.
+			<a href="#Fetch_Ref_Specifications">Fetch Ref Specifications</a> about the details.
 		</p>
 		<p>If the 
 			<b>Configure Push</b> checkbox was selected, the next wizard page will ask for the URIs of the repositories to push to. This is actually a list, as you can push to multiple repositories at once. Click 
@@ -1994,7 +1997,7 @@ Sein oder nicht sein
 			<img border="0" src="images/Egit-0.9-repo-view-createRemoteWizardPush.png"/>
 		</p>
 		<p>The next step is to define the Remote Specification for the push URIs. See 
-			<a href="Tasks.html#Push_Ref_Specifications">Push Ref Specifications</a> about the details.
+			<a href="#Push_Ref_Specifications">Push Ref Specifications</a> about the details.
 		</p>
 		<p>Upon completion, the new Remote configuration will be visible:</p>
 		<p>
@@ -2099,7 +2102,7 @@ Sein oder nicht sein
 		<h4 id="Show_in_Properties">Show in Properties</h4>
 		<p>The command 
 			<b>Show in &gt; Properties</b> will open the 
-			<a href="Tasks.html#Repository_Configuration">Properties view</a> showing the properties of the selected repository.
+			<a href="#Repository_Configuration">Properties view</a> showing the properties of the selected repository.
 		</p>
 		<p>
 			<br/>
@@ -2211,10 +2214,10 @@ Sein oder nicht sein
 			<li>History view table context menu</li>
 			<li>Double-clicking commits in the Pull/Fetch dialog results table</li>
 			<li>
-				<a href="Tasks.html#Open_commit_dialog">Open commit dialog</a>
+				<a href="#Open_commit_dialog">Open commit dialog</a>
 			</li>
 			<li>
-				<a href="Tasks.html#Finding_the_author_of_each_line_in_a_file">Blame annotation popup</a>
+				<a href="#Finding_the_author_of_each_line_in_a_file">Blame annotation popup</a>
 			</li>
 			<li>
 				<a href="#Reflog_View">Reflog View</a>
@@ -2232,7 +2235,7 @@ Sein oder nicht sein
 		</p>
 		<h3 id="Browsing_Search_Results">Browsing Search Results</h3>
 		<p>Commit search results are displayed in the standard Eclipse Search view. Results are grouped by repository when in Tree mode. Double-clicking a commit from the Search view will open it in the 
-			<a href="Tasks.html#Viewing_Commits">commit viewer</a>.
+			<a href="#Viewing_Commits">commit viewer</a>.
 		</p>
 		<p>
 			<img border="0" src="images/Git-search-results.png"/>
@@ -2272,7 +2275,7 @@ Sein oder nicht sein
 			<img border="0" src="images/Egit-1.0-blame-ruler.png"/>
 		</p>
 		<p>Selecting the SHA-1 hyperlink from the popup will open the commit in the 
-			<a href="Tasks.html#Viewing_Commits">commit viewer</a>.
+			<a href="#Viewing_Commits">commit viewer</a>.
 		</p>
 		<h2 id="Working_with_Submodules">Working with Submodules</h2>
 		<p>Submodule support in EGit/JGit was added in the 1.3 release that was part of Indigo SR2 in February 2011.</p>
