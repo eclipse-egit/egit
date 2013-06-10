@@ -353,6 +353,11 @@ public class Activator extends Plugin implements DebugOptionsListener {
 							return false;
 
 						final IResource r = delta.getResource();
+						// don't consider resources contained in a project not
+						// shared with Git team provider
+						if ((r.getProject() != null)
+								&& (RepositoryMapping.getMapping(r) == null))
+							return false;
 						if (r.isTeamPrivateMember())
 							return false;
 
