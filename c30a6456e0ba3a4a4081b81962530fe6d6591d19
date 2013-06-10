@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPn//3dM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/CreateBranchOnCommitHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-06-10T13:07:48Z",
+      "side": 1,
+      "message": "I assume that excluding the current branch was done in order to avoid the current local branch as input for the CreateBranchWizard. This is not needed anymore with your solution. If there is only one local branch pointing to the currently selected commit, it will not be chosen default if it is checked out.\n\nOptional: Fix this also in this change by just changing getBranchesExcludingCurrent.",
+      "revId": "c30a6456e0ba3a4a4081b81962530fe6d6591d19",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
