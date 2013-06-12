@@ -194,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPn//2zE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewSearchThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 656
+      },
+      "writtenOn": "2013-06-12T20:39:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPn//+qE\u003d",
+      "revId": "cc8c6b6e254801244adc5a901bb8c5836965235a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPn//4Co\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 1
