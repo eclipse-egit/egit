@@ -190,6 +190,22 @@ perl -pi~ -e '
 perl -pi~ -e '
 	if ($ARGV ne $old_argv) {
 		$seen_version = 0;
+		$seen_version2 = 0;
+		$old_argv = $ARGV;
+	}
+	if (!$seen_version) {
+		$seen_version = 1 if
+		s{<(version)>[^<\$]*</\1>}{<${1}>'"$POM_V"'</${1}>};
+	}
+	if ($seen_version2 < 3) {
+		$seen_version2++ if
+		s|(<version\>)([\.\d]*)(\</version\>)|${1}'$EGIT_V'${3}|;
+	}
+	' org.eclipse.egit.mylyn.ui.test/pom.xml
+
+perl -pi~ -e '
+	if ($ARGV ne $old_argv) {
+		$seen_version = 0;
 		$old_argv = $ARGV;
 	}
 	if (!$seen_version) {
