@@ -419,20 +419,36 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/2.3/2.3.html" label="EGit 2.3 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/2.3/2.3.html" label="Features"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/2.3/API-changes.html" label="API changes"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/2.3/Performance-Improvements.html" label="Performance Improvements"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/2.3/Bug-Fixes.html" label="Bug Fixes"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/2.3/Contributors.html" label="Contributors"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/2.3/Updating-This-Document.html" label="Updating This Document"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/3.0/3.0.html" label="EGit 3.0 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/3.0/3.0.html" label="EGit Features">
+			<topic href="help/EGit/New_and_Noteworthy/3.0/3.0.html#Rename_Detection" label="Rename Detection"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/3.0/3.0.html#Reset_to_Expression" label="Reset to Expression"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/3.0/3.0.html#Other" label="Other"></topic>
+		</topic>
+		<topic href="help/EGit/New_and_Noteworthy/3.0/GitHub-Connector-Features.html" label="GitHub Connector Features"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/3.0/Performance-Improvements.html" label="Performance Improvements"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/3.0/Bug-Fixes.html" label="Bug Fixes"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/3.0/API-changes.html" label="API changes"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/3.0/Contributors.html" label="Contributors"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/3.0/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/2.3/2.3.html" label="JGit 2.3 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/2.3/2.3.html" label="Features"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/2.3/Performance-Improvements.html" label="Performance Improvements"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/2.3/Bug-Fixes.html" label="Bug Fixes"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/2.3/Contributors.html" label="Contributors"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/2.3/Updating-This-Document.html" label="Updating This Document"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/3.0/3.0.html" label="JGit 3.0 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/3.0/3.0.html" label="Features">
+			<topic href="help/JGit/New_and_Noteworthy/3.0/3.0.html#Recursive_Merge" label="Recursive Merge"></topic>
+		</topic>
+		<topic href="help/JGit/New_and_Noteworthy/3.0/Commands.html" label="Commands"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/3.0/Library.html" label="Library"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/3.0/Command-Line.html" label="Command Line"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/3.0/Performance-Improvements.html" label="Performance Improvements"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/3.0/API-Changes-and-Migration-Hints.html" label="API Changes and Migration Hints">
+			<topic href="help/JGit/New_and_Noteworthy/3.0/API-Changes-and-Migration-Hints.html#Internal_storage_API_moved_to_internal_packages" label="Internal storage API moved to internal packages"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/3.0/API-Changes-and-Migration-Hints.html#WindowCache_reconfiguration" label="WindowCache reconfiguration"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/3.0/API-Changes-and-Migration-Hints.html#FollowFilter_requires_DiffConfig" label="FollowFilter requires DiffConfig"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/3.0/API-Changes-and-Migration-Hints.html#Reflog_interfaces_moved" label="Reflog interfaces moved"></topic>
+		</topic>
+		<topic href="help/JGit/New_and_Noteworthy/3.0/Bug-Fixes.html" label="Bug Fixes"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/3.0/Contributors.html" label="Contributors"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/3.0/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>

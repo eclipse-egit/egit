@@ -2,7 +2,7 @@
 <project name="org.eclipse.egit.doc" basedir="." default="all">
 <!--
     Copyright (c) 2010 Chris Aniszczyk and others.
-    Copyright (c) 2010-2012 Matthias Sohn <matthias.sohn@sap.com>
+    Copyright (c) 2010,2013 Matthias Sohn <matthias.sohn@sap.com>
     All rights reserved. This program and the accompanying materials
     are made available under the terms of the Eclipse Public License v1.0
     which accompanies this distribution, and is available at
@@ -38,8 +38,8 @@
 				generateUnifiedToc="true">
 				<path name="EGit/User_Guide" title="EGit User Guide" />
 				<path name="JGit/User_Guide" title="JGit User Guide" />
-				<path name="EGit/New_and_Noteworthy/2.3" title="EGit 2.3 New and Noteworthy" />
-				<path name="JGit/New_and_Noteworthy/2.3" title="JGit 2.3 New and Noteworthy" />
+				<path name="EGit/New_and_Noteworthy/3.0" title="EGit 3.0 New and Noteworthy" />
+				<path name="JGit/New_and_Noteworthy/3.0" title="JGit 3.0 New and Noteworthy" />
 				<path name="EGit/Git_For_Eclipse_Users" title="Git for Eclipse Users" />
 				<stylesheet url="book.css" />
 				<pageAppendum>

@@ -48,6 +48,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -375,6 +376,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testRebaseAlreadyUpToDate() throws Exception {
 		Repository repo = lookupRepository(repoFile);
 		Ref stable = repo.getRef("stable");
@@ -408,7 +410,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 	/**
 	 * Workaround to ensure that the TableItem of a SWT table with style
 	 * SWT_VIRTUAL is loaded.
-	 * 
+	 *
 	 * @param item
 	 */
 	private static void ensureTableItemLoaded(TableItem item) {
