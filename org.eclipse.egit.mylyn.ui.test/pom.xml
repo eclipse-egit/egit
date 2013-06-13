@@ -16,7 +16,7 @@
   <parent>
     <groupId>org.eclipse.egit</groupId>
     <artifactId>egit-parent</artifactId>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>3.1.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>org.eclipse.egit.mylyn.ui.test</artifactId>
@@ -80,17 +80,17 @@
             <dependency>
               <type>p2-installable-unit</type>
               <artifactId>org.eclipse.egit.feature.group</artifactId>
-              <version>3.0.0</version>
+              <version>3.1.0</version>
             </dependency>
             <dependency>
               <type>p2-installable-unit</type>
               <artifactId>org.eclipse.egit.mylyn.feature.group</artifactId>
-              <version>3.0.0</version>
+              <version>3.1.0</version>
             </dependency>
             <dependency>
               <type>p2-installable-unit</type>
               <artifactId>org.eclipse.jgit.feature.group</artifactId>
-              <version>3.0.0</version>
+              <version>3.1.0</version>
             </dependency>
             <dependency>
               <type>p2-installable-unit</type>
