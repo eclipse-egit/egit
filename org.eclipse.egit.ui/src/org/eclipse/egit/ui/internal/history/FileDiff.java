@@ -424,6 +424,11 @@ public class FileDiff extends WorkbenchAdapter {
 		}
 
 		@Override
+		public String getNewPath() {
+			return path;
+		}
+
+		@Override
 		public ChangeType getChange() {
 			return change;
 		}
