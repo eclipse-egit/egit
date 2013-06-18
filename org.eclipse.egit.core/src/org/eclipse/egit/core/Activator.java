@@ -17,8 +17,10 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -257,6 +259,9 @@ public class Activator extends Plugin implements DebugOptionsListener {
 
 		public void resourceChanged(IResourceChangeEvent event) {
 			try {
+
+				final Map<IProject, File> projects = new HashMap<IProject, File>();
+
 				event.getDelta().accept(new IResourceDeltaVisitor() {
 
 					public boolean visit(IResourceDelta delta)
@@ -290,11 +295,9 @@ public class Activator extends Plugin implements DebugOptionsListener {
 										.next();
 								final File repositoryDir = m
 										.getGitDirAbsolutePath().toFile();
-								final ConnectProviderOperation op = new ConnectProviderOperation(
-										project, repositoryDir);
-								JobUtil.scheduleUserJob(op,
-										CoreText.Activator_AutoShareJobName,
-										JobFamilies.AUTO_SHARE);
+
+								projects.put(project, repositoryDir);
+
 								Activator.getDefault().getRepositoryUtil()
 										.addConfiguredRepository(repositoryDir);
 							}
@@ -304,6 +307,15 @@ public class Activator extends Plugin implements DebugOptionsListener {
 						return false;
 					}
 				});
+
+				if (projects.size() > 0) {
+					ConnectProviderOperation op = new ConnectProviderOperation(
+							projects);
+					JobUtil.scheduleUserJob(op,
+							CoreText.Activator_AutoShareJobName,
+							JobFamilies.AUTO_SHARE);
+				}
+
 			} catch (CoreException e) {
 				Activator.logError(e.getMessage(), e);
 				return;
