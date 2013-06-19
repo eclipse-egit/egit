@@ -4418,6 +4418,10 @@
             icon="icons/obj16/no-assume-unchanged.gif">
       </image>
       <image
+            commandId="org.eclipse.egit.ui.team.DeleteBranch"
+            icon="icons/obj16/delete_obj.gif">
+      </image>      
+      <image
             commandId="org.eclipse.egit.ui.team.RenameBranch"
             icon="icons/obj16/editconfig.gif">
       </image>
