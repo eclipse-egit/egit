@@ -14,6 +14,8 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.core.runtime.ListenerList;
@@ -33,8 +35,12 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.DefaultTextDoubleClickStrategy;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextOperationTarget;
-import org.eclipse.jface.text.TextViewer;
+import org.eclipse.jface.text.Region;
+import org.eclipse.jface.text.hyperlink.IHyperlink;
+import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
+import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelection;
@@ -61,6 +67,7 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.IWorkbenchPartSite;
@@ -69,7 +76,7 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
-class CommitMessageViewer extends TextViewer implements
+class CommitMessageViewer extends SourceViewer implements
 		ISelectionChangedListener {
 
 	private static final Color SYS_LINKCOLOR = PlatformUI.getWorkbench()
@@ -119,7 +126,7 @@ class CommitMessageViewer extends TextViewer implements
 	private ListenerHandle refsChangedListener;
 
 	CommitMessageViewer(final Composite parent, final IPageSite site, IWorkbenchPartSite partSite) {
-		super(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
+		super(parent, null, SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
 		this.partSite = partSite;
 
 		final StyledText t = getTextWidget();
@@ -130,7 +137,8 @@ class CommitMessageViewer extends TextViewer implements
 		// set the cursor when hovering over a link
 		t.addListener(SWT.MouseMove, new Listener() {
 			public void handleEvent(final Event e) {
-				if (getStyleRange(e.x, e.y) instanceof ObjectLink)
+				StyleRange styleRange = getStyleRange(e.x, e.y);
+				if (styleRange != null && styleRange.underline)
 					t.setCursor(SYS_LINK_CURSOR);
 				else
 					t.setCursor(sys_normalCursor);
@@ -274,12 +282,73 @@ class CommitMessageViewer extends TextViewer implements
 							return;
 						setDocument(new Document(job.getFormatResult()
 								.getCommitInfo()));
-						text.setStyleRanges(job.getFormatResult()
-								.getStyleRange());
+
+						// Combine the style ranges from the format job and the
+						// style ranges
+						// for hyperlinks found by registered hyperlink
+						// detectors.
+
+						List<StyleRange> styleRangeList = new ArrayList<StyleRange>();
+
+						for (StyleRange styleRange : job.getFormatResult()
+								.getStyleRange())
+							styleRangeList.add(styleRange);
+
+						StyleRange[] hyperlinkDetectorStyleRanges = getHyperlinkDetectorStyleRanges();
+
+						for (StyleRange styleRange : hyperlinkDetectorStyleRanges)
+							styleRangeList.add(styleRange);
+
+						StyleRange[] styleRanges = new StyleRange[styleRangeList
+								.size()];
+						styleRangeList.toArray(styleRanges);
+
+						// Style ranges must be in order.
+						Arrays.sort(styleRanges, new Comparator<StyleRange>() {
+							public int compare(StyleRange o1, StyleRange o2) {
+								if (o2.start > o1.start)
+									return -1;
+								if (o1.start > o2.start)
+									return 1;
+								return 0;
+							}
+						});
+						for (StyleRange newStyleRange : styleRanges) {
+							text.setStyleRange(newStyleRange);
+						}
 					}
 				});
 			}
 		});
+	}
+
+	private StyleRange[] getHyperlinkDetectorStyleRanges() {
+		List<StyleRange> styleRangeList = new ArrayList<StyleRange>();
+		if (fHyperlinkDetectors != null && fHyperlinkDetectors.length > 0) {
+			for (int i = 0; i < getTextWidget().getText().length(); i++) {
+				IRegion region = new Region(i, 0);
+				for (IHyperlinkDetector hyperLinkDetector : fHyperlinkDetectors) {
+					IHyperlink[] hyperlinks = hyperLinkDetector
+							.detectHyperlinks(this, region, true);
+					if (hyperlinks != null) {
+						for (IHyperlink hyperlink : hyperlinks) {
+							StyleRange hyperlinkStyleRange = new StyleRange(
+									hyperlink.getHyperlinkRegion().getOffset(),
+									hyperlink.getHyperlinkRegion().getLength(),
+									Display.getDefault().getSystemColor(
+											SWT.COLOR_BLUE), Display
+											.getDefault().getSystemColor(
+													SWT.COLOR_WHITE));
+							hyperlinkStyleRange.underline = true;
+							styleRangeList.add(hyperlinkStyleRange);
+						}
+					}
+				}
+			}
+		}
+		StyleRange[] styleRangeArray = new StyleRange[styleRangeList.size()];
+		styleRangeList.toArray(styleRangeArray);
+		return styleRangeArray;
 	}
 
 	@Override
