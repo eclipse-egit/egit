@@ -14,6 +14,8 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.core.runtime.ListenerList;
@@ -34,7 +36,7 @@ import org.eclipse.jface.text.DefaultTextDoubleClickStrategy;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextOperationTarget;
-import org.eclipse.jface.text.TextViewer;
+import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelection;
@@ -69,7 +71,7 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
-class CommitMessageViewer extends TextViewer implements
+class CommitMessageViewer extends SourceViewer implements
 		ISelectionChangedListener {
 
 	private static final Color SYS_LINKCOLOR = PlatformUI.getWorkbench()
@@ -118,8 +120,10 @@ class CommitMessageViewer extends TextViewer implements
 
 	private ListenerHandle refsChangedListener;
 
+	private StyleRange[] styleRanges;
+
 	CommitMessageViewer(final Composite parent, final IPageSite site, IWorkbenchPartSite partSite) {
-		super(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
+		super(parent, null, SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
 		this.partSite = partSite;
 
 		final StyledText t = getTextWidget();
@@ -130,10 +134,13 @@ class CommitMessageViewer extends TextViewer implements
 		// set the cursor when hovering over a link
 		t.addListener(SWT.MouseMove, new Listener() {
 			public void handleEvent(final Event e) {
-				if (getStyleRange(e.x, e.y) instanceof ObjectLink)
+				StyleRange styleRange = getStyleRange(e.x, e.y);
+				if (styleRange != null && styleRange.underline)
 					t.setCursor(SYS_LINK_CURSOR);
 				else
 					t.setCursor(sys_normalCursor);
+				for (StyleRange sr : styleRanges)
+					getTextWidget().setStyleRange(sr);
 			}
 		});
 		// react on link click
@@ -272,10 +279,42 @@ class CommitMessageViewer extends TextViewer implements
 					public void run() {
 						if (text.isDisposed())
 							return;
+
 						setDocument(new Document(job.getFormatResult()
 								.getCommitInfo()));
-						text.setStyleRanges(job.getFormatResult()
-								.getStyleRange());
+
+						// Combine the style ranges from the format job and the
+						// style ranges for hyperlinks found by registered
+						// hyperlink detectors.
+						List<StyleRange> styleRangeList = new ArrayList<StyleRange>();
+						for (StyleRange styleRange : job.getFormatResult()
+								.getStyleRange())
+							styleRangeList.add(styleRange);
+
+						StyleRange[] hyperlinkDetectorStyleRanges = UIUtils
+								.getHyperlinkDetectorStyleRanges(
+										CommitMessageViewer.this,
+										fHyperlinkDetectors);
+						for (StyleRange styleRange : hyperlinkDetectorStyleRanges)
+							styleRangeList.add(styleRange);
+
+						styleRanges = new StyleRange[styleRangeList.size()];
+						styleRangeList.toArray(styleRanges);
+
+						// Style ranges must be in order.
+						Arrays.sort(styleRanges, new Comparator<StyleRange>() {
+							public int compare(StyleRange o1, StyleRange o2) {
+								if (o2.start > o1.start)
+									return -1;
+								if (o1.start > o2.start)
+									return 1;
+								return 0;
+							}
+						});
+
+						text.setStyleRanges(new StyleRange[0]);
+						for (StyleRange sr : styleRanges)
+							text.setStyleRange(sr);
 					}
 				});
 			}
