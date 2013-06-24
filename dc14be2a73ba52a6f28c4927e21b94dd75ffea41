@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87a3737f_e3cbb2c6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-06-24T21:23:45Z",
+      "side": 1,
+      "message": "style nit: this comment could be formatted more nicely",
+      "revId": "dc14be2a73ba52a6f28c4927e21b94dd75ffea41",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87a3737f_a3d5ba60",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-06-24T21:23:45Z",
+      "side": 1,
+      "message": "style nit: no braces around single line blocks",
+      "revId": "dc14be2a73ba52a6f28c4927e21b94dd75ffea41",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87a3737f_83d8be99",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-06-24T21:23:45Z",
+      "side": 1,
+      "message": "can we extract this to avoid repeating SpellcheckableMessageArea.getHyperlinkDetectorStyleRanges() ?",
+      "revId": "dc14be2a73ba52a6f28c4927e21b94dd75ffea41",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
