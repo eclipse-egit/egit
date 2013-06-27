@@ -51,7 +51,6 @@ import org.eclipse.jface.text.TextEvent;
 import org.eclipse.jface.text.WhitespaceCharacterPainter;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
-import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
 import org.eclipse.jface.text.hyperlink.IHyperlinkPresenter;
 import org.eclipse.jface.text.hyperlink.MultipleHyperlinkPresenter;
 import org.eclipse.jface.text.quickassist.IQuickAssistInvocationContext;
@@ -312,10 +311,6 @@ public class SpellcheckableMessageArea extends Composite {
 				EditorsUI
 				.getPreferenceStore()) {
 
-			public int getHyperlinkStateMask(ISourceViewer targetViewer) {
-				return SWT.NONE;
-			}
-
 			protected Map getHyperlinkDetectorTargets(ISourceViewer targetViewer) {
 				return getHyperlinkTargets();
 			}
@@ -328,15 +323,11 @@ public class SpellcheckableMessageArea extends Composite {
 
 					@Override
 					public void hideHyperlinks() {
-						// We want links to always show.
+						super.hideHyperlinks();
+						sourceViewer.getTextWidget().setStyleRange(null);
 					}
 
 				};
-			}
-
-			public IHyperlinkDetector[] getHyperlinkDetectors(
-					ISourceViewer targetViewer) {
-				return getRegisteredHyperlinkDetectors(sourceViewer);
 			}
 
 			@Override
@@ -360,11 +351,6 @@ public class SpellcheckableMessageArea extends Composite {
 
 		sourceViewer.configure(configuration);
 		sourceViewer.setDocument(document, annotationModel);
-
-		for (StyleRange styleRange : UIUtils
-				.getHyperlinkDetectorStyleRanges(sourceViewer,
-						configuration.getHyperlinkDetectors(sourceViewer)))
-			sourceViewer.getTextWidget().setStyleRange(styleRange);
 
 		configureContextMenu();
 
