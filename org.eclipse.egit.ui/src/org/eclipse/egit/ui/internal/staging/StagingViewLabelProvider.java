@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Bernard Leach <leachbj@bouncycastle.org>
+ * Copyright (C) 2011, 2013 Bernard Leach <leachbj@bouncycastle.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,25 +14,27 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.decorators.DecorationResult;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.DecorationHelper;
+import org.eclipse.egit.ui.internal.staging.StagingView.Presentation;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
-import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.DecorationOverlayIcon;
-import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.IDecoration;
-import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 /**
  * Label provider for {@link StagingEntry} objects
  */
-public class StagingViewLabelProvider extends BaseLabelProvider implements
-		ITableLabelProvider, IStyledLabelProvider {
+public class StagingViewLabelProvider extends LabelProvider {
+	private StagingView stagingView;
+
+	private WorkbenchLabelProvider workbenchLabelProvider = new WorkbenchLabelProvider();
 
 	private Image DEFAULT = PlatformUI.getWorkbench().getSharedImages()
 			.getImage(ISharedImages.IMG_OBJ_FILE);
@@ -49,6 +51,14 @@ public class StagingViewLabelProvider extends BaseLabelProvider implements
 	private boolean fileNameMode = false;
 
 	/**
+	 * @param stagingView
+	 */
+	public StagingViewLabelProvider(StagingView stagingView) {
+		super();
+		this.stagingView = stagingView;
+	}
+
+	/**
 	 * Set file name mode to be enabled or disabled. This mode displays the
 	 * names of the file first followed by the path to the folder that the file
 	 * is in.
@@ -59,18 +69,6 @@ public class StagingViewLabelProvider extends BaseLabelProvider implements
 	public StagingViewLabelProvider setFileNameMode(boolean enable) {
 		fileNameMode = enable;
 		return this;
-	}
-
-	public Image getColumnImage(Object element, int columnIndex) {
-		if (columnIndex == 0)
-			return getImage(element);
-		return null;
-	}
-
-	public String getColumnText(Object element, int columnIndex) {
-		if (columnIndex == 0)
-			return getStyledText(element).toString();
-		return ""; //$NON-NLS-1$
 	}
 
 	@Override
@@ -100,45 +98,66 @@ public class StagingViewLabelProvider extends BaseLabelProvider implements
 		return (Image) this.resourceManager.get(decorated);
 	}
 
-	public StyledString getStyledText(Object element) {
-		final StagingEntry c = (StagingEntry) element;
-		final DecorationResult decoration = new DecorationResult();
-		decorationHelper.decorate(decoration, c);
+	public Image getImage(Object element) {
 
+		if (element instanceof StagingFolderEntry) {
+			StagingFolderEntry c = (StagingFolderEntry) element;
+			if (c.getContainer() == null) {
+				return PlatformUI.getWorkbench().getSharedImages()
+						.getImage(ISharedImages.IMG_OBJ_FOLDER);
+			}
+			return workbenchLabelProvider
+					.getImage(((StagingFolderEntry) element).getContainer());
+		}
+
+		StagingEntry c = (StagingEntry) element;
+		DecorationResult decoration = new DecorationResult();
+		decorationHelper.decorate(decoration, c);
+		return getDecoratedImage(getEditorImage(c), decoration.getOverlay());
+	}
+
+	@Override
+	public String getText(Object element) {
+
+		if (element instanceof StagingFolderEntry) {
+			StagingFolderEntry stagingFolderEntry = (StagingFolderEntry) element;
+			return stagingFolderEntry.getNodePath().toString();
+		}
+
+		StagingEntry stagingEntry = (StagingEntry) element;
+		final DecorationResult decoration = new DecorationResult();
+		decorationHelper.decorate(decoration, stagingEntry);
 		final StyledString styled = new StyledString();
 		final String prefix = decoration.getPrefix();
 		final String suffix = decoration.getSuffix();
 		if (prefix != null)
 			styled.append(prefix, StyledString.DECORATIONS_STYLER);
-		if (fileNameMode) {
-			IPath parsed = Path.fromOSString(c.getPath());
-			if (parsed.segmentCount() > 1) {
-				styled.append(parsed.lastSegment());
-				if (suffix != null)
-					styled.append(suffix, StyledString.DECORATIONS_STYLER);
-				styled.append(' ');
-				styled.append('-', StyledString.QUALIFIER_STYLER);
-				styled.append(' ');
-				styled.append(parsed.removeLastSegments(1).toString(),
-						StyledString.QUALIFIER_STYLER);
+		if (stagingView.getPresentation() == Presentation.LIST) {
+			if (fileNameMode) {
+				IPath parsed = Path.fromOSString(stagingEntry.getPath());
+				if (parsed.segmentCount() > 1) {
+					styled.append(parsed.lastSegment());
+					if (suffix != null)
+						styled.append(suffix, StyledString.DECORATIONS_STYLER);
+					styled.append(' ');
+					styled.append('-', StyledString.QUALIFIER_STYLER);
+					styled.append(' ');
+					styled.append(parsed.removeLastSegments(1).toString(),
+							StyledString.QUALIFIER_STYLER);
+				} else {
+					styled.append(stagingEntry.getPath());
+					if (suffix != null)
+						styled.append(suffix, StyledString.DECORATIONS_STYLER);
+				}
 			} else {
-				styled.append(c.getPath());
+				styled.append(stagingEntry.getPath());
 				if (suffix != null)
 					styled.append(suffix, StyledString.DECORATIONS_STYLER);
 			}
 		} else {
-			styled.append(c.getPath());
-			if (suffix != null)
-				styled.append(suffix, StyledString.DECORATIONS_STYLER);
+			styled.append(stagingEntry.getName());
 		}
-
-		return styled;
+		return styled.toString();
 	}
 
-	public Image getImage(Object element) {
-		final StagingEntry c = (StagingEntry) element;
-		final DecorationResult decoration = new DecorationResult();
-		decorationHelper.decorate(decoration, c);
-		return getDecoratedImage(getEditorImage(c), decoration.getOverlay());
-	}
 }
