@@ -14,8 +14,6 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.core.runtime.ListenerList;
@@ -139,8 +137,6 @@ class CommitMessageViewer extends SourceViewer implements
 					t.setCursor(SYS_LINK_CURSOR);
 				else
 					t.setCursor(sys_normalCursor);
-				for (StyleRange sr : styleRanges)
-					getTextWidget().setStyleRange(sr);
 			}
 		});
 		// react on link click
@@ -279,42 +275,10 @@ class CommitMessageViewer extends SourceViewer implements
 					public void run() {
 						if (text.isDisposed())
 							return;
-
 						setDocument(new Document(job.getFormatResult()
 								.getCommitInfo()));
-
-						// Combine the style ranges from the format job and the
-						// style ranges for hyperlinks found by registered
-						// hyperlink detectors.
-						List<StyleRange> styleRangeList = new ArrayList<StyleRange>();
-						for (StyleRange styleRange : job.getFormatResult()
-								.getStyleRange())
-							styleRangeList.add(styleRange);
-
-						StyleRange[] hyperlinkDetectorStyleRanges = UIUtils
-								.getHyperlinkDetectorStyleRanges(
-										CommitMessageViewer.this,
-										fHyperlinkDetectors);
-						for (StyleRange styleRange : hyperlinkDetectorStyleRanges)
-							styleRangeList.add(styleRange);
-
-						styleRanges = new StyleRange[styleRangeList.size()];
-						styleRangeList.toArray(styleRanges);
-
-						// Style ranges must be in order.
-						Arrays.sort(styleRanges, new Comparator<StyleRange>() {
-							public int compare(StyleRange o1, StyleRange o2) {
-								if (o2.start > o1.start)
-									return -1;
-								if (o1.start > o2.start)
-									return 1;
-								return 0;
-							}
-						});
-
-						text.setStyleRanges(new StyleRange[0]);
-						for (StyleRange sr : styleRanges)
-							text.setStyleRange(sr);
+						styleRanges = job.getFormatResult().getStyleRange();
+						text.setStyleRanges(styleRanges);
 					}
 				});
 			}
@@ -361,6 +325,10 @@ class CommitMessageViewer extends SourceViewer implements
 			}
 		});
 		format();
+	}
+
+	public StyleRange[] getStyleRanges() {
+		return styleRanges;
 	}
 
 	public Object getInput() {
