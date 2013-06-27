@@ -59,7 +59,6 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
-import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
 import org.eclipse.jface.text.hyperlink.IHyperlinkPresenter;
 import org.eclipse.jface.text.hyperlink.MultipleHyperlinkPresenter;
 import org.eclipse.jface.text.source.ISourceViewer;
@@ -790,27 +789,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		TextSourceViewerConfiguration configuration = new TextSourceViewerConfiguration(
 				EditorsUI.getPreferenceStore()) {
 
-			public int getHyperlinkStateMask(ISourceViewer sourceViewer) {
-				return SWT.NONE;
-			}
-
 			@Override
 			public IHyperlinkPresenter getHyperlinkPresenter(
 					ISourceViewer sourceViewer) {
 				return new MultipleHyperlinkPresenter(PlatformUI.getWorkbench()
-						.getDisplay().getSystemColor(SWT.COLOR_BLUE).getRGB()) {
-
-					@Override
-					public void hideHyperlinks() {
-						// We want links to always show.
-					}
-
-				};
+						.getDisplay().getSystemColor(SWT.COLOR_BLUE).getRGB());
 			}
 
-			public IHyperlinkDetector[] getHyperlinkDetectors(ISourceViewer sourceViewer) {
-				return getRegisteredHyperlinkDetectors(sourceViewer);
-			}
 		};
 
 		commentViewer.configure(configuration);
