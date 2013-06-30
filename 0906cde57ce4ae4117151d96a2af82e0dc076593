@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "273ac7f6_ac89887c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-06-30T23:15:26Z",
+      "side": 0,
+      "message": "why don\u0027t you handle missing and conflicting entries any longer ? I created a merge conflict and the staging view doesn\u0027t show it anymore",
+      "revId": "0906cde57ce4ae4117151d96a2af82e0dc076593",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
