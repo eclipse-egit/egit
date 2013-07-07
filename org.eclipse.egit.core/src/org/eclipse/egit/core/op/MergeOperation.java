@@ -59,6 +59,8 @@ public class MergeOperation implements IEGitOperation {
 
 	private FastForwardMode fastForwardMode;
 
+	private boolean commit = true;
+
 	private MergeResult mergeResult;
 
 	/**
@@ -99,6 +101,15 @@ public class MergeOperation implements IEGitOperation {
 		this.fastForwardMode = ffmode;
 	}
 
+	/**
+	 * @param commit
+	 *            set the commit option
+	 * @since 3.1
+	 */
+	public void setCommit(boolean commit) {
+		this.commit = commit;
+	}
+
 	public void execute(IProgressMonitor m) throws CoreException {
 		if (mergeResult != null)
 			throw new CoreException(new Status(IStatus.ERROR, Activator
@@ -123,11 +134,12 @@ public class MergeOperation implements IEGitOperation {
 								.getFastForwardMode(repository);
 					Ref ref = repository.getRef(refName);
 					if (ref != null)
-						merge = git.merge().include(ref).setFastForward(ffmode);
+						merge = git.merge().include(ref).setFastForward(ffmode)
+								.setCommit(commit);
 					else
 						merge = git.merge()
 								.include(ObjectId.fromString(refName))
-								.setFastForward(ffmode);
+								.setFastForward(ffmode).setCommit(commit);
 				} catch (IOException e) {
 					throw new TeamException(CoreText.MergeOperation_InternalError, e);
 				}
