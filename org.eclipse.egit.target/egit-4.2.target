@@ -66,7 +66,7 @@
       <unit id="javax.servlet.source" version="2.5.0.v201103041518"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-      <repository location="http://download.eclipse.org/technology/swtbot/snapshots/"/>
+      <repository location="http://download.eclipse.org/technology/swtbot/releases/2.1.0/"/>
       <unit id="org.eclipse.swtbot.eclipse.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.swtbot.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.swtbot.eclipse.test.junit.feature.group" version="0.0.0"/>
