@@ -13,6 +13,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -23,10 +24,16 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.IgnoreOperation;
 import org.eclipse.egit.core.test.GitTestCase;
+import org.eclipse.egit.core.test.TestProject;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.util.FileUtils;
@@ -147,9 +154,41 @@ public class IgnoreOperationTest extends GitTestCase {
 		assertEquals("/bin\n", content);
 	}
 
+	@Test
+	public void testWithNestedProjects() throws Exception {
+		TestProject nested = new TestProject(true, "Project-1/Project-2");
+		try {
+			// Use Project-1 to create folder, Project-2 to get file to try to
+			// confuse any caches in workspace root (location -> IResource).
+			project.createFolder("Project-2/please");
+			IFile ignoreme = nested.createFile("please/ignoreme", new byte[0]);
+			IgnoreOperation operation = executeIgnore(ignoreme.getLocation());
+			String content = nested.getFileContent("please/.gitignore");
+			assertEquals("/ignoreme\n", content);
+			assertFalse(operation.isGitignoreOutsideWSChanged());
+		} finally {
+			nested.dispose();
+		}
+	}
+
 	private IgnoreOperation executeIgnore(IPath... paths) throws Exception {
-		IgnoreOperation operation = new IgnoreOperation(Arrays.asList(paths));
-		operation.execute(new NullProgressMonitor());
+		final IgnoreOperation operation = new IgnoreOperation(Arrays.asList(paths));
+		Job job = new Job("Ignoring resources for test") {
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				try {
+					operation.execute(monitor);
+				} catch (CoreException e) {
+					return e.getStatus();
+				}
+				return Status.OK_STATUS;
+			}
+		};
+		job.setRule(operation.getSchedulingRule());
+		job.schedule();
+		job.join();
+		if (!job.getResult().isOK())
+			fail("Ignore job failed: " + job.getResult());
 		return operation;
 	}
 }
