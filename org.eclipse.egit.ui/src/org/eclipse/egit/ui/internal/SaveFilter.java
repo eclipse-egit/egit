@@ -27,6 +27,7 @@ import org.eclipse.ui.ide.ResourceUtil;
 /*
  * Copied from org.eclipse.ui.ide.IDE.SaveFilter, see
  * https://bugs.eclipse.org/bugs/show_bug.cgi?id=386609
+ * Replace with the above when we can depend on Eclipse 4.3.
  */
 /**
  * A saveable filter that selects savables that contain resources that
