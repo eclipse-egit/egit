@@ -216,6 +216,7 @@ class RefUpdateElement extends WorkbenchAdapter {
 	 * @param object
 	 * @return styled string
 	 */
+	@Override
 	public StyledString getStyledText(Object object) {
 		StyledString styled = new StyledString();
 		final String remote = getDstRefName();
