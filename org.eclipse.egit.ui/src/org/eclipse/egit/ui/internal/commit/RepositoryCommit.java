@@ -216,6 +216,7 @@ public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
 	 * @param object
 	 * @return styled text
 	 */
+	@Override
 	public StyledString getStyledText(Object object) {
 		StyledString styled = new StyledString();
 		styled.append(abbreviate());
