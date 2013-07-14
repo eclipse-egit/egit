@@ -342,7 +342,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 		myRepository.getConfig().save();
 		// and push
-		PushOperationUI pa = new PushOperationUI(myRepository, "push", 0, false);
+		PushOperationUI pa = new PushOperationUI(myRepository, "push", false);
 		pa.execute(null);
 
 		try {

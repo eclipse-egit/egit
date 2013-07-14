@@ -16,8 +16,6 @@ import java.util.Set;
 
 import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.core.op.PushOperationSpecification;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.SecureStoreUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
@@ -200,10 +198,8 @@ public class PushBranchWizard extends Wizard {
 				.deriveSpecification(confirmationPage
 						.isRequireUnchangedSelected());
 
-		int timeout = Activator.getDefault().getPreferenceStore()
-				.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 		PushOperationUI pushOperationUI = new PushOperationUI(repository,
-				pushSpec, timeout, false);
+				pushSpec, false);
 		pushOperationUI.setCredentialsProvider(new EGitCredentialsProvider());
 		pushOperationUI.start();
 	}

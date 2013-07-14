@@ -12,8 +12,6 @@ import java.io.IOException;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.push.PushBranchWizard;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
 import org.eclipse.egit.ui.internal.push.SimpleConfigurePushDialog;
@@ -48,10 +46,8 @@ public class PushUpstreamOrBranchActionHandler extends RepositoryActionHandler {
 	public static void pushOrConfigure(final Repository repository,
 			RemoteConfig config, Shell shell) {
 		if (config != null) {
-			int timeout = Activator.getDefault().getPreferenceStore().getInt(
-					UIPreferences.REMOTE_CONNECTION_TIMEOUT);
-			PushOperationUI op = new PushOperationUI(repository, config.getName(), timeout,
-					false);
+			PushOperationUI op = new PushOperationUI(repository,
+					config.getName(), false);
 			op.start();
 		} else {
 			Ref head = getHeadIfSymbolic(repository);
