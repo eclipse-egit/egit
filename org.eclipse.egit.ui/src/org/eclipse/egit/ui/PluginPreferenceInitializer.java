@@ -47,7 +47,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_TOOLTIPS, false);
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES, false);
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS, true);
-		store.setDefault(UIPreferences.RESOURCEHISTORY_FOLLOW_RENAMES, false);
+		store.setDefault(UIPreferences.RESOURCEHISTORY_FOLLOW_RENAMES, true);
 		store.setDefault(UIPreferences.RESOURCEHISTORY_COMPARE_MODE, false);
 
 		store.setDefault(UIPreferences.DECORATOR_RECOMPUTE_ANCESTORS, true);
