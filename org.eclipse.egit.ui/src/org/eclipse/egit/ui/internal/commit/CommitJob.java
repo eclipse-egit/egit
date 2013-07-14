@@ -22,7 +22,6 @@ import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentStateManager;
@@ -148,10 +147,8 @@ public class CommitJob extends Job {
 				}
 			});
 		} else {
-			int timeout = Activator.getDefault().getPreferenceStore()
-					.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 			PushOperationUI op = new PushOperationUI(repository,
-					config.getName(), timeout, false);
+					config.getName(), false);
 			op.start();
 		}
 
