@@ -8,7 +8,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.view.synchronize;
 
-import static org.eclipse.egit.ui.internal.UIText.CommitAction_commit;
 import static org.eclipse.egit.ui.internal.UIText.CommitDialog_Commit;
 import static org.eclipse.egit.ui.internal.UIText.CommitDialog_CommitChanges;
 import static org.eclipse.egit.ui.internal.UIText.CommitDialog_SelectAll;
@@ -262,7 +261,7 @@ public abstract class AbstractSynchronizeViewTest extends
 	}
 
 	protected void commit(String projectName) throws InterruptedException {
-		showDialog(projectName, "Team", CommitAction_commit);
+		showDialog(projectName, "Team", "Commit...");
 
 		SWTBot shellBot = bot.shell(CommitDialog_CommitChanges).bot();
 		shellBot.styledText(0).setText(TEST_COMMIT_MSG);
