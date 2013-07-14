@@ -180,7 +180,7 @@ public abstract class GitRepositoriesViewTestBase extends
 
 		myRepository.getConfig().save();
 		// and push
-		PushOperationUI pa = new PushOperationUI(myRepository, "push", 0, false);
+		PushOperationUI pa = new PushOperationUI(myRepository, "push", false);
 		pa.execute(null);
 		TestUtil.joinJobs(JobFamilies.PUSH);
 		try {
