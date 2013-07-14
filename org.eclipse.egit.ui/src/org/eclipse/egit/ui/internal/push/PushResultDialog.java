@@ -101,7 +101,7 @@ class PushResultDialog extends TitleAreaDialog {
 	protected Control createDialogArea(final Composite parent) {
 		final Composite composite = (Composite) super.createDialogArea(parent);
 		String pushErrors = getPushErrors();
-		setTitle(NLS.bind(UIText.ResultDialog_label, destinationString));
+		setTitle(NLS.bind(UIText.PushResultDialog_label, destinationString));
 		if (pushErrors != null && pushErrors.length() > 0)
 			setErrorMessage(pushErrors);
 		final PushResultTable table = new PushResultTable(composite);
@@ -114,7 +114,7 @@ class PushResultDialog extends TitleAreaDialog {
 		tableControl.setLayoutData(tableLayout);
 
 		getShell().setText(
-				NLS.bind(UIText.ResultDialog_title, destinationString));
+				NLS.bind(UIText.PushResultDialog_title, destinationString));
 		applyDialogFont(composite);
 		return composite;
 	}

@@ -93,7 +93,7 @@ public class PushActionTest extends LocalRepositoryTestCase {
 		if (withConfirmPage)
 			pushDialog.bot().button(IDialogConstants.NEXT_LABEL).click();
 		pushDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
-		SWTBotShell confirm = bot.shell(NLS.bind(UIText.ResultDialog_title,
+		SWTBotShell confirm = bot.shell(NLS.bind(UIText.PushResultDialog_title,
 				destination));
 		String result = confirm.bot().tree().getAllItems()[0].getText();
 
@@ -113,7 +113,7 @@ public class PushActionTest extends LocalRepositoryTestCase {
 		if (withConfirmPage)
 			pushDialog.bot().button(IDialogConstants.NEXT_LABEL).click();
 		pushDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
-		confirm = bot.shell(NLS.bind(UIText.ResultDialog_title, destination));
+		confirm = bot.shell(NLS.bind(UIText.PushResultDialog_title, destination));
 		result = confirm.bot().tree().getAllItems()[0].getText();
 
 		confirm.close();

@@ -118,7 +118,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		String destinationString = clonedRepositoryFile.getParentFile()
 				.getName()
 				+ " - " + "origin";
-		String dialogTitle = NLS.bind(UIText.ResultDialog_title,
+		String dialogTitle = NLS.bind(UIText.PushResultDialog_title,
 				destinationString);
 
 		// first time: expect new branch
@@ -220,7 +220,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		PushOperationUI op =new PushOperationUI(repository, "origin", 0, false);
 		op.start();
 
-		String pushdialogTitle = NLS.bind(UIText.ResultDialog_title,
+		String pushdialogTitle = NLS.bind(UIText.PushResultDialog_title,
 				op.getDestinationString());
 
 		bot.shell(pushdialogTitle).close();
