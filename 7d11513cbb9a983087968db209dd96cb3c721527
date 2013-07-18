@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "073dc3ed_279ffe40",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-07-18T17:39:24Z",
+      "side": 1,
+      "message": "I think the difference between \"no commit\" and \"squash\" could be clearer.\n\nHow about \"N\u0026o commit (prepare merge commit, but don\u0027t commit yet)\" and \"\u0026Squash (merge changes into working directory, but don\u0027t create merge commit)\"?",
+      "revId": "7d11513cbb9a983087968db209dd96cb3c721527",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
