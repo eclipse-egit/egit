@@ -1633,7 +1633,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			CommitMessageComponentState oldState) {
 		boolean headCommitChanged = !oldState.getHeadCommit().equals(
 				getCommitId(helper.getPreviousCommit()));
-		commitMessageComponent.enableListers(false);
+		commitMessageComponent.enableListeners(false);
 		commitMessageComponent.setAuthor(oldState.getAuthor());
 		if (headCommitChanged)
 			addHeadChangedWarning(oldState.getCommitMessage());
@@ -1655,7 +1655,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			commitMessageComponent.setAmending(false);
 		commitMessageComponent.updateUIFromState();
 		commitMessageComponent.updateSignedOffAndChangeIdButton();
-		commitMessageComponent.enableListers(true);
+		commitMessageComponent.enableListeners(true);
 	}
 
 	private void addHeadChangedWarning(String commitMessage) {
@@ -1665,7 +1665,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 	}
 
 	private void loadInitialState(CommitHelper helper) {
-		commitMessageComponent.enableListers(false);
+		commitMessageComponent.enableListeners(false);
 		commitMessageComponent.resetState();
 		commitMessageComponent.setAuthor(helper.getAuthor());
 		commitMessageComponent.setCommitMessage(helper.getCommitMessage());
@@ -1679,7 +1679,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		// set the defaults for change id and signed off buttons.
 		commitMessageComponent.setDefaults();
 		commitMessageComponent.updateUI();
-		commitMessageComponent.enableListers(true);
+		commitMessageComponent.enableListeners(true);
 	}
 
 	private boolean userEnteredCommmitMessage() {

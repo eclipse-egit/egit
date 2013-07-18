@@ -160,7 +160,7 @@ public class CommitMessageComponent {
 
 	private ObjectId headCommitId;
 
-	private boolean listersEnabled;
+	private boolean listenersEnabled;
 
 	/**
 	 * @param repository
@@ -196,7 +196,7 @@ public class CommitMessageComponent {
 		createChangeId = false;
 		filesToCommit = new ArrayList<String>();
 		headCommitId = null;
-		listersEnabled = false;
+		listenersEnabled = false;
 	}
 
 	/**
@@ -389,12 +389,12 @@ public class CommitMessageComponent {
 	}
 
 	/**
-	 * Disable listeners on commit message editor and committer text
-	 * to change data programmatically.
+	 * Enable/disable listeners on commit message editor and committer text to
+	 * change data programmatically.
 	 * @param enable
 	 */
-	public void enableListers(boolean enable) {
-		this.listersEnabled = enable;
+	public void enableListeners(boolean enable) {
+		this.listenersEnabled = enable;
 	}
 
 	/**
@@ -494,7 +494,7 @@ public class CommitMessageComponent {
 			String oldCommitter = committerText.getText();
 
 			public void modifyText(ModifyEvent e) {
-				if (!listersEnabled)
+				if (!listenersEnabled)
 					return;
 				if (signedOff) {
 					// the commit message is signed
@@ -512,7 +512,7 @@ public class CommitMessageComponent {
 				committerText, COMMITTER_VALUES_PREF);
 		commitText.getTextWidget().addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
-				if (!listersEnabled)
+				if (!listenersEnabled)
 					return;
 				updateSignedOffButton();
 				updateChangeIdButton();
