@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2012 SAP AG and others.
+ * Copyright (c) 2011, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -23,6 +23,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.merge.MergeResultDialog;
+import org.eclipse.egit.ui.internal.rebase.RebaseResultDialog;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -127,12 +129,13 @@ public class MultiPullResultDialog extends Dialog {
 				if (pullRes.getMergeResult() != null) {
 					return NLS.bind(
 							UIText.MultiPullResultDialog_MergeResultMessage,
-							pullRes.getMergeResult().getMergeStatus().name());
+							MergeResultDialog.getStatusText(pullRes
+									.getMergeResult().getMergeStatus()));
 				} else if (pullRes.getRebaseResult() != null) {
 					RebaseResult res = pullRes.getRebaseResult();
 					return NLS.bind(
 							UIText.MultiPullResultDialog_RebaseResultMessage,
-							res.getStatus().name());
+							RebaseResultDialog.getStatusText(res.getStatus()));
 				} else {
 					return UIText.MultiPullResultDialog_NothingUpdatedStatus;
 				}
