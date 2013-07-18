@@ -759,6 +759,10 @@ public class StagingView extends ViewPart implements IShowInSource {
 			public void updateChangeIdToggleSelection(boolean selection) {
 				addChangeIdAction.setChecked(selection);
 			}
+
+			public void statusUpdated() {
+				updateMessage();
+			}
 		};
 		commitMessageComponent = new CommitMessageComponent(listener);
 		commitMessageComponent.attachControls(commitMessageText, authorText,
@@ -787,14 +791,6 @@ public class StagingView extends ViewPart implements IShowInSource {
 				commitButton.setToolTipText(null);
 			}
 		});
-
-		ModifyListener modifyListener = new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				updateMessage();
-			}
-		};
-		authorText.addModifyListener(modifyListener);
-		committerText.addModifyListener(modifyListener);
 
 		// react on selection changes
 		IWorkbenchPartSite site = getSite();
@@ -1240,7 +1236,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			warningLabel.showMessage(message);
 			needsRedraw = true;
 		} else {
-			needsRedraw = warningLabel.isVisible();
+			needsRedraw = warningLabel.getVisible();
 			warningLabel.hideMessage();
 		}
 		// Without this explicit redraw, the ControlDecoration of the

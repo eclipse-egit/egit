@@ -395,6 +395,8 @@ public class CommitMessageComponent {
 	 */
 	public void enableListeners(boolean enable) {
 		this.listenersEnabled = enable;
+		if (enable)
+			listener.statusUpdated();
 	}
 
 	/**
@@ -490,6 +492,13 @@ public class CommitMessageComponent {
 	private void addListeners() {
 		authorHandler = UIUtils.addPreviousValuesContentProposalToText(
 				authorText, AUTHOR_VALUES_PREF);
+		authorText.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				if (!listenersEnabled)
+					return;
+				listener.statusUpdated();
+			}
+		});
 		committerText.addModifyListener(new ModifyListener() {
 			String oldCommitter = committerText.getText();
 
@@ -506,6 +515,7 @@ public class CommitMessageComponent {
 							oldSignOff, newSignOff));
 					oldCommitter = newCommitter;
 				}
+				listener.statusUpdated();
 			}
 		});
 		committerHandler = UIUtils.addPreviousValuesContentProposalToText(
@@ -516,6 +526,7 @@ public class CommitMessageComponent {
 					return;
 				updateSignedOffButton();
 				updateChangeIdButton();
+				listener.statusUpdated();
 			}
 		});
 	}
