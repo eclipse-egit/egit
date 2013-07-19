@@ -11,8 +11,11 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commands.shared;
 
+import static org.eclipse.ui.handlers.HandlerUtil.getCurrentSelectionChecked;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -116,8 +119,25 @@ public abstract class AbstractSharedCommandHandler extends AbstractHandler {
 			if (node.getType() == RepositoryTreeNodeType.REF)
 				return ((RefNode) node).getObject();
 		}
-
 		return null;
+	}
+
+	/**
+	 * @param event
+	 * @return {@link Ref} provided by the given {@code event}
+	 * @throws ExecutionException
+	 *             If the current selection variable is not found for the given
+	 *             {@code event}
+	 * 
+	 */
+	protected Ref getRef(ExecutionEvent event) throws ExecutionException {
+		ISelection currentSelection = getCurrentSelectionChecked(event);
+		if (currentSelection instanceof IStructuredSelection) {
+			IStructuredSelection selection = (IStructuredSelection) currentSelection;
+			Object selected = selection.getFirstElement();
+			return getRef(selected);
+		} else
+			return null;
 	}
 
 	/**

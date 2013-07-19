@@ -207,6 +207,9 @@ public class UIIcons {
 	/** Rebase continue icon */
 	public final static ImageDescriptor REBASE_CONTINUE;
 
+	/** Rebase Process steps icon */
+	public static final ImageDescriptor REBASE_PROCESS_STEPS;
+
 	/** Rebase skip icon */
 	public final static ImageDescriptor REBASE_SKIP;
 
@@ -302,6 +305,7 @@ public class UIIcons {
 		COMMIT = map("obj16/commit.gif"); //$NON-NLS-1$
 		REBASE = map("obj16/rebase.gif"); //$NON-NLS-1$
 		REBASE_CONTINUE = map("elcl16/continue.gif"); //$NON-NLS-1$
+		REBASE_PROCESS_STEPS = map("elcl16/continue.gif"); //$NON-NLS-1$ //TODO: Add Icon
 		REBASE_SKIP = map("elcl16/skip.gif"); //$NON-NLS-1$
 		REBASE_ABORT = map("elcl16/progress_stop.gif"); //$NON-NLS-1$
 		OVR_ERROR = map("ovr/error.png"); //$NON-NLS-1$

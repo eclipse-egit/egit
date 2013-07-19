@@ -543,6 +543,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_rebaseMenuItem;
 
 	/** */
+	public static String GitHistoryPage_rebaseInteractiveMenuItem;
+
+	/** */
 	public static String GitHistoryPage_SetAsBaselineMenuLabel;
 
 	/** */
@@ -687,6 +690,12 @@ public class UIText extends NLS {
 	public static String RebaseCurrentRefCommand_ErrorGettingCurrentBranchMessage;
 
 	/** */
+	public static String RebaseInteractiveHandler_CommitAlreadyPushed;
+
+	/** */
+	public static String RebaseInteractiveHandler_CommitAlreadyPushed_Message;
+
+	/** */
 	public static String RebaseResultDialog_Aborted;
 
 	/** */
@@ -769,6 +778,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RebaseResultDialog_UpToDate;
+
+	/** */
+	public static String RebaseResultDialog_InteractivePrepared;
+
+	/** */
+	public static String RebaseResultDialog_RebaseResultDialog_NothingToDo;
 
 	/** */
 	public static String RebaseTargetSelectionDialog_DialogMessage;
@@ -4768,6 +4783,9 @@ public class UIText extends NLS {
 	public static String FetchChangeFromGerritCommand_noRepositorySelectedMessage;
 
 	/** */
+	public static String RebasePulldownAction_ProcessSteps;
+
+	/** */
 	public static String RebasePulldownAction_Continue;
 
 	/** */
@@ -4817,6 +4835,57 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitScmUrlImportWizardPage_counter;
+
+	/** */
+	public static String InteractiveRebaseView_this_partName;
+
+	/** */
+	public static String InteractiveRebaseView_frmEgit_text;
+
+	/** */
+	public static String InteractiveRebaseView_itemSquash_text;
+
+	/** */
+	public static String InteractiveRebaseView_itemEdit_text;
+
+	/** */
+	public static String InteractiveRebaseView_itemFixup_text;
+
+	/** */
+	public static String InteractiveRebaseView_itemDelete_text;
+
+	/** */
+	public static String InteractiveRebaseView_itemPick_text;
+
+	/** */
+	public static String InteractiveRebaseView_itemReword_text;
+
+	/** */
+	public static String InteractiveRebaseView_itemMoveUp_text;
+
+	/** */
+	public static String InteractiveRebaseView_itemMoveDown_text;
+
+	/** */
+	public static String InteractiveRebaseView_itemUndo_text;
+
+	/** */
+	public static String InteractiveRebaseView_itemRedo_text;
+
+	/** */
+	public static String InteractiveRebaseView_continueItem_text;
+
+	/** */
+	public static String InteractiveRebaseView_abortItem_text;
+
+	/** */
+	public static String InteractiveRebaseView_skipItem_text;
+
+	/** */
+	public static String InteractiveRebaseView_refreshItem_text;
+
+	/** */
+	public static String InteractiveRebaseView_startItem_text;
 
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);

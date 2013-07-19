@@ -12,8 +12,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commands.shared;
 
-import static org.eclipse.ui.handlers.HandlerUtil.getCurrentSelectionChecked;
-
 import java.io.IOException;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -25,7 +23,6 @@ import org.eclipse.egit.ui.internal.dialogs.RebaseTargetSelectionDialog;
 import org.eclipse.egit.ui.internal.rebase.RebaseHelper;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -38,18 +35,11 @@ import org.eclipse.osgi.util.NLS;
 public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 	/** */
 	public RebaseCurrentRefCommand() {
-		super(null, null, null);
+		super(null, null, null, false);
 	}
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		Ref ref;
-		ISelection currentSelection = getCurrentSelectionChecked(event);
-		if (currentSelection instanceof IStructuredSelection) {
-			IStructuredSelection selection = (IStructuredSelection) currentSelection;
-			Object selected = selection.getFirstElement();
-			ref = getRef(selected);
-		} else
-			ref = null;
+		Ref ref = getRef(event);
 
 		final Repository repository = getRepository(event);
 		if (repository == null)
@@ -78,7 +68,8 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 		String jobname = NLS.bind(
 				UIText.RebaseCurrentRefCommand_RebasingCurrentJobName,
 				Repository.shortenRefName(currentFullBranch), ref.getName());
-		RebaseHelper.runRebaseJob(repository, jobname, ref);
+		RebaseHelper.runRebaseJob(repository, jobname, ref,
+				RebaseHelper.DEFAULT_CANCEL_DIALOG_MESSAGE);
 		return null;
 	}
 

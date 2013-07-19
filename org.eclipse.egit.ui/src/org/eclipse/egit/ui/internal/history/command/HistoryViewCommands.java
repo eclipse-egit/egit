@@ -91,4 +91,7 @@ public class HistoryViewCommands {
 
 	/** Show Blame Annotations */
 	public static final String SHOW_BLAME = "org.eclipse.egit.ui.history.ShowBlame"; //$NON-NLS-1$
+
+	/** Rebase interactive */
+	public static final String REBASE_INTERACTIVE = "org.eclipse.egit.ui.RebaseInteractive"; //$NON-NLS-1$
 }

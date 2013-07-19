@@ -10,28 +10,20 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commands.shared;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.IEvaluationContext;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.egit.core.op.RebaseOperation;
-import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.rebase.RebaseResultDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.egit.ui.internal.rebase.RebaseHelper;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jgit.api.RebaseCommand.Operation;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.ISources;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * Rebase command base class
@@ -43,59 +35,42 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 
 	private final String dialogMessage;
 
+	private final boolean interactive;
+
+	private static final List<RebaseCommandFinishedListener> listeners = new ArrayList<RebaseCommandFinishedListener>();
+
 	/**
 	 * @param operation
 	 * @param jobname
 	 * @param dialogMessage
+	 * @param interactive
 	 */
 	protected AbstractRebaseCommandHandler(Operation operation, String jobname,
-			String dialogMessage) {
+			String dialogMessage, boolean interactive) {
 		this.operation = operation;
 		this.jobname = jobname;
 		this.dialogMessage = dialogMessage;
+		this.interactive = interactive;
 	}
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repository = getRepository(event);
+		final Ref ref = getRef(event);
+		return execute(repository, ref);
+	}
+
+	/**
+	 * @param repository
+	 * @param ref
+	 * @return {@code null}
+	 * @throws ExecutionException
+	 */
+	public Object execute(final Repository repository, Ref ref)
+			throws ExecutionException {
 		if (repository == null)
 			return null;
-		final RebaseOperation rebase = new RebaseOperation(repository,
-				this.operation);
-		Job job = new Job(jobname) {
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				try {
-					rebase.execute(monitor);
-				} catch (final CoreException e) {
-					return e.getStatus();
-				}
-				return Status.OK_STATUS;
-			}
-		};
-		job.setUser(true);
-		job.setRule(rebase.getSchedulingRule());
-		job.addJobChangeListener(new JobChangeAdapter() {
-			@Override
-			public void done(IJobChangeEvent cevent) {
-				IStatus result = cevent.getJob().getResult();
-				if (result.getSeverity() == IStatus.CANCEL)
-					Display.getDefault().asyncExec(new Runnable() {
-						public void run() {
-							// don't use getShell(event) here since
-							// the active shell has changed since the
-							// execution has been triggered.
-							Shell shell = PlatformUI.getWorkbench()
-									.getActiveWorkbenchWindow().getShell();
-							MessageDialog.openInformation(shell,
-									UIText.AbstractRebaseCommand_DialogTitle,
-									dialogMessage);
-						}
-					});
-				else if (result.isOK())
-					RebaseResultDialog.show(rebase.getResult(), repository);
-			}
-		});
-		job.schedule();
+		RebaseHelper.runRebaseJob(repository, jobname, ref, operation,
+				interactive, dialogMessage, listeners);
 		return null;
 	}
 
@@ -126,6 +101,52 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 			return (IEditorInput) editorInput;
 
 		return null;
+	}
+
+	/**
+	 * @param listener
+	 */
+	public static void addRebaseCommandFinishListener(
+			RebaseCommandFinishedListener listener) {
+		if (listeners.contains(listener))
+			return;
+		listeners.add(listener);
+	}
+	/**
+	 * @param listener
+	 */
+	public static void removeRebaseCommandFinishListener(
+			RebaseCommandFinishedListener listener) {
+		listeners.remove(listener);
+	}
+
+	/**
+	 *
+	 */
+	public interface RebaseCommandFinishedListener {
+		/**
+		 * Called when a
+		 *
+		 * @param operation
+		 * @param ref
+		 * @param repository
+		 * @param result
+		 */
+		void operationFinished(IStatus result, Repository repository, Ref ref,
+				Operation operation);
+	}
+
+	/**
+	 * @param result
+	 * @param repository
+	 * @param ref
+	 * @param operation
+	 */
+	public static void fireRebaseCommandFinished(IStatus result,
+			Repository repository, Ref ref, Operation operation) {
+		for (RebaseCommandFinishedListener listener : listeners) {
+			listener.operationFinished(result, repository, ref, operation);
+		}
 	}
 
 }

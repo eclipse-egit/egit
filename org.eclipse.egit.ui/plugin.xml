@@ -1812,6 +1812,13 @@
             id="org.eclipse.egit.ui.StagingView"
             name="%GitStagingView_name">
       </view>
+      <view
+            category="org.eclipse.egit.ui.GitCategory"
+            class="org.eclipse.egit.ui.internal.rebase.RebaseInteractiveView"
+            id="org.eclipse.egit.ui.InteractiveRebaseView"
+            name="%GitInteractiveRebaseView_name">
+            <!--icon="icons/eview16/rebase.png"-->
+      </view>
       <category
             id="org.eclipse.egit.ui.GitCategory"
             name="%GitCategory_name">
@@ -1831,6 +1838,11 @@
             icon="icons/eview16/reflog.gif"
             id="org.eclipse.egit.ui.ReflogView"
             name="%ReflogView">
+      </view>
+      <view
+            class="org.eclipse.egit.ui.internal.rebase.View"
+            id="org.eclipse.egit.ui.internal.rebase.View"
+            name="ViewPartTitle">
       </view>
    </extension>
    <extension
@@ -4922,6 +4934,11 @@
             name="%RebaseCurrentCommand.name">
       </command>
       <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.RebaseInteractiveHandler"
+            id="org.eclipse.egit.ui.RebaseInteractive"
+            name="%RebaseInteractiveCommand.name">
+      </command>
+      <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.OpenInCommitViewerHandler"
             id="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"
             name="%OpenInCommitViewerCommand.name">
@@ -5058,6 +5075,9 @@
          </part>
          <part
                id="org.eclipse.egit.ui.ReflogView">
+         </part>
+         <part
+               id="org.eclipse.egit.ui.InteractiveRebaseView">
          </part>
          <part
                id="org.eclipse.egit.ui.commitEditor">
