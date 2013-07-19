@@ -26,12 +26,14 @@ import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.RebaseCommand;
-import org.eclipse.jgit.api.RebaseResult;
+import org.eclipse.jgit.api.RebaseCommand.InteractiveHandler;
 import org.eclipse.jgit.api.RebaseCommand.Operation;
+import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.api.errors.RefNotFoundException;
+import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 
@@ -45,10 +47,12 @@ public class RebaseOperation implements IEGitOperation {
 
 	private final Operation operation;
 
+	private final InteractiveHandler interactiveHandler;
+
 	private RebaseResult result;
 
 	/**
-	 * Construct a {@link RebaseOperation} object for a {@link Ref}.
+	 * Construct a {@link RebaseOperation} object for a {@link Ref}
 	 * <p>
 	 * Upon {@link #execute(IProgressMonitor)}, the current HEAD will be rebased
 	 * onto the provided {@link Ref}
@@ -61,13 +65,38 @@ public class RebaseOperation implements IEGitOperation {
 	public RebaseOperation(Repository repository, Ref ref) {
 		this.repository = repository;
 		this.operation = Operation.BEGIN;
+		this.interactiveHandler = null;
+		this.ref = ref;
+	}
+
+	/**
+	 * Construct a {@link RebaseOperation} object for a {@link AnyObjectId}
+	 * using the given {@link InteractiveHandler}.
+	 * <p>
+	 * Upon {@link #execute(IProgressMonitor)}, the current HEAD will be rebased
+	 * interactively
+	 *
+	 * @param repository
+	 *            the {@link Repository}
+	 * @param ref
+	 *            the ref pointing to the last commit that will not be included
+	 *            in this interactive rebase
+	 * @param interactiveHandler
+	 *            the {@link InteractiveHandler} to be used. If not null run
+	 *            interactively otherwise not
+	 */
+	public RebaseOperation(Repository repository, Ref ref,
+			InteractiveHandler interactiveHandler) {
+		this.repository = repository;
+		this.operation = Operation.BEGIN;
+		this.interactiveHandler = interactiveHandler;
 		this.ref = ref;
 	}
 
 	/**
 	 * Used to abort, skip, or continue a stopped rebase operation that has been
-	 * started before.
-	 *
+	 * started before. Does not provide a {@link InteractiveHandler}, i.e. use
+	 * this if not running interactively
 	 * @param repository
 	 *            the {@link Repository}
 	 * @param operation
@@ -75,8 +104,26 @@ public class RebaseOperation implements IEGitOperation {
 	 *            {@link Operation#SKIP}
 	 */
 	public RebaseOperation(Repository repository, Operation operation) {
+		this(repository, operation, null);
+	}
+
+	/**
+	 * Used to abort, skip, or continue a stopped rebase operation that has been
+	 * started before.
+	 * @param repository
+	 *            the {@link Repository}
+	 * @param operation
+	 *            one of {@link Operation#ABORT}, {@link Operation#CONTINUE},
+	 *            {@link Operation#SKIP}
+	 * @param interactiveHandler
+	 *            the {@link InteractiveHandler} to be used if a user for
+	 *            interaction. Will not be used if null
+	 */
+	public RebaseOperation(Repository repository, Operation operation,
+			InteractiveHandler interactiveHandler) {
 		this.repository = repository;
 		this.operation = operation;
+		this.interactiveHandler = interactiveHandler;
 		this.ref = null;
 	}
 
@@ -96,8 +143,14 @@ public class RebaseOperation implements IEGitOperation {
 						.setProgressMonitor(
 								new EclipseGitProgressTransformer(actMonitor));
 				try {
-					if (operation == Operation.BEGIN)
+					if (interactiveHandler != null)
+						cmd.runInteractively(interactiveHandler, true);
+
+					if (operation == Operation.BEGIN){
+						if (ref == null)
+							return; // throw Exception instead?
 						result = cmd.setUpstream(ref.getName()).call();
+					}
 					else
 						result = cmd.setOperation(operation).call();
 
