@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e4bec_f1a40205",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/mapping/GitContainerMapping.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-07-21T15:56:54Z",
+      "side": 1,
+      "message": "In which cases is it OK to set dataSet to null? Looks like it will just lead to an NPE later on. Better to abort earlier here and throw an exception (or return an empty array?).",
+      "revId": "28725a79b36af38148bde31209974e415560226d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
