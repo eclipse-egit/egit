@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Jens Baumgart <jens.baumgart@sap.com>
+ * Copyright (C) 2011, 2013 Jens Baumgart <jens.baumgart@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,8 +12,10 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.egit.ui.test.SWTBotTreeColumn;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarToggleButton;
@@ -184,4 +186,9 @@ public class CommitDialogTester {
 		return button.isChecked();
 	}
 
+	public void sortByName() {
+		final Tree tree = commitDialog.bot().tree().widget;
+		SWTBotTreeColumn column = SWTBotTreeColumn.getColumn(tree, 1);
+		column.click();
+	}
 }

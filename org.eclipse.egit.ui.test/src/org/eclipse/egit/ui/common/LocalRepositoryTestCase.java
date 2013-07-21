@@ -491,9 +491,12 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		if (!prj.isAccessible())
 			throw new IllegalStateException("No project to touch");
 		IFile file = prj.getFile(new Path(filePath));
-		file.setContents(
-				new ByteArrayInputStream(newContent.getBytes(prj
-						.getDefaultCharset())), 0, null);
+		ByteArrayInputStream inputStream = new ByteArrayInputStream(
+				newContent.getBytes(prj.getDefaultCharset()));
+		if (!file.exists())
+			file.create(inputStream, 0, null);
+		else
+			file.setContents(inputStream, 0, null);
 		return file;
 	}
 

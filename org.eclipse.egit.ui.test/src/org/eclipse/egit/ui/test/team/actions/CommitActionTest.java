@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -253,5 +253,22 @@ public class CommitActionTest extends LocalRepositoryTestCase {
 					.setValue(UIPreferences.COMMIT_DIALOG_INCLUDE_UNTRACKED,
 							include);
 		}
+	}
+
+	@Test
+	public void testSortingByName() throws Exception {
+		touch(PROJ1, "a", "a");
+		touch(PROJ1, "b", "b");
+		CommitDialogTester commitDialogTester = CommitDialogTester
+				.openCommitDialog(PROJ1);
+		assertEquals(2, commitDialogTester.getRowCount());
+		assertEquals(PROJ1 + "/a", commitDialogTester.getEntryText(0));
+		assertEquals(PROJ1 + "/b", commitDialogTester.getEntryText(1));
+		// Sort ascending (first click changes default sort order)
+		commitDialogTester.sortByName();
+		// Sort descending (now the sort order should be reversed)
+		commitDialogTester.sortByName();
+		assertEquals(PROJ1 + "/b", commitDialogTester.getEntryText(0));
+		assertEquals(PROJ1 + "/a", commitDialogTester.getEntryText(1));
 	}
 }
