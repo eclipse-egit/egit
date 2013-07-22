@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e4bec_94bc8757",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/LocalRepositoryTestCase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 17
+      },
+      "writtenOn": "2013-07-22T07:02:05Z",
+      "side": 1,
+      "message": "The changes to this file seem to be unrelated to the fix. But it\u0027s a test case. Thus, I don\u0027t worry much. Just need confirmation from your side if that is intentional.",
+      "revId": "2cb1a71e3dc8f81655770634106e298c3f87e35b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
