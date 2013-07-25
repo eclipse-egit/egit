@@ -16,6 +16,24 @@
       "revId": "7d11513cbb9a983087968db209dd96cb3c721527",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_18e9aa78",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2013-07-25T08:53:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "073dc3ed_279ffe40",
+      "revId": "7d11513cbb9a983087968db209dd96cb3c721527",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
