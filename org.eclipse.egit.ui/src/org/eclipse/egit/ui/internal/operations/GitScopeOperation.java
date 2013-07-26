@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Tasktop Technologies Inc.
+ * Copyright (C) 2011, 2013 Tasktop Technologies Inc and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,16 +14,18 @@ package org.eclipse.egit.ui.internal.operations;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.ResourceTraversal;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.Status;
+import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.core.mapping.ISynchronizationScopeManager;
 import org.eclipse.team.ui.synchronize.ModelOperation;
@@ -67,30 +69,43 @@ public class GitScopeOperation extends ModelOperation {
 	protected boolean promptForInputChange(String requestPreviewMessage,
 			IProgressMonitor monitor) {
 		List<IResource> relevantResources = getRelevantResources();
-		for (IResource resource : relevantResources)
-			if (hasChanged(resource))
-				return super.promptForInputChange(requestPreviewMessage, monitor);
+		Map<Repository, Collection<String>> pathsByRepo = ResourceUtil
+				.splitResourcesByRepository(relevantResources);
+		for (Map.Entry<Repository, Collection<String>> entry : pathsByRepo
+				.entrySet()) {
+			Repository repository = entry.getKey();
+			Collection<String> paths = entry.getValue();
+			IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
+			if (cache == null)
+				continue;
+
+			IndexDiffCacheEntry cacheEntry = cache.getIndexDiffCacheEntry(repository);
+			if (cacheEntry == null)
+				continue;
+
+			IndexDiffData indexDiff = cacheEntry.getIndexDiff();
+			if (indexDiff == null)
+				continue;
+
+			if (hasAnyPathChanged(paths, indexDiff))
+				return super.promptForInputChange(requestPreviewMessage,
+						monitor);
+		}
 		return false;
 	}
 
-	private boolean hasChanged(IResource resource) {
-		boolean hasChanged = false;
-		RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
-		try {
-			Repository repository = mapping.getRepository();
-			Status repoStatus = new Git(repository).status().call();
-			String path = resource.getFullPath().removeFirstSegments(1)
-					.toOSString();
-			hasChanged = repoStatus.getAdded().contains(path)
-					|| repoStatus.getChanged().contains(path)
-					|| repoStatus.getModified().contains(path)
-					|| repoStatus.getRemoved().contains(path)
-					|| repoStatus.getUntracked().contains(path);
-		} catch (Exception e) {
-			Activator.logError(UIText.GitScopeOperation_couldNotDetermineState,
-					e);
+	private static boolean hasAnyPathChanged(Collection<String> paths,
+			IndexDiffData indexDiff) {
+		for (String path : paths) {
+			boolean hasChanged = indexDiff.getAdded().contains(path)
+					|| indexDiff.getChanged().contains(path)
+					|| indexDiff.getModified().contains(path)
+					|| indexDiff.getRemoved().contains(path)
+					|| indexDiff.getUntracked().contains(path);
+			if (hasChanged)
+				return true;
 		}
-		return hasChanged;
+		return false;
 	}
 
 }
