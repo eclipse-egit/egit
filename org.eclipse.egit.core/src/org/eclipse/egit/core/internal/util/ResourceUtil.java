@@ -13,6 +13,7 @@ package org.eclipse.egit.core.internal.util;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -106,7 +107,7 @@ public class ResourceUtil {
 	 *         occurring repository
 	 */
 	public static Map<Repository, Collection<String>> splitResourcesByRepository(
-			IResource[] resources) {
+			Collection<IResource> resources) {
 		Map<Repository, Collection<String>> result = new HashMap<Repository, Collection<String>>();
 		for (IResource resource : resources) {
 			RepositoryMapping repositoryMapping = RepositoryMapping
@@ -117,6 +118,17 @@ public class ResourceUtil {
 			addPathToMap(repositoryMapping, path, result);
 		}
 		return result;
+	}
+
+	/**
+	 * @see #splitResourcesByRepository(Collection)
+	 * @param resources
+	 * @return a map containing a list of repository relative paths for each
+	 *         occurring repository
+	 */
+	public static Map<Repository, Collection<String>> splitResourcesByRepository(
+			IResource[] resources) {
+		return splitResourcesByRepository(Arrays.asList(resources));
 	}
 
 	/**
