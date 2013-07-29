@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2007, IBM Corporation and others
+ * Copyright (C) 2007, 2013 IBM Corporation and others.
  * Copyright (C) 2007, Dave Watson <dwatson@mimvista.com>
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
@@ -84,11 +84,14 @@ public class GitLightweightDecorator extends LabelProvider implements
 			IStatus.ERROR, Activator.getDefault().getLog());
 
 	private static String[] fonts = new String[]  {
-		UIPreferences.THEME_UncommittedChangeFont};
+			UIPreferences.THEME_UncommittedChangeFont,
+			UIPreferences.THEME_IgnoredResourceFont };
 
 	private static String[] colors = new String[] {
 		UIPreferences.THEME_UncommittedChangeBackgroundColor,
-		UIPreferences.THEME_UncommittedChangeForegroundColor};
+			UIPreferences.THEME_UncommittedChangeForegroundColor,
+			UIPreferences.THEME_IgnoredResourceBackgroundColor,
+			UIPreferences.THEME_IgnoredResourceForegroundColor };
 
 	/**
 	 * Constructs a new Git resource decorator
@@ -363,21 +366,30 @@ public class GitLightweightDecorator extends LabelProvider implements
 		 */
 		public void decorate(IDecoration decoration,
 				IDecoratableResource resource) {
+			decorateFontAndColour(decoration, resource);
+
 			if (resource.isIgnored())
 				return;
 
 			decorateText(decoration, resource);
 			decorateIcons(decoration, resource);
-			decorateFontAndColour(decoration, resource);
 		}
 
 		private void decorateFontAndColour(IDecoration decoration,
 				IDecoratableResource resource) {
 			ITheme current = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme();
 			if (resource.isIgnored()) {
-				return;
-			}
-			if (!resource.isTracked()
+				Color bc = current.getColorRegistry().get(
+						UIPreferences.THEME_IgnoredResourceBackgroundColor);
+				Color fc = current.getColorRegistry().get(
+						UIPreferences.THEME_IgnoredResourceForegroundColor);
+				Font f = current.getFontRegistry().get(
+						UIPreferences.THEME_IgnoredResourceFont);
+
+				decoration.setBackgroundColor(bc);
+				decoration.setForegroundColor(fc);
+				decoration.setFont(f);
+			} else if (!resource.isTracked()
 					|| resource.isDirty()
 					|| resource.staged() != Staged.NOT_STAGED) {
 				Color bc = current.getColorRegistry().get(UIPreferences.THEME_UncommittedChangeBackgroundColor);
@@ -607,7 +619,10 @@ public class GitLightweightDecorator extends LabelProvider implements
 			postLabelEvent();
 		} else if (prop.equals(UIPreferences.THEME_UncommittedChangeBackgroundColor)
 				|| prop.equals(UIPreferences.THEME_UncommittedChangeFont)
-				|| prop.equals(UIPreferences.THEME_UncommittedChangeForegroundColor)) {
+				|| prop.equals(UIPreferences.THEME_UncommittedChangeForegroundColor)
+				|| prop.equals(UIPreferences.THEME_IgnoredResourceFont)
+				|| prop.equals(UIPreferences.THEME_IgnoredResourceBackgroundColor)
+				|| prop.equals(UIPreferences.THEME_IgnoredResourceForegroundColor)) {
 			ensureFontAndColorsCreated(fonts, colors);
 			postLabelEvent(); // TODO do I really need this?
 		}
