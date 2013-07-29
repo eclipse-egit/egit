@@ -1318,14 +1318,10 @@ public class StagingView extends ViewPart implements IShowInSource {
 				for (Object item : selection.toArray()) {
 					if (item instanceof StagingFolderEntry) {
 						folderSelected = true;
-						StagingEntry[] stagingEntries;
-						if (presentation == PRESENTATION_COMPRESSED_FOLDERS)
-							stagingEntries = ((StagingViewContentProvider) treeViewer
-									.getContentProvider())
-									.getChildResources((StagingFolderEntry) item);
-						else
-							stagingEntries = ((StagingViewContentProvider) treeViewer
-									.getContentProvider()).getStagingEntries(
+						StagingViewContentProvider contentProvider = (StagingViewContentProvider) treeViewer
+								.getContentProvider();
+						StagingEntry[] stagingEntries = contentProvider
+								.getStagingEntries(
 									(StagingFolderEntry) item,
 									filterText.getText());
 						for (StagingEntry stagingEntry : stagingEntries) {
@@ -1723,32 +1719,20 @@ public class StagingView extends ViewPart implements IShowInSource {
 				StagingEntry entry = (StagingEntry) element;
 				rm = selectEntryForStaging(git, rm, addPaths, entry);
 			} else {
-				if (presentation == PRESENTATION_COMPRESSED_FOLDERS) {
-					StagingViewContentProvider contentProvider = (StagingViewContentProvider) unstagedViewer
-							.getContentProvider();
-					StagingFolderEntry folder = (StagingFolderEntry) element;
-					StagingEntry[] entries = contentProvider
-							.getChildResources(folder);
-					for (StagingEntry entry : entries) {
-						if (isUnfiltered(entry))
-							rm = selectEntryForStaging(git, rm, addPaths, entry);
-					}
-				} else {
-					IResource resource = AdapterUtils.adapt(element,
-							IResource.class);
-					if (resource != null) {
-						RepositoryMapping mapping = RepositoryMapping
-								.getMapping(resource);
-						if (mapping != null
-								&& mapping.getRepository() == currentRepository) {
-							String path = mapping.getRepoRelativePath(resource);
-							// If resource corresponds to root of working
-							// directory
-							if ("".equals(path)) //$NON-NLS-1$
-								addPaths.add("."); //$NON-NLS-1$
-							else
-								addPaths.add(path);
-						}
+				IResource resource = AdapterUtils.adapt(element,
+						IResource.class);
+				if (resource != null) {
+					RepositoryMapping mapping = RepositoryMapping
+							.getMapping(resource);
+					if (mapping != null
+							&& mapping.getRepository() == currentRepository) {
+						String path = mapping.getRepoRelativePath(resource);
+						// If resource corresponds to root of working
+						// directory
+						if ("".equals(path)) //$NON-NLS-1$
+							addPaths.add("."); //$NON-NLS-1$
+						else
+							addPaths.add(path);
 					}
 				}
 			}
@@ -1870,27 +1854,15 @@ public class StagingView extends ViewPart implements IShowInSource {
 				StagingEntry entry = (StagingEntry) selectedItem;
 				selectEntryForUnstaging(headRev, edit, entry);
 			} else if (selectedItem instanceof StagingFolderEntry) {
-				if (presentation == PRESENTATION_COMPRESSED_FOLDERS) {
-					StagingViewContentProvider contentProvider = (StagingViewContentProvider) stagedViewer
-							.getContentProvider();
-					StagingFolderEntry folder = (StagingFolderEntry) selectedItem;
-					StagingEntry[] entries = contentProvider
-							.getChildResources(folder);
-					for (StagingEntry entry : entries) {
-						if (isUnfiltered(entry))
-							selectEntryForUnstaging(headRev, edit, entry);
-					}
-				} else {
-					StagingFolderEntry folderEntry = (StagingFolderEntry) selectedItem;
-					String filter = null;
-					if (filterText != null)
-						filter = filterText.getText().trim();
-					StagingEntry[] droppedEntries = ((StagingViewContentProvider) stagedViewer
-							.getContentProvider()).getStagingEntries(
-							folderEntry, filter);
-					updateDirCache(new StructuredSelection(droppedEntries),
-							headRev, edit);
-				}
+				StagingFolderEntry folderEntry = (StagingFolderEntry) selectedItem;
+				String filter = null;
+				if (filterText != null)
+					filter = filterText.getText().trim();
+				StagingEntry[] droppedEntries = ((StagingViewContentProvider) stagedViewer
+						.getContentProvider()).getStagingEntries(folderEntry,
+						filter);
+				updateDirCache(new StructuredSelection(droppedEntries),
+						headRev, edit);
 			}
 		}
 	}

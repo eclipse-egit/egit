@@ -18,26 +18,24 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.internal.decorators.IProblemDecoratable;
 
 /**
  * A staged/unstaged folder entry in the tree
  */
 public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
-	private File file;
-
-	private IPath path;
+	private final IPath location;
+	private final IPath nodePath;
 
 	private StagingFolderEntry parent;
 
 	/**
-	 * @param file
+	 * @param location
+	 * @param nodePath
 	 */
-	public StagingFolderEntry(File file) {
-		super();
-		this.file = file;
-		path = new Path(file.getAbsolutePath());
+	public StagingFolderEntry(IPath location, IPath nodePath) {
+		this.location = location;
+		this.nodePath = nodePath;
 	}
 
 	/**
@@ -46,7 +44,7 @@ public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
 	 */
 	public IContainer getContainer() {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IContainer resource = root.getContainerForLocation(path);
+		IContainer resource = root.getContainerForLocation(getPath());
 		return resource;
 	}
 
@@ -67,7 +65,7 @@ public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
 		if (adapter == IResource.class || adapter == IContainer.class)
 			return getContainer();
 		else if (adapter == IPath.class)
-			return path;
+			return getPath();
 		return null;
 	}
 
@@ -75,14 +73,21 @@ public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
 	 * @return the path corresponding to the folder entry
 	 */
 	public IPath getPath() {
-		return path;
+		return location;
+	}
+
+	/**
+	 * @return the path of the node
+	 */
+	public IPath getNodePath() {
+		return nodePath;
 	}
 
 	/**
 	 * @return the file corresponding to the folder entry
 	 */
 	public File getFile() {
-		return file;
+		return location.toFile();
 	}
 
 	/**
@@ -102,14 +107,13 @@ public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof StagingFolderEntry)
-			return ((StagingFolderEntry) obj).getFile().getAbsolutePath()
-					.equals(file.getAbsolutePath());
+			return ((StagingFolderEntry) obj).getPath().equals(getPath());
 		return super.equals(obj);
 	}
 
 	@Override
 	public int hashCode() {
-		return file.getAbsolutePath().hashCode();
+		return getPath().hashCode();
 	}
 
 }
