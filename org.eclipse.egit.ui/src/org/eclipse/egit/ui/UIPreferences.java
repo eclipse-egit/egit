@@ -13,8 +13,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui;
 
-
-
 /**
  * Preferences used by the EGit UI plug-in.
  * <p>
@@ -107,6 +105,12 @@ public class UIPreferences {
 	public final static String THEME_DiffRemoveBackgroundColor = "org.eclipse.egit.ui.DiffRemoveBackgroundColor"; //$NON-NLS-1$
 	/** */
 	public final static String THEME_DiffRemoveForegroundColor = "org.eclipse.egit.ui.DiffRemoveForegroundColor"; //$NON-NLS-1$
+	/** */
+	public final static String THEME_IgnoredResourceForegroundColor = "org.eclipse.egit.ui.IgnoredResourceForegroundColor"; //$NON-NLS-1$
+	/** */
+	public final static String THEME_IgnoredResourceBackgroundColor = "org.eclipse.egit.ui.IgnoredResourceBackgroundColor"; //$NON-NLS-1$
+	/** */
+	public final static String THEME_IgnoredResourceFont = "org.eclipse.egit.ui.IgnoredResourceFont"; //$NON-NLS-1$
 	/** */
 	public final static String DECORATOR_RECOMPUTE_ANCESTORS = "decorator_recompute_ancestors"; //$NON-NLS-1$
 	/** */
