@@ -60,7 +60,7 @@ class GitSyncCache {
 
 		for (Entry<GitSynchronizeData, Collection<String>> entry : updateRequests
 				.entrySet()) {
-			cache.merge(getAllData(entry.getKey(), entry.getValue()));
+			cache.merge(getAllData(entry.getKey(), entry.getValue()), null);
 			m.worked(1);
 		}
 
@@ -176,13 +176,17 @@ class GitSyncCache {
 		return cache.get(repo.getDirectory());
 	}
 
-	public void merge(GitSyncCache newCache) {
+	public void merge(GitSyncCache newCache, Collection<String> updateRequests) {
 		for (Entry<File, GitSyncObjectCache> entry : newCache.cache.entrySet()) {
 			File key = entry.getKey();
-			if (cache.containsKey(key))
-				cache.get(key).merge(entry.getValue());
-			else
-				cache.put(key, entry.getValue());
+			// Bug #415430
+			if (updateRequests == null
+					|| (updateRequests.contains(key.getPath()))) {
+				if (cache.containsKey(key))
+					cache.get(key).merge(entry.getValue());
+				else
+					cache.put(key, entry.getValue());
+			}
 		}
 	}
 
