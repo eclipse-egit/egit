@@ -165,27 +165,38 @@ class GitSyncObjectCache {
 		return builder.toString();
 	}
 
-	void merge(GitSyncObjectCache value) {
+	void merge(GitSyncObjectCache value, String parentPath,
+			Collection<String> updateRequests) {
 		if (value.members != null) {
 			if (members == null)
 				members = new HashMap<String, GitSyncObjectCache>();
 			else
 				for (Entry<String, GitSyncObjectCache> entry : members
-						.entrySet())
-					if (!value.members.containsKey(entry.getKey()))
-						entry.getValue().diffEntry.changeType = ChangeType.IN_SYNC;
+						.entrySet()) {
+					String entryKey = entry.getKey();
+					if (!value.members.containsKey(entryKey)) {
+						GitSyncObjectCache entryValue = entry.getValue();
+						if (updateRequests.contains(parentPath + "/" //$NON-NLS-1$
+								+ entryValue.diffEntry))
+							entryValue.diffEntry.changeType = ChangeType.IN_SYNC;
+					}
+				}
 
 			for (Entry<String, GitSyncObjectCache> entry : value.members
 					.entrySet()) {
 				String key = entry.getKey();
 				if (members.containsKey(key))
-					members.get(key).merge(entry.getValue());
+					members.get(key).merge(entry.getValue(),
+							parentPath + "/" + key, //$NON-NLS-1$
+							updateRequests);
 				else
 					members.put(key, entry.getValue());
 			}
 		} else if (members != null)
-			for (GitSyncObjectCache obj : members.values())
-				obj.diffEntry.changeType = ChangeType.IN_SYNC;
+			for (GitSyncObjectCache obj : members.values()) {
+				if (updateRequests.contains(obj.diffEntry.getPath()))
+					obj.diffEntry.changeType = ChangeType.IN_SYNC;
+			}
 		else // we should be on leaf entry, just update the change type value
 			diffEntry.changeType = value.diffEntry.changeType;
 	}
