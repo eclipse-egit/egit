@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.eclipse.egit.core.internal.CoreText;
-import org.eclipse.egit.core.synchronize.ThreeWayDiffEntry.ChangeType;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -169,11 +168,6 @@ class GitSyncObjectCache {
 		if (value.members != null) {
 			if (members == null)
 				members = new HashMap<String, GitSyncObjectCache>();
-			else
-				for (Entry<String, GitSyncObjectCache> entry : members
-						.entrySet())
-					if (!value.members.containsKey(entry.getKey()))
-						entry.getValue().diffEntry.changeType = ChangeType.IN_SYNC;
 
 			for (Entry<String, GitSyncObjectCache> entry : value.members
 					.entrySet()) {
@@ -183,9 +177,7 @@ class GitSyncObjectCache {
 				else
 					members.put(key, entry.getValue());
 			}
-		} else if (members != null)
-			for (GitSyncObjectCache obj : members.values())
-				obj.diffEntry.changeType = ChangeType.IN_SYNC;
+		}
 		else // we should be on leaf entry, just update the change type value
 			diffEntry.changeType = value.diffEntry.changeType;
 	}
