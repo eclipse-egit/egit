@@ -16,6 +16,24 @@
       "revId": "cb94e50dcd5f8f473938a82ba47f43f2a3e487f2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_9bfd82a6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2013-07-30T11:51:32Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "c73e4bec_dbdc2a5c",
+      "revId": "cb94e50dcd5f8f473938a82ba47f43f2a3e487f2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
