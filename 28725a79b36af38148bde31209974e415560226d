@@ -16,6 +16,24 @@
       "revId": "28725a79b36af38148bde31209974e415560226d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_7783bda6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/mapping/GitContainerMapping.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-07-30T13:41:45Z",
+      "side": 1,
+      "message": "I had done this to keep the current behavior when the data set cannot be found (when the context is not a GitSubscriberContext, which should never happen). However this will indeed end in an NPE as it stands...\n\nChanged so that a null dataset reverts to the old behavior (take everything in the repository).",
+      "parentUuid": "c73e4bec_f1a40205",
+      "revId": "28725a79b36af38148bde31209974e415560226d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
