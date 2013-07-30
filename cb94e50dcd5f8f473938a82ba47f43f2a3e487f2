@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e4bec_dbdc2a5c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-07-30T11:47:34Z",
+      "side": 1,
+      "message": "Hm, it occurred to me that we might be violating the comparator contract here, specifically this:\n\n\u003e  Finally, the implementor must ensure that compare(x, y)\u003d\u003d0 implies that sgn(compare(x, z))\u003d\u003dsgn(compare(y, z)) for all z.\n\nMaybe we should change it to this?:\n\n\tif (l1 !\u003d null \u0026\u0026 l2 !\u003d null)\n\t\treturn -l1.toFile().compareTo(l2.toFile());\n\telse if (l1 !\u003d null)\n\t\treturn -1;\n\telse if (l2 !\u003d null)\n\t\treturn 1;\n\telse\n\t\treturn 0;",
+      "revId": "cb94e50dcd5f8f473938a82ba47f43f2a3e487f2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
