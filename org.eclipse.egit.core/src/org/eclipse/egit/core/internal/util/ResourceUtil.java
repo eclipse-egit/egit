@@ -31,6 +31,7 @@ import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.resources.mapping.ResourceMappingContext;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -213,7 +214,7 @@ public class ResourceUtil {
 					// get mappings from model provider if there are matching resources
 					final ModelProvider model = candidate.getModelProvider();
 					final ResourceMapping[] modelMappings = model.getMappings(
-							file, context, null);
+							file, context, new NullProgressMonitor());
 					for (ResourceMapping mapping : modelMappings)
 						mappings.add(mapping);
 				}
