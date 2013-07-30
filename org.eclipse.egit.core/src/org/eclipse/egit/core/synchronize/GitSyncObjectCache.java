@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2011, 2013 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.synchronize.ThreeWayDiffEntry.ChangeType;
@@ -25,7 +26,7 @@ class GitSyncObjectCache {
 
 	private final String name;
 
-	private final ThreeWayDiffEntry diffEntry;
+	private ThreeWayDiffEntry diffEntry;
 
 	private Map<String, GitSyncObjectCache> members;
 
@@ -165,29 +166,41 @@ class GitSyncObjectCache {
 		return builder.toString();
 	}
 
-	void merge(GitSyncObjectCache value) {
-		if (value.members != null) {
+	void merge(GitSyncObjectCache other, Set<String> filterPaths) {
+		if (other.members != null) {
 			if (members == null)
 				members = new HashMap<String, GitSyncObjectCache>();
-			else
-				for (Entry<String, GitSyncObjectCache> entry : members
-						.entrySet())
-					if (!value.members.containsKey(entry.getKey()))
-						entry.getValue().diffEntry.changeType = ChangeType.IN_SYNC;
 
-			for (Entry<String, GitSyncObjectCache> entry : value.members
+			for (Entry<String, GitSyncObjectCache> entry : members.entrySet()) {
+				String key = entry.getKey();
+				if (!other.members.containsKey(key)) {
+					GitSyncObjectCache obj = entry.getValue();
+					String entryPath = obj.getDiffEntry().getPath();
+					if (filterPaths.contains(entryPath))
+						obj.getDiffEntry().changeType = ChangeType.IN_SYNC;
+				}
+			}
+
+			for (Entry<String, GitSyncObjectCache> entry : other.members
 					.entrySet()) {
 				String key = entry.getKey();
-				if (members.containsKey(key))
-					members.get(key).merge(entry.getValue());
-				else
-					members.put(key, entry.getValue());
+				GitSyncObjectCache obj = entry.getValue();
+				if (members.containsKey(key)) {
+					members.get(key).merge(obj, filterPaths);
+				} else {
+					members.put(key, obj);
+				}
 			}
-		} else if (members != null)
-			for (GitSyncObjectCache obj : members.values())
-				obj.diffEntry.changeType = ChangeType.IN_SYNC;
-		else // we should be on leaf entry, just update the change type value
-			diffEntry.changeType = value.diffEntry.changeType;
+		} else if (members != null) {
+			for (GitSyncObjectCache obj : members.values()) {
+				String entryPath = obj.getDiffEntry().getPath();
+				if (filterPaths.contains(entryPath))
+					obj.getDiffEntry().changeType = ChangeType.IN_SYNC;
+			}
+		} else {
+			// we are on a leaf entry, use the newer diff entry (need to update
+			// changeType, direction and other fields)
+			diffEntry = other.diffEntry;
+		}
 	}
-
 }
