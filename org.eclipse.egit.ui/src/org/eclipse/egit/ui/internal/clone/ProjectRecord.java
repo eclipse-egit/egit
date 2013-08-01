@@ -6,6 +6,7 @@
  * Copyright (C) 2010, Wim Jongman <wim.jongman@remainsoftware.com>
  * Copyright (C) 2010, Benjamin Muskalla <bmuskalla@eclipsesource.com>
  * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2013, Lars Vogel <Lars.Vogel@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -33,6 +34,8 @@ public class ProjectRecord {
 	private String projectName;
 
 	private IProjectDescription description;
+
+	private boolean hasConflicts;
 
 	/**
 	 * Create a record for a project based on the info in the file.
@@ -91,6 +94,20 @@ public class ProjectRecord {
 	 */
 	public File getProjectSystemFile() {
 		return projectSystemFile;
+	}
+
+	/**
+	 * @return Returns the hasConflicts.
+	 */
+	public boolean hasConflicts() {
+		return hasConflicts;
+	}
+
+	/**
+	 * @param hasConflicts
+	 */
+	public void setHasConflicts(boolean hasConflicts) {
+		this.hasConflicts = hasConflicts;
 	}
 
 	@Override
