@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e4bec_dbdd2690",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-08-02T23:26:30Z",
+      "side": 1,
+      "message": "style nit: we prefer to add the bug id as a footer just above the change-id",
+      "revId": "b3576d4403da3bf6c83d42730e7c94574ca292c9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_5bf8f6ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-08-02T23:26:30Z",
+      "side": 1,
+      "message": "it\u0027s unclear what kind of conflicts you mean here, it looks like you don\u0027t mean a merge conflict and also not a checkout conflict, or do I miss something ?",
+      "revId": "b3576d4403da3bf6c83d42730e7c94574ca292c9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_bbe2da48",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitProjectsImportPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-08-02T23:26:30Z",
+      "side": 1,
+      "message": "this reformatting is unrelated to this change, please remove that",
+      "revId": "b3576d4403da3bf6c83d42730e7c94574ca292c9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_1be4ae54",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitProjectsImportPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-08-02T23:26:30Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use curly braces around single line blocks (see contributor guide)",
+      "revId": "b3576d4403da3bf6c83d42730e7c94574ca292c9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_fbe8e22a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitProjectsImportPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-08-02T23:26:30Z",
+      "side": 1,
+      "message": "style nit: no braces around single line blocks",
+      "revId": "b3576d4403da3bf6c83d42730e7c94574ca292c9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_3bc08a91",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-08-02T23:26:30Z",
+      "side": 1,
+      "message": "unclear what is considered to be a conflict",
+      "revId": "b3576d4403da3bf6c83d42730e7c94574ca292c9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
