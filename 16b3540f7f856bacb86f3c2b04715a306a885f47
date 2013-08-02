@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c73e4bec_99cd6ead",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitProjectsImportPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2013-08-02T08:22:31Z",
+      "side": 1,
+      "message": "I would drop else clause with smth like:\n\n    boolean hasConflicts \u003d isProjectInWorkspace(selectedProjects[i].getProjectName());\n    selectedProjects[i].hasConflicts \u003d hasConflicts;\n    if(!hasConflicts) {\n        validProjects.add(selectedProjects[i]);\n    }",
+      "revId": "16b3540f7f856bacb86f3c2b04715a306a885f47",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_d6322579",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectRecord.java",
         "patchSetId": 1
@@ -13,6 +30,23 @@
       "writtenOn": "2013-08-02T07:44:26Z",
       "side": 1,
       "message": "Why not private boolean hasConflicts?",
+      "revId": "16b3540f7f856bacb86f3c2b04715a306a885f47",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_f663e132",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2013-08-02T08:22:31Z",
+      "side": 1,
+      "message": "This getter actually makes no sense if hasConflicts is not private",
       "revId": "16b3540f7f856bacb86f3c2b04715a306a885f47",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
