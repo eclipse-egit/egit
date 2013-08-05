@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e4bec_ba459ccd",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/dto/GitSynchronizeData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-05T15:11:27Z",
+      "side": 1,
+      "message": "When an empty \"includedResources\" is passed, all are included. Seems strange, should we document that or make \"null\" the special value meaning \"no restriction\"?",
+      "revId": "3539780de53b16134c1ed0c66696683bb9a1a234",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_9acd40de",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/dto/GitSynchronizeData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-05T15:11:27Z",
+      "side": 1,
+      "message": "This looks like a copy of setIncludedPaths, just with different types. Change the argument type of setIncludedPaths to Set\u003c? extends IResource\u003e and remove this.",
+      "revId": "3539780de53b16134c1ed0c66696683bb9a1a234",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_dad34879",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/dto/GitSynchronizeData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-05T15:11:27Z",
+      "side": 1,
+      "message": "Would be a good opportunity to rename it to includedResources (also setter and field), because I would expect a Set\u003cString\u003e or Set\u003cIPath\u003e for getIncludedPaths.",
+      "revId": "3539780de53b16134c1ed0c66696683bb9a1a234",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_3a04ec8a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronize.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-05T15:11:27Z",
+      "side": 1,
+      "message": "Spurious change, please remove.",
+      "revId": "3539780de53b16134c1ed0c66696683bb9a1a234",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
