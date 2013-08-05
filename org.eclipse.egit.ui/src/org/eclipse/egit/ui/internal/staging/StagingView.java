@@ -1360,9 +1360,9 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private void stage(IStructuredSelection selection) {
 		Git git = new Git(currentRepository);
-		RmCommand rm = null;
 		Iterator iterator = selection.iterator();
 		List<String> addPaths = new ArrayList<String>();
+		List<String> rmPaths = new ArrayList<String>();
 		while (iterator.hasNext()) {
 			Object element = iterator.next();
 			if (element instanceof StagingEntry) {
@@ -1381,9 +1381,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 					break;
 				case MISSING:
 				case MISSING_AND_CHANGED:
-					if (rm == null)
-						rm = git.rm().setCached(true);
-					rm.addFilepattern(entry.getPath());
+					rmPaths.add(entry.getPath());
 					break;
 				}
 			} else {
@@ -1416,8 +1414,11 @@ public class StagingView extends ViewPart implements IShowInSource {
 			} catch (Exception e1) {
 				Activator.handleError(e1.getMessage(), e1, true);
 			}
-		if (rm != null)
+		if (!rmPaths.isEmpty())
 			try {
+				RmCommand rm = git.rm().setCached(true);
+				for (String rmPath : rmPaths)
+					rm.addFilepattern(rmPath);
 				rm.call();
 			} catch (NoFilepatternException e) {
 				// cannot happen
