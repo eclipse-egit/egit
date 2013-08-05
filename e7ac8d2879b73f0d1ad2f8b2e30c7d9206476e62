@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e4bec_fae3a40f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/mapping/GitContainerMapping.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-05T13:41:42Z",
+      "side": 1,
+      "message": "getLocation() can return null, must be checked. It should probably not be included then.",
+      "revId": "e7ac8d2879b73f0d1ad2f8b2e30c7d9206476e62",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_dae06806",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/mapping/GitContainerMapping.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-05T13:41:42Z",
+      "side": 1,
+      "message": "getLocation() can also return null here. The path should not be tested in that case.",
+      "revId": "e7ac8d2879b73f0d1ad2f8b2e30c7d9206476e62",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
