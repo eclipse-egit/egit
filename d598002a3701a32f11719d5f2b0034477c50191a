@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c73e4bec_abe89e29",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-07T08:55:05Z",
+      "side": 1,
+      "message": "Thanks, fixed. Ok if I push a change with sets it to Java 6 (just for EGit)?",
+      "parentUuid": "c73e4bec_4e0f6deb",
+      "revId": "d598002a3701a32f11719d5f2b0034477c50191a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_6e5349b9",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 16
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c73e4bec_0bd1d274",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1506,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-07T08:55:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c73e4bec_6e5349b9",
+      "revId": "d598002a3701a32f11719d5f2b0034477c50191a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_cebffd47",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 16
@@ -47,6 +83,24 @@
       "writtenOn": "2013-08-06T23:10:05Z",
       "side": 1,
       "message": "I don\u0027t get why you rename this method from updateDirCache()",
+      "revId": "d598002a3701a32f11719d5f2b0034477c50191a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_ebcd86dc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1822,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-07T08:55:05Z",
+      "side": 1,
+      "message": "I guess it was for symmetry with selectEntryForStaging. But renamed back to updateDirCache now.",
+      "parentUuid": "c73e4bec_cebffd47",
       "revId": "d598002a3701a32f11719d5f2b0034477c50191a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
