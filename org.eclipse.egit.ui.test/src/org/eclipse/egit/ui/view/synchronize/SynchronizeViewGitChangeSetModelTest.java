@@ -34,6 +34,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.ui.common.CompareEditorTester;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.synchronize.GitChangeSetModelProvider;
@@ -42,10 +43,8 @@ import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotLabel;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotStyledText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.hamcrest.Matcher;
@@ -129,8 +128,8 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		launchSynchronization(HEAD, INITIAL_TAG, true);
 
 		// then
-		SWTBot compare = getCompareEditorForFileInGitChangeSet(FILE1, true)
-				.bot();
+		CompareEditorTester compare = getCompareEditorForFileInGitChangeSet(
+				FILE1, true);
 		assertNotNull(compare);
 	}
 
@@ -190,13 +189,12 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		// compare HEAD against tag
 		launchSynchronization(HEAD, INITIAL_TAG, false);
 
-		SWTBotEditor outgoingCompare = getCompareEditorForFileInGitChangeSet(
+		CompareEditorTester outgoingCompare = getCompareEditorForFileInGitChangeSet(
 				FILE1, false);
-		SWTBot outgoingCompareBot = outgoingCompare.bot();
 		// save left value from compare editor
-		String outgoingLeft = outgoingCompareBot.styledText(0).getText();
+		String outgoingLeft = outgoingCompare.getLeftEditor().getText();
 		// save right value from compare editor
-		String outgoingRight = outgoingCompareBot.styledText(1).getText();
+		String outgoingRight = outgoingCompare.getRightEditor().getText();
 		outgoingCompare.close();
 
 		assertNotSame("Text from SWTBot widgets was the same", outgoingLeft, outgoingRight);
@@ -206,12 +204,12 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		launchSynchronization(INITIAL_TAG, HEAD, false);
 
 		// then
-		SWTBot incomingComp = getCompareEditorForFileInGitChangeSet(
-				FILE1, false).bot();
+		CompareEditorTester incomingComp = getCompareEditorForFileInGitChangeSet(
+				FILE1, false);
 		// right side from compare editor should be equal with left
-		assertThat(outgoingLeft, equalTo(incomingComp.styledText(1).getText()));
+		assertThat(outgoingLeft, equalTo(incomingComp.getRightEditor().getText()));
 		// left side from compare editor should be equal with right
-		assertThat(outgoingRight, equalTo(incomingComp.styledText(0).getText()));
+		assertThat(outgoingRight, equalTo(incomingComp.getLeftEditor().getText()));
 	}
 
 	@Test
@@ -288,14 +286,12 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		launchSynchronization(INITIAL_TAG, HEAD, true);
 
 		// then
-		SWTBotEditor editor = getCompareEditorForNonWorkspaceFileInGitChangeSet(name);
-		editor.setFocus();
+		CompareEditorTester editor = getCompareEditorForNonWorkspaceFileInGitChangeSet(name);
 
-		// the WidgetNotFoundException will be thrown when widget with given content cannot be not found
-		SWTBotStyledText left = editor.bot().styledText(content);
-		SWTBotStyledText right = editor.bot().styledText("");
-		// to be complete sure assert that both sides are not the same
-		assertNotSame(left, right);
+		String left = editor.getLeftEditor().getText();
+		String right = editor.getRightEditor().getText();
+		assertEquals(content, left);
+		assertEquals("", right);
 	}
 
 	@Test
@@ -303,7 +299,8 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		// given
 		changeFilesInProject();
 		launchSynchronization(HEAD, HEAD, true);
-		getCompareEditorForFileInGitChangeSet(FILE1, true).bot();
+		CompareEditorTester compareEditor = getCompareEditorForFileInGitChangeSet(
+				FILE1, true);
 
 		// when
 		Display.getDefault().syncExec(new Runnable() {
@@ -312,7 +309,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 						null);
 			}
 		});
-		bot.activeEditor().save();
+		compareEditor.save();
 
 
 		// then file FILE1 should be in index
@@ -329,7 +326,8 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		// given
 		changeFilesInProject();
 		launchSynchronization(HEAD, HEAD, true);
-		getCompareEditorForFileInGitChangeSet(FILE1, true).bot();
+		CompareEditorTester compareEditor = getCompareEditorForFileInGitChangeSet(
+				FILE1, true);
 
 		// when
 		Display.getDefault().syncExec(new Runnable() {
@@ -338,7 +336,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 						null);
 			}
 		});
-		bot.activeEditor().save();
+		compareEditor.save();
 
 		// then file FILE1 should be unchanged in working tree
 		Repository repo = lookupRepository(repositoryFile);
@@ -439,7 +437,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		return changeSetItem;
 	}
 
-	protected SWTBotEditor getCompareEditorForFileInGitChangeSet(
+	protected CompareEditorTester getCompareEditorForFileInGitChangeSet(
 			String fileName,
 			boolean includeLocalChanges) {
 		SWTBotTreeItem changeSetTreeItem = getChangeSetTreeItem();
@@ -455,7 +453,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		return getCompareEditor(projNode, fileName);
 	}
 
-	protected SWTBotEditor getCompareEditorForNonWorkspaceFileInGitChangeSet(
+	protected CompareEditorTester getCompareEditorForNonWorkspaceFileInGitChangeSet(
 			final String fileName) {
 		SWTBotTreeItem changeSetTreeItem = getChangeSetTreeItem();
 
@@ -463,10 +461,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 					GitModelWorkingTree_workingTree);
 		waitForNodeWithText(rootTree, fileName).doubleClick();
 
-		SWTBotEditor editor = bot
-				.editor(new CompareEditorTitleMatcher(fileName));
-
-		return editor;
+		return CompareEditorTester.forTitleContaining(fileName);
 	}
 
 	private SWTBotTreeItem getExpandedWorkingTreeItem() {
