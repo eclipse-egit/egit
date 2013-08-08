@@ -33,6 +33,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.DefaultScope;
@@ -307,19 +308,34 @@ public class Activator extends Plugin implements DebugOptionsListener {
 				return false;
 			RepositoryFinder f = new RepositoryFinder(project);
 			Collection<RepositoryMapping> mappings = f.find(new NullProgressMonitor());
+			if (mappings.size() != 1)
+				return false;
+
+			RepositoryMapping m = mappings.iterator().next();
+			IPath gitDirPath = m.getGitDirAbsolutePath();
+			if (gitDirPath.segmentCount() == 0)
+				return false;
+
+			IPath workingDir = gitDirPath.removeLastSegments(1);
+			// Don't connect "/" or "C:\"
+			if (workingDir.isRoot())
+				return false;
+
+			File userHome = FS.DETECTED.userHome();
+			if (userHome != null) {
+				Path userHomePath = new Path(userHome.getAbsolutePath());
+				// Don't connect "/home" or "/home/username"
+				if (workingDir.isPrefixOf(userHomePath))
+					return false;
+			}
+
+			// connect
+			final File repositoryDir = gitDirPath.toFile();
+			projects.put(project, repositoryDir);
+
 			try {
-				if (mappings.size() == 1) {
-					// connect
-					RepositoryMapping m = mappings.iterator()
-							.next();
-					final File repositoryDir = m
-							.getGitDirAbsolutePath().toFile();
-
-					projects.put(project, repositoryDir);
-
-					Activator.getDefault().getRepositoryUtil()
-							.addConfiguredRepository(repositoryDir);
-				}
+				Activator.getDefault().getRepositoryUtil()
+						.addConfiguredRepository(repositoryDir);
 			} catch (IllegalArgumentException e) {
 				logError(CoreText.Activator_AutoSharingFailed, e);
 			}
