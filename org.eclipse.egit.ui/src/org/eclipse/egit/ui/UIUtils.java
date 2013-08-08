@@ -183,6 +183,19 @@ public class UIUtils {
 	}
 
 	/**
+	 * @param parent
+	 * @param style
+	 * @return a text field which is read-only but can be selected
+	 */
+	public static Text createSelectableLabel(Composite parent, int style) {
+		// See https://bugs.eclipse.org/bugs/show_bug.cgi?id=71765
+		Text text = new Text(parent, style | SWT.READ_ONLY);
+		text.setBackground(text.getDisplay().getSystemColor(
+				SWT.COLOR_WIDGET_BACKGROUND));
+		return text;
+	}
+
+	/**
 	 * Adds little bulb decoration to given control. Bulb will appear in top
 	 * left corner of control after giving focus for this control.
 	 *
