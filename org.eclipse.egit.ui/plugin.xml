@@ -1260,7 +1260,7 @@
       <handler
             commandId="org.eclipse.ui.edit.delete">
          <class
-               class="org.eclipse.egit.ui.internal.repository.tree.command.DeleteCommand">
+               class="org.eclipse.egit.ui.internal.repository.tree.command.RemoveOrDeleteRepositoryCommand">
          </class>
          <activeWhen>
             <and>
@@ -3345,7 +3345,7 @@
             </visibleWhen>
          </command>
          <command
-               commandId="org.eclipse.ui.edit.delete"
+               commandId="org.eclipse.egit.ui.RepositoriesViewDelete"
                label="%RepoViewDeleteRepository.label"
                style="push">
             <visibleWhen
@@ -4338,6 +4338,10 @@
        <image
             commandId="org.eclipse.egit.ui.RepositoriesToggleBranchCommit"
             icon="icons/obj16/changelog_obj.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewDelete"
+            icon="icons/obj16/delete_obj.gif">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewRemove"
