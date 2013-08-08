@@ -21,7 +21,6 @@ import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.SubmoduleAddCommand;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
@@ -62,12 +61,14 @@ public class GitRepositoriesViewRepoDeletionTest extends
 				.getPluginLocalizedValue(DELETE_REPOSITORY_CONTEXT_MENU_LABEL));
 		SWTBotShell shell = bot.shell(UIText.DeleteRepositoryConfirmDialog_DeleteRepositoryWindowTitle);
 		shell.activate();
-		Repository repo = lookupRepository(repositoryFile);
-		String workDir=repo.getWorkTree().getPath();
-		String checkboxLabel = NLS
-				.bind(UIText.DeleteRepositoryConfirmDialog_DeleteWorkingDirectoryCheckbox,
-						workDir);
-		shell.bot().checkBox(checkboxLabel).select();
+		shell.bot()
+				.checkBox(
+						UIText.DeleteRepositoryConfirmDialog_DeleteGitDirCheckbox)
+				.select();
+		shell.bot()
+				.checkBox(
+						UIText.DeleteRepositoryConfirmDialog_DeleteWorkingDirectoryCheckbox)
+				.select();
 		shell.bot().button(IDialogConstants.OK_LABEL).click();
 		TestUtil.joinJobs(JobFamilies.REPOSITORY_DELETE);
 
@@ -112,11 +113,14 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		SWTBotShell shell = bot
 				.shell(UIText.DeleteRepositoryConfirmDialog_DeleteRepositoryWindowTitle);
 		shell.activate();
-		String workDir = subRepo.getWorkTree().getPath();
-		String checkboxLabel = NLS
-				.bind(UIText.DeleteRepositoryConfirmDialog_DeleteWorkingDirectoryCheckbox,
-						workDir);
-		shell.bot().checkBox(checkboxLabel).select();
+		shell.bot()
+				.checkBox(
+						UIText.DeleteRepositoryConfirmDialog_DeleteGitDirCheckbox)
+				.select();
+		shell.bot()
+				.checkBox(
+						UIText.DeleteRepositoryConfirmDialog_DeleteWorkingDirectoryCheckbox)
+				.select();
 		shell.bot().button(IDialogConstants.OK_LABEL).click();
 		TestUtil.joinJobs(JobFamilies.REPOSITORY_DELETE);
 
