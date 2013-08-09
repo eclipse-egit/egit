@@ -25,7 +25,7 @@ import org.eclipse.jgit.lib.Repository;
  *
  * @param <V>
  */
-public abstract class SubmoduleCommand<V> extends
+public abstract class SubmoduleCommand<V extends RepositoryTreeNode<?>> extends
 		RepositoriesViewCommandHandler<V> {
 
 	/**

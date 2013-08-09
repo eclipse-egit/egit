@@ -137,8 +137,8 @@ public class MergeCommand extends
 	}
 
 	@Override
-	public void setEnabled(Object evaluationContext) {
-		enableWhenRepositoryHaveHead(evaluationContext);
+	public boolean isEnabled() {
+		return selectedRepositoryHasHead();
 	}
 
 	private boolean canMerge(final Repository repository) {
