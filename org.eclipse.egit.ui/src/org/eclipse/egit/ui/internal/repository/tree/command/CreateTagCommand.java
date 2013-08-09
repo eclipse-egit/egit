@@ -111,8 +111,8 @@ public class CreateTagCommand extends RepositoriesViewCommandHandler<RepositoryT
 	}
 
 	@Override
-	public void setEnabled(Object evaluationContext) {
-		enableWhenRepositoryHaveHead(evaluationContext);
+	public boolean isEnabled() {
+		return selectedRepositoryHasHead();
 	}
 
 	private RevObject getTagTarget(ObjectId objectId, Repository repo)

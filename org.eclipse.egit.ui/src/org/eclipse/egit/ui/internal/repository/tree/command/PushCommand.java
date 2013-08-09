@@ -61,7 +61,8 @@ public class PushCommand extends RepositoriesViewCommandHandler<RepositoryNode> 
 		return null;
 	}
 
-	public void setEnabled(Object evaluationContext) {
-		enableWhenRepositoryHaveHead(evaluationContext);
+	@Override
+	public boolean isEnabled() {
+		return selectedRepositoryHasHead();
 	}
 }

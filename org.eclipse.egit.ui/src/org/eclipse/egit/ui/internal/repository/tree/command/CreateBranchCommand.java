@@ -96,8 +96,8 @@ public class CreateBranchCommand extends
 	}
 
 	@Override
-	public void setEnabled(Object evaluationContext) {
-		enableWhenRepositoryHaveHead(evaluationContext);
+	public boolean isEnabled() {
+		return selectedRepositoryHasHead();
 	}
 
 }
