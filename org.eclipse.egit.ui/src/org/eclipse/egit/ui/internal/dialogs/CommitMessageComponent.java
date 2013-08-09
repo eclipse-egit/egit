@@ -7,7 +7,7 @@
  * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2011, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2012, IBM Corporation (Markus Keller <markus_keller@ch.ibm.com>)
- * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -524,12 +524,13 @@ public class CommitMessageComponent {
 	 * Sets the defaults for change id and signed off
 	 */
 	public void setDefaults() {
-		createChangeId = repository.getConfig().getBoolean(
-				ConfigConstants.CONFIG_GERRIT_SECTION,
-				ConfigConstants.CONFIG_KEY_CREATECHANGEID, false);
+		if (repository != null)
+			createChangeId = repository.getConfig().getBoolean(
+					ConfigConstants.CONFIG_GERRIT_SECTION,
+					ConfigConstants.CONFIG_KEY_CREATECHANGEID, false);
 		signedOff = org.eclipse.egit.ui.Activator.getDefault()
-		.getPreferenceStore()
-		.getBoolean(UIPreferences.COMMIT_DIALOG_SIGNED_OFF_BY);
+				.getPreferenceStore()
+				.getBoolean(UIPreferences.COMMIT_DIALOG_SIGNED_OFF_BY);
 	}
 
 	/**
