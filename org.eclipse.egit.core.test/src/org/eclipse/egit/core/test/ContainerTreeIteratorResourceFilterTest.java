@@ -12,10 +12,10 @@ import static org.eclipse.core.resources.IResourceFilterDescription.EXCLUDE_ALL;
 import static org.eclipse.core.resources.IResourceFilterDescription.FILES;
 import static org.eclipse.core.resources.IResourceFilterDescription.FOLDERS;
 import static org.eclipse.core.resources.IResourceFilterDescription.INHERITABLE;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
