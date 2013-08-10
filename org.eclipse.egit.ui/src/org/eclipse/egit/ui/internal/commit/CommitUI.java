@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -37,8 +38,8 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.IteratorService;
 import org.eclipse.egit.core.op.CommitOperation;
-import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.BasicConfigurationDialog;
@@ -46,6 +47,7 @@ import org.eclipse.egit.ui.internal.dialogs.CommitDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.Repository;
@@ -118,7 +120,7 @@ public class CommitUI  {
 		BasicConfigurationDialog.show(new Repository[]{repo});
 
 		resetState();
-		final IProject[] projects = getProjectsOfRepositories();
+		final IProject[] projects = CommitErrorWarningsUtil.getProjectsOfRepositories(repo);
 		try {
 			PlatformUI.getWorkbench().getProgressService().busyCursorWhile(new IRunnableWithProgress() {
 
@@ -146,6 +148,9 @@ public class CommitUI  {
 					shell,
 					UIText.CommitAction_cannotCommit,
 					commitHelper.getCannotCommitMessage());
+			return false;
+		}
+		if (!canCommitWithCurrentErrorsAndWarnings()) {
 			return false;
 		}
 		boolean amendAllowed = commitHelper.amendAllowed();
@@ -179,6 +184,11 @@ public class CommitUI  {
 		if (commitDialog.open() != IDialogConstants.OK_ID)
 			return false;
 
+		if (!canCommitWithCurrentErrorsAndWarnings(commitDialog
+				.getSelectedFiles())) {
+			return false;
+		}
+
 		final CommitOperation commitOperation;
 		try {
 			commitOperation= new CommitOperation(
@@ -202,16 +212,27 @@ public class CommitUI  {
 		return true;
 	}
 
-	private IProject[] getProjectsOfRepositories() {
-		Set<IProject> ret = new HashSet<IProject>();
-		final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
-				.getProjects();
-		for (IProject project : projects) {
-			RepositoryMapping mapping = RepositoryMapping.getMapping(project);
-			if (mapping != null && mapping.getRepository() == repo)
-				ret.add(project);
-		}
-		return ret.toArray(new IProject[ret.size()]);
+	private boolean canCommitWithCurrentErrorsAndWarnings(
+			Collection<String> selectedFiles) {
+		IPreferenceStore preferences = Activator.getDefault()
+				.getPreferenceStore();
+		return (preferences.getInt(UIPreferences.COMMIT_WITH_ERRORS_SCOPE) != 0 || CommitErrorWarningsUtil
+				.canCommitWithCurrentErrors(shell, repo, selectedFiles))
+				&& (preferences
+						.getInt(UIPreferences.COMMIT_WITH_WARNINGS_SCOPE) != 0 || CommitErrorWarningsUtil
+						.canCommitWithCurrentWarnings(shell, repo,
+								selectedFiles));
+	}
+
+	private boolean canCommitWithCurrentErrorsAndWarnings() {
+		IPreferenceStore preferences = Activator.getDefault()
+				.getPreferenceStore();
+		return (preferences.getInt(UIPreferences.COMMIT_WITH_ERRORS_SCOPE) == 0 || CommitErrorWarningsUtil
+				.canCommitWithCurrentErrors(shell, repo, new HashSet<String>()))
+				&& (preferences
+						.getInt(UIPreferences.COMMIT_WITH_WARNINGS_SCOPE) == 0 || CommitErrorWarningsUtil
+						.canCommitWithCurrentWarnings(shell, repo,
+								new HashSet<String>()));
 	}
 
 	private void resetState() {

@@ -55,6 +55,7 @@ import org.eclipse.egit.ui.internal.commit.CommitHelper;
 import org.eclipse.egit.ui.internal.commit.CommitJob;
 import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
+import org.eclipse.egit.ui.internal.commit.CommitErrorWarningsUtil;
 import org.eclipse.egit.ui.internal.components.ToggleableWarningLabel;
 import org.eclipse.egit.ui.internal.decorators.ProblemLabelDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageArea;
@@ -1769,6 +1770,12 @@ public class StagingView extends ViewPart implements IShowInSource {
 			return;
 
 		if (!UIUtils.saveAllEditors(currentRepository))
+			return;
+
+		if (!CommitErrorWarningsUtil.canCommitWithCurrentErrors(getSite().getShell(),
+				currentRepository, getStagedFileNames())
+				|| !CommitErrorWarningsUtil.canCommitWithCurrentWarnings(getSite()
+						.getShell(), currentRepository, getStagedFileNames()))
 			return;
 
 		String commitMessage = commitMessageComponent.getCommitMessage();
