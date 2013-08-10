@@ -119,7 +119,7 @@
     </iu>
     <iu id='org.eclipse.mylyn.bugzilla_feature.feature.group' name='Mylyn Tasks Connector: Bugzilla' version='0.0.0'>
       <repositories size='2'>
-        <repository location='http://download.eclipse.org/mylyn/weekly'/>
+        <repository location='http://download.eclipse.org/mylyn/snapshots/weekly'/>
       </repositories>
     </iu>
     <iu id='org.eclipse.mylyn.reviews.feature.feature.group' name='Mylyn Reviews' version='0.0.0'>
