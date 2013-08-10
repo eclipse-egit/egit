@@ -32,13 +32,13 @@ public class GitCloneSourceProviderExtensionTest {
 				is("ServerWithoutPage1"));
 		assertThat(repositoryImports.get(1).hasFixLocation(), is(true));
 		assertThat(repositoryImports.get(1).getRepositoryServerProvider(),
-				is(TestRepositoryServerProvider.class));
+				instanceOf(TestRepositoryServerProvider.class));
 		assertThat(repositoryImports.get(2).getLabel(), is("TestServer"));
 		assertThat(repositoryImports.get(2).hasFixLocation(), is(false));
 		assertThat(repositoryImports.get(2).getRepositoryServerProvider(),
-				is(TestRepositoryServerProvider.class));
+				instanceOf(TestRepositoryServerProvider.class));
 		assertThat(repositoryImports.get(2).getRepositorySearchPage(),
-				is(TestRepositorySearchPage.class));
+				instanceOf(TestRepositorySearchPage.class));
 		assertThat(repositoryImports.get(3).getLabel(),
 				is("ServerWithoutPage2"));
 		assertThat(repositoryImports.get(3).hasFixLocation(), is(false));
