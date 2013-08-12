@@ -11,7 +11,7 @@
 package org.eclipse.egit.core.test.op;
 
 import static java.util.Arrays.asList;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
 import java.io.ByteArrayInputStream;
