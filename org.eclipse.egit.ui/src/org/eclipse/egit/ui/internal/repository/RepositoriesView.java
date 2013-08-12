@@ -403,6 +403,9 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				TreeSelection sel = (TreeSelection) event.getSelection();
 				RepositoryTreeNode element = (RepositoryTreeNode) sel
 						.getFirstElement();
+				// Disable checkout for bare repositories
+				if (element.getRepository().isBare())
+					return;
 				if (element instanceof RefNode)
 					executeOpenCommandWithConfirmation(((RefNode) element)
 							.getObject().getName());
