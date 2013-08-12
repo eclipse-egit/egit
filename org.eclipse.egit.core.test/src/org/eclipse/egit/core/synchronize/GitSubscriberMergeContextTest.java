@@ -9,7 +9,7 @@
  *******************************************************************************/
 package org.eclipse.egit.core.synchronize;
 
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 import static org.eclipse.jgit.lib.Constants.HEAD;
 import static org.junit.Assert.assertEquals;
 
