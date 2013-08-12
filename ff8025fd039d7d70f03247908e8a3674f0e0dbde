@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e4bec_ecc28127",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-12T20:41:24Z",
+      "side": 1,
+      "message": "Please correct your committer info, it should be the same as author.",
+      "revId": "ff8025fd039d7d70f03247908e8a3674f0e0dbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_4cf57578",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-12T20:41:24Z",
+      "side": 1,
+      "message": "Usual Git practice is to leave off the \".\" at the end of the subject, just like in an e-mail subject.",
+      "revId": "ff8025fd039d7d70f03247908e8a3674f0e0dbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_0c16cd53",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitErrorWarningsUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-12T20:41:24Z",
+      "side": 1,
+      "message": "No, this is never a good idea, we don\u0027t want anything to print to stderr. Either we really ignore it (remove the above line and add a comment like \"// Assume there are no problems then\"). Or we log it, but I think ignoring is the right thing to do here.",
+      "revId": "ff8025fd039d7d70f03247908e8a3674f0e0dbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_6cbdd1fe",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitErrorWarningsUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-12T20:41:24Z",
+      "side": 1,
+      "message": "It should be one method only, not two. Makes it easier for the caller and we can show one dialog with the combined problems (warnings and errors).",
+      "revId": "ff8025fd039d7d70f03247908e8a3674f0e0dbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_ecdf2146",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitErrorWarningsUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-12T20:41:24Z",
+      "side": 1,
+      "message": "The only thing that\u0027s different here is the resources which are passed to the method. Extract the gathering ot the resources to a new method, so it can also be shared for warnings. getRoot can be wrapped in an array of size 1 or a Collections.singleton().",
+      "revId": "ff8025fd039d7d70f03247908e8a3674f0e0dbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_2cad89a3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitErrorWarningsUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-12T20:41:24Z",
+      "side": 1,
+      "message": "I thought we decided to not offer the \"Deny\" option? Please remove it. I know the desire to add as much as possible, but we really need to keep this simple.",
+      "revId": "ff8025fd039d7d70f03247908e8a3674f0e0dbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_cc84e519",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitErrorWarningsUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-12T20:41:24Z",
+      "side": 1,
+      "message": "Have you tried showing the actual problems (warnings, errors) in the dialog? Should not be too hard. Basically, we need to subclass MessageDialog and implement createCustomArea, something like this:\n\n  IMarker[] problems \u003d ...;\n  TableViewer tableViewer \u003d new TableViewer(parent);\n  tableViewer.setContentProvider(ArrayContentProvider.getInstance());\n  tableViewer.setLabelProvider(labelProvider);\n  tableViewer.setInput(problems);\n\nlabelProvider needs to be implemented, e.g. with a ITableLabelProvider.",
+      "revId": "ff8025fd039d7d70f03247908e8a3674f0e0dbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_ccc18528",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitErrorWarningsUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-12T20:41:24Z",
+      "side": 1,
+      "message": "Return a Collection here, and make doesResourceContainMarkerOfSeverity accept a collection instead of varargs.",
+      "revId": "ff8025fd039d7d70f03247908e8a3674f0e0dbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_8cbadd06",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitErrorWarningsUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-12T20:41:24Z",
+      "side": 1,
+      "message": "See comment in CommitUI, replace with ProjectUtil.getProjects(repo)",
+      "revId": "ff8025fd039d7d70f03247908e8a3674f0e0dbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_71900ea2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-12T20:41:24Z",
+      "side": 1,
+      "message": "This can actually be replaced (even before this change) by ProjectUtil.getProjects(repo), it doesn\u0027t need to be moved to CommitErrorWarningsUtil.",
+      "revId": "ff8025fd039d7d70f03247908e8a3674f0e0dbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_51699216",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-12T20:41:24Z",
+      "side": 1,
+      "message": "Checking the preferences here seems unnecessary, they are already checked in CommitErrorWarningsUtil.",
+      "revId": "ff8025fd039d7d70f03247908e8a3674f0e0dbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_8c23fddc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/DialogsPreferencePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-12T20:41:24Z",
+      "side": 1,
+      "message": "Instead of \"0\", \"1\", \"2\", could we store \"PROMPT\", \"IGNORE\", etc? This way we can also map it to an enum when reading it and then the switch statement is much much nicer and doesn\u0027t need any comments anymore.\n\nAlso, why not write it like this?:\n\nString[][] foo \u003d { { ...Label, \"0\" }, { ...Label, \"1\" }, ... }\n\n-\u003e You can\u0027t mess up the indices and it\u0027s more readable.",
+      "revId": "ff8025fd039d7d70f03247908e8a3674f0e0dbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_6c2671ee",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/DialogsPreferencePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-12T20:41:24Z",
+      "side": 1,
+      "message": "This is done twice.",
+      "revId": "ff8025fd039d7d70f03247908e8a3674f0e0dbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
