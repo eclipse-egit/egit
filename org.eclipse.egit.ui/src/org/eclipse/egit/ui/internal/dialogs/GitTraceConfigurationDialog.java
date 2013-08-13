@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2010, 2013 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,8 +17,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Map.Entry;
+import java.util.Properties;
 
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
@@ -31,12 +31,12 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.ICheckStateProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -164,12 +164,18 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 		}
 	}
 
-	private final static class TraceTableContentProvider extends
-			ArrayContentProvider implements ITreeContentProvider {
+	private final static class TraceTableContentProvider implements
+			ITreeContentProvider {
 		private final Map<PluginNode, Properties> myOptionsMap;
 
 		public TraceTableContentProvider(Map<PluginNode, Properties> optionsMap) {
 			this.myOptionsMap = optionsMap;
+		}
+
+		public Object[] getElements(Object inputElement) {
+			if (inputElement instanceof Object[])
+				return (Object[]) inputElement;
+			return new Object[0];
 		}
 
 		public Object[] getChildren(Object parentElement) {
@@ -196,6 +202,14 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 
 		public boolean hasChildren(Object element) {
 			return element instanceof PluginNode;
+		}
+
+		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+			// Do nothing
+		}
+
+		public void dispose() {
+			// Do nothing
 		}
 	}
 
