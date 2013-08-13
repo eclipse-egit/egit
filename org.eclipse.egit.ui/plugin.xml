@@ -3635,18 +3635,13 @@
             <menu
                   label="%RemoteSubMenu.label">
                <command
-                     commandId="org.eclipse.egit.ui.team.Fetch"
-                     label="%FetchAction_label"
-                     style="push">
-               </command>
-               <command
                      commandId="org.eclipse.egit.ui.team.Push"
                      label="%PushAction_label"
                      style="push">
                </command>
                <command
-                     commandId="org.eclipse.egit.ui.FetchGerritChange"
-                     label="%FetchFromGerritCommand.label"
+                     commandId="org.eclipse.egit.ui.team.Fetch"
+                     label="%FetchAction_label"
                      style="push">
                </command>
                <command
@@ -3654,18 +3649,23 @@
                      label="%PushToGerritMenu.label"
                      style="push">
                </command>
+               <command
+                     commandId="org.eclipse.egit.ui.FetchGerritChange"
+                     label="%FetchFromGerritCommand.label"
+                     style="push">
+               </command>
                <separator
                      name="org.eclipse.egit.ui.remote.group1"
                      visible="true">
                </separator>
                <command
-                     commandId="org.eclipse.egit.ui.ConfigureUpstreamFetch"
-                     label="%ConfigureFetchFromUpstreamCommand.label"
+                     commandId="org.eclipse.egit.ui.ConfigureUpstreamPush"
+                     label="%ConfigurePushToUpstreamCommand.label"
                      style="push">
                </command>
                <command
-                     commandId="org.eclipse.egit.ui.ConfigureUpstreamPush"
-                     label="%ConfigurePushToUpstreamCommand.label"
+                     commandId="org.eclipse.egit.ui.ConfigureUpstreamFetch"
+                     label="%ConfigureFetchFromUpstreamCommand.label"
                      style="push">
                </command>
                <visibleWhen
