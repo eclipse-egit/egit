@@ -28,58 +28,6 @@
    </extension>
 
    <extension point="org.eclipse.ui.popupMenus">
-      <objectContribution id="org.eclipse.egit.ui.projectContributions"
-            objectClass="org.eclipse.core.resources.IProject"
-            adaptable="true">
-         <filter name="projectPersistentProperty"
-               value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
-         </filter>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.DisconnectAction"
-               icon="$nl$/icons/obj16/disconnect_co.gif"
-               id="org.eclipse.egit.ui.internal.actions.Disconnect"
-               label="%DisconnectAction_label"
-               menubarPath="team.main/group11">
-         </action>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.ResetAction"
-               icon="$nl$/icons/obj16/reset.gif"
-               id="org.eclipse.egit.ui.internal.actions.ResetAction"
-               label="%ResetAction_label"
-               menubarPath="team.main/group5">
-         </action>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.MergeAction"
-               definitionId="org.eclipse.egit.ui.team.Merge"
-               icon="$nl$/icons/obj16/merge.gif"
-               id="org.eclipse.egit.ui.internal.actions.MergeAction"
-               label="%MergeAction_label"
-               menubarPath="team.main/group4"/>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.PullFromUpstreamConfigAction"
-               definitionId="org.eclipse.egit.ui.team.Pull"
-               icon="$nl$/icons/obj16/pull.gif"
-               id="org.eclipse.egit.ui.team.PullCurrentBranchAction"
-               label="%PullIntoCurrentBranchMenuLabel"
-               menubarPath="team.main/group2">
-         </action>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.SimplePushAction"
-               definitionId="org.eclipse.egit.ui.team.SimplePush"
-               icon="icons/obj16/push.gif"
-               id="org.eclipse.egit.ui.team.SimplePush"
-               label="%PushToUpstreamAction.label"
-               menubarPath="team.main/group1">
-         </action>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.SimpleFetchAction"
-               definitionId="org.eclipse.egit.ui.team.SimpleFetch"
-               icon="icons/obj16/fetch.gif"
-               id="org.eclipse.egit.ui.team.SimpleFetch"
-               label="%FetchFromUpstreamAction.label"
-               menubarPath="team.main/group1">
-         </action>
-     </objectContribution>
      <objectContribution id="org.eclipse.egit.ui.containerContributions"
             objectClass="org.eclipse.core.resources.IContainer"
             adaptable="true">
@@ -391,6 +339,42 @@
             class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
          <adapter type="org.eclipse.ui.part.IShowInSource"/>
       </factory>
+   </extension>
+
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="org.eclipse.egit.ui.gitProject">
+         <and>
+            <count
+                  value="1">
+            </count>
+            <iterate>
+               <adapt
+                     type="org.eclipse.core.resources.IProject">
+                  <test
+                        property="GitResource.isShared">
+                  </test>
+               </adapt>
+            </iterate>
+         </and>
+      </definition>
+      <definition
+            id="org.eclipse.egit.ui.gitProjects">
+         <and>
+            <count
+                  value="+">
+            </count>
+            <iterate>
+               <adapt
+                     type="org.eclipse.core.resources.IProject">
+                  <test
+                        property="GitResource.isShared">
+                  </test>
+               </adapt>
+            </iterate>
+         </and>
+      </definition>
    </extension>
 
    <extension point="org.eclipse.ui.preferencePages">
@@ -942,6 +926,11 @@
             categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.team.GarbageCollect"
             name="%GarbageCollectCommand.label">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.team.Disconnect"
+            name="%DisconnectCommand.name">
       </command>
    </extension>
    <extension
@@ -1816,6 +1805,17 @@
                   property="org.eclipse.core.resources.projectPersistentProperty"
                   args="org.eclipse.team.core.repository, org.eclipse.egit.core.GitProvider">
                </test>
+               </adapt>
+            </iterate>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.eclipse.egit.ui.internal.actions.DisconnectActionHandler"
+            commandId="org.eclipse.egit.ui.team.Disconnect">
+         <activeWhen>
+            <iterate>
+               <adapt
+                     type="org.eclipse.core.resources.IProject">
                </adapt>
             </iterate>
          </activeWhen>
@@ -3628,6 +3628,29 @@
                   name="group1"
                   visible="true">
             </separator>
+            <command
+                  commandId="org.eclipse.egit.ui.team.SimplePush"
+                  label="%PushToUpstreamAction.label"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="org.eclipse.egit.ui.gitProject">
+                  </reference>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="org.eclipse.egit.ui.team.SimpleFetch"
+                  label="%FetchFromUpstreamAction.label"
+                  mnemonic="f"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="org.eclipse.egit.ui.gitProject">
+                  </reference>
+               </visibleWhen>
+            </command>
             <separator
                   name="org.eclipse.egit.ui.remoteSeparator"
                   visible="true">
@@ -3670,21 +3693,9 @@
                </command>
                <visibleWhen
                      checkEnabled="false">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate>
-                        <and>
-                           <adapt
-                                 type="org.eclipse.core.resources.IProject">
-                              <test
-                                    property="GitResource.isShared">
-                              </test>
-                           </adapt>
-                        </and>
-                     </iterate>
-                  </and>
+                  <reference
+                        definitionId="org.eclipse.egit.ui.gitProject">
+                  </reference>
                </visibleWhen>
             </menu>
             <separator
@@ -3699,21 +3710,9 @@
                </dynamic>
                <visibleWhen
                      checkEnabled="false">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate>
-                        <and>
-                           <adapt
-                                 type="org.eclipse.core.resources.IProject">
-                              <test
-                                    property="GitResource.isShared">
-                              </test>
-                           </adapt>
-                        </and>
-                     </iterate>
-                  </and>
+                  <reference
+                        definitionId="org.eclipse.egit.ui.gitProject">
+                  </reference>
                </visibleWhen>
             </menu>
             <separator
@@ -3727,21 +3726,9 @@
                      style="push">
                   <visibleWhen
                         checkEnabled="false">
-                     <and>
-                        <count
-                              value="1">
-                        </count>
-                        <iterate>
-                           <and>
-                              <adapt
-                                    type="org.eclipse.core.resources.IProject">
-                                 <test
-                                       property="GitResource.isShared">
-                                 </test>
-                              </adapt>
-                           </and>
-                        </iterate>
-                     </and>
+                     <reference
+                           definitionId="org.eclipse.egit.ui.gitProject">
+                     </reference>
                   </visibleWhen>
                </command>
                <command
@@ -3750,21 +3737,9 @@
                      style="push">
                   <visibleWhen
                         checkEnabled="false">
-                     <and>
-                        <count
-                              value="1">
-                        </count>
-                        <iterate>
-                           <and>
-                              <adapt
-                                    type="org.eclipse.core.resources.IProject">
-                                 <test
-                                       property="GitResource.isShared">
-                                 </test>
-                              </adapt>
-                           </and>
-                        </iterate>
-                     </and>
+                     <reference
+                           definitionId="org.eclipse.egit.ui.gitProject">
+                     </reference>
                   </visibleWhen>
                </command>
                <separator
@@ -3803,21 +3778,9 @@
                      style="push">
                   <visibleWhen
                         checkEnabled="false">
-                     <and>
-                        <count
-                              value="1">
-                        </count>
-                        <iterate>
-                           <and>
-                              <adapt
-                                    type="org.eclipse.core.resources.IProject">
-                                 <test
-                                       property="GitResource.isShared">
-                                 </test>
-                              </adapt>
-                           </and>
-                        </iterate>
-                     </and>
+                     <reference
+                           definitionId="org.eclipse.egit.ui.gitProject">
+                     </reference>
                   </visibleWhen>
                </command>
                <separator
@@ -3895,6 +3858,17 @@
                   name="group2"
                   visible="true">
             </separator>
+            <command
+                  commandId="org.eclipse.egit.ui.team.Pull"
+                  label="%PullIntoCurrentBranchMenuLabel"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="org.eclipse.egit.ui.gitProjects">
+                  </reference>
+               </visibleWhen>
+            </command>
             <separator
                   name="group3"
                   visible="true">
@@ -3903,6 +3877,17 @@
                   name="group4"
                   visible="true">
             </separator>
+            <command
+                  commandId="org.eclipse.egit.ui.team.Merge"
+                  label="%MergeAction_label"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="org.eclipse.egit.ui.gitProject">
+                  </reference>
+               </visibleWhen>
+            </command>
             <separator
                   name="group5"
                   visible="true">
@@ -3956,6 +3941,17 @@
 	              </and>
 	           </visibleWhen>
             </menu>
+           <command
+                 commandId="org.eclipse.egit.ui.team.Reset"
+                 label="%ResetAction_label"
+                 style="push">
+              <visibleWhen
+                    checkEnabled="false">
+                 <reference
+                       definitionId="org.eclipse.egit.ui.gitProject">
+                 </reference>
+              </visibleWhen>
+           </command>
             <separator
                   name="group6"
                   visible="true">
@@ -3984,6 +3980,21 @@
                   name="projectGroup"
                   visible="true">
             </separator>
+            <separator
+                  name="group11"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.egit.ui.team.Disconnect"
+                  label="%DisconnectAction_label"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="org.eclipse.egit.ui.gitProjects">
+                  </reference>
+               </visibleWhen>
+            </command>
          </menu>
       </menuContribution>
       <menuContribution
@@ -4509,6 +4520,10 @@
       <image
             commandId="org.eclipse.egit.ui.team.GarbageCollect"
             icon="icons/elcl16/trash.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.Disconnect"
+            icon="icons/obj16/disconnect_co.gif">
       </image>
    </extension>
    <extension
