@@ -65,7 +65,6 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.IOpenListener;
@@ -76,6 +75,7 @@ import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.lib.ObjectId;
@@ -988,9 +988,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 	/**
 	 * Used to render the tree in case we have no workspace
 	 */
-	private final class PathNodeContentProvider extends ArrayContentProvider
-			implements ITreeContentProvider {
-		@Override
+	private final class PathNodeContentProvider implements ITreeContentProvider {
 		public Object[] getElements(Object inputElement) {
 			if (baseVersionPathsWithChildren.isEmpty() && addedPaths.isEmpty())
 				return new String[] { UIText.CompareTreeView_NoDifferencesFoundMessage };
@@ -1077,6 +1075,14 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 			if (currentPath.segmentCount() > 0)
 				return currentPath.removeLastSegments(1);
 			return null;
+		}
+
+		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+			// Do nothing
+		}
+
+		public void dispose() {
+			// Do nothing
 		}
 	}
 
