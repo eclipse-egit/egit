@@ -2953,9 +2953,14 @@
                         value="1">
                   </count>
                   <iterate>
-                     <instanceof
-                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-                     </instanceof>
+                     <and>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                        </instanceof>
+                        <test
+                              property="GitRepository.hasGerritConfiguration">
+                        </test>
+                     </and>
                   </iterate>
                </and>
             </visibleWhen>
@@ -2971,9 +2976,14 @@
                         value="1">
                   </count>
                   <iterate>
-                     <instanceof
-                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-                     </instanceof>
+                     <and>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                        </instanceof>
+                        <test
+                              property="GitRepository.hasGerritConfiguration">
+                        </test>
+                     </and>
                   </iterate>
                </and>
             </visibleWhen>
@@ -3645,11 +3655,49 @@
                      commandId="org.eclipse.egit.ui.FetchGerritChange"
                      label="%FetchFromGerritCommand.label"
                      style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <and>
+                        <count
+                              value="1">
+                        </count>
+                        <iterate>
+                           <adapt
+                                 type="org.eclipse.core.resources.IProject">
+                              <test
+                                    property="GitResource.isShared">
+                              </test>
+                              <test
+                                    property="GitResource.hasGerritConfiguration">
+                              </test>
+                           </adapt>
+                        </iterate>
+                     </and>
+                  </visibleWhen>
                </command>
                <command
                      commandId="org.eclipse.egit.ui.PushHeadToGerrit"
                      label="%PushToGerritMenu.label"
                      style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <and>
+                        <count
+                              value="1">
+                        </count>
+                        <iterate>
+                           <adapt
+                                 type="org.eclipse.core.resources.IProject">
+                              <test
+                                    property="GitResource.isShared">
+                              </test>
+                              <test
+                                    property="GitResource.hasGerritConfiguration">
+                              </test>
+                           </adapt>
+                        </iterate>
+                     </and>
+                  </visibleWhen>
                </command>
                <separator
                      name="org.eclipse.egit.ui.remote.group1"
@@ -4514,14 +4562,14 @@
             class="org.eclipse.egit.ui.internal.repository.tree.RepositoriesViewPropertyTester"
             id="org.eclipse.egit.ui.RepositoryTester"
             namespace="GitRepository"
-            properties="isBare,isSafe,canCommit,canAmend,canResetHead,canStash,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase,canContinueRebase,isSubmodule,containsHead"
+            properties="isBare,isSafe,canCommit,canAmend,canResetHead,canStash,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase,canContinueRebase,isSubmodule,containsHead,hasGerritConfiguration"
             type="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
       </propertyTester>
       <propertyTester
             class="org.eclipse.egit.ui.internal.ResourcePropertyTester"
             id="org.eclipse.egit.ui.ResourceTester"
             namespace="GitResource"
-            properties="isShared,isContainer,isSafe,canCommit,canAmend,canResetHead"
+            properties="isShared,isContainer,isSafe,canCommit,canAmend,canResetHead,hasGerritConfiguration"
             type="org.eclipse.core.resources.IResource">
       </propertyTester>
    </extension>
