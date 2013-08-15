@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2011, Stefan Lay <stefan.lay@sap.com>
- * Copyright (C) 2011, Matthias Sohn <matthias.sohn@sap.com>
+ * Copyright (C) 2011, 2013, Matthias Sohn <matthias.sohn@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -25,7 +25,6 @@ import org.eclipse.egit.ui.internal.SWTUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage.Protocol;
 import org.eclipse.jface.bindings.keys.KeyStroke;
-import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.fieldassist.IContentProposal;
@@ -49,6 +48,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -299,16 +299,12 @@ class GerritConfigurationPage extends WizardPage {
 	}
 
 	private void addRefContentProposalToText(final Text textField) {
-		KeyStroke stroke;
-		try {
-			stroke = KeyStroke.getInstance("CTRL+SPACE"); //$NON-NLS-1$
+		KeyStroke stroke = UIUtils
+				.getKeystrokeOfBestActiveBindingFor(IWorkbenchCommandConstants.EDIT_CONTENT_ASSIST);
+		if (stroke != null)
 			UIUtils.addBulbDecorator(textField, NLS.bind(
 					UIText.GerritConfigurationPage_BranchTooltipHover,
 					stroke.format()));
-		} catch (ParseException e1) {
-			Activator.handleError(e1.getMessage(), e1, false);
-			stroke = null;
-		}
 
 		IContentProposalProvider cp = new IContentProposalProvider() {
 			public IContentProposal[] getProposals(String contents, int position) {
