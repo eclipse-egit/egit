@@ -40,9 +40,9 @@ import org.eclipse.egit.ui.UIUtils.IPreviousValueProposalHandler;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitHelper;
 import org.eclipse.egit.ui.internal.commit.CommitHelper.CommitInfo;
+import org.eclipse.egit.ui.internal.gerrit.GerritUtil;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -525,9 +525,8 @@ public class CommitMessageComponent {
 	 */
 	public void setDefaults() {
 		if (repository != null)
-			createChangeId = repository.getConfig().getBoolean(
-					ConfigConstants.CONFIG_GERRIT_SECTION,
-					ConfigConstants.CONFIG_KEY_CREATECHANGEID, false);
+			createChangeId = GerritUtil.getCreateChangeId(repository
+					.getConfig());
 		signedOff = org.eclipse.egit.ui.Activator.getDefault()
 				.getPreferenceStore()
 				.getBoolean(UIPreferences.COMMIT_DIALOG_SIGNED_OFF_BY);

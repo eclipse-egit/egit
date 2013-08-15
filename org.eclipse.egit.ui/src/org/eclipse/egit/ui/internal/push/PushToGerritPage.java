@@ -30,6 +30,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
+import org.eclipse.egit.ui.internal.gerrit.GerritUtil;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.jface.dialogs.Dialog;
@@ -124,7 +125,7 @@ class PushToGerritPage extends WizardPage {
 
 		// we visualize the prefix here
 		prefixCombo = new Combo(main, SWT.READ_ONLY | SWT.DROP_DOWN);
-		prefixCombo.add("refs/for/"); //$NON-NLS-1$
+		prefixCombo.add(GerritUtil.REFS_FOR);
 		prefixCombo.add("refs/drafts/"); //$NON-NLS-1$
 		prefixCombo.select(0);
 

@@ -17,7 +17,6 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
@@ -103,8 +102,9 @@ public class ConfigureGerritWizard extends Wizard {
 			destination = pushRefSpecs.get(0).getDestination();
 			if (destination.startsWith(Constants.R_HEADS))
 				destination = destination.substring(Constants.R_HEADS.length());
-			else if (destination.startsWith("refs/for/")) //$NON-NLS-1$
-				destination = destination.substring("refs/for/".length()); //$NON-NLS-1$
+			else if (destination.startsWith(GerritUtil.REFS_FOR))
+				destination = destination.substring(GerritUtil.REFS_FOR
+						.length());
 		}
 		return destination;
 	}
@@ -149,7 +149,8 @@ public class ConfigureGerritWizard extends Wizard {
 		for (RefSpec refSpec : pushRefSpecs) {
 			remoteConfig.removePushRefSpec(refSpec);
 		}
-		remoteConfig.addPushRefSpec(new RefSpec( "HEAD:refs/for/" + gerritBranch)); //$NON-NLS-1$
+		remoteConfig.addPushRefSpec(new RefSpec(
+				"HEAD:" + GerritUtil.REFS_FOR + gerritBranch)); //$NON-NLS-1$
 	}
 
 	private void configureFetchNotes() {
@@ -163,8 +164,7 @@ public class ConfigureGerritWizard extends Wizard {
 	}
 
 	private void configureCreateChangeId() {
-		config.setBoolean(ConfigConstants.CONFIG_GERRIT_SECTION,
-				null, ConfigConstants.CONFIG_KEY_CREATECHANGEID, true);
+		GerritUtil.setCreateChangeId(config);
 	}
 
 }
