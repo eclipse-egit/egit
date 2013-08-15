@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 SAP AG.
+ * Copyright (c) 2012, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -31,7 +31,6 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.jface.bindings.keys.KeyStroke;
-import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
@@ -57,6 +56,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IWorkbenchCommandConstants;
 
 /**
  * Push the current HEAD to Gerrit
@@ -245,16 +245,12 @@ class PushToGerritPage extends WizardPage {
 	}
 
 	private void addRefContentProposalToText(final Text textField) {
-		KeyStroke stroke;
-		try {
-			stroke = KeyStroke.getInstance("CTRL+SPACE"); //$NON-NLS-1$
+		KeyStroke stroke = UIUtils
+				.getKeystrokeOfBestActiveBindingFor(IWorkbenchCommandConstants.EDIT_CONTENT_ASSIST);
+		if (stroke != null)
 			UIUtils.addBulbDecorator(textField, NLS.bind(
 					UIText.PushToGerritPage_ContentProposalHoverText,
 					stroke.format()));
-		} catch (ParseException e1) {
-			Activator.handleError(e1.getMessage(), e1, false);
-			stroke = null;
-		}
 
 		IContentProposalProvider cp = new IContentProposalProvider() {
 			public IContentProposal[] getProposals(String contents, int position) {
