@@ -28,6 +28,8 @@ import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RefContentProposal;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.bindings.Trigger;
+import org.eclipse.jface.bindings.TriggerSequence;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -753,5 +755,31 @@ public class UIUtils {
 		}
 
 		return UIText.UIUtils_ShowInMenuLabel;
+	}
+
+	/**
+	 * Look up best active binding's keystroke for the given command
+	 *
+	 * @param commandId
+	 *            The identifier of the command for which the best active
+	 *            binding's keystroke should be retrieved; must not be null.
+	 * @return keystroke for the best active binding for the specified commandId
+	 */
+	public static KeyStroke getKeystrokeOfBestActiveBindingFor(String commandId) {
+		KeyStroke stroke = null;
+		IBindingService bindingService = (IBindingService) PlatformUI
+				.getWorkbench().getAdapter(IBindingService.class);
+		TriggerSequence ts = bindingService
+				.getBestActiveBindingFor("org.eclipse.ui.edit.text.contentAssist.proposals"); //$NON-NLS-1$
+		if (ts == null)
+			return null;
+
+		Trigger[] triggers = ts.getTriggers();
+		for (Trigger t : triggers) {
+			if (t instanceof KeyStroke)
+				stroke = (KeyStroke) t;
+		}
+
+		return stroke;
 	}
 }

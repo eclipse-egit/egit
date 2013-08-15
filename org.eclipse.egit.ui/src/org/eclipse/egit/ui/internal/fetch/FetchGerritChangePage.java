@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -38,7 +38,6 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.egit.ui.internal.dialogs.CheckoutConflictDialog;
 import org.eclipse.jface.bindings.keys.KeyStroke;
-import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
@@ -684,16 +683,12 @@ public class FetchGerritChangePage extends WizardPage {
 	}
 
 	private void addRefContentProposalToText(final Text textField) {
-		KeyStroke stroke;
-		try {
-			stroke = KeyStroke.getInstance("CTRL+SPACE"); //$NON-NLS-1$
+		KeyStroke stroke = UIUtils
+				.getKeystrokeOfBestActiveBindingFor("org.eclipse.ui.edit.text.contentAssist.proposals"); //$NON-NLS-1$
+		if (stroke != null)
 			UIUtils.addBulbDecorator(textField, NLS.bind(
 					UIText.FetchGerritChangePage_ContentAssistTooltip,
 					stroke.format()));
-		} catch (ParseException e1) {
-			Activator.handleError(e1.getMessage(), e1, false);
-			stroke = null;
-		}
 
 		IContentProposalProvider cp = new IContentProposalProvider() {
 			public IContentProposal[] getProposals(String contents, int position) {
