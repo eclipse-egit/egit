@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e4bec_e388ab78",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-16T12:35:30Z",
+      "side": 1,
+      "message": "Document that it can return null.",
+      "revId": "8ae94f982dde96eec523e11300ba0b21b20a9028",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_a37ea3d5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-16T12:35:30Z",
+      "side": 1,
+      "message": "commandId is not used in the method. Either the string below should be replaced or we should remove the parameter and rename it to \"getContentAssistKeystroke\".",
+      "revId": "8ae94f982dde96eec523e11300ba0b21b20a9028",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_2359f386",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-16T12:35:30Z",
+      "side": 1,
+      "message": "In which case is there more than one trigger? Is it for a binding like \"Shift+Alt+X T\"? In that case we should probably not return \"Shift+Alt+X\", as it will be more confusing than helpful. So something likes this maybe?:\n\n    if (triggers.length \u003d\u003d 1 \u0026\u0026 triggers[0] instanceof KeyStroke)\n        return (KeyStroke) triggers[0];",
+      "revId": "8ae94f982dde96eec523e11300ba0b21b20a9028",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_03567755",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-16T12:35:30Z",
+      "side": 1,
+      "message": "Use IWorkbenchCommandConstants.EDIT_CONTENT_ASSIST here (also in other places).",
+      "revId": "8ae94f982dde96eec523e11300ba0b21b20a9028",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
