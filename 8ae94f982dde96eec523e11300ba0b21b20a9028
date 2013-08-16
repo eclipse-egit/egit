@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c73e4bec_396f64f0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-08-16T21:37:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c73e4bec_e388ab78",
+      "revId": "8ae94f982dde96eec523e11300ba0b21b20a9028",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_a37ea3d5",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-08-16T12:35:30Z",
       "side": 1,
       "message": "commandId is not used in the method. Either the string below should be replaced or we should remove the parameter and rename it to \"getContentAssistKeystroke\".",
+      "revId": "8ae94f982dde96eec523e11300ba0b21b20a9028",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_670662da",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-08-16T21:37:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c73e4bec_a37ea3d5",
       "revId": "8ae94f982dde96eec523e11300ba0b21b20a9028",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c73e4bec_b9b534e9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-08-16T21:37:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c73e4bec_2359f386",
+      "revId": "8ae94f982dde96eec523e11300ba0b21b20a9028",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_03567755",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2013-08-16T12:35:30Z",
       "side": 1,
       "message": "Use IWorkbenchCommandConstants.EDIT_CONTENT_ASSIST here (also in other places).",
+      "revId": "8ae94f982dde96eec523e11300ba0b21b20a9028",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_199a687b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-08-16T21:37:18Z",
+      "side": 1,
+      "message": "done, thanks I couldn\u0027t find that constant",
+      "parentUuid": "c73e4bec_03567755",
       "revId": "8ae94f982dde96eec523e11300ba0b21b20a9028",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
