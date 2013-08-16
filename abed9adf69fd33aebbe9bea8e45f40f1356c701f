@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e4bec_5e7cd6d8",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3653,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-08-16T14:18:48Z",
+      "side": 1,
+      "message": "this has the effect that for a repository which isn\u0027t configured for Gerrit the team menu shows \"Remote \u003e Fetch from Gerrit...\" instead of \"Remote \u003e Fetch...\"",
+      "revId": "abed9adf69fd33aebbe9bea8e45f40f1356c701f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
