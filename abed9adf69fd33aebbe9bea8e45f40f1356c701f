@@ -16,6 +16,24 @@
       "revId": "abed9adf69fd33aebbe9bea8e45f40f1356c701f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_d9192082",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3653,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-16T14:52:27Z",
+      "side": 1,
+      "message": "Thanks, I accidentally broke this while rebasing. Fixed in newest patch set.",
+      "parentUuid": "c73e4bec_5e7cd6d8",
+      "revId": "abed9adf69fd33aebbe9bea8e45f40f1356c701f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
