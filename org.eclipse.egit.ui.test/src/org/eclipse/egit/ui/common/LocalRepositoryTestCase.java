@@ -44,7 +44,6 @@ import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -415,9 +414,9 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 				existence);
 	}
 
-	protected static FileRepository lookupRepository(File directory)
+	protected static Repository lookupRepository(File directory)
 			throws Exception {
-		return (FileRepository) org.eclipse.egit.core.Activator.getDefault()
+		return org.eclipse.egit.core.Activator.getDefault()
 				.getRepositoryCache().lookupRepository(directory);
 	}
 
