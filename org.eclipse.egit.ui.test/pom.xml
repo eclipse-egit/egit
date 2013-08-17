@@ -61,7 +61,7 @@
         </os>
       </activation>
       <properties>
-        <ui.test.vmargs>${uitest.vmparams}</ui.test.vmargs>
+        <ui.test.vmargs>${test.vmparams} ${uitest.vmparams}</ui.test.vmargs>
       </properties>
     </profile>
   </profiles>

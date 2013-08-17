@@ -24,6 +24,10 @@
 
   <name>EGit Core Test Plug-in</name>
 
+  <properties>
+    <coretest.vmparams></coretest.vmparams>
+  </properties>
+
   <build>
     <plugins>
       <plugin>
@@ -35,6 +39,7 @@
             <!-- test mojo matches TestProject be default and treats it as PojoTest -->
             <exclude>**/Test*.class</exclude>
           </excludes>
+          <argLine>${test.vmparams} ${coretest.vmparams}</argLine>
           <useUIHarness>false</useUIHarness>
           <useUIThread>false</useUIThread>
         </configuration>
