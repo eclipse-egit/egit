@@ -78,6 +78,7 @@ public class GitMoveDeleteHookTest {
 				ResourcesPlugin.getWorkspace().getRoot().getLocation().toFile()
 						.getAbsoluteFile().toString());
 		workspaceSupplement = testUtils.createTempDir("wssupplement");
+		testDirs.add(testUtils.getBaseTempDir());
 		workspace = ResourcesPlugin.getWorkspace().getRoot().getLocation().toFile().getAbsoluteFile();
 	}
 
