@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e4bec_829a6179",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/TestUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-19T11:48:26Z",
+      "side": 1,
+      "message": "Could you change the string to \"EGitTestTemp-\" + ...? Including \"temp\" or \"tmp\" should make it clear that it can safely be deleted in case it is lying around from an aborted test.",
+      "revId": "6bba83b1881a4147f446ee44651fc35bb2c6df66",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
