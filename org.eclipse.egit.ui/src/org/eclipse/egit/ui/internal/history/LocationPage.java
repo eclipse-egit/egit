@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.op.CreatePatchOperation;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.Dialog;
@@ -48,7 +49,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -362,12 +362,7 @@ public class LocationPage extends WizardPage {
 
 		fsBrowseButton = new Button(composite, SWT.PUSH);
 		fsBrowseButton.setText(UIText.GitCreatePatchWizard_Browse);
-		GridData data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-		int widthHint = convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
-		Point minSize = fsBrowseButton.computeSize(SWT.DEFAULT,
-				SWT.DEFAULT, true);
-		data.widthHint = Math.max(widthHint, minSize.x);
-		fsBrowseButton.setLayoutData(data);
+		UIUtils.setButtonLayoutData(fsBrowseButton);
 		fsBrowseButton.setEnabled(isFileSystemSelected);
 
 		// workspace
@@ -382,7 +377,7 @@ public class LocationPage extends WizardPage {
 
 		wsBrowseButton = new Button(composite, SWT.PUSH);
 		wsBrowseButton.setText(UIText.GitCreatePatchWizard_Browse);
-		wsBrowseButton.setLayoutData(data);
+		UIUtils.setButtonLayoutData(wsBrowseButton);
 		wsBrowseButton.setEnabled(isWorkspaceSelected);
 
 		cpRadio.addListener(SWT.Selection, new Listener() {
