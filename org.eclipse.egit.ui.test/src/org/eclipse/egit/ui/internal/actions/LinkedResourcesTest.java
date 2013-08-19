@@ -30,7 +30,6 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.FileUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -53,9 +52,8 @@ public class LinkedResourcesTest extends LocalRepositoryTestCase {
 	public void setUp() throws Exception {
 		gitDir = createProjectAndCommitToRepository();
 		project = ResourcesPlugin.getWorkspace().getRoot().getProject(PROJ1);
-		// create our standalone temporary directory in the user space
-		File userHome = FS.DETECTED.userHome();
-		standaloneDirectory = new File(userHome, STANDALONE_FOLDER);
+		// create standalone temporary directory
+		standaloneDirectory = testUtils.createTempDir(STANDALONE_FOLDER);
 		if (standaloneDirectory.exists())
 			FileUtils.delete(standaloneDirectory, FileUtils.RECURSIVE
 					| FileUtils.RETRY);

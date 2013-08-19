@@ -38,6 +38,7 @@ import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.op.ListRemoteOperation;
+import org.eclipse.egit.core.test.TestUtils;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
@@ -53,7 +54,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryBuilder;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.URIish;
-import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.jgit.util.IO;
 import org.eclipse.swt.SWT;
@@ -126,6 +126,8 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 	protected static final String FOLDER = "folder";
 
+	protected static TestUtils testUtils = new TestUtils();
+
 	public static File getTestDirectory() {
 		return testDirectory;
 	}
@@ -133,9 +135,8 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 	@BeforeClass
 	public static void beforeClassBase() throws Exception {
 		deleteAllProjects();
-		// create our temporary directory in the user space
-		File userHome = FS.DETECTED.userHome();
-		testDirectory = new File(userHome, "LocalRepositoriesTests");
+		// create standalone temporary directory
+		testDirectory = testUtils.createTempDir("LocalRepositoriesTests");
 		if (testDirectory.exists())
 			FileUtils.delete(testDirectory, FileUtils.RECURSIVE
 					| FileUtils.RETRY);

@@ -45,6 +45,31 @@ public class TestUtils {
 	public final static String COMMITTER = "The Commiter <The.committer@some.com>";
 
 	/**
+	 * allow to set a custom directory for running tests
+	 *
+	 * @return custom directory defined by system property
+	 *         {@code egit.test.tmpdir} or {@code null} if this property isn't
+	 *         defined
+	 */
+	private static File customTestDirectory() {
+		final String testDir = System.getProperty("egit.test.tmpdir"); //$NON-NLS-1$
+		if (testDir == null || testDir.length() == 0)
+			return null;
+		return new File(testDir).getAbsoluteFile();
+	}
+
+	private File rootDir;
+
+	public TestUtils() {
+		File testDir = customTestDirectory();
+		if (testDir == null) {
+			testDir = FS.DETECTED.userHome();
+			rootDir = new File(testDir, "egit.test.tmpdir");
+		} else
+			rootDir = testDir;
+	}
+
+	/**
 	 * Return the base directory in which temporary directories are created.
 	 * Current implementation returns a "temporary" folder in the user home.
 	 *
@@ -52,8 +77,6 @@ public class TestUtils {
 	 * @throws IOException
 	 */
 	public File getBaseTempDir() throws IOException {
-		File userHome = FS.DETECTED.userHome();
-		File rootDir = new File(userHome, "EGitCoreTestTempDir");
 		return rootDir;
 	}
 
@@ -79,7 +102,6 @@ public class TestUtils {
 	 * @throws IOException
 	 */
 	public void deleteTempDirs() throws IOException {
-		File rootDir = getBaseTempDir();
 		if (rootDir.exists())
 			FileUtils.delete(rootDir, FileUtils.RECURSIVE | FileUtils.RETRY);
 	}
@@ -277,10 +299,6 @@ public class TestUtils {
 			map.put(args[i], args[i+1]);
 		}
 		return map;
-	}
-
-	File getWorkspaceSupplement() throws IOException {
-		return createTempDir("wssupplement");
 	}
 
 }
