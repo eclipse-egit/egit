@@ -51,7 +51,7 @@ public class TestUtils {
 	 *         {@code egit.test.tmpdir} or {@code null} if this property isn't
 	 *         defined
 	 */
-	private static File customTestDirectory() {
+	private static File getCustomTestDirectory() {
 		final String testDir = System.getProperty("egit.test.tmpdir"); //$NON-NLS-1$
 		if (testDir == null || testDir.length() == 0)
 			return null;
@@ -61,12 +61,13 @@ public class TestUtils {
 	private File rootDir;
 
 	public TestUtils() {
-		File testDir = customTestDirectory();
+		File testDir = getCustomTestDirectory();
 		if (testDir == null) {
 			testDir = FS.DETECTED.userHome();
-			rootDir = new File(testDir, "egit.test.tmpdir");
-		} else
-			rootDir = testDir;
+			testDir = new File(testDir, "egit.test.tmpdir");
+		}
+		rootDir = new File(testDir, "egitTest" + System.currentTimeMillis()
+				+ "-" + Integer.toHexString(System.identityHashCode(this)));
 	}
 
 	/**
