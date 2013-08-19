@@ -44,16 +44,38 @@ public class TestUtils {
 
 	public final static String COMMITTER = "The Commiter <The.committer@some.com>";
 
+	private final static File rootDir = customTestDirectory();
+
+	/**
+	 * Allow to set a custom directory for running tests
+	 *
+	 * @return custom directory defined by system property
+	 *         {@code egit.test.tmpdir} or {@code ~/egit.test.tmpdir} if this
+	 *         property isn't defined
+	 */
+	private static File customTestDirectory() {
+		final String p = System.getProperty("egit.test.tmpdir"); //$NON-NLS-1$
+		File testDir = null;
+		boolean isDefault = true;
+		if (p == null || p.length() == 0)
+			testDir = new File(FS.DETECTED.userHome(), "egit.test.tmpdir"); //$NON-NLS-1$
+		else {
+			isDefault = false;
+			testDir = new File(p).getAbsoluteFile();
+		}
+		System.out.println("egit.test.tmpdir" //$NON-NLS-1$
+				+ (isDefault ? "[default]: " : ": ") //$NON-NLS-1$ $NON-NLS-2$
+				+ testDir.getAbsolutePath());
+		return testDir;
+	}
+
 	/**
 	 * Return the base directory in which temporary directories are created.
 	 * Current implementation returns a "temporary" folder in the user home.
 	 *
 	 * @return a "temporary" folder in the user home that may not exist.
-	 * @throws IOException
 	 */
-	public File getBaseTempDir() throws IOException {
-		File userHome = FS.DETECTED.userHome();
-		File rootDir = new File(userHome, "EGitCoreTestTempDir");
+	public File getBaseTempDir() {
 		return rootDir;
 	}
 
@@ -79,7 +101,6 @@ public class TestUtils {
 	 * @throws IOException
 	 */
 	public void deleteTempDirs() throws IOException {
-		File rootDir = getBaseTempDir();
 		if (rootDir.exists())
 			FileUtils.delete(rootDir, FileUtils.RECURSIVE | FileUtils.RETRY);
 	}
@@ -277,10 +298,6 @@ public class TestUtils {
 			map.put(args[i], args[i+1]);
 		}
 		return map;
-	}
-
-	File getWorkspaceSupplement() throws IOException {
-		return createTempDir("wssupplement");
 	}
 
 }
