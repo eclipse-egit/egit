@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e4bec_a224bd61",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchSelectionBlock.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-19T12:52:22Z",
+      "side": 1,
+      "message": "This class would fit nicely in the \"org.eclipse.egit.ui.internal.components\" package.",
+      "revId": "46345e62cf4dbef93b1bffca6a0b4e842328b930",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_0265b193",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchSelectionBlock.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-19T12:52:22Z",
+      "side": 1,
+      "message": "How about \"BranchSelectionComponent\"?",
+      "revId": "46345e62cf4dbef93b1bffca6a0b4e842328b930",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_a2567da1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchSelectionBlock.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-19T12:52:22Z",
+      "side": 1,
+      "message": "How about doing this in the constructor like in other SWT controls? Then the caller could not forget calling createContent() before accessing other things.",
+      "revId": "46345e62cf4dbef93b1bffca6a0b4e842328b930",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_8278a137",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchSelectionBlock.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-19T12:52:22Z",
+      "side": 1,
+      "message": "checkPage could be added by the client, by exposing the button as a getter here, e.g.:\n\n    Button getSelectButton() { ... }\n\nand the client then does this:\n\n    getSelectButton().addSelectionListener(...);",
+      "revId": "46345e62cf4dbef93b1bffca6a0b4e842328b930",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_429859fc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/AdvancedBranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-19T12:52:22Z",
+      "side": 1,
+      "message": "\"Advanced\" is not very descriptive. If I read this correctly, it adds New, Rename and Delete buttons compared to the base class. How about \"BranchSelectionAndEditDialog\"? Should also be mentioned in the Javadoc.",
+      "revId": "46345e62cf4dbef93b1bffca6a0b4e842328b930",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
