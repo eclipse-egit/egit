@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e4bec_029db146",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-19T12:09:19Z",
+      "side": 1,
+      "message": "In DialogPage, the font that is used (initializeDialogUnits) is JFaceResources.getDialogFont(). Here, it\u0027s the button font. In LocationPage.createControl, Dialog.applyDialogFont is called at the end, which recursively changes the fonts of the controls.\n\nThat means the font which is set on the button when this method is called is not necessarily the same as the final font.\n\nSo, the question is if this method should use JFaceResources.getDialogFont() or if the font should be passed by the caller.",
+      "revId": "9edeb96d4adc67000b0e19b0d0a027099f7b0394",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
