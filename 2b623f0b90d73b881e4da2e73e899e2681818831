@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e4bec_e2408560",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/TestUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-19T11:44:29Z",
+      "side": 1,
+      "message": "Why is this needed? Seems unnecessary for reading arbitrary system properties, no? If it\u0027s really necessary, add a comment explaining why.",
+      "revId": "2b623f0b90d73b881e4da2e73e899e2681818831",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_a214bd73",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/TestUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-19T11:44:29Z",
+      "side": 1,
+      "message": "I would prefer if the name indicated what it\u0027s used for, e.g. \"egit.test.tmpdir\". The test don\u0027t particularly need a \"home directory\", just a temporary test directory.",
+      "revId": "2b623f0b90d73b881e4da2e73e899e2681818831",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
