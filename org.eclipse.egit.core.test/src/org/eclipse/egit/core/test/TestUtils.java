@@ -71,7 +71,8 @@ public class TestUtils {
 		File userHome = customUserHome();
 		if (userHome == null)
 			userHome = FS.DETECTED.userHome();
-		rootDir = new File(userHome, "EGitTestTempDir");
+		rootDir = new File(userHome, "egitTest" + System.currentTimeMillis()
+				+ "-" + Integer.toHexString(System.identityHashCode(this)));
 	}
 
 	/**
