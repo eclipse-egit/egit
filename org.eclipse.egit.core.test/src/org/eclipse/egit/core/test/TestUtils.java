@@ -19,6 +19,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -45,6 +47,34 @@ public class TestUtils {
 	public final static String COMMITTER = "The Commiter <The.committer@some.com>";
 
 	/**
+	 * allow to overwrite user.home for tests
+	 *
+	 * @return custom user home defined by system property
+	 *         {@code custom.user.home} or {@code null} if this property isn't
+	 *         defined
+	 */
+	private static File customUserHome() {
+		final String home = AccessController
+				.doPrivileged(new PrivilegedAction<String>() {
+					public String run() {
+						return System.getProperty("custom.user.home"); //$NON-NLS-1$
+					}
+				});
+		if (home == null || home.length() == 0)
+			return null;
+		return new File(home).getAbsoluteFile();
+	}
+
+	private File rootDir;
+
+	public TestUtils() {
+		File userHome = customUserHome();
+		if (userHome == null)
+			userHome = FS.DETECTED.userHome();
+		rootDir = new File(userHome, "EGitTestTempDir");
+	}
+
+	/**
 	 * Return the base directory in which temporary directories are created.
 	 * Current implementation returns a "temporary" folder in the user home.
 	 *
@@ -52,8 +82,6 @@ public class TestUtils {
 	 * @throws IOException
 	 */
 	public File getBaseTempDir() throws IOException {
-		File userHome = FS.DETECTED.userHome();
-		File rootDir = new File(userHome, "EGitCoreTestTempDir");
 		return rootDir;
 	}
 
@@ -79,7 +107,6 @@ public class TestUtils {
 	 * @throws IOException
 	 */
 	public void deleteTempDirs() throws IOException {
-		File rootDir = getBaseTempDir();
 		if (rootDir.exists())
 			FileUtils.delete(rootDir, FileUtils.RECURSIVE | FileUtils.RETRY);
 	}
@@ -277,10 +304,6 @@ public class TestUtils {
 			map.put(args[i], args[i+1]);
 		}
 		return map;
-	}
-
-	File getWorkspaceSupplement() throws IOException {
-		return createTempDir("wssupplement");
 	}
 
 }
