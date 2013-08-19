@@ -30,6 +30,8 @@ import org.eclipse.egit.ui.internal.components.RefContentProposal;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.ParseException;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.fieldassist.ControlDecoration;
@@ -39,6 +41,7 @@ import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
@@ -58,10 +61,14 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontMetrics;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Resource;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -753,5 +760,30 @@ public class UIUtils {
 		}
 
 		return UIText.UIUtils_ShowInMenuLabel;
+	}
+
+	/**
+	 * Copy from {@link org.eclipse.jface.dialogs.DialogPage} with changes to
+	 * accommodate the lack of a Dialog context.
+	 *
+	 * @param button
+	 *            the button to set the <code>GridData</code>
+	 * @return the <code>GridData</code> set on the given button
+	 */
+	public static GridData setButtonLayoutData(Button button) {
+		button.setFont(JFaceResources.getDialogFont());
+
+		GC gc = new GC(button);
+		gc.setFont(button.getFont());
+		FontMetrics fontMetrics = gc.getFontMetrics();
+		gc.dispose();
+
+		GridData data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+		int widthHint = Dialog.convertHorizontalDLUsToPixels(fontMetrics,
+				IDialogConstants.BUTTON_WIDTH);
+		Point minSize = button.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
+		data.widthHint = Math.max(widthHint, minSize.x);
+		button.setLayoutData(data);
+		return data;
 	}
 }
