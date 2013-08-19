@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c73e4bec_3d89f07a",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/TestUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-08-19T15:22:41Z",
+      "side": 1,
+      "message": "I had blindly copied this from org.eclipse.jgit.util.FS.userHomeImpl()\n\nI removed it since I think we don\u0027t need to care about security constraints for test code which will probably never run with a security manager.\n\nSee guideline 9-3 in [1] for explanations why this could make sense in other scenarios.\n\n[1] http://www.oracle.com/technetwork/java/seccodeguide-139067.html#9",
+      "parentUuid": "c73e4bec_e2408560",
+      "revId": "2b623f0b90d73b881e4da2e73e899e2681818831",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_a214bd73",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/TestUtils.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-08-19T11:44:29Z",
       "side": 1,
       "message": "I would prefer if the name indicated what it\u0027s used for, e.g. \"egit.test.tmpdir\". The test don\u0027t particularly need a \"home directory\", just a temporary test directory.",
+      "revId": "2b623f0b90d73b881e4da2e73e899e2681818831",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_3518e8a7",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/TestUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-08-19T15:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c73e4bec_a214bd73",
       "revId": "2b623f0b90d73b881e4da2e73e899e2681818831",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
