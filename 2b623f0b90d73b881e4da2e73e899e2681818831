@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c73e4bec_18c6c1ad",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/TestUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-19T18:55:01Z",
+      "side": 1,
+      "message": "Interesting, thanks!",
+      "parentUuid": "c73e4bec_3d89f07a",
+      "revId": "2b623f0b90d73b881e4da2e73e899e2681818831",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_a214bd73",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/TestUtils.java",
         "patchSetId": 1
