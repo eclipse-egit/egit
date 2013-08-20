@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e4bec_c8391afd",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/TestUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-08-20T21:11:08Z",
+      "side": 1,
+      "message": "Maybe we should start using java.rmi.server.UID instead.",
+      "revId": "68c2bbc33aac3716a6429c62ca819f32a9104fec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
