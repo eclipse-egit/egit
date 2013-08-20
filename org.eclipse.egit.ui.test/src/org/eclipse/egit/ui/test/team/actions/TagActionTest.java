@@ -96,6 +96,8 @@ public class TagActionTest extends LocalRepositoryTestCase {
 				"SomeTag");
 		assertFalse("Ok should be disabled", tagDialog.bot().button(
 				IDialogConstants.OK_LABEL).isEnabled());
+		tagDialog.bot().button(UIText.CreateTagDialog_clearButton)
+				.click();
 		tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagName).setText(
 				"AnotherTag");
 		assertFalse("Ok should be disabled", tagDialog.bot().button(
