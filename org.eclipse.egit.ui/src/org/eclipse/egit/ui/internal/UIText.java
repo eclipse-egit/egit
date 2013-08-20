@@ -1903,6 +1903,9 @@ public class UIText extends NLS {
 	public static String HistoryPreferencePage_MaxTagLength;
 
 	/** */
+	public static String HistoryPreferencePage_toggleCutAtStart;
+
+	/** */
 	public static String HistoryPreferencePage_ShowGroupLabel;
 
 	/** */

@@ -212,7 +212,11 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 		else
 			maxLength = MAX_LABEL_LENGTH;
 		if (txt.length() > maxLength)
-			txt = txt.substring(0, maxLength) + "\u2026"; // ellipsis "..." (in UTF-8) //$NON-NLS-1$
+			if (Activator.getDefault().getPreferenceStore()
+					.getBoolean(UIPreferences.HISTORY_CUT_AT_START))
+				txt = "\u2026" + txt.substring(txt.length() - maxLength); // ellipsis "..." (in UTF-8) //$NON-NLS-1$
+			else
+				txt = txt.substring(0, maxLength) + "\u2026"; // ellipsis "..." (in UTF-8) //$NON-NLS-1$
 
 		// highlight checked out branch
 		Font oldFont = g.getFont();
