@@ -16,6 +16,24 @@
       "revId": "220769b49c1f2791a68d927e0b23c78093a7fc67",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_57bbefa8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2013-08-20T15:25:17Z",
+      "side": 1,
+      "message": "Sure, I\u0027m gonna update both changes once the transition is over.",
+      "parentUuid": "c73e4bec_81825555",
+      "revId": "220769b49c1f2791a68d927e0b23c78093a7fc67",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
