@@ -90,6 +90,8 @@ public class HistoryPreferencePage extends FieldEditorPreferencePage implements
 				UIPreferences.HISTORY_MAX_BRANCH_LENGTH,
 				UIText.HistoryPreferencePage_MaxBranchLength,
 				showGroup));
+		addField(new BooleanFieldEditor(UIPreferences.HISTORY_CUT_AT_START,
+				UIText.HistoryPreferencePage_toggleShortenAtStart, showGroup));
 		updateMargins(showGroup);
 		Group commentGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		// we need a span of 2 to accommodate the field editors
