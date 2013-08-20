@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e4bec_81825555",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-20T12:33:15Z",
+      "side": 1,
+      "message": "Just a nitpick, but we normally start the subject line with a capital letter, \"Provide ...\". Also on the parent change.\n\nAlso, could you mention that the fetch from gerrit wizard now uses this and provides selection of an existing branch and branch editing?",
+      "revId": "220769b49c1f2791a68d927e0b23c78093a7fc67",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
