@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -69,6 +70,14 @@ public class TestUtils {
 		return testDir;
 	}
 
+	private File baseTempDir;
+
+	public TestUtils() {
+		// ensure that concurrent test runs don't use the same directory
+		baseTempDir = new File(rootDir, UUID.randomUUID().toString()
+				.replace("-", ""));
+	}
+
 	/**
 	 * Return the base directory in which temporary directories are created.
 	 * Current implementation returns a "temporary" folder in the user home.
@@ -76,7 +85,7 @@ public class TestUtils {
 	 * @return a "temporary" folder in the user home that may not exist.
 	 */
 	public File getBaseTempDir() {
-		return rootDir;
+		return baseTempDir;
 	}
 
 	/**
