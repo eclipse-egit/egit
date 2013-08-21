@@ -131,6 +131,10 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		String contentStable = getTestFileContent();
 		assertTrue("Content of master and stable should differ", !contentMaster
 				.equals(contentStable));
+
+		// checkout master again to restore original state before test
+		myRepoViewUtil.getLocalBranchesItem(tree, repositoryFile).expand()
+				.getNode("master").doubleClick();
 	}
 
 	/**
@@ -551,9 +555,6 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 				tree, repositoryFile).expand();
 		SWTBotTreeItem masterNode = localBranchesItem.getNode("master");
 		masterNode.select();
-		ContextMenuHelper.clickContextMenuSync(tree, myUtil
-				.getPluginLocalizedValue("RepoViewCheckout.label"));
-		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 		ContextMenuHelper.clickContextMenu(tree, myUtil
 				.getPluginLocalizedValue("RepoViewCreateBranch.label"));
 		SWTBotShell createBranchShell = bot
@@ -637,6 +638,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		bot.waitUntil(shellCloses(confirm));
 		TestUtil.joinJobs(JobFamilies.REPO_VIEW_REFRESH);
 
+		folder = findWorkdirNode(tree, PROJ1, FOLDER);
 		assertThat(folder.getNodes(), not(hasItem(FILE1)));
 		assertThat(folder.getNodes(), hasItem(FILE2));
 	}
