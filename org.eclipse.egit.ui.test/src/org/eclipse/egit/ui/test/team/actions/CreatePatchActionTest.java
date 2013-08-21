@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2012, IBM Corporation and others.
+ * Copyright (C) 2012, 2013 IBM Corporation and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,7 +13,6 @@ import static org.junit.Assert.assertEquals;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.eclipse.core.resources.IFile;
@@ -22,42 +21,26 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.op.CommitOperation;
-import org.eclipse.egit.core.op.ResetOperation;
-import org.eclipse.egit.core.op.TagOperation;
 import org.eclipse.egit.ui.common.CreatePatchWizard;
 import org.eclipse.egit.ui.common.CreatePatchWizard.NoChangesPopup;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.TestUtil;
-import org.eclipse.jgit.api.ResetCommand.ResetType;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.TagBuilder;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;
 import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * Tests for the Team->Create Patch action
  */
 public class CreatePatchActionTest extends LocalRepositoryTestCase {
-
-	private static SWTBotPerspective perspective;
-
-	private static Repository repo;
-
-	private static final String TAG_NAME = "savepoint";
 
 	private static final String PATCH_FILE = "test.patch";
 
@@ -102,31 +85,18 @@ public class CreatePatchActionTest extends LocalRepositoryTestCase {
 			+ "+Hello, world\n" //
 			+ "\\ No newline at end of file";
 
-	@BeforeClass
-	public static void setup() throws Exception {
-		perspective = bot.activePerspective();
-		bot.perspectiveById("org.eclipse.pde.ui.PDEPerspective").activate();
-		File gitDir = createProjectAndCommitToRepository();
-		repo = FileRepositoryBuilder.create(gitDir);
+	private File gitDir;
+
+	@Before
+	public void setup() throws Exception {
+		gitDir = createProjectAndCommitToRepository();
 
 		IFile[] commitables = getAllFiles();
-		ArrayList<IFile> untracked = new ArrayList<IFile>();
-		untracked.addAll(Arrays.asList(commitables));
-		CommitOperation cop = new CommitOperation(commitables, untracked,
-				TestUtil.TESTAUTHOR, TestUtil.TESTCOMMITTER, "Initial commit");
+		CommitOperation cop = new CommitOperation(commitables,
+				Arrays.asList(commitables), TestUtil.TESTAUTHOR,
+				TestUtil.TESTCOMMITTER, "Initial commit");
 		cop.setAmending(true);
 		cop.execute(null);
-
-		TagBuilder tag = new TagBuilder();
-		tag.setTag(TAG_NAME);
-		tag.setTagger(RawParseUtils.parsePersonIdent(TestUtil.TESTAUTHOR));
-		tag.setMessage("I'm a savepoint");
-		tag.setObjectId(repo.resolve(repo.getFullBranch()),
-				Constants.OBJ_COMMIT);
-		TagOperation top = new TagOperation(repo, tag, false);
-		top.execute(null);
-
-		waitInUI();
 	}
 
 	private static IFile[] getAllFiles() {
@@ -148,18 +118,12 @@ public class CreatePatchActionTest extends LocalRepositoryTestCase {
 				secondtextFile2 };
 	}
 
-	@AfterClass
-	public static void shutdown() {
-		perspective.activate();
-	}
-
 	@After
-	public void rollback() throws Exception {
-		ResetOperation rop = new ResetOperation(repo, TAG_NAME, ResetType.HARD);
-		rop.execute(null);
-		IProject project = ResourcesPlugin.getWorkspace().getRoot()
-				.getProject(PROJ1);
-		project.getFile(PATCH_FILE).delete(true, null);
+	public void tearDown() throws Exception {
+		deleteAllProjects();
+		shutDownRepositories();
+		FileUtils.delete(gitDir.getParentFile(), FileUtils.RECURSIVE
+				| FileUtils.RETRY);
 	}
 
 	@Test
@@ -188,10 +152,11 @@ public class CreatePatchActionTest extends LocalRepositoryTestCase {
 	public void testClipboard() throws Exception {
 		touchAndSubmit("oldContent", null);
 		touch("newContent");
-		waitInUI();
 
 		CreatePatchWizard createPatchWizard = openCreatePatchWizard();
-		createPatchWizard.finish();
+		LocationPage locationPage = createPatchWizard.getLocationPage();
+		locationPage.selectClipboard();
+		createPatchWizard.finishWithNoneFormat();
 
 		bot.waitUntil(Conditions.shellCloses(createPatchWizard.getShell()));
 
@@ -202,7 +167,6 @@ public class CreatePatchActionTest extends LocalRepositoryTestCase {
 	public void testFilesystem() throws Exception {
 		touchAndSubmit("oldContent", null);
 		touch("newContent");
-		waitInUI();
 
 		CreatePatchWizard createPatchWizard = openCreatePatchWizard();
 		LocationPage locationPage = createPatchWizard.getLocationPage();
@@ -210,7 +174,7 @@ public class CreatePatchActionTest extends LocalRepositoryTestCase {
 				.getProject(PROJ1);
 		File patch = new File(project.getLocation().toFile(), PATCH_FILE);
 		locationPage.selectFilesystem(patch.toString());
-		createPatchWizard.finish();
+		createPatchWizard.finishWithNoneFormat();
 
 		bot.waitUntil(Conditions.shellCloses(createPatchWizard.getShell()));
 
@@ -229,7 +193,7 @@ public class CreatePatchActionTest extends LocalRepositoryTestCase {
 		CreatePatchWizard createPatchWizard = openCreatePatchWizard();
 		LocationPage locationPage = createPatchWizard.getLocationPage();
 		locationPage.selectWorkspace("/" + PROJ1 + "/" + PATCH_FILE);
-		createPatchWizard.finish();
+		createPatchWizard.finishWithNoneFormat();
 
 		bot.waitUntil(Conditions.shellCloses(createPatchWizard.getShell()));
 

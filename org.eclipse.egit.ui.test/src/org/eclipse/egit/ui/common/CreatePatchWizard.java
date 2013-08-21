@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2012, IBM Corporation and others.
+ * Copyright (C) 2012, 2013 IBM Corporation and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,9 +8,11 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.common;
 
+import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.egit.ui.test.team.actions.LocationPage;
+import org.eclipse.egit.ui.test.team.actions.OptionsPage;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
@@ -55,6 +57,13 @@ public class CreatePatchWizard {
 
 	public void finish() {
 		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
+	}
+
+	public void finishWithNoneFormat() {
+		LocationPage locationPage = getLocationPage();
+		OptionsPage optionsPage = locationPage.nextToOptionsPage();
+		optionsPage.setFormat(CoreText.DiffHeaderFormat_None);
+		finish();
 	}
 
 	public void close() {
