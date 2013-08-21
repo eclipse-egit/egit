@@ -230,7 +230,7 @@ public abstract class GitRepositoriesViewTestBase extends
 
 	protected SWTBotView getOrOpenView() throws Exception {
 		if (viewbot == null) {
-			viewbot = myRepoViewUtil.openRepositoriesView(bot);
+			viewbot = TestUtil.showView(RepositoriesView.VIEW_ID);
 		} else
 			viewbot.setFocus();
 		TestUtil.joinJobs(JobFamilies.REPO_VIEW_REFRESH);
