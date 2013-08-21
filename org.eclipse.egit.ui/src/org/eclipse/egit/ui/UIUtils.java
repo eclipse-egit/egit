@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -44,9 +45,10 @@ import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.ResourceManager;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
-import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
@@ -719,26 +721,34 @@ public class UIUtils {
 	 */
 	public static StyleRange[] getHyperlinkDetectorStyleRanges(
 			ITextViewer textViewer, IHyperlinkDetector[] hyperlinkDetectors) {
-		List<StyleRange> styleRangeList = new ArrayList<StyleRange>();
+		HashSet<StyleRange> styleRangeList = new HashSet<StyleRange>();
 		if (hyperlinkDetectors != null && hyperlinkDetectors.length > 0) {
-			for (int i = 0; i < textViewer.getTextWidget().getText().length(); i++) {
-				IRegion region = new Region(i, 0);
-				for (IHyperlinkDetector hyperLinkDetector : hyperlinkDetectors) {
-					IHyperlink[] hyperlinks = hyperLinkDetector
-							.detectHyperlinks(textViewer, region, true);
-					if (hyperlinks != null) {
-						for (IHyperlink hyperlink : hyperlinks) {
-							StyleRange hyperlinkStyleRange = new StyleRange(
-									hyperlink.getHyperlinkRegion().getOffset(),
-									hyperlink.getHyperlinkRegion().getLength(),
-									Display.getDefault().getSystemColor(
-											SWT.COLOR_BLUE), Display
-											.getDefault().getSystemColor(
-													SWT.COLOR_WHITE));
-							hyperlinkStyleRange.underline = true;
-							styleRangeList.add(hyperlinkStyleRange);
+			IDocument doc = textViewer.getDocument();
+			for (int line = 0; line < doc.getNumberOfLines(); line++) {
+				try {
+					IRegion region = doc.getLineInformation(line);
+					for (IHyperlinkDetector hyperLinkDetector : hyperlinkDetectors) {
+						IHyperlink[] hyperlinks = hyperLinkDetector
+								.detectHyperlinks(textViewer, region, true);
+						if (hyperlinks != null) {
+							for (IHyperlink hyperlink : hyperlinks) {
+								StyleRange hyperlinkStyleRange = new StyleRange(
+										hyperlink.getHyperlinkRegion()
+												.getOffset(), hyperlink
+												.getHyperlinkRegion()
+												.getLength(), Display
+												.getDefault().getSystemColor(
+														SWT.COLOR_BLUE),
+										Display.getDefault().getSystemColor(
+												SWT.COLOR_WHITE));
+								hyperlinkStyleRange.underline = true;
+								styleRangeList.add(hyperlinkStyleRange);
+							}
 						}
 					}
+				} catch (BadLocationException e) {
+					Activator.logError(e.getMessage(), e);
+					break;
 				}
 			}
 		}
