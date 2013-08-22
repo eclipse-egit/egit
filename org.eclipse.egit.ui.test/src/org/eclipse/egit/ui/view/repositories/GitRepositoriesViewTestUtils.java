@@ -10,12 +10,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.view.repositories;
 
-import static org.junit.Assert.assertNotNull;
-
 import java.io.File;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefsNode;
 import org.eclipse.egit.ui.internal.repository.tree.BranchesNode;
@@ -28,14 +25,8 @@ import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
-import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
 
 public class GitRepositoriesViewTestUtils {
 
@@ -165,24 +156,5 @@ public class GitRepositoriesViewTestUtils {
 	public Repository lookupRepository(File directory) throws Exception {
 		return org.eclipse.egit.core.Activator.getDefault()
 				.getRepositoryCache().lookupRepository(directory);
-	}
-
-	public SWTBotView openRepositoriesView(SWTWorkbenchBot bot)
-			throws Exception {
-		Display.getDefault().syncExec(new Runnable() {
-			public void run() {
-				IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-				IWorkbenchPage workbenchPage = workbenchWindow.getActivePage();
-				try {
-					workbenchPage.showView(RepositoriesView.VIEW_ID);
-				} catch (PartInitException e) {
-					throw new RuntimeException("Showing repositories view failed", e);
-				}
-			}
-		});
-
-		SWTBotView viewbot = bot.viewById(RepositoriesView.VIEW_ID);
-		assertNotNull("Repositories View should not be null", viewbot);
-		return viewbot;
 	}
 }

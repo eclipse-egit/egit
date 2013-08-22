@@ -32,7 +32,7 @@ public class LocationPage {
 		shell.bot().text(1).setText(path);
 	}
 
-	OptionsPage nextToOptionsPage() {
+	public OptionsPage nextToOptionsPage() {
 		shell.bot().button("Next >").click();
 		return new OptionsPage(shell);
 	}

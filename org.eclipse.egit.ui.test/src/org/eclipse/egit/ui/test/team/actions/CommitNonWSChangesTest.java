@@ -20,8 +20,8 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.test.TestUtil;
-import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
@@ -41,8 +41,6 @@ public class CommitNonWSChangesTest extends LocalRepositoryTestCase {
 	private static File repositoryFile;
 
 	private static Repository repository;
-
-	protected static final GitRepositoriesViewTestUtils myRepoViewUtil = new GitRepositoriesViewTestUtils();
 
 	@BeforeClass
 	public static void setup() throws Exception {
@@ -106,7 +104,7 @@ public class CommitNonWSChangesTest extends LocalRepositoryTestCase {
 	}
 
 	private void clickOnCommit() throws Exception {
-		SWTBotView repoView = myRepoViewUtil.openRepositoriesView(bot);
+		SWTBotView repoView = TestUtil.showView(RepositoriesView.VIEW_ID);
 		SWTBotTree tree = repoView.bot().tree();
 		TestUtil.waitUntilTreeHasNodeContainsText(bot, tree, REPO1, 10000);
 		tree.getAllItems()[0].contextMenu("Commit...").click();
