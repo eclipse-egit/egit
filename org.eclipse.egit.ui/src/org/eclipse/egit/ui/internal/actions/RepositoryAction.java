@@ -1,8 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2007, Dave Watson <dwatson@mimvista.com>
- * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
- * Copyright (C) 2006, Shawn O. Pearce <spearce@spearce.org>
- * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2006, 2013 Shawn O. Pearce <spearce@spearce.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,6 +19,7 @@ import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.ISources;
 import org.eclipse.ui.IWorkbenchPart;
@@ -109,9 +107,19 @@ public abstract class RepositoryAction extends AbstractHandler implements
 
 	public final void selectionChanged(IAction action, ISelection selection) {
 		mySelection = selection;
+		// Compare selection of handler, as it converts it to a suitable
+		// selection. E.g. an ITextSelection is converted to a selection of the
+		// file. We are only interested in the selection change if a different
+		// file was selected, not if the offset of the text selection changed.
+		IStructuredSelection selectionBefore = handler.getSelection();
 		handler.setSelection(mySelection);
-		if (action != null)
-			action.setEnabled(isEnabled());
+		if (action != null) {
+			IStructuredSelection selectionAfter = handler.getSelection();
+			boolean equalSelection = (selectionBefore == null) ? selectionAfter == null
+					: selectionBefore.equals(selectionAfter);
+			if (!equalSelection)
+				action.setEnabled(isEnabled());
+		}
 	}
 
 	public final Object execute(ExecutionEvent event) throws ExecutionException {
