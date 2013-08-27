@@ -26,59 +26,11 @@
 
   <name>EGit P2 Repository</name>
 
-  <properties>
-    <p2repo-zip-path>${project.build.directory}/org.eclipse.egit.repository-${project.version}.zip</p2repo-zip-path>
-  </properties>
-
   <profiles>
     <profile>
-     <id>build-server</id>
+     <id>publish</id>
      <build>
        <plugins>
-         <plugin>
-           <groupId>org.eclipse.dash.maven</groupId>
-           <artifactId>eclipse-signing-maven-plugin</artifactId>
-           <executions>
-             <execution>
-               <id>pack</id>
-               <configuration>
-                 <inputFile>${p2repo-zip-path}</inputFile>
-               </configuration>
-               <phase>package</phase>
-               <goals>
-                 <goal>pack</goal>
-               </goals>
-             </execution>
-             <execution>
-               <id>sign</id>
-               <configuration>
-                 <inputFile>${p2repo-zip-path}</inputFile>
-                 <signerInputDirectory>${signer-input-directory}</signerInputDirectory>
-               </configuration>
-               <phase>package</phase>
-               <goals>
-                 <goal>sign</goal>
-               </goals>
-             </execution>
-             <execution>
-               <id>repack</id>
-               <configuration>
-                 <inputFile>${project.build.directory}/signed/site_assembly.zip</inputFile>
-               </configuration>
-               <phase>package</phase>
-               <goals>
-                 <goal>pack</goal>
-               </goals>
-             </execution>
-             <execution>
-               <id>fixCheckSums</id>
-               <phase>package</phase>
-               <goals>
-                 <goal>fixCheckSums</goal>
-               </goals>
-             </execution>
-           </executions>
-         </plugin>
          <plugin>
              <artifactId>maven-antrun-plugin</artifactId>
              <executions>
