@@ -108,8 +108,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
@@ -249,11 +247,11 @@ public class CommitDialog extends TitleAreaDialog {
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			TableColumn column = (TableColumn) e.widget;
-			Table table = column.getParent();
+			TreeColumn column = (TreeColumn) e.widget;
+			Tree tree = column.getParent();
 
-			if (column == table.getSortColumn()) {
-				int currentDirection = table.getSortDirection();
+			if (column == tree.getSortColumn()) {
+				int currentDirection = tree.getSortDirection();
 				switch (currentDirection) {
 				case SWT.NONE:
 					reversed = Boolean.FALSE;
@@ -271,20 +269,20 @@ public class CommitDialog extends TitleAreaDialog {
 				reversed = Boolean.FALSE;
 
 			if (reversed == null) {
-				table.setSortColumn(null);
-				table.setSortDirection(SWT.NONE);
+				tree.setSortColumn(null);
+				tree.setSortDirection(SWT.NONE);
 				filesViewer.setComparator(null);
 				return;
 			}
-			table.setSortColumn(column);
+			tree.setSortColumn(column);
 
 			Comparator<CommitItem> comparator;
 			if (reversed.booleanValue()) {
 				comparator = order.descending();
-				table.setSortDirection(SWT.DOWN);
+				tree.setSortDirection(SWT.DOWN);
 			} else {
 				comparator = order;
-				table.setSortDirection(SWT.UP);
+				tree.setSortDirection(SWT.UP);
 			}
 
 			filesViewer.setComparator(new CommitViewerComparator(comparator));
