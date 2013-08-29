@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -54,6 +54,22 @@ public class RebaseHelper {
 		Job job = new Job(jobname) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
+				if (!repository.getRepositoryState().equals(
+						RepositoryState.SAFE)) {
+					Display.getDefault().asyncExec(new Runnable() {
+						public void run() {
+							Shell shell = PlatformUI.getWorkbench()
+									.getActiveWorkbenchWindow().getShell();
+							MessageDialog
+									.openWarning(
+											shell,
+											UIText.RebaseHelper_NestedRebaseWarningTitle,
+											UIText.RebaseHelper_WarningNestedRebaseRejected);
+						}
+					});
+					return new Status(IStatus.WARNING, Activator.getPluginId(),
+							UIText.RebaseHelper_WarningNestedRebaseRejected);
+				}
 				try {
 					rebase.execute(monitor);
 				} catch (final CoreException e) {
