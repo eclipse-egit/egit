@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -54,6 +54,12 @@ public class RebaseHelper {
 		Job job = new Job(jobname) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
+				// safeguard against broken handlers which don't check that
+				// repository state is safe
+				if (!repository.getRepositoryState().equals(
+						RepositoryState.SAFE))
+					throw new IllegalStateException(
+							"Can't start rebase if repository state isn't SAFE"); //$NON-NLS-1$
 				try {
 					rebase.execute(monitor);
 				} catch (final CoreException e) {
