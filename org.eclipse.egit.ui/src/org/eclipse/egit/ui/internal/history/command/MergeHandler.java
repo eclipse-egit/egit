@@ -49,6 +49,15 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * Executes the Merge
  */
 public class MergeHandler extends AbstractHistoryCommandHandler {
+
+	@Override
+	public boolean isEnabled() {
+		final Repository repository = getRepository(getPage());
+		if (repository == null)
+			return false;
+		return repository.getRepositoryState().equals(RepositoryState.SAFE);
+	}
+
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RevCommit commit = (RevCommit) getSelection(getPage()).getFirstElement();
 		final Repository repository = getRepository(event);
