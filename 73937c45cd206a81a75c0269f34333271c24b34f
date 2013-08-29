@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c73e4bec_6de98677",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncObjectCache.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1007
+      },
+      "writtenOn": "2013-08-29T16:06:13Z",
+      "side": 1,
+      "message": "Definitely. And it should not have any reference to parentPath here, entryValue.diffEntry.getPath() already contains a full path",
+      "parentUuid": "c73e4bec_12b583b2",
+      "revId": "73937c45cd206a81a75c0269f34333271c24b34f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_d2603bb0",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncObjectCache.java",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c73e4bec_4dee4a81",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncObjectCache.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1007
+      },
+      "writtenOn": "2013-08-29T16:06:13Z",
+      "side": 1,
+      "message": "You\u0027re true, i will fix that",
+      "parentUuid": "c73e4bec_d2603bb0",
+      "revId": "73937c45cd206a81a75c0269f34333271c24b34f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_326a3f8f",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncObjectCache.java",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2013-08-29T14:17:37Z",
       "side": 1,
       "message": "The parentPath is missing here.",
+      "revId": "73937c45cd206a81a75c0269f34333271c24b34f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_addf0ecc",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncObjectCache.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1007
+      },
+      "writtenOn": "2013-08-29T16:06:13Z",
+      "side": 1,
+      "message": "It is the expected behavior. The wrong one was in the first loop",
+      "parentUuid": "c73e4bec_326a3f8f",
       "revId": "73937c45cd206a81a75c0269f34333271c24b34f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
