@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e4bec_12b583b2",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncObjectCache.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-29T14:17:37Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this read entryValue.diffEntry.getPath() ?",
+      "revId": "73937c45cd206a81a75c0269f34333271c24b34f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_d2603bb0",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncObjectCache.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-29T14:17:37Z",
+      "side": 1,
+      "message": "If parentPath is \"\" (initial call), then the path which is passed to the recursive call is \"/foo\" But updateRequests contains Strings of the form \"foo\", so it will never match. This also applies to the other places where parentPath is used.",
+      "revId": "73937c45cd206a81a75c0269f34333271c24b34f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_326a3f8f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncObjectCache.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-29T14:17:37Z",
+      "side": 1,
+      "message": "The parentPath is missing here.",
+      "revId": "73937c45cd206a81a75c0269f34333271c24b34f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
