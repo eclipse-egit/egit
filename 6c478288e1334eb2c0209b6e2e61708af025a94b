@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c73e4bec_a49eff69",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-08-30T13:16:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c73e4bec_11aa978c",
+      "revId": "6c478288e1334eb2c0209b6e2e61708af025a94b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_9184e718",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseHelper.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2013-08-30T11:23:55Z",
       "side": 1,
       "message": "better: can\u0027t start rebase in repository state ...",
+      "revId": "6c478288e1334eb2c0209b6e2e61708af025a94b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_44873b1e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-08-30T13:16:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c73e4bec_9184e718",
       "revId": "6c478288e1334eb2c0209b6e2e61708af025a94b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
