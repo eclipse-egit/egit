@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a74dd7b0_bc97011a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-31T05:03:50Z",
+      "side": 1,
+      "message": "I think this would have lead to NPEs. Replaced by fully replacing the cache in the next patch set.",
+      "revId": "5414db1ae9c4b6bf13d6e2a80bf283c6ba913c47",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_9c94c516",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-31T05:03:50Z",
+      "side": 1,
+      "message": "This was incorrect, it mixed repo-relative paths of different repositories together. Fixed in newest patch set.",
+      "revId": "5414db1ae9c4b6bf13d6e2a80bf283c6ba913c47",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_1ca27583",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncObjectCache.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-31T05:03:50Z",
+      "side": 1,
+      "message": "When DiffEntry.getPath returns the full path, we don\u0027t need the parentPath at all -\u003e removed in next patch set.",
+      "revId": "5414db1ae9c4b6bf13d6e2a80bf283c6ba913c47",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
