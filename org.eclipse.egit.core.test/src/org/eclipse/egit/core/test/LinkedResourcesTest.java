@@ -131,6 +131,9 @@ public class LinkedResourcesTest {
 		// Add file to project2
 		testUtils.addFileToProject(project2,
 				"project2folder1/project2folder1file2.txt", "Hello world");
+		// Make sure linked folder is refreshed
+		folder.refreshLocal(IResource.DEPTH_INFINITE, null);
+
 		// Links are written to the .project file
 		resourceDeltaTestHelper1
 				.assertChangedResources(new String[] { "/project1/.project" });
