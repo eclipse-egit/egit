@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a74dd7b0_1c5b9503",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncObjectCache.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-08-31T05:06:48Z",
+      "side": 1,
+      "message": "Before, it only replaced the changeType, but hasLocalChange and hasRemoteChange were looking at the direction. I think this lead to the strange results in hasRemoteChange.",
+      "revId": "e74203a6998a153108d0d50bbf82665d4c3f8983",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
