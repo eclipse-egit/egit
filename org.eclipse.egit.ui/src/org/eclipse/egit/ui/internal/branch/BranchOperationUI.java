@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -33,9 +33,11 @@ import org.eclipse.egit.ui.internal.dialogs.CheckoutDialog;
 import org.eclipse.egit.ui.internal.dialogs.DeleteBranchDialog;
 import org.eclipse.egit.ui.internal.dialogs.RenameBranchDialog;
 import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
@@ -148,8 +150,8 @@ public class BranchOperationUI {
 									.getRepositoryState().getDescription()));
 			return;
 		}
-		if (target == null)
-			target = getTargetWithDialog();
+
+		askForTargetIfNecessary();
 		if (target == null)
 			return;
 
@@ -249,8 +251,8 @@ public class BranchOperationUI {
 			});
 			return;
 		}
-		if (target == null)
-			target = getTargetWithDialog();
+
+		askForTargetIfNecessary();
 		if (target == null)
 			return;
 
@@ -258,6 +260,16 @@ public class BranchOperationUI {
 		bop.execute(monitor);
 
 		BranchResultDialog.show(bop.getResult(), repository, target);
+	}
+
+	private void askForTargetIfNecessary() {
+		if (target == null)
+			target = getTargetWithDialog();
+		if (target != null) {
+			boolean isRemoteBranch = target.startsWith(Constants.R_REMOTES);
+			if (isRemoteBranch)
+				target = getTargetAskHowToCheckoutRemoteTrackingBranch();
+		}
 	}
 
 	private String getTargetWithDialog() {
@@ -289,6 +301,35 @@ public class BranchOperationUI {
 			return null;
 		}
 		return dialog.getRefName();
+	}
+
+	private String getTargetAskHowToCheckoutRemoteTrackingBranch() {
+		String[] buttons = new String[] {
+				UIText.BranchOperationUI_CheckoutRemoteTrackingAsLocal,
+				UIText.BranchOperationUI_CheckoutRemoteTrackingCommit,
+				IDialogConstants.CANCEL_LABEL };
+		MessageDialog questionDialog = new MessageDialog(
+				getShell(),
+				UIText.BranchOperationUI_CheckoutRemoteTrackingTitle,
+				null,
+				UIText.BranchOperationUI_CheckoutRemoteTrackingQuestion,
+				MessageDialog.QUESTION, buttons, 0);
+		int result = questionDialog.open();
+		if (result == 0) {
+			// Check out as new local branch
+			CreateBranchWizard wizard = new CreateBranchWizard(repository,
+					target);
+			WizardDialog createBranchDialog = new WizardDialog(getShell(),
+					wizard);
+			createBranchDialog.open();
+			return null;
+		} else if (result == 1) {
+			// Check out commit
+			return target;
+		} else {
+			// Cancel
+			return null;
+		}
 	}
 
 	private Shell getShell() {

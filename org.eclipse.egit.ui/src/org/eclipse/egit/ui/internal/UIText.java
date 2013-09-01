@@ -897,6 +897,12 @@ public class UIText extends NLS {
 	public static String ClearCredentialsCommand_clearingCredentialsFailed;
 
 	/** */
+	public static String CheckoutCommand_CheckoutLabel;
+
+	/** */
+	public static String CheckoutCommand_CheckoutLabelWithQuestion;
+
+	/** */
 	public static String CheckoutConflictDialog_conflictMessage;
 
 	/** */
@@ -904,6 +910,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CheckoutDialog_OkCheckout;
+
+	/** */
+	public static String CheckoutDialog_OkCheckoutWithQuestion;
 
 	/** */
 	public static String CheckoutDialog_Title;
@@ -2659,6 +2668,18 @@ public class UIText extends NLS {
 
 	/** */
 	public static String BranchConfigurationDialog_UpstreamBranchLabel;
+
+	/** */
+	public static String BranchOperationUI_CheckoutRemoteTrackingAsLocal;
+
+	/** */
+	public static String BranchOperationUI_CheckoutRemoteTrackingCommit;
+
+	/** */
+	public static String BranchOperationUI_CheckoutRemoteTrackingQuestion;
+
+	/** */
+	public static String BranchOperationUI_CheckoutRemoteTrackingTitle;
 
 	/** */
 	public static String BranchOperationUI_DetachedHeadTitle;
