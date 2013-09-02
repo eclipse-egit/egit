@@ -34,6 +34,23 @@
       "revId": "220769b49c1f2791a68d927e0b23c78093a7fc67",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_fd9a117a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4669,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-09-02T00:32:20Z",
+      "side": 1,
+      "message": "These two should be BranchSelectionComponent, right?",
+      "revId": "220769b49c1f2791a68d927e0b23c78093a7fc67",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
