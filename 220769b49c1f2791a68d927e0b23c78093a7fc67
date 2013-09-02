@@ -51,6 +51,24 @@
       "revId": "220769b49c1f2791a68d927e0b23c78093a7fc67",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_5fa212f7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4669,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2013-09-02T20:22:45Z",
+      "side": 1,
+      "message": "Right, I missed those.",
+      "parentUuid": "a74dd7b0_fd9a117a",
+      "revId": "220769b49c1f2791a68d927e0b23c78093a7fc67",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
