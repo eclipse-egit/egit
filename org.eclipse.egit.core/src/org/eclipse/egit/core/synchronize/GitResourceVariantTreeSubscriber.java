@@ -160,8 +160,7 @@ public class GitResourceVariantTreeSubscriber extends
 			// check to see if there is a full refresh
 			if (resource.getType() == IResource.ROOT) {
 				// refresh entire cache
-				GitSyncCache newCache = GitSyncCache.getAllData(gsds, monitor);
-				cache.merge(newCache);
+				cache = GitSyncCache.getAllData(gsds, monitor);
 				super.refresh(resources, depth, monitor);
 				return;
 			}
@@ -196,9 +195,7 @@ public class GitResourceVariantTreeSubscriber extends
 		// scan only the repositories that were affected
 		if (!updateRequests.isEmpty()) {
 			// refresh cache
-			GitSyncCache newCache = GitSyncCache.getAllData(updateRequests,
-					monitor);
-			cache.merge(newCache);
+			GitSyncCache.mergeAllDataIntoCache(updateRequests, monitor, cache);
 		}
 
 		super.refresh(resources, depth, monitor);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Tasktop Technologies Inc.
+ * Copyright (C) 2011, 2013 Tasktop Technologies Inc. and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,11 +16,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -30,22 +30,29 @@ import org.eclipse.core.resources.mapping.ResourceMappingContext;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.ui.common.EGitTestCase;
+import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.operations.GitScopeOperation;
 import org.eclipse.egit.ui.internal.operations.GitScopeOperationFactory;
 import org.eclipse.egit.ui.internal.operations.GitScopeUtil;
 import org.eclipse.egit.ui.test.Eclipse;
+import org.eclipse.egit.ui.test.TestUtil;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.util.FileUtils;
+import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.team.core.subscribers.SubscriberScopeManager;
 import org.eclipse.ui.IWorkbenchPart;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
-public class GitScopeUtilTest extends EGitTestCase {
-
-	private static final String PROJ1 = "modelproject";
+public class GitScopeUtilTest extends LocalRepositoryTestCase {
 
 	public static final String MODEL_FILE = "base.model";
 
@@ -53,9 +60,14 @@ public class GitScopeUtilTest extends EGitTestCase {
 
 	private IWorkbenchPart part;
 
+	private File repositoryFile;
+
 	@Before
-	public void setup() {
-		part = bot.activeView().getViewReference().getPart(false);
+	public void setup() throws Exception {
+		SWTBotView view = TestUtil.showExplorerView();
+		part = view.getViewReference().getPart(false);
+
+		repositoryFile = createProjectAndCommitToRepository();
 
 		GitScopeOperationFactory.setFactory(new GitScopeOperationFactory() {
 			@Override
@@ -74,6 +86,14 @@ public class GitScopeUtilTest extends EGitTestCase {
 		});
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		deleteAllProjects();
+		shutDownRepositories();
+		FileUtils.delete(repositoryFile.getParentFile(), FileUtils.RECURSIVE
+				| FileUtils.RETRY);
+	}
+
 	@AfterClass
 	public static void afterClassBase() throws Exception {
 		// close all editors/dialogs
@@ -82,12 +102,14 @@ public class GitScopeUtilTest extends EGitTestCase {
 		IProject modelProject = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(PROJ1);
 		modelProject.delete(false, false, null);
+
+		GitScopeOperationFactory.setFactory(new GitScopeOperationFactory());
 	}
 
 	@Test
 	// model provider already available via fragment.xml
 	public void modelProviderWithExtensionFiles() throws Exception {
-		IFile modelFile = createProjectAndModelFiles();
+		IFile modelFile = createModelFiles();
 
 		IResource[] selectedResources = new IResource[] { modelFile };
 		IResource[] relatedChanges = getRelatedChangesInUIThread(selectedResources);
@@ -118,6 +140,46 @@ public class GitScopeUtilTest extends EGitTestCase {
 		GitScopeUtil.getRelatedChanges(null, res);
 	}
 
+	@Test
+	public void relatedChangesWithPrompt() throws Exception {
+		GitScopeOperationFactory.setFactory(new GitScopeOperationFactory());
+
+		final IFile modelFile = createModelFiles();
+
+		Repository repository = lookupRepository(repositoryFile);
+		Activator.getDefault().getIndexDiffCache()
+				.getIndexDiffCacheEntry(repository);
+		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+
+		final IResource[] selectedResources = new IResource[] { modelFile };
+		UIThreadRunnable.asyncExec(new VoidResult() {
+			public void run() {
+				try {
+					GitScopeUtil.getRelatedChanges(part, selectedResources);
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+			}
+		});
+
+		// Prompt because the files are untracked
+		SWTBotShell dialog = bot.shell("Selection Adjustment Required");
+		dialog.bot().button(IDialogConstants.OK_LABEL).click();
+
+		IFile modelExtensionsFile = modelFile.getProject().getFile(
+				MODEL_EXTENSIONS_FILE);
+		addAndCommit(modelExtensionsFile, "add model extensions file");
+		addAndCommit(modelFile, "add model file");
+		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+
+		// Both files are committed, should no longer prompt now
+		IResource[] relatedChanges = getRelatedChangesInUIThread(selectedResources);
+		assertEquals(2, relatedChanges.length);
+
+		assertContainsResourceByName(relatedChanges, MODEL_FILE);
+		assertContainsResourceByName(relatedChanges, MODEL_EXTENSIONS_FILE);
+	}
+
 	private IResource[] getRelatedChangesInUIThread(
 			final IResource[] selectedResources) {
 		final IResource[][] relatedChanges = new IResource[1][];
@@ -135,28 +197,22 @@ public class GitScopeUtilTest extends EGitTestCase {
 		return relatedChanges[0];
 	}
 
-	private IFile createProjectAndModelFiles() throws CoreException,
+	private IFile createModelFiles() throws CoreException,
 			UnsupportedEncodingException {
-		IProject modelProject = ResourcesPlugin.getWorkspace().getRoot()
+		IProject project = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(PROJ1);
 
-		if (modelProject.exists())
-			modelProject.delete(true, null);
-		IProjectDescription desc = ResourcesPlugin.getWorkspace()
-				.newProjectDescription(PROJ1);
-		modelProject.create(desc, null);
-		modelProject.open(null);
-
-		IFile modelFile = modelProject.getFile(MODEL_FILE);
+		IFile modelFile = project.getFile(MODEL_FILE);
 		modelFile.create(
 				new ByteArrayInputStream("This is the base model"
-						.getBytes(modelProject.getDefaultCharset())), false,
+						.getBytes(project.getDefaultCharset())), false,
 				null);
-		IFile modelExtensionFile = modelProject.getFile(MODEL_EXTENSIONS_FILE);
+		IFile modelExtensionFile = project.getFile(MODEL_EXTENSIONS_FILE);
 		modelExtensionFile.create(
 				new ByteArrayInputStream("Some more content"
-						.getBytes(modelProject.getDefaultCharset())), false,
+						.getBytes(project.getDefaultCharset())), false,
 				null);
+
 		return modelFile;
 	}
 
