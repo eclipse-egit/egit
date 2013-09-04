@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2012 Dariusz Luksza <dariusz@luksza.org> and others.
+ * Copyright (C) 2011, 2013 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -55,14 +55,25 @@ public class GitCommitsModelCache {
 	public static final int CHANGE = 3;
 
 	/**
+	 * Bit mask (value 3) for extracting the kind of difference.
+	 */
+	private static final int CHANGE_TYPE_MASK = 3;
+
+	/**
 	 * Constant copied from org.eclipse.compare.structuremergeviewer.Differencer.LEFT
 	 * in order to avoid UI dependencies introduced by the org.eclipse.compare bundle
+	 * <p>
+	 * Note that in the context of synchronization, this means "INCOMING", shown
+	 * by an arrow pointing from right to left.
 	 */
 	public static final int LEFT = 4;
 
 	/**
 	 * Constant copied from org.eclipse.compare.structuremergeviewer.Differencer.RIGHT
 	 * in order to avoid UI dependencies introduced by the org.eclipse.compare bundle
+	 * <p>
+	 * Note that in the context of synchronization, this means "OUTGOING", shown
+	 * by an arrow pointing from left to right.
 	 */
 	public static final int RIGHT = 8;
 
@@ -258,17 +269,17 @@ public class GitCommitsModelCache {
 		public String toString() {
 			StringBuilder change = new StringBuilder("Change("); //$NON-NLS-1$
 			if ((kind & LEFT) != 0)
-				change.append("OUTGOING "); //$NON-NLS-1$
+				change.append("INCOMING "); //$NON-NLS-1$
 			else
 				// should be RIGHT
-				change.append("INCOMING "); //$NON-NLS-1$
-			if ((kind & ADDITION) != 0)
-				change.append("ADDITION "); //$NON-NLS-1$
-			else if ((kind & DELETION) != 0)
-				change.append("DELETION "); //$NON-NLS-1$
-			else
-				// should be CHANGE
+				change.append("OUTGOING "); //$NON-NLS-1$
+			int changeType = kind & CHANGE_TYPE_MASK;
+			if (changeType == CHANGE)
 				change.append("CHANGE "); //$NON-NLS-1$
+			else if (changeType == ADDITION)
+				change.append("ADDITION "); //$NON-NLS-1$
+			else if (changeType == DELETION)
+				change.append("DELETION "); //$NON-NLS-1$
 
 			change.append(name);
 			change.append(";\n\tcurrent objectId: "); //$NON-NLS-1$
@@ -303,9 +314,11 @@ public class GitCommitsModelCache {
 	 * @param repo
 	 *            repository that should be scanned
 	 * @param srcId
-	 *            RevCommit id that git history traverse will start from
+	 *            commit id that is considered the "local" version (e.g. from
+	 *            master)
 	 * @param dstId
-	 *            RevCommit id that git history traverse will end
+	 *            commit id that is considered the "remote" version (e.g. from
+	 *            origin/master)
 	 * @param pathFilter
 	 *            path filter definition or {@code null} when all paths should
 	 *            be included
@@ -352,19 +365,17 @@ public class GitCommitsModelCache {
 			commit.committerName = revCommit.getCommitterIdent().getName();
 			commit.commitDate = revCommit.getAuthorIdent().getWhen();
 
-			RevCommit actualCommit, parentCommit;
-			if (revCommit.has(localFlag)) {
-				actualCommit = revCommit;
-				parentCommit = getParentCommit(revCommit);
+			RevCommit parentCommit = getParentCommit(revCommit);
+			if (revCommit.has(localFlag))
+				// Outgoing
 				commit.direction = RIGHT;
-			} else if (revCommit.has(remoteFlag)) {
-				actualCommit = getParentCommit(revCommit);
-				parentCommit = revCommit;
+			else if (revCommit.has(remoteFlag))
+				// Incoming
 				commit.direction = LEFT;
-			} else
+			else
 				throw new GitCommitsModelDirectionException();
 
-			commit.children = getChangedObjects(repo, actualCommit,
+			commit.children = getChangedObjects(repo, revCommit,
 					parentCommit, pathFilter, commit.direction);
 
 			if (commit.children != null)
@@ -383,11 +394,11 @@ public class GitCommitsModelCache {
 	}
 
 	private static Map<String, Change> getChangedObjects(Repository repo,
-			RevCommit parentCommit, RevCommit remoteCommit,
+			RevCommit commit, RevCommit parentCommit,
 			TreeFilter pathFilter, final int direction) throws IOException {
 		final TreeWalk tw = new TreeWalk(repo);
-		addTreeFilter(tw, parentCommit);
-		addTreeFilter(tw, remoteCommit);
+		int commitIndex = addTree(tw, commit);
+		int parentCommitIndex = addTree(tw, parentCommit);
 
 		tw.setRecursive(true);
 		if (pathFilter == null)
@@ -395,21 +406,19 @@ public class GitCommitsModelCache {
 		else
 			tw.setFilter(AndTreeFilter.create(ANY_DIFF, pathFilter));
 
-		final int localTreeId = direction == LEFT ? 1 : 0;
-		final int remoteTreeId = direction == LEFT ? 0 : 1;
 		final Map<String, Change> result = new HashMap<String, GitCommitsModelCache.Change>();
-		final AbbreviatedObjectId actualCommit = getAbbreviatedObjectId(parentCommit);
-		final AbbreviatedObjectId remoteCommitAbb = getAbbreviatedObjectId(remoteCommit);
+		final AbbreviatedObjectId commitId = getAbbreviatedObjectId(commit);
+		final AbbreviatedObjectId parentCommitId = getAbbreviatedObjectId(parentCommit);
 
 		MutableObjectId idBuf = new MutableObjectId();
 		while (tw.next()) {
 			Change change = new Change();
-			change.commitId = actualCommit;
-			change.remoteCommitId = remoteCommitAbb;
+			change.commitId = commitId;
+			change.remoteCommitId = parentCommitId;
 			change.name = tw.getNameString();
-			tw.getObjectId(idBuf, localTreeId);
+			tw.getObjectId(idBuf, commitIndex);
 			change.objectId = AbbreviatedObjectId.fromObjectId(idBuf);
-			tw.getObjectId(idBuf, remoteTreeId);
+			tw.getObjectId(idBuf, parentCommitIndex);
 			change.remoteObjectId = AbbreviatedObjectId.fromObjectId(idBuf);
 
 			calculateAndSetChangeKind(direction, change);
@@ -421,12 +430,12 @@ public class GitCommitsModelCache {
 		return result.size() > 0 ? result : null;
 	}
 
-	private static void addTreeFilter(TreeWalk tw, RevCommit commit)
+	private static int addTree(TreeWalk tw, RevCommit commit)
 			throws IOException {
 		if (commit != null)
-			tw.addTree(commit.getTree());
+			return tw.addTree(commit.getTree());
 		else
-			tw.addTree(new EmptyTreeIterator());
+			return tw.addTree(new EmptyTreeIterator());
 	}
 
 	private static AbbreviatedObjectId getAbbreviatedObjectId(RevCommit commit) {
@@ -437,18 +446,12 @@ public class GitCommitsModelCache {
 	}
 
 	static void calculateAndSetChangeKind(final int direction, Change change) {
-		if (ZERO_ID.equals(change.objectId)) { // missing locally
+		if (ZERO_ID.equals(change.objectId)) { // removed in commit
 			change.objectId = null; // clear zero id;
-			if (direction == LEFT)
-				change.kind = direction | ADDITION;
-			else // should be Differencer.RIGHT
-				change.kind = direction | DELETION;
-		} else if (ZERO_ID.equals(change.remoteObjectId)) { // missing remotely
+			change.kind = direction | DELETION;
+		} else if (ZERO_ID.equals(change.remoteObjectId)) { // added in commit
 			change.remoteObjectId = null; // clear zero id;
-			if (direction == LEFT)
-				change.kind = direction | DELETION;
-			else // should be Differencer.RIGHT
-				change.kind = direction | ADDITION;
+			change.kind = direction | ADDITION;
 		} else
 			change.kind = direction | CHANGE;
 	}
