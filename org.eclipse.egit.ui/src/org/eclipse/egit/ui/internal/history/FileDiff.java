@@ -278,10 +278,10 @@ public class FileDiff extends WorkbenchAdapter {
 	}
 
 	/**
-	 * Get path
-	 *
-	 * @return path
-	 * @deprecated Use {@link #getOldPath()} or {@link #getNewPath()}
+	 * @return the old path in case of a delete, the new path otherwise, but
+	 *         never null or <code>/dev/null</code>
+	 * @see #getNewPath()
+	 * @see #getOldPath()
 	 */
 	public String getPath() {
 		if (ChangeType.DELETE.equals(diffEntry.getChangeType()))
@@ -290,14 +290,16 @@ public class FileDiff extends WorkbenchAdapter {
 	}
 
 	/**
-	 * @return the new path or null for a deleted file
+	 * @return the old path or <code>/dev/null</code> for a completely new file
+	 * @see #getPath() for getting the new or old path depending on change type
 	 */
 	public String getOldPath() {
 		return diffEntry.getOldPath();
 	}
 
 	/**
-	 * @return the old path or null for a completely new file
+	 * @return the new path or <code>/dev/null</code> for a deleted file
+	 * @see #getPath() for getting the new or old path depending on change type
 	 */
 	public String getNewPath() {
 		return diffEntry.getNewPath();
