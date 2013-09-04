@@ -16,7 +16,7 @@
   <parent>
     <groupId>org.eclipse.egit</groupId>
     <artifactId>egit-parent</artifactId>
-    <version>3.0.2-SNAPSHOT</version>
+    <version>3.0.2.201309041250-rc2</version>
   </parent>
 
   <artifactId>org.eclipse.egit.doc</artifactId>
