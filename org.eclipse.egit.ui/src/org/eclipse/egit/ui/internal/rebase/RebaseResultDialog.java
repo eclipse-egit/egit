@@ -28,12 +28,16 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.internal.FileChecker;
 import org.eclipse.egit.core.internal.FileChecker.CheckResult;
 import org.eclipse.egit.core.internal.FileChecker.CheckResultEntry;
+import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.CheckoutConflictDialog;
@@ -549,29 +553,31 @@ public class RebaseResultDialog extends MessageDialog {
 				}
 				CompareUI.openCompareEditor(input);
 				return;
-			} else if (skipCommitButton.getSelection())
+			} else if (skipCommitButton.getSelection()) {
 				// skip the rebase
-				try {
-					final RebaseOperation op = new RebaseOperation(repo,
-							Operation.SKIP);
-					op.execute(null);
-
-					show(op.getResult(), repo);
-				} catch (CoreException e) {
-					Activator.handleError(e.getMessage(), e, true);
-				}
-			else if (abortRebaseButton.getSelection())
+				final RebaseOperation op = new RebaseOperation(repo,
+						Operation.SKIP);
+				JobUtil.scheduleUserJob(op,
+						UIText.RebaseResultDialog_JobNameSkipCommit,
+						JobFamilies.REBASE, new JobChangeAdapter() {
+							@Override
+							public void done(IJobChangeEvent event) {
+								show(op.getResult(), repo);
+							}
+						});
+			} else if (abortRebaseButton.getSelection()) {
 				// abort the rebase
-				try {
-					final RebaseOperation op = new RebaseOperation(repo,
-							Operation.ABORT);
-					op.execute(null);
-
-					show(op.getResult(), repo);
-				} catch (CoreException e) {
-					Activator.handleError(e.getMessage(), e, true);
-				}
-			else if (doNothingButton.getSelection()) {
+				final RebaseOperation op = new RebaseOperation(repo,
+						Operation.ABORT);
+				JobUtil.scheduleUserJob(op,
+						UIText.RebaseResultDialog_JobNameAbortRebase,
+						JobFamilies.REBASE, new JobChangeAdapter() {
+							@Override
+							public void done(IJobChangeEvent event) {
+								show(op.getResult(), repo);
+							}
+						});
+			} else if (doNothingButton.getSelection()) {
 				// nothing
 			}
 		}
