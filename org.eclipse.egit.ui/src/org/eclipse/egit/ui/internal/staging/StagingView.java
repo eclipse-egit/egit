@@ -33,7 +33,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -42,9 +44,12 @@ import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.op.CommitOperation;
+import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
@@ -67,6 +72,7 @@ import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
 import org.eclipse.egit.ui.internal.gerrit.GerritUtil;
 import org.eclipse.egit.ui.internal.operations.DeletePathsOperationUI;
 import org.eclipse.egit.ui.internal.operations.IgnoreOperationUI;
+import org.eclipse.egit.ui.internal.rebase.RebaseResultDialog;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ControlContribution;
@@ -104,11 +110,16 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.RebaseCommand;
+import org.eclipse.jgit.api.RebaseCommand.Operation;
 import org.eclipse.jgit.api.ResetCommand;
 import org.eclipse.jgit.api.RmCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
+import org.eclipse.jgit.events.ListenerHandle;
+import org.eclipse.jgit.events.RefsChangedEvent;
+import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
@@ -418,6 +429,16 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private Button commitAndPushButton;
 
+	private Section rebaseSection;
+
+	private Button rebaseContinueButton;
+
+	private Button rebaseSkipButton;
+
+	private Button rebaseAbortButton;
+
+	private ListenerHandle refsChangedListener;
+
 	private LocalResourceManager resources = new LocalResourceManager(
 			JFaceResources.getResources());
 
@@ -508,9 +529,63 @@ public class StagingView extends ViewPart implements IShowInSource {
 			}
 		});
 
-		commitMessageSection = toolkit.createSection(
-				horizontalSashForm, ExpandableComposite.TITLE_BAR);
+		Composite rebaseAndCommitComposite = toolkit.createComposite(horizontalSashForm);
+		rebaseAndCommitComposite.setLayout(GridLayoutFactory.fillDefaults().create());
+
+		rebaseSection = toolkit.createSection(rebaseAndCommitComposite,
+				ExpandableComposite.TITLE_BAR);
+		rebaseSection.setText(UIText.StagingView_RebaseLabel);
+
+		Composite rebaseComposite = toolkit.createComposite(rebaseSection);
+		toolkit.paintBordersFor(rebaseComposite);
+		rebaseSection.setClient(rebaseComposite);
+
+		rebaseSection.setLayoutData(GridDataFactory.fillDefaults().create());
+		rebaseComposite.setLayout(GridLayoutFactory.fillDefaults()
+				.numColumns(3).equalWidth(true).create());
+		GridDataFactory buttonGridData = GridDataFactory.fillDefaults().align(
+				SWT.FILL, SWT.CENTER);
+
+		this.rebaseAbortButton = toolkit.createButton(rebaseComposite,
+				UIText.StagingView_RebaseAbort, SWT.PUSH);
+		rebaseAbortButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				rebaseAbort();
+			}
+		});
+		rebaseAbortButton.setImage(getImage(UIIcons.REBASE_ABORT));
+		buttonGridData.applyTo(rebaseAbortButton);
+
+		this.rebaseSkipButton = toolkit.createButton(rebaseComposite,
+				UIText.StagingView_RebaseSkip, SWT.PUSH);
+		rebaseSkipButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				rebaseSkip();
+			}
+		});
+		rebaseSkipButton.setImage(getImage(UIIcons.REBASE_SKIP));
+		buttonGridData.applyTo(rebaseSkipButton);
+
+		this.rebaseContinueButton = toolkit.createButton(rebaseComposite,
+				UIText.StagingView_RebaseContinue, SWT.PUSH);
+		rebaseContinueButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				rebaseContinue();
+			}
+		});
+		rebaseContinueButton.setImage(getImage(UIIcons.REBASE_CONTINUE));
+		buttonGridData.applyTo(rebaseContinueButton);
+
+		updateRebaseButtonVisibility(false);
+
+		commitMessageSection = toolkit.createSection(rebaseAndCommitComposite,
+				ExpandableComposite.TITLE_BAR);
 		commitMessageSection.setText(UIText.StagingView_CommitMessage);
+		commitMessageSection.setLayoutData(GridDataFactory.fillDefaults()
+				.grab(true, true).create());
 
 		Composite commitMessageToolbarComposite = toolkit
 				.createComposite(commitMessageSection);
@@ -627,17 +702,21 @@ public class StagingView extends ViewPart implements IShowInSource {
 				.grab(true, false).create());
 
 		Composite buttonsContainer = toolkit.createComposite(composite);
-		GridDataFactory.fillDefaults().grab(true, false).span(2,1).indent(0, 8)
-			.applyTo(buttonsContainer);
-		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(buttonsContainer);
+		GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
+				.indent(0, 8).applyTo(buttonsContainer);
+		GridLayoutFactory.fillDefaults().numColumns(2)
+				.applyTo(buttonsContainer);
 
 		Label filler = toolkit.createLabel(buttonsContainer, ""); //$NON-NLS-1$
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(filler);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL)
+				.grab(true, true).applyTo(filler);
 
-		Composite commitButtonsContainer = toolkit.createComposite(buttonsContainer);
+		Composite commitButtonsContainer = toolkit
+				.createComposite(buttonsContainer);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
 				.applyTo(commitButtonsContainer);
-		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(true).applyTo(commitButtonsContainer);
+		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(true)
+				.applyTo(commitButtonsContainer);
 
 		this.commitAndPushButton = toolkit.createButton(commitButtonsContainer,
 				UIText.StagingView_CommitAndPush, SWT.PUSH);
@@ -828,6 +907,43 @@ public class StagingView extends ViewPart implements IShowInSource {
 		};
 		unstagedViewer.addFilter(filter);
 		stagedViewer.addFilter(filter);
+	}
+
+	private void doRebaseOperation(Repository repository,
+			RebaseCommand.Operation operation, String jobname) {
+		final RebaseOperation op = new RebaseOperation(repository, operation);
+		JobUtil.scheduleUserJob(op, jobname, JobFamilies.REBASE,
+				new JobChangeAdapter() {
+					@Override
+					public void done(IJobChangeEvent event) {
+						RebaseResultDialog.show(op.getResult(),
+								currentRepository);
+					}
+				});
+	}
+
+	/**
+	 * Abort rebase command in progress
+	 */
+	protected void rebaseAbort() {
+		doRebaseOperation(currentRepository, Operation.ABORT,
+				UIText.AbortRebaseCommand_JobName);
+	}
+
+	/**
+	 * Rebase next commit and continue rebase in progress
+	 */
+	protected void rebaseSkip() {
+		doRebaseOperation(currentRepository, Operation.SKIP,
+				UIText.SkipRebaseCommand_JobName);
+	}
+
+	/**
+	 * Continue rebase command in progress
+	 */
+	protected void rebaseContinue() {
+		doRebaseOperation(currentRepository, Operation.CONTINUE,
+				UIText.ContinueRebaseCommand_JobName);
 	}
 
 	private void createUnstagedToolBarComposite() {
@@ -1850,6 +1966,27 @@ public class StagingView extends ViewPart implements IShowInSource {
 		form.setText(UIText.StagingView_NoSelectionTitle);
 	}
 
+	/**
+	 * Show rebase buttons only if a rebase operation is in progress
+	 *
+	 * @param isRebasing
+	 *            {@code}true if rebase is in progress
+	 */
+	protected void updateRebaseButtonVisibility(final boolean isRebasing) {
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				showControl(rebaseSection, isRebasing);
+				rebaseSection.getParent().layout(true);
+			}
+
+			private void showControl(Control c, final boolean show) {
+				c.setVisible(show);
+				GridData g = (GridData) c.getLayoutData();
+				g.exclude = !show;
+			}
+		});
+	}
+
 	private void reload(final Repository repository) {
 		if (form.isDisposed())
 			return;
@@ -1868,18 +2005,29 @@ public class StagingView extends ViewPart implements IShowInSource {
 		final boolean repositoryChanged = currentRepository != repository;
 
 		asyncExec(new Runnable() {
+
 			public void run() {
 				if (form.isDisposed())
 					return;
 
 				final IndexDiffData indexDiff = doReload(repository);
+				boolean indexDiffAvailable = (indexDiff != null);
 
-				boolean indexDiffAvailable = indexDiff !=  null;
-
-				if (repositoryChanged)
+				if (repositoryChanged) {
 					// Reset paths, they're from the old repository
 					resetPathsToExpand();
+					if (refsChangedListener != null)
+						refsChangedListener.remove();
+					refsChangedListener = repository.getListenerList()
+							.addRefsChangedListener(new RefsChangedListener() {
 
+								public void onRefsChanged(RefsChangedEvent event) {
+									updateRebaseButtonVisibility(repository
+											.getRepositoryState().isRebasing());
+								}
+
+							});
+				}
 				final StagingViewUpdate update = new StagingViewUpdate(currentRepository, indexDiff, null);
 				Object[] unstagedExpanded = unstagedViewer
 						.getExpandedElements();
@@ -1891,11 +2039,26 @@ public class StagingView extends ViewPart implements IShowInSource {
 						pathsToExpandInUnstaged);
 				expandPreviousExpandedAndPaths(stagedExpanded, stagedViewer,
 						pathsToExpandInStaged);
-				enableCommitWidgets(indexDiffAvailable);
-				boolean commitEnabled =
-						indexDiffAvailable && repository.getRepositoryState().canCommit();
+				enableCommitWidgets(indexDiffAvailable
+						&& indexDiff.getConflicting().isEmpty());
+
+				updateRebaseButtonVisibility(repository.getRepositoryState()
+						.isRebasing());
+
+				boolean commitEnabled = indexDiffAvailable
+						&& repository.getRepositoryState().canCommit()
+						&& indexDiff.getConflicting().isEmpty();
 				commitButton.setEnabled(commitEnabled);
-				commitAndPushButton.setEnabled(commitEnabled);
+
+				boolean commitAndPushEnabled = commitEnabled
+						&& !repository.getRepositoryState().isRebasing();
+				commitAndPushButton.setEnabled(commitAndPushEnabled);
+
+				boolean rebaseContinueEnabled = indexDiffAvailable
+						&& repository.getRepositoryState().isRebasing()
+						&& indexDiff.getConflicting().isEmpty();
+				rebaseContinueButton.setEnabled(rebaseContinueEnabled);
+
 				form.setText(StagingView.getRepositoryName(repository));
 				updateCommitMessageComponent(repositoryChanged, indexDiffAvailable);
 				updateSectionText();
@@ -2164,6 +2327,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 		InstanceScope.INSTANCE.getNode(
 				org.eclipse.egit.core.Activator.getPluginId())
 				.removePreferenceChangeListener(prefListener);
+		if (refsChangedListener != null)
+			refsChangedListener.remove();
 	}
 
 	private void asyncExec(Runnable runnable) {
