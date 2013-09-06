@@ -83,6 +83,9 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.ContentViewer;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
@@ -415,6 +418,13 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private Button commitAndPushButton;
 
+	private LocalResourceManager resources = new LocalResourceManager(
+			JFaceResources.getResources());
+
+	private Image getImage(ImageDescriptor descriptor) {
+		return (Image) this.resources.get(descriptor);
+	}
+
 	@Override
 	public void createPartControl(Composite parent) {
 		GridLayoutFactory.fillDefaults().applyTo(parent);
@@ -423,15 +433,14 @@ public class StagingView extends ViewPart implements IShowInSource {
 		parent.addDisposeListener(new DisposeListener() {
 
 			public void widgetDisposed(DisposeEvent e) {
+				resources.dispose();
 				toolkit.dispose();
 			}
 		});
 
 		form = toolkit.createForm(parent);
 
-		Image repoImage = UIIcons.REPOSITORY.createImage();
-		UIUtils.hookDisposal(form, repoImage);
-		form.setImage(repoImage);
+		form.setImage(getImage(UIIcons.REPOSITORY));
 		form.setText(UIText.StagingView_NoSelectionTitle);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(form);
 		toolkit.decorateFormHeading(form);
@@ -643,7 +652,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		this.commitButton = toolkit.createButton(commitButtonsContainer,
 				UIText.StagingView_Commit, SWT.PUSH);
-
+		commitButton.setImage(getImage(UIIcons.COMMIT));
+		commitButton.setText(UIText.StagingView_Commit);
 		commitButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
