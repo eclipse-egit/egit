@@ -22,6 +22,7 @@ import org.eclipse.core.commands.State;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
+import org.eclipse.egit.ui.internal.ResourcePropertyTester;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
@@ -64,7 +65,11 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 	private ResourceManager resourceManager = new LocalResourceManager(
 			JFaceResources.getResources());
 
-	private Image annotatedTagImage = UIIcons.TAG_ANNOTATED.createImage();
+	private Image annotatedTagImage = resourceManager
+			.createImage(UIIcons.TAG_ANNOTATED);
+
+	private Image gerritRepoImage = resourceManager
+			.createImage(UIIcons.REPOSITORY_GERRIT);
 
 	private final State verboseBranchModeState;
 
@@ -122,6 +127,13 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 				return decorateImage((Image) resourceManager.get(descriptor),
 						element);
 			}
+		} else if (type == RepositoryTreeNodeType.REPO) {
+			Object object = node.getObject();
+			if (object instanceof Repository) {
+				Repository r = (Repository) object;
+				if (ResourcePropertyTester.hasGerritConfiguration(r))
+					return gerritRepoImage;
+			}
 		}
 		return decorateImage(node.getType().getIcon(), element);
 	}
@@ -145,7 +157,6 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 		}
 		resourceManager.dispose();
 		decoratedImages.clear();
-		annotatedTagImage.dispose();
 		super.dispose();
 	}
 
