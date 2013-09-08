@@ -22,6 +22,7 @@ import org.eclipse.core.commands.State;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
+import org.eclipse.egit.ui.internal.ResourcePropertyTester;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
@@ -65,6 +66,8 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 			JFaceResources.getResources());
 
 	private Image annotatedTagImage = UIIcons.TAG_ANNOTATED.createImage();
+
+	private Image gerritRepoImage = UIIcons.GERRIT.createImage();
 
 	private final State verboseBranchModeState;
 
@@ -121,6 +124,14 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 						.getImageDescriptor(((File) object).getName());
 				return decorateImage((Image) resourceManager.get(descriptor),
 						element);
+			}
+		} else if (type == RepositoryTreeNodeType.REPO) {
+			Object object = node.getObject();
+			if (object instanceof Repository) {
+				Repository r = (Repository) object;
+				if (ResourcePropertyTester.testRepositoryState(r,
+						"hasGerritConfiguration")) //$NON-NLS-1$
+					return gerritRepoImage;
 			}
 		}
 		return decorateImage(node.getType().getIcon(), element);
