@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a74dd7b0_ff21055d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-09T21:52:40Z",
+      "side": 1,
+      "message": "what do you mean with \"collapses anything\" ? \n\nAt the moment the only action which stops auto-expand is \"collapse all\" using the toolbar button. But if I collapse some tree nodes in the tree they get again auto-expanded when new entries enter the respective tree. \n\nI\u0027d prefer if nodes I closed in e.g. the unstaged changes tree aren\u0027t reopened automatically when another file is modified or unstaged",
+      "revId": "231295c78844fd524ff29da036db99f6feb675ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
