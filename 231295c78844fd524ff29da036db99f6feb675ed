@@ -16,6 +16,24 @@
       "revId": "231295c78844fd524ff29da036db99f6feb675ed",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_55b60ec0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-09-10T17:03:17Z",
+      "side": 1,
+      "message": "More precisely, it should read \"collapses a node in the tree or presses Collapse All\".\n\nThe intent of this change is that it works as you describe, see addListenerToDisableAutoExpandOnCollapse. Maybe it\u0027s a platform-specific bug? The following works for me (tested just now):\n\n* Use the jgit repo with the compact tree representation\n* Change AddCommand so that it shows up in unstaged changes\n* Press Expand All\n* Change CanceledException \u003e the \"errors\" node should be automatically expanded\n* Collapse the \"error\" node\n* Change BlameGenerator\n\nNow the \"blame\" node should be there, but not be expanded. Also, change e.g. CheckoutConflictException, and errors should remain collapsed.\n\nIf that does not work for you, could you debug if disableAutoExpand is called when you collapse a node?",
+      "parentUuid": "a74dd7b0_ff21055d",
+      "revId": "231295c78844fd524ff29da036db99f6feb675ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
