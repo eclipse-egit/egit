@@ -34,6 +34,24 @@
       "revId": "231295c78844fd524ff29da036db99f6feb675ed",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_7b421b13",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-10T20:14:56Z",
+      "side": 1,
+      "message": "ok, this works when files become dirty \n\nbut it doesn\u0027t work when staging or unstaging files, the nodes being staged or unstaged always get expanded not regarding if I clicked collapse on the respective pane before or not.\n\n* start from the final state of your example \n* stage the collapsed \"blame\" node -\u003e it gets expanded when staging it\n* now collapse the \"blame\" node in the staged changes pane \n* stage the collapsed \"errors\" node -\u003e again this gets expanded on staging despite the fact that I clicked collapse in both panes before staging the \"errors\" node",
+      "parentUuid": "a74dd7b0_55b60ec0",
+      "revId": "231295c78844fd524ff29da036db99f6feb675ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
