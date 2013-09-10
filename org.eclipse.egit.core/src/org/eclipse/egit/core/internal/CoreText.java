@@ -361,6 +361,9 @@ public class CoreText extends NLS {
 	public static String GitProjectData_repositoryChangedTaskName;
 
 	/** */
+	public static String GitProjectData_UnmappingGoneResourceFailed;
+
+	/** */
 	public static String GitResourceVariantTreeSubscriber_fetchTaskName;
 
 	/** */
