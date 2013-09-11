@@ -52,6 +52,24 @@
       "revId": "231295c78844fd524ff29da036db99f6feb675ed",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_82fcd3a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-09-11T09:18:01Z",
+      "side": 1,
+      "message": "I can\u0027t reproduce the last step. It results in a collapsed node \"org.eclipse.jgit/src/org/eclipse/jgit\" here. Could you please debug the last step with a breakpoint in expandPreviousExpandedAndPaths and see what getAutoExpandLevel returns and what causes the expanded state to be changed?\n\nAlso note, what happens in your second step depends on whether the staged table was set to auto-expand before or not. If you press \"Expand All\" in staged changes before doing it, it should be expanded. If you press \"Collapse All\", it should stay collapsed.",
+      "parentUuid": "a74dd7b0_7b421b13",
+      "revId": "231295c78844fd524ff29da036db99f6feb675ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
