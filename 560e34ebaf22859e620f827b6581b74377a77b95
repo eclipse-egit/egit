@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a74dd7b0_a4fb9fae",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-09-15T20:24:06Z",
+      "side": 1,
+      "message": "The docs of setImage mention that some platforms do not show both text and image and will only show the one that is called last. So maybe we should add another call to setText after this?",
+      "revId": "560e34ebaf22859e620f827b6581b74377a77b95",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
