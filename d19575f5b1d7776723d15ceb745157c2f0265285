@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a74dd7b0_21494109",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-09-15T19:39:25Z",
+      "side": 1,
+      "message": "The image must be disposed, either by adding a call in dispose or creating it like this (IMO preferred):\n\n\tprivate final Image gerritRepoImage \u003d resourceManager\n\t\t\t.createImage(UIIcons.REPOSITORY_GERRIT);",
+      "revId": "d19575f5b1d7776723d15ceb745157c2f0265285",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_c1b4dd69",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-09-15T19:39:25Z",
+      "side": 1,
+      "message": "Could we use the hasGerritConfiguration method directly here (by making it public)? I think that would be nicer than the magic string. But if you prefer it, it\u0027s ok by me.",
+      "revId": "d19575f5b1d7776723d15ceb745157c2f0265285",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
