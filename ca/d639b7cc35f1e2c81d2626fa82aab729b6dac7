@@ -1,0 +1,9 @@
+Verified+1: Matthias Sohn <matthias.sohn@sap.com>
+Code-Review+2: Robin Rosenberg <robin.rosenberg@dewire.com>
+IP-Clean+1: Robin Rosenberg <robin.rosenberg@dewire.com>
+Code-Review-1: Hudson CI
+Submitted-by: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-at: Tue, 17 Sep 2013 08:37:39 -0400
+Reviewed-on: https://git.eclipse.org/r/16211
+Project: egit/egit
+Branch: refs/heads/master
