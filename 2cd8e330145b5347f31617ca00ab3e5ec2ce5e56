@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_3177b6f4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-17T22:05:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a74dd7b0_2462ef08",
+      "revId": "2cd8e330145b5347f31617ca00ab3e5ec2ce5e56",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74dd7b0_846ca3fd",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2013-09-15T20:48:52Z",
       "side": 1,
       "message": "We should use `!indexDiff.getConflicting().isEmpty()` here, not read the index. It\u0027s faster, corresponds to the file state shown in the view and allows to get rid of the exception handling.",
+      "revId": "2cd8e330145b5347f31617ca00ab3e5ec2ce5e56",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_7c0f55c0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-17T22:05:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a74dd7b0_846ca3fd",
       "revId": "2cd8e330145b5347f31617ca00ab3e5ec2ce5e56",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_dc12e9e2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 7
+      },
+      "lineNbr": 1571,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-17T22:05:48Z",
+      "side": 1,
+      "message": "I think this would need too much space e.g. when using this on a laptop screen",
+      "parentUuid": "a74dd7b0_a4443f6d",
+      "revId": "2cd8e330145b5347f31617ca00ab3e5ec2ce5e56",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74dd7b0_04ab7391",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2013-09-15T20:48:52Z",
       "side": 1,
       "message": "How about reusing the labels, e.g. UIText.ContinueRebaseCommand_JobName for continue?",
+      "revId": "2cd8e330145b5347f31617ca00ab3e5ec2ce5e56",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_3cd30d7c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 7
+      },
+      "lineNbr": 1587,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-17T22:05:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a74dd7b0_04ab7391",
       "revId": "2cd8e330145b5347f31617ca00ab3e5ec2ce5e56",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
