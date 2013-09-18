@@ -153,7 +153,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IActionBars;
@@ -429,6 +428,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private Button commitAndPushButton;
 
+	private Section rebaseSection;
+
 	private Button rebaseContinueButton;
 
 	private Button rebaseSkipButton;
@@ -436,8 +437,6 @@ public class StagingView extends ViewPart implements IShowInSource {
 	private Button rebaseAbortButton;
 
 	private ListenerHandle refsChangedListener;
-
-	private Label rebaseLabel;
 
 	private Composite buttonsContainer;
 
@@ -531,9 +530,58 @@ public class StagingView extends ViewPart implements IShowInSource {
 			}
 		});
 
-		commitMessageSection = toolkit.createSection(
-				horizontalSashForm, ExpandableComposite.TITLE_BAR);
+		Composite rebaseAndCommitComposite = toolkit.createComposite(horizontalSashForm);
+		rebaseAndCommitComposite.setLayout(GridLayoutFactory.fillDefaults().create());
+
+		rebaseSection = toolkit.createSection(rebaseAndCommitComposite,
+				ExpandableComposite.TITLE_BAR);
+		rebaseSection.setText("Rebase"); //$NON-NLS-1$
+
+		Composite rebaseComposite = toolkit.createComposite(rebaseSection);
+		toolkit.paintBordersFor(rebaseComposite);
+		rebaseSection.setClient(rebaseComposite);
+
+		rebaseSection.setLayoutData(GridDataFactory.fillDefaults().create());
+		rebaseComposite.setLayout(GridLayoutFactory.fillDefaults()
+				.numColumns(3).create());
+
+		this.rebaseAbortButton = toolkit.createButton(rebaseComposite,
+				UIText.StagingView_RebaseAbort, SWT.PUSH);
+		rebaseAbortButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				rebaseAbort();
+			}
+		});
+		rebaseAbortButton.setImage(getImage(UIIcons.REBASE_ABORT));
+
+		this.rebaseSkipButton = toolkit.createButton(rebaseComposite,
+				UIText.StagingView_RebaseSkip, SWT.PUSH);
+		rebaseSkipButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				rebaseSkip();
+			}
+		});
+		rebaseSkipButton.setImage(getImage(UIIcons.REBASE_SKIP));
+
+		this.rebaseContinueButton = toolkit.createButton(rebaseComposite,
+				UIText.StagingView_RebaseContinue, SWT.PUSH);
+		rebaseContinueButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				rebaseContinue();
+			}
+		});
+		rebaseContinueButton.setImage(getImage(UIIcons.REBASE_CONTINUE));
+
+		updateRebaseButtonVisibility(false);
+
+		commitMessageSection = toolkit.createSection(rebaseAndCommitComposite,
+				ExpandableComposite.TITLE_BAR);
 		commitMessageSection.setText(UIText.StagingView_CommitMessage);
+		commitMessageSection.setLayoutData(GridDataFactory.fillDefaults()
+				.grab(true, true).create());
 
 		Composite commitMessageToolbarComposite = toolkit
 				.createComposite(commitMessageSection);
@@ -685,49 +733,6 @@ public class StagingView extends ViewPart implements IShowInSource {
 		});
 		width3.applyTo(commitButton);
 
-		rebaseLabel = toolkit.createLabel(buttonsContainer,
-				UIText.StagingView_RebaseLabel);
-		rebaseLabel.setForeground(toolkit.getColors().getColor(
-				IFormColors.TB_TOGGLE));
-		GridDataFactory.fillDefaults().align(SWT.END, SWT.CENTER)
-				.applyTo(rebaseLabel);
-
-		GridDataFactory width2 = GridDataFactory.fillDefaults()
-				.span(2, 1).align(SWT.FILL, SWT.CENTER);
-		this.rebaseAbortButton = toolkit.createButton(buttonsContainer,
-				UIText.StagingView_RebaseAbort, SWT.PUSH);
-		rebaseAbortButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				rebaseAbort();
-			}
-		});
-		rebaseAbortButton.setImage(getImage(UIIcons.REBASE_ABORT));
-		width2.applyTo(rebaseAbortButton);
-
-		this.rebaseSkipButton = toolkit.createButton(buttonsContainer,
-				UIText.StagingView_RebaseSkip, SWT.PUSH);
-		rebaseSkipButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				rebaseSkip();
-			}
-		});
-		rebaseSkipButton.setImage(getImage(UIIcons.REBASE_SKIP));
-		width2.applyTo(rebaseSkipButton);
-
-		this.rebaseContinueButton = toolkit.createButton(buttonsContainer,
-				UIText.StagingView_RebaseContinue, SWT.PUSH);
-		rebaseContinueButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				rebaseContinue();
-			}
-		});
-		rebaseContinueButton.setImage(getImage(UIIcons.REBASE_CONTINUE));
-		width2.applyTo(rebaseContinueButton);
-
-		updateRebaseButtonVisibility(false);
 
 		stagedSection = toolkit.createSection(stagingSashForm,
 				ExpandableComposite.TITLE_BAR);
@@ -1962,11 +1967,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 	protected void updateRebaseButtonVisibility(final boolean isRebasing) {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
-				showControl(rebaseLabel, isRebasing);
-				showControl(rebaseAbortButton, isRebasing);
-				showControl(rebaseContinueButton, isRebasing);
-				showControl(rebaseSkipButton, isRebasing);
-				commitMessageSection.layout(true);
+				showControl(rebaseSection, isRebasing);
+				rebaseSection.getParent().layout(true);
 			}
 
 			private void showControl(Control c, final boolean show) {
