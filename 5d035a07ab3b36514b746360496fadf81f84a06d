@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_9ebdee01",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-18T13:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a74dd7b0_43ca71b3",
+      "revId": "5d035a07ab3b36514b746360496fadf81f84a06d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74dd7b0_23c5a5a0",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_fec7d289",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-18T13:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a74dd7b0_23c5a5a0",
+      "revId": "5d035a07ab3b36514b746360496fadf81f84a06d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74dd7b0_8397599d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 9
@@ -47,6 +83,24 @@
       "writtenOn": "2013-09-18T13:13:00Z",
       "side": 1,
       "message": "Are the above changes necessary after moving the rebase buttons into their own section?",
+      "revId": "5d035a07ab3b36514b746360496fadf81f84a06d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_be238adc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-18T13:30:26Z",
+      "side": 1,
+      "message": "done, modulo automatic formatter",
+      "parentUuid": "a74dd7b0_8397599d",
       "revId": "5d035a07ab3b36514b746360496fadf81f84a06d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
