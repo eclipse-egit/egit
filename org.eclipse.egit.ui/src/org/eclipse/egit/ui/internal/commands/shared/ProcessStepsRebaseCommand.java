@@ -13,7 +13,7 @@ package org.eclipse.egit.ui.internal.commands.shared;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.rebase.RebaseInteracitveHandler;
+import org.eclipse.egit.ui.internal.rebase.RebaseInteractiveHandler;
 import org.eclipse.jgit.api.RebaseCommand.Operation;
 import org.eclipse.jgit.lib.Repository;
 
@@ -36,6 +36,6 @@ public class ProcessStepsRebaseCommand extends AbstractRebaseCommandHandler {
 	protected RebaseOperation createRebaseOperation(Repository repository)
 			throws ExecutionException {
 		return new RebaseOperation(repository, Operation.PROCESS_STEPS,
-				RebaseInteracitveHandler.INSTANCE);
+				RebaseInteractiveHandler.INSTANCE);
 	}
 }
