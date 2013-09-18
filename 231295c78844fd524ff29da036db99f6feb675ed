@@ -88,6 +88,24 @@
       "revId": "231295c78844fd524ff29da036db99f6feb675ed",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_c3196181",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-09-18T12:11:31Z",
+      "side": 1,
+      "message": "Ah, dnd vs context menu was the difference! Fixed in newest patch set by using the original selection (folder) instead of the files selection for stage/unstage via context menu.",
+      "parentUuid": "a74dd7b0_653fb5e3",
+      "revId": "231295c78844fd524ff29da036db99f6feb675ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
