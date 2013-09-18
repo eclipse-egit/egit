@@ -169,6 +169,9 @@ public class CoreText extends NLS {
 	public static String GitProjectData_saveFailed;
 
 	/** */
+	public static String RebaseInteractivePlan_WriteRebaseTodoFailed;
+
+	/** */
 	public static String RepositoryFinder_finding;
 
 	/** */
