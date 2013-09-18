@@ -70,6 +70,24 @@
       "revId": "231295c78844fd524ff29da036db99f6feb675ed",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_653fb5e3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-18T08:22:39Z",
+      "side": 1,
+      "message": "it works properly when using drag\u0026drop but when using the context menu for staging/unstaging always the folder being staged/unstaged gets expanded\n\nthe autoexpandLevel is always 0 in this last step",
+      "parentUuid": "a74dd7b0_82fcd3a8",
+      "revId": "231295c78844fd524ff29da036db99f6feb675ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
