@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a74dd7b0_01b4d765",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchSelectionAndEditDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-09-19T11:46:29Z",
+      "side": 1,
+      "message": "The checkout dialog button layout looks wrong because there is space at the right, where usually the buttons are right-aligned. The cause for this is that numColumns is incremented too many times.\n\ncreateButton already increases the number of columns. I\u0027d move this down to be called before new Button.",
+      "revId": "b6936be98e2245481eb92aef4555827ea4997a83",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_e1ae0b19",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchSelectionAndEditDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-09-19T11:46:29Z",
+      "side": 1,
+      "message": "Also, move this down, it\u0027s the increase for the delete button.",
+      "revId": "b6936be98e2245481eb92aef4555827ea4997a83",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_41a1bf25",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchSelectionAndEditDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-09-19T11:46:29Z",
+      "side": 1,
+      "message": "Remove this.",
+      "revId": "b6936be98e2245481eb92aef4555827ea4997a83",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_81290710",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-09-19T11:46:29Z",
+      "side": 1,
+      "message": "The above makes the buttons not be displayed, but the layout is wrong (buttons are not right-aligned).\n\nHow about providing protected methods like createRenameButton() and createDeleteButton, and createCancelButton() in BranchSelectionAndEditDialog and then using them here, and not call super.createButtonsForButtonBar?",
+      "revId": "b6936be98e2245481eb92aef4555827ea4997a83",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_81e1078f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 1647,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-09-19T11:46:29Z",
+      "side": 1,
+      "message": "This should be something like \"\u0026Edit Branches...\"",
+      "revId": "b6936be98e2245481eb92aef4555827ea4997a83",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
