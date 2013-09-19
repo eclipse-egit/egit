@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a74dd7b0_0fa403b8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-09-19T08:59:02Z",
+      "side": 1,
+      "message": "This causes the buttons to be arranged as Cancel, Commit and then Local on Linux. Before, they were arranged as Commit, Cancel, Local, which is consistent with other such dialogs on the platform (e.g. delete contact in Empathy chat program). Also see org.eclipse.jdt.internal.ui.refactoring.reorg.DeleteAction for the order that is used when pressing delete on a working set.",
+      "revId": "e89df393662b30159b9d117aeb048ffde056dc48",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_ef9ef76a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-09-19T08:59:02Z",
+      "side": 1,
+      "message": "This causes the commit to be checked out when pressing Esc, but Esc should probably result in the same action as Cancel.",
+      "revId": "e89df393662b30159b9d117aeb048ffde056dc48",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_4f58cb5d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-09-19T08:59:02Z",
+      "side": 1,
+      "message": "This goes against at least two UI guidelines which say that button labels should be verbs:\n\n\"Label all buttons with imperative verbs\":\n\nhttps://developer.gnome.org/hig-book/3.8/controls-buttons.html.en\n\n\"Use a verb or verb phrase for the title of a push button\":\n\nhttps://developer.apple.com/library/mac/documentation/userexperience/Conceptual/AppleHIGuidelines/Controls/Controls.html#//apple_ref/doc/uid/TP30000359-SW14\n\nAlso, \"Commit\" could mean the verb \"to commit\" or \"the commit\", which could be confusing.\n\nTo make the labels shorter, we could change \"Checkout as New Local Branch\" to \"Checkout as Local Branch\".",
+      "revId": "e89df393662b30159b9d117aeb048ffde056dc48",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
