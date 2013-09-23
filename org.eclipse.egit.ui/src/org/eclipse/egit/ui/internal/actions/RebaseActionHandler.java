@@ -48,6 +48,7 @@ public class RebaseActionHandler extends RepositoryActionHandler {
 		// must enable this because otherwise the menu items can not be opened.
 		RepositoryState state = repo.getRepositoryState();
 		return state.isRebasing()
-				|| RebaseCurrentRefCommand.isEnabledForState(repo, state);
+				|| RebaseCurrentRefCommand
+						.isEnabledForState(repo, state);
 	}
 }

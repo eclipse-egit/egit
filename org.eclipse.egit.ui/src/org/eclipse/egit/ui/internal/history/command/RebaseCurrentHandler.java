@@ -17,8 +17,9 @@ import java.io.IOException;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.rebase.RebaseHelper;
+import org.eclipse.egit.ui.internal.commands.shared.RebaseCurrentRefCommand;
 import org.eclipse.jgit.lib.BranchConfig;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectIdRef;
@@ -43,19 +44,26 @@ public class RebaseCurrentHandler extends AbstractHistoryCommandHandler {
 	}
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-
 		PlotCommit commit = (PlotCommit) getSelection(getPage()).getFirstElement();
 		final Repository repository = getRepository(event);
 		if (repository == null)
 			return null;
 
 		String currentBranch = getCurrentBranch(repository);
-		Ref ref = getRef(commit, repository, currentBranch);
+		final Ref ref = getRef(commit, repository, currentBranch);
 
-		String jobname = NLS.bind(
+		final String name = NLS.bind(
 				UIText.RebaseCurrentRefCommand_RebasingCurrentJobName,
 				currentBranch, ref.getName());
-		RebaseHelper.runRebaseJob(repository, jobname, ref);
+		RebaseCurrentRefCommand rebaseCurrentRef = new RebaseCurrentRefCommand() {
+			@Override
+			public RebaseOperation createRebaseOperation(ExecutionEvent event2)
+					throws ExecutionException {
+				this.jobname = name;
+				return new RebaseOperation(repository, ref);
+			}
+		};
+		rebaseCurrentRef.execute(event);
 		return null;
 	}
 
