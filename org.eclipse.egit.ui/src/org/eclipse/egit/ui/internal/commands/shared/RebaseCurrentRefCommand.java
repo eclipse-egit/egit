@@ -19,10 +19,10 @@ import java.io.IOException;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.IEvaluationContext;
+import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.BasicConfigurationDialog;
 import org.eclipse.egit.ui.internal.dialogs.RebaseTargetSelectionDialog;
-import org.eclipse.egit.ui.internal.rebase.RebaseHelper;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -36,50 +36,17 @@ import org.eclipse.osgi.util.NLS;
  * Implements "Rebase" to the currently checked out {@link Ref}
  */
 public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
-	/** */
-	public RebaseCurrentRefCommand() {
-		super(null, null, null);
+	/**
+	 * @param jobName
+	 */
+	protected RebaseCurrentRefCommand(String jobName) {
+		super(jobName, UIText.RebaseCurrentRefCommand_RebaseCanceledMessage);
 	}
 
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		Ref ref;
-		ISelection currentSelection = getCurrentSelectionChecked(event);
-		if (currentSelection instanceof IStructuredSelection) {
-			IStructuredSelection selection = (IStructuredSelection) currentSelection;
-			Object selected = selection.getFirstElement();
-			ref = getRef(selected);
-		} else
-			ref = null;
-
-		final Repository repository = getRepository(event);
-		if (repository == null)
-			return null;
-
-		BasicConfigurationDialog.show(repository);
-
-		String currentFullBranch = getFullBranch(repository);
-		if (ref != null && ref.getName().equals(currentFullBranch))
-			ref = null;
-
-		if (ref == null) {
-			RebaseTargetSelectionDialog rebaseTargetSelectionDialog = new RebaseTargetSelectionDialog(
-					getShell(event), repository);
-			if (rebaseTargetSelectionDialog.open() == IDialogConstants.OK_ID) {
-				String refName = rebaseTargetSelectionDialog.getRefName();
-				try {
-					ref = repository.getRef(refName);
-				} catch (IOException e) {
-					throw new ExecutionException(e.getMessage(), e);
-				}
-			} else
-				return null;
-		}
-
-		String jobname = NLS.bind(
-				UIText.RebaseCurrentRefCommand_RebasingCurrentJobName,
-				Repository.shortenRefName(currentFullBranch), ref.getName());
-		RebaseHelper.runRebaseJob(repository, jobname, ref);
-		return null;
+	/** */
+	public RebaseCurrentRefCommand() {
+		super(UIText.RebaseCurrentRefCommand_RebasingCurrentJobName,
+				UIText.RebaseCurrentRefCommand_RebaseCanceledMessage);
 	}
 
 	@Override
@@ -129,5 +96,49 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 					UIText.RebaseCurrentRefCommand_ErrorGettingCurrentBranchMessage,
 					e);
 		}
+	}
+
+	@Override
+	public RebaseOperation createRebaseOperation(ExecutionEvent event)
+			throws ExecutionException {
+		Ref ref;
+		ISelection currentSelection = getCurrentSelectionChecked(event);
+		if (currentSelection instanceof IStructuredSelection) {
+			IStructuredSelection selection = (IStructuredSelection) currentSelection;
+			Object selected = selection.getFirstElement();
+			ref = getRef(selected);
+		} else
+			ref = null;
+
+		final Repository repository = getRepository(event);
+		if (repository == null)
+			return null;
+
+		BasicConfigurationDialog.show(repository);
+
+		String currentFullBranch = getFullBranch(repository);
+		if (ref != null && ref.getName().equals(currentFullBranch))
+			ref = null;
+
+		if (ref == null) {
+			RebaseTargetSelectionDialog rebaseTargetSelectionDialog = new RebaseTargetSelectionDialog(
+					getShell(event), repository);
+			if (rebaseTargetSelectionDialog.open() == IDialogConstants.OK_ID) {
+				String refName = rebaseTargetSelectionDialog.getRefName();
+				try {
+					ref = repository.getRef(refName);
+				} catch (IOException e) {
+					throw new ExecutionException(e.getMessage(), e);
+				}
+			} else
+				return null;
+		}
+
+		// set the jobname
+		jobname = NLS.bind(
+				UIText.RebaseCurrentRefCommand_RebasingCurrentJobName,
+				Repository.shortenRefName(currentFullBranch), ref);
+
+		return new RebaseOperation(repository, ref);
 	}
 }
