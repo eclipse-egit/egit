@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_8d7c6492",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RebaseOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-23T15:44:27Z",
+      "side": 1,
+      "message": "where did this come from ? you claim this is a refactoring",
+      "revId": "71553543c921ff076095c151d87e8fa2b792b07d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_2d4d5094",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-23T15:44:27Z",
+      "side": 1,
+      "message": "here we should also show the exception which is the root cause of the problem -\u003e use multistatus as this was done in RebaseHelper",
+      "revId": "71553543c921ff076095c151d87e8fa2b792b07d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_6d475872",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-23T15:44:27Z",
+      "side": 1,
+      "message": "this is rather createRebaseOperation than an innocent getter",
+      "revId": "71553543c921ff076095c151d87e8fa2b792b07d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_0d897432",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-23T15:44:27Z",
+      "side": 1,
+      "message": "I think we don\u0027t need this method, just make the member operation visible to the subclasses by declaring it protected",
+      "revId": "71553543c921ff076095c151d87e8fa2b792b07d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_ed8d283f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-23T15:44:27Z",
+      "side": 1,
+      "message": "unrelated change",
+      "revId": "71553543c921ff076095c151d87e8fa2b792b07d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_8d4aa479",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/RebaseCurrentRefCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-23T15:44:27Z",
+      "side": 1,
+      "message": "if you rename this class you should also rename the other subclasses of AbstractRebaseCommandHandler",
+      "revId": "71553543c921ff076095c151d87e8fa2b792b07d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_0dd33449",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/RebaseCurrentHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-23T15:44:27Z",
+      "side": 1,
+      "message": "according to javadoc of AbstractHandler this method must return null",
+      "revId": "71553543c921ff076095c151d87e8fa2b792b07d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
