@@ -101,7 +101,7 @@ public class RebaseAction extends RepositoryAction implements
 
 	private Repository getRepository() {
 		ExecutionEvent event = createExecutionEvent();
-		return AbstractSharedCommandHandler.getRepository(event);
+		return AbstractSharedCommandHandler.extractRepository(event);
 	}
 
 	private boolean isInRebasingState(Repository repo) {

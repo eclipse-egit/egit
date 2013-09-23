@@ -22,7 +22,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class PushHeadToGerritCommand extends AbstractSharedCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		Repository repository = getRepository(event);
+		Repository repository = extractRepository(event);
 		if (repository == null)
 			return null;
 

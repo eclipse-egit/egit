@@ -25,7 +25,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class FetchChangeFromGerritCommand extends AbstractSharedCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		Repository repository = getRepository(event);
+		Repository repository = extractRepository(event);
 		if (repository == null) {
 			Shell shell = getShell(event);
 			MessageDialog
