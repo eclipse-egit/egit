@@ -13,6 +13,7 @@ package org.eclipse.egit.core.op;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -75,6 +76,7 @@ public class RebaseOperation implements IEGitOperation {
 	 *            {@link Operation#SKIP}
 	 */
 	public RebaseOperation(Repository repository, Operation operation) {
+		Assert.isTrue(operation != Operation.BEGIN);
 		this.repository = repository;
 		this.operation = operation;
 		this.ref = null;
@@ -137,5 +139,26 @@ public class RebaseOperation implements IEGitOperation {
 	 */
 	public RebaseResult getResult() {
 		return result;
+	}
+
+	/**
+	 * @return the {@link Repository}
+	 */
+	public final Repository getRepository() {
+		return repository;
+	}
+
+	/**
+	 * @return the {@link Operation} if it has been set, otherwise null
+	 */
+	public final Operation getOperation() {
+		return operation;
+	}
+
+	/**
+	 * @return the {@link Ref} if it has been set, otherwise null
+	 */
+	public final Ref getRef() {
+		return ref;
 	}
 }

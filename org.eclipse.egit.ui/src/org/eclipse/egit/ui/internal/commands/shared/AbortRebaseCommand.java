@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commands.shared;
 
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jgit.api.RebaseCommand.Operation;
 
@@ -21,7 +24,19 @@ public class AbortRebaseCommand extends AbstractRebaseCommandHandler {
 	 * Default constructor
 	 */
 	public AbortRebaseCommand() {
-		super(Operation.ABORT, UIText.AbortRebaseCommand_JobName,
-				UIText.AbortRebaseCommand_CancelDialogMessage);
+		super(UIText.AbortRebaseCommand_CancelDialogMessage,
+				UIText.RebaseCommandHandler_CancelDialogTitle);
+	}
+
+	@Override
+	public RebaseOperation getRebaseOperation(ExecutionEvent event)
+			throws ExecutionException {
+		return new RebaseOperation(getRepository(event), Operation.ABORT);
+	}
+
+	@Override
+	public String getJobName(RebaseOperation operation)
+			throws ExecutionException {
+		return UIText.AbortRebaseCommand_JobName;
 	}
 }

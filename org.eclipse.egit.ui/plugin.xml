@@ -4238,7 +4238,7 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.commands.shared.RebaseCurrentRefCommand"
+            defaultHandler="org.eclipse.egit.ui.internal.commands.shared.RebaseCurrentRefCommandHandler"
             id="org.eclipse.egit.ui.RepositoriesViewRebase"
             name="%RebaseCommand.name">
       </command>

@@ -19,10 +19,10 @@ import java.io.IOException;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.IEvaluationContext;
+import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.BasicConfigurationDialog;
 import org.eclipse.egit.ui.internal.dialogs.RebaseTargetSelectionDialog;
-import org.eclipse.egit.ui.internal.rebase.RebaseHelper;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -35,51 +35,24 @@ import org.eclipse.osgi.util.NLS;
 /**
  * Implements "Rebase" to the currently checked out {@link Ref}
  */
-public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
+public class RebaseCurrentRefCommandHandler extends AbstractRebaseCommandHandler {
 	/** */
-	public RebaseCurrentRefCommand() {
-		super(null, null, null);
+	public RebaseCurrentRefCommandHandler() {
+		super(UIText.RebaseCurrentRefCommand_RebaseCanceledMessage,
+				UIText.RebaseCurrentRefCommand_RebaseCanceledTitle);
 	}
 
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		Ref ref;
-		ISelection currentSelection = getCurrentSelectionChecked(event);
-		if (currentSelection instanceof IStructuredSelection) {
-			IStructuredSelection selection = (IStructuredSelection) currentSelection;
-			Object selected = selection.getFirstElement();
-			ref = getRef(selected);
-		} else
-			ref = null;
-
-		final Repository repository = getRepository(event);
-		if (repository == null)
-			return null;
-
-		BasicConfigurationDialog.show(repository);
-
-		String currentFullBranch = getFullBranch(repository);
-		if (ref != null && ref.getName().equals(currentFullBranch))
-			ref = null;
-
-		if (ref == null) {
-			RebaseTargetSelectionDialog rebaseTargetSelectionDialog = new RebaseTargetSelectionDialog(
-					getShell(event), repository);
-			if (rebaseTargetSelectionDialog.open() == IDialogConstants.OK_ID) {
-				String refName = rebaseTargetSelectionDialog.getRefName();
-				try {
-					ref = repository.getRef(refName);
-				} catch (IOException e) {
-					throw new ExecutionException(e.getMessage(), e);
-				}
-			} else
-				return null;
-		}
-
-		String jobname = NLS.bind(
-				UIText.RebaseCurrentRefCommand_RebasingCurrentJobName,
-				Repository.shortenRefName(currentFullBranch), ref.getName());
-		RebaseHelper.runRebaseJob(repository, jobname, ref);
-		return null;
+	// do we really need this check any more? All rebase calls to JGit should be
+	// checked in isEnabled() from the framework
+	@Override
+	protected Object execute(RebaseOperation rebase) throws ExecutionException {
+		Repository repository = rebase.getRepository();
+		// safeguard against broken handlers which don't check that
+		// repository state is safe
+		if (!repository.getRepositoryState().equals(RepositoryState.SAFE))
+			throw new IllegalStateException(
+					"Can't start rebase if repository state isn't SAFE"); //$NON-NLS-1$
+		return super.execute(rebase);
 	}
 
 	@Override
@@ -129,5 +102,53 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 					UIText.RebaseCurrentRefCommand_ErrorGettingCurrentBranchMessage,
 					e);
 		}
+	}
+
+	@Override
+	public RebaseOperation getRebaseOperation(ExecutionEvent event)
+			throws ExecutionException {
+		Ref ref;
+		ISelection currentSelection = getCurrentSelectionChecked(event);
+		if (currentSelection instanceof IStructuredSelection) {
+			IStructuredSelection selection = (IStructuredSelection) currentSelection;
+			Object selected = selection.getFirstElement();
+			ref = getRef(selected);
+		} else
+			ref = null;
+
+		final Repository repository = getRepository(event);
+		if (repository == null)
+			return null;
+
+		BasicConfigurationDialog.show(repository);
+
+		String currentFullBranch = getFullBranch(repository);
+		if (ref != null && ref.getName().equals(currentFullBranch))
+			ref = null;
+
+		if (ref == null) {
+			RebaseTargetSelectionDialog rebaseTargetSelectionDialog = new RebaseTargetSelectionDialog(
+					getShell(event), repository);
+			if (rebaseTargetSelectionDialog.open() == IDialogConstants.OK_ID) {
+				String refName = rebaseTargetSelectionDialog.getRefName();
+				try {
+					ref = repository.getRef(refName);
+				} catch (IOException e) {
+					throw new ExecutionException(e.getMessage(), e);
+				}
+			} else
+				return null;
+		}
+
+		return new RebaseOperation(repository, ref);
+	}
+
+	@Override
+	public String getJobName(RebaseOperation operation)
+			throws ExecutionException {
+		String currentFullBranch = getFullBranch(operation.getRepository());
+		return NLS.bind(UIText.RebaseCurrentRefCommand_RebasingCurrentJobName,
+				Repository.shortenRefName(currentFullBranch),
+				operation.getRef());
 	}
 }
