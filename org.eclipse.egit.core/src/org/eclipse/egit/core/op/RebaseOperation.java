@@ -26,8 +26,8 @@ import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.RebaseCommand;
-import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.RebaseCommand.Operation;
+import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.api.errors.NoHeadException;
@@ -137,5 +137,19 @@ public class RebaseOperation implements IEGitOperation {
 	 */
 	public RebaseResult getResult() {
 		return result;
+	}
+
+	/**
+	 * @return the {@link Repository}
+	 */
+	public final Repository getRepository() {
+		return repository;
+	}
+
+	/**
+	 * @return the {@link Operation} if it has been set, otherwise null
+	 */
+	public final Operation getOperation() {
+		return operation;
 	}
 }
