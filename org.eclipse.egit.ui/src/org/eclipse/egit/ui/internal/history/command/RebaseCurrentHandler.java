@@ -17,8 +17,9 @@ import java.io.IOException;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.rebase.RebaseHelper;
+import org.eclipse.egit.ui.internal.commands.shared.AbstractRebaseCommandHandler;
 import org.eclipse.jgit.lib.BranchConfig;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectIdRef;
@@ -50,12 +51,20 @@ public class RebaseCurrentHandler extends AbstractHistoryCommandHandler {
 			return null;
 
 		String currentBranch = getCurrentBranch(repository);
-		Ref ref = getRef(commit, repository, currentBranch);
+		final Ref ref = getRef(commit, repository, currentBranch);
 
 		String jobname = NLS.bind(
 				UIText.RebaseCurrentRefCommand_RebasingCurrentJobName,
 				currentBranch, ref.getName());
-		RebaseHelper.runRebaseJob(repository, jobname, ref);
+		AbstractRebaseCommandHandler rebaseCurrentRef = new AbstractRebaseCommandHandler(
+				jobname, UIText.RebaseCurrentRefCommand_RebaseCanceledMessage) {
+			@Override
+			protected RebaseOperation createRebaseOperation(
+					ExecutionEvent event2) throws ExecutionException {
+				return new RebaseOperation(repository, ref);
+			}
+		};
+		rebaseCurrentRef.execute(event);
 		return null;
 	}
 
