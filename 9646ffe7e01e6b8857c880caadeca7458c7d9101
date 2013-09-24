@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_79fa6784",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryPropertyPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-24T22:47:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_9364743e",
+      "revId": "9646ffe7e01e6b8857c880caadeca7458c7d9101",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_139ea4b4",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryPropertyPage.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-09-24T20:55:13Z",
       "side": 1,
       "message": "I don\u0027t get this else, isn\u0027t config already set to this before the if?",
+      "revId": "9646ffe7e01e6b8857c880caadeca7458c7d9101",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_59fdeb78",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryPropertyPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-24T22:47:10Z",
+      "side": 1,
+      "message": "*sigh* you are right",
+      "parentUuid": "8748d3a1_139ea4b4",
       "revId": "9646ffe7e01e6b8857c880caadeca7458c7d9101",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
