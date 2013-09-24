@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8748d3a1_9364743e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryPropertyPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-09-24T20:57:37Z",
+      "side": 1,
+      "message": "Repository also has fireEvent, should we rather use that?",
+      "revId": "9646ffe7e01e6b8857c880caadeca7458c7d9101",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_139ea4b4",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryPropertyPage.java",
         "patchSetId": 1
