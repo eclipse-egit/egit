@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_c81be377",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseResultDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-25T08:35:43Z",
+      "side": 1,
+      "message": "why is there no entry for CONFLICTS ?",
+      "revId": "18b720162ee365a7f14e91f8c514faefd79bd97c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
