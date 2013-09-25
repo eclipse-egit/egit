@@ -5018,6 +5018,12 @@
             name="%RebaseCurrentCommand.name">
       </command>
       <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.RebaseInteractiveCurrentHandler"
+            id="org.eclipse.egit.ui.RebaseInteractiveCurrent"
+            name="%RebaseInteractiveCurrentHandler.name">
+      </command>
+      
+      <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.OpenInCommitViewerHandler"
             id="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"
             name="%OpenInCommitViewerCommand.name">
