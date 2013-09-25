@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_2de2590d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-25T06:49:38Z",
+      "side": 1,
+      "message": "you unnecessarily flipped the order of these two statements which makes the diff unnecessarily larger",
+      "revId": "0e116f6833bb68f40a0556dca2d50422bdc58d33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_ed64f114",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-25T06:49:38Z",
+      "side": 1,
+      "message": "this is our own method always returning null so there is no need to return anything from this method so I think the return type should be void",
+      "revId": "0e116f6833bb68f40a0556dca2d50422bdc58d33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_2d6ff9ef",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-25T06:49:38Z",
+      "side": 1,
+      "message": "I think this should be inlined",
+      "revId": "0e116f6833bb68f40a0556dca2d50422bdc58d33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_4d7405c0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-25T06:49:38Z",
+      "side": 1,
+      "message": "this javadoc lacks a description of the purpose of this method",
+      "revId": "0e116f6833bb68f40a0556dca2d50422bdc58d33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_ed7d118f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/RebaseCurrentRefCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-25T06:49:38Z",
+      "side": 1,
+      "message": "if you move this method up before setEnabled() the diff is a lot easier to read",
+      "revId": "0e116f6833bb68f40a0556dca2d50422bdc58d33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_cdb2d5ff",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/RebaseCurrentRefCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-25T06:49:38Z",
+      "side": 1,
+      "message": "s/ref/ref.getName()/\n\nsecond parameter of shortenRefName has type String",
+      "revId": "0e116f6833bb68f40a0556dca2d50422bdc58d33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
