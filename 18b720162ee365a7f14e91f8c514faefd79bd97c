@@ -16,6 +16,24 @@
       "revId": "18b720162ee365a7f14e91f8c514faefd79bd97c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_01976152",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseResultDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-09-25T21:27:26Z",
+      "side": 1,
+      "message": "Oh, that was a mistake. Fixed in next patch set. I also replaced the default clause by a return after the switch, so that Eclipse shows a warning when the switch is incomplete.",
+      "parentUuid": "8748d3a1_c81be377",
+      "revId": "18b720162ee365a7f14e91f8c514faefd79bd97c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
