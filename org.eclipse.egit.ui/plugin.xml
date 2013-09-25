@@ -7,7 +7,7 @@
       <initializer class="org.eclipse.egit.ui.PluginPreferenceInitializer"/>
    </extension>
 
-   <extension point="org.eclipse.ui.importWizards">
+   <extension poin<commandt="org.eclipse.ui.importWizards">
       <category name="%Git_clone_category"
 	    id="org.eclipse.egit.ui.internal.clone.gitclonecategory"/>
       <wizard name="%Git_clone_wizard"
@@ -5016,6 +5016,11 @@
             defaultHandler="org.eclipse.egit.ui.internal.history.command.RebaseCurrentHandler"
             id="org.eclipse.egit.ui.RebaseCurrent"
             name="%RebaseCurrentCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.RebaseInteractiveCurrentHandler"
+            id="org.eclipse.egit.ui.RebaseInteractiveCurrent"
+            name="%RebaseInteractiveCurrentHandler.name">
       </command>
       <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.OpenInCommitViewerHandler"
