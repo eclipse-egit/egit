@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_85bc1c06",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-09-25T22:44:04Z",
+      "side": 1,
+      "message": "Does the RevWalk have to be released? (I\u0027m not sure if it\u0027s necessary in this case).",
+      "revId": "6d906bcba38083811f0206976f819db0eb1c3c2a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
