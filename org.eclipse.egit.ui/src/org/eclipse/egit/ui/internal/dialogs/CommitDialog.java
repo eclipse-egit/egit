@@ -86,6 +86,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -924,6 +925,10 @@ public class CommitDialog extends TitleAreaDialog {
 				.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
 		authorText.setLayoutData(GridDataFactory.fillDefaults()
 				.grab(true, false).create());
+		if (repository != null
+				&& repository.getRepositoryState().equals(
+						RepositoryState.CHERRY_PICKING_RESOLVED))
+			authorText.setEnabled(false);
 
 		toolkit.createLabel(personArea, UIText.CommitDialog_Committer)
 				.setForeground(
