@@ -16,6 +16,24 @@
       "revId": "6d906bcba38083811f0206976f819db0eb1c3c2a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_05a64cc2",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-09-25T22:58:48Z",
+      "side": 1,
+      "message": "I think this isn\u0027t necessary since we don\u0027t intend to reuse it",
+      "parentUuid": "8748d3a1_85bc1c06",
+      "revId": "6d906bcba38083811f0206976f819db0eb1c3c2a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
