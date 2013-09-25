@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_7259d960",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-25T13:30:12Z",
+      "side": 1,
+      "message": "What happens if \nresult.getSeverity() \u003d\u003d IStatus.ERROR\nbut \noperation !\u003d Operation.BEGIN?",
+      "revId": "0e116f6833bb68f40a0556dca2d50422bdc58d33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_2d6ff9ef",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
         "patchSetId": 3
@@ -53,6 +70,40 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_126a15e1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-25T13:30:12Z",
+      "side": 1,
+      "message": "You could extract a method for the whole block (e.g. handleError)",
+      "revId": "0e116f6833bb68f40a0556dca2d50422bdc58d33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_32147172",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-25T13:30:12Z",
+      "side": 1,
+      "message": "This can be else if",
+      "revId": "0e116f6833bb68f40a0556dca2d50422bdc58d33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_4d7405c0",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
         "patchSetId": 3
@@ -64,6 +115,23 @@
       "writtenOn": "2013-09-25T06:49:38Z",
       "side": 1,
       "message": "this javadoc lacks a description of the purpose of this method",
+      "revId": "0e116f6833bb68f40a0556dca2d50422bdc58d33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_1fc21e9c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/RebaseCurrentRefCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-25T13:30:12Z",
+      "side": 1,
+      "message": "Please remove this constructor (see comment on RebaseCurrentHandler)",
       "revId": "0e116f6833bb68f40a0556dca2d50422bdc58d33",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -98,6 +166,23 @@
       "writtenOn": "2013-09-25T06:49:38Z",
       "side": 1,
       "message": "s/ref/ref.getName()/\n\nsecond parameter of shortenRefName has type String",
+      "revId": "0e116f6833bb68f40a0556dca2d50422bdc58d33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_32463176",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/RebaseCurrentHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-25T13:30:12Z",
+      "side": 1,
+      "message": "t is unnecessary to instantiate this concrete class. You only need the dialogMessage from there and nothing else.\n\nYou can use\n\nAbstractRebaseCommandHandler rebaseCurrentRef \u003d new AbstractRebaseCommandHandler(\njobname, UIText.RebaseCurrentRefCommand_RebaseCanceledMessage) {\n\ninstead",
       "revId": "0e116f6833bb68f40a0556dca2d50422bdc58d33",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
