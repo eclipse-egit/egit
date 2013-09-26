@@ -606,6 +606,12 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_SecureStoreUseByDefault;
 
 	/** */
+	public static String ProcessStepsRebaseCommand_CancelDialogMessage;
+
+	/** */
+	public static String ProcessStepsRebaseCommand_JobName;
+
+	/** */
 	public static String ProjectsPreferencePage_AutoShareProjects;
 
 	/** */
