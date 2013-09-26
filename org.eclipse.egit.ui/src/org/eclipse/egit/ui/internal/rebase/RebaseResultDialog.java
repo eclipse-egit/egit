@@ -21,6 +21,7 @@ import java.util.Set;
 
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.CompareUI;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -28,18 +29,16 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
-import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.internal.FileChecker;
 import org.eclipse.egit.core.internal.FileChecker.CheckResult;
 import org.eclipse.egit.core.internal.FileChecker.CheckResultEntry;
-import org.eclipse.egit.core.internal.job.JobUtil;
-import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.commands.shared.AbortRebaseCommand;
+import org.eclipse.egit.ui.internal.commands.shared.AbstractRebaseCommandHandler;
+import org.eclipse.egit.ui.internal.commands.shared.SkipRebaseCommand;
 import org.eclipse.egit.ui.internal.dialogs.CheckoutConflictDialog;
 import org.eclipse.egit.ui.internal.merge.GitMergeEditorInput;
 import org.eclipse.egit.ui.internal.merge.MergeModeDialog;
@@ -51,7 +50,6 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jgit.api.RebaseCommand.Operation;
 import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.RebaseResult.Status;
 import org.eclipse.jgit.dircache.DirCache;
@@ -555,33 +553,25 @@ public class RebaseResultDialog extends MessageDialog {
 				return;
 			} else if (skipCommitButton.getSelection()) {
 				// skip the rebase
-				final RebaseOperation op = new RebaseOperation(repo,
-						Operation.SKIP);
-				JobUtil.scheduleUserJob(op,
-						UIText.RebaseResultDialog_JobNameSkipCommit,
-						JobFamilies.REBASE, new JobChangeAdapter() {
-							@Override
-							public void done(IJobChangeEvent event) {
-								show(op.getResult(), repo);
-							}
-						});
+				SkipRebaseCommand skipCommand = new SkipRebaseCommand();
+				execute(skipCommand);
 			} else if (abortRebaseButton.getSelection()) {
 				// abort the rebase
-				final RebaseOperation op = new RebaseOperation(repo,
-						Operation.ABORT);
-				JobUtil.scheduleUserJob(op,
-						UIText.RebaseResultDialog_JobNameAbortRebase,
-						JobFamilies.REBASE, new JobChangeAdapter() {
-							@Override
-							public void done(IJobChangeEvent event) {
-								show(op.getResult(), repo);
-							}
-						});
+				AbortRebaseCommand abortCommand = new AbortRebaseCommand();
+				execute(abortCommand);
 			} else if (doNothingButton.getSelection()) {
 				// nothing
 			}
 		}
 		super.buttonPressed(buttonId);
+	}
+
+	private void execute(AbstractRebaseCommandHandler command) {
+		try {
+			command.execute(repo);
+		} catch (ExecutionException e) {
+			Activator.showError(e.getMessage(), e);
+		}
 	}
 
 	private void createToggleButton(Composite parent) {
