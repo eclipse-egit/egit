@@ -212,7 +212,7 @@ public class RebaseInteractivePlan implements RefsChangedListener {
 
 	/**
 	 * Removes a {@link RebaseInteractivePlanChangeListener} from this
-	 * {@link RebaseInteractivePlan} it it has been registered before
+	 * {@link RebaseInteractivePlan} if it has been registered before
 	 *
 	 * @param listener
 	 *            the {@link RebaseInteractivePlanChangeListener} to be removed
