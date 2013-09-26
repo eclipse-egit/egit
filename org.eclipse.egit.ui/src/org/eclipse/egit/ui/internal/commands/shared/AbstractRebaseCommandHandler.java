@@ -18,9 +18,10 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.core.internal.job.JobUtil;
+import org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan;
 import org.eclipse.egit.core.op.RebaseOperation;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.rebase.RebaseResultDialog;
@@ -87,6 +88,7 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 
 					@Override
 					public void done(IJobChangeEvent cevent) {
+						finishRebaseInteractive();
 						IStatus result = cevent.getJob().getResult();
 						// if a rebase was started, returned with an exception
 						// and left the repository in an unsafe state, try to
@@ -113,6 +115,13 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 						else if (result.isOK())
 							RebaseResultDialog.show(rebase.getResult(),
 									repository);
+					}
+
+					private void finishRebaseInteractive() {
+						RebaseInteractivePlan plan = RebaseInteractivePlan
+								.getPlan(repository);
+						if (plan != null && !plan.isRebasingInteractive())
+							plan.dispose();
 					}
 				});
 	}
