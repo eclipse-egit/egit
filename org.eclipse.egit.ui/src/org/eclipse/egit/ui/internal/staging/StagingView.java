@@ -22,6 +22,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.IUndoContext;
 import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.resources.IContainer;
@@ -33,9 +35,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -44,12 +44,9 @@ import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
-import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.op.CommitOperation;
-import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
@@ -57,6 +54,10 @@ import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
 import org.eclipse.egit.ui.internal.actions.BooleanPrefAction;
+import org.eclipse.egit.ui.internal.commands.shared.AbortRebaseCommand;
+import org.eclipse.egit.ui.internal.commands.shared.AbstractRebaseCommandHandler;
+import org.eclipse.egit.ui.internal.commands.shared.ContinueRebaseCommand;
+import org.eclipse.egit.ui.internal.commands.shared.SkipRebaseCommand;
 import org.eclipse.egit.ui.internal.commit.CommitHelper;
 import org.eclipse.egit.ui.internal.commit.CommitJob;
 import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
@@ -72,7 +73,6 @@ import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
 import org.eclipse.egit.ui.internal.gerrit.GerritUtil;
 import org.eclipse.egit.ui.internal.operations.DeletePathsOperationUI;
 import org.eclipse.egit.ui.internal.operations.IgnoreOperationUI;
-import org.eclipse.egit.ui.internal.rebase.RebaseResultDialog;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ControlContribution;
@@ -113,8 +113,6 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.RebaseCommand;
-import org.eclipse.jgit.api.RebaseCommand.Operation;
 import org.eclipse.jgit.api.ResetCommand;
 import org.eclipse.jgit.api.RmCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -914,41 +912,50 @@ public class StagingView extends ViewPart implements IShowInSource {
 		stagedViewer.addFilter(filter);
 	}
 
-	private void doRebaseOperation(Repository repository,
-			RebaseCommand.Operation operation, String jobname) {
-		final RebaseOperation op = new RebaseOperation(repository, operation);
-		JobUtil.scheduleUserJob(op, jobname, JobFamilies.REBASE,
-				new JobChangeAdapter() {
-					@Override
-					public void done(IJobChangeEvent event) {
-						RebaseResultDialog.show(op.getResult(),
-								currentRepository);
-					}
-				});
+	private void executeRebaseOperation(AbstractRebaseCommandHandler command) {
+		try {
+			command.execute(null);
+		} catch (ExecutionException e) {
+			Activator.showError(e.getMessage(), e);
+		}
 	}
 
 	/**
 	 * Abort rebase command in progress
 	 */
 	protected void rebaseAbort() {
-		doRebaseOperation(currentRepository, Operation.ABORT,
-				UIText.AbortRebaseCommand_JobName);
+		AbortRebaseCommand abortCommand = new AbortRebaseCommand() {
+			protected Repository getRepository(ExecutionEvent event) {
+				return currentRepository;
+			}
+		};
+		executeRebaseOperation(abortCommand);
 	}
 
 	/**
 	 * Rebase next commit and continue rebase in progress
 	 */
 	protected void rebaseSkip() {
-		doRebaseOperation(currentRepository, Operation.SKIP,
-				UIText.SkipRebaseCommand_JobName);
+		SkipRebaseCommand skipCommand = new SkipRebaseCommand() {
+			@Override
+			protected Repository getRepository(ExecutionEvent event) {
+				return currentRepository;
+			}
+		};
+		executeRebaseOperation(skipCommand);
 	}
 
 	/**
 	 * Continue rebase command in progress
 	 */
 	protected void rebaseContinue() {
-		doRebaseOperation(currentRepository, Operation.CONTINUE,
-				UIText.ContinueRebaseCommand_JobName);
+		ContinueRebaseCommand continueCommand = new ContinueRebaseCommand() {
+			@Override
+			protected Repository getRepository(ExecutionEvent event) {
+				return currentRepository;
+			}
+		};
+		executeRebaseOperation(continueCommand);
 	}
 
 	private void createUnstagedToolBarComposite() {
