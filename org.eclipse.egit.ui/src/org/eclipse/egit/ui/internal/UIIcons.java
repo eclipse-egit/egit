@@ -207,6 +207,9 @@ public class UIIcons {
 	/** Commit icon */
 	public final static ImageDescriptor COMMIT;
 
+	/** Cherry-pick icon */
+	public final static ImageDescriptor CHERRY_PICK;
+
 	/** Rebase icon */
 	public final static ImageDescriptor REBASE;
 
@@ -218,6 +221,9 @@ public class UIIcons {
 
 	/** Rebase abort icon */
 	public final static ImageDescriptor REBASE_ABORT;
+
+	/** Rebase process steps icon */
+	public final static ImageDescriptor REBASE_PROCESS_STEPS;
 
 	/** Merge icon */
 	public final static ImageDescriptor MERGE;
@@ -245,6 +251,24 @@ public class UIIcons {
 
 	/** Compact tree presentation icon */
 	public final static ImageDescriptor COMPACT;
+
+	/** Squash icon */
+	public final static ImageDescriptor SQUASH;
+
+	/** Fixup icon */
+	public final static ImageDescriptor FIXUP;
+
+	/** Reword icon */
+	public final static ImageDescriptor REWORD;
+
+	/** Icon for done rebase step */
+	public final static ImageDescriptor DONE_STEP;
+
+	/** Reword for current rebase step */
+	public final static ImageDescriptor CURRENT_STEP;
+
+	/** Reword for todo rebase step */
+	public final static ImageDescriptor TODO_STEP;
 
 	/** base URL */
 	public final static URL base;
@@ -316,10 +340,12 @@ public class UIIcons {
 		NOTE = map("obj16/note.png"); //$NON-NLS-1$
 		ANNOTATE = map("etool16/annotate.gif"); //$NON-NLS-1$
 		COMMIT = map("obj16/commit.gif"); //$NON-NLS-1$
+		CHERRY_PICK = map("obj16/cherry-pick.png"); //$NON-NLS-1$
 		REBASE = map("obj16/rebase.gif"); //$NON-NLS-1$
 		REBASE_CONTINUE = map("elcl16/continue.gif"); //$NON-NLS-1$
 		REBASE_SKIP = map("elcl16/skip.gif"); //$NON-NLS-1$
 		REBASE_ABORT = map("elcl16/progress_stop.gif"); //$NON-NLS-1$
+		REBASE_PROCESS_STEPS = map("elcl16/continue.gif"); //$NON-NLS-1$
 		OVR_ERROR = map("ovr/error.png"); //$NON-NLS-1$
 		MERGE = map("obj16/merge.gif"); //$NON-NLS-1$
 		TAG_ANNOTATED = map("obj16/annotated-tag.gif"); //$NON-NLS-1$
@@ -331,6 +357,12 @@ public class UIIcons {
 		HIERARCHY = map("elcl16/hierarchicalLayout.gif"); //$NON-NLS-1$
 		FLAT = map("elcl16/flatLayout.gif"); //$NON-NLS-1$
 		COMPACT = map("elcl16/compactLayout.gif"); //$NON-NLS-1$
+		SQUASH = map("obj16/squash.gif"); //$NON-NLS-1$
+		FIXUP = map("obj16/fixup.gif"); //$NON-NLS-1$
+		REWORD = map("obj16/reword.gif"); //$NON-NLS-1$
+		DONE_STEP = map("obj16/done_step.gif"); //$NON-NLS-1$
+		CURRENT_STEP = map("obj16/current_step.gif"); //$NON-NLS-1$
+		TODO_STEP = map("obj16/todo_step.gif"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {
@@ -357,7 +389,7 @@ public class UIIcons {
 	 * Get the image for the given descriptor from the resource manager which
 	 * handles disposal of the image when the resource manager itself is
 	 * disposed.
-	 * 
+	 *
 	 * @param resourceManager
 	 *            {code ResourceManager} managing the image resources
 	 * @param descriptor
