@@ -34,6 +34,24 @@
       "revId": "6d906bcba38083811f0206976f819db0eb1c3c2a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_9f6e2123",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-09-26T10:42:05Z",
+      "side": 1,
+      "message": "Looking at the calls of release in the code base, there are many places where it is released even though it isn\u0027t reused. Are all these calls really unnecessary?",
+      "parentUuid": "8748d3a1_05a64cc2",
+      "revId": "6d906bcba38083811f0206976f819db0eb1c3c2a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
