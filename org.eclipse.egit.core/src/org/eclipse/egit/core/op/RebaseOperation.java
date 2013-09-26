@@ -137,7 +137,7 @@ public class RebaseOperation implements IEGitOperation {
 								new EclipseGitProgressTransformer(actMonitor));
 				try {
 					if (handler != null)
-						cmd.runInteractively(handler);
+						cmd.runInteractively(handler, true);
 					if (operation == Operation.BEGIN)
 						result = cmd.setUpstream(ref.getName()).call();
 					else
