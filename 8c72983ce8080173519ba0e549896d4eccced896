@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_6403c984",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001
+      },
+      "writtenOn": "2013-09-26T17:01:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_914a95fc",
+      "revId": "8c72983ce8080173519ba0e549896d4eccced896",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_3118e17f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2013-09-26T14:48:13Z",
       "side": 1,
       "message": "this is hardly understandable, maybe better:\n\n\"Factory method delegating creation of RebaseOperation to concrete subclasses.\"",
+      "revId": "8c72983ce8080173519ba0e549896d4eccced896",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_44068d94",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001
+      },
+      "writtenOn": "2013-09-26T17:01:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_3118e17f",
       "revId": "8c72983ce8080173519ba0e549896d4eccced896",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_e4c19998",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/RebaseCurrentRefCommand.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001
+      },
+      "writtenOn": "2013-09-26T17:01:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_51880dff",
+      "revId": "8c72983ce8080173519ba0e549896d4eccced896",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_918295db",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseResultDialog.java",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2013-09-26T14:48:13Z",
       "side": 1,
       "message": "remove this unrelated change",
+      "revId": "8c72983ce8080173519ba0e549896d4eccced896",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_c4bc5d24",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseResultDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1001
+      },
+      "writtenOn": "2013-09-26T17:01:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_918295db",
       "revId": "8c72983ce8080173519ba0e549896d4eccced896",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
