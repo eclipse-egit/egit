@@ -2280,37 +2280,10 @@ public class UIText extends NLS {
 	public static String CreateBranchPage_CreatingBranchMessage;
 
 	/** */
-	public static String CreateBranchPage_LocalBranchWarningText;
-
-	/** */
-	public static String CreateBranchPage_LocalBranchWarningTooltip;
-
-	/** */
-	public static String CreateBranchPage_MergeRadioButton;
+	public static String CreateBranchPage_LocalBranchWarningMessage;
 
 	/** */
 	public static String CreateBranchPage_MissingSourceMessage;
-
-	/** */
-	public static String CreateBranchPage_NoneRadioButton;
-
-	/** */
-	public static String CreateBranchPage_PullMergeTooltip;
-
-	/** */
-	public static String CreateBranchPage_PullNoneTooltip;
-
-	/** */
-	public static String CreateBranchPage_PullRebaseTooltip;
-
-	/** */
-	public static String CreateBranchPage_PullStrategyGroupHeader;
-
-	/** */
-	public static String CreateBranchPage_PullStrategyTooltip;
-
-	/** */
-	public static String CreateBranchPage_RebaseRadioButton;
 
 	/** */
 	public static String CreateBranchPage_SourceBranchLabel;
@@ -3571,6 +3544,21 @@ public class UIText extends NLS {
 
 	/** */
 	public static String Untrack_untrack;
+
+	/** */
+	public static String UpstreamConfigComponent_ConfigureUpstreamCheck;
+
+	/** */
+	public static String UpstreamConfigComponent_ConfigureUpstreamToolTip;
+
+	/** */
+	public static String UpstreamConfigComponent_MergeRadio;
+
+	/** */
+	public static String UpstreamConfigComponent_PullGroup;
+
+	/** */
+	public static String UpstreamConfigComponent_RebaseRadio;
 
 	/** */
 	public static String TagAction_cannotCheckout;

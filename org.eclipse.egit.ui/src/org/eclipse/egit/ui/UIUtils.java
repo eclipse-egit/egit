@@ -199,6 +199,16 @@ public class UIUtils {
 	}
 
 	/**
+	 * @return the indent of controls that depend on the previous control (e.g.
+	 *         a checkbox that is only enabled when the checkbox above it is
+	 *         checked)
+	 */
+	public static int getControlIndent() {
+		// Eclipse 4.3: Use LayoutConstants.getIndent once we depend on 4.3
+		return 20;
+	}
+
+	/**
 	 * @param parent
 	 * @param style
 	 * @return a text field which is read-only but can be selected
