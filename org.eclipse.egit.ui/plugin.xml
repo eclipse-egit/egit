@@ -1870,6 +1870,13 @@
             id="org.eclipse.egit.ui.StagingView"
             name="%GitStagingView_name">
       </view>
+      <view
+            category="org.eclipse.egit.ui.GitCategory"
+            class="org.eclipse.egit.ui.internal.rebase.RebaseInteractiveView"
+            icon="icons/eview16/rebase.gif"
+            id="org.eclipse.egit.ui.InteractiveRebaseView"
+            name="%GitInteractiveRebaseView_name">
+      </view>
       <category
             id="org.eclipse.egit.ui.GitCategory"
             name="%GitCategory_name">
@@ -5266,6 +5273,9 @@
          </part>
          <part
                id="org.eclipse.egit.ui.ReflogView">
+         </part>
+         <part
+               id="org.eclipse.egit.ui.InteractiveRebaseView">
          </part>
          <part
                id="org.eclipse.egit.ui.commitEditor">
