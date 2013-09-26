@@ -27,6 +27,7 @@ import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.RebaseCommand;
 import org.eclipse.jgit.api.RebaseResult;
+import org.eclipse.jgit.api.RebaseCommand.InteractiveHandler;
 import org.eclipse.jgit.api.RebaseCommand.Operation;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
@@ -47,6 +48,8 @@ public class RebaseOperation implements IEGitOperation {
 
 	private RebaseResult result;
 
+	private final InteractiveHandler handler;
+
 	/**
 	 * Construct a {@link RebaseOperation} object for a {@link Ref}.
 	 * <p>
@@ -59,9 +62,24 @@ public class RebaseOperation implements IEGitOperation {
 	 *            the branch or tag
 	 */
 	public RebaseOperation(Repository repository, Ref ref) {
-		this.repository = repository;
-		this.operation = Operation.BEGIN;
-		this.ref = ref;
+		this(repository, ref, Operation.BEGIN, null);
+	}
+
+	/**
+	 * Construct a {@link RebaseOperation} object for a {@link Ref}.
+	 * <p>
+	 * Upon {@link #execute(IProgressMonitor)}, the current HEAD will be rebased
+	 * interactively onto the provided {@link Ref}
+	 *
+	 * @param repository
+	 *            the {@link Repository}
+	 * @param ref
+	 *            the branch or tag
+	 * @param handler
+	 */
+	public RebaseOperation(Repository repository, Ref ref,
+			InteractiveHandler handler) {
+		this(repository, ref, Operation.BEGIN, handler);
 	}
 
 	/**
@@ -75,9 +93,31 @@ public class RebaseOperation implements IEGitOperation {
 	 *            {@link Operation#SKIP}
 	 */
 	public RebaseOperation(Repository repository, Operation operation) {
+		this(repository, null, operation, null);
+	}
+
+	/**
+	 * Used to abort, skip, or continue a stopped rebase interactive operation
+	 * that has been started before.
+	 *
+	 * @param repository
+	 *            the {@link Repository}
+	 * @param operation
+	 *            one of {@link Operation#ABORT}, {@link Operation#CONTINUE},
+	 *            {@link Operation#SKIP}
+	 * @param handler
+	 */
+	public RebaseOperation(Repository repository, Operation operation,
+			InteractiveHandler handler) {
+		this(repository, null, operation, handler);
+	}
+
+	private RebaseOperation(Repository repository, Ref ref,
+			Operation operation, InteractiveHandler handler) {
 		this.repository = repository;
+		this.ref = ref;
 		this.operation = operation;
-		this.ref = null;
+		this.handler = handler;
 	}
 
 	public void execute(IProgressMonitor m) throws CoreException {
@@ -96,6 +136,8 @@ public class RebaseOperation implements IEGitOperation {
 						.setProgressMonitor(
 								new EclipseGitProgressTransformer(actMonitor));
 				try {
+					if (handler != null)
+						cmd.runInteractively(handler);
 					if (operation == Operation.BEGIN)
 						result = cmd.setUpstream(ref.getName()).call();
 					else
