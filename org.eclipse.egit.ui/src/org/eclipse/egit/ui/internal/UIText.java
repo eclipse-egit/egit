@@ -714,6 +714,9 @@ public class UIText extends NLS {
 	public static String RebaseResultDialog_Failed;
 
 	/** */
+	public static String RebaseResultDialog_InteractivePrepared;
+
+	/** */
 	public static String RebaseResultDialog_JobNameAbortRebase;
 
 	/** */
