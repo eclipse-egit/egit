@@ -13,6 +13,7 @@ package org.eclipse.egit.ui.internal.commands.shared;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.rebase.RebaseInteracitveHandler;
 import org.eclipse.jgit.api.RebaseCommand.Operation;
 import org.eclipse.jgit.lib.Repository;
 
@@ -31,6 +32,7 @@ public class AbortRebaseCommand extends AbstractRebaseCommandHandler {
 	@Override
 	protected RebaseOperation createRebaseOperation(Repository repository)
 			throws ExecutionException {
-		return new RebaseOperation(repository, Operation.ABORT);
+		return new RebaseOperation(repository, Operation.ABORT,
+				RebaseInteracitveHandler.INSTANCE);
 	}
 }
