@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_51bc8023",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1845,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-27T14:18:26Z",
+      "side": 1,
+      "message": "Please add the value to the plugin.properties",
+      "revId": "a857a8cb233f2af076c2c213d4a32cd7cd399911",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_ec185382",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveStepActionToolBarProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-27T14:18:26Z",
+      "side": 1,
+      "message": "Maybe we add undo/redo in a subsequent change.",
+      "revId": "a857a8cb233f2af076c2c213d4a32cd7cd399911",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_8c09cf39",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-27T14:18:26Z",
+      "side": 1,
+      "message": "Maybe we postpone redo/undo to a subsequent change",
+      "revId": "a857a8cb233f2af076c2c213d4a32cd7cd399911",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_acc00b24",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-27T14:18:26Z",
+      "side": 1,
+      "message": "We should find a header for the first column. What about \"Status\"?",
+      "revId": "a857a8cb233f2af076c2c213d4a32cd7cd399911",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
