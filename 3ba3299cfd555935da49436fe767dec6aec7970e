@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_11931862",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-27T13:28:16Z",
+      "side": 1,
+      "message": "s/an/and/",
+      "revId": "3ba3299cfd555935da49436fe767dec6aec7970e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_1125d8b2",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-27T13:28:16Z",
+      "side": 1,
+      "message": "please add the version and the x-friends label like above",
+      "revId": "3ba3299cfd555935da49436fe767dec6aec7970e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_f145cc1a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/rebase/RebaseInteractivePlan.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-27T13:28:16Z",
+      "side": 1,
+      "message": "reversed is always false, so let\u0027s better remove the reverse flag and the ReversedList",
+      "revId": "3ba3299cfd555935da49436fe767dec6aec7970e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_9109e839",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-27T13:28:16Z",
+      "side": 1,
+      "message": "please add the version range",
+      "revId": "3ba3299cfd555935da49436fe767dec6aec7970e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
