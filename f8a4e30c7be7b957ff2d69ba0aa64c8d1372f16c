@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_b16a24df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-27T12:21:08Z",
+      "side": 1,
+      "message": "duplicate Change-Id:",
+      "revId": "f8a4e30c7be7b957ff2d69ba0aa64c8d1372f16c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_f174acc1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 11
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-27T12:21:08Z",
+      "side": 1,
+      "message": "...plan and start the rebase in the Git Rebase Interactive View",
+      "revId": "f8a4e30c7be7b957ff2d69ba0aa64c8d1372f16c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
