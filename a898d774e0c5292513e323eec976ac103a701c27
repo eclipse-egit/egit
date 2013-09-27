@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_a0edb402",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RebaseOperation.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-27T07:41:19Z",
+      "side": 1,
+      "message": "There is a lot of duplication in the different constructors.\n\nYou could use a private constructor called by the others:\n\n....\n\t\tthis(repository, operation, null, handler);\n\t}\n\n\tprivate RebaseOperation(Repository repository, Operation operation,\n\t\t\tRef ref, InteractiveHandler handler) {\n\t\tthis.repository \u003d repository;\n\t\tthis.operation \u003d operation;\n\t\tthis.ref \u003d ref;\n\t\tthis.handler \u003d handler;\n\t}",
+      "revId": "a898d774e0c5292513e323eec976ac103a701c27",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_c0fd60a5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbortRebaseCommand.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-27T07:41:19Z",
+      "side": 1,
+      "message": "Why does the abort operation need the RebaseInteracitveHandler.INSTANCE?",
+      "revId": "a898d774e0c5292513e323eec976ac103a701c27",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_202c04d0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/RebaseInteractiveCurrentHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-27T07:41:19Z",
+      "side": 1,
+      "message": "Do you want to do this in this change?",
+      "revId": "a898d774e0c5292513e323eec976ac103a701c27",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
