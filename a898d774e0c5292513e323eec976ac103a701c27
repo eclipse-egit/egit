@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_26da5c5f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RebaseOperation.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001
+      },
+      "writtenOn": "2013-09-27T10:52:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_a0edb402",
+      "revId": "a898d774e0c5292513e323eec976ac103a701c27",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_c0fd60a5",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbortRebaseCommand.java",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_062f60c5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbortRebaseCommand.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001
+      },
+      "writtenOn": "2013-09-27T10:52:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_c0fd60a5",
+      "revId": "a898d774e0c5292513e323eec976ac103a701c27",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_202c04d0",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/RebaseInteractiveCurrentHandler.java",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2013-09-27T07:41:19Z",
       "side": 1,
       "message": "Do you want to do this in this change?",
+      "revId": "a898d774e0c5292513e323eec976ac103a701c27",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_262c1cd0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/RebaseInteractiveCurrentHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001
+      },
+      "writtenOn": "2013-09-27T10:52:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_202c04d0",
       "revId": "a898d774e0c5292513e323eec976ac103a701c27",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
