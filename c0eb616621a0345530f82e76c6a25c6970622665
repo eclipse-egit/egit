@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_86f2500b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/AbstractRebaseHistoryCommandHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-27T12:00:39Z",
+      "side": 1,
+      "message": "Please add the other contributors from the initial class here",
+      "revId": "c0eb616621a0345530f82e76c6a25c6970622665",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
