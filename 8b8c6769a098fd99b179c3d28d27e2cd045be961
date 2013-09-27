@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_3dea6b22",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseResultDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-27T07:10:00Z",
+      "side": 1,
+      "message": "Unnecessary whitespace change",
+      "revId": "8b8c6769a098fd99b179c3d28d27e2cd045be961",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
