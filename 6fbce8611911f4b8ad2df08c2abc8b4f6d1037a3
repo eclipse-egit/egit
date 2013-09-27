@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_11415862",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 11
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-27T12:24:33Z",
+      "side": 1,
+      "message": "s/canceld/canceled/\n\nMaybe better \"Rebase canceled\", because the user does not know the term \"Processing Steps\"",
+      "revId": "6fbce8611911f4b8ad2df08c2abc8b4f6d1037a3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
