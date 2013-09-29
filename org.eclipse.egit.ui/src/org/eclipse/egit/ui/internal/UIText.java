@@ -3841,6 +3841,9 @@ public class UIText extends NLS {
 	public static String NewRemoteDialog_FetchRadio;
 
 	/** */
+	public static String NewRemoteDialog_InvalidRemoteName;
+
+	/** */
 	public static String NewRemoteDialog_NameLabel;
 
 	/** */
