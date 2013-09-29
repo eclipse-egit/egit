@@ -1254,6 +1254,32 @@
          </activeWhen>
       </handler>
       <handler
+            class="org.eclipse.egit.ui.internal.repository.tree.command.AddToIndexCommand"
+            commandId="org.eclipse.egit.ui.team.AddToIndex">
+         <activeWhen>
+            <and>
+               <count
+                     value="+">
+               </count>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <or>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.FileNode">
+                     </instanceof>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.FolderNode">
+                     </instanceof>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode">
+                     </instanceof>
+                  </or>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.ui.edit.delete">
          <class
                class="org.eclipse.egit.ui.internal.repository.tree.command.DeleteFileCommand">
@@ -3260,7 +3286,7 @@
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-3">
          <command
-               commandId="org.eclipse.egit.ui.RepositoriesViewAddToIndex"
+               commandId="org.eclipse.egit.ui.team.AddToIndex"
                icon="/icons/obj16/add.gif"
                label="%RepoViewAddToIndex.label"
                style="push">
@@ -4272,12 +4298,6 @@
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.OpenInEditorCommand"
             id="org.eclipse.egit.ui.RepositoriesViewOpenInEditor"
             name="%OpenInEditorCommand">
-      </command>
-      <command
-            categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.AddToIndexCommand"
-            id="org.eclipse.egit.ui.RepositoriesViewAddToIndex"
-            name="%AddToIndexCommand">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
