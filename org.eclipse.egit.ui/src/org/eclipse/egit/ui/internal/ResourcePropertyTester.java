@@ -105,9 +105,28 @@ public class ResourcePropertyTester extends PropertyTester {
 			if ("hasGerritConfiguration".equals(property)) //$NON-NLS-1$
 				return hasGerritConfiguration(repository);
 
+			RepositoryState state = repository.getRepositoryState();
+
+			if ("canAbortRebase".equals(property)) //$NON-NLS-1$
+				switch (state) {
+				case REBASING_INTERACTIVE:
+					return true;
+				case REBASING_REBASING:
+					return true;
+				default:
+					return false;
+				}
+
+			if ("canContinueRebase".equals(property)) //$NON-NLS-1$
+				switch (state) {
+				case REBASING_INTERACTIVE:
+					return true;
+				default:
+					return false;
+				}
+
 			// isSTATE checks repository state where STATE is the CamelCase version
 			// of the RepositoryState enum values.
-			RepositoryState state = repository.getRepositoryState();
 			if (property.length() > 3 && property.startsWith("is")) { //$NON-NLS-1$
 				// e.g. isCherryPickingResolved => CHERRY_PICKING_RESOLVED
 				String lookFor = property.substring(2,3) + property.substring(3).replaceAll("([A-Z])","_$1").toUpperCase();  //$NON-NLS-1$//$NON-NLS-2$
