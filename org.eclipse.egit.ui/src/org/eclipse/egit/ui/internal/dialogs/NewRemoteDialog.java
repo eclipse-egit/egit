@@ -107,10 +107,15 @@ public class NewRemoteDialog extends TitleAreaDialog {
 	private void checkPage() {
 		boolean errorFound = false;
 		setErrorMessage(null);
-		if (existingRemotes.contains(nameText.getText())) {
+		String t = getTrimmedRemoteName();
+		if (t.length() > 0
+				&& !Repository.isValidRefName(Constants.R_REMOTES + t)) {
+			setErrorMessage(NLS.bind(UIText.NewRemoteDialog_InvalidRemoteName,
+					t));
+			errorFound = true;
+		} else if (existingRemotes.contains(t)) {
 			setErrorMessage(NLS.bind(
-					UIText.NewRemoteDialog_RemoteAlreadyExistsMessage, nameText
-							.getText()));
+					UIText.NewRemoteDialog_RemoteAlreadyExistsMessage, t));
 			errorFound = true;
 		}
 		getButton(OK).setEnabled(!errorFound);
@@ -119,10 +124,14 @@ public class NewRemoteDialog extends TitleAreaDialog {
 	@Override
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == OK) {
-			name = nameText.getText();
+			name = getTrimmedRemoteName();
 			pushMode = forPush.getSelection();
 		}
 		super.buttonPressed(buttonId);
+	}
+
+	private String getTrimmedRemoteName() {
+		return nameText.getText().trim();
 	}
 
 	/**
