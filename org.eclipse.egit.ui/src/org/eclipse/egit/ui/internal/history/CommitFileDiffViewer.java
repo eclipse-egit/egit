@@ -399,16 +399,24 @@ public class CommitFileDiffViewer extends TableViewer {
 		IPath workTreePath = new Path(db.getWorkTree().getAbsolutePath());
 		IStructuredSelection selection = (IStructuredSelection) getSelection();
 		List<Object> elements = new ArrayList<Object>();
+		List<File> files = new ArrayList<File>();
 		for (Object selectedElement : selection.toList()) {
 			FileDiff fileDiff = (FileDiff) selectedElement;
-			IPath path = workTreePath.append(fileDiff.getNewPath());
+			IPath path = workTreePath.append(fileDiff.getPath());
 			IFile file = ResourceUtil.getFileForLocation(path);
 			if (file != null)
 				elements.add(file);
 			else
 				elements.add(path);
+			files.add(path.toFile());
 		}
-		return new ShowInContext(null, new StructuredSelection(elements));
+		HistoryPageInput historyPageInput = null;
+		if (!files.isEmpty()) {
+			historyPageInput = new HistoryPageInput(db,
+					files.toArray(new File[files.size()]));
+		}
+		return new ShowInContext(historyPageInput, new StructuredSelection(
+				elements));
 	}
 
 	private void openFileInEditor(String filePath) {
