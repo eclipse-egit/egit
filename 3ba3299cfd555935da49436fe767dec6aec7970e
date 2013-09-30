@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8748d3a1_ad6c6480",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-09-30T14:41:15Z",
+      "side": 1,
+      "message": "Please remove the RFC",
+      "revId": "3ba3299cfd555935da49436fe767dec6aec7970e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_11931862",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
