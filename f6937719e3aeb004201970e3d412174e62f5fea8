@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_e01dd86c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/NewRemoteDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2013-09-30T07:51:49Z",
+      "side": 1,
+      "message": "I would also trim() the input here to avoid one more source of errors.",
+      "revId": "f6937719e3aeb004201970e3d412174e62f5fea8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_80c7b439",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/NewRemoteDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2013-09-30T07:51:49Z",
+      "side": 1,
+      "message": "If the text is trimmed above, it would have to be trimmed here also (or better, that one line to be extracted into a method).",
+      "revId": "f6937719e3aeb004201970e3d412174e62f5fea8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
