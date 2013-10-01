@@ -136,24 +136,6 @@ public class RepositoriesViewPropertyTester extends PropertyTester {
 			}
 		}
 
-		if (property.equals("canAbortRebase")) //$NON-NLS-1$
-			switch (node.getRepository().getRepositoryState()) {
-			case REBASING_INTERACTIVE:
-				return true;
-			case REBASING_REBASING:
-				return true;
-			default:
-				return false;
-			}
-
-		if (property.equals("canContinueRebase")) //$NON-NLS-1$
-			switch (node.getRepository().getRepositoryState()) {
-			case REBASING_INTERACTIVE:
-				return true;
-			default:
-				return false;
-			}
-
 		if ("isSubmodule".equals(property)) { //$NON-NLS-1$
 			RepositoryTreeNode<?> parent = node.getParent();
 			return parent != null

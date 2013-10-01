@@ -3967,31 +3967,71 @@
                icon="icons/obj16/rebase.gif"
                label="%RebaseMenu.label">
 	           <command
-	                 commandId="org.eclipse.egit.ui.org.eclipse.egit.ui.AbortRebase" style="push" />
-	            <command
-	                 commandId="org.eclipse.egit.ui.SkipRebase" style="push" />
-	            <command
-	                 commandId="org.eclipse.egit.ui.ContinueRebase" style="push" />
-	           <visibleWhen checkEnabled="false">
-	              <and>
-	                 <iterate
-                        ifEmpty="false">
-	                    <and>
-	                       <adapt
-	                             type="org.eclipse.core.resources.IProject">
+                  commandId="org.eclipse.egit.ui.org.eclipse.egit.ui.AbortRebase"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <and>
+                           <adapt
+                                 type="org.eclipse.core.resources.IProject">
                               <test
-                                    property="GitResource.isShared">
+                                    property="GitResource.canAbortRebase">
                               </test>
-	                          <not>
-		                          <test
-		                                property="GitResource.isSafe">
-		                          </test>
-	                          </not>
-	                       </adapt>
-	                    </and>
-	                 </iterate>
-	              </and>
-	           </visibleWhen>
+                           </adapt>
+                        </and>
+                     </iterate>
+                  </and>
+               </visibleWhen>
+            </command>
+	            <command
+                   commandId="org.eclipse.egit.ui.SkipRebase"
+                   style="push">
+                <visibleWhen
+                      checkEnabled="false">
+                   <and>
+                      <count
+                            value="1">
+                      </count>
+                      <iterate>
+                         <and>
+                            <adapt
+                                  type="org.eclipse.core.resources.IProject">
+                               <test
+                                     property="GitResource.canAbortRebase">
+                               </test>
+                            </adapt>
+                         </and>
+                      </iterate>
+                   </and>
+                </visibleWhen>
+             </command>
+	            <command
+                   commandId="org.eclipse.egit.ui.ContinueRebase"
+                   style="push">
+                <visibleWhen
+                      checkEnabled="false">
+                   <and>
+                      <count
+                            value="1">
+                      </count>
+                      <iterate>
+                         <and>
+                            <adapt
+                                  type="org.eclipse.core.resources.IProject">
+                               <test
+                                     property="GitResource.canContinueRebase">
+                               </test>
+                            </adapt>
+                         </and>
+                      </iterate>
+                   </and>
+                </visibleWhen>
+             </command>
             </menu>
            <command
                  commandId="org.eclipse.egit.ui.team.Reset"
@@ -4591,7 +4631,7 @@
             class="org.eclipse.egit.ui.internal.ResourcePropertyTester"
             id="org.eclipse.egit.ui.ResourceTester"
             namespace="GitResource"
-            properties="isShared,isContainer,isSafe,canCommit,canAmend,canResetHead,hasGerritConfiguration"
+            properties="isShared,isContainer,isSafe,canCommit,canAmend,canResetHead,canAbortRebase,canContinueRebase,hasGerritConfiguration"
             type="org.eclipse.core.resources.IResource">
       </propertyTester>
    </extension>
