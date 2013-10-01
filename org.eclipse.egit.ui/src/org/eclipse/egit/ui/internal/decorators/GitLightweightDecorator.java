@@ -47,9 +47,11 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.TextProcessor;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.team.internal.ui.Utils;
 import org.eclipse.team.ui.ISharedImages;
@@ -93,6 +95,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 			UIPreferences.THEME_IgnoredResourceBackgroundColor,
 			UIPreferences.THEME_IgnoredResourceForegroundColor };
 
+	private static RGB defaultBackgroundRgb;
+
 	/**
 	 * Constructs a new Git resource decorator
 	 */
@@ -117,7 +121,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 	 * @param actColors color ids to cache
 	 */
 	private void ensureFontAndColorsCreated(final String[] actFonts, final String[] actColors) {
-		Display.getDefault().syncExec(new Runnable() {
+		final Display display = Display.getDefault();
+		display.syncExec(new Runnable() {
 			public void run() {
 				ITheme theme  = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme();
 				for (int i = 0; i < actColors.length; i++) {
@@ -127,6 +132,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 				for (int i = 0; i < actFonts.length; i++) {
 					theme.getFontRegistry().get(actFonts[i]);
 				}
+				defaultBackgroundRgb = display.getSystemColor(
+						SWT.COLOR_LIST_BACKGROUND).getRGB();
 			}
 		});
 	}
@@ -386,7 +393,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 				Font f = current.getFontRegistry().get(
 						UIPreferences.THEME_IgnoredResourceFont);
 
-				decoration.setBackgroundColor(bc);
+				setBackgroundColor(decoration, bc);
 				decoration.setForegroundColor(fc);
 				decoration.setFont(f);
 			} else if (!resource.isTracked()
@@ -396,10 +403,18 @@ public class GitLightweightDecorator extends LabelProvider implements
 				Color fc = current.getColorRegistry().get(UIPreferences.THEME_UncommittedChangeForegroundColor);
 				Font f = current.getFontRegistry().get(UIPreferences.THEME_UncommittedChangeFont);
 
-				decoration.setBackgroundColor(bc);
+				setBackgroundColor(decoration, bc);
 				decoration.setForegroundColor(fc);
 				decoration.setFont(f);
 			}
+		}
+
+		private void setBackgroundColor(IDecoration decoration, Color color) {
+			// In case the color is not changed from the default, do not set the
+			// background because it paints over things from the theme such as
+			// alternating line colors (see bug 412183).
+			if (!color.getRGB().equals(defaultBackgroundRgb))
+				decoration.setBackgroundColor(color);
 		}
 
 		private void decorateText(IDecoration decoration,
