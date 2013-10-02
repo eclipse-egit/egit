@@ -82,7 +82,7 @@
 				</topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Fetching_from_other_Repositories" label="Fetching from other Repositories">
 					<topic href="help/EGit/User_Guide/Tasks.html#Fetching_from_upstream" label="Fetching from upstream">
-						<topic href="help/EGit/User_Guide/Tasks.html#Configuring_upstream_fetch" label="Configuring upstream fetch"></topic>
+						<topic href="help/EGit/User_Guide/Tasks.html#Configuring_fetch_from_upstream" label="Configuring fetch from upstream"></topic>
 					</topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Direct_Fetch" label="Direct Fetch"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Fetch_Wizard" label="Fetch Wizard">
@@ -103,7 +103,7 @@
 				</topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Commit_Dialog" label="Commit Dialog"></topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Comparing_Content" label="Comparing Content">
-					<topic href="help/EGit/User_Guide/Tasks.html#Compare_editor_and_Git_Tree_Compare_View" label="Compare editor and Git Tree Compare View"></topic>
+					<topic href="help/EGit/User_Guide/Tasks.html#Compare_editor_and_Synchronize_View" label="Compare editor and Synchronize View"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Compare_working_tree_with_last_commit" label="Compare working tree with last commit"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Comparing_Working_Tree_with_Index" label="Comparing Working Tree with Index"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Comparing_Working_Tree_with_a_branch.2C_a_tag_or_a_reference" label="Comparing Working Tree with a branch, a tag or a reference"></topic>
@@ -124,6 +124,8 @@
 			<topic href="help/EGit/User_Guide/Tasks.html#Committing_Changes" label="Committing Changes">
 				<topic href="help/EGit/User_Guide/Tasks.html#Modifying_the_content" label="Modifying the content"></topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Committing" label="Committing">
+					<topic href="help/EGit/User_Guide/Tasks.html#Committing_with_the_Staging_View" label="Committing with the Staging View"></topic>
+					<topic href="help/EGit/User_Guide/Tasks.html#Committing_using_Commit_Dialog" label="Committing using Commit Dialog"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Commit_Message" label="Commit Message"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Amending_Commits" label="Amending Commits"></topic>
 				</topic>
@@ -132,6 +134,8 @@
 				<topic href="help/EGit/User_Guide/Tasks.html#Reverting_changes_in_the_working_tree" label="Reverting changes in the working tree">
 					<topic href="help/EGit/User_Guide/Tasks.html#Replace_with_File_in_Git_Index" label="Replace with File in Git Index"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Replace_with_HEAD" label="Replace with HEAD"></topic>
+					<topic href="help/EGit/User_Guide/Tasks.html#Replace_with_Branch.2C_Tag_or_Reference" label="Replace with Branch, Tag or Reference"></topic>
+					<topic href="help/EGit/User_Guide/Tasks.html#Replace_with_Commit" label="Replace with Commit"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Replace_with_Previous_Revision" label="Replace with Previous Revision"></topic>
 				</topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Revert_using_quickdiff" label="Revert using quickdiff"></topic>
@@ -170,7 +174,8 @@
 			</topic>
 			<topic href="help/EGit/User_Guide/Tasks.html#Merging" label="Merging">
 				<topic href="help/EGit/User_Guide/Tasks.html#Merging_a_branch_or_a_tag_into_the_current_branch" label="Merging a branch or a tag into the current branch">
-					<topic href="help/EGit/User_Guide/Tasks.html#Starting_merge_from_the_team_menu" label="Starting merge from the team menu"></topic>
+					<topic href="help/EGit/User_Guide/Tasks.html#Starting_merge_from_the_History_View" label="Starting merge from the History View"></topic>
+					<topic href="help/EGit/User_Guide/Tasks.html#Starting_merge_from_the_Team_menu" label="Starting merge from the Team menu"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Starting_merge_from_the_Git_Repositories_View" label="Starting merge from the Git Repositories View"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Possible_merge_results" label="Possible merge results">
 						<topic href="help/EGit/User_Guide/Tasks.html#Merge_Result_dialog" label="Merge Result dialog"></topic>
@@ -194,7 +199,6 @@
 				<topic href="help/EGit/User_Guide/Tasks.html#Rebase_Confirmation_Dialog" label="Rebase Confirmation Dialog"></topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Rebase_Conflicts" label="Rebase Conflicts"></topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Aborting_Rebase" label="Aborting Rebase"></topic>
-				<topic href="help/EGit/User_Guide/Tasks.html#Rebase_Limitation" label="Rebase Limitation"></topic>
 			</topic>
 			<topic href="help/EGit/User_Guide/Tasks.html#Cherry_Picking" label="Cherry Picking">
 				<topic href="help/EGit/User_Guide/Tasks.html#Cherry-pick_Introduction" label="Cherry-pick Introduction"></topic>
@@ -408,6 +412,7 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Snippets.html" label="Snippets">
 			<topic href="help/JGit/User_Guide/Snippets.html#Finding_children_of_a_commit" label="Finding children of a commit"></topic>
+			<topic href="help/JGit/User_Guide/Snippets.html#Snippet_Collection" label="Snippet Collection"></topic>
 		</topic>
 		<topic href="help/JGit/User_Guide/Advanced-Topics.html" label="Advanced Topics">
 			<topic href="help/JGit/User_Guide/Advanced-Topics.html#Reducing_memory_usage_with_RevWalk" label="Reducing memory usage with RevWalk">
@@ -419,36 +424,29 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/3.0/3.0.html" label="EGit 3.0 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/3.0/3.0.html" label="EGit Features">
-			<topic href="help/EGit/New_and_Noteworthy/3.0/3.0.html#Rename_Detection" label="Rename Detection"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/3.0/3.0.html#Reset_to_Expression" label="Reset to Expression"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/3.0/3.0.html#Other" label="Other"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/3.1/3.1.html" label="EGit 3.1 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/3.1/3.1.html" label="EGit">
+			<topic href="help/EGit/New_and_Noteworthy/3.1/3.1.html#Features" label="Features"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/3.1/3.1.html#Staging_View" label="Staging View"></topic>
 		</topic>
-		<topic href="help/EGit/New_and_Noteworthy/3.0/GitHub-Connector-Features.html" label="GitHub Connector Features"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/3.0/Performance-Improvements.html" label="Performance Improvements"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/3.0/Bug-Fixes.html" label="Bug Fixes"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/3.0/API-changes.html" label="API changes"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/3.0/Contributors.html" label="Contributors"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/3.0/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/3.1/GitHub-Connector-Features.html" label="GitHub Connector Features"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/3.1/Performance-Improvements.html" label="Performance Improvements"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/3.1/Build-and-Release-Engineering.html" label="Build and Release Engineering"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/3.1/Bug-Fixes.html" label="Bug Fixes"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/3.1/Contributors.html" label="Contributors"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/3.1/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/3.0/3.0.html" label="JGit 3.0 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/3.0/3.0.html" label="Features">
-			<topic href="help/JGit/New_and_Noteworthy/3.0/3.0.html#Recursive_Merge" label="Recursive Merge"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/3.1/3.1.html" label="JGit 3.1 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/3.1/3.1.html" label="Features">
+			<topic href="help/JGit/New_and_Noteworthy/3.1/3.1.html#Commands" label="Commands"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/3.1/3.1.html#Library" label="Library"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/3.1/3.1.html#Command_Line" label="Command Line"></topic>
 		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/3.0/Commands.html" label="Commands"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/3.0/Library.html" label="Library"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/3.0/Command-Line.html" label="Command Line"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/3.0/Performance-Improvements.html" label="Performance Improvements"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/3.0/API-Changes-and-Migration-Hints.html" label="API Changes and Migration Hints">
-			<topic href="help/JGit/New_and_Noteworthy/3.0/API-Changes-and-Migration-Hints.html#Internal_storage_API_moved_to_internal_packages" label="Internal storage API moved to internal packages"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/3.0/API-Changes-and-Migration-Hints.html#WindowCache_reconfiguration" label="WindowCache reconfiguration"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/3.0/API-Changes-and-Migration-Hints.html#FollowFilter_requires_DiffConfig" label="FollowFilter requires DiffConfig"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/3.0/API-Changes-and-Migration-Hints.html#Reflog_interfaces_moved" label="Reflog interfaces moved"></topic>
-		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/3.0/Bug-Fixes.html" label="Bug Fixes"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/3.0/Contributors.html" label="Contributors"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/3.0/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/3.1/Performance-Improvements.html" label="Performance Improvements"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/3.1/Build-and-Release-Engineering.html" label="Build and Release Engineering"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/3.1/Bug-Fixes.html" label="Bug Fixes"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/3.1/Contributors.html" label="Contributors"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/3.1/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>
