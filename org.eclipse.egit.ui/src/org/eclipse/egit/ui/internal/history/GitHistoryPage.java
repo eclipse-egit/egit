@@ -5,7 +5,7 @@
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2010-2012, Matthias Sohn <matthias.sohn@sap.com>
  * Copyright (C) 2012, Daniel megert <daniel_megert@ch.ibm.com>
- * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012-2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, François Rey <eclipse.org_@_francois_._rey_._name>
  *
  * All rights reserved. This program and the accompanying materials
@@ -1967,9 +1967,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	private void markStartRef(RevWalk walk, Ref ref) throws IOException,
 			IncorrectObjectTypeException {
 		try {
-			Object refTarget = walk.parseAny(ref.getLeaf().getObjectId());
-			if (refTarget instanceof RevCommit)
-				walk.markStart((RevCommit) refTarget);
+			RevObject refTarget = walk.parseAny(ref.getLeaf().getObjectId());
+			RevObject peeled = walk.peel(refTarget);
+			if (peeled instanceof RevCommit)
+				walk.markStart((RevCommit) peeled);
 		} catch (MissingObjectException e) {
 			// If there is a ref which points to Nirvana then we should simply
 			// ignore this ref. We should not let a corrupt ref cause that the

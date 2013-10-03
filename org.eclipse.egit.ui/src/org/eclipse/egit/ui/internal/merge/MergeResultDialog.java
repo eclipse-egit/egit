@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2012 Jens Baumgart <jens.baumgart@sap.com> and others.
+ * Copyright (C) 2010, 2013 Jens Baumgart <jens.baumgart@sap.com> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -117,7 +117,7 @@ public class MergeResultDialog extends Dialog {
 		resultLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false,
 				false));
 		Text resultText = new Text(composite, SWT.READ_ONLY);
-		resultText.setText(mergeResult.getMergeStatus().toString());
+		resultText.setText(getStatusText(mergeResult.getMergeStatus()));
 		resultText.setSelection(resultText.getCaretPosition());
 		resultText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		if (mergeResult.getMergeStatus() == MergeStatus.FAILED) {
@@ -251,6 +251,40 @@ public class MergeResultDialog extends Dialog {
 		};
 
 		return composite;
+	}
+
+	/**
+	 * @param mergeStatus
+	 * @return text describing merge status in short form
+	 */
+	public static String getStatusText(MergeStatus mergeStatus) {
+		switch (mergeStatus) {
+		case FAST_FORWARD:
+			return UIText.MergeResultDialog_StatusFastForward;
+		case FAST_FORWARD_SQUASHED:
+			return UIText.MergeResultDialog_StatusFastForwardSquashed;
+		case ALREADY_UP_TO_DATE:
+			return UIText.MergeResultDialog_StatusAlreadyUpToDate;
+		case FAILED:
+			return UIText.MergeResultDialog_StatusFailed;
+		case MERGED:
+			return UIText.MergeResultDialog_StatusMerged;
+		case MERGED_SQUASHED:
+			return UIText.MergeResultDialog_StatusMergedSquashed;
+		case MERGED_SQUASHED_NOT_COMMITTED:
+			return UIText.MergeResultDialog_StatusMergedSquashedNotCommitted;
+		case CONFLICTING:
+			return UIText.MergeResultDialog_StatusConflicting;
+		case ABORTED:
+			return UIText.MergeResultDialog_StatusAborted;
+		case MERGED_NOT_COMMITTED:
+			return UIText.MergeResultDialog_StatusMergedNotCommitted;
+		case NOT_SUPPORTED:
+			return UIText.MergeResultDialog_StatusNotSupported;
+		case CHECKOUT_CONFLICT:
+			return UIText.MergeResultDialog_StatusCheckoutConflict;
+		}
+		return mergeStatus.toString();
 	}
 
 	private RepositoryCommit[] getCommits(final ObjectId[] merges) {

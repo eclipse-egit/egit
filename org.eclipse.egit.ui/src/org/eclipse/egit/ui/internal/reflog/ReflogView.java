@@ -337,12 +337,8 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		service.addPostSelectionListener(selectionChangedListener);
 
 		// Use current selection to populate reflog view
-		ISelection selection = service.getSelection();
-		if (selection != null && !selection.isEmpty()) {
-			IWorkbenchPart part = site.getPage().getActivePart();
-			if (part != null)
-				selectionChangedListener.selectionChanged(part, selection);
-		}
+		UIUtils.notifySelectionChangedWithCurrentSelection(
+				selectionChangedListener, site);
 
 		site.setSelectionProvider(refLogTableTreeViewer);
 

@@ -58,6 +58,9 @@ public class CoreText extends NLS {
 	public static String CommitFileRevision_pathNotIn;
 
 	/** */
+	public static String CommitOperation_ParseCherryPickCommitFailed;
+
+	/** */
 	public static String CommitOperation_PerformingCommit;
 
 	/** */
@@ -359,6 +362,9 @@ public class CoreText extends NLS {
 
 	/** */
 	public static String GitProjectData_repositoryChangedTaskName;
+
+	/** */
+	public static String GitProjectData_UnmappingGoneResourceFailed;
 
 	/** */
 	public static String GitResourceVariantTreeSubscriber_fetchTaskName;

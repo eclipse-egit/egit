@@ -729,7 +729,31 @@ public class UIText extends NLS {
 	public static String RebaseResultDialog_StartMergeRadioText;
 
 	/** */
+	public static String RebaseResultDialog_StatusAborted;
+
+	/** */
+	public static String RebaseResultDialog_StatusConflicts;
+
+	/** */
+	public static String RebaseResultDialog_StatusFailed;
+
+	/** */
+	public static String RebaseResultDialog_StatusFastForward;
+
+	/** */
 	public static String RebaseResultDialog_StatusLabel;
+
+	/** */
+	public static String RebaseResultDialog_StatusNothingToCommit;
+
+	/** */
+	public static String RebaseResultDialog_StatusOK;
+
+	/** */
+	public static String RebaseResultDialog_StatusStopped;
+
+	/** */
+	public static String RebaseResultDialog_StatusUpToDate;
 
 	/** */
 	public static String RebaseResultDialog_Stopped;
@@ -3394,6 +3418,42 @@ public class UIText extends NLS {
 
 	/** */
 	public static String MergeResultDialog_result;
+
+	/** */
+	public static String MergeResultDialog_StatusAborted;
+
+	/** */
+	public static String MergeResultDialog_StatusAlreadyUpToDate;
+
+	/** */
+	public static String MergeResultDialog_StatusCheckoutConflict;
+
+	/** */
+	public static String MergeResultDialog_StatusConflicting;
+
+	/** */
+	public static String MergeResultDialog_StatusFailed;
+
+	/** */
+	public static String MergeResultDialog_StatusFastForward;
+
+	/** */
+	public static String MergeResultDialog_StatusFastForwardSquashed;
+
+	/** */
+	public static String MergeResultDialog_StatusMerged;
+
+	/** */
+	public static String MergeResultDialog_StatusMergedNotCommitted;
+
+	/** */
+	public static String MergeResultDialog_StatusMergedSquashed;
+
+	/** */
+	public static String MergeResultDialog_StatusMergedSquashedNotCommitted;
+
+	/** */
+	public static String MergeResultDialog_StatusNotSupported;
 
 	/** */
 	public static String MergeTargetSelectionDialog_ButtonMerge;

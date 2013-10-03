@@ -528,6 +528,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				compareWith(event);
 			}
 		});
+		enableAutoExpand(unstagedViewer);
 		addListenerToDisableAutoExpandOnCollapse(unstagedViewer);
 
 		Composite rebaseAndCommitComposite = toolkit.createComposite(horizontalSashForm);
@@ -799,6 +800,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				compareWith(event);
 			}
 		});
+		enableAutoExpand(stagedViewer);
 		addListenerToDisableAutoExpandOnCollapse(stagedViewer);
 
 		selectionChangedListener = new ISelectionListener() {
@@ -885,12 +887,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 		srv.addPostSelectionListener(selectionChangedListener);
 
 		// Use current selection to populate staging view
-		ISelection selection = srv.getSelection();
-		if (selection != null && !selection.isEmpty()) {
-			IWorkbenchPart part = site.getPage().getActivePart();
-			if (part != null)
-				selectionChangedListener.selectionChanged(part, selection);
-		}
+		UIUtils.notifySelectionChangedWithCurrentSelection(
+				selectionChangedListener, site);
 
 		site.setSelectionProvider(unstagedViewer);
 
@@ -1098,13 +1096,22 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		commitMessageText.setEnabled(enabled);
 		committerText.setEnabled(enabled);
-		authorText.setEnabled(enabled);
+		enableAuthorText(enabled);
 		refreshAction.setEnabled(enabled);
 		amendPreviousCommitAction.setEnabled(enabled);
 		signedOffByAction.setEnabled(enabled);
 		addChangeIdAction.setEnabled(enabled);
 		commitButton.setEnabled(enabled);
 		commitAndPushButton.setEnabled(enabled);
+	}
+
+	private void enableAuthorText(boolean enabled) {
+		if (currentRepository != null
+				&& currentRepository.getRepositoryState().equals(
+				RepositoryState.CHERRY_PICKING_RESOLVED))
+			authorText.setEnabled(false);
+		else
+			authorText.setEnabled(enabled);
 	}
 
 	private void updateToolbar() {
