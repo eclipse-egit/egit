@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2008 IBM Corporation and others.
+ * Copyright (c) 2004, 2013 IBM Corporation and others.
  * Copyright (C) 2007, Martin Oberhuber (martin.oberhuber@windriver.com)
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2009, Mykola Nikishov <mn@mn.com.ua>
@@ -22,6 +22,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -43,9 +44,19 @@ public class ProjectRecord {
 		projectSystemFile = file;
 		IPath path = new Path(projectSystemFile.getPath());
 		try {
-			description = ResourcesPlugin.getWorkspace()
-					.loadProjectDescription(path);
-			projectName = description.getName();
+			// If the file is in the default location, use the directory
+			// name as the project name. Otherwise we will get an error like
+			// "foo overlaps the location of another project foo" when importing
+			// in case the directory name and the name in .project do not match.
+			if (isDefaultLocation(path)) {
+				projectName = path.segment(path.segmentCount() - 2);
+				description = ResourcesPlugin.getWorkspace()
+						.newProjectDescription(projectName);
+			} else {
+				description = ResourcesPlugin.getWorkspace()
+						.loadProjectDescription(path);
+				projectName = description.getName();
+			}
 		} catch (CoreException e) {
 			description = null;
 			projectName = path.lastSegment();
@@ -97,4 +108,22 @@ public class ProjectRecord {
 	public String toString() {
 		return projectName;
 	}
+
+	/**
+	 * Returns whether the given project description file path is in the default
+	 * location for a project
+	 *
+	 * @param path
+	 *            The path to examine
+	 * @return Whether the given path is the default location for a project
+	 */
+	private boolean isDefaultLocation(IPath path) {
+		// The project description file must at least be within the project,
+		// which is within the workspace location
+		if (path.segmentCount() < 2)
+			return false;
+		return path.removeLastSegments(2).toFile()
+				.equals(Platform.getLocation().toFile());
+	}
+
 }
