@@ -28,6 +28,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jgit.api.RebaseCommand;
 import org.eclipse.jgit.api.RebaseCommand.Operation;
+import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.swt.widgets.Display;
@@ -110,9 +111,11 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 													dialogMessage);
 								}
 							});
-						else if (result.isOK())
+						else if (result.isOK()) {
 							RebaseResultDialog.show(rebase.getResult(),
 									repository);
+							repository.fireEvent(new RefsChangedEvent());
+						}
 					}
 				});
 	}
