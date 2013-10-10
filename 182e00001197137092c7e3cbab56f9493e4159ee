@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_ce8de6bd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-10-10T16:19:48Z",
+      "side": 1,
+      "message": "Should we maybe check with instanceof GitCompareFileRevisionEditorInput.EmptyTypedElement directly?",
+      "revId": "182e00001197137092c7e3cbab56f9493e4159ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
