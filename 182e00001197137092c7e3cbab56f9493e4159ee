@@ -16,6 +16,24 @@
       "revId": "182e00001197137092c7e3cbab56f9493e4159ee",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_df029f47",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-10-11T07:22:34Z",
+      "side": 1,
+      "message": "Yes. Actually, that\u0027s what I first had.",
+      "parentUuid": "8748d3a1_ce8de6bd",
+      "revId": "182e00001197137092c7e3cbab56f9493e4159ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
