@@ -85,6 +85,8 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.SHOW_HOME_DIR_WARNING, true);
 		store.setDefault(UIPreferences.SHOW_GIT_PREFIX_WARNING, true);
 		store.setDefault(UIPreferences.SHOW_DETACHED_HEAD_WARNING, true);
+		store.setDefault(UIPreferences.SHOW_RUNNING_LAUNCH_ON_CHECKOUT_WARNING,
+				true);
 
 
 		store.setDefault(UIPreferences.SYNC_VIEW_CHANGESET_LABEL_FORMAT,
