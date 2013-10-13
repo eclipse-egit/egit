@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -28,6 +28,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
+import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchCommitCommand;
 import org.eclipse.jface.resource.CompositeImageDescriptor;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -35,15 +36,11 @@ import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.StyledString;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
@@ -97,26 +94,8 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 		RepositoryTreeNode node = (RepositoryTreeNode) element;
 		RepositoryTreeNodeType type = node.getType();
 		if (type == RepositoryTreeNodeType.TAG) {
-			// determine if we have a lightweight tag and
-			// use the corresponding icon
-			RevObject any;
-			RevWalk walk = new RevWalk(node.getRepository());
-			try {
-				ObjectId id = node.getRepository().resolve(
-						((Ref) node.getObject()).getName());
-				if (id == null)
-					return null;
-				any = walk.parseAny(id);
-			} catch (MissingObjectException e) {
-				Activator.logError(e.getMessage(), e);
-				return null;
-			} catch (IOException e) {
-				Activator.logError(e.getMessage(), e);
-				return null;
-			} finally {
-				walk.release();
-			}
-			if (any instanceof RevTag)
+			TagNode tagNode = (TagNode) node;
+			if (tagNode.isAnnotated())
 				return decorateImage(annotatedTagImage, element);
 		} else if (type == RepositoryTreeNodeType.FILE) {
 			Object object = node.getObject();
@@ -189,18 +168,8 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 				} else if (refName.startsWith(Constants.R_TAGS)) {
 					// tag: HEAD would be on the commit id to which the tag is
 					// pointing
-					ObjectId id = node.getRepository().resolve(refName);
-					if (id == null)
-						return image;
-					RevWalk rw = new RevWalk(node.getRepository());
-					try {
-						compareString = rw.parseTag(id).getObject().name();
-					} catch (IncorrectObjectTypeException e) {
-						// Ref is a lightweight tag, not an annotated tag
-						compareString = id.name();
-					} finally {
-						rw.release();
-					}
+					TagNode tagNode = (TagNode) node;
+					compareString = tagNode.getCommitId();
 				} else if (refName.startsWith(Constants.R_REMOTES)) {
 					// remote branch: HEAD would be on the commit id to which
 					// the branch is pointing
@@ -232,7 +201,7 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 				return image;
 			}
 
-			if (compareString.equals(branchName)) {
+			if (compareString != null && compareString.equals(branchName)) {
 				return getDecoratedImage(image);
 			}
 
@@ -416,8 +385,6 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 				return dirString;
 
 			case REF:
-				// fall through
-			case TAG:
 				StyledString styled = null;
 				String nodeText = getSimpleText(node);
 				if (nodeText != null) {
@@ -434,6 +401,8 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 					}
 				}
 				return styled;
+			case TAG:
+				return getStyledTextForTag((TagNode) node);
 			case STASHED_COMMIT:
 				return getStyledTextForCommit((StashedCommitNode) node);
 			case PUSH:
@@ -477,6 +446,26 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 
 		return null;
 
+	}
+
+	private StyledString getStyledTextForTag(TagNode node) {
+		String tagText = getSimpleText(node);
+		if (tagText != null) {
+			StyledString styled = new StyledString(tagText);
+			if (verboseBranchMode) {
+				if (node.getCommitId() != null
+						&& node.getCommitId().length() > 0)
+					styled.append(' ')
+							.append(node.getCommitId().substring(0, 7),
+									StyledString.QUALIFIER_STYLER)
+							.append(' ')
+							.append(node.getCommitShortMessage(),
+									StyledString.QUALIFIER_STYLER);
+			}
+			return styled;
+		} else {
+			return null;
+		}
 	}
 
 	private String getSimpleText(RepositoryTreeNode node) {
