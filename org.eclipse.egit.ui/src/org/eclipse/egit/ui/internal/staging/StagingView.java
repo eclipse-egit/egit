@@ -834,6 +834,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		updateSectionText();
 		updateToolbar();
 		enableCommitWidgets(false);
+		refreshAction.setEnabled(false);
 
 		createPopupMenu(unstagedViewer);
 		createPopupMenu(stagedViewer);
@@ -1097,7 +1098,6 @@ public class StagingView extends ViewPart implements IShowInSource {
 		commitMessageText.setEnabled(enabled);
 		committerText.setEnabled(enabled);
 		enableAuthorText(enabled);
-		refreshAction.setEnabled(enabled);
 		amendPreviousCommitAction.setEnabled(enabled);
 		signedOffByAction.setEnabled(enabled);
 		addChangeIdAction.setEnabled(enabled);
@@ -1992,6 +1992,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		unstagedViewer.setInput(update);
 		stagedViewer.setInput(update);
 		enableCommitWidgets(false);
+		refreshAction.setEnabled(false);
 		updateSectionText();
 		form.setText(UIText.StagingView_NoSelectionTitle);
 	}
