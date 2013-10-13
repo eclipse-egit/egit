@@ -51,20 +51,14 @@ Warnings/Caveats
 - Symbolic links are not yet supported because they used to be
   unsupported by Java. Such links could be damaged.
 
-- Don't try the plugin with a JDK other than 1.6 (Java 6) unless you
-  are prepared to investigate problems yourself. JDK 1.5.0_11 and later
-  Java 5 versions *may* work. Earlier versions do not. JDK 1.4 is *not*
-  supported. Apple's Java 1.5.0_07 is reported to work acceptably. We
-  have no information about other vendors. Please report your findings
-  if you try.
-
 - CRLF conversion works for some things, but is in general still being
   worked on.
 
 Compatibility
 -------------
 
-- Eclipse 3.5.2 is the minimum Eclipse version for EGit 0.9 and later.
+- In general, EGit supports at least the latest two Eclipse releases.
+  For details, please see https://wiki.eclipse.org/EGit/FAQ
 
 - Newer version of EGit may implement new functionality, remove
   existing functions and change others without other notice than what
