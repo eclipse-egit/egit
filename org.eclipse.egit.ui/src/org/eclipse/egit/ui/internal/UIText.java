@@ -954,7 +954,16 @@ public class UIText extends NLS {
 	public static String CheckoutConflictDialog_conflictMessage;
 
 	/** */
-	public static String CheckoutDialog_Message;
+	public static String BranchSelectionAndEditDialog_Message;
+
+	/** */
+	public static String BranchSelectionAndEditDialog_Title;
+
+	/** */
+	public static String BranchSelectionAndEditDialog_WindowTitle;
+
+	/** */
+	public static String BranchSelectionAndEditDialog_OkClose;
 
 	/** */
 	public static String CheckoutDialog_OkCheckout;
@@ -964,9 +973,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CheckoutDialog_Title;
-
-	/** */
-	public static String CheckoutDialog_WindowTitle;
 
 	/** */
 	public static String CheckoutHandler_SelectBranchMessage;
@@ -2799,28 +2805,28 @@ public class UIText extends NLS {
 	public static String BranchResultDialog_DetachedHeadWarningDontShowAgain;
 
 	/** */
-	public static String CheckoutDialog_ErrorCouldNotCreateNewRef;
+	public static String BranchSelectionAndEditDialog_ErrorCouldNotCreateNewRef;
 
 	/** */
-	public static String CheckoutDialog_ErrorCouldNotDeleteRef;
+	public static String BranchSelectionAndEditDialog_ErrorCouldNotDeleteRef;
 
 	/** */
-	public static String CheckoutDialog_ErrorCouldNotRenameRef;
+	public static String BranchSelectionAndEditDialog_ErrorCouldNotRenameRef;
 
 	/** */
-	public static String CheckoutDialog_QuestionNewBranchTitle;
+	public static String BranchSelectionAndEditDialog_QuestionNewBranchTitle;
 
 	/** */
-	public static String CheckoutDialog_QuestionNewBranchNameMessage;
+	public static String BranchSelectionAndEditDialog_QuestionNewBranchNameMessage;
 
 	/** */
-	public static String CheckoutDialog_NewBranch;
+	public static String BranchSelectionAndEditDialog_NewBranch;
 
 	/** */
-	public static String CheckoutDialog_Rename;
+	public static String BranchSelectionAndEditDialog_Rename;
 
 	/** */
-	public static String CheckoutDialog_Delete;
+	public static String BranchSelectionAndEditDialog_Delete;
 
 	/** */
 	public static String CommitDialogPreferencePage_commitMessageHistory;
@@ -4805,6 +4811,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitScmUrlImportWizardPage_counter;
+
+	/** */
+	public static String BranchSelectionComponent_label;
+
+	/** */
+	public static String BranchSelectionComponent_select;
 
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);

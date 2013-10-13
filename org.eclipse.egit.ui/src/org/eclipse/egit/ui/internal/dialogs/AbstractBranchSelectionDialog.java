@@ -293,7 +293,7 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 						&& type != RepositoryTreeNodeType.ADDITIONALREF)
 					branchTree.setExpandedState(node,
 							!branchTree.getExpandedState(node));
-				else if (getButton(Window.OK).isEnabled())
+				else if (isOkButtonEnabled())
 					buttonPressed(OK);
 			}
 		});
@@ -324,7 +324,7 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		// complete after the dialog is first shown. If automatic selections
 		// happen after this (making the user inputs complete), the button will
 		// be enabled.
-		getButton(Window.OK).setEnabled(false);
+		setOkButtonEnabled(false);
 
 		List<RepositoryTreeNode> roots = new ArrayList<RepositoryTreeNode>();
 		if ((settings & SHOW_LOCAL_BRANCHES) != 0)
@@ -357,6 +357,30 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		} catch (IOException e) {
 			// ignore
 		}
+	}
+
+	/**
+	 * Enables the OK button. No-op in case Dialog#createButtonsForButtonBar has
+	 * been overridden and the button has not been created.
+	 *
+	 * @param enabled
+	 *
+	 * @see org.eclipse.jface.dialogs.Dialog#createButtonsForButtonBar(Composite)
+	 */
+	protected void setOkButtonEnabled(boolean enabled) {
+		if (getButton(Window.OK) != null)
+			getButton(Window.OK).setEnabled(enabled);
+	}
+
+	/**
+	 * Returns <code>true</code> if the OK button has been created and is
+	 * enabled.
+	 *
+	 * @return the OK button's enabled state or <code>false</code> if the button
+	 *         has not been created.
+	 */
+	protected boolean isOkButtonEnabled() {
+		return getButton(Window.OK) != null && getButton(Window.OK).isEnabled();
 	}
 
 	/**

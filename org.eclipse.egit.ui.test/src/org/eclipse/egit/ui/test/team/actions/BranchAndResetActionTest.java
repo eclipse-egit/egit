@@ -333,7 +333,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 				util.getPluginLocalizedValue("SwitchToMenu.label"),
 				UIText.SwitchToMenu_OtherMenuLabel };
 		ContextMenuHelper.clickContextMenu(projectExplorerTree, menuPath);
-		SWTBotShell dialog = bot.shell(UIText.CheckoutDialog_WindowTitle);
+		SWTBotShell dialog = bot.shell(UIText.BranchSelectionAndEditDialog_WindowTitle);
 		return dialog;
 	}
 
