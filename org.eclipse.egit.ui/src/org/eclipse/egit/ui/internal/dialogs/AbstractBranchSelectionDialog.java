@@ -37,6 +37,7 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -267,7 +268,8 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		FilteredTree tree = new FilteredTree(composite, selectionModel | SWT.BORDER,
 				new PatternFilter(), true);
 		branchTree = tree.getViewer();
-		branchTree.setLabelProvider(new RepositoriesViewLabelProvider());
+		branchTree.setLabelProvider(new DelegatingStyledCellLabelProvider(
+				new RepositoriesViewLabelProvider()));
 		branchTree.setContentProvider(new RepositoriesViewContentProvider());
 
 		GridDataFactory.fillDefaults().grab(true, true).hint(500, 300).applyTo(
