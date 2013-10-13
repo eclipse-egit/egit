@@ -2930,10 +2930,22 @@ public class UIText extends NLS {
 	public static String BranchOperationUI_CheckoutRemoteTrackingTitle;
 
 	/** */
+	public static String BranchOperationUI_Continue;
+
+	/** */
 	public static String BranchOperationUI_DetachedHeadTitle;
 
 	/** */
 	public static String BranchOperationUI_DetachedHeadMessage;
+
+	/** */
+	public static String BranchOperationUI_RunningLaunchDontShowAgain;
+
+	/** */
+	public static String BranchOperationUI_RunningLaunchMessage;
+
+	/** */
+	public static String BranchOperationUI_RunningLaunchTitle;
 
 	/** */
 	public static String BranchRenameDialog_Message;
@@ -3336,6 +3348,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String DialogsPreferencePage_RebaseCheckbox;
+
+	/** */
+	public static String DialogsPreferencePage_RunningLaunchOnCheckout;
 
 	/** */
 	public static String DialogsPreferencePage_ShowInitialConfigCheckbox;
