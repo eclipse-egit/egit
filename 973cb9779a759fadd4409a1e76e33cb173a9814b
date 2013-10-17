@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_59bca221",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-10-17T16:00:06Z",
+      "side": 1,
+      "message": "getLocation() may return null, please add a check.",
+      "revId": "973cb9779a759fadd4409a1e76e33cb173a9814b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
