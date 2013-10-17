@@ -75,8 +75,9 @@ public class CloneOperation {
 	 *            working directory to clone to. The directory may or may not
 	 *            already exist.
 	 * @param refName
-	 *            full name of ref to be checked out after clone, e.g.
-	 *            refs/heads/master, or null for no checkout
+	 *            name of tag or branch to be checked out after clone, e.g. full
+	 *            <code>refs/heads/master</code> or short <code>v3.1.0</code>,
+	 *            or null for no checkout
 	 * @param remoteName
 	 *            name of created remote config as source remote (typically
 	 *            named "origin").
