@@ -76,24 +76,24 @@ public class ProjectReferenceImporter {
 		for (final Map.Entry<URIish, Map<String, Set<ProjectReference>>> entry : repositories
 				.entrySet()) {
 			final URIish gitUrl = entry.getKey();
-			final Map<String, Set<ProjectReference>> branches = entry
+			final Map<String, Set<ProjectReference>> refs = entry
 					.getValue();
 
-			for (final Map.Entry<String, Set<ProjectReference>> branchEntry : branches
+			for (final Map.Entry<String, Set<ProjectReference>> refEntry : refs
 					.entrySet()) {
-				final String branch = branchEntry.getKey();
-				final Set<ProjectReference> projects = branchEntry.getValue();
+				final String refName = refEntry.getKey();
+				final Set<ProjectReference> projects = refEntry.getValue();
 
-				final Set<String> allBranches = branches.keySet();
+				final Set<String> allRefs = refs.keySet();
 
 				File repositoryPath = null;
-				if (allBranches.size() == 1)
+				if (allRefs.size() == 1)
 					repositoryPath = findConfiguredRepository(gitUrl);
 
 				if (repositoryPath == null) {
 					try {
-						IPath workDir = getWorkingDir(gitUrl, branch, branches.keySet());
-						repositoryPath = cloneIfNecessary(gitUrl, branch, workDir, projects, monitor);
+						IPath workDir = getWorkingDir(gitUrl, refName, refs.keySet());
+						repositoryPath = cloneIfNecessary(gitUrl, refName, workDir, projects, monitor);
 					} catch (final InterruptedException e) {
 						// was canceled by user
 						return Collections.emptyList();
@@ -112,7 +112,7 @@ public class ProjectReferenceImporter {
 		return importedProjects;
 	}
 
-	private static File cloneIfNecessary(final URIish gitUrl, final String branch, final IPath workDir,
+	private static File cloneIfNecessary(final URIish gitUrl, final String refToCheckout, final IPath workDir,
 			final Set<ProjectReference> projects, IProgressMonitor monitor) throws TeamException, InterruptedException {
 
 		final File repositoryPath = workDir.append(Constants.DOT_GIT_EXT).toFile();
@@ -131,9 +131,8 @@ public class ProjectReferenceImporter {
 		} else {
 			try {
 				int timeout = 60;
-				String refName = Constants.R_HEADS + branch;
 				final CloneOperation cloneOperation = new CloneOperation(
-						gitUrl, true, null, workDir.toFile(), refName,
+						gitUrl, true, null, workDir.toFile(), refToCheckout,
 						Constants.DEFAULT_REMOTE_NAME, timeout);
 				cloneOperation.run(monitor);
 
