@@ -10,6 +10,7 @@
 package org.eclipse.egit.core.test.op;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -53,14 +54,55 @@ public class CloneOperationTest extends DualRepositoryTestCase {
 		git.add().addFilepattern("file1.txt").call();
 
 		git.commit().setMessage("first commit").call();
+		git.tag().setName("tag").call();
+
+		file = new File(workdir, "file2.txt");
+		FileUtils.createNewFile(file);
+		git.add().addFilepattern("file2.txt").call();
+		git.commit().setMessage("second commit").call();
+		git.branchCreate().setName("dev").call();
+
+		file = new File(workdir, "file3.txt");
+		FileUtils.createNewFile(file);
+		git.add().addFilepattern("file3.txt").call();
+		git.commit().setMessage("third commit").call();
 	}
 
 	@Test
 	public void testClone() throws Exception {
+		String fullRefName = "refs/heads/master";
+		cloneAndAssert(fullRefName);
+
+		assertTrue(new File(workdir2, "file1.txt").exists());
+		assertTrue(new File(workdir2, "file2.txt").exists());
+		assertTrue(new File(workdir2, "file3.txt").exists());
+	}
+
+	@Test
+	public void testCloneBranch() throws Exception {
+		String branchName = "dev";
+		cloneAndAssert(branchName);
+
+		assertTrue(new File(workdir2, "file1.txt").exists());
+		assertTrue(new File(workdir2, "file2.txt").exists());
+		assertFalse(new File(workdir2, "file3.txt").exists());
+	}
+
+	@Test
+	public void testCloneTag() throws Exception {
+		String tagName = "tag";
+		cloneAndAssert(tagName);
+
+		assertTrue(new File(workdir2, "file1.txt").exists());
+		assertFalse(new File(workdir2, "file2.txt").exists());
+		assertFalse(new File(workdir2, "file3.txt").exists());
+	}
+
+	private void cloneAndAssert(String refName) throws Exception {
 		URIish uri = new URIish("file:///"
 				+ repository1.getRepository().getDirectory().toString());
 		CloneOperation clop = new CloneOperation(uri, true, null, workdir2,
-				"refs/heads/master", "origin", 0);
+				refName, "origin", 0);
 		clop.run(null);
 
 		Repository clonedRepo = FileRepositoryBuilder.create(new File(workdir2,
@@ -76,9 +118,6 @@ public class CloneOperationTest extends DualRepositoryTestCase {
 				clonedRepo.getConfig().getString(
 						ConfigConstants.CONFIG_REMOTE_SECTION, "origin",
 						"fetch"));
-
-		File file = new File(workdir2, "file1.txt");
-		assertTrue(file.exists());
 	}
 
 	@Test
