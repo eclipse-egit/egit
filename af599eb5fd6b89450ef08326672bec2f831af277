@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_327a8861",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CloneOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-18T06:40:05Z",
+      "side": 1,
+      "message": "s/tag or branch/ref (usually tag or branch)/\n\nusually refs are tags or branches but it\u0027s possible to have refs in another namespace e.g. refs/changes and refs/meta/config used in Gerrit",
+      "revId": "af599eb5fd6b89450ef08326672bec2f831af277",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
