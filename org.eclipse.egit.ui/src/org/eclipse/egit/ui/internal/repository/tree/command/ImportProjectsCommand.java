@@ -14,10 +14,12 @@ import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.clone.GitCreateProjectViaWizardWizard;
 import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
@@ -63,7 +65,13 @@ public class ImportProjectsCommand extends
 
 		WizardDialog dlg = new WizardDialog(
 				getShell(event),
-				new GitCreateProjectViaWizardWizard(node.getRepository(), path));
+				new GitCreateProjectViaWizardWizard(node.getRepository(), path)) {
+			@Override
+			protected IDialogSettings getDialogBoundsSettings() {
+				// preserve dialog bounds
+				return Activator.getDefault().getDialogSettings();
+			}
+		};
 		dlg.setHelpAvailable(false);
 		dlg.open();
 
