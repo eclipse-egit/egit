@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_b244d81e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-18T09:10:04Z",
+      "side": 1,
+      "message": "s/either tag or branch/any ref (usually tag or branch)/",
+      "revId": "2efe0e3301b7be4f63411253338434a791e61d53",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
