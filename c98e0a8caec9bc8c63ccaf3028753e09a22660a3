@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_0b0bcd30",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-18T21:55:09Z",
+      "side": 1,
+      "message": "remove this unrelated formatting change",
+      "revId": "c98e0a8caec9bc8c63ccaf3028753e09a22660a3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_2be7a9d1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-18T21:55:09Z",
+      "side": 1,
+      "message": "I think instead of creating a new class ImportProjectsWizardDialog this should be inlined as an anonymous class since it\u0027s only used in this single place and just overrides a single method:\n\n \t\tWizardDialog dlg \u003d new WizardDialog(getShell(event),\n\t\t\t\tnew GitCreateProjectViaWizardWizard(node.getRepository(), path)) {\n\t\t\t@Override\n\t\t\tprotected IDialogSettings getDialogBoundsSettings() {\n\t\t\t\treturn Activator.getDefault().getDialogSettings();\n\t\t\t}\n\t\t};",
+      "revId": "c98e0a8caec9bc8c63ccaf3028753e09a22660a3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_2b51692d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportProjectsWizardDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-18T21:55:09Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "c98e0a8caec9bc8c63ccaf3028753e09a22660a3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_0b4e2d90",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportProjectsWizardDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-18T21:55:09Z",
+      "side": 1,
+      "message": "style nit: remove unnecessary blank lines",
+      "revId": "c98e0a8caec9bc8c63ccaf3028753e09a22660a3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_6b47f172",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportProjectsWizardDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-18T21:55:09Z",
+      "side": 1,
+      "message": "we don\u0027t use author tags",
+      "revId": "c98e0a8caec9bc8c63ccaf3028753e09a22660a3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
