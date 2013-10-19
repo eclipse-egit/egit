@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2012 SAP AG and others.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -36,7 +36,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
@@ -46,7 +45,6 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTableItem;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarToggleButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -60,8 +58,6 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 
 	private static final String ADDEDMESSAGE = "A new file in a new folder";
 
-	private static SWTBotPerspective perspective;
-
 	private static int commitCount;
 
 	private static File repoFile;
@@ -70,8 +66,6 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 	public static void setup() throws Exception {
 		// File repoFile =
 		repoFile = createProjectAndCommitToRepository();
-		perspective = bot.activePerspective();
-		bot.perspectiveById("org.eclipse.pde.ui.PDEPerspective").activate();
 		IProject prj = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(PROJ1);
 		IFolder folder2 = prj.getFolder(SECONDFOLDER);
@@ -83,11 +77,6 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		addAndCommit(addedFile, ADDEDMESSAGE);
 		// TODO count the commits
 		commitCount = 3;
-	}
-
-	@AfterClass
-	public static void shutdown() {
-		perspective.activate();
 	}
 
 	@Test
@@ -242,8 +231,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 	 * @throws Exception
 	 */
 	private SWTBotTable getHistoryViewTable(String... path) throws Exception {
-		SWTBotTree projectExplorerTree = bot
-				.viewById("org.eclipse.jdt.ui.PackageExplorer").bot().tree();
+		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
 		TestUtil testUtil = new TestUtil();
 		SWTBotTreeItem explorerItem;
 		SWTBotTreeItem projectItem = getProjectItem(projectExplorerTree, path[0]);

@@ -37,7 +37,6 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.utils.TableCollection;
@@ -408,44 +407,32 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 	public void testLinkWithSelectionNavigator() throws Exception {
 		deleteAllProjects();
 		shareProjects(repositoryFile);
-		SWTBotPerspective perspective = null;
-		try {
-			perspective = bot.activePerspective();
-			bot.perspectiveById("org.eclipse.ui.resourcePerspective")
-					.activate();
-			SWTBotTree tree = getOrOpenView().bot().tree();
-			myRepoViewUtil.getRootItem(tree, repositoryFile).select();
-			// the selection should be root
-			assertTrue(tree.selection().get(0, 0).startsWith(REPO1));
+		SWTBotTree tree = getOrOpenView().bot().tree();
+		myRepoViewUtil.getRootItem(tree, repositoryFile).select();
+		// the selection should be root
+		assertTrue(tree.selection().get(0, 0).startsWith(REPO1));
 
-			SWTBotTree projectExplorerTree = bot.viewById(
-					"org.eclipse.ui.navigator.ProjectExplorer").bot().tree();
-			getProjectItem(projectExplorerTree, PROJ1).select();
+		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
+		getProjectItem(projectExplorerTree, PROJ1).select();
 
-			// the selection should be still be root
-			assertTrue(tree.selection().get(0, 0).startsWith(REPO1));
+		// the selection should be still be root
+		assertTrue(tree.selection().get(0, 0).startsWith(REPO1));
 
-			// activate the link with selection
-			toggleLinkWithSelection();
+		// activate the link with selection
+		toggleLinkWithSelection();
 
-			// the selection should be still be root
-			assertTrue(tree.selection().get(0, 0).startsWith(REPO1));
+		// the selection should be still be root
+		assertTrue(tree.selection().get(0, 0).startsWith(REPO1));
 
-			// select again the project
-			projectExplorerTree = bot.viewById(
-					"org.eclipse.ui.navigator.ProjectExplorer").bot().tree();
-			getProjectItem(projectExplorerTree, PROJ1).select();
+		// select again the project
+		projectExplorerTree = TestUtil.getExplorerTree();
+		getProjectItem(projectExplorerTree, PROJ1).select();
 
-			// the selection should be project
-			assertTrue(tree.selection().get(0, 0).equals(PROJ1));
+		// the selection should be project
+		assertTrue(tree.selection().get(0, 0).equals(PROJ1));
 
-			// deactivate the link with selection
-			toggleLinkWithSelection();
-
-		} finally {
-			if (perspective != null)
-				perspective.activate();
-		}
+		// deactivate the link with selection
+		toggleLinkWithSelection();
 	}
 
 	/**
@@ -458,91 +445,80 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 	public void testLinkWithSelectionEditor() throws Exception {
 		deleteAllProjects();
 		shareProjects(repositoryFile);
-		SWTBotPerspective perspective = null;
-		try {
-			perspective = bot.activePerspective();
-			bot.perspectiveById("org.eclipse.ui.resourcePerspective")
-					.activate();
-			SWTBotTree tree = getOrOpenView().bot().tree();
-			myRepoViewUtil.getRootItem(tree, repositoryFile).select();
-			// the selection should be root
-			assertTrue(tree.selection().get(0, 0).startsWith(REPO1));
+		SWTBotTree tree = getOrOpenView().bot().tree();
+		myRepoViewUtil.getRootItem(tree, repositoryFile).select();
+		// the selection should be root
+		assertTrue(tree.selection().get(0, 0).startsWith(REPO1));
 
-			SWTBotView view = bot
-					.viewById("org.eclipse.ui.navigator.ProjectExplorer");
-			SWTBotTree projectExplorerTree = view.bot().tree();
+		SWTBotView view = TestUtil.showExplorerView();
+		SWTBotTree projectExplorerTree = view.bot().tree();
 
-			SWTBotTreeItem item = getProjectItem(projectExplorerTree, PROJ1)
-					.expand().getNode(FOLDER).expand().getNode(FILE1);
-			view.show();
-			item.doubleClick();
+		SWTBotTreeItem item = getProjectItem(projectExplorerTree, PROJ1)
+				.expand().getNode(FOLDER).expand().getNode(FILE1);
+		view.show();
+		item.doubleClick();
 
-			item = getProjectItem(projectExplorerTree, PROJ1).expand().getNode(
-					FOLDER).expand().getNode(FILE2);
-			view.show();
-			item.doubleClick();
-			// now we should have two editors
+		item = getProjectItem(projectExplorerTree, PROJ1).expand()
+				.getNode(FOLDER).expand().getNode(FILE2);
+		view.show();
+		item.doubleClick();
+		// now we should have two editors
 
-			// the selection should be still be root
-			assertTrue(tree.selection().get(0, 0).startsWith(REPO1));
+		// the selection should be still be root
+		assertTrue(tree.selection().get(0, 0).startsWith(REPO1));
 
-			// activate the link with selection
-			toggleLinkWithSelection();
+		// activate the link with selection
+		toggleLinkWithSelection();
 
-			bot.editorByTitle(FILE2).show();
-			// the selection should have changed to the latest editor
-			TestUtil.waitUntilTreeHasSelectedNodeWithText(bot, tree, FILE2, 10000);
+		bot.editorByTitle(FILE2).show();
+		// the selection should have changed to the latest editor
+		TestUtil.waitUntilTreeHasSelectedNodeWithText(bot, tree, FILE2, 10000);
 
-			bot.editorByTitle(FILE1).show();
-			// selection should have changed
-			TestUtil.waitUntilTreeHasSelectedNodeWithText(bot, tree, FILE1, 10000);
+		bot.editorByTitle(FILE1).show();
+		// selection should have changed
+		TestUtil.waitUntilTreeHasSelectedNodeWithText(bot, tree, FILE1, 10000);
 
-			// deactivate the link with editor
-			toggleLinkWithSelection();
+		// deactivate the link with editor
+		toggleLinkWithSelection();
 
-			bot.editorByTitle(FILE2).show();
-			// the selection should be still be test.txt
-			TestUtil.waitUntilTreeHasSelectedNodeWithText(bot, tree, FILE1, 10000);
+		bot.editorByTitle(FILE2).show();
+		// the selection should be still be test.txt
+		TestUtil.waitUntilTreeHasSelectedNodeWithText(bot, tree, FILE1, 10000);
 
-			bot.editorByTitle(FILE1).show();
+		bot.editorByTitle(FILE1).show();
 
-			myRepoViewUtil.getWorkdirItem(tree, repositoryFile).expand()
-					.getNode(PROJ1).expand().getNode(FOLDER).expand().getNode(
-							FILE2).select();
+		myRepoViewUtil.getWorkdirItem(tree, repositoryFile).expand()
+				.getNode(PROJ1).expand().getNode(FOLDER).expand()
+				.getNode(FILE2).select();
 
-			// the editor should still be test.txt
-			assertEquals(FILE1, bot.activeEditor().getTitle());
+		// the editor should still be test.txt
+		assertEquals(FILE1, bot.activeEditor().getTitle());
 
-			// activate again
-			toggleLinkWithSelection();
+		// activate again
+		toggleLinkWithSelection();
 
-			// make sure focus is here
-			// tried to remove this waitInUI but failed.
-			// tried setting focus, waiting for focus, joining RepositoriesView
-			// refresh job
-			waitInUI();
-			myRepoViewUtil.getWorkdirItem(tree, repositoryFile).expand()
-					.getNode(PROJ1).expand().getNode(FOLDER).expand().getNode(
-							FILE2).select();
-			TestUtil.waitUntilEditorIsActive(bot, bot.editorByTitle(FILE2), 10000);
+		// make sure focus is here
+		// tried to remove this waitInUI but failed.
+		// tried setting focus, waiting for focus, joining RepositoriesView
+		// refresh job
+		waitInUI();
+		myRepoViewUtil.getWorkdirItem(tree, repositoryFile).expand()
+				.getNode(PROJ1).expand().getNode(FOLDER).expand()
+				.getNode(FILE2).select();
+		TestUtil.waitUntilEditorIsActive(bot, bot.editorByTitle(FILE2), 10000);
 
-			myRepoViewUtil.getWorkdirItem(tree, repositoryFile).expand()
-					.getNode(PROJ1).expand().getNode(FOLDER).expand().getNode(
-							FILE1).select();
-			TestUtil.waitUntilEditorIsActive(bot, bot.editorByTitle(FILE1), 10000);
+		myRepoViewUtil.getWorkdirItem(tree, repositoryFile).expand()
+				.getNode(PROJ1).expand().getNode(FOLDER).expand()
+				.getNode(FILE1).select();
+		TestUtil.waitUntilEditorIsActive(bot, bot.editorByTitle(FILE1), 10000);
 
-			// deactivate the link with editor
-			toggleLinkWithSelection();
+		// deactivate the link with editor
+		toggleLinkWithSelection();
 
-			myRepoViewUtil.getWorkdirItem(tree, repositoryFile).expand()
-					.getNode(PROJ1).expand().getNode(FOLDER).expand().getNode(
-							FILE2).select();
-			TestUtil.waitUntilEditorIsActive(bot, bot.editorByTitle(FILE1), 10000);
-
-		} finally {
-			if (perspective != null)
-				perspective.activate();
-		}
+		myRepoViewUtil.getWorkdirItem(tree, repositoryFile).expand()
+				.getNode(PROJ1).expand().getNode(FOLDER).expand()
+				.getNode(FILE2).select();
+		TestUtil.waitUntilEditorIsActive(bot, bot.editorByTitle(FILE1), 10000);
 	}
 
 	@Test

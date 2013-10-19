@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2012 SAP AG and others.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -20,35 +20,24 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * Tests for the Team->Fetch and Team->Merge actions
+ * Tests for the Team->Share Project... and Team->Disconnect actions
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class DisconnectConnectTest extends LocalRepositoryTestCase {
 
-	private static SWTBotPerspective perspective;
-
 	@BeforeClass
 	public static void setup() throws Exception {
 		createProjectAndCommitToRepository();
-		perspective = bot.activePerspective();
-		bot.perspectiveById("org.eclipse.pde.ui.PDEPerspective").activate();
-		waitInUI();
-	}
-
-	@AfterClass
-	public static void shutdown() {
-		perspective.activate();
 	}
 
 	@Test
@@ -78,8 +67,7 @@ public class DisconnectConnectTest extends LocalRepositoryTestCase {
 	}
 
 	private void clickOnDisconnect() throws Exception {
-		SWTBotTree projectExplorerTree = bot.viewById(
-				"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
+		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
 		getProjectItem(projectExplorerTree, PROJ1).select();
 		String menuString = util
 				.getPluginLocalizedValue("DisconnectAction_label");
@@ -88,8 +76,7 @@ public class DisconnectConnectTest extends LocalRepositoryTestCase {
 	}
 
 	private SWTBotShell openConnectDialog() throws Exception {
-		SWTBotTree projectExplorerTree = bot.viewById(
-				"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
+		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
 		getProjectItem(projectExplorerTree, PROJ1).select();
 		String menuString = "Share Project...";
 		ContextMenuHelper.clickContextMenu(projectExplorerTree, "Team",

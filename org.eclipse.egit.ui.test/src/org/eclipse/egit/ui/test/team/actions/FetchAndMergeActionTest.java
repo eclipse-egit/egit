@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2012 SAP AG and others.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -26,6 +26,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RemoteTrackingNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.JobJoiner;
+import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.ConfigConstants;
@@ -35,11 +36,9 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,8 +52,6 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 
 	private static File childRepositoryFile;
 
-	private static SWTBotPerspective perspective;
-
 	private static String REMOTE_BRANCHES;
 
 	private static String LOCAL_BRANCHES;
@@ -63,8 +60,6 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 	public static void setup() throws Exception {
 		repositoryFile = createProjectAndCommitToRepository();
 		childRepositoryFile = createChildRepository(repositoryFile);
-		perspective = bot.activePerspective();
-		bot.perspectiveById("org.eclipse.pde.ui.PDEPerspective").activate();
 		RepositoriesViewLabelProvider provider = GitRepositoriesViewTestUtils
 				.createLabelProvider();
 		Repository repo = lookupRepository(childRepositoryFile);
@@ -72,11 +67,6 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 				new RepositoryNode(null, repo), repo));
 		LOCAL_BRANCHES = provider.getText(new LocalNode(new RepositoryNode(
 				null, repo), repo));
-	}
-
-	@AfterClass
-	public static void shutdown() {
-		perspective.activate();
 	}
 
 	private String prepare() throws Exception {
@@ -188,8 +178,7 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 	}
 
 	private SWTBotShell openFetchDialog() throws Exception {
-		SWTBotTree projectExplorerTree = bot.viewById(
-				"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
+		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
 		getProjectItem(projectExplorerTree, PROJ1).select();
 		String menuString = util.getPluginLocalizedValue("FetchAction_label");
 		String submenuString = util
@@ -201,8 +190,7 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 	}
 
 	private SWTBotShell openMergeDialog() throws Exception {
-		SWTBotTree projectExplorerTree = bot.viewById(
-				"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
+		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
 		getProjectItem(projectExplorerTree, PROJ1).select();
 		String menuString = util.getPluginLocalizedValue("MergeAction_label");
 		ContextMenuHelper.clickContextMenu(projectExplorerTree, "Team",
@@ -215,8 +203,7 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 	}
 
 	private SWTBotShell openCreateBranchDialog() {
-		SWTBotTree projectExplorerTree = bot
-				.viewById("org.eclipse.jdt.ui.PackageExplorer").bot().tree();
+		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
 		getProjectItem(projectExplorerTree, PROJ1).select();
 		String[] menuPath = new String[] {
 				util.getPluginLocalizedValue("TeamMenu.label"),
@@ -229,8 +216,7 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 	}
 
 	private void checkoutBranch(String branchToCheckout) {
-		SWTBotTree projectExplorerTree = bot
-				.viewById("org.eclipse.jdt.ui.PackageExplorer").bot().tree();
+		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
 		getProjectItem(projectExplorerTree, PROJ1).select();
 		String[] menuPath = new String[] {
 				util.getPluginLocalizedValue("TeamMenu.label"),

@@ -76,8 +76,7 @@ public class MergeToolTest extends LocalRepositoryTestCase {
 		cache.getIndexDiffCacheEntry(testRepository.getRepository());
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
-		SWTBotTree packageExplorer = bot
-				.viewById("org.eclipse.jdt.ui.PackageExplorer").bot().tree();
+		SWTBotTree packageExplorer = TestUtil.getExplorerTree();
 		SWTBotTreeItem project1 = getProjectItem(packageExplorer, PROJ1)
 				.select();
 
