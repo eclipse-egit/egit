@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -56,7 +56,6 @@ import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.utils.TableCollection;
@@ -69,7 +68,6 @@ import org.eclipse.swtbot.swt.finder.widgets.TimeoutException;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE.SharedImages;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -82,8 +80,6 @@ import org.junit.runner.RunWith;
 public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 	private static File repositoryFile;
 
-	private static SWTBotPerspective perspective;
-
 	private static String LOCAL_BRANCHES;
 
 	private static String TAGS;
@@ -92,8 +88,6 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 	public static void setup() throws Exception {
 		repositoryFile = createProjectAndCommitToRepository();
 		Repository repo = lookupRepository(repositoryFile);
-		perspective = bot.activePerspective();
-		bot.perspectiveById("org.eclipse.pde.ui.PDEPerspective").activate();
 
 		TagBuilder tag = new TagBuilder();
 		tag.setTag("SomeTag");
@@ -112,11 +106,6 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		TAGS = provider.getText(new TagsNode(new RepositoryNode(null, repo),
 				repo));
 		waitInUI();
-	}
-
-	@AfterClass
-	public static void shutdown() {
-		perspective.activate();
 	}
 
 	@Before
@@ -325,8 +314,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 	}
 
 	private SWTBotShell openCheckoutBranchDialog() {
-		SWTBotTree projectExplorerTree = bot.viewById(
-				"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
+		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
 		getProjectItem(projectExplorerTree, PROJ1).select();
 		String[] menuPath = new String[] {
 				util.getPluginLocalizedValue("TeamMenu.label"),
@@ -338,8 +326,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 	}
 
 	private SWTBotShell openCreateBranchDialog() {
-			SWTBotTree projectExplorerTree = bot.viewById(
-					"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
+		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
 			getProjectItem(projectExplorerTree, PROJ1).select();
 			String[] menuPath = new String[] {
 					util.getPluginLocalizedValue("TeamMenu.label"),
@@ -352,8 +339,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		}
 
 	private SWTBotShell openRenameBranchDialog() {
-		SWTBotTree projectExplorerTree = bot.viewById(
-				"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
+		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
 		getProjectItem(projectExplorerTree, PROJ1).select();
 		String[] menuPath = new String[] {
 				util.getPluginLocalizedValue("TeamMenu.label"),
@@ -365,8 +351,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 	}
 
 	private SWTBotShell openDeleteBranchDialog() {
-		SWTBotTree projectExplorerTree = bot.viewById(
-				"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
+		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
 		getProjectItem(projectExplorerTree, PROJ1).select();
 		String[] menuPath = new String[] {
 				util.getPluginLocalizedValue("TeamMenu.label"),
@@ -378,8 +363,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 	}
 
 	private SWTBotShell openResetDialog() {
-		SWTBotTree projectExplorerTree = bot.viewById(
-				"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
+		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
 		getProjectItem(projectExplorerTree, PROJ1).select();
 		String menuString = util.getPluginLocalizedValue("ResetAction_label");
 		ContextMenuHelper.clickContextMenu(projectExplorerTree, util

@@ -534,4 +534,9 @@ public class TestUtil {
 	public static SWTBotView showExplorerView() {
 		return showView("org.eclipse.jdt.ui.PackageExplorer");
 	}
+
+	public static SWTBotTree getExplorerTree() {
+		SWTBotView view = showExplorerView();
+		return view.bot().tree();
+	}
 }

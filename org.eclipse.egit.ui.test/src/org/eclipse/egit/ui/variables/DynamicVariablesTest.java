@@ -25,6 +25,7 @@ import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.common.EGitTestCase;
+import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.api.Git;
@@ -32,6 +33,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.util.FileUtils;
+import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.ui.PlatformUI;
@@ -172,7 +174,10 @@ public class DynamicVariablesTest extends EGitTestCase {
 			String argument) throws CoreException {
 		IResource findMember = project.findMember(TEST_FILE);
 
-		final ISelectionProvider selectionProvider = bot.viewByTitle("Package Explorer").getViewReference().getView(true).getSite().getSelectionProvider();
+		SWTBotView explorerView = TestUtil.showExplorerView();
+		final ISelectionProvider selectionProvider = explorerView
+				.getViewReference().getView(true).getSite()
+				.getSelectionProvider();
 		final StructuredSelection structuredSelection = new StructuredSelection(
 				findMember);
 		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {

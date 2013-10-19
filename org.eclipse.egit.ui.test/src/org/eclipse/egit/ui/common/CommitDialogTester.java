@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Jens Baumgart <jens.baumgart@sap.com>
+ * Copyright (C) 2011, 2013 Jens Baumgart <jens.baumgart@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -52,10 +52,9 @@ public class CommitDialogTester {
 		commitDialog = dialogShell;
 	}
 
-	public static CommitDialogTester openCommitDialog(String projectName)
-			throws Exception {
+	public static CommitDialogTester openCommitDialog(String projectName) {
+		clickCommitAction(projectName);
 		SWTWorkbenchBot workbenchBot = new SWTWorkbenchBot();
-		openCommitDialog(projectName, workbenchBot);
 		SWTBotShell shell = workbenchBot
 				.shell(UIText.CommitDialog_CommitChanges);
 		return new CommitDialogTester(shell);
@@ -63,16 +62,14 @@ public class CommitDialogTester {
 
 	public static NoFilesToCommitPopup openCommitDialogExpectNoFilesToCommit(
 			String projectName) throws Exception {
+		clickCommitAction(projectName);
 		SWTWorkbenchBot workbenchBot = new SWTWorkbenchBot();
-		openCommitDialog(projectName, workbenchBot);
 		return new NoFilesToCommitPopup(
 				workbenchBot.shell(UIText.CommitAction_noFilesToCommit));
 	}
 
-	private static void openCommitDialog(String projectName,
-			SWTWorkbenchBot workbenchBot) {
-		SWTBotTree projectExplorerTree = workbenchBot
-				.viewById("org.eclipse.jdt.ui.PackageExplorer").bot().tree();
+	private static void clickCommitAction(String projectName) {
+		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
 		util.getProjectItems(projectExplorerTree, projectName)[0].select();
 		String menuString = util.getPluginLocalizedValue("CommitAction_label");
 		ContextMenuHelper.clickContextMenu(projectExplorerTree, "Team",
