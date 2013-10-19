@@ -23,7 +23,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.ResetOperation;
 import org.eclipse.egit.core.op.TagOperation;
 import org.eclipse.egit.ui.Activator;
@@ -56,7 +55,6 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.team.internal.ui.TeamUIPlugin;
 import org.eclipse.team.ui.synchronize.ISynchronizeManager;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -65,13 +63,13 @@ import org.junit.runner.RunWith;
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class CompareActionsTest extends LocalRepositoryTestCase {
-	private static File repositoryFile;
+	private File repositoryFile;
 
 	private static String TAGS;
 	private static ObjectId commitOfTag;
 
-	@BeforeClass
-	public static void setup() throws Exception {
+	@Before
+	public void setup() throws Exception {
 		repositoryFile = createProjectAndCommitToRepository();
 		Repository repo = lookupRepository(repositoryFile);
 
@@ -94,7 +92,6 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		// null, repo), repo));
 		TAGS = provider.getText(new TagsNode(new RepositoryNode(null, repo),
 				repo));
-		waitInUI();
 	}
 
 	@SuppressWarnings("restriction")
@@ -104,15 +101,6 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 				.setValue(SYNCHRONIZING_COMPLETE_PERSPECTIVE, NEVER);
 		Activator.getDefault().getPreferenceStore()
 				.setValue(UIPreferences.SYNC_VIEW_FETCH_BEFORE_LAUNCH, false);
-	}
-
-	@Before
-	public void prepare() throws Exception {
-		Repository repo = lookupRepository(repositoryFile);
-		if (!repo.getBranch().equals("master")) {
-			BranchOperation bop = new BranchOperation(repo, "refs/heads/master");
-			bop.execute(null);
-		}
 	}
 
 	@Test

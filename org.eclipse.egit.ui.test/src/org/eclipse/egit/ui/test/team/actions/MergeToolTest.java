@@ -33,7 +33,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -49,12 +48,6 @@ public class MergeToolTest extends LocalRepositoryTestCase {
 		File repositoryFile = createProjectAndCommitToRepository();
 		Repository repository = lookupRepository(repositoryFile);
 		testRepository = new TestRepository<Repository>(repository);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		deleteAllProjects();
-		shutDownRepositories();
 	}
 
 	@Test

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -28,7 +28,6 @@ import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTag;
@@ -38,7 +37,6 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -49,33 +47,19 @@ import org.junit.runner.RunWith;
 public class GitRepositoriesViewTagHandlingTest extends
 		GitRepositoriesViewTestBase {
 
-	private static File repositoryFile;
+	private File repositoryFile;
 
 	private Repository repository;
 
 	private RevWalk revWalk;
 
-	@BeforeClass
-	public static void beforeClass() throws Exception {
+	@Before
+	public void beforeClass() throws Exception {
 		setVerboseBranchMode(false);
 		repositoryFile = createProjectAndCommitToRepository();
 		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
 				repositoryFile);
-	}
-
-	@Before
-	public void before() throws Exception {
 		repository = lookupRepository(repositoryFile);
-		for (String ref : repository.getTags().keySet()) {
-			RefUpdate op = repository.updateRef(ref, true);
-			op.setRefLogMessage("tag deleted", //$NON-NLS-1$
-					false);
-			// we set the force update in order
-			// to avoid having this rejected
-			// due to minor issues
-			op.setForceUpdate(true);
-			op.delete();
-		}
 		revWalk = new RevWalk(repository);
 	}
 

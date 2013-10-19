@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2011 GitHub Inc.
+ *  Copyright (c) 2011, 2013 GitHub Inc and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -32,7 +32,7 @@ import org.eclipse.swtbot.swt.finder.results.Result;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -41,13 +41,12 @@ import org.junit.Test;
 @SuppressWarnings("restriction")
 public class CommitSearchDialogTest extends LocalRepositoryTestCase {
 
-	private static Repository repository;
+	private Repository repository;
 
-	private static RevCommit commit;
+	private RevCommit commit;
 
-	@BeforeClass
-	public static void setup() throws Exception {
-		closeWelcomePage();
+	@Before
+	public void setup() throws Exception {
 		File repoFile = createProjectAndCommitToRepository();
 		assertNotNull(repoFile);
 		repository = Activator.getDefault().getRepositoryCache()

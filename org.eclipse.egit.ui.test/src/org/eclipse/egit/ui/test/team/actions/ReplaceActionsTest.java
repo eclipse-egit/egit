@@ -21,7 +21,6 @@ import java.util.TimeZone;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.TagOperation;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
@@ -41,7 +40,6 @@ import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -50,12 +48,12 @@ import org.junit.runner.RunWith;
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class ReplaceActionsTest extends LocalRepositoryTestCase {
-	private static File repositoryFile;
+	private File repositoryFile;
 
 	private static ObjectId commitOfTag;
 
-	@BeforeClass
-	public static void setup() throws Exception {
+	@Before
+	public void setup() throws Exception {
 		repositoryFile = createProjectAndCommitToRepository();
 		Repository repo = lookupRepository(repositoryFile);
 
@@ -69,16 +67,6 @@ public class ReplaceActionsTest extends LocalRepositoryTestCase {
 		TagOperation top = new TagOperation(repo, tag, false);
 		top.execute(null);
 		touchAndSubmit(null);
-		waitInUI();
-	}
-
-	@Before
-	public void prepare() throws Exception {
-		Repository repo = lookupRepository(repositoryFile);
-		if (!repo.getBranch().equals("master")) {
-			BranchOperation bop = new BranchOperation(repo, "refs/heads/master");
-			bop.execute(null);
-		}
 	}
 
 	@Test

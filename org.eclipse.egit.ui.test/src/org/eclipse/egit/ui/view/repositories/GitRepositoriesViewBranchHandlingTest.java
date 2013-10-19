@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2012 SAP AG and others.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -41,7 +41,6 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.URIish;
-import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
@@ -49,7 +48,6 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -88,18 +86,6 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		repositoryUtil.addConfiguredRepository(repositoryFile);
 		repositoryUtil.addConfiguredRepository(remoteRepositoryFile);
 		repositoryUtil.addConfiguredRepository(clonedRepositoryFile);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		deleteAllProjects();
-		shutDownRepositories();
-		FileUtils.delete(repositoryFile.getParentFile(), FileUtils.RECURSIVE
-				| FileUtils.RETRY);
-		FileUtils.delete(remoteRepositoryFile, FileUtils.RECURSIVE
-				| FileUtils.RETRY);
-		FileUtils.delete(clonedRepositoryFile.getParentFile(),
-				FileUtils.RECURSIVE | FileUtils.RETRY);
 	}
 
 	@Test

@@ -29,9 +29,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.URIish;
-import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -53,20 +51,6 @@ public class PushBranchWizardTest extends LocalRepositoryTestCase {
 		remoteRepository = lookupRepository(remoteRepositoryFile);
 		reposToDelete.add(repository);
 		reposToDelete.add(remoteRepository);
-	}
-
-	@After
-	public void deleteRepositories() throws Exception {
-		deleteAllProjects();
-		shutDownRepositories();
-		for (Repository r : reposToDelete) {
-			if (r.isBare())
-				FileUtils.delete(r.getDirectory(), FileUtils.RECURSIVE
-						| FileUtils.RETRY);
-			else
-				FileUtils.delete(r.getWorkTree(), FileUtils.RECURSIVE
-						| FileUtils.RETRY);
-		}
 	}
 
 	@Test
