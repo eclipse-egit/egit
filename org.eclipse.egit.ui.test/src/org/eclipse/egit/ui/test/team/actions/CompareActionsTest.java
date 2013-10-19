@@ -171,8 +171,8 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 
 		// use the tag -> should have a change
 		dialog = openCompareWithDialog(compareWithRefActionLabel, dialogTitle);
-		dialog.bot().tree().getTreeItem(TAGS).expand().getNode("SomeTag")
-				.select();
+		SWTBotTreeItem tags = dialog.bot().tree().getTreeItem(TAGS).expand();
+		TestUtil.getChildNode(tags, "SomeTag").select();
 
 		jobJoiner = JobJoiner.startListening(
 				ISynchronizeManager.FAMILY_SYNCHRONIZE_OPERATION, 60,

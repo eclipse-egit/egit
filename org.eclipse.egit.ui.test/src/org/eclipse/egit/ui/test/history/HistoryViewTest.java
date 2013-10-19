@@ -232,17 +232,16 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 	 */
 	private SWTBotTable getHistoryViewTable(String... path) throws Exception {
 		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
-		TestUtil testUtil = new TestUtil();
 		SWTBotTreeItem explorerItem;
 		SWTBotTreeItem projectItem = getProjectItem(projectExplorerTree, path[0]);
 		if (path.length == 1)
 			explorerItem = projectItem;
 		else if (path.length == 2)
-			explorerItem = testUtil.getChildNode(projectItem.expand(), path[1]);
+			explorerItem = TestUtil.getChildNode(projectItem.expand(), path[1]);
 		else {
-			SWTBotTreeItem childItem = testUtil.getChildNode(
+			SWTBotTreeItem childItem = TestUtil.getChildNode(
 					projectItem.expand(), path[1]);
-			explorerItem = testUtil.getChildNode(childItem.expand(), path[2]);
+			explorerItem = TestUtil.getChildNode(childItem.expand(), path[2]);
 		}
 		explorerItem.select();
 		ContextMenuHelper.clickContextMenuSync(projectExplorerTree, "Show In",
