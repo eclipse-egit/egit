@@ -17,15 +17,15 @@ import java.io.File;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.jgit.lib.Repository;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 public class GitModelRootTest extends GitModelTestCase {
 
 	private static Repository repo1, repo2;
 
-	@BeforeClass
-	public static void setupEnvironment() throws Exception {
+	@Before
+	public void setupEnvironment() throws Exception {
 		File repoFile = createProjectAndCommitToRepository(REPO1);
 		repo1 = lookupRepository(repoFile);
 
@@ -38,7 +38,7 @@ public class GitModelRootTest extends GitModelTestCase {
 		// given
 		touchAndSubmit("second commit");
 		GitSynchronizeDataSet gsds = new GitSynchronizeDataSet();
-		gsds.add(new GitSynchronizeData(repo1, HEAD + "~1", HEAD, false));
+		gsds.add(new GitSynchronizeData(repo1, HEAD, HEAD + "^1", false));
 		gsds.add(new GitSynchronizeData(repo2, HEAD, HEAD, false));
 
 		// when

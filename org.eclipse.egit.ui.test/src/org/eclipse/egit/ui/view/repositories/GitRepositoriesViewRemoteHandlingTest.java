@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2012 SAP AG and others.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -29,7 +29,7 @@ import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -40,12 +40,12 @@ import org.junit.runner.RunWith;
 public class GitRepositoriesViewRemoteHandlingTest extends
 		GitRepositoriesViewTestBase {
 
-	private static File repositoryFile;
+	private File repositoryFile;
 
-	private static File remoteRepositoryFile;
+	private File remoteRepositoryFile;
 
-	@BeforeClass
-	public static void beforeClass() throws Exception {
+	@Before
+	public void before() throws Exception {
 		repositoryFile = createProjectAndCommitToRepository();
 		remoteRepositoryFile = createRemoteRepository(repositoryFile);
 		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
@@ -55,7 +55,7 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 	/**
 	 * Verify that remote configuration is shown correctly; also check error
 	 * node display
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -117,7 +117,7 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 
 	/**
 	 * Remote configuration scenarios
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test

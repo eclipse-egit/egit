@@ -33,7 +33,6 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -44,16 +43,16 @@ import org.junit.runner.RunWith;
 public class GitRepositoriesViewFetchAndPushTest extends
 		GitRepositoriesViewTestBase {
 
-	private static File repositoryFile;
+	private File repositoryFile;
 
-	private static File remoteRepositoryFile;
+	private File remoteRepositoryFile;
 
-	private static File clonedRepositoryFile;
+	private File clonedRepositoryFile;
 
-	private static File clonedRepositoryFile2;
+	private File clonedRepositoryFile2;
 
-	@BeforeClass
-	public static void beforeClass() throws Exception {
+	@Before
+	public void beforeClass() throws Exception {
 		repositoryFile = createProjectAndCommitToRepository();
 		remoteRepositoryFile = createRemoteRepository(repositoryFile);
 		// now let's clone the remote repository
@@ -82,6 +81,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		clearView();
 		deleteAllProjects();
 	}
+
 	@Test
 	public void testPushToOriginPushNode() throws Exception {
 		testPushToOrigin(false);

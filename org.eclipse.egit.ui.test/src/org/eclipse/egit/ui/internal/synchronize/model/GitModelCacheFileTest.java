@@ -20,7 +20,7 @@ import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Change;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.jgit.lib.AbbreviatedObjectId;
 import org.eclipse.jgit.lib.ObjectId;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -54,7 +54,7 @@ public class GitModelCacheFileTest extends GitModelTestCase {
 		// then
 		assertTrue(actual);
 	}
-	
+
 	@Test public void shouldReturnNotEqualForDifferentBaseIds()
 			throws Exception {
 		// given
@@ -145,7 +145,8 @@ public class GitModelCacheFileTest extends GitModelTestCase {
 		assertFalse(actual);
 	}
 
-	@BeforeClass public static void setupEnvironment() throws Exception {
+	@Before
+	public void setupEnvironment() throws Exception {
 		leftRepoFile = createProjectAndCommitToRepository();
 
 		Activator.getDefault().getRepositoryUtil()
@@ -163,5 +164,5 @@ public class GitModelCacheFileTest extends GitModelTestCase {
 		return new GitModelCacheFile(createModelCommit(),
 				lookupRepository(leftRepoFile), change, location);
 	}
-	
+
 }

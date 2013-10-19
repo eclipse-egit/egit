@@ -36,18 +36,15 @@ import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.operations.GitScopeOperation;
 import org.eclipse.egit.ui.internal.operations.GitScopeOperationFactory;
 import org.eclipse.egit.ui.internal.operations.GitScopeUtil;
-import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.team.core.subscribers.SubscriberScopeManager;
 import org.eclipse.ui.IWorkbenchPart;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -86,23 +83,8 @@ public class GitScopeUtilTest extends LocalRepositoryTestCase {
 		});
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		deleteAllProjects();
-		shutDownRepositories();
-		FileUtils.delete(repositoryFile.getParentFile(), FileUtils.RECURSIVE
-				| FileUtils.RETRY);
-	}
-
 	@AfterClass
 	public static void afterClassBase() throws Exception {
-		// close all editors/dialogs
-		new Eclipse().reset();
-		// cleanup
-		IProject modelProject = ResourcesPlugin.getWorkspace().getRoot()
-				.getProject(PROJ1);
-		modelProject.delete(false, false, null);
-
 		GitScopeOperationFactory.setFactory(new GitScopeOperationFactory());
 	}
 

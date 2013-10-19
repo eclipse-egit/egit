@@ -17,7 +17,7 @@ import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Change;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.synchronize.model.TreeBuilder.FileModelFactory;
 import org.eclipse.jgit.lib.Repository;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 public class GitModelCacheTreeTest extends GitModelTestCase {
@@ -71,7 +71,8 @@ public class GitModelCacheTreeTest extends GitModelTestCase {
 		assertFalse(actual);
 	}
 
-	@BeforeClass public static void setupEnvironment() throws Exception {
+	@Before
+	public void setupEnvironment() throws Exception {
 		leftRepoFile = createProjectAndCommitToRepository();
 
 		Activator.getDefault().getRepositoryUtil()

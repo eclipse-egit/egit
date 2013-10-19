@@ -22,7 +22,7 @@ import org.eclipse.egit.core.synchronize.StagedChangeCache;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Repository;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 public class GitModelCacheTest extends GitModelTestCase {
@@ -124,7 +124,8 @@ public class GitModelCacheTest extends GitModelTestCase {
 		assertEquals(4, dirChildren.length);
 	}
 
-	@BeforeClass public static void setupEnvironment() throws Exception {
+	@Before
+	public void setupEnvironment() throws Exception {
 		leftRepoFile = createProjectAndCommitToRepository();
 
 		Activator.getDefault().getRepositoryUtil()

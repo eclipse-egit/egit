@@ -22,7 +22,6 @@ import java.io.File;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
@@ -37,7 +36,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -46,10 +44,10 @@ import org.junit.runner.RunWith;
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class CommitActionTest extends LocalRepositoryTestCase {
-	private static File repositoryFile;
+	private File repositoryFile;
 
-	@BeforeClass
-	public static void setup() throws Exception {
+	@Before
+	public void setup() throws Exception {
 		repositoryFile = createProjectAndCommitToRepository();
 		Repository repo = lookupRepository(repositoryFile);
 		TestUtil.configureTestCommitterAsUser(repo);
@@ -59,15 +57,6 @@ public class CommitActionTest extends LocalRepositoryTestCase {
 		File dotProject = new File(project.getLocation().toOSString(), ".project");
 		project.delete(false, false, null);
 		assertTrue(dotProject.delete());
-	}
-
-	@Before
-	public void prepare() throws Exception {
-		Repository repo = lookupRepository(repositoryFile);
-		if (!repo.getBranch().equals("master")) {
-			BranchOperation bop = new BranchOperation(repo, "refs/heads/master");
-			bop.execute(null);
-		}
 	}
 
 	@Test

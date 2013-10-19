@@ -31,26 +31,23 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.util.FileUtils;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class LinkedResourcesTest extends LocalRepositoryTestCase {
 
 	// the standalone temporary directory
-	private static File standaloneDirectory;
+	private File standaloneDirectory;
 
 	private static final String LINKED_FILE = "LinkedFile";
 
 	private static final String STANDALONE_FOLDER = "StandaloneFolder";
 
-	private File gitDir;
-
 	private IProject project;
 
 	@Before
 	public void setUp() throws Exception {
-		gitDir = createProjectAndCommitToRepository();
+		createProjectAndCommitToRepository();
 		project = ResourcesPlugin.getWorkspace().getRoot().getProject(PROJ1);
 		// create standalone temporary directory
 		standaloneDirectory = testUtils.createTempDir(STANDALONE_FOLDER);
@@ -59,16 +56,6 @@ public class LinkedResourcesTest extends LocalRepositoryTestCase {
 					| FileUtils.RETRY);
 		if (!standaloneDirectory.exists())
 			FileUtils.mkdir(standaloneDirectory, true);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		deleteAllProjects();
-		shutDownRepositories();
-		FileUtils.delete(gitDir.getParentFile(), FileUtils.RECURSIVE
-				| FileUtils.RETRY);
-		FileUtils.delete(standaloneDirectory, FileUtils.RECURSIVE
-				| FileUtils.RETRY);
 	}
 
 	private List<RepositoryActionHandler> getRepositoryActionHandlerList()
