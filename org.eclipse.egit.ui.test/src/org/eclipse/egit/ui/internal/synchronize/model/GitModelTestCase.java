@@ -28,9 +28,9 @@ import org.mockito.Mockito;
 
 abstract class GitModelTestCase extends LocalRepositoryTestCase {
 
-	protected static File leftRepoFile;
+	protected File leftRepoFile;
 
-	protected static File rightRepoFile;
+	protected File rightRepoFile;
 
 	protected GitModelRepository createModelRepository() throws Exception {
 		return new GitModelRepository(getGSD(lookupRepository(leftRepoFile)));

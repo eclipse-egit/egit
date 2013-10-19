@@ -45,7 +45,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTableItem;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarToggleButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,13 +58,12 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 
 	private static final String ADDEDMESSAGE = "A new file in a new folder";
 
-	private static int commitCount;
+	private int commitCount;
 
-	private static File repoFile;
+	private File repoFile;
 
-	@BeforeClass
-	public static void setup() throws Exception {
-		// File repoFile =
+	@Before
+	public void setup() throws Exception {
 		repoFile = createProjectAndCommitToRepository();
 		IProject prj = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(PROJ1);

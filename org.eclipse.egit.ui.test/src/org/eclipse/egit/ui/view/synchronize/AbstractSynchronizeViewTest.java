@@ -50,7 +50,6 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
@@ -113,14 +112,6 @@ public abstract class AbstractSynchronizeViewTest extends
 
 		Activator.getDefault().getRepositoryUtil()
 				.addConfiguredRepository(repositoryFile);
-	}
-
-	@After
-	public void deleteRepository() throws Exception {
-		deleteAllProjects();
-		shutDownRepositories();
-		FileUtils.delete(repositoryFile.getParentFile(), FileUtils.RECURSIVE | FileUtils.RETRY);
-		FileUtils.delete(childRepositoryFile.getParentFile(), FileUtils.RECURSIVE | FileUtils.RETRY);
 	}
 
 	@BeforeClass public static void setupEnvironment() throws Exception {

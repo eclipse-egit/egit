@@ -48,7 +48,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.ui.IWorkingSet;
 import org.eclipse.ui.IWorkingSetManager;
 import org.eclipse.ui.PlatformUI;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -71,10 +71,10 @@ import org.junit.runner.RunWith;
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 
-	private static File repositoryFile;
+	private File repositoryFile;
 
-	@BeforeClass
-	public static void beforeClass() throws Exception {
+	@Before
+	public void beforeClass() throws Exception {
 		setVerboseBranchMode(false);
 		repositoryFile = createProjectAndCommitToRepository();
 		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
@@ -536,7 +536,8 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		SWTBotShell createBranchShell = bot
 				.shell(UIText.CreateBranchWizard_NewBranchTitle);
 		createBranchShell.bot().textWithId("BranchName").setText("abc");
-		createBranchShell.bot().checkBox().deselect();
+		createBranchShell.bot()
+				.checkBox(UIText.CreateBranchPage_CheckoutButton).deselect();
 		createBranchShell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		refreshAndWait();
 		// delete branch
@@ -570,13 +571,15 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		SWTBotShell createBranchShell = bot
 				.shell(UIText.CreateBranchWizard_NewBranchTitle);
 		createBranchShell.bot().textWithId("BranchName").setText("abc");
-		createBranchShell.bot().checkBox().deselect();
+		createBranchShell.bot()
+				.checkBox(UIText.CreateBranchPage_CheckoutButton).deselect();
 		createBranchShell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		// create second branch (123)
 		ContextMenuHelper.clickContextMenu(tree, "Create Branch...");
 		createBranchShell = bot.shell(UIText.CreateBranchWizard_NewBranchTitle);
 		createBranchShell.bot().textWithId("BranchName").setText("123");
-		createBranchShell.bot().checkBox().deselect();
+		createBranchShell.bot()
+				.checkBox(UIText.CreateBranchPage_CheckoutButton).deselect();
 		createBranchShell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		refreshAndWait();
 		localBranchesItem = myRepoViewUtil.getLocalBranchesItem(tree,

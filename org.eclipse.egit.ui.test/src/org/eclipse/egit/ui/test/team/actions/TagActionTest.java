@@ -17,7 +17,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
-import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.TagOperation;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.UIText;
@@ -33,7 +32,6 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -42,10 +40,10 @@ import org.junit.runner.RunWith;
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class TagActionTest extends LocalRepositoryTestCase {
-	private static File repositoryFile;
+	private File repositoryFile;
 
-	@BeforeClass
-	public static void setup() throws Exception {
+	@Before
+	public void setup() throws Exception {
 		repositoryFile = createProjectAndCommitToRepository();
 		Repository repo = lookupRepository(repositoryFile);
 
@@ -57,16 +55,6 @@ public class TagActionTest extends LocalRepositoryTestCase {
 		TagOperation top = new TagOperation(repo, tag, false);
 		top.execute(null);
 		touchAndSubmit(null);
-		waitInUI();
-	}
-
-	@Before
-	public void prepare() throws Exception {
-		Repository repo = lookupRepository(repositoryFile);
-		if (!repo.getBranch().equals("master")) {
-			BranchOperation bop = new BranchOperation(repo, "refs/heads/master");
-			bop.execute(null);
-		}
 	}
 
 	@Test
