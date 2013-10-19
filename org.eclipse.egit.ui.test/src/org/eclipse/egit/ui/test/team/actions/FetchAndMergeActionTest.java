@@ -39,6 +39,7 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -117,8 +118,9 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 
 		SWTBotShell mergeDialog = openMergeDialog();
 
-		mergeDialog.bot().tree().getTreeItem(REMOTE_BRANCHES).expand().getNode(
-				"origin/master").select();
+		SWTBotTreeItem remoteBranches = mergeDialog.bot().tree()
+				.getTreeItem(REMOTE_BRANCHES).expand();
+		TestUtil.getChildNode(remoteBranches, "origin/master").select();
 		mergeDialog.bot().button(UIText.MergeTargetSelectionDialog_ButtonMerge)
 				.click();
 		bot.shell(UIText.MergeAction_MergeResultTitle).close();
@@ -153,7 +155,9 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 
 	private void mergeBranch(String branchToMerge, boolean squash) throws Exception {
 		SWTBotShell mergeDialog = openMergeDialog();
-		mergeDialog.bot().tree().getTreeItem(LOCAL_BRANCHES).expand().getNode(branchToMerge).select();
+		SWTBotTreeItem localBranches = mergeDialog.bot().tree()
+				.getTreeItem(LOCAL_BRANCHES).expand();
+		TestUtil.getChildNode(localBranches, branchToMerge).select();
 		if (squash)
 			mergeDialog.bot().radio(UIText.MergeTargetSelectionDialog_MergeTypeSquashButton).click();
 		mergeDialog.bot().button(UIText.MergeTargetSelectionDialog_ButtonMerge).click();
