@@ -57,11 +57,11 @@ public class StagingViewTest extends LocalRepositoryTestCase {
 
 	@Test
 	public void testCommitSingleFile() throws Exception {
-		setTestFileContent("I have changed this");
-		new Git(repository).add().addFilepattern(".").call();
 		StagingViewTester stagingViewTester = StagingViewTester
 				.openStagingView();
 		selectRepositoryNode();
+		setTestFileContent("I have changed this");
+		new Git(repository).add().addFilepattern(".").call();
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 		stagingViewTester.setAuthor(TestUtil.TESTAUTHOR);
 		stagingViewTester.setCommitter(TestUtil.TESTCOMMITTER);

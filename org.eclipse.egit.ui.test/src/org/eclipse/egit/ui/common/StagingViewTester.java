@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Jens Baumgart <jens.baumgart@sap.com>
+ * Copyright (C) 2011, 2013 Jens Baumgart <jens.baumgart@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -66,38 +66,44 @@ public class StagingViewTester {
 	}
 
 	public void setAmend(boolean amend) {
-		SWTBotToolbarToggleButton button = stagingView
-				.toolbarToggleButton(UIText.StagingView_Ammend_Previous_Commit);
+		SWTBotToolbarToggleButton button = stagingView.bot()
+				.toolbarToggleButtonWithTooltip(
+						UIText.StagingView_Ammend_Previous_Commit);
 		selectToolbarToggle(button, amend);
 	}
 
 	public boolean getAmend() {
-		SWTBotToolbarToggleButton button = stagingView
-				.toolbarToggleButton(UIText.StagingView_Ammend_Previous_Commit);
+		SWTBotToolbarToggleButton button = stagingView.bot()
+				.toolbarToggleButtonWithTooltip(
+						UIText.StagingView_Ammend_Previous_Commit);
 		return button.isChecked();
 	}
 
 	public void setInsertChangeId(boolean insertChangeId) {
-		SWTBotToolbarToggleButton button = stagingView
-				.toolbarToggleButton(UIText.StagingView_Add_Change_ID);
+		SWTBotToolbarToggleButton button = stagingView.bot()
+				.toolbarToggleButtonWithTooltip(
+						UIText.StagingView_Add_Change_ID);
 		selectToolbarToggle(button, insertChangeId);
 	}
 
 	public boolean getInsertChangeId() {
-		SWTBotToolbarToggleButton button = stagingView
-				.toolbarToggleButton(UIText.StagingView_Add_Change_ID);
+		SWTBotToolbarToggleButton button = stagingView.bot()
+				.toolbarToggleButtonWithTooltip(
+						UIText.StagingView_Add_Change_ID);
 		return button.isChecked();
 	}
 
 	public void setSignedOff(boolean signedOff) {
-		SWTBotToolbarToggleButton button = stagingView
-				.toolbarToggleButton(UIText.StagingView_Add_Signed_Off_By);
+		SWTBotToolbarToggleButton button = stagingView.bot()
+				.toolbarToggleButtonWithTooltip(
+						UIText.StagingView_Add_Signed_Off_By);
 		selectToolbarToggle(button, signedOff);
 	}
 
 	public boolean getSignedOff() {
-		SWTBotToolbarToggleButton button = stagingView
-				.toolbarToggleButton(UIText.StagingView_Add_Signed_Off_By);
+		SWTBotToolbarToggleButton button = stagingView.bot()
+				.toolbarToggleButtonWithTooltip(
+						UIText.StagingView_Add_Signed_Off_By);
 		return button.isChecked();
 	}
 
