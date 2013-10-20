@@ -29,6 +29,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -45,7 +46,7 @@ public class StagingViewTest extends LocalRepositoryTestCase {
 	private SWTBotTree repoViewTree;
 
 	@Before
-	public void setup() throws Exception {
+	public void before() throws Exception {
 		repositoryFile = createProjectAndCommitToRepository();
 		repository = lookupRepository(repositoryFile);
 		TestUtil.configureTestCommitterAsUser(repository);
@@ -55,13 +56,18 @@ public class StagingViewTest extends LocalRepositoryTestCase {
 		repoViewTree = repositoriesView.bot().tree();
 	}
 
+	@After
+	public void after() {
+		Activator.getDefault().getRepositoryUtil().removeDir(repositoryFile);
+	}
+
 	@Test
 	public void testCommitSingleFile() throws Exception {
 		setTestFileContent("I have changed this");
 		new Git(repository).add().addFilepattern(".").call();
+		selectRepositoryNode();
 		StagingViewTester stagingViewTester = StagingViewTester
 				.openStagingView();
-		selectRepositoryNode();
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 		stagingViewTester.setAuthor(TestUtil.TESTAUTHOR);
 		stagingViewTester.setCommitter(TestUtil.TESTCOMMITTER);
@@ -69,12 +75,6 @@ public class StagingViewTest extends LocalRepositoryTestCase {
 		stagingViewTester.commit();
 		TestUtil.checkHeadCommit(repository, TestUtil.TESTAUTHOR,
 				TestUtil.TESTCOMMITTER, "The new commit");
-	}
-
-	private void selectRepositoryNode() throws Exception {
-		SWTBotTreeItem repoNode = repoViewUtil.getRootItem(repoViewTree,
-				repositoryFile);
-		repoNode.select();
 	}
 
 	@Test
@@ -122,4 +122,9 @@ public class StagingViewTest extends LocalRepositoryTestCase {
 		stagingViewTester.commit();
 	}
 
+	private void selectRepositoryNode() throws Exception {
+		SWTBotTreeItem repoNode = repoViewUtil.getRootItem(repoViewTree,
+				repositoryFile);
+		repoNode.select();
+	}
 }
