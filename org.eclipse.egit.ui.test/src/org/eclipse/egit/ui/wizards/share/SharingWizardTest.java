@@ -54,6 +54,7 @@ import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotCombo;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -82,6 +83,11 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 		bot.viewByTitle("Package Explorer").show();
 
 		ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
+	}
+
+	@AfterClass
+	public static void afterClass() {
+		SystemReader.setInstance(null);
 	}
 
 	private static String createProject(String projectName) {

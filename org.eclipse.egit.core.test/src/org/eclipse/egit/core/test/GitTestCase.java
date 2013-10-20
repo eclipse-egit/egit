@@ -71,6 +71,7 @@ public abstract class GitTestCase {
 		Activator.getDefault().getRepositoryCache().clear();
 		if (gitDir.exists())
 			FileUtils.delete(gitDir, FileUtils.RECURSIVE | FileUtils.RETRY);
+		SystemReader.setInstance(null);
 	}
 
 	protected ObjectId createFile(Repository repository, IProject actProject, String name, String content) throws IOException {
