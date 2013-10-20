@@ -26,8 +26,9 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarToggleButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,16 +59,18 @@ public class CommitNonWSChangesTest extends LocalRepositoryTestCase {
 		clickOnCommit();
 
 		SWTBotShell commitDialog = bot.shell(UIText.CommitDialog_CommitChanges);
-		SWTBotTable table = commitDialog.bot().table();
-		assertEquals("Wrong row count", 4, table.rowCount());
-		assertTableLineContent(table, 0, "Rem., not staged",
-				"GeneralProject/.project");
-		assertTableLineContent(table, 1, "Rem., not staged",
-				"GeneralProject/folder/test.txt");
-		assertTableLineContent(table, 2, "Rem., not staged",
-				"GeneralProject/folder/test2.txt");
-		assertTableLineContent(table, 3, "Untracked",
-				"ProjectWithoutDotProject/.project");
+		SWTBotToolbarToggleButton showUntracked = commitDialog.bot()
+				.toolbarToggleButtonWithTooltip(
+						UIText.CommitDialog_ShowUntrackedFiles);
+		if (!showUntracked.isChecked())
+			showUntracked.select();
+
+		SWTBotTree tree = commitDialog.bot().tree();
+		assertEquals("Wrong row count", 4, tree.rowCount());
+		assertTreeLineContent(tree, 0, "GeneralProject/.project");
+		assertTreeLineContent(tree, 1, "GeneralProject/folder/test.txt");
+		assertTreeLineContent(tree, 2, "GeneralProject/folder/test2.txt");
+		assertTreeLineContent(tree, 3, "ProjectWithoutDotProject/.project");
 
 		commitDialog.bot().textWithLabel(UIText.CommitDialog_Author)
 				.setText(TestUtil.TESTAUTHOR);
@@ -76,7 +79,7 @@ public class CommitNonWSChangesTest extends LocalRepositoryTestCase {
 		commitDialog.bot()
 				.styledTextWithLabel(UIText.CommitDialog_CommitMessage)
 				.setText("Delete Project GeneralProject");
-		selectAllCheckboxes(table);
+		selectAllCheckboxes(tree);
 		commitDialog.bot().button(UIText.CommitDialog_Commit).click();
 		// wait until commit is completed
 		Job.getJobManager().join(JobFamilies.COMMIT, null);
@@ -90,15 +93,15 @@ public class CommitNonWSChangesTest extends LocalRepositoryTestCase {
 				.button(IDialogConstants.NO_LABEL).click();
 	}
 
-	private void assertTableLineContent(SWTBotTable table, int rowIndex,
-			String status, String file) {
-		assertEquals(status, table.getTableItem(rowIndex).getText(0));
-		assertEquals(file, table.getTableItem(rowIndex).getText(1));
+	private void assertTreeLineContent(SWTBotTree tree, int rowIndex,
+			String file) {
+		SWTBotTreeItem treeItem = tree.getAllItems()[rowIndex];
+		assertEquals(file, treeItem.cell(1));
 	}
 
-	private void selectAllCheckboxes(SWTBotTable table) {
-		for (int i = 0; i < table.rowCount(); i++) {
-			table.getTableItem(i).check();
+	private void selectAllCheckboxes(SWTBotTree tree) {
+		for (int i = 0; i < tree.rowCount(); i++) {
+			tree.getAllItems()[i].check();
 		}
 	}
 
