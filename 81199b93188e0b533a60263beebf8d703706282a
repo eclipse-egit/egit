@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_d75cd2fb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-20T23:40:39Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "8748d3a1_17811ad8",
+      "revId": "81199b93188e0b533a60263beebf8d703706282a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_d7a33285",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2013-10-20T23:31:14Z",
       "side": 0,
       "message": "remove this now unused text",
+      "revId": "81199b93188e0b533a60263beebf8d703706282a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_37c9b622",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-20T23:40:39Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "8748d3a1_d7a33285",
       "revId": "81199b93188e0b533a60263beebf8d703706282a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
