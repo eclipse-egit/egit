@@ -74,8 +74,7 @@
         <version>${tycho-version}</version>
         <configuration>
           <includes>
-            <include>**/AllJUnitTests.java</include>
-            <include>**/AllSWTAndNonSWTTests.java</include>
+            <include>**/*Test.java</include>
           </includes>
           <useUIHarness>true</useUIHarness>
           <useUIThread>false</useUIThread>
