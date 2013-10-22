@@ -168,6 +168,7 @@ public class RebaseInteractivePlan implements RefsChangedListener {
 		myRefsChangedHandle.remove();
 		planRegistry.remove(this.repository.getDirectory());
 		planList.clear();
+		notifyPlanWasUpdatedFromRepository();
 		planChangeListeners.clear();
 	}
 
