@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_9b0a622a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/rebase/RebaseInteractivePlan.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-10-22T14:18:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_a4274439",
+      "revId": "371c7a1891e581e0dee16d920b2e087151468146",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_db750aa4",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/rebase/RebaseInteractivePlan.java",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_fb13a661",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/rebase/RebaseInteractivePlan.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-10-22T14:18:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_db750aa4",
+      "revId": "371c7a1891e581e0dee16d920b2e087151468146",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_5bb3ba02",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/rebase/RebaseInteractivePlan.java",
         "patchSetId": 9
@@ -47,6 +83,24 @@
       "writtenOn": "2013-10-22T14:16:33Z",
       "side": 1,
       "message": "s/it/if/",
+      "revId": "371c7a1891e581e0dee16d920b2e087151468146",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_3b218ea7",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/rebase/RebaseInteractivePlan.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-10-22T14:18:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_5bb3ba02",
       "revId": "371c7a1891e581e0dee16d920b2e087151468146",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
