@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_b2a5ca00",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-22T00:16:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_6dda5ce1",
+      "revId": "3ff163592587cfd9badec07fe82936fcfcf4c61b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_d29216d9",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteracitveHandler.java",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2013-10-21T22:48:17Z",
       "side": 1,
       "message": "typo s/RebaseInteracitveHandler/RebaseInteractiveHandler/",
+      "revId": "3ff163592587cfd9badec07fe82936fcfcf4c61b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_129f5eb2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteracitveHandler.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-22T00:16:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_d29216d9",
       "revId": "3ff163592587cfd9badec07fe82936fcfcf4c61b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
