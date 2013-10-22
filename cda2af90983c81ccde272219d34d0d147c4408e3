@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_b5e934f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-22T00:15:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_8d26c868",
+      "revId": "cda2af90983c81ccde272219d34d0d147c4408e3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_95cfd89e",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2013-10-21T22:57:25Z",
       "side": 1,
       "message": "s/canceld/canceled/",
+      "revId": "cda2af90983c81ccde272219d34d0d147c4408e3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_d5ecc006",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 12
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-22T00:15:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_95cfd89e",
       "revId": "cda2af90983c81ccde272219d34d0d147c4408e3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
