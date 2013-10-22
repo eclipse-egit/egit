@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_952198d7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-22T00:15:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_ad6c6480",
+      "revId": "3ba3299cfd555935da49436fe767dec6aec7970e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_11931862",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_75268cee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-22T00:15:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_11931862",
+      "revId": "3ba3299cfd555935da49436fe767dec6aec7970e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_1125d8b2",
         "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2013-09-27T13:28:16Z",
       "side": 1,
       "message": "please add the version and the x-friends label like above",
+      "revId": "3ba3299cfd555935da49436fe767dec6aec7970e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_5556f032",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-22T00:15:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_1125d8b2",
       "revId": "3ba3299cfd555935da49436fe767dec6aec7970e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -81,6 +135,24 @@
       "writtenOn": "2013-09-27T13:28:16Z",
       "side": 1,
       "message": "please add the version range",
+      "revId": "3ba3299cfd555935da49436fe767dec6aec7970e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_9533581b",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-22T00:15:38Z",
+      "side": 1,
+      "message": "I think this import isn\u0027t required in this change",
+      "parentUuid": "8748d3a1_9109e839",
       "revId": "3ba3299cfd555935da49436fe767dec6aec7970e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
