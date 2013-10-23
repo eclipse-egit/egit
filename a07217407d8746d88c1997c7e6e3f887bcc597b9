@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_c48b6670",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/SWTBotTreeColumn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-23T07:08:32Z",
+      "side": 1,
+      "message": "mark this as todo",
+      "revId": "a07217407d8746d88c1997c7e6e3f887bcc597b9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
