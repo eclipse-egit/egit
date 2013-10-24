@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_46ae2c6d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/rebase/RebaseInteractivePlan.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-10-24T15:24:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_b41abb2a",
+      "revId": "5e62d580dff9932cd8cf1a2a4018a519c30c451a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_941fbf1b",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/rebase/RebaseInteractivePlan.java",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2013-10-24T15:23:23Z",
       "side": 1,
       "message": "Lets better call it skip instead of delete. The commit is not deleted but skipped, and rebase skip does the same in case of a stopped rebase.",
+      "revId": "5e62d580dff9932cd8cf1a2a4018a519c30c451a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_a6b9f0b1",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/rebase/RebaseInteractivePlan.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-10-24T15:24:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_941fbf1b",
       "revId": "5e62d580dff9932cd8cf1a2a4018a519c30c451a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
