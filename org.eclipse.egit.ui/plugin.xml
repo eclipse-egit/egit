@@ -1873,7 +1873,7 @@
       <view
             category="org.eclipse.egit.ui.GitCategory"
             class="org.eclipse.egit.ui.internal.rebase.RebaseInteractiveView"
-            icon="icons/eview16/rebase.gif"
+            icon="icons/eview16/rebase_interactive.gif"
             id="org.eclipse.egit.ui.InteractiveRebaseView"
             name="%GitInteractiveRebaseView_name">
       </view>
@@ -4642,6 +4642,10 @@
       <image
             commandId="org.eclipse.egit.ui.internal.reflog.OpenInCommitViewerCommand"
             icon="icons/obj16/open-commit.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.RebaseInteractiveCurrent"
+            icon="icons/obj16/rebase_interactive.gif">
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"

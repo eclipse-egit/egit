@@ -20,6 +20,9 @@ import org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan.ElementType;
 import org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan.PlanElement;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
@@ -40,7 +43,7 @@ public class RebaseInteractiveStepActionToolBarProvider {
 
 	private ToolItem itemPick;
 
-	private ToolItem itemDelete;
+	private ToolItem itemSkip;
 
 	private ToolItem itemEdit;
 
@@ -58,11 +61,10 @@ public class RebaseInteractiveStepActionToolBarProvider {
 
 	private final RebaseInteractiveView view;
 
-	private Image deleteImage;
-
-	private Image editImage;
-
 	private final ToolBar theToolbar;
+
+	private LocalResourceManager resources = new LocalResourceManager(
+			JFaceResources.getResources());
 
 	/**
 	 * @return the theToolbar
@@ -89,48 +91,53 @@ public class RebaseInteractiveStepActionToolBarProvider {
 		});
 	}
 
+	private Image getImage(ImageDescriptor descriptor) {
+		return (Image) this.resources.get(descriptor);
+	}
+
 	private void dispose() {
-		deleteImage.dispose();
-		editImage.dispose();
+		resources.dispose();
 	}
 
 	private void createToolBarItems() {
 		itemPick = new ToolItem(theToolbar, SWT.RADIO);
+		itemPick.setImage(getImage(UIIcons.CHERRY_PICK));
 		itemPick.addSelectionListener(new ActionSelectionListener(
 				RebaseInteractivePlan.ElementAction.PICK));
 		itemPick.setText(UIText.RebaseInteractiveStepActionToolBarProvider_PickText);
 		rebaseActionItems[0] = itemPick;
 
-		itemDelete = new ToolItem(theToolbar, SWT.RADIO);
-		deleteImage = UIIcons.ELCL16_DELETE.createImage();
-		itemDelete.setImage(deleteImage);
-		itemDelete.addSelectionListener(new ActionSelectionListener(
+		itemSkip = new ToolItem(theToolbar, SWT.RADIO);
+		itemSkip.setImage(getImage(UIIcons.REBASE_SKIP));
+		itemSkip.addSelectionListener(new ActionSelectionListener(
 				RebaseInteractivePlan.ElementAction.SKIP));
-		itemDelete
+		itemSkip
 				.setText(UIText.RebaseInteractiveStepActionToolBarProvider_SkipText);
-		rebaseActionItems[1] = itemDelete;
+		rebaseActionItems[1] = itemSkip;
 
 		itemEdit = new ToolItem(theToolbar, SWT.RADIO);
-		editImage = UIIcons.EDITCONFIG.createImage();
-		itemEdit.setImage(editImage);
+		itemEdit.setImage(getImage(UIIcons.EDITCONFIG));
 		itemEdit.addSelectionListener(new ActionSelectionListener(
 				RebaseInteractivePlan.ElementAction.EDIT));
 		itemEdit.setText(UIText.RebaseInteractiveStepActionToolBarProvider_EditText);
 		rebaseActionItems[2] = itemEdit;
 
 		itemSquash = new ToolItem(theToolbar, SWT.RADIO);
+		itemSquash.setImage(getImage(UIIcons.SQUASH));
 		itemSquash.addSelectionListener(new ActionSelectionListener(
 						RebaseInteractivePlan.ElementAction.SQUASH));
 		itemSquash.setText(UIText.RebaseInteractiveStepActionToolBarProvider_SquashText);
 		rebaseActionItems[3] = itemSquash;
 
 		itemFixup = new ToolItem(theToolbar, SWT.RADIO);
+		itemFixup.setImage(getImage(UIIcons.FIXUP));
 		itemFixup.addSelectionListener(new ActionSelectionListener(
 						RebaseInteractivePlan.ElementAction.FIXUP));
 		itemFixup.setText(UIText.RebaseInteractiveStepActionToolBarProvider_FixupText);
 		rebaseActionItems[4] = itemFixup;
 
 		itemReword = new ToolItem(theToolbar, SWT.RADIO);
+		itemReword.setImage(getImage(UIIcons.REWORD));
 		itemReword.addSelectionListener(new ActionSelectionListener(
 						RebaseInteractivePlan.ElementAction.REWORD));
 		itemReword.setText(UIText.RebaseInteractiveStepActionToolBarProvider_RewordText);
@@ -139,6 +146,7 @@ public class RebaseInteractiveStepActionToolBarProvider {
 		new ToolItem(theToolbar, SWT.SEPARATOR);
 
 		itemMoveUp = new ToolItem(theToolbar, SWT.NONE);
+		itemMoveUp.setImage(getImage(UIIcons.ELCL16_PREVIOUS));
 		itemMoveUp.setText(UIText.RebaseInteractiveStepActionToolBarProvider_MoveUpText);
 		itemMoveUp.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -153,6 +161,9 @@ public class RebaseInteractiveStepActionToolBarProvider {
 		});
 
 		itemMoveDown = new ToolItem(theToolbar, SWT.NONE);
+		itemMoveDown.setImage(getImage(UIIcons.ELCL16_NEXT));
+		itemMoveDown
+				.setText(UIText.RebaseInteractiveStepActionToolBarProvider_MoveDownText);
 		itemMoveDown.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -164,14 +175,12 @@ public class RebaseInteractiveStepActionToolBarProvider {
 				view.getCurrentPlan().moveTodoEntryDown(selectedEntry);
 			}
 		});
-		itemMoveDown.setText(UIText.RebaseInteractiveStepActionToolBarProvider_MoveDownText);
 
 		new ToolItem(theToolbar, SWT.SEPARATOR);
 
 		ToolItem itemRedo = new ToolItem(theToolbar, SWT.NONE);
 		itemRedo.setWidth(10);
-		// TODO: UIICons
-		itemRedo.setImage(UIIcons.ELCL16_NEXT.createImage());
+		// itemRedo.setImage(getImage(UIIcons.ELCL16_NEXT));
 		itemRedo.setEnabled(false);
 		itemRedo.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -182,8 +191,7 @@ public class RebaseInteractiveStepActionToolBarProvider {
 		itemRedo.setText(UIText.RebaseInteractiveStepActionToolBarProvider_RedoText);
 
 		ToolItem itemUndo = new ToolItem(theToolbar, SWT.NONE);
-		// TODO: UIICons
-		itemUndo.setImage(UIIcons.ELCL16_PREVIOUS.createImage());
+		// itemUndo.setImage(getImage(UIIcons.ELCL16_PREVIOUS));
 		itemUndo.setEnabled(false);
 		itemUndo.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -331,7 +339,7 @@ public class RebaseInteractiveStepActionToolBarProvider {
 		case SQUASH:
 			return itemSquash;
 		case SKIP:
-			return itemDelete;
+			return itemSkip;
 		default:
 			return null;
 		}
