@@ -681,6 +681,12 @@ public class UIText extends NLS {
 	public static String RebaseCurrentRefCommand_ErrorGettingCurrentBranchMessage;
 
 	/** */
+	public static String RebaseInteractiveHandler_EditMessageDialogText;
+
+	/** */
+	public static String RebaseInteractiveHandler_EditMessageDialogTitle;
+
+	/** */
 	public static String RebaseInteractiveStepActionToolBarProvider_SkipText;
 
 	/** */
