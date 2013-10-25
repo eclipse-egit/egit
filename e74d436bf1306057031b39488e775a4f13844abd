@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_8c468ed6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchEditDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-25T07:09:01Z",
+      "side": 1,
+      "message": "I think BranchEditDialog should override getTitle() since the branch selected in this dialog isn\u0027t used in the caller, at least not in FetchGerritChangePage.\n\nThere this title is misleading since it says \"Select a branch or work with branches\" but there is no button to accept the selection, selecting a branch and clicking \"Close\" has no effect on the state of FetchGerritChangePage.\n\nAlso it looks strange that a dialog class which inherits from a class named LocalBranchSelectionDialog actually doesn\u0027t allow to select a branch ;-?",
+      "revId": "e74d436bf1306057031b39488e775a4f13844abd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_d2415263",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/LocalBranchSelectionDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-25T07:09:01Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "e74d436bf1306057031b39488e775a4f13844abd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_32351600",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/LocalBranchSelectionDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-25T07:09:01Z",
+      "side": 1,
+      "message": "style nit: remove unnecessary blank line",
+      "revId": "e74d436bf1306057031b39488e775a4f13844abd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
