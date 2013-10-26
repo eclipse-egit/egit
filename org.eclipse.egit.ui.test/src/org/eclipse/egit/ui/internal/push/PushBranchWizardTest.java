@@ -14,8 +14,6 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.egit.core.op.BranchOperation;
@@ -41,16 +39,12 @@ public class PushBranchWizardTest extends LocalRepositoryTestCase {
 	private Repository repository;
 	private Repository remoteRepository;
 
-	private final List<Repository> reposToDelete = new ArrayList<Repository>();
-
 	@Before
 	public void createRepositories() throws Exception {
 		File repositoryFile = createProjectAndCommitToRepository();
 		File remoteRepositoryFile = createRemoteRepository(repositoryFile);
 		repository = lookupRepository(repositoryFile);
 		remoteRepository = lookupRepository(remoteRepositoryFile);
-		reposToDelete.add(repository);
-		reposToDelete.add(remoteRepository);
 	}
 
 	@Test
@@ -181,7 +175,6 @@ public class PushBranchWizardTest extends LocalRepositoryTestCase {
 		Repository repo = FileRepositoryBuilder.create(gitDir);
 		repo.create();
 		assertTrue(repo.isBare());
-		reposToDelete.add(repo);
 		return repo;
 	}
 
@@ -199,8 +192,13 @@ public class PushBranchWizardTest extends LocalRepositoryTestCase {
 	private void assertBranchPushed(String branchName, Repository remoteRepo)
 			throws Exception {
 		ObjectId pushed = remoteRepo.resolve(branchName);
-		assertNotNull(pushed);
-		assertEquals(repository.resolve(branchName), pushed);
+		assertNotNull("Expected '" + branchName
+				+ "' to resolve to non-null ObjectId on remote repository",
+				pushed);
+		ObjectId local = repository.resolve(branchName);
+		assertEquals(
+				"Expected local branch to be the same as branch on remote after pushing",
+				local, pushed);
 	}
 
 	private void assertBranchConfig(String branchName, String remoteName,
