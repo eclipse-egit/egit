@@ -128,9 +128,6 @@ public class LinkedResourcesTest {
 		file.createLink(
 				project2.getFile("project2folder1/project2folder1file1.txt")
 						.getLocation(), 0, null);
-		// Add file to project2
-		testUtils.addFileToProject(project2,
-				"project2folder1/project2folder1file2.txt", "Hello world");
 		// Make sure linked folder is refreshed
 		folder.refreshLocal(IResource.DEPTH_INFINITE, null);
 
@@ -142,8 +139,7 @@ public class LinkedResourcesTest {
 						"/project1/link2project2/project2folder1",
 						"/project1/link2project2/.project",
 						"/project1/link2project2/project2folder1/project2folder1file1.txt",
-						"/project1/link2project2",
-				"/project2/project2folder1/project2folder1file2.txt" });
+						"/project1/link2project2" });
 	}
 
 	@Test
