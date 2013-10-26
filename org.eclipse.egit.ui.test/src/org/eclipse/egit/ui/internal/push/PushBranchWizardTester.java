@@ -9,9 +9,12 @@ package org.eclipse.egit.ui.internal.push;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
@@ -109,6 +112,9 @@ public class PushBranchWizardTester {
 	}
 
 	public void finish() {
+		JobJoiner jobJoiner = JobJoiner.startListening(JobFamilies.PUSH, 60,
+				TimeUnit.SECONDS);
 		wizard.button(IDialogConstants.FINISH_LABEL).click();
+		jobJoiner.join();
 	}
 }
