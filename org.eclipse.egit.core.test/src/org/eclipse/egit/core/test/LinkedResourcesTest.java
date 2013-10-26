@@ -16,6 +16,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.Collection;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -142,8 +143,20 @@ public class LinkedResourcesTest {
 						"/project1/link2project2/project2folder1",
 						"/project1/link2project2/.project",
 						"/project1/link2project2/project2folder1/project2folder1file1.txt",
-						"/project1/link2project2",
-				"/project2/project2folder1/project2folder1file2.txt" });
+						"/project1/link2project2" });
+		Collection<IResource> resources2 = resourceDeltaTestHelper2
+				.getChangedResources();
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		IResource resourceInProject2 = root
+				.findMember("/project2/project2folder1/project2folder1file2.txt");
+		IResource resourceInLinkedFolder = root
+				.findMember("/project1/link2project2/project2folder1/project2folder1file2.txt");
+		// Resource event seems to be sometimes for original path, sometimes for
+		// linked folder. Accept either, but not none.
+		assertTrue(
+				"Expected resource changed event either for original path or for linked folder",
+				resources2.contains(resourceInProject2)
+						|| resources2.contains(resourceInLinkedFolder));
 	}
 
 	@Test
