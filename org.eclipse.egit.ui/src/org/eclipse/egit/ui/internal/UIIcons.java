@@ -18,6 +18,8 @@ import java.net.URL;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.ResourceManager;
+import org.eclipse.swt.graphics.Image;
 
 /**
  * Icons for the the Eclipse plugin. Mostly decorations.
@@ -349,5 +351,21 @@ public class UIIcons {
 			Activator.logError(UIText.UIIcons_errorDeterminingIconBase, mux);
 			return null;
 		}
+	}
+
+	/**
+	 * Get the image for the given descriptor from the resource manager which
+	 * handles disposal of the image when the resource manager itself is
+	 * disposed.
+	 *
+	 * @param resourceManager
+	 *            {code ResourceManager} managing the image resources
+	 * @param descriptor
+	 *            object describing an image
+	 * @return the image for the given descriptor
+	 */
+	public static Image getImage(ResourceManager resourceManager,
+			ImageDescriptor descriptor) {
+		return (Image) resourceManager.get(descriptor);
 	}
 }
