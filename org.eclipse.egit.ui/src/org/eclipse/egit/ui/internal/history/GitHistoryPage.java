@@ -115,6 +115,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.team.ui.history.HistoryPage;
+import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
@@ -124,12 +125,13 @@ import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.part.IShowInSource;
+import org.eclipse.ui.part.IShowInTargetList;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
 /** Graphical commit history viewer. */
 public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
-		ISchedulingRule, TableLoader, IShowInSource {
+		ISchedulingRule, TableLoader, IShowInSource, IShowInTargetList {
 
 	private static final int INITIAL_ITEM = -1;
 
@@ -2022,5 +2024,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			return fileViewer.getShowInContext();
 		else
 			return null;
+	}
+
+	public String[] getShowInTargetIds() {
+		return new String[] { IHistoryView.VIEW_ID };
 	}
 }
