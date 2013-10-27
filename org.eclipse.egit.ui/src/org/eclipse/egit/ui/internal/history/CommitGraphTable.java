@@ -36,6 +36,7 @@ import org.eclipse.egit.core.op.CreatePatchOperation.DiffHeaderFormat;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.history.SWTCommitList.SWTLane;
@@ -596,10 +597,19 @@ class CommitGraphTable {
 		}
 
 		private String getHoverText(Ref r) {
+			StringBuilder sb = new StringBuilder();
 			String name = r.getName();
-			if (r.isSymbolic())
-				name += ": " + r.getLeaf().getName(); //$NON-NLS-1$
-			return name;
+			sb.append(name);
+			if (r.isSymbolic()) {
+				sb.append(": "); //$NON-NLS-1$
+				sb.append(r.getLeaf().getName());
+			}
+			String description = GitLabelProvider.getRefDescription(r);
+			if (description.length() != 0) {
+				sb.append("\n"); //$NON-NLS-1$
+				sb.append(description);
+			}
+			return sb.toString();
 		}
 	}
 

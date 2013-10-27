@@ -34,6 +34,7 @@ import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelP
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jgit.lib.BranchTrackingStatus;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
@@ -77,6 +78,25 @@ public class GitLabelProvider extends LabelProvider implements
 			sb.append(status.getBehindCount());
 		}
 		return sb.toString();
+	}
+
+	/**
+	 * @param ref
+	 * @return a description of the ref
+	 */
+	public static String getRefDescription(Ref ref) {
+		String name = ref.getName();
+		if (name.equals(Constants.HEAD)) {
+			if (ref.isSymbolic())
+				return UIText.GitLabelProvider_RefDescriptionHeadSymbolic;
+			else
+				return UIText.GitLabelProvider_RefDescriptionHead;
+		} else if (name.equals(Constants.ORIG_HEAD))
+			return UIText.GitLabelProvider_RefDescriptionOrigHead;
+		else if (name.equals(Constants.FETCH_HEAD)) {
+			return UIText.GitLabelProvider_RefDescriptionFetchHead;
+		} else
+			return ""; //$NON-NLS-1$
 	}
 
 	@Override
@@ -150,7 +170,7 @@ public class GitLabelProvider extends LabelProvider implements
 	 * @return a styled string for the repository
 	 * @throws IOException
 	 */
-	protected StyledString getStyledTextFor(Repository repository)
+	public static StyledString getStyledTextFor(Repository repository)
 			throws IOException {
 		File directory = repository.getDirectory();
 		StyledString string = new StyledString();
@@ -215,7 +235,11 @@ public class GitLabelProvider extends LabelProvider implements
 		return refNode.getObject().getName();
 	}
 
-	private String getSimpleTextFor(Repository repository) {
+	/**
+	 * @param repository
+	 * @return simple text for repository
+	 */
+	public static String getSimpleTextFor(Repository repository) {
 		File directory;
 		if (!repository.isBare())
 			directory = repository.getDirectory().getParentFile();
