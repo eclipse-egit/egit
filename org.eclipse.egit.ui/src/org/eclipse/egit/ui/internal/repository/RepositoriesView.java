@@ -16,6 +16,7 @@ package org.eclipse.egit.ui.internal.repository;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -44,9 +45,11 @@ import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
 import org.eclipse.egit.ui.internal.reflog.ReflogView;
 import org.eclipse.egit.ui.internal.repository.tree.FetchNode;
@@ -65,8 +68,10 @@ import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.JFaceColors;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -77,6 +82,7 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeSelection;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.events.ConfigChangedEvent;
 import org.eclipse.jgit.events.ConfigChangedListener;
 import org.eclipse.jgit.events.IndexChangedEvent;
@@ -397,8 +403,14 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				TreeSelection sel = (TreeSelection) event.getSelection();
 				RepositoryTreeNode element = (RepositoryTreeNode) sel
 						.getFirstElement();
-				if (element instanceof RefNode || element instanceof TagNode)
-					executeOpenCommand();
+				if (element instanceof RefNode) {
+					executeOpenCommandWithConfirmation(((RefNode) element)
+							.getObject().getName());
+				}
+				if (element instanceof TagNode) {
+					executeOpenCommandWithConfirmation(((TagNode) element)
+							.getObject().getName());
+				}
 			}
 		});
 		// handle open event for the working directory
@@ -429,6 +441,31 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			layout.topControl = emptyArea;
 
 		return viewer;
+	}
+
+	private void executeOpenCommandWithConfirmation(String refName) {
+		if (!BranchOperationUI.checkoutWillShowQuestionDialog(refName)) {
+			String shortName = Repository.shortenRefName(refName);
+
+			IPreferenceStore store = Activator.getDefault()
+					.getPreferenceStore();
+
+			if (store.getBoolean(UIPreferences.SHOW_CHECKOUT_CONFIRMATION)) {
+				String toggleMessage = UIText.RepositoriesView_CheckoutConfirmationToggleMessage;
+				MessageDialogWithToggle dlg = MessageDialogWithToggle
+						.openOkCancelConfirm(
+								getViewSite().getShell(),
+				UIText.RepositoriesView_CheckoutConfirmationTitle,
+				MessageFormat.format(UIText.RepositoriesView_CheckoutConfirmationMessage,
+										shortName),
+										toggleMessage, false, store,
+										UIPreferences.SHOW_CHECKOUT_CONFIRMATION);
+				if (dlg.getReturnCode() != Window.OK) {
+					return;
+				}
+			}
+		}
+		executeOpenCommand();
 	}
 
 	private void executeOpenCommand() {

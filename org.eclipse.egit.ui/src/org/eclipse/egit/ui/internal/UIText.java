@@ -3030,6 +3030,15 @@ public class UIText extends NLS {
 	public static String RepositoriesView_Branches_Nodetext;
 
 	/** */
+	public static String RepositoriesView_CheckoutConfirmationMessage;
+
+	/** */
+	public static String RepositoriesView_CheckoutConfirmationTitle;
+
+	/** */
+	public static String RepositoriesView_CheckoutConfirmationToggleMessage;
+
+	/** */
 	public static String RepositoriesView_ClipboardContentNoGitRepoMessage;
 
 	/** */
@@ -3124,6 +3133,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String DialogsPreferencePage_ShowInitialConfigCheckbox;
+
+	/** */
+	public static String DialogsPreferencePage_ShowCheckoutConfirmation;
 
 	/** */
 	public static String DialogsPreferencePage_ShowCloneFailedDialog;
