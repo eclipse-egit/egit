@@ -118,7 +118,7 @@ public class NewRemoteDialog extends TitleAreaDialog {
 					UIText.NewRemoteDialog_RemoteAlreadyExistsMessage, t));
 			errorFound = true;
 		}
-		getButton(OK).setEnabled(!errorFound);
+		getButton(OK).setEnabled(!errorFound && t.length() > 0);
 	}
 
 	@Override
