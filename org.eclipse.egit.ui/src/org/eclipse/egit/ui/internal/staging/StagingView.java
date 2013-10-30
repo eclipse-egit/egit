@@ -2018,7 +2018,24 @@ public class StagingView extends ViewPart implements IShowInSource {
 		});
 	}
 
-	private void reload(final Repository repository) {
+	/**
+	 * @param isAmending
+	 *            if the current commit should be amended
+	 */
+	public void setAmending(boolean isAmending) {
+		if (amendPreviousCommitAction.isChecked() != isAmending) {
+			amendPreviousCommitAction.setChecked(isAmending);
+			amendPreviousCommitAction.run();
+		}
+
+	}
+
+	/**
+	 * Reload the staging view
+	 *
+	 * @param repository
+	 */
+	public void reload(final Repository repository) {
 		if (form.isDisposed())
 			return;
 		if (repository == null) {
