@@ -540,4 +540,22 @@ public class RepositoryUtil {
 			return null;
 		}
 	}
+
+	/**
+	 * Checks if given repository is in the 'detached HEAD' state.
+	 *
+	 * @param repository
+	 *            the repository to check
+	 * @return <code>true</code> if the repository is in the 'detached HEAD'
+	 *         state, <code>false</code> if it's not or an error occurred
+	 * @since 3.2
+	 */
+	public static boolean isDetachedHead(Repository repository) {
+		try {
+			return ObjectId.isId(repository.getFullBranch());
+		} catch (IOException e) {
+			Activator.logError(e.getMessage(), e);
+		}
+		return false;
+	}
 }

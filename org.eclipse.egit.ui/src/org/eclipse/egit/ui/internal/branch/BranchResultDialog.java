@@ -11,10 +11,10 @@
 package org.eclipse.egit.ui.internal.branch;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.op.ResetOperation;
 import org.eclipse.egit.ui.Activator;
@@ -33,7 +33,6 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.api.CheckoutResult;
 import org.eclipse.jgit.api.ResetCommand.ResetType;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -97,12 +96,8 @@ public class BranchResultDialog extends MessageDialog {
 				}
 			});
 		} else if (result.getStatus() == CheckoutResult.Status.OK) {
-			try {
-				if (ObjectId.isId(repository.getFullBranch()))
-					showDetachedHeadWarning();
-			} catch (IOException e) {
-				Activator.logError(e.getMessage(), e);
-			}
+			if (RepositoryUtil.isDetachedHead(repository))
+				showDetachedHeadWarning();
 		}
 	}
 
