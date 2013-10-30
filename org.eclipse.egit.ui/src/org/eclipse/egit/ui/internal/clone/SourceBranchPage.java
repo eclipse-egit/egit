@@ -306,8 +306,8 @@ class SourceBranchPage extends WizardPage {
 			return;
 
 		final ListRemoteOperation listRemoteOp;
+		final URIish uri = newRepoSelection.getURI();
 		try {
-			final URIish uri = newRepoSelection.getURI();
 			final Repository db = FileRepositoryBuilder
 					.create(new File("/tmp")); //$NON-NLS-1$
 			int timeout = Activator.getDefault().getPreferenceStore().getInt(
@@ -328,7 +328,7 @@ class SourceBranchPage extends WizardPage {
 			Throwable why = e.getCause();
 			transportError(why);
 			if (showDetailedFailureDialog())
-				SourceBranchFailureDialog.show(getShell(), transportError);
+				SourceBranchFailureDialog.show(getShell(), uri);
 			return;
 		} catch (IOException e) {
 			transportError(UIText.SourceBranchPage_cannotCreateTemp);
@@ -373,6 +373,7 @@ class SourceBranchPage extends WizardPage {
 	}
 
 	private void transportError(final Throwable why) {
+		Activator.logError(why.getMessage(), why);
 		Throwable cause = why.getCause();
 		if (why instanceof TransportException && cause != null)
 			transportError(NLS.bind(getMessage(why), why.getMessage(),
