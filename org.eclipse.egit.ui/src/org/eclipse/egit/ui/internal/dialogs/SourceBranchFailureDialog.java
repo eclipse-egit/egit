@@ -14,6 +14,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.Bullet;
@@ -35,22 +36,24 @@ public class SourceBranchFailureDialog extends MessageDialog {
 	 * Creates and shows custom error dialog for failed ls-remotes operation
 	 *
 	 * @param parentShell
-	 * @param cause full failure cause message
+	 * @param uri
+	 *            the uri of the remote repository
 	 */
-	public static void show(Shell parentShell, String cause) {
-		SourceBranchFailureDialog dialog = new SourceBranchFailureDialog(parentShell, cause);
+	public static void show(Shell parentShell, URIish uri) {
+		SourceBranchFailureDialog dialog = new SourceBranchFailureDialog(
+				parentShell, uri);
 		dialog.setShellStyle(dialog.getShellStyle() | SWT.SHEET | SWT.RESIZE);
 		dialog.open();
 	}
 
 	private Button toggleButton;
 
-	private final String cause;
+	private URIish uri;
 
-	private SourceBranchFailureDialog(Shell parentShell, String cause) {
+	private SourceBranchFailureDialog(Shell parentShell, URIish uri) {
 		super(parentShell, UIText.CloneFailureDialog_tile, null, null,
 				MessageDialog.ERROR, new String[] { IDialogConstants.OK_LABEL }, 0);
-		this.cause = cause;
+		this.uri = uri;
 	}
 
 	@Override
@@ -69,8 +72,8 @@ public class SourceBranchFailureDialog extends MessageDialog {
 	protected Control createMessageArea(Composite composite) {
 		Composite main = new Composite(composite, SWT.NONE);
 		main.setLayout(new GridLayout(2, false));
-		GridDataFactory.fillDefaults().indent(0, 0).grab(true, true).applyTo(
-				main);
+		GridDataFactory.fillDefaults().indent(0, 0).grab(true, true)
+				.applyTo(main);
 		// add error image
 		super.createMessageArea(main);
 
@@ -78,21 +81,35 @@ public class SourceBranchFailureDialog extends MessageDialog {
 		text.setEnabled(false);
 		text.setBackground(main.getBackground());
 
-		String messageText = NLS.bind(UIText.CloneFailureDialog_checkList, cause);
+		String messageText = NLS.bind(UIText.CloneFailureDialog_checkList,
+				uri.toString());
+		int bullets = 2;
+		if (!uri.getPath().endsWith(".git")) { //$NON-NLS-1$
+			messageText = messageText + UIText.CloneFailureDialog_checkList_git;
+			bullets += 1;
+		}
+		if ("ssh".equals(uri.getScheme())) { //$NON-NLS-1$
+			messageText = messageText + UIText.CloneFailureDialog_checkList_ssh;
+			bullets += 1;
+		} else if ("https".equals(uri.getScheme())) { //$NON-NLS-1$
+			messageText = messageText
+					+ UIText.CloneFailureDialog_checkList_https;
+			bullets += 1;
+		}
 		int newLinesCount = messageText.split("\n").length; //$NON-NLS-1$
 		Bullet bullet = createBullet(main);
 
 		text.setText(messageText);
-		text.setLineBullet(newLinesCount - 4, 2, bullet);
+		text.setLineBullet(newLinesCount - bullets, bullets, bullet);
 
 		return main;
 	}
 
 	private Bullet createBullet(Composite main) {
 		StyleRange style = new StyleRange();
-	    style.metrics = new GlyphMetrics(0, 0, 40);
-	    style.foreground = main.getDisplay().getSystemColor(SWT.COLOR_BLACK);
-	    Bullet bullet = new Bullet(style);
+		style.metrics = new GlyphMetrics(0, 0, 40);
+		style.foreground = main.getDisplay().getSystemColor(SWT.COLOR_BLACK);
+		Bullet bullet = new Bullet(style);
 		return bullet;
 	}
 
