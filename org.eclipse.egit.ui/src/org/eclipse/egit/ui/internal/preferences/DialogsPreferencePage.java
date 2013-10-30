@@ -59,6 +59,9 @@ public class DialogsPreferencePage extends FieldEditorPreferencePage implements
 				UIPreferences.SHOW_INITIAL_CONFIG_DIALOG,
 				UIText.DialogsPreferencePage_ShowInitialConfigCheckbox,
 				confirmDialogsGroup));
+		addField(new BooleanFieldEditor(
+				UIPreferences.SHOW_CHECKOUT_CONFIRMATION,
+				UIText.DialogsPreferencePage_ShowCheckoutConfirmation, confirmDialogsGroup));
 
 		addField(new BooleanFieldEditor(UIPreferences.SHOW_REBASE_CONFIRM,
 				UIText.DialogsPreferencePage_RebaseCheckbox, confirmDialogsGroup));
