@@ -2019,6 +2019,17 @@ public class StagingView extends ViewPart implements IShowInSource {
 	}
 
 	private void reload(final Repository repository) {
+		reload(repository, false);
+	}
+
+	/**
+	 * Force reloading the staging view programmatically
+	 *
+	 * @param repository
+	 * @param setAmending
+	 *            if the current commit should be amended
+	 */
+	public void reload(final Repository repository, final boolean setAmending) {
 		if (form.isDisposed())
 			return;
 		if (repository == null) {
@@ -2094,6 +2105,11 @@ public class StagingView extends ViewPart implements IShowInSource {
 				form.setText(StagingView.getRepositoryName(repository));
 				updateCommitMessageComponent(repositoryChanged, indexDiffAvailable);
 				updateSectionText();
+
+				if (amendPreviousCommitAction.isChecked() != setAmending) {
+					amendPreviousCommitAction.setChecked(setAmending);
+					amendPreviousCommitAction.run();
+				}
 			}
 		});
 	}
