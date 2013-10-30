@@ -25,16 +25,20 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.rebase.RebaseResultDialog;
+import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jgit.api.RebaseCommand;
 import org.eclipse.jgit.api.RebaseCommand.Operation;
+import org.eclipse.jgit.api.RebaseResult.Status;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.ISources;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -112,9 +116,32 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 													dialogMessage);
 								}
 							});
-						else if (result.isOK())
+						else if (result.isOK()) {
 							RebaseResultDialog.show(rebase.getResult(),
 									repository);
+							if (rebase.getResult().getStatus()
+									.equals(Status.EDIT)) {
+								Display.getDefault().asyncExec(new Runnable() {
+									public void run() {
+										try {
+											IViewPart view = PlatformUI
+													.getWorkbench()
+													.getActiveWorkbenchWindow()
+													.getActivePage()
+													.showView(StagingView.VIEW_ID);
+											if (view instanceof StagingView) {
+												StagingView sv = (StagingView) view;
+												sv.reload(repository, true);
+											}
+										} catch (PartInitException e) {
+											Activator.logError(e.getMessage(),
+													e);
+										}
+									}
+								});
+								}
+
+							}
 					}
 
 					private void finishRebaseInteractive() {
