@@ -25,16 +25,20 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.rebase.RebaseResultDialog;
+import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jgit.api.RebaseCommand;
 import org.eclipse.jgit.api.RebaseCommand.Operation;
+import org.eclipse.jgit.api.RebaseResult.Status;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.ISources;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -112,9 +116,52 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 													dialogMessage);
 								}
 							});
-						else if (result.isOK())
+						else if (result.isOK()) {
 							RebaseResultDialog.show(rebase.getResult(),
 									repository);
+							if (operation == Operation.ABORT) {
+								setAmending(false, false);
+
+							}
+							if (rebase.getResult().getStatus() == Status.EDIT) {
+								setAmending(true, true);
+							}
+						}
+					}
+
+					private void setAmending(final boolean amending,
+							final boolean openStagingView) {
+						Display.getDefault().asyncExec(new Runnable() {
+							public void run() {
+								try {
+									IViewPart view;
+									if (openStagingView)
+										view = PlatformUI.getWorkbench()
+												.getActiveWorkbenchWindow()
+												.getActivePage()
+												.showView(StagingView.VIEW_ID);
+									else
+										view = PlatformUI
+											.getWorkbench()
+											.getActiveWorkbenchWindow()
+											.getActivePage()
+											.findView(StagingView.VIEW_ID);
+									if (view instanceof StagingView) {
+										final StagingView sv = (StagingView) view;
+										sv.reload(repository);
+										Display.getDefault().asyncExec(
+												new Runnable() {
+													public void run() {
+														sv.setAmending(amending);
+													}
+												});
+									}
+								} catch (PartInitException e) {
+									Activator.logError(e.getMessage(),
+											e);
+								}
+							}
+						});
 					}
 
 					private void finishRebaseInteractive() {
