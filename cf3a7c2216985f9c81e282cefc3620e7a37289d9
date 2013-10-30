@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_8462a707",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-30T09:35:37Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "cf3a7c2216985f9c81e282cefc3620e7a37289d9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_e4660b1c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-30T09:35:37Z",
+      "side": 1,
+      "message": "typo: s/Configurmation/Confirmation/",
+      "revId": "cf3a7c2216985f9c81e282cefc3620e7a37289d9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_64a5dbbb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-30T09:35:37Z",
+      "side": 1,
+      "message": "in other similar dialogs we say \"Don\u0027t show this confirmation dialog again\" so we could use the same text here to gain a bit more consistency",
+      "revId": "cf3a7c2216985f9c81e282cefc3620e7a37289d9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
