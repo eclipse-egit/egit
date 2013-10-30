@@ -39,7 +39,7 @@ public class Eclipse {
 	private void closeAllShells() {
 		SWTBotShell[] shells = bot.shells();
 		for (SWTBotShell shell : shells) {
-			if (!isEclipseShell(shell)) {
+			if (shell.isOpen() && !isEclipseShell(shell)) {
 				shell.close();
 			}
 		}
@@ -48,7 +48,6 @@ public class Eclipse {
 	@SuppressWarnings("boxing")
 	public static boolean isEclipseShell(final SWTBotShell shell) {
 		return UIThreadRunnable.syncExec(new BoolResult() {
-
 			public Boolean run() {
 				return PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 						.getShell() == shell.widget;
