@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_c4cf8f23",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-30T10:07:37Z",
+      "side": 1,
+      "message": "commit time resolution depends on the platform you run git on, some filesystems have 1 second resolution, others have higher resolution",
+      "revId": "7b5580b13cadc8a5538f75e8fb07ea316834ebd7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_84ce2729",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-10-30T10:07:37Z",
+      "side": 1,
+      "message": "do we also need RevSort.BOUNDARY ?",
+      "revId": "7b5580b13cadc8a5538f75e8fb07ea316834ebd7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
