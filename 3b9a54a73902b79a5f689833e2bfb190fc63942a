@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_226e16f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2013-10-31T12:36:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_0777ac47",
+      "revId": "3b9a54a73902b79a5f689833e2bfb190fc63942a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_a7723855",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchResultDialog.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-10-31T11:42:00Z",
       "side": 1,
       "message": "Please don\u0027t use braces here\n\nhttp://wiki.eclipse.org/EGit/Contributor_Guide#Braces_for_one-line_statements",
+      "revId": "3b9a54a73902b79a5f689833e2bfb190fc63942a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_4271a2ce",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2013-10-31T12:36:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_a7723855",
       "revId": "3b9a54a73902b79a5f689833e2bfb190fc63942a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
