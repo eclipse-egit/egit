@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_67c4b00b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PushBranchActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2013-10-31T11:27:01Z",
+      "side": 1,
+      "message": "This can be null, and it is for a commit in the History view. Not sure why the exception is not shown in the Error Log though. Found it when running a debug session with breakpoints for NPEs enabled.",
+      "revId": "f9912ff78a53fdbb6082db1c483fe60fb9268a02",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
