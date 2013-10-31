@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_5687a399",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-10-31T15:16:44Z",
+      "side": 1,
+      "message": "[optional] You could add \"refs/stash\" here",
+      "revId": "fd564568a249e7df1c2f3391187349aa17fb6df1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_36a93715",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-10-31T15:16:44Z",
+      "side": 1,
+      "message": "better return null here for all other refs, otherwise there is an empty popup",
+      "revId": "fd564568a249e7df1c2f3391187349aa17fb6df1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
