@@ -25,6 +25,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
+import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefsNode;
 import org.eclipse.egit.ui.internal.repository.tree.LocalNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
@@ -386,6 +387,11 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 				if (ref == null)
 					return false;
 				node = new RefNode(remoteBranches, repo, ref);
+			} else if (Constants.HEAD.equals(refName)) {
+				Ref ref = repo.getRef(refName);
+				if (ref == null)
+					return false;
+				node = new AdditionalRefNode(references, repo, ref);
 			} else {
 				String mappedRef = Activator.getDefault().getRepositoryUtil()
 						.mapCommitToRef(repo, refName, false);
