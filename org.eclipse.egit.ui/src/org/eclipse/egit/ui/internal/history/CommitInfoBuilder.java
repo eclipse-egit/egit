@@ -273,7 +273,8 @@ public class CommitInfoBuilder {
 		}
 		int h0 = d.length();
 		d.append(msg);
-		d.append(LF);
+		if (!msg.endsWith(LF))
+			d.append(LF);
 
 		Matcher matcher = p.matcher(msg);
 		while (matcher.find()) {
@@ -417,7 +418,12 @@ public class CommitInfoBuilder {
 							UIText.CommitMessageViewer_BuildDiffTaskName, path));
 					currentEncoding[0] = CompareCoreUtils.getResourceEncoding(db,
 							path);
-					d.append(formatPathLine(path)).append(LF);
+					d.append(LF);
+					int start = d.length();
+					String pathLine = formatPathLine(path);
+					int len = pathLine.length();
+					d.append(pathLine).append(LF);
+					styles.add(new StyleRange(start, len, darkGrey, null));
 					currentDiff.outputDiff(d, db, diffFmt, true);
 					diffFmt.flush();
 				}
