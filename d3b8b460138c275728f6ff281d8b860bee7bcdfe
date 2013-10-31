@@ -16,6 +16,23 @@
       "revId": "d3b8b460138c275728f6ff281d8b860bee7bcdfe",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_bc288b0b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CheckoutDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-10-31T10:15:08Z",
+      "side": 1,
+      "message": "This breaks disabling the button in case of multi selection. In this case refName is null.\n\nBut indeed this is not very clear. Maybe we better put two different statements into the if/else block above:\n if {\n ...\t\t\t\n  okButton.setEnabled(false);\n  } else {\n ... \n  okButton.setEnabled(!isCurrentBranch(refName));\n }",
+      "revId": "d3b8b460138c275728f6ff281d8b860bee7bcdfe",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
