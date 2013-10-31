@@ -34,6 +34,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -309,7 +310,7 @@ class CloneDestinationPage extends WizardPage {
 	 * @return remote name
 	 */
 	public String getRemote() {
-		return remoteText.getText();
+		return remoteText.getText().trim();
 	}
 
 	/**
@@ -363,8 +364,16 @@ class CloneDestinationPage extends WizardPage {
 			setPageComplete(false);
 			return;
 		}
-		if (remoteText.getText().length() == 0) {
+		String remoteName = getRemote();
+		if (remoteName.length() == 0) {
 			setErrorMessage(UIText.CloneDestinationPage_errorRemoteNameRequired);
+			setPageComplete(false);
+			return;
+		}
+		if (!Repository.isValidRefName(Constants.R_REMOTES + remoteName)) {
+			setErrorMessage(NLS.bind(
+					UIText.CloneDestinationPage_errorInvalidRemoteName,
+					remoteName));
 			setPageComplete(false);
 			return;
 		}

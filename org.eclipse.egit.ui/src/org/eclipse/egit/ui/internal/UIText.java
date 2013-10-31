@@ -1299,6 +1299,9 @@ public class UIText extends NLS {
 	public static String CloneDestinationPage_errorInitialBranchRequired;
 
 	/** */
+	public static String CloneDestinationPage_errorInvalidRemoteName;
+
+	/** */
 	public static String CloneDestinationPage_errorNotEmptyDir;
 
 	/** */
