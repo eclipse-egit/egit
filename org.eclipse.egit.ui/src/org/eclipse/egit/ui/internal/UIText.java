@@ -1656,6 +1656,9 @@ public class UIText extends NLS {
 	public static String ResetTargetSelectionDialog_CommitterLabel;
 
 	/** */
+	public static String ResetTargetSelectionDialog_DetachedHeadState;
+
+	/** */
 	public static String ResetTargetSelectionDialog_ExpressionLabel;
 
 	/** */
