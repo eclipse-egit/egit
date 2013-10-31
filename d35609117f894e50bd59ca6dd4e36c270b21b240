@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_5c698716",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-10-31T10:34:55Z",
+      "side": 1,
+      "message": "We usually use upper case at the begin",
+      "revId": "d35609117f894e50bd59ca6dd4e36c270b21b240",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_7c644340",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/ResetTargetSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-10-31T10:34:55Z",
+      "side": 1,
+      "message": "The preselection of reset medium got lost",
+      "revId": "d35609117f894e50bd59ca6dd4e36c270b21b240",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
