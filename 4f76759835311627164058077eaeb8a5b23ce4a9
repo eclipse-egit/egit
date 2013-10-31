@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_ea18807e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-10-31T21:44:29Z",
+      "side": 1,
+      "message": "How about greying out the \"diff --git ...\" part instead? It seems the file name should stand out more than the (very technical) diff output.",
+      "revId": "4f76759835311627164058077eaeb8a5b23ce4a9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
