@@ -35,8 +35,10 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.team.core.RepositoryProvider;
 
 /**
  * Resource utilities
@@ -45,9 +47,11 @@ import org.eclipse.jgit.lib.Repository;
 public class ResourceUtil {
 
 	/**
-	 * Return the corresponding resource if it exists.
+	 * Return the corresponding resource if it exists and has the Git repository
+	 * provider.
 	 * <p>
-	 * The returned file will be relative to the most nested non-closed project.
+	 * The returned file will be relative to the most nested non-closed
+	 * Git-managed project.
 	 *
 	 * @param location
 	 *            the path to check
@@ -63,9 +67,11 @@ public class ResourceUtil {
 	}
 
 	/**
-	 * Return the corresponding file if it exists.
+	 * Return the corresponding file if it exists and has the Git repository
+	 * provider.
 	 * <p>
-	 * The returned file will be relative to the most nested non-closed project.
+	 * The returned file will be relative to the most nested non-closed
+	 * Git-managed project.
 	 *
 	 * @param location
 	 * @return the file, or null
@@ -77,9 +83,11 @@ public class ResourceUtil {
 	}
 
 	/**
-	 * Return the corresponding container if it exists.
+	 * Return the corresponding container if it exists and has the Git
+	 * repository provider.
 	 * <p>
-	 * The returned container will be relative to the most nested non-closed project.
+	 * The returned container will be relative to the most nested non-closed
+	 * Git-managed project.
 	 *
 	 * @param location
 	 * @return the container, or null
@@ -91,9 +99,11 @@ public class ResourceUtil {
 	}
 
 	/**
-	 * Get the {@link IFile} corresponding to the arguments if it exists.
+	 * Get the {@link IFile} corresponding to the arguments if it exists and has
+	 * the Git repository provider.
 	 * <p>
-	 * The returned file will be relative to the most nested non-closed project.
+	 * The returned file will be relative to the most nested non-closed
+	 * Git-managed project.
 	 *
 	 * @param repository
 	 *            the repository of the file
@@ -182,21 +192,25 @@ public class ResourceUtil {
 
 	private static IFile getFileForLocationURI(IWorkspaceRoot root, URI uri) {
 		IFile[] files = root.findFilesForLocationURI(uri);
-		return getExistingResourceWithShortestPath(files);
+		return getExistingMappedResourceWithShortestPath(files);
 	}
 
 	private static IContainer getContainerForLocationURI(IWorkspaceRoot root,
 			URI uri) {
 		IContainer[] containers = root.findContainersForLocationURI(uri);
-		return getExistingResourceWithShortestPath(containers);
+		return getExistingMappedResourceWithShortestPath(containers);
 	}
 
-	private static <T extends IResource> T getExistingResourceWithShortestPath(
+	private static <T extends IResource> T getExistingMappedResourceWithShortestPath(
 			T[] resources) {
 		int shortestPathSegmentCount = Integer.MAX_VALUE;
 		T shortestPath = null;
 		for (T resource : resources) {
 			if (!resource.exists())
+				continue;
+			RepositoryProvider provider = RepositoryProvider.getProvider(
+					resource.getProject(), GitProvider.ID);
+			if (provider == null)
 				continue;
 			IPath fullPath = resource.getFullPath();
 			int segmentCount = fullPath.segmentCount();
