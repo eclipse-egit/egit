@@ -17,14 +17,35 @@ import static org.junit.Assert.assertTrue;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestProject;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class ResourceUtilTest extends GitTestCase {
+
+	private Repository repository;
+
+	@Before
+	public void before() throws Exception {
+		repository = FileRepositoryBuilder.create(gitDir);
+		repository.create();
+		connect(project.getProject());
+	}
+
+	@After
+	public void after() {
+		repository.close();
+	}
 
 	@Test
 	public void getResourceForLocationShouldReturnFile() throws Exception {
@@ -51,6 +72,7 @@ public class ResourceUtilTest extends GitTestCase {
 	public void getFileForLocationShouldReturnExistingFileInCaseOfNestedProject()
 			throws Exception {
 		TestProject nested = new TestProject(true, "Project-1/Project-0");
+		connect(nested.getProject());
 		IFile file = nested.createFile("a.txt", new byte[] {});
 		IPath location = file.getLocation();
 
@@ -64,8 +86,10 @@ public class ResourceUtilTest extends GitTestCase {
 	public void getFileForLocationShouldReturnExistingFileInCaseOfNestedNotClosedProject()
 			throws Exception {
 		TestProject nested = new TestProject(true, "Project-1/Project-0");
+		connect(nested.getProject());
 		TestProject nested2 = new TestProject(true,
 				"Project-1/Project-0/Project");
+		connect(nested2.getProject());
 		IFile file = nested2.createFile("a.txt", new byte[] {});
 		IPath location = file.getLocation();
 		nested2.project.close(new NullProgressMonitor());
@@ -73,5 +97,24 @@ public class ResourceUtilTest extends GitTestCase {
 		assertThat(result, notNullValue());
 		assertTrue("Returned IFile should exist", result.exists());
 		assertThat(result.getProject(), is(nested.getProject()));
+	}
+
+	@Test
+	public void getFileForLocationShouldNotUseFilesWithoutRepositoryMapping()
+			throws Exception {
+		TestProject nested = new TestProject(true, "Project-1/Project-0");
+		IFile file = nested.createFile("a.txt", new byte[] {});
+		IPath location = file.getLocation();
+
+		IFile result = ResourceUtil.getFileForLocation(location);
+		assertThat(result, notNullValue());
+		assertTrue("Returned IFile should exist", result.exists());
+		assertThat(result.getProject(), is(project.getProject()));
+	}
+
+	private void connect(IProject p) throws CoreException {
+		ConnectProviderOperation operation = new ConnectProviderOperation(p,
+				gitDir);
+		operation.execute(null);
 	}
 }
