@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_2567089d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-04T22:25:01Z",
+      "side": 1,
+      "message": "enums can be compared using \u003d\u003d",
+      "revId": "8c990fd55c2b6a1a3979912d35c1c30585dbc8cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_c55e24bf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-04T22:25:01Z",
+      "side": 1,
+      "message": "why is reload needed ? I tried without and it seems this didn\u0027t change behavior",
+      "revId": "8c990fd55c2b6a1a3979912d35c1c30585dbc8cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_a55958d7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-04T22:25:01Z",
+      "side": 1,
+      "message": "I think when aborting interactive rebase we should ensure that the staging view\u0027s amend flag is set back to false",
+      "revId": "8c990fd55c2b6a1a3979912d35c1c30585dbc8cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_90861df2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2035,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-04T22:25:01Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "8c990fd55c2b6a1a3979912d35c1c30585dbc8cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
