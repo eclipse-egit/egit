@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_1f9fb13f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-11-05T10:25:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_2567089d",
+      "revId": "8c990fd55c2b6a1a3979912d35c1c30585dbc8cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_c55e24bf",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2013-11-04T22:25:01Z",
       "side": 1,
       "message": "why is reload needed ? I tried without and it seems this didn\u0027t change behavior",
+      "revId": "8c990fd55c2b6a1a3979912d35c1c30585dbc8cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_3f6eeda9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-11-05T10:25:15Z",
+      "side": 1,
+      "message": "it is necessary if the staging view shows another repository and link with selection is not selected. In that case the staging view would be opened in amend mode for the other repository.",
+      "parentUuid": "8748d3a1_c55e24bf",
       "revId": "8c990fd55c2b6a1a3979912d35c1c30585dbc8cd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_7f6eb578",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-11-05T10:25:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_a55958d7",
+      "revId": "8c990fd55c2b6a1a3979912d35c1c30585dbc8cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_90861df2",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2013-11-04T22:25:01Z",
       "side": 1,
       "message": "style nit: trailing whitespace",
+      "revId": "8c990fd55c2b6a1a3979912d35c1c30585dbc8cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_7fc075c5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2035,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-11-05T10:25:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_90861df2",
       "revId": "8c990fd55c2b6a1a3979912d35c1c30585dbc8cd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
