@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_18106206",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIIcons.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-05T22:10:22Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "e66fa4585e1eb0c2650c7ff53482d32dfba78d8c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
