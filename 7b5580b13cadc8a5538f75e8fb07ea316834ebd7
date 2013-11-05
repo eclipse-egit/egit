@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_9333b5ab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-05T23:34:26Z",
+      "side": 1,
+      "message": "you are right, the higher precision is only used in the index if available from the filesystem",
+      "parentUuid": "8748d3a1_aa38388b",
+      "revId": "7b5580b13cadc8a5538f75e8fb07ea316834ebd7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_84ce2729",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
         "patchSetId": 1
