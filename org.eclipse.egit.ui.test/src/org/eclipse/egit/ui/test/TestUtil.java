@@ -17,8 +17,10 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -170,9 +172,10 @@ public class TestUtil {
 	 */
 	public static void appendFileContent(File file, String content, boolean append)
 			throws IOException {
-		FileWriter fw = null;
+		Writer fw = null;
 		try {
-			fw = new FileWriter(file, append);
+			fw = new OutputStreamWriter(new FileOutputStream(file, append),
+					"UTF-8");
 			fw.append(content);
 		} finally {
 			if (fw != null)
@@ -380,12 +383,12 @@ public class TestUtil {
 			String path = treeWalk.getPathString();
 			assertTrue(expectedfiles.containsKey(path));
 			ObjectId objectId = treeWalk.getObjectId(0);
-			byte[] expectedContent = expectedfiles.get(path).getBytes();
+			byte[] expectedContent = expectedfiles.get(path).getBytes("UTF-8");
 			byte[] repoContent = treeWalk.getObjectReader().open(objectId)
 					.getBytes();
 			if (!Arrays.equals(repoContent, expectedContent))
 				fail("File " + path + " has repository content "
-						+ new String(repoContent)
+						+ new String(repoContent, "UTF-8")
 						+ " instead of expected content "
 						+ new String(expectedContent));
 			expectedfiles.remove(path);

@@ -86,7 +86,8 @@ public class BlobStorageTest extends GitTestCase {
 
 		try {
 			IFile file = proj.getFile("file");
-			file.create(new ByteArrayInputStream("data".getBytes()), 0, progress);
+			file.create(new ByteArrayInputStream("data".getBytes("UTF-8")), 0,
+					progress);
 			Git git = new Git(singleProjectRepo);
 			git.add().addFilepattern(".").call();
 			RevCommit commit = git.commit().setAuthor("JUnit", "junit@jgit.org").setAll(true).setMessage("First commit").call();

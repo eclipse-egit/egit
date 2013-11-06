@@ -10,6 +10,8 @@ package org.eclipse.egit.core.synchronize;
 
 import static org.eclipse.jgit.lib.ObjectId.zeroId;
 
+import java.io.UnsupportedEncodingException;
+
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -58,7 +60,11 @@ public abstract class GitRemoteResource extends CachedResourceVariant {
 	}
 
 	public byte[] asBytes() {
-		return getObjectId().name().getBytes();
+		try {
+			return getObjectId().name().getBytes("UTF-8"); //$NON-NLS-1$
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override

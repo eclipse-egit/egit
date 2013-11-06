@@ -12,6 +12,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -272,7 +273,8 @@ public class GitSubscriberResourceMappingContextTest extends GitTestCase {
 		folder.create(false, true, null);
 
 		IFile file = folder.getFile("a.txt");
-		file.create(new ByteArrayInputStream("a".getBytes()), false, null);
+		file.create(new ByteArrayInputStream("a".getBytes("UTF-8")), false,
+				null);
 
 		RemoteResourceMappingContext context = prepareContext(MASTER, MASTER);
 		refresh(context, file);
@@ -300,9 +302,9 @@ public class GitSubscriberResourceMappingContextTest extends GitTestCase {
 	}
 
 	private void setContents(IFile targetFile, String newContents)
-			throws CoreException {
+			throws CoreException, UnsupportedEncodingException {
 		targetFile.setContents(
-				new ByteArrayInputStream(newContents.getBytes()),
+				new ByteArrayInputStream(newContents.getBytes("UTF-8")),
 				IResource.FORCE, new NullProgressMonitor());
 	}
 

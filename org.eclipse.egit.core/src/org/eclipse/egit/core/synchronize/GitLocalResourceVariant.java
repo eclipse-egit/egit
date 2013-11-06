@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.core.synchronize;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 import org.eclipse.core.resources.IFile;
@@ -33,7 +34,11 @@ class GitLocalResourceVariant implements IResourceVariant {
 	}
 
 	public byte[] asBytes() {
-		return getContentIdentifier().getBytes();
+		try {
+			return getContentIdentifier().getBytes("UTF-8"); //$NON-NLS-1$
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public String getContentIdentifier() {

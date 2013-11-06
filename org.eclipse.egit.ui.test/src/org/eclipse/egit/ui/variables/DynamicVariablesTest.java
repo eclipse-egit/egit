@@ -10,7 +10,10 @@ package org.eclipse.egit.ui.variables;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.Collections;
 
 import org.eclipse.core.resources.IProject;
@@ -100,7 +103,10 @@ public class DynamicVariablesTest extends EGitTestCase {
 		RepositoryProvider.map(project, GitProvider.class.getName());
 		RepositoryProvider.map(project2, GitProvider.class.getName());
 
-		FileWriter fileWriter = new FileWriter(new File(repository.getWorkTree(), TEST_PROJECT+"/"+TEST_FILE));
+		File f = new File(repository.getWorkTree(), TEST_PROJECT + "/"
+				+ TEST_FILE);
+		Writer fileWriter = new OutputStreamWriter(new FileOutputStream(f),
+				"UTF-8");
 		fileWriter.write("Some data");
 		fileWriter.close();
 		FileWriter fileWriter2 = new FileWriter(new File(repository2.getWorkTree(), TEST_FILE2));
