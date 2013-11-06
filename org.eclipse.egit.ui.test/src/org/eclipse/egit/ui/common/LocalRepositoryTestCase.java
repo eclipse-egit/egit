@@ -131,7 +131,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 	protected static final String FOLDER = "folder";
 
-	protected static TestUtils testUtils = new TestUtils();
+	protected final static TestUtils testUtils = new TestUtils();
 
 	public File getTestDirectory() {
 		return testDirectory;
