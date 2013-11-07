@@ -410,7 +410,7 @@ public class GitResourceVariantTreeSubscriber extends
 	 * comment, timestamp... or any information that could be provided by the
 	 * Git resource variant. This implementation uses the variant's information.
 	 */
-	private class GitResourceVariantFileRevision extends
+	private static class GitResourceVariantFileRevision extends
 			ResourceVariantFileRevision {
 		private final IResourceVariant variant;
 
@@ -477,7 +477,7 @@ public class GitResourceVariantTreeSubscriber extends
 	 * As opposed to the other repository providers, EGit allows for
 	 * synchronization between three remote branches. This will return the
 	 * "source" tree for such synchronization use cases.
-	 * 
+	 *
 	 * @return The source tree of this subscriber.
 	 * @since 3.0
 	 */
@@ -491,7 +491,7 @@ public class GitResourceVariantTreeSubscriber extends
 	/**
 	 * This can be used to retrieve the version of the given resource
 	 * corresponding to the source tree of this subscriber.
-	 * 
+	 *
 	 * @param resource
 	 *            The resource for which we need a variant.
 	 * @return The revision of the given resource cached in the source tree of
