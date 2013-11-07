@@ -16,6 +16,24 @@
       "revId": "4f76759835311627164058077eaeb8a5b23ce4a9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_3d925929",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 339
+      },
+      "writtenOn": "2013-11-07T14:03:14Z",
+      "side": 1,
+      "message": "I wouldn\u0027t be against that, but it would need quite some more code cleanup to ensure we don\u0027t break the coloring in the DiffEditorPage.\n\nIMO, the file name line could also be dropped and the coloring could be unified with the DiffEditorPage. But that\u0027s too much work to fix this little problem.\n\nDropping the coloring change and just adding d.append(LF); would also be fine for me.",
+      "parentUuid": "8748d3a1_ea18807e",
+      "revId": "4f76759835311627164058077eaeb8a5b23ce4a9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
