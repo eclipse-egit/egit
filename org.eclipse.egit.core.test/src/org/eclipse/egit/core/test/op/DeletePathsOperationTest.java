@@ -31,6 +31,7 @@ import org.eclipse.egit.core.test.JobSchedulingAssert;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.util.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -76,7 +77,7 @@ public class DeletePathsOperationTest extends DualRepositoryTestCase {
 	@Test
 	public void testDeleteResourceOutsideOfProject() throws Exception {
 		File outsideOfProject = new File(workdir, "outside-of-project.txt");
-		outsideOfProject.createNewFile();
+		FileUtils.createNewFile(outsideOfProject);
 
 		IPath path = new Path(outsideOfProject.getAbsolutePath());
 
