@@ -66,11 +66,12 @@
     <tycho-version>0.19.0</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
     <mockito-version>1.8.4</mockito-version>
-    <junit-version>4.8.1</junit-version>
+    <junit-version>4.11</junit-version>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.repository/target/repository</jgit-site>
     <signer-input-directory>/home/data/httpd/download-staging.priv/egit</signer-input-directory>
     <download-publish-path>/home/data/httpd/download.eclipse.org/egit/updates-nightly</download-publish-path>
-    <target-platform>egit-4.2</target-platform>
+    <target-platform>egit-4.3</target-platform>
+    <platform-version>[3.9,4.0)</platform-version>
     <tycho.scmUrl>scm:git:https://git.eclipse.org/r/p/egit/egit.git</tycho.scmUrl>
     <test.vmparams></test.vmparams>
   </properties>
@@ -104,16 +105,30 @@
       </properties>
     </profile>
     <profile>
-      <id>platform-kepler-staging</id>
+      <id>platform-luna</id>
       <activation>
+        <activeByDefault>true</activeByDefault>
         <property>
           <name>platform-version-name</name>
-          <value>kepler-staging</value>
+          <value>luna</value>
         </property>
       </activation>
       <properties>
-        <target-platform>egit-4.3-staging</target-platform>
-        <platform-version>[3.9,4.0)</platform-version>
+        <target-platform>egit-4.4</target-platform>
+        <platform-version>[3.10,4.0)</platform-version>
+      </properties>
+    </profile>
+    <profile>
+      <id>platform-luna-staging</id>
+      <activation>
+        <property>
+          <name>platform-version-name</name>
+          <value>luna-staging</value>
+        </property>
+      </activation>
+      <properties>
+        <target-platform>egit-4.4-staging</target-platform>
+        <platform-version>[3.10,4.0)</platform-version>
       </properties>
     </profile>
     <profile>
