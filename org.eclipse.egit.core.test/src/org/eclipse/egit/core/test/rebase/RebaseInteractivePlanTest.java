@@ -169,25 +169,25 @@ public class RebaseInteractivePlanTest extends GitTestCase {
 		public void beforeTest() {
 			testData1 = new LinkedList<Integer>();
 			for (int i = 1; i <= 4; i++) {
-				testData1.add(new Integer(i));
+				testData1.add(Integer.valueOf(i));
 			}
 			testData2 = new LinkedList<Integer>();
 			for (int i = 5; i <= 10; i++) {
-				testData2.add(new Integer(i));
+				testData2.add(Integer.valueOf(i));
 			}
 			joined = JoinedList.wrap(testData1, testData2);
 		}
 
 		@Test
 		public void addTest() {
-			joined.add(new Integer(11));
+			joined.add(Integer.valueOf(11));
 			assertEquals("[1, 2, 3, 4]", joined.getFirstList().toString());
 			assertEquals("[5, 6, 7, 8, 9, 10, 11]", joined.getSecondList()
 					.toString());
 			assertEquals("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]",
 					joined.toString());
 
-			joined.add(new Integer(12));
+			joined.add(Integer.valueOf(12));
 			assertEquals("[1, 2, 3, 4]", joined.getFirstList().toString());
 			assertEquals("[5, 6, 7, 8, 9, 10, 11, 12]", joined.getSecondList()
 					.toString());
@@ -197,28 +197,28 @@ public class RebaseInteractivePlanTest extends GitTestCase {
 
 		@Test
 		public void addToIndexTest() {
-			joined.add(0, new Integer(0));
+			joined.add(0, Integer.valueOf(0));
 			assertEquals("[0, 1, 2, 3, 4]", joined.getFirstList().toString());
 			assertEquals("[5, 6, 7, 8, 9, 10]", joined.getSecondList()
 					.toString());
 			assertEquals("[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
 					joined.toString());
 
-			joined.add(5, new Integer(-5));
+			joined.add(5, Integer.valueOf(-5));
 			assertEquals("[0, 1, 2, 3, 4]", joined.getFirstList().toString());
 			assertEquals("[-5, 5, 6, 7, 8, 9, 10]", joined.getSecondList()
 					.toString());
 			assertEquals("[0, 1, 2, 3, 4, -5, 5, 6, 7, 8, 9, 10]",
 					joined.toString());
 
-			joined.add(5, new Integer(-5));
+			joined.add(5, Integer.valueOf(-5));
 			assertEquals("[0, 1, 2, 3, 4]", joined.getFirstList().toString());
 			assertEquals("[-5, -5, 5, 6, 7, 8, 9, 10]", joined.getSecondList()
 					.toString());
 			assertEquals("[0, 1, 2, 3, 4, -5, -5, 5, 6, 7, 8, 9, 10]",
 					joined.toString());
 
-			joined.add(4, new Integer(-4));
+			joined.add(4, Integer.valueOf(-4));
 			assertEquals("[0, 1, 2, 3, -4, 4]", joined.getFirstList()
 					.toString());
 			assertEquals("[-5, -5, 5, 6, 7, 8, 9, 10]", joined.getSecondList()
@@ -226,7 +226,7 @@ public class RebaseInteractivePlanTest extends GitTestCase {
 			assertEquals("[0, 1, 2, 3, -4, 4, -5, -5, 5, 6, 7, 8, 9, 10]",
 					joined.toString());
 
-			joined.add(14, new Integer(11));
+			joined.add(14, Integer.valueOf(11));
 			assertEquals("[0, 1, 2, 3, -4, 4]", joined.getFirstList()
 					.toString());
 			assertEquals("[-5, -5, 5, 6, 7, 8, 9, 10, 11]", joined
@@ -271,9 +271,9 @@ public class RebaseInteractivePlanTest extends GitTestCase {
 
 		@Test
 		public void containsTest() {
-			Integer containedInFirst = new Integer(4);
-			Integer containedInSecond = new Integer(6);
-			Integer notContained = new Integer(-1);
+			Integer containedInFirst = Integer.valueOf(4);
+			Integer containedInSecond = Integer.valueOf(6);
+			Integer notContained = Integer.valueOf(-1);
 
 			assertTrue(joined.contains(containedInFirst));
 			assertTrue(joined.contains(containedInSecond));
@@ -298,12 +298,12 @@ public class RebaseInteractivePlanTest extends GitTestCase {
 
 		@Test
 		public void getTest() {
-			assertEquals(new Integer(1), joined.get(0));
-			assertEquals(new Integer(1), joined.getFirstList().get(0));
-			assertEquals(new Integer(10), joined.get(9));
-			assertEquals(new Integer(10), joined.getSecondList().get(5));
+			assertEquals(Integer.valueOf(1), joined.get(0));
+			assertEquals(Integer.valueOf(1), joined.getFirstList().get(0));
+			assertEquals(Integer.valueOf(10), joined.get(9));
+			assertEquals(Integer.valueOf(10), joined.getSecondList().get(5));
 
-			Integer toBeAdded = new Integer(-5);
+			Integer toBeAdded = Integer.valueOf(-5);
 			joined.getSecondList().add(0, toBeAdded);
 			assertEquals(toBeAdded, joined.get(4));
 		}
@@ -318,10 +318,10 @@ public class RebaseInteractivePlanTest extends GitTestCase {
 
 		@Test
 		public void indexOfTest() {
-			Integer lastInSecond = new Integer(10);
-			Integer firstInSecond = new Integer(5);
-			Integer lastInFirst = new Integer(4);
-			Integer firstInFirst = new Integer(1);
+			Integer lastInSecond = Integer.valueOf(10);
+			Integer firstInSecond = Integer.valueOf(5);
+			Integer lastInFirst = Integer.valueOf(4);
+			Integer firstInFirst = Integer.valueOf(1);
 
 			testData1.addAll(testData1);
 			testData2.addAll(testData2);
@@ -336,10 +336,10 @@ public class RebaseInteractivePlanTest extends GitTestCase {
 
 		@Test
 		public void lastIndexOfTest() {
-			Integer lastInSecond = new Integer(10);
-			Integer firstInSecond = new Integer(5);
-			Integer lastInFirst = new Integer(4);
-			Integer firstInFirst = new Integer(1);
+			Integer lastInSecond = Integer.valueOf(10);
+			Integer firstInSecond = Integer.valueOf(5);
+			Integer lastInFirst = Integer.valueOf(4);
+			Integer firstInFirst = Integer.valueOf(1);
 
 			testData1.addAll(testData1);
 			testData2.addAll(testData2);
@@ -368,9 +368,9 @@ public class RebaseInteractivePlanTest extends GitTestCase {
 
 		@Test
 		public void removeElementTest() {
-			joined.remove(new Integer(1));
-			joined.remove(new Integer(6));
-			joined.remove(new Integer(10));
+			joined.remove(Integer.valueOf(1));
+			joined.remove(Integer.valueOf(6));
+			joined.remove(Integer.valueOf(10));
 
 			assertEquals("[2, 3, 4, 5, 7, 8, 9]", joined.toString());
 			assertEquals("[2, 3, 4]", joined.getFirstList().toString());
@@ -407,9 +407,9 @@ public class RebaseInteractivePlanTest extends GitTestCase {
 
 		@Test
 		public void setTest() {
-			joined.set(5, new Integer(-6));
-			joined.set(4, new Integer(-5));
-			joined.set(3, new Integer(-4));
+			joined.set(5, Integer.valueOf(-6));
+			joined.set(4, Integer.valueOf(-5));
+			joined.set(3, Integer.valueOf(-4));
 			assertEquals("[1, 2, 3, -4, -5, -6, 7, 8, 9, 10]",
 					joined.toString());
 			assertEquals("[1, 2, 3, -4]", joined.getFirstList().toString());
