@@ -11,6 +11,7 @@
  *****************************************************************************/
 package org.eclipse.egit.core.op;
 
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -69,7 +70,8 @@ public class SubmoduleAddOperation implements IEGitOperation {
 				}
 			}
 		};
-		ResourcesPlugin.getWorkspace().run(action,
+		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
+				IWorkspace.AVOID_UPDATE,
 				monitor != null ? monitor : new NullProgressMonitor());
 	}
 

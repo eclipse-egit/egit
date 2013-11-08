@@ -13,6 +13,7 @@ package org.eclipse.egit.ui.internal.branch;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -258,6 +259,10 @@ public class BranchOperationUI {
 			}
 		};
 		job.setUser(true);
+		// Set scheduling rule to workspace because we may have to re-create
+		// projects using BranchProjectTracker.
+		if (restore)
+			job.setRule(ResourcesPlugin.getWorkspace().getRoot());
 		job.addJobChangeListener(new JobChangeAdapter() {
 			@Override
 			public void done(IJobChangeEvent cevent) {
