@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -32,6 +33,7 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.CheckoutResult;
@@ -159,11 +161,12 @@ public class BranchOperation extends BaseOperation {
 			}
 		};
 		// lock workspace to protect working tree changes
-		ResourcesPlugin.getWorkspace().run(action, monitor);
+		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
+				IWorkspace.AVOID_UPDATE, monitor);
 	}
 
 	public ISchedulingRule getSchedulingRule() {
-		return ResourcesPlugin.getWorkspace().getRoot();
+		return RuleUtil.getRule(repository);
 	}
 
 	/**
