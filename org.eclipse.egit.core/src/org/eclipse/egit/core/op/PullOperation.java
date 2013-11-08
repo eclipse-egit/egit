@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -27,6 +28,7 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.MergeResult;
@@ -140,6 +142,6 @@ public class PullOperation implements IEGitOperation {
 	}
 
 	public ISchedulingRule getSchedulingRule() {
-		return ResourcesPlugin.getWorkspace().getRoot();
+		return RuleUtil.getRuleForRepositories(Arrays.asList(repositories));
 	}
 }

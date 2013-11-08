@@ -18,8 +18,9 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
-import org.eclipse.jgit.api.Git;
+import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.jgit.api.CreateBranchCommand.SetupUpstreamMode;
+import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
@@ -131,7 +132,7 @@ public class CreateLocalBranchOperation implements IEGitOperation {
 	}
 
 	public ISchedulingRule getSchedulingRule() {
-		return ResourcesPlugin.getWorkspace().getRoot();
+		return RuleUtil.getRule(repository);
 	}
 
 	/**

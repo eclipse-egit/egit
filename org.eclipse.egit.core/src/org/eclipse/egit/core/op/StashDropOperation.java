@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.StashDropCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -72,7 +73,7 @@ public class StashDropOperation implements IEGitOperation {
 	}
 
 	public ISchedulingRule getSchedulingRule() {
-		return ResourcesPlugin.getWorkspace().getRoot();
+		return RuleUtil.getRule(repo);
 	}
 
 }
