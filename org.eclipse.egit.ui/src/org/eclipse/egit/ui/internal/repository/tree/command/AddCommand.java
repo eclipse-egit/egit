@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,13 +11,34 @@
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.io.File;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.preferences.DefaultScope;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.GitCorePreferences;
+import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.job.JobUtil;
+import org.eclipse.egit.core.op.ConnectProviderOperation;
+import org.eclipse.egit.core.project.RepositoryFinder;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.repository.RepositorySearchWizard;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.team.core.RepositoryProvider;
 
 /**
  * "Adds" repositories
@@ -28,9 +49,70 @@ public class AddCommand extends
 		RepositorySearchWizard wizard = new RepositorySearchWizard(
 				util.getConfiguredRepositories());
 		WizardDialog dialog = new WizardDialog(getShell(event), wizard);
-		if (dialog.open() == Window.OK)
-			for (String dir : wizard.getDirectories())
-				util.addConfiguredRepository(new File(dir));
+		if (dialog.open() == Window.OK) {
+			for (String dir : wizard.getDirectories()) {
+				File repositoryDir = new File(dir);
+				addRepository(repositoryDir);
+			}
+		}
 		return null;
 	}
+
+	private void addRepository(File repositoryDir) {
+		util.addConfiguredRepository(repositoryDir);
+		if (doAutoShare()) {
+			autoShareProjects(repositoryDir);
+		}
+	}
+
+	private void autoShareProjects(File repositoryDir) {
+		IPath workingDirPath = new Path(repositoryDir.getAbsolutePath())
+				.removeLastSegments(1);
+		Map<IProject, File> connections = new HashMap<IProject, File>();
+		IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
+				.getProjects();
+		for (IProject project : projects) {
+			RepositoryProvider provider = RepositoryProvider
+					.getProvider(project);
+			if (provider != null)
+				continue;
+
+			IPath location = project.getLocation();
+			if (location == null)
+				continue;
+
+			// In case the project is not inside the working directory, don't
+			// even search for a mapping.
+			if (!workingDirPath.isPrefixOf(location))
+				continue;
+
+			RepositoryFinder f = new RepositoryFinder(project);
+			try {
+				Collection<RepositoryMapping> mappings = f
+						.find(new NullProgressMonitor());
+				if (mappings.size() == 1) {
+					connections.put(project, repositoryDir);
+				}
+			} catch (CoreException e) {
+				// Ignore this project in that case
+				continue;
+			}
+		}
+		if (!connections.isEmpty()) {
+			ConnectProviderOperation operation = new ConnectProviderOperation(
+					connections);
+			JobUtil.scheduleUserJob(operation,
+					CoreText.Activator_AutoShareJobName, JobFamilies.AUTO_SHARE);
+		}
+	}
+
+	private boolean doAutoShare() {
+		IEclipsePreferences d = DefaultScope.INSTANCE.getNode(Activator
+				.getPluginId());
+		IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator
+				.getPluginId());
+		return p.getBoolean(GitCorePreferences.core_autoShareProjects,
+				d.getBoolean(GitCorePreferences.core_autoShareProjects, true));
+	}
+
 }
