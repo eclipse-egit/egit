@@ -4780,6 +4780,9 @@ public class UIText extends NLS {
 	public static String StagingView_Find;
 
 	/** */
+	public static String StagingView_MergeTool;
+
+	/** */
 	public static String StagingViewContentProvider_SubmoduleError;
 
 	/** */
