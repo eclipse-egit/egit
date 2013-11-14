@@ -2061,6 +2061,9 @@ public class UIText extends NLS {
 	public static String CommitDialog_CommitMessage;
 
 	/** */
+	public static String CommitDialog_CompareWithHeadRevision;
+
+	/** */
 	public static String CommitDialog_DeselectAll;
 
 	/** */
