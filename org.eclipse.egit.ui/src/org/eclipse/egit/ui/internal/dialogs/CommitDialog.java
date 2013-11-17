@@ -35,6 +35,8 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.AdaptableFileTreeIterator;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
@@ -122,6 +124,7 @@ import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.model.BaseWorkbenchContentProvider;
+import org.eclipse.ui.progress.WorkbenchJob;
 
 /**
  * Dialog is shown to user when they request to commit files. Changes in the
@@ -712,7 +715,26 @@ public class CommitDialog extends TitleAreaDialog {
 		};
 		patternFilter.setIncludeLeadingWildcard(true);
 		FilteredCheckboxTree resourcesTreeComposite = new FilteredCheckboxTree(
-				filesArea, toolkit, SWT.FULL_SELECTION, patternFilter);
+				filesArea, toolkit, SWT.FULL_SELECTION, patternFilter) {
+			@Override
+			protected WorkbenchJob doCreateRefreshJob() {
+				// workaround for file filter not having an explicit change
+				// listener
+				WorkbenchJob filterJob = super.doCreateRefreshJob();
+				filterJob.addJobChangeListener(new JobChangeAdapter() {
+					public void done(IJobChangeEvent event) {
+						if (event.getResult().isOK()) {
+							getDisplay().asyncExec(new Runnable() {
+								public void run() {
+									updateFileSectionText();
+								}
+							});
+						}
+					}
+				});
+				return filterJob;
+			}
+		};
 		Tree resourcesTree = resourcesTreeComposite.getViewer().getTree();
 		resourcesTree.setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TREE_BORDER);
