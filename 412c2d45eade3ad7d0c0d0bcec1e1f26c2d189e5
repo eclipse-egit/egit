@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_f35a6f79",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/CompareCoreUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-17T22:39:39Z",
+      "side": 1,
+      "message": "I would use braces for the for loop\u0027s block",
+      "revId": "412c2d45eade3ad7d0c0d0bcec1e1f26c2d189e5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_d355b349",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/CompareCoreUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-17T22:39:39Z",
+      "side": 1,
+      "message": "I would use braces for the for loop\u0027s block",
+      "revId": "412c2d45eade3ad7d0c0d0bcec1e1f26c2d189e5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
