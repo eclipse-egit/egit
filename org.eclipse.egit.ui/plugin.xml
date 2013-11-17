@@ -179,20 +179,6 @@
          </action>
       </objectContribution>
       <objectContribution
-         adaptable="true"
-         id="org.eclipse.egit.ui.fileContributions"
-         objectClass="org.eclipse.core.resources.IFile">
-         <filter name="projectPersistentProperty"
-               value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
-         </filter>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.CompareWithRevisionAction"
-               icon="$nl$/icons/obj16/history.gif"
-               id="org.eclipse.egit.ui.internal.actions.CompareWithRevisionAction"
-               label="%CompareWithRevisionAction_label"
-               menubarPath="compareWithMenu/gitCompareWithGroup"/>
-      </objectContribution>
-      <objectContribution
             adaptable="true"
             id="org.eclipse.egit.ui.gitFileContributions"
             objectClass="org.eclipse.core.resources.IFile">
@@ -4872,11 +4858,6 @@
             defaultHandler="org.eclipse.egit.ui.internal.actions.CompareWithPreviousActionHandler"
             id="org.eclipse.egit.ui.team.CompareWithPrevious"
             name="%CompareWithPreviousCommand.name">
-      </command>
-      <command
-            categoryId="org.eclipse.egit.ui.commandCategory"
-            id="org.eclipse.egit.ui.team.CompareWithRevision"
-            name="%CompareWithHistoryCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
