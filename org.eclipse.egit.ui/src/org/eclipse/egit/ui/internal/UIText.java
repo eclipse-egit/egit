@@ -126,6 +126,12 @@ public class UIText extends NLS {
 	public static String BlameInformationControl_Committer;
 
 	/** */
+	public static String BlameInformationControl_DiffHeaderLabel;
+
+	/** */
+	public static String BlameInformationControl_ShowAnnotationsLink;
+
+	/** */
 	public static String AssumeUnchanged_assumeUnchanged;
 
 	/** */

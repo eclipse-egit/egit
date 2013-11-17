@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2011 GitHub Inc.
+ *  Copyright (c) 2011, 2013 GitHub Inc and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -27,9 +27,12 @@ import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.revisions.IRevisionRulerColumn;
 import org.eclipse.jface.text.revisions.IRevisionRulerColumnExtension;
 import org.eclipse.jface.text.revisions.RevisionInformation;
+import org.eclipse.jface.text.source.IVerticalRulerInfo;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -140,6 +143,8 @@ public class BlameOperation implements IEGitOperation {
 
 	private IWorkbenchPage page;
 
+	private int lineNumberToReveal;
+
 	/**
 	 * Create annotate operation
 	 *
@@ -152,19 +157,35 @@ public class BlameOperation implements IEGitOperation {
 	 */
 	public BlameOperation(Repository repository, IStorage storage, String path,
 			AnyObjectId startCommit, Shell shell, IWorkbenchPage page) {
+		this(repository, storage, path, startCommit, shell, page, -1);
+	}
+
+	/**
+	 * Create annotate operation
+	 *
+	 * @param repository
+	 * @param storage
+	 * @param path
+	 * @param startCommit
+	 * @param shell
+	 * @param page
+	 * @param lineNumberToReveal
+	 *            0-based line number to reveal, -1 for no reveal
+	 */
+	public BlameOperation(Repository repository, IStorage storage, String path,
+			AnyObjectId startCommit, Shell shell, IWorkbenchPage page,
+			int lineNumberToReveal) {
 		this.repository = repository;
 		this.storage = storage;
 		this.path = path;
 		this.startCommit = startCommit;
 		this.shell = shell;
 		this.page = page;
+		this.lineNumberToReveal = lineNumberToReveal;
 	}
 
 	public void execute(IProgressMonitor monitor) throws CoreException {
 		final RevisionInformation info = new RevisionInformation();
-		info.setHoverControlCreator(new BlameInformationControlCreator(false));
-		info.setInformationPresenterControlCreator(new BlameInformationControlCreator(
-				true));
 
 		final BlameCommand command = new BlameCommand(repository)
 				.setFollowFileRenames(true).setFilePath(path);
@@ -189,6 +210,7 @@ public class BlameOperation implements IEGitOperation {
 		BlameRevision previous = null;
 		for (int i = 0; i < lineCount; i++) {
 			RevCommit commit = result.getSourceCommit(i);
+			String sourcePath = result.getSourcePath(i);
 			if (commit == null) {
 				// Unregister the current revision
 				if (previous != null) {
@@ -202,9 +224,11 @@ public class BlameOperation implements IEGitOperation {
 				revision = new BlameRevision();
 				revision.setRepository(repository);
 				revision.setCommit(commit);
+				revision.setSourcePath(sourcePath);
 				revisions.put(commit, revision);
 				info.addRevision(revision);
 			}
+			revision.addSourceLine(i, result.getSourceLine(i));
 			if (previous != null)
 				if (previous == revision)
 					previous.addLine();
@@ -261,8 +285,31 @@ public class BlameOperation implements IEGitOperation {
 					false);
 		}
 
+		// IRevisionRulerColumn would also be possible but using
+		// IVerticalRulerInfo seems to work in more situations.
+		IVerticalRulerInfo rulerInfo = AdapterUtils.adapt(editor,
+				IVerticalRulerInfo.class);
+
+		BlameInformationControlCreator creator = new BlameInformationControlCreator(
+				rulerInfo);
+		info.setHoverControlCreator(creator);
+		info.setInformationPresenterControlCreator(creator);
+
 		editor.showRevisionInformation(info,
 				"org.eclipse.egit.ui.internal.decorators.GitQuickDiffProvider"); //$NON-NLS-1$
+
+		if (lineNumberToReveal >= 0) {
+			IDocument document = editor.getDocumentProvider().getDocument(
+					editor.getEditorInput());
+			int offset;
+			try {
+				offset = document.getLineOffset(lineNumberToReveal);
+				editor.selectAndReveal(offset, 0);
+			} catch (BadLocationException e) {
+				Activator.logError(
+						"Error revealing line " + lineNumberToReveal, e); //$NON-NLS-1$
+			}
+		}
 
 		IRevisionRulerColumn revisionRuler = AdapterUtils.adapt(editor,
 				IRevisionRulerColumn.class);
