@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_f3c1cf97",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/blame/BlameInformationControl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-17T22:38:39Z",
+      "side": 1,
+      "message": "I think we should not silently ignore but log the exception",
+      "revId": "4685a016cc1b0d53e1b653bff08c311052504a11",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_536a430c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/blame/BlameInformationControl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-17T22:38:39Z",
+      "side": 1,
+      "message": "I think we should also show the commit header of the parent commit since this provides a lot more useful context to the human observer, usually I don\u0027t know the commitIds of interesting commits. \n\nWould be nice if we would auto-scroll the history view to the commit we are showing the diff for in the blame info control",
+      "revId": "4685a016cc1b0d53e1b653bff08c311052504a11",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_d3bc9323",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/blame/BlameOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-17T22:38:39Z",
+      "side": 1,
+      "message": "I think we should not silently ignore but log the exception",
+      "revId": "4685a016cc1b0d53e1b653bff08c311052504a11",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
