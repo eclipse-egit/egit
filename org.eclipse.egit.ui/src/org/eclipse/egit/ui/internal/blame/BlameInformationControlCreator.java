@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2011 GitHub Inc.
+ *  Copyright (c) 2011, 2013 GitHub Inc and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -12,6 +12,7 @@ package org.eclipse.egit.ui.internal.blame;
 
 import org.eclipse.jface.text.AbstractReusableInformationControlCreator;
 import org.eclipse.jface.text.IInformationControl;
+import org.eclipse.jface.text.source.IVerticalRulerInfo;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -20,21 +21,36 @@ import org.eclipse.swt.widgets.Shell;
 public class BlameInformationControlCreator extends
 		AbstractReusableInformationControlCreator {
 
-	private boolean resizable;
+	private IVerticalRulerInfo rulerInfo;
 
 	/**
 	 * Create annotation information control creator
 	 *
-	 * @param resizable
+	 * @param rulerInfo
 	 */
-	public BlameInformationControlCreator(boolean resizable) {
-		this.resizable = resizable;
+	public BlameInformationControlCreator(IVerticalRulerInfo rulerInfo) {
+		this.rulerInfo = rulerInfo;
 	}
 
 	@Override
 	protected IInformationControl doCreateInformationControl(Shell parent) {
-		return new BlameInformationControl(parent, resizable,
-				new BlameInformationControlCreator(true));
+		EnrichedCreator enrichedCreator = new EnrichedCreator();
+		BlameInformationControl control = new BlameInformationControl(parent,
+				enrichedCreator, rulerInfo);
+		enrichedCreator.hoverInformationControl = control;
+		return control;
 	}
 
+	// The enriched control needs access to the original hover control. We can
+	// do that by using this separate creator.
+	private static class EnrichedCreator extends
+			AbstractReusableInformationControlCreator {
+
+		private BlameInformationControl hoverInformationControl;
+
+		@Override
+		protected IInformationControl doCreateInformationControl(Shell parent) {
+			return new BlameInformationControl(parent, hoverInformationControl);
+		}
+	}
 }
