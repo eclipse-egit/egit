@@ -30,8 +30,11 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -59,6 +62,7 @@ import org.eclipse.egit.ui.internal.commit.CommitHelper;
 import org.eclipse.egit.ui.internal.commit.CommitJob;
 import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
+import org.eclipse.egit.ui.internal.commit.CommitHelper.CommitInfo;
 import org.eclipse.egit.ui.internal.components.ToggleableWarningLabel;
 import org.eclipse.egit.ui.internal.decorators.ProblemLabelDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageArea;
@@ -158,6 +162,7 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.ISaveablePart;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchPage;
@@ -180,7 +185,8 @@ import org.eclipse.ui.part.ViewPart;
 /**
  * A GitX style staging view with embedded commit dialog.
  */
-public class StagingView extends ViewPart implements IShowInSource {
+public class StagingView extends ViewPart implements IShowInSource,
+		ISaveablePart {
 
 	/**
 	 * Staging view id
@@ -436,6 +442,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private LocalResourceManager resources = new LocalResourceManager(
 			JFaceResources.getResources());
+
+	private volatile boolean commitPending;
 
 	private Image getImage(ImageDescriptor descriptor) {
 		return (Image) this.resources.get(descriptor);
@@ -1382,6 +1390,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 		// corruption.
 		if (needsRedraw)
 			commitMessageSection.redraw();
+
+		firePropertyChange(PROP_DIRTY);
 	}
 
 	private void compareWith(OpenEvent event) {
@@ -1991,6 +2001,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 	protected void updateRebaseButtonVisibility(final boolean isRebasing) {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
+				if (rebaseSection.isDisposed())
+					return;
 				showControl(rebaseSection, isRebasing);
 				rebaseSection.getParent().layout(true);
 			}
@@ -2309,7 +2321,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		if (!commitMessageComponent.checkCommitInfo())
 			return;
 
-		if (!UIUtils.saveAllEditors(currentRepository))
+		if (!UIUtils.saveAllEditors(currentRepository, this))
 			return;
 
 		String commitMessage = commitMessageComponent.getCommitMessage();
@@ -2326,13 +2338,26 @@ public class StagingView extends ViewPart implements IShowInSource {
 		if (amendPreviousCommitAction.isChecked())
 			commitOperation.setAmending(true);
 		commitOperation.setComputeChangeId(addChangeIdAction.isChecked());
+		commitPending = true;
 		Job commitJob = new CommitJob(currentRepository, commitOperation)
 			.setOpenCommitEditor(openNewCommitsAction.isChecked())
 			.setPushUpstream(pushUpstream);
+		commitJob.addJobChangeListener(new JobChangeAdapter() {
+			@Override
+			public void done(IJobChangeEvent event) {
+				commitPending = false;
+				asyncExec(new Runnable() {
+					public void run() {
+						firePropertyChange(PROP_DIRTY);
+					}
+				});
+			}
+		});
 		commitJob.schedule();
 		CommitMessageHistory.saveCommitHistory(commitMessage);
 		clearCommitMessageToggles();
 		commitMessageText.setText(EMPTY_STRING);
+		firePropertyChange(PROP_DIRTY);
 	}
 
 	private boolean isCommitWithoutFilesAllowed() {
@@ -2373,6 +2398,44 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private void asyncExec(Runnable runnable) {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(runnable);
+	}
+
+	public boolean isSaveAsAllowed() {
+		return false;
+	}
+
+	public void doSaveAs() {
+		throw new UnsupportedOperationException();
+	}
+
+	public void doSave(IProgressMonitor monitor) {
+		commit(false);
+	}
+
+	public boolean isSaveOnCloseNeeded() {
+		return true;
+	}
+
+	public boolean isDirty() {
+		if (commitPending)
+			return false;
+		if (form == null || form.isDisposed())
+			return false;
+		if (amendPreviousCommitAction != null
+				&& amendPreviousCommitAction.isEnabled()
+				&& amendPreviousCommitAction.isChecked()) {
+			CommitInfo headCommitInfo = CommitHelper
+					.getHeadCommitInfo(currentRepository);
+			if (headCommitInfo != null) {
+				String commitMessage = commitMessageText.getText();
+				if (!commitMessage.equals(headCommitInfo.getCommitMessage()))
+					return true;
+			}
+		} else {
+			if (userEnteredCommmitMessage())
+				return true;
+		}
+		return false;
 	}
 
 }
