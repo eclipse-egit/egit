@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 SAP AG and others.
+ * Copyright (c) 2010, 2014 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,6 +9,8 @@
  *    Mathias Kinzler (SAP AG) - initial implementation
  *******************************************************************************/
 package org.eclipse.egit.ui;
+
+import static java.util.Arrays.asList;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -90,6 +92,7 @@ import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.Saveable;
 import org.eclipse.ui.actions.ContributionItemFactory;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.keys.IBindingService;
@@ -712,13 +715,40 @@ public class UIUtils {
 	 * @see IWorkbench#saveAllEditors(boolean)
 	 */
 	public static boolean saveAllEditors(Repository repository) {
-		IWorkbench workbench = PlatformUI.getWorkbench();
-		IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-		return workbench.saveAll(window, window, new RepositorySaveableFilter(repository), true);
+		return saveAllEditors(repository, null);
 	}
 
 	/**
-	 * @param workbenchWindow the workbench window to use for creating the show in menu.
+	 * Prompt for saving all dirty editors for resources in the working
+	 * directory of the specified repository.
+	 *
+	 * @param repository
+	 * @param partToIgnore
+	 *            a part that will not be saved. May be <code>null</code>.
+	 * @return true, if the user opted to continue, false otherwise
+	 * @see IWorkbench#saveAllEditors(boolean)
+	 */
+	public static boolean saveAllEditors(Repository repository,
+			final IWorkbenchPart partToIgnore) {
+		IWorkbench workbench = PlatformUI.getWorkbench();
+		IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+		return workbench.saveAll(window, window, new RepositorySaveableFilter(
+				repository) {
+			@Override
+			public boolean select(Saveable saveable,
+					IWorkbenchPart[] containingParts) {
+				if (partToIgnore != null
+						&& asList(containingParts).contains(partToIgnore)) {
+					return false;
+				}
+				return super.select(saveable, containingParts);
+			}
+		}, true);
+	}
+
+	/**
+	 * @param workbenchWindow
+	 *            the workbench window to use for creating the show in menu.
 	 * @return the show in menu
 	 */
 	public static MenuManager createShowInMenu(IWorkbenchWindow workbenchWindow) {
