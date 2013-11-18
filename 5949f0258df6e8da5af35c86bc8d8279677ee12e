@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_59b25d32",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-11-18T11:19:56Z",
+      "side": 1,
+      "message": "s/a/an/",
+      "revId": "5949f0258df6e8da5af35c86bc8d8279677ee12e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_357af7dc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/blame/BlameInformationControl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-11-18T11:19:56Z",
+      "side": 1,
+      "message": "Line is too long",
+      "revId": "5949f0258df6e8da5af35c86bc8d8279677ee12e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_95894b7b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/blame/BlameInformationControl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-11-18T11:19:56Z",
+      "side": 1,
+      "message": "Maybe add\n\n  diffFormatter.setContext(1);\n\nhere (see comment below).",
+      "revId": "5949f0258df6e8da5af35c86bc8d8279677ee12e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_b5860768",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/blame/BlameInformationControl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-11-18T11:19:56Z",
+      "side": 1,
+      "message": "I had two diffs only separated by two lines. As the default number of context lines is 3 (DiffFormatter.context) I didn\u0027t see the neighboring diff and was a little bit confused.\n\nIf you widen the range here to include the neigboring diffs there would still be a problem if there is another diff as a near neighbor to the first neighbor.\n\nAs there is already context visible in the editor itself, why not limting the context line to 1?",
+      "revId": "5949f0258df6e8da5af35c86bc8d8279677ee12e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
