@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_bc3f0f3d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/blame/BlameInformationControl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-18T14:50:31Z",
+      "side": 1,
+      "message": "wow, you are right, didn\u0027t know this feature :-) any idea how we could make this more obvious ?\n\nbut when I click the new \"show annotation\" link the history view scrolls again, but not to the version opened by clicking \"show annotation\" in the hover but to some other version. This is confusing.",
+      "parentUuid": "8748d3a1_a6bee74a",
+      "revId": "4685a016cc1b0d53e1b653bff08c311052504a11",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_d3bc9323",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/blame/BlameOperation.java",
         "patchSetId": 1
