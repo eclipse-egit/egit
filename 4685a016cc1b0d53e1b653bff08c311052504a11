@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_01b84eab",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/blame/BlameInformationControl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-11-19T23:00:17Z",
+      "side": 1,
+      "message": "It is also activated when putting the caret on a line in the text editor by clicking in the text or navigating using the arrows.\n\nThis is also the commit that is shown in the newly-opened editor after clicking on \"show annotations\". The reason for that is that the line from the diff is scrolled to using selectAndReveal in BlameOperation.\n\nTo make it more obvious, maybe we could add another link to the hover named \"show in history view\"? Maybe we could change the first line of the hover to this:\n\n    Commit 1234567 (open commit) (show in history)\n\nCould you create a bug for this?",
+      "parentUuid": "8748d3a1_bc3f0f3d",
+      "revId": "4685a016cc1b0d53e1b653bff08c311052504a11",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_d3bc9323",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/blame/BlameOperation.java",
         "patchSetId": 1
