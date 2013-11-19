@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_815c5e52",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-11-19T23:01:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_59b25d32",
+      "revId": "5949f0258df6e8da5af35c86bc8d8279677ee12e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_357af7dc",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/blame/BlameInformationControl.java",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_c14ca69b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/blame/BlameInformationControl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-11-19T23:01:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_357af7dc",
+      "revId": "5949f0258df6e8da5af35c86bc8d8279677ee12e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_95894b7b",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/blame/BlameInformationControl.java",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2013-11-18T11:19:56Z",
       "side": 1,
       "message": "Maybe add\n\n  diffFormatter.setContext(1);\n\nhere (see comment below).",
+      "revId": "5949f0258df6e8da5af35c86bc8d8279677ee12e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_81d29efa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/blame/BlameInformationControl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-11-19T23:01:18Z",
+      "side": 1,
+      "message": "Done. We could also set it to 0, but a bit of context is still nice I think.",
+      "parentUuid": "8748d3a1_95894b7b",
       "revId": "5949f0258df6e8da5af35c86bc8d8279677ee12e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
