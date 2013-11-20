@@ -17,9 +17,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -1274,13 +1272,7 @@ public class CommitDialog extends TitleAreaDialog {
 	}
 
 	private IFile findFile(String path) {
-		URI uri = new File(repository.getWorkTree(), path).toURI();
-		IFile[] workspaceFiles = ResourcesPlugin.getWorkspace().getRoot()
-				.findFilesForLocationURI(uri);
-		if (workspaceFiles.length > 0)
-			return workspaceFiles[0];
-		else
-			return null;
+		return ResourceUtil.getFileForLocation(repository, path);
 	}
 }
 
