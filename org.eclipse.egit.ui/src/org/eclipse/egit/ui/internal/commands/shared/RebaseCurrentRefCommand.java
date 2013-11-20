@@ -48,13 +48,13 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		// we need the ref from the event in createRebaseOperation
-		ref = setRef(event);
+		setRef(event);
 		if (ref == null)
 			return null;
 		return super.execute(event);
 	}
 
-	private Ref setRef(ExecutionEvent event) throws ExecutionException {
+	private void setRef(ExecutionEvent event) throws ExecutionException {
 		ISelection currentSelection = getCurrentSelectionChecked(event);
 		if (currentSelection instanceof IStructuredSelection) {
 			IStructuredSelection selection = (IStructuredSelection) currentSelection;
@@ -65,7 +65,7 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 
 		final Repository repository = getRepository(event);
 		if (repository == null)
-			return null;
+			return;
 
 		BasicConfigurationDialog.show(repository);
 
@@ -84,13 +84,12 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 					throw new ExecutionException(e.getMessage(), e);
 				}
 			} else
-				return null;
+				return;
 		}
 
 		jobname = NLS.bind(
 				UIText.RebaseCurrentRefCommand_RebasingCurrentJobName,
 				Repository.shortenRefName(currentFullBranch), ref.getName());
-		return null;
 	}
 
 	@Override
