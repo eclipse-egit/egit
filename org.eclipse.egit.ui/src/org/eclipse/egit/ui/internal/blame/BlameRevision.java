@@ -150,6 +150,13 @@ public class BlameRevision extends Revision {
 	}
 
 	/**
+	 * @return repository-relative path of file
+	 */
+	public String getSourcePath() {
+		return sourcePath;
+	}
+
+	/**
 	 * @param sourcePath
 	 */
 	public void setSourcePath(String sourcePath) {
