@@ -55,24 +55,24 @@ import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
  */
 public class BlameOperation implements IEGitOperation {
 
-	private static class BlameHistoryPageInput extends HistoryPageInput
+	static class BlameHistoryPageInput extends HistoryPageInput
 			implements IAdaptable {
 
 		private final RevCommit commit;
 
-		private BlameHistoryPageInput(Repository repository, RevCommit commit,
+		BlameHistoryPageInput(Repository repository, RevCommit commit,
 				File file) {
 			super(repository, new File[] { file });
 			this.commit = commit;
 		}
 
-		private BlameHistoryPageInput(Repository repository, RevCommit commit,
+		BlameHistoryPageInput(Repository repository, RevCommit commit,
 				IResource file) {
 			super(repository, new IResource[] { file });
 			this.commit = commit;
 		}
 
-		private BlameHistoryPageInput(Repository repository, RevCommit commit) {
+		BlameHistoryPageInput(Repository repository, RevCommit commit) {
 			super(repository);
 			this.commit = commit;
 		}
