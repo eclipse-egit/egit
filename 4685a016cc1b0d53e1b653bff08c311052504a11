@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_04fe9ca1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/blame/BlameInformationControl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-20T00:12:57Z",
+      "side": 1,
+      "message": "I filed https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d422099\nand https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d422100 to track this",
+      "parentUuid": "8748d3a1_01b84eab",
+      "revId": "4685a016cc1b0d53e1b653bff08c311052504a11",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_d3bc9323",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/blame/BlameOperation.java",
         "patchSetId": 1
