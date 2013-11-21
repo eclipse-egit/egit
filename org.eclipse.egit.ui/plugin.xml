@@ -77,33 +77,6 @@
                label="%AddToIndexAction_label"
                menubarPath="team.main/group8"/>
          <action
-               class="org.eclipse.egit.ui.internal.actions.DiscardChangesAction"
-               id="org.eclipse.egit.ui.internal.actions.DiscardChangesAction"
-               label="%DiscardChangesAction_label"
-               menubarPath="replaceWithMenu/gitReplaceWithGroup"/>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.ReplaceWithRefAction"
-               id="org.eclipse.egit.ui.internal.actions.ReplaceWithRefAction"
-               label="%ReplaceWithRefAction_label"
-               menubarPath="replaceWithMenu/gitReplaceWithGroup"/>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.ReplaceWithPreviousAction"
-               enablesFor="1"
-               id="org.eclipse.egit.ui.internal.actions.ReplaceWithPreviousAction"
-               label="%replaceWithPreviousVersionAction.label"
-               menubarPath="replaceWithMenu/gitReplaceWithGroup">
-         </action>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.ReplaceWithHeadAction"
-               id="org.eclipse.egit.ui.internal.actions.ReplaceWithHeadAction"
-               label="%ReplaceWithHeadAction_label"
-               menubarPath="replaceWithMenu/gitReplaceWithGroup"/>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.ReplaceWithCommitAction"
-               id="org.eclipse.egit.ui.internal.actions.ReplaceWithCommitAction"
-               label="%ReplaceWithCommitAction_label"
-               menubarPath="replaceWithMenu/gitReplaceWithGroup"/>
-         <action
                class="org.eclipse.egit.ui.internal.actions.ApplyPatchAction"
                definitionId="org.eclipse.egit.ui.team.ApplyPatch"
                enablesFor="*"
@@ -320,6 +293,22 @@
             <iterate>
                <adapt
                      type="org.eclipse.core.resources.IProject">
+                  <test
+                        property="GitResource.isShared">
+                  </test>
+               </adapt>
+            </iterate>
+         </and>
+      </definition>
+      <definition
+            id="org.eclipse.egit.ui.gitResource">
+         <and>
+            <count
+                  value="1">
+            </count>
+            <iterate>
+               <adapt
+                     type="org.eclipse.core.resources.IResource">
                   <test
                         property="GitResource.isShared">
                   </test>
@@ -4194,19 +4183,9 @@
                   style="push">
                <visibleWhen
                      checkEnabled="false">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate>
-                        <adapt
-                              type="org.eclipse.core.resources.IResource">
-                           <test
-                                 property="GitResource.isShared">
-                           </test>
-                        </adapt>
-                     </iterate>
-                  </and>
+                  <reference
+                        definitionId="org.eclipse.egit.ui.gitResource">
+                  </reference>
                </visibleWhen>
             </command>
             <separator
@@ -4227,6 +4206,73 @@
             <command
                   commandId="org.eclipse.egit.ui.team.CompareWithCommit"
                   label="%CompareWithCommitAction.label"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="org.eclipse.egit.ui.gitResources">
+                  </reference>
+               </visibleWhen>
+            </command>
+         </menu>
+         <menu
+               id="replaceWithMenu"
+               label="%ReplaceWithMenu.label">
+            <separator
+                  name="gitReplaceWithGroup"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.egit.ui.team.ReplaceWithHead"
+                  label="%ReplaceWithHeadAction_label"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="org.eclipse.egit.ui.gitResources">
+                  </reference>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="org.eclipse.egit.ui.team.Discard"
+                  label="%DiscardChangesAction_label"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="org.eclipse.egit.ui.gitResources">
+                  </reference>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="org.eclipse.egit.ui.team.ReplaceWithPrevious"
+                  label="%replaceWithPreviousVersionAction.label"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="org.eclipse.egit.ui.gitResource">
+                  </reference>
+               </visibleWhen>
+            </command>
+            <separator
+                  name="gitReplaceWithGroup2"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.egit.ui.team.ReplaceWithCommit"
+                  label="%ReplaceWithCommitAction_label"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="org.eclipse.egit.ui.gitResources">
+                  </reference>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="org.eclipse.egit.ui.team.ReplaceWithRef"
+                  label="%ReplaceWithRefAction_label"
                   style="push">
                <visibleWhen
                      checkEnabled="false">
@@ -4971,7 +5017,13 @@
             id="org.eclipse.egit.ui.team.ReplaceWithRef"
             name="%ReplaceWithRefCommand.name">
       </command>
-            <command
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.ReplaceWithPreviousActionHandler"
+            id="org.eclipse.egit.ui.team.ReplaceWithPrevious"
+            name="%ReplaceWithPreviousCommand.name">
+      </command>
+      <command
             categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.actions.IgnoreActionHandler"
             id="org.eclipse.egit.ui.team.Ignore"
