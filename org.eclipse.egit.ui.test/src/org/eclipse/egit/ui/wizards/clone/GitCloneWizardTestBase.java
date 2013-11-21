@@ -22,6 +22,7 @@ import org.eclipse.egit.ui.common.GitImportRepoWizard;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.common.RepoRemoteBranchesPage;
 import org.eclipse.egit.ui.common.WorkingCopyPage;
+import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.equinox.internal.security.storage.PasswordProviderSelector;
 import org.eclipse.equinox.internal.security.storage.PasswordProviderSelector.ExtStorageModule;
 import org.eclipse.equinox.internal.security.storage.friends.IStorageConstants;
@@ -113,8 +114,7 @@ public abstract class GitCloneWizardTestBase extends LocalRepositoryTestCase {
 
 	@Before
 	public void setupViews() {
-		bot.perspectiveById("org.eclipse.jdt.ui.JavaPerspective").activate();
-		bot.viewByTitle("Package Explorer").show();
+		TestUtil.showExplorerView();
 		importWizard = new GitImportRepoWizard();
 	}
 
