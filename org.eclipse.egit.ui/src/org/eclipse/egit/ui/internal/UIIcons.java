@@ -345,7 +345,7 @@ public class UIIcons {
 		REBASE_CONTINUE = map("elcl16/continue.gif"); //$NON-NLS-1$
 		REBASE_SKIP = map("elcl16/skip.gif"); //$NON-NLS-1$
 		REBASE_ABORT = map("elcl16/progress_stop.gif"); //$NON-NLS-1$
-		REBASE_PROCESS_STEPS = map("elcl16/continue.gif"); //$NON-NLS-1$
+		REBASE_PROCESS_STEPS = map("elcl16/start.gif"); //$NON-NLS-1$
 		OVR_ERROR = map("ovr/error.png"); //$NON-NLS-1$
 		MERGE = map("obj16/merge.gif"); //$NON-NLS-1$
 		TAG_ANNOTATED = map("obj16/annotated-tag.gif"); //$NON-NLS-1$
