@@ -43,9 +43,13 @@ class PushResultDialog extends TitleAreaDialog {
 	 * @param repository
 	 * @param result
 	 * @param sourceString
+	 * @param showConfigureButton
+	 *            whether to show the "Configure..." button in the result dialog
+	 *            or not
 	 */
 	public static void show(final Repository repository,
-			final PushOperationResult result, final String sourceString) {
+			final PushOperationResult result, final String sourceString,
+			final boolean showConfigureButton) {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 			public void run() {
 				PlatformUI.getWorkbench().getDisplay().asyncExec(
@@ -53,8 +57,10 @@ class PushResultDialog extends TitleAreaDialog {
 							public void run() {
 								Shell shell = PlatformUI.getWorkbench()
 										.getActiveWorkbenchWindow().getShell();
-								new PushResultDialog(shell, repository, result,
-										sourceString).open();
+								PushResultDialog dialog = new PushResultDialog(
+										shell, repository, result, sourceString);
+								dialog.showConfigureButton(showConfigureButton);
+								dialog.open();
 							}
 						});
 			}
