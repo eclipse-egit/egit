@@ -4553,7 +4553,7 @@
             categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ConfigureBranchCommand"
             id="org.eclipse.egit.ui.RepositoriesViewConfigureBranch"
-            name="%RepoViewConfigurBranchCommand.name">
+            name="%RepoViewConfigureBranchCommand.name">
       </command>
    </extension>
    <extension
