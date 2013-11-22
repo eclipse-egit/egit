@@ -24,6 +24,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.notes.Note;
 import org.eclipse.jgit.notes.NoteMap;
 import org.eclipse.jgit.util.IO;
+import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
 /**
@@ -70,7 +71,7 @@ public class RepositoryCommitNote extends PlatformObject implements
 						(int) loader.getSize()).array();
 			else
 				contents = loader.getCachedBytes();
-			return new String(contents);
+			return RawParseUtils.decode(contents);
 		} catch (IOException e) {
 			Activator.logError("Error loading note text", e); //$NON-NLS-1$
 		}
