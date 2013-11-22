@@ -126,7 +126,7 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 
 		public void write(byte[] b, int off, int len) throws IOException {
 			if (charset == null)
-				lineBuffer.append(new String(b, off, len));
+				lineBuffer.append(new String(b, off, len, "UTF-8")); //$NON-NLS-1$
 			else
 				lineBuffer.append(new String(b, off, len, charset));
 		}

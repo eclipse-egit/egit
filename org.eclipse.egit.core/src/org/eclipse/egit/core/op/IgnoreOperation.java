@@ -201,7 +201,7 @@ public class IgnoreOperation implements IEGitOperation {
 
 			FileOutputStream os = new FileOutputStream(gitIgnore, true);
 			try {
-				os.write(ignoreLine.getBytes());
+				os.write(ignoreLine.getBytes("UTF-8")); //$NON-NLS-1$
 			} finally {
 				os.close();
 			}

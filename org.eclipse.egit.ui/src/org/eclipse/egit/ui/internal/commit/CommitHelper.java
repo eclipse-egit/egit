@@ -14,10 +14,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commit;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 
 import org.eclipse.egit.ui.Activator;
@@ -116,31 +112,15 @@ public class CommitHelper {
 	}
 
 	private String getMergeResolveMessage(Repository mergeRepository) {
-		File mergeMsg = new File(mergeRepository.getDirectory(),
-				Constants.MERGE_MSG);
-		FileReader reader;
 		try {
-			reader = new FileReader(mergeMsg);
-			BufferedReader br = new BufferedReader(reader);
-			try {
-				StringBuilder message = new StringBuilder();
-				String s;
-				String newLine = newLine();
-				while ((s = br.readLine()) != null)
-					message.append(s).append(newLine);
-				return message.toString();
-			} catch (IOException e) {
-				throw new IllegalStateException(e);
-			} finally {
-				try {
-					br.close();
-				} catch (IOException e) {
-					// Empty
-				}
-			}
-		} catch (FileNotFoundException e) {
-			return NLS.bind(UIText.CommitHelper_couldNotFindMergeMsg, Constants.MERGE_MSG);
+			String message = mergeRepository.readMergeCommitMsg();
+			if (message != null)
+				return message;
+		} catch (IOException e) {
+			// Return "Could not find ..." below
 		}
+		return NLS.bind(UIText.CommitHelper_couldNotFindMergeMsg,
+				Constants.MERGE_MSG);
 	}
 
 	private static String getCherryPickOriginalAuthor(Repository mergeRepository) {
@@ -154,10 +134,6 @@ public class CommitHelper {
 					true);
 			throw new IllegalStateException(e);
 		}
-	}
-
-	private String newLine() {
-		return System.getProperty("line.separator"); //$NON-NLS-1$
 	}
 
 	/**
