@@ -2526,6 +2526,30 @@ public class UIText extends NLS {
 	public static String PushResultTable_statusOkNewTag;
 
 	/** */
+	public static String PushTagsPage_ForceUpdateButton;
+
+	/** */
+	public static String PushTagsPage_PageMessage;
+
+	/** */
+	public static String PushTagsPage_PageName;
+
+	/** */
+	public static String PushTagsPage_PageTitle;
+
+	/** */
+	public static String PushTagsPage_RemoteLabel;
+
+	/** */
+	public static String PushTagsPage_TagsLabelNoneSelected;
+
+	/** */
+	public static String PushTagsPage_TagsLabelSelected;
+
+	/** */
+	public static String PushTagsWizard_WindowTitle;
+
+	/** */
 	public static String PushToGerritPage_BranchLabel;
 
 	/** */
@@ -3787,6 +3811,15 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CreateTagDialog_clearButtonTooltip;
+
+	/** */
+	public static String CreateTagDialog_CreateTagAndStartPushButton;
+
+	/** */
+	public static String CreateTagDialog_CreateTagAndStartPushToolTip;
+
+	/** */
+	public static String CreateTagDialog_CreateTagButton;
 
 	/** */
 	public static String CreateTagDialog_CreateTagOnCommitTitle;
