@@ -301,7 +301,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 				.setText("NewTag");
 		dialog.bot().styledTextWithLabel(UIText.CreateTagDialog_tagMessage)
 				.setText("New Tag message");
-		dialog.bot().button(IDialogConstants.OK_LABEL).click();
+		dialog.bot().button(UIText.CreateTagDialog_CreateTagButton).click();
 		TestUtil.joinJobs(JobFamilies.TAG);
 		assertNotNull(repo.resolve(Constants.R_TAGS + "NewTag"));
 	}

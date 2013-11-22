@@ -848,6 +848,11 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.team.PushTags"
+            name="%PushTagsCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.team.Merge"
             name="%MergeCommand.name">
       </command>
@@ -1128,24 +1133,33 @@
                class="org.eclipse.egit.ui.internal.repository.tree.command.PushCommand">
          </class>
          <activeWhen>
-            <and>
-               <count
-                     value="1">
-               </count>
-               <iterate>
-	               <or>
-		               <instanceof
-		                     value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
-		               </instanceof>
-		               <instanceof
-		                     value="org.eclipse.egit.ui.internal.repository.tree.TagNode">
-		               </instanceof>
-		               <instanceof
-		                     value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-		               </instanceof>
-	               </or>
-               </iterate>
-            </and>
+            <or>
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <or>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+                        </instanceof>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+               <and>
+                  <count
+                        value="+">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.TagNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </or>
          </activeWhen>
       </handler>
       <handler
@@ -1183,6 +1197,39 @@
                   <iterate>
 		             <instanceof
 		                   value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+		             </instanceof>
+                  </iterate>
+               </and>
+            </or>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.PushTags">
+         <class
+               class="org.eclipse.egit.ui.internal.actions.PushTagsActionHandler">
+         </class>
+         <activeWhen>
+            <or>
+               <reference
+                     definitionId="org.eclipse.egit.ui.gitProject">
+               </reference>
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+		             <instanceof
+		                   value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+		             </instanceof>
+                  </iterate>
+               </and>
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+		             <instanceof
+		                   value="org.eclipse.egit.ui.internal.repository.tree.TagsNode">
 		             </instanceof>
                   </iterate>
                </and>
@@ -2166,7 +2213,7 @@
                   checkEnabled="false">
                <and>
                   <count
-                        value="1">
+                        value="+">
                   </count>
                   <iterate>
                      <instanceof
@@ -2499,6 +2546,25 @@
                commandId="org.eclipse.egit.ui.team.Tag"
                icon="icons/obj16/new_tag_obj.gif"
                label="%RepoViewCreateTag.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <or>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.TagsNode">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.team.PushTags"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -3041,6 +3107,23 @@
                   commandId="org.eclipse.egit.ui.team.Push"
                   icon="icons/obj16/push.gif"
                   label="%RepoViewPush.label"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                        </instanceof>
+                     </iterate>
+                  </and>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="org.eclipse.egit.ui.team.PushTags"
                   style="push">
                <visibleWhen
                      checkEnabled="false">
@@ -3744,6 +3827,10 @@
                <command
                      commandId="org.eclipse.egit.ui.team.Push"
                      label="%PushAction_label"
+                     style="push">
+               </command>
+               <command
+                     commandId="org.eclipse.egit.ui.team.PushTags"
                      style="push">
                </command>
                <command
@@ -4690,6 +4777,10 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.PushBranch"
+            icon="icons/obj16/push.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.PushTags"
             icon="icons/obj16/push.gif">
       </image>
       <image
