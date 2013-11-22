@@ -180,8 +180,8 @@ public class GitRepositoriesViewTagHandlingTest extends
 	private void createTag(String name, String message) throws Exception {
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		myRepoViewUtil.getTagsItem(tree, repositoryFile).select();
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue("CreateTagCommand"));
+		ContextMenuHelper.clickContextMenu(tree,
+				myUtil.getPluginLocalizedValue("RepoViewCreateTag.label"));
 		String shellTitle = UIText.CreateTagDialog_NewTag;
 		SWTBotShell createDialog = bot.shell(shellTitle).activate();
 		TestUtil.joinJobs(JobFamilies.FILL_TAG_LIST);
