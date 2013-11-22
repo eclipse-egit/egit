@@ -214,19 +214,13 @@ public class RebaseInteractiveView extends ViewPart implements
 		toolkit.adapt(toolBar);
 		toolkit.paintBordersFor(toolBar);
 
-		abortItem = new ToolItem(toolBar, SWT.NONE);
-		abortItem.setImage(UIIcons.getImage(resources, UIIcons.REBASE_ABORT));
-		abortItem.addSelectionListener(new RebaseCommandItemSelectionListener(
-				new AbortRebaseCommand()));
-		abortItem.setText(UIText.InteractiveRebaseView_abortItem_text);
-		abortItem.setEnabled(false);
-
-		skipItem = new ToolItem(toolBar, SWT.NONE);
-		skipItem.setImage(UIIcons.getImage(resources, UIIcons.REBASE_SKIP));
-		skipItem.addSelectionListener(new RebaseCommandItemSelectionListener(
-				new SkipRebaseCommand()));
-		skipItem.setText(UIText.InteractiveRebaseView_skipItem_text);
-		skipItem.setEnabled(false);
+		startItem = new ToolItem(toolBar, SWT.NONE);
+		startItem.setImage(UIIcons.getImage(resources,
+				UIIcons.REBASE_PROCESS_STEPS));
+		startItem.addSelectionListener(new RebaseCommandItemSelectionListener(
+				new ProcessStepsRebaseCommand()));
+		startItem.setEnabled(false);
+		startItem.setText(UIText.InteractiveRebaseView_startItem_text);
 
 		continueItem = new ToolItem(toolBar, SWT.NONE);
 		continueItem.setImage(UIIcons.getImage(resources,
@@ -237,13 +231,19 @@ public class RebaseInteractiveView extends ViewPart implements
 		continueItem.setEnabled(false);
 		continueItem.setText(UIText.InteractiveRebaseView_continueItem_text);
 
-		startItem = new ToolItem(toolBar, SWT.NONE);
-		startItem.setImage(UIIcons.getImage(resources,
-				UIIcons.REBASE_PROCESS_STEPS));
-		startItem.addSelectionListener(new RebaseCommandItemSelectionListener(
-				new ProcessStepsRebaseCommand()));
-		startItem.setEnabled(false);
-		startItem.setText(UIText.InteractiveRebaseView_startItem_text);
+		skipItem = new ToolItem(toolBar, SWT.NONE);
+		skipItem.setImage(UIIcons.getImage(resources, UIIcons.REBASE_SKIP));
+		skipItem.addSelectionListener(new RebaseCommandItemSelectionListener(
+				new SkipRebaseCommand()));
+		skipItem.setText(UIText.InteractiveRebaseView_skipItem_text);
+		skipItem.setEnabled(false);
+
+		abortItem = new ToolItem(toolBar, SWT.NONE);
+		abortItem.setImage(UIIcons.getImage(resources, UIIcons.REBASE_ABORT));
+		abortItem.addSelectionListener(new RebaseCommandItemSelectionListener(
+				new AbortRebaseCommand()));
+		abortItem.setText(UIText.InteractiveRebaseView_abortItem_text);
+		abortItem.setEnabled(false);
 
 		new ToolItem(toolBar, SWT.SEPARATOR);
 
