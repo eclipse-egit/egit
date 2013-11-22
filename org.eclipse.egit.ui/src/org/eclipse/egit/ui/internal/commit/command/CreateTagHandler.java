@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011 GitHub Inc.
+ *  Copyright (c) 2011, 2013 GitHub Inc and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -19,8 +19,10 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.op.TagOperation;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.internal.dialogs.CreateTagDialog;
+import org.eclipse.egit.ui.internal.push.PushTagsWizard;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.PersonIdent;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.TagBuilder;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -39,15 +41,16 @@ public class CreateTagHandler extends CommitCommandHandler {
 		if (commits.size() == 1) {
 			RepositoryCommit commit = commits.get(0);
 
+			Repository repository = commit.getRepository();
 			CreateTagDialog dialog = new CreateTagDialog(
 					HandlerUtil.getActiveShellChecked(event), commit
-							.getRevCommit().getId(), commit.getRepository());
+							.getRevCommit().getId(), repository);
 
 			if (dialog.open() != Window.OK)
 				return null;
 
 			final TagBuilder tag = new TagBuilder();
-			PersonIdent personIdent = new PersonIdent(commit.getRepository());
+			PersonIdent personIdent = new PersonIdent(repository);
 			String tagName = dialog.getTagName();
 
 			tag.setTag(tagName);
@@ -56,12 +59,15 @@ public class CreateTagHandler extends CommitCommandHandler {
 			tag.setObjectId(commit.getRevCommit());
 
 			try {
-				new TagOperation(commit.getRepository(), tag,
+				new TagOperation(repository, tag,
 						dialog.shouldOverWriteTag())
 						.execute(new NullProgressMonitor());
 			} catch (CoreException e) {
 				throw new ExecutionException(e.getMessage(), e);
 			}
+
+			if (dialog.shouldStartPushWizard())
+				PushTagsWizard.openWizardDialog(repository, tagName);
 		}
 		return null;
 	}
