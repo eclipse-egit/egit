@@ -2496,7 +2496,7 @@
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=tag">
          <command
-               commandId="org.eclipse.egit.ui.RepositoriesViewCreateTag"
+               commandId="org.eclipse.egit.ui.team.Tag"
                icon="icons/obj16/new_tag_obj.gif"
                label="%RepoViewCreateTag.label"
                style="push">
@@ -4447,12 +4447,6 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.CreateTagCommand"
-            id="org.eclipse.egit.ui.RepositoriesViewCreateTag"
-            name="%CreateTagCommand">
-      </command>
-      <command
-            categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.CheckoutCommand"
             id="org.eclipse.egit.ui.CheckoutCommand"
             name="%CheckoutCommand">
@@ -4573,10 +4567,6 @@
       <image
             commandId="org.eclipse.egit.ui.RepositoriesLinkWithSelection"
             icon="icons/elcl16/synced.gif">
-      </image>
-      <image
-            commandId="org.eclipse.egit.ui.RepositoriesViewCreateTag"
-            icon="icons/obj16/new_tag_obj.gif">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.ShowRepositoriesView"
