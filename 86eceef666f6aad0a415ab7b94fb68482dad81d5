@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_6d38f853",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/TagActionHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-22T22:35:29Z",
+      "side": 1,
+      "message": "style nit: no braces around single line block",
+      "revId": "86eceef666f6aad0a415ab7b94fb68482dad81d5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_ad04c08b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushTagsPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-22T22:35:29Z",
+      "side": 1,
+      "message": "style nit: no braces here",
+      "revId": "86eceef666f6aad0a415ab7b94fb68482dad81d5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_0dfa14e9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushTagsPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-22T22:35:29Z",
+      "side": 1,
+      "message": "style nit: no braces here",
+      "revId": "86eceef666f6aad0a415ab7b94fb68482dad81d5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_8dc8e4bb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushTagsWizard.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-22T22:35:29Z",
+      "side": 1,
+      "message": "I think we should have a force checkbox, since otherwise the following scenario would move a tag in the remote repository and the user wouldn\u0027t know about that:\n\n- Joe creates a new tag and pushes it to the remote\n- he moves this tag locally\n- then later, after having forgot about moving this tag he pushes the same tag again, and voila the tag in the remote is moved forcefully, but Joe didn\u0027t say he wants to use force flag\n\nI think we should make this explicit",
+      "revId": "86eceef666f6aad0a415ab7b94fb68482dad81d5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
