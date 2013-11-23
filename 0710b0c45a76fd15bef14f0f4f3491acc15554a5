@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_26544ad1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/RefSpecWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-11-23T15:18:40Z",
+      "side": 1,
+      "message": "Please add the year here, like so:\n\nCopyright (C) 2010, 2013 Mathias Kinzler \u003cmathias.kinzler@sap.com\u003e and others.\n\nSee also this guide: https://wiki.eclipse.org/EGit/Contributor_Guide#Copyright",
+      "revId": "0710b0c45a76fd15bef14f0f4f3491acc15554a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_c66766c4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/RefSpecWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-11-23T15:18:40Z",
+      "side": 1,
+      "message": "We don\u0027t use braces ({}) for such simple one-line statements, please remove them.",
+      "revId": "0710b0c45a76fd15bef14f0f4f3491acc15554a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_86927e27",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-11-23T15:18:40Z",
+      "side": 1,
+      "message": "Titles should be in \"title capitalization\", so these should be \"Configure Push\" and \"Configure Fetch\".",
+      "revId": "0710b0c45a76fd15bef14f0f4f3491acc15554a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
