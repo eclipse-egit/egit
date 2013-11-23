@@ -1710,6 +1710,12 @@ public class UIText extends NLS {
 	public static String RefSpecPage_annotatedTagsNoTags;
 
 	/** */
+	public static String RefSpecWizard_pushTitle;
+
+	/** */
+	public static String RefSpecWizard_fetchTitle;
+
+	/** */
 	public static String QuickDiff_failedLoading;
 
 	/** */
