@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2010, 2013 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.push;
 
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RefSpecPage;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.jface.wizard.IWizardPage;
@@ -36,6 +37,16 @@ public class RefSpecWizard extends Wizard {
 		this.pushMode = pushMode;
 		this.config = config;
 		page = new RefSpecPage(repository, pushMode);
+		setWindowTitle(pushMode);
+	}
+
+	private void setWindowTitle(boolean pushMode) {
+		final String title;
+		if (pushMode)
+			title = UIText.RefSpecWizard_pushTitle;
+		else
+			title = UIText.RefSpecWizard_fetchTitle;
+		setWindowTitle(title);
 	}
 
 	@Override
