@@ -201,6 +201,9 @@ public class PushBranchWizard extends Wizard {
 		PushOperationUI pushOperationUI = new PushOperationUI(repository,
 				pushSpec, false);
 		pushOperationUI.setCredentialsProvider(new EGitCredentialsProvider());
+		pushOperationUI.setShowConfigureButton(false);
+		if (confirmationPage.isShowOnlyIfChangedSelected())
+			pushOperationUI.setExpectedResult(result);
 		pushOperationUI.start();
 	}
 
