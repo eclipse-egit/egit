@@ -27,6 +27,8 @@ public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
 
 	private StagingFolderEntry parent;
 
+	private Object[] children;
+
 	/**
 	 * @param repoLocation
 	 * @param repoRelativePath
@@ -83,13 +85,6 @@ public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
 	}
 
 	/**
-	 * @return the repo-relative path of the parent folder entry
-	 */
-	public IPath getParentPath() {
-		return repoRelativePath.removeLastSegments(nodePath.segmentCount());
-	}
-
-	/**
 	 * @return the path of the node, relative to its parent
 	 */
 	public IPath getNodePath() {
@@ -108,6 +103,20 @@ public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
 	 */
 	public void setParent(StagingFolderEntry parent) {
 		this.parent = parent;
+	}
+
+	/**
+	 * @return child nodes (files or folders)
+	 */
+	public Object[] getChildren() {
+		return children;
+	}
+
+	/**
+	 * @param children
+	 */
+	public void setChildren(Object[] children) {
+		this.children = children;
 	}
 
 	@Override
