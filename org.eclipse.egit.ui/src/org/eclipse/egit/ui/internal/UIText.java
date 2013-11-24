@@ -3976,7 +3976,7 @@ public class UIText extends NLS {
 	public static String GitBranchSynchronizeWizardPage_description;
 
 	/** */
-	public static String GitBranchSynchronizeWizardPage_repositories;
+	public static String GitBranchSynchronizeWizardPage_repository;
 
 	/** */
 	public static String GitBranchSynchronizeWizardPage_destination;
