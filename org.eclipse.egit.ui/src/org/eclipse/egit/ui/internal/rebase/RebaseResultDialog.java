@@ -533,14 +533,12 @@ public class RebaseResultDialog extends MessageDialog {
 			if (startMergeButton.getSelection()) {
 				super.buttonPressed(buttonId);
 				// open the merge tool
-				List<IProject> validProjects = new ArrayList<IProject>();
 				IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
 						.getProjects();
 				for (IProject project : projects) {
 					RepositoryMapping mapping = RepositoryMapping
 							.getMapping(project);
 					if (mapping != null && mapping.getRepository().equals(repo)) {
-						validProjects.add(project);
 						try {
 							// make sure to refresh before opening the merge
 							// tool
@@ -552,20 +550,14 @@ public class RebaseResultDialog extends MessageDialog {
 						}
 					}
 				}
-				List<IResource> resourceList = new ArrayList<IResource>();
+				List<IPath> locationList = new ArrayList<IPath>();
 				IPath repoWorkdirPath = new Path(repo.getWorkTree().getPath());
 				for (String repoPath : conflictPaths) {
-					IPath filePath = repoWorkdirPath.append(repoPath);
-					for (IProject project : validProjects)
-						if (project.getLocation().isPrefixOf(filePath)) {
-							IResource res = project.getFile(filePath
-									.removeFirstSegments(project.getLocation()
-											.segmentCount()));
-							resourceList.add(res);
-						}
+					IPath location = repoWorkdirPath.append(repoPath);
+					locationList.add(location);
 				}
-				IResource[] resources = new IResource[resourceList.size()];
-				resourceList.toArray(resources);
+				IPath[] locations = locationList.toArray(new IPath[locationList
+						.size()]);
 				int mergeMode = Activator.getDefault().getPreferenceStore()
 						.getInt(UIPreferences.MERGE_MODE);
 				CompareEditorInput input;
@@ -574,10 +566,11 @@ public class RebaseResultDialog extends MessageDialog {
 					if (dlg.open() != Window.OK)
 						return;
 					input = new GitMergeEditorInput(dlg.useWorkspace(),
-							resources);
+							locations);
 				} else {
 					boolean useWorkspace = mergeMode == 1;
-					input = new GitMergeEditorInput(useWorkspace, resources);
+					input = new GitMergeEditorInput(useWorkspace,
+							locations);
 				}
 				CompareUI.openCompareEditor(input);
 				return;

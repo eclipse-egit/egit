@@ -45,7 +45,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
-import org.eclipse.egit.ui.internal.FileEditableRevision;
+import org.eclipse.egit.ui.internal.ResourceEditableRevision;
 import org.eclipse.egit.ui.internal.FileRevisionTypedElement;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.LocalFileRevision;
@@ -254,7 +254,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 		} else if (selected instanceof IFile) {
 			final IFile res = (IFile) selected;
 			LocalFileRevision revision = new LocalFileRevision(res);
-			left = new FileEditableRevision(revision, res, PlatformUI.getWorkbench().getProgressService());
+			left = new ResourceEditableRevision(revision, res, PlatformUI.getWorkbench().getProgressService());
 			GitFileRevision rightRevision = compareVersionMap.get(new Path(
 					repositoryMapping.getRepoRelativePath(res)));
 			if (rightRevision == null) {
