@@ -23,8 +23,11 @@ import org.eclipse.team.core.history.IFileRevision;
 
 /**
  * Editable revision backed by an {@link IFile}.
+ * <p>
+ * Use {@link LocationEditableRevision} if you just have a path (for
+ * non-workspace files).
  */
-public class FileEditableRevision extends EditableRevision {
+public class ResourceEditableRevision extends EditableRevision {
 
 	private final IFile file;
 
@@ -39,7 +42,7 @@ public class FileEditableRevision extends EditableRevision {
 	 * @param runnableContext
 	 *            the context to use for the file write operation
 	 */
-	public FileEditableRevision(IFileRevision fileRevision, IFile file,
+	public ResourceEditableRevision(IFileRevision fileRevision, IFile file,
 			IRunnableContext runnableContext) {
 		super(fileRevision, CompareCoreUtils.getResourceEncoding(file));
 		this.file = file;
@@ -87,7 +90,7 @@ public class FileEditableRevision extends EditableRevision {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		FileEditableRevision other = (FileEditableRevision) obj;
+		ResourceEditableRevision other = (ResourceEditableRevision) obj;
 		if (file == null) {
 			if (other.file != null)
 				return false;

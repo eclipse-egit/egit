@@ -512,6 +512,14 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	}
 
 	/**
+	 * @return the locations in the selection
+	 */
+	protected IPath[] getSelectedLocations() {
+		IStructuredSelection selection = getSelection();
+		return getSelectedLocations(selection);
+	}
+
+	/**
 	 * @return true if all selected items map to the same repository, false otherwise.
 	 */
 	protected boolean selectionMapsToSingleRepository() {
