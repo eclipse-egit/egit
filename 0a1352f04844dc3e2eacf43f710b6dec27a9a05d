@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_27dd43d9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-26T16:05:40Z",
+      "side": 1,
+      "message": "I think we should instead better use the IndexDiff which is updated incrementally to feed the staging view, so I think there is no need to recompute this information",
+      "revId": "0a1352f04844dc3e2eacf43f710b6dec27a9a05d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
