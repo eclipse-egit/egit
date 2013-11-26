@@ -10,7 +10,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.branch;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -21,6 +23,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.IEGitOperation.PostExecuteTask;
 import org.eclipse.egit.core.op.IEGitOperation.PreExecuteTask;
@@ -32,12 +35,16 @@ import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.AbstractBranchSelectionDialog;
 import org.eclipse.egit.ui.internal.dialogs.CheckoutDialog;
 import org.eclipse.egit.ui.internal.dialogs.DeleteBranchDialog;
+import org.eclipse.egit.ui.internal.dialogs.NonDeletedFilesDialog;
 import org.eclipse.egit.ui.internal.dialogs.RenameBranchDialog;
 import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.MessageDialogWithToggle;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.jgit.api.CheckoutResult;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -266,7 +273,7 @@ public class BranchOperationUI {
 		job.addJobChangeListener(new JobChangeAdapter() {
 			@Override
 			public void done(IJobChangeEvent cevent) {
-				BranchResultDialog.show(bop.getResult(), repository, target);
+				show(bop.getResult());
 			}
 		});
 		job.schedule();
@@ -300,7 +307,7 @@ public class BranchOperationUI {
 		BranchOperation bop = new BranchOperation(repository, target);
 		bop.execute(monitor);
 
-		BranchResultDialog.show(bop.getResult(), repository, target);
+		show(bop.getResult());
 	}
 
 	private void askForTargetIfNecessary() {
@@ -392,4 +399,75 @@ public class BranchOperationUI {
 	private Shell getShell() {
 		return PlatformUI.getWorkbench().getDisplay().getActiveShell();
 	}
+
+	/**
+	 * @param result
+	 *            the result to show
+	 */
+	public void show(final CheckoutResult result) {
+		if (result.getStatus() == CheckoutResult.Status.CONFLICTS)
+			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+				public void run() {
+					Shell shell = PlatformUI.getWorkbench()
+							.getActiveWorkbenchWindow().getShell();
+					CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
+							shell,
+							UIText.BranchResultDialog_CheckoutConflictsTitle,
+							NLS.bind(
+									UIText.BranchResultDialog_CheckoutConflictsMessage,
+									Repository.shortenRefName(target)),
+							repository, result.getConflictList());
+					cleanupUncomittedChangesDialog.open();
+					if (cleanupUncomittedChangesDialog.shouldContinue()) {
+						BranchOperationUI op = BranchOperationUI
+								.checkoutWithoutQuestion(repository, target);
+						op.start();
+					}
+				}
+			});
+		else if (result.getStatus() == CheckoutResult.Status.NONDELETED) {
+			// double-check if the files are still there
+			boolean show = false;
+			List<String> pathList = result.getUndeletedList();
+			for (String path : pathList)
+				if (new File(repository.getWorkTree(), path).exists()) {
+					show = true;
+					break;
+				}
+			if (!show)
+				return;
+			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+				public void run() {
+					Shell shell = PlatformUI.getWorkbench()
+							.getActiveWorkbenchWindow().getShell();
+					new NonDeletedFilesDialog(shell, repository, result
+							.getUndeletedList()).open();
+				}
+			});
+		} else if (result.getStatus() == CheckoutResult.Status.OK) {
+			if (RepositoryUtil.isDetachedHead(repository))
+				showDetachedHeadWarning();
+		}
+	}
+
+	private void showDetachedHeadWarning() {
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				IPreferenceStore store = Activator.getDefault()
+						.getPreferenceStore();
+
+				if (store.getBoolean(UIPreferences.SHOW_DETACHED_HEAD_WARNING)) {
+					String toggleMessage = UIText.BranchResultDialog_DetachedHeadWarningDontShowAgain;
+					MessageDialogWithToggle.openInformation(PlatformUI
+							.getWorkbench().getActiveWorkbenchWindow()
+							.getShell(),
+							UIText.BranchOperationUI_DetachedHeadTitle,
+							UIText.BranchOperationUI_DetachedHeadMessage,
+							toggleMessage, false, store,
+							UIPreferences.SHOW_DETACHED_HEAD_WARNING);
+				}
+			}
+		});
+	}
+
 }
