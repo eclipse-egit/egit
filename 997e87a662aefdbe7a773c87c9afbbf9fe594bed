@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_b8520e5f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-26T22:50:02Z",
+      "side": 1,
+      "message": "style nit: no braces around single line block",
+      "revId": "997e87a662aefdbe7a773c87c9afbbf9fe594bed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
