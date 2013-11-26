@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commands.shared;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.IEvaluationContext;
@@ -18,12 +21,14 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan;
 import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.branch.CleanupUncomittedChangesDialog;
 import org.eclipse.egit.ui.internal.rebase.RebaseResultDialog;
 import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -75,6 +80,46 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 			return;
 		final RebaseCommand.Operation operation = rebase.getOperation();
 
+		if (operation == Operation.BEGIN) {
+			IndexDiffData indexDiffData = org.eclipse.egit.core.Activator
+					.getDefault().getIndexDiffCache()
+					.getIndexDiffCacheEntry(repository).getIndexDiff();
+			List<String> files = new ArrayList<String>();
+			files.addAll(indexDiffData.getAdded());
+			files.addAll(indexDiffData.getChanged());
+			files.addAll(indexDiffData.getModified());
+			files.addAll(indexDiffData.getRemoved());
+			files.addAll(indexDiffData.getConflicting());
+
+			if (!files.isEmpty()) {
+				handleUncommittedChanges(rebase, repository, files);
+				return;
+			}
+		}
+		startRebaseJob(rebase, repository, operation);
+	}
+
+	private void handleUncommittedChanges(final RebaseOperation rebase,
+			final Repository repository, final List<String> files) {
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				Shell shell = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getShell();
+				CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
+						shell,
+						UIText.AbstractRebaseCommandHandler_cleanupDialog_title,
+						UIText.AbstractRebaseCommandHandler_cleanupDialog_text,
+						repository, files);
+				cleanupUncomittedChangesDialog.open();
+				if (cleanupUncomittedChangesDialog.shouldContinue()) {
+					startRebaseJob(rebase, repository, rebase.getOperation());
+				}
+			}
+		});
+	}
+
+	private void startRebaseJob(final RebaseOperation rebase,
+			final Repository repository, final RebaseCommand.Operation operation) {
 		JobUtil.scheduleUserJob(rebase, jobname, JobFamilies.REBASE,
 				new JobChangeAdapter() {
 					@Override
