@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_4f5e944a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-11-27T23:16:26Z",
+      "side": 1,
+      "message": "I just noticed, does this need @since?",
+      "revId": "3ff6578d9f50c1e9ea5eda6b705eddb0c27caaa4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_cf7104d1",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-11-27T23:16:26Z",
+      "side": 1,
+      "message": "Should not get location again -\u003e isPrefixOf(location)",
+      "revId": "3ff6578d9f50c1e9ea5eda6b705eddb0c27caaa4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_6f627008",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-11-27T23:16:26Z",
+      "side": 1,
+      "message": "Ah, that reads even nicer :).",
+      "revId": "3ff6578d9f50c1e9ea5eda6b705eddb0c27caaa4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
