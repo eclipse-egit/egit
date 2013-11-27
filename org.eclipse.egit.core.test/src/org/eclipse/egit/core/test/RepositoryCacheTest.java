@@ -12,12 +12,17 @@ package org.eclipse.egit.core.test;
 
 import static org.hamcrest.Matchers.isIn;
 import static org.hamcrest.core.IsNot.not;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
+import java.io.File;
 import java.io.IOException;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryCache;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.util.FileUtils;
 import org.junit.After;
@@ -51,5 +56,46 @@ public class RepositoryCacheTest extends GitTestCase {
 		assertThat(repository, isIn(cache.getAllRepositories()));
 		FileUtils.delete(repository.getDirectory(), FileUtils.RECURSIVE);
 		assertThat(repository, not(isIn(cache.getAllRepositories())));
+	}
+
+	@Test
+	public void findsRepositoryForOpenProject() throws Exception {
+		IFile a = testUtils.addFileToProject(project.getProject(),
+				"folder1/a.txt", "a");
+		assertEquals(repository, cache.getRepository(a));
+	}
+
+	@Test
+	public void findsRepositoryForClosedProject() throws Exception {
+		IFile a = testUtils.addFileToProject(project.getProject(),
+				"folder1/a.txt", "a");
+		project.getProject().close(null);
+		assertEquals(repository, cache.getRepository(a));
+	}
+
+	@Test
+	public void findsNestedRepositoryForClosedProject()
+			throws Exception {
+		IFile a = testUtils.addFileToProject(project.getProject(),
+				"folder1/a.txt", "a");
+
+		// now we create a second project2 in a nested repository2
+		File workdir = project.createFolder("nested").getLocation().toFile();
+		TestRepository repository2 = new TestRepository(new File(workdir,
+				Constants.DOT_GIT));
+
+		String projectName = "project2";
+		IProject project2 = testUtils.createProjectInLocalFileSystem(workdir,
+				projectName);
+		IFile b = testUtils.addFileToProject(project2, "folder1/b.txt",
+				"Hello world");
+		repository2.connect(project2);
+
+		project.getProject().close(null);
+		project2.getProject().close(null);
+
+		// assert that we don't get confused by nesting repositories
+		assertEquals(repository, cache.getRepository(a));
+		assertEquals(repository2.repository, cache.getRepository(b));
 	}
 }
