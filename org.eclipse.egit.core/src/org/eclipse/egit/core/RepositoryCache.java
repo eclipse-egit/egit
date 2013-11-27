@@ -21,6 +21,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
@@ -65,6 +68,42 @@ public class RepositoryCache {
 			repositories.add(reference.get());
 		}
 		return repositories.toArray(new Repository[repositories.size()]);
+	}
+
+	/**
+	 * Lookup the closest git repository with a working tree containing the given
+	 * resource. If there are repositories nested above in the file system hierarchy
+	 * we select the closest one above the given resource.
+	 *
+	 * @param resource
+	 *            the resource to find the repository for
+	 * @return the git repository which has the given resource in its working
+	 *         tree
+	 */
+	public Repository getRepository(final IResource resource) {
+		Repository[] repositories = org.eclipse.egit.core.Activator
+				.getDefault().getRepositoryCache().getAllRepositories();
+		Repository repository = null;
+		IPath repositoryPath = null;
+		for (Repository r : repositories) {
+			if (!r.isBare()) {
+				try {
+					IPath repoPath = new Path(r.getWorkTree()
+							.getCanonicalPath());
+					if (repoPath.isPrefixOf(resource.getLocation())) {
+						if (repository == null || repositoryPath == null
+								|| repositoryPath.isPrefixOf(repoPath)) {
+							repository = r;
+							repositoryPath = repoPath;
+						}
+					}
+				} catch (IOException e) {
+					Activator
+							.error("looking up working tree path of git repository failed", e); //$NON-NLS-1$
+				}
+			}
+		}
+		return repository;
 	}
 
 	private static void prune(Map<File, Reference<Repository>> map) {
