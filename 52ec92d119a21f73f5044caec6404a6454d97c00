@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_544f493f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-11-27T22:10:34Z",
+      "side": 1,
+      "message": "IResource#getLocation can return null, this must be checked.",
+      "revId": "52ec92d119a21f73f5044caec6404a6454d97c00",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_34527de3",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-11-27T22:10:34Z",
+      "side": 1,
+      "message": "Could you rename repositoryPath to closestRepoPath? I think this would be easier to read then. You could also use segmentCount to compare which path is longer, right?",
+      "revId": "52ec92d119a21f73f5044caec6404a6454d97c00",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
