@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_1439418e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-27T22:21:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_93e3b54d",
+      "revId": "1faed9d6d97f907797b498b06d31e42272de2a57",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_a0d3f4cc",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/CleanupUncomittedChangesDialog.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_f43bf583",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/CleanupUncomittedChangesDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-27T22:21:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_a0d3f4cc",
+      "revId": "1faed9d6d97f907797b498b06d31e42272de2a57",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_80ceb826",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/CleanupUncomittedChangesDialog.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2013-11-27T22:17:33Z",
       "side": 1,
       "message": "this sentence is incomplete",
+      "revId": "1faed9d6d97f907797b498b06d31e42272de2a57",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_5433c9ab",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/CleanupUncomittedChangesDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-27T22:21:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_80ceb826",
       "revId": "1faed9d6d97f907797b498b06d31e42272de2a57",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
