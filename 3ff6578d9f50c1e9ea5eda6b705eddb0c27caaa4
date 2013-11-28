@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_cc562d31",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-28T07:37:21Z",
+      "side": 1,
+      "message": "I think we don\u0027t need it since the package is internal, but added it anyway",
+      "parentUuid": "8748d3a1_4f5e944a",
+      "revId": "3ff6578d9f50c1e9ea5eda6b705eddb0c27caaa4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_cf7104d1",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2013-11-27T23:16:26Z",
       "side": 1,
       "message": "Should not get location again -\u003e isPrefixOf(location)",
+      "revId": "3ff6578d9f50c1e9ea5eda6b705eddb0c27caaa4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_2c5eb149",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-11-28T07:37:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_cf7104d1",
       "revId": "3ff6578d9f50c1e9ea5eda6b705eddb0c27caaa4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
