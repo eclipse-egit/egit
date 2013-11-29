@@ -870,6 +870,9 @@ public class UIText extends NLS {
 	public static String RebaseResultDialog_ToggleShowButton;
 
 	/** */
+	public static String RebaseResultDialog_UncommittedChanges;
+
+	/** */
 	public static String RebaseResultDialog_UpToDate;
 
 	/** */
