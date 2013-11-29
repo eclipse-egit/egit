@@ -27,6 +27,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.BranchConfig;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -145,7 +146,7 @@ public class PushBranchPage extends WizardPage {
 				inputPanel, SWT.NONE, SelectionType.PUSH);
 		GridDataFactory.fillDefaults().grab(true, false).span(remoteSelectionSpan, 1)
 				.applyTo(remoteSelectionCombo);
-		remoteConfig = remoteSelectionCombo.setItems(remoteConfigs);
+		setRemoteConfigs();
 		remoteSelectionCombo
 				.addRemoteSelectionListener(new IRemoteSelectionListener() {
 					public void remoteSelected(RemoteConfig rc) {
@@ -200,6 +201,23 @@ public class PushBranchPage extends WizardPage {
 				checkPage();
 			}
 		});
+	}
+
+	private void setRemoteConfigs() {
+		remoteSelectionCombo.setItems(remoteConfigs);
+
+		String branchName = Repository.shortenRefName(ref.getName());
+		String remoteName = repository.getConfig().getString(
+				ConfigConstants.CONFIG_BRANCH_SECTION, branchName,
+				ConfigConstants.CONFIG_KEY_REMOTE);
+		if (remoteName != null) {
+			for (RemoteConfig rc : remoteConfigs) {
+				if (remoteName.equals(rc.getName()))
+					remoteSelectionCombo.setSelectedRemote(rc);
+			}
+		}
+
+		remoteConfig = remoteSelectionCombo.getSelectedRemote();
 	}
 
 	private void setDefaultUpstreamConfig() {
