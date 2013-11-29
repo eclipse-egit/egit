@@ -158,7 +158,6 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 
 	private void createNewBranch(String newBranch, boolean checkout) {
 		SWTBotShell newBranchDialog = openCreateBranchDialog();
-		newBranchDialog.bot().comboBoxWithId("BaseBranch").setSelection(0);
 		newBranchDialog.bot().textWithId("BranchName").setText(newBranch);
 		if (!checkout)
 			newBranchDialog.bot().checkBox(UIText.CreateBranchPage_CheckoutButton).deselect();

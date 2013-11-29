@@ -2428,6 +2428,9 @@ public class UIText extends NLS {
 	public static String CreateBranchPage_BranchNameLabel;
 
 	/** */
+	public static String CreateBranchPage_BranchNameToolTip;
+
+	/** */
 	public static String CreateBranchPage_CheckingOutMessage;
 
 	/** */
@@ -2449,16 +2452,19 @@ public class UIText extends NLS {
 	public static String CreateBranchPage_MissingSourceMessage;
 
 	/** */
-	public static String CreateBranchPage_SourceBranchLabel;
+	public static String CreateBranchPage_SourceLabel;
 
 	/** */
-	public static String CreateBranchPage_SourceBranchTooltip;
+	public static String CreateBranchPage_SourceSelectButton;
 
 	/** */
-	public static String CreateBranchPage_SourceCommitLabel;
+	public static String CreateBranchPage_SourceSelectionDialogMessage;
 
 	/** */
-	public static String CreateBranchPage_SourceCommitTooltip;
+	public static String CreateBranchPage_SourceSelectionDialogTitle;
+
+	/** */
+	public static String CreateBranchPage_SourceTooltip;
 
 	/** */
 	public static String CreateBranchPage_Title;
