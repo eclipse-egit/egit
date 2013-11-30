@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Benjamin Muskalla and others.
+ * Copyright (c) 2011, 2013 Benjamin Muskalla and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -127,8 +127,11 @@ public class GitLabelProvider extends LabelProvider implements
 		if (element instanceof Repository)
 			return RepositoryTreeNodeType.REPO.getIcon();
 
-		if (element instanceof RefNode || element instanceof Ref)
-			return RepositoryTreeNodeType.REF.getIcon();
+		if (element instanceof RefNode)
+			return getRefIcon(((RefNode) element).getObject());
+
+		if (element instanceof Ref)
+			return getRefIcon((Ref) element);
 
 		if (element instanceof GitModelBlob || element instanceof GitModelTree) {
 			Object adapter = ((IAdaptable) element).getAdapter(IResource.class);
@@ -220,6 +223,17 @@ public class GitLabelProvider extends LabelProvider implements
 	 */
 	protected Image getChangesetIcon() {
 		return getImageCache().createImage(UIIcons.CHANGESET);
+	}
+
+	private Image getRefIcon(Ref ref) {
+		String name = ref.getName();
+		if (name.startsWith(Constants.R_HEADS)
+				|| name.startsWith(Constants.R_REMOTES))
+			return RepositoryTreeNodeType.REF.getIcon();
+		else if (name.startsWith(Constants.R_TAGS))
+			return RepositoryTreeNodeType.TAG.getIcon();
+		else
+			return RepositoryTreeNodeType.ADDITIONALREF.getIcon();
 	}
 
 	private LabelProvider getWorkbenchLabelProvider() {
