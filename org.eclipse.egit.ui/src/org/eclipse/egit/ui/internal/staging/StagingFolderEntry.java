@@ -24,10 +24,11 @@ public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
 	private final IPath repoLocation;
 	private final IPath repoRelativePath;
 	private final IPath nodePath;
+	private final IContainer container;
 
 	private StagingFolderEntry parent;
-
 	private Object[] children;
+
 
 	/**
 	 * @param repoLocation
@@ -39,6 +40,7 @@ public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
 		this.repoLocation = repoLocation;
 		this.repoRelativePath = repoRelativePath;
 		this.nodePath = nodePath;
+		this.container = ResourceUtil.getContainerForLocation(getLocation());
 	}
 
 	/**
@@ -46,11 +48,10 @@ public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
 	 *         workspace, null otherwise.
 	 */
 	public IContainer getContainer() {
-		return ResourceUtil.getContainerForLocation(getLocation());
+		return container;
 	}
 
 	public int getProblemSeverity() {
-		IContainer container = getContainer();
 		if (container == null)
 			return SEVERITY_NONE;
 
