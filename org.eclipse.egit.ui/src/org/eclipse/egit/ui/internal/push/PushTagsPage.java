@@ -184,9 +184,12 @@ public class PushTagsPage extends WizardPage {
 		TagNode[] checkedTagsArray = checkedTags
 				.toArray(new TagNode[checkedTags.size()]);
 		viewer.setCheckedElements(checkedTagsArray);
-		viewer.setSelection(StructuredSelection.EMPTY);
-		if (checkedTagsArray.length > 0)
-			viewer.reveal(checkedTagsArray[0]);
+		if (checkedTagsArray.length > 0) {
+			// Reveal preselected tags (just using reveal does not seem to work)
+			viewer.setSelection(new StructuredSelection(checkedTagsArray), true);
+			// Clear selection, we don't want to highlight the row that much
+			viewer.setSelection(StructuredSelection.EMPTY);
+		}
 		setSelectedTags(checkedTagsArray);
 	}
 
