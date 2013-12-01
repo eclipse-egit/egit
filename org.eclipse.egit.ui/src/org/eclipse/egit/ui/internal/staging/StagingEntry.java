@@ -30,8 +30,6 @@ import org.eclipse.jgit.lib.Repository;
  * A staged/unstaged entry in the table
  */
 public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratableResource {
-	private String name;
-	private StagingFolderEntry parent;
 
 	/**
 	 * State of the node
@@ -93,24 +91,29 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 		LAUNCH_MERGE_TOOL,
 	}
 
-	private Repository repository;
+	private final Repository repository;
+	private final State state;
+	private final String path;
+	private final IFile file;
 
-	private State state;
+	private String name;
 
-	private String path;
+	private StagingFolderEntry parent;
 
 	private boolean submodule;
 
 	/**
-	 *
-	 * @param repository TODO
-	 * @param modified
-	 * @param file
+	 * @param repository
+	 *            repository for this entry
+	 * @param state
+	 * @param path
+	 *            repo-relative path for this entry
 	 */
-	public StagingEntry(Repository repository, State modified, String file) {
+	public StagingEntry(Repository repository, State state, String path) {
 		this.repository = repository;
-		this.state = modified;
-		this.path = file;
+		this.state = state;
+		this.path = path;
+		this.file = ResourceUtil.getFileForLocation(repository, path);
 	}
 
 	/**
@@ -164,9 +167,7 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 	 *         workspace, null otherwise.
 	 */
 	public IFile getFile() {
-		IPath absolutePath = getLocation();
-		IFile resource = ResourceUtil.getFileForLocation(absolutePath);
-		return resource;
+		return file;
 	}
 
 	/**
@@ -193,7 +194,6 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 	}
 
 	public int getProblemSeverity() {
-		IFile file = getFile();
 		if (file == null)
 			return SEVERITY_NONE;
 
