@@ -153,7 +153,7 @@ public class RepositoryPropertySource implements IPropertySource {
 
 		effectiveConfig = repository.getConfig();
 		systemConfig = SystemReader.getInstance().openSystemConfig(null, FS.DETECTED);
-		userHomeConfig = SystemReader.getInstance().openUserConfig(systemConfig, FS.DETECTED);
+		userHomeConfig = SystemReader.getInstance().openUserConfig(null, FS.DETECTED);
 
 		if (effectiveConfig instanceof FileBasedConfig) {
 			File configFile = ((FileBasedConfig) effectiveConfig).getFile();
@@ -353,11 +353,13 @@ public class RepositoryPropertySource implements IPropertySource {
 		StoredConfig config;
 		String category;
 		String prefix;
+		boolean recursive = false;
 		switch (getCurrentMode()) {
 		case EFFECTIVE:
 			prefix = EFFECTIVE_ID_PREFIX;
 			category = UIText.RepositoryPropertySource_EffectiveConfigurationCategory;
 			config = effectiveConfig;
+			recursive = true;
 			break;
 		case REPO: {
 			prefix = REPO_ID_PREFIX;
@@ -395,7 +397,7 @@ public class RepositoryPropertySource implements IPropertySource {
 			return new IPropertyDescriptor[0];
 		}
 		for (String key : config.getSections()) {
-			for (String sectionItem : config.getNames(key)) {
+			for (String sectionItem : config.getNames(key, recursive)) {
 				String sectionId = key + "." + sectionItem; //$NON-NLS-1$
 				PropertyDescriptor desc = new PropertyDescriptor(prefix
 						+ sectionId, sectionId);
@@ -403,7 +405,7 @@ public class RepositoryPropertySource implements IPropertySource {
 				resultList.add(desc);
 			}
 			for (String sub : config.getSubsections(key)) {
-				for (String sectionItem : config.getNames(key, sub)) {
+				for (String sectionItem : config.getNames(key, sub, recursive)) {
 					String sectionId = key + "." + sub + "." + sectionItem; //$NON-NLS-1$ //$NON-NLS-2$
 					PropertyDescriptor desc = new PropertyDescriptor(prefix
 							+ sectionId, sectionId);
