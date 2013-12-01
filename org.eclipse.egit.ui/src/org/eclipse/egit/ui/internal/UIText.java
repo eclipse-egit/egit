@@ -8,6 +8,7 @@
  * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, Laurent Goubet <laurent.goubet@obeo.fr>
  * Copyright (C) 2012, Gunnar Wagenknecht <gunnar@wagenknecht.org>
+ * Copyright (C) 2013, Ben Hammen <hammenb@gmail.com>
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -4867,7 +4868,10 @@ public class UIText extends NLS {
 	public static String StashCreateCommand_titleNoChanges;
 
 	/** */
-	public static String StashDropCommand_confirmMessage;
+	public static String StashDropCommand_confirmSingle;
+
+	/** */
+	public static String StashDropCommand_confirmMultiple;
 
 	/** */
 	public static String StashDropCommand_confirmTitle;
