@@ -841,6 +841,9 @@ public class UIText extends NLS {
 	public static String RebaseResultDialog_StartMergeRadioText;
 
 	/** */
+	public static String RebaseResultDialog_stashApplyConflicts;
+
+	/** */
 	public static String RebaseResultDialog_StatusAborted;
 
 	/** */

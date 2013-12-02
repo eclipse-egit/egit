@@ -109,6 +109,7 @@ public class RebaseResultDialog extends MessageDialog {
 	public static void show(final RebaseResult result,
 			final Repository repository) {
 		boolean shouldShow = result.getStatus() == Status.STOPPED
+				|| result.getStatus() == Status.STASH_APPLY_CONFLICTS
 				|| Activator.getDefault().getPreferenceStore().getBoolean(
 						UIPreferences.SHOW_REBASE_CONFIRM);
 
@@ -163,6 +164,9 @@ public class RebaseResultDialog extends MessageDialog {
 			return UIText.RebaseResultDialog_InteractivePrepared;
 		case UNCOMMITTED_CHANGES:
 			return UIText.RebaseResultDialog_UncommittedChanges;
+		case STASH_APPLY_CONFLICTS:
+			return UIText.RebaseResultDialog_SuccessfullyFinished + ".\n" + //$NON-NLS-1$
+					UIText.RebaseResultDialog_stashApplyConflicts;
 		default:
 			throw new IllegalStateException(status.name());
 		}
@@ -192,6 +196,9 @@ public class RebaseResultDialog extends MessageDialog {
 			return UIText.RebaseResultDialog_StatusNothingToCommit;
 		case UNCOMMITTED_CHANGES:
 			return UIText.RebaseResultDialog_UncommittedChanges;
+		case STASH_APPLY_CONFLICTS:
+			return UIText.RebaseResultDialog_SuccessfullyFinished + ".\n" + //$NON-NLS-1$
+					UIText.RebaseResultDialog_stashApplyConflicts;
 		}
 		return status.toString();
 	}
