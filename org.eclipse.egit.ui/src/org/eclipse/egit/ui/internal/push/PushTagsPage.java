@@ -126,13 +126,8 @@ public class PushTagsPage extends WizardPage {
 
 		final CachedCheckboxTreeViewer treeViewer = tree
 				.getCheckboxTreeViewer();
-		final TagsNode tagsNode = new TagsNode(null, repository);
-		RepositoriesViewContentProvider contentProvider = new RepositoriesViewContentProvider() {
-			@Override
-			public Object[] getElements(Object inputElement) {
-				return getChildren(tagsNode);
-			}
-		};
+		TagsNode tagsNode = new TagsNode(null, repository);
+		ContentProvider contentProvider = new ContentProvider(tagsNode);
 		treeViewer.setContentProvider(contentProvider);
 		treeViewer
 				.setLabelProvider(new RepositoriesViewStyledCellLabelProvider());
@@ -184,9 +179,12 @@ public class PushTagsPage extends WizardPage {
 		TagNode[] checkedTagsArray = checkedTags
 				.toArray(new TagNode[checkedTags.size()]);
 		viewer.setCheckedElements(checkedTagsArray);
-		viewer.setSelection(StructuredSelection.EMPTY);
-		if (checkedTagsArray.length > 0)
-			viewer.reveal(checkedTagsArray[0]);
+		if (checkedTagsArray.length > 0) {
+			// Reveal tags (just using reveal does not work on some platforms)
+			viewer.setSelection(new StructuredSelection(checkedTagsArray), true);
+			// Clear selection, we don't want to highlight the rows that much
+			viewer.setSelection(StructuredSelection.EMPTY);
+		}
 		setSelectedTags(checkedTagsArray);
 	}
 
@@ -210,6 +208,20 @@ public class PushTagsPage extends WizardPage {
 			return RemoteConfig.getAllRemoteConfigs(repository.getConfig());
 		} catch (URISyntaxException e) {
 			throw new RuntimeException(e);
+		}
+	}
+
+	private static class ContentProvider extends
+			RepositoriesViewContentProvider {
+		private final Object[] children;
+
+		private ContentProvider(TagsNode tagsNode) {
+			this.children = getChildren(tagsNode);
+		}
+
+		@Override
+		public Object[] getElements(Object inputElement) {
+			return children;
 		}
 	}
 }
