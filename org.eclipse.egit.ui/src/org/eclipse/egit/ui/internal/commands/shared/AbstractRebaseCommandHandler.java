@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commands.shared;
 
+import java.util.List;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.IEvaluationContext;
@@ -24,6 +26,7 @@ import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.branch.CleanupUncomittedChangesDialog;
 import org.eclipse.egit.ui.internal.rebase.RebaseResultDialog;
 import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -75,6 +78,11 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 			return;
 		final RebaseCommand.Operation operation = rebase.getOperation();
 
+		startRebaseJob(rebase, repository, operation);
+	}
+
+	private void startRebaseJob(final RebaseOperation rebase,
+			final Repository repository, final RebaseCommand.Operation operation) {
 		JobUtil.scheduleUserJob(rebase, jobname, JobFamilies.REBASE,
 				new JobChangeAdapter() {
 					@Override
@@ -117,14 +125,17 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 								}
 							});
 						else if (result.isOK()) {
-							RebaseResultDialog.show(rebase.getResult(),
-									repository);
-							if (operation == Operation.ABORT) {
-								setAmending(false, false);
-
-							}
-							if (rebase.getResult().getStatus() == Status.EDIT) {
-								setAmending(true, true);
+							if (rebase.getResult().getStatus() == Status.UNCOMMITTED_CHANGES) {
+								handleUncommittedChanges(rebase, repository,
+										rebase.getResult()
+												.getUncommittedChanges());
+							} else {
+								RebaseResultDialog.show(rebase.getResult(),
+										repository);
+								if (operation == Operation.ABORT)
+									setAmending(false, false);
+								if (rebase.getResult().getStatus() == Status.EDIT)
+									setAmending(true, true);
 							}
 						}
 					}
@@ -173,6 +184,28 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 				});
 	}
 
+	private void handleUncommittedChanges(final RebaseOperation rebase,
+			final Repository repository, final List<String> files) {
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				Shell shell = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getShell();
+				CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
+						shell,
+						UIText.AbstractRebaseCommandHandler_cleanupDialog_title,
+						UIText.AbstractRebaseCommandHandler_cleanupDialog_text,
+						repository, files);
+				cleanupUncomittedChangesDialog.open();
+				if (cleanupUncomittedChangesDialog.shouldContinue()) {
+					try {
+						execute(repository);
+					} catch (ExecutionException e) {
+						Activator.logError(e.getMessage(), e);
+					}
+				}
+			}
+		});
+	}
 
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {

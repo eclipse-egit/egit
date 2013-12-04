@@ -82,9 +82,9 @@ public abstract class AbstractSynchronizeViewTest extends
 
 	protected File childRepositoryFile;
 
-	@Before public void setupViews() {
-		bot.perspectiveById("org.eclipse.jdt.ui.JavaPerspective").activate();
-		bot.viewByTitle("Package Explorer").show();
+	@Before
+	public void setupViews() {
+		TestUtil.showExplorerView();
 	}
 
 	@After
@@ -114,15 +114,15 @@ public abstract class AbstractSynchronizeViewTest extends
 				.addConfiguredRepository(repositoryFile);
 	}
 
-	@BeforeClass public static void setupEnvironment() throws Exception {
+	@BeforeClass
+	public static void setupEnvironment() throws Exception {
 		// disable perspective synchronize selection
 		TeamUIPlugin.getPlugin().getPreferenceStore().setValue(
 				SYNCHRONIZING_COMPLETE_PERSPECTIVE, NEVER);
 		Activator.getDefault().getPreferenceStore()
 				.setValue(UIPreferences.SYNC_VIEW_FETCH_BEFORE_LAUNCH, false);
 
-		bot.perspectiveById("org.eclipse.jdt.ui.JavaPerspective").activate();
-		bot.viewByTitle("Package Explorer").show();
+		TestUtil.showExplorerView();
 	}
 
 	protected void changeFilesInProject() throws Exception {

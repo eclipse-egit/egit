@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2011 GitHub Inc.
+ *  Copyright (c) 2011, 2013 GitHub Inc and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -27,9 +27,12 @@ import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.revisions.IRevisionRulerColumn;
 import org.eclipse.jface.text.revisions.IRevisionRulerColumnExtension;
 import org.eclipse.jface.text.revisions.RevisionInformation;
+import org.eclipse.jface.text.source.IVerticalRulerInfo;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -37,7 +40,6 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jgit.api.BlameCommand;
 import org.eclipse.jgit.blame.BlameResult;
 import org.eclipse.jgit.diff.RawTextComparator;
-import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.widgets.Shell;
@@ -53,24 +55,24 @@ import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
  */
 public class BlameOperation implements IEGitOperation {
 
-	private static class BlameHistoryPageInput extends HistoryPageInput
+	static class BlameHistoryPageInput extends HistoryPageInput
 			implements IAdaptable {
 
 		private final RevCommit commit;
 
-		private BlameHistoryPageInput(Repository repository, RevCommit commit,
+		BlameHistoryPageInput(Repository repository, RevCommit commit,
 				File file) {
 			super(repository, new File[] { file });
 			this.commit = commit;
 		}
 
-		private BlameHistoryPageInput(Repository repository, RevCommit commit,
+		BlameHistoryPageInput(Repository repository, RevCommit commit,
 				IResource file) {
 			super(repository, new IResource[] { file });
 			this.commit = commit;
 		}
 
-		private BlameHistoryPageInput(Repository repository, RevCommit commit) {
+		BlameHistoryPageInput(Repository repository, RevCommit commit) {
 			super(repository);
 			this.commit = commit;
 		}
@@ -89,6 +91,8 @@ public class BlameOperation implements IEGitOperation {
 
 		private File nonResourceFile;
 
+		private boolean firstSelectionChange = true;
+
 		private RevisionSelectionHandler(Repository repository, String path,
 				IStorage storage) {
 			if (storage instanceof IFile)
@@ -98,6 +102,13 @@ public class BlameOperation implements IEGitOperation {
 		}
 
 		public void selectionChanged(SelectionChangedEvent event) {
+			// Don't show the commit for the first selection change, as that was
+			// not initiated by the user directly. Instead, show the commit the
+			// first time the user clicks on a revision or line.
+			if (firstSelectionChange) {
+				firstSelectionChange = false;
+				return;
+			}
 			ISelection selection = event.getSelection();
 			if (selection.isEmpty()
 					|| !(selection instanceof IStructuredSelection))
@@ -134,11 +145,13 @@ public class BlameOperation implements IEGitOperation {
 
 	private String path;
 
-	private AnyObjectId startCommit;
+	private RevCommit startCommit;
 
 	private Shell shell;
 
 	private IWorkbenchPage page;
+
+	private int lineNumberToReveal;
 
 	/**
 	 * Create annotate operation
@@ -151,20 +164,36 @@ public class BlameOperation implements IEGitOperation {
 	 * @param page
 	 */
 	public BlameOperation(Repository repository, IStorage storage, String path,
-			AnyObjectId startCommit, Shell shell, IWorkbenchPage page) {
+			RevCommit startCommit, Shell shell, IWorkbenchPage page) {
+		this(repository, storage, path, startCommit, shell, page, -1);
+	}
+
+	/**
+	 * Create annotate operation
+	 *
+	 * @param repository
+	 * @param storage
+	 * @param path
+	 * @param startCommit
+	 * @param shell
+	 * @param page
+	 * @param lineNumberToReveal
+	 *            0-based line number to reveal, -1 for no reveal
+	 */
+	public BlameOperation(Repository repository, IStorage storage, String path,
+			RevCommit startCommit, Shell shell, IWorkbenchPage page,
+			int lineNumberToReveal) {
 		this.repository = repository;
 		this.storage = storage;
 		this.path = path;
 		this.startCommit = startCommit;
 		this.shell = shell;
 		this.page = page;
+		this.lineNumberToReveal = lineNumberToReveal;
 	}
 
 	public void execute(IProgressMonitor monitor) throws CoreException {
 		final RevisionInformation info = new RevisionInformation();
-		info.setHoverControlCreator(new BlameInformationControlCreator(false));
-		info.setInformationPresenterControlCreator(new BlameInformationControlCreator(
-				true));
 
 		final BlameCommand command = new BlameCommand(repository)
 				.setFollowFileRenames(true).setFilePath(path);
@@ -189,6 +218,7 @@ public class BlameOperation implements IEGitOperation {
 		BlameRevision previous = null;
 		for (int i = 0; i < lineCount; i++) {
 			RevCommit commit = result.getSourceCommit(i);
+			String sourcePath = result.getSourcePath(i);
 			if (commit == null) {
 				// Unregister the current revision
 				if (previous != null) {
@@ -202,9 +232,11 @@ public class BlameOperation implements IEGitOperation {
 				revision = new BlameRevision();
 				revision.setRepository(repository);
 				revision.setCommit(commit);
+				revision.setSourcePath(sourcePath);
 				revisions.put(commit, revision);
 				info.addRevision(revision);
 			}
+			revision.addSourceLine(i, result.getSourceLine(i));
 			if (previous != null)
 				if (previous == revision)
 					previous.addLine();
@@ -246,23 +278,38 @@ public class BlameOperation implements IEGitOperation {
 		try {
 			IHistoryView part = (IHistoryView) page.showView(
 					IHistoryView.VIEW_ID, null, IWorkbenchPage.VIEW_VISIBLE);
-			HistoryPageInput input;
-			if (storage instanceof IFile)
-				input = new HistoryPageInput(repository,
-						new IResource[] { (IResource) storage });
-			else if (!repository.isBare())
-				input = new HistoryPageInput(repository, new File[] { new File(
-						repository.getWorkTree(), path) });
-			else
-				input = new HistoryPageInput(repository);
+			HistoryPageInput input = createHistoryPageInputWhenEditorOpened();
 			part.showHistoryFor(input);
 		} catch (PartInitException e) {
 			Activator.handleError("Error displaying blame annotations", e, //$NON-NLS-1$
 					false);
 		}
 
+		// IRevisionRulerColumn would also be possible but using
+		// IVerticalRulerInfo seems to work in more situations.
+		IVerticalRulerInfo rulerInfo = AdapterUtils.adapt(editor,
+				IVerticalRulerInfo.class);
+
+		BlameInformationControlCreator creator = new BlameInformationControlCreator(
+				rulerInfo);
+		info.setHoverControlCreator(creator);
+		info.setInformationPresenterControlCreator(creator);
+
 		editor.showRevisionInformation(info,
 				"org.eclipse.egit.ui.internal.decorators.GitQuickDiffProvider"); //$NON-NLS-1$
+
+		if (lineNumberToReveal >= 0) {
+			IDocument document = editor.getDocumentProvider().getDocument(
+					editor.getEditorInput());
+			int offset;
+			try {
+				offset = document.getLineOffset(lineNumberToReveal);
+				editor.selectAndReveal(offset, 0);
+			} catch (BadLocationException e) {
+				Activator.logError(
+						"Error revealing line " + lineNumberToReveal, e); //$NON-NLS-1$
+			}
+		}
 
 		IRevisionRulerColumn revisionRuler = AdapterUtils.adapt(editor,
 				IRevisionRulerColumn.class);
@@ -272,6 +319,30 @@ public class BlameOperation implements IEGitOperation {
 					.addSelectionChangedListener(
 							new RevisionSelectionHandler(repository, path,
 									storage));
+	}
+
+	private HistoryPageInput createHistoryPageInputWhenEditorOpened() {
+		if (storage instanceof IFile) {
+			IResource resource = (IResource) storage;
+			if (startCommit != null) {
+				return new BlameHistoryPageInput(repository, startCommit,
+						resource);
+			} else {
+				return new HistoryPageInput(repository,
+						new IResource[] { resource });
+			}
+		} else if (!repository.isBare()) {
+			File file = new File(repository.getWorkTree(), path);
+			if (startCommit != null) {
+				return new BlameHistoryPageInput(repository, startCommit,
+						file);
+			} else {
+				return new HistoryPageInput(repository,
+						new File[] { file });
+			}
+		} else {
+			return new HistoryPageInput(repository);
+		}
 	}
 
 	public ISchedulingRule getSchedulingRule() {

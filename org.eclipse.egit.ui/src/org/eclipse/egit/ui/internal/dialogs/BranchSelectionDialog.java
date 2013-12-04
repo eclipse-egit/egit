@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.ui.internal.CachedCheckboxTreeViewer;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.FilteredCheckboxTree;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -35,6 +36,7 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
@@ -85,6 +87,11 @@ public class BranchSelectionDialog<T> extends MessageDialog {
 		this.nodes = nodes;
 		this.style = style;
 		this.multiMode = (this.style & SWT.MULTI) > 0;
+	}
+
+	@Override
+	protected boolean isResizable() {
+		return true;
 	}
 
 	@Override
@@ -152,6 +159,8 @@ public class BranchSelectionDialog<T> extends MessageDialog {
 			});
 
 			viewer.setLabelProvider(new GitLabelProvider());
+			viewer.setComparator(new ViewerComparator(
+					CommonUtils.STRING_ASCENDING_COMPARATOR));
 			viewer.setInput(nodes);
 		} else {
 			branchesList = new TableViewer(area, this.style | SWT.H_SCROLL
@@ -160,6 +169,8 @@ public class BranchSelectionDialog<T> extends MessageDialog {
 					.applyTo(branchesList.getControl());
 			branchesList.setContentProvider(ArrayContentProvider.getInstance());
 			branchesList.setLabelProvider(new GitLabelProvider());
+			branchesList.setComparator(new ViewerComparator(
+					CommonUtils.STRING_ASCENDING_COMPARATOR));
 			branchesList.setInput(nodes);
 			branchesList
 					.addSelectionChangedListener(new ISelectionChangedListener() {

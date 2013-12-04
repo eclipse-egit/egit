@@ -10,10 +10,6 @@ package org.eclipse.egit.ui.variables;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.Collections;
 
 import org.eclipse.core.resources.IProject;
@@ -32,6 +28,7 @@ import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.junit.JGitTestUtil;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
@@ -103,15 +100,10 @@ public class DynamicVariablesTest extends EGitTestCase {
 		RepositoryProvider.map(project, GitProvider.class.getName());
 		RepositoryProvider.map(project2, GitProvider.class.getName());
 
-		File f = new File(repository.getWorkTree(), TEST_PROJECT + "/"
-				+ TEST_FILE);
-		Writer fileWriter = new OutputStreamWriter(new FileOutputStream(f),
-				"UTF-8");
-		fileWriter.write("Some data");
-		fileWriter.close();
-		FileWriter fileWriter2 = new FileWriter(new File(repository2.getWorkTree(), TEST_FILE2));
-		fileWriter2.write("Some other data");
-		fileWriter2.close();
+		JGitTestUtil.write(new File(repository.getWorkTree(), TEST_PROJECT
+				+ "/" + TEST_FILE), "Some data");
+		JGitTestUtil.write(new File(repository2.getWorkTree(), TEST_FILE2),
+				"Some other data");
 		project.refreshLocal(IResource.DEPTH_INFINITE, null);
 		project2.refreshLocal(IResource.DEPTH_INFINITE, null);
 		git = new Git(repository);

@@ -43,7 +43,7 @@
 		<description>
 			<b>Specify reference mappings</b><br /><br />
 			To map your local branch names to the same branch names that are available in the destination repository click &quot;Add all branches spec&quot;.<br /><br />
-			If you want to declare different mappings, either enter reference names into the &quot;Source ref&quot; and &quot;Destination ref&quot; fields or select an existing entry from the drop-down lists. Afterwards click &quot;Add spec&quot; to transfer the mapping into the &quot;Specifications for push&quot; list.<br /><br />
+			If you want to declare different mappings, either enter reference names into the &quot;Source ref&quot; and &quot;Destination ref&quot; fields or select an existing entry from the drop-down lists. Afterwards click &quot;Add Spec&quot; to transfer the mapping into the &quot;Specifications for push&quot; list.<br /><br />
 			A typical mapping is 'HEAD' as source reference and 'refs/heads/master' as destination reference. This means that the current HEAD (which points to the currently checked out branch) is mapped to the destination master branch.<br /><br />
 			When pushing to a <b>Gerrit code review</b> system enter 'refs/for/master' as destination reference. This pushes the change to the review queue for the master branch.
 		</description>
