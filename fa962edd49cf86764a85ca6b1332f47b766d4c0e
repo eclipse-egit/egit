@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_e4859e5e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-12-06T14:11:53Z",
+      "side": 1,
+      "message": "I think this bug does not really address the issue fixed here. It addresses the checkbox on the RepositorySelectionPage. This however was fixed with commit 4d1447a12d3d88 (If2191024644a95665aaa7a8e178e06b587a93baf)\n\nThe issue fixed here was addressed in bug 359714 which was erroneously closed as duplicate of bug 349527.",
+      "revId": "fa962edd49cf86764a85ca6b1332f47b766d4c0e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_24a826d7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/credentials/LoginDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-12-06T14:11:53Z",
+      "side": 1,
+      "message": "I think it is not obvious for the user that the preference is changed by unchecking this check box. This preference does not only apply for this dialog but also e.g. for the RepositorySelectionPage",
+      "revId": "fa962edd49cf86764a85ca6b1332f47b766d4c0e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
