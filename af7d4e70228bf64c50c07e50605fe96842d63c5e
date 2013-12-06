@@ -34,6 +34,24 @@
       "revId": "af7d4e70228bf64c50c07e50605fe96842d63c5e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_e442bee4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryPropertySource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-12-06T13:43:36Z",
+      "side": 1,
+      "message": "ah, I see, repositoryConfig has no baseConfig!",
+      "parentUuid": "8748d3a1_a43a7680",
+      "revId": "af7d4e70228bf64c50c07e50605fe96842d63c5e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
