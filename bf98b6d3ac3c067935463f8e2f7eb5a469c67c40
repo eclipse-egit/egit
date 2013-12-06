@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_5e0fff61",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-12-06T08:56:05Z",
+      "side": 1,
+      "message": "Merge tool still doesn\u0027t work  for a repository where no eclipse project exists. Please either explain this in the commit message, or implement this also.",
+      "revId": "bf98b6d3ac3c067935463f8e2f7eb5a469c67c40",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_fead2ba3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-12-06T08:56:05Z",
+      "side": 1,
+      "message": "This only returns repos only if there is an entry in RepositoryMapping, and RepositoryMapping.getMapping(IPath path) only returns a repo if path is below a project.",
+      "revId": "bf98b6d3ac3c067935463f8e2f7eb5a469c67c40",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
