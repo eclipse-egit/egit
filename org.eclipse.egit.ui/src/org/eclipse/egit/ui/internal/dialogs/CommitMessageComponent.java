@@ -494,7 +494,7 @@ public class CommitMessageComponent {
 				authorText, AUTHOR_VALUES_PREF);
 		authorText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
-				if (!listenersEnabled)
+				if (!listenersEnabled || !authorText.isEnabled())
 					return;
 				listener.statusUpdated();
 			}
@@ -503,7 +503,7 @@ public class CommitMessageComponent {
 			String oldCommitter = committerText.getText();
 
 			public void modifyText(ModifyEvent e) {
-				if (!listenersEnabled)
+				if (!listenersEnabled || !committerText.isEnabled())
 					return;
 				if (signedOff) {
 					// the commit message is signed
@@ -522,7 +522,7 @@ public class CommitMessageComponent {
 				committerText, COMMITTER_VALUES_PREF);
 		commitText.getTextWidget().addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
-				if (!listenersEnabled)
+				if (!listenersEnabled || !commitText.isEnabled())
 					return;
 				updateSignedOffButton();
 				updateChangeIdButton();

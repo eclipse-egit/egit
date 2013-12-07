@@ -1077,12 +1077,6 @@ public class StagingView extends ViewPart implements IShowInSource {
 	}
 
 	private void enableCommitWidgets(boolean enabled) {
-		if (!enabled) {
-			commitMessageText.setText(""); //$NON-NLS-1$
-			committerText.setText(""); //$NON-NLS-1$
-			authorText.setText(""); //$NON-NLS-1$
-		}
-
 		commitMessageText.setEnabled(enabled);
 		committerText.setEnabled(enabled);
 		enableAuthorText(enabled);
@@ -1091,6 +1085,12 @@ public class StagingView extends ViewPart implements IShowInSource {
 		addChangeIdAction.setEnabled(enabled);
 		commitButton.setEnabled(enabled);
 		commitAndPushButton.setEnabled(enabled);
+
+		if (!enabled) {
+			commitMessageText.setText(""); //$NON-NLS-1$
+			committerText.setText(""); //$NON-NLS-1$
+			authorText.setText(""); //$NON-NLS-1$
+		}
 	}
 
 	private void enableAuthorText(boolean enabled) {
@@ -2072,8 +2072,6 @@ public class StagingView extends ViewPart implements IShowInSource {
 						pathsToExpandInUnstaged);
 				expandPreviousExpandedAndPaths(stagedExpanded, stagedViewer,
 						pathsToExpandInStaged);
-				enableCommitWidgets(indexDiffAvailable
-						&& indexDiff.getConflicting().isEmpty());
 				refreshAction.setEnabled(true);
 
 				updateRebaseButtonVisibility(repository.getRepositoryState()
@@ -2095,6 +2093,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 				form.setText(StagingView.getRepositoryName(repository));
 				updateCommitMessageComponent(repositoryChanged, indexDiffAvailable);
+				enableCommitWidgets(indexDiffAvailable
+						&& indexDiff.getConflicting().isEmpty());
 				updateSectionText();
 			}
 		});
