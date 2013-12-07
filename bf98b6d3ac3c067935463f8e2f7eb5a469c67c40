@@ -51,6 +51,24 @@
       "revId": "bf98b6d3ac3c067935463f8e2f7eb5a469c67c40",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_edbbb527",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-12-07T16:37:15Z",
+      "side": 1,
+      "message": "No, it also returns a mapping if the path is only below the working directory, not necessarily the project. But you are right, it didn\u0027t work when not even a single project of the repository was imported.\n\nFixed here: https://git.eclipse.org/r/19478 (not sure if we really want this in 3.2 though, or if it\u0027s too risky)",
+      "parentUuid": "8748d3a1_fead2ba3",
+      "revId": "bf98b6d3ac3c067935463f8e2f7eb5a469c67c40",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
