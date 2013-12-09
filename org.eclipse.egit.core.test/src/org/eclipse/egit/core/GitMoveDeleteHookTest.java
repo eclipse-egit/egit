@@ -76,7 +76,7 @@ public class GitMoveDeleteHookTest {
 		SystemReader.setInstance(mockSystemReader);
 		mockSystemReader.setProperty(Constants.GIT_CEILING_DIRECTORIES_KEY,
 				ResourcesPlugin.getWorkspace().getRoot().getLocation().toFile()
-						.getAbsoluteFile().toString());
+						.getParentFile().getAbsoluteFile().toString());
 		workspaceSupplement = testUtils.createTempDir("wssupplement");
 		testDirs.add(testUtils.getBaseTempDir());
 		workspace = ResourcesPlugin.getWorkspace().getRoot().getLocation().toFile().getAbsoluteFile();
