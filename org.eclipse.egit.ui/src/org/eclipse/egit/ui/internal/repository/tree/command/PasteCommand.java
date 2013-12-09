@@ -8,6 +8,7 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Matthias Sohn (SAP AG) - imply .git if parent folder is given
+ *    Sascha Vogt (SEEBURGER AG) - strip "git clone" from pasted URL
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
@@ -104,6 +105,9 @@ public class PasteCommand extends
 	}
 
 	private URIish getCloneURI(String content) {
+		if (content != null && content.startsWith("git clone")) { //$NON-NLS-1$
+			content = content.substring(9);
+		}
 		URIish finalURI;
 		try {
 			finalURI = new URIish(content.trim());
