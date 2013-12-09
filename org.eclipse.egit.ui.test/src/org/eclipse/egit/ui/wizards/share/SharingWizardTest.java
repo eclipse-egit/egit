@@ -78,7 +78,7 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 		SystemReader.setInstance(mockSystemReader);
 		mockSystemReader.setProperty(Constants.GIT_CEILING_DIRECTORIES_KEY,
 				ResourcesPlugin.getWorkspace().getRoot().getLocation().toFile()
-						.getAbsoluteFile().toString());
+						.getParentFile().getAbsoluteFile().toString());
 
 		TestUtil.showExplorerView();
 
