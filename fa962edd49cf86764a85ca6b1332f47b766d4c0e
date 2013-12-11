@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8748d3a1_53e21a0f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-12-11T09:15:57Z",
+      "side": 1,
+      "message": "reopened 359714 and now reference this bug",
+      "parentUuid": "8748d3a1_e4859e5e",
+      "revId": "fa962edd49cf86764a85ca6b1332f47b766d4c0e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748d3a1_24a826d7",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/credentials/LoginDialog.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2013-12-06T14:11:53Z",
       "side": 1,
       "message": "I think it is not obvious for the user that the preference is changed by unchecking this check box. This preference does not only apply for this dialog but also e.g. for the RepositorySelectionPage",
+      "revId": "fa962edd49cf86764a85ca6b1332f47b766d4c0e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_f3e4061d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/credentials/LoginDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-12-11T09:15:57Z",
+      "side": 1,
+      "message": "removed the selection listener part of this patch",
+      "parentUuid": "8748d3a1_24a826d7",
       "revId": "fa962edd49cf86764a85ca6b1332f47b766d4c0e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
