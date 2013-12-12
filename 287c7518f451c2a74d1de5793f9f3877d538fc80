@@ -16,6 +16,24 @@
       "revId": "287c7518f451c2a74d1de5793f9f3877d538fc80",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8748d3a1_d44d5e19",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-12-12T22:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8748d3a1_4ca61096",
+      "revId": "287c7518f451c2a74d1de5793f9f3877d538fc80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
