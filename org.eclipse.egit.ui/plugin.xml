@@ -56,6 +56,34 @@
                label="%CommitAction_label"
                menubarPath="team.main/group1"/>
          <action
+               class="org.eclipse.egit.ui.internal.actions.CompareWithIndexAction"
+               id="org.eclipse.egit.ui.internal.actions.CompareWithIndexAction"
+               label="%CompareWithIndexAction_label"
+               menubarPath="compareWithMenu/gitCompareWithGroup"/>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.CompareWithRefAction"
+               id="org.eclipse.egit.ui.internal.actions.CompareWithRefAction"
+               label="%CompareWithBranchOrTagAction.label"
+               menubarPath="compareWithMenu/gitCompareWithGroup">
+         </action>
+          <action
+               class="org.eclipse.egit.ui.internal.actions.CompareWithPreviousAction"
+               definitionId="org.eclipse.egit.ui.team.CompareWithPrevious"
+               enablesFor="1"
+               id="org.eclipse.egit.ui.internal.actions.CompareWithPreviousAction"
+               label="%CompareWithPreviousAction.label"
+               menubarPath="compareWithMenu/gitCompareWithGroup"/>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.CompareWithHeadAction"
+               id="org.eclipse.egit.ui.internal.actions.CompareWithHeadAction"
+               label="%CompareWithHeadAction_label"
+               menubarPath="compareWithMenu/gitCompareWithGroup"/>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.CompareIndexWithHeadAction"
+               id="org.eclipse.egit.ui.internal.actions.CompareIndexWithHeadAction"
+               label="%CompareIndexWithHeadAction_label"
+               menubarPath="compareWithMenu/gitCompareWithGroup"/>
+         <action
                class="org.eclipse.egit.ui.internal.actions.IgnoreAction"
                definitionId="org.eclipse.egit.ui.team.Ignore"
                icon="$nl$/icons/obj16/ignore.gif"
@@ -135,6 +163,12 @@
                id="org.eclipse.egit.ui.internal.actions.MergeTool"
                label="%MergeToolAction.label"
                menubarPath="team.main/group4">
+         </action>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.CompareWithCommitAction"
+               id="org.eclipse.egit.ui.internal.actions.CompareWithCommitAction"
+               label="%CompareWithCommitAction.label"
+               menubarPath="compareWithMenu/gitCompareWithGroup">
          </action>
          <action
                class="org.eclipse.egit.ui.internal.actions.CreatePatchAction"
@@ -320,22 +354,6 @@
             <iterate>
                <adapt
                      type="org.eclipse.core.resources.IProject">
-                  <test
-                        property="GitResource.isShared">
-                  </test>
-               </adapt>
-            </iterate>
-         </and>
-      </definition>
-      <definition
-            id="org.eclipse.egit.ui.gitResources">
-         <and>
-            <count
-                  value="+">
-            </count>
-            <iterate>
-               <adapt
-                     type="org.eclipse.core.resources.IResource">
                   <test
                         property="GitResource.isShared">
                   </test>
@@ -4256,94 +4274,6 @@
                </visibleWhen>
             </command>
          </menu>
-         <menu
-               id="compareWithMenu"
-               label="%CompareWithMenu.label">
-            <separator
-                  name="gitCompareWithGroup"
-                  visible="true">
-            </separator>
-            <command
-                  commandId="org.eclipse.egit.ui.team.CompareWithHead"
-                  label="%CompareWithHeadAction_label"
-                  style="push">
-               <visibleWhen
-                     checkEnabled="false">
-                  <reference
-                        definitionId="org.eclipse.egit.ui.gitResources">
-                  </reference>
-               </visibleWhen>
-            </command>
-            <command
-                  commandId="org.eclipse.egit.ui.team.CompareWithIndex"
-                  label="%CompareWithIndexAction_label"
-                  style="push">
-               <visibleWhen
-                     checkEnabled="false">
-                  <reference
-                        definitionId="org.eclipse.egit.ui.gitResources">
-                  </reference>
-               </visibleWhen>
-            </command>
-            <command
-                  commandId="org.eclipse.egit.ui.team.CompareIndexWithHead"
-                  label="%CompareIndexWithHeadAction_label"
-                  style="push">
-               <visibleWhen
-                     checkEnabled="false">
-                  <reference
-                        definitionId="org.eclipse.egit.ui.gitResources">
-                  </reference>
-               </visibleWhen>
-            </command>
-            <command
-                  commandId="org.eclipse.egit.ui.team.CompareWithPrevious"
-                  label="%CompareWithPreviousAction.label"
-                  style="push">
-               <visibleWhen
-                     checkEnabled="false">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate>
-                        <adapt
-                              type="org.eclipse.core.resources.IResource">
-                           <test
-                                 property="GitResource.isShared">
-                           </test>
-                        </adapt>
-                     </iterate>
-                  </and>
-               </visibleWhen>
-            </command>
-            <separator
-                  name="gitCompareWithGroup2"
-                  visible="true">
-            </separator>
-            <command
-                  commandId="org.eclipse.egit.ui.team.CompareWithRef"
-                  label="%CompareWithBranchOrTagAction.label"
-                  style="push">
-               <visibleWhen
-                     checkEnabled="false">
-                  <reference
-                        definitionId="org.eclipse.egit.ui.gitResources">
-                  </reference>
-               </visibleWhen>
-            </command>
-            <command
-                  commandId="org.eclipse.egit.ui.team.CompareWithCommit"
-                  label="%CompareWithCommitAction.label"
-                  style="push">
-               <visibleWhen
-                     checkEnabled="false">
-                  <reference
-                        definitionId="org.eclipse.egit.ui.gitResources">
-                  </reference>
-               </visibleWhen>
-            </command>
-         </menu>
       </menuContribution>
       <menuContribution
          locationURI="popup:#AbstractTextEditorRulerContext?after=QuickDiff.Toggle">
@@ -5036,18 +4966,6 @@
             defaultHandler="org.eclipse.egit.ui.internal.actions.CompareWithIndexActionHandler"
             id="org.eclipse.egit.ui.team.CompareWithIndex"
             name="%CompareWithIndexCommand.name">
-      </command>
-      <command
-            categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.actions.CompareWithRefActionHandler"
-            id="org.eclipse.egit.ui.team.CompareWithRef"
-            name="%CompareWithRefCommand.name">
-      </command>
-      <command
-            categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.actions.CompareWithCommitActionHandler"
-            id="org.eclipse.egit.ui.team.CompareWithCommit"
-            name="%CompareWithCommitCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
