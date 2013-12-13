@@ -83,9 +83,21 @@ public class GitImportWizard extends AbstractGitCloneWizard implements IImportWi
 		}
 	};
 
-	private GitProjectsImportPage projectsImportPage = new GitProjectsImportPage() ;
+	private GitProjectsImportPage projectsImportPage = new GitProjectsImportPage() {
+		public void setVisible(boolean visible) {
+			if (visible)
+				setProjectsList(importWithDirectoriesPage.getPath());
+			super.setVisible(visible);
+		}
+	};
 
-	private GitCreateGeneralProjectPage createGeneralProjectPage = new GitCreateGeneralProjectPage();
+	private GitCreateGeneralProjectPage createGeneralProjectPage = new GitCreateGeneralProjectPage() {
+		public void setVisible(boolean visible) {
+			if (visible)
+				setPath(importWithDirectoriesPage.getPath());
+			super.setVisible(visible);
+		}
+	};
 
 	private Repository existingRepo;
 
@@ -148,16 +160,11 @@ public class GitImportWizard extends AbstractGitCloneWizard implements IImportWi
 		} else if (page == importWithDirectoriesPage)
 			switch (importWithDirectoriesPage.getWizardSelection()) {
 			case GitSelectWizardPage.EXISTING_PROJECTS_WIZARD:
-				projectsImportPage.setProjectsList(importWithDirectoriesPage
-						.getPath());
 				return projectsImportPage;
 			case GitSelectWizardPage.NEW_WIZARD:
 				return null;
 			case GitSelectWizardPage.GENERAL_WIZARD:
-				createGeneralProjectPage.setPath(importWithDirectoriesPage
-						.getPath());
 				return createGeneralProjectPage;
-
 			}
 		else if (page == createGeneralProjectPage
 				|| page == projectsImportPage)
