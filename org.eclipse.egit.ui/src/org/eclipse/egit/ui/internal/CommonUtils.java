@@ -2,6 +2,7 @@
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2011, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2011, Bernard Leach <leachbj@bouncycastle.org>
+ * Copyright (C) 2013, Michael Keppler <michael.keppler@gmx.de>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -38,7 +39,7 @@ public class CommonUtils {
 
 	/**
 	 * Instance of comparator that sorts strings in ascending alphabetical and
-	 * numerous order (also known as natural order).
+	 * numerous order (also known as natural order), case insensitive.
 	 */
 	public static final Comparator<String> STRING_ASCENDING_COMPARATOR = new Comparator<String>() {
 		public int compare(String o1, String o2) {
@@ -65,9 +66,9 @@ public class CommonUtils {
 					o2Part = stripLeadingZeros(o2Part);
 					result = o1Part.length() - o2Part.length();
 					if (result == 0)
-						result = o1Part.compareTo(o2Part);
+						result = o1Part.compareToIgnoreCase(o2Part);
 				} else {
-					result = o1Part.compareTo(o2Part);
+					result = o1Part.compareToIgnoreCase(o2Part);
 				}
 
 				if (result != 0)
