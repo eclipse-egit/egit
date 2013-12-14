@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2011, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2013, Michael Keppler <michael.keppler@gmx.de>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -55,6 +56,12 @@ public class CommonUtilsTest {
 	public void sortingShouldIgnoreLeadingZeros() {
 		assertSortedLike("00001", "2", "3");
 		assertSortedLike("a-01", "a-002");
+	}
+
+	@Test
+	public void sortingShouldIgnoreCase() {
+		assertSortedLike("a", "b", "z");
+		assertSortedLike("a", "B");
 	}
 
 	/**
