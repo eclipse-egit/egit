@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_f2bcc903",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-12-15T22:22:52Z",
+      "side": 1,
+      "message": "externalize error message",
+      "revId": "dc413ea8d537ee80d49540b66e1408d615e60d04",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
