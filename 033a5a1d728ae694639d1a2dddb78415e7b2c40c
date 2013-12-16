@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748d3a1_5f601928",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/CommonUtilsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-12-16T23:39:12Z",
+      "side": 1,
+      "message": "I\u0027d add another lower and upper case character to prove the point",
+      "revId": "033a5a1d728ae694639d1a2dddb78415e7b2c40c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
