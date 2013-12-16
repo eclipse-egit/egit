@@ -26,7 +26,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileMode;
@@ -57,12 +56,16 @@ import org.eclipse.jgit.util.FS;
  */
 public class ContainerTreeIterator extends WorkingTreeIterator {
 
-	private static String computePrefix(final IContainer base) {
-		final RepositoryMapping rm = RepositoryMapping.getMapping(base);
-		if (rm == null)
+	private static String computePrefix(final Repository repository,
+			final IContainer base) {
+		File workTree = repository.getWorkTree();
+		IPath location = base.getLocation();
+		if (location == null)
 			throw new IllegalArgumentException(
-					"Not in a Git project: " + base);  //$NON-NLS-1$
-		return rm.getRepoRelativePath(base);
+					"Location of container not found: " + base); //$NON-NLS-1$
+		Path workTreePath = new Path(workTree.getAbsolutePath());
+		IPath relativePath = location.makeRelativeTo(workTreePath);
+		return relativePath.toString();
 	}
 
 	private final IContainer node;
@@ -82,7 +85,8 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 	 *            the part of the workspace the iterator will walk over.
 	 */
 	public ContainerTreeIterator(final Repository repository, final IContainer base) {
-		super(computePrefix(base), repository.getConfig().get(WorkingTreeOptions.KEY));
+		super(computePrefix(repository, base), repository.getConfig().get(
+				WorkingTreeOptions.KEY));
 		node = base;
 		init(entries(false));
 		initRootIterator(repository);
