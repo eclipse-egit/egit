@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 3.2 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 3.2 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="GitHub-Connector-Features.html" title="GitHub Connector Features">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">GitHub Connector Features</td>
+			</tr>
+		</table><hr/>
+		<h1 id="EGit">EGit</h1>
+		<h2 id="Features">Features</h2>
+		<ul>
+			<li>Interactive rebase allows to quickly edit a series of commits</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-3.2-InteractiveRebaseView.png"/>
+		</p>
+		<ul>
+			<li>Support for configuration option rebase.autostash. Automatically create a temporary stash before a rebase operation begins, and apply it after the operation ends. This means that you can run rebase on a dirty worktree. However, use with care: the final stash application after a successful rebase might result in non-trivial conflicts.</li>
+		</ul>
+		<ul>
+			<li>Add dropping multiple stashed commits in repositories view, select multiple stashes and click "Delete Stashed Commits..."</li>
+		</ul>
+		<ul>
+			<li>Push Branch / Initial Push wizard simplifies pushing a branch and also allows upstream configuration for new branches created by the push operation</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-3.2-PushBranchWizard.png"/>
+		</p>
+		<ul>
+			<li>Push Tags wizard simplifies pushing one or multiple tags</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-3.2-PushTagWizard.png"/>
+		</p>
+		<ul>
+			<li>Improve UI of upstream configuration when creating a branch</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-3.2-CreateBranchWizard.png"/>
+		</p>
+		<ul>
+			<li>Blame annotations: Add link for showing commit in history and open</li>
+			<li>Blame annotations: Show start commit when opening editor</li>
+			<li>Blame annotations: Show diff in hover and enable blaming parent commits</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-3.2-BlameImprovements.png"/>
+		</p>
+		<ul>
+			<li>PSF import also supports checking out tags, not only branches</li>
+			<li>Make Merge Tool work for non-workspace files</li>
+			<li>Rebase: Show dialog in case there are uncommitted changes</li>
+			<li>"Search all" option for find toolbar in history view</li>
+		</ul>
+		<h2 id="Usability_Improvements">Usability Improvements</h2>
+		<ul>
+			<li>Push Branch wizard: Preselect remote if branch has one configured</li>
+			<li>BranchSelectionDialog: Make resizable and sort elements</li>
+			<li>Add Show In &gt; History to file diff pane in history view</li>
+			<li>Improve rendering of file diffs in history view</li>
+			<li>Commit dialog: Add "Compare with HEAD revision" to file context menu</li>
+			<li>Automatically share projects when adding existing repository in repositories view</li>
+			<li>Show tooltips for refs (history view, branch selection dialogs)</li>
+			<li>Prohibit invalid remote name in clone wizard</li>
+			<li>Disable Delete button when current branch is selected in Checkout dialog</li>
+			<li>Allow to edit branches while fetching from Gerrit</li>
+			<li>Show checkout confirmation when triggered from repositories view</li>
+			<li>Prohibit empty remote name</li>
+			<li>Only show "New HEAD" in merge result dialog when applicable</li>
+			<li>Fix showing deleted file in history from commit viewer</li>
+			<li>Expand the "Working Directory" node in import wizard</li>
+			<li>Validate branch and tag names in FetchFromGerritWizard</li>
+			<li>Add dialog settings to project import dialog</li>
+			<li>Validate new remote's name in NewRemoteDialog</li>
+		</ul>
+		<h2 id="Performance_Improvements">Performance Improvements</h2>
+		<ul>
+			<li>Improve performance of loading tags in repositories view</li>
+		</ul><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="GitHub-Connector-Features.html" title="GitHub Connector Features">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">GitHub Connector Features</td>
+			</tr>
+		</table>
+	</body>
+</html>

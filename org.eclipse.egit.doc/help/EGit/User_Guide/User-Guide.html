@@ -75,6 +75,9 @@
 				<br/>
 			</li>
 		</ol>
+		<p>Note that if you use 
+			<a href="http://www.cygwin.com/" target="egit_external">Cygwin</a>, you should already have <code>HOME</code> set. For example, if you installed Cygwin to <code>C:\cygwin</code> and your username is Fred, then Cygwin should have already set <code>HOME</code> to <code>C:\cygwin\home\Fred</code> (or something similar). You can verify this by entering <code>echo %HOME%</code> in the Windows command prompt, or <code>echo $HOME</code> in the Cygwin shell.
+		</p>
 		<p>EGit needs this path for looking up the user configuration (.gitconfig). <code>HOME</code> should point to your home directory e.g. <code>C:\Users\Tom</code>. 
 			<b>Ensure correct case!</b> E.g. <code>C:\users</code> instead of <code>C:\Users</code> may cause problems!
 		</p>
@@ -172,9 +175,6 @@
 				<b>Filters...</b> from the View Menu and you will be presented with the Java Element Filters dialog. Unselect the top entry to display files that begin with . (period) such as <code>.gitignore</code>.
 			</li>
 		</ul>
-		<p>
-			<img border="0" src="images/Filters.png"/>
-		</p>
 		<ul>
 			<li>Click 
 				<b>Team &gt; Commit</b> in the project context menu
