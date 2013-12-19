@@ -2974,34 +2974,34 @@ public class UIText extends NLS {
 	public static String BranchSelectionAndEditDialog_Delete;
 
 	/** */
-	public static String CommitDialogPreferencePage_commitMessageHistory;
+	public static String CommittingPreferencePage_commitMessageHistory;
 
 	/** */
-	public static String CommitDialogPreferencePage_title;
+	public static String CommittingPreferencePage_title;
 
 	/** */
-	public static String CommitDialogPreferencePage_hardWrapMessage;
+	public static String CommittingPreferencePage_hardWrapMessage;
 
 	/** */
-	public static String CommitDialogPreferencePage_hardWrapMessageTooltip;
+	public static String CommittingPreferencePage_hardWrapMessageTooltip;
 
 	/** */
-	public static String CommitDialogPreferencePage_footers;
+	public static String CommittingPreferencePage_footers;
 
 	/** */
-	public static String CommitDialogPreferencePage_formatting;
+	public static String CommittingPreferencePage_formatting;
 
 	/** */
-	public static String CommitDialogPreferencePage_includeUntrackedFiles;
+	public static String CommittingPreferencePage_includeUntrackedFiles;
 
 	/** */
-	public static String CommitDialogPreferencePage_includeUntrackedFilesTooltip;
+	public static String CommittingPreferencePage_includeUntrackedFilesTooltip;
 
 	/** */
-	public static String CommitDialogPreferencePage_signedOffBy;
+	public static String CommittingPreferencePage_signedOffBy;
 
 	/** */
-	public static String CommitDialogPreferencePage_signedOffByTooltip;
+	public static String CommittingPreferencePage_signedOffByTooltip;
 
 	/** */
 	public static String Decorator_exceptionMessage;

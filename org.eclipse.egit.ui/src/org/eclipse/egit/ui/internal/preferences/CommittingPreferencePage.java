@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2010, 2013 Robin Stocker <robin@nibor.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -23,14 +23,14 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
-/** Preferences for commit dialog. */
-public class CommitDialogPreferencePage extends FieldEditorPreferencePage
+/** Preferences for committing with commit dialog/staging view. */
+public class CommittingPreferencePage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {
 
 	/** */
-	public CommitDialogPreferencePage() {
+	public CommittingPreferencePage() {
 		super(GRID);
-		setTitle(UIText.CommitDialogPreferencePage_title);
+		setTitle(UIText.CommittingPreferencePage_title);
 	}
 
 	public void init(IWorkbench workbench) {
@@ -47,44 +47,44 @@ public class CommitDialogPreferencePage extends FieldEditorPreferencePage
 		Composite main = getFieldEditorParent();
 
 		Group formattingGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
-		formattingGroup.setText(UIText.CommitDialogPreferencePage_formatting);
+		formattingGroup.setText(UIText.CommittingPreferencePage_formatting);
 		GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
 				.applyTo(formattingGroup);
 
 		BooleanFieldEditor hardWrap = new BooleanFieldEditor(
 				UIPreferences.COMMIT_DIALOG_HARD_WRAP_MESSAGE,
-				UIText.CommitDialogPreferencePage_hardWrapMessage, formattingGroup);
+				UIText.CommittingPreferencePage_hardWrapMessage, formattingGroup);
 		hardWrap.getDescriptionControl(formattingGroup).setToolTipText(
-				UIText.CommitDialogPreferencePage_hardWrapMessageTooltip);
+				UIText.CommittingPreferencePage_hardWrapMessageTooltip);
 		addField(hardWrap);
 		updateMargins(formattingGroup);
 
 		Group footersGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
-		footersGroup.setText(UIText.CommitDialogPreferencePage_footers);
+		footersGroup.setText(UIText.CommittingPreferencePage_footers);
 		GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
 				.applyTo(footersGroup);
 
 		BooleanFieldEditor signedOffBy = new BooleanFieldEditor(
 				UIPreferences.COMMIT_DIALOG_SIGNED_OFF_BY,
-				UIText.CommitDialogPreferencePage_signedOffBy,
+				UIText.CommittingPreferencePage_signedOffBy,
 				footersGroup);
 		signedOffBy
 				.getDescriptionControl(footersGroup)
 				.setToolTipText(
-						UIText.CommitDialogPreferencePage_signedOffByTooltip);
+						UIText.CommittingPreferencePage_signedOffByTooltip);
 		addField(signedOffBy);
 		updateMargins(footersGroup);
 
 		IntegerFieldEditor historySize = new IntegerFieldEditor(
 				UIPreferences.COMMIT_DIALOG_HISTORY_SIZE,
-				UIText.CommitDialogPreferencePage_commitMessageHistory, main);
+				UIText.CommittingPreferencePage_commitMessageHistory, main);
 		addField(historySize);
 
 		BooleanFieldEditor includeUntracked = new BooleanFieldEditor(
 				UIPreferences.COMMIT_DIALOG_INCLUDE_UNTRACKED,
-				UIText.CommitDialogPreferencePage_includeUntrackedFiles, main);
+				UIText.CommittingPreferencePage_includeUntrackedFiles, main);
 		includeUntracked.getDescriptionControl(main).setToolTipText(
-				UIText.CommitDialogPreferencePage_includeUntrackedFilesTooltip);
+				UIText.CommittingPreferencePage_includeUntrackedFilesTooltip);
 		addField(includeUntracked);
 	}
 
