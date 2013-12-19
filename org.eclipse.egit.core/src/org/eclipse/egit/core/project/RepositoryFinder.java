@@ -14,7 +14,6 @@ package org.eclipse.egit.core.project;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,8 +29,7 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.RepositoryCache.FileKey;
-import org.eclipse.jgit.util.FS;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.util.SystemReader;
 
 /**
@@ -57,7 +55,7 @@ public class RepositoryFinder {
 	private final Collection<RepositoryMapping> results = new ArrayList<RepositoryMapping>();
 	private final Set<File> gitdirs = new HashSet<File>();
 
-	private Set<String> ceilingDirectories = new HashSet<String>();
+	private Set<File> ceilingDirectories = new HashSet<File>();
 
 	/**
 	 * Create a new finder to locate Git repositories for a project.
@@ -71,8 +69,8 @@ public class RepositoryFinder {
 		String ceilingDirectoriesVar = SystemReader.getInstance().getenv(
 				Constants.GIT_CEILING_DIRECTORIES_KEY);
 		if (ceilingDirectoriesVar != null) {
-			ceilingDirectories.addAll(Arrays.asList(ceilingDirectoriesVar
-					.split(File.pathSeparator)));
+			for (String path : ceilingDirectoriesVar.split(File.pathSeparator))
+				ceilingDirectories.add(new File(path));
 		}
 	}
 
@@ -129,37 +127,14 @@ public class RepositoryFinder {
 			if (loc != null) {
 				final File fsLoc = loc.toFile();
 				assert fsLoc.isAbsolute();
-				final File ownCfg = configFor(fsLoc);
-				final IResource[] children;
-				final FS fs = FS.detect();
 
-				if (ownCfg.isFile()
-						&& FileKey.isGitRepository(ownCfg.getParentFile(), fs)) {
-					register(c, ownCfg.getParentFile());
-				}
-				if (c instanceof IProject) {
-					File p = fsLoc.getParentFile();
-					while (p != null) {
-						// TODO is this the right location?
-						if (GitTraceLocation.CORE.isActive())
-							GitTraceLocation.getTrace().trace(
-									GitTraceLocation.CORE.getLocation(),
-									"Looking at candidate dir: " //$NON-NLS-1$
-											+ p);
-						final File pCfg = configFor(p);
-						if (pCfg.isFile()
-								&& FileKey.isGitRepository(
-										pCfg.getParentFile(), fs)) {
-							register(c, pCfg.getParentFile());
-						}
-						if (ceilingDirectories.contains(p.getPath()))
-							break;
-						p = p.getParentFile();
-					}
-				}
+				if (c instanceof IProject)
+					findInDirectoryAndParents(c, fsLoc);
+				else
+					findInDirectory(c, fsLoc);
 				m.worked(1);
 
-				children = c.members();
+				final IResource[] children = c.members();
 				if (children != null && children.length > 0) {
 					final int scale = 100 / children.length;
 					for (int k = 0; k < children.length; k++) {
@@ -179,9 +154,30 @@ public class RepositoryFinder {
 		}
 	}
 
-	private File configFor(final File fsLoc) {
-		return new File(new File(fsLoc, Constants.DOT_GIT),
-				"config");  //$NON-NLS-1$
+	private void findInDirectoryAndParents(IContainer container, File startPath) {
+		File path = startPath;
+		while (path != null && !ceilingDirectories.contains(path)) {
+			findInDirectory(container, path);
+			path = path.getParentFile();
+		}
+	}
+
+	private void findInDirectory(final IContainer container,
+			final File path) {
+		if (GitTraceLocation.CORE.isActive())
+			GitTraceLocation.getTrace().trace(
+					GitTraceLocation.CORE.getLocation(),
+					"Looking at candidate dir: " //$NON-NLS-1$
+							+ path);
+
+		FileRepositoryBuilder builder = new FileRepositoryBuilder();
+		File parent = path.getParentFile();
+		if (parent != null)
+			builder.addCeilingDirectory(parent);
+		builder.findGitDir(path);
+		File gitDir = builder.getGitDir();
+		if (gitDir != null)
+			register(container, gitDir);
 	}
 
 	private void register(final IContainer c, final File gitdir) {

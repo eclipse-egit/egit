@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -75,19 +75,26 @@ public class MergeCommand extends
 			targetRef = null;
 
 		final String refName;
-		if (targetRef != null)
+		final MergeOperation op;
+
+		if (targetRef != null) {
 			refName = targetRef;
-		else {
+			op = new MergeOperation(repository, refName);
+		} else {
 			MergeTargetSelectionDialog mergeTargetSelectionDialog = new MergeTargetSelectionDialog(
 					getShell(event), repository);
-			if (mergeTargetSelectionDialog.open() == IDialogConstants.OK_ID)
-				refName = mergeTargetSelectionDialog.getRefName();
-			else
+			if (mergeTargetSelectionDialog.open() != IDialogConstants.OK_ID)
 				return null;
+
+			refName = mergeTargetSelectionDialog.getRefName();
+			op = new MergeOperation(repository, refName);
+			op.setSquash(mergeTargetSelectionDialog.isMergeSquash());
+			op.setFastForwardMode(mergeTargetSelectionDialog
+					.getFastForwardMode());
+			op.setCommit(mergeTargetSelectionDialog.isCommit());
 		}
 
 		String jobname = NLS.bind(UIText.MergeAction_JobNameMerge, refName);
-		final MergeOperation op = new MergeOperation(repository, refName);
 		Job job = new Job(jobname) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {

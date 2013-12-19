@@ -392,7 +392,7 @@
 		<ul>
 			<li>enter source and destination ref or select already existing branches from the drop-down lists</li>
 			<li>click 
-				<b>Add spec</b>
+				<b>Add Spec</b>
 			</li>
 		</ul>
 		<p>This will transfer the newly defined mapping to the list 
@@ -410,7 +410,7 @@
 		<h5 id="Delete_Ref_Specifications">Delete Ref Specifications</h5>
 		<p>To delete a ref in the destination repository select the ref to be deleted from the drop-down list 
 			<b>Remote ref to delete</b> and click 
-			<b>Add spec</b>. This will create a corresponding entry in the 
+			<b>Add Spec</b>. This will create a corresponding entry in the 
 			<b>Specifications for push</b> list. Alternatively you may type in the specification for the refs to be deleted, this may also use wildcards. Pushing Delete Ref Specifications will delete the matching Refs in the destination repository.
 		</p>
 		<p>
@@ -587,7 +587,7 @@
 		<ul>
 			<li>enter source (ref in source repository) and destination ref (tracking branch or tag in local repository) or select already existing branches from the drop-down lists</li>
 			<li>click 
-				<b>Add spec</b>
+				<b>Add Spec</b>
 			</li>
 		</ul>
 		<p>This will transfer the newly defined mapping to the list 
@@ -1648,6 +1648,128 @@ Sein oder nicht sein
 		</p>
 		<h3 id="Aborting_Rebase">Aborting Rebase</h3>
 		<p>As long as the Repository is in "Rebasing" state, the user can always abort the rebase in the Git Repositories View using the menu action "Rebase &gt; Abort" which is available on the Repository node.</p>
+		<h2 id="Interactive_Rebase">Interactive Rebase</h2>
+		<h3 id="Synopsis">Synopsis</h3>
+		<p>
+			<img border="0" src="images/Egit-3.2-InteractiveRebaseView.png"/>
+		</p>
+		<p>Interactive rebase allows to quickly edit a series of commits using the following actions defined in a rebase plan:</p>
+		<ul>
+			<li>
+				<b>pick</b> to define the order of commits, moving pick entries enables reordering
+			</li>
+			<li>
+				<b>skip</b> to remove a commit
+			</li>
+			<li>
+				<b>edit</b> to amend a commit
+			</li>
+			<li>
+				<b>reword</b> to edit a commit's message
+			</li>
+			<li>
+				<b>squash</b> to squash a commit with its predecessor commit and including their commit messages
+			</li>
+			<li>
+				<b>fixup</b> to squash a commit's diff into its predecessor discarding the squashed commit's message
+			</li>
+		</ul>
+		<p>
+			<b>Warning:</b> don't rewrite commits you have already published on a remote repository, it's considered a bad practice for all but experimental or review branches since your colleagues may have already based their work on these published commits and you would force them to also rewrite their changes. Though it's a tool frequently used on review branches e.g. when using Gerrit to rework changes which have to be improved based on review feedback.
+		</p>
+		<h3 id="Starting_interactive_rebase">Starting interactive rebase</h3>
+		<p>First checkout the local branch (here branch 
+			<i>toRebase</i>) containing the commit series you want to edit. Then open the History View for this repository and click 
+			<b>Interactive Rebase</b> on the commit preceding the oldest commit you want to rewrite. Often this is the one origin/master points at.
+		</p>
+		<p>
+			<img border="0" src="images/Egit-3.2-StartInteractiveRebase.png"/>
+		</p>
+		<p>This opens the new view 
+			<b>Git Interactive Rebase</b> showing the rebase plan populated with the commits to be modified in topological order in the sequence they will be processed during the rebase operation.
+			The initial action for all commits is 
+			<b>Pick</b> which would cherry-pick the corresponding commit. Note that EGit also rewinds HEAD to the commit preceding the first one in the edit list in order to prepare the repository for rebasing.
+		</p>
+		<p>
+			<img border="0" src="images/Egit-3.2-StartedInteractiveRebase.png"/>
+		</p>
+		<h3 id="Planning_rebase">Planning rebase</h3>
+		<p>Here the initial rebase plan, the first commit to be applied on the rewound HEAD comes first and then all the other commits to be rebased in the order they will be applied when clicking "Start".</p>
+		<p>
+			<img border="0" src="images/Egit-3.2-PlanInteractiveRebase.png"/>
+		</p>
+		<p>Next we prepare the rebase plan, moving commits up and down using the arrow buttons to reorder commits and choosing the rebase action we want to apply on the commits we want to tweak.</p>
+		<p>In this example I first reordered the commits so that the implementation of new calculator operations immediately precedes the commit implementing tests for the respective operation.</p>
+		<p>
+			<b>Here what I want to modify in this series of commits:</b>
+		</p>
+		<p>I want to skip commit "TODO list" since it contains a private todo list I used while implementing the operations and I don't need this anymore.
+			I need to amend commit "Add divide operation" since it's buggy, this was revealed by the corresponding test which was implemented in a later change, hence I select action 
+			<b>Edit</b> here
+			the commit "Add multiply opration" obviously has a typo in the commit message header so I choose 
+			<b>Reword</b>.
+			I want to squash commit de7647b into its predecessor since it doesn't make sense to have the JavaDoc fix separate from the implementation of what it describes, hence I choose 
+			<b>Squash</b> to squash it with its predecessor.
+		</p>
+		<p>
+			<img border="0" src="images/Egit-3.2-InteractiveRebaseView.png"/>
+		</p>
+		<h3 id="Executing_interactive_rebase">Executing interactive rebase</h3>
+		<p>When you're done planning the rebase click 
+			<b>Start</b> to start execution of the rebase command. EGit will process the plan and stop at the commits where you have selected actions which need your intervention to interactively edit the corresponding commit.
+		</p>
+		<p>In our little example rebase stops the first time on commit "Add divide operation" since we signaled that we want to edit it. The last picked commit is highlighted in bold. At this time the first step skipping the commit "TODO list" was already processed and this commit is no longer in our commit series we are rewriting while executing rebase. Also the commit "Add divide operation" was already cherry-picked since we want to amend it. Note that EGit has already selected the "Amend" option in the Staging View in order to prepare amending this commit.</p>
+		<p>
+			<img border="0" src="images/Egit-3.2-InteractiveRebaseEdit.png"/>
+		</p>
+		<p>Now we fix the bug in this commit, stage the changes needed to fix the bug, adjust the commit message if necessary and click 
+			<b>Commit</b> in order to amend the buggy commit.
+		</p>
+		<p>
+			<img border="0" src="images/Egit-3.2-InteractiveRebaseAmend.png"/>
+		</p>
+		<p>Let's have a look at the History View to see the resulting commit graph. HEAD now points at the rewritten fixed commit "Add divide operation", note that its SHA1 is different from its original version since we rewrote the commit to fix the bug.</p>
+		<p>
+			<img border="0" src="images/Egit-3.2-InteractiveRebaseHistoryAfterEdit.png"/>
+		</p>
+		<p>Next we click 
+			<b>Continue</b> in order to resume processing the rebase plan. Rebase picks the commits "Divide test" and "Add multiply opration" and stops again raising a commit message editor so that we can fix the typo in the commit message of the latter commit.
+		</p>
+		<p>
+			<img border="0" src="images/Egit-3.2-InteractiveRebaseReword.png"/>
+		</p>
+		<p>Edit the commit message to fix the typo and click 
+			<b>OK</b> in order to amend the commit message and resume processing.
+		</p>
+		<p>Rebase picks the next 3 commits, squashes the commits "add power" and "Fix javadoc for power operation" into one new commit and stops again so that we can prepare the commit message of the new commit. Its initialized with the concatenation of the messages of the commits being squashed.</p>
+		<p>
+			<img border="0" src="images/Egit-3.2-InteractiveRebaseSquash.png"/>
+		</p>
+		<p>Edit the squashed commit's message and click 
+			<b>OK</b> to resume processing.
+		</p>
+		<p>
+			<img border="0" src="images/Egit-3.2-InteractiveRebaseSquashMessage.png"/>
+		</p>
+		<p>Rebase picks the final commit "Power test" and completes successfully.</p>
+		<p>
+			<img border="0" src="images/Egit-3.2-InteractiveRebaseFinished.png"/>
+		</p>
+		<p>Finally lets have another look in the History View to examine the result of the interactive rebase command. Compare the rewritten series of commits now contained in branch "toRebase" with the old commit series still visible since I have placed another local branch "start" there in order to keep the old series visible.</p>
+		<p>
+			<img border="0" src="images/Egit-3.2-InteractiveRebaseHistoryAfterRebase.png"/>
+		</p>
+		<h3 id="Safety_Instructions">Safety Instructions</h3>
+		<p>If you happen to go wrong during this multi-step process you can always hit 
+			<b>Abort</b> in order to stop the rebase operation in progress and roll back to the starting point.
+		</p>
+		<p>When you are starting to use this feature it's maybe a good idea to place a second local branch on the starting point (as I showed in this example) to make it more obvious what's going on until you are familiar with this powerful git command.</p>
+		<h3 id="Rebase_with_auto-stashing">Rebase with auto-stashing</h3>
+		<p>EGit also supports the Git configuration option 
+			<b>rebase.autostash</b>. Set this option 
+			<b>rebase.autostash = true</b> to automatically create a temporary stash before a rebase operation begins, and apply it after the operation ends. This means that you can run rebase and also interactive rebase on a dirty worktree. However, 
+			<b>use with care:</b> the final stash application after a successful rebase might result in non-trivial conflicts.
+		</p>
 		<h2 id="Cherry_Picking">Cherry Picking</h2>
 		<h3 id="Cherry-pick_Introduction">Cherry-pick Introduction</h3>
 		<p>A given commit 
@@ -2352,16 +2474,19 @@ Sein oder nicht sein
 		</p>
 		<p>Selecting the 
 			<b>Team</b> &gt; 
-			<b>Show Annotations</b> action on file selections will open the editor and display an annotation ruler with commit and author information for each line in a file.  Hovering over the ruler will display a pop-up showing the commit id, author, committer, and the commit message.
+			<b>Show Annotations</b> action on file selections will open the editor and display an annotation ruler with commit and author information for each line in a file.  Hovering over the ruler will display a pop-up showing the commit id, author, committer, commit message and the diff applied by this commit on the selected hunk.
 		</p>
 		<p>The look and feel of the blame annotation editor ruler can be configured from the 
 			<b>Revisions</b> sub-menu available from the ruler context-menu.
 		</p>
 		<p>
-			<img border="0" src="images/Egit-1.0-blame-ruler.png"/>
+			<img border="0" src="images/Egit-3.2-BlameImprovements.png"/>
 		</p>
-		<p>Selecting the SHA-1 hyperlink from the popup will open the commit in the 
-			<a href="#Viewing_Commits">commit viewer</a>.
+		<p>Click 
+			<b>open commit</b> to open the commit in the 
+			<a href="#Viewing_Commits">commit viewer</a>, click 
+			<b>show in history</b> to show the commit in the History View. Click 
+			<b>show annotations</b> to show annotations of the parent commit of the commit shown in the hover.
 		</p>
 		<h2 id="Working_with_Submodules">Working with Submodules</h2>
 		<p>You can read more about what Git submodules are and how they work in this 
