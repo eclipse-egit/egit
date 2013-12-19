@@ -410,9 +410,9 @@
       </page>
       <page
             category="org.eclipse.egit.ui.GitPreferences"
-            class="org.eclipse.egit.ui.internal.preferences.CommitDialogPreferencePage"
-            id="org.eclipse.egit.ui.internal.preferences.CommitDialogPreferencePage"
-            name="%GitPreferences_CommitDialogPreferencePage_name">
+            class="org.eclipse.egit.ui.internal.preferences.CommittingPreferencePage"
+            id="org.eclipse.egit.ui.internal.preferences.CommittingPreferencePage"
+            name="%GitPreferences_CommittingPreferencePage_name">
          <keywordReference
                id="org.eclipse.egit.ui.keyword.git">
          </keywordReference>
