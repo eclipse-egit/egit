@@ -2482,6 +2482,9 @@ public class UIText extends NLS {
 	public static String CreateBranchPage_ChooseNameMessage;
 
 	/** */
+	public static String CreateBranchPage_CreateBranchNameProviderFailed;
+
+	/** */
 	public static String CreateBranchPage_CreatingBranchMessage;
 
 	/** */
