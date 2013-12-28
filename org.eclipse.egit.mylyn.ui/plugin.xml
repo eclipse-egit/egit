@@ -28,4 +28,10 @@
             targetId="org.eclipse.mylyn.tasks.ui.TaskEditor">
       </hyperlinkDetector>
    </extension>
+   <extension
+         point="org.eclipse.egit.ui.branchNameProvider">
+      <branchNameProvider
+            class="org.eclipse.egit.internal.mylyn.ui.commit.ActiveTaskBranchNameProvider">
+      </branchNameProvider>
+   </extension>
 </plugin>
