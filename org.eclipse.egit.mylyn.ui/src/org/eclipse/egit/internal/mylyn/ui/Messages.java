@@ -25,6 +25,15 @@ public class Messages extends NLS {
 	/**	 */
 	public static String CommitHyperlinkDetector_CommitNotFoundInRepositories;
 
+	/** */
+	public static String TaskActivationListener_MylynCoreException;
+
+	/** */
+	public static String TaskActivationListener_ReadingMalformedPSF;
+
+	/** */
+	public static String TaskActivationListener_BranchCheckoutFailed;
+
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

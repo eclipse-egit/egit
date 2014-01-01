@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.egit.ui.commitMessageProvider">
       <commitMessageProvider
-            class="org.eclipse.egit.internal.mylyn.ui.commit.MylynCommitMessageProvider">
+            class="org.eclipse.egit.internal.mylyn.ui.commit.TaskWorkflowProvider">
       </commitMessageProvider>
    </extension>
 
@@ -27,5 +27,12 @@
             name="%hyperlinkDetector.name"
             targetId="org.eclipse.mylyn.tasks.ui.TaskEditor">
       </hyperlinkDetector>
+   </extension>
+   <extension
+         point="org.eclipse.mylyn.tasks.core.taskActivationListeners">
+      <listener
+            class="org.eclipse.egit.internal.mylyn.ui.commit.TaskActivationListener"
+            id="org.eclipse.egit.mylyn.ui.listener">
+      </listener>
    </extension>
 </plugin>
