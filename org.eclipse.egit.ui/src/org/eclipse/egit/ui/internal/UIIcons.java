@@ -314,7 +314,7 @@ public class UIIcons {
 		PUSH = map("obj16/push.gif"); //$NON-NLS-1$
 		PULL = map("obj16/pull.gif"); //$NON-NLS-1$
 		REPOSITORY = map("obj16/repository_rep.gif"); //$NON-NLS-1$
-		REPOSITORY_GERRIT = map("obj16/repository_gerrit.gif"); //$NON-NLS-1$
+		REPOSITORY_GERRIT = map("obj16/repository_gerrit.png"); //$NON-NLS-1$
 		NEW_REPOSITORY = map("etool16/newlocation_wiz.gif"); //$NON-NLS-1$
 		REMOTE_REPOSITORY = map("obj16/remote_entry_tbl.gif"); //$NON-NLS-1$
 		REMOTE_SPEC = map("obj16/remotespec.gif"); //$NON-NLS-1$
@@ -329,7 +329,7 @@ public class UIIcons {
 		CLONEGIT = map("obj16/cloneGit.gif"); //$NON-NLS-1$
 		RESET = map("obj16/reset.gif"); //$NON-NLS-1$
 		CHANGESET = map("obj16/changelog_obj.gif"); //$NON-NLS-1$
-		GERRIT = map("obj16/gerrit_obj.gif"); //$NON-NLS-1$
+		GERRIT = map("obj16/gerrit_obj.png"); //$NON-NLS-1$
 		EXPAND_ALL = map("wizban/expandall.gif"); //$NON-NLS-1$
 		CHECKOUT = map("obj16/checkout.gif"); //$NON-NLS-1$
 		SIGNED_OFF = map("obj16/signed-off.png"); //$NON-NLS-1$
