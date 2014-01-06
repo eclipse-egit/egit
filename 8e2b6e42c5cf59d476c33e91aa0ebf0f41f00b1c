@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67591f73_b8175977",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-01-06T11:54:45Z",
+      "side": 1,
+      "message": "this sentence shouldn\u0027t be part of the commit message as it only describes how you created this patchset from a previous one, so this should rather be part of a review comment. It doesn\u0027t add value to the project history when this change is submitted",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_58bd5dac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-01-06T11:54:45Z",
+      "side": 1,
+      "message": "I think you should give credit to some more co-authors, have a look at the license headers to find them, the email address you are listing for Manuel doesn\u0027t match another email address listed in some of the license headers.",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_581c3d9d",
+        "filename": "org.eclipse.egit.mylyn-feature/feature.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-01-06T11:54:45Z",
+      "side": 1,
+      "message": "does this feature include the bundle org.eclipse.mylyn.versions.core ?",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_782141d2",
+        "filename": "org.eclipse.egit.mylyn.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-01-06T11:54:45Z",
+      "side": 1,
+      "message": "specify the required version range, for 3rd party dependencies we use a range from the minimum required version up to the next major version to allow egit to run on a variety of underlying platform versions",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_f806f15a",
+        "filename": "org.eclipse.egit.mylyn.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-01-06T11:54:45Z",
+      "side": 1,
+      "message": "s/3.3.0/[3.3.0,3.4.0)/",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_d8096d6c",
+        "filename": "org.eclipse.egit.mylyn.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-01-06T11:54:45Z",
+      "side": 1,
+      "message": "s/3.3.0/[3.3.0,3.4.0)/",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_d8268dbe",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-01-06T11:54:45Z",
+      "side": 1,
+      "message": "can we find a better name here, this one sounds odd",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_381a2975",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-01-06T11:54:45Z",
+      "side": 1,
+      "message": "why should we ignore exceptions here ?",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_3836a90c",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-01-06T11:54:45Z",
+      "side": 1,
+      "message": "fix this todo",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_183925fb",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-01-06T11:54:45Z",
+      "side": 1,
+      "message": "fix todo",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_78530136",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-01-06T11:54:45Z",
+      "side": 1,
+      "message": "I would add braces here to improve readability",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_584efd90",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-01-06T11:54:45Z",
+      "side": 1,
+      "message": "should we really ignore this or better notify the user that he is trying to use a malformed psf file ? I would at least log the problem",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_d894cd4a",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-01-06T11:54:45Z",
+      "side": 1,
+      "message": "can\u0027t we use org.eclipse.jgit.transport.RemoteConfig here ?",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_9811b55c",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-01-06T11:54:45Z",
+      "side": 1,
+      "message": "fix todo",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_f82391ad",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-01-06T11:54:45Z",
+      "side": 1,
+      "message": "this can be inlined",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
