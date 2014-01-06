@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67591f73_55a6c60b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-01-06T11:10:45Z",
+      "side": 1,
+      "message": "this commit message is too wide, please reformat it",
+      "revId": "2ccc9c3735707e2b9065246ea96a498aed40ad98",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
