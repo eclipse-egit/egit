@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_efebb39c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-01-07T22:08:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67591f73_b8175977",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_58bd5dac",
         "filename": "/COMMIT_MSG",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2014-01-06T11:54:45Z",
       "side": 1,
       "message": "I think you should give credit to some more co-authors, have a look at the license headers to find them, the email address you are listing for Manuel doesn\u0027t match another email address listed in some of the license headers.",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_cfeeafad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-01-07T22:08:21Z",
+      "side": 1,
+      "message": "I hope that I now did it right:\nI readded the signed-off and also-by lines and included all the authors of new files (not from modified ones).\nBecause Manuel use in the last changes the googlemail email address I changed the license header.",
+      "parentUuid": "67591f73_58bd5dac",
       "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_ef7d7361",
+        "filename": "org.eclipse.egit.mylyn-feature/feature.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-01-07T22:08:21Z",
+      "side": 1,
+      "message": "No. This leacked in from the old patches.\nIt shall be org.eclipse.mylyn.versions.core.\nDone.",
+      "parentUuid": "67591f73_581c3d9d",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_782141d2",
         "filename": "org.eclipse.egit.mylyn.ui/META-INF/MANIFEST.MF",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2014-01-06T11:54:45Z",
       "side": 1,
       "message": "specify the required version range, for 3rd party dependencies we use a range from the minimum required version up to the next major version to allow egit to run on a variety of underlying platform versions",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_2f9beb47",
+        "filename": "org.eclipse.egit.mylyn.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-01-07T22:08:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67591f73_782141d2",
       "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_0f96e71c",
+        "filename": "org.eclipse.egit.mylyn.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-01-07T22:08:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67591f73_f806f15a",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_d8096d6c",
         "filename": "org.eclipse.egit.mylyn.ui/META-INF/MANIFEST.MF",
         "patchSetId": 10
@@ -98,6 +188,24 @@
       "writtenOn": "2014-01-06T11:54:45Z",
       "side": 1,
       "message": "s/3.3.0/[3.3.0,3.4.0)/",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_6f916322",
+        "filename": "org.eclipse.egit.mylyn.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-01-07T22:08:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67591f73_d8096d6c",
       "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
