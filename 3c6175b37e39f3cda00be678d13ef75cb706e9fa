@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67591f73_5d109658",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-01-08T08:39:05Z",
+      "side": 1,
+      "message": "This extension is somehow under the hood. You just inherit from the interface of an existing extension point (commitMessageProvider) and check in the coding if the provider of commitMessageProvider also implements the new interface. So this extension possibility is not made explicit in the plugin.xml. Is there a good reason for this?",
+      "revId": "3c6175b37e39f3cda00be678d13ef75cb706e9fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_bdf8d271",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-01-08T08:39:05Z",
+      "side": 1,
+      "message": "Please do this in a separate commit.\n\nYou may also add this behavior when the user selects \"New Branch...\" on the \"Branches\" dialog without having selected a reference (BranchSelectionAndEditDialog).",
+      "revId": "3c6175b37e39f3cda00be678d13ef75cb706e9fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_5d537635",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IBranchNameProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-01-08T08:39:05Z",
+      "side": 1,
+      "message": "Why should IBranchNameProvider extend ICommitMessageProvider?",
+      "revId": "3c6175b37e39f3cda00be678d13ef75cb706e9fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_1d361e0c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CreateBranchCommand.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-01-08T08:39:05Z",
+      "side": 1,
+      "message": "Btw. I think currently this else branch cannot be reached anymore, because according to the plugin.xml the command is only visible on RefNode, TagNode and AdditionalRefNode. Or did I miss something?",
+      "revId": "3c6175b37e39f3cda00be678d13ef75cb706e9fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_5d21b6d1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CreateBranchCommand.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-01-08T08:39:05Z",
+      "side": 1,
+      "message": "This comment is not quite correct anymore",
+      "revId": "3c6175b37e39f3cda00be678d13ef75cb706e9fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
