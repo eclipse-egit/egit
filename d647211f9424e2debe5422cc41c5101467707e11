@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67591f73_1aa90713",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-01-08T00:49:01Z",
+      "side": 1,
+      "message": "I would expect Ctrl-S / Cmd-S to just persist the state of the staging view but not create a commit.",
+      "revId": "d647211f9424e2debe5422cc41c5101467707e11",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_7a100307",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-01-08T00:49:01Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "d647211f9424e2debe5422cc41c5101467707e11",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_ba68db6c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-01-08T00:49:01Z",
+      "side": 1,
+      "message": "this unrelated change providing better javadoc for this method should come in another commit",
+      "revId": "d647211f9424e2debe5422cc41c5101467707e11",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_3aae8b1d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2412,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-01-08T00:49:01Z",
+      "side": 1,
+      "message": "I think this behavior is surprising, I would expect Ctrl-S / Cmd-S to just persist the state of the staging view but not create a commit. Committing in staging view is already mapped to Ctrl-Enter/Cmd-Enter (see line 856)",
+      "revId": "d647211f9424e2debe5422cc41c5101467707e11",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
