@@ -17,6 +17,7 @@ import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
+import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarToggleButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
@@ -191,5 +192,9 @@ public class CommitDialogTester {
 		final Tree tree = commitDialog.bot().tree().widget;
 		SWTBotTreeColumn column = SWTBotTreeColumn.getColumn(tree, 1);
 		column.click();
+	}
+
+	public SWTBot getBot() {
+		return commitDialog.bot();
 	}
 }
