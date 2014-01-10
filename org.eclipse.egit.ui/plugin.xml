@@ -5219,6 +5219,26 @@
             name="%CherryPickCommand.name">
       </command>
       <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.RewordHandler"
+            id="org.eclipse.egit.ui.history.Reword"
+            name="%RewordCommitCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.commit.command.RewordHandler"
+            id="org.eclipse.egit.ui.commit.Reword"
+            name="%RewordCommitCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.SquashHandler"
+            id="org.eclipse.egit.ui.history.Squash"
+            name="%SquashCommitsCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.commit.command.SquashHandler"
+            id="org.eclipse.egit.ui.commit.Squash"
+            name="%SquashCommitsCommand.name">
+      </command>
+      <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.RevertHandler"
             id="org.eclipse.egit.ui.history.Revert"
             name="%RevertCommand.name">

@@ -825,6 +825,10 @@ class CommitGraphTable {
 				popupMgr.add(getCommandContributionItem(
 						HistoryViewCommands.REBASE_INTERACTIVE_CURRENT,
 						UIText.GitHistoryPage_rebaseInteractiveMenuItem));
+				popupMgr.add(getCommandContributionItem(
+						HistoryViewCommands.REWORD, UIText.GitHistoryPage_rewordMenuItem));
+				popupMgr.add(getCommandContributionItem(
+						HistoryViewCommands.SQUASH, UIText.GitHistoryPage_squashMenuItem));
 				popupMgr.add(new Separator());
 
 				MenuManager resetManager = new MenuManager(
@@ -848,15 +852,22 @@ class CommitGraphTable {
 				resetManager.add(getCommandContributionItem(
 						HistoryViewCommands.RESET,
 						UIText.GitHistoryPage_ResetHardMenuLabel, parameters));
-			} else if (selectionSize == 2) {
+			} else if (selectionSize >= 2) {
+				if (selectionSize == 2) {
+					popupMgr.add(getCommandContributionItem(
+							HistoryViewCommands.COMPARE_VERSIONS,
+							UIText.GitHistoryPage_CompareWithEachOtherMenuLabel));
+					if (!input.isSingleFile())
+						popupMgr.add(getCommandContributionItem(
+								HistoryViewCommands.COMPARE_VERSIONS_IN_TREE,
+								UIText.CommitGraphTable_CompareWithEachOtherInTreeMenuLabel));
+				}
+
+				popupMgr.add(new Separator());
+
 				popupMgr.add(getCommandContributionItem(
-						HistoryViewCommands.COMPARE_VERSIONS,
-						UIText.GitHistoryPage_CompareWithEachOtherMenuLabel));
-				if (!input.isSingleFile())
-					popupMgr
-							.add(getCommandContributionItem(
-									HistoryViewCommands.COMPARE_VERSIONS_IN_TREE,
-									UIText.CommitGraphTable_CompareWithEachOtherInTreeMenuLabel));
+						HistoryViewCommands.SQUASH,
+						UIText.GitHistoryPage_squashMenuItem));
 			}
 			popupMgr.add(new Separator());
 

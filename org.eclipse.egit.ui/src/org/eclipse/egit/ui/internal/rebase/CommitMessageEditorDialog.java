@@ -29,7 +29,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 /**
  * Dialog for editing a commit message
  */
-class CommitMessageEditorDialog extends TitleAreaDialog {
+public class CommitMessageEditorDialog extends TitleAreaDialog {
 
 	private String commitMessage;
 
@@ -44,7 +44,7 @@ class CommitMessageEditorDialog extends TitleAreaDialog {
 	 * @param parentShell
 	 * @param commitMessage
 	 */
-	CommitMessageEditorDialog(Shell parentShell,
+	public CommitMessageEditorDialog(Shell parentShell,
 			String commitMessage) {
 		super(parentShell);
 		this.commitMessage = commitMessage;

@@ -1,0 +1,51 @@
+/*******************************************************************************
+ *  Copyright (c) 2014 Maik Schreiber
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License v1.0
+ *  which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ *
+ *  Contributors:
+ *    Maik Schreiber - initial implementation
+ *******************************************************************************/
+package org.eclipse.egit.ui.internal.history.command;
+
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.egit.ui.internal.CommonUtils;
+import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.internal.history.GitHistoryPage;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+
+/** Prompts to enter a new commit message for a commit. */
+public class RewordHandler extends AbstractHistoryCommandHandler {
+	public Object execute(ExecutionEvent event) throws ExecutionException {
+		Repository repository = getRepository(event);
+		RevCommit commit = (RevCommit) getSelection(getPage())
+				.getFirstElement();
+
+		final IStructuredSelection selected = new StructuredSelection(
+				new RepositoryCommit(repository, commit));
+		CommonUtils
+				.runCommand(
+						org.eclipse.egit.ui.internal.commit.command.RewordHandler.ID,
+						selected);
+
+		return null;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		GitHistoryPage page = getPage();
+		if (page == null)
+			return false;
+		IStructuredSelection selection = getSelection(page);
+		if (selection.size() != 1)
+			return false;
+		RevCommit commit = (RevCommit) selection.getFirstElement();
+		return (commit.getParentCount() == 1);
+	}
+}
