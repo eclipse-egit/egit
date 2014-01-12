@@ -229,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_86abc75d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-01-12T20:45:20Z",
+      "side": 1,
+      "message": "Done.\nRenamed into defaultRepositoryToBranch and improved comments in declaration and also where the map is used.",
+      "parentUuid": "67591f73_d8268dbe",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_381a2975",
         "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
         "patchSetId": 10
@@ -240,6 +258,24 @@
       "writtenOn": "2014-01-06T11:54:45Z",
       "side": 1,
       "message": "why should we ignore exceptions here ?",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_e6af2368",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-01-12T20:45:20Z",
+      "side": 1,
+      "message": "Done\nException loged",
+      "parentUuid": "67591f73_381a2975",
       "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -263,6 +299,41 @@
     },
     {
       "key": {
+        "uuid": "67591f73_26911b24",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-01-12T20:45:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67591f73_3836a90c",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_c693ff2b",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-01-12T20:45:20Z",
+      "side": 1,
+      "message": "Replaced this deprecated function call.\nDone",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_183925fb",
         "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
         "patchSetId": 10
@@ -274,6 +345,24 @@
       "writtenOn": "2014-01-06T11:54:45Z",
       "side": 1,
       "message": "fix todo",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_66c033f8",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-01-12T20:45:20Z",
+      "side": 1,
+      "message": "Exception logged and error shown to user.\nDone",
+      "parentUuid": "67591f73_183925fb",
       "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -297,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_46c52f06",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-01-12T20:45:20Z",
+      "side": 1,
+      "message": "Done.\nAdd braces for all other for loops with a following try+catch in this file too.",
+      "parentUuid": "67591f73_78530136",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_584efd90",
         "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
         "patchSetId": 10
@@ -308,6 +415,24 @@
       "writtenOn": "2014-01-06T11:54:45Z",
       "side": 1,
       "message": "should we really ignore this or better notify the user that he is trying to use a malformed psf file ? I would at least log the problem",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_86e627a4",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-01-12T20:45:20Z",
+      "side": 1,
+      "message": "Exception logged and error shown to user.\nDone",
+      "parentUuid": "67591f73_584efd90",
       "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -348,6 +473,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_2610fb06",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-01-12T20:45:20Z",
+      "side": 1,
+      "message": "Exception logged and error shown to user.\nDone",
+      "parentUuid": "67591f73_9811b55c",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_f82391ad",
         "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
         "patchSetId": 10
@@ -359,6 +502,24 @@
       "writtenOn": "2014-01-06T11:54:45Z",
       "side": 1,
       "message": "this can be inlined",
+      "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_c602dfc2",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskActivationListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-01-12T20:45:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67591f73_f82391ad",
       "revId": "8e2b6e42c5cf59d476c33e91aa0ebf0f41f00b1c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
