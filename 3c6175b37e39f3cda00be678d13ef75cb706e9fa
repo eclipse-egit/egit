@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_6f5920d4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2014-01-13T15:40:21Z",
+      "side": 1,
+      "message": "I think the original reason may have been to minimize change since there is only one implementation. I agree though that it would make sense to split the extension point since the functionality could in theory be implemented by different providers.",
+      "parentUuid": "67591f73_5d109658",
+      "revId": "3c6175b37e39f3cda00be678d13ef75cb706e9fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_bdf8d271",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_4f56dca4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IBranchNameProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2014-01-13T15:40:21Z",
+      "side": 1,
+      "message": "Makes sense to split.",
+      "parentUuid": "67591f73_5d537635",
+      "revId": "3c6175b37e39f3cda00be678d13ef75cb706e9fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_1d361e0c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CreateBranchCommand.java",
         "patchSetId": 8
@@ -64,6 +100,24 @@
       "writtenOn": "2014-01-08T08:39:05Z",
       "side": 1,
       "message": "Btw. I think currently this else branch cannot be reached anymore, because according to the plugin.xml the command is only visible on RefNode, TagNode and AdditionalRefNode. Or did I miss something?",
+      "revId": "3c6175b37e39f3cda00be678d13ef75cb706e9fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_cf4aecfd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CreateBranchCommand.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2014-01-13T15:40:21Z",
+      "side": 1,
+      "message": "Not sure. Manuel?",
+      "parentUuid": "67591f73_1d361e0c",
       "revId": "3c6175b37e39f3cda00be678d13ef75cb706e9fa",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
