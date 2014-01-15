@@ -98,7 +98,7 @@ class GenerateHistoryJob extends Job {
 							.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR);
 					if (loadedCommits.size() > itemToLoad + (BATCH_SIZE / 2) + 1 && loadIncrementally)
 						break;
-					if (maxCommits > 0 && loadedCommits.size() > maxCommits)
+					if (maxCommits > 0 && loadedCommits.size() < maxCommits)
 						incomplete = true;
 					if (incomplete || oldsz == loadedCommits.size())
 						break;
