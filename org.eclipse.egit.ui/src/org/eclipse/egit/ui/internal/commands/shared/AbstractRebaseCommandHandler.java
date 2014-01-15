@@ -126,7 +126,7 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 							});
 						else if (result.isOK()) {
 							if (rebase.getResult().getStatus() == Status.UNCOMMITTED_CHANGES) {
-								handleUncommittedChanges(rebase, repository,
+								handleUncommittedChanges(repository,
 										rebase.getResult()
 												.getUncommittedChanges());
 							} else {
@@ -184,8 +184,8 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 				});
 	}
 
-	private void handleUncommittedChanges(final RebaseOperation rebase,
-			final Repository repository, final List<String> files) {
+	private void handleUncommittedChanges(final Repository repository,
+			final List<String> files) {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 			public void run() {
 				Shell shell = PlatformUI.getWorkbench()
