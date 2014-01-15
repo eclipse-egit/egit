@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ResetCommand;
 import org.eclipse.jgit.api.ResetCommand.ResetType;
@@ -87,8 +88,10 @@ public class ResetOperation implements IEGitOperation {
 				type.toString().toLowerCase(), refName), 2);
 
 		IProject[] validProjects = null;
-		if (type == ResetType.HARD)
+		if (type == ResetType.HARD) {
 			validProjects = ProjectUtil.getValidOpenProjects(repository);
+			ResourceUtil.saveLocalHistory(repository);
+		}
 
 		ResetCommand reset = Git.wrap(repository).reset();
 		reset.setMode(type);
