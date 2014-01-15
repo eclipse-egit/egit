@@ -11,7 +11,10 @@
 package org.eclipse.egit.ui.internal.pull;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -29,9 +32,11 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.branch.CleanupUncomittedChangesDialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.api.PullResult;
+import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.errors.TransportException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
@@ -123,6 +128,23 @@ public class PullOperationUI extends JobChangeAdapter {
 	}
 
 	public void done(IJobChangeEvent event) {
+		Map<Repository, Object> res = new HashMap<Repository, Object>(
+				this.results);
+		for (Repository repo : res.keySet()) {
+			Object result = res.get(repo);
+			if (result instanceof PullResult) {
+				PullResult pullResult = (PullResult) result;
+				if (pullResult.getRebaseResult() != null
+						&& RebaseResult.Status.UNCOMMITTED_CHANGES == pullResult
+						.getRebaseResult().getStatus()) {
+					handleUncommittedChanges(repo, pullResult
+							.getRebaseResult().getUncommittedChanges());
+					this.results.remove(repo);
+				}
+			}
+		}
+		if (this.results.isEmpty())
+			return;
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 			public void run() {
 				Shell shell = PlatformUI.getWorkbench()
@@ -131,6 +153,27 @@ public class PullOperationUI extends JobChangeAdapter {
 			}
 		});
 
+	}
+
+	private void handleUncommittedChanges(final Repository repository,
+			final List<String> files) {
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				Shell shell = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getShell();
+				CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
+						shell,
+						UIText.AbstractRebaseCommandHandler_cleanupDialog_title,
+						UIText.AbstractRebaseCommandHandler_cleanupDialog_text,
+						repository, files);
+				cleanupUncomittedChangesDialog.open();
+				if (cleanupUncomittedChangesDialog.shouldContinue()) {
+					PullOperationUI pullOperationUI = new PullOperationUI(
+							Collections.singleton(repository));
+					pullOperationUI.start();
+				}
+			}
+		});
 	}
 
 	private void showResults(final Shell shell) {
