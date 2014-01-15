@@ -11,10 +11,14 @@
 package org.eclipse.egit.ui.internal.pull;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -29,9 +33,11 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.branch.CleanupUncomittedChangesDialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.api.PullResult;
+import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.errors.TransportException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
@@ -47,7 +53,15 @@ public class PullOperationUI extends JobChangeAdapter {
 
 	private final Repository[] repositories;
 
-	private final Map<Repository, Object> results = new LinkedHashMap<Repository, Object>();
+	/**
+	 * Holds the number of PullOperationUIs that need to complete before the
+	 * pull results can be shown. The number includes this instance of
+	 * PullOperationUI and all subtasks spawned by it.
+	 */
+	private final AtomicInteger tasksToWaitFor = new AtomicInteger(1);
+
+	/** pull results per repository */
+	protected final Map<Repository, Object> results = new LinkedHashMap<Repository, Object>();
 
 	private final PullOperation pullOperation;
 
@@ -122,7 +136,77 @@ public class PullOperationUI extends JobChangeAdapter {
 		}
 	}
 
+	/**
+	 * NOTE: this method is overridden in an anonymous class in {@link #handleUncommittedChanges(Repository, List, Shell)}
+	 */
 	public void done(IJobChangeEvent event) {
+		final Map<Repository, Object> res = new HashMap<Repository, Object>(
+				PullOperationUI.this.results);
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				Shell shell = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getShell();
+
+				for (Entry<Repository, Object> entry : res.entrySet()) {
+					Object result = entry.getValue();
+					if (result instanceof PullResult) {
+						PullResult pullResult = (PullResult) result;
+						if (pullResult.getRebaseResult() != null
+								&& RebaseResult.Status.UNCOMMITTED_CHANGES == pullResult
+										.getRebaseResult().getStatus()) {
+							boolean handledSeparately = handleUncommittedChanges(
+									entry.getKey(), pullResult
+											.getRebaseResult()
+											.getUncommittedChanges(), shell);
+							if (handledSeparately)
+								tasksToWaitFor.incrementAndGet();
+						}
+					}
+				}
+
+				if (tasksToWaitFor.decrementAndGet() == 0 && !results.isEmpty())
+					showResults(shell);
+			}
+
+		});
+	}
+
+	/**
+	 * @param repository
+	 * @param files
+	 *            uncommitted files that were in the way for the rebase
+	 * @param shell
+	 * @return true if the rebase is retried separately, false if not
+	 */
+	private boolean handleUncommittedChanges(final Repository repository,
+			final List<String> files, Shell shell) {
+		CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
+				shell, UIText.AbstractRebaseCommandHandler_cleanupDialog_title,
+				UIText.AbstractRebaseCommandHandler_cleanupDialog_text,
+				repository, files);
+		cleanupUncomittedChangesDialog.open();
+		if (cleanupUncomittedChangesDialog.shouldContinue()) {
+			final PullOperationUI outerThis = this;
+			PullOperationUI pullOperationUI = new PullOperationUI(
+					Collections.singleton(repository)) {
+
+				public void done(IJobChangeEvent event) {
+					// put the result from this subtask into the result map of
+					// the outer PullOperationUI and display the results if all
+					// subtasks have reported back
+					outerThis.results.putAll(this.results);
+					int missing = outerThis.tasksToWaitFor.decrementAndGet();
+					if (missing == 0)
+						outerThis.showResults();
+				}
+			};
+			pullOperationUI.start();
+			return true;
+		} else
+			return false;
+	}
+
+	private void showResults() {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 			public void run() {
 				Shell shell = PlatformUI.getWorkbench()
@@ -130,7 +214,6 @@ public class PullOperationUI extends JobChangeAdapter {
 				showResults(shell);
 			}
 		});
-
 	}
 
 	private void showResults(final Shell shell) {
