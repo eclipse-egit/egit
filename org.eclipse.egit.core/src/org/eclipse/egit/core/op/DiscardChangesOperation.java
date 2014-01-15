@@ -148,6 +148,7 @@ public class DiscardChangesOperation implements IEGitOperation {
 				.splitResourcesByRepository(files);
 		for (Entry<Repository, Collection<String>> entry : pathsByRepository.entrySet()) {
 			Repository repository = entry.getKey();
+			ResourceUtil.saveLocalHistory(repository);
 			Collection<String> paths = entry.getValue();
 			CheckoutCommand checkoutCommand = new Git(repository).checkout();
 			checkoutCommand.setStartPoint(this.revision);
