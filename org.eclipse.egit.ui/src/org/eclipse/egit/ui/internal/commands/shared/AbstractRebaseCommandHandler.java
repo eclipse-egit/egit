@@ -36,6 +36,7 @@ import org.eclipse.jgit.api.RebaseCommand.Operation;
 import org.eclipse.jgit.api.RebaseResult.Status;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
@@ -190,9 +191,12 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 			public void run() {
 				Shell shell = PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getShell();
+				String dialogTitle = NLS
+						.bind(UIText.AbstractRebaseCommandHandler_cleanupDialog_title,
+								Activator.getDefault().getRepositoryUtil()
+										.getRepositoryName(repository));
 				CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
-						shell,
-						UIText.AbstractRebaseCommandHandler_cleanupDialog_title,
+						shell, dialogTitle,
 						UIText.AbstractRebaseCommandHandler_cleanupDialog_text,
 						repository, files);
 				cleanupUncomittedChangesDialog.open();

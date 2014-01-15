@@ -15,11 +15,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.branch.CleanupUncomittedChangesDialog;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
 
 /** Utility class for handling repositories in the UI. */
@@ -49,9 +51,12 @@ public final class UIRepositoryUtils {
 			List<String> files = new ArrayList<String>(status.getModified());
 			Collections.sort(files);
 
-			CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
-					shell,
+			String dialogTitle = NLS.bind(
 					UIText.AbstractRebaseCommandHandler_cleanupDialog_title,
+					Activator.getDefault().getRepositoryUtil()
+							.getRepositoryName(repo));
+			CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
+					shell, dialogTitle,
 					UIText.AbstractRebaseCommandHandler_cleanupDialog_text,
 					repo, files);
 			cleanupUncomittedChangesDialog.open();
