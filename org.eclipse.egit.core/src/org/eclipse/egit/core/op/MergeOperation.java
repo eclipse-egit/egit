@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 SAP AG and others.
+ * Copyright (c) 2010, 2014 SAP AG and others.
  * Copyright (C) 2012, 2013 Tomasz Zarna <tzarna@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
@@ -57,11 +57,11 @@ public class MergeOperation implements IEGitOperation {
 
 	private MergeStrategy mergeStrategy;
 
-	private boolean squash;
+	private Boolean squash;
 
 	private FastForwardMode fastForwardMode;
 
-	private boolean commit = true;
+	private Boolean commit;
 
 	private MergeResult mergeResult;
 
@@ -92,7 +92,7 @@ public class MergeOperation implements IEGitOperation {
 	 * @param squash true to squash merge commits
 	 */
 	public void setSquash(boolean squash) {
-		this.squash = squash;
+		this.squash = Boolean.valueOf(squash);
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class MergeOperation implements IEGitOperation {
 	 * @since 3.1
 	 */
 	public void setCommit(boolean commit) {
-		this.commit = commit;
+		this.commit = Boolean.valueOf(commit);
 	}
 
 	public void execute(IProgressMonitor m) throws CoreException {
@@ -128,24 +128,22 @@ public class MergeOperation implements IEGitOperation {
 				mymonitor.beginTask(NLS.bind(CoreText.MergeOperation_ProgressMerge, refName), 3);
 				Git git = new Git(repository);
 				mymonitor.worked(1);
-				MergeCommand merge;
+				MergeCommand merge = git.merge();
 				try {
-					FastForwardMode ffmode = fastForwardMode;
-					if (ffmode == null)
-						ffmode = Activator.getDefault().getRepositoryUtil()
-								.getFastForwardMode(repository);
 					Ref ref = repository.getRef(refName);
 					if (ref != null)
-						merge = git.merge().include(ref).setFastForward(ffmode)
-								.setCommit(commit);
+						merge.include(ref);
 					else
-						merge = git.merge()
-								.include(ObjectId.fromString(refName))
-								.setFastForward(ffmode).setCommit(commit);
+						merge.include(ObjectId.fromString(refName));
 				} catch (IOException e) {
 					throw new TeamException(CoreText.MergeOperation_InternalError, e);
 				}
-				merge.setSquash(squash);
+				if (fastForwardMode != null)
+					merge.setFastForward(fastForwardMode);
+				if (commit != null)
+					merge.setCommit(commit.booleanValue());
+				if (squash != null)
+					merge.setSquash(squash.booleanValue());
 				if (mergeStrategy != null) {
 					merge.setStrategy(mergeStrategy);
 				}
