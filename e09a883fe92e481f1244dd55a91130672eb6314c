@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67591f73_7b44f4cf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-01-20T17:13:03Z",
+      "side": 1,
+      "message": "No, this is wrong, because this statement is there to limit the size of shown objects to about maxCommits.\n\nBut clearly incomplete \u003d true is not true always in case maxCommits \u003e 0 \u0026\u0026 loadedCommits.size() \u003e maxCommits. \nA check is missing if all commits are loaded. This is unfortunately not easily done with the SWTCommitList.\n\nA workaround is to check if no new commits were loaded in the current invocation of the GenerateHistoryJob (it is retriggered after rendering the table from a Listener added in the Consgtructor of CommitGraphTable, and the retriggering is done to implement the incremental loading) and step out of the loop before this check for incomplete is done. Then the method updateUI in GenerateHistoryJob will not render the UI again and not start the endless loop anymore.\n\nI have a fix for that locally. If you agree I would rather push it to a new Gerrit Change as it is quite different from this Change.",
+      "revId": "e09a883fe92e481f1244dd55a91130672eb6314c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
