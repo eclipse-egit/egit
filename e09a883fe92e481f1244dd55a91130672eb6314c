@@ -16,6 +16,24 @@
       "revId": "e09a883fe92e481f1244dd55a91130672eb6314c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_de236ead",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 598
+      },
+      "writtenOn": "2014-01-20T18:23:22Z",
+      "side": 1,
+      "message": "Thanks for looking into this.\n\n\"I have a fix for that locally. If you agree I would rather push it to a new Gerrit Change as it is quite different from this Change.\"\n\nYes, you can push it to a new Gerrit change. I also have an updated patch that I could push to this current Gerrit change but I\u0027ll wait for your patch because your solution will most likely be better.",
+      "parentUuid": "67591f73_7b44f4cf",
+      "revId": "e09a883fe92e481f1244dd55a91130672eb6314c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
