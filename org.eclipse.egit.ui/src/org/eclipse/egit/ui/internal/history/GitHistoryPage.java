@@ -1501,6 +1501,16 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		return this.input;
 	}
 
+	void setWarningTextInUIThread(final Job j) {
+		graph.getControl().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				if (!graph.getControl().isDisposed() && job == j) {
+					setWarningText(UIText.GitHistoryPage_ListIncompleteWarningMessage);
+				}
+			}
+		});
+	}
+
 	@SuppressWarnings("boxing")
 	void showCommitList(final Job j, final SWTCommitList list,
 			final SWTCommit[] asArray, final RevCommit toSelect, final boolean incomplete, final RevFlag highlightFlag) {
