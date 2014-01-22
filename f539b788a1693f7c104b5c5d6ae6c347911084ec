@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67591f73_36c0c371",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-01-22T18:24:00Z",
+      "side": 1,
+      "message": "As you said in the commit message this may open multiple dialogs.\n\nI tried the change with three repositories: one having uncommited changes and two that either pull cleanly or abort due to other reasons.\n\nAfter starting to pull, the CleanupUncomittedChangesDialog and a pull result dialog for the other two repositories popped up. The result dialog appeared in the foreground, but clicking its OK button did not close it. Only after closing the CleanupUncomittedChangesDialog (which was behind the result dialog) I could click OK on the result dialog.",
+      "revId": "f539b788a1693f7c104b5c5d6ae6c347911084ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
