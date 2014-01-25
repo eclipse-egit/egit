@@ -227,6 +227,8 @@ public class CleanRepositoryPage extends WizardPage {
 	public void finish() {
 		try {
 			final Set<String> itemsToClean = getItemsToClean();
+			if (itemsToClean.isEmpty())
+				return;
 
 			getContainer().run(true, false, new IRunnableWithProgress() {
 				public void run(IProgressMonitor monitor) throws InvocationTargetException,
