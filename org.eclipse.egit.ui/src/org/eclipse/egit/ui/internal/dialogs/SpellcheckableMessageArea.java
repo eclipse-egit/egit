@@ -269,6 +269,7 @@ public class SpellcheckableMessageArea extends Composite {
 		AnnotationModel annotationModel = new AnnotationModel();
 		sourceViewer = new SourceViewer(this, null, null, true, SWT.MULTI
 				| SWT.V_SCROLL | SWT.WRAP);
+		getTextWidget().setAlwaysShowScrollBars(false);
 		getTextWidget().setFont(UIUtils
 				.getFont(UIPreferences.THEME_CommitMessageEditorFont));
 
