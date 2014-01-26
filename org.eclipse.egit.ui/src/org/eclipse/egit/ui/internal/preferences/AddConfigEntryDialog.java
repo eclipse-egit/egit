@@ -106,7 +106,7 @@ public class AddConfigEntryDialog extends TitleAreaDialog {
 				return;
 			}
 			StringTokenizer st = new StringTokenizer(keyText.getText(), "."); //$NON-NLS-1$
-			if (st.countTokens() < 2 || st.countTokens() > 3) {
+			if (st.countTokens() < 2) {
 				setErrorMessage(UIText.AddConfigEntryDialog_KeyComponentsMessage);
 				hasError = true;
 				return;
