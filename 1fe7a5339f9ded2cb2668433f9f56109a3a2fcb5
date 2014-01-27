@@ -16,6 +16,24 @@
       "revId": "1fe7a5339f9ded2cb2668433f9f56109a3a2fcb5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_2f802498",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GenerateHistoryJob.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-01-27T15:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67591f73_80fe76da",
+      "revId": "1fe7a5339f9ded2cb2668433f9f56109a3a2fcb5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
