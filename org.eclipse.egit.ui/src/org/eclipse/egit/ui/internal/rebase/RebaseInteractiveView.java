@@ -115,6 +115,9 @@ public class RebaseInteractiveView extends ViewPart implements
 	private LocalResourceManager resources = new LocalResourceManager(
 			JFaceResources.getResources());
 
+	/** these columns are dynamically resized to fit their contents */
+	private TreeViewerColumn[] dynamicColumns;
+
 	/**
 	 * View for handling interactive rebase
 	 */
@@ -427,18 +430,14 @@ public class RebaseInteractiveView extends ViewPart implements
 		String[] headings = { UIText.RebaseInteractiveView_HeadingStatus,
 				UIText.RebaseInteractiveView_HeadingAction,
 				UIText.RebaseInteractiveView_HeadingCommitId,
-				UIText.RebaseInteractiveView_HeadingMessage };
+				UIText.RebaseInteractiveView_HeadingMessage,
+				UIText.RebaseInteractiveView_HeadingAuthor,
+				UIText.RebaseInteractiveView_HeadingAuthorDate };
 
 		ColumnViewerToolTipSupport.enableFor(planTreeViewer,
 				ToolTip.NO_RECREATE);
 
-		TreeViewerColumn infoColumn = new TreeViewerColumn(planTreeViewer,
-				SWT.NONE);
-		infoColumn.getColumn().setText(headings[0]);
-		infoColumn.getColumn().setMoveable(false);
-		infoColumn.getColumn().setResizable(true);
-		infoColumn.getColumn().setWidth(70);
-
+		TreeViewerColumn infoColumn = createColumn(headings[0], 70);
 		infoColumn.setLabelProvider(new HighlightingColumnLabelProvider() {
 
 			@Override
@@ -484,13 +483,7 @@ public class RebaseInteractiveView extends ViewPart implements
 			}
 		});
 
-		TreeViewerColumn actionColumn = new TreeViewerColumn(planTreeViewer,
-				SWT.NONE);
-		actionColumn.getColumn().setText(headings[1]);
-		actionColumn.getColumn().setMoveable(false);
-		actionColumn.getColumn().setResizable(true);
-		actionColumn.getColumn().setWidth(90);
-
+		TreeViewerColumn actionColumn = createColumn(headings[1], 90);
 		actionColumn.setLabelProvider(new HighlightingColumnLabelProvider() {
 
 			@Override
@@ -532,13 +525,7 @@ public class RebaseInteractiveView extends ViewPart implements
 			}
 		});
 
-		TreeViewerColumn commitIDColumn = new TreeViewerColumn(planTreeViewer,
-				SWT.NONE);
-		commitIDColumn.getColumn().setText(headings[2]);
-		commitIDColumn.getColumn().setMoveable(false);
-		commitIDColumn.getColumn().setResizable(true);
-		commitIDColumn.getColumn().setWidth(70);
-
+		TreeViewerColumn commitIDColumn = createColumn(headings[2], 70);
 		commitIDColumn.setLabelProvider(new HighlightingColumnLabelProvider() {
 			@Override
 			public String getText(Object element) {
@@ -550,13 +537,7 @@ public class RebaseInteractiveView extends ViewPart implements
 			}
 		});
 
-		TreeViewerColumn commitMessageColumn = new TreeViewerColumn(
-				planTreeViewer, SWT.NONE);
-		commitMessageColumn.getColumn().setText(headings[3]);
-		commitMessageColumn.getColumn().setMoveable(false);
-		commitMessageColumn.getColumn().setResizable(true);
-		commitMessageColumn.getColumn().setWidth(200);
-
+		TreeViewerColumn commitMessageColumn = createColumn(headings[3], 200);
 		commitMessageColumn
 				.setLabelProvider(new HighlightingColumnLabelProvider() {
 					@Override
@@ -568,6 +549,42 @@ public class RebaseInteractiveView extends ViewPart implements
 						return super.getText(element);
 					}
 				});
+
+		TreeViewerColumn authorColumn = createColumn(headings[4], 120);
+		authorColumn.setLabelProvider(new HighlightingColumnLabelProvider() {
+			@Override
+			public String getText(Object element) {
+				if (element instanceof PlanElement) {
+					PlanElement planLine = (PlanElement) element;
+					return planLine.getAuthor();
+				}
+				return super.getText(element);
+			}
+		});
+
+		TreeViewerColumn authoredDateColumn = createColumn(headings[5], 80);
+		authoredDateColumn
+				.setLabelProvider(new HighlightingColumnLabelProvider() {
+					@Override
+					public String getText(Object element) {
+						if (element instanceof PlanElement) {
+							PlanElement planLine = (PlanElement) element;
+							return planLine.getAuthoredDate();
+						}
+						return super.getText(element);
+					}
+				});
+		dynamicColumns = new TreeViewerColumn[] { commitMessageColumn,
+				authorColumn, authoredDateColumn };
+	}
+
+	private TreeViewerColumn createColumn(String text, int width) {
+		TreeViewerColumn column = new TreeViewerColumn(planTreeViewer, SWT.NONE);
+		column.getColumn().setText(text);
+		column.getColumn().setMoveable(false);
+		column.getColumn().setResizable(true);
+		column.getColumn().setWidth(width);
+		return column;
 	}
 
 	private void asyncExec(Runnable runnable) {
@@ -618,8 +635,12 @@ public class RebaseInteractiveView extends ViewPart implements
 	}
 
 	private void refreshUI() {
-		if (planTreeViewer != null)
+		if (planTreeViewer != null) {
 			planTreeViewer.refresh(true);
+			// make column widths match the contents
+			for (TreeViewerColumn col : dynamicColumns)
+				col.getColumn().pack();
+		}
 
 		startItem.setEnabled(false);
 		continueItem.setEnabled(false);
