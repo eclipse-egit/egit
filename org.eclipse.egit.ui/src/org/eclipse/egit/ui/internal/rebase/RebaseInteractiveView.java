@@ -20,6 +20,7 @@ import org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan.ElementType;
 import org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan.PlanElement;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
@@ -46,6 +47,8 @@ import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.window.ToolTip;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
+import org.eclipse.jgit.util.GitDateFormatter;
+import org.eclipse.jgit.util.GitDateFormatter.Format;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.dnd.DND;
@@ -114,6 +117,11 @@ public class RebaseInteractiveView extends ViewPart implements
 
 	private LocalResourceManager resources = new LocalResourceManager(
 			JFaceResources.getResources());
+
+	private GitDateFormatter dateFormatter = getNewDateFormatter();
+
+	/** these columns are dynamically resized to fit their contents */
+	private TreeViewerColumn[] dynamicColumns;
 
 	/**
 	 * View for handling interactive rebase
@@ -427,18 +435,16 @@ public class RebaseInteractiveView extends ViewPart implements
 		String[] headings = { UIText.RebaseInteractiveView_HeadingStatus,
 				UIText.RebaseInteractiveView_HeadingAction,
 				UIText.RebaseInteractiveView_HeadingCommitId,
-				UIText.RebaseInteractiveView_HeadingMessage };
+				UIText.RebaseInteractiveView_HeadingMessage,
+				UIText.RebaseInteractiveView_HeadingAuthor,
+				UIText.RebaseInteractiveView_HeadingAuthorDate,
+				UIText.RebaseInteractiveView_HeadingCommitter,
+				UIText.RebaseInteractiveView_HeadingCommitDate };
 
 		ColumnViewerToolTipSupport.enableFor(planTreeViewer,
 				ToolTip.NO_RECREATE);
 
-		TreeViewerColumn infoColumn = new TreeViewerColumn(planTreeViewer,
-				SWT.NONE);
-		infoColumn.getColumn().setText(headings[0]);
-		infoColumn.getColumn().setMoveable(false);
-		infoColumn.getColumn().setResizable(true);
-		infoColumn.getColumn().setWidth(70);
-
+		TreeViewerColumn infoColumn = createColumn(headings[0], 70);
 		infoColumn.setLabelProvider(new HighlightingColumnLabelProvider() {
 
 			@Override
@@ -484,13 +490,7 @@ public class RebaseInteractiveView extends ViewPart implements
 			}
 		});
 
-		TreeViewerColumn actionColumn = new TreeViewerColumn(planTreeViewer,
-				SWT.NONE);
-		actionColumn.getColumn().setText(headings[1]);
-		actionColumn.getColumn().setMoveable(false);
-		actionColumn.getColumn().setResizable(true);
-		actionColumn.getColumn().setWidth(90);
-
+		TreeViewerColumn actionColumn = createColumn(headings[1], 90);
 		actionColumn.setLabelProvider(new HighlightingColumnLabelProvider() {
 
 			@Override
@@ -532,13 +532,7 @@ public class RebaseInteractiveView extends ViewPart implements
 			}
 		});
 
-		TreeViewerColumn commitIDColumn = new TreeViewerColumn(planTreeViewer,
-				SWT.NONE);
-		commitIDColumn.getColumn().setText(headings[2]);
-		commitIDColumn.getColumn().setMoveable(false);
-		commitIDColumn.getColumn().setResizable(true);
-		commitIDColumn.getColumn().setWidth(70);
-
+		TreeViewerColumn commitIDColumn = createColumn(headings[2], 70);
 		commitIDColumn.setLabelProvider(new HighlightingColumnLabelProvider() {
 			@Override
 			public String getText(Object element) {
@@ -550,13 +544,7 @@ public class RebaseInteractiveView extends ViewPart implements
 			}
 		});
 
-		TreeViewerColumn commitMessageColumn = new TreeViewerColumn(
-				planTreeViewer, SWT.NONE);
-		commitMessageColumn.getColumn().setText(headings[3]);
-		commitMessageColumn.getColumn().setMoveable(false);
-		commitMessageColumn.getColumn().setResizable(true);
-		commitMessageColumn.getColumn().setWidth(200);
-
+		TreeViewerColumn commitMessageColumn = createColumn(headings[3], 200);
 		commitMessageColumn
 				.setLabelProvider(new HighlightingColumnLabelProvider() {
 					@Override
@@ -568,6 +556,68 @@ public class RebaseInteractiveView extends ViewPart implements
 						return super.getText(element);
 					}
 				});
+
+		TreeViewerColumn authorColumn = createColumn(headings[4], 120);
+		authorColumn.setLabelProvider(new HighlightingColumnLabelProvider() {
+			@Override
+			public String getText(Object element) {
+				if (element instanceof PlanElement) {
+					PlanElement planLine = (PlanElement) element;
+					return planLine.getAuthor();
+				}
+				return super.getText(element);
+			}
+		});
+
+		TreeViewerColumn authoredDateColumn = createColumn(headings[5], 80);
+		authoredDateColumn
+				.setLabelProvider(new HighlightingColumnLabelProvider() {
+					@Override
+					public String getText(Object element) {
+						if (element instanceof PlanElement) {
+							PlanElement planLine = (PlanElement) element;
+							return planLine.getAuthoredDate(dateFormatter);
+						}
+						return super.getText(element);
+					}
+				});
+
+		TreeViewerColumn committerColumn = createColumn(headings[6], 120);
+		committerColumn.setLabelProvider(new HighlightingColumnLabelProvider() {
+			@Override
+			public String getText(Object element) {
+				if (element instanceof PlanElement) {
+					PlanElement planLine = (PlanElement) element;
+					return planLine.getCommitter();
+				}
+				return super.getText(element);
+			}
+		});
+
+		TreeViewerColumn commitDateColumn = createColumn(headings[7], 80);
+		commitDateColumn
+				.setLabelProvider(new HighlightingColumnLabelProvider() {
+					@Override
+					public String getText(Object element) {
+						if (element instanceof PlanElement) {
+							PlanElement planLine = (PlanElement) element;
+							return planLine.getCommittedDate(dateFormatter);
+						}
+						return super.getText(element);
+					}
+				});
+		dynamicColumns = new TreeViewerColumn[] { commitMessageColumn,
+				authorColumn, authoredDateColumn, committerColumn,
+				commitDateColumn };
+	}
+
+	private TreeViewerColumn createColumn(String text, int width) {
+		TreeViewerColumn column = new TreeViewerColumn(planTreeViewer, SWT.NONE);
+		column.getColumn().setText(text);
+		column.getColumn().setMoveable(false);
+		column.getColumn().setResizable(true);
+		column.getColumn().setWidth(width);
+		return column;
 	}
 
 	private void asyncExec(Runnable runnable) {
@@ -618,8 +668,13 @@ public class RebaseInteractiveView extends ViewPart implements
 	}
 
 	private void refreshUI() {
-		if (planTreeViewer != null)
+		dateFormatter = getNewDateFormatter();
+		if (planTreeViewer != null) {
 			planTreeViewer.refresh(true);
+			// make column widths match the contents
+			for (TreeViewerColumn col : dynamicColumns)
+				col.getColumn().pack();
+		}
 
 		startItem.setEnabled(false);
 		continueItem.setEnabled(false);
@@ -653,6 +708,15 @@ public class RebaseInteractiveView extends ViewPart implements
 
 	private void createPopupMenu(TreeViewer planViewer) {
 		// TODO create popup menu
+	}
+
+	private static GitDateFormatter getNewDateFormatter() {
+		boolean useRelativeDates = Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE);
+		if (useRelativeDates)
+			return new GitDateFormatter(Format.RELATIVE);
+		else
+			return new GitDateFormatter(Format.LOCALE);
 	}
 
 	@Override

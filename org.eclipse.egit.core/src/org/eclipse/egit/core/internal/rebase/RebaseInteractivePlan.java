@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -31,11 +32,16 @@ import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.AbbreviatedObjectId;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.RebaseTodoFile;
 import org.eclipse.jgit.lib.RebaseTodoLine;
 import org.eclipse.jgit.lib.RebaseTodoLine.Action;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.util.GitDateFormatter;
 
 /**
  * Representation of the {@link RebaseTodoFile} for Rebase-Todo and
@@ -261,46 +267,82 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 	}
 
 	private void reparsePlan() {
-		doneList = parseDone();
-		todoList = parseTodo();
+		RevWalk walk = new RevWalk(repository.newObjectReader());
+		try {
+			doneList = parseDone(walk);
+			todoList = parseTodo(walk);
+		} finally {
+			walk.release();
+		}
 		planList = JoinedList.wrap(doneList, todoList);
 		notifyPlanWasUpdatedFromRepository();
 	}
 
-	private List<PlanElement> parseTodo() {
+	private List<PlanElement> parseTodo(RevWalk walk) {
 		List<RebaseTodoLine> rebaseTodoLines;
 		try {
 			rebaseTodoLines = repository.readRebaseTodo(REBASE_TODO, true);
 		} catch (IOException e) {
 			rebaseTodoLines = new LinkedList<RebaseTodoLine>();
 		}
-		List<PlanElement> todoElements = createElementList(rebaseTodoLines);
+		List<PlanElement> todoElements = createElementList(rebaseTodoLines,
+				walk);
 		return todoElements;
 	}
 
-	private List<PlanElement> parseDone() {
+	private List<PlanElement> parseDone(RevWalk walk) {
 		List<RebaseTodoLine> rebaseDoneLines;
 		try {
 			rebaseDoneLines = repository.readRebaseTodo(REBASE_DONE, false);
 		} catch (IOException e) {
 			rebaseDoneLines = new LinkedList<RebaseTodoLine>();
 		}
-		List<PlanElement> doneElements = createElementList(rebaseDoneLines);
+		List<PlanElement> doneElements = createElementList(rebaseDoneLines,
+				walk);
 		return doneElements;
 	}
 
-	private List<PlanElement> createElementList(List<RebaseTodoLine> rebaseTodoLines) {
-		List<PlanElement> planElements = new LinkedList<PlanElement>();
+	private List<PlanElement> createElementList(
+			List<RebaseTodoLine> rebaseTodoLines, RevWalk walk) {
+		List<PlanElement> planElements = new ArrayList<PlanElement>(
+				rebaseTodoLines.size());
 		for (RebaseTodoLine todoLine : rebaseTodoLines) {
-			PlanElement element = createElement(todoLine);
+			PlanElement element = createElement(todoLine, walk);
 			planElements.add(element);
 		}
 		return planElements;
 	}
 
-	private PlanElement createElement(RebaseTodoLine todoLine) {
-		PlanElement element = new PlanElement(todoLine);
+	private PlanElement createElement(RebaseTodoLine todoLine, RevWalk walk) {
+		PersonIdent author = null;
+		PersonIdent committer = null;
+
+		RevCommit commit = loadCommit(todoLine.getCommit(), walk);
+		if (commit != null) {
+			author = commit.getAuthorIdent();
+			committer = commit.getCommitterIdent();
+		}
+
+		PlanElement element = new PlanElement(todoLine, author, committer);
 		return element;
+	}
+
+	private RevCommit loadCommit(AbbreviatedObjectId abbreviatedObjectId,
+			RevWalk walk) {
+		if (abbreviatedObjectId != null) {
+			try {
+				Collection<ObjectId> resolved = walk.getObjectReader().resolve(
+						abbreviatedObjectId);
+				if (resolved.size() == 1) {
+					RevCommit commit = walk.parseCommit(resolved
+							.iterator().next());
+					return commit;
+				}
+			} catch (IOException e) {
+				// ignore, we assume no author/committer then
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -395,15 +437,25 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 	}
 
 	/**
-	 * This class wraps a {@link RebaseTodoLine}.
+	 * This class wraps a {@link RebaseTodoLine} and holds additional
+	 * information about the underlying commit, if available.
 	 */
 	public class PlanElement {
 		private final RebaseTodoLine line;
 
-		private PlanElement(RebaseTodoLine line) {
+		/** author info, may be null */
+		private final PersonIdent author;
+
+		/** committer info, may be null */
+		private final PersonIdent committer;
+
+		private PlanElement(RebaseTodoLine line, PersonIdent author,
+				PersonIdent committer) {
 			if (line == null)
 				throw new IllegalArgumentException();
 			this.line = line;
+			this.author = author;
+			this.committer = committer;
 		}
 
 		/**
@@ -438,6 +490,48 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 		 */
 		public String getShortMessage() {
 			return line.getShortMessage();
+		}
+
+		/**
+		 * @return the author name of the underlying commit
+		 */
+		public String getAuthor() {
+			if (author == null)
+				return ""; //$NON-NLS-1$
+			else
+				return author.getName();
+		}
+
+		/**
+		 * @param dateFormatter
+		 * @return the authored date of the underlying commit
+		 */
+		public String getAuthoredDate(GitDateFormatter dateFormatter) {
+			if (author == null)
+				return ""; //$NON-NLS-1$
+			else
+				return dateFormatter.formatDate(author);
+		}
+
+		/**
+		 * @return the committer name of the underlying commit
+		 */
+		public String getCommitter() {
+			if (committer == null)
+				return ""; //$NON-NLS-1$
+			else
+				return committer.getName();
+		}
+
+		/**
+		 * @param dateFormatter
+		 * @return the commit date of the underlying commit
+		 */
+		public String getCommittedDate(GitDateFormatter dateFormatter) {
+			if (committer == null)
+				return ""; //$NON-NLS-1$
+			else
+				return dateFormatter.formatDate(committer);
 		}
 
 		/**
