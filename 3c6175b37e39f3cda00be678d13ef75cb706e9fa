@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_117a6c94",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-02-01T21:45:26Z",
+      "side": 1,
+      "message": "I have committed the changes in my working copy. Shall I push this new commit without a gerrit Change-ID to start a new review?",
+      "parentUuid": "67591f73_bdf8d271",
+      "revId": "3c6175b37e39f3cda00be678d13ef75cb706e9fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_5d537635",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IBranchNameProvider.java",
         "patchSetId": 8
