@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_ae44ef1f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-02-03T08:24:01Z",
+      "side": 1,
+      "message": "Yes, please push it as another change.\n\nNote that you can also create a Change-Id locally when you ommit. This is described here: http://wiki.eclipse.org/EGit/Contributor_Guide#Install_the_commit-msg_hook_in_your_repository.\n\nI use the Gerrit configuration wizard in eclipse (http://wiki.eclipse.org/EGit/User_Guide#Gerrit_Configuration). After a repository is configured with the wizard, the Change-Id-Button is selected automatically, and the push goes to refs/for/master.",
+      "parentUuid": "67591f73_117a6c94",
+      "revId": "3c6175b37e39f3cda00be678d13ef75cb706e9fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_5d537635",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IBranchNameProvider.java",
         "patchSetId": 8
