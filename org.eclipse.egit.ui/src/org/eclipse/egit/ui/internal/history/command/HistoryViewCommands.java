@@ -77,6 +77,9 @@ public class HistoryViewCommands {
 	/** "cherry-pick" a commit */
 	public static final String CHERRYPICK = "org.eclipse.egit.ui.history.CherryPick"; //$NON-NLS-1$
 
+	/** squash multiple commits into one */
+	public static final String SQUASH = "org.eclipse.egit.ui.history.Squash"; //$NON-NLS-1$
+
 	/** revert a commit */
 	public static final String REVERT = "org.eclipse.egit.ui.history.Revert"; //$NON-NLS-1$
 

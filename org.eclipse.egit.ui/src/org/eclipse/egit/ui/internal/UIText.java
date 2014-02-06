@@ -430,6 +430,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_showAllBranches;
 
 	/** */
+	public static String GitHistoryPage_squashMenuItem;
+
+	/** */
 	public static String GitHistoryPage_CheckoutMenuLabel;
 
 	/** */
@@ -494,6 +497,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitHistoryPage_notContainedInCommits;
+
+	/** */
+	public static String GitHistoryPage_ModifyMenuLabel;
 
 	/** */
 	public static String GitHistoryPage_MultiResourcesType;
@@ -4530,6 +4536,24 @@ public class UIText extends NLS {
 
 	/** */
 	public static String SkipRebaseCommand_JobName;
+
+	/** */
+	public static String SquashHandler_CommitsNotOnCurrentBranch;
+
+	/** */
+	public static String SquashHandler_Error_Title;
+
+	/** */
+	public static String SquashHandler_ErrorCheckingIfCommitsAreOnCurrentBranch;
+
+	/** */
+	public static String SquashHandler_InternalError;
+
+	/** */
+	public static String SquashHandler_JobName;
+
+	/** */
+	public static String SquashHandler_MessageFromCommitX;
 
 	/** */
 	public static String SwitchToMenu_NewBranchMenuLabel;
