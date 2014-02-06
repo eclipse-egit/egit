@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67591f73_e2becffb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-06T22:13:36Z",
+      "side": 1,
+      "message": "s/RFC//  :-)",
+      "revId": "64cee7675dcb5632d9c774080690a2840fb1c1d7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_67ebf11a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SWTPlotRenderer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-06T22:13:36Z",
+      "side": 1,
+      "message": "style nit: I would extract \"\\u206\" into a constant",
+      "revId": "64cee7675dcb5632d9c774080690a2840fb1c1d7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_02bae308",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-06T22:13:36Z",
+      "side": 1,
+      "message": "s/Cut/Shorten/ sounds better to me, though I am not a native speaker",
+      "revId": "64cee7675dcb5632d9c774080690a2840fb1c1d7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
