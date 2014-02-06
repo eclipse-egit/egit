@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
+ * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -113,6 +113,11 @@ public class JobFamilies {
 	 * Cherry pick commit job
 	 */
 	public static final Object CHERRY_PICK = new Object();
+
+	/**
+	 * Squash commits job
+	 */
+	public static final Object SQUASH = new Object();
 
 	/**
 	 * Revert commit job

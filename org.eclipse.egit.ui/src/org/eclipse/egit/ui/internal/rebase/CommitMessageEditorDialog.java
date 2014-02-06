@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (c) 2013 SAP AG.
+ * Copyright (c) 2013 SAP AG and others.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -29,7 +30,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 /**
  * Dialog for editing a commit message
  */
-class CommitMessageEditorDialog extends TitleAreaDialog {
+public class CommitMessageEditorDialog extends TitleAreaDialog {
 
 	private String commitMessage;
 
@@ -44,7 +45,7 @@ class CommitMessageEditorDialog extends TitleAreaDialog {
 	 * @param parentShell
 	 * @param commitMessage
 	 */
-	CommitMessageEditorDialog(Shell parentShell,
+	public CommitMessageEditorDialog(Shell parentShell,
 			String commitMessage) {
 		super(parentShell);
 		this.commitMessage = commitMessage;
