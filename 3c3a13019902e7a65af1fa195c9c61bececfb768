@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67591f73_8216f37a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/coretext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-06T22:53:17Z",
+      "side": 1,
+      "message": "maybe simpler s/Running squash on/Squashing/ ?",
+      "revId": "3c3a13019902e7a65af1fa195c9c61bececfb768",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_c253cb40",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/SquashCommitsOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-06T22:53:17Z",
+      "side": 1,
+      "message": "style nit: remove this unnecessary blank line",
+      "revId": "3c3a13019902e7a65af1fa195c9c61bececfb768",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_e239affc",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/SquashCommitsOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-06T22:53:17Z",
+      "side": 1,
+      "message": "add a blank line here to make the anonymous class stand out (that\u0027s what the standard Eclipse formatter does)",
+      "revId": "3c3a13019902e7a65af1fa195c9c61bececfb768",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_424e9b92",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/SquashCommitsOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-06T22:53:17Z",
+      "side": 1,
+      "message": "// shouldn\u0027t happen",
+      "revId": "3c3a13019902e7a65af1fa195c9c61bececfb768",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_0287831f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/SquashCommitsOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-06T22:53:17Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "3c3a13019902e7a65af1fa195c9c61bececfb768",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_227d678e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/command/SquashHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-06T22:53:17Z",
+      "side": 1,
+      "message": "this looks wrong, probably you copied this from the reword handler",
+      "revId": "3c3a13019902e7a65af1fa195c9c61bececfb768",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_c21e2b6b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/command/SquashHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-06T22:53:17Z",
+      "side": 1,
+      "message": "looks like this is a duplicate of SquashCommitsOperation.sortCommits()",
+      "revId": "3c3a13019902e7a65af1fa195c9c61bececfb768",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_02194380",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/SquashHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-06T22:53:17Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "3c3a13019902e7a65af1fa195c9c61bececfb768",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
