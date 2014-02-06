@@ -4568,6 +4568,14 @@
             icon="icons/obj16/cherry-pick.png">
       </image>
       <image
+            commandId="org.eclipse.egit.ui.history.Squash"
+            icon="icons/obj16/squash.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.commit.Squash"
+            icon="icons/obj16/squash.gif">
+      </image>
+      <image
             commandId="org.eclipse.egit.ui.commit.Checkout"
             icon="icons/obj16/checkout.gif">
       </image>
@@ -5217,6 +5225,16 @@
             defaultHandler="org.eclipse.egit.ui.internal.commit.command.CherryPickHandler"
             id="org.eclipse.egit.ui.commit.CherryPick"
             name="%CherryPickCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.SquashHandler"
+            id="org.eclipse.egit.ui.history.Squash"
+            name="%SquashCommitsCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.commit.command.SquashHandler"
+            id="org.eclipse.egit.ui.commit.Squash"
+            name="%SquashCommitsCommand.name">
       </command>
       <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.RevertHandler"
