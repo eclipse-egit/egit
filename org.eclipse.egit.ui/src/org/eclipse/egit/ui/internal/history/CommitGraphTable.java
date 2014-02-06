@@ -883,6 +883,18 @@ class CommitGraphTable {
 					UIText.GitHistoryPage_ResetBaselineToParentOfHeadMenuLabel,
 					parameters));
 
+			popupMgr.add(new Separator());
+
+			MenuManager modifyManager = new MenuManager(
+					UIText.GitHistoryPage_ModifyMenuLabel, null, "Modify"); //$NON-NLS-1$
+
+			popupMgr.add(modifyManager);
+
+			if (selectionSize >= 2)
+				modifyManager.add(getCommandContributionItem(
+						HistoryViewCommands.SQUASH,
+						UIText.GitHistoryPage_squashMenuItem));
+
 			// copy and such after additions
 			popupMgr.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 			popupMgr.add(copyAction);
