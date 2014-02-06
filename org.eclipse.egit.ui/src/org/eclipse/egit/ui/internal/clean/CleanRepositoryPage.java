@@ -23,7 +23,9 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
+import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.api.CleanCommand;
@@ -107,6 +109,13 @@ public class CleanRepositoryPage extends WizardPage {
 					return fileImage;
 			}
 		});
+		setPageComplete(false);
+		cleanTable.addCheckStateListener(new ICheckStateListener() {
+
+			public void checkStateChanged(CheckStateChangedEvent event) {
+				updatePageComplete();
+			}
+		});
 
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(cleanTable.getControl());
 
@@ -139,6 +148,7 @@ public class CleanRepositoryPage extends WizardPage {
 				if (cleanTable.getInput() instanceof Set<?>) {
 					Set<?> input = (Set<?>) cleanTable.getInput();
 					cleanTable.setCheckedElements(input.toArray());
+					updatePageComplete();
 				}
 			}
 		});
@@ -147,10 +157,20 @@ public class CleanRepositoryPage extends WizardPage {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				cleanTable.setCheckedElements(new Object[0]);
+				updatePageComplete();
 			}
 		});
 
 		setControl(main);
+	}
+
+	private void updatePageComplete() {
+		boolean hasCheckedElements = cleanTable.getCheckedElements().length != 0;
+		setPageComplete(hasCheckedElements);
+		if (hasCheckedElements)
+			setMessage("", NONE); //$NON-NLS-1$
+		else
+			setMessage(UIText.CleanRepositoryPage_SelectFilesToClean, INFORMATION);
 	}
 
 	@Override
@@ -191,6 +211,7 @@ public class CleanRepositoryPage extends WizardPage {
 					monitor.done();
 				}
 			});
+			updatePageComplete();
 		} catch (InvocationTargetException e) {
 			Activator.logError("Unexpected exception while finding items to clean", e); //$NON-NLS-1$
 			clearPage();
