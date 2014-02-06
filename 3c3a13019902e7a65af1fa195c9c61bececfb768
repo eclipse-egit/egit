@@ -121,6 +121,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_a2169707",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/command/SquashHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 576
+      },
+      "writtenOn": "2014-02-06T23:04:55Z",
+      "side": 1,
+      "message": "It is, because the other one is in the core plugin. I think this method should be refactored into a static utility method in the core plugin? Any advice is appreciated, I\u0027d rather follow your lead here on where to put it.",
+      "parentUuid": "67591f73_c21e2b6b",
+      "revId": "3c3a13019902e7a65af1fa195c9c61bececfb768",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_02194380",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/SquashHandler.java",
         "patchSetId": 1
