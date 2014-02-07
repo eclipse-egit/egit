@@ -83,7 +83,7 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 
 	private void startRebaseJob(final RebaseOperation rebase,
 			final Repository repository, final RebaseCommand.Operation operation) {
-		JobUtil.scheduleUserJob(rebase, jobname, JobFamilies.REBASE,
+		JobUtil.scheduleUserWorkspaceJob(rebase, jobname, JobFamilies.REBASE,
 				new JobChangeAdapter() {
 					@Override
 					public void aboutToRun(IJobChangeEvent event) {

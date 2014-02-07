@@ -99,8 +99,8 @@ public class ResetCommand extends
 									final ResetOperation operation = new ResetOperation(
 											node.getRepository(), targetBranch,
 											resetType);
-									JobUtil.scheduleUserJob(operation, jobname,
-											JobFamilies.RESET);
+									JobUtil.scheduleUserWorkspaceJob(operation,
+											jobname, JobFamilies.RESET);
 								}
 							});
 				} catch (InvocationTargetException ite) {

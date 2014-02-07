@@ -13,6 +13,7 @@ package org.eclipse.egit.ui.internal.actions;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -59,9 +60,9 @@ public class MergeActionHandler extends RepositoryActionHandler {
 			op.setSquash(mergeTargetSelectionDialog.isMergeSquash());
 			op.setFastForwardMode(mergeTargetSelectionDialog.getFastForwardMode());
 			op.setCommit(mergeTargetSelectionDialog.isCommit());
-			Job job = new Job(jobname) {
+			Job job = new WorkspaceJob(jobname) {
 				@Override
-				protected IStatus run(IProgressMonitor monitor) {
+				public IStatus runInWorkspace(IProgressMonitor monitor) {
 					try {
 						op.execute(monitor);
 					} catch (final CoreException e) {

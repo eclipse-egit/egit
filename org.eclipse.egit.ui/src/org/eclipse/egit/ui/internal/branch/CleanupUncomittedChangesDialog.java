@@ -88,7 +88,8 @@ public class CleanupUncomittedChangesDialog extends MessageDialog {
 			final ResetOperation operation = new ResetOperation(repository,
 					Constants.HEAD, ResetType.HARD);
 			String jobname = NLS.bind(UIText.ResetAction_reset, Constants.HEAD);
-			JobUtil.scheduleUserJob(operation, jobname, JobFamilies.RESET);
+			JobUtil.scheduleUserWorkspaceJob(operation, jobname,
+					JobFamilies.RESET);
 			shouldContinue = true;
 			break;
 		case IDialogConstants.SKIP_ID:
