@@ -29,6 +29,7 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -158,10 +159,10 @@ public class IndexDiffCacheEntry {
 		String jobName = MessageFormat
 				.format(CoreText.IndexDiffCacheEntry_refreshingProjects,
 						repositoryName);
-		Job job = new Job(jobName) {
+		Job job = new WorkspaceJob(jobName) {
 
 			@Override
-			protected IStatus run(IProgressMonitor monitor) {
+			public IStatus runInWorkspace(IProgressMonitor monitor) {
 				try {
 					IProject[] validOpenProjects = ProjectUtil
 							.getValidOpenProjects(repository);
