@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -209,9 +210,10 @@ public class BranchOperationUI {
 		final BranchOperation bop = new BranchOperation(repository, target,
 				!restore);
 
-		Job job = new Job(jobname) {
+		Job job = new WorkspaceJob(jobname) {
+
 			@Override
-			protected IStatus run(IProgressMonitor monitor) {
+			public IStatus runInWorkspace(IProgressMonitor monitor) {
 				try {
 					if (restore) {
 						final BranchProjectTracker tracker = new BranchProjectTracker(

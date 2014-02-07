@@ -51,7 +51,7 @@ public class ShowBlameActionHandler extends RepositoryActionHandler {
 		IWorkbenchPage page = HandlerUtil.getActiveSite(event).getPage();
 		JobUtil.scheduleUserJob(new BlameOperation(repository, storage, path,
 				null, shell, page), UIText.ShowBlameHandler_JobName,
-				JobFamilies.BLAME);
+				JobFamilies.BLAME, false);
 		return null;
 	}
 
