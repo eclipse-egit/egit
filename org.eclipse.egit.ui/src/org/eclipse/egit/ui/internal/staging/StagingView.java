@@ -1542,7 +1542,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 	 *         no filter
 	 */
 	String getFilterString() {
-		if (filterText != null)
+		if (filterText != null && !filterText.isDisposed())
 			return filterText.getText().trim();
 		else
 			return ""; //$NON-NLS-1$
