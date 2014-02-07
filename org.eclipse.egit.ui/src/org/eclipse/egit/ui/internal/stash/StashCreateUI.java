@@ -11,6 +11,7 @@
  *****************************************************************************/
 package org.eclipse.egit.ui.internal.stash;
 
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -62,9 +63,10 @@ public class StashCreateUI {
 			message = null;
 
 		final StashCreateOperation op = new StashCreateOperation(repo, message);
-		Job job = new Job(UIText.StashCreateCommand_jobTitle) {
+		Job job = new WorkspaceJob(UIText.StashCreateCommand_jobTitle) {
+
 			@Override
-			protected IStatus run(IProgressMonitor monitor) {
+			public IStatus runInWorkspace(IProgressMonitor monitor) {
 				monitor.beginTask("", 1); //$NON-NLS-1$
 				try {
 					op.execute(monitor);

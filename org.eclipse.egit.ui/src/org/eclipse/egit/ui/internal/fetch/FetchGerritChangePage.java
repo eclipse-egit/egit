@@ -23,6 +23,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -531,9 +532,11 @@ public class FetchGerritChangePage extends WizardPage {
 		storeRunInBackgroundSelection();
 
 		if (runInBackgroud.getSelection()) {
-			Job job = new Job(UIText.FetchGerritChangePage_GetChangeTaskName) {
+			Job job = new WorkspaceJob(
+					UIText.FetchGerritChangePage_GetChangeTaskName) {
+
 				@Override
-				protected IStatus run(IProgressMonitor monitor) {
+				public IStatus runInWorkspace(IProgressMonitor monitor) {
 					internalDoFetch(spec, uri, doCheckout, doCreateTag,
 							doCreateBranch, doActivateAdditionalRefs,
 							textForTag, textForBranch, monitor);

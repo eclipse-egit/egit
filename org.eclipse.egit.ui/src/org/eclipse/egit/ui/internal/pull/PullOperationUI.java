@@ -17,6 +17,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -84,9 +85,10 @@ public class PullOperationUI extends JobChangeAdapter {
 					shortBranchName, repoName);
 		} else
 			jobName = UIText.PullOperationUI_PullingMultipleTaskName;
-		Job job = new Job(jobName) {
+		Job job = new WorkspaceJob(jobName) {
+
 			@Override
-			protected IStatus run(IProgressMonitor monitor) {
+			public IStatus runInWorkspace(IProgressMonitor monitor) {
 				execute(monitor);
 				// we always return OK and handle display of errors on our own
 				return Status.OK_STATUS;
