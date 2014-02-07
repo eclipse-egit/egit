@@ -17,6 +17,7 @@ import java.io.IOException;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -95,9 +96,10 @@ public class MergeCommand extends
 		}
 
 		String jobname = NLS.bind(UIText.MergeAction_JobNameMerge, refName);
-		Job job = new Job(jobname) {
+		Job job = new WorkspaceJob(jobname) {
+
 			@Override
-			protected IStatus run(IProgressMonitor monitor) {
+			public IStatus runInWorkspace(IProgressMonitor monitor) {
 				try {
 					op.execute(monitor);
 				} catch (final CoreException e) {

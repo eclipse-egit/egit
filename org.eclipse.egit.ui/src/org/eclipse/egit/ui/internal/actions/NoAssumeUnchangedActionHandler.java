@@ -33,7 +33,7 @@ public class NoAssumeUnchangedActionHandler extends RepositoryActionHandler {
 		AssumeUnchangedOperation op = new AssumeUnchangedOperation(Arrays
 				.asList(resources), false);
 		JobUtil.scheduleUserJob(op, UIText.AssumeUnchanged_assumeUnchanged,
-				JobFamilies.ASSUME_NOASSUME_UNCHANGED);
+				JobFamilies.ASSUME_NOASSUME_UNCHANGED, false);
 		return null;
 	}
 }

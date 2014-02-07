@@ -424,7 +424,7 @@ public class BlameInformationControl extends AbstractInformationControl
 					revision.getRepository(), storage, path, parent,
 					getShell(), page, line);
 			JobUtil.scheduleUserJob(operation, UIText.ShowBlameHandler_JobName,
-					JobFamilies.BLAME);
+					JobFamilies.BLAME, false);
 		} catch (IOException e) {
 			Activator.logError(UIText.ShowBlameHandler_errorMessage, e);
 		} catch (CoreException e) {
