@@ -25,6 +25,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -346,10 +347,10 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 			final IWorkingSet[] sets) {
 		String repoName = Activator.getDefault().getRepositoryUtil()
 				.getRepositoryName(repository);
-		Job importJob = new Job(MessageFormat.format(
+		Job importJob = new WorkspaceJob(MessageFormat.format(
 				UIText.GitCloneWizard_jobImportProjects, repoName)) {
 
-			protected IStatus run(IProgressMonitor monitor) {
+			public IStatus runInWorkspace(IProgressMonitor monitor) {
 				List<File> files = new ArrayList<File>();
 				ProjectUtil.findProjectFiles(files, repository.getWorkTree(),
 						true, monitor);

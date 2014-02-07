@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.internal.actions;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -48,9 +49,9 @@ public class DiscardChangesActionHandler extends RepositoryActionHandler {
 		if (operation == null)
 			return null;
 		String jobname = UIText.DiscardChangesAction_discardChanges;
-		Job job = new Job(jobname) {
+		Job job = new WorkspaceJob(jobname) {
 			@Override
-			protected IStatus run(IProgressMonitor monitor) {
+			public IStatus runInWorkspace(IProgressMonitor monitor) {
 				try {
 					operation.execute(monitor);
 				} catch (CoreException e) {
