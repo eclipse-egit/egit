@@ -100,7 +100,8 @@ public class AddCommand extends
 			ConnectProviderOperation operation = new ConnectProviderOperation(
 					connections);
 			JobUtil.scheduleUserJob(operation,
-					CoreText.Activator_AutoShareJobName, JobFamilies.AUTO_SHARE);
+					CoreText.Activator_AutoShareJobName,
+					JobFamilies.AUTO_SHARE, false);
 		}
 	}
 

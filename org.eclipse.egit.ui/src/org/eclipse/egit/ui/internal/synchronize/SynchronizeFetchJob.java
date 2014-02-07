@@ -10,11 +10,11 @@ package org.eclipse.egit.ui.internal.synchronize;
 
 import java.net.URISyntaxException;
 
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.ui.Activator;
@@ -30,7 +30,7 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
-class SynchronizeFetchJob extends Job {
+class SynchronizeFetchJob extends WorkspaceJob {
 
 	private final int timeout;
 
@@ -44,7 +44,7 @@ class SynchronizeFetchJob extends Job {
 	}
 
 	@Override
-	protected IStatus run(IProgressMonitor monitor) {
+	public IStatus runInWorkspace(IProgressMonitor monitor) {
 		monitor.beginTask(UIText.SynchronizeFetchJob_TaskName, gsdSet.size());
 
 		for (GitSynchronizeData gsd : gsdSet) {

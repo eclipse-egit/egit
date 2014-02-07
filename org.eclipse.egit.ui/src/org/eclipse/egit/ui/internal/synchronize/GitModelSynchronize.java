@@ -19,6 +19,7 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.resources.mapping.RemoteResourceMappingContext;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.resources.mapping.ResourceMappingContext;
@@ -240,9 +241,11 @@ public class GitModelSynchronize {
 		final GitResourceVariantTreeSubscriber subscriber = new GitResourceVariantTreeSubscriber(
 				gsdSet);
 
-		Job syncJob = new Job(UIText.GitModelSynchonize_fetchGitDataJobName) {
+		Job syncJob = new WorkspaceJob(
+				UIText.GitModelSynchonize_fetchGitDataJobName) {
+
 			@Override
-			protected IStatus run(IProgressMonitor monitor) {
+			public IStatus runInWorkspace(IProgressMonitor monitor) {
 				subscriber.init(monitor);
 
 				return Status.OK_STATUS;

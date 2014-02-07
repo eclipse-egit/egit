@@ -24,6 +24,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -143,13 +144,12 @@ public class RemoveCommand extends
 		final boolean deleteWorkDir = deleteWorkingDir;
 		final boolean removeProj = removeProjects;
 
-		Job job = new Job(UIText.RemoveCommand_RemoveRepositoriesJob) {
+		Job job = new WorkspaceJob(UIText.RemoveCommand_RemoveRepositoriesJob) {
 
 			@Override
-			protected IStatus run(IProgressMonitor monitor) {
+			public IStatus runInWorkspace(IProgressMonitor monitor) {
 
-				monitor
-						.setTaskName(UIText.RepositoriesView_DeleteRepoDeterminProjectsMessage);
+				monitor.setTaskName(UIText.RepositoriesView_DeleteRepoDeterminProjectsMessage);
 
 				if (removeProj) {
 					// confirmed deletion

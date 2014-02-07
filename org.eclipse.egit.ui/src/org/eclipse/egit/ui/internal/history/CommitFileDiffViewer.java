@@ -476,7 +476,7 @@ public class CommitFileDiffViewer extends TableViewer {
 						rev.getStorage(new NullProgressMonitor()), path,
 						commit, window.getShell(), page);
 				JobUtil.scheduleUserJob(op, UIText.ShowBlameHandler_JobName,
-						JobFamilies.BLAME);
+						JobFamilies.BLAME, false);
 			} else {
 				String message = NLS.bind(
 						UIText.CommitFileDiffViewer_notContainedInCommit,
