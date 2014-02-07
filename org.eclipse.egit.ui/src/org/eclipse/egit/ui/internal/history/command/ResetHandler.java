@@ -62,7 +62,7 @@ public class ResetHandler extends AbstractHistoryCommandHandler {
 		}
 
 		ResetOperation operation = new ResetOperation(repo, commit.getName(), resetType);
-		JobUtil.scheduleUserJob(operation, jobName, JobFamilies.RESET);
+		JobUtil.scheduleUserJob(operation, jobName, JobFamilies.RESET, true);
 		return null;
 	}
 }

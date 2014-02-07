@@ -19,6 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -64,10 +65,11 @@ public class CherryPickHandler extends SelectionHandler {
 
 		final CherryPickOperation op = new CherryPickOperation(repo, commit);
 
-		Job job = new Job(MessageFormat.format(
+		Job job = new WorkspaceJob(MessageFormat.format(
 				UIText.CherryPickHandler_JobName, commit.name())) {
+
 			@Override
-			protected IStatus run(IProgressMonitor monitor) {
+			public IStatus runInWorkspace(IProgressMonitor monitor) {
 				try {
 					op.execute(monitor);
 					CherryPickResult cherryPickResult = op.getResult();

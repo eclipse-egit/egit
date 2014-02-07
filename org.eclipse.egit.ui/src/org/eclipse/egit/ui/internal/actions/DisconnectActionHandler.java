@@ -33,9 +33,10 @@ public class DisconnectActionHandler extends RepositoryActionHandler {
 		IProject[] projects = getProjectsForSelectedResources();
 		if (projects.length == 0)
 			return null;
-		JobUtil.scheduleUserJob(new DisconnectProviderOperation(Arrays
-				.asList(projects)), UIText.Disconnect_disconnect,
-				JobFamilies.DISCONNECT, new JobChangeAdapter() {
+		JobUtil.scheduleUserJob(
+				new DisconnectProviderOperation(Arrays.asList(projects)),
+				UIText.Disconnect_disconnect, JobFamilies.DISCONNECT, false,
+				new JobChangeAdapter() {
 					@Override
 					public void done(IJobChangeEvent actEvent) {
 						GitLightweightDecorator.refresh();

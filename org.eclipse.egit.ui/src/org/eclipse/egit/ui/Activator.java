@@ -28,6 +28,7 @@ import org.eclipse.core.net.proxy.IProxyService;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -421,7 +422,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	 * A Job that looks at the repository meta data and triggers a refresh of
 	 * the resources in the affected projects.
 	 */
-	static class RepositoryChangeScanner extends Job {
+	static class RepositoryChangeScanner extends WorkspaceJob {
 		RepositoryChangeScanner() {
 			super(UIText.Activator_repoScanJobName);
 		}
@@ -436,7 +437,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		}
 
 		@Override
-		protected IStatus run(IProgressMonitor monitor) {
+		public IStatus runInWorkspace(IProgressMonitor monitor) {
 			Repository[] repos = org.eclipse.egit.core.Activator.getDefault()
 					.getRepositoryCache().getAllRepositories();
 			if (repos.length == 0)
