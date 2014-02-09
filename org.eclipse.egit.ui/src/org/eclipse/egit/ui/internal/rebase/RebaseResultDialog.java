@@ -257,13 +257,13 @@ public class RebaseResultDialog extends MessageDialog {
 				false));
 		Text resultText = new Text(composite, SWT.READ_ONLY);
 		resultText.setText(getStatusText(result.getStatus()));
+		if (!result.getStatus().isSuccessful())
+			resultText.setForeground(composite.getParent().getDisplay()
+					.getSystemColor(SWT.COLOR_RED));
 		resultText.setSelection(resultText.getCaretPosition());
 		resultText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		if (result.getStatus() == Status.FAILED) {
-			resultText.setForeground(composite.getParent().getDisplay()
-					.getSystemColor(
-					SWT.COLOR_RED));
 
+		if (result.getStatus() == Status.FAILED) {
 			StringBuilder paths = new StringBuilder();
 			Label pathsLabel = new Label(composite, SWT.NONE);
 			pathsLabel.setText(UIText.MergeResultDialog_failed);
@@ -293,9 +293,6 @@ public class RebaseResultDialog extends MessageDialog {
 			}
 			pathsText.setText(paths.toString());
 		} else if (result.getStatus() == Status.CONFLICTS) {
-			resultText.setForeground(composite.getParent().getDisplay()
-					.getSystemColor(SWT.COLOR_RED));
-
 			StringBuilder paths = new StringBuilder();
 			Label pathsLabel = new Label(composite, SWT.NONE);
 			pathsLabel.setText(UIText.MergeResultDialog_conflicts);
