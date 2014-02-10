@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_5e1ac975",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-02-10T21:09:45Z",
+      "side": 1,
+      "message": "Done.\nconfig option for specifying the default source ref when branching is not committed and has its own review, see https://git.eclipse.org/r/#/c/21785/1",
+      "parentUuid": "67591f73_ae44ef1f",
+      "revId": "3c6175b37e39f3cda00be678d13ef75cb706e9fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_5d537635",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IBranchNameProvider.java",
         "patchSetId": 8
@@ -160,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_1ef21192",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CreateBranchCommand.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-02-10T21:09:45Z",
+      "side": 1,
+      "message": "I removed the complete else block, because I interpret the plugin.xml configuration in the same way as you and was also with manual test not able to reach this else block.",
+      "parentUuid": "67591f73_1d361e0c",
+      "revId": "3c6175b37e39f3cda00be678d13ef75cb706e9fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_5d21b6d1",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CreateBranchCommand.java",
         "patchSetId": 8
@@ -171,6 +207,24 @@
       "writtenOn": "2014-01-08T08:39:05Z",
       "side": 1,
       "message": "This comment is not quite correct anymore",
+      "revId": "3c6175b37e39f3cda00be678d13ef75cb706e9fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_3e1d556c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CreateBranchCommand.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-02-10T21:09:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67591f73_5d21b6d1",
       "revId": "3c6175b37e39f3cda00be678d13ef75cb706e9fa",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
