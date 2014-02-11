@@ -2767,6 +2767,9 @@ public class UIText extends NLS {
 	public static String FetchResultTable_statusRejected;
 
 	/** */
+	public static String FetchResultTable_statusPruned;
+
+	/** */
 	public static String FetchResultTable_statusUpToDate;
 
 	/** */
