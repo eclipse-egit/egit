@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_1fbca7b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-02-13T14:41:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67591f73_7bf06952",
+      "revId": "59bad32f4832c588ff161c111790a0bcfb717266",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_265ff446",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-02-12T10:14:41Z",
       "side": 1,
       "message": "When sourceRef is just the branch name (e.g. origin/master or master) without refs/remotes/ or refs/heads/ the behaviour is strange. In CreateBranchWizard\u0027s constructor the startpoint is set to the commit where the branch points to:\n\n   // the page only knows some special Refs\n  RevCommit commit \u003d new RevWalk(repository)\n     .parseCommit(repository.resolve(base + \"^{commit}\"));\n\nIf you directly resolve the branch here with \n  \n  BranchOperationUI.createWithRef(repository,\n\trepository.getRef(sourceRef).getName()).start();\n\nthen \"origin/master\" is expanded to \"refs/remotes/origin/master\" and \"master\" is expanded to refs/heads/master.",
+      "revId": "59bad32f4832c588ff161c111790a0bcfb717266",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_3fbfeba8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-02-13T14:41:11Z",
+      "side": 1,
+      "message": "Done here and in BranchSelectionAndEditDialog",
+      "parentUuid": "67591f73_265ff446",
       "revId": "59bad32f4832c588ff161c111790a0bcfb717266",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
