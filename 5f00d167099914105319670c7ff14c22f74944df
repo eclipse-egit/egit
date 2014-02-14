@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67591f73_32aef29f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clean/CleanRepositoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-02-14T15:17:25Z",
+      "side": 1,
+      "message": "The documentation of DialogPage#setMessage says a null String should be used to clear the message.",
+      "revId": "5f00d167099914105319670c7ff14c22f74944df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
