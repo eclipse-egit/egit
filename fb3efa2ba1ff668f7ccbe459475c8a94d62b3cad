@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67591f73_b8fae0a9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SWTPlotRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-02-14T22:52:42Z",
+      "side": 1,
+      "message": "In the history view those three dots are roughly two average characters wide. In a fixed-width font they are one character wide. This is because we use … rather than ...",
+      "revId": "fb3efa2ba1ff668f7ccbe459475c8a94d62b3cad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
