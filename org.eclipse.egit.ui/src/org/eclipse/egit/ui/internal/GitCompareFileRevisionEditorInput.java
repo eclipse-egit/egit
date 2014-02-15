@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.compare.CompareConfiguration;
@@ -33,18 +34,33 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.storage.IndexFileRevision;
+import org.eclipse.egit.core.internal.storage.OpenWorkspaceVersionEnabled;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.internal.ui.Utils;
 import org.eclipse.team.internal.ui.synchronize.EditableSharedDocumentAdapter.ISharedDocumentAdapterListener;
 import org.eclipse.team.internal.ui.synchronize.LocalResourceSaveableComparison;
 import org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISaveablesLifecycleListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.Saveable;
 import org.eclipse.ui.SaveablesLifecycleEvent;
+import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
  * The input provider for the compare editor when working on resources
@@ -449,6 +465,85 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 			}
 		}
 	}
+
+	@Override
+	public void registerContextMenu(MenuManager menu,
+			final ISelectionProvider selectionProvider) {
+		super.registerContextMenu(menu, selectionProvider);
+		registerOpenWorkspaceVersion(menu, selectionProvider);
+	}
+
+	private void registerOpenWorkspaceVersion(MenuManager menu,
+			final ISelectionProvider selectionProvider) {
+		FileRevisionTypedElement leftRevision = getLeftRevision();
+		if (leftRevision != null) {
+			IFileRevision fileRevision = leftRevision.getFileRevision();
+			if (fileRevision instanceof OpenWorkspaceVersionEnabled) {
+				OpenWorkspaceVersionEnabled workspaceVersion = (OpenWorkspaceVersionEnabled) fileRevision;
+				final File workspaceFile = new File(workspaceVersion
+						.getRepository().getWorkTree(),
+						workspaceVersion.getGitPath());
+				if (workspaceFile.exists())
+					menu.addMenuListener(new IMenuListener() {
+						public void menuAboutToShow(IMenuManager manager) {
+							Action action = new OpenWorkspaceVersionAction(
+									UIText.CommitFileDiffViewer_OpenWorkingTreeVersionInEditorMenuLabel,
+									selectionProvider, workspaceFile);
+							manager.insertAfter("file", action); //$NON-NLS-1$
+						}
+					});
+			}
+		}
+	}
+
+	private class OpenWorkspaceVersionAction extends Action {
+
+		private final ISelectionProvider selectionProvider;
+
+		private final File workspaceFile;
+
+		private OpenWorkspaceVersionAction(String text,
+				ISelectionProvider selectionProvider, File workspaceFile) {
+			super(text);
+			this.selectionProvider = selectionProvider;
+			this.workspaceFile = workspaceFile;
+		}
+
+		@Override
+		public void run() {
+			int selectedLine = 0;
+			if (selectionProvider.getSelection() instanceof ITextSelection) {
+				ITextSelection selection = (ITextSelection) selectionProvider
+						.getSelection();
+				selectedLine = selection.getStartLine();
+			}
+
+			IWorkbenchWindow window = PlatformUI.getWorkbench()
+					.getActiveWorkbenchWindow();
+			IWorkbenchPage page = window.getActivePage();
+			IEditorPart editor = EgitUiEditorUtils.openEditor(workspaceFile,
+					page);
+			selectLine(editor, selectedLine);
+		}
+
+		private void selectLine(IEditorPart editorPart, int selectedLine) {
+			if (editorPart instanceof ITextEditor) {
+				ITextEditor editor = (ITextEditor) editorPart;
+				IDocument document = editor.getDocumentProvider().getDocument(
+						editor.getEditorInput());
+				if (document != null)
+					try {
+						IRegion line = document
+								.getLineInformation(selectedLine);
+						editor.selectAndReveal(line.getOffset(), 0);
+					} catch (BadLocationException e) {
+						// line seems not to exist in
+						// workspace version
+					}
+			}
+		}
+	}
+
 	/**
 	 * ITypedElement without content. May be used to indicate that a file is not
 	 * available.

@@ -133,14 +133,16 @@ public class EgitUiEditorUtils {
 	 * @param file
 	 *            File to open an editor for. {@code file} must exist.
 	 * @param page
+	 * @return the created editor or null in case of an error
 	 */
-	public static void openEditor(File file, IWorkbenchPage page) {
+	public static IEditorPart openEditor(File file, IWorkbenchPage page) {
 		if (!file.exists())
-			return;
+			return null;
 		IFile fileResource = ResourceUtil.getFileForLocation(new Path(file.getAbsolutePath()));
 		if (fileResource != null) {
 			try {
-				IDE.openEditor(page, fileResource, OpenStrategy.activateOnOpen());
+				return IDE.openEditor(page, fileResource,
+						OpenStrategy.activateOnOpen());
 			} catch (PartInitException e) {
 				Activator.handleError(UIText.EgitUiEditorUtils_openFailed, e,
 						true);
@@ -149,13 +151,14 @@ public class EgitUiEditorUtils {
 			IFileStore store = EFS.getLocalFileSystem().getStore(
 					new Path(file.getAbsolutePath()));
 			try {
-				IDE.openEditor(page, new FileStoreEditorInput(store),
+				return IDE.openEditor(page, new FileStoreEditorInput(store),
 						EditorsUI.DEFAULT_TEXT_EDITOR_ID);
 			} catch (PartInitException e) {
 				Activator.handleError(UIText.EgitUiEditorUtils_openFailed, e,
 						true);
 			}
 		}
+		return null;
 	}
 
 	private static String getEditorId(FileRevisionEditorInput editorInput) {

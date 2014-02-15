@@ -35,7 +35,8 @@ import org.eclipse.team.core.history.ITag;
  * An {@link IFileRevision} for a version of a specified resource in the
  * specified commit (revision).
  */
-class CommitFileRevision extends GitFileRevision {
+class CommitFileRevision extends GitFileRevision implements
+		OpenWorkspaceVersionEnabled {
 	private final Repository db;
 
 	private final RevCommit commit;
@@ -61,7 +62,11 @@ class CommitFileRevision extends GitFileRevision {
 		blobId = blob;
 	}
 
-	String getGitPath() {
+	public Repository getRepository() {
+		return db;
+	}
+
+	public String getGitPath() {
 		return path;
 	}
 
