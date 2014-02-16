@@ -1,0 +1,8 @@
+Code-Review+2: Robin Rosenberg <robin.rosenberg@dewire.com>
+IP-Clean+1: Robin Rosenberg <robin.rosenberg@dewire.com>
+Verified+1: Hudson CI
+Submitted-by: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-at: Sun, 16 Feb 2014 11:53:22 -0500
+Reviewed-on: https://git.eclipse.org/r/22016
+Project: egit/egit
+Branch: refs/heads/stable-3.3
