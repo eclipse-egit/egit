@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013 Robin Stocker <robin@nibor.org> and others.
+ * Copyright (c) 2013, 2014 Robin Stocker <robin@nibor.org> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -142,7 +142,8 @@ public class PushBranchWizard extends Wizard {
 	private List<RefSpec> getRefSpecs() {
 		String src = refToPush.getName();
 		String dst = Constants.R_HEADS + pushBranchPage.getBranchName();
-		RefSpec refSpec = new RefSpec(src + ":" + dst); //$NON-NLS-1$
+		RefSpec refSpec = new RefSpec().setSourceDestination(src, dst)
+				.setForceUpdate(pushBranchPage.isForceUpdateSelected());
 		return Arrays.asList(refSpec);
 	}
 

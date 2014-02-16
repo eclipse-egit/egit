@@ -68,6 +68,8 @@ public class PushBranchPage extends WizardPage {
 
 	private UpstreamConfigComponent upstreamConfigComponent;
 
+	private boolean forceUpdateSelected = false;
+
 	/** Only set if user selected "New Remote" */
 	private AddRemotePage addRemotePage;
 
@@ -118,6 +120,10 @@ public class PushBranchPage extends WizardPage {
 
 	boolean isRebaseSelected() {
 		return upstreamConfig == UpstreamConfig.REBASE;
+	}
+
+	boolean isForceUpdateSelected() {
+		return forceUpdateSelected;
 	}
 
 	public void createControl(Composite parent) {
@@ -188,6 +194,17 @@ public class PushBranchPage extends WizardPage {
 						checkPage();
 					}
 				});
+
+		final Button forceUpdateButton = new Button(inputPanel, SWT.CHECK);
+		forceUpdateButton.setText(UIText.PushBranchPage_ForceUpdateButton);
+		forceUpdateButton.setSelection(false);
+		forceUpdateButton.setLayoutData(GridDataFactory.fillDefaults()
+				.grab(true, false).span(3, 1).create());
+		forceUpdateButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				forceUpdateSelected = forceUpdateButton.getSelection();
+			}
+		});
 
 		setDefaultUpstreamConfig();
 
