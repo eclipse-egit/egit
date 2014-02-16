@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013 Robin Stocker <robin@nibor.org> and others.
+ * Copyright (c) 2013, 2014 Robin Stocker <robin@nibor.org> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -221,12 +221,22 @@ public class PushBranchPage extends WizardPage {
 	}
 
 	private void setDefaultUpstreamConfig() {
-		UpstreamConfig defaultUpstreamConfig = UpstreamConfig.getDefault(
-				repository,
-				Constants.R_REMOTES + Constants.DEFAULT_REMOTE_NAME
-						+ "/" + Repository.shortenRefName(ref.getName())); //$NON-NLS-1$
-		upstreamConfigComponent.setUpstreamConfig(defaultUpstreamConfig);
-		upstreamConfig = defaultUpstreamConfig;
+		String branchName = Repository.shortenRefName(ref.getName());
+		boolean alreadyConfigured = repository.getConfig()
+				.getSubsections(ConfigConstants.CONFIG_BRANCH_SECTION)
+				.contains(branchName);
+		UpstreamConfig config;
+		if (alreadyConfigured) {
+			boolean rebase = repository.getConfig().getBoolean(
+					ConfigConstants.CONFIG_BRANCH_SECTION, branchName,
+					ConfigConstants.CONFIG_KEY_REBASE, false);
+			config = rebase ? UpstreamConfig.REBASE : UpstreamConfig.MERGE;
+		} else {
+			config = UpstreamConfig.getDefault(repository, Constants.R_REMOTES
+					+ Constants.DEFAULT_REMOTE_NAME + "/" + branchName); //$NON-NLS-1$
+		}
+		upstreamConfigComponent.setUpstreamConfig(config);
+		upstreamConfig = config;
 	}
 
 	private void showNewRemoteDialog() {
