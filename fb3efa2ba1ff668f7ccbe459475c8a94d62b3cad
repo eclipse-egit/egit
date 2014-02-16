@@ -16,6 +16,24 @@
       "revId": "fb3efa2ba1ff668f7ccbe459475c8a94d62b3cad",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_743f9e72",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SWTPlotRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-02-16T17:20:01Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right, it depends on the characters/font. I chose 3 because \"…\" can replace \"lll\" or \"iii\", so 3 characters looks like the worst case. The goal is that the ellipsized text is not longer than the non-ellipsized, so I think using the worst case is ok here.\n\nTo do this correctly, we would probably have to render the text and measure its length. Certain toolkits provide ellipsize functionality (e.g. Gtk+ through Pango), but I don\u0027t think SWT exposes this.",
+      "parentUuid": "67591f73_b8fae0a9",
+      "revId": "fb3efa2ba1ff668f7ccbe459475c8a94d62b3cad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
