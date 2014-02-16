@@ -1993,6 +1993,9 @@ public class UIText extends NLS {
 	public static String PushBranchPage_ChooseRemoteError;
 
 	/** */
+	public static String PushBranchPage_ForceUpdateButton;
+
+	/** */
 	public static String PushBranchPage_InvalidBranchNameError;
 
 	/** */
