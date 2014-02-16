@@ -16,6 +16,24 @@
       "revId": "5f00d167099914105319670c7ff14c22f74944df",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_52fd4dde",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clean/CleanRepositoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-16T16:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67591f73_32aef29f",
+      "revId": "5f00d167099914105319670c7ff14c22f74944df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
