@@ -1,34 +1,36 @@
 /*******************************************************************************
- * Copyright (C) 2012, Markus Duft <markus.duft@salomon.at>
- *
+ * Copyright (c) 2012, 2014 Markus Duft <markus.duft@salomon.at> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-
-package org.eclipse.egit.ui.internal.repository.tree.command;
+package org.eclipse.egit.ui.internal.actions;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.internal.clean.CleanWizardDialog;
-import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.jgit.lib.Repository;
 
 /**
- * Performs a clean operation on a repository.
+ * Clean untracked/ignored files.
  */
-public class CleanCommand extends RepositoriesViewCommandHandler<RepositoryNode> {
+public class CleanActionHandler extends RepositoryActionHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		RepositoryNode node = getSelectedNodes(event).get(0);
-		Repository repository = node.getRepository();
+		Repository repository = getRepository();
 
-		CleanWizardDialog dlg = new CleanWizardDialog(getShell(event), repository);
+		CleanWizardDialog dlg = new CleanWizardDialog(getShell(event),
+				repository);
 		dlg.setBlockOnOpen(true);
 		dlg.open();
 
 		return null;
 	}
 
+	@Override
+	public boolean isEnabled() {
+		Repository repository = getRepository();
+		return repository != null && !repository.isBare();
+	}
 }
