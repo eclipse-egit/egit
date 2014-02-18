@@ -127,7 +127,6 @@ class CommitMessageViewer extends SourceViewer implements
 		this.partSite = partSite;
 
 		final StyledText t = getTextWidget();
-		t.setAlwaysShowScrollBars(false);
 		t.setFont(UIUtils.getFont(UIPreferences.THEME_CommitMessageFont));
 
 		sys_normalCursor = t.getCursor();
