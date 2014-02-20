@@ -357,6 +357,9 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			File parent = ((File) node.getObject());
 
 			File[] childFiles = parent.listFiles();
+			if (childFiles == null)
+				return children.toArray();
+
 			Arrays.sort(childFiles, new Comparator<File>() {
 				public int compare(File o1, File o2) {
 					if (o1.isDirectory()) {
