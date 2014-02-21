@@ -80,6 +80,9 @@ public class HistoryViewCommands {
 	/** squash multiple commits into one */
 	public static final String SQUASH = "org.eclipse.egit.ui.history.Squash"; //$NON-NLS-1$
 
+	/** reword a commit's message */
+	public static final String REWORD = "org.eclipse.egit.ui.history.Reword"; //$NON-NLS-1$
+
 	/** revert a commit */
 	public static final String REVERT = "org.eclipse.egit.ui.history.Revert"; //$NON-NLS-1$
 
