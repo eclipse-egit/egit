@@ -120,6 +120,11 @@ public class JobFamilies {
 	public static final Object SQUASH = new Object();
 
 	/**
+	 * Reword commit job
+	 */
+	public static final Object REWORD = new Object();
+
+	/**
 	 * Revert commit job
 	 */
 	public static final Object REVERT_COMMIT = new Object();
