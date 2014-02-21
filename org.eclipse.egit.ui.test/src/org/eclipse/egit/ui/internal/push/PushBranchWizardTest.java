@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013 Robin Stocker <robin@nibor.org> and others.
+ * Copyright (c) 2013, 2014 Robin Stocker <robin@nibor.org> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,9 +7,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.push;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -70,6 +68,7 @@ public class PushBranchWizardTest extends LocalRepositoryTestCase {
 				selectProject(), "bar");
 		wizard.selectRemote("fetch");
 		wizard.selectRebase();
+		assertFalse(wizard.isUpstreamConfigOverwriteWarningShown());
 		wizard.next();
 		wizard.finish();
 
@@ -148,6 +147,39 @@ public class PushBranchWizardTest extends LocalRepositoryTestCase {
 		assertEquals(repository.resolve("localname"), pushed);
 
 		assertBranchConfig("localname", "fetch", "refs/heads/remotename", null);
+	}
+
+	@Test
+	public void pushWithExistingUpstreamConfiguration() throws Exception {
+		checkoutNewLocalBranch("foo");
+		// Existing configuration
+		repository.getConfig().setString(ConfigConstants.CONFIG_BRANCH_SECTION,
+				"foo", ConfigConstants.CONFIG_KEY_REMOTE, "fetch");
+		repository.getConfig().setString(ConfigConstants.CONFIG_BRANCH_SECTION,
+				"foo", ConfigConstants.CONFIG_KEY_MERGE, "refs/heads/foo");
+		repository.getConfig().setBoolean(
+				ConfigConstants.CONFIG_BRANCH_SECTION, "foo",
+				ConfigConstants.CONFIG_KEY_REBASE, true);
+		// Make sure the repository does not have autosetuprebase set
+		repository.getConfig().setBoolean(
+				ConfigConstants.CONFIG_BRANCH_SECTION, null,
+				ConfigConstants.CONFIG_KEY_AUTOSETUPREBASE, false);
+
+		PushBranchWizardTester wizard = PushBranchWizardTester.startWizard(
+				selectProject(), "foo");
+		wizard.selectRemote("fetch");
+		wizard.assertRebaseSelected();
+		assertFalse(wizard.isUpstreamConfigOverwriteWarningShown());
+		wizard.selectMerge();
+		assertTrue(wizard.isUpstreamConfigOverwriteWarningShown());
+		wizard.deselectConfigureUpstream();
+		assertFalse(wizard.isUpstreamConfigOverwriteWarningShown());
+		wizard.next();
+		wizard.finish();
+
+		assertBranchPushed("foo", remoteRepository);
+		// Still configured
+		assertBranchConfig("foo", "fetch", "refs/heads/foo", "true");
 	}
 
 	private void removeExistingRemotes() throws IOException {

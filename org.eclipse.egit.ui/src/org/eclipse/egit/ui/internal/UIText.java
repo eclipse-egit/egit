@@ -1057,6 +1057,9 @@ public class UIText extends NLS {
 	public static String CleanRepositoryPage_message;
 
 	/** */
+	public static String CleanRepositoryPage_SelectFilesToClean;
+
+	/** */
 	public static String CleanRepositoryPage_title;
 
 	/** */
@@ -1988,6 +1991,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String PushBranchPage_ChooseRemoteError;
+
+	/** */
+	public static String PushBranchPage_ForceUpdateButton;
 
 	/** */
 	public static String PushBranchPage_InvalidBranchNameError;

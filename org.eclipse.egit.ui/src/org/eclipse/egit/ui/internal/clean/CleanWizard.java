@@ -51,4 +51,8 @@ public class CleanWizard extends Wizard {
 		return true;
 	}
 
+	@Override
+	public boolean canFinish() {
+		return cleanPage.isPageComplete();
+	}
 }

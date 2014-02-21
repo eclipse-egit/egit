@@ -1733,31 +1733,6 @@
          </activeWhen>
       </handler>
       <handler
-            commandId="org.eclipse.egit.ui.team.clean">
-         <class
-               class="org.eclipse.egit.ui.internal.repository.tree.command.CleanCommand">
-         </class>
-         <activeWhen>
-             <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <and>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-                        </instanceof>
-                        <not>
-                           <test
-                                 property="GitRepository.isBare">
-                           </test>
-                        </not>
-                     </and>
-                  </iterate>
-               </and>
-         </activeWhen>
-      </handler>
-      <handler
             commandId="org.eclipse.egit.ui.team.stash.create">
          <class
                class="org.eclipse.egit.ui.internal.repository.tree.command.StashCreateCommand">
@@ -2879,9 +2854,9 @@
             </visibleWhen>
          </command>
         <command
-               commandId="org.eclipse.egit.ui.team.clean"
-               label="%CleanCommand.label"
-               style="push">
+              commandId="org.eclipse.egit.ui.team.clean"
+              label="%CleanCommand.label"
+              style="push">
             <visibleWhen
                   checkEnabled="false">
                <and>
@@ -4022,6 +3997,21 @@
                   </visibleWhen>
                </command>
                <separator
+                     name="org.eclipse.egit.ui.separator2"
+                     visible="true">
+               </separator>
+               <command
+                     commandId="org.eclipse.egit.ui.team.clean"
+                     label="%CleanCommand.label"
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <reference
+                           definitionId="org.eclipse.egit.ui.gitProject">
+                     </reference>
+                  </visibleWhen>
+               </command>
+               <separator
                      name="org.eclipse.egit.ui.TeamAdvancedFileSeparator"
                      visible="true">
                </separator>
@@ -4496,6 +4486,7 @@
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.team.clean"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.CleanActionHandler"
             name="%CleanCommand.name">
       </command>
       <command
