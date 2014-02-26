@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67591f73_c5a5848b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/command/RewordHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-26T14:40:41Z",
+      "side": 1,
+      "message": "I think we should use a WorkspaceJob here in order to ensure that resource change events triggered when rebase moves HEAD will be batched until the end of the job execution",
+      "revId": "952dea278660a18a4fa11f5353bcfc0b9709243e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_65e91877",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/command/RewordHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-26T14:40:41Z",
+      "side": 1,
+      "message": "why CHERRY_PICK, this is REWORD",
+      "revId": "952dea278660a18a4fa11f5353bcfc0b9709243e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_456b3493",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/RewordHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-26T14:40:41Z",
+      "side": 1,
+      "message": "what\u0027s the reason you enable the command and then raise an error message in case the selected commit isn\u0027t reachable from the current branch ? For squash we instead disable the command.",
+      "revId": "952dea278660a18a4fa11f5353bcfc0b9709243e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
