@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_c822bbd9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/command/RewordHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 576
+      },
+      "writtenOn": "2014-02-26T15:19:45Z",
+      "side": 1,
+      "message": "I believe this originated from the cherry-pick handler. But I\u0027ll have another look at WorkspaceJob as you suggest.",
+      "parentUuid": "67591f73_c5a5848b",
+      "revId": "952dea278660a18a4fa11f5353bcfc0b9709243e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_65e91877",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/command/RewordHandler.java",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_e8e4df1c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/command/RewordHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 576
+      },
+      "writtenOn": "2014-02-26T15:19:45Z",
+      "side": 1,
+      "message": "right, this must have slipped through the cracks all along",
+      "parentUuid": "67591f73_65e91877",
+      "revId": "952dea278660a18a4fa11f5353bcfc0b9709243e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_456b3493",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/RewordHandler.java",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2014-02-26T14:40:41Z",
       "side": 1,
       "message": "what\u0027s the reason you enable the command and then raise an error message in case the selected commit isn\u0027t reachable from the current branch ? For squash we instead disable the command.",
+      "revId": "952dea278660a18a4fa11f5353bcfc0b9709243e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_28c89798",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/RewordHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 576
+      },
+      "writtenOn": "2014-02-26T15:19:45Z",
+      "side": 1,
+      "message": "Actually I did the same for squash.\n\nThe reason is that I want to give more information about why the command cannot be executed right now. If we instead just disable it, the user might become confused as to why the command cannot be accessed. There is just not enough information contained in a disabled menu item.",
+      "parentUuid": "67591f73_456b3493",
       "revId": "952dea278660a18a4fa11f5353bcfc0b9709243e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
