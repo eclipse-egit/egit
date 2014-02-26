@@ -66,6 +66,8 @@ public class IteratorService {
 	 *         container does not exist
 	 */
 	public static IContainer findContainer(IWorkspaceRoot root, File file) {
+		if (!file.exists())
+			return null;
 		if (!file.isDirectory())
 			throw new IllegalArgumentException(
 					"file " + file.getAbsolutePath() + " is no directory"); //$NON-NLS-1$//$NON-NLS-2$
