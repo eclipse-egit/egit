@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_249ef042",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-02-27T19:30:37Z",
+      "side": 1,
+      "message": "Done\nnew extension point for branch name suggestion added",
+      "parentUuid": "67591f73_6f5920d4",
+      "revId": "3c6175b37e39f3cda00be678d13ef75cb706e9fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_bdf8d271",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "Makes sense to split.",
       "parentUuid": "67591f73_5d537635",
+      "revId": "3c6175b37e39f3cda00be678d13ef75cb706e9fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_84a53c8c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IBranchNameProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-02-27T19:30:37Z",
+      "side": 1,
+      "message": "splitted\nA new extension point added",
+      "parentUuid": "67591f73_4f56dca4",
       "revId": "3c6175b37e39f3cda00be678d13ef75cb706e9fa",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
