@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67591f73_5f1491ce",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/MylynBranchNameProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-27T22:06:54Z",
+      "side": 1,
+      "message": "A BranchNameProvider using description and title of the currently active task to suggest a branch name.",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_bf1a0df9",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/MylynBranchNameProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-27T22:06:54Z",
+      "side": 1,
+      "message": "I\u0027d rather name this ActiveTaskBranchNameProvider since Mylyn... doesn\u0027t really describe what functionality this class provides",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_5f8f7186",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/MylynBranchNameProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-27T22:06:54Z",
+      "side": 1,
+      "message": "we should ensure that the suggested branch name doesn\u0027t end with a delimiter like \"_\"",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_1f67b944",
+        "filename": "org.eclipse.egit.ui/schema/branchNameProvider.exsd",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-27T22:06:54Z",
+      "side": 1,
+      "message": "s/provides the ability to extend the branch name suggestion./allows to register an implementation suggesting branch names based on contextual information/",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_3f38bd89",
+        "filename": "org.eclipse.egit.ui/schema/branchNameProvider.exsd",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-27T22:06:54Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace, more below",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_cac29d7b",
+        "filename": "org.eclipse.egit.ui/schema/branchNameProvider.exsd",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-27T22:06:54Z",
+      "side": 1,
+      "message": "Class implementing org.eclipse.egit.ui.IBranchNameProvider to be registered for suggesting branch names",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_1f3b3987",
+        "filename": "org.eclipse.egit.ui/schema/branchNameProvider.exsd",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-27T22:06:54Z",
+      "side": 1,
+      "message": "this won\u0027t reach 3.3: s/3.3.0/3.4.0/",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_5f4771f5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IBranchNameProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-27T22:06:54Z",
+      "side": 1,
+      "message": "I think this first sentence doesn\u0027t add information hence I\u0027d remove it",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_5f35b18d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IBranchNameProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-27T22:06:54Z",
+      "side": 1,
+      "message": "I think this is too generic, maybe better\n\ns/provides informations related to creating branches./suggests a branch name based on current context./",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_7f44f5f1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IBranchNameProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-02-27T22:06:54Z",
+      "side": 1,
+      "message": "I think the interface shouldn\u0027t disclose how you intend to use it but just provide an abstraction, hence\n\ns/for the Creation wizard//",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
