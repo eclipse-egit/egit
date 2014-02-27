@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_ee321ca7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/command/RewordHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 576
+      },
+      "writtenOn": "2014-02-27T12:13:07Z",
+      "side": 1,
+      "message": "right, I noticed it when I was reviewing which commit this change had been rebased onto",
+      "parentUuid": "67591f73_2efa5437",
+      "revId": "952dea278660a18a4fa11f5353bcfc0b9709243e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_65e91877",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/command/RewordHandler.java",
         "patchSetId": 3
