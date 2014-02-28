@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 IBM Corporation and others.
+ * Copyright (c) 2010, 2014 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -28,29 +28,23 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
-import org.eclipse.egit.core.internal.storage.WorkspaceFileRevision;
+import org.eclipse.egit.core.internal.merge.EmptyResourceVariantTreeProvider;
+import org.eclipse.egit.core.internal.merge.GitResourceVariantTreeProvider;
+import org.eclipse.egit.core.internal.merge.GitSyncInfoToDiffConverter;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
-import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.team.core.diff.IDiff;
-import org.eclipse.team.core.diff.ITwoWayDiff;
-import org.eclipse.team.core.diff.provider.ThreeWayDiff;
 import org.eclipse.team.core.history.IFileRevision;
-import org.eclipse.team.core.mapping.provider.ResourceDiff;
 import org.eclipse.team.core.synchronize.SyncInfo;
 import org.eclipse.team.core.variants.IResourceVariant;
 import org.eclipse.team.core.variants.IResourceVariantComparator;
 import org.eclipse.team.core.variants.IResourceVariantTree;
 import org.eclipse.team.core.variants.ResourceVariantTreeSubscriber;
-import org.eclipse.team.internal.core.mapping.ResourceVariantFileRevision;
-import org.eclipse.team.internal.core.mapping.SyncInfoToDiffConverter;
 
 /**
  *
@@ -58,27 +52,25 @@ import org.eclipse.team.internal.core.mapping.SyncInfoToDiffConverter;
 @SuppressWarnings("restriction")
 public class GitResourceVariantTreeSubscriber extends
 		ResourceVariantTreeSubscriber {
-
-	/** A resource variant tree of the source branch. */
-	private GitSourceResourceVariantTree sourceTree;
-
 	/**
-	 * A resource variant tree of the remote branch(es).
+	 * The {@link #variantTreeProvider} cannot be <code>null</code> since this
+	 * is also used during asynchronous refresh calls from workspace listeners
+	 * installed by Team during the creation of merge or synchronization
+	 * context. However, {@link #dispose()} and
+	 * {@link #reset(GitSynchronizeDataSet)} are called specifically to clean
+	 * this provider. This specific, empty resource variant tree provider will
+	 * be used as a "null object" to prevent NullPointerExceptions during these
+	 * asynchronous calls after we've been disposed.
 	 */
-	private GitRemoteResourceVariantTree remoteTree;
+	private static final GitResourceVariantTreeProvider EMPTY_TREE_PROVIDER = new EmptyResourceVariantTreeProvider();
 
-	/**
-	 * A resource variant tree against HEAD.
-	 */
-	private GitBaseResourceVariantTree baseTree;
+	private GitResourceVariantTreeProvider variantTreeProvider;
 
 	private GitSynchronizeDataSet gsds;
 
-	private IResource[] roots;
-
 	private GitSyncCache cache;
 
-	private GitSyncInfoToDiffConverter syncInfoConverter = new GitSyncInfoToDiffConverter();
+	private GitSyncInfoToDiffConverter syncInfoConverter;
 
 	/**
 	 * @param data
@@ -100,6 +92,9 @@ public class GitResourceVariantTreeSubscriber extends
 				gsds.size());
 		try {
 			cache = GitSyncCache.getAllData(gsds, monitor);
+			variantTreeProvider = new SynchronizeDataTreeProvider(cache, gsds);
+			syncInfoConverter = new GitSyncInfoToDiffConverter(
+					variantTreeProvider);
 		} finally {
 			monitor.done();
 		}
@@ -162,6 +157,10 @@ public class GitResourceVariantTreeSubscriber extends
 			if (resource.getType() == IResource.ROOT) {
 				// refresh entire cache
 				cache = GitSyncCache.getAllData(gsds, monitor);
+				variantTreeProvider = new SynchronizeDataTreeProvider(cache,
+						gsds);
+				syncInfoConverter = new GitSyncInfoToDiffConverter(
+						variantTreeProvider);
 				super.refresh(resources, depth, monitor);
 				return;
 			}
@@ -197,6 +196,12 @@ public class GitResourceVariantTreeSubscriber extends
 		if (!updateRequests.isEmpty()) {
 			// refresh cache
 			GitSyncCache.mergeAllDataIntoCache(updateRequests, monitor, cache);
+
+			// and reset the variant tree (variants are lazily fetched
+			// on-demand)
+			variantTreeProvider = new SynchronizeDataTreeProvider(cache, gsds);
+			syncInfoConverter = new GitSyncInfoToDiffConverter(
+					variantTreeProvider);
 		}
 
 		super.refresh(resources, depth, monitor);
@@ -204,11 +209,8 @@ public class GitResourceVariantTreeSubscriber extends
 
 	@Override
 	public IResource[] roots() {
-		if (roots == null)
-			roots = gsds.getAllProjects();
-		IResource[] result = new IResource[roots.length];
-		System.arraycopy(roots, 0, result, 0, roots.length);
-		return result;
+		final Set<IResource> roots = variantTreeProvider.getRoots();
+		return roots.toArray(new IResource[roots.size()]);
 	}
 
 	/**
@@ -216,23 +218,26 @@ public class GitResourceVariantTreeSubscriber extends
 	 */
 	public void reset(GitSynchronizeDataSet data) {
 		gsds = data;
-
-		roots = null;
-		sourceTree = null;
-		baseTree = null;
-		remoteTree = null;
+		variantTreeProvider = EMPTY_TREE_PROVIDER;
+		syncInfoConverter = null;
 	}
 
 	/**
 	 * Disposes nested resources
 	 */
 	public void dispose() {
-		if (sourceTree != null)
-			sourceTree.dispose();
-		if (baseTree != null)
-			baseTree.dispose();
-		if (remoteTree != null)
-			remoteTree.dispose();
+		if (variantTreeProvider != EMPTY_TREE_PROVIDER) {
+			if (variantTreeProvider.getBaseTree() instanceof GitResourceVariantTree)
+				((GitResourceVariantTree) variantTreeProvider.getBaseTree())
+						.dispose();
+			if (variantTreeProvider.getRemoteTree() instanceof GitResourceVariantTree)
+				((GitResourceVariantTree) variantTreeProvider.getRemoteTree())
+						.dispose();
+			if (variantTreeProvider.getSourceTree() instanceof GitResourceVariantTree)
+				((GitResourceVariantTree) variantTreeProvider.getSourceTree())
+						.dispose();
+			variantTreeProvider = EMPTY_TREE_PROVIDER;
+		}
 		gsds.dispose();
 	}
 
@@ -246,222 +251,6 @@ public class GitResourceVariantTreeSubscriber extends
 		if (info == null || info.getKind() == SyncInfo.IN_SYNC)
 			return null;
 		return syncInfoConverter.getDeltaFor(info);
-	}
-
-	/**
-	 * The default implementation of SyncInfoToDiffConverter uses inaccurate
-	 * information with regards to some of EGit features.
-	 * <p>
-	 * SyncInfoToDiffConverter#asFileRevision(IResourceVariant) is called when a
-	 * user double-clicks a revision from the synchronize view (among others).
-	 * However, the default implementation returns an IFileRevision with no
-	 * comment, author or timestamp information (this can be observed by
-	 * commenting this implementation out and launching
-	 * HistoryTest#queryHistoryThroughTeam()).
-	 * </p>
-	 * <p>
-	 * SyncInfoToDiffConverter#getDeltaFor(SyncInfo) had been originally thought
-	 * by Team to be used for synchronizations that considered local changes.
-	 * This is not always the case with EGit. For example, a user might try and
-	 * compare two refs together from the Git repository explorer (right click >
-	 * synchronize with each other). In such a case, the local files must not be
-	 * taken into account (i.e. we must respect the value of our
-	 * GitSynchronizeData#shouldIncludeLocal(). Most of the private methods here
-	 * were copy/pasted from the super implementation.
-	 * </p>
-	 */
-	private class GitSyncInfoToDiffConverter extends SyncInfoToDiffConverter {
-		@Override
-		public IDiff getDeltaFor(SyncInfo info) {
-			if (info.getComparator().isThreeWay()) {
-				ITwoWayDiff local = getLocalDelta(info);
-				ITwoWayDiff remote = getRemoteDelta(info);
-				return new ThreeWayDiff(local, remote);
-			} else {
-				if (info.getKind() != SyncInfo.IN_SYNC) {
-					IResourceVariant remote = info.getRemote();
-					IResource local = info.getLocal();
-
-					int kind;
-					if (remote == null)
-						kind = IDiff.REMOVE;
-					else if (!local.exists())
-						kind = IDiff.ADD;
-					else
-						kind = IDiff.CHANGE;
-
-					if (local.getType() == IResource.FILE) {
-						IFileRevision after = asFileState(remote);
-						IFileRevision before = getLocalFileRevision((IFile) local);
-						return new ResourceDiff(info.getLocal(), kind, 0,
-								before, after);
-					}
-					// For folders, we don't need file states
-					return new ResourceDiff(info.getLocal(), kind);
-				}
-				return null;
-			}
-		}
-
-		private ITwoWayDiff getLocalDelta(SyncInfo info) {
-			int direction = SyncInfo.getDirection(info.getKind());
-			if (direction == SyncInfo.OUTGOING
-					|| direction == SyncInfo.CONFLICTING) {
-				IResourceVariant ancestor = info.getBase();
-				IResource local = info.getLocal();
-
-				int kind;
-				if (ancestor == null)
-					kind = IDiff.ADD;
-				else if (!local.exists())
-					kind = IDiff.REMOVE;
-				else
-					kind = IDiff.CHANGE;
-
-				if (local.getType() == IResource.FILE) {
-					IFileRevision before = asFileState(ancestor);
-					IFileRevision after = getLocalFileRevision((IFile) local);
-					return new ResourceDiff(info.getLocal(), kind, 0, before,
-							after);
-				}
-				// For folders, we don't need file states
-				return new ResourceDiff(info.getLocal(), kind);
-
-			}
-			return null;
-		}
-
-		/**
-		 * Depending on the Synchronize data, this will return either the local
-		 * file or the "source" revision.
-		 *
-		 * @param local
-		 *            The local file.
-		 * @return The file revision that should be considered for the local
-		 *         (left) side a delta
-		 */
-		protected IFileRevision getLocalFileRevision(IFile local) {
-			final GitSynchronizeData data = gsds.getData(local.getProject());
-			if (data.shouldIncludeLocal())
-				return new WorkspaceFileRevision(local);
-
-			try {
-				return asFileState(getSourceTree().getResourceVariant(local));
-			} catch (TeamException e) {
-				String error = NLS
-						.bind(CoreText.GitResourceVariantTreeSubscriber_CouldNotFindSourceVariant,
-								local.getName());
-				Activator.logError(error, e);
-				// fall back to the working tree version
-				return new WorkspaceFileRevision(local);
-			}
-		}
-
-		/*
-		 * copy-pasted from the private implementation in
-		 * SyncInfoToDiffConverter
-		 */
-		private ITwoWayDiff getRemoteDelta(SyncInfo info) {
-			int direction = SyncInfo.getDirection(info.getKind());
-			if (direction == SyncInfo.INCOMING
-					|| direction == SyncInfo.CONFLICTING) {
-				IResourceVariant ancestor = info.getBase();
-				IResourceVariant remote = info.getRemote();
-
-				int kind;
-				if (ancestor == null)
-					kind = IDiff.ADD;
-				else if (remote == null)
-					kind = IDiff.REMOVE;
-				else
-					kind = IDiff.CHANGE;
-
-				// For folders, we don't need file states
-				if (info.getLocal().getType() == IResource.FILE) {
-					IFileRevision before = asFileState(ancestor);
-					IFileRevision after = asFileState(remote);
-					return new ResourceDiff(info.getLocal(), kind, 0, before,
-							after);
-				}
-
-				return new ResourceDiff(info.getLocal(), kind);
-			}
-			return null;
-		}
-
-		/*
-		 * copy-pasted from the private implementation in
-		 * SyncInfoToDiffConverter
-		 */
-		private IFileRevision asFileState(final IResourceVariant variant) {
-			if (variant == null)
-				return null;
-			return asFileRevision(variant);
-		}
-
-		@Override
-		protected ResourceVariantFileRevision asFileRevision(
-				IResourceVariant variant) {
-			return new GitResourceVariantFileRevision(variant);
-		}
-	}
-
-	/**
-	 * The default implementation of ResourceVariantFileRevision has no author,
-	 * comment, timestamp... or any information that could be provided by the
-	 * Git resource variant. This implementation uses the variant's information.
-	 */
-	private static class GitResourceVariantFileRevision extends
-			ResourceVariantFileRevision {
-		private final IResourceVariant variant;
-
-		public GitResourceVariantFileRevision(IResourceVariant variant) {
-			super(variant);
-			this.variant = variant;
-		}
-
-		@Override
-		public String getContentIdentifier() {
-			// Use the same ID as would CommitFileRevision
-			if (variant instanceof GitRemoteResource)
-				return ((GitRemoteResource) variant).getCommitId().getId()
-						.getName();
-
-			return super.getContentIdentifier();
-		}
-
-		@Override
-		public long getTimestamp() {
-			if (variant instanceof GitRemoteResource) {
-				final PersonIdent author = ((GitRemoteResource) variant)
-						.getCommitId().getAuthorIdent();
-				if (author != null)
-					return author.getWhen().getTime();
-			}
-
-			return super.getTimestamp();
-		}
-
-		@Override
-		public String getAuthor() {
-			if (variant instanceof GitRemoteResource) {
-				final PersonIdent author = ((GitRemoteResource) variant)
-						.getCommitId().getAuthorIdent();
-				if (author != null)
-					return author.getName();
-			}
-
-			return super.getAuthor();
-		}
-
-		@Override
-		public String getComment() {
-			if (variant instanceof GitRemoteResource)
-				return ((GitRemoteResource) variant).getCommitId()
-						.getFullMessage();
-
-			return super.getComment();
-		}
 	}
 
 	@Override
@@ -483,10 +272,7 @@ public class GitResourceVariantTreeSubscriber extends
 	 * @since 3.0
 	 */
 	protected IResourceVariantTree getSourceTree() {
-		if (sourceTree == null)
-			sourceTree = new GitSourceResourceVariantTree(cache, gsds);
-
-		return sourceTree;
+		return variantTreeProvider.getSourceTree();
 	}
 
 	/**
@@ -507,18 +293,12 @@ public class GitResourceVariantTreeSubscriber extends
 
 	@Override
 	protected IResourceVariantTree getBaseTree() {
-		if (baseTree == null)
-			baseTree = new GitBaseResourceVariantTree(cache, gsds);
-
-		return baseTree;
+		return variantTreeProvider.getBaseTree();
 	}
 
 	@Override
 	protected IResourceVariantTree getRemoteTree() {
-		if (remoteTree == null)
-			remoteTree = new GitRemoteResourceVariantTree(cache, gsds);
-
-		return remoteTree;
+		return variantTreeProvider.getRemoteTree();
 	}
 
 	@Override
