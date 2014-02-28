@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2014 Obeo and others.
+ * Copyright (C) 2015 Obeo and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,12 +10,11 @@ package org.eclipse.egit.core.test.models;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
@@ -76,19 +75,26 @@ public abstract class ModelTestCase extends GitTestCase {
 		return testRepository.commit(commitMessage);
 	}
 
+	/**
+	 * Checks that the content of the given file is equal to the given String.
+	 * End-of-line characters are NOT ignored: They must be equal too, i.e. the
+	 * expected content is tested as is and not tokenized against line
+	 * separators.
+	 * 
+	 * @param file
+	 * @param expectedContents
+	 * @throws Exception
+	 */
 	protected void assertContentEquals(IFile file, String expectedContents)
 			throws Exception {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(
-				file.getContents()));
-		StringBuilder contentsBuilder = new StringBuilder();
-		String line = reader.readLine();
-		while (line != null) {
-			contentsBuilder.append(line);
-			contentsBuilder.append('\n');
-			line = reader.readLine();
+		try (Scanner scanner = new Scanner(file.getContents())) {
+			scanner.useDelimiter("\\A");
+			String fileContent = "";
+			if (scanner.hasNext()) {
+				fileContent = scanner.next();
+			}
+			assertEquals(expectedContents, fileContent);
 		}
-		reader.close();
-		assertEquals(expectedContents, contentsBuilder.toString());
 	}
 
 	protected void merge(Repository repository, String refName)
@@ -97,7 +103,9 @@ public abstract class ModelTestCase extends GitTestCase {
 	}
 
 	protected Status status(Repository repository) throws Exception {
-		return new Git(repository).status().call();
+		try (Git git = new Git(repository)) {
+			return git.status().call();
+		}
 	}
 
 	protected IResourceMappingMerger createMerger() throws CoreException {
