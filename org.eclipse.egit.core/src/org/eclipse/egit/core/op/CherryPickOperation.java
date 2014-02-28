@@ -1,5 +1,7 @@
 /******************************************************************************
  *  Copyright (c) 2011 GitHub Inc.
+ *  Copyright (c) 2014, Obeo.
+ *  
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -22,6 +24,7 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
+import org.eclipse.egit.core.internal.merge.StrategyRecursiveModel;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.CherryPickCommand;
 import org.eclipse.jgit.api.CherryPickResult;
@@ -70,8 +73,9 @@ public class CherryPickOperation implements IEGitOperation {
 				pm.subTask(MessageFormat.format(
 						CoreText.CherryPickOperation_cherryPicking,
 						commit.name()));
-				CherryPickCommand command = new Git(repo).cherryPick().include(
-						commit.getId());
+				CherryPickCommand command = new Git(repo).cherryPick()
+						.include(commit.getId())
+						.setStrategy(new StrategyRecursiveModel());
 				try {
 					result = command.call();
 				} catch (GitAPIException e) {
