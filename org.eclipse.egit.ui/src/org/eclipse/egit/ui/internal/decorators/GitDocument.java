@@ -22,6 +22,8 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.text.Document;
+import org.eclipse.jgit.diff.DiffConfig;
+import org.eclipse.jgit.diff.DiffConfig.RenameDetectionType;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.RenameDetector;
 import org.eclipse.jgit.dircache.DirCacheIterator;
@@ -153,19 +155,24 @@ class GitDocument extends Document implements RefsChangedListener {
 			try {
 				reader = repository.newObjectReader();
 				baselineCommit = rw.parseCommit(commitId);
-				TreeWalk walk = new TreeWalk(repository);
-				CanonicalTreeParser baseLineIterator = new CanonicalTreeParser();
-				baseLineIterator.reset(reader, baselineCommit.getTree());
-				walk.addTree(baseLineIterator);
-				walk.addTree(new DirCacheIterator(repository.readDirCache()));
-				List<DiffEntry> diffs = DiffEntry.scan(walk, true);
-				RenameDetector renameDetector = new RenameDetector(repository);
-				renameDetector.addAll(diffs);
-				List<DiffEntry> renames = renameDetector.compute();
-				for (DiffEntry e : renames) {
-					if (e.getNewPath().equals(gitPath)) {
-						oldPath = e.getOldPath();
-						break;
+				DiffConfig diffConfig = repository.getConfig().get(
+						DiffConfig.KEY);
+				if (diffConfig.getRenameDetectionType() != RenameDetectionType.FALSE) {
+					TreeWalk walk = new TreeWalk(repository);
+					CanonicalTreeParser baseLineIterator = new CanonicalTreeParser();
+					baseLineIterator.reset(reader, baselineCommit.getTree());
+					walk.addTree(baseLineIterator);
+					walk.addTree(new DirCacheIterator(repository.readDirCache()));
+					List<DiffEntry> diffs = DiffEntry.scan(walk, true);
+					RenameDetector renameDetector = new RenameDetector(
+							repository);
+					renameDetector.addAll(diffs);
+					List<DiffEntry> renames = renameDetector.compute();
+					for (DiffEntry e : renames) {
+						if (e.getNewPath().equals(gitPath)) {
+							oldPath = e.getOldPath();
+							break;
+						}
 					}
 				}
 			} catch (IOException err) {
