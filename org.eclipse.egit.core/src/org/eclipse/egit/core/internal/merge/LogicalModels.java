@@ -142,9 +142,10 @@ public final class LogicalModels {
 	 * @throws CoreException
 	 *             Thrown if we cannot query one or more of the model providers.
 	 */
-	@SuppressWarnings("unchecked")
 	public static <T> T findAdapter(Set<IResource> model, Class<T> adapterClass)
 			throws CoreException {
+		if (model.isEmpty())
+			return null;
 		final IResource[] modelArray = model
 				.toArray(new IResource[model.size()]);
 		final IModelProviderDescriptor[] descriptors = ModelProvider
@@ -159,7 +160,7 @@ public final class LogicalModels {
 					.getMatchingResources(modelArray);
 			if (matchingResources.length == modelArray.length) {
 				final ModelProvider provider = descriptor.getModelProvider();
-				T adapter = (T) provider.getAdapter(adapterClass);
+				T adapter = provider.getAdapter(adapterClass);
 				if (adapter != null) {
 					// The first merger is used (arbitrary decision)
 					return adapter;
