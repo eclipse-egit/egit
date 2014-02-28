@@ -13,10 +13,9 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.storage.TreeParserResourceVariant;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
+import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
@@ -86,8 +85,8 @@ public class TreeWalkResourceVariantTreeProvider implements
 			final int modeBase = treeWalk.getRawMode(baseIndex);
 			final int modeOurs = treeWalk.getRawMode(ourIndex);
 			final int modeTheirs = treeWalk.getRawMode(theirIndex);
-			if (modeBase == 0 && modeOurs == 0 && modeTheirs == 0) {
-				// untracked
+			if (!hasSignificantDifference(modeBase, modeOurs, modeTheirs)) {
+				// conflict on file modes, leave the default merger handle it
 				continue;
 			}
 
@@ -98,12 +97,17 @@ public class TreeWalkResourceVariantTreeProvider implements
 			final CanonicalTreeParser theirs = treeWalk.getTree(theirIndex,
 					CanonicalTreeParser.class);
 
-			final IPath path = new Path(treeWalk.getPathString());
+			final int nonZeroMode = modeBase != 0 ? modeBase
+					: modeOurs != 0 ? modeOurs : modeTheirs;
 			final IResource resource = ResourceUtil
-					.getResourceHandleForLocation(path);
+					.getResourceHandleForLocation(repository,
+							treeWalk.getPathString(),
+							FileMode.fromBits(nonZeroMode) == FileMode.TREE);
 			// Resource variants only make sense for IResources. Do not consider
 			// files outside of the workspace or otherwise non accessible.
-			if (resource != null && resource.getProject().isAccessible()) {
+
+			if (resource != null && resource.getProject() != null
+					&& resource.getProject().isAccessible()) {
 				if (modeBase != 0) {
 					baseCache.setVariant(resource,
 							TreeParserResourceVariant.create(repository, base));
@@ -143,6 +147,22 @@ public class TreeWalkResourceVariantTreeProvider implements
 		knownResources.addAll(baseCache.getKnownResources());
 		knownResources.addAll(oursCache.getKnownResources());
 		knownResources.addAll(theirsCache.getKnownResources());
+	}
+
+	private boolean hasSignificantDifference(int modeBase, int modeOurs,
+			int modeTheirs) {
+		if (modeBase == 0) {
+			if (FileMode.fromBits(modeOurs | modeTheirs) != FileMode.MISSING) {
+				return true;
+			} else {
+				return (FileMode.fromBits(modeOurs) == FileMode.TREE && FileMode
+						.fromBits(modeTheirs) != FileMode.TREE)
+						|| (FileMode.fromBits(modeOurs) != FileMode.TREE && FileMode
+								.fromBits(modeTheirs) == FileMode.TREE);
+			}
+		}
+		return FileMode.fromBits(modeBase & modeOurs) != FileMode.MISSING
+				|| FileMode.fromBits(modeBase & modeTheirs) != FileMode.MISSING;
 	}
 
 	public IResourceVariantTree getBaseTree() {
