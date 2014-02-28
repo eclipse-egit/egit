@@ -16,6 +16,7 @@ Export-Package: org.eclipse.egit.core;version="4.0.0";x-friends:="org.eclipse.eg
  org.eclipse.egit.core.internal.gerrit;version="4.0.0";x-friends:="org.eclipse.egit.ui",
  org.eclipse.egit.core.internal.indexdiff;version="4.0.0";x-friends:="org.eclipse.egit.ui,org.eclipse.egit.ui.test",
  org.eclipse.egit.core.internal.job;version="4.0.0";x-friends:="org.eclipse.egit.ui",
+ org.eclipse.egit.core.internal.merge;version="4.0.0";x-friends:="org.eclipse.egit.ui",
  org.eclipse.egit.core.internal.rebase;version="4.0.0";x-friends:="org.eclipse.egit.ui",
  org.eclipse.egit.core.internal.storage;version="4.0.0";x-friends:="org.eclipse.egit.ui,org.eclipse.egit.core.test",
  org.eclipse.egit.core.internal.trace;version="4.0.0";x-internal:=true,
