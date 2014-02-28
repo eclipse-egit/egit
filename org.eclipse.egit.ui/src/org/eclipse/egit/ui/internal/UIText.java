@@ -6,7 +6,7 @@
  * Copyright (C) 2012, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2012, Daniel Megert <daniel_megert@ch.ibm.com>
  * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
- * Copyright (C) 2012, Laurent Goubet <laurent.goubet@obeo.fr>
+ * Copyright (C) 2012, 2014 Laurent Goubet <laurent.goubet@obeo.fr>
  * Copyright (C) 2012, Gunnar Wagenknecht <gunnar@wagenknecht.org>
  * Copyright (C) 2013, Ben Hammen <hammenb@gmail.com>
  * Copyright (C) 2014, Marc Khouzam <marc.khouzam@ericsson.com>
@@ -4657,6 +4657,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitMergeEditorInput_WorkspaceHeader;
+
+	/** */
+	public static String GitMergeEditorInput_OutOfWSResources;
+
+	/** */
+	public static String GitMergeEditorInput_MultipleModels;
 
 	/** */
 	public static String GitModelIndex_index;
