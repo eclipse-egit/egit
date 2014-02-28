@@ -403,6 +403,15 @@ public class CoreText extends NLS {
 	/** */
 	public static String SquashCommitsOperation_squashing;
 
+	/** */
+	public static String RecursiveModelMerger_RefreshError;
+
+	/** */
+	public static String RecursiveModelMerger_ScopeInitializationError;
+
+	/** */
+	public static String RecursiveModelMerger_ScopeInitializationInterrupted;
+
 	static {
 		initializeMessages(BUNDLE_NAME,	CoreText.class);
 	}

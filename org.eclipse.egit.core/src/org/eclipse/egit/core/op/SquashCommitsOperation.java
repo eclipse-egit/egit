@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.CommitUtil;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
+import org.eclipse.egit.core.internal.merge.StrategyRecursiveModel;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.RebaseCommand;
@@ -107,7 +108,8 @@ public class SquashCommitsOperation implements IEGitOperation {
 					Git git = new Git(repository);
 					git.rebase().setUpstream(commits.get(0).getParent(0))
 							.runInteractively(handler)
-							.setOperation(RebaseCommand.Operation.BEGIN).call();
+							.setOperation(RebaseCommand.Operation.BEGIN)
+							.setStrategy(new StrategyRecursiveModel()).call();
 				} catch (GitAPIException e) {
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
