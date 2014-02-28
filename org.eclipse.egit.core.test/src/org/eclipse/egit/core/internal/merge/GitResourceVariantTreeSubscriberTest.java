@@ -170,6 +170,7 @@ public class GitResourceVariantTreeSubscriberTest extends VariantsTestCase {
 		GitResourceVariantTreeSubscriber subscriber = new GitResourceVariantTreeSubscriber(
 				provider);
 
+		// file1 has been added locally
 		final IDiff diff1 = subscriber.getDiff(iFile1);
 		assertTrue(diff1 instanceof IThreeWayDiff);
 		assertEquals(IDiff.ADD, diff1.getKind());
@@ -189,6 +190,7 @@ public class GitResourceVariantTreeSubscriberTest extends VariantsTestCase {
 				.getStorage(new NullProgressMonitor());
 		assertContentEquals(localStorage1, INITIAL_CONTENT_1);
 
+		// file2 has been added remotely
 		final IDiff diff2 = subscriber.getDiff(iFile2);
 		assertTrue(diff2 instanceof IThreeWayDiff);
 		assertEquals(IDiff.ADD, diff2.getKind());
@@ -256,6 +258,77 @@ public class GitResourceVariantTreeSubscriberTest extends VariantsTestCase {
 		assertContentEquals(rancestorStorage2, INITIAL_CONTENT_2);
 	}
 
+	@Test
+	public void testChangeLocalAndDeleteRemote() throws Exception {
+		GitResourceVariantTreeProvider provider = createTreeProviderWithChangeDeleteConflicts();
+		GitResourceVariantTreeSubscriber subscriber = new GitResourceVariantTreeSubscriber(
+				provider);
+
+		// file1 has been changed locally and deleted remotely
+		final IDiff diff1 = subscriber.getDiff(iFile1);
+		assertTrue(diff1 instanceof IThreeWayDiff);
+		assertEquals(IDiff.CHANGE, diff1.getKind());
+		assertEquals(IThreeWayDiff.CONFLICTING,
+				((IThreeWayDiff) diff1).getDirection());
+		final IDiff localDiff1 = ((IThreeWayDiff) diff1).getLocalChange();
+		final IDiff remoteDiff1 = ((IThreeWayDiff) diff1).getRemoteChange();
+		assertTrue(localDiff1 instanceof ResourceDiff);
+		assertTrue(remoteDiff1 instanceof ResourceDiff);
+
+		IFileRevision ancestorState1 = ((ResourceDiff) localDiff1)
+				.getBeforeState();
+		final IFileRevision localState1 = ((ResourceDiff) localDiff1)
+				.getAfterState();
+		assertTrue(iFile1.getName().equals(ancestorState1.getName()));
+		assertTrue(iFile1.getName().equals(localState1.getName()));
+		IStorage ancestorStorage1 = ancestorState1
+				.getStorage(new NullProgressMonitor());
+		assertContentEquals(ancestorStorage1, INITIAL_CONTENT_1);
+		IStorage localStorage1 = localState1
+				.getStorage(new NullProgressMonitor());
+		assertContentEquals(localStorage1, INITIAL_CONTENT_1 + MASTER_CHANGES);
+
+		ancestorState1 = ((ResourceDiff) remoteDiff1).getBeforeState();
+		final IFileRevision remoteState1 = ((ResourceDiff) remoteDiff1)
+				.getAfterState();
+		assertTrue(iFile1.getName().equals(ancestorState1.getName()));
+		assertNull(remoteState1);
+		ancestorStorage1 = ancestorState1.getStorage(new NullProgressMonitor());
+		assertContentEquals(ancestorStorage1, INITIAL_CONTENT_1);
+
+		// file2 has been deleted locally and changed remotely
+		final IDiff diff2 = subscriber.getDiff(iFile2);
+		assertTrue(diff2 instanceof IThreeWayDiff);
+		assertEquals(IDiff.CHANGE, diff2.getKind());
+		assertEquals(IThreeWayDiff.CONFLICTING,
+				((IThreeWayDiff) diff2).getDirection());
+		final IDiff localDiff2 = ((IThreeWayDiff) diff2).getLocalChange();
+		final IDiff remoteDiff2 = ((IThreeWayDiff) diff2).getRemoteChange();
+		assertTrue(localDiff2 instanceof ResourceDiff);
+		assertTrue(remoteDiff2 instanceof ResourceDiff);
+
+		IFileRevision ancestorState2 = ((ResourceDiff) localDiff2)
+				.getBeforeState();
+		final IFileRevision localState2 = ((ResourceDiff) localDiff2)
+				.getAfterState();
+		assertTrue(iFile2.getName().equals(ancestorState2.getName()));
+		assertNull(localState2);
+		IStorage ancestorStorage2 = ancestorState2
+				.getStorage(new NullProgressMonitor());
+		assertContentEquals(ancestorStorage2, INITIAL_CONTENT_2);
+
+		ancestorState2 = ((ResourceDiff) remoteDiff2).getBeforeState();
+		final IFileRevision remoteState2 = ((ResourceDiff) remoteDiff2)
+				.getAfterState();
+		assertTrue(iFile2.getName().equals(ancestorState2.getName()));
+		assertTrue(iFile2.getName().equals(remoteState2.getName()));
+		ancestorStorage2 = ancestorState2.getStorage(new NullProgressMonitor());
+		assertContentEquals(ancestorStorage2, INITIAL_CONTENT_2);
+		IStorage remoteStorage2 = remoteState2
+				.getStorage(new NullProgressMonitor());
+		assertContentEquals(remoteStorage2, INITIAL_CONTENT_2 + BRANCH_CHANGES);
+	}
+
 	private GitResourceVariantTreeProvider createTreeProvider()
 			throws Exception {
 		testRepo.appendContentAndCommit(iProject, file1, INITIAL_CONTENT_1,
@@ -317,6 +390,43 @@ public class GitResourceVariantTreeSubscriberTest extends VariantsTestCase {
 			treeWalk.addTree(remoteTree);
 			return new TreeWalkResourceVariantTreeProvider(repo, treeWalk, 0,
 					1, 2);
+		}
+	}
+
+	private GitResourceVariantTreeProvider createTreeProviderWithChangeDeleteConflicts()
+			throws Exception {
+		file1 = testRepo.createFile(iProject, "file1");
+		testRepo.appendContentAndCommit(iProject, file1, INITIAL_CONTENT_1,
+				"Creation of file1 in master.");
+		file2 = testRepo.createFile(iProject, "file2");
+		testRepo.appendContentAndCommit(iProject, file2, INITIAL_CONTENT_2,
+				"Creation of file2 in master.");
+		testRepo.createBranch(MASTER, BASE);
+
+		testRepo.createAndCheckoutBranch(MASTER, BRANCH);
+		testRepo.untrack(file1);
+		testRepo.appendContentAndCommit(iProject, file2, BRANCH_CHANGES,
+				"Modified file2 in branch.");
+		testRepo.commit("Removed file1 in branch.");
+
+		testRepo.checkoutBranch(MASTER);
+		testRepo.untrack(file2);
+		testRepo.appendContentAndCommit(iProject, file1, MASTER_CHANGES,
+				"Modified file1 in master.");
+
+		iProject.refreshLocal(IResource.DEPTH_INFINITE,
+				new NullProgressMonitor());
+
+		// as if we tried to merge branch3 into branch2
+		try (RevWalk walk = new RevWalk(repo)) {
+			RevTree baseTree = walk.parseTree(repo.resolve(BASE));
+			RevTree sourceTree = walk.parseTree(repo.resolve(MASTER));
+			RevTree remoteTree = walk.parseTree(repo.resolve(BRANCH));
+			TreeWalk treeWalk = new TreeWalk(repo);
+			treeWalk.addTree(baseTree);
+			treeWalk.addTree(sourceTree);
+			treeWalk.addTree(remoteTree);
+			return new TreeWalkResourceVariantTreeProvider(repo, treeWalk);
 		}
 	}
 
