@@ -1,5 +1,7 @@
 /******************************************************************************
  *  Copyright (c) 2012 GitHub Inc.
+ *  Copyright (c) 2014, Obeo.
+ *  
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -20,6 +22,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.internal.job.RuleUtil;
+import org.eclipse.egit.core.internal.merge.StrategyRecursiveModel;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -59,7 +62,8 @@ public class StashApplyOperation implements IEGitOperation {
 							.getValidOpenProjects(repository);
 					pm.worked(1);
 					Git.wrap(repository).stashApply()
-							.setStashRef(commit.name()).call();
+							.setStashRef(commit.name())
+							.setStrategy(new StrategyRecursiveModel()).call();
 					pm.worked(1);
 					ProjectUtil.refreshValidProjects(validProjects,
 							new SubProgressMonitor(pm, 1));
