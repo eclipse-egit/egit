@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "67591f73_6101ef42",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/MylynBranchNameProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-02-28T12:50:11Z",
+      "side": 1,
+      "message": "you should use the local variable taskKey here",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_5f8f7186",
         "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/MylynBranchNameProvider.java",
         "patchSetId": 10
