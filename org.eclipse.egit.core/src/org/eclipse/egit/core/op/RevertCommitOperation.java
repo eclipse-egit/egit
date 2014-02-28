@@ -1,5 +1,7 @@
 /******************************************************************************
  *  Copyright (c) 2011 GitHub Inc.
+ *  Copyright (c) 2014, Obeo.
+ *  
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -23,6 +25,7 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
+import org.eclipse.egit.core.internal.merge.StrategyRecursiveModel;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.MergeResult;
@@ -82,7 +85,8 @@ public class RevertCommitOperation implements IEGitOperation {
 
 				pm.subTask(MessageFormat.format(
 						CoreText.RevertCommitOperation_reverting, commit.name()));
-				RevertCommand command = new Git(repo).revert().include(commit);
+				RevertCommand command = new Git(repo).revert().include(commit)
+						.setStrategy(new StrategyRecursiveModel());
 				try {
 					newHead = command.call();
 					reverted = command.getRevertedRefs();
