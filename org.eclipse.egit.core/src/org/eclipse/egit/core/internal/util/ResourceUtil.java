@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2011, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
- * Copyright (C) 2012, 2013 Laurent Goubet <laurent.goubet@obeo.fr>
+ * Copyright (C) 2012, 2014 Laurent Goubet <laurent.goubet@obeo.fr>
  * Copyright (C) 2012, Gunnar Wagenknecht <gunnar@wagenknecht.org>
  *
  * All rights reserved. This program and the accompanying materials
@@ -134,6 +134,27 @@ public class ResourceUtil {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IPath path = new Path(repository.getWorkTree().getAbsolutePath()).append(repoRelativePath);
 		return root.getContainerForLocation(path);
+	}
+
+	/**
+	 * Returns a resource handle for this path in the workspace. Note that
+	 * neither the resource nor the result need exist in the workspace : this
+	 * may return inexistant or otherwise non-accessible IResources.
+	 *
+	 * @param path
+	 *            Path for which we need a resource handle.
+	 * @return The resource handle for the given path in the workspace.
+	 */
+	public static IResource getResourceHandleForLocation(IPath path) {
+		final IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace()
+				.getRoot();
+
+		final IResource resource;
+		if (path.segmentCount() > 1)
+			resource = workspaceRoot.getFile(path);
+		else
+			resource = workspaceRoot.getProject(path.toString());
+		return resource;
 	}
 
 	/**
