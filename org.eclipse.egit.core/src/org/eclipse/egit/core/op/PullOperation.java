@@ -30,6 +30,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
+import org.eclipse.egit.core.internal.merge.StrategyRecursiveModel;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.MergeResult;
@@ -90,6 +91,7 @@ public class PullOperation implements IEGitOperation {
 						pull.setProgressMonitor(new EclipseGitProgressTransformer(
 								new SubProgressMonitor(mymonitor, 1)));
 						pull.setTimeout(timeout);
+						pull.setStrategy(new StrategyRecursiveModel());
 						pullResult = pull.call();
 						results.put(repository, pullResult);
 					} catch (DetachedHeadException e) {
