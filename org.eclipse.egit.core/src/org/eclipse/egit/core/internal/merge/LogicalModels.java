@@ -146,6 +146,8 @@ public final class LogicalModels {
 	@SuppressWarnings("unchecked")
 	public static <T> T findAdapter(Set<IResource> model, Class<T> adapterClass)
 			throws CoreException {
+		if (model.isEmpty())
+			return null;
 		final IResource[] modelArray = model
 				.toArray(new IResource[model.size()]);
 		final IModelProviderDescriptor[] descriptors = ModelProvider
