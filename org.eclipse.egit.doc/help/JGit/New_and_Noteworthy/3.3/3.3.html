@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<title>JGit 3.2 New and Noteworthy</title>
+		<title>JGit 3.3 New and Noteworthy</title>
 		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
 	</head>
 	<body>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
-				<th style="width: 100%" align="center" colspan="3">JGit 3.2 New and Noteworthy</th>
+				<th style="width: 100%" align="center" colspan="3">JGit 3.3 New and Noteworthy</th>
 			</tr>
 			<tr>
 				<td style="width: 20%" align="left"></td>
@@ -27,28 +27,34 @@
 		</table><hr/>
 		<h1 id="Features">Features</h1>
 		<ul>
-			<li>Interactive rebase</li>
-			<li>Support for rebase.autostash</li>
-			<li>Add recursive variant of Config.getNames() methods</li>
-		</ul>
-		<h2 id="Commands">Commands</h2>
-		<ul>
-			<li>Added the git-describe implementation</li>
+			<li>Add symlink support to JGit (Java 7 only, including newer Windows versions provided the user has SeCreateSymbolicLinkPrivilege).</li>
+			<li>Abstraction for HTTP connections and alternate implementation using Apache HttpClient</li>
+			<li>Use branch.&lt;x&gt;.mergeoptions and merge.ff as defaults for merging</li>
+			<li>Support fetch.prune and remote.&lt;name&gt;.prune to set prune mode when fetching</li>
+			<li>Add git checkout --orphan implementation</li>
+			<li>Suppport the GIT_CONFIG_NOSYSTEM environment variable</li>
+			<li>Include entries for directories for archive command</li>
+			<li>Prepend a specified prefix to all entry filenames for archive command</li>
+			<li>Add delete support to FS</li>
+			<li>Ban dangerous ref names on Windows</li>
+			<li>Allow programmatic remote configuration for PullCommand</li>
 		</ul>
 		<h2 id="Command_Line">Command Line</h2>
 		<ul>
-			<li>status command supports --porcelain</li>
-			<li>fetch command supports --tags</li>
-			<li>added describe command</li>
-			<li>list all supported formats in archive command's help</li>
-			<li>add support for --version</li>
+			<li>Add option --millis / -m to debug-show-dir-cache command</li>
+		</ul>
+		<h2 id="Performance_Improvements">Performance Improvements</h2>
+		<ul>
+			<li>Use fileAttributes to get more attributes in one go on Java 7</li>
+			<li>Non-Fast-Forward Ref-Updates: Omit isMergedInto() calls</li>
 		</ul>
 		<h2 id="Build_and_Release_Engineering">Build and Release Engineering</h2>
 		<ul>
-			<li>Updated Jetty to 7.6.14.v20131031</li>
-			<li>Updated to Ant 1.9.2</li>
-			<li>Introduced Kepler and Luna target platform</li>
-			<li>Updated build to use Tycho 0.19</li>
+			<li>Update Kepler target platform to use Kepler SR2 orbit R-build</li>
+			<li>Update Luna target platform to use Luna M5 orbit repository</li>
+			<li>Update com.jcraft.jsch to 0.1.50</li>
+			<li>Update commons-compress to 1.6</li>
+			<li>Upgrade javaewah to version 0.7.9</li>
 		</ul><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
