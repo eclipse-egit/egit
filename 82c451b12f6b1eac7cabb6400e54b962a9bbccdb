@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_9f6a770a",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/MylynBranchNameProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-03-03T19:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67591f73_5f1491ce",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_bf1a0df9",
         "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/MylynBranchNameProvider.java",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2014-02-27T22:06:54Z",
       "side": 1,
       "message": "I\u0027d rather name this ActiveTaskBranchNameProvider since Mylyn... doesn\u0027t really describe what functionality this class provides",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_3f59ab86",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/MylynBranchNameProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-03-03T19:39:12Z",
+      "side": 1,
+      "message": "Done.\nI took the MylynCommitMessageProvider class name in the same package as an example.",
+      "parentUuid": "67591f73_bf1a0df9",
       "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_71c7d789",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/MylynBranchNameProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-03-03T19:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67591f73_6101ef42",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_5f8f7186",
         "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/MylynBranchNameProvider.java",
         "patchSetId": 10
@@ -64,6 +118,41 @@
       "writtenOn": "2014-02-27T22:06:54Z",
       "side": 1,
       "message": "we should ensure that the suggested branch name doesn\u0027t end with a delimiter like \"_\"",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_31e8bfee",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/MylynBranchNameProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-03-03T19:39:12Z",
+      "side": 1,
+      "message": "What is the reason? Just more human readable or this there some source code reason?\nI added a trim() which should do a good job. Do you have something more like an advanced regex in mind?",
+      "parentUuid": "67591f73_5f8f7186",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_91454b6c",
+        "filename": "org.eclipse.egit.ui/schema/branchNameProvider.exsd",
+        "patchSetId": 10
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-03-03T19:39:12Z",
+      "side": 1,
+      "message": "Compare exsd file with other exsd files.\nSaw that the other sometimes use \nname\u003d\"%BranchNameProviderExtension-point.name\".\nWhat is the correct variant?",
       "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_7110777e",
+        "filename": "org.eclipse.egit.ui/schema/branchNameProvider.exsd",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-03-03T19:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67591f73_1f67b944",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_3f38bd89",
         "filename": "org.eclipse.egit.ui/schema/branchNameProvider.exsd",
         "patchSetId": 10
@@ -98,6 +205,24 @@
       "writtenOn": "2014-02-27T22:06:54Z",
       "side": 1,
       "message": "style nit: trailing whitespace, more below",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_511d7399",
+        "filename": "org.eclipse.egit.ui/schema/branchNameProvider.exsd",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-03-03T19:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67591f73_3f38bd89",
       "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -121,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_f12487e6",
+        "filename": "org.eclipse.egit.ui/schema/branchNameProvider.exsd",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-03-03T19:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67591f73_cac29d7b",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_1f3b3987",
         "filename": "org.eclipse.egit.ui/schema/branchNameProvider.exsd",
         "patchSetId": 10
@@ -132,6 +275,75 @@
       "writtenOn": "2014-02-27T22:06:54Z",
       "side": 1,
       "message": "this won\u0027t reach 3.3: s/3.3.0/3.4.0/",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_11201bd0",
+        "filename": "org.eclipse.egit.ui/schema/branchNameProvider.exsd",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-03-03T19:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67591f73_1f3b3987",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_115bfb59",
+        "filename": "org.eclipse.egit.ui/schema/branchNameProvider.exsd",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-03-03T19:39:12Z",
+      "side": 1,
+      "message": "I compare this exsd file with others and detected that this example is mostly missing.\nCan I remove it?",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_b1920f5b",
+        "filename": "org.eclipse.egit.ui/schema/branchNameProvider.exsd",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-03-03T19:39:12Z",
+      "side": 1,
+      "message": "Same default content here which is missing on other exsd files.\nCan I remove it or do I have to provide information?",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_11849b18",
+        "filename": "org.eclipse.egit.ui/schema/branchNameProvider.exsd",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-03-03T19:39:12Z",
+      "side": 1,
+      "message": "Other exsd file have a copyright note at the end.\nI guess it this needed here too, isn\u0027t it?",
       "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -155,6 +367,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_3f724b06",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IBranchNameProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-03-03T19:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67591f73_5f4771f5",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_5f35b18d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IBranchNameProvider.java",
         "patchSetId": 10
@@ -172,6 +402,24 @@
     },
     {
       "key": {
+        "uuid": "67591f73_1f6f8721",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IBranchNameProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-03-03T19:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67591f73_5f35b18d",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_7f44f5f1",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IBranchNameProvider.java",
         "patchSetId": 10
@@ -183,6 +431,24 @@
       "writtenOn": "2014-02-27T22:06:54Z",
       "side": 1,
       "message": "I think the interface shouldn\u0027t disclose how you intend to use it but just provide an abstraction, hence\n\ns/for the Creation wizard//",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67591f73_7f7843e4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IBranchNameProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2515
+      },
+      "writtenOn": "2014-03-03T19:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67591f73_7f44f5f1",
       "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
