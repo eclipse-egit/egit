@@ -28,6 +28,7 @@ import org.eclipse.compare.structuremergeviewer.Differencer;
 import org.eclipse.compare.structuremergeviewer.ICompareInput;
 import org.eclipse.compare.structuremergeviewer.IDiffContainer;
 import org.eclipse.compare.structuremergeviewer.IDiffElement;
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -42,6 +43,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.merge.DirCacheResourceVariantTreeProvider;
 import org.eclipse.egit.core.internal.merge.GitResourceVariantTreeSubscriber;
@@ -50,6 +52,7 @@ import org.eclipse.egit.core.internal.merge.LogicalModels;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.internal.storage.WorkingTreeFileRevision;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.EditableRevision;
@@ -253,12 +256,19 @@ public class GitMergeEditorInput extends CompareEditorInput {
 				final Iterator<IProject> projectIterator = projects.iterator();
 				while (!foundMatchInWS && projectIterator.hasNext()) {
 					final IProject project = projectIterator.next();
-					if (project.getLocation().isPrefixOf(path)) {
-						final IPath projectRelativePath = path
-								.removeFirstSegments(project.getLocation()
-										.segmentCount());
-						resourcesInOperation.add(project
-								.getFile(projectRelativePath));
+					final IPath projectLocation = project.getLocation();
+					if (projectLocation.equals(path)) {
+						resourcesInOperation
+								.addAll(getConflictingFilesFrom(project));
+						foundMatchInWS = true;
+					} else if (project.getLocation().isPrefixOf(path)) {
+						final IResource resource = ResourceUtil
+								.getResourceForLocation(path);
+						if (resource instanceof IContainer)
+							resourcesInOperation
+									.addAll(getConflictingFilesFrom((IContainer) resource));
+						else
+							resourcesInOperation.add(resource);
 						foundMatchInWS = true;
 					}
 				}
@@ -337,6 +347,31 @@ public class GitMergeEditorInput extends CompareEditorInput {
 			throw new InvocationTargetException(e);
 		}
 		return null;
+	}
+
+	private Set<IResource> getConflictingFilesFrom(IContainer container)
+			throws IOException {
+		final Set<IResource> conflictingResources = new LinkedHashSet<IResource>();
+		final RepositoryMapping mapping = RepositoryMapping
+				.getMapping(container);
+		final IndexDiffData indexDiffData = org.eclipse.egit.core.Activator
+				.getDefault().getIndexDiffCache()
+				.getIndexDiffCacheEntry(mapping.getRepository()).getIndexDiff();
+		if (indexDiffData != null) {
+			final IPath containerPath = container.getLocation();
+			final IPath workDirPrefix = new Path(mapping.getWorkTree()
+					.getCanonicalPath());
+			for (String conflicting : indexDiffData.getConflicting()) {
+				final IPath resourcePath = workDirPrefix.append(conflicting);
+				if (containerPath.isPrefixOf(resourcePath)) {
+					final IPath containerRelativePath = resourcePath
+							.removeFirstSegments(containerPath.segmentCount());
+					conflictingResources.add(container
+							.getFile(containerRelativePath));
+				}
+			}
+		}
+		return conflictingResources;
 	}
 
 	private ISynchronizationContext prepareSynchronizationContext(
