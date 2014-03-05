@@ -377,6 +377,11 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		// let's create a stable branch temporarily so
 		// that we push two branches to remote
 		String newRefName = "refs/heads/stable";
+		createBranch(myRepository, newRefName);
+	}
+
+	protected static void createBranch(Repository myRepository,
+			String newRefName) throws IOException {
 		RefUpdate updateRef = myRepository.updateRef(newRefName);
 		Ref sourceBranch = myRepository.getRef("refs/heads/master");
 		ObjectId startAt = sourceBranch.getObjectId();
