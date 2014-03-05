@@ -102,6 +102,10 @@ public class RefContentAssistProvider {
 					result.add(ref);
 		} catch (RuntimeException e) {
 			throw e;
+		} catch (InvocationTargetException e) {
+			Throwable cause = e.getCause();
+			Activator.handleError(cause.getMessage(), cause, true);
+			return result;
 		} catch (Exception e) {
 			Activator.handleError(e.getMessage(), e, true);
 			return result;
