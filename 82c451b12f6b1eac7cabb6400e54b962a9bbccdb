@@ -159,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2753a756_985cd5c7",
+        "filename": "org.eclipse.egit.ui/schema/branchNameProvider.exsd",
+        "patchSetId": 10
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-03-06T09:54:31Z",
+      "side": 1,
+      "message": "When I look into the existing schemas for the platform I indeed see that the name attribute is not externalised. So it seems that our cloneSourceProvider should be changed.",
+      "parentUuid": "67591f73_91454b6c",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_1f67b944",
         "filename": "org.eclipse.egit.ui/schema/branchNameProvider.exsd",
         "patchSetId": 10
@@ -316,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "2753a756_18bc4555",
+        "filename": "org.eclipse.egit.ui/schema/branchNameProvider.exsd",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-03-06T09:54:31Z",
+      "side": 1,
+      "message": "The platform schemas have examples. But I would not object if you deleted it.",
+      "parentUuid": "67591f73_115bfb59",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_b1920f5b",
         "filename": "org.eclipse.egit.ui/schema/branchNameProvider.exsd",
         "patchSetId": 10
@@ -327,6 +363,24 @@
       "writtenOn": "2014-03-03T19:39:12Z",
       "side": 1,
       "message": "Same default content here which is missing on other exsd files.\nCan I remove it or do I have to provide information?",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_78c101c9",
+        "filename": "org.eclipse.egit.ui/schema/branchNameProvider.exsd",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-03-06T09:54:31Z",
+      "side": 1,
+      "message": "I\u0027m ok with removing it.",
+      "parentUuid": "67591f73_b1920f5b",
       "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
