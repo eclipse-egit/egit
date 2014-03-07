@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "2753a756_725598ca",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/MylynBranchNameProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-03-07T20:59:42Z",
+      "side": 1,
+      "message": "since a branch name with trailing \"_\" looks ugly",
+      "parentUuid": "67591f73_31e8bfee",
+      "revId": "82c451b12f6b1eac7cabb6400e54b962a9bbccdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_91454b6c",
         "filename": "org.eclipse.egit.ui/schema/branchNameProvider.exsd",
         "patchSetId": 10
