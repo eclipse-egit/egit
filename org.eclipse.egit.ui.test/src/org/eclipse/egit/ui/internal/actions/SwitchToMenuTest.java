@@ -14,12 +14,16 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.io.File;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
@@ -69,6 +73,25 @@ public class SwitchToMenuTest extends LocalRepositoryTestCase {
 	@Test
 	public void selectionWithProj1() throws Exception {
 		createProjectAndCommitToRepository();
+		selectionWithProj1Common();
+	}
+
+	@Test
+	public void selectionWithProj1AndReflog() throws Exception {
+		File gitDir = createProjectAndCommitToRepository();
+
+		// create additional reflog entries
+		Git git = new Git(lookupRepository(gitDir));
+		git.checkout().setName("stable").call();
+		git.checkout().setName("master").call();
+
+		selectionWithProj1Common();
+
+		// delete reflog again to not confuse other tests
+		new File(gitDir, Constants.LOGS + "/" + Constants.HEAD).delete();
+	}
+
+	private void selectionWithProj1Common() {
 		IProject project = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(PROJ1);
 		when(selectionService.getSelection()).thenReturn(
