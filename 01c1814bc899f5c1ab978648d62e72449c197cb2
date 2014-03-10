@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2753a756_d872c205",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/CommonUtilsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-03-10T23:48:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2753a756_d8f5a2f7",
+      "revId": "01c1814bc899f5c1ab978648d62e72449c197cb2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2753a756_98fccae6",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/CommonUtilsTest.java",
         "patchSetId": 1
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "2753a756_b86f0e20",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/CommonUtilsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-03-10T23:48:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2753a756_7801f677",
+      "revId": "01c1814bc899f5c1ab978648d62e72449c197cb2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2753a756_38077e91",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
         "patchSetId": 1
@@ -64,6 +100,24 @@
       "writtenOn": "2014-03-10T23:17:11Z",
       "side": 1,
       "message": "Is that -0?",
+      "revId": "01c1814bc899f5c1ab978648d62e72449c197cb2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_187d5ad5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-03-10T23:48:56Z",
+      "side": 1,
+      "message": ":-)",
+      "parentUuid": "2753a756_38077e91",
       "revId": "01c1814bc899f5c1ab978648d62e72449c197cb2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
