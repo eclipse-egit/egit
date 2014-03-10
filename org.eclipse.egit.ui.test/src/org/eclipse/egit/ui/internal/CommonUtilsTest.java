@@ -10,6 +10,7 @@
 package org.eclipse.egit.ui.internal;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +31,11 @@ public class CommonUtilsTest {
 		assertSortedLike("a", "asdf");
 		assertSortedLike("aaa", "bbb");
 		assertSortedLike("1", "2");
+
+		assertEquals(0, cmp("", ""));
+		assertEquals(0, cmp("a", "a"));
+		assertTrue(cmp("", "a") < 0);
+		assertTrue(cmp("a", "") > 0);
 	}
 
 	@Test
@@ -75,5 +81,9 @@ public class CommonUtilsTest {
 		Collections.shuffle(tmp, new Random(1));
 		Collections.sort(tmp, CommonUtils.STRING_ASCENDING_COMPARATOR);
 		assertEquals(expected, tmp);
+	}
+
+	private static int cmp(String a, String b) {
+		return CommonUtils.STRING_ASCENDING_COMPARATOR.compare(a, b);
 	}
 }
