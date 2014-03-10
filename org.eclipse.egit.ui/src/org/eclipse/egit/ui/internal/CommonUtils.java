@@ -40,13 +40,14 @@ public class CommonUtils {
 	/**
 	 * Instance of comparator that sorts strings in ascending alphabetical and
 	 * numerous order (also known as natural order), case insensitive.
+	 * 
+	 * The comparator is guaranteed to return a non-zero value if
+	 * string1.equals(String2) returns false
 	 */
 	public static final Comparator<String> STRING_ASCENDING_COMPARATOR = new Comparator<String>() {
 		public int compare(String o1, String o2) {
-			if (o1.length() == 0)
-				return -1;
-			if (o2.length() == 0)
-				return 1;
+			if (o1.length() == 0 || o2.length() == 0)
+				return o1.length() - o2.length();
 
 			LinkedList<String> o1Parts = splitIntoDigitAndNonDigitParts(o1);
 			LinkedList<String> o2Parts = splitIntoDigitAndNonDigitParts(o2);
@@ -75,7 +76,13 @@ public class CommonUtils {
 					return result;
 			}
 
-			return -1;
+			if (o2PartsIterator.hasNext())
+				return -1;
+			else {
+				// strings are equal (in the Object.equals() sense)
+				// or only differ in case and/or leading zeros
+				return o1.compareTo(o2);
+			}
 		}
 	};
 
