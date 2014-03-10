@@ -43,8 +43,12 @@ public class CommonUtils {
 	 */
 	public static final Comparator<String> STRING_ASCENDING_COMPARATOR = new Comparator<String>() {
 		public int compare(String o1, String o2) {
-			if (o1.length() == 0)
-				return -1;
+			if (o1.length() == 0) {
+				if (o2.length() == 0)
+					return 0;
+				else
+					return -1;
+			}
 			if (o2.length() == 0)
 				return 1;
 
@@ -75,7 +79,10 @@ public class CommonUtils {
 					return result;
 			}
 
-			return -1;
+			if (o2PartsIterator.hasNext())
+				return -1;
+			else
+				return 0;
 		}
 	};
 
