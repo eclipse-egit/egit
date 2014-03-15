@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -101,6 +102,8 @@ public class RepositorySearchDialog extends WizardPage {
 
 	private final IEclipsePreferences prefs = InstanceScope.INSTANCE
 			.getNode(Activator.getPluginId());
+
+	private Set<String> checkedItems = Collections.<String> emptySet();
 
 	private static final class ContentProvider implements ITreeContentProvider {
 
@@ -299,7 +302,7 @@ public class RepositorySearchDialog extends WizardPage {
 			@Override
 			public boolean isElementVisible(Viewer viewer, Object element) {
 
-				if (getCheckedItems().contains(element))
+				if (checkedItems.contains(element))
 					return true;
 
 				return super.isElementVisible(viewer, element);
@@ -312,6 +315,10 @@ public class RepositorySearchDialog extends WizardPage {
 		fTreeViewer.addCheckStateListener(new ICheckStateListener() {
 
 			public void checkStateChanged(CheckStateChangedEvent event) {
+				// remember the current checked state for faster evaluation of
+				// the search filter (otherwise there are notable delays for
+				// large directories)
+				checkedItems = getCheckedItems();
 				enableOk();
 			}
 		});
