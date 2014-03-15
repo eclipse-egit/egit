@@ -156,7 +156,7 @@ public class PushBranchWizardTest extends LocalRepositoryTestCase {
 		repository.getConfig().setString(ConfigConstants.CONFIG_BRANCH_SECTION,
 				"foo", ConfigConstants.CONFIG_KEY_REMOTE, "fetch");
 		repository.getConfig().setString(ConfigConstants.CONFIG_BRANCH_SECTION,
-				"foo", ConfigConstants.CONFIG_KEY_MERGE, "refs/heads/foo");
+				"foo", ConfigConstants.CONFIG_KEY_MERGE, "refs/heads/foo-on-remote");
 		repository.getConfig().setBoolean(
 				ConfigConstants.CONFIG_BRANCH_SECTION, "foo",
 				ConfigConstants.CONFIG_KEY_REBASE, true);
@@ -168,6 +168,7 @@ public class PushBranchWizardTest extends LocalRepositoryTestCase {
 		PushBranchWizardTester wizard = PushBranchWizardTester.startWizard(
 				selectProject(), "foo");
 		wizard.selectRemote("fetch");
+		wizard.assertBranchName("foo-on-remote");
 		wizard.assertRebaseSelected();
 		assertFalse(wizard.isUpstreamConfigOverwriteWarningShown());
 		wizard.selectMerge();
@@ -177,9 +178,12 @@ public class PushBranchWizardTest extends LocalRepositoryTestCase {
 		wizard.next();
 		wizard.finish();
 
-		assertBranchPushed("foo", remoteRepository);
+		ObjectId remoteId = remoteRepository.resolve("foo-on-remote");
+		ObjectId localId = repository.resolve("foo");
+		assertEquals(localId, remoteId);
+
 		// Still configured
-		assertBranchConfig("foo", "fetch", "refs/heads/foo", "true");
+		assertBranchConfig("foo", "fetch", "refs/heads/foo-on-remote", "true");
 	}
 
 	private void removeExistingRemotes() throws IOException {
