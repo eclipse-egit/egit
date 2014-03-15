@@ -23,7 +23,10 @@ public class UserPasswordCredentials {
 	 */
 	public UserPasswordCredentials(String user, String password) {
 		this.user = user;
-		this.password = password;
+		if (password != null && password.length() > 0)
+			this.password = password;
+		else
+			this.password = null;
 	}
 
 	/**
