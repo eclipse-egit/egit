@@ -18,7 +18,6 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.SWTUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
@@ -138,8 +137,7 @@ public class SwitchToMenu extends ContributionItem implements
 			String currentBranch = repository.getFullBranch();
 			Map<String, Ref> localBranches = repository.getRefDatabase().getRefs(
 					Constants.R_HEADS);
-			TreeMap<String, Ref> sortedRefs = new TreeMap<String, Ref>(
-					CommonUtils.STRING_ASCENDING_COMPARATOR);
+			TreeMap<String, Ref> sortedRefs = new TreeMap<String, Ref>();
 
 			// Add the MAX_NUM_MENU_ENTRIES most recently used branches first
 			List<ReflogEntry> reflogEntries = repository.getReflogReader(
