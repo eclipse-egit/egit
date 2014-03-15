@@ -7,6 +7,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.push;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.text.MessageFormat;
@@ -90,6 +91,12 @@ public class PushBranchWizardTester {
 	public void enterBranchName(String branchName) {
 		wizard.textWithLabel(UIText.PushBranchPage_BranchNameLabel).setText(
 				branchName);
+	}
+
+	public void assertBranchName(String branchName) {
+		assertEquals(branchName,
+				wizard.textWithLabel(UIText.PushBranchPage_BranchNameLabel)
+						.getText());
 	}
 
 	public void deselectConfigureUpstream() {
