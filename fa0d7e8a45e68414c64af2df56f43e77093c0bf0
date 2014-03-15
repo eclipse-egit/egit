@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2753a756_110a492c",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/CommonUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-03-15T16:46:55Z",
+      "side": 1,
+      "message": "Why this?",
+      "revId": "fa0d7e8a45e68414c64af2df56f43e77093c0bf0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
