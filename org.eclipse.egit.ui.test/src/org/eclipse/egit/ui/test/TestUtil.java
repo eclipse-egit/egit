@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 SAP AG and others.
+ * Copyright (c) 2010, 2014 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -47,11 +47,13 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.osgi.service.localization.BundleLocalization;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.waits.ICondition;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
@@ -63,6 +65,8 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
@@ -514,6 +518,26 @@ public class TestUtil {
 				description.appendText("Wait for view with title " + viewTitle);
 			}
 		});
+	}
+
+	public static SWTBotShell botForShellStartingWith(final String titlePrefix) {
+		SWTWorkbenchBot bot = new SWTWorkbenchBot();
+
+		Matcher<Shell> matcher = new TypeSafeMatcher<Shell>() {
+			@Override
+			protected boolean matchesSafely(Shell item) {
+				String title = item.getText();
+				return title != null && title.startsWith(titlePrefix);
+			}
+
+			public void describeTo(Description description) {
+				description.appendText("Shell with title starting with '"
+						+ titlePrefix + "'");
+			}
+		};
+
+		Shell shell = bot.widget(matcher);
+		return new SWTBotShell(shell);
 	}
 
 	public static SWTBotView showView(final String viewId) {

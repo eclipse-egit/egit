@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2011, 2014 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -151,10 +151,8 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 		if (branch == null)
 			return null;
 
-		String remoteName;
-		if (ObjectId.isId(branch))
-			remoteName = Constants.DEFAULT_REMOTE_NAME;
-		else
+		String remoteName = null;
+		if (!ObjectId.isId(branch))
 			remoteName = repository.getConfig().getString(
 					ConfigConstants.CONFIG_BRANCH_SECTION, branch,
 					ConfigConstants.CONFIG_REMOTE_SECTION);
@@ -169,12 +167,22 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 		}
 
 		RemoteConfig configuredConfig = null;
+		RemoteConfig defaultConfig = null;
 		for (RemoteConfig config : allRemotes) {
 			if (remoteName != null && config.getName().equals(remoteName))
 				configuredConfig = config;
+			if (config.getName().equals(Constants.DEFAULT_REMOTE_NAME))
+				defaultConfig = config;
 		}
 
-		return configuredConfig;
+		if (configuredConfig != null)
+			return configuredConfig;
+
+		if (defaultConfig != null)
+			if (!defaultConfig.getPushRefSpecs().isEmpty())
+				return defaultConfig;
+
+		return null;
 	}
 
 	/**
