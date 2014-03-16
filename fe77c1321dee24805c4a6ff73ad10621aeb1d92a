@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2753a756_b1ad5df7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-03-16T11:22:28Z",
+      "side": 1,
+      "message": "Change the description. This could be reads like this is what you do, rather than than the issue you try to fix.\n\nOtherwise ok",
+      "revId": "fe77c1321dee24805c4a6ff73ad10621aeb1d92a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
