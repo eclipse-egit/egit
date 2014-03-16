@@ -30,6 +30,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.api.PullResult;
@@ -61,6 +62,7 @@ public class PullOperationUI extends JobChangeAdapter {
 		int timeout = Activator.getDefault().getPreferenceStore().getInt(
 				UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 		pullOperation = new PullOperation(repositories, timeout);
+		pullOperation.setCredentialsProvider(new EGitCredentialsProvider());
 		for (Repository repository : repositories)
 			results.put(repository, NOT_TRIED_STATUS);
 	}
