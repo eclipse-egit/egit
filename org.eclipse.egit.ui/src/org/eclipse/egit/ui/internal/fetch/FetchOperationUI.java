@@ -25,6 +25,7 @@ import org.eclipse.egit.core.op.FetchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.FetchResult;
@@ -97,6 +98,8 @@ public class FetchOperationUI {
 	 */
 	public FetchResult execute(IProgressMonitor monitor) throws CoreException {
 		try {
+			if (op.getCredentialsProvider() == null)
+				op.setCredentialsProvider(new EGitCredentialsProvider());
 			op.run(monitor);
 			return op.getOperationResult();
 		} catch (InvocationTargetException e) {

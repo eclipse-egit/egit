@@ -313,7 +313,7 @@ class SourceBranchPage extends WizardPage {
 			int timeout = Activator.getDefault().getPreferenceStore().getInt(
 					UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 			listRemoteOp = new ListRemoteOperation(db, uri, timeout);
-			if (credentials != null)
+			if (credentials != null && credentials.isValid())
 				listRemoteOp
 						.setCredentialsProvider(new EGitCredentialsProvider(
 								credentials.getUser(), credentials
