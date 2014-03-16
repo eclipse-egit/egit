@@ -16,6 +16,24 @@
       "revId": "c1fd758196642fd3362efe6dc1e8ca6e351ce38c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_d1229160",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2014-03-16T07:34:29Z",
+      "side": 1,
+      "message": "Thanks for pointing me to a much better alternative. Works indeed much faster without any additional code. New patch set coming...",
+      "parentUuid": "2753a756_b18efd3b",
+      "revId": "c1fd758196642fd3362efe6dc1e8ca6e351ce38c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
