@@ -203,7 +203,10 @@ public class MultiPullResultDialog extends Dialog {
 		});
 		tv.setLabelProvider(new LabelProvider());
 		Table table = tv.getTable();
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(table);
+		int linesToShow = Math.min(Math.max(results.size() + 1, 5), 15);
+		int heightHint = table.getItemHeight() * linesToShow;
+		GridDataFactory.fillDefaults().grab(true, true).hint(800, heightHint)
+				.applyTo(table);
 		// repository
 		TableColumn col = new TableColumn(table, SWT.NONE);
 		col.setWidth(200);
