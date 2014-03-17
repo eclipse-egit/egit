@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2753a756_0a1a12fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-03-17T22:09:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2753a756_8a5102b3",
+      "revId": "9b4b918eea41ef02400d8685c120b90d2fbed85f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2753a756_4ab24a7c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/MultiPullResultDialog.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-03-17T22:08:40Z",
       "side": 1,
       "message": "there is no need for an extra empty line, so remove +1",
+      "revId": "9b4b918eea41ef02400d8685c120b90d2fbed85f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_6a274e3f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/MultiPullResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-03-17T22:09:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2753a756_4ab24a7c",
       "revId": "9b4b918eea41ef02400d8685c120b90d2fbed85f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
