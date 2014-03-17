@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2753a756_717d85d4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-03-17T21:33:32Z",
+      "side": 1,
+      "message": "s/zo/to/",
+      "revId": "4566415d0579541af663501446f928b6ce620c03",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_31730d0c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-03-17T21:33:32Z",
+      "side": 1,
+      "message": "style nit: trailing whitespaces",
+      "revId": "4566415d0579541af663501446f928b6ce620c03",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
