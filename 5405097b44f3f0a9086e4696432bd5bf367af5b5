@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2753a756_1ae37997",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/securestorage/UserPasswordCredentials.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2014-03-21T07:08:12Z",
+      "side": 1,
+      "message": "why can\u0027t a password not of length 0? And even the user? I think that would not be very secure credentials ... but should we invent now in egit the restriction that user and password must be non-empty?",
+      "revId": "5405097b44f3f0a9086e4696432bd5bf367af5b5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
