@@ -16,6 +16,24 @@
       "revId": "5405097b44f3f0a9086e4696432bd5bf367af5b5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_2951d9df",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/securestorage/UserPasswordCredentials.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2014-03-24T12:55:52Z",
+      "side": 1,
+      "message": "Although HTTP Basic Authentication scheme supports that user and password has length 0 (an empty string) (see [1]) and I think that in EGit it\u0027s ok to insist on non-empty values here. Maybe the cleanest solution would be to add a checkbox to the UI named \"anonymous access\". We need something like that to differentiate between the situation where the user has not entered credentials at all and wants to access the server without user,password (anonymously) ... and the situation where the user wants to explicitly contact the server with an empty password and/or user.\n\nBut adding that is a feature which should go in another change.\n\nFor now I only suggest to rename this method to isEmpty().\n\n[1] http://www.ietf.org/rfc/rfc2617.txt (end of page 4)",
+      "parentUuid": "2753a756_1ae37997",
+      "revId": "5405097b44f3f0a9086e4696432bd5bf367af5b5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
