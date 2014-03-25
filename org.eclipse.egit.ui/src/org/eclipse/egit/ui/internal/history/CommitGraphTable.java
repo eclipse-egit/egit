@@ -890,10 +890,14 @@ class CommitGraphTable {
 
 			popupMgr.add(modifyManager);
 
-			if (selectionSize == 1)
+			if (selectionSize == 1) {
 				modifyManager.add(getCommandContributionItem(
 						HistoryViewCommands.REWORD,
 						UIText.GitHistoryPage_rewordMenuItem));
+				modifyManager.add(getCommandContributionItem(
+						HistoryViewCommands.EDIT,
+						UIText.GitHistoryPage_editMenuItem));
+			}
 
 			if (selectionSize >= 2)
 				modifyManager.add(getCommandContributionItem(
