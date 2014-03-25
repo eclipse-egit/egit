@@ -81,6 +81,15 @@
           <product>org.eclipse.sdk.ide</product>
           <argLine>${ui.test.vmargs}</argLine>
           <application>org.eclipse.ui.ide.workbench</application>
+          <dependency-resolution>
+            <extraRequirements>
+              <requirement>
+                <type>eclipse-feature</type>
+                <id>org.eclipse.jgit.java7</id>
+                <versionRange>0.0.0</versionRange>
+              </requirement>
+            </extraRequirements>
+          </dependency-resolution>
           <dependencies>
             <dependency>
               <type>p2-installable-unit</type>
