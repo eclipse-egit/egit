@@ -10,6 +10,7 @@ package org.eclipse.egit.core.test.op;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.Arrays;
@@ -92,6 +93,21 @@ public class DeletePathsOperationTest extends DualRepositoryTestCase {
 		assertFalse("File should have been deleted", outsideOfProject.exists());
 		jobSchedulingAssertion
 				.assertScheduled("Delete of file outside of workspace should have cause an index diff cache job.");
+	}
+
+	@Test
+	public void testDeleteSymlink() throws Exception {
+		IResource resource = testUtils.addFileToProject(project, "file.txt", "Hello world 1");
+		File symlinkA = new File(project.getLocation().toOSString(), "link.txt");
+		FileUtils.createSymLink(symlinkA, "file.txt");
+
+		IPath linkPath = project.getFile("link.txt").getLocation();
+		deletePaths(Arrays.asList(linkPath));
+
+		File file = resource.getFullPath().toFile();
+		File link = linkPath.toFile();
+		assertTrue("File should not have been deleted", file.exists());
+		assertTrue("Link should have been deleted", link.exists());
 	}
 
 	private static void initIndexDiffCache(Repository repository)
