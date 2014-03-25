@@ -83,6 +83,9 @@ public class HistoryViewCommands {
 	/** reword a commit's message */
 	public static final String REWORD = "org.eclipse.egit.ui.history.Reword"; //$NON-NLS-1$
 
+	/** edit an existing commit */
+	public static final String EDIT = "org.eclipse.egit.ui.history.Edit"; //$NON-NLS-1$
+
 	/** revert a commit */
 	public static final String REVERT = "org.eclipse.egit.ui.history.Revert"; //$NON-NLS-1$
 
