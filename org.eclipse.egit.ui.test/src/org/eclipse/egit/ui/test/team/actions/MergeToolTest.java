@@ -22,15 +22,12 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.op.MergeOperation;
 import org.eclipse.egit.ui.common.CompareEditorTester;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
-import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.MergeResult.MergeStatus;
 import org.eclipse.jgit.junit.TestRepository;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.Before;
@@ -79,11 +76,6 @@ public class MergeToolTest extends LocalRepositoryTestCase {
 		ContextMenuHelper.clickContextMenu(packageExplorer,
 				util.getPluginLocalizedValue("TeamMenu.label"),
 				util.getPluginLocalizedValue("MergeToolAction.label"));
-
-		SWTBotShell shell = bot.shell(UIText.MergeModeDialog_DialogTitle)
-				.activate();
-		shell.bot().radio(UIText.MergeModeDialog_MergeMode_2_Label).click();
-		shell.bot().button(IDialogConstants.OK_LABEL).click();
 
 		CompareEditorTester compareEditor = CompareEditorTester
 				.forTitleContaining("Merging");
