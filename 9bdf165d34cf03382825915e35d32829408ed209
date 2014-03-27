@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2753a756_26b8dc61",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/EditCommitOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-03-27T00:21:10Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "9bdf165d34cf03382825915e35d32829408ed209",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_06bdd851",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/EditCommitOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-03-27T00:21:10Z",
+      "side": 1,
+      "message": "no braces around single line block",
+      "revId": "9bdf165d34cf03382825915e35d32829408ed209",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
