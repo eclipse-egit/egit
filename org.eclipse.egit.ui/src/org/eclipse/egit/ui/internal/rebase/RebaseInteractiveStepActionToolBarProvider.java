@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.rebase;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -154,12 +155,14 @@ public class RebaseInteractiveStepActionToolBarProvider {
 		itemMoveUp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				RebaseInteractivePlan.PlanElement selectedEntry = getSingleSelectedTodoLine(false);
-				if (selectedEntry == null)
-					return;
-				if (selectedEntry.getElementType() != ElementType.TODO)
-					return;
-				view.getCurrentPlan().moveTodoEntryUp(selectedEntry);
+				List<PlanElement> selectedRebaseTodoLines = getSelectedRebaseTodoLines();
+				for (PlanElement planElement : selectedRebaseTodoLines) {
+					if (planElement.getElementType() != ElementType.TODO)
+						return;
+					view.getCurrentPlan().moveTodoEntryUp(planElement);
+					mapActionItemsToSelection(view.planTreeViewer
+							.getSelection());
+				}
 			}
 		});
 
@@ -170,12 +173,15 @@ public class RebaseInteractiveStepActionToolBarProvider {
 		itemMoveDown.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				RebaseInteractivePlan.PlanElement selectedEntry = getSingleSelectedTodoLine(false);
-				if (selectedEntry == null)
-					return;
-				if (selectedEntry.getElementType() != ElementType.TODO)
-					return;
-				view.getCurrentPlan().moveTodoEntryDown(selectedEntry);
+				List<PlanElement> selectedRebaseTodoLines = getSelectedRebaseTodoLines();
+				Collections.reverse(selectedRebaseTodoLines);
+				for (PlanElement planElement : selectedRebaseTodoLines) {
+					if (planElement.getElementType() != ElementType.TODO)
+						return;
+					view.getCurrentPlan().moveTodoEntryDown(planElement);
+					mapActionItemsToSelection(view.planTreeViewer
+							.getSelection());
+				}
 			}
 		});
 	}
@@ -275,27 +281,39 @@ public class RebaseInteractiveStepActionToolBarProvider {
 
 			if (structured.size() > 1) {
 				// multi selection
-				setMoveItemsEnabled(false);
 				ElementAction type = firstSelectedEntry.getPlanElementAction();
+				PlanElement entry = null;
 				for (Iterator iterator = structured.iterator(); iterator
 						.hasNext();) {
 					Object selectedObj = iterator.next();
 					if (!(selectedObj instanceof PlanElement))
 						continue;
-					PlanElement entry = (PlanElement) selectedObj;
+					entry = (PlanElement) selectedObj;
 					if (type != entry.getPlanElementAction()) {
 						unselectAllActionItemsExecpt(null);
 						break;
 					}
 				}
+				enableMoveButtons(structured, firstSelectedEntry, entry);
 				return;
 			}
 
+			enableMoveButtons(structured, firstSelectedEntry,
+					firstSelectedEntry);
+
 			// single selection
-			setMoveItemsEnabled(true);
 			unselectAllActionItemsExecpt(getItemFor(firstSelectedEntry
 					.getPlanElementAction()));
 		}
+	}
+
+	private void enableMoveButtons(IStructuredSelection selectedEntries,
+			PlanElement firstSelectedEntry, PlanElement lastSelectedEntry) {
+		List<PlanElement> list = view.getCurrentPlan().getList();
+		itemMoveDown.setEnabled(list.indexOf(firstSelectedEntry)
+				+ selectedEntries.size() < list.size());
+		itemMoveUp.setEnabled(list.indexOf(lastSelectedEntry)
+				- selectedEntries.size() > 0);
 	}
 
 	private ToolItem getItemFor(ElementAction type) {
