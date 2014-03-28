@@ -23,10 +23,12 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.RewordCommitOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.internal.UIRepositoryUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.handler.SelectionHandler;
 import org.eclipse.egit.ui.internal.rebase.CommitMessageEditorDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.widgets.Shell;
@@ -46,6 +48,15 @@ public class RewordHandler extends SelectionHandler {
 			return null;
 
 		Shell shell = getPart(event).getSite().getShell();
+
+		try {
+			if (!UIRepositoryUtils.handleUncommittedFiles(repo, shell))
+				return null;
+		} catch (GitAPIException e) {
+			Activator.logError(e.getMessage(), e);
+			return null;
+		}
+
 		String newMessage = promptCommitMessage(shell, commit);
 		if (newMessage == null)
 			return null;
