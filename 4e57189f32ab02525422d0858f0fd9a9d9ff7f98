@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2753a756_c618f5aa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/blame/BlameOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-03-29T16:26:41Z",
+      "side": 1,
+      "message": "Then we lose information on why blame did not work. I think it\u0027s better to log and abort now when we know the reason",
+      "revId": "4e57189f32ab02525422d0858f0fd9a9d9ff7f98",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
