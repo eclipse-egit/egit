@@ -47,4 +47,25 @@ public class SecureStoreUtils {
 		}
 		return true;
 	}
+
+	/**
+	 * @param uri
+	 * @param rethrow
+	 *            if {@code true} this method will rethrow exceptions raised by
+	 *            the underlying implementation
+	 * @return credentials stored in secure store for given uri
+	 */
+	public static UserPasswordCredentials getCredentials(final URIish uri,
+			boolean rethrow) {
+		try {
+			return org.eclipse.egit.core.Activator.getDefault()
+					.getSecureStore().getCredentials(uri);
+		} catch (StorageException e) {
+			Activator.logError(
+					UIText.EGitCredentialsProvider_errorReadingCredentials, e);
+			if (rethrow)
+				throw new RuntimeException(e.getMessage(), e);
+		}
+		return null;
+	}
 }
