@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2753a756_467a2562",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-03-29T21:27:45Z",
+      "side": 1,
+      "message": "The change seems unrelated to this bug report",
+      "revId": "e5055f1f10f93ebe4295d75037bac475b6e0ff56",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_465185de",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveStepActionToolBarProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-03-29T21:27:45Z",
+      "side": 1,
+      "message": "When you move up all the A lines in\nA1\nA2\nB\nA3\n\nIt mixes up A1 and A2:\nA2\nA1\nA3\nB",
+      "revId": "e5055f1f10f93ebe4295d75037bac475b6e0ff56",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_265611d8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveStepActionToolBarProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-03-29T21:27:45Z",
+      "side": 1,
+      "message": "Movng down can similarily mix up elements",
+      "revId": "e5055f1f10f93ebe4295d75037bac475b6e0ff56",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_06578dd7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveStepActionToolBarProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-03-29T21:27:45Z",
+      "side": 1,
+      "message": "This method is no longer used.",
+      "revId": "e5055f1f10f93ebe4295d75037bac475b6e0ff56",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_666009af",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveStepActionToolBarProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-03-29T21:27:45Z",
+      "side": 1,
+      "message": "Maybe rename to \"lastSelectedEntry\" (keeping the \"entry\" name in the for loop)",
+      "revId": "e5055f1f10f93ebe4295d75037bac475b6e0ff56",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_86639dbb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveStepActionToolBarProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-03-29T21:27:45Z",
+      "side": 1,
+      "message": "the break statement can cause \"entry\" to not to contain the last selected entry after the for loop",
+      "revId": "e5055f1f10f93ebe4295d75037bac475b6e0ff56",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
