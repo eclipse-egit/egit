@@ -384,6 +384,10 @@ public class UIText extends NLS {
 	/** */
 	public static String GitDocument_errorResolveQuickdiff;
 
+	public static String GitDocument_ReloadJobError;
+
+	public static String GitDocument_ReloadJobName;
+
 	/** */
 	public static String GitHistoryPage_AllChangesInRepoHint;
 
