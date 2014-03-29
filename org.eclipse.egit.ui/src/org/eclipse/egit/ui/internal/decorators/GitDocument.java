@@ -15,6 +15,10 @@ import java.util.Map.Entry;
 import java.util.WeakHashMap;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -54,6 +58,9 @@ class GitDocument extends Document implements RefsChangedListener {
 	private ObjectId lastBlob;
 
 	private ListenerHandle myRefsChangedHandle;
+
+	// Job that reloads the document when something has changed
+	private Job reloadJob;
 
 	private boolean disposed;
 
@@ -265,19 +272,31 @@ class GitDocument extends Document implements RefsChangedListener {
 			myRefsChangedHandle.remove();
 			myRefsChangedHandle = null;
 		}
+		cancelReloadJob();
 		disposed = true;
 	}
 
-	public void onRefsChanged(final RefsChangedEvent e) {
-		Activator.getDefault().getWorkbench().getDisplay().asyncExec(new Runnable() {
-			public void run() {
+	public void onRefsChanged(final RefsChangedEvent event) {
+		cancelReloadJob();
+
+		reloadJob = new Job(UIText.GitDocument_ReloadJobName) {
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
 				try {
 					populate();
-				} catch (Exception e1) {
-					Activator.logError(UIText.GitDocument_errorRefreshQuickdiff, e1);
+					return Status.OK_STATUS;
+				} catch (IOException e) {
+					return Activator.createErrorStatus(
+							UIText.GitDocument_ReloadJobError, e);
 				}
 			}
-		});
+		};
+		reloadJob.schedule();
+	}
+
+	private void cancelReloadJob() {
+		if (reloadJob != null && reloadJob.getState() != Job.NONE)
+			reloadJob.cancel();
 	}
 
 	private Repository getRepository() {
