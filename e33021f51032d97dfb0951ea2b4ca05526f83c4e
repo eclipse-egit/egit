@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2753a756_46a86562",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitCompareFileRevisionEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-03-29T19:38:53Z",
+      "side": 1,
+      "message": "Done. Moved both required methods to new OpenWorkspaceVersionEnabled interface, which both Revisions now implement",
+      "parentUuid": "2753a756_a6a221ab",
+      "revId": "e33021f51032d97dfb0951ea2b4ca05526f83c4e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2753a756_068f8d3a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitCompareFileRevisionEditorInput.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-03-29T18:00:00Z",
       "side": 1,
       "message": "SaveablesCompareEditorInput.handleMenuAboutToShow (the code that adds \"Open\" to local file compare context menu) uses the \"file\" group (not \"save\"). It looks like you can also get rid of the separator when you use the \"file\" group.",
+      "revId": "e33021f51032d97dfb0951ea2b4ca05526f83c4e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_26ad7172",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitCompareFileRevisionEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-03-29T19:38:53Z",
+      "side": 1,
+      "message": "Done. Works nicely.",
+      "parentUuid": "2753a756_068f8d3a",
       "revId": "e33021f51032d97dfb0951ea2b4ca05526f83c4e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
