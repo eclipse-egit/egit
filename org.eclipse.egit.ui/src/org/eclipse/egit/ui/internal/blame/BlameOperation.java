@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.blame;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +41,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jgit.api.BlameCommand;
 import org.eclipse.jgit.blame.BlameResult;
 import org.eclipse.jgit.diff.RawTextComparator;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.widgets.Shell;
@@ -199,6 +201,13 @@ public class BlameOperation implements IEGitOperation {
 				.setFollowFileRenames(true).setFilePath(path);
 		if (startCommit != null)
 			command.setStartCommit(startCommit);
+		else {
+			try {
+				command.setStartCommit(repository.resolve(Constants.HEAD));
+			} catch (IOException e) {
+				// Let the command handle this later
+			}
+		}
 		if (Activator.getDefault().getPreferenceStore()
 				.getBoolean(UIPreferences.BLAME_IGNORE_WHITESPACE))
 			command.setTextComparator(RawTextComparator.WS_IGNORE_ALL);
