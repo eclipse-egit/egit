@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2753a756_26c731df",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/OpenWorkspaceVersionEnabled.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-03-30T20:13:49Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "1bdf600c6f2402146330f3eb3ee6bc2ddb513bd7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
