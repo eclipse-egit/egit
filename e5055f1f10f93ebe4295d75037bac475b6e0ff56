@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2753a756_fc03084a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-03-31T13:56:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2753a756_467a2562",
+      "revId": "e5055f1f10f93ebe4295d75037bac475b6e0ff56",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2753a756_465185de",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveStepActionToolBarProvider.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-03-29T21:27:45Z",
       "side": 1,
       "message": "When you move up all the A lines in\nA1\nA2\nB\nA3\n\nIt mixes up A1 and A2:\nA2\nA1\nA3\nB",
+      "revId": "e5055f1f10f93ebe4295d75037bac475b6e0ff56",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_dc08c469",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveStepActionToolBarProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-03-31T13:56:01Z",
+      "side": 1,
+      "message": "Good catch!\n\nI now just do not allow to move lines if the first line is selected when moving up or when the last line is selectd when moving down.",
+      "parentUuid": "2753a756_465185de",
       "revId": "e5055f1f10f93ebe4295d75037bac475b6e0ff56",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2753a756_3c0e2074",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveStepActionToolBarProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-03-31T13:56:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2753a756_265611d8",
+      "revId": "e5055f1f10f93ebe4295d75037bac475b6e0ff56",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2753a756_06578dd7",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveStepActionToolBarProvider.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2014-03-29T21:27:45Z",
       "side": 1,
       "message": "This method is no longer used.",
+      "revId": "e5055f1f10f93ebe4295d75037bac475b6e0ff56",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_9c476c71",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveStepActionToolBarProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-03-31T13:56:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2753a756_06578dd7",
       "revId": "e5055f1f10f93ebe4295d75037bac475b6e0ff56",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2753a756_1c3cfcea",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveStepActionToolBarProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-03-31T13:56:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2753a756_666009af",
+      "revId": "e5055f1f10f93ebe4295d75037bac475b6e0ff56",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2753a756_86639dbb",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveStepActionToolBarProvider.java",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2014-03-29T21:27:45Z",
       "side": 1,
       "message": "the break statement can cause \"entry\" to not to contain the last selected entry after the for loop",
+      "revId": "e5055f1f10f93ebe4295d75037bac475b6e0ff56",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_3c37400a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveStepActionToolBarProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-03-31T13:56:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2753a756_86639dbb",
       "revId": "e5055f1f10f93ebe4295d75037bac475b6e0ff56",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
