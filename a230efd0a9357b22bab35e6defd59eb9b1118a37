@@ -16,6 +16,24 @@
       "revId": "a230efd0a9357b22bab35e6defd59eb9b1118a37",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_2046f275",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveStepActionToolBarProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-04-01T10:37:20Z",
+      "side": 1,
+      "message": "ooh, I shouldn\u0027t push such changes just before the next meeting...\n\nThank you very much!",
+      "parentUuid": "2753a756_578f6db4",
+      "revId": "a230efd0a9357b22bab35e6defd59eb9b1118a37",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
