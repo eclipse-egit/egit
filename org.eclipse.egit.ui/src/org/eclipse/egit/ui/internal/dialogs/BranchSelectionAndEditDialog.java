@@ -260,6 +260,7 @@ public class BranchSelectionAndEditDialog extends
 				}
 			}
 		});
+		renameButton.setEnabled(false);
 		return renameButton;
 	}
 
@@ -292,6 +293,7 @@ public class BranchSelectionAndEditDialog extends
 				}
 			}
 		});
+		deleteButton.setEnabled(false);
 		return deleteButton;
 	}
 
