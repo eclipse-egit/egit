@@ -36,8 +36,9 @@ public final class UIRepositoryUtils {
 	 *            the repository
 	 * @param shell
 	 *            the parent shell for opening the dialog
-	 * @return true if the user cleaned up the uncommitted changes and the
-	 *         previous action may continue
+	 * @return true if the git status was clean or it was dirty and the user
+	 *         cleaned up the uncommitted changes and the previous action may
+	 *         continue
 	 * @throws GitAPIException
 	 *             if there was an error checking the repository
 	 */
@@ -56,6 +57,6 @@ public final class UIRepositoryUtils {
 			cleanupUncomittedChangesDialog.open();
 			return cleanupUncomittedChangesDialog.shouldContinue();
 		} else
-			return false;
+			return true;
 	}
 }
