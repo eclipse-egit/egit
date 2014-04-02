@@ -16,6 +16,24 @@
       "revId": "8a7197bacdb231ce510f4081a17f035c9633fa99",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_e9e7c51d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-04-02T13:03:31Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "2753a756_9dc94351",
+      "revId": "8a7197bacdb231ce510f4081a17f035c9633fa99",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }

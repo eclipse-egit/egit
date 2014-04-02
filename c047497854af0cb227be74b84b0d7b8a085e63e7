@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2753a756_e6a6d242",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/ActiveTaskBranchNameProvider.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-04-02T13:03:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2753a756_ddcbbb4b",
+      "revId": "c047497854af0cb227be74b84b0d7b8a085e63e7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2753a756_bdd087f5",
         "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/ActiveTaskBranchNameProvider.java",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2014-03-20T23:03:56Z",
       "side": 1,
       "message": "\u0027-\u0027 is slightly better than \"-\", and you don\u0027t need the commen",
+      "revId": "c047497854af0cb227be74b84b0d7b8a085e63e7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_46b69e71",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/ActiveTaskBranchNameProvider.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-04-02T13:03:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2753a756_bdd087f5",
       "revId": "c047497854af0cb227be74b84b0d7b8a085e63e7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2753a756_26b1ea76",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-04-02T13:03:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2753a756_fddaff12",
+      "revId": "c047497854af0cb227be74b84b0d7b8a085e63e7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2753a756_5dbfaba7",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
         "patchSetId": 11
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "2753a756_869f16e7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-04-02T13:03:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2753a756_5dbfaba7",
+      "revId": "c047497854af0cb227be74b84b0d7b8a085e63e7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2753a756_3dbc77b1",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
         "patchSetId": 11
@@ -81,6 +153,24 @@
       "writtenOn": "2014-03-20T23:03:56Z",
       "side": 1,
       "message": "I see we aren\u0027t consistent about i18n here, so I guess we can let this one slip too, or?\n\n(I do hope no-one translates EGit to Swedish...)",
+      "revId": "c047497854af0cb227be74b84b0d7b8a085e63e7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_66a2c22c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-04-02T13:03:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2753a756_3dbc77b1",
       "revId": "c047497854af0cb227be74b84b0d7b8a085e63e7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
