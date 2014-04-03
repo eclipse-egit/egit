@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2753a756_7a341165",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/credentials/LoginService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-04-03T08:14:07Z",
+      "side": 0,
+      "message": "UIText.LoginService_storingCredentialsFailed seems to be unused after this change",
+      "revId": "df90f993af83abcfe818e595daf61dba08fdb4c6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_9a312578",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/credentials/LoginService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-04-03T08:14:07Z",
+      "side": 0,
+      "message": "UIText.LoginService_readingCredentialsFailed seems to be unused after this change",
+      "revId": "df90f993af83abcfe818e595daf61dba08fdb4c6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
