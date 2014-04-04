@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2753a756_c038cb89",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/command/EditHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-04-04T15:41:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2753a756_60bc5fa1",
+      "revId": "080ca34a79d28a7a5c2d890b203f8481afc4b0dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2753a756_a085d7e9",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/EditHandler.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2014-04-04T15:38:53Z",
       "side": 1,
       "message": "we need to open the views in a UIJob using the same scheduling rule as used by the command EditHandler to prevent that this happens concurrently",
+      "revId": "080ca34a79d28a7a5c2d890b203f8481afc4b0dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_202f0743",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/EditHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-04-04T15:41:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2753a756_a085d7e9",
       "revId": "080ca34a79d28a7a5c2d890b203f8481afc4b0dd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
