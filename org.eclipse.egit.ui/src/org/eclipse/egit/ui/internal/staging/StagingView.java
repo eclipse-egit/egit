@@ -2046,7 +2046,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		if (form.isDisposed())
 			return;
 		if (repository == null) {
-			asyncExec(new Runnable() {
+			syncExec(new Runnable() {
 				public void run() {
 					clearRepository();
 				}
@@ -2059,7 +2059,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		final boolean repositoryChanged = currentRepository != repository;
 
-		asyncExec(new Runnable() {
+		syncExec(new Runnable() {
 
 			public void run() {
 				if (form.isDisposed())
@@ -2413,8 +2413,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 			refsChangedListener.remove();
 	}
 
-	private void asyncExec(Runnable runnable) {
-		PlatformUI.getWorkbench().getDisplay().asyncExec(runnable);
+	private void syncExec(Runnable runnable) {
+		PlatformUI.getWorkbench().getDisplay().syncExec(runnable);
 	}
 
 }
