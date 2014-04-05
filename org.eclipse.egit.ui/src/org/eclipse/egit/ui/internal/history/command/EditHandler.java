@@ -76,8 +76,8 @@ public class EditHandler extends AbstractHistoryCommandHandler {
 							.getPage();
 					final StagingView stagingView = (StagingView) workbenchPage
 							.showView(StagingView.VIEW_ID);
-					stagingView.setAmending(true);
 					stagingView.reload(repository);
+					stagingView.setAmending(true);
 					RebaseInteractiveView rebaseView = (RebaseInteractiveView) workbenchPage
 							.showView(RebaseInteractiveView.VIEW_ID);
 					rebaseView.setInput(repository);
