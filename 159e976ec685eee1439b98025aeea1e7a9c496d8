@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2753a756_9188e300",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullOperationUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-06T14:01:51Z",
+      "side": 1,
+      "message": "Could you extract the body of this into its own method? It\u0027s not very readable here.",
+      "revId": "159e976ec685eee1439b98025aeea1e7a9c496d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_f17f9f57",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullOperationUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-06T14:01:51Z",
+      "side": 1,
+      "message": "Hm, could we increment inside handleUncommittedChanges, preferably before calling start() on the nested pullOperationUI?",
+      "revId": "159e976ec685eee1439b98025aeea1e7a9c496d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_51b76bbb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullOperationUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-06T14:01:51Z",
+      "side": 1,
+      "message": "How about instead of overriding done here, adding a variant of the start method where you can pass a custom IJobChangeListener? That way, it doesn\u0027t need to be overriden and is clearly separate.",
+      "revId": "159e976ec685eee1439b98025aeea1e7a9c496d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_f1a83f64",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullOperationUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-06T14:01:51Z",
+      "side": 1,
+      "message": "Isn\u0027t it possible that results is concurrently modified? (Not sure by which thread done() is invoked.)",
+      "revId": "159e976ec685eee1439b98025aeea1e7a9c496d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
