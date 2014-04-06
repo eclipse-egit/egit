@@ -68,16 +68,18 @@ public class GitQuickDiffProvider implements IQuickDiffReferenceProvider {
 					"(GitQuickDiffProvider) file: " + resource); //$NON-NLS-1$
 		if (resource == null)
 			return null;
-		RepositoryProvider provider = RepositoryProvider.getProvider(resource
-				.getProject());
-		if (provider != null) {
-			try {
-				document = GitDocument.create(resource);
-			} catch (IOException e) {
-				Activator.error(UIText.QuickDiff_failedLoading, e);
-			}
-			return document;
-		} else {
+
+		// Document must only be created once
+		if (document == null)
+			document = createDocument(resource);
+		return document;
+	}
+
+	private static GitDocument createDocument(IResource resource) {
+		try {
+			return GitDocument.create(resource);
+		} catch (IOException e) {
+			Activator.error(UIText.QuickDiff_failedLoading, e);
 			return null;
 		}
 	}
