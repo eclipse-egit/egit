@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2753a756_b1f36795",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/reflog/ReflogView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-06T13:19:54Z",
+      "side": 1,
+      "message": "Instead of copying this from CommitGraphTable, could you extract it somewhere?\n\nE.g. create a new class ResetMenu in org.eclipse.egit.ui.internal.actions. It would also make sense to move ResetHandler.performReset there, so that the reflog package does not need things from the history package. (Well, the command IDs do still contain \"history\" then, but that\u0027s ok.)",
+      "revId": "b7490bffcc2fa4701c06d5c627261cab60c40e03",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753a756_91f62384",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/reflog/command/ResetHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-06T13:19:54Z",
+      "side": 1,
+      "message": "Could you add \" and others\" at the end? That way, when someone edits this in the future, there is no need to also edit this.",
+      "revId": "b7490bffcc2fa4701c06d5c627261cab60c40e03",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
