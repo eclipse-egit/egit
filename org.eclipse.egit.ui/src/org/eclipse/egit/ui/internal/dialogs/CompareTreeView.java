@@ -10,6 +10,7 @@
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Robin Stocker <robin@nibor.org> - ignore linked resources
  *    Robin Stocker <robin@nibor.org> - Unify workbench and PathNode tree code
+ *    Marc Khouzam <marc.khouzam@ericsson.com> - Add compare mode toggle
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
@@ -147,6 +148,8 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 
 	private IWorkbenchAction showEqualsAction;
 
+	private IWorkbenchAction compareModeAction;
+
 	private Map<IPath, FileNode> fileNodes = new HashMap<IPath, FileNode>();
 
 	private Map<IPath, ContainerNode> containerNodes = new HashMap<IPath, ContainerNode>();
@@ -188,6 +191,22 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 		actionsToDispose.add(reuseCompareEditorAction);
 		getViewSite().getActionBars().getMenuManager().add(
 				reuseCompareEditorAction);
+
+		compareModeAction = new BooleanPrefAction(
+				(IPersistentPreferenceStore) Activator.getDefault()
+						.getPreferenceStore(),
+				UIPreferences.TREE_COMPARE_COMPARE_MODE,
+				UIText.CompareTreeView_CompareModeTooltip) {
+			@Override
+			public void apply(boolean value) {
+				// nothing, just switch the preference
+			}
+		};
+		compareModeAction.setImageDescriptor(UIIcons.ELCL16_COMPARE_VIEW);
+		compareModeAction.setEnabled(true);
+		actionsToDispose.add(compareModeAction);
+		getViewSite().getActionBars().getToolBarManager()
+				.add(compareModeAction);
 
 		showEqualsAction = new BooleanPrefAction(
 				(IPersistentPreferenceStore) Activator.getDefault()
@@ -236,14 +255,27 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 			tv.setExpandedState(selected, !tv.getExpandedState(selected));
 		} else if (selected instanceof FileNode) {
 			FileNode fileNode = (FileNode) selected;
-			left = getTypedElement(fileNode, fileNode.leftRevision, getBaseVersion());
-			right = getTypedElement(fileNode, fileNode.rightRevision, getCompareVersion());
 
-			GitCompareFileRevisionEditorInput compareInput = new GitCompareFileRevisionEditorInput(
-					left, right, PlatformUI.getWorkbench()
-							.getActiveWorkbenchWindow().getActivePage());
-			CompareUtils.openInCompare(PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow().getActivePage(), compareInput);
+			boolean compareMode = Activator.getDefault().getPreferenceStore()
+					.getBoolean(UIPreferences.TREE_COMPARE_COMPARE_MODE);
+
+			if (compareMode) {
+				left = getTypedElement(fileNode, fileNode.leftRevision,
+						getBaseVersion());
+				right = getTypedElement(fileNode, fileNode.rightRevision,
+						getCompareVersion());
+
+				GitCompareFileRevisionEditorInput compareInput = new GitCompareFileRevisionEditorInput(
+						left, right, PlatformUI.getWorkbench()
+								.getActiveWorkbenchWindow().getActivePage());
+				CompareUtils.openInCompare(PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getActivePage(),
+						compareInput);
+			} else {
+				IFile file = fileNode.getFile();
+				if (file != null)
+					openFileInEditor(file.getLocation().toOSString());
+			}
 		}
 	}
 
