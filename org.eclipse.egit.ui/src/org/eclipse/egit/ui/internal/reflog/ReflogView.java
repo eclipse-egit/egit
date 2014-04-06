@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2012 Chris Aniszczyk <caniszczyk@gmail.com> and others.
+ * Copyright (c) 2011, 2014 Chris Aniszczyk <caniszczyk@gmail.com> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -15,6 +15,8 @@ package org.eclipse.egit.ui.internal.reflog;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
@@ -25,6 +27,7 @@ import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.internal.history.command.HistoryViewCommands;
 import org.eclipse.egit.ui.internal.reflog.ReflogViewContentProvider.ReflogInput;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.action.ControlContribution;
@@ -48,6 +51,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.api.ResetCommand.ResetType;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
@@ -88,6 +92,8 @@ import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ImageHyperlink;
+import org.eclipse.ui.menus.CommandContributionItem;
+import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.part.IShowInTarget;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.part.ViewPart;
@@ -350,7 +356,35 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		menuManager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		Tree tree = refLogTableTreeViewer.getTree();
 		tree.setMenu(menuManager.createContextMenu(tree));
+
+		MenuManager resetManager = new MenuManager(
+				UIText.GitHistoryPage_ResetMenuLabel, UIIcons.RESET, "Reset"); //$NON-NLS-1$
+		menuManager.add(resetManager);
+
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put(HistoryViewCommands.RESET_MODE, ResetType.SOFT.name());
+		resetManager.add(getCommandContributionItem(HistoryViewCommands.RESET,
+				UIText.GitHistoryPage_ResetSoftMenuLabel, parameters));
+		parameters = new HashMap<String, String>();
+		parameters.put(HistoryViewCommands.RESET_MODE, ResetType.MIXED.name());
+		resetManager.add(getCommandContributionItem(HistoryViewCommands.RESET,
+				UIText.GitHistoryPage_ResetMixedMenuLabel, parameters));
+		parameters = new HashMap<String, String>();
+		parameters.put(HistoryViewCommands.RESET_MODE, ResetType.HARD.name());
+		resetManager.add(getCommandContributionItem(HistoryViewCommands.RESET,
+				UIText.GitHistoryPage_ResetHardMenuLabel, parameters));
+
 		getSite().registerContextMenu(POPUP_MENU_ID, menuManager, refLogTableTreeViewer);
+	}
+
+	private CommandContributionItem getCommandContributionItem(
+			String commandId, String menuLabel, Map<String, String> parameters) {
+		CommandContributionItemParameter parameter = new CommandContributionItemParameter(
+				this.getSite(), commandId, commandId,
+				CommandContributionItem.STYLE_PUSH);
+		parameter.label = menuLabel;
+		parameter.parameters = parameters;
+		return new CommandContributionItem(parameter);
 	}
 
 	@Override

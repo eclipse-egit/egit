@@ -64,6 +64,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jgit.api.ResetCommand.ResetType;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -834,17 +835,20 @@ class CommitGraphTable {
 				popupMgr.add(resetManager);
 
 				Map<String, String> parameters = new HashMap<String, String>();
-				parameters.put(HistoryViewCommands.RESET_MODE, "Soft"); //$NON-NLS-1$
+				parameters.put(HistoryViewCommands.RESET_MODE,
+						ResetType.SOFT.name());
 				resetManager.add(getCommandContributionItem(
 						HistoryViewCommands.RESET,
 						UIText.GitHistoryPage_ResetSoftMenuLabel, parameters));
 				parameters = new HashMap<String, String>();
-				parameters.put(HistoryViewCommands.RESET_MODE, "Mixed"); //$NON-NLS-1$
+				parameters.put(HistoryViewCommands.RESET_MODE,
+						ResetType.MIXED.name());
 				resetManager.add(getCommandContributionItem(
 						HistoryViewCommands.RESET,
 						UIText.GitHistoryPage_ResetMixedMenuLabel, parameters));
 				parameters = new HashMap<String, String>();
-				parameters.put(HistoryViewCommands.RESET_MODE, "Hard"); //$NON-NLS-1$
+				parameters.put(HistoryViewCommands.RESET_MODE,
+						ResetType.HARD.name());
 				resetManager.add(getCommandContributionItem(
 						HistoryViewCommands.RESET,
 						UIText.GitHistoryPage_ResetHardMenuLabel, parameters));

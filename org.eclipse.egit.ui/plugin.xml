@@ -972,6 +972,24 @@
             </and>
          </activeWhen>
       </handler>
+            <handler
+            commandId="org.eclipse.egit.ui.history.Reset">
+         <class
+               class="org.eclipse.egit.ui.internal.reflog.command.ResetHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count
+                     value="1">
+               </count>
+               <iterate>
+                  <adapt
+                        type="org.eclipse.jgit.lib.ReflogEntry">
+                  </adapt>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
       <handler
             commandId="org.eclipse.egit.ui.team.Commit">
          <class
