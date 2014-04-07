@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0756a345_bd6267b6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveDoubleClickListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-04-07T22:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0756a345_fd917f24",
+      "revId": "41988b651899bf101fd143dc1f4a8f42e4869003",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0756a345_5d834be1",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveView.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-04-07T22:31:47Z",
       "side": 1,
       "message": "inline the listener as an anonymous class then you don\u0027t need to make this package visible",
+      "revId": "41988b651899bf101fd143dc1f4a8f42e4869003",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_9d5fa3f2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-04-07T22:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0756a345_5d834be1",
       "revId": "41988b651899bf101fd143dc1f4a8f42e4869003",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
