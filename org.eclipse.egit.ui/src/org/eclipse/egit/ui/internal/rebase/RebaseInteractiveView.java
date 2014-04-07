@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013 SAP AG.
+ * Copyright (c) 2013, 2014 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,6 +9,9 @@
  *    Tobias Pfeifer (SAP AG) - initial implementation
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.rebase;
+
+import java.io.IOException;
+import java.util.Collection;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
@@ -29,6 +32,8 @@ import org.eclipse.egit.ui.internal.commands.shared.AbstractRebaseCommandHandler
 import org.eclipse.egit.ui.internal.commands.shared.ContinueRebaseCommand;
 import org.eclipse.egit.ui.internal.commands.shared.ProcessStepsRebaseCommand;
 import org.eclipse.egit.ui.internal.commands.shared.SkipRebaseCommand;
+import org.eclipse.egit.ui.internal.commit.CommitEditor;
+import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -38,15 +43,22 @@ import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.window.ToolTip;
+import org.eclipse.jgit.lib.AbbreviatedObjectId;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.util.GitDateFormatter;
 import org.eclipse.jgit.util.GitDateFormatter.Format;
 import org.eclipse.swt.SWT;
@@ -214,6 +226,44 @@ public class RebaseInteractiveView extends ViewPart implements
 
 		setupListeners();
 		createLocalDragandDrop();
+		planTreeViewer.addDoubleClickListener(new IDoubleClickListener() {
+
+			public void doubleClick(DoubleClickEvent event) {
+				PlanElement element = (PlanElement) ((IStructuredSelection) event
+						.getSelection()).getFirstElement();
+				if (element == null)
+					return;
+
+				RepositoryCommit commit = loadCommit(element.getCommit());
+				if (commit != null)
+					CommitEditor.openQuiet(commit);
+
+			}
+
+			private RepositoryCommit loadCommit(
+					AbbreviatedObjectId abbreviatedObjectId) {
+				if (abbreviatedObjectId != null) {
+					RevWalk walk = new RevWalk(
+							RebaseInteractiveView.this.currentRepository);
+					try {
+						Collection<ObjectId> resolved = walk.getObjectReader()
+								.resolve(abbreviatedObjectId);
+						if (resolved.size() == 1) {
+							RevCommit commit = walk.parseCommit(resolved
+									.iterator().next());
+							return new RepositoryCommit(
+									RebaseInteractiveView.this.currentRepository,
+									commit);
+						}
+					} catch (IOException e) {
+						return null;
+					} finally {
+						walk.release();
+					}
+				}
+				return null;
+			}
+		});
 	}
 
 	private void createCommandToolBar(Form theForm, FormToolkit toolkit) {
