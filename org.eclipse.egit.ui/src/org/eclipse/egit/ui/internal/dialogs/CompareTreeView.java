@@ -165,6 +165,8 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 
 	private boolean showEquals = false;
 
+	private boolean partialMaps;
+
 	@Override
 	public void createPartControl(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);
@@ -491,7 +493,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 								throws InvocationTargetException,
 								InterruptedException {
 							try {
-								if (buildMaps)
+								if (buildMaps || partialMaps)
 									buildMaps(repo, baseCommit, compareCommit,
 											monitor);
 								PlatformUI.getWorkbench().getDisplay()
@@ -527,6 +529,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 		boolean useIndex = compareVersion.equals(INDEX_VERSION);
 		fileNodes.clear();
 		containerNodes.clear();
+		partialMaps = !showEquals;
 		boolean checkIgnored = false;
 		TreeWalk tw = new TreeWalk(repository);
 		try {
@@ -600,6 +603,8 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 					boolean equalContent = compareVersionIterator
 							.getEntryObjectId().equals(
 									baseVersionIterator.getEntryObjectId());
+					if (!showEquals && equalContent)
+						continue;
 					type = equalContent ? Type.FILE_BOTH_SIDES_SAME
 							: Type.FILE_BOTH_SIDES_DIFFER;
 				} else if (compareVersionIterator != null
