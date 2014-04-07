@@ -11,6 +11,7 @@
  *    Robin Stocker <robin@nibor.org> - ignore linked resources
  *    Robin Stocker <robin@nibor.org> - Unify workbench and PathNode tree code
  *    Marc Khouzam <marc.khouzam@ericsson.com> - Add compare mode toggle
+ *    Marc Khouzam <marc.khouzam@ericsson.com> - Skip expensive computations for equal content (bug 431610)
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
@@ -593,10 +594,30 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 						: compareVersionIterator.getEntryPathString();
 				IPath currentPath = new Path(repoRelativePath);
 
-				monitor.setTaskName(currentPath.toString());
+				Type type = null;
+				if (compareVersionIterator != null
+						&& baseVersionIterator != null) {
+					boolean equalContent = compareVersionIterator
+							.getEntryObjectId().equals(
+									baseVersionIterator.getEntryObjectId());
+					type = equalContent ? Type.FILE_BOTH_SIDES_SAME
+							: Type.FILE_BOTH_SIDES_DIFFER;
+				} else if (compareVersionIterator != null
+						&& baseVersionIterator == null) {
+					type = Type.FILE_DELETED;
+				} else if (compareVersionIterator == null
+						&& baseVersionIterator != null) {
+					type = Type.FILE_ADDED;
+				}
 
-				IFile file = ResourceUtil.getFileForLocation(repository,
+				IFile file = null;
+				if (type != Type.FILE_BOTH_SIDES_SAME) {
+					monitor.setTaskName(currentPath.toString());
+
+					file = ResourceUtil.getFileForLocation(repository,
 						repoRelativePath);
+				}
+
 				if (baseVersionIterator != null) {
 					if (baseCommit == null) {
 						if (file != null)
@@ -623,18 +644,6 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 					else
 						right = GitFileRevision.inIndex(repository,
 								repoRelativePath);
-				}
-
-				Type type = null;
-				if (compareVersionIterator != null && baseVersionIterator != null) {
-					boolean equalContent = compareVersionIterator
-							.getEntryObjectId().equals(
-									baseVersionIterator.getEntryObjectId());
-					type = equalContent ? Type.FILE_BOTH_SIDES_SAME : Type.FILE_BOTH_SIDES_DIFFER;
-				} else if (compareVersionIterator != null && baseVersionIterator == null) {
-					type = Type.FILE_DELETED;
-				} else if (compareVersionIterator == null && baseVersionIterator != null) {
-					type = Type.FILE_ADDED;
 				}
 
 				IPath containerPath = currentPath.removeLastSegments(1);
