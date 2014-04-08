@@ -33,6 +33,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.AdaptableFileTreeIterator;
+import org.eclipse.egit.core.ContainerTreeIterator;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.internal.storage.WorkingTreeFileRevision;
@@ -76,6 +77,9 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jgit.dircache.DirCacheIterator;
+import org.eclipse.jgit.errors.IncorrectObjectTypeException;
+import org.eclipse.jgit.errors.MissingObjectException;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -83,6 +87,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
+import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.NotIgnoredFilter;
@@ -524,6 +529,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 			throws InterruptedException, IOException {
 		monitor.beginTask(UIText.CompareTreeView_AnalyzingRepositoryTaskText,
 				IProgressMonitor.UNKNOWN);
+		long previousTimeMilliseconds = System.currentTimeMillis();
 		boolean useIndex = compareVersion.equals(INDEX_VERSION);
 		fileNodes.clear();
 		containerNodes.clear();
@@ -594,6 +600,25 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 						: compareVersionIterator.getEntryPathString();
 				IPath currentPath = new Path(repoRelativePath);
 
+				// Updating the progress bar is slow, so just sample it. To
+				// make sure slow compares are reflected in the progress
+				// monitor also update before comparing large files.
+				long currentTimeMilliseconds = System.currentTimeMillis();
+				long size1 = -1;
+				long size2 = -1;
+				if (compareVersionIterator != null
+						&& baseVersionIterator != null) {
+					size1 = getEntrySize(tw, compareVersionIterator);
+					size2 = getEntrySize(tw, baseVersionIterator);
+				}
+				final long REPORTSIZE = 100000;
+				if (size1 > REPORTSIZE
+						|| size2 > REPORTSIZE
+						|| currentTimeMilliseconds - previousTimeMilliseconds > 500) {
+					monitor.setTaskName(currentPath.toString());
+					previousTimeMilliseconds = currentTimeMilliseconds;
+				}
+
 				Type type = null;
 				if (compareVersionIterator != null
 						&& baseVersionIterator != null) {
@@ -612,7 +637,6 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 
 				IFile file = null;
 				if (type != Type.FILE_BOTH_SIDES_SAME) {
-					monitor.setTaskName(currentPath.toString());
 
 					file = ResourceUtil.getFileForLocation(repository,
 						repoRelativePath);
@@ -670,6 +694,23 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 		} finally {
 			tw.release();
 			monitor.done();
+		}
+	}
+
+	private long getEntrySize(TreeWalk tw, AbstractTreeIterator iterator)
+			throws MissingObjectException, IncorrectObjectTypeException,
+			IOException {
+		if (iterator instanceof ContainerTreeIterator)
+			return ((ContainerTreeIterator) iterator).getEntryContentLength();
+		if (iterator instanceof FileTreeIterator)
+			return ((FileTreeIterator) iterator).getEntryContentLength();
+		try {
+			return tw.getObjectReader().getObjectSize(
+					iterator.getEntryObjectId(), Constants.OBJ_BLOB);
+		} catch (MissingObjectException e) {
+			// in case the object is not stored as a blob and not
+			// one of the known iterator types above, say zero.
+			return 0;
 		}
 	}
 
