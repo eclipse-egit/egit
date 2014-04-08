@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_604b0803",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-04-08T10:11:58Z",
+      "side": 1,
+      "message": "Keep all footers together",
+      "revId": "cd25e6b8704d124437b37156ccfe3cd9ef7ad4e1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_80461cf9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-04-08T10:11:58Z",
+      "side": 1,
+      "message": "We don\u0027t need this extra field. It just confuses",
+      "revId": "cd25e6b8704d124437b37156ccfe3cd9ef7ad4e1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
