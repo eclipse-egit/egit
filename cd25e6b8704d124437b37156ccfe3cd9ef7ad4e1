@@ -33,6 +33,24 @@
       "revId": "cd25e6b8704d124437b37156ccfe3cd9ef7ad4e1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_60c668e3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 457
+      },
+      "writtenOn": "2014-04-08T10:20:39Z",
+      "side": 1,
+      "message": "I added it to avoid having to rebuild the full maps if we have done so once already.  The use case is if the user toggles \u0027show all content\u0027 multiple times; in that case, I wanted to avoid doing the full computation more than once.",
+      "parentUuid": "0756a345_80461cf9",
+      "revId": "cd25e6b8704d124437b37156ccfe3cd9ef7ad4e1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
