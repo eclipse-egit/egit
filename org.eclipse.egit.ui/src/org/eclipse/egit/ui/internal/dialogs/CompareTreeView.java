@@ -76,6 +76,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jgit.dircache.DirCacheIterator;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -524,6 +525,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 			throws InterruptedException, IOException {
 		monitor.beginTask(UIText.CompareTreeView_AnalyzingRepositoryTaskText,
 				IProgressMonitor.UNKNOWN);
+		long previousTimeMilliseconds = System.currentTimeMillis();
 		boolean useIndex = compareVersion.equals(INDEX_VERSION);
 		fileNodes.clear();
 		containerNodes.clear();
@@ -594,6 +596,29 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 						: compareVersionIterator.getEntryPathString();
 				IPath currentPath = new Path(repoRelativePath);
 
+				// Updating the progress bar is slow, so just sample it. To
+				// make sure slow compares are reflected in the progress
+				// monitor also update before comparing large files.
+				long currentTimeMilliseconds = System.currentTimeMillis();
+				long size1 = -1;
+				long size2 = -1;
+				if (compareVersionIterator != null
+						&& baseVersionIterator != null) {
+					size1 = tw.getObjectReader().getObjectSize(
+							compareVersionIterator.getEntryObjectId(),
+							Constants.OBJ_BLOB);
+					size2 = tw.getObjectReader().getObjectSize(
+							baseVersionIterator.getEntryObjectId(),
+							Constants.OBJ_BLOB);
+				}
+				final long REPORTSIZE = 100000;
+				if (size1 > REPORTSIZE
+						|| size2 > REPORTSIZE
+						|| currentTimeMilliseconds - previousTimeMilliseconds > 500) {
+					monitor.setTaskName(currentPath.toString());
+					previousTimeMilliseconds = currentTimeMilliseconds;
+				}
+
 				Type type = null;
 				if (compareVersionIterator != null
 						&& baseVersionIterator != null) {
@@ -612,7 +637,6 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 
 				IFile file = null;
 				if (type != Type.FILE_BOTH_SIDES_SAME) {
-					monitor.setTaskName(currentPath.toString());
 
 					file = ResourceUtil.getFileForLocation(repository,
 						repoRelativePath);
