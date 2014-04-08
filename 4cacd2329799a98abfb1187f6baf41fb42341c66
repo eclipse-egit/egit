@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_cb6835eb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 457
+      },
+      "writtenOn": "2014-04-08T12:54:11Z",
+      "side": 1,
+      "message": "I don\u0027t think there should be an else here or else it will only hit for removed or added elements.",
+      "revId": "4cacd2329799a98abfb1187f6baf41fb42341c66",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
