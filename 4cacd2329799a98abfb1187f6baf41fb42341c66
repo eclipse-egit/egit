@@ -16,6 +16,41 @@
       "revId": "4cacd2329799a98abfb1187f6baf41fb42341c66",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_06e6a422",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-08T18:06:08Z",
+      "side": 1,
+      "message": "+1.",
+      "parentUuid": "0756a345_cb6835eb",
+      "revId": "4cacd2329799a98abfb1187f6baf41fb42341c66",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_66120095",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-08T18:06:08Z",
+      "side": 1,
+      "message": "This just adds some more calls to setTaskName, I don\u0027t see any removed/changed lines.",
+      "revId": "4cacd2329799a98abfb1187f6baf41fb42341c66",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
