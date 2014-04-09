@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 SAP AG and others.
+ * Copyright (c) 2010, 2014 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Marc Khouzam (Ericsson)  - Add an option not to checkout the new branch
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.fetch;
 
@@ -142,6 +143,8 @@ public class FetchGerritChangePage extends WizardPage {
 
 	private Button branchEditButton;
 
+	private Button branchCheckoutButton;
+
 	/**
 	 * @param repository
 	 * @param refName initial value for the ref field
@@ -260,6 +263,14 @@ public class FetchGerritChangePage extends WizardPage {
 		});
 		GridDataFactory.defaultsFor(branchEditButton).exclude(false)
 				.applyTo(branchEditButton);
+
+		branchCheckoutButton = new Button(checkoutGroup, SWT.CHECK);
+		GridDataFactory.fillDefaults().span(3, 1).align(SWT.END, SWT.BEGINNING)
+				.applyTo(branchCheckoutButton);
+		branchCheckoutButton.setFont(JFaceResources.getDialogFont());
+		branchCheckoutButton
+				.setText(UIText.FetchGerritChangePage_LocalBranchCheckout);
+		branchCheckoutButton.setSelection(true);
 
 		// radio: create tag
 		createTag = new Button(checkoutGroup, SWT.RADIO);
@@ -413,11 +424,14 @@ public class FetchGerritChangePage extends WizardPage {
 		branchText.setVisible(createBranchSelected);
 		branchTextlabel.setVisible(createBranchSelected);
 		branchEditButton.setVisible(createBranchSelected);
+		branchCheckoutButton.setVisible(createBranchSelected);
 		GridData gd = (GridData) branchText.getLayoutData();
 		gd.exclude = !createBranchSelected;
 		gd = (GridData) branchTextlabel.getLayoutData();
 		gd.exclude = !createBranchSelected;
 		gd = (GridData) branchEditButton.getLayoutData();
+		gd.exclude = !createBranchSelected;
+		gd = (GridData) branchCheckoutButton.getLayoutData();
 		gd.exclude = !createBranchSelected;
 
 		boolean createTagSelected = createTag.getSelection();
@@ -524,6 +538,7 @@ public class FetchGerritChangePage extends WizardPage {
 		final boolean doCheckout = checkout.getSelection();
 		final boolean doCreateTag = createTag.getSelection();
 		final boolean doCreateBranch = createBranch.getSelection();
+		final boolean doNewBranchCheckout = branchCheckoutButton.getSelection();
 		final boolean doActivateAdditionalRefs = (checkout.getSelection() || dontCheckout
 				.getSelection()) && activateAdditionalRefs.getSelection();
 		final String textForTag = tagText.getText();
@@ -538,7 +553,8 @@ public class FetchGerritChangePage extends WizardPage {
 				@Override
 				public IStatus runInWorkspace(IProgressMonitor monitor) {
 					internalDoFetch(spec, uri, doCheckout, doCreateTag,
-							doCreateBranch, doActivateAdditionalRefs,
+							doCreateBranch, doNewBranchCheckout,
+							doActivateAdditionalRefs,
 							textForTag, textForBranch, monitor);
 					return org.eclipse.core.runtime.Status.OK_STATUS;
 				}
@@ -562,7 +578,8 @@ public class FetchGerritChangePage extends WizardPage {
 								InterruptedException {
 							try {
 								internalDoFetch(spec, uri, doCheckout,
-										doCreateTag, doCreateBranch,
+											doCreateTag, doCreateBranch,
+											doNewBranchCheckout,
 										doActivateAdditionalRefs, textForTag,
 										textForBranch, monitor);
 							} catch (RuntimeException e) {
@@ -587,6 +604,7 @@ public class FetchGerritChangePage extends WizardPage {
 
 	private void internalDoFetch(RefSpec spec, String uri, boolean doCheckout,
 			boolean doCreateTag, boolean doCreateBranch,
+			boolean doNewBranchCheckout,
 			boolean doActivateAdditionalRefs, String textForTag,
 			String textForBranch, IProgressMonitor monitor) {
 
@@ -607,7 +625,7 @@ public class FetchGerritChangePage extends WizardPage {
 				createTag(spec, textForTag, commit, monitor);
 
 			if (doCreateBranch)
-				createBranch(textForBranch, commit, monitor);
+				createBranch(textForBranch, doNewBranchCheckout, commit, monitor);
 
 			if (doCheckout || doCreateTag)
 				checkout(commit, monitor);
@@ -662,27 +680,31 @@ public class FetchGerritChangePage extends WizardPage {
 		monitor.worked(1);
 	}
 
-	private void createBranch(final String textForBranch, RevCommit commit,
-			IProgressMonitor monitor) throws CoreException, GitAPIException {
+	private void createBranch(final String textForBranch, boolean doCheckout,
+			RevCommit commit, IProgressMonitor monitor) throws CoreException,
+			GitAPIException {
 		monitor.setTaskName(UIText.FetchGerritChangePage_CreatingBranchTaskName);
 		CreateLocalBranchOperation bop = new CreateLocalBranchOperation(
 				repository, textForBranch, commit);
 		bop.execute(monitor);
-		CheckoutCommand co = new Git(repository).checkout();
-		try {
-			co.setName(textForBranch).call();
-		} catch (CheckoutConflictException e) {
-			final CheckoutResult result = co.getResult();
 
-			if (result.getStatus() == Status.CONFLICTS) {
-				final Shell shell = getWizard().getContainer().getShell();
+		if (doCheckout) {
+			CheckoutCommand co = new Git(repository).checkout();
+			try {
+				co.setName(textForBranch).call();
+			} catch (CheckoutConflictException e) {
+				final CheckoutResult result = co.getResult();
 
-				shell.getDisplay().asyncExec(new Runnable() {
-					public void run() {
-						new CheckoutConflictDialog(shell, repository, result
-								.getConflictList()).open();
-					}
-				});
+				if (result.getStatus() == Status.CONFLICTS) {
+					final Shell shell = getWizard().getContainer().getShell();
+
+					shell.getDisplay().asyncExec(new Runnable() {
+						public void run() {
+							new CheckoutConflictDialog(shell, repository,
+									result.getConflictList()).open();
+						}
+					});
+				}
 			}
 		}
 		monitor.worked(1);
