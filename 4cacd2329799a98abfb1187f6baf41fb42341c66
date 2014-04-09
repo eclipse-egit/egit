@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0756a345_abf341d8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-04-09T22:10:56Z",
+      "side": 1,
+      "message": "s/progressm monitor/progress monitor/",
+      "revId": "4cacd2329799a98abfb1187f6baf41fb42341c66",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0756a345_cb6835eb",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
         "patchSetId": 3
