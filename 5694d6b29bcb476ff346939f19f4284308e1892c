@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0756a345_853bc1f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 457
+      },
+      "writtenOn": "2014-04-11T00:34:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0756a345_eae52ac9",
+      "revId": "5694d6b29bcb476ff346939f19f4284308e1892c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0756a345_0addfeff",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0756a345_e54f1d8c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 457
+      },
+      "writtenOn": "2014-04-11T00:34:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0756a345_0addfeff",
+      "revId": "5694d6b29bcb476ff346939f19f4284308e1892c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0756a345_6a9d9a46",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2014-04-10T20:26:34Z",
       "side": 1,
       "message": "Maybe doNewBranchCheckout -\u003e doCheckoutNewBranch",
+      "revId": "5694d6b29bcb476ff346939f19f4284308e1892c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_c54c999a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 457
+      },
+      "writtenOn": "2014-04-11T00:34:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0756a345_6a9d9a46",
       "revId": "5694d6b29bcb476ff346939f19f4284308e1892c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
