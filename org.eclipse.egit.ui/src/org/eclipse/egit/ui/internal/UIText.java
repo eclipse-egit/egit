@@ -2723,9 +2723,6 @@ public class UIText extends NLS {
 	public static String FetchGerritChangePage_LocalBranchRadio;
 
 	/** */
-	public static String FetchGerritChangePage_LocalBranchCheckout;
-
-	/** */
 	public static String FetchGerritChangePage_MissingChangeMessage;
 
 	/** */
