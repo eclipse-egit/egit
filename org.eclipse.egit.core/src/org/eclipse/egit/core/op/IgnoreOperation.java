@@ -123,10 +123,19 @@ public class IgnoreOperation implements IEGitOperation {
 		IPath parent = path.removeLastSegments(1);
 		IResource resource = ResourceUtil.getResourceForLocation(path);
 		IContainer container = null;
-		if (resource != null)
+		boolean isDirectory = false;
+		if (resource != null) {
+			isDirectory = resource instanceof IContainer;
 			container = resource.getParent();
+		} else
+			isDirectory = path.toFile().isDirectory();
 
-		String entry = "/" + path.lastSegment() + "\n"; //$NON-NLS-1$  //$NON-NLS-2$
+		StringBuilder b = new StringBuilder('/');
+		b.append(path.lastSegment());
+		if (isDirectory)
+			b.append('/');
+		b.append('\n');
+		String entry = b.toString();
 
 		if (container == null || container instanceof IWorkspaceRoot) {
 			Repository repository = RepositoryMapping.getMapping(
