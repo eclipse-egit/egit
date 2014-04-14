@@ -10,13 +10,13 @@ package org.eclipse.egit.core;
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -382,7 +382,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 				if (d == null || !autoIgnoreDerived())
 					return;
 
-				final List<IPath> toBeIgnored = new ArrayList<IPath>();
+				final Set<IPath> toBeIgnored = new HashSet<IPath>();
 
 				d.accept(new IResourceDeltaVisitor() {
 
