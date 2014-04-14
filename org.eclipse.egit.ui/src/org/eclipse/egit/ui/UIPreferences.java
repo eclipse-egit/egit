@@ -153,6 +153,9 @@ public class UIPreferences {
 	/** */
 	public static final String REMOTE_CONNECTION_TIMEOUT = "remote_connection_timeout"; //$NON-NLS-1$
 
+	/** Holds true if the logical model should be used. */
+	public static final String USE_LOGICAL_MODEL = "enable_logical_model"; //$NON-NLS-1$
+
 	/**
 	 * When reading this preference, use
 	 * {@link UIUtils#getDefaultRepositoryDir()} instead (for variable
