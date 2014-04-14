@@ -72,7 +72,16 @@ public class IgnoreOperationTest extends GitTestCase {
 		IgnoreOperation operation = executeIgnore(binFolder.getLocation());
 
 		String content = project.getFileContent(Constants.GITIGNORE_FILENAME);
-		assertEquals("/bin\n", content);
+		assertEquals("/bin/\n", content);
+		assertFalse(operation.isGitignoreOutsideWSChanged());
+	}
+
+	@Test
+	public void testIgnoreFile() throws Exception {
+		IFile aFile = project.createFile("aFile.txt", new byte[0]);
+		IgnoreOperation operation = executeIgnore(aFile.getLocation());
+		String content = project.getFileContent(Constants.GITIGNORE_FILENAME);
+		assertEquals("/aFile.txt\n", content);
 		assertFalse(operation.isGitignoreOutsideWSChanged());
 	}
 
@@ -97,19 +106,19 @@ public class IgnoreOperationTest extends GitTestCase {
 	}
 
 	@Test
-	public void testIgnoreMultiFile() throws Exception {
+	public void testIgnoreMultiFolders() throws Exception {
 		project.createSourceFolder();
 		IFolder binFolder = project.getProject().getFolder("bin");
 		IFolder srcFolder = project.getProject().getFolder("src");
 		executeIgnore(binFolder.getLocation());
 
 		String content = project.getFileContent(Constants.GITIGNORE_FILENAME);
-		assertEquals("/bin\n", content);
+		assertEquals("/bin/\n", content);
 
 		executeIgnore(srcFolder.getLocation());
 
 		content = project.getFileContent(Constants.GITIGNORE_FILENAME);
-		assertEquals("/bin\n/src\n", content);
+		assertEquals("/bin/\n/src/\n", content);
 	}
 
 	@Test
@@ -122,7 +131,7 @@ public class IgnoreOperationTest extends GitTestCase {
 		File ignoreFile = new File(rootFile, Constants.GITIGNORE_FILENAME);
 		String content = testUtils.slurpAndClose(ignoreFile.toURI().toURL()
 				.openStream());
-		assertEquals("/" + project.getProject().getName() + "\n", content);
+		assertEquals("/" + project.getProject().getName() + "/\n", content);
 		assertTrue(operation.isGitignoreOutsideWSChanged());
 	}
 
@@ -139,7 +148,7 @@ public class IgnoreOperationTest extends GitTestCase {
 		IgnoreOperation operation = executeIgnore(binFolder.getLocation());
 
 		String content = project.getFileContent(Constants.GITIGNORE_FILENAME);
-		assertEquals(existing + "\n/bin\n", content);
+		assertEquals(existing + "\n/bin/\n", content);
 		assertFalse(operation.isGitignoreOutsideWSChanged());
 	}
 
@@ -151,7 +160,7 @@ public class IgnoreOperationTest extends GitTestCase {
 		operation.execute(new NullProgressMonitor());
 
 		String content = project.getFileContent(Constants.GITIGNORE_FILENAME);
-		assertEquals("/bin\n", content);
+		assertEquals("/bin/\n", content);
 	}
 
 	@Test
