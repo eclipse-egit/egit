@@ -49,6 +49,7 @@ import org.eclipse.egit.core.internal.storage.WorkspaceFileRevision;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput.EmptyTypedElement;
 import org.eclipse.egit.ui.internal.merge.GitCompareEditorInput;
 import org.eclipse.egit.ui.internal.synchronize.GitModelSynchronize;
@@ -903,23 +904,31 @@ public class CompareUtils {
 		 * trying to determine if the local file can be compared alone, this can
 		 * be done by relying on the local model only.
 		 */
-		final ResourceMapping[] mappings = ResourceUtil.getResourceMappings(
-				file, ResourceMappingContext.LOCAL_CONTEXT);
+		// Only builds the logical model if the preference holds true
+		if (Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.USE_LOGICAL_MODEL)) {
 
-		for (ResourceMapping mapping : mappings) {
-			try {
-				final ResourceTraversal[] traversals = mapping.getTraversals(
-						ResourceMappingContext.LOCAL_CONTEXT, null);
-				for (ResourceTraversal traversal : traversals) {
-					final IResource[] resources = traversal.getResources();
-					for (IResource resource : resources) {
-						if (!resource.equals(file))
-							return false;
+			final ResourceMapping[] mappings = ResourceUtil
+					.getResourceMappings(file,
+							ResourceMappingContext.LOCAL_CONTEXT);
+
+			for (ResourceMapping mapping : mappings) {
+				try {
+					final ResourceTraversal[] traversals = mapping
+							.getTraversals(
+									ResourceMappingContext.LOCAL_CONTEXT, null);
+					for (ResourceTraversal traversal : traversals) {
+						final IResource[] resources = traversal.getResources();
+						for (IResource resource : resources) {
+							if (!resource.equals(file))
+								return false;
+						}
 					}
+				} catch (CoreException e) {
+					Activator.logError(e.getMessage(), e);
 				}
-			} catch (CoreException e) {
-				Activator.logError(e.getMessage(), e);
 			}
+
 		}
 		return true;
 	}
