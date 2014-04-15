@@ -12,13 +12,11 @@ package org.eclipse.egit.ui.internal.repository;
 
 import java.io.File;
 
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.osgi.util.NLS;
@@ -27,6 +25,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -41,8 +40,6 @@ public class CreateRepositoryPage extends WizardPage {
 	private final boolean hideBare;
 
 	private Text directoryText;
-
-	private Text nameText;
 
 	private Button bareButton;
 
@@ -87,17 +84,19 @@ public class CreateRepositoryPage extends WizardPage {
 			}
 		});
 
-		Label nameLabel = new Label(main, SWT.NONE);
-		nameLabel.setText(UIText.CreateRepositoryPage_RepositoryNameLabel);
-		nameText = new Text(main, SWT.BORDER);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
-				.grab(true, false).applyTo(nameText);
-
 		if (!hideBare) {
 			bareButton = new Button(main, SWT.CHECK);
 			bareButton.setText(UIText.CreateRepositoryPage_BareCheckbox);
 			GridDataFactory.fillDefaults().indent(10, 0).span(3, 1)
 					.applyTo(bareButton);
+			bareButton.addSelectionListener(new SelectionListener() {
+				public void widgetSelected(SelectionEvent e) {
+					checkPage();
+				}
+				public void widgetDefaultSelected(SelectionEvent e) {
+					checkPage();
+				}
+			});
 		}
 
 		directoryText.addModifyListener(new ModifyListener() {
@@ -105,14 +104,10 @@ public class CreateRepositoryPage extends WizardPage {
 				checkPage();
 			}
 		});
-		nameText.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				checkPage();
-			}
-		});
 
 		setControl(main);
-		nameText.setFocus();
+		directoryText.setFocus();
+		directoryText.setSelection(directoryText.getText().length());
 	}
 
 	/**
@@ -120,7 +115,7 @@ public class CreateRepositoryPage extends WizardPage {
 	 *         system specific path separators)
 	 */
 	public String getDirectory() {
-		IPath path = new Path(directoryText.getText()).append(nameText.getText());
+		IPath path = new Path(directoryText.getText().trim());
 		return path.toOSString();
 	}
 
@@ -134,28 +129,18 @@ public class CreateRepositoryPage extends WizardPage {
 	void checkPage() {
 		setErrorMessage(null);
 		try {
-			String parentDir = directoryText.getText();
-			if (parentDir.length() == 0) {
+			String dir = directoryText.getText().trim();
+
+			// errors
+			if (dir.length() == 0) {
 				setErrorMessage(UIText.CreateRepositoryPage_PleaseSelectDirectoryMessage);
 				return;
 			}
-			String name = nameText.getText();
-			if (name.length() == 0) {
-				setErrorMessage(UIText.CreateRepositoryPage_MissingNameMessage);
-				return;
-			}
 
-			IStatus status = ResourcesPlugin.getWorkspace().validateName(name, IResource.FOLDER);
-			if (!status.isOK()){
-				setErrorMessage(status.getMessage());
-				return;
-			}
-
-			String dir = getDirectory();
 			File testFile = new File(dir);
-			IPath path = new Path(dir);
+			IPath path = Path.fromOSString(dir);
 			if (!path.isAbsolute()) {
-				setErrorMessage(UIText.CreateRepositoryPage_PleaseUseAbsoluePathMessage);
+				setErrorMessage(UIText.CreateRepositoryPage_PleaseUseAbsolutePathMessage);
 				return;
 			}
 			if (testFile.exists() && !testFile.isDirectory()) {
@@ -163,11 +148,20 @@ public class CreateRepositoryPage extends WizardPage {
 						UIText.CreateRepositoryPage_NotADirectoryMessage, dir));
 				return;
 			}
-			if (testFile.exists() && testFile.list().length > 0) {
+			boolean hasExistingFiles = testFile.exists() && testFile.list().length > 0;
+			if (hasExistingFiles && getBare()) {
 				setErrorMessage(NLS.bind(
 						UIText.CreateRepositoryPage_NotEmptyMessage, dir));
 				return;
 			}
+
+			// warning only
+			if (hasExistingFiles && !getBare()) {
+				setMessage(NLS.bind(
+						UIText.CreateRepositoryPage_NotEmptyMessage, dir),
+						IMessageProvider.INFORMATION);
+			} else
+				setMessage(UIText.CreateRepositoryPage_PageMessage);
 		} finally {
 			setPageComplete(getErrorMessage() == null);
 		}

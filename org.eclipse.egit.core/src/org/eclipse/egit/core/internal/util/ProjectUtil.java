@@ -353,12 +353,32 @@ public class ProjectUtil {
 	}
 
 	/**
+	 * Find projects located under the given path
+	 *
+	 * @param path
+	 *            absolute path under which to look for projects
+	 * @return projects located under the given path
+	 */
+	public static IProject[] getProjectsUnderPath(final IPath path) {
+		IProject[] allProjects = getProjectsForContainerMatch(ResourcesPlugin
+				.getWorkspace().getRoot());
+		Set<IProject> projects = new HashSet<IProject>();
+		for (IProject p : allProjects)
+			if (path.isPrefixOf(p.getLocation()))
+				projects.add(p);
+		return projects.toArray(new IProject[projects.size()]);
+	}
+
+	/**
 	 * Find directories containing .project files recursively starting at given
 	 * directory
 	 *
-	 * @param files the collection to add the found projects to
-	 * @param directory where to search for project files
-	 * @param searchNested whether to search for nested projects or not
+	 * @param files
+	 *            the collection to add the found projects to
+	 * @param directory
+	 *            where to search for project files
+	 * @param searchNested
+	 *            whether to search for nested projects or not
 	 * @param monitor
 	 * @return true if projects files found, false otherwise
 	 */
