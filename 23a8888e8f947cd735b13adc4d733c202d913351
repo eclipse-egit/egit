@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_35501929",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-15T13:27:31Z",
+      "side": 1,
+      "message": "How about a LinkedHashSet to keep the order stable?",
+      "revId": "23a8888e8f947cd735b13adc4d733c202d913351",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_55478d71",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/IgnoreOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-15T13:27:31Z",
+      "side": 1,
+      "message": "You could also append path.lastSegment() in a separate append call (doesn\u0027t matter much though).",
+      "revId": "23a8888e8f947cd735b13adc4d733c202d913351",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
