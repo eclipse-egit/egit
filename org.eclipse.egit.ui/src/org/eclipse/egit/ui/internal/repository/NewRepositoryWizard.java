@@ -11,14 +11,27 @@
 package org.eclipse.egit.ui.internal.repository;
 
 import java.io.File;
-import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.preferences.DefaultScope;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.RepositoryCache;
+import org.eclipse.egit.core.GitCorePreferences;
+import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.job.JobUtil;
+import org.eclipse.egit.core.internal.util.ProjectUtil;
+import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
@@ -55,21 +68,52 @@ public class NewRepositoryWizard extends Wizard implements INewWizard {
 
 	@Override
 	public boolean performFinish() {
-		RepositoryCache cache = Activator.getDefault().getRepositoryCache();
 		try {
 			File repoFile = new File(myCreatePage.getDirectory());
-			if (!myCreatePage.getBare())
-				repoFile = new File(repoFile, Constants.DOT_GIT);
-
-			Repository repoToCreate = cache.lookupRepository(repoFile);
-			repoToCreate.create(myCreatePage.getBare());
+			boolean isBare = myCreatePage.getBare();
+			Repository repoToCreate = Git.init().setDirectory(repoFile)
+					.setBare(isBare).call().getRepository();
 			Activator.getDefault().getRepositoryUtil()
-					.addConfiguredRepository(repoFile);
+					.addConfiguredRepository(repoToCreate.getDirectory());
 			this.newRepo = repoToCreate;
-		} catch (IOException e) {
+
+			if (!isBare && doAutoShare()) {
+				IPath workTree = new Path(repoToCreate.getWorkTree()
+						.getAbsolutePath());
+				IProject[] projects = ProjectUtil
+						.getProjectsUnderPath(workTree);
+				if (projects.length == 0)
+					return true;
+				autoShareProjects(repoToCreate, projects);
+			}
+		} catch (GitAPIException e) {
 			org.eclipse.egit.ui.Activator.handleError(e.getMessage(), e, false);
 		}
 		return true;
+	}
+
+	private boolean doAutoShare() {
+		IEclipsePreferences d = DefaultScope.INSTANCE.getNode(Activator
+				.getPluginId());
+		IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator
+				.getPluginId());
+		return p.getBoolean(GitCorePreferences.core_autoShareProjects,
+				d.getBoolean(GitCorePreferences.core_autoShareProjects, true));
+	}
+
+	/**
+	 * auto-share projects which are located inside newly created repository
+	 *
+	 * @param repoToCreate
+	 * @param projects
+	 */
+	private void autoShareProjects(Repository repoToCreate, IProject[] projects) {
+		final Map<IProject, File> projectsMap = new HashMap<IProject, File>();
+		for (IProject project : projects)
+			projectsMap.put(project, repoToCreate.getDirectory());
+		ConnectProviderOperation op = new ConnectProviderOperation(projectsMap);
+		JobUtil.scheduleUserJob(op, CoreText.Activator_AutoShareJobName,
+				JobFamilies.AUTO_SHARE);
 	}
 
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
