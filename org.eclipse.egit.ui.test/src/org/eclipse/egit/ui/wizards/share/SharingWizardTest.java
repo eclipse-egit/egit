@@ -267,10 +267,7 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 		File repoFolder = new File(repoDir, repoName);
 		createRepoDialog.bot()
 				.textWithLabel(UIText.CreateRepositoryPage_DirectoryLabel)
-				.setText(repoDir);
-		createRepoDialog.bot()
-				.textWithLabel(UIText.CreateRepositoryPage_RepositoryNameLabel)
-				.setText(repoName);
+				.setText(repoFolder.getAbsolutePath());
 		createRepoDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
 
 		SWTBotCombo combo = bot
