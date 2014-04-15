@@ -138,6 +138,11 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 		return tags;
 	}
 
+	/**
+	 * Use {@link #getPage(ExecutionEvent)} when handling "execute" instead.
+	 *
+	 * @return the Git history page or null if not found
+	 */
 	protected GitHistoryPage getPage() {
 		IWorkbenchWindow window = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
@@ -146,6 +151,25 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 		if (window.getActivePage() == null)
 			return null;
 		IWorkbenchPart part = window.getActivePage().getActivePart();
+		return getPageFromPart(part);
+	}
+
+	/**
+	 * @param event
+	 * @return the Git history page for the event, never null
+	 * @throws ExecutionException
+	 */
+	protected GitHistoryPage getPage(ExecutionEvent event)
+			throws ExecutionException {
+		IWorkbenchPart part = getPart(event);
+		GitHistoryPage page = getPageFromPart(part);
+		if (page == null)
+			throw new ExecutionException(
+					UIText.AbstractHistoryCommandHandler_CouldNotGetPageMessage);
+		return page;
+	}
+
+	private GitHistoryPage getPageFromPart(IWorkbenchPart part) {
 		if (!(part instanceof IHistoryView))
 			return null;
 		IHistoryView view = (IHistoryView) part;

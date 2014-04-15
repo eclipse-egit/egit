@@ -20,7 +20,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 public class ResetHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repo = getRepository(event);
-		final RevCommit commit = (RevCommit) getSelection(getPage())
+		final RevCommit commit = (RevCommit) getSelection(getPage(event))
 				.getFirstElement();
 
 		String resetMode = event.getParameter(ResetMenu.RESET_MODE);
