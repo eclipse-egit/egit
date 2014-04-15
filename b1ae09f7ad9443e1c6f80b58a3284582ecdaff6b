@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_e836c80b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/IgnoreOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-15T16:34:45Z",
+      "side": 1,
+      "message": "This needs to be \"/\", a char actually calls the int constructor.",
+      "revId": "b1ae09f7ad9443e1c6f80b58a3284582ecdaff6b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
