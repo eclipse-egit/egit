@@ -47,8 +47,8 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IStructuredSelection selection = getSelection(getPage());
-		Object input = getPage().getInputInternal().getSingleFile();
+		IStructuredSelection selection = getSelection(event);
+		Object input = getPage(event).getInputInternal().getSingleFile();
 		if (selection.size() < 1 || input == null)
 			return null;
 

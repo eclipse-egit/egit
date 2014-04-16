@@ -37,10 +37,10 @@ import org.eclipse.team.core.history.IFileRevision;
  */
 public class OpenInTextEditorHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IStructuredSelection selection = getSelection(getPage());
+		IStructuredSelection selection = getSelection(event);
 		if (selection.size() < 1)
 			return null;
-		Object input = getPage().getInputInternal().getSingleFile();
+		Object input = getPage(event).getInputInternal().getSingleFile();
 		if (input == null)
 			return null;
 		boolean errorOccurred = false;

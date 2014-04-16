@@ -25,19 +25,20 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /** Prompts to enter a new commit message for a commit. */
 public class RewordHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repository = getRepository(event);
-		RevCommit commit = (RevCommit) getSelection(getPage())
-				.getFirstElement();
+		RevCommit commit = getSelectedCommit(event);
 
 		try {
 			if (!CommitUtil.isCommitInCurrentBranch(commit, repository)) {
-				MessageDialog.openError(getPage().getSite().getShell(),
-								UIText.RewordHandler_Error_Title,
-								UIText.RewordHandler_CommitNotOnCurrentBranch);
+				MessageDialog.openError(
+						HandlerUtil.getActiveShellChecked(event),
+						UIText.RewordHandler_Error_Title,
+						UIText.RewordHandler_CommitNotOnCurrentBranch);
 				return null;
 			}
 		} catch (IOException e) {

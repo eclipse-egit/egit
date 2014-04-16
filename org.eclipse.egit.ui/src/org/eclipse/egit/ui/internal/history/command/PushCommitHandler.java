@@ -26,7 +26,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class PushCommitHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		PlotCommit commit = (PlotCommit) getSelection(getPage()).getFirstElement();
+		PlotCommit commit = (PlotCommit) getSelection(event).getFirstElement();
 		final Repository repo = getRepository(event);
 
 		try {

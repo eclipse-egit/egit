@@ -21,6 +21,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.SWT;
@@ -31,17 +32,17 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class CheckoutCommitHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		RevCommit commit = (RevCommit) getSelection(getPage()).getFirstElement();
+		ObjectId commitId = getSelectedCommitId(event);
 		Repository repo = getRepository(event);
 
 		final BranchOperationUI op;
 
-		List<RefNode> nodes = getRefNodes(commit, repo, Constants.R_HEADS,
+		List<RefNode> nodes = getRefNodes(commitId, repo, Constants.R_HEADS,
 				Constants.R_REMOTES);
 		Collections.sort(nodes);
 
 		if (nodes.isEmpty())
-			op = BranchOperationUI.checkout(repo, commit.name());
+			op = BranchOperationUI.checkout(repo, commitId.name());
 		else if (nodes.size() == 1)
 			op = BranchOperationUI.checkout(repo, nodes.get(0).getObject().getName());
 		else {

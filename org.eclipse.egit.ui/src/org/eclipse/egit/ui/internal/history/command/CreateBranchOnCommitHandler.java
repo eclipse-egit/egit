@@ -33,14 +33,14 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class CreateBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		GitHistoryPage page = getPage();
 		Repository repo = getRepository(event);
+		IStructuredSelection selection = getSelection(event);
 
 		IWizard wiz = null;
-		List<Ref> branches = getBranches(page, repo);
+		List<Ref> branches = getBranches(selection, repo);
 
 		if (branches.isEmpty()) {
-			PlotCommit commit = (PlotCommit) getSelection(page)
+			PlotCommit commit = (PlotCommit) selection
 					.getFirstElement();
 			wiz = new CreateBranchWizard(repo, commit.name());
 		} else {
@@ -74,10 +74,10 @@ public class CreateBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 		return null;
 	}
 
-	private List<Ref> getBranches(GitHistoryPage page,
+	private List<Ref> getBranches(IStructuredSelection selection,
 			Repository repo) {
 		try {
-			return getBranchesOfCommit(page, repo, false);
+			return getBranchesOfCommit(selection, repo, false);
 		} catch (IOException e) {
 			// ignore, use commit name
 			return Collections.<Ref> emptyList();

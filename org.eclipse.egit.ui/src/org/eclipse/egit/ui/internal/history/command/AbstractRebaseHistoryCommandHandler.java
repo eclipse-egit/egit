@@ -47,7 +47,7 @@ public abstract class AbstractRebaseHistoryCommandHandler extends
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
-		PlotCommit commit = (PlotCommit) getSelection(getPage()).getFirstElement();
+		PlotCommit commit = (PlotCommit) getSelection(event).getFirstElement();
 		final Repository repository = getRepository(event);
 		if (repository == null)
 			return null;

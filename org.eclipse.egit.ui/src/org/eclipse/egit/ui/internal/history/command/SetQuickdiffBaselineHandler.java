@@ -17,7 +17,6 @@ import org.eclipse.egit.ui.internal.decorators.GitQuickDiffProvider;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
 
 /**
  * "Set quickdiff baseline" to selected commit.
@@ -25,9 +24,8 @@ import org.eclipse.jgit.revwalk.RevCommit;
 public class SetQuickdiffBaselineHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repo = getRepository(event);
-		String baseline = ((RevCommit) getSelection(getPage()).getFirstElement())
-				.getId().name();
-		if (baseline == null)
+		String baseline = getSelectedCommitId(event).name();
+		if (repo == null)
 			throw new ExecutionException(
 					UIText.ResetQuickdiffBaselineHandler_NoTargetMessage);
 

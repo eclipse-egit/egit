@@ -27,13 +27,11 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class RenameBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		GitHistoryPage page = getPage();
-
-		final Repository repository = getRepository(page);
+		final Repository repository = getRepository(event);
 		if (repository == null)
 			return null;
 
-		List<Ref> branchesOfCommit = getBranchesOfCommit(page);
+		List<Ref> branchesOfCommit = getBranchesOfCommit(getSelection(event));
 		// this should have been checked by isEnabled()
 		if (branchesOfCommit.isEmpty())
 			return null;
@@ -62,6 +60,6 @@ public class RenameBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 	public boolean isEnabled() {
 		GitHistoryPage page = getPage();
 		return getRepository(page) != null
-				&& !(getBranchesOfCommit(page).isEmpty());
+				&& !(getBranchesOfCommit(getSelection(page)).isEmpty());
 	}
 }
