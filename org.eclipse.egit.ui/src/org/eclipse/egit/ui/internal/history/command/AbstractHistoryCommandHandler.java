@@ -39,6 +39,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
@@ -146,6 +147,16 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 		if (window.getActivePage() == null)
 			return null;
 		IWorkbenchPart part = window.getActivePage().getActivePart();
+		return getPageFromPart(part);
+	}
+
+	protected GitHistoryPage getPage(ExecutionEvent event)
+			throws ExecutionException {
+		IWorkbenchPart part = getPart(event);
+		return getPageFromPart(part);
+	}
+
+	private GitHistoryPage getPageFromPart(IWorkbenchPart part) {
 		if (!(part instanceof IHistoryView))
 			return null;
 		IHistoryView view = (IHistoryView) part;
@@ -165,23 +176,61 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 			return StructuredSelection.EMPTY;
 	}
 
+	protected IStructuredSelection getSelection(ExecutionEvent event)
+			throws ExecutionException {
+		ISelection selection = HandlerUtil.getCurrentSelectionChecked(event);
+		if (selection instanceof IStructuredSelection)
+			return (IStructuredSelection) selection;
+		else
+			return StructuredSelection.EMPTY;
+	}
+
+	protected ObjectId getSelectedCommitId(ExecutionEvent event)
+			throws ExecutionException {
+		IStructuredSelection selection = getSelection(event);
+		if (selection.isEmpty())
+			throw new ExecutionException(
+					UIText.AbstractHistoryCommandHandler_CouldNotGetSelectedCommitMessage);
+
+		RevCommit commit = (RevCommit) selection.getFirstElement();
+		return commit.getId();
+	}
+
+	/**
+	 * Gets the selected commit, re-parsed to have correct parent information
+	 * regardless of how history was walked.
+	 *
+	 * @param event
+	 * @return the selected commit, never null
+	 * @throws ExecutionException
+	 */
+	protected RevCommit getSelectedCommit(ExecutionEvent event)
+			throws ExecutionException {
+		List<RevCommit> commits = getSelectedCommits(event);
+		if (commits.size() != 1)
+			throw new ExecutionException(
+					UIText.AbstractHistoryCommandHandler_CouldNotGetSelectedCommitMessage);
+		return commits.get(0);
+	}
+
 	/**
 	 * Gets the selected commits, re-parsed to have correct parent information
 	 * regardless of how history was walked.
 	 *
+	 * @param event
 	 * @return the selected commits, or an empty list
 	 * @throws ExecutionException
 	 */
-	protected List<RevCommit> getSelectedCommits() throws ExecutionException {
+	protected List<RevCommit> getSelectedCommits(ExecutionEvent event)
+			throws ExecutionException {
+		Repository repository = getRepository(event);
+		if (repository == null)
+			return Collections.emptyList();
+		IStructuredSelection selection = getSelection(event);
+		if (selection.isEmpty())
+			return Collections.emptyList();
 		List<RevCommit> commits = new ArrayList<RevCommit>();
-		GitHistoryPage page = getPage();
-		if (page == null)
-			return Collections.emptyList();
-		IStructuredSelection selection = getSelection(page);
-		HistoryPageInput input = page.getInputInternal();
-		if (input == null)
-			return Collections.emptyList();
-		RevWalk walk = new RevWalk(input.getRepository());
+		RevWalk walk = new RevWalk(repository);
 		try {
 			for (Object element : selection.toList()) {
 				RevCommit commit = (RevCommit) element;
@@ -207,7 +256,7 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 	 *            e.g. "refs/heads/" or ""
 	 * @return a list of RefNodes
 	 */
-	protected List<RefNode> getRefNodes(RevCommit commit, Repository repo,
+	protected List<RefNode> getRefNodes(ObjectId commit, Repository repo,
 			String... refPrefixes) {
 		List<Ref> availableBranches = new ArrayList<Ref>();
 		List<RefNode> nodes = new ArrayList<RefNode>();
@@ -216,7 +265,7 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 			for (String refPrefix : refPrefixes)
 				branches.putAll(repo.getRefDatabase().getRefs(refPrefix));
 			for (Ref branch : branches.values()) {
-				if (branch.getLeaf().getObjectId().equals(commit.getId()))
+				if (branch.getLeaf().getObjectId().equals(commit))
 					availableBranches.add(branch);
 			}
 			RepositoryNode repoNode = new RepositoryNode(null, repo);
@@ -229,21 +278,21 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 		return nodes;
 	}
 
-	protected List<Ref> getBranchesOfCommit(GitHistoryPage page,
+	protected List<Ref> getBranchesOfCommit(IStructuredSelection selection,
 			final Repository repo, boolean hideCurrentBranch)
 			throws IOException {
 		String head = repo.getFullBranch();
-		return getBranchesOfCommit(page, head, hideCurrentBranch);
+		return getBranchesOfCommit(selection, head, hideCurrentBranch);
 	}
 
-	protected List<Ref> getBranchesOfCommit(GitHistoryPage page) {
+	protected List<Ref> getBranchesOfCommit(IStructuredSelection page) {
 		return getBranchesOfCommit(page, (String) null, false);
 	}
 
-	private List<Ref> getBranchesOfCommit(GitHistoryPage page, String head,
+	private List<Ref> getBranchesOfCommit(IStructuredSelection selection,
+			String head,
 			boolean hideCurrentBranch) {
 		final List<Ref> branchesOfCommit = new ArrayList<Ref>();
-		IStructuredSelection selection = getSelection(page);
 		if (selection.isEmpty())
 			return branchesOfCommit;
 		PlotCommit commit = (PlotCommit) selection.getFirstElement();

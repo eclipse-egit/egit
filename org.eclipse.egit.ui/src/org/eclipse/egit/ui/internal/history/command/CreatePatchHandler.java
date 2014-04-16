@@ -25,7 +25,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 public class CreatePatchHandler extends AbstractHistoryCommandHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		List<RevCommit> selectedCommits = getSelectedCommits();
+		List<RevCommit> selectedCommits = getSelectedCommits(event);
 		RevCommit commit = selectedCommits.get(0);
 		Repository repo = getRepository(event);
 		PatchOperationUI.createPatch(getPart(event), commit, repo).start();

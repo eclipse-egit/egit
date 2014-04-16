@@ -11,8 +11,8 @@ package org.eclipse.egit.ui.internal.history.command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.internal.actions.ResetMenu;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
 
 /**
  * "Reset" with parameter (hard, mixed, soft).
@@ -20,11 +20,10 @@ import org.eclipse.jgit.revwalk.RevCommit;
 public class ResetHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repo = getRepository(event);
-		final RevCommit commit = (RevCommit) getSelection(getPage())
-				.getFirstElement();
+		final ObjectId commitId = getSelectedCommitId(event);
 
 		String resetMode = event.getParameter(ResetMenu.RESET_MODE);
-		ResetMenu.performReset(event, repo, commit, resetMode);
+		ResetMenu.performReset(event, repo, commitId, resetMode);
 		return null;
 	}
 }

@@ -36,13 +36,13 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class CompareWithWorkingTreeHandler extends
 		AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IStructuredSelection selection = getSelection(getPage());
+		IStructuredSelection selection = getSelection(event);
 		if (selection.isEmpty())
 			return null;
 
 		// Even if there's more than one element, only consider the first
 		RevCommit commit = (RevCommit) selection.getFirstElement();
-		Object input = getPage().getInputInternal().getSingleFile();
+		Object input = getPage(event).getInputInternal().getSingleFile();
 		Repository repository = getRepository(event);
 
 		try {
