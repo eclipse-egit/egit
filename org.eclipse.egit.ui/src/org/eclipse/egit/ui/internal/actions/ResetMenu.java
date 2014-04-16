@@ -21,8 +21,8 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.api.ResetCommand.ResetType;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.ui.IWorkbenchSite;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.menus.CommandContributionItem;
@@ -78,12 +78,12 @@ public class ResetMenu {
 	/**
 	 * @param event
 	 * @param repo
-	 * @param commit
+	 * @param commitId
 	 * @param resetMode
 	 * @throws ExecutionException
 	 */
 	public static void performReset(ExecutionEvent event,
-			final Repository repo, final RevCommit commit, String resetMode)
+			final Repository repo, final ObjectId commitId, String resetMode)
 			throws ExecutionException {
 		final ResetType resetType = ResetType.valueOf(resetMode);
 
@@ -108,7 +108,7 @@ public class ResetMenu {
 			return; // other types are currently not used
 		}
 
-		ResetOperation operation = new ResetOperation(repo, commit.getName(),
+		ResetOperation operation = new ResetOperation(repo, commitId.getName(),
 				resetType);
 		JobUtil.scheduleUserWorkspaceJob(operation, jobName, JobFamilies.RESET);
 	}
