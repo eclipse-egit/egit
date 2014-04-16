@@ -16,6 +16,24 @@
       "revId": "b1ae09f7ad9443e1c6f80b58a3284582ecdaff6b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_c6ead521",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/IgnoreOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-04-16T13:37:19Z",
+      "side": 1,
+      "message": "argh, what a rat\u0027s nest, thanks",
+      "parentUuid": "0756a345_e836c80b",
+      "revId": "b1ae09f7ad9443e1c6f80b58a3284582ecdaff6b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
