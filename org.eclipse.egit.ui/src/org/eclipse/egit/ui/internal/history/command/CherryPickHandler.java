@@ -36,10 +36,7 @@ public class CherryPickHandler extends AbstractHistoryCommandHandler {
 	}
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		RevCommit commit = (RevCommit) getSelection(getPage())
-				.getFirstElement();
-		if (commit == null)
-			return null;
+		RevCommit commit = getSelectedCommit(event);
 		Repository repo = getRepository(event);
 		if (repo == null)
 			return null;

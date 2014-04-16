@@ -34,14 +34,14 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class CompareVersionsHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IStructuredSelection selection = getSelection(getPage());
+		IStructuredSelection selection = getSelection(event);
 		if (selection.size() == 2) {
 			Iterator<?> it = selection.iterator();
 			RevCommit commit1 = (RevCommit) it.next();
 			RevCommit commit2 = (RevCommit) it.next();
 
 
-			Object input = getPage().getInputInternal().getSingleItem();
+			Object input = getPage(event).getInputInternal().getSingleItem();
 			Repository repo = getRepository(event);
 			IWorkbenchPage workBenchPage = HandlerUtil
 					.getActiveWorkbenchWindowChecked(event).getActivePage();

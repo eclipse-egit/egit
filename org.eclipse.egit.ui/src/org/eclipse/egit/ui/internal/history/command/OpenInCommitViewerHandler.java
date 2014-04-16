@@ -29,7 +29,7 @@ public class OpenInCommitViewerHandler extends AbstractHistoryCommandHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repository = getRepository(event);
-		List<RevCommit> commits = getSelectedCommits();
+		List<RevCommit> commits = getSelectedCommits(event);
 		for (RevCommit commit : commits) {
 			try {
 				CommitEditor.open(new RepositoryCommit(repository, commit));
