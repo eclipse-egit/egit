@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_d34c501f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/AbstractHistoryCommandHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2014-04-17T12:49:39Z",
+      "side": 1,
+      "message": "The last 4 lines of this method should be extracted as new method, because they are a duplication (see 10 lines above).",
+      "revId": "9091a9a78c9b3541e84e896a363ac5a6a18cd06f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
