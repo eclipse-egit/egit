@@ -146,7 +146,7 @@ public class TestUtils {
 	 *            the contents
 	 * @return the file
 	 * @throws CoreException
-	 *             if the file can not be created
+	 *             if the file cannot be created
 	 * @throws UnsupportedEncodingException
 	 */
 	public IFile addFileToProject(IProject project, String path, String content) throws CoreException, UnsupportedEncodingException {

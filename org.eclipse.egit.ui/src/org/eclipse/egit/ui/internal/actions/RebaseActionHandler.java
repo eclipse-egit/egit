@@ -45,7 +45,7 @@ public class RebaseActionHandler extends RepositoryActionHandler {
 		// Either we want this to be enabled because a new rebase can be started
 		// (main action) or an active rebase can be continued, skipped or
 		// aborted (menu items). Even when the main action is not enabled we
-		// must enable this because otherwise the menu items can not be opened.
+		// must enable this because otherwise the menu items cannot be opened.
 		RepositoryState state = repo.getRepositoryState();
 		return state.isRebasing()
 				|| RebaseCurrentRefCommand.isEnabledForState(repo, state);
