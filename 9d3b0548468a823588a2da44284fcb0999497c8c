@@ -16,6 +16,24 @@
       "revId": "9d3b0548468a823588a2da44284fcb0999497c8c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_02db1019",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/NewRepositoryWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-04-18T19:44:20Z",
+      "side": 0,
+      "message": "thanks for finding the reason",
+      "parentUuid": "0756a345_8789f2af",
+      "revId": "9d3b0548468a823588a2da44284fcb0999497c8c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
