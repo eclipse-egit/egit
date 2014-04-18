@@ -2185,13 +2185,19 @@ public class StagingView extends ViewPart implements IShowInSource {
 	}
 
 	void updateCommitMessageComponent(boolean repositoryChanged, boolean indexDiffAvailable) {
-		CommitHelper helper = new CommitHelper(currentRepository);
-		CommitMessageComponentState oldState = null;
-		if (repositoryChanged) {
+		if (repositoryChanged)
 			if (userEnteredCommmitMessage())
 				saveCommitMessageComponentState();
 			else
 				deleteCommitMessageComponentState();
+		if (!indexDiffAvailable)
+			return; // only try to restore the stored repo commit message if
+					// indexDiff is ready
+
+		CommitHelper helper = new CommitHelper(currentRepository);
+		CommitMessageComponentState oldState = null;
+		if (repositoryChanged
+				|| commitMessageComponent.getRepository() != currentRepository) {
 			oldState = loadCommitMessageComponentState();
 			commitMessageComponent.setRepository(currentRepository);
 			if (oldState == null)
@@ -2208,7 +2214,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				loadInitialState(helper);
 		amendPreviousCommitAction.setChecked(commitMessageComponent
 				.isAmending());
-		amendPreviousCommitAction.setEnabled(indexDiffAvailable && helper.amendAllowed());
+		amendPreviousCommitAction.setEnabled(helper.amendAllowed());
 		updateMessage();
 	}
 
