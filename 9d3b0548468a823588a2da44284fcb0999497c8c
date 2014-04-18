@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_8789f2af",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/NewRepositoryWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-18T15:29:52Z",
+      "side": 0,
+      "message": "On the right, you no longer add the repo to the cache. Because of that, it\u0027s no longer equal to any of the repository objects as returned from RepoComboContentProvider#getElements.\n\nThis is the reason for the test failure.\n\nIMO having the repositories as elements directly is kind of dangerous (as this problem shows), maybe we should change it so that it uses the File objects instead?",
+      "revId": "9d3b0548468a823588a2da44284fcb0999497c8c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
