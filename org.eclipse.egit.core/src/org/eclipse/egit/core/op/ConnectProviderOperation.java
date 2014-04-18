@@ -114,8 +114,9 @@ public class ConnectProviderOperation implements IEGitOperation {
 							GitTraceLocation.CORE.getLocation(),
 							"Locating repository for " + project); //$NON-NLS-1$
 
-				Collection<RepositoryMapping> repos = new RepositoryFinder(
-						project).find(new SubProgressMonitor(monitor, 40));
+				RepositoryFinder finder = new RepositoryFinder(project);
+				finder.setFindInChildren(false);
+				Collection<RepositoryMapping> repos = finder.find(new SubProgressMonitor(monitor, 40));
 				File suggestedRepo = projects.get(project);
 				RepositoryMapping actualMapping= findActualRepository(repos, suggestedRepo);
 				if (actualMapping != null) {

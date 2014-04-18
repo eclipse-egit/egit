@@ -318,6 +318,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 			if (provider != null)
 				return false;
 			RepositoryFinder f = new RepositoryFinder(project);
+			f.setFindInChildren(false);
 			Collection<RepositoryMapping> mappings = f.find(new NullProgressMonitor());
 			if (mappings.size() != 1)
 				return false;

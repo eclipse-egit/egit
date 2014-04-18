@@ -261,6 +261,7 @@ class ExistingOrNewPage extends WizardPage {
 			TableItem item = children[i];
 			IProject data = (IProject) item.getData();
 			RepositoryFinder repositoryFinder = new RepositoryFinder(data);
+			repositoryFinder.setFindInChildren(false);
 			try {
 				Collection<RepositoryMapping> find = repositoryFinder
 						.find(new NullProgressMonitor());
@@ -318,6 +319,7 @@ class ExistingOrNewPage extends WizardPage {
 		boolean allProjectsInExistingRepos = true;
 		for (IProject project : myWizard.projects) {
 			RepositoryFinder repositoryFinder = new RepositoryFinder(project);
+			repositoryFinder.setFindInChildren(false);
 			try {
 				Collection<RepositoryMapping> mappings;
 				mappings = repositoryFinder.find(new NullProgressMonitor());
