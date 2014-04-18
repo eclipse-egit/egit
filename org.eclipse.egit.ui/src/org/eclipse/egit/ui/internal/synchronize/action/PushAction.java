@@ -71,7 +71,7 @@ public class PushAction extends SynchronizeModelAction {
 				.getProperty(SYNCHRONIZATION_DATA);
 
 		for (GitSynchronizeData gsd : gsds) {
-			String remoteName = gsd.getSrcRemoteName();
+			String remoteName = gsd.getDstRemoteName();
 			if (remoteName == null)
 				continue;
 
