@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2013 Dariusz Luksza <dariusz@luksza.org> and others.
+ * Copyright (C) 2010, 2014 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -277,9 +277,14 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 
 	@Override
 	public void run(final IWorkbenchPart part) {
+		boolean fetchPossible = false;
+		for (GitSynchronizeData data : gsds)
+			if (data.getDstRemoteName() != null)
+				fetchPossible = true;
+
 		boolean launchFetch = Activator.getDefault().getPreferenceStore()
 				.getBoolean(UIPreferences.SYNC_VIEW_FETCH_BEFORE_LAUNCH);
-		if (launchFetch || gsds.forceFetch()) {
+		if (fetchPossible && (launchFetch || gsds.forceFetch())) {
 			Job fetchJob = new SynchronizeFetchJob(gsds);
 			fetchJob.setUser(true);
 			fetchJob.addJobChangeListener(new JobChangeAdapter() {
