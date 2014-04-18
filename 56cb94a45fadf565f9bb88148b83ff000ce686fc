@@ -34,6 +34,24 @@
       "revId": "56cb94a45fadf565f9bb88148b83ff000ce686fc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_e23a5c82",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-04-18T23:33:05Z",
+      "side": 0,
+      "message": "Hm, I see another one in AbstractRebaseCommandHandler, see Path Set 4",
+      "parentUuid": "0756a345_a211840d",
+      "revId": "56cb94a45fadf565f9bb88148b83ff000ce686fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
