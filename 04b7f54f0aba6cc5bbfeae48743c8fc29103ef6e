@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_e7f9ce8f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullOperationUI.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-18T12:33:52Z",
+      "side": 1,
+      "message": "This should also be a LinkedHashMap, so that the order in which the uncommitted changes dialogs appear is predictable.",
+      "revId": "04b7f54f0aba6cc5bbfeae48743c8fc29103ef6e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_470a3a2d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullOperationUI.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-18T12:33:52Z",
+      "side": 1,
+      "message": "While trying this out, I noticed that neither the title nor the description mentions the repository name. In this case, I think it should be in the title. It should also be in \"Title Case\".",
+      "revId": "04b7f54f0aba6cc5bbfeae48743c8fc29103ef6e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
