@@ -40,7 +40,7 @@ public class DeleteBranchOperation implements IEGitOperation {
 	/** Operation was performed */
 	public final static int OK = 0;
 
-	/** Current branch can not be deleted */
+	/** Current branch cannot be deleted */
 	public final static int REJECTED_CURRENT = 1;
 
 	/**

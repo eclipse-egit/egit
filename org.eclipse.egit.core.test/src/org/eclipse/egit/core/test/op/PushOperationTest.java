@@ -148,7 +148,7 @@ public class PushOperationTest extends DualRepositoryTestCase {
 		assertEquals(Status.OK, getStatus(pop.getOperationResult()));
 
 		try {
-			// assert that we can not run this again
+			// assert that we cannot run this again
 			pop.run(null);
 			fail("Expected Exception not thrown");
 		} catch (IllegalStateException e) {
@@ -319,7 +319,7 @@ public class PushOperationTest extends DualRepositoryTestCase {
 
 	private PushOperation createPushOperation() throws Exception {
 		// set up push from repository1 to repository2
-		// we can not re-use the RemoteRefUpdate!!!
+		// we cannot re-use the RemoteRefUpdate!!!
 		PushOperationSpecification spec = new PushOperationSpecification();
 		// the remote is repo2
 		URIish remote = new URIish("file:///"
