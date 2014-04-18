@@ -16,6 +16,24 @@
       "revId": "9d3b0548468a823588a2da44284fcb0999497c8c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_67793e3a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/SetQuickdiffBaselineHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-18T15:14:27Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "0756a345_27b2a600",
+      "revId": "9d3b0548468a823588a2da44284fcb0999497c8c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
