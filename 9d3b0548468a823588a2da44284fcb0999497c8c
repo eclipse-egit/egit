@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_27b2a600",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/SetQuickdiffBaselineHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-04-18T13:57:54Z",
+      "side": 0,
+      "message": "baseline cannot be null",
+      "revId": "9d3b0548468a823588a2da44284fcb0999497c8c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

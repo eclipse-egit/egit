@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_477fda86",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/AbstractHistoryCommandHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-04-18T13:57:54Z",
+      "side": 1,
+      "message": "This should behave the same as getSelectedCommit when multiple commits are selected",
+      "revId": "33a175dd21fefc16e1e97fa9cc9c271d634edb53",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_27890633",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/AbstractHistoryCommandHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-04-18T13:57:54Z",
+      "side": 1,
+      "message": "Some callers of this method previously used the first selected element. I think being less graceful wrt. multiple selected commits here is okay. Maybe we can throw a more specific error message in that case, stating that the operation is not supported for multiple commits.",
+      "revId": "33a175dd21fefc16e1e97fa9cc9c271d634edb53",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_073cc2ea",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/AbstractHistoryCommandHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-04-18T13:57:54Z",
+      "side": 1,
+      "message": "page -\u003e selection",
+      "revId": "33a175dd21fefc16e1e97fa9cc9c271d634edb53",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_c793ea5f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-04-18T13:57:54Z",
+      "side": 1,
+      "message": "maybe \".. the selected commit\"",
+      "revId": "33a175dd21fefc16e1e97fa9cc9c271d634edb53",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
