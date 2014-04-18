@@ -38,14 +38,16 @@ import org.eclipse.jgit.util.SystemReader;
  * This finder algorithm searches a project's contained files to see if any of
  * them are located within the working directory of an existing Git repository.
  * By default linked resources are ignored and not included in the search.
- * </p>
  * <p>
  * The search algorithm is exhaustive, it will find all matching repositories.
  * For the project itself and possibly for each linked container within the
  * project it scans down the local filesystem trees to locate any Git
- * repositories which may be found there. It also scans up the local filesystem
- * tree to locate any Git repository which may be outside of Eclipse's
- * workspace-view of the world.
+ * repositories which may be found there. Descending into children can be
+ * disabled, see {@link #setFindInChildren(boolean)}.
+ * <p>
+ * It also scans up the local filesystem tree to locate any Git repository which
+ * may be outside of Eclipse's workspace-view of the world.
+ * <p>
  * In short, if there is a Git repository associated, it finds it.
  * </p>
  */
@@ -55,7 +57,9 @@ public class RepositoryFinder {
 	private final Collection<RepositoryMapping> results = new ArrayList<RepositoryMapping>();
 	private final Set<File> gitdirs = new HashSet<File>();
 
-	private Set<File> ceilingDirectories = new HashSet<File>();
+	private final Set<File> ceilingDirectories = new HashSet<File>();
+
+	private boolean findInChildren = true;
 
 	/**
 	 * Create a new finder to locate Git repositories for a project.
@@ -72,6 +76,16 @@ public class RepositoryFinder {
 			for (String path : ceilingDirectoriesVar.split(File.pathSeparator))
 				ceilingDirectories.add(new File(path));
 		}
+	}
+
+	/**
+	 * @param findInChildren
+	 *            whether children of the project should also be scanned for a
+	 *            .git directory
+	 * @since 3.4
+	 */
+	public void setFindInChildren(boolean findInChildren) {
+		this.findInChildren = findInChildren;
 	}
 
 	/**
@@ -134,17 +148,19 @@ public class RepositoryFinder {
 					findInDirectory(c, fsLoc);
 				m.worked(1);
 
-				final IResource[] children = c.members();
-				if (children != null && children.length > 0) {
-					final int scale = 100 / children.length;
-					for (int k = 0; k < children.length; k++) {
-						final IResource o = children[k];
-						if (o instanceof IContainer
-								&& !o.getName().equals(Constants.DOT_GIT)) {
-							find(new SubProgressMonitor(m, scale),
-									(IContainer) o, searchLinkedFolders);
-						} else {
-							m.worked(scale);
+				if (findInChildren) {
+					final IResource[] children = c.members();
+					if (children != null && children.length > 0) {
+						final int scale = 100 / children.length;
+						for (int k = 0; k < children.length; k++) {
+							final IResource o = children[k];
+							if (o instanceof IContainer
+									&& !o.getName().equals(Constants.DOT_GIT)) {
+								find(new SubProgressMonitor(m, scale),
+										(IContainer) o, searchLinkedFolders);
+							} else {
+								m.worked(scale);
+							}
 						}
 					}
 				}
