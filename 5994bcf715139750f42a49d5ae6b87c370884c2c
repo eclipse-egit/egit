@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_22c294ce",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2117,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-04-19T08:32:15Z",
+      "side": 1,
+      "message": "avoid unrelated formatting changes",
+      "revId": "5994bcf715139750f42a49d5ae6b87c370884c2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
