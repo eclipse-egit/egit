@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2011, 2014 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,11 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.clone;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
@@ -25,21 +29,23 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
+import org.eclipse.egit.core.project.RepositoryFinder;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.IWorkingSet;
 import org.eclipse.ui.IWorkingSetManager;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * Utilities for creating projects
+ * Utilities for creating (importing) projects
  */
 public class ProjectUtils {
 	/**
+	 * Create (import) a set of existing projects. The projects are
+	 * automatically connected to the repository they reside in.
+	 *
 	 * @param projectsToCreate
 	 *            the projects to create
-	 * @param repository
-	 *            if not null, the projects will be automatically shared
 	 * @param selectedWorkingSets
 	 *            the workings sets to add the created projects to, may be null
 	 *            or empty
@@ -49,21 +55,20 @@ public class ProjectUtils {
 	 */
 	public static void createProjects(
 			final Set<ProjectRecord> projectsToCreate,
-			final Repository repository,
 			final IWorkingSet[] selectedWorkingSets, IProgressMonitor monitor)
 			throws InvocationTargetException, InterruptedException {
-		createProjects(projectsToCreate, false, repository,
-				selectedWorkingSets, monitor);
+		createProjects(projectsToCreate, false, selectedWorkingSets, monitor);
 	}
 
 	/**
+	 * Create (import) a set of existing projects. The projects are
+	 * automatically connected to the repository they reside in.
+	 *
 	 * @param projectsToCreate
 	 *            the projects to create
 	 * @param open
 	 *            true to open existing projects, false to leave in current
 	 *            state
-	 * @param repository
-	 *            if not null, the projects will be automatically shared
 	 * @param selectedWorkingSets
 	 *            the workings sets to add the created projects to, may be null
 	 *            or empty
@@ -73,7 +78,6 @@ public class ProjectUtils {
 	 */
 	public static void createProjects(
 			final Set<ProjectRecord> projectsToCreate, final boolean open,
-			final Repository repository,
 			final IWorkingSet[] selectedWorkingSets, IProgressMonitor monitor)
 			throws InvocationTargetException, InterruptedException {
 		IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
@@ -81,26 +85,40 @@ public class ProjectUtils {
 				IWorkingSetManager workingSetManager = PlatformUI
 						.getWorkbench().getWorkingSetManager();
 				try {
-					actMonitor.beginTask("", projectsToCreate.size()); //$NON-NLS-1$
+					actMonitor.beginTask("", projectsToCreate.size() * 2 + 1); //$NON-NLS-1$
 					if (actMonitor.isCanceled())
 						throw new OperationCanceledException();
+					Map<IProject, File> projectsToConnect = new HashMap<IProject, File>();
 					for (ProjectRecord projectRecord : projectsToCreate) {
 						if (actMonitor.isCanceled())
 							throw new OperationCanceledException();
-						actMonitor.setTaskName(projectRecord.getProjectLabel());
+						actMonitor.subTask(projectRecord.getProjectLabel());
 						IProject project = createExistingProject(projectRecord,
 								open, new SubProgressMonitor(actMonitor, 1));
 						if (project == null)
 							continue;
-						if (repository != null) {
-							ConnectProviderOperation connectProviderOperation = new ConnectProviderOperation(
-									project, repository.getDirectory());
-							connectProviderOperation.execute(actMonitor);
+
+						RepositoryFinder finder = new RepositoryFinder(project);
+						finder.setFindInChildren(false);
+						Collection<RepositoryMapping> mappings = finder
+								.find(new SubProgressMonitor(actMonitor, 1));
+						if (!mappings.isEmpty()) {
+							RepositoryMapping mapping = mappings.iterator()
+									.next();
+							projectsToConnect.put(project, mapping
+									.getGitDirAbsolutePath().toFile());
 						}
+
 						if (selectedWorkingSets != null
 								&& selectedWorkingSets.length > 0)
 							workingSetManager.addToWorkingSets(project,
 									selectedWorkingSets);
+					}
+
+					if (!projectsToConnect.isEmpty()) {
+						ConnectProviderOperation connect = new ConnectProviderOperation(
+								projectsToConnect);
+						connect.execute(new SubProgressMonitor(actMonitor, 1));
 					}
 				} finally {
 					actMonitor.done();
