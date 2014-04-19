@@ -232,7 +232,6 @@ public class GitImportWizard extends AbstractGitCloneWizard implements IImportWi
 		case GitSelectWizardPage.EXISTING_PROJECTS_WIZARD: {
 			final Set<ProjectRecord> projectsToCreate = new HashSet<ProjectRecord>();
 			final List<IWorkingSet> workingSets = new ArrayList<IWorkingSet>();
-			final Repository[] repository = new Repository[1];
 			// get the data from the pages in the UI thread
 			PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 				public void run() {
@@ -241,11 +240,10 @@ public class GitImportWizard extends AbstractGitCloneWizard implements IImportWi
 					IWorkingSet[] workingSetArray = projectsImportPage
 							.getSelectedWorkingSets();
 					workingSets.addAll(Arrays.asList(workingSetArray));
-					repository[0] = getTargetRepository();
 					projectsImportPage.saveWidgetValues();
 				}
 			});
-			ProjectUtils.createProjects(projectsToCreate, repository[0],
+			ProjectUtils.createProjects(projectsToCreate,
 					workingSets.toArray(new IWorkingSet[workingSets.size()]),
 					monitor);
 			break;

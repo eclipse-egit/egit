@@ -161,7 +161,7 @@ public class GitCreateProjectViaWizardWizard extends Wizard {
 					myProjectsImportPage.saveWidgetValues();
 				}
 			});
-			ProjectUtils.createProjects(projectsToCreate, myRepository,
+			ProjectUtils.createProjects(projectsToCreate,
 					workingSets.toArray(new IWorkingSet[workingSets.size()]),
 					monitor);
 			break;
