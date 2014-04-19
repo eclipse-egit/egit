@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_82d6006a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-19T13:02:19Z",
+      "side": 1,
+      "message": "In case of a deleted file, getNewPath returns /dev/null, which causes a garbage path. Could you add a check with getChange(), and disable it in case of DELETE?",
+      "revId": "6cb2213b2350ab2d053cb66d432f4db11a186bc3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_e2025c7f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-19T13:02:19Z",
+      "side": 1,
+      "message": "Setting enabled twice is a bit weird. Could you instead move the other setEnabled for openWorkingTreeVersion into the else? Then you can remove `openWorkingTreeVersion.isEnabled() \u0026\u0026` here.",
+      "revId": "6cb2213b2350ab2d053cb66d432f4db11a186bc3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
