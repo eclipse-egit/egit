@@ -328,18 +328,23 @@ public class CommitFileDiffViewer extends TableViewer {
 		if (!submoduleSelected) {
 			boolean oneOrMoreSelected = !sel.isEmpty();
 			open.setEnabled(oneOrMoreSelected);
-			openWorkingTreeVersion.setEnabled(oneOrMoreSelected);
 			compare.setEnabled(sel.size() == 1);
 			blame.setEnabled(oneOrMoreSelected);
 			if (sel.size() == 1) {
 				FileDiff diff = (FileDiff) sel.getFirstElement();
-				String path = new Path(getRepository().getWorkTree()
-						.getAbsolutePath()).append(diff.getNewPath())
-						.toOSString();
-				compareWorkingTreeVersion.setEnabled(new File(path).exists()
-						&& !submoduleSelected);
-			} else
+				boolean workTreeFileExists = false;
+				if (diff.getChange() != ChangeType.DELETE) {
+					String path = new Path(getRepository().getWorkTree()
+							.getAbsolutePath()).append(diff.getNewPath())
+							.toOSString();
+					workTreeFileExists = new File(path).exists();
+				}
+				compareWorkingTreeVersion.setEnabled(workTreeFileExists);
+				openWorkingTreeVersion.setEnabled(workTreeFileExists);
+			} else {
 				compareWorkingTreeVersion.setEnabled(false);
+				openWorkingTreeVersion.setEnabled(oneOrMoreSelected);
+			}
 		} else {
 			open.setEnabled(false);
 			openWorkingTreeVersion.setEnabled(false);
