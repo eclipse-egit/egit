@@ -16,6 +16,24 @@
       "revId": "1a2d561106a7b609d1685ee3363de66099938124",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_228f3489",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractRebaseCommandHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-04-19T14:23:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0756a345_823ba04f",
+      "revId": "1a2d561106a7b609d1685ee3363de66099938124",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
