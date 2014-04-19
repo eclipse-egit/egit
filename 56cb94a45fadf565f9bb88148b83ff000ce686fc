@@ -52,6 +52,24 @@
       "revId": "56cb94a45fadf565f9bb88148b83ff000ce686fc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_a25a24c7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-04-19T07:55:36Z",
+      "side": 0,
+      "message": "thanks, didn\u0027t spot this, done",
+      "parentUuid": "0756a345_e23a5c82",
+      "revId": "56cb94a45fadf565f9bb88148b83ff000ce686fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
