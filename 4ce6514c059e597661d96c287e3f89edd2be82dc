@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_4d31b9ef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-20T15:21:42Z",
+      "side": 1,
+      "message": "We put the bug number in a footer line like this:\n\n    Bug: 432915\n\nAnd the subject should describe what the change does, not the bug, e.g.:\n\n    Only enable \"Open Workspace Version\" when file exists",
+      "revId": "4ce6514c059e597661d96c287e3f89edd2be82dc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_6d347de2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-20T15:21:42Z",
+      "side": 1,
+      "message": "That\u0027s what I meant. But now that I see it I\u0027m asking myself why we don\u0027t use diff.getPath here, it returns the old path in case of a delete. It would be useful to be able open a file that was deleted in a commit but was later restored.\n\nCould you change it to just use getPath and also change it in Action#run? Sorry about that :).",
+      "revId": "4ce6514c059e597661d96c287e3f89edd2be82dc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
