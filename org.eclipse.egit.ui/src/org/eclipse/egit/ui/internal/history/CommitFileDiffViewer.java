@@ -434,19 +434,26 @@ public class CommitFileDiffViewer extends TableViewer {
 	}
 
 	private void openFileInEditor(FileDiff d) {
+		RevCommit commit;
+		ObjectId blob;
+		ObjectId[] blobs = d.getBlobs();
+		if (d.getChange().equals(ChangeType.DELETE)) {
+			commit = d.getCommit().getParent(0);
+			blob = blobs[0];
+		} else {
+			commit = d.getCommit();
+			blob = blobs[blobs.length - 1];
+		}
 		try {
-			IWorkbenchWindow window = PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow();
-			IWorkbenchPage page = window.getActivePage();
-			IFileRevision rev = CompareUtils.getFileRevision(d.getNewPath(), d
-					.getChange().equals(ChangeType.DELETE) ? d.getCommit()
-					.getParent(0) : d.getCommit(), getRepository(), d
-					.getChange().equals(ChangeType.DELETE) ? d.getBlobs()[0]
-					: d.getBlobs()[d.getBlobs().length - 1]);
-			if (rev != null)
+			IFileRevision rev = CompareUtils.getFileRevision(d.getNewPath(),
+					commit, getRepository(), blob);
+			if (rev != null) {
+				IWorkbenchWindow window = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow();
+				IWorkbenchPage page = window.getActivePage();
 				EgitUiEditorUtils.openEditor(page, rev,
 						new NullProgressMonitor());
-			else {
+			} else {
 				String message = NLS.bind(
 						UIText.CommitFileDiffViewer_notContainedInCommit, d
 .getNewPath(), d.getCommit().getId().getName());
