@@ -16,6 +16,24 @@
       "revId": "d005b6e937fb750ad849967f0853e3e27f8e7165",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_153183f0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-22T21:39:00Z",
+      "side": 1,
+      "message": "Good one, done. See, it was even wrong before (well, just for the message, but still) :).",
+      "parentUuid": "0756a345_fc8e7c8a",
+      "revId": "d005b6e937fb750ad849967f0853e3e27f8e7165",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
