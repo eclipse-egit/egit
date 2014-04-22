@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0756a345_dc645817",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1655
+      },
+      "writtenOn": "2014-04-22T06:41:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0756a345_67fc9e33",
+      "revId": "0fe14e4bc9a230989dc95f96fb92f7c80d031661",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0756a345_a7f6b64e",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeUtil.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-04-18T14:46:06Z",
       "side": 1,
       "message": "Please remove this unnecessary change.",
+      "revId": "0fe14e4bc9a230989dc95f96fb92f7c80d031661",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_3c6914ed",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1655
+      },
+      "writtenOn": "2014-04-22T06:41:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0756a345_a7f6b64e",
       "revId": "0fe14e4bc9a230989dc95f96fb92f7c80d031661",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
