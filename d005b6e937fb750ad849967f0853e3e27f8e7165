@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_fc8e7c8a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-04-22T12:39:47Z",
+      "side": 1,
+      "message": "Maybe use commit.getName() here",
+      "revId": "d005b6e937fb750ad849967f0853e3e27f8e7165",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
