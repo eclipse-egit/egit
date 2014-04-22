@@ -325,6 +325,13 @@ public class CommitFileDiffViewer extends TableViewer {
 		selectAll.setEnabled(!allSelected);
 		copy.setEnabled(!sel.isEmpty());
 
+		boolean deleteSelected = sel.size() == 1
+				&& ((FileDiff) sel.getFirstElement()).getChange() == ChangeType.DELETE;
+		if (deleteSelected)
+			open.setText(UIText.CommitFileDiffViewer_OpenPreviousInEditorMenuLabel);
+		else
+			open.setText(UIText.CommitFileDiffViewer_OpenInEditorMenuLabel);
+
 		if (!submoduleSelected) {
 			boolean oneOrMoreSelected = !sel.isEmpty();
 			open.setEnabled(oneOrMoreSelected);
@@ -445,7 +452,7 @@ public class CommitFileDiffViewer extends TableViewer {
 			blob = blobs[blobs.length - 1];
 		}
 		try {
-			IFileRevision rev = CompareUtils.getFileRevision(d.getNewPath(),
+			IFileRevision rev = CompareUtils.getFileRevision(d.getPath(),
 					commit, getRepository(), blob);
 			if (rev != null) {
 				IWorkbenchWindow window = PlatformUI.getWorkbench()
@@ -455,8 +462,8 @@ public class CommitFileDiffViewer extends TableViewer {
 						new NullProgressMonitor());
 			} else {
 				String message = NLS.bind(
-						UIText.CommitFileDiffViewer_notContainedInCommit, d
-.getNewPath(), commit.getName());
+						UIText.CommitFileDiffViewer_notContainedInCommit,
+						d.getPath(), commit.getName());
 				Activator.showError(message, null);
 			}
 		} catch (IOException e) {
