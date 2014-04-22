@@ -29,6 +29,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -254,9 +255,14 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 				// empty
 			}
 		});
+		return getHistoryViewBot().table();
+	}
+
+	private SWTBot getHistoryViewBot() {
 		String genericHistoryViewId = "org.eclipse.team.ui.GenericHistoryView";
 		TestUtil.waitUntilViewWithGivenIdShows(genericHistoryViewId);
-		return bot.viewById(genericHistoryViewId).bot().table();
+		SWTBot historyView = bot.viewById(genericHistoryViewId).bot();
+		return historyView;
 	}
 
 	@Test
@@ -359,6 +365,28 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		assertEquals(1, dialog.tree().getAllItems()[0].rowCount());
 		assertTrue(dialog.tree().getAllItems()[0].getItems()[0].getText()
 				.startsWith(FILE1));
+	}
+
+	@Test
+	public void testOpenThisVersionForDeletedFile() throws Exception {
+		Git git = Git.wrap(lookupRepository(repoFile));
+		git.rm().addFilepattern(FILE1_PATH).call();
+		RevCommit commit = git.commit().setMessage("Delete file").call();
+
+		SWTBotTable commitsTable = getHistoryViewTable(PROJ1);
+		assertEquals(commitCount + 1, commitsTable.rowCount());
+		commitsTable.select(0);
+
+		SWTBot viewBot = getHistoryViewBot();
+		SWTBotTable fileDiffTable = viewBot.table(1);
+		assertEquals(1, fileDiffTable.rowCount());
+
+		fileDiffTable.select(0);
+		fileDiffTable.contextMenu(
+				UIText.CommitFileDiffViewer_OpenInEditorMenuLabel).click();
+
+		// Editor for old file version should be opened
+		bot.editorByTitle(FILE1 + " " + commit.getParent(0).getName());
 	}
 
 	@Test

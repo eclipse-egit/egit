@@ -445,7 +445,7 @@ public class CommitFileDiffViewer extends TableViewer {
 			blob = blobs[blobs.length - 1];
 		}
 		try {
-			IFileRevision rev = CompareUtils.getFileRevision(d.getNewPath(),
+			IFileRevision rev = CompareUtils.getFileRevision(d.getPath(),
 					commit, getRepository(), blob);
 			if (rev != null) {
 				IWorkbenchWindow window = PlatformUI.getWorkbench()
@@ -455,8 +455,8 @@ public class CommitFileDiffViewer extends TableViewer {
 						new NullProgressMonitor());
 			} else {
 				String message = NLS.bind(
-						UIText.CommitFileDiffViewer_notContainedInCommit, d
-.getNewPath(), d.getCommit().getId().getName());
+						UIText.CommitFileDiffViewer_notContainedInCommit,
+						d.getPath(), d.getCommit().getId().getName());
 				Activator.showError(message, null);
 			}
 		} catch (IOException e) {
