@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0756a345_6679379f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/CommitMessageEditorDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2014-04-23T16:27:30Z",
+      "side": 1,
+      "message": "I\u0027ve been using the CommitDialog as my \"template\", which is why I\u0027ve changed it this way. When looking at more classes, I see three versions: calling setStyle in the middle of some code, overriding setStyle or overriding getStyle.\n\nTo me, the overriding of getStyle looked more logical than overriding setStyle because getStyle will be called for sure during creation of the new shell.\n\nI\u0027m fine with changing this, but can someone give a good argument what it is really the preferred alternative of all the available ones?",
+      "parentUuid": "0756a345_2b1b88a7",
+      "revId": "0dc4136dd3fe88a4311113683452ef18f5c591fb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0756a345_8b18d4a9",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/CommitMessageEditorDialog.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-04-23T12:32:38Z",
       "side": 1,
       "message": "I think you should rather overwrite getTitle",
+      "revId": "0dc4136dd3fe88a4311113683452ef18f5c591fb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_469b537f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/CommitMessageEditorDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2014-04-23T16:27:30Z",
+      "side": 1,
+      "message": "There is no getTitle() method in this class hierarchy.\n\nI created both changes by looking at a similar class in the egit code. Generally speaking, the egit UI code is using many different alternatives to do the same things. For setting the windows title I\u0027ve seen at least\n* the convinience method in the AbstractBranchSelectionDialog hierarchy\n* overriding configureShell\n* calling getShell().setText() during createComponents\n\nI have no clue if there is a recommended and preferred way. If so, the whole code should be reworked.",
+      "parentUuid": "0756a345_8b18d4a9",
       "revId": "0dc4136dd3fe88a4311113683452ef18f5c591fb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
