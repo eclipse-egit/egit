@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_2b1b88a7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/CommitMessageEditorDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-04-23T12:32:38Z",
+      "side": 1,
+      "message": "unrelated change\n\nBesides that, the javadoc says:\n\nThe default value is SWT.CLOSE|SWT.MIN|SWT.MAX|SWT.RESIZE. Subclassers should call setShellStyle to change this value, rather than overriding this method.",
+      "revId": "0dc4136dd3fe88a4311113683452ef18f5c591fb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_8b18d4a9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/CommitMessageEditorDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-04-23T12:32:38Z",
+      "side": 1,
+      "message": "I think you should rather overwrite getTitle",
+      "revId": "0dc4136dd3fe88a4311113683452ef18f5c591fb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
