@@ -52,8 +52,8 @@ public class CommitMessageEditorDialog extends TitleAreaDialog {
 	}
 
 	@Override
-	protected void setShellStyle(int newShellStyle) {
-		super.setShellStyle(newShellStyle | SWT.RESIZE | SWT.MAX);
+	protected int getShellStyle() {
+		return super.getShellStyle() | SWT.RESIZE | SWT.MAX;
 	}
 
 	@Override
@@ -107,5 +107,11 @@ public class CommitMessageEditorDialog extends TitleAreaDialog {
 	 */
 	public String getCommitMessage() {
 		return this.commitMessage;
+	}
+
+	@Override
+	protected void configureShell(Shell newShell) {
+		super.configureShell(newShell);
+		newShell.setText(UIText.RebaseInteractiveHandler_EditMessageDialogTitle);
 	}
 }
