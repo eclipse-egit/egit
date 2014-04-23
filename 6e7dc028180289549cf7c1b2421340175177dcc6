@@ -16,6 +16,24 @@
       "revId": "6e7dc028180289549cf7c1b2421340175177dcc6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_8118b5a9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-23T20:46:46Z",
+      "side": 1,
+      "message": "An oversight, fixed the commit message in patch set 4.",
+      "parentUuid": "0756a345_61e3e111",
+      "revId": "6e7dc028180289549cf7c1b2421340175177dcc6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
