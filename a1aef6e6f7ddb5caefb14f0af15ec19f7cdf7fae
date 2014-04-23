@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_8128b537",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-04-23T23:04:49Z",
+      "side": 1,
+      "message": "I think in case of a deletion we should show the old path (/dev/null is pretty useless to understand the situation) and the commit which doesn\u0027t contain the file identified by the old path which is the one containing the file\u0027s deletion and not its predecessor",
+      "revId": "a1aef6e6f7ddb5caefb14f0af15ec19f7cdf7fae",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
