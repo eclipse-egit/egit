@@ -12,7 +12,9 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
@@ -68,7 +70,15 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 
 	private final Color commitDotOutline;
 
+	/**
+	 * Map from ref name to its label coordinates
+	 */
 	private final Map<String, Point> labelCoordinates = new HashMap<String, Point>();
+
+	/**
+	 * Set of ref names that are shown as an ellipsis
+	 */
+	private final Set<String> ellipsisTags = new HashSet<String>();
 
 	private int textHeight;
 
@@ -87,6 +97,12 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 	Color cellBG;
 
 	private Ref headRef;
+
+	/**
+	 * Number of tags of the current commit being rendered. Reset after each
+	 * commit.
+	 */
+	private int tagCount = 0;
 
 	SWTPlotRenderer(final Display d, final ResourceManager resources) {
 		this.resources = resources;
@@ -163,6 +179,8 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 		g.setForeground(cellFG);
 		g.setBackground(cellBG);
 		g.drawString(msg, cellX + x, cellY + texty, true);
+
+		tagCount = 0;
 	}
 
 	@Override
@@ -184,6 +202,8 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 			labelInner = INNER_REMOTE;
 			txt = name.substring(Constants.R_REMOTES.length());
 		} else if (name.startsWith(Constants.R_TAGS)) {
+			tagCount++;
+
 			tag = true;
 			if (ref.getPeeledObjectId() != null) {
 				labelOuter = OUTER_ANNOTATED;
@@ -193,7 +213,17 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 				labelInner = INNER_TAG;
 			}
 
-			txt = name.substring(Constants.R_TAGS.length());
+			int maxNumberOfTags = 1;
+			if (tagCount == maxNumberOfTags) {
+				txt = name.substring(Constants.R_TAGS.length());
+			} else if (tagCount == maxNumberOfTags + 1) {
+				txt = ELLIPSIS;
+				ellipsisTags.add(name);
+			} else {
+				// Don't draw additional tags, they are shown when hovering the
+				// ellipsis
+				return 0;
+			}
 		} else {
 			labelOuter = OUTER_OTHER;
 			labelInner = INNER_OTHER;
@@ -288,8 +318,12 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 	 * @return a Point where x and y designate the start and end x position of
 	 *         the label
 	 */
-	public Point getRefHSpan(Ref ref) {
+	Point getRefHSpan(Ref ref) {
 		return labelCoordinates.get(ref.getName());
+	}
+
+	boolean isShownAsEllipsis(Ref ref) {
+		return ellipsisTags.contains(ref.getName());
 	}
 
 	/**
