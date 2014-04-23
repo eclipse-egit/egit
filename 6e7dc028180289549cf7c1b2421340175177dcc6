@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_61e3e111",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-04-23T20:37:41Z",
+      "side": 1,
+      "message": "In the previous version commit is the same, in the new version it depends on the change type, i.e. the change does not match the commit comment.",
+      "revId": "6e7dc028180289549cf7c1b2421340175177dcc6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
