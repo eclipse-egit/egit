@@ -147,14 +147,11 @@ public class GitScmUrlImportWizardPage extends WizardPage implements
 		setPageComplete(true);
 
 		// Initialize versions versus master
-		// TODO: temporarily disabled, until bug 367712 is fixed
-		// IDialogSettings settings = getWizard().getDialogSettings();
-		// boolean useHEAD = settings != null
-		//		&& settings.getBoolean(GIT_PAGE_USE_MASTER);
-		// useHead.setSelection(useHEAD);
-		// versions.setSelection(!useHEAD);
-		useMaster.setSelection(true);
-		versions.setEnabled(false);
+		IDialogSettings settings = getWizard().getDialogSettings();
+		boolean useMasterSetting = settings != null
+				&& settings.getBoolean(GIT_PAGE_USE_MASTER);
+		useMaster.setSelection(useMasterSetting);
+		versions.setSelection(!useMasterSetting);
 
 		if (descriptions != null) {
 			bundlesViewer.setInput(descriptions);
