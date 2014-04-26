@@ -4802,6 +4802,10 @@
             icon="icons/obj16/revert.gif">
       </image>
       <image
+            commandId="org.eclipse.egit.ui.commit.ShowInHistory"
+            icon="icons/obj16/history.gif">
+      </image>
+      <image
             commandId="org.eclipse.egit.ui.team.clean"
             icon="icons/obj16/clean_obj.gif">
       </image>
@@ -5291,6 +5295,11 @@
             defaultHandler="org.eclipse.egit.ui.internal.commit.command.RevertHandler"
             id="org.eclipse.egit.ui.commit.Revert"
             name="%RevertCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.commit.command.ShowInHistoryHandler"
+            id="org.eclipse.egit.ui.commit.ShowInHistory"
+            name="%ShowInHistoryCommand.name">
       </command>
       <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.MergeHandler"
