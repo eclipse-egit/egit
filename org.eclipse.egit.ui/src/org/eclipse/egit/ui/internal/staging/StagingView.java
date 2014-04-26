@@ -449,6 +449,10 @@ public class StagingView extends ViewPart implements IShowInSource {
 		parent.addDisposeListener(new DisposeListener() {
 
 			public void widgetDisposed(DisposeEvent e) {
+				if (userEnteredCommmitMessage())
+					saveCommitMessageComponentState();
+				else
+					deleteCommitMessageComponentState();
 				resources.dispose();
 				toolkit.dispose();
 			}
