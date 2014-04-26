@@ -22,6 +22,7 @@ import org.eclipse.egit.ui.internal.commit.command.CreateBranchHandler;
 import org.eclipse.egit.ui.internal.commit.command.CreateTagHandler;
 import org.eclipse.egit.ui.internal.commit.command.CherryPickHandler;
 import org.eclipse.egit.ui.internal.commit.command.RevertHandler;
+import org.eclipse.egit.ui.internal.commit.command.ShowInHistoryHandler;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.jface.action.ContributionManager;
 import org.eclipse.jface.action.ControlContribution;
@@ -221,6 +222,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 		toolbar.add(createCommandContributionItem(CheckoutHandler.ID));
 		toolbar.add(createCommandContributionItem(CherryPickHandler.ID));
 		toolbar.add(createCommandContributionItem(RevertHandler.ID));
+		toolbar.add(createCommandContributionItem(ShowInHistoryHandler.ID));
 		addContributions(toolbar);
 		toolbar.update(true);
 		getSite().setSelectionProvider(new ISelectionProvider() {
