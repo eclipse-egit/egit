@@ -16,6 +16,24 @@
       "revId": "84431472541ac0380175773f043745e985c853bc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_183a4680",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 1373,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-04-28T19:16:14Z",
+      "side": 1,
+      "message": "Thanks for reporting, uploaded a new change at https://git.eclipse.org/r/25692",
+      "parentUuid": "0756a345_f8cb124b",
+      "revId": "84431472541ac0380175773f043745e985c853bc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
