@@ -16,6 +16,24 @@
       "revId": "a1aef6e6f7ddb5caefb14f0af15ec19f7cdf7fae",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_f8a792c2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-04-28T17:50:29Z",
+      "side": 1,
+      "message": "In hindsight, I should have squashed this together with the next change, would have been easier to see where this was going.",
+      "parentUuid": "0756a345_8128b537",
+      "revId": "a1aef6e6f7ddb5caefb14f0af15ec19f7cdf7fae",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
