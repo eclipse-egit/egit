@@ -87,6 +87,24 @@
       "revId": "0dc4136dd3fe88a4311113683452ef18f5c591fb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_df5b93cc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/CommitMessageEditorDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-04-29T12:06:49Z",
+      "side": 1,
+      "message": "Sorry, my fault, I was completely on the wrong track. Actually the way you do it here is very common in the EGit code base.",
+      "parentUuid": "0756a345_469b537f",
+      "revId": "0dc4136dd3fe88a4311113683452ef18f5c591fb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
