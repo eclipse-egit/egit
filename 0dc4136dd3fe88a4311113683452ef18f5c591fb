@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0756a345_7f4d2718",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/CommitMessageEditorDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-04-29T12:05:38Z",
+      "side": 1,
+      "message": "But why do you want to change it at all?\n\nEven if there is a good reason for changing it, it should be done in another commit.",
+      "parentUuid": "0756a345_6679379f",
+      "revId": "0dc4136dd3fe88a4311113683452ef18f5c591fb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0756a345_8b18d4a9",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/CommitMessageEditorDialog.java",
         "patchSetId": 1
