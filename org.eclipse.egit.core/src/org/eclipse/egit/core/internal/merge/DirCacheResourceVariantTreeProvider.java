@@ -13,8 +13,6 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.storage.IndexResourceVariant;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.jgit.dircache.DirCache;
@@ -61,9 +59,9 @@ public class DirCacheResourceVariantTreeProvider implements
 
 		for (int i = 0; i < cache.getEntryCount(); i++) {
 			final DirCacheEntry entry = cache.getEntry(i);
-			final IPath path = new Path(entry.getPathString());
 			final IResource resource = ResourceUtil
-					.getResourceHandleForLocation(path);
+					.getResourceHandleForLocation(repository,
+							entry.getPathString(), entry.getRawMode());
 			// Resource variants only make sense for IResources. Do not consider
 			// files outside of the workspace or otherwise non accessible.
 			if (resource == null || !resource.getProject().isAccessible())
