@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.egit.core.internal.util;
 
+import java.io.File;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +24,7 @@ import java.util.Set;
 import org.eclipse.core.filesystem.URIUtil;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -38,6 +40,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.core.RepositoryProvider;
 
@@ -139,22 +142,55 @@ public class ResourceUtil {
 	/**
 	 * Returns a resource handle for this path in the workspace. Note that
 	 * neither the resource nor the result need exist in the workspace : this
-	 * may return inexistant or otherwise non-accessible IResources.
+	 * may return inexistent or otherwise non-accessible IResources.
 	 *
-	 * @param path
-	 *            Path for which we need a resource handle.
+	 * @param repository
+	 *            The repository within which is tracked this file.
+	 * @param repoRelativePath
+	 *            Repository-relative path of the file we need an handle for.
+	 * @param fileMode
+	 *            The kind of file we seek. This will only be used if the file
+	 *            does not exist in the repository's working tree in order to
+	 *            determine whether the handle we need is that of an IContainer
+	 *            or that of an IFile.
 	 * @return The resource handle for the given path in the workspace.
 	 */
-	public static IResource getResourceHandleForLocation(IPath path) {
-		final IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace()
-				.getRoot();
+	public static IResource getResourceHandleForLocation(Repository repository,
+			String repoRelativePath, int fileMode) {
+		final String workDir = repository.getWorkTree().getAbsolutePath();
+		final IPath path = new Path(workDir + '/' + repoRelativePath);
+		final File file = path.toFile();
+		if (file.exists()) {
+			if (file.isDirectory())
+				return ResourceUtil.getContainerForLocation(path);
+			else
+				return ResourceUtil.getFileForLocation(path);
+		}
 
-		final IResource resource;
-		if (path.segmentCount() > 1)
-			resource = workspaceRoot.getFile(path);
-		else
-			resource = workspaceRoot.getProject(path.toString());
-		return resource;
+		if (!FileMode.TREE.equals(fileMode)
+				&& !FileMode.REGULAR_FILE.equals(fileMode))
+			return null;
+
+		// This is a file that no longer exists locally, yet we still need to
+		// determine an IResource for it.
+		// Try and find a Project in the workspace which path is a prefix of the
+		// file we seek and which is mapped to the current repository.
+		final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		for (IProject project : root.getProjects()) {
+			if (repository.equals(RepositoryProvider.getProvider(project,
+					GitProvider.ID))) {
+				final IPath projectLocation = project.getLocation();
+				if (projectLocation != null && projectLocation.isPrefixOf(path)) {
+					final IPath projectRelativePath = path
+							.makeRelativeTo(projectLocation);
+					if (FileMode.TREE.equals(fileMode))
+						return project.getFolder(projectRelativePath);
+					else if (FileMode.REGULAR_FILE.equals(fileMode))
+						return project.getFile(projectRelativePath);
+				}
+			}
+		}
+		return null;
 	}
 
 	/**
