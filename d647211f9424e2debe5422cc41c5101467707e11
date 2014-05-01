@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0756a345_94957a98",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-05-01T14:54:03Z",
+      "side": 1,
+      "message": "Agreed. Committing using the keyboard can already be done using Ctrl+Enter.",
+      "parentUuid": "67591f73_1aa90713",
+      "revId": "d647211f9424e2debe5422cc41c5101467707e11",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67591f73_7a100307",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
         "patchSetId": 4
