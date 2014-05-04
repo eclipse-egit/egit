@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_77a6e3c3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/SecureStoreUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-05-04T23:00:02Z",
+      "side": 1,
+      "message": "In RepositorySelectionPage the exception wasn\u0027t eaten, so the user would be informed that something bad happed. Not so with this change,",
+      "revId": "a0a1d87ead936a1ea680322722e818fbc1e196f9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
