@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0756a345_3450e4ab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2014-05-06T07:44:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0756a345_adc2ecfd",
+      "revId": "ed48d5388374a7b63dc970462b939dc3038489bc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0756a345_12569555",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0756a345_944730f6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2014-05-06T07:44:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0756a345_12569555",
+      "revId": "ed48d5388374a7b63dc970462b939dc3038489bc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0756a345_2dd6dcbe",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2014-05-05T16:14:18Z",
       "side": 1,
       "message": "could you elaborate what\u0027s the advantage of ignoring the exception like that ?\n\naccording to this method\u0027s javadoc returning false means that the team provider doesn\u0027t feel responsible for deleting this file which seems inappropriate here (can\u0027t test this on Mac since it doesn\u0027t fail to delete the file) \n\nalso it mentions that if the call is failing tree.failed() should be called to notify Team that it failed",
+      "revId": "ed48d5388374a7b63dc970462b939dc3038489bc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_544d9817",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2014-05-06T07:44:21Z",
+      "side": 1,
+      "message": "I\u0027ll elaborate on my thoughts, and wait for your answer before pushing another review :).\n\nWell, my question would be more like \"at what point should an automatic, but not mandatory, hook should fail a process as a whole\"?\n\nSometime in december, I had launched a discussion on egit-dev about the DirCache locking mechanism, along with a very small test case describing more or less the issue : http://dev.eclipse.org/mhonarc/lists/egit-dev/msg03353.html .\n\nI thought that it would be possible to implement a reentrant lock for the DirCache, but that proved impossible for me since there were just too many assumptions made that the process had free reign over everything.\n\nBasically, \"git\" is not responsible for merging files : someone might have provided his own custom merger for a given file, and we mustn\u0027t prevent him to work on said file. At the start of a merging process, the RecursiveMerger acquires and locks the DirCache. Then, when it sees like it needs to merge a file which possesses its own merger, it will delegate to that merger for all modifications. If the modification is \"that file should be deleted\", then the custom merger will delete it and tell it to its caller (the merger strategy), which in turn is responsible to update the index it has already locked. Problem here is that when the custom merger tries and delete the file, this hook is triggered. It fails to lock the index, and it throws up, failing the merge process as a whole just because it couldn\u0027t make an eager (and useless, in this case) modification to the index.\n\nThat is why I ended up catching and ignoring the exception : whatever the case, I do not think that this hook should make the modification in the workspace fail entirely, whatever it is that it couldn\u0027t do. Even if it could not modify the index, the user will still be able to do it later, either through the staging view or through a command line interface for git. Then, and only then, will it be a good time to show an error to the user if the operation fails : an error to something he asked for, not an error for something that occurred automatically and, in this case, out of turn.\n\nI think the proper returned boolean is \"false\" : \"I couldn\u0027t lock the index, so simply let the caller delete the file\". returning \"true\" would mean that we did the deletion, which is wrong in this case.",
+      "parentUuid": "0756a345_2dd6dcbe",
       "revId": "ed48d5388374a7b63dc970462b939dc3038489bc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
