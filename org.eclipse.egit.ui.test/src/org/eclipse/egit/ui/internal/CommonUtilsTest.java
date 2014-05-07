@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.TreeSet;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.core.test.TestProject;
 import org.junit.Test;
 
 /**
@@ -108,5 +111,23 @@ public class CommonUtilsTest {
 		sortedSet.addAll(shuffeled);
 		assertEquals(expectedWithoutDuplicates,
 				new ArrayList<String>(sortedSet));
+	}
+
+	@Test
+	public void testResourceCompare() throws Exception {
+		// we just want to test that we can call the JFace resource name
+		// comparator which itself is tested by JFace
+		TestProject p = new TestProject();
+		p.createFolder("test");
+		IFile f1 = p.createFile("test/z.txt", "z".getBytes("UTF-8"));
+		IFile f2 = p.createFile("test/d.txt", "d".getBytes("UTF-8"));
+		IFile f3 = p.createFile("test/a.txt", "a".getBytes("UTF-8"));
+		List<IResource> expected = Arrays
+				.asList(new IResource[] { f3, f2,
+				f1 });
+		List<IResource> tmp = new ArrayList<IResource>(expected);
+		Collections.shuffle(tmp, new Random(1));
+		Collections.sort(tmp, CommonUtils.RESOURCE_NAME_COMPARATOR);
+		assertEquals(expected, tmp);
 	}
 }
