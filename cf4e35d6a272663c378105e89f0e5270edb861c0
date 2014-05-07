@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_fd4488d1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-05-07T21:55:21Z",
+      "side": 1,
+      "message": "why ?",
+      "revId": "cf4e35d6a272663c378105e89f0e5270edb861c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_9d2e2c15",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-05-07T21:55:21Z",
+      "side": 1,
+      "message": "typo: s/Synchonize/Synchronize/",
+      "revId": "cf4e35d6a272663c378105e89f0e5270edb861c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
