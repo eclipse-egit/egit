@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_e9f68a01",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 339
+      },
+      "writtenOn": "2014-05-08T18:58:28Z",
+      "side": 1,
+      "message": "The SuppressWarnings is unused and should be removed. Code change looks good.",
+      "revId": "5434d2c6c5aac2c140341d3d24f7cf28742c01e5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
