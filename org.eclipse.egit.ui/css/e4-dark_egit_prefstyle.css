@@ -1,0 +1,29 @@
+/*******************************************************************************
+ * Copyright (c) 2014 Andrea Guarinoni and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Andrea Guarinoni - initial API and implementation
+ *******************************************************************************/
+ 
+/* ############################## EGIT preferences ############################## */
+
+IEclipsePreferences#org-eclipse-ui-workbench {
+		preferences:
+			'org.eclipse.egit.ui.DiffAddBackgroundColor=11,121,90'
+			'org.eclipse.egit.ui.DiffAddForegroundColor=216,254,245'
+			'org.eclipse.egit.ui.DiffHeadlineBackgroundColor=71,71,71'
+			'org.eclipse.egit.ui.DiffHeadlineForegroundColor=242,242,242'
+			'org.eclipse.egit.ui.DiffHunkBackgroundColor=53,97,113'
+			'org.eclipse.egit.ui.DiffHunkForegroundColor=233,242,254'
+			'org.eclipse.egit.ui.DiffRemoveBackgroundColor=117,2,36'
+			'org.eclipse.egit.ui.DiffRemoveForegroundColor=255,232,237'
+			'org.eclipse.egit.ui.IgnoredResourceBackgroundColor=42,42,42'
+			'org.eclipse.egit.ui.IgnoredResourceForegroundColor=120,120,120'
+			'org.eclipse.egit.ui.UncommittedChangeBackgroundColor=42,42,42'
+			'org.eclipse.egit.ui.UncommittedChangeForegroundColor=114,157,186'
+}
+			
