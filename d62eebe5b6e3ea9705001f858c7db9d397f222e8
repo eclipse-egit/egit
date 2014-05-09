@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_e1e7be1c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-05-09T22:29:45Z",
+      "side": 1,
+      "message": "we put the bug link to the footer (last paragraph):\n\n Bug: 430741\n Change-Id: I2e...",
+      "revId": "d62eebe5b6e3ea9705001f858c7db9d397f222e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
