@@ -49,6 +49,8 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 
 	private static final String SUB_FOLDER = "SubFolder";
 
+	private static final String SUB_FOLDER2 = "SubFolder2";
+
 	private File gitDir;
 
 	private IProject project;
@@ -88,7 +90,7 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 	}
 
 	@Test
-	public void testDecorationNewFolder() throws Exception {
+	public void testDecorationNewEmptyFolder() throws Exception {
 		// Create new folder with sub folder
 		IFolder folder = project.getFolder(TEST_FOLDER);
 		folder.create(true, true, null);
@@ -97,8 +99,8 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 
 		IDecoratableResource[] expectedDRs = new IDecoratableResource[] {
 				new TestDecoratableResource(project).tracked(),
-				new TestDecoratableResource(folder),
-				new TestDecoratableResource(subFolder) };
+				new TestDecoratableResource(folder).ignored(),
+				new TestDecoratableResource(subFolder).ignored() };
 
 		waitForIndexDiffUpdate(true);
 		IndexDiffData indexDiffData = indexDiffCacheEntry.getIndexDiff();
@@ -147,7 +149,6 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 	@Test
 	public void testDecorationIgnoredFile() throws Exception {
 		// Create new file
-
 		write(new File(project.getLocation().toFile(), "Test.dat"), "Something");
 		write(new File(project.getLocation().toFile(), TEST_FILE2), "Something");
 		write(new File(project.getLocation().toFile(), "Test"), "Something");
@@ -176,7 +177,6 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 	@Test
 	public void testDecorationFileInIgnoredFolder() throws Exception {
 		// Create new file
-
 		FileUtils.mkdir(new File(project.getLocation().toFile(), "dir"));
 		write(new File(project.getLocation().toFile(), "dir/file"), "Something");
 		write(new File(project.getLocation().toFile(), ".gitignore"), "dir");
@@ -370,6 +370,38 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 				indexDiffData, project);
 
 		assertEquals(expectedDR, actualDR);
+	}
+
+	@Test
+	public void testDecorationNewFileInOneSubfolder() throws Exception {
+		IFolder folder = project.getFolder(TEST_FOLDER);
+		folder.create(true, true, null);
+		IFolder subFolder = folder.getFolder(SUB_FOLDER);
+		subFolder.create(true, true, null);
+		IFolder subFolder2 = folder.getFolder(SUB_FOLDER2);
+		subFolder2.create(true, true, null);
+		write(new File(subFolder2.getLocation().toFile().getAbsolutePath(),
+				TEST_FILE), "Something");
+		project.refreshLocal(IResource.DEPTH_INFINITE, null);
+		IResource file = subFolder2.findMember(TEST_FILE);
+
+		IDecoratableResource[] expectedDRs = new IDecoratableResource[] {
+				new TestDecoratableResource(project).tracked().dirty(),
+				new TestDecoratableResource(folder).dirty(),
+				new TestDecoratableResource(subFolder).ignored(),
+				new TestDecoratableResource(subFolder2).dirty(),
+				new TestDecoratableResource(file) };
+
+		waitForIndexDiffUpdate(true);
+		IndexDiffData indexDiffData = indexDiffCacheEntry.getIndexDiff();
+		IDecoratableResource[] actualDRs = {
+				new DecoratableResourceAdapter(indexDiffData, project),
+				new DecoratableResourceAdapter(indexDiffData, folder),
+				new DecoratableResourceAdapter(indexDiffData, subFolder),
+				new DecoratableResourceAdapter(indexDiffData, subFolder2),
+				new DecoratableResourceAdapter(indexDiffData, file) };
+
+		assertArrayEquals(expectedDRs, actualDRs);
 	}
 
 }
