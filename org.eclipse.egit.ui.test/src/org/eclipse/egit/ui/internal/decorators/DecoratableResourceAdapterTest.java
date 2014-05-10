@@ -88,7 +88,7 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 	}
 
 	@Test
-	public void testDecorationNewFolder() throws Exception {
+	public void testDecorationNewEmptyFolder() throws Exception {
 		// Create new folder with sub folder
 		IFolder folder = project.getFolder(TEST_FOLDER);
 		folder.create(true, true, null);
@@ -97,8 +97,8 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 
 		IDecoratableResource[] expectedDRs = new IDecoratableResource[] {
 				new TestDecoratableResource(project).tracked(),
-				new TestDecoratableResource(folder),
-				new TestDecoratableResource(subFolder) };
+				new TestDecoratableResource(folder).ignored(),
+				new TestDecoratableResource(subFolder).ignored() };
 
 		waitForIndexDiffUpdate(true);
 		IndexDiffData indexDiffData = indexDiffCacheEntry.getIndexDiff();

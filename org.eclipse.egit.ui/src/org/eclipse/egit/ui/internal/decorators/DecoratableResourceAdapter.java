@@ -22,7 +22,9 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
@@ -127,7 +129,8 @@ class DecoratableResourceAdapter extends DecoratableResource {
 
 		Set<String> ignoredFiles = indexDiffData.getIgnoredNotInIndex();
 		Set<String> untrackedFolders = indexDiffData.getUntrackedFolders();
-		ignored = containsPrefixPath(ignoredFiles, repoRelativePath);
+		ignored = containsPrefixPath(ignoredFiles, repoRelativePath)
+				|| !hasContainerAnyFiles(resource);
 
 		if (ignored)
 			tracked = false;
@@ -155,6 +158,29 @@ class DecoratableResourceAdapter extends DecoratableResource {
 		dirty = containsPrefix(modified, repoRelativePath)
 				|| containsPrefix(untracked, repoRelativePath)
 				|| containsPrefix(missing, repoRelativePath);
+	}
+
+	private static boolean hasContainerAnyFiles(IResource resource) {
+		if (resource instanceof IContainer) {
+			IContainer container = (IContainer) resource;
+			try {
+				return anyFile(container.members());
+			} catch (CoreException e) {
+				// if can't get any info, treat as with file
+				return true;
+			}
+		}
+		throw new IllegalArgumentException("Expected a container resource."); //$NON-NLS-1$
+	}
+
+	private static boolean anyFile(IResource[] memebers) {
+		for (IResource member : memebers) {
+			if (member.getType() == IResource.FILE)
+				return true;
+			else if (member.getType() == IResource.FOLDER)
+				return hasContainerAnyFiles(member);
+		}
+		return false;
 	}
 
 	private String makeRepoRelative(IResource res) {
