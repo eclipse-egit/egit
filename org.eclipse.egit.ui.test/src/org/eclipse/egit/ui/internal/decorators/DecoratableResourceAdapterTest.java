@@ -28,7 +28,6 @@ import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
-import org.eclipse.egit.ui.internal.decorators.IDecoratableResource.Staged;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.MergeResult.MergeStatus;
@@ -80,7 +79,7 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 	@Test
 	public void testDecorationEmptyProject() throws Exception {
 		IDecoratableResource[] expectedDRs = new IDecoratableResource[] { new TestDecoratableResource(
-				project, true, false, false, false, Staged.NOT_STAGED) };
+				project).tracked() };
 
 		IDecoratableResource[] actualDRs = { new DecoratableResourceAdapter(
 				indexDiffCacheEntry.getIndexDiff(), project) };
@@ -97,12 +96,9 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 		subFolder.create(true, true, null);
 
 		IDecoratableResource[] expectedDRs = new IDecoratableResource[] {
-				new TestDecoratableResource(project, true, false, false, false,
-						Staged.NOT_STAGED),
-				new TestDecoratableResource(folder, false, false, false, false,
-						Staged.NOT_STAGED),
-				new TestDecoratableResource(subFolder, false, false, false,
-						false, Staged.NOT_STAGED) };
+				new TestDecoratableResource(project).tracked(),
+				new TestDecoratableResource(folder),
+				new TestDecoratableResource(subFolder) };
 
 		waitForIndexDiffUpdate(true);
 		IndexDiffData indexDiffData = indexDiffCacheEntry.getIndexDiff();
@@ -120,7 +116,7 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 		IFolder testFolder2 = project.getFolder(TEST_FOLDER2);
 
 		IDecoratableResource[] expectedDRs = new IDecoratableResource[] { new TestDecoratableResource(
-				testFolder2, true, false, false, false, Staged.NOT_STAGED) };
+				testFolder2).tracked() };
 		waitForIndexDiffUpdate(true);
 		IndexDiffData indexDiffData = indexDiffCacheEntry.getIndexDiff();
 		IDecoratableResource[] actualDRs = { new DecoratableResourceAdapter(
@@ -137,10 +133,8 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 		IResource file = project.findMember(TEST_FILE);
 
 		IDecoratableResource[] expectedDRs = new IDecoratableResource[] {
-				new TestDecoratableResource(project, true, false, true, false,
-						Staged.NOT_STAGED),
-				new TestDecoratableResource(file, false, false, false, false,
-						Staged.NOT_STAGED) };
+				new TestDecoratableResource(project).tracked().dirty(),
+				new TestDecoratableResource(file) };
 		waitForIndexDiffUpdate(true);
 		IndexDiffData indexDiffData = indexDiffCacheEntry.getIndexDiff();
 		IDecoratableResource[] actualDRs = {
@@ -157,29 +151,24 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 		write(new File(project.getLocation().toFile(), "Test.dat"), "Something");
 		write(new File(project.getLocation().toFile(), TEST_FILE2), "Something");
 		write(new File(project.getLocation().toFile(), "Test"), "Something");
-		write(new File(project.getLocation().toFile(), ".gitignore"), "Test"); // Test is prefix of TestFile
+		// Test is prefix of TestFile
+		write(new File(project.getLocation().toFile(), ".gitignore"), "Test");
 		project.refreshLocal(IResource.DEPTH_INFINITE, null);
 		IResource file = project.findMember("Test.dat");
 		IResource gitignore = project.findMember(".gitignore");
 		IResource test = project.findMember("Test");
 		IDecoratableResource[] expectedDRs = new IDecoratableResource[] {
-				new TestDecoratableResource(project, true, false, true, false,
-						Staged.NOT_STAGED),
-				new TestDecoratableResource(gitignore, false, false, false, false,
-						Staged.NOT_STAGED),
-				new TestDecoratableResource(file, false, false, false, false,
-						Staged.NOT_STAGED),
-				new TestDecoratableResource(test, false, true, false, false,
-						Staged.NOT_STAGED)
-		};
+				new TestDecoratableResource(project).tracked().dirty(),
+				new TestDecoratableResource(gitignore),
+				new TestDecoratableResource(file),
+				new TestDecoratableResource(test).ignored() };
 		waitForIndexDiffUpdate(true);
 		IndexDiffData indexDiffData = indexDiffCacheEntry.getIndexDiff();
 		IDecoratableResource[] actualDRs = {
 				new DecoratableResourceAdapter(indexDiffData, project),
 				new DecoratableResourceAdapter(indexDiffData, gitignore),
 				new DecoratableResourceAdapter(indexDiffData, file),
-				new DecoratableResourceAdapter(indexDiffData, test)
-		};
+				new DecoratableResourceAdapter(indexDiffData, test) };
 
 		assertArrayEquals(expectedDRs, actualDRs);
 	}
@@ -188,7 +177,7 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 	public void testDecorationFileInIgnoredFolder() throws Exception {
 		// Create new file
 
-		FileUtils.mkdir(new File(project.getLocation().toFile(),"dir"));
+		FileUtils.mkdir(new File(project.getLocation().toFile(), "dir"));
 		write(new File(project.getLocation().toFile(), "dir/file"), "Something");
 		write(new File(project.getLocation().toFile(), ".gitignore"), "dir");
 		project.refreshLocal(IResource.DEPTH_INFINITE, null);
@@ -196,23 +185,17 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 		IResource file = project.findMember("dir/file");
 		IResource gitignore = project.findMember(".gitignore");
 		IDecoratableResource[] expectedDRs = new IDecoratableResource[] {
-				new TestDecoratableResource(project, true, false, true, false,
-						Staged.NOT_STAGED),
-				new TestDecoratableResource(gitignore, false, false, false, false,
-						Staged.NOT_STAGED),
-				new TestDecoratableResource(file, false, true, false, false,
-						Staged.NOT_STAGED),
-				new TestDecoratableResource(dir, false, true, false, false,
-						Staged.NOT_STAGED)
-		};
+				new TestDecoratableResource(project).tracked().dirty(),
+				new TestDecoratableResource(gitignore),
+				new TestDecoratableResource(file).ignored(),
+				new TestDecoratableResource(dir).ignored() };
 		waitForIndexDiffUpdate(true);
 		IndexDiffData indexDiffData = indexDiffCacheEntry.getIndexDiff();
 		IDecoratableResource[] actualDRs = {
 				new DecoratableResourceAdapter(indexDiffData, project),
 				new DecoratableResourceAdapter(indexDiffData, gitignore),
 				new DecoratableResourceAdapter(indexDiffData, file),
-				new DecoratableResourceAdapter(indexDiffData, dir)
-		};
+				new DecoratableResourceAdapter(indexDiffData, dir) };
 
 		assertArrayEquals(expectedDRs, actualDRs);
 	}
@@ -225,19 +208,16 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 		IFolder subFolder = folder.getFolder(SUB_FOLDER);
 		subFolder.create(true, true, null);
 		// Create new file
-		write(new File(subFolder.getLocation().toFile().getAbsolutePath(), TEST_FILE), "Something");
+		write(new File(subFolder.getLocation().toFile().getAbsolutePath(),
+				TEST_FILE), "Something");
 		project.refreshLocal(IResource.DEPTH_INFINITE, null);
 		IResource file = subFolder.findMember(TEST_FILE);
 
 		IDecoratableResource[] expectedDRs = new IDecoratableResource[] {
-				new TestDecoratableResource(project, true, false, true, false,
-						Staged.NOT_STAGED),
-				new TestDecoratableResource(folder, false, false, true, false,
-						Staged.NOT_STAGED),
-				new TestDecoratableResource(subFolder, false, false, true,
-						false, Staged.NOT_STAGED),
-				new TestDecoratableResource(file, false, false, false, false,
-						Staged.NOT_STAGED) };
+				new TestDecoratableResource(project).tracked().dirty(),
+				new TestDecoratableResource(folder).dirty(),
+				new TestDecoratableResource(subFolder).dirty(),
+				new TestDecoratableResource(file) };
 		waitForIndexDiffUpdate(true);
 		IndexDiffData indexDiffData = indexDiffCacheEntry.getIndexDiff();
 		IDecoratableResource[] actualDRs = {
@@ -247,7 +227,7 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 				new DecoratableResourceAdapter(indexDiffData, file) };
 
 		for (int i = 0; i < expectedDRs.length; i++)
-			assert(expectedDRs[i].equals(actualDRs[i]));
+			assert (expectedDRs[i].equals(actualDRs[i]));
 	}
 
 	@Test
@@ -260,10 +240,8 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 		git.add().addFilepattern(".").call();
 
 		IDecoratableResource[] expectedDRs = new IDecoratableResource[] {
-				new TestDecoratableResource(project, true, false, false, false,
-						Staged.MODIFIED),
-				new TestDecoratableResource(file, true, false, false, false,
-						Staged.ADDED) };
+				new TestDecoratableResource(project).tracked().modified(),
+				new TestDecoratableResource(file).tracked().added() };
 		waitForIndexDiffUpdate(true);
 		IndexDiffData indexDiffData = indexDiffCacheEntry.getIndexDiff();
 		IDecoratableResource[] actualDRs = {
@@ -284,10 +262,8 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 		git.commit().setMessage("First commit").call();
 
 		IDecoratableResource[] expectedDRs = new IDecoratableResource[] {
-				new TestDecoratableResource(project, true, false, false, false,
-						Staged.NOT_STAGED),
-				new TestDecoratableResource(file, true, false, false, false,
-						Staged.NOT_STAGED) };
+				new TestDecoratableResource(project).tracked(),
+				new TestDecoratableResource(file).tracked() };
 
 		waitForIndexDiffUpdate(true);
 		IndexDiffData indexDiffData = indexDiffCacheEntry.getIndexDiff();
@@ -313,10 +289,8 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 		write(f, "SomethingElse");
 
 		IDecoratableResource[] expectedDRs = new IDecoratableResource[] {
-				new TestDecoratableResource(project, true, false, true, false,
-						Staged.NOT_STAGED),
-				new TestDecoratableResource(file, true, false, true, false,
-						Staged.NOT_STAGED) };
+				new TestDecoratableResource(project).tracked().dirty(),
+				new TestDecoratableResource(file).tracked().dirty() };
 
 		waitForIndexDiffUpdate(true);
 		IndexDiffData indexDiffData = indexDiffCacheEntry.getIndexDiff();
@@ -362,10 +336,8 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 				.getMergeStatus() == MergeStatus.CONFLICTING);
 
 		IDecoratableResource[] expectedDRs = new IDecoratableResource[] {
-				new TestDecoratableResource(project, true, false, false, true,
-						Staged.NOT_STAGED),
-				new TestDecoratableResource(file, true, false, false, true,
-						Staged.NOT_STAGED) };
+				new TestDecoratableResource(project).tracked().conflicts(),
+				new TestDecoratableResource(file).tracked().conflicts() };
 
 		waitForIndexDiffUpdate(true);
 		IndexDiffData indexDiffData = indexDiffCacheEntry.getIndexDiff();
@@ -389,8 +361,8 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 		// Delete file
 		FileUtils.delete(f);
 
-		IDecoratableResource expectedDR = new TestDecoratableResource(project,
-				true, false, true, false, Staged.NOT_STAGED);
+		IDecoratableResource expectedDR = new TestDecoratableResource(project)
+				.tracked().dirty();
 
 		waitForIndexDiffUpdate(true);
 		IndexDiffData indexDiffData = indexDiffCacheEntry.getIndexDiff();
@@ -404,14 +376,38 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 
 class TestDecoratableResource extends DecoratableResource {
 
-	public TestDecoratableResource(IResource resource, boolean tracked,
-			boolean ignored, boolean dirty, boolean conflicts, Staged staged) {
+	public TestDecoratableResource(IResource resource) {
 		super(resource);
-		this.tracked = tracked;
-		this.ignored = ignored;
-		this.dirty = dirty;
-		this.conflicts = conflicts;
-		this.staged = staged;
+	}
+
+	public TestDecoratableResource tracked() {
+		this.tracked = true;
+		return this;
+	}
+
+	public TestDecoratableResource ignored() {
+		this.ignored = true;
+		return this;
+	}
+
+	public TestDecoratableResource dirty() {
+		this.dirty = true;
+		return this;
+	}
+
+	public TestDecoratableResource conflicts() {
+		this.conflicts = true;
+		return this;
+	}
+
+	public TestDecoratableResource added() {
+		this.staged = Staged.ADDED;
+		return this;
+	}
+
+	public IDecoratableResource modified() {
+		this.staged = Staged.MODIFIED;
+		return this;
 	}
 
 	public boolean equals(Object obj) {
