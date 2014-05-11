@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_a4edd402",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-05-11T10:13:18Z",
+      "side": 1,
+      "message": "This returns too early. Maybe use something like this:\n\nif (member.getType() \u003d\u003d IResource.FOLDER \u0026\u0026 hasContainerAnyFiles(member))\n         return true;",
+      "revId": "b5e16b569d036322b307db957d19b11cce68c4ef",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
