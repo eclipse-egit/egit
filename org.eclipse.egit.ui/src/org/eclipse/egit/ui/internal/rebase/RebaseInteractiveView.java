@@ -305,7 +305,7 @@ public class RebaseInteractiveView extends ViewPart implements
 		abortItem.setText(UIText.InteractiveRebaseView_abortItem_text);
 		abortItem.setEnabled(false);
 
-		new ToolItem(toolBar, SWT.SEPARATOR);
+		createSeparator(toolBar);
 
 		refreshItem = new ToolItem(toolBar, SWT.NONE);
 		refreshItem.setImage(UIIcons
@@ -317,6 +317,10 @@ public class RebaseInteractiveView extends ViewPart implements
 			}
 		});
 		refreshItem.setText(UIText.InteractiveRebaseView_refreshItem_text);
+	}
+
+	private static ToolItem createSeparator(ToolBar toolBar) {
+		return new ToolItem(toolBar, SWT.SEPARATOR);
 	}
 
 	private TreeViewer createPlanTreeViewer(Section rebasePlanSection,
