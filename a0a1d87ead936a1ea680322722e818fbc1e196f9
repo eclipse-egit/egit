@@ -16,6 +16,24 @@
       "revId": "a0a1d87ead936a1ea680322722e818fbc1e196f9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_15d028f3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/SecureStoreUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-05-12T21:10:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0756a345_77a6e3c3",
+      "revId": "a0a1d87ead936a1ea680322722e818fbc1e196f9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
