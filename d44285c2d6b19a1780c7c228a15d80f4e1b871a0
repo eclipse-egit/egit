@@ -16,6 +16,24 @@
       "revId": "d44285c2d6b19a1780c7c228a15d80f4e1b871a0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_55ac6075",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryStatisticsPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2014-05-12T21:51:10Z",
+      "side": 1,
+      "message": "Sounds like a good idea, but I guess we don\u0027t want to run gc each time when opening the page, which is what the command would do before returning the stats. Having a flag for not running the gc doesn\u0027t make much sense either. That leads me to a conclusion that a new command should be added for listing the stats, or did I miss anything?",
+      "parentUuid": "0756a345_b5833c0f",
+      "revId": "d44285c2d6b19a1780c7c228a15d80f4e1b871a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
