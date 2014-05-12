@@ -173,8 +173,8 @@ class DecoratableResourceAdapter extends DecoratableResource {
 		throw new IllegalArgumentException("Expected a container resource."); //$NON-NLS-1$
 	}
 
-	private static boolean anyFile(IResource[] memebers) {
-		for (IResource member : memebers) {
+	private static boolean anyFile(IResource[] members) {
+		for (IResource member : members) {
 			if (member.getType() == IResource.FILE)
 				return true;
 			else if (member.getType() == IResource.FOLDER)
