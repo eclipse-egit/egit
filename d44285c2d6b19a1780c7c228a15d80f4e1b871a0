@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_b5833c0f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryStatisticsPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-05-12T20:46:04Z",
+      "side": 1,
+      "message": "I think we should instead use GarbageCollectCommand which exposes statistics as properties",
+      "revId": "d44285c2d6b19a1780c7c228a15d80f4e1b871a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
