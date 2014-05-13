@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_e492275c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-05-13T13:59:20Z",
+      "side": 1,
+      "message": "With true, credentials will aleways be non-null, unless an exception occurs.\n\nOther than that, I think this is ugly. Create two utility methofs instead.\n\nMaybe we need to tests for this?",
+      "revId": "2513ad6965b5036412e2216d1511ea792299475c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
