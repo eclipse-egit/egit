@@ -16,6 +16,24 @@
       "revId": "2513ad6965b5036412e2216d1511ea792299475c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_7a6a2ce2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-05-13T22:06:36Z",
+      "side": 1,
+      "message": "got me, boolean parameters are suspicious",
+      "parentUuid": "0756a345_e492275c",
+      "revId": "2513ad6965b5036412e2216d1511ea792299475c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
