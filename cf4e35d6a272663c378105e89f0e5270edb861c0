@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0756a345_b0450ace",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2014-05-13T12:36:19Z",
+      "side": 1,
+      "message": "Because this SubscriberScopeManager will be passed over to Team as-is, and some of the implementations of Team APIs will rely on the proper initialization of this scope. I cannot provide the full stack, but here is one of those that can happen (here, when trying to \u003ccommit\u003e a file which is part of a model) :\n\n java.lang.NullPointerException\n at org.eclipse.egit.core.synchronize.GitResourceVariantTreeSubscriber.getBaseTree(GitResourceVariantTreeSubscriber.java:276)\n at org.eclipse.team.core.variants.ResourceVariantTreeSubscriber.refresh(ResourceVariantTreeSubscriber.java:170)\n at org.eclipse.team.core.variants.ResourceVariantTreeSubscriber.refresh(ResourceVariantTreeSubscriber.java:114)\n at org.eclipse.egit.core.synchronize.GitResourceVariantTreeSubscriber.refresh(GitResourceVariantTreeSubscriber.java:187)\n at org.eclipse.team.core.subscribers.SubscriberResourceMappingContext.refresh(SubscriberResourceMappingContext.java:167)\n at org.eclipse.team.core.subscribers.SubscriberResourceMappingContext.ensureRefreshed(SubscriberResourceMappingContext.java:207)\n at org.eclipse.team.core.subscribers.SubscriberResourceMappingContext.fetchMembers(SubscriberResourceMappingContext.java:132)\n [...]\n at org.eclipse.core.resources.mapping.ModelProvider.getMappings(ModelProvider.java:169)\n at org.eclipse.team.core.mapping.provider.SynchronizationScopeManager.getMappings(SynchronizationScopeManager.java:100)\n at org.eclipse.team.core.mapping.provider.SynchronizationScopeManager.getMappingsFromProviders(SynchronizationScopeManager.java:86)\n at org.eclipse.team.core.mapping.provider.SynchronizationScopeManager.internalPrepareContext(SynchronizationScopeManager.java:204)\n at org.eclipse.team.core.mapping.provider.SynchronizationScopeManager.access$0(SynchronizationScopeManager.java:187)\n at org.eclipse.team.core.mapping.provider.SynchronizationScopeManager$1.run(SynchronizationScopeManager.java:167)\n at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2344)\n at org.eclipse.team.core.mapping.provider.SynchronizationScopeManager.initialize(SynchronizationScopeManager.java:165)\n at org.eclipse.team.core.subscribers.SubscriberScopeManager.access$0(SubscriberScopeManager.java:1)\n at org.eclipse.team.core.subscribers.SubscriberScopeManager$1.run(SubscriberScopeManager.java:81)\n at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2344)\n at org.eclipse.team.core.subscribers.SubscriberScopeManager.initialize(SubscriberScopeManager.java:79)\n at org.eclipse.team.ui.synchronize.ModelOperation.initializeScope(ModelOperation.java:161)\n at org.eclipse.team.ui.synchronize.ModelOperation.beginOperation(ModelOperation.java:124)\n at org.eclipse.team.ui.synchronize.ModelOperation.run(ModelOperation.java:105)\n at org.eclipse.egit.ui.internal.operations.GitScopeUtil.collectRelatedChanges(GitScopeUtil.java:168)",
+      "parentUuid": "0756a345_fd4488d1",
+      "revId": "cf4e35d6a272663c378105e89f0e5270edb861c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0756a345_9d2e2c15",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeUtil.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2014-05-07T21:55:21Z",
       "side": 1,
       "message": "typo: s/Synchonize/Synchronize/",
+      "revId": "cf4e35d6a272663c378105e89f0e5270edb861c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_159948d1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2014-05-13T12:36:19Z",
+      "side": 1,
+      "message": "That\u0027s a property key that previously existed. Should I changed it anyway (though I did make the same error in the key I\u0027ve added for the interruption)?",
+      "parentUuid": "0756a345_9d2e2c15",
       "revId": "cf4e35d6a272663c378105e89f0e5270edb861c0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
