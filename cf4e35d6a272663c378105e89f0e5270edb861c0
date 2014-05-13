@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0756a345_3a61d405",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-05-13T22:05:10Z",
+      "side": 1,
+      "message": "ok, then explain this in the commit message so that we can understand the reason for this change when we look at the history later",
+      "parentUuid": "0756a345_b0450ace",
+      "revId": "cf4e35d6a272663c378105e89f0e5270edb861c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0756a345_9d2e2c15",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeUtil.java",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "That\u0027s a property key that previously existed. Should I changed it anyway (though I did make the same error in the key I\u0027ve added for the interruption)?",
       "parentUuid": "0756a345_9d2e2c15",
+      "revId": "cf4e35d6a272663c378105e89f0e5270edb861c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_da59b862",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-05-13T22:05:10Z",
+      "side": 1,
+      "message": "ok, then I\u0027d fix this in another change and rebase this one on top of that fix",
+      "parentUuid": "0756a345_159948d1",
       "revId": "cf4e35d6a272663c378105e89f0e5270edb861c0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
