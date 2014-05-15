@@ -134,14 +134,13 @@ public class GitCloneWizardTest extends GitCloneWizardTestBase {
 		propertiesPage.assertURI("git://gitney@example.com:99/EGIT");
 		propertiesPage.assertSourceParams(
 				" User not supported on git protocol.", "example.com", "/EGIT",
-				"git", "99", true, "gitney", "fsck", false, false);
+				"git", "99", true, "", "", false, false);
 
 		// change protocol to one without host capability
 		bot.comboBoxWithLabel("Protocol:").setSelection("file");
 		propertiesPage.assertURI("file://gitney@example.com:99/EGIT");
-		propertiesPage.assertSourceParams(
-				" Host not supported on file protocol.", "example.com",
-				"/EGIT", "file", "99", false, "gitney", "fsck", false, false);
+		propertiesPage.assertSourceParams(null, "", "/EGIT", "file", "", false,
+				"", "", false, false);
 
 		// Local protocol with file: prefix. We need to make sure the
 		// local path exists as a directory so we choose user.home as
