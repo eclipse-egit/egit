@@ -59,9 +59,8 @@ public class GitCloneWizardTest extends GitCloneWizardTestBase {
 				"", true, "", "", false, false);
 
 		propertiesPage.setURI("git://user:hi@www.jgit.org/EGIT");
-		propertiesPage.assertSourceParams(
-				" User not supported on git protocol.", "www.jgit.org",
-				"/EGIT", "git", "", true, "user", "hi", false, false);
+		propertiesPage.assertSourceParams(null, "www.jgit.org", "/EGIT", "git",
+				"", true, "", "", false, false);
 
 		// UI doesn't change URI even when password is entered in clear text as
 		// part of URI. Opinions on this may vary.
@@ -132,16 +131,14 @@ public class GitCloneWizardTest extends GitCloneWizardTestBase {
 		// change protocol to one without user/password capability
 		bot.comboBoxWithLabel("Protocol:").setSelection("git");
 		propertiesPage.assertURI("git://gitney@example.com:99/EGIT");
-		propertiesPage.assertSourceParams(
-				" User not supported on git protocol.", "example.com", "/EGIT",
-				"git", "99", true, "gitney", "fsck", false, false);
+		propertiesPage.assertSourceParams(null, "example.com", "/EGIT",
+				"git", "99", true, "", "", false, false);
 
 		// change protocol to one without host capability
 		bot.comboBoxWithLabel("Protocol:").setSelection("file");
 		propertiesPage.assertURI("file://gitney@example.com:99/EGIT");
-		propertiesPage.assertSourceParams(
-				" Host not supported on file protocol.", "example.com",
-				"/EGIT", "file", "99", false, "gitney", "fsck", false, false);
+		propertiesPage.assertSourceParams(null, "", "/EGIT", "file", "", false,
+				"", "", false, false);
 
 		// Local protocol with file: prefix. We need to make sure the
 		// local path exists as a directory so we choose user.home as
