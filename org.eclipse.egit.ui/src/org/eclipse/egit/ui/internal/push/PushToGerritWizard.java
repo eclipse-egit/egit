@@ -10,12 +10,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.push;
 
-import java.lang.reflect.InvocationTargetException;
-
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.Repository;
 
@@ -47,18 +43,7 @@ public class PushToGerritWizard extends Wizard {
 
 	@Override
 	public boolean performFinish() {
-		try {
-			getContainer().run(false, true, new IRunnableWithProgress() {
-				public void run(IProgressMonitor monitor)
-						throws InvocationTargetException, InterruptedException {
-					page.doPush(monitor);
-				}
-			});
-		} catch (InvocationTargetException e) {
-			return false;
-		} catch (InterruptedException e) {
-			return false;
-		}
+		page.doPush();
 		return true;
 	}
 }
