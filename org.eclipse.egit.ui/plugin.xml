@@ -5562,4 +5562,15 @@
         </themeid>
      </stylesheet>
   </extension>
+  <extension point="org.eclipse.core.contenttype.contentTypes">
+    <file-association 
+        content-type="org.eclipse.core.runtime.text"
+        file-names=".gitignore"/>
+    <content-type
+        id="org.eclipse.egit.contenttype.gitignore"
+        base-type="org.eclipse.core.runtime.text"
+        file-names=".gitignore"
+        priority="normal"
+        name="%GitIgnoreContentTypeName"/>
+  </extension>
 </plugin>
