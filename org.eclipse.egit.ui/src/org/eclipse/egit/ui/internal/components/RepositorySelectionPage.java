@@ -20,18 +20,17 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
-import org.eclipse.egit.core.securestorage.EGitSecureStore;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.UIUtils.IPreviousValueProposalHandler;
+import org.eclipse.egit.ui.internal.SecureStoreUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo.IRemoteSelectionListener;
 import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo.SelectionType;
 import org.eclipse.egit.ui.internal.provisional.wizards.GitRepositoryInfo;
 import org.eclipse.egit.ui.internal.provisional.wizards.IRepositorySearchResult;
-import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -818,7 +817,8 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 
 				if (Protocol.HTTP.handles(finalURI)
 						|| Protocol.HTTPS.handles(finalURI)) {
-					UserPasswordCredentials credentials = getSecureStoreCredentials(finalURI);
+					UserPasswordCredentials credentials = SecureStoreUtils
+							.getCredentials(finalURI);
 					if (credentials != null) {
 						String u = credentials.getUser();
 						String p = credentials.getPassword();
@@ -875,15 +875,6 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 	private void setStoreInSecureStore(boolean store) {
 		storeInSecureStore = store;
 		storeCheckbox.setSelection(store);
-	}
-
-	private UserPasswordCredentials getSecureStoreCredentials(
-			final URIish finalURI) throws StorageException {
-		EGitSecureStore secureStore = org.eclipse.egit.core.Activator
-				.getDefault().getSecureStore();
-		UserPasswordCredentials credentials = secureStore
-				.getCredentials(finalURI);
-		return credentials;
 	}
 
 	private String unamp(String s) {
