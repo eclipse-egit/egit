@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0756a345_aca2c428",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-05-20T21:10:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0756a345_4c64c8c3",
+      "revId": "7fa34eb5e367662e9ca18bf1661273bea4a83a5b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0756a345_cc70d883",
         "filename": "org.eclipse.egit.ui/plugin.xml",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-05-20T18:54:40Z",
       "side": 1,
       "message": "superfluous space",
+      "revId": "7fa34eb5e367662e9ca18bf1661273bea4a83a5b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_0c9ad0f4",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5566,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-05-20T21:10:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0756a345_cc70d883",
       "revId": "7fa34eb5e367662e9ca18bf1661273bea4a83a5b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
