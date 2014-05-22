@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0756a345_3ba9c4dc",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/StashCreateOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 966
+      },
+      "writtenOn": "2014-05-22T07:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0756a345_8d0d47f4",
+      "revId": "c0253df5ad80b2e7bbbb126e70558aa04963475f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0756a345_ed66839f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/stash/StashCreateUI.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-05-15T21:35:55Z",
       "side": 1,
       "message": "maybe rename to make clearer this is the stash commit message",
+      "revId": "c0253df5ad80b2e7bbbb126e70558aa04963475f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_1ba4c001",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/stash/StashCreateUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 966
+      },
+      "writtenOn": "2014-05-22T07:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0756a345_ed66839f",
       "revId": "c0253df5ad80b2e7bbbb126e70558aa04963475f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
