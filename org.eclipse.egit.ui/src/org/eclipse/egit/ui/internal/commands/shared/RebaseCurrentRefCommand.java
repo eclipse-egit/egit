@@ -23,9 +23,11 @@ import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.BasicConfigurationDialog;
 import org.eclipse.egit.ui.internal.dialogs.RebaseTargetSelectionDialog;
+import org.eclipse.egit.ui.internal.rebase.RebaseInteractiveHandler;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jgit.api.RebaseCommand.InteractiveHandler;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -38,6 +40,10 @@ import org.eclipse.osgi.util.NLS;
 public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 
 	private Ref ref;
+
+	private boolean interactive;
+
+	private boolean preserveMerges;
 
 	/** */
 	public RebaseCurrentRefCommand() {
@@ -83,6 +89,8 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 				} catch (IOException e) {
 					throw new ExecutionException(e.getMessage(), e);
 				}
+				interactive = rebaseTargetSelectionDialog.isInteractive();
+				preserveMerges = rebaseTargetSelectionDialog.isPreserveMerges();
 			} else
 				return;
 		}
@@ -144,6 +152,11 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 	@Override
 	protected RebaseOperation createRebaseOperation(Repository repository)
 			throws ExecutionException {
-		return new RebaseOperation(repository, ref);
+		InteractiveHandler handler = interactive ? RebaseInteractiveHandler.INSTANCE
+				: null;
+		RebaseOperation operation = new RebaseOperation(repository, ref,
+				handler);
+		operation.setPreserveMerges(preserveMerges);
+		return operation;
 	}
 }
