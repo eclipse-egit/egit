@@ -52,6 +52,8 @@ public class RebaseOperation implements IEGitOperation {
 
 	private final InteractiveHandler handler;
 
+	private boolean preserveMerges = false;
+
 	/**
 	 * Construct a {@link RebaseOperation} object for a {@link Ref}.
 	 * <p>
@@ -140,8 +142,10 @@ public class RebaseOperation implements IEGitOperation {
 				try {
 					if (handler != null)
 						cmd.runInteractively(handler, true);
-					if (operation == Operation.BEGIN)
+					if (operation == Operation.BEGIN) {
+						cmd.setPreserveMerges(preserveMerges);
 						result = cmd.setUpstream(ref.getName()).call();
+					}
 					else
 						result = cmd.setOperation(operation).call();
 
@@ -196,5 +200,14 @@ public class RebaseOperation implements IEGitOperation {
 	 */
 	public final Operation getOperation() {
 		return operation;
+	}
+
+	/**
+	 * 
+	 * @param preserveMerges
+	 *            true to preserve merges during the rebase
+	 */
+	public void setPreserveMerges(boolean preserveMerges) {
+		this.preserveMerges = preserveMerges;
 	}
 }

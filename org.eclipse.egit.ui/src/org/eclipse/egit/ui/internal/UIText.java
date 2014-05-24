@@ -945,6 +945,12 @@ public class UIText extends NLS {
 	public static String RebaseTargetSelectionDialog_RebaseTitleWithBranch;
 
 	/** */
+	public static String RebaseTargetSelectionDialog_InteractiveButton;
+
+	/** */
+	public static String RebaseTargetSelectionDialog_PreserveMergesButton;
+
+	/** */
 	public static String ReplaceTargetSelectionDialog_ReplaceButton;
 
 	/** */
