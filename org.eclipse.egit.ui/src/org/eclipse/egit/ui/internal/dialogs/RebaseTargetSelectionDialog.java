@@ -18,6 +18,10 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
@@ -26,6 +30,10 @@ import org.eclipse.swt.widgets.Shell;
  *
  */
 public class RebaseTargetSelectionDialog extends AbstractBranchSelectionDialog {
+
+	private boolean interactive = false;
+
+	private boolean preserveMerges = false;
 
 	/**
 	 * @param parentShell
@@ -96,5 +104,41 @@ public class RebaseTargetSelectionDialog extends AbstractBranchSelectionDialog {
 
 		getButton(Window.OK).setEnabled(
 				!currentSelected && (branchSelected || tagSelected));
+	}
+
+	@Override
+	protected void createCustomArea(Composite parent) {
+		final Button interactivebutton = new Button(parent, SWT.CHECK);
+		interactivebutton
+				.setText(UIText.RebaseTargetSelectionDialog_InteractiveButton);
+		interactivebutton.addSelectionListener(new SelectionAdapter() {
+
+			public void widgetSelected(SelectionEvent e) {
+				interactive = interactivebutton.getSelection();
+			}
+		});
+		final Button preserveMergesButton = new Button(parent, SWT.CHECK);
+		preserveMergesButton
+				.setText(UIText.RebaseTargetSelectionDialog_PreserveMergesButton);
+		preserveMergesButton.addSelectionListener(new SelectionAdapter() {
+
+			public void widgetSelected(SelectionEvent e) {
+				preserveMerges = preserveMergesButton.getSelection();
+			}
+		});
+	}
+
+	/**
+	 * @return whether the rebase should be interactive
+	 */
+	public boolean isInteractive() {
+		return interactive;
+	}
+
+	/**
+	 * @return whether merges should be preserved during rebase
+	 */
+	public boolean isPreserveMerges() {
+		return preserveMerges;
 	}
 }
