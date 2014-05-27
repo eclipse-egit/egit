@@ -1745,9 +1745,6 @@ public class UIText extends NLS {
 	public static String RefSpecPage_errorTransportDialogMessage;
 
 	/** */
-	public static String RefSpecPage_errorTransportDialogTitle;
-
-	/** */
 	public static String RefSpecPage_operationCancelled;
 
 	/** */
