@@ -5055,7 +5055,7 @@ public class UIText extends NLS {
 	public static String CustomPromptDialog_information_about;
 
 	/** */
-	public static String GitModelSynchonize_fetchGitDataJobName;
+	public static String GitModelSynchronize_fetchGitDataJobName;
 
 	/** */
 	public static String FetchChangeFromGerritCommand_noRepositorySelectedTitle;
