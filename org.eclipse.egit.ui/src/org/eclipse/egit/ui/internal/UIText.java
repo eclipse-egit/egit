@@ -1145,7 +1145,13 @@ public class UIText extends NLS {
 	public static String CherryPickHandler_ConfirmMessage;
 
 	/** */
+	public static String CherryPickHandler_ConfirmMessage_Multi;
+
+	/** */
 	public static String CherryPickHandler_ConfirmTitle;
+
+	/** */
+	public static String CherryPickHandler_ConfirmTitle_Multi;
 
 	/** */
 	public static String CherryPickHandler_unknown;

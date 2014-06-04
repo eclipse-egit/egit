@@ -830,9 +830,6 @@ class CommitGraphTable {
 						HistoryViewCommands.CREATE_PATCH,
 						UIText.GitHistoryPage_CreatePatchMenuLabel));
 				popupMgr.add(getCommandContributionItem(
-						HistoryViewCommands.CHERRYPICK,
-						UIText.GitHistoryPage_cherryPickMenuItem));
-				popupMgr.add(getCommandContributionItem(
 						HistoryViewCommands.REVERT,
 						UIText.GitHistoryPage_revertMenuItem));
 				popupMgr.add(getCommandContributionItem(
@@ -857,7 +854,13 @@ class CommitGraphTable {
 							.add(getCommandContributionItem(
 									HistoryViewCommands.COMPARE_VERSIONS_IN_TREE,
 									UIText.CommitGraphTable_CompareWithEachOtherInTreeMenuLabel));
+				popupMgr.add(new Separator());
 			}
+
+			popupMgr.add(getCommandContributionItem(
+					HistoryViewCommands.CHERRYPICK,
+					UIText.GitHistoryPage_cherryPickMenuItem));
+
 			popupMgr.add(new Separator());
 
 			MenuManager quickDiffManager = new MenuManager(

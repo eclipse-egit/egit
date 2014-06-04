@@ -7,10 +7,14 @@
  *
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
+ *    Maik Schreiber - support for cherry-picking multiple commits
  *****************************************************************************/
 package org.eclipse.egit.core.op;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
@@ -38,7 +42,7 @@ public class CherryPickOperation implements IEGitOperation {
 
 	private final Repository repo;
 
-	private final RevCommit commit;
+	private final List<RevCommit> commits;
 
 	private CherryPickResult result;
 
@@ -46,11 +50,13 @@ public class CherryPickOperation implements IEGitOperation {
 	 * Create cherry pick operation
 	 *
 	 * @param repository
-	 * @param commit
+	 * @param commits
+	 *            the commits to pick (in newest-first order)
 	 */
-	public CherryPickOperation(Repository repository, RevCommit commit) {
+	public CherryPickOperation(Repository repository, List<RevCommit> commits) {
 		this.repo = repository;
-		this.commit = commit;
+		this.commits = new ArrayList<RevCommit>(commits);
+		Collections.reverse(this.commits);
 	}
 
 	/**
@@ -69,9 +75,11 @@ public class CherryPickOperation implements IEGitOperation {
 
 				pm.subTask(MessageFormat.format(
 						CoreText.CherryPickOperation_cherryPicking,
-						commit.name()));
-				CherryPickCommand command = new Git(repo).cherryPick().include(
-						commit.getId());
+						Integer.valueOf(commits.size())));
+				CherryPickCommand command = new Git(repo).cherryPick();
+				for (RevCommit commit : commits) {
+					command.include(commit.getId());
+				}
 				try {
 					result = command.call();
 				} catch (GitAPIException e) {
