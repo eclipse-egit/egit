@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_37bed44e",
+        "filename": "org.eclipse.egit.target/egit-4.3.target",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-06-04T22:57:24Z",
+      "side": 1,
+      "message": "why upgrading this to 1.3 ? AFAIK swtbot 2.1 uses 1.1",
+      "revId": "a357e590a296c6cd3a1c40ec261352dcd8491bc3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_97bfe048",
+        "filename": "org.eclipse.egit.target/egit-4.3.target",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-06-04T22:57:24Z",
+      "side": 1,
+      "message": "AFAIK servlet 3.0 requires Java 6 that\u0027s why we stick to 2.5 so far",
+      "revId": "a357e590a296c6cd3a1c40ec261352dcd8491bc3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_57b9c864",
+        "filename": "org.eclipse.egit.target/egit-4.3.target",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-06-04T22:57:24Z",
+      "side": 1,
+      "message": "this doesn\u0027t seem to be portable to another machine",
+      "revId": "a357e590a296c6cd3a1c40ec261352dcd8491bc3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
