@@ -23,6 +23,7 @@ import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
@@ -31,12 +32,15 @@ import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
 
 /**
- * A wizard dedicated to pushing a branch for the first time.
+ * A wizard dedicated to pushing a commit.
  */
 public class PushBranchWizard extends Wizard {
 
 	private final Repository repository;
-	private final Ref refToPush;
+
+	private final ObjectId commitToPush;
+
+	private final Ref ref;
 
 	private AddRemotePage addRemotePage;
 	private PushBranchPage pushBranchPage;
@@ -46,17 +50,40 @@ public class PushBranchWizard extends Wizard {
 	/**
 	 * @param repository
 	 *            the repository the ref belongs to
-	 * @param refToPush
+	 * @param ref
 	 */
-	public PushBranchWizard(final Repository repository, Ref refToPush) {
+	public PushBranchWizard(final Repository repository, Ref ref) {
+		this(repository, ref.getObjectId(), ref);
+	}
+
+	/**
+	 *
+	 * @param repository
+	 *            the repository commit belongs to
+	 * @param commitToPush
+	 */
+	public PushBranchWizard(final Repository repository, ObjectId commitToPush) {
+		this(repository, commitToPush, null);
+	}
+
+	/**
+	 *
+	 * @param repository
+	 * @param commitToPush
+	 * @param ref
+	 */
+	private PushBranchWizard(final Repository repository, ObjectId commitToPush, Ref ref) {
 		this.repository = repository;
-		this.refToPush = refToPush;
+		this.commitToPush = commitToPush;
+		this.ref = ref;
+		assert (this.repository != null);
+		assert (this.commitToPush != null);
 
 		Set<String> remoteNames = repository.getConfig().getSubsections(ConfigConstants.CONFIG_REMOTE_SECTION);
 		if (remoteNames.isEmpty())
 			addRemotePage = new AddRemotePage(repository);
 
-		pushBranchPage = new PushBranchPage(repository, refToPush) {
+		pushBranchPage = new PushBranchPage(repository, commitToPush, ref) {
 			@Override
 			public void setVisible(boolean visible) {
 				if (visible && addRemotePage != null) {
@@ -91,8 +118,12 @@ public class PushBranchWizard extends Wizard {
 
 	@Override
 	public String getWindowTitle() {
-		return MessageFormat.format(UIText.PushBranchWizard_WindowTitle,
-				Repository.shortenRefName(refToPush.getName()));
+		if (ref != null) {
+			return MessageFormat.format(UIText.PushBranchWizard_WindowTitle,
+					Repository.shortenRefName(this.ref.getName()));
+		} else {
+			return UIText.PushCommitHandler_pushCommitTitle;
+		}
 	}
 
 	@Override
@@ -140,8 +171,8 @@ public class PushBranchWizard extends Wizard {
 	}
 
 	private List<RefSpec> getRefSpecs() {
-		String src = refToPush.getName();
-		String dst = Constants.R_HEADS + pushBranchPage.getBranchName();
+		String src = commitToPush.getName();
+		String dst = Constants.R_HEADS + pushBranchPage.getRemoteBranchName();
 		RefSpec refSpec = new RefSpec().setSourceDestination(src, dst)
 				.setForceUpdate(pushBranchPage.isForceUpdateSelected());
 		return Arrays.asList(refSpec);
@@ -172,8 +203,8 @@ public class PushBranchWizard extends Wizard {
 
 	private void configureUpstream() throws IOException {
 		String remoteName = getRemoteName();
-		String remoteBranchName = pushBranchPage.getBranchName();
-		String branchName = Repository.shortenRefName(refToPush.getName());
+		String remoteBranchName = pushBranchPage.getRemoteBranchName();
+		String branchName = Repository.shortenRefName(commitToPush.getName());
 
 		StoredConfig config = repository.getConfig();
 		config.setString(ConfigConstants.CONFIG_BRANCH_SECTION, branchName,
