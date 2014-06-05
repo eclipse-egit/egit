@@ -7,11 +7,14 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.push;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation.UpstreamConfig;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
@@ -31,6 +34,8 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.swt.SWT;
@@ -38,6 +43,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -61,7 +67,7 @@ public class PushBranchPage extends WizardPage {
 
 	private RemoteSelectionCombo remoteSelectionCombo;
 
-	private Text branchNameText;
+	private Text remoteBranchNameText;
 
 	private UpstreamConfig upstreamConfig = UpstreamConfig.NONE;
 
@@ -109,8 +115,8 @@ public class PushBranchPage extends WizardPage {
 	/**
 	 * @return the chosen short name of the branch on the remote
 	 */
-	String getBranchName() {
-		return branchNameText.getText();
+	String getRemoteBranchName() {
+		return remoteBranchNameText.getText();
 	}
 
 	boolean isConfigureUpstreamSelected() {
@@ -140,6 +146,50 @@ public class PushBranchPage extends WizardPage {
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(inputPanel);
 		inputPanel.setLayout(GridLayoutFactory.fillDefaults().numColumns(3)
 				.create());
+
+
+		Label commitLabel = new Label(inputPanel, SWT.NONE);
+		commitLabel.setText(UIText.PushBranchPage_CommitLabel);
+		commitLabel
+				.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
+		Label commit = new Label(inputPanel, SWT.NONE);
+		commit.setLayoutData(GridDataFactory.fillDefaults().span(2, 1).create());
+		RevWalk revWalk = new RevWalk(repository);
+		StringBuilder commitBuilder = new StringBuilder(ref.getObjectId()
+				.getName().substring(0, 8));
+		StringBuilder commitTooltipBuilder = new StringBuilder(ref
+				.getObjectId().getName());
+		try {
+			RevCommit revCommit = revWalk.parseCommit(ref.getObjectId());
+			commitBuilder.append(' ');
+			commitBuilder.append(revCommit.getShortMessage());
+			commitTooltipBuilder.append(System.lineSeparator());
+			commitTooltipBuilder.append(System.lineSeparator());
+			commitTooltipBuilder.append(revCommit.getFullMessage());
+		} catch (IOException ex) {
+			commitBuilder
+					.append(UIText.PushBranchPage_CannotAccessCommitDescription);
+			commitTooltipBuilder.append(ex.getMessage());
+			Activator
+					.getDefault()
+					.getLog()
+					.log(new Status(IStatus.ERROR, Activator.getDefault()
+							.getBundle().getSymbolicName(), ex.getMessage(), ex));
+		}
+		commit.setText(commitBuilder.toString());
+		commit.setToolTipText(commitTooltipBuilder.toString());
+
+		Label localBranchLabel = new Label(inputPanel, SWT.NONE);
+		localBranchLabel.setText(UIText.PushBranchPage_LocalBranchLabel);
+		Label localBranch = new Label(inputPanel, SWT.NONE);
+		localBranch.setLayoutData(GridDataFactory.fillDefaults().span(2, 1)
+				.create());
+		localBranch.setText(Repository.shortenRefName(ref.getName()));
+
+		Label to = new Label(inputPanel, SWT.NONE);
+		to.setText(UIText.PushBranchPage_to);
+		to.setLayoutData(GridDataFactory.fillDefaults().indent(SWT.DEFAULT, 20)
+				.span(3, 1).create());
 
 		Label remoteLabel = new Label(inputPanel, SWT.NONE);
 		remoteLabel.setText(UIText.PushBranchPage_RemoteLabel);
@@ -173,18 +223,18 @@ public class PushBranchPage extends WizardPage {
 		}
 
 		Label branchNameLabel = new Label(inputPanel, SWT.NONE);
-		branchNameLabel.setText(UIText.PushBranchPage_BranchNameLabel);
+		branchNameLabel.setText(UIText.PushBranchPage_RemoteBranchNameLabel);
 
-		branchNameText = new Text(inputPanel, SWT.BORDER);
+		remoteBranchNameText = new Text(inputPanel, SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
-				.applyTo(branchNameText);
-		branchNameText.setText(getSuggestedBranchName());
+				.applyTo(remoteBranchNameText);
+		remoteBranchNameText.setText(getSuggestedBranchName());
 
 		upstreamConfigComponent = new UpstreamConfigComponent(inputPanel,
 				SWT.NONE);
 		upstreamConfigComponent.getContainer().setLayoutData(
 				GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
-						.create());
+						.indent(SWT.DEFAULT, 20).create());
 		upstreamConfigComponent
 				.addUpstreamConfigSelectionListener(new UpstreamConfigSelectionListener() {
 					public void upstreamConfigSelected(
@@ -212,7 +262,7 @@ public class PushBranchPage extends WizardPage {
 		checkPage();
 
 		// Add listener now to avoid setText above to already trigger it.
-		branchNameText.addModifyListener(new ModifyListener() {
+		remoteBranchNameText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				checkPage();
 			}
@@ -273,7 +323,7 @@ public class PushBranchPage extends WizardPage {
 				setErrorMessage(UIText.PushBranchPage_ChooseRemoteError);
 				return;
 			}
-			String branchName = branchNameText.getText();
+			String branchName = remoteBranchNameText.getText();
 			if (branchName.length() == 0) {
 				setErrorMessage(UIText.PushBranchPage_ChooseBranchNameError);
 				return;
@@ -336,7 +386,7 @@ public class PushBranchPage extends WizardPage {
 
 		String merge = config.getString(ConfigConstants.CONFIG_BRANCH_SECTION,
 				branchName, ConfigConstants.CONFIG_KEY_MERGE);
-		if (merge == null || !merge.equals(Constants.R_HEADS + getBranchName()))
+		if (merge == null || !merge.equals(Constants.R_HEADS + getRemoteBranchName()))
 			return true;
 
 		boolean rebase = config.getBoolean(
