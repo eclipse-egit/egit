@@ -12,17 +12,21 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commit;
 
+import java.text.MessageFormat;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.command.CheckoutHandler;
+import org.eclipse.egit.ui.internal.commit.command.CherryPickHandler;
 import org.eclipse.egit.ui.internal.commit.command.CreateBranchHandler;
 import org.eclipse.egit.ui.internal.commit.command.CreateTagHandler;
-import org.eclipse.egit.ui.internal.commit.command.CherryPickHandler;
 import org.eclipse.egit.ui.internal.commit.command.RevertHandler;
 import org.eclipse.egit.ui.internal.commit.command.ShowInHistoryHandler;
+import org.eclipse.egit.ui.internal.commit.command.StashApplyHandler;
+import org.eclipse.egit.ui.internal.commit.command.StashDropHandler;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.jface.action.ContributionManager;
 import org.eclipse.jface.action.ControlContribution;
@@ -32,10 +36,13 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -142,12 +149,14 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	 */
 	protected void addPages() {
 		try {
-			commitPage = new CommitEditorPage(this);
-			addPage(commitPage);
-			if (getCommit().getRevCommit().getParentCount() <= 1) {
-				diffPage = new DiffEditorPage(this);
-				addPage(diffPage);
+			if (getCommit().isStash()) {
+				commitPage = new StashEditorPage(this);
+			} else {
+				commitPage = new CommitEditorPage(this);
 			}
+			addPage(commitPage);
+			diffPage = new DiffEditorPage(this);
+			addPage(diffPage);
 			if (getCommit().getNotes().length > 0) {
 				notePage = new NotesEditorPage(this);
 				addPage(notePage);
@@ -173,8 +182,10 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	protected void createHeaderContents(IManagedForm headerForm) {
 		RepositoryCommit commit = getCommit();
 		ScrolledForm form = headerForm.getForm();
-		new HeaderText(form.getForm(), commit.getRevCommit().name());
-		form.setToolTipText(commit.getRevCommit().name());
+		String commitName = commit.getRevCommit().name();
+		String title = getFormattedHeaderTitle(commitName);
+		new HeaderText(form.getForm(), title, commitName);
+		form.setToolTipText(commitName);
 		getToolkit().decorateFormHeading(form.getForm());
 
 		IToolBarManager toolbar = form.getToolBarManager();
@@ -217,12 +228,17 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 			}
 		};
 		toolbar.add(repositoryLabelControl);
-		toolbar.add(createCommandContributionItem(CreateTagHandler.ID));
-		toolbar.add(createCommandContributionItem(CreateBranchHandler.ID));
-		toolbar.add(createCommandContributionItem(CheckoutHandler.ID));
-		toolbar.add(createCommandContributionItem(CherryPickHandler.ID));
-		toolbar.add(createCommandContributionItem(RevertHandler.ID));
-		toolbar.add(createCommandContributionItem(ShowInHistoryHandler.ID));
+		if (commit.isStash()) {
+			toolbar.add(createCommandContributionItem(StashApplyHandler.ID));
+			toolbar.add(createCommandContributionItem(StashDropHandler.ID));
+		} else {
+			toolbar.add(createCommandContributionItem(CreateTagHandler.ID));
+			toolbar.add(createCommandContributionItem(CreateBranchHandler.ID));
+			toolbar.add(createCommandContributionItem(CheckoutHandler.ID));
+			toolbar.add(createCommandContributionItem(CherryPickHandler.ID));
+			toolbar.add(createCommandContributionItem(RevertHandler.ID));
+			toolbar.add(createCommandContributionItem(ShowInHistoryHandler.ID));
+		}
 		addContributions(toolbar);
 		toolbar.update(true);
 		getSite().setSelectionProvider(new ISelectionProvider() {
@@ -245,6 +261,40 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 				// Ignored
 			}
 		});
+	}
+
+	private String getFormattedHeaderTitle(String commitName) {
+		if (getCommit().isStash()) {
+			int stashIndex = getStashIndex(getCommit().getRepository(),
+					getCommit().getRevCommit().getId());
+			String stashName = MessageFormat.format("stash@'{'{0}'}'", //$NON-NLS-1$
+					Integer.valueOf(stashIndex));
+			return MessageFormat.format(
+					UIText.CommitEditor_TitleHeaderStashedCommit,
+					stashName);
+		} else {
+			return MessageFormat.format(UIText.CommitEditor_TitleHeaderCommit,
+					commitName);
+		}
+	}
+
+	private int getStashIndex(Repository repo, ObjectId id) {
+		int index = 0;
+		try {
+			for (RevCommit commit : Git.wrap(repo).stashList().call())
+				if (commit.getId().equals(id))
+					return index;
+				else
+					index++;
+			throw new IllegalStateException(
+					UIText.CommitEditor_couldNotFindStashCommit);
+		} catch (Exception e) {
+			String message = MessageFormat.format(
+					UIText.CommitEditor_couldNotGetStashIndex, id.name());
+			Activator.logError(message, e);
+			index = -1;
+		}
+		return index;
 	}
 
 	/**

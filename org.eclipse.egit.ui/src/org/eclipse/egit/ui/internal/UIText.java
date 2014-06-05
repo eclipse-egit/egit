@@ -3960,10 +3960,19 @@ public class UIText extends NLS {
 	public static String CommitEditor_couldNotShowRepository;
 
 	/** */
+	public static String CommitEditor_couldNotFindStashCommit;
+
+	/** */
+	public static String CommitEditor_couldNotGetStashIndex;
+
+	/** */
 	public static String CommitEditor_showGitRepo;
 
 	/** */
-	public static String CommitEditor_TitleHeader;
+	public static String CommitEditor_TitleHeaderCommit;
+
+	/** */
+	public static String CommitEditor_TitleHeaderStashedCommit;
 
 	/** */
 	public static String CommitEditorInput_Name;
@@ -4015,6 +4024,21 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommitEditorPage_TooltipSignedOffByCommitter;
+
+	/** */
+	public static String StashEditorPage_UnstagedChanges;
+
+	/** */
+	public static String StashEditorPage_StagedChanges;
+
+	/** */
+	public static String StashEditorPage_LabelParent0;
+
+	/** */
+	public static String StashEditorPage_LabelParent1;
+
+	/** */
+	public static String StashEditorPage_LabelParent2;
 
 	/** */
 	public static String Header_contextMenu_copy;
@@ -4987,6 +5011,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String StashDropCommand_dropFailed;
+
+	/** */
+	public static String StashDropCommand_stashCommitNotFound;
 
 	/** */
 	public static String StashDropCommand_jobTitle;

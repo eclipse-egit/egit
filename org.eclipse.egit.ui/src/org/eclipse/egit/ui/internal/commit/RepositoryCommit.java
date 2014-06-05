@@ -79,6 +79,11 @@ public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
 	private RepositoryCommitNote[] notes;
 
 	/**
+	 * Marks this commit as a stash commit.
+	 */
+	private boolean stash;
+
+	/**
 	 * Create a repository commit
 	 *
 	 * @param repository
@@ -141,12 +146,15 @@ public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
 	}
 
 	/**
-	 * Get file diffs
+	 * Get the changes between this commit and all parent commits
 	 *
 	 * @return non-null but possibly empty array of {@link FileDiff} instances.
 	 */
 	public FileDiff[] getDiffs() {
 		if (diffs == null) {
+			RevCommit[] parents = commit.getParents();
+			if (isStash() && commit.getParentCount() > 0)
+				parents = new RevCommit[] { commit.getParent(0) };
 			RevWalk revWalk = new RevWalk(repository);
 			TreeWalk treewalk = new TreeWalk(revWalk.getObjectReader());
 			treewalk.setRecursive(true);
@@ -154,7 +162,7 @@ public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
 			try {
 				for (RevCommit parent : commit.getParents())
 					revWalk.parseBody(parent);
-				diffs = FileDiff.compute(repository, treewalk, commit,
+				diffs = FileDiff.compute(repository, treewalk, commit, parents,
 						TreeFilter.ALL);
 			} catch (IOException e) {
 				diffs = new FileDiff[0];
@@ -164,6 +172,43 @@ public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
 			}
 		}
 		return diffs;
+	}
+
+	/**
+	 * Gets the changes between this commit and specific parent commits
+	 * 
+	 * @param parents
+	 *            parents to which the current commit is compared
+	 * 
+	 * @return non-null but possibly empty array of {@link FileDiff} instances.
+	 */
+	public FileDiff[] getDiffs(RevCommit... parents) {
+		RevWalk revWalk = new RevWalk(repository);
+		TreeWalk treewalk = new TreeWalk(revWalk.getObjectReader());
+		treewalk.setRecursive(true);
+		treewalk.setFilter(TreeFilter.ANY_DIFF);
+		FileDiff[] diffsResult = null;
+		try {
+			loadParents();
+			diffsResult = FileDiff.compute(repository, treewalk, commit,
+					parents, TreeFilter.ALL);
+		} catch (IOException e) {
+			diffsResult = new FileDiff[0];
+		} finally {
+			revWalk.release();
+			treewalk.release();
+		}
+		return diffsResult;
+	}
+
+	private void loadParents() throws IOException {
+		RevWalk revWalk = new RevWalk(repository);
+		try {
+			for (RevCommit parent : commit.getParents())
+				revWalk.parseBody(parent);
+		} finally {
+			revWalk.release();
+		}
 	}
 
 	/**
@@ -239,6 +284,25 @@ public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
 			}
 		}
 		return styled;
+	}
+
+	/**
+	 * Marks this commit as a stash commit.
+	 *
+	 * @param stash
+	 *            true whether this is a stash commit
+	 */
+	public void setStash(boolean stash) {
+		this.stash = stash;
+	}
+
+	/**
+	 * Whether this is a stash commit.
+	 *
+	 * @return true if this is a stash commit
+	 */
+	public boolean isStash() {
+		return stash;
 	}
 
 }
