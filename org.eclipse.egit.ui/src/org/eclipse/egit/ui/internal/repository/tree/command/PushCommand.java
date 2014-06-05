@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 SAP AG and others.
+ * Copyright (c) 2010, 2014 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Mickael Istria (Red Hat Inc.)
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
@@ -41,8 +42,8 @@ public class PushCommand extends
 		try {
 			switch (node.getType()) {
 			case REF:
-				pushWiz = new PushBranchWizard(node.getRepository(),
-						(Ref) node.getObject());
+				Ref ref = (Ref) node.getObject();
+				pushWiz = new PushBranchWizard(node.getRepository(), ref);
 				break;
 			case TAG:
 				pushWiz = createPushTagsWizard(nodes);

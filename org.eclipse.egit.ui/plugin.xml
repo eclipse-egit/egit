@@ -3122,11 +3122,10 @@
                </and>
             </visibleWhen>
          </command>
-         <command
-               commandId="org.eclipse.egit.ui.team.PushBranch"
-               label="%PushBranchAction.label"
-               style="push">
-            <visibleWhen
+         <dynamic
+                  class="org.eclipse.egit.ui.internal.actions.PushMenu"
+                  id="org.eclipse.egit.ui.repository.tree.popup.Push">
+			<visibleWhen
                   checkEnabled="false">
                <and>
                   <count
@@ -3141,7 +3140,7 @@
                   </iterate>
                </and>
             </visibleWhen>
-         </command>
+         </dynamic>
          <command
                commandId="org.eclipse.egit.ui.team.Pull"
                icon="icons/obj16/pull.gif"
@@ -3847,17 +3846,16 @@
                   </reference>
                </visibleWhen>
             </command>
-            <command
-                  commandId="org.eclipse.egit.ui.team.PushBranch"
-                  label="%PushBranchAction.label"
-                  style="push">
+            <dynamic
+                  class="org.eclipse.egit.ui.internal.actions.PushMenu"
+                  id="org.eclipse.egit.ui.team.popup.Push">
                <visibleWhen
                      checkEnabled="false">
                   <reference
                         definitionId="org.eclipse.egit.ui.gitProject">
                   </reference>
                </visibleWhen>
-            </command>
+            </dynamic>
             <separator
                   name="org.eclipse.egit.ui.remoteSeparator"
                   visible="true">
