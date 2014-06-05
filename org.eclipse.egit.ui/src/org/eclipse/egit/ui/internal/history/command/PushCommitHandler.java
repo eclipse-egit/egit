@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2012, Markus Duft <markus.duft@salomon.at>
+ * Copyright (C) 2012-2014, Markus Duft <markus.duft@salomon.at> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,11 +11,12 @@ package org.eclipse.egit.ui.internal.history.command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
-import org.eclipse.egit.ui.internal.push.SimplePushRefWizard;
+import org.eclipse.egit.ui.internal.push.PushBranchWizard;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -30,10 +31,21 @@ public class PushCommitHandler extends AbstractHistoryCommandHandler {
 		final Repository repo = getRepository(event);
 
 		try {
+			PushBranchWizard wizard = null;
+			Ref localBranch = null;
+			for (int i = 0; i < commit.getRefCount(); i++) {
+				Ref currentRef = commit.getRef(i);
+				if (localBranch == null
+						&& currentRef.getName().startsWith(Constants.R_HEADS))
+					localBranch = currentRef;
+			}
+			if (localBranch == null)
+				wizard = new PushBranchWizard(repo, commit.getId());
+			else
+				wizard = new PushBranchWizard(repo, localBranch);
 			WizardDialog dlg = new WizardDialog(
 					HandlerUtil.getActiveShellChecked(event),
-					new SimplePushRefWizard(repo, commit.getId(),
-							UIText.PushCommitHandler_pushCommitTitle));
+					wizard);
 			dlg.setHelpAvailable(true);
 			dlg.open();
 		} catch (Exception e) {
