@@ -140,7 +140,7 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 		return (Image) this.resources.get(descriptor);
 	}
 
-	private Section createSection(Composite parent, FormToolkit toolkit,
+	Section createSection(Composite parent, FormToolkit toolkit,
 			int span) {
 		Section section = toolkit.createSection(parent,
 				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE
@@ -150,7 +150,7 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 		return section;
 	}
 
-	private Composite createSectionClient(Section parent, FormToolkit toolkit) {
+	Composite createSectionClient(Section parent, FormToolkit toolkit) {
 		Composite client = toolkit.createComposite(parent);
 		GridLayoutFactory.fillDefaults().extendedMargins(2, 2, 2, 2)
 				.applyTo(client);
@@ -214,7 +214,7 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 		return userArea;
 	}
 
-	private void updateSectionClient(Section section, Composite client,
+	void updateSectionClient(Section section, Composite client,
 			FormToolkit toolkit) {
 		hookExpansionGrabbing(section);
 		toolkit.paintBordersFor(client);
@@ -292,7 +292,8 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 		return tags;
 	}
 
-	private void createTagsArea(Composite parent, FormToolkit toolkit, int span) {
+	void createTagsArea(Composite parent, FormToolkit toolkit,
+			int span) {
 		Composite tagArea = toolkit.createComposite(parent);
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false)
 				.applyTo(tagArea);
@@ -306,14 +307,17 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 		GridLayoutFactory.fillDefaults().spacing(1, 1).applyTo(tagLabelArea);
 	}
 
-	private void fillDiffs(FileDiff[] diffs) {
+	void fillDiffs(FileDiff[] diffs) {
 		diffViewer.setInput(diffs);
-		diffSection.setText(MessageFormat.format(
-				UIText.CommitEditorPage_SectionFiles,
-				Integer.valueOf(diffs.length)));
+		diffSection.setText(getDiffSectionTitle(Integer.valueOf(diffs.length)));
 	}
 
-	private void fillTags(FormToolkit toolkit, List<Ref> tags) {
+	String getDiffSectionTitle(Integer numChanges) {
+		return MessageFormat.format(UIText.CommitEditorPage_SectionFiles,
+				numChanges);
+	}
+
+	void fillTags(FormToolkit toolkit, List<Ref> tags) {
 		for (Control child : tagLabelArea.getChildren())
 			child.dispose();
 
@@ -411,7 +415,7 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 				Integer.valueOf(result.size())));
 	}
 
-	private void createFilesArea(Composite parent, FormToolkit toolkit, int span) {
+	void createDiffArea(Composite parent, FormToolkit toolkit, int span) {
 		diffSection = createSection(parent, toolkit, span);
 		diffSection.setText(UIText.CommitEditorPage_SectionFilesEmpty);
 		Composite filesArea = createSectionClient(diffSection, toolkit);
@@ -429,7 +433,7 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 		updateSectionClient(diffSection, filesArea, toolkit);
 	}
 
-	private RepositoryCommit getCommit() {
+	RepositoryCommit getCommit() {
 		return (RepositoryCommit) getEditor()
 				.getAdapter(RepositoryCommit.class);
 	}
@@ -457,10 +461,14 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 
 		createHeaderArea(displayArea, toolkit, 2);
 		createMessageArea(displayArea, toolkit, 2);
-		createFilesArea(displayArea, toolkit, 1);
-		createBranchesArea(displayArea, toolkit, 1);
+		createChangesArea(displayArea, toolkit);
 
 		loadSections();
+	}
+
+	void createChangesArea(Composite displayArea, FormToolkit toolkit) {
+		createDiffArea(displayArea, toolkit, 1);
+		createBranchesArea(displayArea, toolkit, 1);
 	}
 
 	private List<Ref> loadTags() {
@@ -497,7 +505,7 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 		}
 	}
 
-	private void loadSections() {
+	void loadSections() {
 		RepositoryCommit commit = getCommit();
 		Job refreshJob = new Job(MessageFormat.format(
 				UIText.CommitEditorPage_JobName, commit.getRevCommit().name())) {

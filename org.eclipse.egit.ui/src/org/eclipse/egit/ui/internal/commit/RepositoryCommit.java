@@ -79,6 +79,11 @@ public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
 	private RepositoryCommitNote[] notes;
 
 	/**
+	 * Marks this commit as a stash commit.
+	 */
+	private boolean stash;
+
+	/**
 	 * Create a repository commit
 	 *
 	 * @param repository
@@ -239,6 +244,25 @@ public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
 			}
 		}
 		return styled;
+	}
+
+	/**
+	 * Marks this commit as a stash commit.
+	 * 
+	 * @param stash
+	 *            true whether this is a stash commit
+	 */
+	public void setStash(boolean stash) {
+		this.stash = stash;
+	}
+
+	/**
+	 * Whether this is a stash commit.
+	 * 
+	 * @return true if this is a stash commit
+	 */
+	public boolean isStash() {
+		return stash;
 	}
 
 }
