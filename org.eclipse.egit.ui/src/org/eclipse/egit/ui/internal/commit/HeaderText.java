@@ -12,7 +12,6 @@
 package org.eclipse.egit.ui.internal.commit;
 
 import java.lang.reflect.Field;
-import java.text.MessageFormat;
 
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
@@ -60,10 +59,12 @@ public class HeaderText {
 
 	/**
 	 * @param form
-	 * @param sha1String string form of the SHA-1, in lower case hexadecimal
+	 * @param text
+	 *            the displayed text
+	 * @param sha1String
+	 *            string form of the SHA-1, in lower case hexadecimal
 	 */
-	public HeaderText(Form form, String sha1String) {
-		String text= MessageFormat.format(UIText.CommitEditor_TitleHeader, sha1String);
+	public HeaderText(Form form, String text, String sha1String) {
 		try {
 			FormHeading heading = (FormHeading) form.getHead();
 			heading.setBusy(true);
