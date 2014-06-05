@@ -92,6 +92,9 @@ public class ActionCommands {
 	/** "Push" action command id */
 	public static final String PUSH_ACTION = "org.eclipse.egit.ui.team.Push"; //$NON-NLS-1$
 
+	/** "Push branch" action command id */
+	public static final String PUSH_BRANCH_ACTION = "org.eclipse.egit.ui.team.PushBranch"; //$NON-NLS-1$
+
 	/** "Rename Branch" action command id */
 	public static final String RENAME_BRANCH_ACTION = "org.eclipse.egit.ui.team.RenameBranch"; //$NON-NLS-1$
 
