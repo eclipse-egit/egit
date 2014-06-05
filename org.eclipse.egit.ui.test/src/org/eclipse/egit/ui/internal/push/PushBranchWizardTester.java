@@ -89,13 +89,15 @@ public class PushBranchWizardTester {
 	}
 
 	public void enterBranchName(String branchName) {
-		wizard.textWithLabel(UIText.PushBranchPage_BranchNameLabel).setText(
+		wizard.textWithLabel(UIText.PushBranchPage_RemoteBranchNameLabel)
+				.setText(
 				branchName);
 	}
 
 	public void assertBranchName(String branchName) {
 		assertEquals(branchName,
-				wizard.textWithLabel(UIText.PushBranchPage_BranchNameLabel)
+				wizard.textWithLabel(
+						UIText.PushBranchPage_RemoteBranchNameLabel)
 						.getText());
 	}
 

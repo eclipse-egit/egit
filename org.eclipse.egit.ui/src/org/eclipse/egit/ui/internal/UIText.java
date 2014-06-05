@@ -10,6 +10,7 @@
  * Copyright (C) 2012, Gunnar Wagenknecht <gunnar@wagenknecht.org>
  * Copyright (C) 2013, Ben Hammen <hammenb@gmail.com>
  * Copyright (C) 2014, Marc Khouzam <marc.khouzam@ericsson.com>
+ * Copyright (C) 2014, Red Hat Inc.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -2006,7 +2007,22 @@ public class UIText extends NLS {
 	public static String PushAction_wrongURITitle;
 
 	/** */
-	public static String PushBranchPage_BranchNameLabel;
+	public static String PushBranchPage_CommitLabel;
+
+	/** */
+	public static String PushBranchPage_RemoteBranchNameLabel;
+
+	/** */
+	public static String PushBranchPage_CannotAccessCommitDescription;
+
+	/** */
+	public static String PushBranchPage_LocalBranchLabel;
+
+	/** */
+	public static String PushBranchPage_Source;
+
+	/** */
+	public static String PushBranchPage_Destination;
 
 	/** */
 	public static String PushBranchPage_ChooseBranchNameError;
