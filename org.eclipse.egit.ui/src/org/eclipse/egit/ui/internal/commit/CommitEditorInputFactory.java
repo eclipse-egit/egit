@@ -44,6 +44,11 @@ public class CommitEditorInputFactory implements IElementFactory {
 	public static final String PATH = "path"; //$NON-NLS-1$
 
 	/**
+	 * STASH
+	 */
+	public static final String STASH = "stash"; //$NON-NLS-1$
+
+	/**
 	 * Save state of input to memento
 	 *
 	 * @param memento
@@ -54,6 +59,7 @@ public class CommitEditorInputFactory implements IElementFactory {
 		memento.putString(COMMIT, commit.getRevCommit().name());
 		memento.putString(PATH, commit.getRepository().getDirectory()
 				.getAbsolutePath());
+		memento.putBoolean(STASH, commit.isStash());
 	}
 
 	/**
@@ -86,7 +92,7 @@ public class CommitEditorInputFactory implements IElementFactory {
 	 * @param repository
 	 * @return rev commit
 	 */
-	protected RevCommit getCommit(IMemento memento, Repository repository) {
+	protected RepositoryCommit getCommit(IMemento memento, Repository repository) {
 		String id = memento.getString(COMMIT);
 		if (id == null)
 			return null;
@@ -96,7 +102,10 @@ public class CommitEditorInputFactory implements IElementFactory {
 			RevCommit commit = walk.parseCommit(ObjectId.fromString(id));
 			for (RevCommit parent : commit.getParents())
 				walk.parseBody(parent);
-			return commit;
+			RepositoryCommit repositoryCommit = new RepositoryCommit(
+					repository, commit);
+			repositoryCommit.setStash(memento.getBoolean(STASH).booleanValue());
+			return repositoryCommit;
 		} catch (IOException e) {
 			return null;
 		} finally {
@@ -112,10 +121,10 @@ public class CommitEditorInputFactory implements IElementFactory {
 		if (repository == null)
 			return null;
 
-		RevCommit commit = getCommit(memento, repository);
+		RepositoryCommit commit = getCommit(memento, repository);
 		if (commit == null)
 			return null;
 
-		return new CommitEditorInput(new RepositoryCommit(repository, commit));
+		return new CommitEditorInput(commit);
 	}
 }

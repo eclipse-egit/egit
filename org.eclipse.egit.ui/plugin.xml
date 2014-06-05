@@ -4578,6 +4578,18 @@
             icon="icons/obj16/cherry-pick.png">
       </image>
       <image
+            commandId="org.eclipse.egit.ui.team.stash.apply"
+            icon="icons/obj16/stash-apply.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.commit.StashApply"
+            icon="icons/obj16/stash-apply.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.commit.StashDrop"
+            icon="icons/obj16/delete_obj.gif">
+      </image>
+      <image
             commandId="org.eclipse.egit.ui.history.Squash"
             icon="icons/obj16/squash.gif">
       </image>
@@ -5344,6 +5356,16 @@
             defaultHandler="org.eclipse.egit.ui.internal.history.command.ShowBlameHandler"
             id="org.eclipse.egit.ui.history.ShowBlame"
             name="%ShowBlameCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.commit.command.StashApplyHandler"
+            id="org.eclipse.egit.ui.commit.StashApply"
+            name="%StashApplyCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.commit.command.StashDropHandler"
+            id="org.eclipse.egit.ui.commit.StashDrop"
+            name="%StashDropCommand.name">
       </command>
    </extension>
    <extension
