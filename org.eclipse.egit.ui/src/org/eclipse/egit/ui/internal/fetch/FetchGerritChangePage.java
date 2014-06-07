@@ -636,8 +636,7 @@ public class FetchGerritChangePage extends WizardPage {
 			storeLastUsedUri(uri);
 
 		} catch (Exception e) {
-			Activator
-					.handleError(e.getCause().getMessage(), e.getCause(), true);
+			Activator.handleError(e.getMessage(), e, true);
 		} finally {
 			monitor.done();
 		}
