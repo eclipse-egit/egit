@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_a51e29ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-06-08T22:22:36Z",
+      "side": 1,
+      "message": "style nit: we put the bug link to the commit message footer in the line immediately before the Change-Id",
+      "revId": "fea6af8630a105918689d4aad9b72c579aa6ea37",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_851b25fd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-06-08T22:22:36Z",
+      "side": 1,
+      "message": "why not simpler: \"Push HEAD to remote\" ?",
+      "revId": "fea6af8630a105918689d4aad9b72c579aa6ea37",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
