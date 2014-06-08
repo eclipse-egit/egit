@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0756a345_85484534",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-06-08T22:15:22Z",
+      "side": 1,
+      "message": "style not: we don\u0027t use braces around single line blocks",
+      "revId": "d54cb64d0f51502a2b0dc5102b0f2be1cead6a3a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_e541410e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/RepositoryCommit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-06-08T22:15:22Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "d54cb64d0f51502a2b0dc5102b0f2be1cead6a3a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0756a345_c53ebd8f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/RepositoryCommit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-06-08T22:15:22Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "d54cb64d0f51502a2b0dc5102b0f2be1cead6a3a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
