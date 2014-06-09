@@ -10,14 +10,15 @@
  *****************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
-import java.io.IOException;
 import java.text.NumberFormat;
+import java.util.Properties;
 
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.jgit.api.GarbageCollectCommand;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
-import org.eclipse.jgit.internal.storage.file.GC;
-import org.eclipse.jgit.internal.storage.file.GC.RepoStatistics;
 import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -63,48 +64,59 @@ public class RepositoryStatisticsPage extends PropertyPage {
 				.getAdapter(Repository.class);
 		if (repo == null)
 			return table;
-		if (repo instanceof FileRepository) {
-			GC gc = new GC((FileRepository) repo);
-			try {
-				RepoStatistics stats = gc.getStatistics();
+		Git git = new Git(repo);
+		GarbageCollectCommand gc = git.gc();
+		try {
+			Properties stats = gc.getStatistics();
 
-				table.setLinesVisible(true);
-				table.setHeaderVisible(true);
-				GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
-				data.heightHint = 200;
-				table.setLayoutData(data);
+			table.setLinesVisible(true);
+			table.setHeaderVisible(true);
+			GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
+			data.heightHint = 200;
+			table.setLayoutData(data);
 
-				TableItem item = new TableItem(table, SWT.NONE);
-				item.setText(0, UIText.RepositoryStatistics_NrOfObjects);
-				item.setText(1, bigIntFmt.format(stats.numberOfLooseObjects));
-				item.setText(2, bigIntFmt.format(stats.numberOfPackedObjects));
+			TableItem item = new TableItem(table, SWT.NONE);
+			item.setText(0, UIText.RepositoryStatistics_NrOfObjects);
+			item.setText(1, getStatsAsString(stats, "numberOfLooseObjects")); //$NON-NLS-1$
+			item.setText(2, getStatsAsString(stats, "numberOfPackedObjects")); //$NON-NLS-1$
 
-				item = new TableItem(table, SWT.NONE);
-				item.setText(0, UIText.RepositoryStatistics_NrOfPackfiles);
-				item.setText(2, bigIntFmt.format(stats.numberOfPackFiles)
-						.toString());
+			item = new TableItem(table, SWT.NONE);
+			item.setText(0, UIText.RepositoryStatistics_NrOfPackfiles);
+			item.setText(2, getStatsAsString(stats, "numberOfPackFiles")); //$NON-NLS-1$
 
-				item = new TableItem(table, SWT.NONE);
-				item.setText(0, UIText.RepositoryStatistics_NrOfRefs);
-				item.setText(1, bigIntFmt.format(stats.numberOfLooseRefs)
-						.toString());
-				item.setText(2, bigIntFmt.format(stats.numberOfPackedRefs)
-						.toString());
+			item = new TableItem(table, SWT.NONE);
+			item.setText(0, UIText.RepositoryStatistics_NrOfRefs);
+			item.setText(1, getStatsAsString(stats, "numberOfLooseRefs")); //$NON-NLS-1$
+			item.setText(2, getStatsAsString(stats, "numberOfPackedRefs"));//$NON-NLS-1$
 
-				item = new TableItem(table, SWT.NONE);
-				item.setText(0,
-						UIText.RepositoryStatistics_SpaceNeededOnFilesystem);
-				item.setText(1, describeSize(stats.sizeOfLooseObjects));
-				item.setText(2, describeSize(stats.sizeOfPackedObjects));
+			item = new TableItem(table, SWT.NONE);
+			item.setText(0, UIText.RepositoryStatistics_SpaceNeededOnFilesystem);
+			item.setText(1,
+					describeSize(getStatsAsLong(stats, "sizeOfLooseObjects"))); //$NON-NLS-1$
+			item.setText(2,
+					describeSize(getStatsAsLong(stats, "sizeOfPackedObjects"))); //$NON-NLS-1$
 
-				for (int i = 0; i < titles.length; i++) {
-					table.getColumn(i).pack();
-				}
-				parent.pack();
-			} catch (IOException e) {
+			for (int i = 0; i < titles.length; i++) {
+				table.getColumn(i).pack();
 			}
+			parent.pack();
+		} catch (GitAPIException e) {
+			Activator.handleError(e.getMessage(), e, false);
 		}
 		return table;
+	}
+
+	private String getStatsAsString(Properties stats, String key) {
+		return bigIntFmt.format(firstNonNull(stats.get(key), "")); //$NON-NLS-1$
+	}
+
+	@SuppressWarnings("boxing")
+	private static long getStatsAsLong(Properties stats, String key) {
+		return (Long) firstNonNull(stats.get(key), 0);
+	}
+
+	private static <T> T firstNonNull(T first, T second) {
+		return first != null ? first : second;
 	}
 
 	private String describeSize(long nrOfBytes) {
