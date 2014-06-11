@@ -84,5 +84,16 @@
       <unit id="org.eclipse.mylyn.sdk_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.wikitext_feature.feature.group" version="0.0.0"/>
     </location>
+    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+      <repository location="http://download.eclipse.org/mylyn/releases/latest"/>
+      <unit id="org.eclipse.mylyn.commons.sdk.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.mylyn.ide_feature.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.mylyn.team_feature.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.mylyn.context.sdk.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.mylyn_feature.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.mylyn.context_feature.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.mylyn.sdk_feature.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.mylyn.wikitext_feature.feature.group" version="0.0.0"/>
+    </location>
   </locations>
 </target>

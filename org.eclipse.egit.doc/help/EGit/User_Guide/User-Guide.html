@@ -66,14 +66,12 @@
 		<h4 id="Setting_up_the_Home_Directory_on_Windows">Setting up the Home Directory on Windows</h4>
 		<p>Add the environment variable <code>HOME</code> to your environment variables.</p>
 		<ol>
-			<li>In Windows 7, type "environment" at the start menu</li>
-			<li>Select "Edit environment variables for your account"</li>
+			<li>In Windows 7, type "environment" at the start menu.</li>
+			<li>Select "Edit environment variables for your account".</li>
 			<li>Click the "New" button.</li>
-			<li>Enter "HOME" in the name field</li>
+			<li>Enter "HOME" in the name field.</li>
 			<li>Enter "%USERPROFILE%" or some other path in the value field.</li>
-			<li>Click OK, and OK again. You have just added the Home directory on Windows.
-				<br/>
-			</li>
+			<li>Click OK, and OK again. You have just added the Home directory on Windows.&lt;br /&gt;</li>
 		</ol>
 		<p>Note that if you use 
 			<a href="http://www.cygwin.com/" target="egit_external">Cygwin</a>, you should already have <code>HOME</code> set. For example, if you installed Cygwin to <code>C:\cygwin</code> and your username is Fred, then Cygwin should have already set <code>HOME</code> to <code>C:\cygwin\home\Fred</code> (or something similar). You can verify this by entering <code>echo %HOME%</code> in the Windows command prompt, or <code>echo $HOME</code> in the Cygwin shell.
@@ -83,6 +81,7 @@
 		</p>
 		<p>If the <code>HOME</code> variable is not defined the home directory will be calculated by concatenating <code>HOMEDRIVE</code> and <code>HOMEPATH</code>.</p>
 		<p>If both <code>HOME</code> and <code>HOMEDRIVE</code> are not defined <code>HOMESHARE</code> will be used.</p>
+		<p><small><font color="red">If <code>HOMEPATH</code> is not defined, what happens?</font></small></p>
 		<p>EGit shows a warning if <code>HOME</code> is not defined explicitly. Keep in mind that if you set the HOME environment variable while Eclipse is running, you will still see following warning. You will have to restart Eclipse for it to recognize the HOME value.</p>
 		<p>
 			<img border="0" src="images/Egit_no_home.png"/>
@@ -102,18 +101,18 @@
 		</p>
 		<ul>
 			<li>Select the project, click 
-				<b>File &gt; Team &gt; Share Project</b>
+				<b>File &gt; Team &gt; Share Project</b>.
 			</li>
 			<li>Select repository type 
 				<b>Git</b> and click 
-				<b>Next</b>
+				<b>Next</b>.
 			</li>
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.9-getstarted-share.png"/>
 		</p>
 		<ul>
-			<li>To configure the Git repository select the new project <code>HelloWorld</code></li>
+			<li>To configure the Git repository select the new project <code>HelloWorld</code>.</li>
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.9-getstarted-create-project.png"/>
@@ -132,7 +131,7 @@
 			</li>
 			<li>The decorator text "
 				<a href="master">master</a>" behind the project shows that this project is tracked in a repository on the 
-				<i>master</i> branch and the question mark decorators show that the <code>.classpath</code> and <code>.project</code> and the <code>.settings</code> files are not yet under version control
+				<i>master</i> branch and the question mark decorators show that the <code>.classpath</code> and <code>.project</code> and the <code>.settings</code> files are not yet under version control.
 			</li>
 		</ul>
 		<p>
@@ -142,15 +141,13 @@
 		<ul>
 			<li>Click 
 				<b>Team &gt; Add</b> on the project node. (This menu item may read 
-				<b>Add to Index</b> on recent versions of Egit)
+				<b>Add to Index</b> on recent versions of Egit.)
 			</li>
 			<li>The 
-				<i>+</i> decorators show that now the project's files have been added to version control
+				<i>+</i> decorators show that now the project's files have been added to version control.
 			</li>
-		</ul>
-		<ul>
 			<li>Mark the "bin" folder as "ignored by Git", either by right-clicking on it and selecting 
-				<b>Team &gt; Ignore</b> or by creating a file <code>.gitignore</code> in the project folder with the following content
+				<b>Team &gt; Ignore</b> or by creating a file <code>.gitignore</code> in the project folder with the following content:
 			</li>
 		</ul>
 		<pre>/bin
@@ -165,7 +162,7 @@
 			<img border="0" src="images/Egit-0.11-getstarted-ignore-added.png"/>
 		</p>
 		<ul>
-			<li>You may have to set your Package Explorer filters in order to see <code>.gitignore</code> displayed in the Package Explorer. To access filters, select the down arrow at right of Package Explorer tab to display View Menu.</li>
+			<li>You may have to set your Package Explorer filters in order to see <code>.gitignore</code> displayed in the Package Explorer. To access filters, select the down arrow on the right edge of the Package Explorer tab to display View Menu.</li>
 		</ul>
 		<p>
 			<img border="0" src="images/Pe_downarrow1.png"/>
@@ -177,7 +174,7 @@
 		</ul>
 		<ul>
 			<li>Click 
-				<b>Team &gt; Commit</b> in the project context menu
+				<b>Team &gt; Commit</b> in the project context menu.
 			</li>
 			<li>Enter a commit message explaining your change, the first line (followed by an empty line) will become the short log for this commit. By default the author and committer are taken from the <code>.gitconfig</code> file in your home directory.</li>
 			<li>You may click 
@@ -193,7 +190,7 @@
 			<img border="0" src="images/Egit-0.9-getstarted-commit.png"/>
 		</p>
 		<ul>
-			<li>Note that the decorators of the committed files changed.</li>
+			<li>Note that the decorators of the committed files have changed as a result of your commit.</li>
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.9-getstarted-commited.png"/>
@@ -201,17 +198,17 @@
 		<h3 id="Inspect_History">Inspect History</h3>
 		<ul>
 			<li>Click 
-				<b>Team &gt; Show in History</b> from the context menu to inspect the history of a resource
+				<b>Team &gt; Show in History</b> from the context menu to inspect the history of a resource:
 			</li>
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.11-getstarted-history1.png"/>
 		</p>
 		<ul>
-			<li>Create a new Java class <code>Hello.java</code> and implement it</li>
-			<li>Add it to version control and commit your change</li>
-			<li>Improve your implementation and commit the improved class</li>
-			<li>The resource history should now show 2 commits for this class</li>
+			<li>Create a new Java class <code>Hello.java</code> and implement it.</li>
+			<li>Add it to version control and commit your change.</li>
+			<li>Improve your implementation and commit the improved class.</li>
+			<li>The resource history should now show 2 commits for this class.</li>
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.9-getstarted-application.png"/>
@@ -221,29 +218,29 @@
 		</p>
 		<ul>
 			<li>Click the 
-				<b>Compare Mode</b> toggle button in the History View
+				<b>Compare Mode</b> toggle button in the History View.
 			</li>
-			<li>Double click <code>src/Hello.java</code> in the Resource list of the History View to open your last committed change in the Compare View</li>
+			<li>Double click <code>src/Hello.java</code> in the Resource list of the History View to open your last committed change in the Compare View.</li>
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.11-getstarted-compare.png"/>
 		</p>
-		<p>
-			<br/> 
-			<b>Congratulations, you just have mastered your first project using Git&nbsp;!</b> 
-			<br/>
-			<br/>
+		<p>&lt;br 
+			/&gt;
+			<b>Congratulations, you just have mastered your first project using Git&nbsp;!</b>&lt;br 
+			/&gt;&lt;br 
+			/&gt;
 		</p>
 		<h2 id="GitHub_Tutorial">GitHub Tutorial</h2>
 		<h3 id="Create_Local_Repository">Create Local Repository</h3>
 		<ul>
 			<li>follow 
-				<a href="http://wiki.eclipse.org/EGit/User_Guide/Getting_Started" title="EGit/User Guide/Getting Started" target="egit_external">EGit/User Guide/Getting Started</a> to create a new local repository (with your content instead of the demo project)
+				<a href="http://wiki.eclipse.org/EGit/User_Guide/Getting_Started" title="EGit/User Guide/Getting Started" target="egit_external">EGit/User Guide/Getting Started</a> to create a new local repository (with your content instead of the demo project).
 			</li>
 		</ul>
 		<h3 id="Create_Repository_at_GitHub">Create Repository at GitHub</h3>
 		<ul>
-			<li>create a new repository at GitHub</li>
+			<li>create a new repository at GitHub:</li>
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.10-github-create-repo.png"/>
@@ -252,7 +249,7 @@
 		<ul>
 			<li>click 
 				<b>SSH</b> to choose the 
-				<i>SSH protocol</i>. It can be used for read and write access
+				<i>SSH protocol</i>. It can be used for read and write access.
 			</li>
 			<li>click 
 				<b>HTTP</b> to choose the 
@@ -270,31 +267,31 @@
 		<h3 id="Eclipse_SSH_Configuration">Eclipse SSH Configuration</h3>
 		<ul>
 			<li>Open the Eclipse 
-				<b>Preferences</b> and ensure that your SSH2 home is configured correctly (usually this is <tt>~/.ssh</tt>) and contains your SSH2 keys
+				<b>Preferences</b> and ensure that your SSH2 home is configured correctly (usually this is <tt>~/.ssh</tt>) and contains your SSH2 keys:
 			</li>
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.10-ssh-preferences.png"/>
 		</p>
 		<ul>
-			<li>if you don't have SSH keys yet you may generate them on the second tab 
-				<b>Key Management</b> of this dialog, use a good pass phrase to protect your private key, for more details see 
-				<a href="http://help.github.com/working-with-key-passphrases/" target="egit_external">"working with key passphrases"</a>
+			<li>if you don't have SSH keys yet you may generate them on the second tab of this dialog (
+				<b>Key Management</b>). Use a good pass phrase to protect your private key, for more details see 
+				<a href="http://help.github.com/working-with-key-passphrases/" target="egit_external">"working with key passphrases"</a>.
 			</li>
 			<li>upload your public SSH key to your 
-				<a href="https://github.com/account" target="egit_external">GitHub account settings</a>
+				<a href="https://github.com/account" target="egit_external">GitHub account settings</a>.
 			</li>
 		</ul>
 		<h3 id="Push_Upstream">Push Upstream</h3>
 		<ul>
 			<li>Click 
-				<b>Team &gt; Remote &gt; Push...</b> and copy and paste the SSH URL of your new GitHub repository
+				<b>Team &gt; Remote &gt; Push...</b> and copy and paste the SSH URL of your new GitHub repository.
 			</li>
-			<li>If you are behind a firewall which doesn't allow SSH traffic use the GitHub HTTPS URL instead and provide your GitHub user and password instead of using the uploaded public SSH key. To store your credentials into the Eclipse secure store click 
+			<li>If you are behind a firewall which doesn't allow SSH traffic, use the GitHub HTTPS URL instead and provide your GitHub user and password instead of using the uploaded public SSH key. To store your credentials into the Eclipse secure store click 
 				<b>Store in Secure Store</b>.
 			</li>
 			<li>
-				<b>Note:</b> many HTTP proxies are configured to block HTTP URLs containing a user name, since disclosing a user name in an HTTP URL is considered a security risk. In that case remove the username from the HTTP URL and only provide it in the user field. It will be sent as an HTTP header.
+				<b>Note:</b> many HTTP proxies are configured to block HTTP URLs containing a user name, since disclosing a user name in an HTTP URL is considered a security risk. In that case remove the user name from the HTTP URL and only provide it in the user field. It will be sent as an HTTP header.
 			</li>
 		</ul>
 		<p>
@@ -312,7 +309,7 @@
 		</ul>
 		<ul>
 			<li>On the next wizard page click 
-				<b>Add all branches spec</b> to map your local branch names 1:1 to the same branch names in the destination repository.
+				<b>Add all branches spec</b> to map your local branch names to the same branch names in the destination repository (on a one-to-one basis).
 			</li>
 		</ul>
 		<p>
@@ -338,14 +335,13 @@
 			<img border="0" src="images/Egit-0.10-github-pushresult.png"/>
 		</p>
 		<ul>
-			<li>Point your browser at your GitHub repository to see that your new repository content has arrived</li>
+			<li>Point your browser at your GitHub repository to see that your new repository content has arrived.</li>
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.10-github-pushed-repo.png"/>
 		</p>
-		<p>
-			<br/>
-		</p>
+		<p>&lt;br 
+			/&gt;</p>
 		<h2 id="EclipseCon_2012_Git_Tutorial">EclipseCon 2012 Git Tutorial</h2>
 		<p>Find all exercises and the slides 
 			<a href="https://docs.google.com/open?id=0B4F_gjXVrHZVRXkydE0xVFBRRkc1WUpEcXdwQ2I1dw" target="egit_external">here</a>.
