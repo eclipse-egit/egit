@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 3.4 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 3.4 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bug-Fixes.html" title="Bug Fixes">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bug Fixes</td>
+			</tr>
+		</table><hr/>
+		<h1 id="EGit">EGit</h1>
+		<h2 id="Features">Features</h2>
+		<ul>
+			<li>Add ability to edit a commit directly from the history view.</li>
+			<li>Add ability to reword a commit directly from the history view.</li>
+			<li>Enable creating a new git repository in a non-empty folder</li>
+			<li>Honor "branch.&lt;name&gt;.mergeoptions" to set merge defaults</li>
+			<li>Add a flag in the create stash dialog to allow including untracked changes in a stash</li>
+			<li>Enable staging view for submodule repositories</li>
+			<li>Add compare mode to CompareTreeView</li>
+			<li>Provide extensibility for suggesting branch names</li>
+		</ul>
+		<h2 id="Usability_Improvements">Usability Improvements</h2>
+		<ul>
+			<li>Fix Package Explorer text colors on dark theme</li>
+			<li>Provide an option to fetch from Gerrit without checking out the branch</li>
+			<li>Action buttons in interactive rebase view toggle</li>
+			<li>Double click on commit in interactive rebase view opens commit viewer</li>
+			<li>Allow to move multiple commits simultaneously in interactive rebase view</li>
+			<li>Provide "Show in History" in toolbar of commit viewer</li>
+			<li>Show first line of commit message in editor tooltip of commit viewer</li>
+			<li>Store the commit message edited in staging view on Eclipse shutdown</li>
+			<li>Allow to disable logical model from preferences</li>
+			<li>Use more space-efficient labels on commits with multiple tags in history view</li>
+			<li>Warn when switching branches and a launch is running for the repo</li>
+			<li>Offer to reset to a reflog entry via the context menu in reflog view</li>
+			<li>Enable "Push to Upstream" when default remote has push spec</li>
+			<li>Pre-fill branch name of upstream config if available in "Push Branch" dialog</li>
+			<li>Add "Open workspace version" to context menu of the compare editor</li>
+			<li>Check for uncommitted changes before pull with rebase strategy</li>
+			<li>Check for uncommitted changes before rewording commits.</li>
+			<li>Check for uncommitted changes before squashing commits.</li>
+			<li>Don't ask for merge mode per default when opening merge tool</li>
+			<li>Allow canceling the commit operation after save-during-commit</li>
+			<li>Sort refs in the 'Switch To' menu in natural order</li>
+		</ul>
+		<h2 id="Performance_Improvements">Performance Improvements</h2>
+		<ul>
+			<li>Only fetch when synchronizing with remote-tracking branch</li>
+			<li>Only sample the progress when computing the compare tree view</li>
+			<li>Accelerate calculation of content of CompareTreeView.</li>
+		</ul>
+		<h2 id="Build_and_Release_Engineering">Build and Release Engineering</h2>
+		<ul>
+			<li>Update Luna target platform to Orbit release R20140525021250</li>
+			<li>Update build to use Tycho 0.20.0</li>
+			<li>Add script to create EGit release</li>
+		</ul><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bug-Fixes.html" title="Bug Fixes">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bug Fixes</td>
+			</tr>
+		</table>
+	</body>
+</html>

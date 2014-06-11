@@ -40,14 +40,18 @@
 		</p>
 		<p>Two problems surface with a centralised version control system, although they aren't immediately obvious: </p>
 		<ul>
-			<li>You need to be 'online' to perform actions, like diff or patch.<sup>*</sup> </li>
+			<li>You need to be 'online' to perform actions, like diff or patch.<span id="ref-1"><small>&nbsp;</small><sup>
+				<a href="#reference-1">&amp;#91;1&amp;#93;</a></sup></span>
+			</li>
 			<li>Patches generated against a particular branch can become outdated fairly quickly as development of the snapshot-in-time branch moves on (e.g. when it is time to apply the patch, HEAD is different than it was when the patch was generated).</li>
 		</ul>
-		<p>The first problem is rarely apparent for those working with Eclipse in a location at (or near) the repository itself. Those in the same continent will rarely experience delays due to global network variation; in addition, they tend to be employed in an organisation and sit at a desktop connected to wired networking for most of the day. Road warriors (those with laptops and who code from the local coffee shop) tend to operate in a more frequently disconnected mode, which limits repository functionality to when they are connected. 
-			<i>(*A note on SVN: since SVN keeps the last-known checkout, it's possible to do a limited set of operations while disconnected from SVN, like diff from the last-known checkout. However, in general, you are prevented from doing many of the operations that are possible while connected.)</i> 
+		<p><span id="reference-1"><sup>
+			<a href="#ref-1">&amp;#91;1&amp;#93;</a></sup></span>
+			<i>(A note on SVN: since SVN keeps the last-known checkout, it's possible to do a limited set of operations while disconnected from SVN, like diff from the last-known checkout. However, in general, you are prevented from doing many of the operations that are possible while connected.)</i>
 		</p>
+		<p>The first problem is rarely apparent for those working with Eclipse in a location at (or near) the repository itself. Those in the same continent will rarely experience delays due to global network variation; in addition, they tend to be employed in an organisation and sit at a desktop connected to wired networking for most of the day. Road warriors (those with laptops and who code from the local coffee shop) tend to operate in a more frequently disconnected mode, which limits repository functionality to when they are connected.</p>
 		<p>The second problem is simply an artifact of the way in which patches work. These are generally performed against HEAD (a snapshot in time) and then applied later (sometimes months or even 
-			<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=4922" target="egit_external">eight years later</a>). Although they record the version of the file they were patched against, the patch itself is sensitive to big changes in the file, sometimes leading to the patch's being inapplicable. Even relatively simple operations, like a file rename, can throw a well-formed CVCS patch out of the window.
+			<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=4922" target="egit_external">eight years later</a>). Although they record the version of the file they were patched against, the patch itself is sensitive to big changes in the file, sometimes leading to the patch being inapplicable. Even relatively simple operations, like a file rename, can throw a well-formed CVCS patch out of the window.
 		</p>
 		<h2 id="Distributed_Version_Control_Systems">Distributed Version Control Systems</h2>
 		<p>Distributed Version Control Systems (DVCS) are a family of version control systems unlike those with which many are familiar. Two of the most popular are 
@@ -189,7 +193,7 @@
 			</dd>
 		</dl>
 		<p>The current version of your repository is simply a pointer to the end of the tree. For this reason, it's often referred to as a 
-			<i>tip</i>, but <code>HEAD</code> is used the symbolic identifier for what the current repository is pointing to. Similarly, any branch can be referred to by its changeset id, which includes that and all prior changes. The default branch is usually called 
+			<i>tip</i>, but <code>HEAD</code> is the symbolic identifier for what the current repository is pointing to. Similarly, any branch can be referred to by its changeset id, which includes that and all prior changes. The default branch is usually called 
 			<i>master</i>.
 		</p>
 		<dl>
@@ -206,7 +210,7 @@
 				<b>Creating, and switching between, branches is fast</b>
 			</dd>
 		</dl>
-		<p>Because branching is so fast, branches get used for things where a user of a CVCS wouldn't normally use branching. For example, each bug in Bugzilla could have a new branch associated with it; if a couple of independent features are being worked on concurrently, they'd get their own branch; if you needed to drop back to do maintenance work on an ECLIPSE_35 branch, then you'd switch to a branch for that as well. Branches get created at least as frequently as 
+		<p>Because branching is so fast, branches get used for things that a user of a CVCS wouldn't normally use branching for. For example, each bug in Bugzilla could have a new branch associated with it; if a couple of independent features are being worked on concurrently, they'd get their own branch; if you needed to drop back to do maintenance work on an ECLIPSE_35 branch, then you'd switch to a branch for that as well. Branches get created at least as frequently as 
 			<a href="http://www.peterfriese.de/using-cvs-change-sets/" target="egit_external">changesets</a> might in CVS, if not more so.
 		</p>
 		<dl>
@@ -225,7 +229,7 @@
 			</dd>
 		</dl>
 		<p>Fortunately, DVCSs are all about merging. Given that each node in the changeset tree contains a pointer to its previous node (and transitively, to the beginning of time), it's much more powerful than the standard flat CVCS diff. In other words, not only do you know what changes need to be made, but also 
-			<i>what point in history they need to be made</i>. So, if you have a changeset that renames a file, and then merge in a changeset that points to the file as it was before it was renamed, a CVCS will just fall over; but a DVCS will be able to apply the change 
+			<i>at what point in history they need to be made</i>. So, if you have a changeset that renames a file, and then merge in a changeset that points to the file as it was before it was renamed, a CVCS will just fall over; but a DVCS will be able to apply the change 
 			<i>before</i> the rename occurred, and then play forward the changes.
 		</p>
 		<p>Merges are just the weaving together of two (or more) local branches into one. The 

@@ -31,15 +31,24 @@
 				<fileset dir="${basedir}/help/images" />
 			</delete>
 
-			<mediawiki-to-eclipse-help wikiBaseUrl="${egit.help.doc.url.base}"
-				validate="true" failonvalidationerror="true" prependImagePrefix="images"
-				formatoutput="true" defaultAbsoluteLinkTarget="egit_external" dest="${basedir}/help"
-				navigationimages="true" title="EGit Documentation" helpPrefix="help"
-				generateUnifiedToc="true">
+			<mediawiki-to-eclipse-help
+				dest="${basedir}/help"
+                wikiBaseUrl="${egit.help.doc.url.base}"
+				defaultAbsoluteLinkTarget="egit_external"
+                fetchImages="true"
+				formatOutput="true"
+				generateUnifiedToc="true"
+				helpPrefix="help"
+				navigationImages="true"
+				prependImagePrefix="images"
+				title="EGit Documentation"
+				validate="true"
+				failOnValidationError="true"
+			>
 				<path name="EGit/User_Guide" title="EGit User Guide" />
 				<path name="JGit/User_Guide" title="JGit User Guide" />
-				<path name="EGit/New_and_Noteworthy/3.3" title="EGit 3.3 New and Noteworthy" />
-				<path name="JGit/New_and_Noteworthy/3.3" title="JGit 3.3 New and Noteworthy" />
+				<path name="EGit/New_and_Noteworthy/3.4" title="EGit 3.4 New and Noteworthy" />
+				<path name="JGit/New_and_Noteworthy/3.4" title="JGit 3.4 New and Noteworthy" />
 				<path name="EGit/Git_For_Eclipse_Users" title="Git for Eclipse Users" />
 				<stylesheet url="book.css" />
 				<pageAppendum>
