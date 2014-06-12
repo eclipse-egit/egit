@@ -498,6 +498,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		rcs.schedule(RepositoryChangeScanner.REPO_SCAN_INTERVAL);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void setupSSH(final BundleContext context) {
 		final ServiceReference ssh;
 
