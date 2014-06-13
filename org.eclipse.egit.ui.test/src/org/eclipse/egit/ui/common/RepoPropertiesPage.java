@@ -103,7 +103,7 @@ public class RepoPropertiesPage {
 	}
 
 	private SWTBotCheckBox storeCheckBox() {
-		return bot.checkBoxWithLabel("Store in Secure Store");
+		return bot.checkBox("Store in Secure Store");
 	}
 
 	public RepoRemoteBranchesPage nextToRemoteBranches(String string) {
