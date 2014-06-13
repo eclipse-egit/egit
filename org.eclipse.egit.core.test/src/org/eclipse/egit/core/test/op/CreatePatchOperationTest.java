@@ -179,11 +179,13 @@ public class CreatePatchOperationTest extends GitTestCase {
 		operation.execute(null);
 	}
 
+	@SuppressWarnings("unused")
 	@Test
 	public void testNullCommit() throws Exception {
 		new CreatePatchOperation(testRepository.getRepository(), null);
 	}
 
+	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void testNullRepo() throws Exception {
 		new CreatePatchOperation(null, commit);
