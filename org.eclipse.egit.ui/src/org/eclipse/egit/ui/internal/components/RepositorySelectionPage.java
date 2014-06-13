@@ -602,8 +602,9 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 			}
 		});
 
-		newLabel(g, UIText.RepositorySelectionPage_storeInSecureStore);
 		storeCheckbox = new Button(g, SWT.CHECK);
+		storeCheckbox
+				.setText(UIText.RepositorySelectionPage_storeInSecureStore);
 		storeCheckbox.setSelection(storeInSecureStore);
 		storeCheckbox.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
