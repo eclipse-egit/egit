@@ -85,15 +85,6 @@ public class BranchRenameDialog extends TitleAreaDialog {
 			shortName = Repository.shortenRefName(branchToRename
 					.getName());
 			setMessage(NLS.bind(UIText.BranchRenameDialog_Message, shortName));
-			final IInputValidator inputValidator = ValidationUtils
-					.getRefNameInputValidator(repository, prefix, true);
-			name.addModifyListener(new ModifyListener() {
-				public void modifyText(ModifyEvent e) {
-					String error = inputValidator.isValid(name.getText());
-					setErrorMessage(error);
-					getButton(OK).setEnabled(error == null);
-				}
-			});
 		} else
 			setErrorMessage(NLS.bind(
 					UIText.BranchRenameDialog_WrongPrefixErrorMessage, oldName));
@@ -102,6 +93,16 @@ public class BranchRenameDialog extends TitleAreaDialog {
 			name.setText(shortName);
 			name.setSelection(0, shortName.length());
 		}
+
+		final IInputValidator inputValidator = ValidationUtils
+				.getRefNameInputValidator(repository, prefix, true);
+		name.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				String error = inputValidator.isValid(name.getText());
+				setErrorMessage(error);
+				getButton(OK).setEnabled(error == null);
+			}
+		});
 
 		getButton(OK).setEnabled(false);
 	}
