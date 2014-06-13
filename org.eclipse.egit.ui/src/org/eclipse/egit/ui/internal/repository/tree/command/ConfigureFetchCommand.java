@@ -24,9 +24,9 @@ import org.eclipse.jface.dialogs.Dialog;
 public class ConfigureFetchCommand extends
 		RepositoriesViewCommandHandler<RemoteNode> {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		RepositoryTreeNode selectedNode = getSelectedNodes(event).get(0);
-		final String configName;
+		RepositoryTreeNode selectedNode = getFirstOrNull(getSelectedNodes(event));
 
+		final String configName;
 		if (selectedNode instanceof RemoteNode)
 			configName = ((RemoteNode) selectedNode).getObject();
 		else if (selectedNode instanceof FetchNode)
@@ -37,7 +37,6 @@ public class ConfigureFetchCommand extends
 		Dialog dlg = SimpleConfigureFetchDialog.getDialog(getShell(event),
 				selectedNode.getRepository(), configName);
 		dlg.open();
-
 		return null;
 	}
 }
