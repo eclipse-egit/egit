@@ -15,8 +15,10 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.preferences.GlobalConfigurationPreferencePage;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.errors.ConfigInvalidException;
 import org.eclipse.jgit.lib.ConfigConstants;
@@ -26,6 +28,7 @@ import org.eclipse.jgit.lib.UserConfig;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -165,14 +168,22 @@ public class BasicConfigurationDialog extends TitleAreaDialog {
 			}
 		});
 
+		CLabel configLocationInfoLabel = new CLabel(main, SWT.NONE);
+		configLocationInfoLabel.setImage(JFaceResources
+				.getImage(Dialog.DLG_IMG_MESSAGE_INFO));
+		configLocationInfoLabel
+				.setText(UIText.BasicConfigurationDialog_ConfigLocationInfo);
+		GridDataFactory.fillDefaults().span(2, 1)
+				.applyTo(configLocationInfoLabel);
+
 		dontShowAgain = new Button(main, SWT.CHECK);
 		GridDataFactory.fillDefaults().span(2, 1).applyTo(dontShowAgain);
-		dontShowAgain.setText("&Don't show this dialog again"); //$NON-NLS-1$
+		dontShowAgain.setText(UIText.BasicConfigurationDialog_DontShowAgain);
 		dontShowAgain.setSelection(true);
 
 		Link link = new Link(main, SWT.UNDERLINE_LINK);
 		GridDataFactory.fillDefaults().span(2, 1).applyTo(link);
-		link.setText("Open the <a>Git Configuration</a> Preference Page"); //$NON-NLS-1$
+		link.setText(UIText.BasicConfigurationDialog_OpenPreferencePage);
 		link.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
