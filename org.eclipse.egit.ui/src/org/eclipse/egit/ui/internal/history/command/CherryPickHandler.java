@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2014 SAP AG
+ * and other copyright owners as documented in the project's IP log.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,6 +12,9 @@
  *******************************************************************************/
 
 package org.eclipse.egit.ui.internal.history.command;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -36,17 +40,22 @@ public class CherryPickHandler extends AbstractHistoryCommandHandler {
 	}
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		RevCommit commit = getSelectedCommit(event);
+		List<RevCommit> commits = getSelectedCommits(event);
 		Repository repo = getRepository(event);
 		if (repo == null)
 			return null;
 
+		List<RepositoryCommit> repositoryCommits = new ArrayList<RepositoryCommit>();
+		for (RevCommit commit : commits)
+			repositoryCommits.add(new RepositoryCommit(repo, commit));
+
 		final IStructuredSelection selected = new StructuredSelection(
-				new RepositoryCommit(repo, commit));
+				repositoryCommits);
 		CommonUtils
 				.runCommand(
 						org.eclipse.egit.ui.internal.commit.command.CherryPickHandler.ID,
 						selected);
+
 		return null;
 	}
 }
