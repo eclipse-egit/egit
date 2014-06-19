@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.commit.command;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -46,50 +47,63 @@ public class RevertHandler extends CommitCommandHandler {
 	public static final String ID = "org.eclipse.egit.ui.commit.Revert"; //$NON-NLS-1$
 
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
-		List<RepositoryCommit> commits = getCommits(event);
-		if (commits.size() == 1) {
-			RepositoryCommit repoCommit = commits.get(0);
-			final RevCommit commit = repoCommit.getRevCommit();
-			Repository repo = repoCommit.getRepository();
-			final Shell shell = getPart(event).getSite().getShell();
+		List<RepositoryCommit> repoCommits = getCommits(event);
+		Repository repo = repoCommits.get(0).getRepository();
+		final Shell shell = getPart(event).getSite().getShell();
 
-			final RevertCommitOperation op = new RevertCommitOperation(repo,
-					commit);
+		final List<RevCommit> commits = new ArrayList<RevCommit>();
+		for (RepositoryCommit repoCommit : repoCommits)
+			commits.add(repoCommit.getRevCommit());
+		final RevertCommitOperation op = new RevertCommitOperation(repo,
+				commits);
 
-			Job job = new WorkspaceJob(MessageFormat.format(
-					UIText.RevertHandler_JobName, commit.name())) {
+		Job job = new WorkspaceJob(MessageFormat.format(
+				UIText.RevertHandler_JobName, Integer.valueOf(commits.size()))) {
 
-				@Override
-				public IStatus runInWorkspace(IProgressMonitor monitor) {
-					try {
-						op.execute(monitor);
-						RevCommit newHead = op.getNewHead();
-						List<Ref> revertedRefs = op.getRevertedRefs();
-						if (newHead != null && revertedRefs.isEmpty())
-							showRevertedDialog(shell);
-						if (newHead == null)
-							showFailureDialog(shell, commit,
-									op.getFailingResult());
-					} catch (CoreException e) {
-						Activator.handleError(
-								UIText.RevertOperation_InternalError, e, true);
+			@Override
+			public IStatus runInWorkspace(IProgressMonitor monitor) {
+				try {
+					op.execute(monitor);
+					RevCommit newHead = op.getNewHead();
+					List<Ref> revertedRefs = op.getRevertedRefs();
+					if (newHead != null && revertedRefs.isEmpty())
+						showRevertedDialog(shell);
+					if (newHead == null) {
+						RevCommit newestUnmergedCommit = null;
+						for (RevCommit commit : commits) {
+							if (!contains(revertedRefs, commit)) {
+								newestUnmergedCommit = commit;
+								break;
+							}
+						}
+						showFailureDialog(shell, newestUnmergedCommit,
+								op.getFailingResult());
 					}
-					return Status.OK_STATUS;
+				} catch (CoreException e) {
+					Activator.handleError(UIText.RevertOperation_InternalError,
+							e, true);
 				}
+				return Status.OK_STATUS;
+			}
 
-				@Override
-				public boolean belongsTo(Object family) {
-					if (JobFamilies.REVERT_COMMIT.equals(family))
-						return true;
-					return super.belongsTo(family);
-				}
-			};
-			job.setUser(true);
-			job.setRule(op.getSchedulingRule());
-			job.schedule();
-			return null;
-		}
+			@Override
+			public boolean belongsTo(Object family) {
+				if (JobFamilies.REVERT_COMMIT.equals(family))
+					return true;
+				return super.belongsTo(family);
+			}
+		};
+		job.setUser(true);
+		job.setRule(op.getSchedulingRule());
+		job.schedule();
 		return null;
+	}
+
+	private boolean contains(List<Ref> refs, RevCommit commit) {
+		for (Ref ref : refs)
+			if (ref.getObjectId().equals(commit.getId()))
+				return true;
+		return false;
 	}
 
 	/**

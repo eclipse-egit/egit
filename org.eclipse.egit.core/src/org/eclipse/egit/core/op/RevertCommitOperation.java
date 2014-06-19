@@ -40,7 +40,7 @@ public class RevertCommitOperation implements IEGitOperation {
 
 	private final Repository repo;
 
-	private final RevCommit commit;
+	private final List<RevCommit> commits;
 
 	private RevCommit newHead;
 
@@ -52,11 +52,12 @@ public class RevertCommitOperation implements IEGitOperation {
 	 * Create revert commit operation
 	 *
 	 * @param repository
-	 * @param commit
+	 * @param commits
+	 *            the commits to revert (in newest-first order)
 	 */
-	public RevertCommitOperation(Repository repository, RevCommit commit) {
+	public RevertCommitOperation(Repository repository, List<RevCommit> commits) {
 		this.repo = repository;
-		this.commit = commit;
+		this.commits = commits;
 	}
 
 	/**
@@ -81,8 +82,11 @@ public class RevertCommitOperation implements IEGitOperation {
 				pm.beginTask("", 2); //$NON-NLS-1$
 
 				pm.subTask(MessageFormat.format(
-						CoreText.RevertCommitOperation_reverting, commit.name()));
-				RevertCommand command = new Git(repo).revert().include(commit);
+						CoreText.RevertCommitOperation_reverting,
+						Integer.valueOf(commits.size())));
+				RevertCommand command = new Git(repo).revert();
+				for (RevCommit commit : commits)
+					command.include(commit);
 				try {
 					newHead = command.call();
 					reverted = command.getRevertedRefs();
