@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e76c2f17_8edd9a58",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-06-23T21:53:27Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use spaces around single line blocks",
+      "revId": "0d82623f8960d830ed9d893db3e7deee041ea466",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_ced79232",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/RepositoryCommit.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-06-23T21:53:27Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "0d82623f8960d830ed9d893db3e7deee041ea466",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_ce12f292",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiff.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-06-23T21:53:27Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "0d82623f8960d830ed9d893db3e7deee041ea466",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
