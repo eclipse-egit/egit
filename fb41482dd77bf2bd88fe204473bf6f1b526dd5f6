@@ -16,6 +16,24 @@
       "revId": "fb41482dd77bf2bd88fe204473bf6f1b526dd5f6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_daad89f6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CherryPickOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 576
+      },
+      "writtenOn": "2014-06-23T22:19:02Z",
+      "side": 0,
+      "message": "should I be fiddling with that? I\u0027d rather prefer not to touch it unless it is necessary",
+      "parentUuid": "e76c2f17_5acfb9d5",
+      "revId": "fb41482dd77bf2bd88fe204473bf6f1b526dd5f6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "bb9c5cc81b8160cb4c2f10553d579b42b6106b3f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_3af3dd12",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CherryPickOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 576
+      },
+      "writtenOn": "2014-06-23T22:19:02Z",
+      "side": 1,
+      "message": "whoops, silly me",
+      "parentUuid": "e76c2f17_da02a97f",
+      "revId": "bb9c5cc81b8160cb4c2f10553d579b42b6106b3f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
