@@ -50,6 +50,13 @@
                value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
          </filter>
          <action
+               class="org.eclipse.egit.ui.internal.actions.StashCreateAction"
+               definitionId="org.eclipse.egit.ui.team.StashCreate"
+               icon="$nl$/icons/obj16/stash-create.png"
+               id="org.eclipse.egit.ui.internal.actions.StashCreateAction"
+               label="%StashCreateCommand.label"
+               menubarPath="team.main/group1"/>
+         <action
                class="org.eclipse.egit.ui.internal.actions.CommitAction"
                definitionId="org.eclipse.egit.ui.team.Commit"
                icon="$nl$/icons/obj16/commit.gif"
