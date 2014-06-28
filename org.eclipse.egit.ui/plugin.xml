@@ -362,6 +362,37 @@
             </iterate>
          </and>
       </definition>
+      <definition
+            id="org.eclipse.egit.ui.repositoryTreePathNode">
+         <and>
+            <count
+                  value="1">
+            </count>
+            <iterate>
+               <or>
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                  </instanceof>
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.FileNode">
+                  </instanceof>
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.FolderNode">
+                  </instanceof>
+                  <and>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode">
+                     </instanceof>
+                     <not>
+                        <test
+                              property="GitRepository.isBare">
+                        </test>
+                     </not>
+                  </and>
+               </or>
+            </iterate>
+         </and>
+      </definition>
    </extension>
 
    <extension point="org.eclipse.ui.preferencePages">
@@ -1640,6 +1671,17 @@
                      </instanceof>
                   </iterate>
                </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.RepositoriesViewCopyPath">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.CopyPathCommand">
+         </class>
+         <activeWhen>
+            <reference
+                  definitionId="org.eclipse.egit.ui.repositoryTreePathNode">
+            </reference>
          </activeWhen>
       </handler>
       <handler
@@ -3647,34 +3689,9 @@
                style="push">
             <visibleWhen
                   checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <or>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-                        </instanceof>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.FileNode">
-                        </instanceof>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.FolderNode">
-                        </instanceof>
-                        <and>
-                           <instanceof
-                                 value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode">
-                           </instanceof>
-                           <not>
-                              <test
-                                    property="GitRepository.isBare">
-                              </test>
-                           </not>
-                        </and>
-                     </or>
-                  </iterate>
-               </and>
+                  <reference
+                        definitionId="org.eclipse.egit.ui.repositoryTreePathNode">
+                  </reference>
             </visibleWhen>
          </command>
          <command
@@ -4321,7 +4338,6 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.CopyPathCommand"
             id="org.eclipse.egit.ui.RepositoriesViewCopyPath"
             name="%CopyPathCommand">
       </command>
