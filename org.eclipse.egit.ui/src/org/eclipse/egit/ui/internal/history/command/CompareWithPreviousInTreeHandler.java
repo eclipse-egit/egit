@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2014 Mathias Kinzler <mathias.kinzler@sap.com> and others.
+ * Copyright (C) 2014 Ericsson and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,32 +7,29 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Mathias Kinzler (SAP AG) - initial implementation
- *    Marc Khouzam (Ericsson)  - Refactor to use base compare class
+ *    Marc Khouzam (Ericsson) - initial implementation
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history.command;
 
-import java.util.Iterator;
-
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.egit.ui.internal.dialogs.CompareTreeView;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.revwalk.RevCommit;
 
 /**
- * Compare the file contents of two commits.
+ * Compare the file contents of a commit with its parent in the
+ * {@link CompareTreeView}.
  */
-public class CompareVersionsHandler extends AbstractHistoryCompareCommandHandler {
+public class CompareWithPreviousInTreeHandler extends
+		AbstractHistoryCompareCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IStructuredSelection selection = getSelection(event);
-		if (selection.size() == 2) {
-			Iterator<?> it = selection.iterator();
-			RevCommit commit1 = (RevCommit) it.next();
-			RevCommit commit2 = (RevCommit) it.next();
+		RevCommit commit = getSelectedCommit(event);
 
-			compare(commit1, commit2, event);
+		if (commit.getParentCount() == 1) {
+			compareInTree(commit, commit.getParent(0), event);
 		}
+
 		return null;
 	}
 
@@ -41,6 +38,11 @@ public class CompareVersionsHandler extends AbstractHistoryCompareCommandHandler
 		GitHistoryPage page = getPage();
 		if (page == null)
 			return false;
-		return getSelection(page).size() == 2;
+		if (getSelection(page).size() == 1) {
+			RevCommit commit = (RevCommit) getSelection(page).getFirstElement();
+			if (commit.getParentCount() == 1)
+				return true;
+		}
+		return false;
 	}
 }

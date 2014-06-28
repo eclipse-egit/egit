@@ -5202,6 +5202,16 @@
             name="%CreatePatchCommand.name">
       </command>
       <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.CompareWithPreviousHandler"
+            id="org.eclipse.egit.ui.history.CompareWithPrevious"
+            name="%CompareWithPreviousCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.CompareWithPreviousInTreeHandler"
+            id="org.eclipse.egit.ui.history.CompareWithPreviousInTree"
+            name="%CompareWithPreviousInTreeCommand.name">
+      </command>
+      <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.CreateBranchOnCommitHandler"
             id="org.eclipse.egit.ui.history.CreateBranch"
             name="%CreateBranchCommand.name">

@@ -471,6 +471,12 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_CreatePatchMenuLabel;
 
 	/** */
+	public static String GitHistoryPage_CompareWithPreviousMenuLabel;
+
+	/** */
+	public static String GitHistoryPage_CompareWithPreviousInTreeMenuLabel;
+
+	/** */
 	public static String GitHistoryPage_CreateTagMenuLabel;
 
 	/** */

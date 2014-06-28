@@ -7,6 +7,7 @@
  * Copyright (C) 2011-2012, Matthias Sohn <matthias.sohn@sap.com>
  * Copyright (C) 2012-2013, Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, Daniel Megert <daniel_megert@ch.ibm.com>
+ * Copyright (C) 2014, Marc Khouzam <marc.khouzam@ericsson.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -829,6 +830,16 @@ class CommitGraphTable {
 				popupMgr.add(getCommandContributionItem(
 						HistoryViewCommands.CREATE_PATCH,
 						UIText.GitHistoryPage_CreatePatchMenuLabel));
+				popupMgr.add(getCommandContributionItem(
+						HistoryViewCommands.COMPARE_WITH_PREVIOUS,
+						UIText.GitHistoryPage_CompareWithPreviousMenuLabel));
+				if (!input.isSingleFile())
+					popupMgr.add(getCommandContributionItem(
+							HistoryViewCommands.COMPARE_WITH_PREVIOUS_IN_TREE,
+							UIText.GitHistoryPage_CompareWithPreviousInTreeMenuLabel));
+				popupMgr.add(getCommandContributionItem(
+						HistoryViewCommands.CHERRYPICK,
+						UIText.GitHistoryPage_cherryPickMenuItem));
 				popupMgr.add(getCommandContributionItem(
 						HistoryViewCommands.REVERT,
 						UIText.GitHistoryPage_revertMenuItem));

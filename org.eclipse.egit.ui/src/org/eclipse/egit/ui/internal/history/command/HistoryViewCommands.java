@@ -5,6 +5,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Marc Khouzam (Ericsson)  - Add Compare with Previous commands (Bug 384378)
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history.command;
 
@@ -46,6 +50,12 @@ public class HistoryViewCommands {
 
 	/** "Create Patch" */
 	public static final String CREATE_PATCH = "org.eclipse.egit.ui.history.CreatePatch"; //$NON-NLS-1$
+
+	/** "Compare with Previous" */
+	public static final String COMPARE_WITH_PREVIOUS = "org.eclipse.egit.ui.history.CompareWithPrevious"; //$NON-NLS-1$
+
+	/** "Compare with Previous in Tree" */
+	public static final String COMPARE_WITH_PREVIOUS_IN_TREE = "org.eclipse.egit.ui.history.CompareWithPreviousInTree"; //$NON-NLS-1$
 
 	/** "Create Tag" */
 	public static final String CREATE_TAG = "org.eclipse.egit.ui.history.CreateTag"; //$NON-NLS-1$
