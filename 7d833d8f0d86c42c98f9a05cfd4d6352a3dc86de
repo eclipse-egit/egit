@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e76c2f17_faecbab8",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-06-28T05:08:14Z",
+      "side": 1,
+      "message": "I think it should only be visible like other \"repository-level\" actions such as push. When files are selected, it shouldn\u0027t be available, as that could be understood to only stash the selected files.\n\nFor this, I think it has to be defined in org.eclipse.ui.menus.",
+      "revId": "7d833d8f0d86c42c98f9a05cfd4d6352a3dc86de",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_9af78681",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/StashCreateActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-06-28T05:08:14Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we check if the repository contains any changes or untracked files using IndexDiffCache here?",
+      "revId": "7d833d8f0d86c42c98f9a05cfd4d6352a3dc86de",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
