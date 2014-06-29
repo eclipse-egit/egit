@@ -57,6 +57,7 @@ import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -318,6 +319,12 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 	void fillDiffs(FileDiff[] diffs) {
 		diffViewer.setInput(diffs);
 		diffSection.setText(getDiffSectionTitle(Integer.valueOf(diffs.length)));
+		setSectionExpanded(diffSection, diffs.length != 0);
+	}
+
+	static void setSectionExpanded(Section section, boolean expanded) {
+		section.setExpanded(expanded);
+		((GridData) section.getLayoutData()).grabExcessVerticalSpace = expanded;
 	}
 
 	String getDiffSectionTitle(Integer numChanges) {
@@ -328,6 +335,10 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 	void fillTags(FormToolkit toolkit, List<Ref> tags) {
 		for (Control child : tagLabelArea.getChildren())
 			child.dispose();
+
+		// Hide "Tags" area if no tags to show
+		((GridData) tagLabelArea.getParent().getLayoutData()).exclude = tags
+				.isEmpty();
 
 		GridLayoutFactory.fillDefaults().spacing(1, 1).numColumns(tags.size())
 				.applyTo(tagLabelArea);
@@ -382,11 +393,16 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 			}
 
 		};
+
 		if ((toolkit.getBorderStyle() & SWT.BORDER) == 0)
 			textContent.setData(FormToolkit.KEY_DRAW_BORDER,
 					FormToolkit.TEXT_BORDER);
-		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, 80).grab(true, true)
-				.applyTo(textContent);
+
+		Point size = textContent.getTextWidget().computeSize(SWT.DEFAULT,
+				SWT.DEFAULT);
+		int yHint = size.y > 80 ? 80 : SWT.DEFAULT;
+		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, yHint).minSize(1, 20)
+				.grab(true, true).applyTo(textContent);
 
 		updateSectionClient(messageSection, messageArea, toolkit);
 	}
@@ -433,7 +449,7 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 				| toolkit.getBorderStyle());
 		diffViewer.getTable().setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TREE_BORDER);
-		GridDataFactory.fillDefaults().grab(true, true).hint(SWT.DEFAULT, 80)
+		GridDataFactory.fillDefaults().grab(true, true)
 				.applyTo(diffViewer.getControl());
 		diffViewer.setContentProvider(ArrayContentProvider.getInstance());
 		diffViewer.setTreeWalk(getCommit().getRepository(), null);
@@ -535,6 +551,7 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 							fillTags(getManagedForm().getToolkit(), tags);
 							fillDiffs(diffs);
 							fillBranches(branches);
+							form.reflow(true);
 							form.layout(true, true);
 						}
 					});
