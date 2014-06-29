@@ -41,6 +41,6 @@ public class CreatePatchHandler extends AbstractHistoryCommandHandler {
 		if (selection.size() != 1)
 			return false;
 		RevCommit commit = (RevCommit) selection.getFirstElement();
-		return (commit.getParentCount() == 1);
+		return (commit.getParentCount() <= 1);
 	}
 }
