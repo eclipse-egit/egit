@@ -99,7 +99,10 @@ public abstract class RepositoryAction extends AbstractHandler implements
 		return event;
 	}
 
-	private IServiceLocator getServiceLocator() {
+	/**
+	 * @return the service locator to use in the action
+	 */
+	protected IServiceLocator getServiceLocator() {
 		if (serviceLocator == null)
 			serviceLocator = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		return serviceLocator;

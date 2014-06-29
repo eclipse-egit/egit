@@ -62,6 +62,7 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISources;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -248,6 +249,14 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 */
 	protected Repository getRepository() {
 		IStructuredSelection selection = getSelection();
+		return getRepository(selection);
+	}
+
+	static Repository getRepository(IEvaluationContext evaluationContext) {
+		return getRepository(getSelection(evaluationContext));
+	}
+
+	private static Repository getRepository(IStructuredSelection selection) {
 		return getRepository(false, selection, null);
 	}
 
@@ -263,7 +272,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 *            must be provided if warn = true
 	 * @return repository for current project, or null
 	 */
-	private Repository getRepository(boolean warn,
+	private static Repository getRepository(boolean warn,
 			IStructuredSelection selection, Shell shell) {
 		RepositoryMapping mapping = null;
 		for (IPath location : getSelectedLocations(selection)) {
@@ -428,6 +437,12 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	private static IStructuredSelection getSelectionFromEditorInput(
 			IEvaluationContext context) {
 		Object object = context.getVariable(ISources.ACTIVE_EDITOR_INPUT_NAME);
+		if (!(object instanceof IEditorInput)) {
+			Object editor = context.getVariable(ISources.ACTIVE_EDITOR_NAME);
+			if (editor instanceof IEditorPart)
+				object = ((IEditorPart) editor).getEditorInput();
+		}
+
 		if (object instanceof IEditorInput) {
 			IEditorInput editorInput = (IEditorInput) object;
 			// Note that there is both a getResource(IEditorInput) as well as a
@@ -540,7 +555,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		return result.toArray(new IResource[result.size()]);
 	}
 
-	private IPath[] getSelectedLocations(IStructuredSelection selection) {
+	private static IPath[] getSelectedLocations(IStructuredSelection selection) {
 		Set<IPath> result = new LinkedHashSet<IPath>();
 		for (Object o : selection.toList()) {
 			IResource resource = AdapterUtils.adapt(o, IResource.class);
@@ -563,7 +578,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		return result.toArray(new IPath[result.size()]);
 	}
 
-	private List<IResource> extractResourcesFromMapping(Object o) {
+	private static List<IResource> extractResourcesFromMapping(Object o) {
 		ResourceMapping mapping = AdapterUtils.adapt(o,
 				ResourceMapping.class);
 		if (mapping != null) {

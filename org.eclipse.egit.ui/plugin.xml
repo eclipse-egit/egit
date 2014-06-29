@@ -818,6 +818,16 @@
            tooltip="%BranchAction_tooltip">
          </action>
          <action
+           class="org.eclipse.egit.ui.internal.actions.StashToolbarAction"
+           definitionId="org.eclipse.egit.ui.team.stash.create"
+           icon="icons/obj16/stash.png"
+           id="org.eclipse.egit.ui.actionstash"
+           label="%StashToolbarAction_label"
+           style="pulldown"
+           toolbarPath="Normal/additions"
+           tooltip="%StashToolbarAction_tooltip">
+         </action>
+         <action
            class="org.eclipse.egit.ui.internal.actions.CommitAction"
            definitionId="org.eclipse.egit.ui.team.Commit"
            icon="icons/obj16/commit.gif"
@@ -1789,42 +1799,6 @@
                               value="org.eclipse.egit.ui.internal.repository.tree.SubmodulesNode">
                         </instanceof>
                      </or>
-                  </iterate>
-               </and>
-         </activeWhen>
-      </handler>
-      <handler
-            commandId="org.eclipse.egit.ui.team.stash.create">
-         <class
-               class="org.eclipse.egit.ui.internal.repository.tree.command.StashCreateCommand">
-         </class>
-         <activeWhen>
-             <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <and>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-                        </instanceof>
-                        <not>
-                           <test
-                                 property="GitRepository.isSubmodule">
-                           </test>
-                        </not>
-                        <not>
-                           <test
-                                 property="GitRepository.isBare">
-                           </test>
-                        </not>
-                        <test
-                              property="GitRepository.canStash">
-                        </test>
-                        <test
-                              property="GitRepository.containsHead">
-                        </test>
-                     </and>
                   </iterate>
                </and>
          </activeWhen>
@@ -2939,10 +2913,12 @@
                </and>
             </visibleWhen>
          </command>
-         <command
-               commandId="org.eclipse.egit.ui.team.stash.create"
-               label="%StashCreateCommand.label"
-               style="push">
+         <menu
+               label="%StashesMenu.label">
+            <dynamic
+                  class="org.eclipse.egit.ui.internal.actions.StashesMenu"
+                  id="org.eclipse.egit.ui.stashedChanges">
+            </dynamic>
             <visibleWhen
                   checkEnabled="false">
                <and>
@@ -2974,7 +2950,7 @@
                   </iterate>
                </and>
             </visibleWhen>
-         </command>
+         </menu>
          <command
                commandId="org.eclipse.egit.ui.team.stash.apply"
                label="%StashApplyCommand.label"
@@ -3823,6 +3799,19 @@
                   name="group1"
                   visible="true">
             </separator>
+            <menu
+                  label="%StashesMenu.label">
+               <dynamic
+                     class="org.eclipse.egit.ui.internal.actions.StashesMenu"
+                     id="org.eclipse.egit.ui.stashedChanges">
+               </dynamic>
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="org.eclipse.egit.ui.gitProject">
+                  </reference>
+               </visibleWhen>
+            </menu>
             <command
                   commandId="org.eclipse.egit.ui.team.SimplePush"
                   label="%PushToUpstreamAction.label"
@@ -4525,7 +4514,7 @@
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.team.stash.create"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.StashCreateCommand"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.StashCreateHandler"
             name="%StashCreateCommand.name">
       </command>
       <command
