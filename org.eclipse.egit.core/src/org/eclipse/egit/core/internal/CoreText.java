@@ -232,9 +232,6 @@ public class CoreText extends NLS {
 	public static String CreatePatchOperation_cannotCreatePatchForMergeCommit;
 
 	/** */
-	public static String CreatePatchOperation_cannotCreatePatchForFirstCommit;
-
-	/** */
 	public static String CreatePatchOperation_couldNotFindProject;
 
 	/** */
