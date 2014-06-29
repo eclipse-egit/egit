@@ -4989,6 +4989,15 @@ public class UIText extends NLS {
 	public static String StashDropCommand_jobTitle;
 
 	/** */
+	public static String StashesMenu_StashListError;
+
+	/** */
+	public static String StashesMenu_NoStashedChangesText;
+
+	/** */
+	public static String StashesMenu_StashItemText;
+
+	/** */
 	public static String SubmoduleAddCommand_AddError;
 
 	/** */

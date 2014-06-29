@@ -248,6 +248,17 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 */
 	protected Repository getRepository() {
 		IStructuredSelection selection = getSelection();
+		return getRepository(selection);
+	}
+
+	/**
+	 * Figure out which repository to use. All selected resources must map to
+	 * the same Git repository.
+	 *
+	 * @param selection
+	 * @return the repository of the selection, or null
+	 */
+	static Repository getRepository(IStructuredSelection selection) {
 		return getRepository(false, selection, null);
 	}
 
@@ -263,7 +274,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 *            must be provided if warn = true
 	 * @return repository for current project, or null
 	 */
-	private Repository getRepository(boolean warn,
+	private static Repository getRepository(boolean warn,
 			IStructuredSelection selection, Shell shell) {
 		RepositoryMapping mapping = null;
 		for (IPath location : getSelectedLocations(selection)) {
@@ -542,7 +553,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		return result.toArray(new IResource[result.size()]);
 	}
 
-	private IPath[] getSelectedLocations(IStructuredSelection selection) {
+	private static IPath[] getSelectedLocations(IStructuredSelection selection) {
 		Set<IPath> result = new LinkedHashSet<IPath>();
 		for (Object o : selection.toList()) {
 			IResource resource = AdapterUtils.adapt(o, IResource.class);
@@ -565,7 +576,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		return result.toArray(new IPath[result.size()]);
 	}
 
-	private List<IResource> extractResourcesFromMapping(Object o) {
+	private static List<IResource> extractResourcesFromMapping(Object o) {
 		ResourceMapping mapping = AdapterUtils.adapt(o,
 				ResourceMapping.class);
 		if (mapping != null) {
