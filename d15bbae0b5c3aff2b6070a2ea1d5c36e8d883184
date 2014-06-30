@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e76c2f17_151ea721",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-06-30T10:35:19Z",
+      "side": 1,
+      "message": "How about this?: \"These settings will be stored in the Git configuration file in your home directory.\"",
+      "revId": "d15bbae0b5c3aff2b6070a2ea1d5c36e8d883184",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_f5220b60",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-06-30T10:35:19Z",
+      "side": 1,
+      "message": "I know this was just moved here, but could you change \"Preference Page\" to \"preference page\"? No reason this needs to be capitalized.",
+      "revId": "d15bbae0b5c3aff2b6070a2ea1d5c36e8d883184",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
