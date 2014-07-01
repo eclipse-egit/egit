@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e76c2f17_e8b50d65",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-01T15:36:08Z",
+      "side": 1,
+      "message": "I think this should remain \"Push...\" since with the advanced wizard you can also create complex push refspecs and can e.g. push multiple branches in one go",
+      "revId": "9e0320100c93f43f50eb49254576ba2122be59bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_28b8a561",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 8
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-01T15:36:08Z",
+      "side": 1,
+      "message": "I think this action should be named \"Push HEAD...\" or \"Push Branch...\" following Robin\u0027s suggestion on the bug",
+      "revId": "9e0320100c93f43f50eb49254576ba2122be59bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_a892f5d7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/PushCommitHandler.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-01T15:36:08Z",
+      "side": 1,
+      "message": "maybe better: localBranch",
+      "revId": "9e0320100c93f43f50eb49254576ba2122be59bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_888f39b4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/PushCommitHandler.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-01T15:36:08Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "9e0320100c93f43f50eb49254576ba2122be59bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_6899fdff",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/PushCommitHandler.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-01T15:36:08Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "9e0320100c93f43f50eb49254576ba2122be59bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_c88931af",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-01T15:36:08Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "9e0320100c93f43f50eb49254576ba2122be59bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_a81dd5f4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchWizard.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-01T15:36:08Z",
+      "side": 1,
+      "message": "unnecessary blank comment line",
+      "revId": "9e0320100c93f43f50eb49254576ba2122be59bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_e827cd3c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchWizard.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-01T15:36:08Z",
+      "side": 1,
+      "message": "we usually don\u0027t add javadoc for private methods",
+      "revId": "9e0320100c93f43f50eb49254576ba2122be59bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_2831c575",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchWizard.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-01T15:36:08Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "9e0320100c93f43f50eb49254576ba2122be59bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

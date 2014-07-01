@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e76c2f17_289f05e9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PushBranchActionHandler.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-01T15:36:08Z",
+      "side": 0,
+      "message": "why should the action be enabled if there is no associated repository ?",
+      "revId": "84630b1e235207b2f1e0410783d1f0eb464462fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
