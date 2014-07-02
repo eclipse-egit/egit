@@ -29,6 +29,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.merge.EmptyResourceVariantTreeProvider;
 import org.eclipse.egit.core.internal.merge.GitResourceVariantTreeProvider;
 import org.eclipse.egit.core.internal.merge.GitSyncInfoToDiffConverter;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -50,6 +51,18 @@ import org.eclipse.team.core.variants.ResourceVariantTreeSubscriber;
  */
 public class GitResourceVariantTreeSubscriber extends
 		ResourceVariantTreeSubscriber {
+	/**
+	 * The {@link #variantTreeProvider} cannot be <code>null</code> since this
+	 * is also used during asynchronous refresh calls from workspace listeners
+	 * installed by Team during the creation of merge or synchronization
+	 * context. However, {@link #dispose()} and
+	 * {@link #reset(GitSynchronizeDataSet)} are called specifically to clean
+	 * this provider. This specific, empty resource variant tree provider will
+	 * be used as a "null object" to prevent NullPointerExceptions during these
+	 * asynchronous calls after we've been disposed.
+	 */
+	private static final GitResourceVariantTreeProvider EMPTY_TREE_PROVIDER = new EmptyResourceVariantTreeProvider();
+
 	private GitResourceVariantTreeProvider variantTreeProvider;
 
 	private GitSynchronizeDataSet gsds;
@@ -198,7 +211,7 @@ public class GitResourceVariantTreeSubscriber extends
 	 */
 	public void reset(GitSynchronizeDataSet data) {
 		gsds = data;
-		variantTreeProvider = null;
+		variantTreeProvider = EMPTY_TREE_PROVIDER;
 		syncInfoConverter = null;
 	}
 
@@ -206,7 +219,7 @@ public class GitResourceVariantTreeSubscriber extends
 	 * Disposes nested resources
 	 */
 	public void dispose() {
-		if (variantTreeProvider != null) {
+		if (variantTreeProvider != EMPTY_TREE_PROVIDER) {
 			if (variantTreeProvider.getBaseTree() instanceof GitResourceVariantTree)
 				((GitResourceVariantTree) variantTreeProvider.getBaseTree())
 						.dispose();
@@ -216,7 +229,7 @@ public class GitResourceVariantTreeSubscriber extends
 			if (variantTreeProvider.getSourceTree() instanceof GitResourceVariantTree)
 				((GitResourceVariantTree) variantTreeProvider.getSourceTree())
 						.dispose();
-			variantTreeProvider = null;
+			variantTreeProvider = EMPTY_TREE_PROVIDER;
 		}
 		gsds.dispose();
 	}
