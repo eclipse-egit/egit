@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e76c2f17_bd47d170",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PushMenu.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-02T22:28:27Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use author tags",
+      "revId": "b6fa627d2f3f95277609034399918895bbd4f1df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_1da88593",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PushMenu.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-02T22:28:27Z",
+      "side": 1,
+      "message": "this could be shortened to a single line\n\n /** */",
+      "revId": "b6fa627d2f3f95277609034399918895bbd4f1df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_fdaca9a9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PushMenu.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-02T22:28:27Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "b6fa627d2f3f95277609034399918895bbd4f1df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_5db2fd00",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PushMenu.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-02T22:28:27Z",
+      "side": 1,
+      "message": "this TODO needs to be fixed",
+      "revId": "b6fa627d2f3f95277609034399918895bbd4f1df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_3db741f1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PushMenu.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-02T22:28:27Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "b6fa627d2f3f95277609034399918895bbd4f1df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_9d9bf57e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/PushCommitHandler.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-02T22:28:27Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "b6fa627d2f3f95277609034399918895bbd4f1df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_5d895d31",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchPage.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-02T22:28:27Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "b6fa627d2f3f95277609034399918895bbd4f1df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_9d82d50a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchWizard.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-02T22:28:27Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "b6fa627d2f3f95277609034399918895bbd4f1df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_9d3495e3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 12
+      },
+      "lineNbr": 1815,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-02T22:28:27Z",
+      "side": 1,
+      "message": "I\u0027d prefer \"Push HEAD...\" since \"Push HEAD Commit...\" sounds like only the commit HEAD is pointing at would be pushed which isn\u0027t true in general",
+      "revId": "b6fa627d2f3f95277609034399918895bbd4f1df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

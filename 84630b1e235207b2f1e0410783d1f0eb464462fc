@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e76c2f17_dd4a8d7a",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 12
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-02T22:28:27Z",
+      "side": 0,
+      "message": "this is still used by Repositories View, so the menu entry there is now %PushBranchAction.label\n\nWe should also implement the dynamic Push menu in the repositories view",
+      "revId": "84630b1e235207b2f1e0410783d1f0eb464462fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e76c2f17_289f05e9",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PushBranchActionHandler.java",
         "patchSetId": 8
