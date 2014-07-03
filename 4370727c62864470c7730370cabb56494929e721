@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "e76c2f17_5d8afd6f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2014-07-03T07:50:50Z",
+      "side": 1,
+      "message": "Well, except that in the case I am describing here, logging this would be noise, and noise that would confuse the user. See also the FileDeleteHookTest contributed through this change : a process creates then deletes a file. the user does not need to know that the auto-staging hook tried to take a lock and failed, since \"the process\" is taking care of the locking himself, and possibly also taking care of the index cleanup.\n\nIn this case, there isn\u0027t a \"stale lock\" : it\u0027s just that the auto-staging hook is too eager.\n\nI\u0027ll add the \u0027log\u0027 line, but there\u0027s a good chance this isn\u0027t what the user wants.",
+      "parentUuid": "e76c2f17_5de67d5f",
+      "revId": "4370727c62864470c7730370cabb56494929e721",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e76c2f17_fd07898d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/FileDeleteHookTest.java",
         "patchSetId": 4
@@ -42,6 +60,24 @@
         "endLine": 62,
         "endChar": 21
       },
+      "revId": "4370727c62864470c7730370cabb56494929e721",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_9da815da",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/FileDeleteHookTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2014-07-03T07:50:50Z",
+      "side": 1,
+      "message": "Well, we\u0027ve locked the dircache, so we know \"delete\" will throw up a LockFailedException because of the auto-staging hook trying to re-lock... until the patch is applied, at which point it won\u0027t fail anymore.\n\nI probably should have used \"will\", or not commented at all since this is the description of the bug.",
+      "parentUuid": "e76c2f17_fd07898d",
       "revId": "4370727c62864470c7730370cabb56494929e721",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
