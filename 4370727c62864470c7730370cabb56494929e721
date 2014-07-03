@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e76c2f17_5de67d5f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-07-03T07:28:40Z",
+      "side": 1,
+      "message": "You should log this. How else could the user figure out what the problem is?\nThough sometimes benign, LockFailedException usually means there is a stale lock.",
+      "range": {
+        "startLine": 110,
+        "startChar": 11,
+        "endLine": 110,
+        "endChar": 30
+      },
+      "revId": "4370727c62864470c7730370cabb56494929e721",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_fd07898d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/FileDeleteHookTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-07-03T07:28:40Z",
+      "side": 1,
+      "message": "You mean \"may\" or \"will\"?\n\nUndeterministic tests are not in my taste.",
+      "range": {
+        "startLine": 62,
+        "startChar": 18,
+        "endLine": 62,
+        "endChar": 21
+      },
+      "revId": "4370727c62864470c7730370cabb56494929e721",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
