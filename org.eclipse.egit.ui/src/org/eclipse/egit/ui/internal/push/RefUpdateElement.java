@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2008, 2011 Marek Zawirski <marek.zawirski@gmail.com> and others.
+ * Copyright (C) 2008, 2014 Marek Zawirski <marek.zawirski@gmail.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -222,12 +222,12 @@ class RefUpdateElement extends WorkbenchAdapter {
 		final String remote = getDstRefName();
 		final String local = getSrcRefName();
 
+		if (!tag && local != null) {
+			styled.append(shortenRef(local), StyledString.QUALIFIER_STYLER);
+			styled.append(" → ", StyledString.QUALIFIER_STYLER); //$NON-NLS-1$
+		}
 		styled.append(shortenRef(remote));
 
-		if (!tag && local != null) {
-			styled.append(": ", StyledString.QUALIFIER_STYLER); //$NON-NLS-1$
-			styled.append(shortenRef(local), StyledString.QUALIFIER_STYLER);
-		}
 		styled.append(' ');
 		// Include uri if more than one
 		if (result.getURIs().size() > 1) {
