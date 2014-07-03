@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e76c2f17_328e4b3b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchPage.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-03T14:00:56Z",
+      "side": 1,
+      "message": "I started playing around with the layout and fixed the below comments, see my changes.",
+      "revId": "5be655a40172f88a675f94503555238563fcd2cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_92f75fc6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchPage.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-03T14:00:56Z",
+      "side": 1,
+      "message": "This layout comes with its own margin, which it should not have. Use RowLayoutFactory.fillDefaults().\n\nAlso set center to true, so that icons aren\u0027t placed higher than the text (which looks off).",
+      "revId": "5be655a40172f88a675f94503555238563fcd2cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_1256af32",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchPage.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-03T14:00:56Z",
+      "side": 1,
+      "message": "Make this spacer smaller.",
+      "revId": "5be655a40172f88a675f94503555238563fcd2cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_f25a1355",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchPage.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-03T14:00:56Z",
+      "side": 1,
+      "message": "Add another small spacer in here, otherwise the grouping (branch vs commit) is not clear.",
+      "revId": "5be655a40172f88a675f94503555238563fcd2cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_92691fef",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchPage.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-03T14:00:56Z",
+      "side": 1,
+      "message": "We\u0027re still on Java 5, replace these with \"\\n\" (the message from commit also uses \"\\n\").",
+      "revId": "5be655a40172f88a675f94503555238563fcd2cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_6f573c52",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 14
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-03T14:00:56Z",
+      "side": 1,
+      "message": "These and some other messages are not used anymore, please remove.",
+      "revId": "5be655a40172f88a675f94503555238563fcd2cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_32d80b63",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 14
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-03T14:00:56Z",
+      "side": 1,
+      "message": "This should stay \"Remote\". That matches the button saying \"New Remote...\" and is also in line with other labels.",
+      "revId": "5be655a40172f88a675f94503555238563fcd2cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_12b22f32",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 14
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-03T14:00:56Z",
+      "side": 1,
+      "message": "I don\u0027t like the \"Branch/Commit\" here, how about \"Push to branch on remote\". Looks like the title is mostly in sentence case in other wizards.",
+      "revId": "5be655a40172f88a675f94503555238563fcd2cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_52bca704",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 14
+      },
+      "lineNbr": 1818,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-03T14:00:56Z",
+      "side": 1,
+      "message": "Branch needs to be capitalized.\n\nAlso, there\u0027s no mnemonic anymore.",
+      "revId": "5be655a40172f88a675f94503555238563fcd2cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
