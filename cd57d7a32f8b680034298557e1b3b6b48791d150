@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e76c2f17_43605701",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/RefUpdateElement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-04T14:29:06Z",
+      "side": 1,
+      "message": "Not sure if this should still be with QUALIFIER_STYLER (that greys out the text). Did you leave this in on purpose or just switch the order? Maybe just greying out the arrow is enough, or don\u0027t grey out anything (haven\u0027t tried how it looks).",
+      "revId": "cd57d7a32f8b680034298557e1b3b6b48791d150",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_e341a363",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/RefUpdateElement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-04T14:29:06Z",
+      "side": 1,
+      "message": "Can you replace this with \" \\u2192 \" and add a comment? It\u0027s not strictly necessary, but keeping the source to be ASCII is a bit safer (e.g. against bad editors).",
+      "revId": "cd57d7a32f8b680034298557e1b3b6b48791d150",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
