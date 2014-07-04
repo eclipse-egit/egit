@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e76c2f17_e3d083f6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/RefUpdateElement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-04T14:49:50Z",
+      "side": 1,
+      "message": "Really? Not even in other views like the repo view (the repo path is in grey)?\n\nLooks like this here: http://i.imgur.com/LN9BIkD.png",
+      "parentUuid": "e76c2f17_e393635f",
+      "revId": "cd57d7a32f8b680034298557e1b3b6b48791d150",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e76c2f17_e341a363",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/RefUpdateElement.java",
         "patchSetId": 1
