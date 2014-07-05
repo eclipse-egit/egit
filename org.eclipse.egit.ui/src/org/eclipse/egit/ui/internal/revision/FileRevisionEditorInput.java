@@ -8,7 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.egit.ui.internal;
+package org.eclipse.egit.ui.internal.revision;
 
 import java.io.InputStream;
 import java.net.URI;
@@ -23,6 +23,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.PlatformObject;
+import org.eclipse.egit.ui.internal.CompareUtils;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.history.IFileRevision;
@@ -33,7 +35,7 @@ import org.eclipse.ui.model.IWorkbenchAdapter;
 /**
  * An Editor input for file revisions
  */
-class FileRevisionEditorInput extends PlatformObject implements
+public class FileRevisionEditorInput extends PlatformObject implements
 		IWorkbenchAdapter, IStorageEditorInput {
 
 	private final Object fileRevision;
