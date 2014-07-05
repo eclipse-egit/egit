@@ -223,8 +223,8 @@ class RefUpdateElement extends WorkbenchAdapter {
 		final String local = getSrcRefName();
 
 		if (!tag && local != null) {
-			styled.append(shortenRef(local), StyledString.QUALIFIER_STYLER);
-			styled.append(" \u2192 " /* →  */, StyledString.QUALIFIER_STYLER); //$NON-NLS-1$
+			styled.append(shortenRef(local));
+			styled.append(" \u2192 " /* → */); //$NON-NLS-1$
 		}
 		styled.append(shortenRef(remote));
 
