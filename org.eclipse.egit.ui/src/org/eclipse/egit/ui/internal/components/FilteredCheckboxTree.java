@@ -8,7 +8,7 @@
  * Contributors:
  *    Chris Aniszczyk <caniszczyk@gmail.com> - initial implementation
  *******************************************************************************/
-package org.eclipse.egit.ui.internal;
+package org.eclipse.egit.ui.internal.components;
 
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
