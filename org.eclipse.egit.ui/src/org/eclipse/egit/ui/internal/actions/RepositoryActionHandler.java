@@ -44,7 +44,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.text.TextSelection;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -89,7 +89,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 *            the new selection
 	 */
 	public void setSelection(ISelection selection) {
-		mySelection = convertSelection(null, selection);
+		mySelection = convertSelection(selection);
 	}
 
 	/**
@@ -380,26 +380,13 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 * @throws ExecutionException
 	 *             if the selection can't be determined
 	 */
-	protected IStructuredSelection getSelection(ExecutionEvent event)
+	protected static IStructuredSelection getSelection(ExecutionEvent event)
 			throws ExecutionException {
 		if (event == null)
 			throw new IllegalArgumentException("event must not be NULL"); //$NON-NLS-1$
-		Object selection = HandlerUtil.getActiveMenuSelection(event);
-		if (selection == null)
-			selection = HandlerUtil.getCurrentSelectionChecked(event);
-		if (selection instanceof TextSelection) {
-			IEditorInput editorInput = (IEditorInput) HandlerUtil.getVariable(
-					event, ISources.ACTIVE_EDITOR_INPUT_NAME);
-			IResource resource = ResourceUtil.getResource(editorInput);
-			if (resource != null)
-				return new StructuredSelection(resource);
-
-			resource = ResourceUtil.getFile(editorInput);
-			if (resource != null)
-				return new StructuredSelection(resource);
-		}
-		if (selection instanceof IStructuredSelection)
-			return (IStructuredSelection) selection;
+		Object context = event.getApplicationContext();
+		if (context instanceof IEvaluationContext)
+			return getSelection((IEvaluationContext) context);
 		return StructuredSelection.EMPTY;
 	}
 
@@ -410,36 +397,47 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		// if the selection was set explicitly, use it
 		if (mySelection != null)
 			return mySelection;
-		return convertSelection(evaluationContext, null);
+		return getSelection(evaluationContext);
 	}
 
-	private IStructuredSelection convertSelection(IEvaluationContext aContext,
-			Object aSelection) {
-		IEvaluationContext ctx;
-		if (aContext == null && aSelection == null)
+	private static IStructuredSelection convertSelection(ISelection selection) {
+		if (selection instanceof IStructuredSelection)
+			return (IStructuredSelection) selection;
+		else if (selection instanceof ITextSelection)
+			return getSelectionFromEditorInput(getEvaluationContext());
+		return StructuredSelection.EMPTY;
+	}
+
+	private static IStructuredSelection getSelection(IEvaluationContext context) {
+		if (context == null)
 			return StructuredSelection.EMPTY;
-		else
-			ctx = aContext;
-		Object selection;
-		if (aSelection == null && ctx != null) {
-			selection = ctx.getVariable(ISources.ACTIVE_MENU_SELECTION_NAME);
-			if (!(selection instanceof ISelection))
-				selection = ctx
-						.getVariable(ISources.ACTIVE_CURRENT_SELECTION_NAME);
-		} else if (aSelection != null)
-			selection = aSelection;
-		else
-			return StructuredSelection.EMPTY;
-		if (selection instanceof TextSelection) {
-			if (ctx == null)
-				ctx = getEvaluationContext();
-			IResource resource = ResourceUtil.getResource(ctx
-					.getVariable(ISources.ACTIVE_EDITOR_INPUT_NAME));
+
+		Object selection = context
+				.getVariable(ISources.ACTIVE_MENU_SELECTION_NAME);
+		if (!(selection instanceof ISelection))
+			selection = context
+					.getVariable(ISources.ACTIVE_CURRENT_SELECTION_NAME);
+
+		if (selection instanceof IStructuredSelection)
+			return (IStructuredSelection) selection;
+		else if (selection instanceof ITextSelection)
+			return getSelectionFromEditorInput(context);
+		return StructuredSelection.EMPTY;
+	}
+
+	private static IStructuredSelection getSelectionFromEditorInput(
+			IEvaluationContext context) {
+		Object object = context.getVariable(ISources.ACTIVE_EDITOR_INPUT_NAME);
+		if (object instanceof IEditorInput) {
+			IEditorInput editorInput = (IEditorInput) object;
+			// Note that there is both a getResource(IEditorInput) as well as a
+			// getResource(Object), which don't do the same thing. We explicitly
+			// want the first here.
+			IResource resource = ResourceUtil.getResource(editorInput);
 			if (resource != null)
 				return new StructuredSelection(resource);
 		}
-		if (selection instanceof IStructuredSelection)
-			return (IStructuredSelection) selection;
+
 		return StructuredSelection.EMPTY;
 	}
 
@@ -447,7 +445,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		this.evaluationContext = (IEvaluationContext) evaluationContext;
 	}
 
-	private IEvaluationContext getEvaluationContext() {
+	private static IEvaluationContext getEvaluationContext() {
 		IEvaluationContext ctx;
 		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
