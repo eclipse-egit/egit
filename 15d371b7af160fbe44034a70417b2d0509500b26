@@ -34,6 +34,24 @@
       "revId": "15d371b7af160fbe44034a70417b2d0509500b26",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_24cb9e97",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/revision/FileRevisionEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-07T21:46:37Z",
+      "side": 1,
+      "message": "ok, you are right the package is an internal one so this doesn\u0027t make a big difference",
+      "parentUuid": "e76c2f17_3ef7314e",
+      "revId": "15d371b7af160fbe44034a70417b2d0509500b26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
