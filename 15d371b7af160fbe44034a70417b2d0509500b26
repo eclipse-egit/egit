@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e76c2f17_b4b52366",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/revision/FileRevisionEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-07T12:55:32Z",
+      "side": 1,
+      "message": "can we also move EgitUiEditorUtils to the new package ? Then we don\u0027t need to make this class public",
+      "revId": "15d371b7af160fbe44034a70417b2d0509500b26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
