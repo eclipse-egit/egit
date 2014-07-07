@@ -16,6 +16,24 @@
       "revId": "15d371b7af160fbe44034a70417b2d0509500b26",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_3ef7314e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/revision/FileRevisionEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-07T14:55:12Z",
+      "side": 1,
+      "message": "Does it belong with the \"revision\" stuff? I guess the methods taking a IFileRevision do, but not the one taking a File. Should I split the class?\n\nOn the other hand, all the methods are used for opening editors. As this is in internal packages, is making this class public bad?",
+      "parentUuid": "e76c2f17_b4b52366",
+      "revId": "15d371b7af160fbe44034a70417b2d0509500b26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
