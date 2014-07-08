@@ -63,4 +63,17 @@ public class Utils {
 		}
 		return result.toString();
 	}
+
+	/**
+	 * @param text
+	 * @param maxLength
+	 * @return {@code text} shortened to {@code maxLength} characters if its
+	 *         string length exceeds {@code maxLength} and an ellipsis is
+	 *         appended to the shortened text
+	 */
+	public static String shortenText(final String text, final int maxLength) {
+		if (text.length() > maxLength)
+			return text.substring(0, maxLength - 1) + "\u2026"; // ellipsis "…" (in UTF-8) //$NON-NLS-1$
+		return text;
+	}
 }
