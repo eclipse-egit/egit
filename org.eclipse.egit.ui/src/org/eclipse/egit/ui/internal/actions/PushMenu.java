@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2014, Red Hat Inc.
+ * Copyright (C) 2014, Red Hat Inc. and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,21 +15,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.repository.tree.BranchesNode;
-import org.eclipse.egit.ui.internal.repository.tree.LocalNode;
-import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
+import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.action.IContributionItem;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.actions.CompoundContributionItem;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.menus.IWorkbenchContribution;
@@ -44,7 +38,7 @@ public class PushMenu extends CompoundContributionItem implements
 
 	private IServiceLocator serviceLocator;
 
-	private ISelectionService selectionService;
+	private IHandlerService handlerService;
 
 	/**	 */
 	public PushMenu() {
@@ -63,41 +57,19 @@ public class PushMenu extends CompoundContributionItem implements
 		return true;
 	}
 
-	public void initialize(IServiceLocator serviceLocator) {
-		this.serviceLocator = serviceLocator;
-		this.selectionService = (ISelectionService) serviceLocator
-				.getService(ISelectionService.class);
+	public void initialize(IServiceLocator locator) {
+		this.serviceLocator = locator;
+		this.handlerService = (IHandlerService) locator
+				.getService(IHandlerService.class);
 	}
 
 	@Override
 	protected IContributionItem[] getContributionItems() {
 		List<IContributionItem> res = new ArrayList<IContributionItem>();
 
-		if (this.selectionService != null
-				&& this.selectionService.getSelection() instanceof IStructuredSelection) {
-			IStructuredSelection sel = (IStructuredSelection) this.selectionService
-					.getSelection();
-			Object selected = sel.getFirstElement();
-			if (selected instanceof IAdaptable) {
-				Object adapter = ((IAdaptable) selected)
-						.getAdapter(IProject.class);
-				if (adapter != null)
-					selected = adapter;
-			}
-
-			Repository repository = null;
-			if (selected instanceof RepositoryNode)
-				repository = ((RepositoryNode) selected).getRepository();
-			else if (selected instanceof BranchesNode)
-				repository = ((BranchesNode) selected).getRepository();
-			else if (selected instanceof LocalNode)
-				repository = ((LocalNode) selected).getRepository();
-			else if ((selected instanceof IProject)) {
-				RepositoryMapping mapping = RepositoryMapping
-						.getMapping((IProject) selected);
-				if (mapping != null)
-					repository = mapping.getRepository();
-			}
+		if (this.handlerService != null) {
+			Repository repository = SelectionUtils.getRepository(handlerService
+					.getCurrentState());
 
 			if (repository != null) {
 				try {
