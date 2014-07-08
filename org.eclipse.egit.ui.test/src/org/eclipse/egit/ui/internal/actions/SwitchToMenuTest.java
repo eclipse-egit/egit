@@ -16,6 +16,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.File;
 
+import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
@@ -30,7 +31,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.ISelectionService;
+import org.eclipse.ui.ISources;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.services.IServiceLocator;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,21 +41,21 @@ public class SwitchToMenuTest extends LocalRepositoryTestCase {
 
 	private SwitchToMenu switchToMenu;
 
-	private ISelectionService selectionService;
+	private IHandlerService handlerService;
 
 	@Before
 	public void setUp() throws Exception {
 		switchToMenu = new SwitchToMenu();
-		selectionService = mock(ISelectionService.class);
+		handlerService = mock(IHandlerService.class);
 		IServiceLocator serviceLocator = mock(IServiceLocator.class);
-		when(serviceLocator.getService(ISelectionService.class)).thenReturn(
-				selectionService);
+		when(serviceLocator.getService(IHandlerService.class)).thenReturn(
+				handlerService);
 		switchToMenu.initialize(serviceLocator);
 	}
 
 	@Test
 	public void emptySelection() {
-		when(selectionService.getSelection()).thenReturn(new EmptySelection());
+		mockSelection(new EmptySelection());
 
 		MenuItem[] items = fillMenu();
 
@@ -62,7 +64,7 @@ public class SwitchToMenuTest extends LocalRepositoryTestCase {
 
 	@Test
 	public void selectionNotAdaptableToRepository() {
-		when(selectionService.getSelection()).thenReturn(
+		mockSelection(
 				new StructuredSelection(new Object()));
 
 		MenuItem[] items = fillMenu();
@@ -94,8 +96,7 @@ public class SwitchToMenuTest extends LocalRepositoryTestCase {
 	private void selectionWithProj1Common() {
 		IProject project = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(PROJ1);
-		when(selectionService.getSelection()).thenReturn(
-				new StructuredSelection(project));
+		mockSelection(new StructuredSelection(project));
 
 		MenuItem[] items = fillMenu();
 
@@ -116,8 +117,7 @@ public class SwitchToMenuTest extends LocalRepositoryTestCase {
 		}
 		IProject project = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(PROJ1);
-		when(selectionService.getSelection()).thenReturn(
-				new StructuredSelection(project));
+		mockSelection(new StructuredSelection(project));
 
 		MenuItem[] items = fillMenu();
 
@@ -147,6 +147,12 @@ public class SwitchToMenuTest extends LocalRepositoryTestCase {
 		// "master" and "stable" didn't make it
 		assertStyleEquals(SWT.SEPARATOR, items[22]);
 		assertTextEquals(UIText.SwitchToMenu_OtherMenuLabel, items[23]);
+	}
+
+	private void mockSelection(ISelection selection) {
+		EvaluationContext context = new EvaluationContext(null, new Object());
+		context.addVariable(ISources.ACTIVE_MENU_SELECTION_NAME, selection);
+		when(handlerService.getCurrentState()).thenReturn(context);
 	}
 
 	private MenuItem[] fillMenu() {
