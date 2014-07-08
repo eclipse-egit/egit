@@ -103,6 +103,7 @@ Export-Package: org.eclipse.egit.ui;version="3.5.0";x-friends:="org.eclipse.egit
  org.eclipse.egit.ui.internal.repository;version="3.5.0";x-internal:=true,
  org.eclipse.egit.ui.internal.repository.tree;version="3.5.0";x-internal:=true,
  org.eclipse.egit.ui.internal.repository.tree.command;version="3.5.0";x-internal:=true,
+ org.eclipse.egit.ui.internal.revision;version="3.5.0";x-internal:=true,
  org.eclipse.egit.ui.internal.search;version="3.5.0";x-internal:=true,
  org.eclipse.egit.ui.internal.sharing;version="3.5.0";x-internal:=true,
  org.eclipse.egit.ui.internal.staging;version="3.5.0";x-internal:=true,
