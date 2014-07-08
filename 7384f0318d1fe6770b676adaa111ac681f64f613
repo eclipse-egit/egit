@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e76c2f17_78cff958",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-07-08T23:53:31Z",
+      "side": 0,
+      "message": "looks like this text is now obsolete and should be removed",
+      "revId": "7384f0318d1fe6770b676adaa111ac681f64f613",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
