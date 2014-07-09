@@ -293,17 +293,6 @@ public class BlameOperation implements IEGitOperation {
 		if (editor == null)
 			return;
 
-		// Show history view for path
-		try {
-			IHistoryView part = (IHistoryView) page.showView(
-					IHistoryView.VIEW_ID, null, IWorkbenchPage.VIEW_VISIBLE);
-			HistoryPageInput input = createHistoryPageInputWhenEditorOpened();
-			part.showHistoryFor(input);
-		} catch (PartInitException e) {
-			Activator.handleError("Error displaying blame annotations", e, //$NON-NLS-1$
-					false);
-		}
-
 		// IRevisionRulerColumn would also be possible but using
 		// IVerticalRulerInfo seems to work in more situations.
 		IVerticalRulerInfo rulerInfo = AdapterUtils.adapt(editor,
@@ -338,30 +327,6 @@ public class BlameOperation implements IEGitOperation {
 					.addSelectionChangedListener(
 							new RevisionSelectionHandler(repository, path,
 									storage));
-	}
-
-	private HistoryPageInput createHistoryPageInputWhenEditorOpened() {
-		if (storage instanceof IFile) {
-			IResource resource = (IResource) storage;
-			if (startCommit != null) {
-				return new BlameHistoryPageInput(repository, startCommit,
-						resource);
-			} else {
-				return new HistoryPageInput(repository,
-						new IResource[] { resource });
-			}
-		} else if (!repository.isBare()) {
-			File file = new File(repository.getWorkTree(), path);
-			if (startCommit != null) {
-				return new BlameHistoryPageInput(repository, startCommit,
-						file);
-			} else {
-				return new HistoryPageInput(repository,
-						new File[] { file });
-			}
-		} else {
-			return new HistoryPageInput(repository);
-		}
 	}
 
 	@Override
