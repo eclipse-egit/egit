@@ -65,7 +65,7 @@ public class MergeHandler extends AbstractHistoryCommandHandler {
 		if (repository == null)
 			return null;
 
-		if (!canMerge(repository))
+		if (!canMerge(repository, event))
 			return null;
 
 		List<RefNode> nodes = getRefNodes(commitId, repository,
@@ -141,9 +141,8 @@ public class MergeHandler extends AbstractHistoryCommandHandler {
 	/* copy of {@link org.eclipse.egit.ui.internal.repository.tree.command.MergeCommand#canMerge(Repository)}
 	 * @param repository
 	 * @return true of merge is allowed */
-	private boolean canMerge(final Repository repository) {
+	private boolean canMerge(final Repository repository, ExecutionEvent event) {
 		String message = null;
-		Exception ex = null;
 		try {
 			Ref head = repository.getRef(Constants.HEAD);
 			if (head == null || !head.isSymbolic())
@@ -153,12 +152,13 @@ public class MergeHandler extends AbstractHistoryCommandHandler {
 				message = NLS.bind(UIText.MergeAction_WrongRepositoryState,
 						repository.getRepositoryState());
 		} catch (IOException e) {
+			Activator.logError(e.getMessage(), e);
 			message = e.getMessage();
-			ex = e;
 		}
 
 		if (message != null)
-			Activator.handleError(UIText.MergeAction_CannotMerge, ex, true);
+			MessageDialog.openError(getShell(event),
+					UIText.MergeAction_CannotMerge, message);
 		return (message == null);
 	}
 
