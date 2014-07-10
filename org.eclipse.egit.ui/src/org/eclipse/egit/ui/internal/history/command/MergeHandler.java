@@ -13,7 +13,6 @@
 
 package org.eclipse.egit.ui.internal.history.command;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -29,6 +28,7 @@ import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.op.MergeOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.actions.MergeActionHandler;
 import org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog;
 import org.eclipse.egit.ui.internal.merge.MergeResultDialog;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
@@ -36,7 +36,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.osgi.util.NLS;
@@ -65,7 +64,7 @@ public class MergeHandler extends AbstractHistoryCommandHandler {
 		if (repository == null)
 			return null;
 
-		if (!canMerge(repository))
+		if (!MergeActionHandler.checkMergeIsPossible(repository, getShell(event)))
 			return null;
 
 		List<RefNode> nodes = getRefNodes(commitId, repository,
@@ -136,30 +135,6 @@ public class MergeHandler extends AbstractHistoryCommandHandler {
 		});
 		job.schedule();
 		return null;
-	}
-
-	/* copy of {@link org.eclipse.egit.ui.internal.repository.tree.command.MergeCommand#canMerge(Repository)}
-	 * @param repository
-	 * @return true of merge is allowed */
-	private boolean canMerge(final Repository repository) {
-		String message = null;
-		Exception ex = null;
-		try {
-			Ref head = repository.getRef(Constants.HEAD);
-			if (head == null || !head.isSymbolic())
-				message = UIText.MergeAction_HeadIsNoBranch;
-			else if (!repository.getRepositoryState().equals(
-					RepositoryState.SAFE))
-				message = NLS.bind(UIText.MergeAction_WrongRepositoryState,
-						repository.getRepositoryState());
-		} catch (IOException e) {
-			message = e.getMessage();
-			ex = e;
-		}
-
-		if (message != null)
-			Activator.handleError(UIText.MergeAction_CannotMerge, ex, true);
-		return (message == null);
 	}
 
 	/**

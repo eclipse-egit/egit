@@ -52,14 +52,11 @@ import org.eclipse.jgit.diff.DiffConfig;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.FollowFilter;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevSort;
 import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -625,39 +622,6 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		return HandlerUtil.getActivePartChecked(event);
 	}
 
-	/**
-	 * Checks if merge is possible:
-	 * <ul>
-	 * <li>HEAD must point to a branch</li>
-	 * <li>Repository State must be SAFE</li>
-	 * </ul>
-	 *
-	 * @param repository
-	 * @param event
-	 * @return a boolean indicating if merge is possible
-	 * @throws ExecutionException
-	 */
-	protected boolean canMerge(final Repository repository, ExecutionEvent event)
-			throws ExecutionException {
-		String message = null;
-		try {
-			Ref head = repository.getRef(Constants.HEAD);
-			if (head == null || !head.isSymbolic())
-				message = UIText.MergeAction_HeadIsNoBranch;
-			else if (!repository.getRepositoryState().equals(
-					RepositoryState.SAFE))
-				message = NLS.bind(UIText.MergeAction_WrongRepositoryState,
-						repository.getRepositoryState());
-		} catch (IOException e) {
-			Activator.logError(e.getMessage(), e);
-			message = e.getMessage();
-		}
-
-		if (message != null)
-			MessageDialog.openError(getShell(event),
-					UIText.MergeAction_CannotMerge, message);
-		return (message == null);
-	}
 
 	/**
 	 *
