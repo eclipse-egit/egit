@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e76c2f17_fe02cec1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/MergeHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-10T14:27:12Z",
+      "side": 1,
+      "message": "I\u0027d rather pass in the Shell, it\u0027s the only thing that\u0027s used.",
+      "revId": "490ad82893467a479638a3c0a8904052f5f5b186",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_9e147a03",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-10T14:27:12Z",
+      "side": 1,
+      "message": "This is used as a title now, should be \"Cannot Merge\". Or maybe something more titley like \"Merge Unavailable\"?",
+      "revId": "490ad82893467a479638a3c0a8904052f5f5b186",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
