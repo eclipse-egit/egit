@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.op.MergeOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.actions.MergeActionHandler;
 import org.eclipse.egit.ui.internal.dialogs.BasicConfigurationDialog;
 import org.eclipse.egit.ui.internal.dialogs.MergeTargetSelectionDialog;
 import org.eclipse.egit.ui.internal.merge.MergeResultDialog;
@@ -36,10 +37,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -56,7 +54,7 @@ public class MergeCommand extends
 
 		BasicConfigurationDialog.show(repository);
 
-		if (!canMerge(repository))
+		if (!MergeActionHandler.checkMergeIsPossible(repository, getShell(event)))
 			return null;
 
 		String targetRef;
@@ -150,24 +148,4 @@ public class MergeCommand extends
 		return selectedRepositoryHasHead();
 	}
 
-	private boolean canMerge(final Repository repository) {
-		String message = null;
-		Exception ex = null;
-		try {
-			Ref head = repository.getRef(Constants.HEAD);
-			if (head == null || !head.isSymbolic())
-				message = UIText.MergeAction_HeadIsNoBranch;
-			else if (!repository.getRepositoryState().equals(
-					RepositoryState.SAFE))
-				message = NLS.bind(UIText.MergeAction_WrongRepositoryState,
-						repository.getRepositoryState());
-		} catch (IOException e) {
-			message = e.getMessage();
-			ex = e;
-		}
-
-		if (message != null)
-			Activator.handleError(UIText.MergeAction_CannotMerge, ex, true);
-		return (message == null);
-	}
 }
