@@ -16,6 +16,23 @@
       "revId": "66c38346854a0eecd8f1ec8c2335822de864faa4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_ef6e93f1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-07-14T12:02:09Z",
+      "side": 1,
+      "message": "Same thing isn\u0027t it?",
+      "revId": "66c38346854a0eecd8f1ec8c2335822de864faa4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
