@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e76c2f17_b2ba42b4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeActionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 966
+      },
+      "writtenOn": "2014-07-14T18:31:03Z",
+      "side": 1,
+      "message": "It should express that the method has a side effect.",
+      "parentUuid": "e76c2f17_ea35e490",
+      "revId": "66c38346854a0eecd8f1ec8c2335822de864faa4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e76c2f17_ef6e93f1",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 2
