@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e76c2f17_2f240bb6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeActionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-14T13:08:45Z",
+      "side": 1,
+      "message": "I like the new name, the other sounds like it\u0027s just a getter, when it does more than that.",
+      "parentUuid": "e76c2f17_ea35e490",
+      "revId": "66c38346854a0eecd8f1ec8c2335822de864faa4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e76c2f17_ef6e93f1",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2014-07-14T12:02:09Z",
       "side": 1,
       "message": "Same thing isn\u0027t it?",
+      "revId": "66c38346854a0eecd8f1ec8c2335822de864faa4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_6f1e036a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-14T13:08:45Z",
+      "side": 1,
+      "message": "What would you suggest? This text is a title, so it should be in title case. As a title, \"Merge Unavailable\" sounds better than \"Cannot Merge Now\" to me. See also the other titles below, \"Merge Canceled\", \"Merge Result\".",
+      "parentUuid": "e76c2f17_ef6e93f1",
       "revId": "66c38346854a0eecd8f1ec8c2335822de864faa4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
