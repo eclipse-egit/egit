@@ -146,10 +146,6 @@ class CommitMessageViewer extends SourceViewer implements
 					t.setCursor(SYS_LINK_CURSOR);
 				else
 					t.setCursor(sys_normalCursor);
-				if (styleRanges != null) {
-					for (StyleRange sr : styleRanges)
-						getTextWidget().setStyleRange(sr);
-				}
 			}
 		});
 		// react on link click
