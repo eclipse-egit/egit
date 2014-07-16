@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e76c2f17_36745fbf",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContextTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-07-16T17:24:40Z",
+      "side": 1,
+      "message": "Just let exceptions that would fail the test also escape the test give us some more information, such as stack traces and the original error message. Never drop the original exception.",
+      "revId": "98e7a0e63de6107647b8127f26dc8e92da9e51c6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_f650272b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-07-16T17:24:40Z",
+      "side": 1,
+      "message": "Am explanation would be nice",
+      "revId": "98e7a0e63de6107647b8127f26dc8e92da9e51c6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
