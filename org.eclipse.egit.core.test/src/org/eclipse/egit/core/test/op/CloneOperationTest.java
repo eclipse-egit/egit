@@ -187,6 +187,7 @@ public class CloneOperationTest extends DualRepositoryTestCase {
 						"origin", "fetch")[1].equals("refs/notes/review:refs/notes/review"));
 		Git clonedGit = new Git(clonedRepo);
 		assertEquals(1, clonedGit.notesList().setNotesRef("refs/notes/review").call().size());
+		clonedGit.getRepository().close();
 	}
 
 	protected void createNoteInOrigin() throws GitAPIException {
