@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e76c2f17_09fdc4a3",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContextTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2014-07-17T08:18:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e76c2f17_36745fbf",
+      "revId": "98e7a0e63de6107647b8127f26dc8e92da9e51c6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e76c2f17_f650272b",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2014-07-16T17:24:40Z",
       "side": 1,
       "message": "Am explanation would be nice",
+      "revId": "98e7a0e63de6107647b8127f26dc8e92da9e51c6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_c9190caf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2014-07-17T08:18:13Z",
+      "side": 1,
+      "message": "\"PlatformUI.getWorkbench()\" will simply fail if called without prior checking. However, this should have been made in a separate review. I\u0027ll extract this out.\n\nLaunching these from Eclipse as headless tests should net you a better explanation (right click \u003e run as \u003e JUnit plugin test will do that by default). setupFocusHandling relies on the workbench being fully initialized, which is not the case when running unit tests. Since there\u0027s little that prevents us from running headless tests, I thought protecting against these failures would be interesting.\n\nCaused by: java.lang.IllegalStateException: Workbench has not been created yet.\n\tat org.eclipse.ui.PlatformUI.getWorkbench(PlatformUI.java:93)\n\tat org.eclipse.egit.ui.Activator.setupFocusHandling(Activator.java:270)\n\tat org.eclipse.egit.ui.Activator.start(Activator.java:227)\n\tat org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:771)\n\tat org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:1)\n\tat java.security.AccessController.doPrivileged(Native Method)\n\tat org.eclipse.osgi.internal.framework.BundleContextImpl.startActivator(BundleContextImpl.java:764)",
+      "parentUuid": "e76c2f17_f650272b",
       "revId": "98e7a0e63de6107647b8127f26dc8e92da9e51c6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
