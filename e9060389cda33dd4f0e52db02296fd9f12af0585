@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e76c2f17_167963e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-17T02:11:15Z",
+      "side": 1,
+      "message": "Please remove the \".\" at the end, and add an empty line after this. Git commit message style is to have the first line be like an e-mail subject, then an empty line and then paragraphs of text.",
+      "revId": "e9060389cda33dd4f0e52db02296fd9f12af0585",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_367e1fd2",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/CloneOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-17T02:11:15Z",
+      "side": 1,
+      "message": "Isn\u0027t it possible to call `clonedGit.close()` directly?",
+      "revId": "e9060389cda33dd4f0e52db02296fd9f12af0585",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
