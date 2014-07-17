@@ -75,6 +75,9 @@ public class UIText extends NLS {
 	public static String Activator_scanningRepositories;
 
 	/** */
+	public static String Activator_setupFocusListener;
+
+	/** */
 	public static String AddConfigEntryDialog_AddConfigTitle;
 
 	/** */
