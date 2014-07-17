@@ -327,9 +327,7 @@ class CommitMessageViewer extends SourceViewer implements
 							}
 						});
 
-						text.setStyleRanges(new StyleRange[0]);
-						for (StyleRange sr : styleRanges)
-							text.setStyleRange(sr);
+						text.setStyleRanges(styleRanges);
 					}
 				});
 			}
