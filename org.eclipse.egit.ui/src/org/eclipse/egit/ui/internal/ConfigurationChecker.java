@@ -41,12 +41,15 @@ public class ConfigurationChecker {
 		Job job = new Job(UIText.ConfigurationChecker_checkConfiguration) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				PlatformUI.getWorkbench().getDisplay()
-						.asyncExec(new Runnable() {
-							public void run() {
-								check();
-							}
-						});
+				if (PlatformUI.isWorkbenchRunning())
+					PlatformUI.getWorkbench().getDisplay()
+							.asyncExec(new Runnable() {
+								public void run() {
+									check();
+								}
+							});
+				else
+					schedule(1000L);
 				return Status.OK_STATUS;
 			}
 		};
