@@ -1983,9 +1983,6 @@ public class UIText extends NLS {
 	public static String PushAction_wrongURITitle;
 
 	/** */
-	public static String PushBranchPage_CommitLabel;
-
-	/** */
 	public static String PushBranchPage_RemoteBranchNameLabel;
 
 	/** */
