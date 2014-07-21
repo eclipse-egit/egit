@@ -10,12 +10,11 @@ package org.eclipse.egit.core.test.models;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
@@ -73,17 +72,20 @@ public abstract class ModelTestCase extends GitTestCase {
 
 	protected void assertContentEquals(IFile file, String expectedContents)
 			throws Exception {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(
-				file.getContents()));
-		StringBuilder contentsBuilder = new StringBuilder();
-		String line = reader.readLine();
-		while (line != null) {
-			contentsBuilder.append(line);
-			contentsBuilder.append('\n');
-			line = reader.readLine();
+		Scanner scanner = null;
+		try {
+			scanner = new Scanner(file.getContents()).useDelimiter("\\A");
+
+			String fileContent = "";
+			if (scanner.hasNext()) {
+				fileContent = scanner.next();
+			}
+
+			assertEquals(expectedContents, fileContent);
+		} finally {
+			if (scanner != null)
+				scanner.close();
 		}
-		reader.close();
-		assertEquals(expectedContents, contentsBuilder.toString());
 	}
 
 	protected void merge(Repository repository, String refName)
