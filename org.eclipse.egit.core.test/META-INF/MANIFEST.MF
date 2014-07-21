@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Git Team Provider Core Test Plug-in
 Bundle-Vendor: Eclipse.org
-Bundle-SymbolicName: org.eclipse.egit.core.test
+Bundle-SymbolicName: org.eclipse.egit.core.test;singleton:=true
 Fragment-Host: org.eclipse.egit.core
 Bundle-Version: 3.6.0.qualifier
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
