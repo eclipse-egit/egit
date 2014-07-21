@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_382ae5b5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryStatisticsPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-21T14:47:31Z",
+      "side": 1,
+      "message": "I\u0027m wondering if we should be prepared that one of the gets above can return null, and set an empty String in that case.\n\nYou can extract that into a method, then you also don\u0027t have to repeat the `bigIntFmt.format` part.",
+      "revId": "ecce5ea385308c6a242baddaf2f336f7039d637b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_78245de6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryStatisticsPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-21T14:47:31Z",
+      "side": 1,
+      "message": "Same here, null handling. Then you can also get rid of @SuppressWarnings(\"boxing\").",
+      "revId": "ecce5ea385308c6a242baddaf2f336f7039d637b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
