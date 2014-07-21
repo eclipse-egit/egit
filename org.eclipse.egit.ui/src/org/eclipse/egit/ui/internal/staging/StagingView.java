@@ -31,7 +31,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -176,6 +178,7 @@ import org.eclipse.ui.operations.UndoRedoActionGroup;
 import org.eclipse.ui.part.IShowInSource;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
 /**
  * A GitX style staging view with embedded commit dialog.
@@ -436,6 +439,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private LocalResourceManager resources = new LocalResourceManager(
 			JFaceResources.getResources());
+
+	private boolean disposed;
 
 	private Image getImage(ImageDescriptor descriptor) {
 		return (Image) this.resources.get(descriptor);
@@ -1081,6 +1086,11 @@ public class StagingView extends ViewPart implements IShowInSource {
 	}
 
 	private void enableCommitWidgets(boolean enabled) {
+		if (isDisposed())
+			return;
+
+		unstagedViewer.getControl().setEnabled(enabled);
+		stagedViewer.getControl().setEnabled(enabled);
 		commitMessageText.setEnabled(enabled);
 		committerText.setEnabled(enabled);
 		enableAuthorText(enabled);
@@ -2379,7 +2389,28 @@ public class StagingView extends ViewPart implements IShowInSource {
 		Job commitJob = new CommitJob(currentRepository, commitOperation)
 			.setOpenCommitEditor(openNewCommitsAction.isChecked())
 			.setPushUpstream(pushUpstream);
-		commitJob.schedule();
+
+		commitJob.addJobChangeListener(new JobChangeAdapter() {
+			@Override
+			public void done(IJobChangeEvent event) {
+				PlatformUI.getWorkbench().getDisplay()
+						.asyncExec(new Runnable() {
+							public void run() {
+								enableCommitWidgets(true);
+							}
+						});
+			}
+		});
+
+		// don't allow to do anything as long as commit is in progress
+		enableCommitWidgets(false);
+		IWorkbenchSiteProgressService service = (IWorkbenchSiteProgressService) getSite()
+				.getService(IWorkbenchSiteProgressService.class);
+		if (service != null)
+			service.schedule(commitJob);
+		else
+			commitJob.schedule();
+
 		CommitMessageHistory.saveCommitHistory(commitMessage);
 		clearCommitMessageToggles();
 		commitMessageText.setText(EMPTY_STRING);
@@ -2419,6 +2450,11 @@ public class StagingView extends ViewPart implements IShowInSource {
 				.removePreferenceChangeListener(prefListener);
 		if (refsChangedListener != null)
 			refsChangedListener.remove();
+		disposed = true;
+	}
+
+	private boolean isDisposed() {
+		return disposed;
 	}
 
 	private void syncExec(Runnable runnable) {
