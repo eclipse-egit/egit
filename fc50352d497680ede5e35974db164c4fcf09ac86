@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_d8e2d10c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-21T14:38:27Z",
+      "side": 1,
+      "message": "We use \"tags\" like this: \"[stagingView] Provide ...\"",
+      "revId": "fc50352d497680ede5e35974db164c4fcf09ac86",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_f8e50d17",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2406,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-21T14:38:27Z",
+      "side": 1,
+      "message": "Could you move these two lines up before `commitJob.addJobChangeListener`? I know it doesn\u0027t make a difference, but I feel it\u0027s clearer when the order in which these steps happen (disable, then later enable again) are reflected in the code.",
+      "revId": "fc50352d497680ede5e35974db164c4fcf09ac86",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
