@@ -361,6 +361,7 @@ class CommitMessageViewer extends SourceViewer implements
 		// so we only rebuild this when the commit did in fact change
 		if (input == commit)
 			return;
+		setDocument(new Document("")); //$NON-NLS-1$
 		currentDiffs.clear();
 		commit = (PlotCommit<?>) input;
 		allRefs = getBranches();
