@@ -19,7 +19,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.Vector;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -35,9 +34,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.IteratorService;
@@ -79,7 +76,7 @@ public class IndexDiffCacheEntry {
 
 	private volatile boolean reloadJobIsInitializing;
 
-	private Vector<Job> updateJobs = new Vector<Job>();
+	private IndexDiffUpdateJob updateJob;
 
 	private DirCache lastIndex;
 
@@ -263,7 +260,7 @@ public class IndexDiffCacheEntry {
 				return;
 			reloadJob.cancel();
 		}
-		for (Job updateJob : updateJobs.toArray(new Job[updateJobs.size()]))
+		if (updateJob != null)
 			updateJob.cancel();
 
 		if (!checkRepository())
@@ -360,17 +357,23 @@ public class IndexDiffCacheEntry {
 			return;
 		if (reloadJob != null && reloadJobIsInitializing)
 			return;
-		Job job = new Job(getUpdateJobName()) {
+		if (updateJob != null) {
+			updateJob.addChanges(filesToUpdate, resourcesToUpdate);
+			return;
+		}
+		updateJob = new IndexDiffUpdateJob(getUpdateJobName(), 400) {
 			@Override
-			protected IStatus run(IProgressMonitor monitor) {
+			protected IStatus updateIndexDiff(Collection<String> files,
+					Collection<IResource> resources,
+					IProgressMonitor monitor) {
 				waitForWorkspaceLock(monitor);
 				if (monitor.isCanceled())
 					return Status.CANCEL_STATUS;
 				lock.lock();
 				try {
 					long startTime = System.currentTimeMillis();
-					IndexDiffData result = calcIndexDiffDataIncremental(monitor,
-							getName(), filesToUpdate, resourcesToUpdate);
+					IndexDiffData result = calcIndexDiffDataIncremental(monitor, 
+							getName(), files, resources);
 					if (monitor.isCanceled() || (result == null))
 						return Status.CANCEL_STATUS;
 					indexDiffData = result;
@@ -379,7 +382,7 @@ public class IndexDiffCacheEntry {
 						StringBuilder message = new StringBuilder(
 								NLS.bind(
 										"Updated IndexDiffData based on resource list (length = {0}) in {1} ms\n", //$NON-NLS-1$
-										Integer.valueOf(resourcesToUpdate
+										Integer.valueOf(resources
 												.size()), Long.valueOf(time)));
 						GitTraceLocation.getTrace().trace(
 								GitTraceLocation.INDEXDIFFCACHE.getLocation(),
@@ -406,13 +409,8 @@ public class IndexDiffCacheEntry {
 			}
 
 		};
-		updateJobs.add(job);
-		job.addJobChangeListener(new JobChangeAdapter() {
-			public void done(IJobChangeEvent event) {
-				updateJobs.remove(event.getJob());
-			}
-		});
-		job.schedule();
+
+		updateJob.addChanges(filesToUpdate, resourcesToUpdate);
 	}
 
 	private IndexDiffData calcIndexDiffDataIncremental(IProgressMonitor monitor,
