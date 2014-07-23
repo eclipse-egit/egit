@@ -1811,7 +1811,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 				showResource((IResource) firstElement);
 			else if (firstElement instanceof RepositoryTreeNode) {
 				RepositoryTreeNode repoNode = (RepositoryTreeNode) firstElement;
-				reload(repoNode.getRepository());
+				if (currentRepository != repoNode.getRepository())
+					reload(repoNode.getRepository());
 			} else if (firstElement instanceof IAdaptable) {
 				IResource adapted = (IResource) ((IAdaptable) firstElement).getAdapter(IResource.class);
 				if (adapted != null)
