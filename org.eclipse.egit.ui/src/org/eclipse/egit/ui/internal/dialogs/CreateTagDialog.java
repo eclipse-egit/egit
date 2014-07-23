@@ -300,7 +300,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 		Job job = new Job(UIText.CreateTagDialog_GetTagJobName) {
 			@Override
 			public boolean belongsTo(Object family) {
-				if (family.equals(JobFamilies.FILL_TAG_LIST))
+				if (JobFamilies.FILL_TAG_LIST.equals(family))
 					return true;
 				return super.belongsTo(family);
 			}

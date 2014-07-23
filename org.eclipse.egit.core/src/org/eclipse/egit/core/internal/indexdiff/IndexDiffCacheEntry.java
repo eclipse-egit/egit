@@ -321,7 +321,7 @@ public class IndexDiffCacheEntry {
 
 			@Override
 			public boolean belongsTo(Object family) {
-				if (family.equals(JobFamilies.INDEX_DIFF_CACHE_UPDATE))
+				if (JobFamilies.INDEX_DIFF_CACHE_UPDATE.equals(family))
 					return true;
 				return super.belongsTo(family);
 			}
@@ -400,7 +400,7 @@ public class IndexDiffCacheEntry {
 			}
 			@Override
 			public boolean belongsTo(Object family) {
-				if (family.equals(JobFamilies.INDEX_DIFF_CACHE_UPDATE))
+				if (JobFamilies.INDEX_DIFF_CACHE_UPDATE.equals(family))
 					return true;
 				return super.belongsTo(family);
 			}

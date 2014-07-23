@@ -196,7 +196,7 @@ class GenerateHistoryJob extends Job {
 
 	@Override
 	public boolean belongsTo(Object family) {
-		if (family.equals(JobFamilies.GENERATE_HISTORY))
+		if (JobFamilies.GENERATE_HISTORY.equals(family))
 			return true;
 		return super.belongsTo(family);
 	}
