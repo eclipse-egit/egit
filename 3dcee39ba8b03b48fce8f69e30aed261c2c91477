@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_ca594f88",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2014-07-23T13:37:08Z",
+      "side": 1,
+      "message": "Hum... Because I copy/pasted a little too fast? :)",
+      "parentUuid": "c7672b30_0aa227f6",
+      "revId": "3dcee39ba8b03b48fce8f69e30aed261c2c91477",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_ea9ecbb3",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ConfigurationChecker.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2014-07-23T13:19:13Z",
       "side": 1,
       "message": "Could you add braces for if and else? We only omit the braces in simple statements.",
+      "revId": "3dcee39ba8b03b48fce8f69e30aed261c2c91477",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_0a54e74a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ConfigurationChecker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2014-07-23T13:37:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_ea9ecbb3",
       "revId": "3dcee39ba8b03b48fce8f69e30aed261c2c91477",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
