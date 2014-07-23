@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_2a99e3d1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-23T13:06:51Z",
+      "side": 1,
+      "message": "Please make this fit on one line. You can remove the \"[IndexDiffCacheEntry] \".",
+      "revId": "8bb6e6dbcd79df1db23bf0d187c2f46062d1b421",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_6abc7b24",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffUpdateJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-23T13:06:51Z",
+      "side": 1,
+      "message": "Could you mention that the same job instance is used repeatedly here?",
+      "revId": "8bb6e6dbcd79df1db23bf0d187c2f46062d1b421",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_8ab75740",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffUpdateJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-23T13:06:51Z",
+      "side": 1,
+      "message": "Remove public, doesn\u0027t need to be public.",
+      "revId": "8bb6e6dbcd79df1db23bf0d187c2f46062d1b421",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_cac02f96",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffUpdateJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-23T13:06:51Z",
+      "side": 1,
+      "message": "Could you convert these to Sets? Makes it clearer to me.",
+      "revId": "8bb6e6dbcd79df1db23bf0d187c2f46062d1b421",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_eac7eba7",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffUpdateJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-23T13:06:51Z",
+      "side": 1,
+      "message": "Small style nit: We don\u0027t use braces around simple statements.",
+      "revId": "8bb6e6dbcd79df1db23bf0d187c2f46062d1b421",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_4a941f9a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffUpdateJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-23T13:06:51Z",
+      "side": 1,
+      "message": "Small style nit: We don\u0027t use braces around simple statements.",
+      "revId": "8bb6e6dbcd79df1db23bf0d187c2f46062d1b421",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
