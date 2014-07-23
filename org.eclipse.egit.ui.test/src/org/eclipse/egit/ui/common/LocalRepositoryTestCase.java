@@ -194,6 +194,16 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 	@AfterClass
 	public static void afterClassBase() throws Exception {
+		File tempDir = testUtils.getBaseTempDir();
+		if (tempDir.toString().startsWith("/home") && tempDir.exists()) {
+			// see bug 440182: if test has left opened file streams on NFS
+			// mounted directories "delete" will fail because the directory
+			// would contain "stolen NFS file handles"
+			// (something like .nfs* files)
+			// so the "first round" of delete can ignore failures.
+			FileUtils.delete(tempDir, FileUtils.IGNORE_ERRORS
+					| FileUtils.RECURSIVE | FileUtils.RETRY);
+		}
 		testUtils.deleteTempDirs();
 	}
 
