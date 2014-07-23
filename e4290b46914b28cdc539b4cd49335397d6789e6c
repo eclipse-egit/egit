@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_6a391b8b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2014-07-23T09:50:34Z",
+      "side": 1,
+      "message": "This implementation is wrong. We want all \"non-zero\" modes to be equal, yet this will fail if, for example, base is non-zero but ours is. Replace this with the following once our dependencies are merged.\n\nFileMode mode \u003d FileMode.fromBits(modeBase);\nif (mode \u003d\u003d FileMode.MISSING)\n\tmode \u003d FileMode.fromBits(modeOurs);\nelse if (modeOurs !\u003d 0 \u0026\u0026 mode !\u003d FileMode.fromBits(modeOurs))\n\treturn false;\nreturn modeTheirs \u003d\u003d 0 || mode \u003d\u003d FileMode.fromBits(modeTheirs);",
+      "revId": "e4290b46914b28cdc539b4cd49335397d6789e6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
