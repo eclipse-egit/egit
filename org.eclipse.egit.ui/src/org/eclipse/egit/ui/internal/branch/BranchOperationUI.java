@@ -294,7 +294,7 @@ public class BranchOperationUI {
 
 			@Override
 			public boolean belongsTo(Object family) {
-				if (family.equals(JobFamilies.CHECKOUT))
+				if (JobFamilies.CHECKOUT.equals(family))
 					return true;
 				return super.belongsTo(family);
 			}

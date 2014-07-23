@@ -156,7 +156,7 @@ public class CommitJob extends Job {
 
 	@Override
 	public boolean belongsTo(Object family) {
-		if (family.equals(JobFamilies.COMMIT))
+		if (JobFamilies.COMMIT.equals(family))
 			return true;
 		return super.belongsTo(family);
 	}
