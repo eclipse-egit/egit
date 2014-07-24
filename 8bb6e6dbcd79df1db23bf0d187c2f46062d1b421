@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_97cbff1a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffUpdateJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-24T10:28:34Z",
+      "side": 1,
+      "message": "Yes, I also dislike this \"rule\". The worst part about it is that it can\u0027t be configured in format-on-save (because the rule is: only do it for \"simple\" statements). Also, it\u0027s always an issue for new contributors.\n\nSo I\u0027m +1 for always adding braces in new code, but others might disagree.",
+      "parentUuid": "c7672b30_74bc6124",
+      "revId": "8bb6e6dbcd79df1db23bf0d187c2f46062d1b421",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_4a941f9a",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffUpdateJob.java",
         "patchSetId": 1
