@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_d2658510",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-24T14:49:17Z",
+      "side": 1,
+      "message": "Instead of having two additional levels of indentation, I\u0027d prefer if the body of run() would just contain a call to a new method (e.g. getTargetWithDialogInUI).\n\nThen the called method can also have a normal return value instead of having to write to the array.\n\nSame for the other places.",
+      "revId": "2948bd0d3d2a6a48f50c182c83294f079e3b67a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
