@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_b4bd5920",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-07-24T07:22:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_2a99e3d1",
+      "revId": "8bb6e6dbcd79df1db23bf0d187c2f46062d1b421",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_6abc7b24",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffUpdateJob.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-07-23T13:06:51Z",
       "side": 1,
       "message": "Could you mention that the same job instance is used repeatedly here?",
+      "revId": "8bb6e6dbcd79df1db23bf0d187c2f46062d1b421",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_74010178",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffUpdateJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-07-24T07:22:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_6abc7b24",
       "revId": "8bb6e6dbcd79df1db23bf0d187c2f46062d1b421",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_d4f575f7",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffUpdateJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-07-24T07:22:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_8ab75740",
+      "revId": "8bb6e6dbcd79df1db23bf0d187c2f46062d1b421",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_cac02f96",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffUpdateJob.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2014-07-23T13:06:51Z",
       "side": 1,
       "message": "Could you convert these to Sets? Makes it clearer to me.",
+      "revId": "8bb6e6dbcd79df1db23bf0d187c2f46062d1b421",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_b4f2790b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffUpdateJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-07-24T07:22:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_cac02f96",
       "revId": "8bb6e6dbcd79df1db23bf0d187c2f46062d1b421",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_74bc6124",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffUpdateJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-07-24T07:22:33Z",
+      "side": 1,
+      "message": "Done.\n\nOfftopic: this is so far the most surprising/annoying style rule I\u0027ve met in Eclipse code. \n\nIn production I\u0027ve seen multiple times such code which was differently *read* as written due the wrong indentation after merge etc and each time people spent lot of time debugging such crazy places and literally *not seeing* the broken logic. All this because of ... two missing braces. \n\nAnyway, it\u0027s project choice, but do we have any chance to convince people to change this style rule?",
+      "parentUuid": "c7672b30_eac7eba7",
+      "revId": "8bb6e6dbcd79df1db23bf0d187c2f46062d1b421",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_4a941f9a",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffUpdateJob.java",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2014-07-23T13:06:51Z",
       "side": 1,
       "message": "Small style nit: We don\u0027t use braces around simple statements.",
+      "revId": "8bb6e6dbcd79df1db23bf0d187c2f46062d1b421",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_d4c0d595",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffUpdateJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-07-24T07:22:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_4a941f9a",
       "revId": "8bb6e6dbcd79df1db23bf0d187c2f46062d1b421",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
