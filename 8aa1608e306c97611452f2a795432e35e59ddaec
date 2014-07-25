@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_4dbc3456",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/CompareActionsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-25T01:02:53Z",
+      "side": 1,
+      "message": "Could you extract the expected String into a variable? Seems to be the same for both checks.",
+      "revId": "8aa1608e306c97611452f2a795432e35e59ddaec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
