@@ -267,9 +267,9 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 
 			if (compareMode) {
 				left = getTypedElement(fileNode, fileNode.leftRevision,
-						getBaseVersion());
+						getBaseVersionText());
 				right = getTypedElement(fileNode, fileNode.rightRevision,
-						getCompareVersion());
+						getCompareVersionText());
 
 				GitCompareFileRevisionEditorInput compareInput = new GitCompareFileRevisionEditorInput(
 						left, right, PlatformUI.getWorkbench()
@@ -303,18 +303,18 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 		}
 	}
 
-	private String getBaseVersion() {
+	private String getBaseVersionText() {
 		// null in case of Workspace compare
 		if (baseVersion == null)
 			return UIText.CompareTreeView_WorkspaceVersionText;
-		return baseVersion;
+		return CompareUtils.truncatedRevision(baseVersion);
 	}
 
-	private String getCompareVersion() {
+	private String getCompareVersionText() {
 		if (compareVersion.equals(INDEX_VERSION))
 			return UIText.CompareTreeView_IndexVersionText;
 		else
-			return compareVersion;
+			return CompareUtils.truncatedRevision(compareVersion);
 	}
 
 	@Override
@@ -427,17 +427,14 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 				throw new IllegalStateException();
 			if (baseVersion == null)
 				setContentDescription(NLS
-						.bind(
-								UIText.CompareTreeView_ComparingWorkspaceVersionDescription,
-								name, getCompareVersion()));
+						.bind(UIText.CompareTreeView_ComparingWorkspaceVersionDescription,
+								name, getCompareVersionText()));
 			else
-				setContentDescription(NLS
-						.bind(
-								UIText.CompareTreeView_ComparingTwoVersionDescription,
-								new String[] {
-										baseVersion,
-										name,
-										getCompareVersion() }));
+				setContentDescription(NLS.bind(
+						UIText.CompareTreeView_ComparingTwoVersionDescription,
+						new String[] { name,
+								CompareUtils.truncatedRevision(baseVersion),
+								getCompareVersionText() }));
 		}
 	}
 
