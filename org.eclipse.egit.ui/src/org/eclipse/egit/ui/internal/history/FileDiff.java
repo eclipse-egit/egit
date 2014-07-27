@@ -1,8 +1,9 @@
 /*******************************************************************************
  * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
- * Copyright (c) 2010, Stefan Lay <stefan.lay@sap.com>
+ * Copyright (C) 2010, Stefan Lay <stefan.lay@sap.com>
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2014, Gregor Dschung <gregor.dschung@andrena.de>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -23,6 +24,7 @@ import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.DecorationOverlayDescriptor;
 import org.eclipse.egit.ui.internal.UIIcons;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jgit.diff.DiffEntry;
@@ -47,6 +49,7 @@ import org.eclipse.jgit.treewalk.EmptyTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.jgit.treewalk.filter.TreeFilterMarker;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.model.WorkbenchAdapter;
 
 /**
@@ -76,6 +79,7 @@ public class FileDiff extends WorkbenchAdapter {
 		return r;
 	}
 
+
 	/**
 	 * Computer file diffs for specified tree walk and commit
 	 *
@@ -95,8 +99,33 @@ public class FileDiff extends WorkbenchAdapter {
 			final TreeWalk walk, final RevCommit commit,
 			final TreeFilter... markTreeFilters) throws MissingObjectException,
 			IncorrectObjectTypeException, CorruptObjectException, IOException {
+		return compute(repository, walk, commit, 0, markTreeFilters);
+	}
+
+	/**
+	 * Computer file diffs for specified tree walk and commit
+	 *
+	 * @param repository
+	 * @param walk
+	 * @param commit
+	 * @param maxNumberOfFiles
+	 *            maximum number of files to be included in the result
+	 * @param markTreeFilters
+	 *            optional filters for marking entries, see
+	 *            {@link #isMarked(int)}
+	 * @return non-null but possibly empty array of file diffs
+	 * @throws MissingObjectException
+	 * @throws IncorrectObjectTypeException
+	 * @throws CorruptObjectException
+	 * @throws IOException
+	 */
+	public static FileDiff[] compute(final Repository repository,
+			final TreeWalk walk, final RevCommit commit,
+			final int maxNumberOfFiles, final TreeFilter... markTreeFilters)
+			throws MissingObjectException, IncorrectObjectTypeException,
+			CorruptObjectException, IOException {
 		return compute(repository, walk, commit, commit.getParents(),
-				markTreeFilters);
+				maxNumberOfFiles, markTreeFilters);
 	}
 
 	/**
@@ -120,6 +149,32 @@ public class FileDiff extends WorkbenchAdapter {
 			final RevCommit[] parents,
 			final TreeFilter... markTreeFilters) throws MissingObjectException,
 			IncorrectObjectTypeException, CorruptObjectException, IOException {
+		return compute(repository, walk, commit, parents, 0, markTreeFilters);
+	}
+
+	/**
+	 * Computer file diffs for specified tree walk and commit
+	 *
+	 * @param repository
+	 * @param walk
+	 * @param commit
+	 * @param parents
+	 * @param maxNumberOfFiles
+	 *            maximum number of files to be included in the result
+	 * @param markTreeFilters
+	 *            optional filters for marking entries, see
+	 *            {@link #isMarked(int)}
+	 * @return non-null but possibly empty array of file diffs
+	 * @throws MissingObjectException
+	 * @throws IncorrectObjectTypeException
+	 * @throws CorruptObjectException
+	 * @throws IOException
+	 */
+	public static FileDiff[] compute(final Repository repository,
+			final TreeWalk walk, final RevCommit commit,
+			final RevCommit[] parents, final int maxNumberOfFiles,
+			final TreeFilter... markTreeFilters) throws MissingObjectException,
+			IncorrectObjectTypeException, CorruptObjectException, IOException {
 		final ArrayList<FileDiff> r = new ArrayList<FileDiff>();
 
 		if (parents.length > 0) {
@@ -131,7 +186,11 @@ public class FileDiff extends WorkbenchAdapter {
 		}
 
 		if (walk.getTreeCount() <= 2) {
-			List<DiffEntry> entries = DiffEntry.scan(walk, false, markTreeFilters);
+			// We have to double maxNumberOfFiles, as we could have n adds and n
+			// deletes, which result in n renames;
+			List<DiffEntry> entries = DiffEntry.scan(walk, false,
+					markTreeFilters, 2 * maxNumberOfFiles);
+
 			List<DiffEntry> xentries = new LinkedList<DiffEntry>(entries);
 			RenameDetector detector = new RenameDetector(repository);
 			detector.addAll(entries);
@@ -152,8 +211,13 @@ public class FileDiff extends WorkbenchAdapter {
 				final FileDiff d = new FileDiff(commit, m);
 				r.add(d);
 			}
-		}
-		else { // DiffEntry does not support walks with more than two trees
+			if (maxNumberOfFiles > 0 && r.size() > maxNumberOfFiles) {
+				while (r.size() > maxNumberOfFiles)
+					r.remove(r.size() - 1);
+
+				r.add(new FileDiff.MoreAvailable(commit, maxNumberOfFiles));
+			}
+		} else { // DiffEntry does not support walks with more than two trees
 			final int nTree = walk.getTreeCount();
 			final int myTree = nTree - 1;
 
@@ -179,14 +243,14 @@ public class FileDiff extends WorkbenchAdapter {
 				else if (m0 != 0 && m1 == 0)
 					d.change = ChangeType.DELETE;
 				else if (m0 != m1 && walk.idEqual(0, myTree))
-					d.change = ChangeType.MODIFY; // there is no ChangeType.TypeChanged
+					d.change = ChangeType.MODIFY; // there is no
+													// ChangeType.TypeChanged
 				d.blobs = new ObjectId[nTree];
 				d.modes = new FileMode[nTree];
 				for (int i = 0; i < nTree; i++) {
 					d.blobs[i] = walk.getObjectId(i);
 					d.modes[i] = walk.getFileMode(i);
 				}
-
 
 				r.add(d);
 			}
@@ -417,6 +481,7 @@ public class FileDiff extends WorkbenchAdapter {
 
 	public ImageDescriptor getImageDescriptor(Object object) {
 		final ImageDescriptor base;
+
 		if (!isSubmodule())
 			base = UIUtils.getEditorImage(getPath());
 		else
@@ -484,6 +549,46 @@ public class FileDiff extends WorkbenchAdapter {
 		@Override
 		public boolean isMarked(int index) {
 			return (treeFilterMarks & (1L << index)) != 0;
+		}
+	}
+
+	private static class MoreAvailable extends FileDiff {
+		private final String message;
+
+		public MoreAvailable(final RevCommit c, final int numberOfShownEntries) {
+			super(c, DiffEntry.NULL);
+			message = NLS.bind(UIText.CommitFileDiffViewer_MoreFilesAvailable,
+					numberOfShownEntries);
+		}
+
+		@Override
+		public String getPath() {
+			return message;
+		}
+
+		@Override
+		public String getNewPath() {
+			return message;
+		}
+
+		@Override
+		public ChangeType getChange() {
+			return ChangeType.MODIFY;
+		}
+
+		@Override
+		public ObjectId[] getBlobs() {
+			return new ObjectId[0];
+		}
+
+		@Override
+		public FileMode[] getModes() {
+			return new FileMode[0];
+		}
+
+		@Override
+		public boolean isMarked(int index) {
+			return false;
 		}
 	}
 }
