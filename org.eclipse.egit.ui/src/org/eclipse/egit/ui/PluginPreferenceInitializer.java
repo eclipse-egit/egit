@@ -4,6 +4,7 @@
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2012, Daniel Megert <daniel_megert@ch.ibm.com>
  * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2014, Gregor Dschung <gregor.dschung@andrena.de>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -99,6 +100,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.DATE_FORMAT,
 				UIPreferences.DEFAULT_DATE_FORMAT);
 		store.setDefault(UIPreferences.HISTORY_MAX_NUM_COMMITS, 10000);
+		store.setDefault(UIPreferences.HISTORY_MAX_NUM_FILES_PER_COMMITS, 30);
 		store.setDefault(UIPreferences.HISTORY_SHOW_TAG_SEQUENCE, false);
 		store.setDefault(UIPreferences.BLAME_IGNORE_WHITESPACE, false);
 		store.setDefault(UIPreferences.REMOTE_CONNECTION_TIMEOUT, 30 /* seconds */);

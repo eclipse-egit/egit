@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2014, Gregor Dschung <gregor.dschung@andrena.de>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -40,6 +41,28 @@ public class FileDiffContentProvider implements IStructuredContentProvider {
 
 	private Repository repo;
 
+	private final int maxNumberOfElements;
+
+	/**
+	 * A {@link FileDiffContentProvider} which isn't limited in the number of
+	 * elements it's providing.
+	 */
+	public FileDiffContentProvider() {
+		this.maxNumberOfElements = 0;
+	}
+
+	/**
+	 * A {@link FileDiffContentProvider} which provides a limited number of
+	 * elements.
+	 *
+	 * @param maxNumberOfElements
+	 *            the number of elements {@link #getElements(Object)} is limited
+	 *            to return
+	 */
+	public FileDiffContentProvider(final int maxNumberOfElements) {
+		this.maxNumberOfElements = maxNumberOfElements;
+	}
+
 	public void inputChanged(final Viewer newViewer, final Object oldInput,
 			final Object newInput) {
 		if (newInput != null) {
@@ -70,7 +93,8 @@ public class FileDiffContentProvider implements IStructuredContentProvider {
 	public Object[] getElements(final Object inputElement) {
 		if (diff == null && walk != null && commit != null)
 			try {
-				diff = FileDiff.compute(repo, walk, commit, markTreeFilter);
+				diff = FileDiff.compute(repo, walk, commit,
+						maxNumberOfElements, markTreeFilter);
 			} catch (IOException err) {
 				Activator.handleError(NLS.bind(UIText.FileDiffContentProvider_errorGettingDifference,
 						commit.getId()), err, false);

@@ -4,6 +4,7 @@
  * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, Gunnar Wagenknecht <gunnar@wagenknecht.org>
  * Copyright (C) 2013, Laurent Goubet <laurent.goubet@obeo.fr>
+ * Copyright (C) 2014, Gregor Dschung <gregor.dschung@andrena.de>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -153,7 +154,11 @@ public class CommitFileDiffViewer extends TableViewer {
 		ColumnViewerToolTipSupport.enableFor(this);
 
 		setLabelProvider(new FileDiffLabelProvider(dimmedForegroundRgb));
-		setContentProvider(new FileDiffContentProvider());
+
+		int maxNumberOfFiles = Activator.getDefault().getPreferenceStore()
+				.getInt(UIPreferences.HISTORY_MAX_NUM_FILES_PER_COMMITS);
+		setContentProvider(new FileDiffContentProvider(maxNumberOfFiles));
+
 		addOpenListener(new IOpenListener() {
 			public void open(final OpenEvent event) {
 				final ISelection s = event.getSelection();

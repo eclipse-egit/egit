@@ -11,6 +11,7 @@
  * Copyright (C) 2013, Ben Hammen <hammenb@gmail.com>
  * Copyright (C) 2014, Marc Khouzam <marc.khouzam@ericsson.com>
  * Copyright (C) 2014, Red Hat Inc.
+ * Copyright (C) 2014, Gregor Dschung <gregor.dschung@andrena.de>
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -1834,6 +1835,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String ResourceHistory_MaxNumCommitsInList;
+
+	/** */
+	public static String ResourceHistory_MaxNumFilesPerCommit;
 
 	/** */
 	public static String ResourceHistory_ShowTagSequence;
@@ -4076,6 +4080,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommitFileDiffViewer_ShowAnnotationsMenuLabel;
+
+	/** */
+	public static String CommitFileDiffViewer_MoreFilesAvailable;
 
 	/** */
 	public static String CommitGraphTable_CommitId;
