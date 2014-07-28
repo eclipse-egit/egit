@@ -271,10 +271,10 @@ public class IndexDiffCacheEntry {
 				try {
 					reloadJobIsInitializing = true;
 					waitForWorkspaceLock(monitor);
-					lock.lock();
 				} finally {
 					reloadJobIsInitializing = false;
 				}
+				lock.lock();
 				try {
 					if (monitor.isCanceled())
 						return Status.CANCEL_STATUS;
