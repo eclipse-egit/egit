@@ -245,8 +245,8 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 			explorerItem = TestUtil.getChildNode(childItem.expand(), path[2]);
 		}
 		explorerItem.select();
-		ContextMenuHelper.clickContextMenuSync(projectExplorerTree, "Show In",
-				"History");
+		ContextMenuHelper.clickContextMenuSync(projectExplorerTree, "Team",
+				"Show in History");
 		// join GenerateHistoryJob
 		Job.getJobManager().join(JobFamilies.GENERATE_HISTORY, null);
 		// join UI update triggered by GenerateHistoryJob
