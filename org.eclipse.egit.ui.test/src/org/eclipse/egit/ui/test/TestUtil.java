@@ -562,6 +562,10 @@ public class TestUtil {
 		return viewbot;
 	}
 
+	public static SWTBotView showHistoryView() {
+		return showView("org.eclipse.team.ui.GenericHistoryView");
+	}
+
 	public static SWTBotView showExplorerView() {
 		return showView("org.eclipse.jdt.ui.PackageExplorer");
 	}
