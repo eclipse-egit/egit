@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_afa7b2c3",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-30T13:24:08Z",
+      "side": 1,
+      "message": "I don\u0027t get how this is different, besides setting reloadJobIsInitializing earlier. Is it only to make the FindBugs warning to go away?",
+      "revId": "1ae9876d2991e597358ddb8c219b1bf1788ba07f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
