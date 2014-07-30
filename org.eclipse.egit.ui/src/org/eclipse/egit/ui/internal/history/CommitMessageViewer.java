@@ -49,6 +49,7 @@ import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -363,15 +364,21 @@ class CommitMessageViewer extends SourceViewer implements
 			return;
 		currentDiffs.clear();
 		commit = (PlotCommit<?>) input;
-		allRefs = getBranches();
-		if (refsChangedListener != null)
+		if (refsChangedListener != null) {
 			refsChangedListener.remove();
-		refsChangedListener = db.getListenerList().addRefsChangedListener(new RefsChangedListener() {
+			refsChangedListener = null;
+		}
 
-			public void onRefsChanged(RefsChangedEvent event) {
-				allRefs = getBranches();
-			}
-		});
+		if (db != null) {
+			allRefs = getBranches(db);
+			refsChangedListener = db.getListenerList().addRefsChangedListener(
+					new RefsChangedListener() {
+
+						public void onRefsChanged(RefsChangedEvent event) {
+							allRefs = getBranches(db);
+						}
+					});
+		}
 		format();
 	}
 
@@ -383,11 +390,12 @@ class CommitMessageViewer extends SourceViewer implements
 		this.db = repository;
 	}
 
-	private List<Ref> getBranches()  {
+	private static List<Ref> getBranches(Repository repo)  {
 		List<Ref> ref = new ArrayList<Ref>();
 		try {
-			ref.addAll(db.getRefDatabase().getRefs(Constants.R_HEADS).values());
-			ref.addAll(db.getRefDatabase().getRefs(Constants.R_REMOTES).values());
+			RefDatabase refDb = repo.getRefDatabase();
+			ref.addAll(refDb.getRefs(Constants.R_HEADS).values());
+			ref.addAll(refDb.getRefs(Constants.R_REMOTES).values());
 		} catch (IOException e) {
 			Activator.logError(e.getMessage(), e);
 		}
@@ -401,7 +409,7 @@ class CommitMessageViewer extends SourceViewer implements
 	}
 
 	private void format() {
-		if (commit == null) {
+		if (db == null || commit == null) {
 			setDocument(new Document("")); //$NON-NLS-1$
 			return;
 		}
