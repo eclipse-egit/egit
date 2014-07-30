@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_cfb66ef3",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/IteratorService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-30T13:26:00Z",
+      "side": 1,
+      "message": "Please remove this. I\u0027d do it myself but the CLA hook won\u0027t let me right now because of this: https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d437166",
+      "revId": "15593c33b73d1cab707fdd20185486d9c027fd3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
