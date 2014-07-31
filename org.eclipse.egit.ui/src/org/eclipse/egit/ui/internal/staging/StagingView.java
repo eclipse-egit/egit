@@ -1085,12 +1085,15 @@ public class StagingView extends ViewPart implements IShowInSource {
 			return SWT.VERTICAL;
 	}
 
+	private void enableStagingWidgets(boolean enabled) {
+		unstagedViewer.getControl().setEnabled(enabled);
+		stagedViewer.getControl().setEnabled(enabled);
+	}
+
 	private void enableCommitWidgets(boolean enabled) {
 		if (isDisposed())
 			return;
 
-		unstagedViewer.getControl().setEnabled(enabled);
-		stagedViewer.getControl().setEnabled(enabled);
 		commitMessageText.setEnabled(enabled);
 		committerText.setEnabled(enabled);
 		enableAuthorText(enabled);
@@ -2393,6 +2396,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		// don't allow to do anything as long as commit is in progress
 		enableCommitWidgets(false);
+		enableStagingWidgets(false);
 		commitJob.addJobChangeListener(new JobChangeAdapter() {
 			@Override
 			public void done(IJobChangeEvent event) {
@@ -2400,6 +2404,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 						.asyncExec(new Runnable() {
 							public void run() {
 								enableCommitWidgets(true);
+								enableStagingWidgets(true);
 							}
 						});
 			}
@@ -2408,7 +2413,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		IWorkbenchSiteProgressService service = (IWorkbenchSiteProgressService) getSite()
 				.getService(IWorkbenchSiteProgressService.class);
 		if (service != null)
-			service.schedule(commitJob);
+			service.schedule(commitJob, 0, true);
 		else
 			commitJob.schedule();
 
