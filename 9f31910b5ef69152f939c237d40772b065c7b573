@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_dbd2b043",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1089,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-31T13:42:05Z",
+      "side": 1,
+      "message": "I think isDisposed should also be checked here, right?",
+      "revId": "9f31910b5ef69152f939c237d40772b065c7b573",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_fbe84cf1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2399,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-07-31T13:42:05Z",
+      "side": 1,
+      "message": "How about having a enableAllWidgets instead, which would enable/disable the viewers and then call enableCommitWidgets. Seems better than having two methods to call here.",
+      "revId": "9f31910b5ef69152f939c237d40772b065c7b573",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
