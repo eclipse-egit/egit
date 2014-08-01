@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_d9d8f768",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-08-01T11:15:25Z",
+      "side": 1,
+      "message": "Don\u0027t know why this is Boolean instead of boolean (I\u0027ll fix).",
+      "revId": "c0b9245eeea2e20f4825e105b303f4ba3745a569",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
