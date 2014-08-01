@@ -416,8 +416,28 @@ public class CommitFileDiffViewer extends TableViewer {
 	protected void inputChanged(final Object input, final Object oldInput) {
 		if (oldInput == null && input == null)
 			return;
+
+		updateLabelProviderFlags();
+
 		super.inputChanged(input, oldInput);
 		revealFirstInterestingElement();
+	}
+
+	/**
+	 * Updates "interesting" flag for the label provider to make sure there is
+	 * no highlighting if all files shown are "interesting"
+	 */
+	private void updateLabelProviderFlags() {
+		Object[] elements = ((FileDiffContentProvider) getContentProvider()).getElements(null);
+		boolean all = true;
+		for (int i = 0; i < elements.length; i++) {
+			final FileDiff c = (FileDiff) elements[i];
+			if (!c.isMarked(FileDiffContentProvider.INTERESTING_MARK_TREE_FILTER_INDEX)) {
+				all = false;
+				break;
+			}
+		}
+		((FileDiffLabelProvider) getLabelProvider()).setAllInteresting(all);
 	}
 
 	/**
@@ -689,7 +709,13 @@ public class CommitFileDiffViewer extends TableViewer {
 	 * @param interestingPaths
 	 */
 	void setInterestingPaths(Set<String> interestingPaths) {
-		((FileDiffContentProvider) getContentProvider()).setInterestingPaths(interestingPaths);
+		FileDiffContentProvider contentProvider = (FileDiffContentProvider) getContentProvider();
+		contentProvider.setInterestingPaths(interestingPaths);
+		if (interestingPaths == null)
+			((FileDiffLabelProvider) getLabelProvider())
+					.setAllInteresting(true);
+		else
+			updateLabelProviderFlags();
 	}
 
 	void selectFirstInterestingElement() {
