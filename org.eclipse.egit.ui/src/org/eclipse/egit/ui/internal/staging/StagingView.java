@@ -501,8 +501,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				FormToolkit.TREE_BORDER);
 		unstagedViewer.getTree().setLinesVisible(true);
 		unstagedViewer.setLabelProvider(createLabelProvider(unstagedViewer));
-		unstagedViewer.setContentProvider(new StagingViewContentProvider(this,
-				true));
+		unstagedViewer.setContentProvider(createStagingContentProvider(true));
 		unstagedViewer.addDragSupport(DND.DROP_MOVE | DND.DROP_COPY
 				| DND.DROP_LINK,
 				new Transfer[] { LocalSelectionTransfer.getTransfer(),
@@ -766,8 +765,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				FormToolkit.TREE_BORDER);
 		stagedViewer.getTree().setLinesVisible(true);
 		stagedViewer.setLabelProvider(createLabelProvider(stagedViewer));
-		stagedViewer.setContentProvider(new StagingViewContentProvider(this,
-				false));
+		stagedViewer.setContentProvider(createStagingContentProvider(false));
 		stagedViewer.addDragSupport(
 				DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_LINK,
 				new Transfer[] { LocalSelectionTransfer.getTransfer(),
@@ -1229,6 +1227,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 				final boolean enable = isChecked();
 				getLabelProvider(stagedViewer).setFileNameMode(enable);
 				getLabelProvider(unstagedViewer).setFileNameMode(enable);
+				getContentProvider(stagedViewer).setFileNameMode(enable);
+				getContentProvider(unstagedViewer).setFileNameMode(enable);
 				refreshViewersPreservingExpandedElements();
 				getPreferenceStore().setValue(
 						UIPreferences.STAGING_VIEW_FILENAME_MODE, enable);
@@ -1363,6 +1363,15 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		ProblemLabelDecorator decorator = new ProblemLabelDecorator(treeViewer);
 		return new TreeDecoratingLabelProvider(baseProvider, decorator);
+	}
+
+	private StagingViewContentProvider createStagingContentProvider(
+			boolean unstaged) {
+		StagingViewContentProvider provider = new StagingViewContentProvider(
+				this, unstaged);
+		provider.setFileNameMode(getPreferenceStore().getBoolean(
+				UIPreferences.STAGING_VIEW_FILENAME_MODE));
+		return provider;
 	}
 
 	private IPreferenceStore getPreferenceStore() {
