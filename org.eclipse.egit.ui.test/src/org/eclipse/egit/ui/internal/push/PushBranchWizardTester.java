@@ -117,10 +117,20 @@ public class PushBranchWizardTester {
 		wizard.radio(UIText.UpstreamConfigComponent_RebaseRadio).click();
 	}
 
-	public void assertRebaseSelected() {
+	public void assertConfigureUpstreamSelected() {
 		assertTrue(wizard.checkBox(
 				UIText.UpstreamConfigComponent_ConfigureUpstreamCheck)
 				.isChecked());
+	}
+
+	public void assertMergeSelected() {
+		assertConfigureUpstreamSelected();
+		assertTrue(wizard.radio(UIText.UpstreamConfigComponent_MergeRadio)
+				.isSelected());
+	}
+
+	public void assertRebaseSelected() {
+		assertConfigureUpstreamSelected();
 		assertTrue(wizard.radio(UIText.UpstreamConfigComponent_RebaseRadio)
 				.isSelected());
 	}
