@@ -4078,6 +4078,9 @@ public class UIText extends NLS {
 	public static String CommitFileDiffViewer_ShowAnnotationsMenuLabel;
 
 	/** */
+	public static String CommitFileDiffViewer_ShowInHistoryLabel;
+
+	/** */
 	public static String CommitGraphTable_CommitId;
 
 	/** */
