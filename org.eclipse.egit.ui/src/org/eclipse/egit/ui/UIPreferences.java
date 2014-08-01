@@ -194,6 +194,8 @@ public class UIPreferences {
 	/** */
 	public static final String HISTORY_CUT_AT_START = "HistoryView_CutAtStart"; //$NON-NLS-1$
 	/** */
+	public static final String HISTORY_HIGHLIGHT_INTERESTING_FILES = "HistoryView_HighlightInterestingFiles"; //$NON-NLS-1$
+	/** */
 	public static final String HISTORY_SHOW_TAG_SEQUENCE = "HistoryView_ShowTagSequence"; //$NON-NLS-1$
 	/** */
 	public static final String STAGING_VIEW_SHOW_NEW_COMMITS = "StagingView_ShowNewCommits"; //$NON-NLS-1$

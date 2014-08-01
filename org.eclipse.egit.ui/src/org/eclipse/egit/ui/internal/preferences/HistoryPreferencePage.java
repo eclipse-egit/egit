@@ -92,6 +92,10 @@ public class HistoryPreferencePage extends FieldEditorPreferencePage implements
 				showGroup));
 		addField(new BooleanFieldEditor(UIPreferences.HISTORY_CUT_AT_START,
 				UIText.HistoryPreferencePage_toggleShortenAtStart, showGroup));
+		addField(new BooleanFieldEditor(
+				UIPreferences.HISTORY_HIGHLIGHT_INTERESTING_FILES,
+				UIText.HistoryPreferencePage_toggleHighlightInterestingFiles,
+				showGroup));
 		updateMargins(showGroup);
 		Group commentGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		// we need a span of 2 to accommodate the field editors

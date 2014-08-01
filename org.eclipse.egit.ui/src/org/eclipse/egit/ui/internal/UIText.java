@@ -1941,6 +1941,9 @@ public class UIText extends NLS {
 	public static String HistoryPreferencePage_toggleShortenAtStart;
 
 	/** */
+	public static String HistoryPreferencePage_toggleHighlightInterestingFiles;
+
+	/** */
 	public static String HistoryPreferencePage_ShowGroupLabel;
 
 	/** */

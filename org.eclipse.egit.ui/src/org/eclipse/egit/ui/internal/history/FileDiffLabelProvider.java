@@ -10,13 +10,21 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.text.MessageFormat;
 
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
 
@@ -29,11 +37,18 @@ public class FileDiffLabelProvider extends ColumnLabelProvider {
 			JFaceResources.getResources());
 	private final Color dimmedForegroundColor;
 
+	private Font boldFont;
+
+	private boolean allAreInteresting;
+
+	private IPreferenceStore store;
+
 	/**
 	 * @param dimmedForegroundRgb the color used for as foreground color for "unhighlighted" entries
 	 */
 	public FileDiffLabelProvider(RGB dimmedForegroundRgb) {
 		dimmedForegroundColor = resourceManager.createColor(dimmedForegroundRgb);
+		store = Activator.getDefault().getPreferenceStore();
 	}
 
 	public String getText(final Object element) {
@@ -47,13 +62,15 @@ public class FileDiffLabelProvider extends ColumnLabelProvider {
 
 	@Override
 	public void dispose() {
+		boldFont = null;
 		this.resourceManager.dispose();
 		super.dispose();
 	}
 
 	public Color getForeground(Object element) {
 		final FileDiff c = (FileDiff) element;
-		if (!c.isMarked(FileDiffContentProvider.INTERESTING_MARK_TREE_FILTER_INDEX))
+		if (!allAreInteresting
+				&& !c.isMarked(FileDiffContentProvider.INTERESTING_MARK_TREE_FILTER_INDEX))
 			return dimmedForegroundColor;
 		else
 			return null;
@@ -69,4 +86,34 @@ public class FileDiffLabelProvider extends ColumnLabelProvider {
 		}
 		return null;
 	}
+
+	@Override
+	public Font getFont(Object element) {
+		boolean highlight = store
+				.getBoolean(UIPreferences.HISTORY_HIGHLIGHT_INTERESTING_FILES);
+		if (!highlight)
+			return super.getFont(element);
+
+		final FileDiff c = (FileDiff) element;
+		if (!allAreInteresting
+				&& c.isMarked(FileDiffContentProvider.INTERESTING_MARK_TREE_FILTER_INDEX)) {
+			if (boldFont == null) {
+				Font font = UIUtils
+						.getFont(UIPreferences.THEME_CommitGraphHighlightFont);
+				FontData fontData[] = font.getFontData();
+				for (int i = 0; i < fontData.length; i++) {
+					fontData[i].setStyle(fontData[i].getStyle() | SWT.BOLD);
+				}
+				boldFont = resourceManager.createFont(FontDescriptor
+						.createFrom(fontData));
+			}
+			return boldFont;
+		}
+		return super.getFont(element);
+	}
+
+	void setAllInteresting(boolean all) {
+		this.allAreInteresting = all;
+	}
+
 }
