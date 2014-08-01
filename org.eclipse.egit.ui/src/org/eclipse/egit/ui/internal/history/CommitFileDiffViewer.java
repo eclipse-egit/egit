@@ -77,13 +77,16 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.team.core.history.IFileRevision;
+import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchSite;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.part.IShowInSource;
+import org.eclipse.ui.part.IShowInTarget;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.themes.ColorUtil;
 
@@ -114,6 +117,8 @@ public class CommitFileDiffViewer extends TableViewer {
 	private IAction compare;
 
 	private IAction compareWorkingTreeVersion;
+
+	private IAction showInHistory;
 
 	private final IWorkbenchSite site;
 
@@ -292,17 +297,37 @@ public class CommitFileDiffViewer extends TableViewer {
 			}
 		};
 
+		showInHistory = new Action(
+				UIText.CommitFileDiffViewer_ShowInHistoryLabel, UIIcons.HISTORY) {
+			@Override
+			public void run() {
+				ShowInContext context = getShowInContext();
+				if (context == null)
+					return;
+
+				IWorkbenchWindow window = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow();
+				IWorkbenchPage page = window.getActivePage();
+				IWorkbenchPart part = page.getActivePart();
+				// paranoia
+				if (part instanceof IHistoryView) {
+					((IShowInTarget) part).show(context);
+				}
+			}
+		};
+
 		mgr.add(openWorkingTreeVersion);
 		mgr.add(openThisVersion);
 		mgr.add(openPreviousVersion);
+		mgr.add(new Separator());
 		mgr.add(compare);
 		mgr.add(compareWorkingTreeVersion);
 		mgr.add(blame);
 
-		MenuManager showInSubMenu = UIUtils.createShowInMenu(
-				site.getWorkbenchWindow());
-
 		mgr.add(new Separator());
+		mgr.add(showInHistory);
+		MenuManager showInSubMenu = UIUtils.createShowInMenu(site
+				.getWorkbenchWindow());
 		mgr.add(showInSubMenu);
 
 		mgr.add(new Separator());
@@ -363,6 +388,7 @@ public class CommitFileDiffViewer extends TableViewer {
 
 		selectAll.setEnabled(!allSelected);
 		copy.setEnabled(!sel.isEmpty());
+		showInHistory.setEnabled(!sel.isEmpty());
 
 		if (!submoduleSelected) {
 			boolean oneOrMoreSelected = !sel.isEmpty();

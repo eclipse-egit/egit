@@ -272,6 +272,9 @@ public class UIIcons {
 	/** Stash icon */
 	public final static ImageDescriptor STASH;
 
+	/** History view icon */
+	public final static ImageDescriptor HISTORY;
+
 	/** Search commit icon */
 	public final static ImageDescriptor SEARCH_COMMIT;
 
@@ -399,6 +402,7 @@ public class UIIcons {
 		SUBMODULES = map("obj16/submodules.gif"); //$NON-NLS-1$
 		CLEAN = map("obj16/clean_obj.gif"); //$NON-NLS-1$
 		STASH = map("obj16/stash.png"); //$NON-NLS-1$
+		HISTORY = map("obj16/history.gif"); //$NON-NLS-1$
 		SEARCH_COMMIT = map("obj16/search-commit.gif"); //$NON-NLS-1$
 		HIERARCHY = map("elcl16/hierarchicalLayout.gif"); //$NON-NLS-1$
 		FLAT = map("elcl16/flatLayout.gif"); //$NON-NLS-1$
