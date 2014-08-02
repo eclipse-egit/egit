@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_1f352f90",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-08-02T01:18:49Z",
+      "side": 1,
+      "message": "A non-magic constant would be better, I think.\nThere are other places that should be fixed too, so for this commit it\u0027s ok.",
+      "range": {
+        "startLine": 437,
+        "startChar": 21,
+        "endLine": 437,
+        "endChar": 25
+      },
+      "revId": "1bd0adb5afeed7e8da7df56c77427c43f51b5b98",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
