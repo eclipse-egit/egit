@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_02d83462",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-08-02T09:57:16Z",
+      "side": 1,
+      "message": "What if there are multiple files with the same name (e.g. pom.xml) in different directories? Should sort by full path then.",
+      "revId": "c5a8d434cd2bfca9693aa121c48f772e25a4e86b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
