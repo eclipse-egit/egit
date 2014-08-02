@@ -69,6 +69,24 @@
       "revId": "98e7a0e63de6107647b8127f26dc8e92da9e51c6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76c2f17_b6b22ffe",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-08-02T22:57:40Z",
+      "side": 1,
+      "message": "ok, saw it now",
+      "parentUuid": "e76c2f17_f650272b",
+      "revId": "98e7a0e63de6107647b8127f26dc8e92da9e51c6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
