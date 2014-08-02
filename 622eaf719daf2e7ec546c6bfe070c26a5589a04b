@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_42950c10",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-08-02T22:12:39Z",
+      "side": 1,
+      "message": "No #-sign",
+      "revId": "622eaf719daf2e7ec546c6bfe070c26a5589a04b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_0284b4e7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/PluginPreferenceInitializer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-08-02T22:12:39Z",
+      "side": 1,
+      "message": "This is ridiculously low. I see no freeze whatsoever even when there are hundreds of changed files.\n\nIf we add this there should be no limit, or perhaps a timeout rather than count",
+      "range": {
+        "startLine": 103,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 7
+      },
+      "revId": "622eaf719daf2e7ec546c6bfe070c26a5589a04b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
