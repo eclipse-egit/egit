@@ -50,13 +50,6 @@
                value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
          </filter>
          <action
-               class="org.eclipse.egit.ui.internal.actions.CommitAction"
-               definitionId="org.eclipse.egit.ui.team.Commit"
-               icon="$nl$/icons/obj16/commit.gif"
-               id="org.eclipse.egit.ui.internal.actions.CommitAction"
-               label="%CommitAction_label"
-               menubarPath="team.main/group1"/>
-          <action
                class="org.eclipse.egit.ui.internal.actions.CompareWithPreviousAction"
                definitionId="org.eclipse.egit.ui.team.CompareWithPrevious"
                enablesFor="1"
@@ -1004,22 +997,16 @@
                class="org.eclipse.egit.ui.internal.actions.CommitActionHandler">
          </class>
          <activeWhen>
-            <and>
-               <count
-                     value="+">
-               </count>
-               <iterate>
-                  <or>
-                    <adapt
-                        type="org.eclipse.core.resources.IResource">
-                    </adapt>
-                    <adapt
-                        type="org.eclipse.core.resources.mapping.ResourceMapping">
-                    </adapt>
-                    <adapt
-                        type="org.eclipse.ui.IContributorResourceAdapter">
-                    </adapt>
-                    <and>
+            <or>
+               <test
+                     property="GitSelection.resourcesSingleRepository">
+               </test>
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <and>
                         <instanceof
                               value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
                         </instanceof>
@@ -1029,9 +1016,9 @@
                            </test>
                         </not>
                      </and>
-                  </or>
-               </iterate>
-            </and>
+                  </iterate>
+               </and>
+            </or>
          </activeWhen>
       </handler>
       <handler
@@ -3777,6 +3764,17 @@
                   name="group1"
                   visible="true">
             </separator>
+            <command
+                  commandId="org.eclipse.egit.ui.team.Commit"
+                  label="%CommitAction_label"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <test
+                        property="GitSelection.resourcesSingleRepository">
+                  </test>
+               </visibleWhen>
+            </command>
             <menu
                   label="%StashesMenu.label">
                <dynamic
@@ -4793,7 +4791,7 @@
             class="org.eclipse.egit.ui.internal.selection.SelectionPropertyTester"
             id="org.eclipse.egit.ui.SelectionTester"
             namespace="GitSelection"
-            properties="projectSingleRepository,projectsWithRepositories"
+            properties="projectSingleRepository,projectsWithRepositories,resourcesSingleRepository"
             type="java.util.Collection">
       </propertyTester>
    </extension>
