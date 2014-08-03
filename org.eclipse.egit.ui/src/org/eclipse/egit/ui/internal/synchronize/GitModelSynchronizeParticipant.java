@@ -77,6 +77,7 @@ import org.eclipse.ui.PartInitException;
 /**
  * Git model synchronization participant
  */
+@SuppressWarnings("restriction")
 public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant {
 
 	/**

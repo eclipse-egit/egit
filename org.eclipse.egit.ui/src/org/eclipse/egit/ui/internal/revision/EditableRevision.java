@@ -30,6 +30,7 @@ import org.eclipse.team.internal.ui.synchronize.EditableSharedDocumentAdapter;
  * Editable revision which supports listening to content changes by adding
  * {@link IContentChangeListener}.
  */
+@SuppressWarnings("restriction")
 public class EditableRevision extends FileRevisionTypedElement implements
 		IEditableContent, IContentChangeNotifier {
 
