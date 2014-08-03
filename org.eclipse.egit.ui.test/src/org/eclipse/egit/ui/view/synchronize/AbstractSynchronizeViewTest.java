@@ -270,8 +270,7 @@ public abstract class AbstractSynchronizeViewTest extends
 	}
 
 	private static void showDialog(String projectName, String... cmd) {
-		SWTBot packageExplorerBot = bot.viewByTitle("Package Explorer").bot();
-		SWTBotTree tree = packageExplorerBot.tree();
+		SWTBotTree tree = TestUtil.getExplorerTree();
 
 		// EGit decorates the project node shown in the package explorer. The
 		// '>' decorator indicates that there are uncommitted changes present in
