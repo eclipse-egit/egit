@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.core.resources.IFile;
@@ -50,11 +49,9 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
-import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.team.internal.ui.TeamUIPlugin;
@@ -296,16 +293,6 @@ public abstract class AbstractSynchronizeViewTest extends
 
 	private SWTBotTreeItem getTreeItemContainingText(SWTBotTreeItem[] items,
 			String text) {
-		List<String> existingItems = new ArrayList<String>();
-		for (SWTBotTreeItem item : items) {
-			if (item.getText().contains(text))
-				return item;
-			existingItems.add(item.getText());
-		}
-
-		throw new WidgetNotFoundException(
-				"Tree item element containing text \"" + text
-						+ "\" was not found. Existing tree items:\n"
-						+ StringUtils.join(existingItems, "\n"));
+		return TestUtil.getNode(items, text);
 	}
 }

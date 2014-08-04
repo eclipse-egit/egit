@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2013 Jens Baumgart <jens.baumgart@sap.com> and others.
+ * Copyright (C) 2011, 2014 Jens Baumgart <jens.baumgart@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,17 +8,22 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.common;
 
-import org.eclipse.core.runtime.jobs.Job;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.concurrent.TimeUnit;
+
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.staging.StagingView;
-import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
+import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.egit.ui.test.JobJoiner;
+import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
-import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
-import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
-import org.eclipse.swtbot.swt.finder.results.VoidResult;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarToggleButton;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 
 public class StagingViewTester {
 
@@ -29,18 +34,13 @@ public class StagingViewTester {
 	}
 
 	public static StagingViewTester openStagingView() throws Exception {
-		SWTWorkbenchBot workbenchBot = new SWTWorkbenchBot();
-		UIThreadRunnable.syncExec(new VoidResult() {
-			public void run() {
-				try {
-					PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-							.getActivePage().showView(StagingView.VIEW_ID);
-				} catch (Exception e) {
-					throw new WidgetNotFoundException(e.getMessage(), e);
-				}
-			}
-		});
-		SWTBotView view = workbenchBot.viewById(StagingView.VIEW_ID);
+		// This is needed so that we can find staging entries by full path.
+		Activator.getDefault().getPreferenceStore()
+				.setValue(UIPreferences.STAGING_VIEW_FILENAME_MODE, false);
+
+		SWTBotView view = TestUtil.showView(StagingView.VIEW_ID);
+		TestUtil.joinJobs(org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+
 		return new StagingViewTester(view);
 	}
 
@@ -59,10 +59,32 @@ public class StagingViewTester {
 				.setText(message);
 	}
 
+	public void stageFile(String path) {
+		SWTBotTree unstagedTree = stagingView.bot().tree(0);
+		TestUtil.getNode(unstagedTree.getAllItems(), path).select();
+
+		JobJoiner jobJoiner = JobJoiner.startListening(
+				org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE, 30,
+				TimeUnit.SECONDS);
+		ContextMenuHelper.clickContextMenu(unstagedTree,
+				UIText.StagingView_StageItemMenuLabel);
+		jobJoiner.join();
+	}
+
 	public void commit() throws Exception {
+		JobJoiner jobJoiner = JobJoiner.startListening(JobFamilies.COMMIT, 30,
+				TimeUnit.SECONDS);
 		stagingView.bot().button(UIText.StagingView_Commit).click();
-		// wait until commit is completed
-		Job.getJobManager().join(JobFamilies.COMMIT, null);
+		jobJoiner.join();
+	}
+
+	public void assertCommitEnabled(boolean expectEnabled) {
+		boolean actual = stagingView.bot().button(UIText.StagingView_Commit)
+				.isEnabled();
+		if (expectEnabled)
+			assertTrue("Expected Commit button to be enabled", actual);
+		else
+			assertFalse("Expected Commit button to be disabled", actual);
 	}
 
 	public void setAmend(boolean amend) {

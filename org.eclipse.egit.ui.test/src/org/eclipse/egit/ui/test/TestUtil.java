@@ -45,6 +45,7 @@ import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.osgi.service.localization.BundleLocalization;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -52,6 +53,7 @@ import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
+import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.waits.ICondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
@@ -441,30 +443,49 @@ public class TestUtil {
 	}
 
 	/**
-	 * Retrieves a child node with the given childNodeText. Nodes with dirty
-	 * marker are also found (without specifying > in childNodeText), as well as
-	 * nodes with trailing text.
-	 *
 	 * @param node
 	 * @param childNodeText
-	 * @return child node
+	 * @return child node containing childNodeText
+	 * @see #getNode(SWTBotTreeItem[], String)
 	 */
 	public static SWTBotTreeItem getChildNode(SWTBotTreeItem node,
 			String childNodeText) {
-		for (SWTBotTreeItem item : node.getItems()) {
-			String itemText = item.getText();
-			StringTokenizer tok = new StringTokenizer(itemText, " ");
-			String name = tok.nextToken();
-			// may be a dirty marker
-			if (name.equals(">"))
-				name = tok.nextToken();
-			if (childNodeText.equals(name)
-					|| name.startsWith(childNodeText + " "))
-				return item;
-		}
-		return null;
+		return getNode(node.getItems(), childNodeText);
 	}
 
+	/**
+	 * Finds the node that contains the given text. Throws a nice message in
+	 * case the item is not found or more than one matching node was found.
+	 *
+	 * @param nodes
+	 * @param searchText
+	 * @return node containing the text
+	 */
+	public static SWTBotTreeItem getNode(SWTBotTreeItem[] nodes, String searchText) {
+		List<String> texts = new ArrayList<String>();
+		List<SWTBotTreeItem> matchingItems = new ArrayList<SWTBotTreeItem>();
+
+		for (SWTBotTreeItem item : nodes) {
+			String text = item.getText();
+			if (text.contains(searchText))
+				matchingItems.add(item);
+			texts.add(text);
+		}
+
+		if (matchingItems.isEmpty())
+			throw new WidgetNotFoundException(
+					"Tree item element containg text \"" + searchText
+							+ "\" was not found. Existing tree items:\n"
+							+ StringUtils.join(texts, "\n"));
+		else if (matchingItems.size() > 1)
+			throw new WidgetNotFoundException(
+					"Tree item element containg text \""
+							+ searchText
+							+ "\" could not be uniquely identified. All tree items:\n"
+							+ StringUtils.join(texts, "\n"));
+
+		return matchingItems.get(0);
+	}
 
 	public static RevCommit getHeadCommit(Repository repository)
 			throws Exception {
