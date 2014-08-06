@@ -53,11 +53,14 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Resource;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Link;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 /**
@@ -316,7 +319,27 @@ public class PushBranchPage extends WizardPage {
 			}
 		});
 
+		Link advancedDialogLink = new Link(main, SWT.NONE);
+		advancedDialogLink
+				.setText("<A>" + UIText.PushBranchPage_advancedWizard + "</A>"); //$NON-NLS-1$ //$NON-NLS-2$
+		advancedDialogLink.setLayoutData(new GridData(SWT.END, SWT.END, false,
+				true));
+		advancedDialogLink.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Shell parentShell = getShell().getParent().getShell();
+				PushWizard advancedWizard = null;
+				try {
+					advancedWizard = new PushWizard(repository);
+					// TODO populate PushWizard with remote/source/target
+					getShell().close();
+					new WizardDialog(parentShell, advancedWizard).open();
+				} catch (URISyntaxException ex) {
+					Activator.logError(ex.getMessage(), ex);
+				}
 
+			}
+		});
 
 		setControl(main);
 

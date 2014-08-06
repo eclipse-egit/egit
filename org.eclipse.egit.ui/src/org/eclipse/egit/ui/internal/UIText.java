@@ -2031,6 +2031,9 @@ public class UIText extends NLS {
 	public static String PushBranchPage_UpstreamConfigOverwriteWarning;
 
 	/** */
+	public static String PushBranchPage_advancedWizard;
+
+	/** */
 	public static String PushBranchWizard_WindowTitle;
 
 	/** */
