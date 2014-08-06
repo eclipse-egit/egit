@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Red Hat, Inc. Distributed under license by Red Hat, Inc.
+ * Copyright (c) 2012-2014 Red Hat, Inc. Distributed under license by Red Hat, Inc.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,11 +7,12 @@
  *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
+ *    Mickael Istria - 441231 Use simple push wizard
  *******************************************************************************/
 
 package org.eclipse.egit.ui.internal.commit;
 
-import java.net.URISyntaxException;
+import java.io.IOException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -25,11 +26,13 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentStateManager;
+import org.eclipse.egit.ui.internal.push.PushBranchWizard;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
-import org.eclipse.egit.ui.internal.push.PushWizard;
 import org.eclipse.egit.ui.internal.push.SimpleConfigurePushDialog;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.api.errors.JGitInternalException;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.transport.RemoteConfig;
@@ -111,7 +114,7 @@ public class CommitJob extends Job {
 			if (openCommitEditor)
 				openCommitEditor(commit);
 			if (pushUpstream)
-				pushUpstream();
+				pushUpstream(commit);
 		}
 		return Status.OK_STATUS;
 	}
@@ -126,7 +129,7 @@ public class CommitJob extends Job {
 		});
 	}
 
-	private void pushUpstream() {
+	private void pushUpstream(final RevCommit commit) {
 		RemoteConfig config = SimpleConfigurePushDialog
 				.getConfiguredRemote(repository);
 		if (config == null) {
@@ -135,11 +138,21 @@ public class CommitJob extends Job {
 
 				public void run() {
 					try {
+						PushBranchWizard pushWizard = null;
+						String fullBranch = repository.getFullBranch();
+						if (fullBranch != null
+								&& fullBranch.startsWith(Constants.R_HEADS)) {
+							Ref ref = repository.getRef(fullBranch);
+							pushWizard = new PushBranchWizard(repository, ref);
+						} else {
+							pushWizard = new PushBranchWizard(repository,
+									commit.getId());
+						}
 						WizardDialog wizardDialog = new WizardDialog(display
-								.getActiveShell(), new PushWizard(repository));
+								.getActiveShell(), pushWizard);
 						wizardDialog.setHelpAvailable(true);
 						wizardDialog.open();
-					} catch (URISyntaxException e) {
+					} catch (IOException e) {
 						Activator.handleError(
 								NLS.bind(UIText.CommitUI_pushFailedMessage, e),
 								e, true);
