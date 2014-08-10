@@ -39,10 +39,6 @@ import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
@@ -72,23 +68,13 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
-class CommitMessageViewer extends SourceViewer implements
-		ISelectionChangedListener {
+class CommitMessageViewer extends SourceViewer {
 
 	private static final Color SYS_LINKCOLOR = PlatformUI.getWorkbench()
 			.getDisplay().getSystemColor(SWT.COLOR_BLUE);
 
 	private static final Color SYS_DARKGRAY = PlatformUI.getWorkbench()
 			.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY);
-
-	private static final Color SYS_HUNKHEADER_COLOR = PlatformUI.getWorkbench()
-			.getDisplay().getSystemColor(SWT.COLOR_BLUE);
-
-	private static final Color SYS_LINES_ADDED_COLOR = PlatformUI
-			.getWorkbench().getDisplay().getSystemColor(SWT.COLOR_DARK_GREEN);
-
-	private static final Color SYS_LINES_REMOVED_COLOR = PlatformUI
-			.getWorkbench().getDisplay().getSystemColor(SWT.COLOR_DARK_RED);
 
 	private static final Cursor SYS_LINK_CURSOR = PlatformUI.getWorkbench()
 			.getDisplay().getSystemCursor(SWT.CURSOR_HAND);
@@ -97,9 +83,6 @@ class CommitMessageViewer extends SourceViewer implements
 
 	// notified when clicking on a link in the message (branch, commit...)
 	private final ListenerList navListeners = new ListenerList();
-
-	// set by selecting files in the file list
-	private final List<FileDiff> currentDiffs = new ArrayList<FileDiff>();
 
 	// listener to detect changes in the wrap and fill preferences
 	private final IPropertyChangeListener listener;
@@ -128,7 +111,7 @@ class CommitMessageViewer extends SourceViewer implements
 	private BooleanPrefAction fillParagraphsPrefAction;
 
 	CommitMessageViewer(final Composite parent, final IPageSite site, IWorkbenchPartSite partSite) {
-		super(parent, null, SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
+		super(parent, null, SWT.READ_ONLY);
 		this.partSite = partSite;
 
 		final StyledText t = getTextWidget();
@@ -170,11 +153,6 @@ class CommitMessageViewer extends SourceViewer implements
 		listener = new IPropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent event) {
 				if (event.getProperty().equals(
-						UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP)) {
-					setWrap(((Boolean) event.getNewValue()).booleanValue());
-					return;
-				}
-				if (event.getProperty().equals(
 						UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL)) {
 					setFill(((Boolean) event.getNewValue()).booleanValue());
 					return;
@@ -190,8 +168,6 @@ class CommitMessageViewer extends SourceViewer implements
 		store.addPropertyChangeListener(listener);
 		fill = store
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL);
-		setWrap(store
-				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP));
 
 		// global action handlers for select all and copy
 		final IAction selectAll = new Action() {
@@ -325,7 +301,6 @@ class CommitMessageViewer extends SourceViewer implements
 		// so we only rebuild this when the commit did in fact change
 		if (input == commit)
 			return;
-		currentDiffs.clear();
 		commit = (PlotCommit<?>) input;
 		if (refsChangedListener != null) {
 			refsChangedListener.remove();
@@ -386,10 +361,8 @@ class CommitMessageViewer extends SourceViewer implements
 				.getAdapter(IWorkbenchSiteProgressService.class);
 		if (siteService == null)
 			return;
-		FormatJob.FormatRequest formatRequest = new FormatJob.FormatRequest(getRepository(),
-				commit, fill, currentDiffs, SYS_LINKCOLOR, SYS_DARKGRAY,
-				SYS_HUNKHEADER_COLOR, SYS_LINES_ADDED_COLOR,
-				SYS_LINES_REMOVED_COLOR,
+		FormatJob.FormatRequest formatRequest = new FormatJob.FormatRequest(
+				getRepository(), commit, fill, SYS_LINKCOLOR, SYS_DARKGRAY,
 				allRefs);
 		formatJob = new FormatJob(formatRequest);
 		addDoneListenerToFormatJob();
@@ -445,24 +418,8 @@ class CommitMessageViewer extends SourceViewer implements
 		}
 	}
 
-	private void setWrap(boolean wrap) {
-		getTextWidget().setWordWrap(wrap);
-	}
-
 	private void setFill(boolean fill) {
 		this.fill = fill;
-		format();
-	}
-
-	public void selectionChanged(SelectionChangedEvent event) {
-		currentDiffs.clear();
-		ISelection selection = event.getSelection();
-		if (selection instanceof IStructuredSelection) {
-			IStructuredSelection sel = (IStructuredSelection) selection;
-			for (Object obj : sel.toList())
-				if (obj instanceof FileDiff)
-					currentDiffs.add((FileDiff) obj);
-		}
 		format();
 	}
 
@@ -487,4 +444,5 @@ class CommitMessageViewer extends SourceViewer implements
 		else
 			return null;
 	}
+
 }
