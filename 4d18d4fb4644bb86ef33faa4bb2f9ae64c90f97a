@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_c483d1a4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1952,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-08-10T13:18:21Z",
+      "side": 1,
+      "message": "I don\u0027t really know how to use ScrolledComposite (if it is meant to be done like this). Is there a better way than setting the exact size and updating it when the sash is modified?",
+      "revId": "4d18d4fb4644bb86ef33faa4bb2f9ae64c90f97a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
