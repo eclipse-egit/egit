@@ -205,7 +205,7 @@ public class DiffEditorPage extends FormPage {
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(body);
 
 		viewer = new DiffViewer(body, new CompositeRuler(), SWT.V_SCROLL
-				| SWT.H_SCROLL);
+				| SWT.H_SCROLL, true);
 		viewer.setEditable(false);
 		GridDataFactory.fillDefaults().grab(true, true)
 				.applyTo(viewer.getControl());
