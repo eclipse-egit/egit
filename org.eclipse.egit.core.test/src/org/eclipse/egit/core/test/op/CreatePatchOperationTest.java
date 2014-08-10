@@ -171,12 +171,18 @@ public class CreatePatchOperationTest extends GitTestCase {
 		assertPatch(SIMPLE_ONELINE_PATCH_CONTENT, patchContent);
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test
 	public void testFirstCommit() throws Exception {
 		CreatePatchOperation operation = new CreatePatchOperation(
 				testRepository.getRepository(), commit);
 
+		operation.setHeaderFormat(DiffHeaderFormat.ONELINE);
 		operation.execute(null);
+		String patchContent = operation.getPatchContent();
+		assertPatch("5d67e6eaa2464d15c4216a93a0e7180ec905a2bb new file\n"
+				+ "diff --git a/test-file b/test-file\n"
+				+ "new file mode 100644\nindex 0000000..e69de29\n"
+				+ "--- /dev/null\n" + "+++ b/test-file", patchContent);
 	}
 
 	@SuppressWarnings("unused")
