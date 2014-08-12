@@ -27,6 +27,7 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commands.shared.AbortRebaseCommand;
@@ -205,8 +206,7 @@ public class RebaseInteractiveView extends ViewPart implements
 	}
 
 	private void removeListeners() {
-		ISelectionService srv = (ISelectionService) getSite().getService(
-				ISelectionService.class);
+		ISelectionService srv = CommonUtils.getService(getSite(), ISelectionService.class);
 		srv.removePostSelectionListener(RepositoriesView.VIEW_ID,
 				selectionChangedListener);
 		if (currentPlan != null)
@@ -423,8 +423,7 @@ public class RebaseInteractiveView extends ViewPart implements
 			}
 		};
 
-		ISelectionService srv = (ISelectionService) getSite().getService(
-				ISelectionService.class);
+		ISelectionService srv = CommonUtils.getService(getSite(), ISelectionService.class);
 		srv.addPostSelectionListener(RepositoriesView.VIEW_ID,
 				selectionChangedListener);
 	}

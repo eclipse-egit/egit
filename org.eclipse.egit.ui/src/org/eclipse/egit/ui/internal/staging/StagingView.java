@@ -673,7 +673,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			}
 			@Override
 			protected IHandlerService getHandlerService() {
-				return (IHandlerService) getSite().getService(IHandlerService.class);
+				return CommonUtils.getService(getSite(), IHandlerService.class);
 			}
 		};
 		commitMessageText.setData(FormToolkit.KEY_DRAW_BORDER,
@@ -877,8 +877,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		// react on selection changes
 		IWorkbenchPartSite site = getSite();
-		ISelectionService srv = (ISelectionService) site
-				.getService(ISelectionService.class);
+		ISelectionService srv = CommonUtils.getService(site, ISelectionService.class);
 		srv.addPostSelectionListener(selectionChangedListener);
 
 		// Use current selection to populate staging view
@@ -2442,8 +2441,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			}
 		});
 
-		IWorkbenchSiteProgressService service = (IWorkbenchSiteProgressService) getSite()
-				.getService(IWorkbenchSiteProgressService.class);
+		IWorkbenchSiteProgressService service = CommonUtils.getService(getSite(), IWorkbenchSiteProgressService.class);
 		if (service != null)
 			service.schedule(commitJob, 0, true);
 		else
@@ -2473,8 +2471,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 	public void dispose() {
 		super.dispose();
 
-		ISelectionService srv = (ISelectionService) getSite().getService(
-				ISelectionService.class);
+		ISelectionService srv = CommonUtils.getService(getSite(), ISelectionService.class);
 		srv.removePostSelectionListener(selectionChangedListener);
 
 		if(cacheEntry != null)

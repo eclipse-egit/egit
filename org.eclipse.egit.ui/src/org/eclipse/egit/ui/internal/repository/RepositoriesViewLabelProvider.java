@@ -21,6 +21,7 @@ import org.eclipse.core.commands.IStateListener;
 import org.eclipse.core.commands.State;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.ResourcePropertyTester;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -79,8 +80,7 @@ public class RepositoriesViewLabelProvider extends ColumnLabelProvider
 	 * Constructs a repositories view label provider
 	 */
 	public RepositoriesViewLabelProvider() {
-		ICommandService srv = (ICommandService) PlatformUI.getWorkbench()
-				.getService(ICommandService.class);
+		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(), ICommandService.class);
 		verboseBranchModeState = srv.getCommand(ToggleBranchCommitCommand.ID)
 				.getState(ToggleBranchCommitCommand.TOGGLE_STATE);
 		verboseBranchModeState.addListener(this);
