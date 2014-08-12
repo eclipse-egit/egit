@@ -182,8 +182,7 @@ public class SynchronizeWithMenu extends ContributionItem implements
 	}
 
 	public void initialize(IServiceLocator serviceLocator) {
-		srv = (ISelectionService) serviceLocator
-				.getService(ISelectionService.class);
+		srv = CommonUtils.getService(serviceLocator, ISelectionService.class);
 	}
 
 	@Override

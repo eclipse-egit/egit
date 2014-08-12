@@ -47,6 +47,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
@@ -298,8 +299,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		addLink.setForeground(linkColor);
 		addLink.addHyperlinkListener(new HyperlinkAdapter() {
 			public void linkActivated(HyperlinkEvent e) {
-				IHandlerService service = (IHandlerService) getViewSite()
-						.getService(IHandlerService.class);
+				IHandlerService service = CommonUtils.getService(getViewSite(), IHandlerService.class);
 				UIUtils.executeCommand(service,
 						"org.eclipse.egit.ui.RepositoriesViewAddRepository"); //$NON-NLS-1$
 			}
@@ -316,8 +316,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		cloneLink.setForeground(linkColor);
 		cloneLink.addHyperlinkListener(new HyperlinkAdapter() {
 			public void linkActivated(HyperlinkEvent e) {
-				IHandlerService service = (IHandlerService) getViewSite()
-						.getService(IHandlerService.class);
+				IHandlerService service = CommonUtils.getService(getViewSite(), IHandlerService.class);
 				UIUtils.executeCommand(service,
 						"org.eclipse.egit.ui.RepositoriesViewClone"); //$NON-NLS-1$
 			}
@@ -335,8 +334,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		createLink.setText(UIText.RepositoriesView_linkCreate);
 		createLink.addHyperlinkListener(new HyperlinkAdapter() {
 			public void linkActivated(HyperlinkEvent e) {
-				IHandlerService service = (IHandlerService) getViewSite()
-						.getService(IHandlerService.class);
+				IHandlerService service = CommonUtils.getService(getViewSite(), IHandlerService.class);
 				UIUtils.executeCommand(service,
 						"org.eclipse.egit.ui.RepositoriesViewCreateRepository"); //$NON-NLS-1$
 			}
@@ -357,15 +355,13 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 
 		IWorkbenchWindow w = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
-		ICommandService csrv = (ICommandService) w
-				.getService(ICommandService.class);
+		ICommandService csrv = CommonUtils.getService(w, ICommandService.class);
 		Command command = csrv
 				.getCommand("org.eclipse.egit.ui.RepositoriesLinkWithSelection"); //$NON-NLS-1$
 		reactOnSelection = (Boolean) command.getState(
 				RegistryToggleState.STATE_ID).getValue();
 
-		IWorkbenchSiteProgressService service = (IWorkbenchSiteProgressService) getSite()
-				.getService(IWorkbenchSiteProgressService.class);
+		IWorkbenchSiteProgressService service = CommonUtils.getService(getSite(), IWorkbenchSiteProgressService.class);
 		if (service != null) {
 			service.showBusyForFamily(JobFamilies.REPO_VIEW_REFRESH);
 			service.showBusyForFamily(JobFamilies.CLONE);
@@ -426,8 +422,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			}
 		});
 		// react on selection changes
-		ISelectionService srv = (ISelectionService) getSite().getService(
-				ISelectionService.class);
+		ISelectionService srv = CommonUtils.getService(getSite(), ISelectionService.class);
 		srv.addPostSelectionListener(selectionChangedListener);
 		// react on changes in the configured repositories
 		repositoryUtil.getPreferences().addPreferenceChangeListener(
@@ -469,8 +464,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	}
 
 	private void executeOpenCommand() {
-		IHandlerService srv = (IHandlerService) getViewSite()
-				.getService(IHandlerService.class);
+		IHandlerService srv = CommonUtils.getService(getViewSite(), IHandlerService.class);
 
 		try {
 			srv.executeCommand("org.eclipse.egit.ui.RepositoriesViewOpen", null); //$NON-NLS-1$
@@ -480,8 +474,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	}
 
 	private void activateContextService() {
-		IContextService contextService = (IContextService) getSite()
-				.getService(IContextService.class);
+		IContextService contextService = CommonUtils.getService(getSite(), IContextService.class);
 		if (contextService != null)
 			contextService.activateContext(VIEW_ID);
 
@@ -525,8 +518,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		repositoryUtil.getPreferences().removePreferenceChangeListener(
 				configurationListener);
 
-		ISelectionService srv = (ISelectionService) getSite().getService(
-				ISelectionService.class);
+		ISelectionService srv = CommonUtils.getService(getSite(), ISelectionService.class);
 		srv.removePostSelectionListener(selectionChangedListener);
 
 		// remove RepositoryChangedListener
@@ -727,8 +719,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		};
 		job.setSystem(true);
 
-		IWorkbenchSiteProgressService service = (IWorkbenchSiteProgressService) getSite()
-				.getService(IWorkbenchSiteProgressService.class);
+		IWorkbenchSiteProgressService service = CommonUtils.getService(getSite(), IWorkbenchSiteProgressService.class);
 
 		if (trace)
 			GitTraceLocation.getTrace().trace(
