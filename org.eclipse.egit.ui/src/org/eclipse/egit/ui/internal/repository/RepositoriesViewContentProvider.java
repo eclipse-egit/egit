@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefsNode;
@@ -101,8 +102,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 	 * Constructs this instance
 	 */
 	public RepositoriesViewContentProvider() {
-		ICommandService srv = (ICommandService) PlatformUI.getWorkbench()
-				.getService(ICommandService.class);
+		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(), ICommandService.class);
 		commandState = srv.getCommand(
 				ToggleBranchHierarchyCommand.ID)
 				.getState(ToggleBranchHierarchyCommand.TOGGLE_STATE);

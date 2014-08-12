@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
@@ -79,8 +80,7 @@ public class RemoveCommand extends
 	protected void removeRepository(final ExecutionEvent event,
 			final boolean delete) {
 		IWorkbenchSite activeSite = HandlerUtil.getActiveSite(event);
-		IWorkbenchSiteProgressService service = (IWorkbenchSiteProgressService) activeSite
-				.getService(IWorkbenchSiteProgressService.class);
+		IWorkbenchSiteProgressService service = CommonUtils.getService(activeSite, IWorkbenchSiteProgressService.class);
 
 		// get selected nodes
 		final List<RepositoryNode> selectedNodes;

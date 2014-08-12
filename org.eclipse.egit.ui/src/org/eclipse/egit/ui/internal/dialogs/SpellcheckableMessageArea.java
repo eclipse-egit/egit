@@ -24,6 +24,7 @@ import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -831,8 +832,7 @@ public class SpellcheckableMessageArea extends Composite {
 	 *         found.
 	 */
 	protected IHandlerService getHandlerService() {
-		return (IHandlerService) PlatformUI.getWorkbench().getService(
-				IHandlerService.class);
+		return CommonUtils.getService(PlatformUI.getWorkbench(), IHandlerService.class);
 	}
 
 	private SourceViewerDecorationSupport configureAnnotationPreferences() {
