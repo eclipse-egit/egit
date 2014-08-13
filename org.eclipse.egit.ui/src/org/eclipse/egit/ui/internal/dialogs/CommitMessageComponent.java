@@ -872,4 +872,11 @@ public class CommitMessageComponent {
 	public ObjectId getHeadCommit() {
 		return headCommitId;
 	}
+
+	/**
+	 * @return the previous commit message in case of amending
+	 */
+	public String getPreviousCommitMessage() {
+		return previousCommitMessage;
+	}
 }

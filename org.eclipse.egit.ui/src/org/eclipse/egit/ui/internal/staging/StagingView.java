@@ -2228,7 +2228,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	void updateCommitMessageComponent(boolean repositoryChanged, boolean indexDiffAvailable) {
 		if (repositoryChanged)
-			if (userEnteredCommmitMessage())
+			if (userEnteredCommmitMessage()
+					|| commitMessageComponent.isAmending())
 				saveCommitMessageComponentState();
 			else
 				deleteCommitMessageComponentState();
@@ -2321,6 +2322,11 @@ public class StagingView extends ViewPart implements IShowInSource {
 		String message = commitMessageComponent.getCommitMessage().replace(
 				UIText.StagingView_headCommitChanged, ""); //$NON-NLS-1$
 		if (message == null || message.trim().length() == 0)
+			return false;
+
+		if (commitMessageComponent.isAmending()
+				&& message.equals(commitMessageComponent
+						.getPreviousCommitMessage()))
 			return false;
 
 		String chIdLine = "Change-Id: I" + ObjectId.zeroId().name(); //$NON-NLS-1$
