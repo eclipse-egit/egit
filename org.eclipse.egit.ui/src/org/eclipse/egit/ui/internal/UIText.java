@@ -2169,6 +2169,9 @@ public class UIText extends NLS {
 	public static String CommitDialog_SelectAll;
 
 	/** */
+	public static String CommitDialog_SelectForCommit;
+
+	/** */
 	public static String CommitDialog_ShowUntrackedFiles;
 
 	/** */
