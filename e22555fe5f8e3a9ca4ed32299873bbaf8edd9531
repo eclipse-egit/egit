@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "c7672b30_b75400d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-08-13T16:09:08Z",
+      "side": 1,
+      "message": "Mars?",
+      "revId": "e22555fe5f8e3a9ca4ed32299873bbaf8edd9531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_975744d6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-08-13T16:09:08Z",
+      "side": 1,
+      "message": "trailing ws",
+      "revId": "e22555fe5f8e3a9ca4ed32299873bbaf8edd9531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_8c21f7a9",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
         "patchSetId": 1
