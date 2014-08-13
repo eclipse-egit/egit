@@ -54,6 +54,7 @@ import org.eclipse.egit.ui.internal.dialogs.CommitItem.Status;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponent.CommitStatus;
 import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
@@ -1157,6 +1158,16 @@ public class CommitDialog extends TitleAreaDialog {
 					manager.add(createCompareAction(commitItem));
 				}
 
+				boolean hasUnselected = false;
+				for (Object element : selection.toList()) {
+					if (!filesViewer.getChecked(element)) {
+						hasUnselected = true;
+						break;
+					}
+				}
+
+				if (hasUnselected)
+					manager.add(createSelectAction(selection));
 				manager.add(createAddAction(selection));
 			}
 		};
@@ -1194,6 +1205,16 @@ public class CommitDialog extends TitleAreaDialog {
 					}
 				}
 				filesViewer.refresh(true);
+			}
+		};
+	}
+
+	private IAction createSelectAction(final IStructuredSelection selection) {
+		return new Action(UIText.CommitDialog_SelectForCommit) {
+			@Override
+			public void run() {
+				for (Object item : selection.toList())
+					filesViewer.setChecked(item, true);
 			}
 		};
 	}
