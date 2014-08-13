@@ -391,6 +391,7 @@ public class CommitDialog extends TitleAreaDialog {
 	 */
 	public CommitDialog(Shell parentShell) {
 		super(parentShell);
+		setHelpAvailable(false);
 	}
 
 	/**
@@ -571,15 +572,9 @@ public class CommitDialog extends TitleAreaDialog {
 	@Override
 	protected Control createButtonBar(Composite parent) {
 		toolkit.adapt(parent, false, false);
-		return super.createButtonBar(parent);
-	}
-
-	@Override
-	protected Control createHelpControl(Composite parent) {
-		toolkit.adapt(parent, false, false);
-		Control help = super.createHelpControl(parent);
-		toolkit.adapt(help, false, false);
-		return help;
+		Control bar = super.createButtonBar(parent);
+		toolkit.adapt(bar, false, false);
+		return bar;
 	}
 
 	@Override
