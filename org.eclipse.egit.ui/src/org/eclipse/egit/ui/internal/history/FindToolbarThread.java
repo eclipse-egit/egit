@@ -11,6 +11,8 @@ package org.eclipse.egit.ui.internal.history;
 import java.io.IOException;
 
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
 
 /**
  * This class executes the search function for the find toolbar. Only one thread
@@ -52,6 +54,8 @@ public class FindToolbarThread extends Thread {
 	boolean findInAuthor;
 
 	boolean findInCommitter;
+
+	boolean findInReference;
 
 	private volatile static int globalThreadIx = 0;
 
@@ -201,6 +205,23 @@ public class FindToolbarThread extends Thread {
 								email = email.toLowerCase();
 							}
 							if (email.indexOf(findPattern) != -1) {
+								totalMatches++;
+								findResults.add(i, revision);
+								notFound = false;
+							}
+						}
+					}
+				}
+
+				if (findInReference && notFound) {
+					if (revision.getRefCount() > 0) {
+						for (int j = 0; j < revision.getRefCount(); j++) {
+							Ref ref = revision.getRef(j);
+							String refName = ref.getName();
+							refName = Repository.shortenRefName(refName);
+							if (ignoreCase)
+								refName = refName.toLowerCase();
+							if (refName.indexOf(findPattern) != -1) {
 								totalMatches++;
 								findResults.add(i, revision);
 								notFound = false;
