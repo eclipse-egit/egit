@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_f0995901",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-08-14T21:48:45Z",
+      "side": 1,
+      "message": "When the CommitDialog is opened e.g. via CommitUI.commit() closing the dialog like this will return a 0 return code, which is interpreted as a OK / commit button press, which in turn initiates a commit.\n\nSomehow a different return code should be set before closing.",
+      "revId": "3139161130f2d1ef71c37a81626e5ea68878f051",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
