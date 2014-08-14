@@ -825,6 +825,9 @@ class CommitGraphTable {
 				popupMgr.add(getCommandContributionItem(
 						HistoryViewCommands.CREATE_TAG,
 						UIText.GitHistoryPage_CreateTagMenuLabel));
+				popupMgr.add(getCommandContributionItem(
+						HistoryViewCommands.DELETE_TAG,
+						UIText.CommitGraphTable_DeleteTagAction));
 				popupMgr.add(new Separator());
 				popupMgr.add(getCommandContributionItem(
 						HistoryViewCommands.CREATE_PATCH,
