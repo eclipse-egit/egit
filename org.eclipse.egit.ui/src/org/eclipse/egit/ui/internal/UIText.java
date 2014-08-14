@@ -1914,10 +1914,16 @@ public class UIText extends NLS {
 	public static String HistoryPage_findbar_changeto_committer;
 
 	/** */
+	public static String HistoryPage_findbar_changeto_reference;
+
+	/** */
 	public static String HistoryPage_findbar_exceeded;
 
 	/** */
 	public static String HistoryPage_findbar_notFound;
+
+	/** */
+	public static String HistoryPage_findbar_reference;
 
 	/** */
 	public static String HistoryPreferencePage_MaxBranchLength;
