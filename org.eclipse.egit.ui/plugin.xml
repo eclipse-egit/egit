@@ -4715,6 +4715,10 @@
             icon="icons/obj16/delete_obj.gif">
       </image>
       <image
+            commandId="org.eclipse.egit.ui.history.DeleteTag"
+            icon="icons/obj16/delete_obj.gif">
+      </image>
+      <image
             commandId="org.eclipse.egit.ui.internal.reflog.OpenInCommitViewerCommand"
             icon="icons/obj16/open-commit.gif">
       </image>
@@ -5145,6 +5149,11 @@
             defaultHandler="org.eclipse.egit.ui.internal.history.command.CreateTagOnCommitHandler"
             id="org.eclipse.egit.ui.history.CreateTag"
             name="%CreateTagCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.DeleteTagOnCommitHandler"
+            id="org.eclipse.egit.ui.history.DeleteTag"
+            name="%DeleteTagCommand.name">
       </command>
       <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.PushCommitHandler"
