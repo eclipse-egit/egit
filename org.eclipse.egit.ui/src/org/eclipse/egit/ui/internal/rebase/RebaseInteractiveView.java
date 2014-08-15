@@ -11,7 +11,9 @@
 package org.eclipse.egit.ui.internal.rebase;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
@@ -36,6 +38,9 @@ import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.JFaceResources;
@@ -73,6 +78,7 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
@@ -134,6 +140,8 @@ public class RebaseInteractiveView extends ViewPart implements
 
 	/** these columns are dynamically resized to fit their contents */
 	private TreeViewerColumn[] dynamicColumns;
+
+	private List<PlanContextMenuAction> contextMenuItems;
 
 	/**
 	 * View for handling interactive rebase
@@ -764,8 +772,56 @@ public class RebaseInteractiveView extends ViewPart implements
 		}
 	}
 
-	private void createPopupMenu(TreeViewer planViewer) {
-		// TODO create popup menu
+	private void createPopupMenu(final TreeViewer planViewer) {
+		createContextMenuItems(planViewer);
+
+		MenuManager manager = new MenuManager();
+		manager.addMenuListener(new IMenuListener() {
+			public void menuAboutToShow(IMenuManager menuManager) {
+				boolean selectionNotEmpty = !planViewer.getSelection()
+						.isEmpty();
+				boolean rebaseNotStarted = !currentPlan
+						.hasRebaseBeenStartedYet();
+				boolean menuEnabled = selectionNotEmpty && rebaseNotStarted;
+				for (PlanContextMenuAction item : contextMenuItems)
+					item.setEnabled(menuEnabled);
+			}
+		});
+
+		for (PlanContextMenuAction item : contextMenuItems)
+			manager.add(item);
+
+		Menu menu = manager.createContextMenu(planViewer.getControl());
+		planViewer.getControl().setMenu(menu);
+	}
+
+	private void createContextMenuItems(final TreeViewer planViewer) {
+		contextMenuItems = new ArrayList<PlanContextMenuAction>();
+
+		contextMenuItems.add(new PlanContextMenuAction(
+				UIText.RebaseInteractiveStepActionToolBarProvider_PickText,
+				UIIcons.CHERRY_PICK, RebaseInteractivePlan.ElementAction.PICK,
+				planViewer, actionToolBarProvider));
+		contextMenuItems.add(new PlanContextMenuAction(
+				UIText.RebaseInteractiveStepActionToolBarProvider_SkipText,
+				UIIcons.REBASE_SKIP, RebaseInteractivePlan.ElementAction.SKIP,
+				planViewer, actionToolBarProvider));
+		contextMenuItems.add(new PlanContextMenuAction(
+				UIText.RebaseInteractiveStepActionToolBarProvider_EditText,
+				UIIcons.EDITCONFIG, RebaseInteractivePlan.ElementAction.EDIT,
+				planViewer, actionToolBarProvider));
+		contextMenuItems.add(new PlanContextMenuAction(
+				UIText.RebaseInteractiveStepActionToolBarProvider_SquashText,
+				UIIcons.SQUASH, RebaseInteractivePlan.ElementAction.SQUASH,
+				planViewer, actionToolBarProvider));
+		contextMenuItems.add(new PlanContextMenuAction(
+				UIText.RebaseInteractiveStepActionToolBarProvider_FixupText,
+				UIIcons.FIXUP, RebaseInteractivePlan.ElementAction.FIXUP,
+				planViewer, actionToolBarProvider));
+		contextMenuItems.add(new PlanContextMenuAction(
+				UIText.RebaseInteractiveStepActionToolBarProvider_RewordText,
+				UIIcons.REWORD, RebaseInteractivePlan.ElementAction.REWORD,
+				planViewer, actionToolBarProvider));
 	}
 
 	private static GitDateFormatter getNewDateFormatter() {
