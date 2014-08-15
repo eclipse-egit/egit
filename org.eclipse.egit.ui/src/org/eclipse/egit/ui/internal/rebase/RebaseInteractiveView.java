@@ -813,7 +813,9 @@ public class RebaseInteractiveView extends ViewPart implements
 		actionToolBarProvider.mapActionItemsToSelection(planTreeViewer
 				.getSelection());
 		if (!currentPlan.hasRebaseBeenStartedYet()) {
-			actionToolBarProvider.getTheToolbar().setEnabled(true);
+			if (!planTreeViewer.getSelection().isEmpty())
+				actionToolBarProvider.getTheToolbar().setEnabled(true);
+
 			startItem.setEnabled(true);
 			abortItem.setEnabled(true);
 			dndEnabled = true;
