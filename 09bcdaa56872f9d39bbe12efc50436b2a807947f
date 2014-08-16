@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_94bc5406",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveStepActionToolBarProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-08-16T08:53:56Z",
+      "side": 1,
+      "message": "We should first find out if we have to select one/deselect all and then do the right thing in the UI only once after the if-block. This avoids unnecessary UI changes.",
+      "revId": "09bcdaa56872f9d39bbe12efc50436b2a807947f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
