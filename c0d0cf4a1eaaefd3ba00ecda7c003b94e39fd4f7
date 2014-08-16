@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_9460d402",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveStepActionToolBarProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 2957
+      },
+      "writtenOn": "2014-08-16T12:29:53Z",
+      "side": 1,
+      "message": "Please remove the braces around the single-line-blocks. See also the Contributor Guide for this https://wiki.eclipse.org/EGit/Contributor_Guide#Coding_standards",
+      "revId": "c0d0cf4a1eaaefd3ba00ecda7c003b94e39fd4f7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
