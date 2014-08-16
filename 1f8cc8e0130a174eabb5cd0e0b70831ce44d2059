@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_f4130889",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/PlanContextMenuActionListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7239
+      },
+      "writtenOn": "2014-08-16T12:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_14d0443e",
+      "revId": "1f8cc8e0130a174eabb5cd0e0b70831ce44d2059",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_d4c52c85",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/PlanContextMenuActionListener.java",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_54563c33",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/PlanContextMenuActionListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 7239
+      },
+      "writtenOn": "2014-08-16T12:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_d4c52c85",
+      "revId": "1f8cc8e0130a174eabb5cd0e0b70831ce44d2059",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_b4c07073",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/PlanContextMenuActionListener.java",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2014-08-16T09:20:54Z",
       "side": 1,
       "message": "Negating the if-condition and moving these two lines into the then-block looks nicer to me than continuing.",
+      "revId": "1f8cc8e0130a174eabb5cd0e0b70831ce44d2059",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_141964ac",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/PlanContextMenuActionListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 7239
+      },
+      "writtenOn": "2014-08-16T12:25:44Z",
+      "side": 1,
+      "message": "Was trying to stick to the approach used in other places of \"rebase interactive ui\" sources.",
+      "parentUuid": "c7672b30_b4c07073",
       "revId": "1f8cc8e0130a174eabb5cd0e0b70831ce44d2059",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
