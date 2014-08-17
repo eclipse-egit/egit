@@ -144,8 +144,6 @@ public class CommitFileDiffViewer extends TableViewer {
 		this.site = site;
 		final Table rawTable = getTable();
 
-		rawTable.setLinesVisible(true);
-
 		Color fg = rawTable.getForeground();
 		Color bg = rawTable.getBackground();
 		RGB dimmedForegroundRgb = ColorUtil.blend(fg.getRGB(), bg.getRGB(), 60);
