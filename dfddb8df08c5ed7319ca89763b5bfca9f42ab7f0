@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_34df4088",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FindToolbar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-08-17T13:02:57Z",
+      "side": 1,
+      "message": "Hm, this is the icon we use for the \"References\" in Git Repositories view, right? Not sure I like it here, because it\u0027s so generic. Maybe rather use the one which is shown on \"Branches\"?",
+      "revId": "dfddb8df08c5ed7319ca89763b5bfca9f42ab7f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_94e6145d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FindToolbar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-08-17T13:02:57Z",
+      "side": 1,
+      "message": "The last argument here is wrong, it should be swapped with the \"..._changeto_all\" of above. It\u0027s the tooltip that is shown when hovering over the icon and tells the user what the *next* thing will be when clicking on it.",
+      "revId": "dfddb8df08c5ed7319ca89763b5bfca9f42ab7f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_d4cfecd3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FindToolbarThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-08-17T13:02:57Z",
+      "side": 1,
+      "message": "This is the full name of the ref, e.g. \"refs/heads/master\", so searching for \"refs\" or \"head\" will find all branches. Not sure if that\u0027s intended, it could be either a feature or bug :).\n\nBut I think when the user is looking for a specific branch, they don\u0027t enter the full name, so I\u0027d probably use the refname after calling Repository.shortenRefName on it.",
+      "revId": "dfddb8df08c5ed7319ca89763b5bfca9f42ab7f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_74e9b82c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FindToolbarThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-08-17T13:02:57Z",
+      "side": 1,
+      "message": "This excludes finding in remote-tracking branches (e.g. \"refs/remotes/origin/master\"), is there a reason for this?\n\nI think we should search in all refs, also the ones like HEAD, so just removing the if.",
+      "revId": "dfddb8df08c5ed7319ca89763b5bfca9f42ab7f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
