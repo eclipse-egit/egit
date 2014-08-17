@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_544d9c17",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-08-17T07:54:45Z",
+      "side": 1,
+      "message": "Mars is Eclipse 4.5. Done.",
+      "parentUuid": "c7672b30_b75400d0",
+      "revId": "e22555fe5f8e3a9ca4ed32299873bbaf8edd9531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_975744d6",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_3450e0ab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-08-17T07:54:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_975744d6",
+      "revId": "e22555fe5f8e3a9ca4ed32299873bbaf8edd9531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_8c21f7a9",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2014-08-13T12:07:35Z",
       "side": 1,
       "message": "Could you please add a note here that this method can be removed when we depend on Eclipse 4.5 or higher? I\u0027ve found it useful to search for \"Eclipse \\d\" in the past to find stuff that is no longer needed.",
+      "revId": "e22555fe5f8e3a9ca4ed32299873bbaf8edd9531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_944734f6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-08-17T07:54:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_8c21f7a9",
       "revId": "e22555fe5f8e3a9ca4ed32299873bbaf8edd9531",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
