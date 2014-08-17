@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_54ae3cf2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-08-17T13:27:09Z",
+      "side": 1,
+      "message": "This doesn\u0027t work for detached HEAD:\n\nCaused by: java.lang.NullPointerException\n\tat org.eclipse.egit.ui.internal.push.PushBranchWizard.\u003cinit\u003e(PushBranchWizard.java:59)\n\tat org.eclipse.egit.ui.internal.commit.CommitJob$2.run(CommitJob.java:143)\n\nThe reason for this is that getBranch() doesn\u0027t return null for a detached HEAD. Use this instead:\n\n    String fullBranch \u003d repository.getFullBranch();\n    if (fullBranch !\u003d null \u0026\u0026 fullBranch.startsWith(Constants.R_HEADS)) {\n        Ref ref \u003d repository.getRef(fullBranch);\n        ...\n    } else {\n        ...\n    }",
+      "revId": "4a1191e91287157134740a38910da25e746a8a31",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
