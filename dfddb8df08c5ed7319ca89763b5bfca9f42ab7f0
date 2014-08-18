@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_c0d562b3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FindToolbarThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 966
+      },
+      "writtenOn": "2014-08-18T21:42:54Z",
+      "side": 1,
+      "message": "I wasn\u0027t sure whether it could be useful to search for the full reference name. The user probably doesn\u0027t expect such a search mode. So I agree with shortening the ref names.",
+      "parentUuid": "c7672b30_d4cfecd3",
+      "revId": "dfddb8df08c5ed7319ca89763b5bfca9f42ab7f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_74e9b82c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FindToolbarThread.java",
         "patchSetId": 1
@@ -64,6 +82,24 @@
       "writtenOn": "2014-08-17T13:02:57Z",
       "side": 1,
       "message": "This excludes finding in remote-tracking branches (e.g. \"refs/remotes/origin/master\"), is there a reason for this?\n\nI think we should search in all refs, also the ones like HEAD, so just removing the if.",
+      "revId": "dfddb8df08c5ed7319ca89763b5bfca9f42ab7f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_a0d026c1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FindToolbarThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 966
+      },
+      "writtenOn": "2014-08-18T21:42:54Z",
+      "side": 1,
+      "message": "I didn\u0027t consider that but I agree.",
+      "parentUuid": "c7672b30_74e9b82c",
       "revId": "dfddb8df08c5ed7319ca89763b5bfca9f42ab7f0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
