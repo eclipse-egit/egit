@@ -281,7 +281,9 @@ class GerritConfigurationPage extends WizardPage {
 	private void checkPage() {
 		try {
 			pushURI = new URIish(uriText.getText());
-			scheme.select(scheme.indexOf(pushURI.getScheme()));
+			String uriScheme = pushURI.getScheme();
+			if (uriScheme != null)
+				scheme.select(scheme.indexOf(uriScheme));
 		} catch (URISyntaxException e) {
 			setErrorMessage(e.getLocalizedMessage());
 			setPageComplete(false);
