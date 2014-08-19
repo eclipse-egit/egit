@@ -267,9 +267,6 @@ public class UIIcons {
 	/** Reword for current rebase step */
 	public final static ImageDescriptor CURRENT_STEP;
 
-	/** Reword for todo rebase step */
-	public final static ImageDescriptor TODO_STEP;
-
 	/** base URL */
 	public final static URL base;
 
@@ -362,7 +359,6 @@ public class UIIcons {
 		REWORD = map("obj16/reword.gif"); //$NON-NLS-1$
 		DONE_STEP = map("obj16/done_step.gif"); //$NON-NLS-1$
 		CURRENT_STEP = map("obj16/current_step.gif"); //$NON-NLS-1$
-		TODO_STEP = map("obj16/todo_step.gif"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {

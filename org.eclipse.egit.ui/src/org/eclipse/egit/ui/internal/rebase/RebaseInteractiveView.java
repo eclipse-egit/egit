@@ -523,8 +523,6 @@ public class RebaseInteractiveView extends ViewPart implements
 				ElementType t = getType(element);
 				if (t != null) {
 					switch (t) {
-					case TODO:
-						return UIIcons.getImage(resources, UIIcons.TODO_STEP);
 					case DONE_CURRENT:
 						return UIIcons
 								.getImage(resources, UIIcons.CURRENT_STEP);
