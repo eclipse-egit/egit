@@ -49,6 +49,7 @@ public class PushBranchWizard extends Wizard {
 	private PushBranchPage pushBranchPage;
 	private ConfirmationPage confirmationPage;
 
+	private boolean dryRun = false;
 
 	/**
 	 * @param repository
@@ -104,12 +105,26 @@ public class PushBranchWizard extends Wizard {
 		};
 	}
 
+	/**
+	 * @param repository the repository the ref belongs to
+	 * @param refToPush
+	 * @param dryRun only the configuration is done without a push
+	 */
+	public PushBranchWizard(final Repository repository, Ref refToPush,
+			boolean dryRun) {
+		this(repository, refToPush);
+		this.dryRun = dryRun;
+	}
+
 	@Override
 	public void addPages() {
 		if (addRemotePage != null)
 			addPage(addRemotePage);
 		addPage(pushBranchPage);
-		addPage(confirmationPage);
+
+		if (!dryRun) {
+			addPage(confirmationPage);
+		}
 	}
 
 	@Override
@@ -123,7 +138,10 @@ public class PushBranchWizard extends Wizard {
 
 	@Override
 	public boolean canFinish() {
-		return getContainer().getCurrentPage() == confirmationPage;
+		if (!dryRun) {
+			return getContainer().getCurrentPage() == confirmationPage;
+		}
+		return getContainer().getCurrentPage() == pushBranchPage;
 	}
 
 	@Override
@@ -137,7 +155,9 @@ public class PushBranchWizard extends Wizard {
 			}
 			if (pushBranchPage.isConfigureUpstreamSelected())
 				configureUpstream();
-			startPush();
+			if (!dryRun) {
+				startPush();
+			}
 		} catch (IOException e) {
 			confirmationPage.setErrorMessage(e.getMessage());
 			return false;
