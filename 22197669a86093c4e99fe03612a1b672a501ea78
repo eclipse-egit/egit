@@ -69,6 +69,24 @@
       "revId": "22197669a86093c4e99fe03612a1b672a501ea78",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_a7b2f2cb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-08-21T13:17:23Z",
+      "side": 1,
+      "message": "Ah :). No worries mate, tested it now.",
+      "parentUuid": "c7672b30_07fe4676",
+      "revId": "22197669a86093c4e99fe03612a1b672a501ea78",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
