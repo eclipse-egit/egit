@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_e1bcdaa2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/DeleteTagOnCommitHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 966
+      },
+      "writtenOn": "2014-08-21T06:58:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_b43fd03d",
+      "revId": "1043bdf86ed4a4ba877b357c806828beac755e13",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_143fa43e",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/DeleteTagOnCommitHandler.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_c1b71eba",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/DeleteTagOnCommitHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 966
+      },
+      "writtenOn": "2014-08-21T06:58:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_143fa43e",
+      "revId": "1043bdf86ed4a4ba877b357c806828beac755e13",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_f4394858",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2014-08-17T12:46:08Z",
       "side": 1,
       "message": "I think this should be \"Delete Tag...\" and we should ask for confirmation even when exactly 1 tag is selected.\n\nThe reason for this is that tags (e.g. ones with message and a tag date) are a bit harder to recover than branches. And for branches, the menu entry asks in case the branch is unmerged.",
+      "revId": "1043bdf86ed4a4ba877b357c806828beac755e13",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_417e6e55",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 966
+      },
+      "writtenOn": "2014-08-21T06:58:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_f4394858",
       "revId": "1043bdf86ed4a4ba877b357c806828beac755e13",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
