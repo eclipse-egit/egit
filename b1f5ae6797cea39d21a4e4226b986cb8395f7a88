@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_273ee2e7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveStepActionToolBarProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-08-21T12:38:25Z",
+      "side": 1,
+      "message": "While we\u0027re in here, could you replace that with this:\n\n  for (Object selectedObj : structured.toList()) {",
+      "revId": "b1f5ae6797cea39d21a4e4226b986cb8395f7a88",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_07412662",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveStepActionToolBarProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-08-21T12:38:25Z",
+      "side": 1,
+      "message": "This code isn\u0027t from you, but maybe you didn\u0027t see the break problem below because there was an extra assignment hidden here, let\u0027s replace it while we\u0027re at it:\n\n  PlanElement entry \u003d (PlanElement) selectedObj;\n  lastSelectedEntry \u003d entry;",
+      "revId": "b1f5ae6797cea39d21a4e4226b986cb8395f7a88",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_c76f2eed",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveStepActionToolBarProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-08-21T12:38:25Z",
+      "side": 1,
+      "message": "This causes the lastSelectedEntry to be wrong as the loop can be terminated before the last selected entry was reached. Remove the break to fix it. (It\u0027s not really your fault as this whole code was already unreadable before.)",
+      "revId": "b1f5ae6797cea39d21a4e4226b986cb8395f7a88",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
