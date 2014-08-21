@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_47083e35",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/DeleteTagOnCommitHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 966
+      },
+      "writtenOn": "2014-08-21T13:02:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_e7e7ca1c",
+      "revId": "22197669a86093c4e99fe03612a1b672a501ea78",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_c7e28e0c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2014-08-21T12:12:24Z",
       "side": 1,
       "message": "The mnemonic is missing (sorry, didn\u0027t notice the first time). Maybe use \"e\", as \"d\" is already taken.",
+      "revId": "22197669a86093c4e99fe03612a1b672a501ea78",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_07fe4676",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 966
+      },
+      "writtenOn": "2014-08-21T13:02:55Z",
+      "side": 1,
+      "message": "I am unable to test that. I use OSX where Mnemonics are not supported! :-D",
+      "parentUuid": "c7672b30_c7e28e0c",
       "revId": "22197669a86093c4e99fe03612a1b672a501ea78",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
