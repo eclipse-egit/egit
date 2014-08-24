@@ -19,12 +19,18 @@ import java.util.Arrays;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.op.DiscardChangesOperation;
+import org.eclipse.egit.core.op.DiscardChangesOperation.Stage;
 import org.eclipse.egit.core.test.DualRepositoryTestCase;
 import org.eclipse.egit.core.test.TestRepository;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.util.IO;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -112,6 +118,43 @@ public class DiscardChangesOperationTest extends DualRepositoryTestCase {
 
 		assertEquals("Hello world 1",
 				testUtils.slurpAndClose(file1.getContents()));
+	}
+
+	@Test
+	public void testDiscardChangesWithStage() throws Exception {
+		Git git = Git.wrap(repository1.getRepository());
+		File file = new File(repository1.getRepository().getWorkTree(),
+				"conflict.txt");
+		repository1.appendFileContent(file, "base", false);
+		git.add().addFilepattern("conflict.txt").call();
+		git.commit().setMessage("commit").call();
+
+		git.checkout().setCreateBranch(true).setName("side").call();
+		repository1.appendFileContent(file, "side", false);
+		git.add().addFilepattern("conflict.txt").call();
+		RevCommit side = git.commit().setMessage("commit on side").call();
+
+		git.checkout().setName("master").call();
+		repository1.appendFileContent(file, "master", false);
+		git.add().addFilepattern("conflict.txt").call();
+		git.commit().setMessage("commit on master").call();
+
+		git.merge().include(side).call();
+
+		DirCache dirCache = repository1.getRepository().readDirCache();
+		assertEquals(1, dirCache.getEntry("conflict.txt").getStage());
+
+		IPath path = new Path(file.getAbsolutePath());
+		DiscardChangesOperation operation = new DiscardChangesOperation(
+				Arrays.asList(path));
+		operation.setStage(Stage.THEIRS);
+		operation.execute(new NullProgressMonitor());
+
+		DirCache dirCacheAfter = repository1.getRepository().readDirCache();
+		assertEquals("Expected index to be unmodified", 1, dirCacheAfter
+				.getEntry("conflict.txt").getStage());
+
+		assertEquals("side", new String(IO.readFully(file), "UTF-8"));
 	}
 
 	@Test
