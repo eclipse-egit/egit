@@ -50,6 +50,32 @@ public class DiscardChangesOperation implements IEGitOperation {
 
 	private String revision;
 
+	private Stage stage;
+
+	/**
+	 * The index stage to check out for conflicting files.
+	 */
+	public enum Stage {
+		/**
+		 * "base" stage
+		 */
+		BASE(CheckoutCommand.Stage.BASE),
+		/**
+		 * "ours" stage
+		 */
+		OURS(CheckoutCommand.Stage.OURS),
+		/**
+		 * "theirs" stage
+		 */
+		THEIRS(CheckoutCommand.Stage.THEIRS);
+
+		private CheckoutCommand.Stage checkoutStage;
+
+		private Stage(CheckoutCommand.Stage checkoutStage) {
+			this.checkoutStage = checkoutStage;
+		}
+	}
+
 	/**
 	 * Construct a {@link DiscardChangesOperation} object.
 	 *
@@ -84,6 +110,19 @@ public class DiscardChangesOperation implements IEGitOperation {
 		this.pathsByRepository = pathsByRepository;
 		this.schedulingRule = RuleUtil.getRuleForRepositories(pathsByRepository
 				.keySet());
+	}
+
+	/**
+	 * Set the index stage to check out for conflicting files. Not compatible
+	 * with revision.
+	 *
+	 * @param stage
+	 */
+	public void setStage(Stage stage) {
+		if (revision != null)
+			throw new IllegalStateException(
+					"Either stage or revision can be set, but not both"); //$NON-NLS-1$
+		this.stage = stage;
 	}
 
 	/*
@@ -151,7 +190,10 @@ public class DiscardChangesOperation implements IEGitOperation {
 			throws GitAPIException {
 		ResourceUtil.saveLocalHistory(repository);
 		CheckoutCommand checkoutCommand = new Git(repository).checkout();
-		checkoutCommand.setStartPoint(this.revision);
+		if (revision != null)
+			checkoutCommand.setStartPoint(revision);
+		if (stage != null)
+			checkoutCommand.setStage(stage.checkoutStage);
 		if (paths.isEmpty() || paths.contains("")) //$NON-NLS-1$
 			checkoutCommand.setAllPaths(true);
 		else {
