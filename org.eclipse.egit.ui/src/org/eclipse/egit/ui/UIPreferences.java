@@ -216,6 +216,9 @@ public class UIPreferences {
 	/** */
 	public static final String CLONE_WIZARD_SHOW_DETAILED_FAILURE_DIALOG = "CloneWizard_ShowDetailedFailureDialog"; //$NON-NLS-1$
 
+	/** */
+	public final static String REBASE_INTERACTIVE_ORDER_INVERSE = "rebase_interactive_order_inverse"; //$NON-NLS-1$
+
 	/**
 	 * Converts a persisted String separated with commas to an integer array
 	 *
