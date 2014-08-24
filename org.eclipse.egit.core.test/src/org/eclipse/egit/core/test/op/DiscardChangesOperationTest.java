@@ -14,6 +14,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.util.Arrays;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -98,6 +99,19 @@ public class DiscardChangesOperationTest extends DualRepositoryTestCase {
 
 		contents = testUtils.slurpAndClose(file2.getContents());
 		assertEquals("Hello world 2", contents);
+	}
+
+	@Test
+	public void testDiscardChangesWithPath() throws Exception {
+		IFile file1 = project.getFile(new Path("folder1/file1.txt"));
+		setNewFileContent(file1, "changed 1");
+
+		DiscardChangesOperation operation = new DiscardChangesOperation(
+				Arrays.asList(file1.getLocation()));
+		operation.execute(new NullProgressMonitor());
+
+		assertEquals("Hello world 1",
+				testUtils.slurpAndClose(file1.getContents()));
 	}
 
 	@Test
