@@ -33,6 +33,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
@@ -231,7 +232,49 @@ public class ProjectUtil {
 		} finally {
 			monitor.done();
 		}
+	}
 
+	/**
+	 * Refresh the resources that are within the passed repository paths.
+	 *
+	 * @param repository
+	 * @param relativePaths
+	 *            repository-relative paths to refresh
+	 * @param monitor
+	 * @throws CoreException
+	 */
+	public static void refreshRepositoryResources(Repository repository,
+			Collection<String> relativePaths, IProgressMonitor monitor)
+			throws CoreException {
+		if (relativePaths.isEmpty() || relativePaths.contains("")) { //$NON-NLS-1$
+			refreshResources(getProjects(repository), monitor);
+			return;
+		}
+
+		IPath repositoryPath = new Path(repository.getWorkTree().getAbsolutePath());
+		IProject[] projects = null;
+		Set<IResource> resources = new LinkedHashSet<IResource>();
+		for (String relativePath : relativePaths) {
+			IPath location = repositoryPath.append(relativePath);
+			IResource resource = ResourceUtil
+					.getResourceForLocation(location);
+			if (resource != null) {
+				// Resource exists for path, refresh it
+				resources.add(resource);
+			} else {
+				// Resource doesn't exist. Check if there are any projects
+				// contained in the path, we need to refresh them.
+				if (projects == null)
+					projects = getProjects(repository);
+				for (IProject project : projects) {
+					IPath projectLocation = project.getLocation();
+					if (projectLocation != null
+							&& location.isPrefixOf(projectLocation))
+						resources.add(project);
+				}
+			}
+		}
+		refreshResources(resources.toArray(new IResource[0]), monitor);
 	}
 
 	/**
