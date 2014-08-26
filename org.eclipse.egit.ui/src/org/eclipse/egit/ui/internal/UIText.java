@@ -982,6 +982,21 @@ public class UIText extends NLS {
 	public static String ReplaceTargetSelectionDialog_ReplaceWindowTitle;
 
 	/** */
+	public static String ReplaceWithOursTheirsMenu_CalculatingOursTheirsCommitsError;
+
+	/** */
+	public static String ReplaceWithOursTheirsMenu_OursWithCommitLabel;
+
+	/** */
+	public static String ReplaceWithOursTheirsMenu_OursWithoutCommitLabel;
+
+	/** */
+	public static String ReplaceWithOursTheirsMenu_TheirsWithCommitLabel;
+
+	/** */
+	public static String ReplaceWithOursTheirsMenu_TheirsWithoutCommitLabel;
+
+	/** */
 	public static String ReplaceWithPreviousActionHandler_NoParentCommitDialogMessage;
 
 	/** */
@@ -4983,6 +4998,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String StagingView_Refresh;
+
+	/** */
+	public static String StagingView_ReplaceWith;
 
 	/** */
 	public static String StagingView_LinkSelection;

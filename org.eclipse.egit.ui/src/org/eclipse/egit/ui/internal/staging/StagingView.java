@@ -54,6 +54,7 @@ import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
 import org.eclipse.egit.ui.internal.actions.BooleanPrefAction;
+import org.eclipse.egit.ui.internal.actions.ReplaceWithOursTheirsMenu;
 import org.eclipse.egit.ui.internal.commands.shared.AbortRebaseCommand;
 import org.eclipse.egit.ui.internal.commands.shared.AbstractRebaseCommandHandler;
 import org.eclipse.egit.ui.internal.commands.shared.ContinueRebaseCommand;
@@ -1513,6 +1514,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 				boolean addDelete = availableActions.contains(StagingEntry.Action.DELETE);
 				boolean addIgnore = availableActions.contains(StagingEntry.Action.IGNORE);
 				boolean addLaunchMergeTool = availableActions.contains(StagingEntry.Action.LAUNCH_MERGE_TOOL);
+				boolean addReplaceWithOursTheirsMenu = availableActions
+						.contains(StagingEntry.Action.REPLACE_WITH_OURS_THEIRS_MENU);
 
 				if (addStage)
 					menuMgr.add(new Action(UIText.StagingView_StageItemMenuLabel) {
@@ -1557,6 +1560,14 @@ public class StagingView extends ViewPart implements IShowInSource {
 					menuMgr.add(createItem(UIText.StagingView_MergeTool,
 							ActionCommands.MERGE_TOOL_ACTION,
 							fileSelection));
+				if (addReplaceWithOursTheirsMenu) {
+					MenuManager replaceWithMenu = new MenuManager(
+							UIText.StagingView_ReplaceWith);
+					ReplaceWithOursTheirsMenu oursTheirsMenu = new ReplaceWithOursTheirsMenu();
+					oursTheirsMenu.initialize(getSite());
+					replaceWithMenu.add(oursTheirsMenu);
+					menuMgr.add(replaceWithMenu);
+				}
 				menuMgr.add(new Separator());
 				menuMgr.add(createShowInMenu());
 			}
