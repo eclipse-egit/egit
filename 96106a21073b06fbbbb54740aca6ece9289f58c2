@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_4f75e73b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveDropTargetListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-08-26T23:31:51Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_af847bae",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractivePreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-08-26T23:31:51Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_8f7fff1b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractivePreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-08-26T23:31:51Z",
+      "side": 1,
+      "message": "we don\u0027t use author tags but want javadoc for public classes/non-trivial public methods",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_ef4dd319",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractivePreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-08-26T23:31:51Z",
+      "side": 1,
+      "message": "this javadoc doesn\u0027t make sense",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_2f486b05",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-08-26T23:31:51Z",
+      "side": 1,
+      "message": "shouldn\u0027t this variable better be named \"reverse\" ?",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_0f4bef02",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-08-26T23:31:51Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_6f61c37a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-08-26T23:31:51Z",
+      "side": 1,
+      "message": "we don\u0027t use author tags\n\nmissing javadoc",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_4f5cc7c5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-08-26T23:31:51Z",
+      "side": 1,
+      "message": "style nit: no braces around single line blocks",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_af5bdbcb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-08-26T23:31:51Z",
+      "side": 1,
+      "message": "what\u0027s 123 ?",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_2f150bcc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-08-26T23:31:51Z",
+      "side": 1,
+      "message": "this works but isn\u0027t there a simpler way to compute the step index ?",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_4f8e87b9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-08-26T23:31:51Z",
+      "side": 1,
+      "message": "strange method name",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_8f56dfa1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-08-26T23:31:51Z",
+      "side": 1,
+      "message": "style nit: no braces around single line blocks",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_efb83364",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-08-26T23:31:51Z",
+      "side": 1,
+      "message": "style nit: no braces around single line blocks",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
