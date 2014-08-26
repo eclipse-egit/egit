@@ -65,8 +65,9 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 		UNTRACKED(EnumSet.of(Action.STAGE, Action.DELETE, Action.IGNORE)),
 
 		/** in conflict */
-		CONFLICTING(EnumSet.of(Action.REPLACE_WITH_FILE_IN_GIT_INDEX, Action.REPLACE_WITH_HEAD_REVISION,
-					Action.STAGE, Action.LAUNCH_MERGE_TOOL));
+		CONFLICTING(EnumSet.of(Action.REPLACE_WITH_FILE_IN_GIT_INDEX,
+				Action.REPLACE_WITH_HEAD_REVISION, Action.STAGE,
+				Action.LAUNCH_MERGE_TOOL, Action.REPLACE_WITH_OURS_THEIRS_MENU));
 
 		private final Set<Action> availableActions;
 
@@ -93,6 +94,7 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 		DELETE,
 		IGNORE,
 		LAUNCH_MERGE_TOOL,
+		REPLACE_WITH_OURS_THEIRS_MENU
 	}
 
 	private final Repository repository;
