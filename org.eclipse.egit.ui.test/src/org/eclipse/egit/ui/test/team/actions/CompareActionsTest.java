@@ -250,7 +250,7 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		String compareWithHeadMenuLabel = util
 				.getPluginLocalizedValue("CompareWithHeadAction_label");
 		clickCompareWithAndWaitForSync(compareWithHeadMenuLabel);
-
+		closeFirstEmptySynchronizeDialog();
 		assertSynchronizeNoChange();
 
 		// change test file -> should have one change
