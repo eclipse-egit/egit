@@ -2570,6 +2570,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.PushTags"
+               label="%PushTagsCommand.label"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -3130,6 +3131,7 @@
             </command>
             <command
                   commandId="org.eclipse.egit.ui.team.PushTags"
+                  label="%PushTagsCommand.label"
                   style="push">
                <visibleWhen
                      checkEnabled="false">
@@ -3834,6 +3836,7 @@
                </command>
                <command
                      commandId="org.eclipse.egit.ui.team.PushTags"
+                     label="%PushTagsCommand.label"
                      style="push">
                </command>
                <command
