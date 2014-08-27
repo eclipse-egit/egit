@@ -58,6 +58,10 @@ final class RebaseInteractiveDropTargetListener extends ViewerDropAdapter {
 		case ViewerDropAdapter.LOCATION_NONE:
 			return false;
 		}
+
+		if (RebaseInteractivePreferences.isOrderReversed())
+			before = !before;
+
 		rebaseInteractiveView.getCurrentPlan().moveTodoEntry(sourceElement,
 				targetElement, before);
 		return true;

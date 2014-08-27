@@ -215,6 +215,8 @@ public class UIPreferences {
 	public static final String CLONE_WIZARD_IMPORT_PROJECTS = "CloneWizard_ImportProjects"; //$NON-NLS-1$
 	/** */
 	public static final String CLONE_WIZARD_SHOW_DETAILED_FAILURE_DIALOG = "CloneWizard_ShowDetailedFailureDialog"; //$NON-NLS-1$
+	/** */
+	public final static String REBASE_INTERACTIVE_ORDER_REVERSE = "rebase_interactive_order_reverse"; //$NON-NLS-1$
 
 	/**
 	 * Converts a persisted String separated with commas to an integer array
