@@ -765,6 +765,9 @@ public class UIText extends NLS {
 	public static String RebaseInteractiveStepActionToolBarProvider_UndoText;
 
 	/** */
+	public static String RebaseInteractiveView_HeadingStep;
+
+	/** */
 	public static String RebaseInteractiveView_HeadingAction;
 
 	/** */
