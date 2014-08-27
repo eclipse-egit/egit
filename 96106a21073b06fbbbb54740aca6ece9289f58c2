@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_83ecf832",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveDropTargetListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 7239
+      },
+      "writtenOn": "2014-08-27T22:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_4f75e73b",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_af847bae",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractivePreferences.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2014-08-26T23:31:51Z",
       "side": 1,
       "message": "missing license header",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_23b9a434",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractivePreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 7239
+      },
+      "writtenOn": "2014-08-27T22:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_af847bae",
       "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_e3ae8cf0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractivePreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 7239
+      },
+      "writtenOn": "2014-08-27T22:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_8f7fff1b",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_ef4dd319",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractivePreferences.java",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2014-08-26T23:31:51Z",
       "side": 1,
       "message": "this javadoc doesn\u0027t make sense",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_c3b1d04d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractivePreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 7239
+      },
+      "writtenOn": "2014-08-27T22:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_ef4dd319",
       "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_03bc6822",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 7239
+      },
+      "writtenOn": "2014-08-27T22:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_2f486b05",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_0f4bef02",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2014-08-26T23:31:51Z",
       "side": 1,
       "message": "missing license header",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_43bdc01c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 7239
+      },
+      "writtenOn": "2014-08-27T22:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_0f4bef02",
       "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_63c27c9d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 7239
+      },
+      "writtenOn": "2014-08-27T22:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_6f61c37a",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_4f5cc7c5",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2014-08-26T23:31:51Z",
       "side": 1,
       "message": "style nit: no braces around single line blocks",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_a3cc94cf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 7239
+      },
+      "writtenOn": "2014-08-27T22:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_4f5cc7c5",
       "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_83c7d8a8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 7239
+      },
+      "writtenOn": "2014-08-27T22:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_af5bdbcb",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_2f150bcc",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
         "patchSetId": 3
@@ -166,6 +328,24 @@
       "writtenOn": "2014-08-26T23:31:51Z",
       "side": 1,
       "message": "this works but isn\u0027t there a simpler way to compute the step index ?",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_e3804c51",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 7239
+      },
+      "writtenOn": "2014-08-27T22:30:01Z",
+      "side": 1,
+      "message": "I was considering several ways to compute step index (https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d441925#c7), but for different reasons this hacky approach with \"indexer\" was the only way I could add step to the UI without glitches and in a reasonable time.\n\nIf you have any suggestions of a better approach, please share them!",
+      "parentUuid": "c7672b30_2f150bcc",
       "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_e395ec96",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 7239
+      },
+      "writtenOn": "2014-08-27T22:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_4f8e87b9",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_8f56dfa1",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
         "patchSetId": 3
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_c398b0cf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 7239
+      },
+      "writtenOn": "2014-08-27T22:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_8f56dfa1",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_efb83364",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
         "patchSetId": 3
@@ -217,6 +433,24 @@
       "writtenOn": "2014-08-26T23:31:51Z",
       "side": 1,
       "message": "style nit: no braces around single line blocks",
+      "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_239084a2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebasePlanIndexer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 7239
+      },
+      "writtenOn": "2014-08-27T22:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_efb83364",
       "revId": "96106a21073b06fbbbb54740aca6ece9289f58c2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
