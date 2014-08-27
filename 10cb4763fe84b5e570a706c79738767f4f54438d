@@ -16,6 +16,24 @@
       "revId": "10cb4763fe84b5e570a706c79738767f4f54438d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_b5b68e6e",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-08-27T13:45:52Z",
+      "side": 1,
+      "message": "Done. Also added the missing mnemonic.",
+      "parentUuid": "c7672b30_6f1ee3f0",
+      "revId": "10cb4763fe84b5e570a706c79738767f4f54438d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
