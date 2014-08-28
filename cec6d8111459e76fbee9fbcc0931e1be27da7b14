@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_7814e672",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractivePreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-08-28T23:09:12Z",
+      "side": 1,
+      "message": "s/change set/commit/",
+      "revId": "cec6d8111459e76fbee9fbcc0931e1be27da7b14",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_d856da31",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractivePreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-08-28T23:09:12Z",
+      "side": 1,
+      "message": "s/change set/commit/",
+      "revId": "cec6d8111459e76fbee9fbcc0931e1be27da7b14",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_b82e7ec6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractivePreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-08-28T23:09:12Z",
+      "side": 1,
+      "message": "second value should be\n\n true - display change sets in historical order\n\ns/change set/commit/",
+      "revId": "cec6d8111459e76fbee9fbcc0931e1be27da7b14",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
