@@ -38,7 +38,7 @@ import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.internal.CommonUtils;
+import org.eclipse.egit.ui.internal.Comparators;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -117,7 +117,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 				List<IProject> projects = new ArrayList<IProject>(
 						Arrays.asList(mappedProjects));
 				Collections
-						.sort(projects, CommonUtils.RESOURCE_NAME_COMPARATOR);
+						.sort(projects, Comparators.RESOURCE_NAME_COMPARATOR);
 				ret.addAll(projects);
 			}
 		}

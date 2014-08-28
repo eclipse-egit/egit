@@ -18,7 +18,7 @@ import java.util.List;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.egit.ui.internal.CommonUtils;
+import org.eclipse.egit.ui.internal.Comparators;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.components.CachedCheckboxTreeViewer;
 import org.eclipse.egit.ui.internal.components.FilteredCheckboxTree;
@@ -160,7 +160,7 @@ public class BranchSelectionDialog<T> extends MessageDialog {
 
 			viewer.setLabelProvider(new GitLabelProvider());
 			viewer.setComparator(new ViewerComparator(
-					CommonUtils.STRING_ASCENDING_COMPARATOR));
+					Comparators.STRING_ASCENDING_COMPARATOR));
 			viewer.setInput(nodes);
 		} else {
 			branchesList = new TableViewer(area, this.style | SWT.H_SCROLL
@@ -170,7 +170,7 @@ public class BranchSelectionDialog<T> extends MessageDialog {
 			branchesList.setContentProvider(ArrayContentProvider.getInstance());
 			branchesList.setLabelProvider(new GitLabelProvider());
 			branchesList.setComparator(new ViewerComparator(
-					CommonUtils.STRING_ASCENDING_COMPARATOR));
+					Comparators.STRING_ASCENDING_COMPARATOR));
 			branchesList.setInput(nodes);
 			branchesList
 					.addSelectionChangedListener(new ISelectionChangedListener() {

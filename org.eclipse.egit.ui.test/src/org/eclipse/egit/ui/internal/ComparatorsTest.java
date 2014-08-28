@@ -9,6 +9,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal;
 
+import static org.eclipse.egit.ui.internal.Comparators.RESOURCE_NAME_COMPARATOR;
+import static org.eclipse.egit.ui.internal.Comparators.STRING_ASCENDING_COMPARATOR;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
@@ -27,9 +29,9 @@ import org.eclipse.egit.core.test.TestProject;
 import org.junit.Test;
 
 /**
- * Tests for {@link CommonUtils}.
+ * Tests for {@link Comparators}.
  */
-public class CommonUtilsTest {
+public class ComparatorsTest {
 	@Test
 	public void sortingShouldWorkForEasyStrings() {
 		assertSortedLike("", "");
@@ -41,11 +43,10 @@ public class CommonUtilsTest {
 
 	@Test
 	public void sortingShouldWorkForEqualAndEmptyStrings() {
-		assertEquals(0, CommonUtils.STRING_ASCENDING_COMPARATOR.compare("", ""));
-		assertEquals(0,
-				CommonUtils.STRING_ASCENDING_COMPARATOR.compare("a", "a"));
-		assertTrue(CommonUtils.STRING_ASCENDING_COMPARATOR.compare("", "a") < 0);
-		assertTrue(CommonUtils.STRING_ASCENDING_COMPARATOR.compare("a", "") > 0);
+		assertEquals(0, STRING_ASCENDING_COMPARATOR.compare("", ""));
+		assertEquals(0, STRING_ASCENDING_COMPARATOR.compare("a", "a"));
+		assertTrue(STRING_ASCENDING_COMPARATOR.compare("", "a") < 0);
+		assertTrue(STRING_ASCENDING_COMPARATOR.compare("a", "") > 0);
 	}
 
 	@Test
@@ -73,12 +74,10 @@ public class CommonUtilsTest {
 		assertSortedLike("00001", "2", "3");
 		assertSortedLike("a-01", "a-002");
 
-		assertNotEquals(0,
-				CommonUtils.STRING_ASCENDING_COMPARATOR.compare("01", "1"));
-		assertNotEquals(0,
-				CommonUtils.STRING_ASCENDING_COMPARATOR.compare("1", "01"));
-		assertTrue(CommonUtils.STRING_ASCENDING_COMPARATOR.compare("01x", "1") > 0);
-		assertTrue(CommonUtils.STRING_ASCENDING_COMPARATOR.compare("01", "1x") < 0);
+		assertNotEquals(0, STRING_ASCENDING_COMPARATOR.compare("01", "1"));
+		assertNotEquals(0, STRING_ASCENDING_COMPARATOR.compare("1", "01"));
+		assertTrue(STRING_ASCENDING_COMPARATOR.compare("01x", "1") > 0);
+		assertTrue(STRING_ASCENDING_COMPARATOR.compare("01", "1x") < 0);
 	}
 
 	@Test
@@ -86,8 +85,7 @@ public class CommonUtilsTest {
 		assertSortedLike("a", "b", "z");
 		assertSortedLike("a", "B", "c", "D");
 
-		assertNotEquals(0,
-				CommonUtils.STRING_ASCENDING_COMPARATOR.compare("b1", "B1"));
+		assertNotEquals(0, STRING_ASCENDING_COMPARATOR.compare("b1", "B1"));
 	}
 
 	/**
@@ -99,7 +97,7 @@ public class CommonUtilsTest {
 		List<String> expected = Arrays.asList(inputs);
 		List<String> tmp = new ArrayList<String>(expected);
 		Collections.shuffle(tmp, new Random(1));
-		Collections.sort(tmp, CommonUtils.STRING_ASCENDING_COMPARATOR);
+		Collections.sort(tmp, STRING_ASCENDING_COMPARATOR);
 		assertEquals(expected, tmp);
 
 		List<String> expectedWithoutDuplicates = new ArrayList<String>(
@@ -107,7 +105,7 @@ public class CommonUtilsTest {
 		List<String> shuffeled = new ArrayList<String>(expected);
 		Collections.shuffle(shuffeled, new Random(1));
 		TreeSet<String> sortedSet = new TreeSet<String>(
-				CommonUtils.STRING_ASCENDING_COMPARATOR);
+				STRING_ASCENDING_COMPARATOR);
 		sortedSet.addAll(shuffeled);
 		assertEquals(expectedWithoutDuplicates,
 				new ArrayList<String>(sortedSet));
@@ -127,7 +125,7 @@ public class CommonUtilsTest {
 				f1 });
 		List<IResource> tmp = new ArrayList<IResource>(expected);
 		Collections.shuffle(tmp, new Random(1));
-		Collections.sort(tmp, CommonUtils.RESOURCE_NAME_COMPARATOR);
+		Collections.sort(tmp, RESOURCE_NAME_COMPARATOR);
 		assertEquals(expected, tmp);
 	}
 }

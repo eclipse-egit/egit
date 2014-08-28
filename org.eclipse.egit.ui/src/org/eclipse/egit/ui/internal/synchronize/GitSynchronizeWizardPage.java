@@ -28,7 +28,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.egit.ui.internal.CommonUtils;
+import org.eclipse.egit.ui.internal.Comparators;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.Dialog;
@@ -217,7 +217,7 @@ class GitSynchronizeWizardPage extends WizardPage {
 					for (Ref ref : additionalRefs)
 						refs.add(ref.getName());
 
-				Collections.sort(refs, CommonUtils.STRING_ASCENDING_COMPARATOR);
+				Collections.sort(refs, Comparators.STRING_ASCENDING_COMPARATOR);
 
 				branchesEditor.setItems(refs.toArray(new String[refs.size()]));
 

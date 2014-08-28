@@ -24,7 +24,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.CommonUtils;
+import org.eclipse.egit.ui.internal.Comparators;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.synchronize.GitModelSynchronize;
@@ -112,7 +112,7 @@ public class SynchronizeWithMenu extends ContributionItem implements
 		} catch (IOException e) {
 			// do nothing
 		}
-		Collections.sort(refs, CommonUtils.REF_ASCENDING_COMPARATOR);
+		Collections.sort(refs, Comparators.REF_ASCENDING_COMPARATOR);
 		String currentBranch;
 		try {
 			currentBranch = repo.getFullBranch();

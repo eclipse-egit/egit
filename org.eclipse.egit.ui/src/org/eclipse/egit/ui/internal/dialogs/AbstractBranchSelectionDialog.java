@@ -15,7 +15,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
-import static org.eclipse.egit.ui.internal.CommonUtils.STRING_ASCENDING_COMPARATOR;
+import static org.eclipse.egit.ui.internal.Comparators.STRING_ASCENDING_COMPARATOR;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.egit.ui.internal.CommonUtils;
+import org.eclipse.egit.ui.internal.Comparators;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.CachedCheckboxTreeViewer;
 import org.eclipse.egit.ui.internal.components.FilteredCheckboxTree;
@@ -132,7 +132,7 @@ public class PushTagsPage extends WizardPage {
 		treeViewer
 				.setLabelProvider(new RepositoriesViewStyledCellLabelProvider());
 		treeViewer.setComparator(new ViewerComparator(
-				CommonUtils.STRING_ASCENDING_COMPARATOR));
+				Comparators.STRING_ASCENDING_COMPARATOR));
 		treeViewer.setInput(tagsNode);
 
 		final Object[] tagNodes = contentProvider.getElements(tagsNode);
