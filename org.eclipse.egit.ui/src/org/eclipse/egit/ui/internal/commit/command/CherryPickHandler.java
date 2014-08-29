@@ -33,6 +33,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.handler.SelectionHandler;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.widgets.Shell;
@@ -99,21 +100,31 @@ public class CherryPickHandler extends SelectionHandler {
 			final Repository repository, final List<RevCommit> commits)
 			throws ExecutionException {
 		final AtomicBoolean confirmed = new AtomicBoolean(false);
-		final String message;
+		final StringBuilder message = new StringBuilder();
+		final ObjectReader reader = repository.newObjectReader();
 		try {
-			message = MessageFormat.format(
+			message.append(MessageFormat.format(
 					UIText.CherryPickHandler_ConfirmMessage,
-					Integer.valueOf(commits.size()), repository.getBranch());
+					Integer.valueOf(commits.size()), repository.getBranch()));
+			for (RevCommit c : commits)
+				message.append(MessageFormat.format(
+						UIText.CherryPickHandler_CommitFormat, reader
+								.abbreviate(c.getId(), 7).name(), c
+								.getShortMessage()));
 		} catch (IOException e) {
 			throw new ExecutionException(
 					"Exception obtaining current repository branch", e); //$NON-NLS-1$
+		} finally {
+			if (reader != null)
+				reader.release();
 		}
 
 		shell.getDisplay().syncExec(new Runnable() {
 
 			public void run() {
 				confirmed.set(MessageDialog.openConfirm(shell,
-						UIText.CherryPickHandler_ConfirmTitle, message));
+						UIText.CherryPickHandler_ConfirmTitle,
+						message.toString()));
 			}
 		});
 		return confirmed.get();
