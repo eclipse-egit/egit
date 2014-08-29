@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (c) 2010, 2014 SAP AG and others.
  * Copyright (C) 2012, 2013 Tomasz Zarna <tzarna@gmail.com>
+ * Copyright (C) 2014 Axel Richard <axel.richard@obeo.fr>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,6 +11,7 @@
  * Contributors:
  *    Stefan Lay (SAP AG) - initial implementation
  *    Tomasz Zarna (IBM) - merge squash, bug 382720
+ *    Axel Richard (Obeo) - merge message, bug 422886
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
@@ -65,6 +67,8 @@ public class MergeOperation implements IEGitOperation {
 
 	private MergeResult mergeResult;
 
+	private String message;
+
 	/**
 	 * @param repository
 	 * @param refName name of a commit which should be merged
@@ -112,6 +116,18 @@ public class MergeOperation implements IEGitOperation {
 		this.commit = Boolean.valueOf(commit);
 	}
 
+	/**
+	 * Set the commit message to be used for the merge commit (in case one is
+	 * created)
+	 *
+	 * @param message
+	 *            the message to be used for the merge commit
+	 * @since 3.5
+	 */
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
 	public void execute(IProgressMonitor m) throws CoreException {
 		if (mergeResult != null)
 			throw new CoreException(new Status(IStatus.ERROR, Activator
@@ -146,6 +162,9 @@ public class MergeOperation implements IEGitOperation {
 					merge.setSquash(squash.booleanValue());
 				if (mergeStrategy != null) {
 					merge.setStrategy(mergeStrategy);
+				}
+				if (message != null) {
+					merge.setMessage(message);
 				}
 				try {
 					mergeResult = merge.call();
