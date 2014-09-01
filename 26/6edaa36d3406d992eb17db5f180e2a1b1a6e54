@@ -1,0 +1,9 @@
+Code-Review+2: Matthias Sohn <matthias.sohn@sap.com>
+Verified+1: Matthias Sohn <matthias.sohn@sap.com>
+Verified+1: Hudson CI
+Code-Review+1: Lars Vogel <Lars.Vogel@gmail.com>
+Submitted-by: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-at: Mon, 01 Sep 2014 18:09:55 -0400
+Reviewed-on: https://git.eclipse.org/r/32633
+Project: egit/egit
+Branch: refs/heads/master
