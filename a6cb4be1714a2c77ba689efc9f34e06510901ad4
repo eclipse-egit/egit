@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_622a6d7f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-09-01T12:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_2709a737",
+      "revId": "a6cb4be1714a2c77ba689efc9f34e06510901ad4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_470e6342",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2014-09-01T02:22:46Z",
       "side": 1,
       "message": "Not sure if the trailing \\n will cause the message to have an empty last line (couldn\u0027t try this out yet). Might consider moving it to the beginning of the string and remove one \\n from ConfirmMessage.",
+      "revId": "a6cb4be1714a2c77ba689efc9f34e06510901ad4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_c2cc2167",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-09-01T12:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_470e6342",
       "revId": "a6cb4be1714a2c77ba689efc9f34e06510901ad4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
