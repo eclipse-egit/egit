@@ -10,6 +10,10 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.rebase;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
@@ -32,17 +36,23 @@ final class RebaseInteractiveDropTargetListener extends ViewerDropAdapter {
 			return false;
 
 		DropTargetEvent event = getCurrentEvent();
-		RebaseInteractivePlan.PlanElement sourceElement = null;
-		if (event.data instanceof IStructuredSelection) {
-			final IStructuredSelection structuredSelection = (IStructuredSelection) data;
-			if (structuredSelection.size() > 1)
-				return false;
-			if (structuredSelection.getFirstElement() instanceof RebaseInteractivePlan.PlanElement)
-				sourceElement = (RebaseInteractivePlan.PlanElement) structuredSelection
-						.getFirstElement();
+
+		if (!(event.data instanceof IStructuredSelection))
+			return false;
+
+		final IStructuredSelection structuredSelection = (IStructuredSelection) data;
+		List selectionList = structuredSelection.toList();
+
+		if (selectionList.contains(getCurrentTarget()))
+			return false;
+
+		List<RebaseInteractivePlan.PlanElement> sourceElements = new ArrayList<RebaseInteractivePlan.PlanElement>();
+		for (Object obj : selectionList) {
+			if (obj instanceof RebaseInteractivePlan.PlanElement)
+				sourceElements.add((RebaseInteractivePlan.PlanElement) obj);
 		}
 
-		if (sourceElement == null)
+		if (sourceElements.isEmpty())
 			return false;
 
 		Object targetObj = getCurrentTarget();
@@ -59,11 +69,16 @@ final class RebaseInteractiveDropTargetListener extends ViewerDropAdapter {
 			return false;
 		}
 
+		if (!before)
+			Collections.reverse(sourceElements);
+
 		if (RebaseInteractivePreferences.isOrderReversed())
 			before = !before;
 
-		rebaseInteractiveView.getCurrentPlan().moveTodoEntry(sourceElement,
-				targetElement, before);
+		for (RebaseInteractivePlan.PlanElement element : sourceElements)
+			rebaseInteractiveView.getCurrentPlan().moveTodoEntry(element,
+					targetElement, before);
+
 		return true;
 	}
 
