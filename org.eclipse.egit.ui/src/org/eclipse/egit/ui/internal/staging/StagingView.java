@@ -49,6 +49,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
+import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
@@ -2161,7 +2162,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 						&& noConflicts;
 				rebaseContinueButton.setEnabled(rebaseContinueEnabled);
 
-				form.setText(StagingView.getRepositoryName(repository));
+				form.setText(GitLabels.getStyledLabelSafe(repository).toString());
 				updateCommitMessageComponent(repositoryChanged, indexDiffAvailable);
 				enableCommitWidgets(indexDiffAvailable && noConflicts);
 				updateSectionText();
@@ -2375,16 +2376,6 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private CommitMessageComponentState loadCommitMessageComponentState() {
 		return CommitMessageComponentStateManager.loadState(currentRepository);
-	}
-
-	private static String getRepositoryName(Repository repository) {
-		String repoName = Activator.getDefault().getRepositoryUtil()
-				.getRepositoryName(repository);
-		RepositoryState state = repository.getRepositoryState();
-		if (state != RepositoryState.SAFE)
-			return repoName + '|' + state.getDescription();
-		else
-			return repoName;
 	}
 
 	private Collection<String> getStagedFileNames() {

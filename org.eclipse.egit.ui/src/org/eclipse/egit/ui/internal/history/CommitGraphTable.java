@@ -37,7 +37,7 @@ import org.eclipse.egit.core.op.CreatePatchOperation.DiffHeaderFormat;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
-import org.eclipse.egit.ui.internal.GitLabelProvider;
+import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ResetMenu;
 import org.eclipse.egit.ui.internal.history.SWTCommitList.SWTLane;
@@ -625,7 +625,7 @@ class CommitGraphTable {
 				sb.append(": "); //$NON-NLS-1$
 				sb.append(r.getLeaf().getName());
 			}
-			String description = GitLabelProvider.getRefDescription(r);
+			String description = GitLabels.getRefDescription(r);
 			if (description != null) {
 				sb.append("\n"); //$NON-NLS-1$
 				sb.append(description);
