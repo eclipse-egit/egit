@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_4735c3dc",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/MergeOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1013
+      },
+      "writtenOn": "2014-09-01T07:04:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_514585ca",
+      "revId": "b19f394bbda98df6e338c26aab9946d7e14bb7a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_f12e5115",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/MergeOperation.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2014-08-29T22:54:09Z",
       "side": 1,
       "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "b19f394bbda98df6e338c26aab9946d7e14bb7a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_273087eb",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/MergeOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1013
+      },
+      "writtenOn": "2014-09-01T07:04:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_f12e5115",
       "revId": "b19f394bbda98df6e338c26aab9946d7e14bb7a1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
