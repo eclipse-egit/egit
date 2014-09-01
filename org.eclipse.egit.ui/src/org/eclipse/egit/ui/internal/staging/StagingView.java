@@ -11,6 +11,7 @@ package org.eclipse.egit.ui.internal.staging;
 import static org.eclipse.egit.ui.internal.CommonUtils.runCommand;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,6 +50,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
+import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
@@ -120,6 +122,7 @@ import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
+import org.eclipse.jgit.lib.BranchTrackingStatus;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
@@ -2374,13 +2377,55 @@ public class StagingView extends ViewPart implements IShowInSource {
 	}
 
 	private static String getRepositoryName(Repository repository) {
-		String repoName = Activator.getDefault().getRepositoryUtil()
-				.getRepositoryName(repository);
+		RepositoryUtil repositoryUtil = Activator.getDefault()
+				.getRepositoryUtil();
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(repositoryUtil.getRepositoryName(repository));
+
+		appendRepositoryDecoration(sb, repository, repositoryUtil);
+
 		RepositoryState state = repository.getRepositoryState();
-		if (state != RepositoryState.SAFE)
-			return repoName + '|' + state.getDescription();
-		else
-			return repoName;
+		if (state != RepositoryState.SAFE) {
+			sb.append('|');
+			sb.append(state.getDescription());
+		}
+
+		return sb.toString();
+	}
+
+	private static StringBuilder appendRepositoryDecoration(StringBuilder sb,
+			Repository repository, RepositoryUtil repositoryUtil) {
+
+		try {
+			String branchName = repository.getBranch();
+
+			String statusString = null;
+
+			BranchTrackingStatus trackingStatus = BranchTrackingStatus.of(
+					repository, branchName);
+			if (trackingStatus != null)
+				statusString = GitLabelProvider
+						.formatBranchTrackingStatus(trackingStatus);
+
+			String shortBranchName = repositoryUtil.getShortBranch(repository);
+
+			sb.append(' ');
+			sb.append('[');
+			sb.append(shortBranchName);
+
+			if (statusString != null && statusString.length() > 0) {
+				sb.append(' ');
+				sb.append(statusString);
+			}
+
+			sb.append(']');
+		} catch (IOException e) {
+			// suppress exception
+			// if we can not compute branch info, just do not append it and
+			// continue normally
+		}
+		return sb;
 	}
 
 	private Collection<String> getStagedFileNames() {
