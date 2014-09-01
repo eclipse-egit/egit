@@ -72,6 +72,13 @@ public class ResourceEditableRevision extends EditableRevision {
 		}
 	}
 
+	/**
+	 * @return the resource of this revision
+	 */
+	public IFile getFile() {
+		return file;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
