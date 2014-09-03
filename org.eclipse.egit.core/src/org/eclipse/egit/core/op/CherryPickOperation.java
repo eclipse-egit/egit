@@ -32,6 +32,7 @@ import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.RebaseCommand;
 import org.eclipse.jgit.api.RebaseCommand.InteractiveHandler;
+import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.IllegalTodoFileModification;
 import org.eclipse.jgit.lib.Constants;
@@ -49,6 +50,8 @@ public class CherryPickOperation implements IEGitOperation {
 	private final Repository repo;
 
 	private List<RevCommit> commits;
+
+	private RebaseResult result;
 
 	/**
 	 * Create cherry pick operation
@@ -106,7 +109,8 @@ public class CherryPickOperation implements IEGitOperation {
 					ObjectId headCommitId = repo.resolve(Constants.HEAD);
 					RevCommit headCommit = new RevWalk(repo)
 							.parseCommit(headCommitId);
-					git.rebase().setUpstream(headCommit.getParent(0))
+					result = git.rebase()
+							.setUpstream(headCommit.getParent(0))
 							.runInteractively(handler)
 							.setOperation(RebaseCommand.Operation.BEGIN).call();
 				} catch (GitAPIException e) {
@@ -131,5 +135,14 @@ public class CherryPickOperation implements IEGitOperation {
 
 	public ISchedulingRule getSchedulingRule() {
 		return RuleUtil.getRule(repo);
+	}
+
+	/**
+	 * Returns the result of the rebase operation.
+	 *
+	 * @return the rebase result
+	 */
+	public RebaseResult getResult() {
+		return result;
 	}
 }
