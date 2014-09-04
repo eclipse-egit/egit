@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_1a9af979",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-09-04T10:49:32Z",
+      "side": 1,
+      "message": "Please either implement this or remove the comment and create a bug.",
+      "revId": "afcef34bde44e85ee42e7f738b2b628f8be5d7dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
