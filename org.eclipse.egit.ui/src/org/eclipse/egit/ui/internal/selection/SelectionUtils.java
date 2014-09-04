@@ -27,6 +27,7 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.revision.FileRevisionEditorInput;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
@@ -34,6 +35,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISources;
@@ -265,6 +267,13 @@ public class SelectionUtils {
 			IResource resource = ResourceUtil.getResource(editorInput);
 			if (resource != null)
 				return new StructuredSelection(resource);
+			if (editorInput instanceof FileRevisionEditorInput) {
+				FileRevisionEditorInput fileRevisionEditorInput = (FileRevisionEditorInput) editorInput;
+				IFileRevision fileRevision = fileRevisionEditorInput
+						.getFileRevision();
+				if (fileRevision != null)
+					return new StructuredSelection(fileRevision);
+			}
 		}
 
 		return StructuredSelection.EMPTY;
