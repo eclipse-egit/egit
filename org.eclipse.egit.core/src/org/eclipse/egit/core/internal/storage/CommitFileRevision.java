@@ -35,7 +35,7 @@ import org.eclipse.team.core.history.ITag;
  * An {@link IFileRevision} for a version of a specified resource in the
  * specified commit (revision).
  */
-class CommitFileRevision extends GitFileRevision implements
+public class CommitFileRevision extends GitFileRevision implements
 		OpenWorkspaceVersionEnabled {
 	private final Repository db;
 

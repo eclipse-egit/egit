@@ -4234,6 +4234,26 @@
             </visibleWhen>
          </command>
       </menuContribution>
+      <menuContribution
+         locationURI="popup:#AbstractTextEditorRulerContext?after=rulers">
+         <command
+            commandId="org.eclipse.egit.ui.team.ShowBlame"
+            label="%ShowBlameAction_label"
+            style="push">
+            <visibleWhen
+               checkEnabled="false">
+               <with
+                     variable="activeEditorInput">
+                  <adapt
+                     type="org.eclipse.team.core.history.IFileRevision">
+                     <instanceof
+                           value="org.eclipse.egit.core.internal.storage.CommitFileRevision">
+                     </instanceof>
+                  </adapt>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
    </extension>
    <extension
          name="%RepositoryCommandsLabel"
