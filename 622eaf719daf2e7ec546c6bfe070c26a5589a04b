@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "c7672b30_5f22a32d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-09-04T08:26:04Z",
+      "side": 1,
+      "message": "duplicate sign-off, usually sign-off is the last footer in the message",
+      "revId": "622eaf719daf2e7ec546c6bfe070c26a5589a04b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7672b30_0284b4e7",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/PluginPreferenceInitializer.java",
         "patchSetId": 2
