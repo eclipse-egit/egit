@@ -16,6 +16,24 @@
       "revId": "afcef34bde44e85ee42e7f738b2b628f8be5d7dd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7672b30_ce056251",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-09-04T14:55:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7672b30_1a9af979",
+      "revId": "afcef34bde44e85ee42e7f738b2b628f8be5d7dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
