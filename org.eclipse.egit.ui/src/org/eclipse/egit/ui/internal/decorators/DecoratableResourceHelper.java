@@ -13,7 +13,7 @@ package org.eclipse.egit.ui.internal.decorators;
 import java.io.IOException;
 
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.GitLabelProvider;
+import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.jgit.lib.BranchTrackingStatus;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
@@ -52,7 +52,7 @@ public class DecoratableResourceHelper {
 		if (status.getAheadCount() == 0 && status.getBehindCount() == 0)
 			return null;
 
-		String formattedStatus = GitLabelProvider.formatBranchTrackingStatus(status);
+		String formattedStatus = GitLabels.formatBranchTrackingStatus(status);
 		return formattedStatus;
 	}
 }
