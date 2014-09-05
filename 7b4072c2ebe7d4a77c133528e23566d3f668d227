@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7672b30_a71ac92b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabels.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-09-05T15:09:26Z",
+      "side": 1,
+      "message": "as you moved that code from another class you should list the original author(s) here",
+      "revId": "7b4072c2ebe7d4a77c133528e23566d3f668d227",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
