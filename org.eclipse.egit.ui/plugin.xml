@@ -137,7 +137,7 @@
                enablesFor="*"
                id="org.eclipse.egit.ui.internal.actions.applyPatch"
                label="%ApplyPatchAction_label"
-               menubarPath="team.main/group6"
+               menubarPath="team.main/applyPatchGroup"
                overrideActionId="org.eclipse.team.ui.applyPatch">
          </action>
          <action
@@ -147,13 +147,6 @@
                id="org.eclipse.egit.ui.internal.actions.MergeTool"
                label="%MergeToolAction.label"
                menubarPath="team.main/group4">
-         </action>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.CreatePatchAction"
-               id="org.eclipse.egit.ui.internal.actions.CreatePatchAction"
-               label="%CreatePatchAction.label"
-               menubarPath="team.main/group6"
-               tooltip="%CreatePatchAction.tooltip">
          </action>
       </objectContribution>
       <objectContribution
@@ -4034,10 +4027,6 @@
                </command>
             </menu>
             <separator
-                  name="applyPatchGroup"
-                  visible="false">
-            </separator>
-            <separator
                   name="group2"
                   visible="true">
             </separator>
@@ -4136,6 +4125,21 @@
             <separator
                   name="group6"
                   visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.egit.ui.team.CreatePatch"
+                  label="%CreatePatchAction.label"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <test
+                        property="GitSelection.resourcesSingleRepository">
+                  </test>
+               </visibleWhen>
+            </command>
+            <separator
+                  name="applyPatchGroup"
+                  visible="false">
             </separator>
             <separator
                   name="group7"
