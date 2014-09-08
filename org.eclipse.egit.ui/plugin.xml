@@ -1215,7 +1215,7 @@
          </class>
          <activeWhen>
             <or>
-               <test property="GitSelection.projectSingleRepository">
+               <test property="GitSelection.resourcesSingleRepository">
                </test>
                <and>
                   <count
@@ -4200,18 +4200,48 @@
                </visibleWhen>
             </command>
             <menu
-                  label="Repository">
+                  label="%RepositorySubMenu.label">
                <visibleWhen
                      checkEnabled="false">
                      <test
-                           property="Foo.bar">
+                           property="GitSelection.fileOrFolderInRepository">
                      </test>
                </visibleWhen>
+               <separator
+                     name="group1"
+                     visible="true">
+               </separator>
                <command
                      commandId="org.eclipse.egit.ui.team.SimplePush"
                      label="%PushToUpstreamAction.label"
                      style="push">
                </command>
+               <command
+                     commandId="org.eclipse.egit.ui.team.SimpleFetch"
+                     label="%FetchFromUpstreamAction.label"
+                     style="push">
+               </command>
+               <dynamic
+                     class="org.eclipse.egit.ui.internal.actions.PushMenu"
+                     id="org.eclipse.egit.ui.team.popup.Push">
+               </dynamic>
+               <command
+                     commandId="org.eclipse.egit.ui.team.Pull"
+                     label="%RepoViewPullMenu.label"
+                     style="push">
+               </command>
+               <separator
+                     name="group2"
+                     visible="true">
+               </separator>
+               <menu
+                     label="%SwitchToMenu.label"
+                     icon="icons/obj16/branches_obj.gif">
+                  <dynamic
+                        class="org.eclipse.egit.ui.internal.actions.SwitchToMenu"
+                        id="org.eclipse.egit.ui.switchToMenu">
+                  </dynamic>
+               </menu>
             </menu>
          </menu>
       </menuContribution>
@@ -4818,7 +4848,7 @@
             class="org.eclipse.egit.ui.internal.selection.SelectionPropertyTester"
             id="org.eclipse.egit.ui.SelectionTester"
             namespace="GitSelection"
-            properties="projectSingleRepository,projectsWithRepositories,resourcesSingleRepository"
+            properties="projectSingleRepository,projectsWithRepositories,resourcesSingleRepository,fileOrFolderInRepository"
             type="java.util.Collection">
       </propertyTester>
    </extension>
