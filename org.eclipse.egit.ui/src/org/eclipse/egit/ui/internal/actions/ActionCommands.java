@@ -110,12 +110,6 @@ public class ActionCommands {
 	/** "Rebase" action command id */
 	public static final String REBASE_ACTION = "org.eclipse.egit.ui.team.Rebase"; //$NON-NLS-1$
 
-	/** "Show History" action command id */
-	public static final String SHOW_HISTORY = "org.eclipse.egit.ui.team.ShowHistory"; //$NON-NLS-1$
-
-	/** "Show Repository View" action command id */
-	public static final String SHOW_REPO_VIEW = "org.eclipse.egit.ui.team.ShowRepositoriesView"; //$NON-NLS-1$
-
 	/** "Stash Changes" action command id */
 	public static final String STASH_CREATE = "org.eclipse.egit.ui.team.stash.create"; //$NON-NLS-1$
 

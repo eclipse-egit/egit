@@ -141,22 +141,6 @@
                overrideActionId="org.eclipse.team.ui.applyPatch">
          </action>
          <action
-               class="org.eclipse.egit.ui.internal.actions.ShowHistoryAction"
-               definitionId="org.eclipse.egit.ui.team.ShowHistory"
-               icon="icons/obj16/history.gif"
-               id="org.eclipse.egit.ui.internal.actions.ShowHistoryActionHandler"
-               label="%ShowResourceInHistoryAction_label"
-               menubarPath="team.main/group9">
-         </action>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.ShowRepositoriesViewAction"
-               definitionId="org.eclipse.egit.ui.team.ShowRepositoriesView"
-               icon="icons/eview16/repo_rep.gif"
-               id="org.eclipse.egit.ui.internal.actions.ShowRepositoriesViewAction"
-               label="%ShowRepositoryAction_label"
-               menubarPath="team.main/group9">
-         </action>
-         <action
                class="org.eclipse.egit.ui.internal.actions.MergeToolAction"
                definitionId="org.eclipse.egit.ui.team.MergeTool"
                icon="icons/obj16/mergetool.gif"
@@ -187,7 +171,7 @@
                definitionId="org.eclipse.egit.ui.team.ShowBlame"
                label="%ShowBlameAction_label"
                icon="icons/etool16/annotate.gif"
-               menubarPath="team.main/group9">
+               menubarPath="team.main/showAnnotationsGroup">
          </action>
       </objectContribution>
    </extension>
@@ -1562,16 +1546,9 @@
                class="org.eclipse.egit.ui.internal.actions.ShowHistoryActionHandler">
          </class>
          <activeWhen>
-            <and>
-               <count
-                     value="1">
-               </count>
-               <iterate>
-                  <adapt
-                        type="org.eclipse.core.resources.IResource">
-                  </adapt>
-               </iterate>
-            </and>
+            <test
+                  property="GitSelection.resourcesSingleRepository">
+            </test>
          </activeWhen>
       </handler>
       <handler
@@ -4171,6 +4148,32 @@
             <separator
                   name="group9"
                   visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.egit.ui.team.ShowHistory"
+                  label="%ShowResourceInHistoryAction_label"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <test
+                        property="GitSelection.resourcesSingleRepository">
+                  </test>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="org.eclipse.egit.ui.team.ShowRepositoriesView"
+                  label="%ShowRepositoryAction_label"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <test
+                        property="GitSelection.resourcesSingleRepository">
+                  </test>
+               </visibleWhen>
+            </command>
+            <separator
+                  name="showAnnotationsGroup"
+                  visible="false">
             </separator>
             <separator
                   name="group10"
