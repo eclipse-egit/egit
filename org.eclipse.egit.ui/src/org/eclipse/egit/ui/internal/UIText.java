@@ -11,6 +11,7 @@
  * Copyright (C) 2013, Ben Hammen <hammenb@gmail.com>
  * Copyright (C) 2014, Marc Khouzam <marc.khouzam@ericsson.com>
  * Copyright (C) 2014, Red Hat Inc.
+ * Copyright (C) 2014, Axel Richard <axel.richard@obeo.fr>
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -5006,6 +5007,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String StagingViewContentProvider_SubmoduleError;
+
+	/** */
+	public static String StagingViewContentProvider_SymlinkError;
 
 	/** */
 	public static String StashApplyCommand_applyFailed;

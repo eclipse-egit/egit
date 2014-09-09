@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2013 Bernard Leach <leachbj@bouncycastle.org> and others.
+ * Copyright (C) 2011, 2014 Bernard Leach <leachbj@bouncycastle.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -27,11 +27,20 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * Label provider for {@link StagingEntry} objects
  */
 public class StagingViewLabelProvider extends LabelProvider {
+
+	private static ImageDescriptor SYMLINK;
+
+	static {
+		SYMLINK = AbstractUIPlugin.imageDescriptorFromPlugin(
+				Activator.getPluginId(), "/icons/ovr/symlink_ovr.png"); //$NON-NLS-1$
+	}
+
 	private StagingView stagingView;
 
 	private WorkbenchLabelProvider workbenchLabelProvider = new WorkbenchLabelProvider();
@@ -89,12 +98,21 @@ public class StagingViewLabelProvider extends LabelProvider {
 					.getEditorRegistry().getImageDescriptor(name);
 			image = (Image) this.resourceManager.get(descriptor);
 		}
+		if (diff.isSymlink()) {
+			image = addSymlinkDecorationToImage(image);
+		}
 		return image;
 	}
 
 	private Image getDecoratedImage(Image base, ImageDescriptor decorator) {
 		DecorationOverlayIcon decorated = new DecorationOverlayIcon(base,
 				decorator, IDecoration.BOTTOM_RIGHT);
+		return (Image) this.resourceManager.get(decorated);
+	}
+
+	private Image addSymlinkDecorationToImage(Image base) {
+		DecorationOverlayIcon decorated = new DecorationOverlayIcon(base,
+				SYMLINK, IDecoration.TOP_RIGHT);
 		return (Image) this.resourceManager.get(decorated);
 	}
 
