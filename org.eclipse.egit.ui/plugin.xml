@@ -5583,4 +5583,17 @@
         priority="normal"
         name="%GitIgnoreContentTypeName"/>
   </extension>
+  <extension
+        point="org.eclipse.ui.trace.traceComponents">
+     <component
+           id="org.eclipse.egit.ui.traceComponent"
+           label="%extension.traceComponent.name">
+        <bundle
+              name="org.eclipse.egit.core">
+        </bundle>
+        <bundle
+              name="org.eclipse.egit.ui">
+        </bundle>
+     </component>
+  </extension>
 </plugin>
