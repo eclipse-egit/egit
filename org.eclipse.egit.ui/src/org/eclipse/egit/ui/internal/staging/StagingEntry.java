@@ -2,6 +2,7 @@
  * Copyright (C) 2011, Bernard Leach <leachbj@bouncycastle.org>
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2014, Axel Richard <axel.richard@obeo.fr>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -102,6 +103,8 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 
 	private boolean submodule;
 
+	private boolean symlink;
+
 	/**
 	 * @param repository
 	 *            repository for this entry
@@ -128,6 +131,20 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 	 */
 	public boolean isSubmodule() {
 		return submodule;
+	}
+
+	/**
+	 * @param symlink
+	 */
+	public void setSymlink(boolean symlink) {
+		this.symlink = symlink;
+	}
+
+	/**
+	 * @return true if symlink, false otherwise
+	 */
+	public boolean isSymlink() {
+		return symlink;
 	}
 
 	/**
