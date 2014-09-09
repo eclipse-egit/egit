@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2012 Jens Baumgart <jens.baumgart@sap.com> and others.
+ * Copyright (C) 2011, 2014 Jens Baumgart <jens.baumgart@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.IndexDiff;
 
 /**
@@ -43,6 +44,8 @@ public class IndexDiffData {
 
 	private final Set<String> ignored;
 
+	private final Set<String> symlinks;
+
 	private final Collection<IResource> changedResources;
 
 	/**
@@ -66,6 +69,8 @@ public class IndexDiffData {
 				.getConflicting()));
 		ignored = Collections.unmodifiableSet(new HashSet<String>(indexDiff
 				.getIgnoredNotInIndex()));
+		symlinks = Collections.unmodifiableSet(new HashSet<String>(indexDiff
+				.getPathsWithIndexMode(FileMode.SYMLINK)));
 		changedResources = null;
 	}
 
@@ -100,6 +105,7 @@ public class IndexDiffData {
 		Set<String> modified2 = new HashSet<String>(baseDiff.getModified());
 		Set<String> untracked2 = new HashSet<String>(baseDiff.getUntracked());
 		Set<String> conflicts2 = new HashSet<String>(baseDiff.getConflicting());
+		Set<String> symlinks2 = new HashSet<String>(baseDiff.getSymlinks());
 
 		mergeList(added2, changedFiles, diffForChangedFiles.getAdded());
 		mergeList(changed2, changedFiles, diffForChangedFiles.getChanged());
@@ -107,6 +113,8 @@ public class IndexDiffData {
 		mergeList(missing2, changedFiles, diffForChangedFiles.getMissing());
 		mergeList(modified2, changedFiles, diffForChangedFiles.getModified());
 		mergeList(untracked2, changedFiles, diffForChangedFiles.getUntracked());
+		mergeList(symlinks2, changedFiles,
+				diffForChangedFiles.getPathsWithIndexMode(FileMode.SYMLINK));
 		Set<String> untrackedFolders2 = mergeUntrackedFolders(
 				baseDiff.getUntrackedFolders(), changedFiles,
 				getUntrackedFolders(diffForChangedFiles));
@@ -124,6 +132,7 @@ public class IndexDiffData {
 		untrackedFolders = Collections.unmodifiableSet(untrackedFolders2);
 		conflicts = Collections.unmodifiableSet(conflicts2);
 		ignored = Collections.unmodifiableSet(ignored2);
+		symlinks = Collections.unmodifiableSet(symlinks2);
 	}
 
 	private void mergeList(Set<String> baseList,
@@ -245,6 +254,13 @@ public class IndexDiffData {
 	}
 
 	/**
+	 * @return list of files that are symlinks
+	 */
+	public Set<String> getSymlinks() {
+		return symlinks;
+	}
+
+	/**
 	 * @return the changed files
 	 */
 	public Collection<IResource> getChangedResources() {
@@ -263,6 +279,7 @@ public class IndexDiffData {
 		dumpList(builder, "untrackedFolders", untrackedFolders); //$NON-NLS-1$
 		dumpList(builder, "conflicts", conflicts); //$NON-NLS-1$
 		dumpList(builder, "ignored", ignored); //$NON-NLS-1$
+		dumpList(builder, "symlinks", symlinks); //$NON-NLS-1$
 		dumpResourceList(builder,
 				"changedResources", changedResources); //$NON-NLS-1$
 		return builder.toString();
