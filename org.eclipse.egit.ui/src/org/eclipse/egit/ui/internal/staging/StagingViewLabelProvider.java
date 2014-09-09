@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2013 Bernard Leach <leachbj@bouncycastle.org> and others.
+ * Copyright (C) 2011, 2014 Bernard Leach <leachbj@bouncycastle.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,12 +8,16 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.staging;
 
+import java.io.IOException;
+
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIIcons;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.DecorationResult;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.DecorationHelper;
+import org.eclipse.egit.ui.internal.staging.StagingEntry.State;
 import org.eclipse.egit.ui.internal.staging.StagingView.Presentation;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
@@ -23,15 +27,36 @@ import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StyledString;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.FileMode;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevTree;
+import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.util.FS;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * Label provider for {@link StagingEntry} objects
  */
 public class StagingViewLabelProvider extends LabelProvider {
+
+	private static ImageDescriptor SYMLINK;
+
+	static {
+		SYMLINK = AbstractUIPlugin.imageDescriptorFromPlugin(
+				IDEWorkbenchPlugin.IDE_WORKBENCH,
+				"$nl$/icons/full/ovr16/symlink_ovr.png"); //$NON-NLS-1$
+
+	}
+
 	private StagingView stagingView;
 
 	private WorkbenchLabelProvider workbenchLabelProvider = new WorkbenchLabelProvider();
@@ -89,12 +114,51 @@ public class StagingViewLabelProvider extends LabelProvider {
 					.getEditorRegistry().getImageDescriptor(name);
 			image = (Image) this.resourceManager.get(descriptor);
 		}
+		image = handleSymlinkDecoration(diff, image);
 		return image;
 	}
 
 	private Image getDecoratedImage(Image base, ImageDescriptor decorator) {
 		DecorationOverlayIcon decorated = new DecorationOverlayIcon(base,
 				decorator, IDecoration.BOTTOM_RIGHT);
+		return (Image) this.resourceManager.get(decorated);
+	}
+
+	private Image handleSymlinkDecoration(StagingEntry entry, Image base) {
+		Image image = base;
+		try {
+			Repository repository = entry.getRepository();
+			FS fs = repository.getFS();
+			if (!fs.supportsSymlinks()) {
+				return image;
+			}
+			State state = entry.getState();
+			if (State.REMOVED == state || State.MISSING == state
+					|| State.MISSING_AND_CHANGED == state) {
+				ObjectId headCommitId = repository.resolve(
+						Constants.HEAD);
+				if (headCommitId != null) {
+					RevWalk revWalk = new RevWalk(repository);
+					RevCommit headCommit = revWalk.parseCommit(headCommitId);
+					RevTree headTree = headCommit.getTree();
+					TreeWalk tw = TreeWalk.forPath(repository, entry.getPath(),
+							headTree);
+					if (FileMode.SYMLINK == tw.getFileMode(0))
+						image = addSymlinkDecorationToImage(image);
+				}
+			} else {
+				if (fs.isSymLink(entry.getLocation().toFile()))
+					image = addSymlinkDecorationToImage(image);
+			}
+		} catch (IOException e) {
+			Activator.error(UIText.StagingViewLabelProvider_SymlinkError, e);
+		}
+		return image;
+	}
+
+	private Image addSymlinkDecorationToImage(Image base) {
+		DecorationOverlayIcon decorated = new DecorationOverlayIcon(base,
+				SYMLINK, IDecoration.TOP_RIGHT);
 		return (Image) this.resourceManager.get(decorated);
 	}
 
