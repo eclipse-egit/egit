@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2013 Bernard Leach <leachbj@bouncycastle.org> and others.
+ * Copyright (C) 2011, 2014 Bernard Leach <leachbj@bouncycastle.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -35,11 +35,20 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.staging.StagingEntry.State;
 import org.eclipse.egit.ui.internal.staging.StagingView.Presentation;
 import org.eclipse.egit.ui.internal.staging.StagingView.StagingViewUpdate;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.FileMode;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevTree;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.submodule.SubmoduleWalk;
+import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.util.FS;
 import org.eclipse.ui.model.WorkbenchContentProvider;
 
 /**
@@ -328,8 +337,10 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		try {
 		SubmoduleWalk walk = SubmoduleWalk.forIndex(repository);
 		while(walk.next())
-			for (StagingEntry entry : nodes)
-				entry.setSubmodule(entry.getPath().equals(walk.getPath()));
+				for (StagingEntry entry : nodes) {
+					entry.setSubmodule(entry.getPath().equals(walk.getPath()));
+					entry.setSymlink(isSymlink(entry));
+				}
 		} catch(IOException e) {
 			Activator.error(UIText.StagingViewContentProvider_SubmoduleError, e);
 		}
@@ -406,4 +417,40 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		}
 	}
 
+	/**
+	 * Check if the given StagingEntry is a symlink.
+	 *
+	 * @param entry
+	 *            the StagingEntry to check
+	 * @return true if symlink, false otherwise
+	 */
+	private boolean isSymlink(StagingEntry entry) {
+		boolean symlink = false;
+		try {
+			FS fs = repository.getFS();
+			if (!fs.supportsSymlinks()) {
+				return false;
+			}
+			State state = entry.getState();
+			if (State.REMOVED == state || State.MISSING == state
+					|| State.MISSING_AND_CHANGED == state) {
+				ObjectId headCommitId = repository.resolve(Constants.HEAD);
+				if (headCommitId != null) {
+					RevWalk revWalk = new RevWalk(repository);
+					RevCommit headCommit = revWalk.parseCommit(headCommitId);
+					RevTree headTree = headCommit.getTree();
+					TreeWalk tw = TreeWalk.forPath(repository, entry.getPath(),
+							headTree);
+					if (FileMode.SYMLINK == tw.getFileMode(0))
+						symlink = true;
+				}
+			} else {
+				if (fs.isSymLink(entry.getLocation().toFile()))
+					symlink = true;
+			}
+		} catch (IOException e) {
+			Activator.error(UIText.StagingViewContentProvider_SymlinkError, e);
+		}
+		return symlink;
+	}
 }
