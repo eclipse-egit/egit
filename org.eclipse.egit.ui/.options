@@ -14,3 +14,5 @@ org.eclipse.egit.ui/debug/quickdiff = false
 org.eclipse.egit.ui/debug/repochangescanner = false
 # Trace location for properties testers
 org.eclipse.egit.ui/debug/ui/propertiestesters = false
+# Trace location for selection handling
+org.eclipse.egit.ui/debug/ui/selection = false

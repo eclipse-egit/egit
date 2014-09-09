@@ -28,6 +28,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.revision.FileRevisionEditorInput;
+import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
@@ -201,7 +202,15 @@ public class SelectionUtils {
 	private static Repository getRepository(boolean warn,
 			IStructuredSelection selection, Shell shell) {
 		RepositoryMapping mapping = null;
-		for (IPath location : getSelectedLocations(selection)) {
+
+		IPath[] locations = getSelectedLocations(selection);
+		if (GitTraceLocation.SELECTION.isActive())
+			GitTraceLocation.getTrace().trace(
+					GitTraceLocation.SELECTION.getLocation(), "selection=" //$NON-NLS-1$
+							+ selection + ", locations=" //$NON-NLS-1$
+							+ Arrays.toString(locations));
+
+		for (IPath location : locations) {
 			RepositoryMapping repositoryMapping = RepositoryMapping
 					.getMapping(location);
 			if (mapping == null)
