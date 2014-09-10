@@ -3448,6 +3448,27 @@
                </and>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewImportRelevantProjects"
+               icon="icons/obj16/import_prj.gif"
+               label="%ImportChangedProjects.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <or>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=group.open">
@@ -4254,6 +4275,31 @@
             </visibleWhen>
          </command>
       </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.egit.ui.historyPageContributions?after=additions">
+            <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewImportRelevantProjects"
+               icon="icons/obj16/import_prj.gif"
+               label="%ImportChangedProjects.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <or>
+                        <instanceof
+                              value="org.eclipse.jgit.revplot.PlotCommit">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+      </menuContribution>
    </extension>
    <extension
          name="%RepositoryCommandsLabel"
@@ -4306,6 +4352,13 @@
             name="%ImportProjectsCommand"
             description="%ImportProjectsCommand_description"
             >
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ImportRelevantProjectsCommand"
+            id="org.eclipse.egit.ui.RepositoriesViewImportRelevantProjects"
+            name="%ImportChangedProjectsCommand"
+            description="%ImportProjectsCommand_description">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"

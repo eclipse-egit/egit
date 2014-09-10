@@ -840,6 +840,7 @@ class CommitGraphTable {
 				popupMgr.add(getCommandContributionItem(
 						HistoryViewCommands.REBASE_INTERACTIVE_CURRENT,
 						UIText.GitHistoryPage_rebaseInteractiveMenuItem));
+
 				popupMgr.add(new Separator());
 
 				MenuManager resetManager = ResetMenu.createMenu(site);
