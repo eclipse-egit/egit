@@ -4263,6 +4263,7 @@
          </command>
       </menuContribution>
       <menuContribution
+<<<<<<< Upstream, based on origin/stable-3.5
          locationURI="popup:#AbstractTextEditorRulerContext?after=rulers">
          <command
             commandId="org.eclipse.egit.ui.team.ShowBlame"
@@ -4279,6 +4280,29 @@
                      </instanceof>
                   </adapt>
                </with>
+=======
+            allPopups="false"
+            locationURI="popup:org.eclipse.egit.ui.historyPageContributions?after=additions">
+            <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewImportChangedProjects"
+               icon="icons/obj16/import_prj.gif"
+               label="%ImportChangedProjects.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <or>
+                        <instanceof
+                              value="org.eclipse.jgit.revplot.PlotCommit">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+>>>>>>> 81e5a57 Introduce context menu "import changed projects"
             </visibleWhen>
          </command>
       </menuContribution>
@@ -4334,6 +4358,13 @@
             name="%ImportProjectsCommand"
             description="%ImportProjectsCommand_description"
             >
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ImportChangedProjectsCommand"
+            id="org.eclipse.egit.ui.RepositoriesViewImportChangedProjects"
+            name="%ImportChangedProjectsCommand"
+            description="%ImportProjectsCommand_description">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
