@@ -97,4 +97,5 @@ public class HistoryViewCommands {
 
 	/** Show Blame Annotations */
 	public static final String SHOW_BLAME = "org.eclipse.egit.ui.history.ShowBlame"; //$NON-NLS-1$
+
 }

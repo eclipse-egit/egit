@@ -50,13 +50,6 @@
                value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
          </filter>
          <action
-               class="org.eclipse.egit.ui.internal.actions.CommitAction"
-               definitionId="org.eclipse.egit.ui.team.Commit"
-               icon="$nl$/icons/obj16/commit.gif"
-               id="org.eclipse.egit.ui.internal.actions.CommitAction"
-               label="%CommitAction_label"
-               menubarPath="team.main/group1"/>
-          <action
                class="org.eclipse.egit.ui.internal.actions.CompareWithPreviousAction"
                definitionId="org.eclipse.egit.ui.team.CompareWithPrevious"
                enablesFor="1"
@@ -330,35 +323,34 @@
 
    <extension
          point="org.eclipse.core.expressions.definitions">
-      <definition
-            id="org.eclipse.egit.ui.gitProject">
+     <definition
+            id="org.eclipse.egit.ui.repositoryTreePathNode">
          <and>
             <count
                   value="1">
             </count>
             <iterate>
-               <adapt
-                     type="org.eclipse.core.resources.IProject">
-                  <test
-                        property="GitResource.isShared">
-                  </test>
-               </adapt>
-            </iterate>
-         </and>
-      </definition>
-      <definition
-            id="org.eclipse.egit.ui.gitProjects">
-         <and>
-            <count
-                  value="+">
-            </count>
-            <iterate>
-               <adapt
-                     type="org.eclipse.core.resources.IProject">
-                  <test
-                        property="GitResource.isShared">
-                  </test>
-               </adapt>
+               <or>
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                  </instanceof>
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.FileNode">
+                  </instanceof>
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.FolderNode">
+                  </instanceof>
+                  <and>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode">
+                     </instanceof>
+                     <not>
+                        <test
+                              property="GitRepository.isBare">
+                        </test>
+                     </not>
+                  </and>
+               </or>
             </iterate>
          </and>
       </definition>
@@ -770,7 +762,6 @@
            icon="icons/obj16/rebase.gif"
            id="org.eclipse.egit.ui.actionrebase"
            label="%RebaseAction_label"
-           menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
            style="pulldown"
            toolbarPath="Normal/additions"
            tooltip="%RebaseAction_tooltip">
@@ -785,6 +776,16 @@
            style="push"
            toolbarPath="Normal/additions"
            tooltip="%BranchAction_tooltip">
+         </action>
+         <action
+           class="org.eclipse.egit.ui.internal.actions.StashToolbarAction"
+           definitionId="org.eclipse.egit.ui.team.stash.create"
+           icon="icons/obj16/stash.png"
+           id="org.eclipse.egit.ui.actionstash"
+           label="%StashToolbarAction_label"
+           style="pulldown"
+           toolbarPath="Normal/additions"
+           tooltip="%StashToolbarAction_tooltip">
          </action>
          <action
            class="org.eclipse.egit.ui.internal.actions.CommitAction"
@@ -996,22 +997,16 @@
                class="org.eclipse.egit.ui.internal.actions.CommitActionHandler">
          </class>
          <activeWhen>
-            <and>
-               <count
-                     value="+">
-               </count>
-               <iterate>
-                  <or>
-                    <adapt
-                        type="org.eclipse.core.resources.IResource">
-                    </adapt>
-                    <adapt
-                        type="org.eclipse.core.resources.mapping.ResourceMapping">
-                    </adapt>
-                    <adapt
-                        type="org.eclipse.ui.IContributorResourceAdapter">
-                    </adapt>
-                    <and>
+            <or>
+               <test
+                     property="GitSelection.resourcesSingleRepository">
+               </test>
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <and>
                         <instanceof
                               value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
                         </instanceof>
@@ -1021,9 +1016,9 @@
                            </test>
                         </not>
                      </and>
-                  </or>
-               </iterate>
-            </and>
+                  </iterate>
+               </and>
+            </or>
          </activeWhen>
       </handler>
       <handler
@@ -1162,17 +1157,9 @@
                class="org.eclipse.egit.ui.internal.actions.FetchActionHandler">
          </class>
          <activeWhen>
-            <and>
-               <count
-                     value="1">
-               </count>
-               <iterate>
-                  <or>
-                     <adapt
-                           type="org.eclipse.core.resources.IProject">
-                     </adapt></or>
-               </iterate>
-            </and>
+            <test
+                  property="GitSelection.projectSingleRepository">
+            </test>
          </activeWhen>
       </handler>
       <handler
@@ -1216,16 +1203,9 @@
                class="org.eclipse.egit.ui.internal.actions.PushActionHandler">
          </class>
          <activeWhen>
-            <and>
-               <count
-                     value="1">
-               </count>
-               <iterate>
-                  <adapt
-                        type="org.eclipse.core.resources.IProject">
-                  </adapt>
-               </iterate>
-            </and>
+            <test
+                  property="GitSelection.projectSingleRepository">
+            </test>
          </activeWhen>
       </handler>
       <handler
@@ -1235,9 +1215,8 @@
          </class>
          <activeWhen>
             <or>
-               <reference
-                     definitionId="org.eclipse.egit.ui.gitProject">
-               </reference>
+               <test property="GitSelection.projectSingleRepository">
+               </test>
                <and>
                   <count
                         value="1">
@@ -1258,9 +1237,9 @@
          </class>
          <activeWhen>
             <or>
-               <reference
-                     definitionId="org.eclipse.egit.ui.gitProject">
-               </reference>
+               <test
+                     property="GitSelection.projectSingleRepository">
+               </test>
                <and>
                   <count
                         value="1">
@@ -1508,6 +1487,37 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.team.Rebase">
+         <class
+               class="org.eclipse.egit.ui.internal.commands.shared.RebaseCurrentRefCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <count
+                     value="1">
+               </count>
+               <and>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.Rebase">
+         <class
+               class="org.eclipse.egit.ui.internal.actions.RebaseActionHandler">
+         </class>
+         <activeWhen>
+            <test
+                  property="GitSelection.projectSingleRepository">
+            </test>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.team.Synchronize">
          <class
                class="org.eclipse.egit.ui.internal.repository.tree.command.SynchronizeCommand">
@@ -1643,6 +1653,17 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.RepositoriesViewCopyPath">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.CopyPathCommand">
+         </class>
+         <activeWhen>
+            <reference
+                  definitionId="org.eclipse.egit.ui.repositoryTreePathNode">
+            </reference>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.ui.edit.rename">
          <class
                class="org.eclipse.egit.ui.internal.repository.tree.command.RenameBranchCommand">
@@ -1747,42 +1768,6 @@
                               value="org.eclipse.egit.ui.internal.repository.tree.SubmodulesNode">
                         </instanceof>
                      </or>
-                  </iterate>
-               </and>
-         </activeWhen>
-      </handler>
-      <handler
-            commandId="org.eclipse.egit.ui.team.stash.create">
-         <class
-               class="org.eclipse.egit.ui.internal.repository.tree.command.StashCreateCommand">
-         </class>
-         <activeWhen>
-             <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <and>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-                        </instanceof>
-                        <not>
-                           <test
-                                 property="GitRepository.isSubmodule">
-                           </test>
-                        </not>
-                        <not>
-                           <test
-                                 property="GitRepository.isBare">
-                           </test>
-                        </not>
-                        <test
-                              property="GitRepository.canStash">
-                        </test>
-                        <test
-                              property="GitRepository.containsHead">
-                        </test>
-                     </and>
                   </iterate>
                </and>
          </activeWhen>
@@ -1905,11 +1890,9 @@
             class="org.eclipse.egit.ui.internal.actions.DisconnectActionHandler"
             commandId="org.eclipse.egit.ui.team.Disconnect">
          <activeWhen>
-            <iterate>
-               <adapt
-                     type="org.eclipse.core.resources.IProject">
-               </adapt>
-            </iterate>
+            <test
+                  property="GitSelection.projectsWithRepositories">
+            </test>
          </activeWhen>
       </handler>
    </extension>
@@ -2397,8 +2380,7 @@
             </visibleWhen>
          </command>
          <command
-               commandId="org.eclipse.egit.ui.RepositoriesViewRebase"
-               icon="icons/obj16/rebase.gif"
+               commandId="org.eclipse.egit.ui.team.Rebase"
                label="%RebaseCommand.label"
                style="push">
             <visibleWhen
@@ -2588,6 +2570,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.PushTags"
+               label="%PushTagsCommand.label"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -2897,10 +2880,12 @@
                </and>
             </visibleWhen>
          </command>
-         <command
-               commandId="org.eclipse.egit.ui.team.stash.create"
-               label="%StashCreateCommand.label"
-               style="push">
+         <menu
+               label="%StashesMenu.label">
+            <dynamic
+                  class="org.eclipse.egit.ui.internal.actions.StashesMenu"
+                  id="org.eclipse.egit.ui.stashedChanges">
+            </dynamic>
             <visibleWhen
                   checkEnabled="false">
                <and>
@@ -2932,7 +2917,7 @@
                   </iterate>
                </and>
             </visibleWhen>
-         </command>
+         </menu>
          <command
                commandId="org.eclipse.egit.ui.team.stash.apply"
                label="%StashApplyCommand.label"
@@ -3080,11 +3065,10 @@
                </and>
             </visibleWhen>
          </command>
-         <command
-               commandId="org.eclipse.egit.ui.team.PushBranch"
-               label="%PushBranchAction.label"
-               style="push">
-            <visibleWhen
+         <dynamic
+                  class="org.eclipse.egit.ui.internal.actions.PushMenu"
+                  id="org.eclipse.egit.ui.repository.tree.popup.Push">
+			<visibleWhen
                   checkEnabled="false">
                <and>
                   <count
@@ -3099,7 +3083,7 @@
                   </iterate>
                </and>
             </visibleWhen>
-         </command>
+         </dynamic>
          <command
                commandId="org.eclipse.egit.ui.team.Pull"
                icon="icons/obj16/pull.gif"
@@ -3147,6 +3131,7 @@
             </command>
             <command
                   commandId="org.eclipse.egit.ui.team.PushTags"
+                  label="%PushTagsCommand.label"
                   style="push">
                <visibleWhen
                      checkEnabled="false">
@@ -3222,8 +3207,7 @@
             </visibleWhen>
          </command>
          <command
-               commandId="org.eclipse.egit.ui.RepositoriesViewRebase"
-               icon="icons/obj16/rebase.gif"
+               commandId="org.eclipse.egit.ui.team.Rebase"
                label="%RebaseCommand.label2"
                style="push">
             <visibleWhen
@@ -3464,6 +3448,27 @@
                </and>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewImportRelevantProjects"
+               icon="icons/obj16/import_prj.gif"
+               label="%ImportChangedProjects.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <or>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=group.open">
@@ -3647,34 +3652,9 @@
                style="push">
             <visibleWhen
                   checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <or>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-                        </instanceof>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.FileNode">
-                        </instanceof>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.FolderNode">
-                        </instanceof>
-                        <and>
-                           <instanceof
-                                 value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode">
-                           </instanceof>
-                           <not>
-                              <test
-                                    property="GitRepository.isBare">
-                              </test>
-                           </not>
-                        </and>
-                     </or>
-                  </iterate>
-               </and>
+                  <reference
+                        definitionId="org.eclipse.egit.ui.repositoryTreePathNode">
+                  </reference>
             </visibleWhen>
          </command>
          <command
@@ -3808,14 +3788,38 @@
                   visible="true">
             </separator>
             <command
-                  commandId="org.eclipse.egit.ui.team.SimplePush"
-                  label="%PushToUpstreamAction.label"
+                  commandId="org.eclipse.egit.ui.team.Commit"
+                  label="%CommitAction_label"
                   style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <test
+                        property="GitSelection.resourcesSingleRepository">
+                  </test>
+               </visibleWhen>
+            </command>
+            <menu
+                  label="%StashesMenu.label">
+               <dynamic
+                     class="org.eclipse.egit.ui.internal.actions.StashesMenu"
+                     id="org.eclipse.egit.ui.stashedChanges">
+               </dynamic>
                <visibleWhen
                      checkEnabled="false">
                   <reference
                         definitionId="org.eclipse.egit.ui.gitProject">
                   </reference>
+               </visibleWhen>
+            </menu>
+            <command
+                  commandId="org.eclipse.egit.ui.team.SimplePush"
+                  label="%PushToUpstreamAction.label"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <test
+                        property="GitSelection.projectSingleRepository">
+                  </test>
                </visibleWhen>
             </command>
             <command
@@ -3825,22 +3829,21 @@
                   style="push">
                <visibleWhen
                      checkEnabled="false">
-                  <reference
-                        definitionId="org.eclipse.egit.ui.gitProject">
-                  </reference>
+                  <test
+                        property="GitSelection.projectSingleRepository">
+                  </test>
                </visibleWhen>
             </command>
-            <command
-                  commandId="org.eclipse.egit.ui.team.PushBranch"
-                  label="%PushBranchAction.label"
-                  style="push">
+            <dynamic
+                  class="org.eclipse.egit.ui.internal.actions.PushMenu"
+                  id="org.eclipse.egit.ui.team.popup.Push">
                <visibleWhen
                      checkEnabled="false">
-                  <reference
-                        definitionId="org.eclipse.egit.ui.gitProject">
-                  </reference>
+                  <test
+                        property="GitSelection.projectSingleRepository">
+                  </test>
                </visibleWhen>
-            </command>
+            </dynamic>
             <separator
                   name="org.eclipse.egit.ui.remoteSeparator"
                   visible="true">
@@ -3854,6 +3857,7 @@
                </command>
                <command
                      commandId="org.eclipse.egit.ui.team.PushTags"
+                     label="%PushTagsCommand.label"
                      style="push">
                </command>
                <command
@@ -3867,22 +3871,10 @@
                      style="push">
                   <visibleWhen
                         checkEnabled="false">
-                     <and>
-                        <count
-                              value="1">
-                        </count>
-                        <iterate>
-                           <adapt
-                                 type="org.eclipse.core.resources.IProject">
-                              <test
-                                    property="GitResource.isShared">
-                              </test>
-                              <test
-                                    property="GitResource.hasGerritConfiguration">
-                              </test>
-                           </adapt>
-                        </iterate>
-                     </and>
+                     <test
+                           property="GitSelection.projectSingleRepository"
+                           args="hasGerritConfiguration">
+                     </test>
                   </visibleWhen>
                </command>
                <command
@@ -3891,22 +3883,10 @@
                      style="push">
                   <visibleWhen
                         checkEnabled="false">
-                     <and>
-                        <count
-                              value="1">
-                        </count>
-                        <iterate>
-                           <adapt
-                                 type="org.eclipse.core.resources.IProject">
-                              <test
-                                    property="GitResource.isShared">
-                              </test>
-                              <test
-                                    property="GitResource.hasGerritConfiguration">
-                              </test>
-                           </adapt>
-                        </iterate>
-                     </and>
+                     <test
+                           property="GitSelection.projectSingleRepository"
+                           args="hasGerritConfiguration">
+                     </test>
                   </visibleWhen>
                </command>
                <separator
@@ -3925,9 +3905,9 @@
                </command>
                <visibleWhen
                      checkEnabled="false">
-                  <reference
-                        definitionId="org.eclipse.egit.ui.gitProject">
-                  </reference>
+                  <test
+                        property="GitSelection.projectSingleRepository">
+                  </test>
                </visibleWhen>
             </menu>
             <separator
@@ -3942,9 +3922,9 @@
                </dynamic>
                <visibleWhen
                      checkEnabled="false">
-                  <reference
-                        definitionId="org.eclipse.egit.ui.gitProject">
-                  </reference>
+                  <test
+                        property="GitSelection.projectSingleRepository">
+                  </test>
                </visibleWhen>
             </menu>
             <separator
@@ -3958,9 +3938,9 @@
                      style="push">
                   <visibleWhen
                         checkEnabled="false">
-                     <reference
-                           definitionId="org.eclipse.egit.ui.gitProject">
-                     </reference>
+                     <test
+                           property="GitSelection.projectSingleRepository">
+                     </test>
                   </visibleWhen>
                </command>
                <command
@@ -3969,9 +3949,9 @@
                      style="push">
                   <visibleWhen
                         checkEnabled="false">
-                     <reference
-                           definitionId="org.eclipse.egit.ui.gitProject">
-                     </reference>
+                     <test
+                           property="GitSelection.projectSingleRepository">
+                     </test>
                   </visibleWhen>
                </command>
                <separator
@@ -4010,9 +3990,9 @@
                      style="push">
                   <visibleWhen
                         checkEnabled="false">
-                     <reference
-                           definitionId="org.eclipse.egit.ui.gitProject">
-                     </reference>
+                     <test
+                           property="GitSelection.projectSingleRepository">
+                     </test>
                   </visibleWhen>
                </command>
                <separator
@@ -4025,9 +4005,9 @@
                      style="push">
                   <visibleWhen
                         checkEnabled="false">
-                     <reference
-                           definitionId="org.eclipse.egit.ui.gitProject">
-                     </reference>
+                     <test
+                           property="GitSelection.projectSingleRepository">
+                     </test>
                   </visibleWhen>
                </command>
                <separator
@@ -4111,9 +4091,9 @@
                   style="push">
                <visibleWhen
                      checkEnabled="false">
-                  <reference
-                        definitionId="org.eclipse.egit.ui.gitProjects">
-                  </reference>
+                  <test
+                        property="GitSelection.projectsWithRepositories">
+                  </test>
                </visibleWhen>
             </command>
             <separator
@@ -4130,115 +4110,73 @@
                   style="push">
                <visibleWhen
                      checkEnabled="false">
-                  <reference
-                        definitionId="org.eclipse.egit.ui.gitProject">
-                  </reference>
+                  <test
+                        property="GitSelection.projectSingleRepository">
+                  </test>
                </visibleWhen>
             </command>
             <separator
                   name="group5"
                   visible="true">
             </separator>
-           <command
-                 commandId="org.eclipse.egit.ui.RepositoriesViewRebase" style="push"
-                 label="%RebaseWithDialog_label">
-	           <visibleWhen checkEnabled="false">
-	              <and>
-	                 <iterate
-                        ifEmpty="false">
-	                    <and>
-	                       <adapt
-	                             type="org.eclipse.core.resources.IProject">
-	                          <test
-	                                property="GitResource.isSafe">
-	                          </test>
-	                       </adapt>
-	                    </and>
-	                 </iterate>
-	              </and>
-	           </visibleWhen>
-           </command>
-           <menu
-               icon="icons/obj16/rebase.gif"
-               label="%RebaseMenu.label">
-	           <command
-                  commandId="org.eclipse.egit.ui.org.eclipse.egit.ui.AbortRebase"
+            <command
+                  commandId="org.eclipse.egit.ui.team.Rebase" style="push"
+                  label="%RebaseWithDialog_label">
+               <visibleWhen checkEnabled="false">
+                  <test
+                        property="GitSelection.projectSingleRepository"
+                        args="isSafe">
+                  </test>
+               </visibleWhen>
+            </command>
+            <menu
+                  icon="icons/obj16/rebase.gif"
+                  label="%RebaseMenu.label">
+               <command
+                     commandId="org.eclipse.egit.ui.org.eclipse.egit.ui.AbortRebase"
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <test
+                           property="GitSelection.projectSingleRepository"
+                           args="canAbortRebase">
+                     </test>
+                  </visibleWhen>
+               </command>
+               <command
+                     commandId="org.eclipse.egit.ui.SkipRebase"
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <test
+                           property="GitSelection.projectSingleRepository"
+                           args="canAbortRebase">
+                     </test>
+                  </visibleWhen>
+               </command>
+               <command
+                     commandId="org.eclipse.egit.ui.ContinueRebase"
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <test
+                           property="GitSelection.projectSingleRepository"
+                           args="canContinueRebase">
+                     </test>
+                  </visibleWhen>
+               </command>
+            </menu>
+            <command
+                  commandId="org.eclipse.egit.ui.team.Reset"
+                  label="%ResetAction_label"
                   style="push">
                <visibleWhen
                      checkEnabled="false">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate>
-                        <and>
-                           <adapt
-                                 type="org.eclipse.core.resources.IProject">
-                              <test
-                                    property="GitResource.canAbortRebase">
-                              </test>
-                           </adapt>
-                        </and>
-                     </iterate>
-                  </and>
+                  <test
+                        property="GitSelection.projectSingleRepository">
+                  </test>
                </visibleWhen>
             </command>
-	            <command
-                   commandId="org.eclipse.egit.ui.SkipRebase"
-                   style="push">
-                <visibleWhen
-                      checkEnabled="false">
-                   <and>
-                      <count
-                            value="1">
-                      </count>
-                      <iterate>
-                         <and>
-                            <adapt
-                                  type="org.eclipse.core.resources.IProject">
-                               <test
-                                     property="GitResource.canAbortRebase">
-                               </test>
-                            </adapt>
-                         </and>
-                      </iterate>
-                   </and>
-                </visibleWhen>
-             </command>
-	            <command
-                   commandId="org.eclipse.egit.ui.ContinueRebase"
-                   style="push">
-                <visibleWhen
-                      checkEnabled="false">
-                   <and>
-                      <count
-                            value="1">
-                      </count>
-                      <iterate>
-                         <and>
-                            <adapt
-                                  type="org.eclipse.core.resources.IProject">
-                               <test
-                                     property="GitResource.canContinueRebase">
-                               </test>
-                            </adapt>
-                         </and>
-                      </iterate>
-                   </and>
-                </visibleWhen>
-             </command>
-            </menu>
-           <command
-                 commandId="org.eclipse.egit.ui.team.Reset"
-                 label="%ResetAction_label"
-                 style="push">
-              <visibleWhen
-                    checkEnabled="false">
-                 <reference
-                       definitionId="org.eclipse.egit.ui.gitProject">
-                 </reference>
-              </visibleWhen>
-           </command>
             <separator
                   name="group6"
                   visible="true">
@@ -4277,11 +4215,25 @@
                   style="push">
                <visibleWhen
                      checkEnabled="false">
-                  <reference
-                        definitionId="org.eclipse.egit.ui.gitProjects">
-                  </reference>
+                  <test
+                        property="GitSelection.projectsWithRepositories">
+                  </test>
                </visibleWhen>
             </command>
+            <menu
+                  label="Repository">
+               <visibleWhen
+                     checkEnabled="false">
+                     <test
+                           property="Foo.bar">
+                     </test>
+               </visibleWhen>
+               <command
+                     commandId="org.eclipse.egit.ui.team.SimplePush"
+                     label="%PushToUpstreamAction.label"
+                     style="push">
+               </command>
+            </menu>
          </menu>
       </menuContribution>
       <menuContribution
@@ -4303,6 +4255,51 @@
             </visibleWhen>
          </command>
       </menuContribution>
+      <menuContribution
+         locationURI="popup:#AbstractTextEditorRulerContext?after=rulers">
+         <command
+            commandId="org.eclipse.egit.ui.team.ShowBlame"
+            label="%ShowBlameAction_label"
+            style="push">
+            <visibleWhen
+               checkEnabled="false">
+               <with
+                     variable="activeEditorInput">
+                  <adapt
+                     type="org.eclipse.team.core.history.IFileRevision">
+                     <instanceof
+                           value="org.eclipse.egit.core.internal.storage.CommitFileRevision">
+                     </instanceof>
+                  </adapt>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.egit.ui.historyPageContributions?after=additions">
+            <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewImportRelevantProjects"
+               icon="icons/obj16/import_prj.gif"
+               label="%ImportChangedProjects.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <or>
+                        <instanceof
+                              value="org.eclipse.jgit.revplot.PlotCommit">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+      </menuContribution>
    </extension>
    <extension
          name="%RepositoryCommandsLabel"
@@ -4321,7 +4318,6 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.CopyPathCommand"
             id="org.eclipse.egit.ui.RepositoriesViewCopyPath"
             name="%CopyPathCommand">
       </command>
@@ -4356,6 +4352,13 @@
             name="%ImportProjectsCommand"
             description="%ImportProjectsCommand_description"
             >
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ImportRelevantProjectsCommand"
+            id="org.eclipse.egit.ui.RepositoriesViewImportRelevantProjects"
+            name="%ImportChangedProjectsCommand"
+            description="%ImportProjectsCommand_description">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
@@ -4465,12 +4468,6 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.commands.shared.RebaseCurrentRefCommand"
-            id="org.eclipse.egit.ui.RepositoriesViewRebase"
-            name="%RebaseCommand.name">
-      </command>
-      <command
-            categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.commands.shared.AbortRebaseCommand"
             id="org.eclipse.egit.ui.org.eclipse.egit.ui.AbortRebase"
             name="%AbortRebaseCommand.name">
@@ -4511,7 +4508,7 @@
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.team.stash.create"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.StashCreateCommand"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.StashCreateHandler"
             name="%StashCreateCommand.name">
       </command>
       <command
@@ -4576,6 +4573,18 @@
       <image
             commandId="org.eclipse.egit.ui.commit.CherryPick"
             icon="icons/obj16/cherry-pick.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.stash.apply"
+            icon="icons/obj16/stash-apply.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.commit.StashApply"
+            icon="icons/obj16/stash-apply.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.commit.StashDrop"
+            icon="icons/obj16/delete_obj.gif">
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.Squash"
@@ -4738,12 +4747,12 @@
             icon="icons/obj16/mergetool.gif">
       </image>
       <image
-            commandId="org.eclipse.egit.ui.team.Pull"
-            icon="icons/obj16/pull.gif">
+            commandId="org.eclipse.egit.ui.team.Rebase"
+            icon="icons/obj16/rebase.gif">
       </image>
       <image
-            commandId="org.eclipse.egit.ui.RepositoriesViewRebase"
-            icon="icons/obj16/rebase.gif">
+            commandId="org.eclipse.egit.ui.team.Pull"
+            icon="icons/obj16/pull.gif">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Reset"
@@ -4779,6 +4788,10 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.DeleteBranch"
+            icon="icons/obj16/delete_obj.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.history.DeleteTag"
             icon="icons/obj16/delete_obj.gif">
       </image>
       <image
@@ -4853,6 +4866,13 @@
             namespace="GitResource"
             properties="isShared,isContainer,isSafe,canCommit,canAmend,canResetHead,canAbortRebase,canContinueRebase,hasGerritConfiguration"
             type="org.eclipse.core.resources.IResource">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.egit.ui.internal.selection.SelectionPropertyTester"
+            id="org.eclipse.egit.ui.SelectionTester"
+            namespace="GitSelection"
+            properties="projectSingleRepository,projectsWithRepositories,resourcesSingleRepository"
+            type="java.util.Collection">
       </propertyTester>
    </extension>
    <extension
@@ -5207,6 +5227,11 @@
             name="%CreateTagCommand.name">
       </command>
       <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.DeleteTagOnCommitHandler"
+            id="org.eclipse.egit.ui.history.DeleteTag"
+            name="%DeleteTagCommand.name">
+      </command>
+      <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.PushCommitHandler"
             id="org.eclipse.egit.ui.history.PushCommit"
             name="%PushCommit.name">
@@ -5344,6 +5369,16 @@
             defaultHandler="org.eclipse.egit.ui.internal.history.command.ShowBlameHandler"
             id="org.eclipse.egit.ui.history.ShowBlame"
             name="%ShowBlameCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.commit.command.StashApplyHandler"
+            id="org.eclipse.egit.ui.commit.StashApply"
+            name="%StashApplyCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.commit.command.StashDropHandler"
+            id="org.eclipse.egit.ui.commit.StashDrop"
+            name="%StashDropCommand.name">
       </command>
    </extension>
    <extension
