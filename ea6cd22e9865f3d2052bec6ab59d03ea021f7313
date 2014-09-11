@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_1a08bd66",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 8855
+      },
+      "writtenOn": "2014-09-11T13:41:40Z",
+      "side": 1,
+      "message": "we should check that we do not search in directories above the root of the repository the changed files are located in",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_5a123594",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 8855
+      },
+      "writtenOn": "2014-09-11T13:41:40Z",
+      "side": 1,
+      "message": "it would be nice to get a notification about files no .project has been found for",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

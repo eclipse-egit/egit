@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_3ad81966",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8855
+      },
+      "writtenOn": "2014-09-11T13:41:40Z",
+      "side": 0,
+      "message": "seeing this file as \"changed\" just due to an empty line should be avoided",
+      "revId": "b8107379a594d7f9d77e4caa35fd584658c2fb52",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_9af32dd9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/HistoryViewCommands.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8855
+      },
+      "writtenOn": "2014-09-11T13:41:40Z",
+      "side": 0,
+      "message": "we should avoid this file appear changed just due to an empy line",
+      "revId": "b8107379a594d7f9d77e4caa35fd584658c2fb52",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
