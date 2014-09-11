@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_b7ce02d8",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2014-09-11T12:55:50Z",
+      "side": 1,
+      "message": "I think this whole file seems to have been merged from master badly.  Just replace it with origin/stable-3.4 and apply your changes manually.",
+      "revId": "82e2269fcc6614fac105f2047b9656622e2d591a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_f7d87a9a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2014-09-11T12:55:50Z",
+      "side": 1,
+      "message": "Superfluous diff",
+      "revId": "82e2269fcc6614fac105f2047b9656622e2d591a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_3702f280",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/HistoryViewCommands.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2014-09-11T12:55:50Z",
+      "side": 1,
+      "message": "Superfluous",
+      "revId": "82e2269fcc6614fac105f2047b9656622e2d591a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_f7efda25",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2014-09-11T12:55:50Z",
+      "side": 1,
+      "message": "f.isFile() is better since it checks if .project isn\u0027t a directory accidentally.",
+      "revId": "82e2269fcc6614fac105f2047b9656622e2d591a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_b7f562f8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2014-09-11T12:55:50Z",
+      "side": 1,
+      "message": "Wrap this whole loop in workspace runnable or, even better, in a WorkspaceJob to do the import in the background.",
+      "revId": "82e2269fcc6614fac105f2047b9656622e2d591a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
