@@ -2,6 +2,210 @@
   "comments": [
     {
       "key": {
+        "uuid": "a766b734_14e09441",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-09-11T15:10:01Z",
+      "side": 1,
+      "message": "what are matching projects ?\n\ndo you also import projects needed to compile the \"matching projects\" ?",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_34db109d",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-09-11T15:10:01Z",
+      "side": 1,
+      "message": "I think it\u0027s not clear which changes are meant here:\n* projects changed in a commit\n* projects changed in all commits reachable from a branch\n* projects changed in all commits reachable from a branch but not from another branch\n* projects newly introduced in a commit/branch",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_143ff473",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3452,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-09-11T15:10:01Z",
+      "side": 1,
+      "message": "it\u0027s unclear what are relevant projects hence better\ns/RepositoriesViewImportRelevantProjects/RepositoriesViewImportChangedProjects/",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_74346894",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-09-11T15:10:01Z",
+      "side": 1,
+      "message": "remove this unrelated formatting change",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_54396c8a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/HistoryViewCommands.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-09-11T15:10:01Z",
+      "side": 1,
+      "message": "remove this unrelated formatting change",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_54e7aca1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-09-11T15:10:01Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_b4fba03a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-09-11T15:10:01Z",
+      "side": 1,
+      "message": "we want JavaDoc on public classes and public non-trivial methods",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_b42d604b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-09-11T15:10:01Z",
+      "side": 1,
+      "message": "I\u0027d rather name this like the menu entry: ImportChangedProjectCommand",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_94f8243f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-09-11T15:10:01Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_5474cc42",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-09-11T15:10:01Z",
+      "side": 1,
+      "message": "I hit this when trying to import changed projects from the history view and this error only ended up in the error log without direct feedback for the user, it should be shown in an error dialog so that the user knows what went wrong.\n\nI don\u0027t understand how this can fail in the history view if it shows the history of a repository, in that case the repo should be known",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_744628fc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-09-11T15:10:01Z",
+      "side": 1,
+      "message": "why not RevWalk ?\n\nwalks which are no longer used should be released in a finally block",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_544b2c02",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-09-11T15:10:01Z",
+      "side": 1,
+      "message": "why not RevWalk ?",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_1a08bd66",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
         "patchSetId": 1
@@ -30,6 +234,40 @@
       "writtenOn": "2014-09-11T13:41:40Z",
       "side": 1,
       "message": "it would be nice to get a notification about files no .project has been found for",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_d4b1fc77",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-09-11T15:10:01Z",
+      "side": 1,
+      "message": "fix discouraged access warnings",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_9475c43f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-09-11T15:10:01Z",
+      "side": 1,
+      "message": "why this catch all ?",
       "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
