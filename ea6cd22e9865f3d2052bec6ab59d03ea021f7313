@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_e3db9ce2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-09-12T16:43:45Z",
+      "side": 1,
+      "message": "No, only the matching projects for the files containing in a revision will be imported. \nUse case is the following:\nUser fetches a change done by a colleague for code review or testing. Now he wants to ensure that all the projects needed for this change are locally imported so that the build will work locally and the change can be tested running the target ide (for eclipse plugin projects). Finding all the necessary projects for a change by hand is quite complex for a large git repository and can be taken over by the tool.",
+      "parentUuid": "a766b734_14e09441",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_34db109d",
         "filename": "org.eclipse.egit.ui/plugin.properties",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-09-11T15:10:01Z",
       "side": 1,
       "message": "I think it\u0027s not clear which changes are meant here:\n* projects changed in a commit\n* projects changed in all commits reachable from a branch\n* projects changed in all commits reachable from a branch but not from another branch\n* projects newly introduced in a commit/branch",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_43e89074",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-09-12T16:43:45Z",
+      "side": 1,
+      "message": "it is the first. Could you please help in finding a better name? Please make a proposal.",
+      "parentUuid": "a766b734_34db109d",
       "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_23ed9484",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3452,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-09-12T16:43:45Z",
+      "side": 1,
+      "message": "please take a look at the last patchset of https://git.eclipse.org/r/#/c/33192/ \nIf the naming is fine, I will move all the changes from stable-3.4 to master.",
+      "parentUuid": "a766b734_143ff473",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_74346894",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2014-09-11T15:10:01Z",
       "side": 1,
       "message": "remove this unrelated formatting change",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_83e2a890",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-09-12T16:43:45Z",
+      "side": 1,
+      "message": "done in https://git.eclipse.org/r/#/c/33192/",
+      "parentUuid": "a766b734_74346894",
       "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_63e78ca2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/HistoryViewCommands.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-09-12T16:43:45Z",
+      "side": 1,
+      "message": "done in https://git.eclipse.org/r/#/c/33192/",
+      "parentUuid": "a766b734_54396c8a",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_54e7aca1",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2014-09-11T15:10:01Z",
       "side": 1,
       "message": "missing license header",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_e30d5cf3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-09-12T16:43:45Z",
+      "side": 1,
+      "message": "done in https://git.eclipse.org/r/#/c/33192/",
+      "parentUuid": "a766b734_54e7aca1",
       "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_a3f8843e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-09-12T16:43:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_b4fba03a",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_b42d604b",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
         "patchSetId": 1
@@ -132,6 +258,24 @@
       "writtenOn": "2014-09-11T15:10:01Z",
       "side": 1,
       "message": "I\u0027d rather name this like the menu entry: ImportChangedProjectCommand",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_c3fb003a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-09-12T16:43:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_b42d604b",
       "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -189,6 +333,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_e3f27c5a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-09-12T16:43:45Z",
+      "side": 1,
+      "message": "Please help here. I am not an expert of EGit and JGit API. I just  tried to get it working.",
+      "parentUuid": "a766b734_744628fc",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_544b2c02",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
         "patchSetId": 1
@@ -200,6 +362,24 @@
       "writtenOn": "2014-09-11T15:10:01Z",
       "side": 1,
       "message": "why not RevWalk ?",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_4313701a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-09-12T16:43:45Z",
+      "side": 1,
+      "message": "Same as above. Please give advise and help here.",
+      "parentUuid": "a766b734_544b2c02",
       "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -257,6 +437,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_6322ec62",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-09-12T16:43:45Z",
+      "side": 1,
+      "message": "How? Plugin org.eclipse.ui.ide needs to be changed.",
+      "parentUuid": "a766b734_d4b1fc77",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_9475c43f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
         "patchSetId": 1
@@ -268,6 +466,24 @@
       "writtenOn": "2014-09-11T15:10:01Z",
       "side": 1,
       "message": "why this catch all ?",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_c30660d8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-09-12T16:43:45Z",
+      "side": 1,
+      "message": "see https://git.eclipse.org/r/#/c/33192/\nswitched to CoreException",
+      "parentUuid": "a766b734_9475c43f",
       "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
