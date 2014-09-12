@@ -1846,14 +1846,9 @@
             class="org.eclipse.egit.ui.internal.actions.UntrackActionHandler"
             commandId="org.eclipse.egit.ui.team.Untrack">
          <activeWhen>
-            <iterate>
-               <adapt type="org.eclipse.core.resources.IResource">
-               <test
-                  property="org.eclipse.core.resources.projectPersistentProperty"
-                  args="org.eclipse.team.core.repository, org.eclipse.egit.core.GitProvider">
-               </test>
-               </adapt>
-            </iterate>
+            <test
+                  property="GitSelection.resourcesSingleRepository">
+            </test>
          </activeWhen>
       </handler>
       <handler
@@ -3969,19 +3964,9 @@
                      style="push">
                   <visibleWhen
                         checkEnabled="false">
-                    <and>
-                       <count
-                              value="+">
-                       </count>
-                       <iterate>
-                          <adapt
-                               type="org.eclipse.core.resources.IResource">
-                             <test
-                                  property="GitResource.isShared">
-                             </test>
-                          </adapt>
-                        </iterate>
-                     </and>
+                     <test
+                           property="GitSelection.resourcesSingleRepository">
+                     </test>
                   </visibleWhen>
                </command>
                <command
@@ -3990,19 +3975,9 @@
                      style="push">
                   <visibleWhen
                         checkEnabled="false">
-                     <and>
-                        <count
-                              value="+">
-                        </count>
-                        <iterate>
-                          <adapt
-                               type="org.eclipse.core.resources.IResource">
-                             <test
-                                 property="GitResource.isShared">
-                             </test>
-                          </adapt>
-                        </iterate>
-                     </and>
+                     <test
+                           property="GitSelection.resourcesSingleRepository">
+                     </test>
                   </visibleWhen>
                </command>
                <command
@@ -4010,20 +3985,12 @@
                      icon="$nl$/icons/obj16/untrack.gif"
                      label="%UntrackAction_label"
                      style="push">
-                 <visibleWhen checkEnabled="false">
-                  <and>
-                     <count value="+" />
-                     <iterate>
-                        <and>
-                           <adapt type="org.eclipse.core.resources.IResource">
-                              <and>
-                                 <test property="GitResource.isShared" />
-                              </and>
-                           </adapt>
-                        </and>
-                     </iterate>
-                  </and>
-               </visibleWhen>
+                  <visibleWhen
+                        checkEnabled="false">
+                     <test
+                           property="GitSelection.resourcesSingleRepository">
+                     </test>
+                  </visibleWhen>
                </command>
             </menu>
             <separator
