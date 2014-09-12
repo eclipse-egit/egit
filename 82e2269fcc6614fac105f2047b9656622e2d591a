@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_0317b851",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-09-12T15:40:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_b7ce02d8",
+      "revId": "82e2269fcc6614fac105f2047b9656622e2d591a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_f7d87a9a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-09-11T12:55:50Z",
       "side": 1,
       "message": "Superfluous diff",
+      "revId": "82e2269fcc6614fac105f2047b9656622e2d591a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_e3139c61",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-09-12T15:40:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_f7d87a9a",
       "revId": "82e2269fcc6614fac105f2047b9656622e2d591a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_432090a3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/HistoryViewCommands.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-09-12T15:40:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_3702f280",
+      "revId": "82e2269fcc6614fac105f2047b9656622e2d591a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_f7efda25",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_232594b3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-09-12T15:40:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_f7efda25",
+      "revId": "82e2269fcc6614fac105f2047b9656622e2d591a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_b7f562f8",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2014-09-11T12:55:50Z",
       "side": 1,
       "message": "Wrap this whole loop in workspace runnable or, even better, in a WorkspaceJob to do the import in the background.",
+      "revId": "82e2269fcc6614fac105f2047b9656622e2d591a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_e32a7c7d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-09-12T15:40:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_b7f562f8",
       "revId": "82e2269fcc6614fac105f2047b9656622e2d591a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
