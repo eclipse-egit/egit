@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_8e792f6f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-09-13T20:59:41Z",
+      "side": 1,
+      "message": "Why not auto-import new projects? Sure someone might want to turn such a feature off, but the natural thing would be to normally keep all projects available",
+      "revId": "00e33a5370b29ba769050dd178d639ed8f5b3fce",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
