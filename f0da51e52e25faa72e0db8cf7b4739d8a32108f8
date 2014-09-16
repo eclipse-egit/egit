@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_515693db",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 8855
+      },
+      "writtenOn": "2014-09-16T09:38:10Z",
+      "side": 1,
+      "message": "repo is null when trying to import from history view",
+      "revId": "f0da51e52e25faa72e0db8cf7b4739d8a32108f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
