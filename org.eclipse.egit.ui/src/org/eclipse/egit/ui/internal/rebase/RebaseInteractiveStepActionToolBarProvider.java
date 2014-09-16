@@ -122,7 +122,7 @@ public class RebaseInteractiveStepActionToolBarProvider {
 		rebaseActionItems[2] = itemEdit;
 
 		itemSquash = new ToolItem(theToolbar, SWT.RADIO);
-		itemSquash.setImage(getImage(UIIcons.SQUASH));
+		itemSquash.setImage(getImage(UIIcons.SQUASH_DIRECT));
 		itemSquash.addSelectionListener(new ActionSelectionListener(
 				RebaseInteractivePlan.ElementAction.SQUASH));
 		itemSquash
@@ -130,7 +130,7 @@ public class RebaseInteractiveStepActionToolBarProvider {
 		rebaseActionItems[3] = itemSquash;
 
 		itemFixup = new ToolItem(theToolbar, SWT.RADIO);
-		itemFixup.setImage(getImage(UIIcons.FIXUP));
+		itemFixup.setImage(getImage(UIIcons.FIXUP_DIRECT));
 		itemFixup.addSelectionListener(new ActionSelectionListener(
 				RebaseInteractivePlan.ElementAction.FIXUP));
 		itemFixup

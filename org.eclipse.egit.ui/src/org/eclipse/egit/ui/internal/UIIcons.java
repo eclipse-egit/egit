@@ -252,11 +252,17 @@ public class UIIcons {
 	/** Compact tree presentation icon */
 	public final static ImageDescriptor COMPACT;
 
-	/** Squash icon */
-	public final static ImageDescriptor SQUASH;
+	/** Squash icon direct order */
+	public final static ImageDescriptor SQUASH_DIRECT;
 
-	/** Fixup icon */
-	public final static ImageDescriptor FIXUP;
+	/** Squash icon reversed order */
+	public final static ImageDescriptor SQUASH_REVERSED;
+
+	/** Fixup icon direct order */
+	public final static ImageDescriptor FIXUP_DIRECT;
+
+	/** Fixup icon reversed order */
+	public final static ImageDescriptor FIXUP_REVERSED;
 
 	/** Reword icon */
 	public final static ImageDescriptor REWORD;
@@ -354,8 +360,10 @@ public class UIIcons {
 		HIERARCHY = map("elcl16/hierarchicalLayout.gif"); //$NON-NLS-1$
 		FLAT = map("elcl16/flatLayout.gif"); //$NON-NLS-1$
 		COMPACT = map("elcl16/compactLayout.gif"); //$NON-NLS-1$
-		SQUASH = map("obj16/squash.gif"); //$NON-NLS-1$
-		FIXUP = map("obj16/fixup.gif"); //$NON-NLS-1$
+		SQUASH_DIRECT = map("obj16/squash-direct.png"); //$NON-NLS-1$
+		SQUASH_REVERSED = map("obj16/squash-reversed.png"); //$NON-NLS-1$
+		FIXUP_DIRECT = map("obj16/fixup-direct.png"); //$NON-NLS-1$
+		FIXUP_REVERSED = map("obj16/fixup-reversed.png"); //$NON-NLS-1$
 		REWORD = map("obj16/reword.gif"); //$NON-NLS-1$
 		DONE_STEP = map("obj16/done_step.gif"); //$NON-NLS-1$
 		CURRENT_STEP = map("obj16/current_step.gif"); //$NON-NLS-1$
