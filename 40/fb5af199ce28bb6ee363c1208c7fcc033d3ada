@@ -1,0 +1,7 @@
+Code-Review+2: Matthias Sohn <matthias.sohn@sap.com>
+Verified+1: Hudson CI
+Submitted-by: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-at: Tue, 16 Sep 2014 18:31:19 -0400
+Reviewed-on: https://git.eclipse.org/r/33428
+Project: egit/egit
+Branch: refs/heads/stable-3.5
