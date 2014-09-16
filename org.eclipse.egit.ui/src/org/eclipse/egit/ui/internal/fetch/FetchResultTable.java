@@ -329,7 +329,6 @@ class FetchResultTable {
 		ColumnViewerToolTipSupport.enableFor(treeViewer);
 		final Tree tree = treeViewer.getTree();
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(tree);
-		tree.setLinesVisible(true);
 
 		treePanel.addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
