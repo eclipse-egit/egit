@@ -16,6 +16,24 @@
       "revId": "f9619ee27ee33a870c9f2f631ee1a4cf1511361a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_a51361e7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIIcons.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-09-17T21:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_4a189c35",
+      "revId": "f9619ee27ee33a870c9f2f631ee1a4cf1511361a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
