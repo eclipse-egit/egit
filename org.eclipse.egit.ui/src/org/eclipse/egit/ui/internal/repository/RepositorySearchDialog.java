@@ -102,6 +102,8 @@ public class RepositorySearchDialog extends WizardPage {
 	private final IEclipsePreferences prefs = InstanceScope.INSTANCE
 			.getNode(Activator.getPluginId());
 
+	private boolean fUserModifiedTreeSelection;
+
 	private static final class ContentProvider implements ITreeContentProvider {
 
 		private final Object[] children = new Object[0];
@@ -175,7 +177,8 @@ public class RepositorySearchDialog extends WizardPage {
 
 	/**
 	 * @param existingDirs
-	 * @param fillSearch true to fill search results when initially displayed
+	 * @param fillSearch
+	 *            true to fill search results when initially displayed
 	 */
 	public RepositorySearchDialog(Collection<String> existingDirs,
 			boolean fillSearch) {
@@ -215,8 +218,8 @@ public class RepositorySearchDialog extends WizardPage {
 		Label dirLabel = new Label(searchGroup, SWT.NONE);
 		dirLabel.setText(UIText.RepositorySearchDialog_directory);
 		dir = new Text(searchGroup, SWT.BORDER);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true,
-				false).hint(300, SWT.DEFAULT).applyTo(dir);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
+				.grab(true, false).hint(300, SWT.DEFAULT).applyTo(dir);
 		dir.setToolTipText(UIText.RepositorySearchDialog_EnterDirectoryToolTip);
 
 		String defaultRepoPath = UIUtils.getDefaultRepositoryDir();
@@ -276,8 +279,8 @@ public class RepositorySearchDialog extends WizardPage {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				prefs.putBoolean(PREF_DEEP_SEARCH, lookForNestedButton
-						.getSelection());
+				prefs.putBoolean(PREF_DEEP_SEARCH,
+						lookForNestedButton.getSelection());
 				try {
 					prefs.flush();
 				} catch (BackingStoreException e1) {
@@ -298,11 +301,17 @@ public class RepositorySearchDialog extends WizardPage {
 
 			@Override
 			public boolean isElementVisible(Viewer viewer, Object element) {
-
-				if (getCheckedItems().contains(element))
-					return true;
-
-				return super.isElementVisible(viewer, element);
+				boolean elementVisible = super
+						.isElementVisible(viewer, element);
+				// Only user selected elements are not searched.
+				if (getCheckedItems().contains(element)) {
+					if (!fUserModifiedTreeSelection) {
+						fTreeViewer.setChecked(element, elementVisible);
+					} else {
+						return true;
+					}
+				}
+				return elementVisible;
 			}
 		};
 
@@ -312,6 +321,7 @@ public class RepositorySearchDialog extends WizardPage {
 		fTreeViewer.addCheckStateListener(new ICheckStateListener() {
 
 			public void checkStateChanged(CheckStateChangedEvent event) {
+				fUserModifiedTreeSelection = true;
 				enableOk();
 			}
 		});
@@ -321,8 +331,8 @@ public class RepositorySearchDialog extends WizardPage {
 
 		ToolBar toolbar = new ToolBar(searchResultGroup, SWT.FLAT
 				| SWT.VERTICAL);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).applyTo(
-				toolbar);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING)
+				.applyTo(toolbar);
 
 		checkAllItem = new ToolItem(toolbar, SWT.PUSH);
 		checkAllItem
@@ -442,7 +452,7 @@ public class RepositorySearchDialog extends WizardPage {
 		final Set<String> directories = new HashSet<String>();
 		final File file = new File(dir.getText());
 		final boolean lookForNested = lookForNestedButton.getSelection();
-		if(!file.exists())
+		if (!file.exists())
 			return;
 
 		try {
@@ -514,6 +524,7 @@ public class RepositorySearchDialog extends WizardPage {
 		fTreeViewer.setInput(validDirs);
 		// this sets all to selected
 		fTreeViewer.setAllChecked(true);
+		fUserModifiedTreeSelection = false;
 		enableOk();
 	}
 
@@ -522,8 +533,8 @@ public class RepositorySearchDialog extends WizardPage {
 		final File file = new File(dir.getText());
 		if (!file.exists()) {
 			setErrorMessage(NLS.bind(
-					UIText.RepositorySearchDialog_DirectoryNotFoundMessage, dir
-							.getText()));
+					UIText.RepositorySearchDialog_DirectoryNotFoundMessage,
+					dir.getText()));
 		} else {
 			setErrorMessage(null);
 			setMessage(UIText.RepositorySearchDialog_NoSearchAvailableMessage,
