@@ -485,8 +485,7 @@ public class RebaseInteractiveView extends ViewPart implements
 		};
 
 		ISelectionService srv = CommonUtils.getService(getSite(), ISelectionService.class);
-		srv.addPostSelectionListener(RepositoriesView.VIEW_ID,
-				selectionChangedListener);
+		srv.addPostSelectionListener(selectionChangedListener);
 	}
 
 	private class RebaseCommandItemSelectionListener extends SelectionAdapter {
