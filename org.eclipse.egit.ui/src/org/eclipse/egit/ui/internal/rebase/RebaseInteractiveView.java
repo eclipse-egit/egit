@@ -18,7 +18,11 @@ import java.util.List;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan;
 import org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan.ElementAction;
 import org.eclipse.egit.core.internal.rebase.RebaseInteractivePlan.ElementType;
@@ -83,6 +87,7 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
@@ -152,6 +157,8 @@ public class RebaseInteractiveView extends ViewPart implements
 
 	private RebasePlanIndexer planIndexer;
 
+	private IPreferenceChangeListener prefListener;
+
 	/**
 	 * View for handling interactive rebase
 	 */
@@ -219,6 +226,10 @@ public class RebaseInteractiveView extends ViewPart implements
 
 		if (planIndexer != null)
 			planIndexer.dispose();
+
+		InstanceScope.INSTANCE.getNode(
+				org.eclipse.egit.core.Activator.getPluginId())
+				.removePreferenceChangeListener(prefListener);
 	}
 
 	@Override
@@ -283,6 +294,31 @@ public class RebaseInteractiveView extends ViewPart implements
 				return null;
 			}
 		});
+
+		prefListener = new IPreferenceChangeListener() {
+			public void preferenceChange(PreferenceChangeEvent event) {
+				if (!RepositoryUtil.PREFS_DIRECTORIES.equals(event.getKey()))
+					return;
+
+				final Repository repo = currentRepository;
+				if (repo == null)
+					return;
+
+				if (Activator.getDefault().getRepositoryUtil().contains(repo))
+					return;
+
+				Display.getDefault().asyncExec(new Runnable() {
+					public void run() {
+						currentRepository = null;
+						showRepository(null);
+					}
+				});
+			}
+		};
+
+		InstanceScope.INSTANCE.getNode(
+				org.eclipse.egit.core.Activator.getPluginId())
+				.addPreferenceChangeListener(prefListener);
 
 		IActionBars actionBars = getViewSite().getActionBars();
 		IToolBarManager toolbar = actionBars.getToolBarManager();
