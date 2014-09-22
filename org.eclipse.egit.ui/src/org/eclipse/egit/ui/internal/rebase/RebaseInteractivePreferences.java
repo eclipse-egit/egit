@@ -42,4 +42,23 @@ public class RebaseInteractivePreferences {
 		getPreferencesStore().setValue(
 				UIPreferences.REBASE_INTERACTIVE_ORDER_REVERSE, reversed);
 	}
+
+	/**
+	 * @return if the view should react on selection changes.
+	 */
+	public static boolean isReactOnSelection() {
+		return getPreferencesStore().getBoolean(
+				UIPreferences.REBASE_INTERACTIVE_SYNC_SELECTION);
+	}
+
+	/**
+	 * Sets if the view should react on selection changes.
+	 *
+	 * @param react
+	 *            {@code true} - should react, {@code false} - should ignore.
+	 */
+	public static void setReactOnSelection(boolean react) {
+		getPreferencesStore().setValue(
+				UIPreferences.REBASE_INTERACTIVE_SYNC_SELECTION, react);
+	}
 }
