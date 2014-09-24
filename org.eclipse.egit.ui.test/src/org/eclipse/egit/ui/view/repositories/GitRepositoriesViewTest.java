@@ -14,6 +14,7 @@ import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellCloses;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -124,8 +125,8 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		checkoutWithDoubleClick(tree, "stable");
 		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 		String contentStable = getTestFileContent();
-		assertTrue("Content of master and stable should differ", !contentMaster
-				.equals(contentStable));
+		assertNotEquals("Content of master and stable should differ",
+				contentMaster, contentStable);
 	}
 
 	private void checkoutWithDoubleClick(SWTBotTree tree, String branch)

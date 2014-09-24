@@ -346,7 +346,8 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
 		SWTBotTreeItem[] syncItems = syncViewTree.getAllItems();
 		assertEquals(syncItems.length, 1);
-		assertTrue(syncItems[0].getText().contains(PROJ1));
+		String text = syncItems[0].getText();
+		assertTrue("Received unexpected text: " + text, text.contains(PROJ1));
 
 		syncItems[0].expand();
 		SWTBotTreeItem[] level1Children = syncItems[0].getItems();
