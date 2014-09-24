@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 3.5 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 3.5 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bug-Fixes.html" title="Bug Fixes">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bug Fixes</td>
+			</tr>
+		</table><hr/>
+		<h1 id="EGit">EGit</h1>
+		<h2 id="Features">Features</h2>
+		<h3 id="Interactive_Rebase_View">Interactive Rebase View</h3>
+		<ul>
+			<li>Allow to move multiple commits by drag &amp; drop</li>
+			<li>Indicate order of steps and allow to change it by clicking on header</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-3.5-interactive-rebase.png"/>
+		</p>
+		<ul>
+			<li>Add context menu for plan modification</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-3.5-interactive-rebase-plan-menu.png"/>
+		</p>
+		<h3 id="History_View">History View</h3>
+		<ul>
+			<li>Add support for cherry-picking multiple commits at once</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-3.5-multi-cherry-pick.png"/>
+		</p>
+		<ul>
+			<li>Add support for reverting multiple commits at once.</li>
+			<li>Add menu action for deleting tags</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-3.5-history-delete-tag.png"/>
+		</p>
+		<ul>
+			<li>Use separate diff viewer instead of embedding into message</li>
+			<li>&#xa0;Support searching for branches/tags with find toolbar</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-3.5-history-find-tag-branch.png"/>
+		</p>
+		<ul>
+			<li>Make compare/open actions work with renamed/moved files</li>
+			<li>Enable "Create Patch" for first commit in the History view</li>
+		</ul>
+		<h3 id="Rebase">Rebase</h3>
+		<ul>
+			<li>Offer interactive and preserve merges options when selecting rebase target</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-3.5-rebase-options.png"/>
+		</p>
+		<h3 id="Stash_Support">Stash Support</h3>
+		<ul>
+			<li>Add "Stashes" menu to Team context menu and toolbar</li>
+		</ul>
+		<p>
+			<img border="0" src="images/EGit-3.5-stash-toolbar.png"/>
+		</p>
+		<ul>
+			<li>Add stash commit viewer</li>
+		</ul>
+		<p>
+			<img border="0" src="images/EGit-3.5-stash-viewer.png"/>
+		</p>
+		<ul>
+			<li>Optimize layouts of commit and stash viewer</li>
+		</ul>
+		<h3 id="Menus">Menus</h3>
+		<ul>
+			<li>Add "Team" menu on working sets</li>
+		</ul>
+		<p>
+			<img border="0" src="images/EGit-3.5-working-set-team-menu.png"/>
+		</p>
+		<ul>
+			<li>Add "Repository" submenu in Team menu of files and folders</li>
+		</ul>
+		<p>
+			<img border="0" src="images/EGit-3.5-repository-submenu.png"/>
+		</p>
+		<h3 id="GitHub_Connector">GitHub Connector</h3>
+		<ul>
+			<li>PullRequest supports the review_comments field</li>
+		</ul>
+		<h2 id="Usability_Improvements">Usability Improvements</h2>
+		<ul>
+			<li>Add "Show Annotations" to ruler menu of revision editor</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-3.5-annotations-in-ruler.png"/>
+		</p>
+		<ul>
+			<li>Staging view
+				<ul>
+					<li>Sort content by name if file names are shown first</li>
+				</ul>
+			</li>
+			<li>Repositories view
+				<ul>
+					<li>Sort tags in natural order</li>
+					<li>Sort folders before files in working directory</li>
+				</ul>
+			</li>
+			<li>Commit dialog
+				<ul>
+					<li>Add "Select for Commit" to files context menu</li>
+					<li>Replace help button with link to Staging view</li>
+				</ul>
+			</li>
+			<li>Cherry-pick
+				<ul>
+					<li>Show a rebase result dialog if cherry-picking fails</li>
+					<li>Provide more context in cherry-pick confirmation dialog</li>
+				</ul>
+			</li>
+			<li>Push
+				<ul>
+					<li>Simple push wizard links to Advanced push wizard</li>
+					<li>"Commit and Push" opens simple push wizard if no push refspec exists or current branch doesn't track a remote branch</li>
+					<li>Push Branch: Don't suggest branch name if upstream branch is a local branch</li>
+					<li>Assist in Push dialog and allow to push to custom refs</li>
+					<li>Show details about branch and commit in simple push dialog</li>
+					<li>Make source/destination branch more clear in push result dialog/confirmation</li>
+				</ul>
+			</li>
+		</ul>
+		<h2 id="Performance_Improvements">Performance Improvements</h2>
+		<ul>
+			<li>Staging view
+				<ul>
+					<li>Improved performance on large repositories/working directories</li>
+					<li>Don't reload repository on selection if repository stays the same</li>
+				</ul>
+			</li>
+			<li>Use faster method of setting styles in commit message details</li>
+		</ul><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bug-Fixes.html" title="Bug Fixes">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bug Fixes</td>
+			</tr>
+		</table>
+	</body>
+</html>

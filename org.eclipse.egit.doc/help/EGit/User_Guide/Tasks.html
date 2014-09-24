@@ -106,8 +106,9 @@
 				<b>Finish</b>
 			</li>
 		</ul>
-		<p>&lt;br 
-			/&gt;</p>
+		<p>
+			<br/>
+		</p>
 		<h2 id="Starting_from_existing_Git_Repositories">Starting from existing Git Repositories</h2>
 		<p>In order to work with the content of a Git repository in the Eclipse workbench, the contained files and folders must be imported as projects. In principle, this import can be done using the generic "New Project" or "Import..." wizards, since the working directory of a Git Repository is just a normal directory in the local file system. However, the newly created projects would still have to be shared manually with Git. The "Import Projects from Git" wizard integrates project import and sharing and also offers some extra convenience.</p>
 		<h3 id="Starting_the_import_wizard">Starting the import wizard</h3>
@@ -648,8 +649,9 @@
 			<a href="http://code.google.com/p/gerrit/" target="egit_external">http://code.google.com/p/gerrit/</a>), EGit allows you to conveniently push and fetch changes to and from the Gerrit servers.
 		</p>
 		<h3 id="Enabling_Gerrit_for_a_repository">Enabling Gerrit for a repository</h3>
-		<p>Gerrit operation will not appear in any menus unless you configure your repository first. To do that open the Git Repositories view browse down to the 
-			<b>Remote</b> that the represent the Git repository server you want to use.
+		<p>Gerrit operation will not appear in any menus unless you configure your repository first. To do that, open the Git Repositories view and browse down to the 
+			<b>Remote</b> that represents the Git repository server you want to use and select 
+			<b>Gerrit Configuration...</b>.
 		</p>
 		<h3 id="Pushing_a_change_to_a_Gerrit_Code_Review_Server">Pushing a change to a Gerrit Code Review Server</h3>
 		<p>Right-click on a project and select 
@@ -669,6 +671,17 @@
 			<b>Finish</b>, the currently checked out commit will be pushed to the Gerrit branch specified. Also, the URI and Gerrit Branch values will be remembered and suggested again when the dialog is opened again later.
 		</p>
 		<p>This allows for more flexibility when working with different Gerrit branches in parallel (e.g. frequently switching between development and hotfixing).</p>
+		<h4 id="Editing_a_change">Editing a change</h4>
+		<p>When a change has been pushed to Gerrit and the reviewers suggest to make some improvements, a new patch set for the change has to be uploaded. First, edit the commit(s):</p>
+		<ul>
+			<li>In case you have one commit corresponding to one change, you can amend the commit (see 
+				<a href="#Amending_Commits">Amending Commits</a>).
+			</li>
+			<li>In case you have multiple dependent commits and need to edit a commit other than the last one, you can do an interactive rebase (see 
+				<a href="#Interactive_Rebase">Interactive Rebase</a>). Alternatively, check out the commit you want to edit, amend it and then cherry-pick the later commits on top (this is what interactive rebase does for you).
+			</li>
+		</ul>
+		<p>Then push again to the same branch. Gerrit will detect that you are updating existing changes and will add new patch sets.</p>
 		<h3 id="Fetching_a_change_from_a_Gerrit_Code_Review_Server">Fetching a change from a Gerrit Code Review Server</h3>
 		<p>Right-click on a project and select 
 			<b>Team &gt; Remote &gt; Fetch from Gerrit...</b> or right-click on a Repository node in the Repositories View and select 
@@ -722,7 +735,7 @@
 			<img border="0" src="images/01-TextDecorations.png"/>
 		</p>
 		<p>For files and folders there are the variables <tt>"name"</tt>, <tt>"dirty"</tt> and <tt>"staged"</tt>. <tt>"Dirty"</tt> and <tt>"staged"</tt> are flags; if they are true, the text after the colon is displayed.</p>
-		<p>For projects there are the additional variables <tt>"repository"</tt> and <tt>"branch"</tt>. The <tt>"repository"</tt> variable displays the name of the repository.</p>
+		<p>For projects there are the additional variables <tt>"repository"</tt>, <tt>"branch"</tt> and <tt>"branch_status"</tt>. The <tt>"repository"</tt> variable displays the name of the repository.</p>
 		<p>The <tt>"branch"</tt> variable displays the name of the currently checked out branch. If no branch is checked out, the decoration shows the shortened name of the commit (first seven characters followed by ellipsis). If tags and/or remote branches are pointing to this commit, a "best guess" heuristic is applied to also show this information: tags take precedence over remote branches, if several tags apply, the newest one is displayed; if there are several remote branches or tags have no modification date, then alphabetic sorting is applied and the last one is shown. Example: the checked out commit <tt>
 			<b>e49f576...</b></tt> refers to tag <tt>
 			<b>v.0.7.1</b></tt> of repository <tt>
@@ -732,6 +745,18 @@
 		<p>
 			<img border="0" src="images/03-ExampleDecoration.png"/>
 		</p>
+		<p>The <tt>"branch_status"</tt> variable shows the status of the local branch compared to the remote-tracking branch that is set as upstream:</p>
+		<ul>
+			<li>↑N – The local branch has 
+				<i>N</i> commits that are not yet on the remote-tracking branch. This can be read as "N commits to push".
+			</li>
+			<li>↓M – The remote-tracking branch has 
+				<i>M</i> commits that are not on the local branch. This can be read as "M commits to merge/rebase".
+			</li>
+			<li>↑N↓M – The local branch and the remote-tracking branch have diverged (the two above apply both).</li>
+			<li>– Empty if the local branch and the remote-tracking branch have the same state.</li>
+		</ul>
+		<p>The status variable can be used with a leading space like this: <tt>{ branch_status}</tt>. This results in the space only being added when the status is not empty.</p>
 		<h4 id="Icon_Decorations">Icon Decorations</h4>
 		<p>Icon decorations appear on the lower right corner of the icon displayed in front of the label. They can be configured on the Preferences dialog under 
 			<b>Team &gt; Git &gt; Label Decorations</b> on the tab 
@@ -1051,7 +1076,7 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 			<b>Show untracked Files</b> is selected by default.
 		</p>
 		<h4 id="Amending_Commits">Amending Commits</h4>
-		<p>If you recognize that you missed something when committing a change you may fix this: open the commit dialog again and specify that the current commit shall "amend" the previous commit in the current branch. The new commit will then replace the previous one. This feature is often used to correct incorrect commits before they are published to other repositories.</p>
+		<p>If you recognize that you missed something when committing a change you may fix this: open the staging view or commit dialog again and specify that the current commit shall "amend" the previous commit in the current branch. The new commit will then replace the previous one. This feature is often used to correct incorrect commits before they are published to other repositories.</p>
 		<p>
 			<b>Note:</b> do not amend commits if they have already been published to a shared repository since this may disturb others if they already based their changes on the published change.
 		</p>
@@ -1067,8 +1092,8 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<p>
 			<img border="0" src="images/EGit-Corrected.png"/>
 		</p>
-		<p>then open the Staging View or Commit Dialog again and select the option 
-			<b>Amend previous commit</b> in the toolbar.
+		<p>Then open the Staging View or Commit Dialog again and select the 
+			<b>Amend Previous Commit</b> icon in the toolbar.
 		</p>
 		<p>The commit message of your previous commit (the one you want to replace) is then filled into the "Commit Message" field. This gives you the chance not only to correct errors in the content of the version-controlled files but to also correct errors (e.g. typos) in the commit message describing your change.</p>
 		<p>As an alternative to amending you could just commit the corrected version as a subsequent commit. But the first commit containing the typo is of no use to anybody and in order not to clutter the history of your project with unneeded commits you should amend the commit.</p>
@@ -1300,14 +1325,19 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<h3 id="Branch_Creation_Dialog">Branch Creation Dialog</h3>
 		<p>There are several actions available to create a local branch. All these actions use the Branch Creation dialog:</p>
 		<p>
-			<img border="0" src="images/Egit-3.1-CreateBranchDialog.png"/>
+			<img border="0" src="images/Egit-3.5-CreateBranchDialog.png"/>
 		</p>
-		<p>The combo in the upper part allows to select the branch or commit the new branch shall be based on. Typically, this is a remote tracking branch, but it could be any branch or commit in the repository (selecting a local branch is not recommended if you are working with a remote repository).</p>
-		<p>The "Pull Strategy" group is only visible when a branch is selected in the combo and allows to override the default setup for the "upstream configuration" which is helpful when fetching and pushing, but particularly when pulling. Depending on the selected option the following configuration can be chosen:</p>
+		<p>Enter the name of the local branch you want to create. If a source branch is selected which is a remote tracking branch EGit will suggest to create the new local branch with the same name.</p>
+		<p>Click 
+			<b>Select...</b> to select the source branch the new branch shall be based on. Typically, this is a remote tracking branch, but it could be any branch or commit in the repository (selecting a local branch is not recommended if you are working with a remote repository).
+			If you want to base the new branch on a commit no branch is referring to then click 
+			<b>Create Branch...</b> from the commit shown in the History View.
+		</p>
+		<p>When a source branch is selected you can configure the "upstream configuration" of the new branch which is helpful when fetching and pushing, but particularly when pulling. Depending on the selected option the following configuration can be chosen:</p>
 		<ul>
-			<li>Rebase: When pulling, new changes will be fetched from upstream and the remote tracking branch will be updated. Then the current local branch will be rebased onto the updated remote tracking branch</li>
-			<li>Merge: When pulling, the changes will be fetched from upstream and the remote tracking branch will be updated. Then the current local branch will be merged with the new changes. This is the default if the new branch is based on a remote tracking branch (but this default may be overridden by specific repository configuration)</li>
-			<li>None: When pulling, no specific upstream configuration will be done for the new branch; however, if a default remote exists (a remote with name "origin", pull will try to use the configuration of this remote; this is the default if the new branch is not based on a remote tracking branch</li>
+			<li>"Merge upstream commits into local branch": When pulling, the changes will be fetched from upstream and the remote tracking branch will be updated. Then the current local branch will be merged with the new changes. This is the default if the new branch is based on a remote tracking branch (but this default may be overridden by specific repository configuration)</li>
+			<li>"Rebase commits of local branch onto upstream": When pulling, new changes will be fetched from upstream and the remote tracking branch will be updated. Then the current local branch will be rebased onto the updated remote tracking branch</li>
+			<li>if you uncheck the option "Configure upstream for push and pull"): When pulling, no specific upstream configuration will be done for the new branch; however, if a default remote exists (a remote with name "origin", pull will try to use the configuration of this remote; this is the default if the new branch is not based on a remote tracking branch</li>
 		</ul>
 		<p>You may view and edit the upstream configuration in the 
 			<a href="#Repository_Configuration">repository configuration</a> or by selecting 
@@ -1315,6 +1345,15 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		</p>
 		<p>EGit also supports the git configuration parameter <code>branch.autosetuprebase</code>, set it to <code>always</code> if you want to use the rebase pull strategy by default. If you set this in the repository configuration this is used for all local branches created based on a remote tracking branch in this repository, if you set it in your user configuration it will be used for all your repositories.</p>
 		<p>In the lower part, you can decide whether the new branch shall be checked out immediately.</p>
+		<h3 id="Configure_Branch_Dialog">Configure Branch Dialog</h3>
+		<p>
+			<img border="0" src="images/Egit-3.5-ConfigureBranchDialog.png"/>
+		</p>
+		<p>Click 
+			<b>Configure Branch...</b> on a branch in the Repositories View in order to change the upstream configuration of a local branch.
+			Select which remote ("." means the local repository) and branch the selected local branch should track. Check "Rebase" if you want
+			pull to rebase the local branch onto new changes arriving for the tracked branch, otherwise pull will merge new changes arriving for the tracked branch.
+		</p>
 		<h2 id="Merging">Merging</h2>
 		<p>A merge incorporates changes from another branch or tag, since the time their histories diverged from the current branch, into the currently checked out branch.</p>
 		<h3 id="Merging_a_branch_or_a_tag_into_the_current_branch">Merging a branch or a tag into the current branch</h3>
@@ -1451,6 +1490,13 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<p>A repository which contains conflicting files has the textual label decorator "|Conflicts" attached to the repository name. Conflicting resources and folders containing such conflicting resources get a conflict label decoration.</p>
 		<p>
 			<img border="0" src="images/Conflicts.png"/>
+		</p>
+		<p>Alternativley, it's easy to find a list of all conflicting files in the staging area. 
+			Open the 
+			<b>Git Staging</b> view. The conflicting files with decorators will be seen 
+			on the left.
+
+			<img border="0" src="images/Git_merge_conflict.png"/>
 		</p>
 		<h4 id="Editing_conflicting_files">Editing conflicting files</h4>
 		<p>In the file content, the area where a pair of conflicting changes happened is marked with markers &lt;&lt;&lt;&lt;&lt;&lt;&lt;, =======, and &gt;&gt;&gt;&gt;&gt;&gt;&gt;. The part before the ======= is typically your side, and the part afterwards is typically their side (see 

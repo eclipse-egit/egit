@@ -94,7 +94,9 @@
 			</topic>
 			<topic href="help/EGit/User_Guide/Tasks.html#Working_with_Gerrit" label="Working with Gerrit">
 				<topic href="help/EGit/User_Guide/Tasks.html#Enabling_Gerrit_for_a_repository" label="Enabling Gerrit for a repository"></topic>
-				<topic href="help/EGit/User_Guide/Tasks.html#Pushing_a_change_to_a_Gerrit_Code_Review_Server" label="Pushing a change to a Gerrit Code Review Server"></topic>
+				<topic href="help/EGit/User_Guide/Tasks.html#Pushing_a_change_to_a_Gerrit_Code_Review_Server" label="Pushing a change to a Gerrit Code Review Server">
+					<topic href="help/EGit/User_Guide/Tasks.html#Editing_a_change" label="Editing a change"></topic>
+				</topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Fetching_a_change_from_a_Gerrit_Code_Review_Server" label="Fetching a change from a Gerrit Code Review Server"></topic>
 			</topic>
 			<topic href="help/EGit/User_Guide/Tasks.html#Inspecting_the_state_of_the_Repository" label="Inspecting the state of the Repository">
@@ -172,6 +174,7 @@
 					<topic href="help/EGit/User_Guide/Tasks.html#From_the_History_View_4" label="From the History View"></topic>
 				</topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Branch_Creation_Dialog" label="Branch Creation Dialog"></topic>
+				<topic href="help/EGit/User_Guide/Tasks.html#Configure_Branch_Dialog" label="Configure Branch Dialog"></topic>
 			</topic>
 			<topic href="help/EGit/User_Guide/Tasks.html#Merging" label="Merging">
 				<topic href="help/EGit/User_Guide/Tasks.html#Merging_a_branch_or_a_tag_into_the_current_branch" label="Merging a branch or a tag into the current branch">
@@ -434,27 +437,33 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/3.4/3.4.html" label="EGit 3.4 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/3.4/3.4.html" label="EGit">
-			<topic href="help/EGit/New_and_Noteworthy/3.4/3.4.html#Features" label="Features"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/3.4/3.4.html#Usability_Improvements" label="Usability Improvements"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/3.4/3.4.html#Performance_Improvements" label="Performance Improvements"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/3.4/3.4.html#Build_and_Release_Engineering" label="Build and Release Engineering"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/3.5/3.5.html" label="EGit 3.5 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/3.5/3.5.html" label="EGit">
+			<topic href="help/EGit/New_and_Noteworthy/3.5/3.5.html#Features" label="Features">
+				<topic href="help/EGit/New_and_Noteworthy/3.5/3.5.html#Interactive_Rebase_View" label="Interactive Rebase View"></topic>
+				<topic href="help/EGit/New_and_Noteworthy/3.5/3.5.html#History_View" label="History View"></topic>
+				<topic href="help/EGit/New_and_Noteworthy/3.5/3.5.html#Rebase" label="Rebase"></topic>
+				<topic href="help/EGit/New_and_Noteworthy/3.5/3.5.html#Stash_Support" label="Stash Support"></topic>
+				<topic href="help/EGit/New_and_Noteworthy/3.5/3.5.html#Menus" label="Menus"></topic>
+				<topic href="help/EGit/New_and_Noteworthy/3.5/3.5.html#GitHub_Connector" label="GitHub Connector"></topic>
+			</topic>
+			<topic href="help/EGit/New_and_Noteworthy/3.5/3.5.html#Usability_Improvements" label="Usability Improvements"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/3.5/3.5.html#Performance_Improvements" label="Performance Improvements"></topic>
 		</topic>
-		<topic href="help/EGit/New_and_Noteworthy/3.4/Bug-Fixes.html" label="Bug Fixes"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/3.4/Contributors.html" label="Contributors"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/3.4/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/3.5/Bug-Fixes.html" label="Bug Fixes"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/3.5/Contributors.html" label="Contributors"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/3.5/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/3.4/3.4.html" label="JGit 3.4 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/3.4/3.4.html" label="JGit">
-			<topic href="help/JGit/New_and_Noteworthy/3.4/3.4.html#Features" label="Features"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/3.4/3.4.html#Command_Line" label="Command Line"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/3.4/3.4.html#Performance_Improvements" label="Performance Improvements"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/3.4/3.4.html#Build_and_Release_Engineering" label="Build and Release Engineering"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/3.5/3.5.html" label="JGit 3.5 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/3.5/3.5.html" label="JGit">
+			<topic href="help/JGit/New_and_Noteworthy/3.5/3.5.html#Features" label="Features"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/3.5/3.5.html#Command_Line" label="Command Line"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/3.5/3.5.html#Performance_Improvements" label="Performance Improvements"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/3.5/3.5.html#Build_and_Release_Engineering" label="Build and Release Engineering"></topic>
 		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/3.4/Bug-Fixes.html" label="Bug Fixes"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/3.4/Contributors.html" label="Contributors"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/3.4/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/3.5/Bug-Fixes.html" label="Bug Fixes"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/3.5/Contributors.html" label="Contributors"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/3.5/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>

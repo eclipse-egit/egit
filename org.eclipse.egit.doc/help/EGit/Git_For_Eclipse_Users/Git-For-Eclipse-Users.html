@@ -40,13 +40,13 @@
 		</p>
 		<p>Two problems surface with a centralised version control system, although they aren't immediately obvious: </p>
 		<ul>
-			<li>You need to be 'online' to perform actions, like diff or patch.<span id="ref-1"><small>&nbsp;</small><sup>
-				<a href="#reference-1">&amp;#91;1&amp;#93;</a></sup></span>
+			<li>You need to be 'online' to perform actions, like diff or patch 
+				<a href="#reference-1">[1</a>].
 			</li>
 			<li>Patches generated against a particular branch can become outdated fairly quickly as development of the snapshot-in-time branch moves on (e.g. when it is time to apply the patch, HEAD is different than it was when the patch was generated).</li>
 		</ul>
-		<p><span id="reference-1"><sup>
-			<a href="#ref-1">&amp;#91;1&amp;#93;</a></sup></span>
+		<p>
+			<a href="#ref-1">[1</a>] 
 			<i>(A note on SVN: since SVN keeps the last-known checkout, it's possible to do a limited set of operations while disconnected from SVN, like diff from the last-known checkout. However, in general, you are prevented from doing many of the operations that are possible while connected.)</i>
 		</p>
 		<p>The first problem is rarely apparent for those working with Eclipse in a location at (or near) the repository itself. Those in the same continent will rarely experience delays due to global network variation; in addition, they tend to be employed in an organisation and sit at a desktop connected to wired networking for most of the day. Road warriors (those with laptops and who code from the local coffee shop) tend to operate in a more frequently disconnected mode, which limits repository functionality to when they are connected.</p>
