@@ -1,0 +1,9 @@
+Code-Review+2: Matthias Sohn <matthias.sohn@sap.com>
+Code-Review+1: Robin Stocker <robin@nibor.org>
+Verified+1: Robin Stocker <robin@nibor.org>
+Verified+1: Hudson CI
+Submitted-by: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-at: Wed, 24 Sep 2014 17:28:45 -0400
+Reviewed-on: https://git.eclipse.org/r/33797
+Project: egit/egit
+Branch: refs/heads/stable-3.5
