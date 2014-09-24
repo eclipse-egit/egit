@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit Contributor Guide - Documentation</title>
+		<link type="text/css" rel="stylesheet" href="../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">Documentation</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="Builds.html" title="Builds">
+						<img alt="Previous" border="0" src="../../images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Tests.html" title="Tests">
+						<img alt="Next" border="0" src="../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">Builds</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Tests</td>
+			</tr>
+		</table><hr/>
+		<h1 id="Documentation">Documentation</h1>
+		<p>The EGit project sources its documentation from the wiki and generates Eclipse help content from it (under the covers, we are using 
+			<a href="http://wiki.eclipse.org/Mylyn/WikiText" target="egit_external">Mylyn WikiText</a> to make this possible). This significantly lowers the barrier for people to contribute documentation to the EGit project. To contribute documentation, simply modify the 
+			<a href="http://wiki.eclipse.org/EGit/User_Guide" target="egit_external">EGit User's Guide</a>. Have a look at the 
+			<a href="http://wiki.eclipse.org/DocumentationGuidelines/StyleGuidelines" title="DocumentationGuidelines/StyleGuidelines" target="egit_external">Style Guidelines</a> and 
+			<a href="http://wiki.eclipse.org/Eclipse_Doc_Style_Guide" title="Eclipse_Doc_Style_Guide" target="egit_external">Eclipse Documentation Style Guide</a> to get some guidance on how to write good documentation. More on that can be found 
+			<a href="http://wiki.eclipse.org/DocumentationGuidelines" title="DocumentationGuidelines" target="egit_external">here</a>.
+		</p>
+		<p>The documentation is contained in the 
+			<b>org.eclipse.egit.doc</b> plug-in. The 
+			<b>build-help.xml</b> drives the generation of the help content. It is integrated into the maven build. The regular maven build of 
+			<b>org.eclipse.egit.doc</b>
+		</p>
+		<pre><b>$ mvn clean install</b> 
+</pre>
+		<p>will only package the help content committed to the egit repository. To update the help content by downloading the latest documentation from the wiki run</p>
+		<pre><b>$ mvn clean install -Dupdate.egit.doc</b>
+</pre>
+		<p>Don't forget to check all the generated help pages and especially all hyperlinks and images before pushing the updated help to the code review system for inclusion into the continuous build.</p>
+		<p>The aim is to generate new documentation every month or so (or just on demand). If you're making big changes or want the documentation refreshed, please let us know on the egit-dev mailing list.</p>
+		<p>
+			<br/>
+		</p><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="Builds.html" title="Builds">
+						<img alt="Previous" border="0" src="../../images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center">
+					<a href="Contributor-Guide.html" title="EGit Contributor Guide">
+						<img alt="EGit Contributor Guide" border="0" src="../../images/home.gif"/>
+					</a>
+				</td>
+				<td style="width: 20%" align="right">
+					<a href="Tests.html" title="Tests">
+						<img alt="Next" border="0" src="../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">Builds</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Tests</td>
+			</tr>
+		</table>
+	</body>
+</html>

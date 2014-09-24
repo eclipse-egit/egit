@@ -50,6 +50,7 @@
 				<path name="EGit/New_and_Noteworthy/3.5" title="EGit 3.5 New and Noteworthy" />
 				<path name="JGit/New_and_Noteworthy/3.5" title="JGit 3.5 New and Noteworthy" />
 				<path name="EGit/Git_For_Eclipse_Users" title="Git for Eclipse Users" />
+				<path name="EGit/Contributor_Guide" title="EGit Contributor Guide" />
 				<stylesheet url="book.css" />
 				<pageAppendum>
 

@@ -478,4 +478,103 @@
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html#Rebasing_and_fast-forwarding" label="Rebasing and fast-forwarding"></topic>
 		<topic href="help/EGit/Git_For_Eclipse_Users/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
+	<topic href="help/EGit/Contributor_Guide/Contributor-Guide.html" label="EGit Contributor Guide">
+		<topic href="help/EGit/Contributor_Guide/Contributor-Guide.html" label="Communication"></topic>
+		<topic href="help/EGit/Contributor_Guide/Obtaining-Sources.html" label="Obtaining Sources">
+			<topic href="help/EGit/Contributor_Guide/Obtaining-Sources.html#Cloning" label="Cloning">
+				<topic href="help/EGit/Contributor_Guide/Obtaining-Sources.html#On_the_command_line" label="On the command line"></topic>
+				<topic href="help/EGit/Contributor_Guide/Obtaining-Sources.html#Using_EGit_.28see_.5Bhttp:.2F.2Fwww.eclipse.org.2Fegit.2Fdownload.2F_download_page.5D.29" label="Using EGit (see [http://www.eclipse.org/egit/download/ download page])"></topic>
+			</topic>
+			<topic href="help/EGit/Contributor_Guide/Obtaining-Sources.html#Repositories" label="Repositories">
+				<topic href="help/EGit/Contributor_Guide/Obtaining-Sources.html#EGit" label="EGit"></topic>
+				<topic href="help/EGit/Contributor_Guide/Obtaining-Sources.html#JGit" label="JGit"></topic>
+				<topic href="help/EGit/Contributor_Guide/Obtaining-Sources.html#EGit_GitHub_Integration" label="EGit GitHub Integration"></topic>
+				<topic href="help/EGit/Contributor_Guide/Obtaining-Sources.html#EGit_PDE_Tools" label="EGit PDE Tools"></topic>
+			</topic>
+		</topic>
+		<topic href="help/EGit/Contributor_Guide/Development-IDE-Configuration.html" label="Development IDE Configuration">
+			<topic href="help/EGit/Contributor_Guide/Development-IDE-Configuration.html#Tools" label="Tools"></topic>
+			<topic href="help/EGit/Contributor_Guide/Development-IDE-Configuration.html#Java_Requirements" label="Java Requirements"></topic>
+			<topic href="help/EGit/Contributor_Guide/Development-IDE-Configuration.html#Dependencies" label="Dependencies">
+				<topic href="help/EGit/Contributor_Guide/Development-IDE-Configuration.html#Option_1:_Use_a_Target_Platform" label="Option 1: Use a Target Platform"></topic>
+				<topic href="help/EGit/Contributor_Guide/Development-IDE-Configuration.html#Option_2:_Install_from_Orbit_P2_Repository" label="Option 2: Install from Orbit P2 Repository"></topic>
+			</topic>
+			<topic href="help/EGit/Contributor_Guide/Development-IDE-Configuration.html#Running" label="Running"></topic>
+		</topic>
+		<topic href="help/EGit/Contributor_Guide/Builds.html" label="Builds">
+			<topic href="help/EGit/Contributor_Guide/Builds.html#JGit_2" label="JGit"></topic>
+			<topic href="help/EGit/Contributor_Guide/Builds.html#EGit_2" label="EGit"></topic>
+			<topic href="help/EGit/Contributor_Guide/Builds.html#Mailing_Lists" label="Mailing Lists"></topic>
+			<topic href="help/EGit/Contributor_Guide/Builds.html#Maven_Build_Sequence" label="Maven Build Sequence"></topic>
+			<topic href="help/EGit/Contributor_Guide/Builds.html#FindBugs_and_PMD" label="FindBugs and PMD"></topic>
+			<topic href="help/EGit/Contributor_Guide/Builds.html#Checking_for_JGit_API_Changes_using_API_Baseline" label="Checking for JGit API Changes using API Baseline"></topic>
+			<topic href="help/EGit/Contributor_Guide/Builds.html#Automated_Signing_and_Publishing" label="Automated Signing and Publishing">
+				<topic href="help/EGit/Contributor_Guide/Builds.html#Signing_.28old_method.2C_replaced_by_automated_procedure.29" label="Signing (old method, replaced by automated procedure)"></topic>
+			</topic>
+			<topic href="help/EGit/Contributor_Guide/Builds.html#Contribution_to_Release_Train" label="Contribution to Release Train"></topic>
+		</topic>
+		<topic href="help/EGit/Contributor_Guide/Documentation.html" label="Documentation"></topic>
+		<topic href="help/EGit/Contributor_Guide/Tests.html" label="Tests">
+			<topic href="help/EGit/Contributor_Guide/Tests.html#JGit_Unit_Tests" label="JGit Unit Tests"></topic>
+			<topic href="help/EGit/Contributor_Guide/Tests.html#JGit_HTTP_Tests" label="JGit HTTP Tests"></topic>
+			<topic href="help/EGit/Contributor_Guide/Tests.html#EGit_Core_Tests" label="EGit Core Tests"></topic>
+			<topic href="help/EGit/Contributor_Guide/Tests.html#EGit_UI_Tests" label="EGit UI Tests">
+				<topic href="help/EGit/Contributor_Guide/Tests.html#During_Maven_Build" label="During Maven Build"></topic>
+			</topic>
+			<topic href="help/EGit/Contributor_Guide/Tests.html#Auxilary_testing_tools" label="Auxilary testing tools"></topic>
+		</topic>
+		<topic href="help/EGit/Contributor_Guide/Bugs.html" label="Bugs">
+			<topic href="help/EGit/Contributor_Guide/Bugs.html#Links" label="Links">
+				<topic href="help/EGit/Contributor_Guide/Bugs.html#Filing_Bugs" label="Filing Bugs"></topic>
+				<topic href="help/EGit/Contributor_Guide/Bugs.html#Bug_Reports_and_Links" label="Bug Reports and Links"></topic>
+			</topic>
+			<topic href="help/EGit/Contributor_Guide/Bugs.html#Keywords" label="Keywords"></topic>
+		</topic>
+		<topic href="help/EGit/Contributor_Guide/Website.html" label="Website"></topic>
+		<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html" label="Contributing Patches">
+			<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Using_Gerrit_at_Eclipse" label="Using Gerrit at Eclipse">
+				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#User_Account" label="User Account"></topic>
+				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Legal_Paperwork" label="Legal Paperwork"></topic>
+				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Logon" label="Logon">
+					<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Gerrit_Web_UI" label="Gerrit Web UI"></topic>
+					<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Git_over_SSH" label="Git over SSH"></topic>
+					<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Git_over_HTTPS" label="Git over HTTPS"></topic>
+				</topic>
+				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#SSH_Keys" label="SSH Keys"></topic>
+				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Doing_Code_Reviews_with_Gerrit" label="Doing Code Reviews with Gerrit"></topic>
+				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Using_Gerrit_with_git_command_line:" label="Using Gerrit with git command line:">
+					<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Adding_a_dedicated_remote" label="Adding a dedicated remote"></topic>
+				</topic>
+				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Using_Gerrit_with_EGit:" label="Using Gerrit with EGit:"></topic>
+				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Using_the_Mylyn_Gerrit_Connector" label="Using the Mylyn Gerrit Connector"></topic>
+			</topic>
+			<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Granularity_of_Changes" label="Granularity of Changes">
+				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Branches" label="Branches"></topic>
+			</topic>
+			<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Coding_standards" label="Coding standards">
+				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Braces_for_one-line_statements" label="Braces for one-line statements"></topic>
+				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Removing_trailing_whitespace" label="Removing trailing whitespace"></topic>
+			</topic>
+			<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Commit_message_guidelines" label="Commit message guidelines"></topic>
+			<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Copyright" label="Copyright"></topic>
+			<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Test_before_submitting" label="Test before submitting"></topic>
+			<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Sending_patches_by_mail" label="Sending patches by mail"></topic>
+		</topic>
+		<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html" label="Gerrit Code Review Cheatsheet">
+			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#Install_the_commit-msg_hook_in_your_repository" label="Install the commit-msg hook in your repository"></topic>
+			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#To_create_a_new_change" label="To create a new change"></topic>
+			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#To_update_an_existing_change_with_a_new_commit" label="To update an existing change with a new commit"></topic>
+			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#To_compare_bulk_diffs_using_Git" label="To compare bulk diffs using Git"></topic>
+			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#To_trigger_Hudson_build_for_a_change" label="To trigger Hudson build for a change"></topic>
+			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#To_approve_a_change" label="To approve a change"></topic>
+			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#To_add_a_reviewer" label="To add a reviewer"></topic>
+			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#Code_Review" label="Code Review"></topic>
+			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#IP_Review" label="IP Review"></topic>
+			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#Submission_Guidelines" label="Submission Guidelines"></topic>
+			<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#Tips_.26_Tricks" label="Tips &amp; Tricks">
+				<topic href="help/EGit/Contributor_Guide/Gerrit-Code-Review-Cheatsheet.html#Class_Loading_Issues" label="Class Loading Issues"></topic>
+			</topic>
+		</topic>
+		<topic href="help/EGit/Contributor_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
+	</topic>
 </toc>
