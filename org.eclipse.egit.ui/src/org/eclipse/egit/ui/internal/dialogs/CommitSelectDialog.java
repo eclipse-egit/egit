@@ -84,7 +84,6 @@ public class CommitSelectDialog extends TitleAreaDialog {
 		c3.setText(UIText.CommitSelectDialog_DateColumn);
 		tv.setInput(commits);
 		table.setHeaderVisible(true);
-		table.setLinesVisible(true);
 		tv.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
 				if (!event.getSelection().isEmpty())

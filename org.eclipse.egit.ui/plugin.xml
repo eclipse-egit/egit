@@ -137,24 +137,8 @@
                enablesFor="*"
                id="org.eclipse.egit.ui.internal.actions.applyPatch"
                label="%ApplyPatchAction_label"
-               menubarPath="team.main/group6"
+               menubarPath="team.main/applyPatchGroup"
                overrideActionId="org.eclipse.team.ui.applyPatch">
-         </action>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.ShowHistoryAction"
-               definitionId="org.eclipse.egit.ui.team.ShowHistory"
-               icon="icons/obj16/history.gif"
-               id="org.eclipse.egit.ui.internal.actions.ShowHistoryActionHandler"
-               label="%ShowResourceInHistoryAction_label"
-               menubarPath="team.main/group9">
-         </action>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.ShowRepositoriesViewAction"
-               definitionId="org.eclipse.egit.ui.team.ShowRepositoriesView"
-               icon="icons/eview16/repo_rep.gif"
-               id="org.eclipse.egit.ui.internal.actions.ShowRepositoriesViewAction"
-               label="%ShowRepositoryAction_label"
-               menubarPath="team.main/group9">
          </action>
          <action
                class="org.eclipse.egit.ui.internal.actions.MergeToolAction"
@@ -163,13 +147,6 @@
                id="org.eclipse.egit.ui.internal.actions.MergeTool"
                label="%MergeToolAction.label"
                menubarPath="team.main/group4">
-         </action>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.CreatePatchAction"
-               id="org.eclipse.egit.ui.internal.actions.CreatePatchAction"
-               label="%CreatePatchAction.label"
-               menubarPath="team.main/group6"
-               tooltip="%CreatePatchAction.tooltip">
          </action>
       </objectContribution>
       <objectContribution
@@ -187,7 +164,7 @@
                definitionId="org.eclipse.egit.ui.team.ShowBlame"
                label="%ShowBlameAction_label"
                icon="icons/etool16/annotate.gif"
-               menubarPath="team.main/group9">
+               menubarPath="team.main/showAnnotationsGroup">
          </action>
       </objectContribution>
    </extension>
@@ -1215,7 +1192,7 @@
          </class>
          <activeWhen>
             <or>
-               <test property="GitSelection.projectSingleRepository">
+               <test property="GitSelection.resourcesSingleRepository">
                </test>
                <and>
                   <count
@@ -1562,16 +1539,9 @@
                class="org.eclipse.egit.ui.internal.actions.ShowHistoryActionHandler">
          </class>
          <activeWhen>
-            <and>
-               <count
-                     value="1">
-               </count>
-               <iterate>
-                  <adapt
-                        type="org.eclipse.core.resources.IResource">
-                  </adapt>
-               </iterate>
-            </and>
+            <test
+                  property="GitSelection.resourcesSingleRepository">
+            </test>
          </activeWhen>
       </handler>
       <handler
@@ -1876,14 +1846,9 @@
             class="org.eclipse.egit.ui.internal.actions.UntrackActionHandler"
             commandId="org.eclipse.egit.ui.team.Untrack">
          <activeWhen>
-            <iterate>
-               <adapt type="org.eclipse.core.resources.IResource">
-               <test
-                  property="org.eclipse.core.resources.projectPersistentProperty"
-                  args="org.eclipse.team.core.repository, org.eclipse.egit.core.GitProvider">
-               </test>
-               </adapt>
-            </iterate>
+            <test
+                  property="GitSelection.resourcesSingleRepository">
+            </test>
          </activeWhen>
       </handler>
       <handler
@@ -3910,6 +3875,74 @@
                   name="org.eclipse.egit.ui.AdvancedSeparator">
             </separator>
             <menu
+                  label="%RepositorySubMenu.label">
+               <visibleWhen
+                     checkEnabled="false">
+                     <test
+                           property="GitSelection.fileOrFolderInRepository">
+                     </test>
+               </visibleWhen>
+               <separator
+                     name="group1"
+                     visible="true">
+               </separator>
+               <command
+                     commandId="org.eclipse.egit.ui.team.SimplePush"
+                     label="%PushToUpstreamAction.label"
+                     style="push">
+               </command>
+               <command
+                     commandId="org.eclipse.egit.ui.team.SimpleFetch"
+                     label="%FetchFromUpstreamAction.label"
+                     style="push">
+               </command>
+               <dynamic
+                     class="org.eclipse.egit.ui.internal.actions.PushMenu"
+                     id="org.eclipse.egit.ui.team.popup.Push">
+               </dynamic>
+               <command
+                     commandId="org.eclipse.egit.ui.team.Pull"
+                     label="%RepoViewPullMenu.label"
+                     style="push">
+               </command>
+               <command
+                     commandId="org.eclipse.egit.ui.PushHeadToGerrit"
+                     label="%PushToGerritMenu.label"
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <test
+                           property="GitSelection.fileOrFolderInRepository"
+                           args="hasGerritConfiguration">
+                     </test>
+                  </visibleWhen>
+               </command>
+               <command
+                     commandId="org.eclipse.egit.ui.FetchGerritChange"
+                     label="%FetchFromGerritCommand.label"
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <test
+                           property="GitSelection.fileOrFolderInRepository"
+                           args="hasGerritConfiguration">
+                     </test>
+                  </visibleWhen>
+               </command>
+               <separator
+                     name="group2"
+                     visible="true">
+               </separator>
+               <menu
+                     label="%SwitchToMenu.label"
+                     icon="icons/obj16/branches_obj.gif">
+                  <dynamic
+                        class="org.eclipse.egit.ui.internal.actions.SwitchToMenu"
+                        id="org.eclipse.egit.ui.switchToMenu">
+                  </dynamic>
+               </menu>
+            </menu>
+            <menu
                   label="%AdvancedMenu.label">
                <command
                      commandId="org.eclipse.egit.ui.team.RenameBranch"
@@ -3999,19 +4032,9 @@
                      style="push">
                   <visibleWhen
                         checkEnabled="false">
-                    <and>
-                       <count
-                              value="+">
-                       </count>
-                       <iterate>
-                          <adapt
-                               type="org.eclipse.core.resources.IResource">
-                             <test
-                                  property="GitResource.isShared">
-                             </test>
-                          </adapt>
-                        </iterate>
-                     </and>
+                     <test
+                           property="GitSelection.resourcesSingleRepository">
+                     </test>
                   </visibleWhen>
                </command>
                <command
@@ -4020,19 +4043,9 @@
                      style="push">
                   <visibleWhen
                         checkEnabled="false">
-                     <and>
-                        <count
-                              value="+">
-                        </count>
-                        <iterate>
-                          <adapt
-                               type="org.eclipse.core.resources.IResource">
-                             <test
-                                 property="GitResource.isShared">
-                             </test>
-                          </adapt>
-                        </iterate>
-                     </and>
+                     <test
+                           property="GitSelection.resourcesSingleRepository">
+                     </test>
                   </visibleWhen>
                </command>
                <command
@@ -4040,26 +4053,14 @@
                      icon="$nl$/icons/obj16/untrack.gif"
                      label="%UntrackAction_label"
                      style="push">
-                 <visibleWhen checkEnabled="false">
-                  <and>
-                     <count value="+" />
-                     <iterate>
-                        <and>
-                           <adapt type="org.eclipse.core.resources.IResource">
-                              <and>
-                                 <test property="GitResource.isShared" />
-                              </and>
-                           </adapt>
-                        </and>
-                     </iterate>
-                  </and>
-               </visibleWhen>
+                  <visibleWhen
+                        checkEnabled="false">
+                     <test
+                           property="GitSelection.resourcesSingleRepository">
+                     </test>
+                  </visibleWhen>
                </command>
             </menu>
-            <separator
-                  name="applyPatchGroup"
-                  visible="false">
-            </separator>
             <separator
                   name="group2"
                   visible="true">
@@ -4160,6 +4161,21 @@
                   name="group6"
                   visible="true">
             </separator>
+            <command
+                  commandId="org.eclipse.egit.ui.team.CreatePatch"
+                  label="%CreatePatchAction.label"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <test
+                        property="GitSelection.resourcesSingleRepository">
+                  </test>
+               </visibleWhen>
+            </command>
+            <separator
+                  name="applyPatchGroup"
+                  visible="false">
+            </separator>
             <separator
                   name="group7"
                   visible="true">
@@ -4171,6 +4187,32 @@
             <separator
                   name="group9"
                   visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.egit.ui.team.ShowHistory"
+                  label="%ShowResourceInHistoryAction_label"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <test
+                        property="GitSelection.resourcesSingleRepository">
+                  </test>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="org.eclipse.egit.ui.team.ShowRepositoriesView"
+                  label="%ShowRepositoryAction_label"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <test
+                        property="GitSelection.resourcesSingleRepository">
+                  </test>
+               </visibleWhen>
+            </command>
+            <separator
+                  name="showAnnotationsGroup"
+                  visible="false">
             </separator>
             <separator
                   name="group10"
@@ -4199,20 +4241,6 @@
                   </test>
                </visibleWhen>
             </command>
-            <menu
-                  label="Repository">
-               <visibleWhen
-                     checkEnabled="false">
-                     <test
-                           property="Foo.bar">
-                     </test>
-               </visibleWhen>
-               <command
-                     commandId="org.eclipse.egit.ui.team.SimplePush"
-                     label="%PushToUpstreamAction.label"
-                     style="push">
-               </command>
-            </menu>
          </menu>
       </menuContribution>
       <menuContribution
@@ -4818,7 +4846,7 @@
             class="org.eclipse.egit.ui.internal.selection.SelectionPropertyTester"
             id="org.eclipse.egit.ui.SelectionTester"
             namespace="GitSelection"
-            properties="projectSingleRepository,projectsWithRepositories,resourcesSingleRepository"
+            properties="projectSingleRepository,projectsWithRepositories,resourcesSingleRepository,fileOrFolderInRepository"
             type="java.util.Collection">
       </propertyTester>
    </extension>

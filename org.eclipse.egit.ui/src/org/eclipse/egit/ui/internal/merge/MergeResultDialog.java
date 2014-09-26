@@ -53,7 +53,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.OpenAndLinkWithEditorHelper;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
@@ -187,8 +186,6 @@ public class MergeResultDialog extends Dialog {
 				return getCommits(mergeResult.getMergedCommits());
 			}
 		});
-		Table table = viewer.getTable();
-		table.setLinesVisible(true);
 		final IStyledLabelProvider styleProvider = new IStyledLabelProvider() {
 
 			private final WorkbenchLabelProvider wrapped = new WorkbenchLabelProvider();
