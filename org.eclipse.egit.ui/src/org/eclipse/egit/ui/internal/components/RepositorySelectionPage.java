@@ -825,7 +825,7 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 						String p = credentials.getPassword();
 						String uriUser = finalURI.getUser();
 						if (uriUser == null) {
-							if (setSafeUser(u) || setSafePassword(p))
+							if (setSafeUser(u) && setSafePassword(p))
 								setStoreInSecureStore(true);
 						} else if (uriUser.length() != 0 && uriUser.equals(u)) {
 							if (setSafePassword(p))
