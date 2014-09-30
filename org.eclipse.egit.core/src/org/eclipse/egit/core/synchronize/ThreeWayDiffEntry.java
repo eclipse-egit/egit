@@ -10,6 +10,8 @@ package org.eclipse.egit.core.synchronize;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jgit.lib.AbbreviatedObjectId;
@@ -78,6 +80,27 @@ public final class ThreeWayDiffEntry {
 	 */
 	public static List<ThreeWayDiffEntry> scan(TreeWalk walk)
 			throws IOException {
+		return scan(walk, Collections.<String> emptyList());
+	}
+
+	/**
+	 * Converts the TreeWalk into TreeWayDiffEntry headers.
+	 *
+	 * @param walk
+	 *            the TreeWalk to walk through. Must have exactly three trees in
+	 *            this order: local, base and remote and can't be recursive.
+	 * @param forceInCache
+	 *            List of path that should be in the cache no matter if they
+	 *            have changed or not.
+	 * @return headers describing the changed file.
+	 * @throws IOException
+	 *             the repository cannot be accessed.
+	 * @throws IllegalArgumentException
+	 *             when {@code walk} doen't have exactly three trees, or when
+	 *             {@code walk} is recursive
+	 */
+	public static List<ThreeWayDiffEntry> scan(TreeWalk walk,
+			Collection<String> forceInCache) throws IOException {
 		if (walk.getTreeCount() != 3 && walk.getTreeCount() != 4)
 			throw new IllegalArgumentException(
 					"TreeWalk need to have three or four trees"); //$NON-NLS-1$
@@ -101,8 +124,15 @@ public final class ThreeWayDiffEntry {
 
 			boolean localSameAsBase = e.localId.equals(e.baseId);
 			if (!A_ZERO.equals(e.localId) && localSameAsBase
-					&& e.baseId.equals(e.remoteId))
+					&& e.baseId.equals(e.remoteId)) {
+				if (forceInCache.contains(walk.getPathString())) {
+					e.direction = Direction.INCOMING;
+					e.changeType = ChangeType.IN_SYNC;
+					e.path = walk.getPathString();
+					r.add(e);
+				}
 				continue;
+			}
 
 			e.path = walk.getPathString();
 			boolean localIsMissing = walk.getFileMode(0) == FileMode.MISSING;
