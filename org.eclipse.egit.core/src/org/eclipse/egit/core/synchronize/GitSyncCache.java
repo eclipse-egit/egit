@@ -19,7 +19,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
@@ -153,7 +156,9 @@ class GitSyncCache {
 				tw.addTree(dci);
 				fti.setDirCacheIterator(tw, 3);
 			}
-			List<ThreeWayDiffEntry> diffEntrys = ThreeWayDiffEntry.scan(tw);
+
+			List<ThreeWayDiffEntry> diffEntrys = ThreeWayDiffEntry.scan(tw,
+					getForceInCachePaths(gsd));
 			tw.release();
 
 			for (ThreeWayDiffEntry diffEntry : diffEntrys)
@@ -161,6 +166,19 @@ class GitSyncCache {
 		} catch (Exception e) {
 			Activator.logError(e.getMessage(), e);
 		}
+	}
+
+	private static Collection<String> getForceInCachePaths(GitSynchronizeData gsd) {
+		final Set<String> forceInCache = new HashSet<String>(gsd
+				.getIncludedResources().size());
+		final Path repositoryPath = new Path(gsd.getRepository().getWorkTree()
+				.getAbsolutePath());
+		for (IResource resource : gsd.getIncludedResources()) {
+			IPath resourceLocation = resource.getLocation();
+			forceInCache.add(resourceLocation.makeRelativeTo(repositoryPath)
+					.toString());
+		}
+		return forceInCache;
 	}
 
 	private static ObjectId getTree(RevCommit commit) {
