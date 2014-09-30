@@ -3750,9 +3750,9 @@
                </dynamic>
                <visibleWhen
                      checkEnabled="false">
-                  <reference
-                        definitionId="org.eclipse.egit.ui.gitProject">
-                  </reference>
+                  <test
+                        property="GitSelection.projectSingleRepository">
+                  </test>
                </visibleWhen>
             </menu>
             <command
