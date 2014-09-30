@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2011, 2015 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,8 +10,16 @@ package org.eclipse.egit.core.synchronize;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.AbbreviatedObjectId;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.MutableObjectId;
@@ -64,20 +72,45 @@ public final class ThreeWayDiffEntry {
 	}
 
 	/**
-	 * Converts the TreeWalk into TreeWayDiffEntry headers.
+	 * Convert the TreeWalk into {@link ThreeWayDiffEntry} instances.
 	 *
 	 * @param walk
-	 *            the TreeWalk to walk through. Must have exactly three trees in
-	 *            this order: local, base and remote and can't be recursive.
-	 * @return headers describing the changed file.
+	 *            the TreeWalk to walk through. Must have 3 or 4 trees in this
+	 *            order: local, base, remote, optionally a DirCacheIterator, and
+	 *            can't be recursive.
+	 * @return A list, never null but possibly empty, of
+	 *         {@link ThreeWayDiffEntry} describing the changed file.
 	 * @throws IOException
 	 *             the repository cannot be accessed.
 	 * @throws IllegalArgumentException
-	 *             when {@code walk} doen't have exactly three trees, or when
+	 *             when {@code walk} doen't have 3 or 4 trees, or when
 	 *             {@code walk} is recursive
 	 */
-	public static List<ThreeWayDiffEntry> scan(TreeWalk walk)
+	public static @NonNull List<ThreeWayDiffEntry> scan(TreeWalk walk)
 			throws IOException {
+		return scan(walk, null);
+	}
+
+	/**
+	 * Convert the TreeWalk into {@link ThreeWayDiffEntry} instances.
+	 *
+	 * @param walk
+	 *            the TreeWalk to walk through. Must have 3 or 4 trees in this
+	 *            order: local, base, remote, optionally a DirCacheIterator, and
+	 *            can't be recursive.
+	 * @param gsd
+	 *            The {@link GitSynchronizeData} that contains info about the
+	 *            synchronization configuration and scope.
+	 * @return A list, never null but possibly empty, of
+	 *         {@link ThreeWayDiffEntry} describing the changed file.
+	 * @throws IOException
+	 *             the repository cannot be accessed.
+	 * @throws IllegalArgumentException
+	 *             when {@code walk} doen't have 3 or 4 trees, or when
+	 *             {@code walk} is recursive
+	 */
+	public static @NonNull List<ThreeWayDiffEntry> scan(TreeWalk walk,
+			GitSynchronizeData gsd) throws IOException {
 		if (walk.getTreeCount() != 3 && walk.getTreeCount() != 4)
 			throw new IllegalArgumentException(
 					"TreeWalk need to have three or four trees"); //$NON-NLS-1$
@@ -87,6 +120,7 @@ public final class ThreeWayDiffEntry {
 
 		List<ThreeWayDiffEntry> r = new ArrayList<ThreeWayDiffEntry>();
 		MutableObjectId idBuf = new MutableObjectId();
+		NeedEntry needEntry = new NeedEntry(gsd);
 		while (walk.next()) {
 			ThreeWayDiffEntry e = new ThreeWayDiffEntry();
 
@@ -101,8 +135,15 @@ public final class ThreeWayDiffEntry {
 
 			boolean localSameAsBase = e.localId.equals(e.baseId);
 			if (!A_ZERO.equals(e.localId) && localSameAsBase
-					&& e.baseId.equals(e.remoteId))
+					&& e.baseId.equals(e.remoteId)) {
+				if (needEntry.apply(walk.getPathString())) {
+					e.direction = Direction.INCOMING;
+					e.changeType = ChangeType.IN_SYNC;
+					e.path = walk.getPathString();
+					r.add(e);
+				}
 				continue;
+			}
 
 			e.path = walk.getPathString();
 			boolean localIsMissing = walk.getFileMode(0) == FileMode.MISSING;
@@ -221,6 +262,45 @@ public final class ThreeWayDiffEntry {
 		buf.append("]"); //$NON-NLS-1$
 
 		return buf.toString();
+	}
+
+	private static class NeedEntry {
+		private final GitSynchronizeData gsd;
+
+		private Set<String> paths;
+
+		public NeedEntry(GitSynchronizeData gsd) {
+			this.gsd = gsd;
+		}
+
+		boolean apply(String pathString) {
+			if (gsd == null) {
+				// This means that all paths must be included
+				return true;
+			}
+			if (paths == null) {
+				initPaths();
+			}
+			return paths.contains(pathString);
+		}
+
+		private void initPaths() {
+			Set<IResource> resources = gsd.getIncludedResources();
+			if (resources != null && !resources.isEmpty()) {
+				paths = new HashSet<String>(resources.size());
+				final Path repositoryPath = new Path(gsd.getRepository()
+						.getWorkTree().getAbsolutePath());
+				for (IResource resource : gsd.getIncludedResources()) {
+					IPath resourceLocation = resource.getLocation();
+					if (resourceLocation != null) {
+						paths.add(resourceLocation.makeRelativeTo(
+								repositoryPath).toString());
+					}
+				}
+			} else {
+				paths = Collections.emptySet();
+			}
+		}
 	}
 
 }
