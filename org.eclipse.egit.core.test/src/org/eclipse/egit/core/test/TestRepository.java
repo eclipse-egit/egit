@@ -369,6 +369,19 @@ public class TestRepository {
 	}
 
 	/**
+	 * Removes the given resource form the index.
+	 *
+	 * @param file
+	 * @throws NoFilepatternException
+	 * @throws GitAPIException
+	 */
+	public void rm(File file) throws NoFilepatternException, GitAPIException {
+		String repoPath = getRepoRelativePath(new Path(file.getPath())
+				.toString());
+		new Git(repository).rm().addFilepattern(repoPath).call();
+	}
+
+	/**
 	 * Appends content to end of given file.
 	 *
 	 * @param file
