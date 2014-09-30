@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2013 Dariusz Luksza <dariusz@luksza.org> and others.
+ * Copyright (C) 2011, 2015 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,7 +19,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
@@ -152,13 +155,33 @@ class GitSyncCache {
 				tw.addTree(dci);
 				fti.setDirCacheIterator(tw, 3);
 			}
-			List<ThreeWayDiffEntry> diffEntrys = ThreeWayDiffEntry.scan(tw);
-
+			List<ThreeWayDiffEntry> diffEntrys = ThreeWayDiffEntry.scan(tw,
+					getPathsToCache(gsd));
 			for (ThreeWayDiffEntry diffEntry : diffEntrys)
 				repoCache.addMember(diffEntry);
 		} catch (Exception e) {
 			Activator.logError(e.getMessage(), e);
 		}
+	}
+
+	private static Collection<String> getPathsToCache(GitSynchronizeData gsd) {
+		Set<IResource> resourcesToInclude = gsd.getIncludedResources();
+		final Set<String> pathsToCache;
+		if (resourcesToInclude != null && !resourcesToInclude.isEmpty()) {
+			pathsToCache = new HashSet<String>(resourcesToInclude.size());
+			final Path repositoryPath = new Path(gsd.getRepository()
+					.getWorkTree().getAbsolutePath());
+			for (IResource resource : gsd.getIncludedResources()) {
+				IPath resourceLocation = resource.getLocation();
+				if (resourceLocation != null) {
+					pathsToCache.add(resourceLocation.makeRelativeTo(
+							repositoryPath).toString());
+				}
+			}
+		} else {
+			pathsToCache = Collections.emptySet();
+		}
+		return pathsToCache;
 	}
 
 	private static ObjectId getTree(RevCommit commit) {

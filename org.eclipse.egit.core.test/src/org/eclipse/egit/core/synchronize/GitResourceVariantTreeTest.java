@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2010, 2015 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,15 +14,22 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.mapping.ResourceMapping;
+import org.eclipse.core.resources.mapping.ResourceMappingContext;
+import org.eclipse.core.resources.mapping.ResourceTraversal;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -31,12 +38,15 @@ import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestProject;
 import org.eclipse.egit.core.test.TestRepository;
+import org.eclipse.egit.core.test.models.SampleModelProvider;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.team.core.variants.IResourceVariant;
+import org.eclipse.team.core.variants.IResourceVariantTree;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -114,8 +124,8 @@ public class GitResourceVariantTreeTest extends GitTestCase {
 			GitSynchronizeDataSet dataSet = new GitSynchronizeDataSet(data);
 
 			// given
-			GitResourceVariantTree grvt = new GitTestResourceVariantTree(dataSet,
-					null, null);
+			GitResourceVariantTree grvt = new GitTestResourceVariantTree(
+					dataSet, null, null);
 
 			// then
 			IResource[] roots = grvt.roots();
@@ -218,6 +228,143 @@ public class GitResourceVariantTreeTest extends GitTestCase {
 		// then
 		// null variant indicates that resource wasn't changed
 		assertNull(grvt.getResourceVariant(mainJava));
+	}
+
+	@Test
+	public void shouldNotReturnNullOnSameResouceVariant() throws Exception {
+		String changingFileName = "changingFile."
+				+ SampleModelProvider.SAMPLE_FILE_EXTENSION;
+		String notChangingFileName = "notChangingFile."
+				+ SampleModelProvider.SAMPLE_FILE_EXTENSION;
+		String toBeRemovedFileName = "toBeRemovedFile."
+				+ SampleModelProvider.SAMPLE_FILE_EXTENSION;
+
+		File changingFile = testRepo.createFile(iProject, changingFileName);
+		File notChangingFile = testRepo.createFile(iProject,
+				notChangingFileName);
+		File toBeRemovedFile = testRepo.createFile(iProject,
+				toBeRemovedFileName);
+
+		testRepo.appendFileContent(changingFile, "My content is changing");
+		testRepo.appendFileContent(notChangingFile, "My content is constant");
+		testRepo.appendFileContent(toBeRemovedFile, "I will be removed");
+
+		IFile iChangingFile = testRepo.getIFile(iProject, changingFile);
+		IFile iNotChangingFile = testRepo.getIFile(iProject, notChangingFile);
+		IFile iToBeRemovedFile = testRepo.getIFile(iProject, toBeRemovedFile);
+
+		testRepo.trackAllFiles(iProject);
+
+		RevCommit firstCommit = testRepo.commit("C1");
+
+		testRepo.appendFileContent(changingFile, " My content has changed");
+		testRepo.track(changingFile);
+		testRepo.rm(toBeRemovedFile);
+
+		RevCommit secondCommit = testRepo.commit("C2");
+
+		//@formatter:off
+		// History (X means has changed)
+		//------------------------------------------------------------
+		// files					   C1 [HEAD]		  	C2
+		// changingFile.sample   	|-----X----------|-------X-------|->
+		// notChangingFile.sample	|-----X----------|---------------|->
+		// toBeRemovedFile.sample	|-----X----------|-------X-------|->
+		//-------------------------------------------------------------
+		//formatter:on
+
+		testRepo.checkoutBranch(firstCommit.getName());
+
+		iProject.refreshLocal(IResource.DEPTH_INFINITE,
+				new NullProgressMonitor());
+
+		// Now synchronize the two commits using our logical model provider
+		SampleModelProvider provider = new SampleModelProvider();
+		// Gets the impacted resources
+		ResourceMapping[] mappings = provider
+				.getMappings(iChangingFile,
+						ResourceMappingContext.LOCAL_CONTEXT,
+						new NullProgressMonitor());
+
+		Set<IResource> includedResource = collectResources(mappings);
+		Set<IResource> expectedIncludedResources = new HashSet<IResource>();
+		expectedIncludedResources.add(iChangingFile);
+		expectedIncludedResources.add(iNotChangingFile);
+		expectedIncludedResources.add(iToBeRemovedFile);
+
+		assertEquals(expectedIncludedResources, includedResource);
+
+		// Synchronize the data
+		final GitSynchronizeData data = new GitSynchronizeData(
+				testRepo.getRepository(), firstCommit.getName(),
+				secondCommit.getName(), true, includedResource);
+		GitSynchronizeDataSet gitSynchDataSet = new GitSynchronizeDataSet(data);
+		final GitResourceVariantTreeSubscriber subscriber = new GitResourceVariantTreeSubscriber(
+				gitSynchDataSet);
+		subscriber.init(new NullProgressMonitor());
+
+
+		IResourceVariantTree sourceVariantTree = subscriber.getSourceTree();
+		assertNotNull(sourceVariantTree);
+
+		IResourceVariantTree remoteVariantTree = subscriber.getRemoteTree();
+		assertNotNull(remoteVariantTree);
+
+		IResourceVariant notChangingSourceVariant = sourceVariantTree
+				.getResourceVariant(iNotChangingFile);
+
+		IResourceVariant notChangingRemoteVariant = remoteVariantTree
+				.getResourceVariant(iNotChangingFile);
+
+		IResourceVariant toBeRemovedSourceVariant = sourceVariantTree
+				.getResourceVariant(iToBeRemovedFile);
+
+		IResourceVariant toBeRemovedRemoteVariant = remoteVariantTree
+				.getResourceVariant(iToBeRemovedFile);
+
+		// In the use case in which the file has been deleted the source variant is
+		// not null whereas the remote variant is null.It seems quite logic.
+		// However in the second use case we have the same result, the source variant is
+		// not null whereas the remote is null. In both cases the null value does
+		// not mean the same thing. In the first case, the null value means that
+		// the resource is no longer in the repository and in the second the
+		// null value means there is no change between the two versions.
+		// Using these values I am not able to distinguish both case.
+		// It is in contradiction with test #shouldReturnNullResourceVariant2()
+		// and test #shoulReturnSameResourceVariant(). However I haven't found
+		// another way to handle this case. Maybe something can be
+		// done with ThreeWayDiffEntry.scan(tw) to force including in the cache
+		// some entry even if they have not changed. For example,
+		// ThreeWayDiffEntry.scan(tw,includedSource) or maybe try preventing the variant
+		// tree to return null by walking throught the repository and looking for the file...
+
+		assertNotNull(toBeRemovedSourceVariant);
+		assertNull(toBeRemovedRemoteVariant);
+		assertNotNull(notChangingSourceVariant);
+		assertNotNull(notChangingRemoteVariant);
+
+		GitSubscriberResourceMappingContext context = new GitSubscriberResourceMappingContext(subscriber, gitSynchDataSet);
+		assertFalse(context.hasLocalChange(iNotChangingFile, new NullProgressMonitor()));
+		assertFalse(context.hasRemoteChange(iNotChangingFile, new NullProgressMonitor()));
+
+		assertFalse(context.hasLocalChange(iChangingFile, new NullProgressMonitor()));
+		assertTrue(context.hasRemoteChange(iChangingFile, new NullProgressMonitor()));
+
+		assertFalse(context.hasLocalChange(iToBeRemovedFile, new NullProgressMonitor()));
+		assertTrue(context.hasRemoteChange(iToBeRemovedFile, new NullProgressMonitor()));
+	}
+
+	private static Set<IResource> collectResources(ResourceMapping[] mappings)
+			throws CoreException {
+		final Set<IResource> resources = new HashSet<IResource>();
+		ResourceMappingContext context = ResourceMappingContext.LOCAL_CONTEXT;
+		for (ResourceMapping mapping : mappings) {
+			ResourceTraversal[] traversals = mapping.getTraversals(context,
+					new NullProgressMonitor());
+			for (ResourceTraversal traversal : traversals)
+				resources.addAll(Arrays.asList(traversal.getResources()));
+		}
+		return resources;
 	}
 
 	/**
