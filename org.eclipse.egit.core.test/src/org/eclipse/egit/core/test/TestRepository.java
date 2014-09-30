@@ -3,6 +3,7 @@
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, François Rey <eclipse.org_@_francois_._rey_._name>
+ * Copyright (C) 2015, Obeo
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -359,6 +360,21 @@ public class TestRepository {
 	public void addToIndex(IResource resource) throws CoreException, IOException, NoFilepatternException, GitAPIException {
 		String repoPath = getRepoRelativePath(resource.getLocation().toString());
 		new Git(repository).add().addFilepattern(repoPath).call();
+	}
+
+	/**
+	 * Remove the given resource form the index.
+	 *
+	 * @param file
+	 * @throws NoFilepatternException
+	 * @throws GitAPIException
+	 */
+	public void removeFromIndex(File file) throws NoFilepatternException, GitAPIException {
+		String repoPath = getRepoRelativePath(new Path(file.getPath())
+				.toString());
+		try (Git git = new Git(repository)) {
+			git.rm().addFilepattern(repoPath).call();
+		}
 	}
 
 	/**
