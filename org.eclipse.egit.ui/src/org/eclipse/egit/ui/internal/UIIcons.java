@@ -313,14 +313,14 @@ public class UIIcons {
 		FILTERRESOURCE = map("elcl16/filterresource.gif"); //$NON-NLS-1$
 		FILTERPROJECT = map("elcl16/filterproject.gif"); //$NON-NLS-1$
 		FILTERFOLDER = map("elcl16/filterfolder.gif"); //$NON-NLS-1$
-		FETCH = map("obj16/fetch.gif"); //$NON-NLS-1$
-		PUSH = map("obj16/push.gif"); //$NON-NLS-1$
-		PULL = map("obj16/pull.gif"); //$NON-NLS-1$
+		FETCH = map("obj16/fetch.png"); //$NON-NLS-1$
+		PUSH = map("obj16/push.png"); //$NON-NLS-1$
+		PULL = map("obj16/pull.png"); //$NON-NLS-1$
 		REPOSITORY = map("obj16/repository_rep.gif"); //$NON-NLS-1$
 		REPOSITORY_GERRIT = map("obj16/repository_gerrit.gif"); //$NON-NLS-1$
 		NEW_REPOSITORY = map("etool16/newlocation_wiz.gif"); //$NON-NLS-1$
 		REMOTE_REPOSITORY = map("obj16/remote_entry_tbl.gif"); //$NON-NLS-1$
-		REMOTE_SPEC = map("obj16/remotespec.gif"); //$NON-NLS-1$
+		REMOTE_SPEC = map("obj16/synchronize.png"); //$NON-NLS-1$
 		BRANCHES = map("obj16/branches_obj.gif"); //$NON-NLS-1$
 		OVR_CHECKEDOUT = map("ovr/checkedout_ov.gif"); //$NON-NLS-1$
 		TAGS = map("obj16/tags.gif"); //$NON-NLS-1$
@@ -342,7 +342,7 @@ public class UIIcons {
 		UNTRACKED_FILE = map("obj16/untracked_file.gif"); //$NON-NLS-1$
 		NOTE = map("obj16/note.png"); //$NON-NLS-1$
 		ANNOTATE = map("etool16/annotate.gif"); //$NON-NLS-1$
-		COMMIT = map("obj16/commit.gif"); //$NON-NLS-1$
+		COMMIT = map("obj16/commit.png"); //$NON-NLS-1$
 		CHERRY_PICK = map("obj16/cherry-pick.png"); //$NON-NLS-1$
 		REBASE = map("obj16/rebase.gif"); //$NON-NLS-1$
 		REBASE_CONTINUE = map("elcl16/continue.gif"); //$NON-NLS-1$

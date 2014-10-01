@@ -38,7 +38,7 @@
          <action
                class="org.eclipse.egit.ui.internal.actions.SynchronizeWorkspaceAction"
                id="org.eclipse.egit.ui.internal.actions.SynchronizeWorkspace"
-               icon="$nl$/icons/obj16/remotespec.gif"
+               icon="$nl$/icons/obj16/synchronize.png"
                label="%SynchronizeWorkspace_label"
                menubarPath="team.main/group3"/>
      </objectContribution>
@@ -681,7 +681,7 @@
          <action
            class="org.eclipse.egit.ui.internal.actions.PullFromUpstreamConfigAction"
            definitionId="org.eclipse.egit.ui.team.Pull"
-           icon="icons/obj16/pull.gif"
+           icon="icons/obj16/pull.png"
            id="org.eclipse.egit.ui.actionpull"
            label="%PullIntoCurrentBranchMenuLabel"
            menubarPath="org.eclipse.egit.ui.gitmenu/repo"
@@ -692,7 +692,7 @@
 		 <action
            class="org.eclipse.egit.ui.internal.actions.SimpleFetchAction"
            definitionId="org.eclipse.egit.ui.team.SimpleFetch"
-           icon="icons/obj16/fetch.gif"
+           icon="icons/obj16/fetch.png"
            id="org.eclipse.egit.ui.actionfetch"
            label="%FetchFromUpstreamAction.label"
            menubarPath="org.eclipse.egit.ui.gitmenu/repo"
@@ -703,7 +703,7 @@
 		 <action
            class="org.eclipse.egit.ui.internal.actions.PushUpstreamOrBranchAction"
            definitionId="org.eclipse.egit.ui.team.SimplePush"
-           icon="icons/obj16/push.gif"
+           icon="icons/obj16/push.png"
            id="org.eclipse.egit.ui.actionpush"
            label="%PushToUpstreamAction.label"
            menubarPath="org.eclipse.egit.ui.gitmenu/repo"
@@ -767,7 +767,7 @@
          <action
            class="org.eclipse.egit.ui.internal.actions.CommitAction"
            definitionId="org.eclipse.egit.ui.team.Commit"
-           icon="icons/obj16/commit.gif"
+           icon="icons/obj16/commit.png"
            id="org.eclipse.egit.ui.actioncommit"
            label="%CommitAction_label"
            menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
@@ -2158,7 +2158,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.Push"
-               icon="icons/obj16/push.gif"
+               icon="icons/obj16/push.png"
                label="%RepoViewPushBranch.label"
                style="push">
             <visibleWhen
@@ -2177,7 +2177,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.Push"
-               icon="icons/obj16/push.gif"
+               icon="icons/obj16/push.png"
                label="%RepoViewPushTag.label"
                style="push">
             <visibleWhen
@@ -2376,7 +2376,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.Synchronize"
-               icon="icons/obj16/remotespec.gif"
+               icon="icons/obj16/synchronize.png"
                label="%RepoViewSynchronize.label"
                style="push">
             <visibleWhen
@@ -2407,7 +2407,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.Synchronize"
-               icon="icons/obj16/remotespec.gif"
+               icon="icons/obj16/synchronize.png"
                label="%RepoViewSynchronizeEachOther.label"
                style="push">
             <visibleWhen
@@ -2459,7 +2459,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.SimplePush"
-               icon="icons/obj16/push.gif"
+               icon="icons/obj16/push.png"
                label="%RepoViewPushSimpleLabel"
                style="push">
             <visibleWhen
@@ -2485,7 +2485,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.SimpleFetch"
-               icon="icons/obj16/fetch.gif"
+               icon="icons/obj16/fetch.png"
                label="%RepoViewFetchSimple.label"
                style="push">
             <visibleWhen
@@ -2794,7 +2794,7 @@
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-1">
          <command
                commandId="org.eclipse.egit.ui.team.Commit"
-               icon="icons/obj16/commit.gif"
+               icon="icons/obj16/commit.png"
                label="%RepoViewCommit.label"
                style="push">
             <visibleWhen
@@ -2944,7 +2944,7 @@
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-commit">
          <command
                commandId="org.eclipse.egit.ui.team.SimplePush"
-               icon="icons/obj16/push.gif"
+               icon="icons/obj16/push.png"
                label="%PushToUpstreamCommand.label"
                style="push">
             <visibleWhen
@@ -2965,7 +2965,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.SimpleFetch"
-               icon="icons/obj16/fetch.gif"
+               icon="icons/obj16/fetch.png"
                label="%FetchFromUpstreamCommand.label"
                style="push">
             <visibleWhen
@@ -3051,7 +3051,7 @@
          </dynamic>
          <command
                commandId="org.eclipse.egit.ui.team.Pull"
-               icon="icons/obj16/pull.gif"
+               icon="icons/obj16/pull.png"
                label="%RepoViewPullMenu.label"
                style="push">
             <visibleWhen
@@ -3077,7 +3077,7 @@
                label="%RemoteSubMenu.label">
             <command
                   commandId="org.eclipse.egit.ui.team.Push"
-                  icon="icons/obj16/push.gif"
+                  icon="icons/obj16/push.png"
                   label="%RepoViewPush.label"
                   style="push">
                <visibleWhen
@@ -3114,7 +3114,7 @@
             </command>
             <command
                   commandId="org.eclipse.egit.ui.team.Fetch"
-                  icon="icons/obj16/fetch.gif"
+                  icon="icons/obj16/fetch.png"
                   label="%RepoViewFetch.label"
                   style="push">
                <visibleWhen
@@ -3971,7 +3971,7 @@
                   visible="true" />
                <menu
                   label="%SynchronizeWith_label"
-                  icon="$nl$/icons/obj16/remotespec.gif">
+                  icon="$nl$/icons/obj16/synchronize.png">
                   <dynamic
                      class="org.eclipse.egit.ui.internal.actions.SynchronizeWithMenu"
                      id="org.eclipse.egit.ui.synchronize">
@@ -4599,7 +4599,7 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewNewRemote"
-            icon="icons/obj16/remotespec.gif">
+            icon="icons/obj16/synchronize.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.CreateTag"
@@ -4607,7 +4607,7 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.PushCommit"
-            icon="icons/obj16/push.gif">
+            icon="icons/obj16/push.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.CheckoutCommand"
@@ -4663,27 +4663,27 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Fetch"
-            icon="icons/obj16/fetch.gif">
+            icon="icons/obj16/fetch.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.ConfigureUpstreamFetch"
-            icon="icons/obj16/fetch.gif">
+            icon="icons/obj16/fetch.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.ConfigureUpstreamPush"
-            icon="icons/obj16/push.gif">
+            icon="icons/obj16/push.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Push"
-            icon="icons/obj16/push.gif">
+            icon="icons/obj16/push.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.PushBranch"
-            icon="icons/obj16/push.gif">
+            icon="icons/obj16/push.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.PushTags"
-            icon="icons/obj16/push.gif">
+            icon="icons/obj16/push.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.FetchGerritChange"
@@ -4699,15 +4699,15 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Commit"
-            icon="icons/obj16/commit.gif">
+            icon="icons/obj16/commit.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.SimpleFetch"
-            icon="icons/obj16/fetch.gif">
+            icon="icons/obj16/fetch.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.SimplePush"
-            icon="icons/obj16/push.gif">
+            icon="icons/obj16/push.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Ignore"
@@ -4727,7 +4727,7 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Pull"
-            icon="icons/obj16/pull.gif">
+            icon="icons/obj16/pull.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Reset"
@@ -4735,7 +4735,7 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Synchronize"
-            icon="icons/obj16/remotespec.gif">
+            icon="icons/obj16/synchronize.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Tag"
