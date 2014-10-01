@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_cea780c3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-01T08:38:08Z",
+      "side": 1,
+      "message": "commit message format doesn\u0027t comply to https://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "revId": "da1789aa495d52152665eac5bf9aab394ed287cb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
