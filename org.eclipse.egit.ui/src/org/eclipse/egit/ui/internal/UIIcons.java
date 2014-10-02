@@ -105,6 +105,33 @@ public class UIIcons {
 	/** Connect Wizard banner */
 	public final static ImageDescriptor WIZBAN_CONNECT_REPO;
 
+	/**
+	 * Commit Wizard banner
+	 * @TODO make use of this wizban
+	 */
+	public final static ImageDescriptor WIZBAN_COMMIT;
+
+	/** Fetch from Gerrit Wizard banner */
+	public final static ImageDescriptor WIZBAN_FETCH_GERRIT;
+
+	/** Fetch Wizard banner */
+	public final static ImageDescriptor WIZBAN_FETCH;
+
+	/**
+	 * Pull Wizard banner
+	 * @TODO make use of this wizban
+	 */
+	public final static ImageDescriptor WIZBAN_PULL;
+
+	/** Push to Gerrit Wizard banner */
+	public final static ImageDescriptor WIZBAN_PUSH_GERRIT;
+
+	/** Push Wizard banner */
+	public final static ImageDescriptor WIZBAN_PUSH;
+
+	/** Synchronize Wizard banner */
+	public final static ImageDescriptor WIZBAN_SYNCHRONIZE;
+
 	/** History view, select all version in same project */
 	public final static ImageDescriptor FILTERPROJECT;
 
@@ -293,6 +320,13 @@ public class UIIcons {
 		WIZBAN_CREATE_PATCH = map("wizban/createpatch_wizban.png"); //$NON-NLS-1$
 		WIZBAN_IMPORT_REPO = map("wizban/import_wiz.png"); //$NON-NLS-1$
 		WIZBAN_CONNECT_REPO = map("wizban/newconnect_wizban.png"); //$NON-NLS-1$
+		WIZBAN_COMMIT = map("wizban/commit_wizban.png"); //$NON-NLS-1$
+		WIZBAN_FETCH_GERRIT = map("wizban/fetch_gerrit_wizban.png"); //$NON-NLS-1$
+		WIZBAN_FETCH = map("wizban/fetch_wizban.png"); //$NON-NLS-1$
+		WIZBAN_PULL = map("wizban/pull_wizban.png"); //$NON-NLS-1$
+		WIZBAN_PUSH_GERRIT = map("wizban/push_gerrit_wizban.png"); //$NON-NLS-1$
+		WIZBAN_PUSH = map("wizban/push_wizban.png"); //$NON-NLS-1$
+		WIZBAN_SYNCHRONIZE = map("wizban/synchronize_wizban.png"); //$NON-NLS-1$
 		EDITCONFIG = map("obj16/editconfig.gif"); //$NON-NLS-1$
 		ELCL16_COMMIT = map("elcl16/commit.gif"); //$NON-NLS-1$
 		ELCL16_COMMENTS = map("elcl16/comment.gif"); //$NON-NLS-1$
