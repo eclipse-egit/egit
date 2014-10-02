@@ -2574,6 +2574,9 @@ public class UIText extends NLS {
 	public static String PushResultDialog_label;
 
 	/** */
+	public static String PushResultDialog_label_failed;
+
+	/** */
 	public static String PushResultDialog_title;
 
 	/** */
