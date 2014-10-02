@@ -17,6 +17,7 @@ import java.util.Set;
 import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.core.op.PushOperationSpecification;
 import org.eclipse.egit.ui.internal.SecureStoreUtils;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
@@ -102,6 +103,8 @@ public class PushBranchWizard extends Wizard {
 				super.setVisible(visible);
 			}
 		};
+
+		setDefaultPageImageDescriptor(UIIcons.WIZBAN_PUSH);
 	}
 
 	@Override
