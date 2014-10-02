@@ -107,9 +107,14 @@ class PushResultDialog extends TitleAreaDialog {
 	protected Control createDialogArea(final Composite parent) {
 		final Composite composite = (Composite) super.createDialogArea(parent);
 		String pushErrors = getPushErrors();
-		setTitle(NLS.bind(UIText.PushResultDialog_label, destinationString));
-		if (pushErrors != null && pushErrors.length() > 0)
+		String title;
+		if (pushErrors != null && pushErrors.length() > 0) {
 			setErrorMessage(pushErrors);
+			title = NLS.bind(UIText.PushResultDialog_label_failed,
+					destinationString);
+		} else
+			title = NLS.bind(UIText.PushResultDialog_label, destinationString);
+		setTitle(title);
 		final PushResultTable table = new PushResultTable(composite);
 		table.setData(localDb, result);
 		final Control tableControl = table.getControl();
