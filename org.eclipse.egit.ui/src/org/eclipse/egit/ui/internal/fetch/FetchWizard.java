@@ -70,8 +70,7 @@ public class FetchWizard extends Wizard {
 				super.setVisible(visible);
 			}
 		};
-		// TODO use/create another cool icon
-		setDefaultPageImageDescriptor(UIIcons.WIZBAN_IMPORT_REPO);
+		setDefaultPageImageDescriptor(UIIcons.WIZBAN_FETCH);
 		setNeedsProgressMonitor(true);
 	}
 

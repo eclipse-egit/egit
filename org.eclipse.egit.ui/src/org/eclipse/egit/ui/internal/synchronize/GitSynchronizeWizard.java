@@ -27,6 +27,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -48,6 +49,7 @@ public class GitSynchronizeWizard extends Wizard {
 	 */
 	public GitSynchronizeWizard() {
 		setWindowTitle(UIText.GitSynchronizeWizard_synchronize);
+		setDefaultPageImageDescriptor(UIIcons.WIZBAN_SYNCHRONIZE);
 	}
 
 	@Override

@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.push;
 
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.Repository;
@@ -33,6 +34,7 @@ public class PushToGerritWizard extends Wizard {
 		setNeedsProgressMonitor(true);
 		setHelpAvailable(false);
 		setWindowTitle(UIText.PushToGerritWizard_Title);
+		setDefaultPageImageDescriptor(UIIcons.WIZBAN_PUSH_GERRIT);
 	}
 
 	@Override
