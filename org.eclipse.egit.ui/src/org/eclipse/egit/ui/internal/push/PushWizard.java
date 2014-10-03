@@ -33,6 +33,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RefSpecPage;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage;
+import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.wizard.IWizardPage;
@@ -44,7 +45,6 @@ import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.RemoteRefUpdate;
 import org.eclipse.jgit.transport.Transport;
 import org.eclipse.jgit.transport.URIish;
-import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
@@ -162,7 +162,7 @@ public class PushWizard extends Wizard {
 			return false;
 		UserPasswordCredentials credentials = repoPage.getCredentials();
 		if (credentials != null)
-			operation.setCredentialsProvider(new UsernamePasswordCredentialsProvider(
+			operation.setCredentialsProvider(new EGitCredentialsProvider(
 					credentials.getUser(), credentials.getPassword()));
 		final PushOperationResult resultToCompare;
 		if (confirmPage.isShowOnlyIfChangedSelected())
