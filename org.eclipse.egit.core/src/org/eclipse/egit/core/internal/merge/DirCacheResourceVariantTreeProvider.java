@@ -15,6 +15,7 @@ import java.util.Set;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.internal.storage.GitLocalResourceVariant;
 import org.eclipse.egit.core.internal.storage.IndexResourceVariant;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.jgit.dircache.DirCache;
@@ -49,11 +50,14 @@ public class DirCacheResourceVariantTreeProvider implements
 	 * @param repository
 	 *            The repository which DirCache info we need to cache as
 	 *            IResourceVariantTrees.
+	 * @param useWorkspace
+	 *            Whether we should use local data instead of what's in the
+	 *            index for our side.
 	 * @throws IOException
 	 *             if we somehow cannot read the DirCache.
 	 */
-	public DirCacheResourceVariantTreeProvider(Repository repository)
-			throws IOException {
+	public DirCacheResourceVariantTreeProvider(Repository repository,
+			boolean useWorkspace) throws IOException {
 		final DirCache cache = repository.readDirCache();
 		final GitResourceVariantCache baseCache = new GitResourceVariantCache();
 		final GitResourceVariantCache oursCache = new GitResourceVariantCache();
@@ -75,8 +79,12 @@ public class DirCacheResourceVariantTreeProvider implements
 						IndexResourceVariant.create(repository, entry));
 				break;
 			case DirCacheEntry.STAGE_2:
-				oursCache.setVariant(resource,
-						IndexResourceVariant.create(repository, entry));
+				if (useWorkspace)
+					oursCache.setVariant(resource, new GitLocalResourceVariant(
+							resource));
+				else
+					oursCache.setVariant(resource,
+							IndexResourceVariant.create(repository, entry));
 				break;
 			case DirCacheEntry.STAGE_3:
 				theirsCache.setVariant(resource,
