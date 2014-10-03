@@ -59,7 +59,7 @@ public class DirCacheResourceVariantTreeProvider implements
 			boolean useWorkspace) throws IOException {
 		final DirCache cache = repository.readDirCache();
 		final GitResourceVariantCache baseCache = new GitResourceVariantCache();
-		final GitResourceVariantCache sourceCache = new GitResourceVariantCache();
+		final GitResourceVariantCache oursCache = new GitResourceVariantCache();
 		final GitResourceVariantCache remoteCache = new GitResourceVariantCache();
 
 		for (int i = 0; i < cache.getEntryCount(); i++) {
@@ -83,13 +83,12 @@ public class DirCacheResourceVariantTreeProvider implements
 						IndexResourceVariant.create(repository, entry));
 				break;
 			case DirCacheEntry.STAGE_2:
-				if (useWorkspace) {
-					sourceCache.setVariant(resource, new GitLocalResourceVariant(
+				if (useWorkspace)
+					oursCache.setVariant(resource, new GitLocalResourceVariant(
 							resource));
-				} else {
-					sourceCache.setVariant(resource,
+				else
+					oursCache.setVariant(resource,
 							IndexResourceVariant.create(repository, entry));
-				}
 				break;
 			case DirCacheEntry.STAGE_3:
 				remoteCache.setVariant(resource,
@@ -102,17 +101,17 @@ public class DirCacheResourceVariantTreeProvider implements
 		}
 
 		baseTree = new GitCachedResourceVariantTree(baseCache);
-		sourceTree = new GitCachedResourceVariantTree(sourceCache);
+		sourceTree = new GitCachedResourceVariantTree(oursCache);
 		remoteTree = new GitCachedResourceVariantTree(remoteCache);
 
 		roots = new LinkedHashSet<IResource>();
 		roots.addAll(baseCache.getRoots());
-		roots.addAll(sourceCache.getRoots());
+		roots.addAll(oursCache.getRoots());
 		roots.addAll(remoteCache.getRoots());
 
 		knownResources = new LinkedHashSet<IResource>();
 		knownResources.addAll(baseCache.getKnownResources());
-		knownResources.addAll(sourceCache.getKnownResources());
+		knownResources.addAll(oursCache.getKnownResources());
 		knownResources.addAll(remoteCache.getKnownResources());
 	}
 
