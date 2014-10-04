@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_5fb83130",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-10-04T09:50:03Z",
+      "side": 1,
+      "message": "I\u0027d prefer not to yell at the user. It could also be shorter, maybe:\n\n  Failed pushing to {0}",
+      "revId": "9174c1587af2db14199dd9043dd9e603c39e84d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
