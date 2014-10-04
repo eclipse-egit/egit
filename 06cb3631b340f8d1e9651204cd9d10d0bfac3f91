@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "a766b734_31c12979",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-04T18:23:03Z",
+      "side": 1,
+      "message": "style nit: inconsistent whitespace, the other lines around don\u0027t use tabs",
+      "revId": "06cb3631b340f8d1e9651204cd9d10d0bfac3f91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_5f8af16f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 2
