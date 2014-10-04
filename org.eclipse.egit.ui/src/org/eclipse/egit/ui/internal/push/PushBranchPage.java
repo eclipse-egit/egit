@@ -201,7 +201,7 @@ public class PushBranchPage extends WizardPage {
 			spacer.setLayoutData(new RowData(3, SWT.DEFAULT));
 		}
 
-		Image commitIcon = UIIcons.COMMIT.createImage();
+		Image commitIcon = UIIcons.CHANGESET.createImage();
 		this.disposables.add(commitIcon);
 		Label commitIconLabel = new Label(sourceComposite, SWT.NONE);
 		commitIconLabel.setBackgroundImage(commitIcon);
