@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_b4dc07dd",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4283,
+      "author": {
+        "id": 8855
+      },
+      "writtenOn": "2014-10-06T11:52:33Z",
+      "side": 1,
+      "message": "missed resolution of rebase conflicts",
+      "revId": "597b42c98d5b371fc7ce8faa296507864a0e7980",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
