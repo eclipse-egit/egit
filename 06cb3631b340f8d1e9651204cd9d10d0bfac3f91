@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_059e6743",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1013
+      },
+      "writtenOn": "2014-10-07T15:55:58Z",
+      "side": 1,
+      "message": "I propose to move this code in a new method boolean isSymlink() in StagingEntry.java, and then called isSymlink() here.\nDo you agree with that ?",
+      "parentUuid": "a766b734_ff849d64",
+      "revId": "06cb3631b340f8d1e9651204cd9d10d0bfac3f91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_31c12979",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 2
