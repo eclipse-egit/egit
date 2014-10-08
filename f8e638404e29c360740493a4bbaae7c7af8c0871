@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_60cc69e0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-10-08T11:02:07Z",
+      "side": 1,
+      "message": "Hm, don\u0027t we need to trigger a UI update/refresh or something when this is completed and setSubmodule was called on some nodes?",
+      "revId": "f8e638404e29c360740493a4bbaae7c7af8c0871",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
