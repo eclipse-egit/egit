@@ -89,11 +89,20 @@ public class RevUtils {
 			if (commitId.equals(ref.getObjectId()))
 				return true;
 
+		final int skew = 24 * 60 * 60; // one day clock skew
+
 		RevWalk walk = new RevWalk(repo);
 		try {
 			RevCommit commit = walk.parseCommit(commitId);
 			for (Ref ref : refs) {
 				RevCommit refCommit = walk.parseCommit(ref.getObjectId());
+
+				// if commit is in the ref branch, then the tip of ref should be
+				// newer than the commit we are looking for. Allow for a large
+				// clock skew.
+				if (refCommit.getCommitTime() + skew < commit.getCommitTime())
+					continue;
+
 				boolean contained = walk.isMergedInto(commit, refCommit);
 				if (contained)
 					return true;
