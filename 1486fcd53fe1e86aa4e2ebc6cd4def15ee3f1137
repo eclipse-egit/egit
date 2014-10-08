@@ -16,6 +16,24 @@
       "revId": "1486fcd53fe1e86aa4e2ebc6cd4def15ee3f1137",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_5b04bece",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/SubmoduleAndContainerTreeIteratorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2014-10-08T14:21:24Z",
+      "side": 1,
+      "message": "I put the creation of the iterator into the setup method and assigned it to a field. Formatting is nicer now.",
+      "parentUuid": "a766b734_00dc9591",
+      "revId": "1486fcd53fe1e86aa4e2ebc6cd4def15ee3f1137",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
