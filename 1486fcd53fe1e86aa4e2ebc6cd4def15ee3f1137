@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_00dc9591",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/SubmoduleAndContainerTreeIteratorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-10-08T10:54:27Z",
+      "side": 1,
+      "message": "Could you extract creation of the iterator into its own method and use it here and below? That should also take care of this ugly wrapping.",
+      "revId": "1486fcd53fe1e86aa4e2ebc6cd4def15ee3f1137",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
