@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_00677545",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-10-08T11:36:45Z",
+      "side": 1,
+      "message": "The point is that the calculation should not be done at the point in time when the label provider is called (UI thread), but earlier.\n\nThis code here should just call isSymlink. But isSymlink should return a stored value, not compute it when getting it. To set the stored value, add it to where the StagingEntry objects are constructed, see StagingViewContentProvider.inputChanged.",
+      "parentUuid": "a766b734_059e6743",
+      "revId": "06cb3631b340f8d1e9651204cd9d10d0bfac3f91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_31c12979",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 2
