@@ -47,6 +47,9 @@ public class GitSubscriberMergeContextTest extends ModelTestCase {
 
 	private static final String BRANCH = Constants.R_HEADS + "branch";
 
+	private static final String LINE_SEPARATOR = System
+			.getProperty("line.separator");
+
 	private Repository repo;
 
 	private IProject iProject;
@@ -118,7 +121,7 @@ public class GitSubscriberMergeContextTest extends ModelTestCase {
 	public void mergeNoConflict() throws Exception {
 		String fileName = "src/Main.java";
 		File file = testRepo.createFile(iProject, fileName);
-		final String initialContent = "class Main {}\n";
+		final String initialContent = "class Main {}" + LINE_SEPARATOR;
 		testRepo.appendContentAndCommit(iProject, file, initialContent,
 				"some file");
 		testRepo.addToIndex(iProject.getFile(".classpath"));
@@ -131,13 +134,13 @@ public class GitSubscriberMergeContextTest extends ModelTestCase {
 
 		testRepo.createAndCheckoutBranch(MASTER, BRANCH);
 
-		final String branchChanges = "branch changes\n";
+		final String branchChanges = "branch changes" + LINE_SEPARATOR;
 		setContentsAndCommit(testRepo, workspaceFile, branchChanges
 				+ initialContent, "branch commit");
 
 		testRepo.checkoutBranch(MASTER);
 
-		final String masterChanges = "some changes\n";
+		final String masterChanges = "some changes" + LINE_SEPARATOR;
 		setContentsAndCommit(testRepo, workspaceFile, initialContent
 				+ masterChanges, "master commit");
 		iProject.refreshLocal(IResource.DEPTH_INFINITE,
@@ -185,7 +188,7 @@ public class GitSubscriberMergeContextTest extends ModelTestCase {
 
 		testRepo.createAndCheckoutBranch(MASTER, BRANCH);
 
-		final String branchChanges = "branch changes\n";
+		final String branchChanges = "branch changes" + LINE_SEPARATOR;
 		setContentsAndCommit(testRepo, iFile1, branchChanges + initialContent1,
 				"branch commit");
 		setContentsAndCommit(testRepo, iFile2, branchChanges + initialContent2,
@@ -193,7 +196,7 @@ public class GitSubscriberMergeContextTest extends ModelTestCase {
 
 		testRepo.checkoutBranch(MASTER);
 
-		final String masterChanges = "some changes\n";
+		final String masterChanges = "some changes" + LINE_SEPARATOR;
 		setContentsAndCommit(testRepo, iFile1, initialContent1 + masterChanges,
 				"master commit");
 		setContentsAndCommit(testRepo, iFile2, initialContent2 + masterChanges,
@@ -229,7 +232,7 @@ public class GitSubscriberMergeContextTest extends ModelTestCase {
 	public void mergeWithConflict() throws Exception {
 		String fileName = "src/Main.java";
 		File file = testRepo.createFile(iProject, fileName);
-		final String initialContent = "class Main {}\n";
+		final String initialContent = "class Main {}" + LINE_SEPARATOR;
 		testRepo.appendContentAndCommit(iProject, file, initialContent,
 				"some file");
 		testRepo.addToIndex(iProject.getFile(".classpath"));
@@ -242,13 +245,13 @@ public class GitSubscriberMergeContextTest extends ModelTestCase {
 
 		testRepo.createAndCheckoutBranch(MASTER, BRANCH);
 
-		final String branchChanges = "branch changes\n";
+		final String branchChanges = "branch changes" + LINE_SEPARATOR;
 		setContentsAndCommit(testRepo, workspaceFile, initialContent
 				+ branchChanges, "branch commit");
 
 		testRepo.checkoutBranch(MASTER);
 
-		final String masterChanges = "some changes\n";
+		final String masterChanges = "some changes" + LINE_SEPARATOR;
 		setContentsAndCommit(testRepo, workspaceFile, initialContent
 				+ masterChanges, "master commit");
 		iProject.refreshLocal(IResource.DEPTH_INFINITE,
@@ -291,7 +294,7 @@ public class GitSubscriberMergeContextTest extends ModelTestCase {
 
 		testRepo.createAndCheckoutBranch(MASTER, BRANCH);
 
-		final String branchChanges = "branch changes\n";
+		final String branchChanges = "branch changes" + LINE_SEPARATOR;
 		setContentsAndCommit(testRepo, iFile1, initialContent1 + branchChanges,
 				"branch commit");
 		setContentsAndCommit(testRepo, iFile2, initialContent2 + branchChanges,
@@ -299,7 +302,7 @@ public class GitSubscriberMergeContextTest extends ModelTestCase {
 
 		testRepo.checkoutBranch(MASTER);
 
-		final String masterChanges = "some changes\n";
+		final String masterChanges = "some changes" + LINE_SEPARATOR;
 		setContentsAndCommit(testRepo, iFile1, initialContent1 + masterChanges,
 				"master commit");
 		setContentsAndCommit(testRepo, iFile2, initialContent2 + masterChanges,
@@ -364,7 +367,7 @@ public class GitSubscriberMergeContextTest extends ModelTestCase {
 
 		testRepo.createAndCheckoutBranch(MASTER, BRANCH);
 
-		final String branchChanges = "branch changes\n";
+		final String branchChanges = "branch changes" + LINE_SEPARATOR;
 		setContentsAndCommit(testRepo, iFile1, branchChanges + initialContent1,
 				"branch commit");
 		iFile2.delete(true, new NullProgressMonitor());
@@ -373,7 +376,7 @@ public class GitSubscriberMergeContextTest extends ModelTestCase {
 
 		testRepo.checkoutBranch(MASTER);
 
-		final String masterChanges = "some changes\n";
+		final String masterChanges = "some changes" + LINE_SEPARATOR;
 		setContentsAndCommit(testRepo, iFile1, initialContent1 + masterChanges,
 				"master commit");
 		iProject.refreshLocal(IResource.DEPTH_INFINITE,
