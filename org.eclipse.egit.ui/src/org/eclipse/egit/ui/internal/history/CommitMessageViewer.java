@@ -383,16 +383,11 @@ class CommitMessageViewer extends SourceViewer {
 		// ordered and don't overlap.
 		text.setStyleRanges(formatResult.getStyleRange());
 
-		StyleRange[] hyperlinkStyleRanges = UIUtils
-				.getHyperlinkDetectorStyleRanges(CommitMessageViewer.this,
-						fHyperlinkDetectors);
-
-		// Apply hyperlink style ranges one by one. setStyleRange takes care to
-		// do the right thing in case they overlap with an existing style range.
-		// If we combined them with the above style ranges and set them all at
-		// once, we would have to manually remove overlapping ones.
-		for (StyleRange styleRange : hyperlinkStyleRanges)
-			text.setStyleRange(styleRange);
+		// Apply additional styles. If we combined them with the above style
+		// ranges and set them all at once, we would have to manually remove
+		// overlapping ones.
+		UIUtils.applyHyperlinkDetectorStyleRanges(CommitMessageViewer.this,
+				fHyperlinkDetectors);
 	}
 
 	static final class ObjectLink extends StyleRange {
