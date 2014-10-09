@@ -16,6 +16,24 @@
       "revId": "15295c8a6ae938d2118e245018acde6f3a537320",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_9fe91f30",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContextTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2014-10-09T12:19:08Z",
+      "side": 1,
+      "message": "It is. This patch is the first in a line of 6 inter-dependent changes though... would it be okay with you if I made this change (change the method signature and all callers as a result) in https://git.eclipse.org/r/#/c/30190/ instead (two changes down the dependency line, where I extract this method into a superclass for my tests)?\n\nI can do the modification here, but it\u0027ll mean re-pushing a new patch set for a few of its dependencies too (along with the noise in notifications). If that\u0027s okay with you, then I\u0027l do it right away in this review.",
+      "parentUuid": "a766b734_ff1db3f3",
+      "revId": "15295c8a6ae938d2118e245018acde6f3a537320",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
