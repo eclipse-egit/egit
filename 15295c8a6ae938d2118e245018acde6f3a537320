@@ -52,6 +52,24 @@
       "revId": "15295c8a6ae938d2118e245018acde6f3a537320",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_82b26630",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContextTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2014-10-09T12:58:14Z",
+      "side": 1,
+      "message": "Indeed, I had left the commit message intact even after extracting the \"NPE fixing\" from patch set 6 out of this review.\n\nI\u0027ll push an updated version of this change in a few moments.",
+      "parentUuid": "a766b734_1f9eafb4",
+      "revId": "15295c8a6ae938d2118e245018acde6f3a537320",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
