@@ -34,6 +34,24 @@
       "revId": "15295c8a6ae938d2118e245018acde6f3a537320",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_1f9eafb4",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContextTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-10-09T12:51:33Z",
+      "side": 1,
+      "message": "Don\u0027t worry about the additional notifications. The commit message of this change also needs to be updated (and it seems later ones too).",
+      "parentUuid": "a766b734_9fe91f30",
+      "revId": "15295c8a6ae938d2118e245018acde6f3a537320",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
