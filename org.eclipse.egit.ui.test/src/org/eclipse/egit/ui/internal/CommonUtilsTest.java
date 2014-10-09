@@ -23,6 +23,8 @@ import java.util.TreeSet;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.test.TestProject;
 import org.junit.Test;
 
@@ -129,5 +131,13 @@ public class CommonUtilsTest {
 		Collections.shuffle(tmp, new Random(1));
 		Collections.sort(tmp, CommonUtils.RESOURCE_NAME_COMPARATOR);
 		assertEquals(expected, tmp);
+
+		// Clean up our mess
+		IProgressMonitor monitor = new NullProgressMonitor();
+		f1.delete(false, monitor);
+		f2.delete(false, monitor);
+		f3.delete(false, monitor);
+		p.getProject().getFolder("test").delete(false, monitor);
+		p.getProject().delete(false, monitor);
 	}
 }
