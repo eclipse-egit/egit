@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_ebf17509",
+        "filename": "org.eclipse.egit.core.test/fragment.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-10-11T04:48:16Z",
+      "side": 1,
+      "message": "Why is this and the build changes necessary? According to the commit message, this just extracts the classes, but it seems it does more. I assume this is necessary for later changes? Please update commit message.",
+      "revId": "03b9dd18758d02b93f73910cddedb504b50df4b2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_0bf791ff",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/models/ModelTestCase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-10-11T04:48:16Z",
+      "side": 1,
+      "message": "should be abstract.",
+      "revId": "03b9dd18758d02b93f73910cddedb504b50df4b2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
