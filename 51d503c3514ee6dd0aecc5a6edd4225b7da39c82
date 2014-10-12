@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_1651742d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-12T21:19:28Z",
+      "side": 1,
+      "message": "style nit: we put the bug link into the commit message footer",
+      "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_b63a40ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-12T21:19:28Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_c3c64be1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-12T21:19:28Z",
+      "side": 1,
+      "message": "I think the prefix \"f\" is unnecessary",
+      "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_e3c1c7ca",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-12T21:19:28Z",
+      "side": 1,
+      "message": "unrelated formatting change",
+      "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_23abbf0e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-12T21:19:28Z",
+      "side": 1,
+      "message": "unrelated formatting change",
+      "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_03a8430e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-12T21:19:28Z",
+      "side": 1,
+      "message": "unrelated formatting change",
+      "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_d637fc06",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-12T21:19:28Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_a39eafe9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-12T21:19:28Z",
+      "side": 1,
+      "message": "unrelated formatting change",
+      "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_83a3b32e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-12T21:19:28Z",
+      "side": 1,
+      "message": "unrelated formatting change",
+      "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_e398a7fe",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-12T21:19:28Z",
+      "side": 1,
+      "message": "unrelated formatting change",
+      "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
