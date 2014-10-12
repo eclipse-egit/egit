@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_56e12cb8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-12T21:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_c3c64be1",
+      "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_e3c1c7ca",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
         "patchSetId": 1
@@ -64,6 +82,24 @@
       "writtenOn": "2014-10-12T21:19:28Z",
       "side": 1,
       "message": "unrelated formatting change",
+      "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_36dc7003",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-12T21:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_e3c1c7ca",
       "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_969e2442",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-12T21:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_23abbf0e",
+      "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_03a8430e",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
         "patchSetId": 1
@@ -98,6 +152,24 @@
       "writtenOn": "2014-10-12T21:19:28Z",
       "side": 1,
       "message": "unrelated formatting change",
+      "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_76a1c87d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-12T21:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_03a8430e",
       "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -121,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_d6a89c64",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-12T21:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_d637fc06",
+      "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_a39eafe9",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
         "patchSetId": 1
@@ -132,6 +222,24 @@
       "writtenOn": "2014-10-12T21:19:28Z",
       "side": 1,
       "message": "unrelated formatting change",
+      "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_b6ab605d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-12T21:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_a39eafe9",
       "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -155,6 +263,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_16b214ce",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-12T21:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_83a3b32e",
+      "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_e398a7fe",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
         "patchSetId": 1
@@ -166,6 +292,24 @@
       "writtenOn": "2014-10-12T21:19:28Z",
       "side": 1,
       "message": "unrelated formatting change",
+      "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_f6acb875",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-12T21:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_e398a7fe",
       "revId": "51d503c3514ee6dd0aecc5a6edd4225b7da39c82",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
