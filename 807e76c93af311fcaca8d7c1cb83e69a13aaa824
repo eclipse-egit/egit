@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_7dbcf904",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractivePreferences.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-10-19T06:06:52Z",
+      "side": 1,
+      "message": "I think setting defaults is usually in the PluginPreferenceInitializer class.",
+      "revId": "807e76c93af311fcaca8d7c1cb83e69a13aaa824",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_5dbf7df8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-10-19T06:06:52Z",
+      "side": 1,
+      "message": "I don\u0027t get what this whole thing does. Was this copied from somewhere else? A comment might be good here.",
+      "revId": "807e76c93af311fcaca8d7c1cb83e69a13aaa824",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_bdc5f185",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-10-19T06:06:52Z",
+      "side": 1,
+      "message": "Does `currentPlan.removeRebaseInteractivePlanChangeListener(this);` need to be done here in case it\u0027s not null? (Or rather, should the lines below that do this be moved before this if.)",
+      "revId": "807e76c93af311fcaca8d7c1cb83e69a13aaa824",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
