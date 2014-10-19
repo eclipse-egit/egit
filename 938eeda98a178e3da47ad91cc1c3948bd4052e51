@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_5d63fd0c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-10-19T08:50:20Z",
+      "side": 1,
+      "message": "Putting it in this \"while\" means that symlinks will only be shown if there are submodules in the repository, no?",
+      "revId": "938eeda98a178e3da47ad91cc1c3948bd4052e51",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_9d647514",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-10-19T08:50:20Z",
+      "side": 1,
+      "message": "revWalk needs to be release()d in a finally block.",
+      "revId": "938eeda98a178e3da47ad91cc1c3948bd4052e51",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_bd6971ee",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-10-19T08:50:20Z",
+      "side": 1,
+      "message": "I\u0027m not comfortable with this being inside the loop. In the worst case, it would mean we parse HEAD for every entry in the staging view. Could you change this so that it\u0027s only done once if needed?\n\nThat means processing all entries inside this function and reusing headCommit once it\u0027s initialized.",
+      "revId": "938eeda98a178e3da47ad91cc1c3948bd4052e51",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
