@@ -3348,6 +3348,9 @@ public class UIText extends NLS {
 	public static String RepositoriesView_WorkingDir_treenode;
 
 	/** */
+	public static String RepositoriesViewActionProvider_OpenWithMenu;
+
+	/** */
 	public static String RepositoriesViewContentProvider_ExceptionNodeText;
 
 	/** */
