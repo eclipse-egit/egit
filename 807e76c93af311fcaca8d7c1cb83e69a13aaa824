@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_c82e2d45",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-10-20T13:20:37Z",
+      "side": 1,
+      "message": "Ah, I get it now, thanks. Didn\u0027t see the connection between the pref change and `getRepositoryUtil().contains`.",
+      "parentUuid": "a766b734_ddda6ddf",
+      "revId": "807e76c93af311fcaca8d7c1cb83e69a13aaa824",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_bdc5f185",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveView.java",
         "patchSetId": 2
