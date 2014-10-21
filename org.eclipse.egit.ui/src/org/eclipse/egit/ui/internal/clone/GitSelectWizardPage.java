@@ -55,6 +55,9 @@ public class GitSelectWizardPage extends WizardPage {
 	public static final int NEW_WIZARD = 1;
 
 	/** */
+	public static final int IMPORT_WIZARD = 3;
+
+	/** */
 	public static final int GENERAL_WIZARD = 2;
 
 	// TODO check if we need/can support Import... wizard
@@ -65,6 +68,8 @@ public class GitSelectWizardPage extends WizardPage {
 	private Button importExisting;
 
 	private Button newProjectWizard;
+
+	private Button importProjectWizard;
 
 	private Button generalWizard;
 
@@ -144,6 +149,8 @@ public class GitSelectWizardPage extends WizardPage {
 					wizardSelection = NEW_WIZARD;
 				else if (generalWizard.getSelection())
 					wizardSelection = GENERAL_WIZARD;
+				else if (importProjectWizard.getSelection())
+					wizardSelection = IMPORT_WIZARD;
 				else
 					wizardSelection = EXISTING_PROJECTS_WIZARD;
 				checkPage();
@@ -163,6 +170,11 @@ public class GitSelectWizardPage extends WizardPage {
 		newProjectWizard
 				.setText(UIText.GitSelectWizardPage_UseNewProjectsWizardButton);
 		newProjectWizard.addSelectionListener(sl);
+
+		importProjectWizard = new Button(wizardType, SWT.RADIO);
+		importProjectWizard
+				.setText(UIText.GitSelectWizardPage_UseImportProjectsWizardButton);
+		importProjectWizard.addSelectionListener(sl);
 
 		generalWizard = new Button(wizardType, SWT.RADIO);
 		generalWizard.setText(UIText.GitSelectWizardPage_ImportAsGeneralButton);
@@ -184,7 +196,9 @@ public class GitSelectWizardPage extends WizardPage {
 		case NEW_WIZARD:
 			newProjectWizard.setSelection(true);
 			break;
-
+		case IMPORT_WIZARD:
+			importProjectWizard.setSelection(true);
+			break;
 		}
 
 		tv = new TreeViewer(main, SWT.SINGLE | SWT.H_SCROLL | SWT.V_SCROLL
@@ -263,6 +277,10 @@ public class GitSelectWizardPage extends WizardPage {
 		setErrorMessage(null);
 
 		if (newProjectWizard.getSelection()) {
+			setPageComplete(true);
+			return;
+		}
+		if (importProjectWizard.getSelection()) {
 			setPageComplete(true);
 			return;
 		}
