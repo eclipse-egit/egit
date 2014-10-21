@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.submodule.SubmoduleWalk;
 import org.eclipse.team.core.RepositoryProvider;
 
 /**
@@ -140,6 +141,30 @@ public class RepositoryMapping {
 	 * @return a reference to the repository object handled by this mapping
 	 */
 	public synchronized Repository getRepository() {
+		return db;
+	}
+
+	/**
+	 * @param res
+	 * @return a reference to the repository object handled by this mapping. If
+	 *         the specified resource belongs to a submodule then the submodule
+	 *         repo is returned
+	 */
+	public synchronized Repository getRepository(IResource res) {
+		IPath projectRelativePath = res.getProjectRelativePath();
+		if (projectRelativePath == null)
+			return db;
+		String projectRelativePathStr = res.getProjectRelativePath().toString();
+		try {
+			if (SubmoduleWalk.containsGitModulesFile(db)) {
+				SubmoduleWalk sw = SubmoduleWalk.forIndex(db);
+				while (sw.next())
+					if (projectRelativePathStr.startsWith(sw.getPath()))
+						return sw.getRepository();
+			}
+		} catch (IOException e) {
+			// ignore IOExceptions when searching for submodules
+		}
 		return db;
 	}
 
