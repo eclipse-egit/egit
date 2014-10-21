@@ -27,8 +27,12 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitProvider;
+import org.eclipse.egit.core.RepositoryCache;
+import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.submodule.SubmoduleWalk;
 import org.eclipse.team.core.RepositoryProvider;
 
 /**
@@ -54,6 +58,9 @@ public class RepositoryMapping {
 	private String workdirPrefix;
 
 	private IContainer container;
+
+	private final RepositoryCache repositoryCache = org.eclipse.egit.core.Activator
+			.getDefault().getRepositoryCache();
 
 	/**
 	 * Construct a {@link RepositoryMapping} for a previously connected project.
@@ -140,6 +147,47 @@ public class RepositoryMapping {
 	 * @return a reference to the repository object handled by this mapping
 	 */
 	public synchronized Repository getRepository() {
+		return db;
+	}
+
+	/**
+	 * @param res
+	 *            a resource
+	 * @return the submodule repository if the resource is contained in a git
+	 *         submodule otherwise return {@code null}
+	 *
+	 *         TODO add support for multiple nesting levels of submodules
+	 */
+	public synchronized Repository getSubmoduleRepository(IResource res) {
+		IPath projectRelativePath = res.getProjectRelativePath();
+		if (projectRelativePath == null)
+			return null;
+
+		String projectRelativePathStr = res.getProjectRelativePath().toString();
+		try {
+			if (SubmoduleWalk.containsGitModulesFile(db)) {
+				SubmoduleWalk sw = SubmoduleWalk.forIndex(db);
+				while (sw.next()) {
+					if (projectRelativePathStr.startsWith(sw.getPath())) {
+						Repository subRepo = sw.getRepository();
+						if (subRepo == null)
+							return null;
+
+						Repository cachedRepo = null;
+						try {
+							cachedRepo = repositoryCache
+									.lookupRepository(subRepo.getDirectory());
+						} finally {
+							subRepo.close();
+						}
+						return cachedRepo;
+					}
+				}
+			}
+		} catch (IOException e) {
+			Activator.logWarning(
+					CoreText.RepositoryMapping_ExceptionSubmoduleWalk, e);
+		}
 		return db;
 	}
 
