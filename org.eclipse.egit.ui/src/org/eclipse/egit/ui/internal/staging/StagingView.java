@@ -1846,8 +1846,10 @@ public class StagingView extends ViewPart implements IShowInSource {
 		RepositoryMapping mapping = RepositoryMapping.getMapping(project);
 		if (mapping == null)
 			return;
-		if (mapping.getRepository() != currentRepository)
-			reload(mapping.getRepository());
+		Repository newRep = mapping.getRepositoryOrNestedSubmoduleRepository(resource);
+		if (newRep != currentRepository) {
+			reload(newRep);
+		}
 	}
 
 	private void stage(IStructuredSelection selection) {
@@ -1875,7 +1877,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 				IResource resource = AdapterUtils.adapt(element, IResource.class);
 				if (resource != null) {
 					RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
-					if (mapping != null && mapping.getRepository() == currentRepository) {
+					if (mapping != null
+							&& mapping.getRepositoryOrNestedSubmoduleRepository(resource) == currentRepository) {
 						String path = mapping.getRepoRelativePath(resource);
 						// If resource corresponds to root of working directory
 						if ("".equals(path)) //$NON-NLS-1$
