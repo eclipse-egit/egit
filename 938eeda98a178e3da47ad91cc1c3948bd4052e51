@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_496a1c0d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1013
+      },
+      "writtenOn": "2014-10-22T08:53:45Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right, my mistake.",
+      "parentUuid": "a766b734_5d63fd0c",
+      "revId": "938eeda98a178e3da47ad91cc1c3948bd4052e51",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_9d647514",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_e95a087a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1013
+      },
+      "writtenOn": "2014-10-22T08:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_9d647514",
+      "revId": "938eeda98a178e3da47ad91cc1c3948bd4052e51",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_bd6971ee",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2014-10-19T08:50:20Z",
       "side": 1,
       "message": "I\u0027m not comfortable with this being inside the loop. In the worst case, it would mean we parse HEAD for every entry in the staging view. Could you change this so that it\u0027s only done once if needed?\n\nThat means processing all entries inside this function and reusing headCommit once it\u0027s initialized.",
+      "revId": "938eeda98a178e3da47ad91cc1c3948bd4052e51",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_2419c5ac",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1013
+      },
+      "writtenOn": "2014-10-22T08:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_bd6971ee",
       "revId": "938eeda98a178e3da47ad91cc1c3948bd4052e51",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
