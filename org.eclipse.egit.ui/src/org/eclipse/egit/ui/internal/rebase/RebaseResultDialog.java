@@ -184,6 +184,8 @@ public class RebaseResultDialog extends MessageDialog {
 			return UIText.RebaseResultDialog_StatusAborted;
 		case STOPPED:
 			return UIText.RebaseResultDialog_StatusStopped;
+		case EDIT:
+			return UIText.RebaseResultDialog_StatusEdit;
 		case FAILED:
 			return UIText.RebaseResultDialog_StatusFailed;
 		case CONFLICTS:
@@ -196,6 +198,8 @@ public class RebaseResultDialog extends MessageDialog {
 			return UIText.RebaseResultDialog_StatusNothingToCommit;
 		case UNCOMMITTED_CHANGES:
 			return UIText.RebaseResultDialog_UncommittedChanges;
+		case INTERACTIVE_PREPARED:
+			return UIText.RebaseResultDialog_StatusInteractivePrepared;
 		case STASH_APPLY_CONFLICTS:
 			return UIText.RebaseResultDialog_SuccessfullyFinished + ".\n" + //$NON-NLS-1$
 					UIText.RebaseResultDialog_stashApplyConflicts;
