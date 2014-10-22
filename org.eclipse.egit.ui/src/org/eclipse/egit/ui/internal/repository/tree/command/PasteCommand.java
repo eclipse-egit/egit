@@ -105,8 +105,8 @@ public class PasteCommand extends
 	}
 
 	private URIish getCloneURI(String content) {
-		if (content != null && content.startsWith("git clone")) //$NON-NLS-1$
-			content = content.substring(9);
+		if (content.startsWith("git clone")) //$NON-NLS-1$
+			content = content.substring("git clone".length()); //$NON-NLS-1$
 		URIish finalURI;
 		try {
 			finalURI = new URIish(content.trim());
