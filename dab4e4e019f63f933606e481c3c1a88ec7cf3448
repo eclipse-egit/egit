@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_89a42d04",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-10-24T15:01:12Z",
+      "side": 1,
+      "message": "That works fine, besides the corner case I commented in the Staging View, line 1880.\n\nBut, on the other hand, it does only a small step when it comes to working with submodules nested in one eclipse project. Still the History View, the Team menu, the Compare With and Replace With menu, the toolbar buttons, the reflog view and the decorators are still not connected to the submodule repository. And I am sure I forgot something. \n\nI am not sure if all these other places can simply be changed in the same way as the Staging View. I am not sure if the concept of the RepositoryMapping would still be suited if we had more than one repository per project.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 69
+      },
+      "revId": "dab4e4e019f63f933606e481c3c1a88ec7cf3448",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_492fb512",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-10-24T15:01:12Z",
+      "side": 1,
+      "message": "This works, but I think it does not quite fit to the overall concept of the RepositoryMapping class. The assumption is that there is one repository. Methods like getRepoRelativePath make use of that assumption.\n\nThere are many, many places in EGit which just call getRepository(). If we\u0027d change all these places to use getRepository(IResource res) do a submodule walk in case there are submodules we may get a performance penalty.",
+      "range": {
+        "startLine": 153,
+        "startChar": 32,
+        "endLine": 153,
+        "endChar": 45
+      },
+      "revId": "dab4e4e019f63f933606e481c3c1a88ec7cf3448",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_699a71f6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1880,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-10-24T15:01:12Z",
+      "side": 1,
+      "message": "I think this should be adapted also to mapping.getRepository(resource)",
+      "range": {
+        "startLine": 1880,
+        "startChar": 36,
+        "endLine": 1880,
+        "endChar": 49
+      },
+      "revId": "dab4e4e019f63f933606e481c3c1a88ec7cf3448",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
