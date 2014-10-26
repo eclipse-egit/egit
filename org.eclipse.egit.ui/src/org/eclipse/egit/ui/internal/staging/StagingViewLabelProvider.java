@@ -39,10 +39,11 @@ public class StagingViewLabelProvider extends LabelProvider {
 	private Image DEFAULT = PlatformUI.getWorkbench().getSharedImages()
 			.getImage(ISharedImages.IMG_OBJ_FILE);
 
-	private final Image SUBMODULE = UIIcons.REPOSITORY.createImage();
+	private final Image SUBMODULE;
 
-	private ResourceManager resourceManager = new LocalResourceManager(
-			JFaceResources.getResources());
+	private final Image SYMLINK;
+
+	private ResourceManager resourceManager;
 
 	private final DecorationHelper decorationHelper = new DecorationHelper(
 			Activator.getDefault().getPreferenceStore());
@@ -55,6 +56,10 @@ public class StagingViewLabelProvider extends LabelProvider {
 	 */
 	public StagingViewLabelProvider(StagingView stagingView) {
 		super();
+		resourceManager = new LocalResourceManager(
+				JFaceResources.getResources());
+		SUBMODULE = resourceManager.createImage(UIIcons.REPOSITORY);
+		SYMLINK = resourceManager.createImage(UIIcons.SYMLINK);
 		this.stagingView = stagingView;
 	}
 
@@ -73,14 +78,15 @@ public class StagingViewLabelProvider extends LabelProvider {
 
 	@Override
 	public void dispose() {
-		SUBMODULE.dispose();
-		this.resourceManager.dispose();
+		resourceManager.dispose();
 		super.dispose();
 	}
 
 	private Image getEditorImage(StagingEntry diff) {
 		if (diff.isSubmodule())
 			return SUBMODULE;
+		if (diff.isSymlink())
+			return SYMLINK;
 
 		Image image = DEFAULT;
 		String name = new Path(diff.getPath()).lastSegment();

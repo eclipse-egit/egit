@@ -105,6 +105,8 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 
 	private boolean submodule;
 
+	private boolean isSymlink;
+
 	/**
 	 * @param repository
 	 *            repository for this entry
@@ -117,6 +119,7 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 		this.state = state;
 		this.path = path;
 		this.file = ResourceUtil.getFileForLocation(repository, path);
+		this.isSymlink = ResourceUtil.isSymbolicLink(repository, path);
 	}
 
 	/**
@@ -131,6 +134,13 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 	 */
 	public boolean isSubmodule() {
 		return submodule;
+	}
+
+	/**
+	 * @return {@code true} if the entry is a symbolic link
+	 */
+	public boolean isSymlink() {
+		return isSymlink;
 	}
 
 	/**

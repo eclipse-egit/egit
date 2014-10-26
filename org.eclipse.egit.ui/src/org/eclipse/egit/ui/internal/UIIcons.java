@@ -303,6 +303,9 @@ public class UIIcons {
 	/** base URL */
 	public final static URL base;
 
+	/** symbolic link **/
+	public final static ImageDescriptor SYMLINK;
+
 	static {
 		base = init();
 		OVR_STAGED = map("ovr/staged.gif"); //$NON-NLS-1$
@@ -401,6 +404,7 @@ public class UIIcons {
 		REWORD = map("obj16/reword.gif"); //$NON-NLS-1$
 		DONE_STEP = map("obj16/done_step.gif"); //$NON-NLS-1$
 		CURRENT_STEP = map("obj16/current_step.gif"); //$NON-NLS-1$
+		SYMLINK = map("obj16/symlink.png"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {
