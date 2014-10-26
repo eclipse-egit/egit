@@ -12,6 +12,8 @@
 package org.eclipse.egit.core.internal.util;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -44,6 +46,7 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.util.FS;
 import org.eclipse.team.core.RepositoryProvider;
 
 /**
@@ -139,6 +142,28 @@ public class ResourceUtil {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IPath path = new Path(repository.getWorkTree().getAbsolutePath()).append(repoRelativePath);
 		return root.getContainerForLocation(path);
+	}
+
+	/**
+	 * Checks if the path relative to the given repository refers to a symbolic
+	 * link
+	 *
+	 * @param repository
+	 *            the repository of the file
+	 * @param repoRelativePath
+	 *            the repository-relative path of the file to search for
+	 * @return {@code true} if the path in the given repository refers to a
+	 *         symbolic link
+	 */
+	public static boolean isSymbolicLink(Repository repository,
+			String repoRelativePath) {
+		try {
+			File f = new Path(repository.getWorkTree().getAbsolutePath())
+					.append((repoRelativePath)).toFile();
+			return FS.DETECTED.isSymLink(f);
+		} catch (@SuppressWarnings("unused") IOException e) {
+			return false;
+		}
 	}
 
 	/**

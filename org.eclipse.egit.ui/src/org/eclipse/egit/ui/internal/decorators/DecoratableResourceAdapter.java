@@ -26,6 +26,7 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jgit.lib.Repository;
@@ -136,6 +137,11 @@ class DecoratableResourceAdapter extends DecoratableResource {
 			tracked = false;
 		else
 			tracked = !containsPrefixPath(untrackedFolders, repoRelativePath);
+
+		if (ResourceUtil.isSymbolicLink(repository, repoRelativePath)) {
+			extractResourceProperties();
+			return;
+		}
 
 		// containers are marked as staged whenever file was added, removed or
 		// changed
