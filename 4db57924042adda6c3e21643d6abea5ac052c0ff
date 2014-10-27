@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_47615904",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/DeletePathsOperationTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-27T21:44:22Z",
+      "side": 1,
+      "message": "this doesn\u0027t delete the symlink source but the file it\u0027s referring to, here the stack when calling deletePaths:\n\n File.getCanonicalPath() line: 618 [local variables unavailable]\t\n FileUtil.canonicalPath(IPath) line: 69\t\n FileUtil.canonicalURI(URI) line: 88\t\n FileSystemResourceManager.allPathsForLocation(URI) line: 59\t\n FileSystemResourceManager.allResourcesFor(URI, boolean, int) line: 216\t\n WorkspaceRoot.findFilesForLocationURI(URI, int) line: 113\t\n WorkspaceRoot.findFilesForLocationURI(URI) line: 104\t\n ResourceUtil.getFileForLocationURI(IWorkspaceRoot, URI) line: 222\t\n ResourceUtil.getResourceForLocation(IPath) line: 69\t\n RuleUtil.getRuleForContainers(Collection\u003cIPath\u003e) line: 108\t\n DeletePathsOperation.calculateSchedulingRule() line: 121\t\n DeletePathsOperation.\u003cinit\u003e(Collection\u003cIPath\u003e) line: 55\t\n DeletePathsOperationTest.deletePaths(Collection\u003cIPath\u003e) line: 122\t\n DeletePathsOperationTest.testDeleteSymlink() line: 105\t\n ...\n\n ResourceUtil.getFileForLocationURI(IWorkspaceRoot, URI) \nuses \n IWorkspaceRoot.findFilesForLocationURI(uri) \nand this in the end (see stack trace) relies on\n java.io.File.getCanonicalPath()\nwhich returns the symlink\u0027s target and not the symlink itself.\n\nHence this test fails.",
+      "revId": "4db57924042adda6c3e21643d6abea5ac052c0ff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
