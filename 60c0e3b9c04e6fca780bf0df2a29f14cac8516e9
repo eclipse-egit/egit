@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_156b0a11",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-27T20:41:15Z",
+      "side": 1,
+      "message": "this is unnecessary as boolean defaults to false",
+      "revId": "60c0e3b9c04e6fca780bf0df2a29f14cac8516e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_47bdd9ff",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-27T20:41:15Z",
+      "side": 1,
+      "message": "why this catch all ?",
+      "revId": "60c0e3b9c04e6fca780bf0df2a29f14cac8516e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_3568c613",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewLabelProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-27T20:41:15Z",
+      "side": 1,
+      "message": "This icon doesn\u0027t exist your change has /icons/ovr/symlink_ovr.gif but no png.\n\nSo far we manage all image descriptors in org.eclipse.egit.ui.internal.UIIcons",
+      "revId": "60c0e3b9c04e6fca780bf0df2a29f14cac8516e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_07b3e136",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewLabelProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-27T20:41:15Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "60c0e3b9c04e6fca780bf0df2a29f14cac8516e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_e7b5051a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewLabelProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-10-27T20:41:15Z",
+      "side": 1,
+      "message": "this is ok if the target of the symlink is a file, if the target is a directory we should use a decorated directory icon",
+      "revId": "60c0e3b9c04e6fca780bf0df2a29f14cac8516e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
