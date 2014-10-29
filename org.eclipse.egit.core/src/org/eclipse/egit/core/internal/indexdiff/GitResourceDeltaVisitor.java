@@ -25,6 +25,7 @@ import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -51,6 +52,9 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 	private final Collection<IResource> resourcesToUpdate;
 
 	private boolean gitIgnoreChanged = false;
+
+	/** Holds <code>true</code> if at least one .gitattribute file has changed. */
+	private boolean gitAttributeChanged = false;
 
 	/**
 	 * Constructs {@link GitResourceDeltaVisitor}
@@ -104,6 +108,10 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 		// skip any non-FILE resources
 		if (resource.getType() != IResource.FILE)
 			return true;
+		if (resource.getName().equals(Constants.DOT_GIT_ATTRIBUTES)) {
+			gitAttributeChanged = true;
+			return false;
+		}
 
 		if (resource.getName().equals(GITIGNORE_NAME)) {
 			gitIgnoreChanged = true;
@@ -193,5 +201,13 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 	 */
 	public boolean getGitIgnoreChanged() {
 		return gitIgnoreChanged;
+	}
+
+	/**
+	 * @return <code>true</code> when the content of any .gitattributes file has
+	 *         changed, <code>false</code> otherwise.
+	 */
+	public boolean getGitAttributeChanged() {
+		return gitAttributeChanged;
 	}
 }

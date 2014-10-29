@@ -561,6 +561,8 @@ public class IndexDiffCacheEntry {
 				Collection<String> filesToUpdate = visitor.getFilesToUpdate();
 				if (visitor.getGitIgnoreChanged()) {
 					scheduleReloadJob("A .gitignore changed"); //$NON-NLS-1$
+				} else if (visitor.getGitAttributeChanged()) {
+					scheduleReloadJob("A .gitattributes changed"); //$NON-NLS-1$
 				} else if (indexDiffData == null) {
 					scheduleReloadJob("Resource changed, no diff available"); //$NON-NLS-1$
 				} else if (!filesToUpdate.isEmpty()) {
