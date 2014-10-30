@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_bbfde4a5",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1655
+      },
+      "writtenOn": "2014-10-30T08:40:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_9bed8803",
+      "revId": "9d43a27cd9487f9959e12d9864513037fb29afec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_7be86cef",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-10-30T08:24:48Z",
       "side": 1,
       "message": "s/of one of a/of any/",
+      "revId": "9d43a27cd9487f9959e12d9864513037fb29afec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_1b2cd8cf",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1655
+      },
+      "writtenOn": "2014-10-30T08:40:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_7be86cef",
       "revId": "9d43a27cd9487f9959e12d9864513037fb29afec",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
