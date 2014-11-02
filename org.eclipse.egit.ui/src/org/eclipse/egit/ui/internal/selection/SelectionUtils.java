@@ -94,10 +94,10 @@ public class SelectionUtils {
 			selection = context
 					.getVariable(ISources.ACTIVE_CURRENT_SELECTION_NAME);
 
-		if (selection instanceof IStructuredSelection)
-			return (IStructuredSelection) selection;
-		else if (selection instanceof ITextSelection)
+		if (selection instanceof ITextSelection)
 			return getSelectionFromEditorInput(context);
+		else if (selection instanceof IStructuredSelection)
+			return (IStructuredSelection) selection;
 		return StructuredSelection.EMPTY;
 	}
 
@@ -112,10 +112,10 @@ public class SelectionUtils {
 	 */
 	public static IStructuredSelection getStructuredSelection(
 			ISelection selection) {
-		if (selection instanceof IStructuredSelection)
-			return (IStructuredSelection) selection;
-		else if (selection instanceof ITextSelection)
+		if (selection instanceof ITextSelection)
 			return getSelectionFromEditorInput(getEvaluationContext());
+		else if (selection instanceof IStructuredSelection)
+			return (IStructuredSelection) selection;
 		return StructuredSelection.EMPTY;
 	}
 

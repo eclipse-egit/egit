@@ -331,6 +331,73 @@
             </iterate>
          </and>
       </definition>
+      <definition id="org.eclipse.egit.ui.resourcesSingleRepository">
+         <or>
+            <test
+                  property="GitSelection.resourcesSingleRepository">
+            </test>
+            <with variable="activePart">
+               <instanceof
+                     value="org.eclipse.ui.IEditorPart">
+               </instanceof>
+               <with
+                     variable="activeEditorInput">
+                  <adapt
+                        type="org.eclipse.core.resources.IResource">
+                     <test
+                           property="GitResource.isShared">
+                     </test>
+                  </adapt>
+               </with>
+            </with>
+         </or>
+      </definition>
+      <definition id="org.eclipse.egit.ui.fileOrFolderInRepository">
+         <or>
+            <test
+                  property="GitSelection.fileOrFolderInRepository">
+            </test>
+            <with variable="activePart">
+               <instanceof
+                     value="org.eclipse.ui.IEditorPart">
+               </instanceof>
+               <with
+                     variable="activeEditorInput">
+                  <adapt
+                        type="org.eclipse.core.resources.IResource">
+                     <test
+                           property="GitResource.isShared">
+                     </test>
+                  </adapt>
+               </with>
+            </with>
+         </or>
+      </definition>
+      <definition id="org.eclipse.egit.ui.fileOrFolderInRepositoryWithGerritConfiguration">
+         <or>
+            <test
+                  property="GitSelection.fileOrFolderInRepository"
+                  args="hasGerritConfiguration">
+            </test>
+            <with variable="activePart">
+               <instanceof
+                     value="org.eclipse.ui.IEditorPart">
+               </instanceof>
+               <with
+                     variable="activeEditorInput">
+                  <adapt
+                        type="org.eclipse.core.resources.IResource">
+                     <test
+                           property="GitResource.isShared">
+                     </test>
+                     <test
+                           property="GitResource.hasGerritConfiguration">
+                     </test>
+                  </adapt>
+               </with>
+            </with>
+         </or>
+      </definition>
    </extension>
 
    <extension point="org.eclipse.ui.preferencePages">
@@ -975,9 +1042,9 @@
          </class>
          <activeWhen>
             <or>
-               <test
-                     property="GitSelection.resourcesSingleRepository">
-               </test>
+               <reference
+                     definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
+               </reference>
                <and>
                   <count
                         value="1">
@@ -1192,8 +1259,9 @@
          </class>
          <activeWhen>
             <or>
-               <test property="GitSelection.resourcesSingleRepository">
-               </test>
+               <reference
+                     definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
+               </reference>
                <and>
                   <count
                         value="1">
@@ -1539,9 +1607,9 @@
                class="org.eclipse.egit.ui.internal.actions.ShowHistoryActionHandler">
          </class>
          <activeWhen>
-            <test
-                  property="GitSelection.resourcesSingleRepository">
-            </test>
+            <reference
+                  definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
+            </reference>
          </activeWhen>
       </handler>
       <handler
@@ -1846,9 +1914,9 @@
             class="org.eclipse.egit.ui.internal.actions.UntrackActionHandler"
             commandId="org.eclipse.egit.ui.team.Untrack">
          <activeWhen>
-            <test
-                  property="GitSelection.resourcesSingleRepository">
-            </test>
+            <reference
+                  definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
+            </reference>
          </activeWhen>
       </handler>
       <handler
@@ -3737,9 +3805,9 @@
                   style="push">
                <visibleWhen
                      checkEnabled="false">
-                  <test
-                        property="GitSelection.resourcesSingleRepository">
-                  </test>
+                  <reference
+                        definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
+                  </reference>
                </visibleWhen>
             </command>
             <menu
@@ -3878,9 +3946,9 @@
                   label="%RepositorySubMenu.label">
                <visibleWhen
                      checkEnabled="false">
-                     <test
-                           property="GitSelection.fileOrFolderInRepository">
-                     </test>
+                     <reference
+                           definitionId="org.eclipse.egit.ui.fileOrFolderInRepository">
+                     </reference>
                </visibleWhen>
                <separator
                      name="group1"
@@ -3911,10 +3979,9 @@
                      style="push">
                   <visibleWhen
                         checkEnabled="false">
-                     <test
-                           property="GitSelection.fileOrFolderInRepository"
-                           args="hasGerritConfiguration">
-                     </test>
+                     <reference
+                           definitionId="org.eclipse.egit.ui.fileOrFolderInRepositoryWithGerritConfiguration">
+                     </reference>
                   </visibleWhen>
                </command>
                <command
@@ -3923,10 +3990,9 @@
                      style="push">
                   <visibleWhen
                         checkEnabled="false">
-                     <test
-                           property="GitSelection.fileOrFolderInRepository"
-                           args="hasGerritConfiguration">
-                     </test>
+                     <reference
+                           definitionId="org.eclipse.egit.ui.fileOrFolderInRepositoryWithGerritConfiguration">
+                     </reference>
                   </visibleWhen>
                </command>
                <separator
@@ -4032,9 +4098,9 @@
                      style="push">
                   <visibleWhen
                         checkEnabled="false">
-                     <test
-                           property="GitSelection.resourcesSingleRepository">
-                     </test>
+                     <reference
+                           definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
+                     </reference>
                   </visibleWhen>
                </command>
                <command
@@ -4043,9 +4109,9 @@
                      style="push">
                   <visibleWhen
                         checkEnabled="false">
-                     <test
-                           property="GitSelection.resourcesSingleRepository">
-                     </test>
+                     <reference
+                           definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
+                     </reference>
                   </visibleWhen>
                </command>
                <command
@@ -4055,9 +4121,9 @@
                      style="push">
                   <visibleWhen
                         checkEnabled="false">
-                     <test
-                           property="GitSelection.resourcesSingleRepository">
-                     </test>
+                     <reference
+                           definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
+                     </reference>
                   </visibleWhen>
                </command>
             </menu>
@@ -4167,9 +4233,9 @@
                   style="push">
                <visibleWhen
                      checkEnabled="false">
-                  <test
-                        property="GitSelection.resourcesSingleRepository">
-                  </test>
+                  <reference
+                        definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
+                  </reference>
                </visibleWhen>
             </command>
             <separator
@@ -4194,9 +4260,9 @@
                   style="push">
                <visibleWhen
                      checkEnabled="false">
-                  <test
-                        property="GitSelection.resourcesSingleRepository">
-                  </test>
+                  <reference
+                        definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
+                  </reference>
                </visibleWhen>
             </command>
             <command
@@ -4205,9 +4271,9 @@
                   style="push">
                <visibleWhen
                      checkEnabled="false">
-                  <test
-                        property="GitSelection.resourcesSingleRepository">
-                  </test>
+                  <reference
+                        definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
+                  </reference>
                </visibleWhen>
             </command>
             <separator
