@@ -25,6 +25,41 @@
     },
     {
       "key": {
+        "uuid": "a766b734_47a4aa02",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-04T14:17:06Z",
+      "side": 1,
+      "message": "I tested this change rebased on current master on Eclipse Mars M2 and found that it\u0027s working properly if the sources contained in submodules each live in their own separate Eclipse projects. Hence I think we should accept this change for this use case (submodules in separate projects) and clearly state that it doesn\u0027t yet work for projects spanning super project and submodule.\n\nI tried successfully:\n* history View\n* team menu\n* compare with\n* replace with\n* toolbar buttons\n* reflog view\n* decorators\n\nthere are a few problems left and I will file bugs for those.\n\nIf super project and submodules reside in the same Eclipse project I can see all the problems you mentioned. So there is quite some work needed to make this work, I think to support that we would have to first enhance RepositoryMapping to handle projects spanning multiple git repositories.",
+      "parentUuid": "a766b734_89a42d04",
+      "revId": "dab4e4e019f63f933606e481c3c1a88ec7cf3448",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_27624e32",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-04T14:17:06Z",
+      "side": 1,
+      "message": "add footer to link related bugs\n\nBug: 382093 ?\nBug: 411742 ?\nBug: 446344",
+      "revId": "dab4e4e019f63f933606e481c3c1a88ec7cf3448",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_492fb512",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
         "patchSetId": 1
@@ -42,6 +77,24 @@
         "endLine": 153,
         "endChar": 45
       },
+      "revId": "dab4e4e019f63f933606e481c3c1a88ec7cf3448",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_677446f2",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-04T14:17:06Z",
+      "side": 1,
+      "message": "Using submodulewalk shouldn\u0027t be a big penalty since it\u0027s typically just traversing the DirCache to find submodule entries. Though we could improve that if we teach IndexDiff to cache and incrementally update submodule entries based on resource change events.",
+      "parentUuid": "a766b734_492fb512",
       "revId": "dab4e4e019f63f933606e481c3c1a88ec7cf3448",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
