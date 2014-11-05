@@ -108,13 +108,15 @@ public class RepositorySearchDialog extends WizardPage {
 
 		private final Object[] children = new Object[0];
 
-		@SuppressWarnings("unchecked")
+		private Set<String> paths = new TreeSet<String>();
+
 		public Object[] getElements(Object inputElement) {
-			return ((Set<String>) inputElement).toArray();
+			return paths.toArray();
 		}
 
+		@SuppressWarnings("unchecked")
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-			// nothing
+			paths = (Set<String>) newInput;
 		}
 
 		public void dispose() {
@@ -198,7 +200,6 @@ public class RepositorySearchDialog extends WizardPage {
 	@Override
 	public void dispose() {
 		fResult = getCheckedItems();
-		fResult.addAll(getCheckedItems());
 		super.dispose();
 	}
 
@@ -464,6 +465,8 @@ public class RepositorySearchDialog extends WizardPage {
 			// ignore
 		}
 
+		final TreeSet<String> validDirs = new TreeSet<String>(getCheckedItems());
+
 		IRunnableWithProgress action = new IRunnableWithProgress() {
 
 			public void run(IProgressMonitor monitor)
@@ -496,8 +499,6 @@ public class RepositorySearchDialog extends WizardPage {
 		}
 
 		int foundOld = 0;
-
-		final TreeSet<String> validDirs = new TreeSet<String>();
 
 		for (String foundDir : directories) {
 			if (!fExistingDirectories.contains(foundDir)) {
