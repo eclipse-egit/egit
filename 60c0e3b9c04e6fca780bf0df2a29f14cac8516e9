@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_3c56e055",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1013
+      },
+      "writtenOn": "2014-11-05T08:42:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_156b0a11",
+      "revId": "60c0e3b9c04e6fca780bf0df2a29f14cac8516e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_47bdd9ff",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2014-10-27T20:41:15Z",
       "side": 1,
       "message": "why this catch all ?",
+      "revId": "60c0e3b9c04e6fca780bf0df2a29f14cac8516e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_9c55744a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1013
+      },
+      "writtenOn": "2014-11-05T08:42:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_47bdd9ff",
       "revId": "60c0e3b9c04e6fca780bf0df2a29f14cac8516e9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_d9709e83",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewLabelProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1013
+      },
+      "writtenOn": "2014-11-05T08:42:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_3568c613",
+      "revId": "60c0e3b9c04e6fca780bf0df2a29f14cac8516e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_07b3e136",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewLabelProvider.java",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_b973228c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewLabelProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1013
+      },
+      "writtenOn": "2014-11-05T08:42:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_07b3e136",
+      "revId": "60c0e3b9c04e6fca780bf0df2a29f14cac8516e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_e7b5051a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewLabelProvider.java",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2014-10-27T20:41:15Z",
       "side": 1,
       "message": "this is ok if the target of the symlink is a file, if the target is a directory we should use a decorated directory icon",
+      "revId": "60c0e3b9c04e6fca780bf0df2a29f14cac8516e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_fc92a8a9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewLabelProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1013
+      },
+      "writtenOn": "2014-11-05T08:42:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_e7b5051a",
       "revId": "60c0e3b9c04e6fca780bf0df2a29f14cac8516e9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
