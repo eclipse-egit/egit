@@ -198,7 +198,6 @@ public class RepositorySearchDialog extends WizardPage {
 	@Override
 	public void dispose() {
 		fResult = getCheckedItems();
-		fResult.addAll(getCheckedItems());
 		super.dispose();
 	}
 
@@ -464,6 +463,8 @@ public class RepositorySearchDialog extends WizardPage {
 			// ignore
 		}
 
+		final TreeSet<String> validDirs = new TreeSet<String>(getCheckedItems());
+
 		IRunnableWithProgress action = new IRunnableWithProgress() {
 
 			public void run(IProgressMonitor monitor)
@@ -496,8 +497,6 @@ public class RepositorySearchDialog extends WizardPage {
 		}
 
 		int foundOld = 0;
-
-		final TreeSet<String> validDirs = new TreeSet<String>();
 
 		for (String foundDir : directories) {
 			if (!fExistingDirectories.contains(foundDir)) {
