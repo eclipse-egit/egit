@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
+ * Copyright (C) 2014, Obeo
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,7 +15,10 @@ package org.eclipse.egit.core.internal.storage;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.Utils;
+import org.eclipse.egit.core.storage.GitBlobStorage;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -26,7 +30,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
  * issue that editors get dirty because Eclipse seems to share the document of
  * the workspace file if the remote file has the same full path.
  */
-public class CommitBlobStorage extends BlobStorage {
+public class CommitBlobStorage extends GitBlobStorage {
 
 	private final RevCommit commit;
 
@@ -49,6 +53,8 @@ public class CommitBlobStorage extends BlobStorage {
 
 	@Override
 	public IPath getFullPath() {
+		final RepositoryUtil repositoryUtil = Activator.getDefault()
+				.getRepositoryUtil();
 		IPath repoPath = new Path(repositoryUtil.getRepositoryName(db));
 		String pathString = super.getFullPath().toPortableString() + " " //$NON-NLS-1$
 				+ Utils.getShortObjectId(commit.getId());
