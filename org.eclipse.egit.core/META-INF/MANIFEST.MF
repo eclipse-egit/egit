@@ -16,12 +16,14 @@ Export-Package: org.eclipse.egit.core;version="3.6.0";x-friends:="org.eclipse.eg
  org.eclipse.egit.core.internal.indexdiff;version="3.6.0";x-friends:="org.eclipse.egit.ui,org.eclipse.egit.ui.test",
  org.eclipse.egit.core.internal.job;version="3.6.0";x-friends:="org.eclipse.egit.ui",
  org.eclipse.egit.core.internal.rebase;version="3.6.0";x-friends:="org.eclipse.egit.ui",
+ org.eclipse.egit.core.internal.rebase;version="3.6.0";x-friends:="org.eclipse.egit.ui",
  org.eclipse.egit.core.internal.storage;version="3.6.0";x-friends:="org.eclipse.egit.ui,org.eclipse.egit.core.test",
  org.eclipse.egit.core.internal.trace;version="3.6.0";x-internal:=true,
  org.eclipse.egit.core.internal.util;version="3.6.0";x-friends:="org.eclipse.egit.ui",
  org.eclipse.egit.core.op;version="3.6.0";x-friends:="org.eclipse.egit.ui.test,org.eclipse.egit.ui",
  org.eclipse.egit.core.project;version="3.6.0";x-friends:="org.eclipse.egit.ui,org.eclipse.egit.ui.test",
  org.eclipse.egit.core.securestorage;version="3.6.0";x-friends:="org.eclipse.egit.ui",
+ org.eclipse.egit.core.storage;version="3.6.0",
  org.eclipse.egit.core.synchronize;version="3.6.0";x-friends:="org.eclipse.egit.ui,org.eclipse.egit.ui.test",
  org.eclipse.egit.core.synchronize.dto;version="3.6.0";x-friends:="org.eclipse.egit.ui"
 Bundle-ActivationPolicy: lazy
