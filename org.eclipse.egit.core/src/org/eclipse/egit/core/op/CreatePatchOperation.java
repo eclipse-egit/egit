@@ -263,7 +263,7 @@ public class CreatePatchOperation implements IEGitOperation {
 		URI pathUri = repository.getWorkTree().toURI().resolve(URIUtil.toURI(path));
 		IFile[] files = ResourcesPlugin.getWorkspace().getRoot()
 				.findFilesForLocationURI(pathUri);
-		Assert.isLegal(files.length == 1, NLS.bind(CoreText.CreatePatchOperation_couldNotFindProject, path, repository));
+		Assert.isLegal(files.length >= 1, NLS.bind(CoreText.CreatePatchOperation_couldNotFindProject, path,	repository));
 		return files[0].getProject();
 	}
 
