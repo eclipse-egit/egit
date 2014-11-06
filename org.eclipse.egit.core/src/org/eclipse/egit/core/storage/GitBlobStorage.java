@@ -2,15 +2,17 @@
  * Copyright (C) 2006, 2012 Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2014, Obeo
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package org.eclipse.egit.core.internal.storage;
+package org.eclipse.egit.core.storage;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -19,7 +21,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
@@ -30,22 +31,34 @@ import org.eclipse.jgit.treewalk.WorkingTreeOptions;
 import org.eclipse.jgit.util.io.AutoCRLFInputStream;
 import org.eclipse.osgi.util.NLS;
 
-/** Accesses a blob from Git. */
-class BlobStorage implements IStorage {
+/**
+ * Provides access to a git blob.
+ *
+ * @since 3.6
+ */
+public class GitBlobStorage implements IStorage {
+	/** Repository containing the object this storage provides access to. */
 	protected final Repository db;
 
-	protected final RepositoryUtil repositoryUtil;
+	/** Repository-relative path of the underlying object. */
+	protected final String path;
 
-	private final String path;
+	/** Id of this object in its repository. */
+	protected final ObjectId blobId;
 
-	private final ObjectId blobId;
-
-	BlobStorage(final Repository repository, final String fileName,
+	/**
+	 * @param repository
+	 *            The repository containing this object.
+	 * @param path
+	 *            Repository-relative path of the underlying object.
+	 * @param blob
+	 *            Id of this object in its repository.
+	 */
+	public GitBlobStorage(final Repository repository, final String path,
 			final ObjectId blob) {
-		db = repository;
-		path = fileName;
-		blobId = blob;
-		repositoryUtil = Activator.getDefault().getRepositoryUtil();
+		this.db = repository;
+		this.path = path;
+		this.blobId = blob;
 	}
 
 	public InputStream getContents() throws CoreException {
@@ -65,20 +78,22 @@ class BlobStorage implements IStorage {
 
 		try {
 			WorkingTreeOptions workingTreeOptions = db.getConfig().get(WorkingTreeOptions.KEY);
+			final InputStream objectInputStream = db.open(blobId,
+					Constants.OBJ_BLOB).openStream();
 			switch (workingTreeOptions.getAutoCRLF()) {
 			case INPUT:
 				// When autocrlf == input the working tree could be either CRLF or LF, i.e. the comparison
 				// itself should ignore line endings.
 			case FALSE:
-				return db.open(blobId, Constants.OBJ_BLOB).openStream();
+				return objectInputStream;
 			case TRUE:
 			default:
-				return new AutoCRLFInputStream(db.open(blobId, Constants.OBJ_BLOB).openStream(), true);
+				return new AutoCRLFInputStream(objectInputStream, true);
 			}
 		} catch (MissingObjectException notFound) {
 			throw new CoreException(Activator.error(NLS.bind(
 					CoreText.BlobStorage_blobNotFound, blobId.name(), path),
-					null));
+					notFound));
 		}
 	}
 
@@ -97,5 +112,23 @@ class BlobStorage implements IStorage {
 
 	public Object getAdapter(final Class adapter) {
 		return null;
+	}
+
+	/**
+	 * Returns the absolute path on disk of the underlying object.
+	 * <p>
+	 * The returned path may not point to an existing file if the object does
+	 * not exist locally.
+	 * </p>
+	 *
+	 * @return The absolute path on disk of the underlying object.
+	 */
+	public IPath getAbsolutePath() {
+		final File repoDir;
+		if (db.isBare())
+			repoDir = db.getDirectory();
+		else
+			repoDir = db.getWorkTree();
+		return new Path(repoDir.getAbsolutePath() + File.separatorChar + path);
 	}
 }

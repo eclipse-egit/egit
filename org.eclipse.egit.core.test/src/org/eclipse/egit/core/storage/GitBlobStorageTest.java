@@ -6,7 +6,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package org.eclipse.egit.core.internal.storage;
+package org.eclipse.egit.core.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.internal.storage.GitFileHistoryProvider;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.op.DisconnectProviderOperation;
 import org.eclipse.egit.core.test.GitTestCase;
@@ -39,7 +40,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class BlobStorageTest extends GitTestCase {
+public class GitBlobStorageTest extends GitTestCase {
 
 	Repository repository;
 
@@ -59,7 +60,7 @@ public class BlobStorageTest extends GitTestCase {
 	@Test
 	public void testOk() throws Exception {
 		ObjectId id = createFile(repository, project.getProject(), "file", "data");
-		BlobStorage blobStorage = new BlobStorage(repository, "p/file", id);
+		GitBlobStorage blobStorage = new GitBlobStorage(repository, "p/file", id);
 		assertEquals("file", blobStorage.getName());
 		assertEquals("data", testUtils.slurpAndClose(blobStorage.getContents()));
 		assertEquals(Path.fromPortableString("p/file").toOSString(), blobStorage.getFullPath().toOSString());
@@ -108,7 +109,7 @@ public class BlobStorageTest extends GitTestCase {
 
 	@Test
 	public void testFailNotFound() throws Exception {
-		BlobStorage blobStorage = new BlobStorage(repository, "file", ObjectId.fromString("0123456789012345678901234567890123456789"));
+		GitBlobStorage blobStorage = new GitBlobStorage(repository, "file", ObjectId.fromString("0123456789012345678901234567890123456789"));
 		assertEquals("file", blobStorage.getName());
 		try {
 			blobStorage.getContents();
@@ -120,7 +121,7 @@ public class BlobStorageTest extends GitTestCase {
 
 	@Test
 	public void testFailWrongType() throws Exception {
-		BlobStorage blobStorage = new BlobStorage(repository, "file", ObjectId.fromString("4b825dc642cb6eb9a060e54bf8d69288fbee4904"));
+		GitBlobStorage blobStorage = new GitBlobStorage(repository, "file", ObjectId.fromString("4b825dc642cb6eb9a060e54bf8d69288fbee4904"));
 		assertEquals("file", blobStorage.getName());
 		try {
 			blobStorage.getContents();
@@ -134,7 +135,7 @@ public class BlobStorageTest extends GitTestCase {
 	public void testFailCorrupt() throws Exception {
 		try {
 			createFileCorruptShort(repository, project.getProject(), "file", "data");
-			BlobStorage blobStorage = new BlobStorage(repository, "file", ObjectId.fromString("6320cd248dd8aeaab759d5871f8781b5c0505172"));
+			GitBlobStorage blobStorage = new GitBlobStorage(repository, "file", ObjectId.fromString("6320cd248dd8aeaab759d5871f8781b5c0505172"));
 			assertEquals("file", blobStorage.getName());
 			blobStorage.getContents();
 			fail("We should not be able to read this blob");
@@ -147,7 +148,7 @@ public class BlobStorageTest extends GitTestCase {
 	public void testFailCorrupt2() throws Exception {
 		try {
 			createFileCorruptShort(repository, project.getProject(), "file", "datjhjhjhjhjhjhjjkujioedfughjuop986rdfghjhiu7867586redtfguy675r6tfguhyo76r7tfa");
-			BlobStorage blobStorage = new BlobStorage(repository, "file", ObjectId.fromString("526ef34fc76ab0c35ccee343bda1a626efbd4134"));
+			GitBlobStorage blobStorage = new GitBlobStorage(repository, "file", ObjectId.fromString("526ef34fc76ab0c35ccee343bda1a626efbd4134"));
 			assertEquals("file", blobStorage.getName());
 			blobStorage.getContents();
 			fail("We should not be able to read this blob");
