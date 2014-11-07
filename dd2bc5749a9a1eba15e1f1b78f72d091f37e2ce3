@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_64b39a80",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-07T00:04:33Z",
+      "side": 1,
+      "message": "no since tag is required since the package is internal",
+      "revId": "dd2bc5749a9a1eba15e1f1b78f72d091f37e2ce3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_44b01e72",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-07T00:04:33Z",
+      "side": 1,
+      "message": "style nit: no braces",
+      "revId": "dd2bc5749a9a1eba15e1f1b78f72d091f37e2ce3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
