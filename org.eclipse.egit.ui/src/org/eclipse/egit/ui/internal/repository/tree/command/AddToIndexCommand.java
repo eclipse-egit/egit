@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.FileNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -30,7 +31,7 @@ import org.eclipse.jgit.lib.Repository;
 public class AddToIndexCommand extends RepositoriesViewCommandHandler<FileNode> {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		List<FileNode> selectedNodes = getSelectedNodes(event);
+		List<? extends RepositoryTreeNode> selectedNodes = getSelectedNodes(event);
 		if (selectedNodes.isEmpty() || selectedNodes.get(0).getRepository() == null)
 			return null;
 
