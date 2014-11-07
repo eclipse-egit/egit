@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_4ac4a734",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-07T13:45:02Z",
+      "side": 1,
+      "message": "from where do the other bundles needed to compile and run come if the projects aren\u0027t imported ?",
+      "parentUuid": "a766b734_e3db9ce2",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_34db109d",
         "filename": "org.eclipse.egit.ui/plugin.properties",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "it is the first. Could you please help in finding a better name? Please make a proposal.",
       "parentUuid": "a766b734_34db109d",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_aaf45b7e",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-07T13:45:02Z",
+      "side": 1,
+      "message": "\"Import projects changed in latest commit\"",
+      "parentUuid": "a766b734_43e89074",
       "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_8af99f77",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3452,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-07T13:45:02Z",
+      "side": 1,
+      "message": "the names in the other change look good",
+      "parentUuid": "a766b734_23ed9484",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_74346894",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
         "patchSetId": 1
@@ -136,6 +190,24 @@
       "side": 1,
       "message": "done in https://git.eclipse.org/r/#/c/33192/",
       "parentUuid": "a766b734_74346894",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_6adec3fe",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-07T13:45:02Z",
+      "side": 1,
+      "message": "I won\u0027t cross review two changes, this new feature can only be accepted on master so I\u0027d prefer if you do the updates to fix review comments here",
+      "parentUuid": "a766b734_83e2a890",
       "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -397,6 +469,24 @@
       "writtenOn": "2014-09-11T13:41:40Z",
       "side": 1,
       "message": "we should check that we do not search in directories above the root of the repository the changed files are located in",
+      "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_4adb070c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportRelevantProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-07T13:45:02Z",
+      "side": 1,
+      "message": "good point, this should be ensured",
+      "parentUuid": "a766b734_1a08bd66",
       "revId": "ea6cd22e9865f3d2052bec6ab59d03ea021f7313",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
