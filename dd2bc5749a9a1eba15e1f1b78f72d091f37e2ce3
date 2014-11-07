@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_a4ddb290",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-11-07T01:08:13Z",
+      "side": 1,
+      "message": "Hm, can we move the class to the internal package in that case?",
+      "parentUuid": "a766b734_64b39a80",
+      "revId": "dd2bc5749a9a1eba15e1f1b78f72d091f37e2ce3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_44b01e72",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
         "patchSetId": 1
