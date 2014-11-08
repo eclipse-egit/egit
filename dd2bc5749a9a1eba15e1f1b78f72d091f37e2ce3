@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_f3180a7e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-11-08T06:32:44Z",
+      "side": 1,
+      "message": "Cool. I\u0027ve started a wiki page about cleanup ideas for 4.0:\n\nhttps://wiki.eclipse.org/EGit/Planning/4.0",
+      "parentUuid": "a766b734_2ac16b27",
+      "revId": "dd2bc5749a9a1eba15e1f1b78f72d091f37e2ce3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_44b01e72",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
         "patchSetId": 1
