@@ -16,6 +16,24 @@
       "revId": "027be54c53b72bcfeaaa0f7f5a0810043e65e8cc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_d32d0e1b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/AddToIndexCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-09T20:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_f31bea2e",
+      "revId": "027be54c53b72bcfeaaa0f7f5a0810043e65e8cc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
