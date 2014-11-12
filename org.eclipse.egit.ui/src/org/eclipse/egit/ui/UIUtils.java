@@ -12,6 +12,7 @@ package org.eclipse.egit.ui;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -62,6 +63,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.KeyEvent;
@@ -772,6 +774,25 @@ public class UIUtils {
 	}
 
 	/**
+	 * Use hyperlink detectors to find a text viewer's hyperlinks and apply them
+	 * to the text widget. Existing overlapping styles are overwritten by new
+	 * styles from this.
+	 *
+	 * @param textViewer
+	 * @param hyperlinkDetectors
+	 */
+	public static void applyHyperlinkDetectorStyleRanges(
+			ITextViewer textViewer, IHyperlinkDetector[] hyperlinkDetectors) {
+		StyleRange[] styleRanges = getHyperlinkDetectorStyleRanges(textViewer,
+				hyperlinkDetectors);
+		StyledText styledText = textViewer.getTextWidget();
+		// Apply hyperlink style ranges one by one. setStyleRange takes care to
+		// do the right thing in case they overlap with an existing style range.
+		for (StyleRange styleRange : styleRanges)
+			styledText.setStyleRange(styleRange);
+	}
+
+	/**
 	 * Use hyperlink detectors to find a text viewer's hyperlinks and return the
 	 * style ranges to render them.
 	 *
@@ -781,7 +802,7 @@ public class UIUtils {
 	 */
 	public static StyleRange[] getHyperlinkDetectorStyleRanges(
 			ITextViewer textViewer, IHyperlinkDetector[] hyperlinkDetectors) {
-		HashSet<StyleRange> styleRangeList = new HashSet<StyleRange>();
+		HashSet<StyleRange> styleRangeList = new LinkedHashSet<StyleRange>();
 		if (hyperlinkDetectors != null && hyperlinkDetectors.length > 0) {
 			IDocument doc = textViewer.getDocument();
 			for (int line = 0; line < doc.getNumberOfLines(); line++) {
