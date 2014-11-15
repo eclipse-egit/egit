@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_d0317225",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4355,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-15T23:12:22Z",
+      "side": 1,
+      "message": "this command doesn\u0027t show up in repositories view but only in the history view so why is it called RepositorieViewImportChangedProjects ?",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_f0daae5d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-15T23:12:22Z",
+      "side": 1,
+      "message": "I did not write this class, so this copyright header is wrong",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_30d1c63f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-15T23:12:22Z",
+      "side": 1,
+      "message": "use RevWalk not PlotWalk",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_d00a125f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-15T23:12:22Z",
+      "side": 1,
+      "message": "Path and File.toPath[] aren\u0027t available in Java 5",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_300c267a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-15T23:12:22Z",
+      "side": 1,
+      "message": "File.toPath() isn\u0027t available in Java 5",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_10d64a37",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-15T23:12:22Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_70ee9efe",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-15T23:12:22Z",
+      "side": 1,
+      "message": "style nit: remove this blank line",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_10112a8e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-15T23:12:22Z",
+      "side": 1,
+      "message": "Path isn\u0027t available in Java 5",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_70f97eb9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-15T23:12:22Z",
+      "side": 1,
+      "message": "Paths isn\u0027t available in Java 5",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_50eba2eb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-15T23:12:22Z",
+      "side": 1,
+      "message": "style nit: no braces around single line blocks",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_b0e4b61a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-15T23:12:22Z",
+      "side": 1,
+      "message": "no braces",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
