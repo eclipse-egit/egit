@@ -38,7 +38,6 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
-import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ResetMenu;
 import org.eclipse.egit.ui.internal.history.SWTCommitList.SWTLane;
@@ -49,10 +48,6 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ResourceManager;
-import org.eclipse.jface.text.AbstractHoverInformationControlManager;
-import org.eclipse.jface.text.AbstractReusableInformationControlCreator;
-import org.eclipse.jface.text.DefaultInformationControl;
-import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -89,17 +84,14 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
-import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -236,7 +228,8 @@ class CommitGraphTable {
 			}
 		});
 
-		final RefHoverInformationControlManager hoverManager = new RefHoverInformationControlManager();
+		final CommitGraphTableHoverManager hoverManager = new CommitGraphTableHoverManager(
+				table, renderer);
 		hoverManager.install(table.getTable());
 
 		table.getTable().addDisposeListener(new DisposeListener() {
@@ -547,90 +540,6 @@ class CommitGraphTable {
 			}
 		};
 		return action;
-	}
-
-	private static final class RefHoverInformationControlCreator extends
-			AbstractReusableInformationControlCreator {
-		@Override
-		protected IInformationControl doCreateInformationControl(Shell parent) {
-			return new DefaultInformationControl(parent);
-		}
-	}
-
-	private final class RefHoverInformationControlManager extends
-			AbstractHoverInformationControlManager {
-
-		protected RefHoverInformationControlManager() {
-			super(new RefHoverInformationControlCreator());
-		}
-
-		@Override
-		protected void computeInformation() {
-			MouseEvent e = getHoverEvent();
-
-			TableItem item = table.getTable().getItem(new Point(e.x, e.y));
-			if (item != null) {
-				SWTCommit commit = (SWTCommit) item.getData();
-				if (commit != null && commit.getRefCount() > 0) {
-					Rectangle itemBounds = item.getBounds();
-					int firstColumnWidth = table.getTable().getColumn(0).getWidth();
-					int relativeX = e.x - firstColumnWidth - itemBounds.x;
-					for (int i = 0; i < commit.getRefCount(); i++) {
-						Ref ref = commit.getRef(i);
-						Point textSpan = renderer.getRefHSpan(ref);
-						if ((textSpan != null)
-								&& (relativeX >= textSpan.x && relativeX <= textSpan.y)) {
-
-							String hoverText = getHoverText(ref, i, commit);
-							int width = textSpan.y - textSpan.x;
-							Rectangle rectangle = new Rectangle(
-									firstColumnWidth + itemBounds.x
-											+ textSpan.x, itemBounds.y, width,
-									itemBounds.height);
-							setInformation(hoverText, rectangle);
-							return;
-						}
-					}
-				}
-			}
-
-			// computeInformation must setInformation in all cases
-			setInformation(null, null);
-		}
-
-		private String getHoverText(Ref ref, int refIndex, SWTCommit commit) {
-			if (ref.getName().startsWith(Constants.R_TAGS)
-					&& renderer.isShownAsEllipsis(ref)) {
-				StringBuilder sb = new StringBuilder(UIText.CommitGraphTable_HoverAdditionalTags);
-				for (int i = refIndex; i < commit.getRefCount(); i++) {
-					Ref tag = commit.getRef(i);
-					String name = tag.getName();
-					if (name.startsWith(Constants.R_TAGS)) {
-						sb.append('\n');
-						sb.append(name.substring(Constants.R_TAGS.length()));
-					}
-				}
-				return sb.toString();
-			} else {
-				return getHoverTextForSingleRef(ref);
-			}
-		}
-
-		private String getHoverTextForSingleRef(Ref r) {
-			StringBuilder sb = new StringBuilder();
-			String name = r.getName();
-			sb.append(name);
-			if (r.isSymbolic()) {
-				sb.append(": "); //$NON-NLS-1$
-				sb.append(r.getLeaf().getName());
-			}
-			String description = GitLabels.getRefDescription(r);
-			if (description != null) {
-				sb.append("\n"); //$NON-NLS-1$
-				sb.append(description);
-			}
-			return sb.toString();
-		}
 	}
 
 	private final class CommitDragSourceListener extends DragSourceAdapter {
