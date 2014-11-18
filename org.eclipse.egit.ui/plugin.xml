@@ -4629,11 +4629,11 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.Squash"
-            icon="icons/obj16/squash.gif">
+            icon="icons/obj16/squash-down.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.commit.Squash"
-            icon="icons/obj16/squash.gif">
+            icon="icons/obj16/squash-down.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.Reword"
