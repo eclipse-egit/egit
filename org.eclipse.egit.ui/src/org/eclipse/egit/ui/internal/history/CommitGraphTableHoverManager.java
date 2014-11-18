@@ -71,8 +71,12 @@ class CommitGraphTableHoverManager extends
 		switch (columnIndex) {
 		case 1:
 			return computeInformationForRef(commit, cell, e);
+		case 2:
+			return computeInformationForName(commit.getAuthorIdent(), cell);
 		case 3:
 			return computeInformationForDate(commit.getAuthorIdent(), cell);
+		case 4:
+			return computeInformationForName(commit.getCommitterIdent(), cell);
 		case 5:
 			return computeInformationForDate(commit.getCommitterIdent(), cell);
 		}
@@ -100,6 +104,13 @@ class CommitGraphTableHoverManager extends
 			}
 		}
 		return null;
+	}
+
+	private Information computeInformationForName(PersonIdent ident,
+			ViewerCell cell) {
+		String nameWithEmail = ident.getName()
+				+ " <" + ident.getEmailAddress() + ">"; //$NON-NLS-1$ //$NON-NLS-2$
+		return new Information(nameWithEmail, cell.getBounds());
 	}
 
 	private Information computeInformationForDate(PersonIdent ident,
