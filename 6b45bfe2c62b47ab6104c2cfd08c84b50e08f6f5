@@ -16,6 +16,24 @@
       "revId": "6b45bfe2c62b47ab6104c2cfd08c84b50e08f6f5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_c2cd21ac",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/BlobStorage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1655
+      },
+      "writtenOn": "2014-11-19T09:01:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_9fc1299a",
+      "revId": "6b45bfe2c62b47ab6104c2cfd08c84b50e08f6f5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
