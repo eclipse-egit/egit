@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 SAP AG and others.
+ * Copyright (c) 2010, 2013, 2014 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,6 +13,7 @@
  *    Robin Stocker <robin@nibor.org>
  *    Laurent Goubet <laurent.goubet@obeo.fr>
  *    Gunnar Wagenknecht <gunnar@wagenknecht.org>
+ *    Philip Langer <planger@eclipsesource.com>
  *******************************************************************************/
 package org.eclipse.egit.ui.internal;
 
@@ -46,10 +47,10 @@ import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.internal.storage.WorkingTreeFileRevision;
 import org.eclipse.egit.core.internal.storage.WorkspaceFileRevision;
+import org.eclipse.egit.core.internal.util.OperationUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.merge.GitCompareEditorInput;
 import org.eclipse.egit.ui.internal.revision.EditableRevision;
 import org.eclipse.egit.ui.internal.revision.FileRevisionTypedElement;
@@ -139,11 +140,11 @@ public class CompareUtils {
 
 		try {
 			IFileRevision nextFile = getFileRevision(gitPath, commit, db,
-							blobId);
-				if (nextFile != null) {
+					blobId);
+			if (nextFile != null) {
 					String encoding = CompareCoreUtils.getResourceEncoding(db, gitPath);
-					right = new FileRevisionTypedElement(nextFile, encoding);
-				}
+				right = new FileRevisionTypedElement(nextFile, encoding);
+			}
 		} catch (IOException e) {
 			Activator.error(NLS.bind(UIText.GitHistoryPage_errorLookingUpPath,
 					gitPath, commit.getId()), e);
@@ -185,7 +186,6 @@ public class CompareUtils {
 		return null;
 	}
 
-
 	/**
 	 * Creates a {@link ITypedElement} for the commit which is the common
 	 * ancestor of the provided commits. Returns null if no such commit exists
@@ -209,7 +209,7 @@ public class CompareUtils {
 			commonAncestor = RevUtils.getCommonAncestor(db, commit1, commit2);
 		} catch (IOException e) {
 			Activator.logError(NLS.bind(UIText.CompareUtils_errorCommonAncestor,
-					commit1.getName(), commit2.getName()), e);
+							commit1.getName(), commit2.getName()), e);
 		}
 		if (commonAncestor != null) {
 			ITypedElement ancestorCandidate = CompareUtils
@@ -219,7 +219,8 @@ public class CompareUtils {
 		}
 		return ancestor;
 	}
-/**
+
+	/**
 	 * @param element
 	 * @param adapterType
 	 * @return the adapted element, or null
@@ -529,7 +530,6 @@ public class CompareUtils {
 						gitPath, headCommitId, destCommitId, repository);
 			}
 		}
-
 
 		final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
 				base, destCommit, commonAncestor, null);
@@ -973,6 +973,7 @@ public class CompareUtils {
 		private final Repository repo;
 
 		private final byte[] content;
+
 		private final int contentLength;
 
 		public DirCacheEntryEditor(String path, Repository repo,
@@ -1025,8 +1026,7 @@ public class CompareUtils {
 		 * be done by relying on the local model only.
 		 */
 		// Only builds the logical model if the preference holds true
-		if (Activator.getDefault().getPreferenceStore()
-				.getBoolean(UIPreferences.USE_LOGICAL_MODEL)) {
+		if (OperationUtil.isUseLogicalModel()) {
 
 			final ResourceMapping[] mappings = ResourceUtil
 					.getResourceMappings(file,

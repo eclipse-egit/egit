@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2014 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler <mathias.kinzler@sap.com> - initial implementation
+ *    Philip Langer <planger@eclipsesource.com> - setting merge strategy from OperationUtil
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
@@ -30,7 +31,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
-import org.eclipse.egit.core.internal.merge.StrategyRecursiveModel;
+import org.eclipse.egit.core.internal.util.OperationUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.MergeResult;
@@ -95,7 +96,7 @@ public class PullOperation implements IEGitOperation {
 								new SubProgressMonitor(mymonitor, 1)));
 						pull.setTimeout(timeout);
 						pull.setCredentialsProvider(credentialsProvider);
-						pull.setStrategy(new StrategyRecursiveModel());
+						pull.setStrategy(OperationUtil.getMergeStrategy());
 						pullResult = pull.call();
 						results.put(repository, pullResult);
 					} catch (DetachedHeadException e) {
