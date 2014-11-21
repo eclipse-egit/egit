@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_82ffa2d7",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4355,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-11-21T13:49:47Z",
+      "side": 1,
+      "message": "In the first implementation, we added the context menu to the repository view. It was you who decided not to have this context menu in the repository view.",
+      "parentUuid": "a766b734_d0317225",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_f0daae5d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2014-11-15T23:12:22Z",
       "side": 1,
       "message": "I did not write this class, so this copyright header is wrong",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_42090aa2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-11-21T13:49:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_f0daae5d",
       "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_62a08623",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-11-21T13:49:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_30d1c63f",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_d00a125f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2014-11-15T23:12:22Z",
       "side": 1,
       "message": "Path and File.toPath[] aren\u0027t available in Java 5",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_6204068c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-11-21T13:49:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_d00a125f",
       "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_02d43261",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-11-21T13:49:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_300c267a",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_10d64a37",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2014-11-15T23:12:22Z",
       "side": 1,
       "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_22d7ae69",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-11-21T13:49:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_10d64a37",
       "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_82e8422a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-11-21T13:49:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_70ee9efe",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_10112a8e",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
         "patchSetId": 2
@@ -132,6 +258,24 @@
       "writtenOn": "2014-11-15T23:12:22Z",
       "side": 1,
       "message": "Path isn\u0027t available in Java 5",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_a2e3be4c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-11-21T13:49:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_10112a8e",
       "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_223cce47",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-11-21T13:49:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_70f97eb9",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_50eba2eb",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
         "patchSetId": 2
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_c2423ac2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-11-21T13:49:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_50eba2eb",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_b0e4b61a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
         "patchSetId": 2
@@ -183,6 +363,24 @@
       "writtenOn": "2014-11-15T23:12:22Z",
       "side": 1,
       "message": "no braces",
+      "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_e245b6cc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportChangedProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1584
+      },
+      "writtenOn": "2014-11-21T13:49:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_b0e4b61a",
       "revId": "fdc6237d93e68c5a17c9de956c4a9f2e82073fe7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
