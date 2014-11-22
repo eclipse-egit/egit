@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_0f10dada",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/CommitBlobStorage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-11-22T10:51:48Z",
+      "side": 1,
+      "message": "Please also remove them from here (sorry, should have been more explicit in my previous comment).",
+      "revId": "b98313ee8428c6c962eb09e598cd3c808a376cb3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
