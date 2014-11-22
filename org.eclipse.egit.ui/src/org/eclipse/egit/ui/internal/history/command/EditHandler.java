@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2014 Maik Schreiber
+ *  Copyright (c) 2014 Maik Schreiber and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -21,18 +21,16 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.CommitUtil;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.egit.ui.internal.rebase.RebaseInteractiveView;
 import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -43,11 +41,11 @@ public class EditHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repository = getRepository(event);
 		final RevCommit commit = getSelectedCommit(event);
+		final Shell shell = HandlerUtil.getActiveShellChecked(event);
 
 		try {
 			if (!CommitUtil.isCommitInCurrentBranch(commit, repository)) {
-				MessageDialog.openError(
-						HandlerUtil.getActiveShellChecked(event),
+				MessageDialog.openError(shell,
 						UIText.EditHandler_Error_Title,
 						UIText.EditHandler_CommitNotOnCurrentBranch);
 				return null;
@@ -58,12 +56,10 @@ public class EditHandler extends AbstractHistoryCommandHandler {
 					e);
 		}
 
-		final IStructuredSelection selected = new StructuredSelection(
-				new RepositoryCommit(repository, commit));
-		CommonUtils.runCommand(
-				org.eclipse.egit.ui.internal.commit.command.EditHandler.ID,
-				selected);
-		openStagingAndRebaseInteractiveViews(repository);
+		boolean success = org.eclipse.egit.ui.internal.commit.command.EditHandler
+				.editCommit(commit, repository, shell);
+		if (success)
+			openStagingAndRebaseInteractiveViews(repository);
 
 		return null;
 	}

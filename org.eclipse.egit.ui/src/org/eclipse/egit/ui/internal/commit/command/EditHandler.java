@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2014 Maik Schreiber
+ *  Copyright (c) 2014 Maik Schreiber and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -40,13 +40,26 @@ public class EditHandler extends SelectionHandler {
 		if (repo == null)
 			return null;
 
+		Shell shell = getPart(event).getSite().getShell();
+
+		editCommit(commit, repo, shell);
+		return null;
+	}
+
+	/**
+	 * @param commit
+	 * @param repo
+	 * @param shell
+	 * @return true, if edit was started, false if user aborted
+	 */
+	public static boolean editCommit(RevCommit commit, Repository repo,
+			Shell shell) {
 		try {
-			Shell shell = getPart(event).getSite().getShell();
 			if (!UIRepositoryUtils.handleUncommittedFiles(repo, shell))
-				return null;
+				return false;
 		} catch (GitAPIException e) {
 			Activator.logError(e.getMessage(), e);
-			return null;
+			return false;
 		}
 
 		final EditCommitOperation op = new EditCommitOperation(repo, commit);
@@ -55,6 +68,6 @@ public class EditHandler extends SelectionHandler {
 				op,
 				MessageFormat.format(UIText.EditHandler_JobName, commit.name()),
 				JobFamilies.EDIT);
-		return null;
+		return true;
 	}
 }
