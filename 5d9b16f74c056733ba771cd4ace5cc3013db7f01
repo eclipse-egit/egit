@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_b2f829b7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTableHoverManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-22T23:43:33Z",
+      "side": 1,
+      "message": "I think we should use Format.LOCALE here otherwise the hover looks really strange if the current Locale isn\u0027t English since ISO is always using Locale.US and Format.LOCALLOCAL will use the current Locale\n\ne.g. with German locale the timestamp in the table looks like\n10.11.2014  16:34:54\nand the hover\n2014-11-10 16:34:54 +0100\n-\u003e here the dates are formatted inconsistently\n\nwith English locale and 24 hour time format configured in the OS the timestamp in the table is\nNov 10, 2014 4:34:54 PM\nand the hover\n2014-11-10 16:34:54 +0100\n-\u003e here times are shown in 24h / 12h format which again looks inconsistent\n\nif we use Format.LOCALE here with German locale the table entry looks like\n10.11.2014  16:34:54\nand the hover\n10.11.2014  16:34:54 +0100",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 36,
+        "endChar": 13
+      },
+      "revId": "5d9b16f74c056733ba771cd4ace5cc3013db7f01",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
