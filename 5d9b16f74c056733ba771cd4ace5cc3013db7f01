@@ -22,6 +22,24 @@
       "revId": "5d9b16f74c056733ba771cd4ace5cc3013db7f01",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_920b6d2f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTableHoverManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2014-11-23T06:47:57Z",
+      "side": 1,
+      "message": "ISO looks the same regardless of the locale, so it isn\u0027t really US.\n\nI explicitly picked ISO because it is unambiguous and frequently used for showing international times, and most if not all developers should be familiar with it.\n\nUsing the locale-specific date format but for different time zones somehow feels strange to me. But hey, maybe that\u0027s just me. I added a comment on the bug report, maybe the others have a preference.",
+      "parentUuid": "a766b734_b2f829b7",
+      "revId": "5d9b16f74c056733ba771cd4ace5cc3013db7f01",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
