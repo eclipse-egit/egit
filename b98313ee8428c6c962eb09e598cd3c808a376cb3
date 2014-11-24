@@ -16,6 +16,24 @@
       "revId": "b98313ee8428c6c962eb09e598cd3c808a376cb3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_12411df2",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/CommitBlobStorage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1655
+      },
+      "writtenOn": "2014-11-24T07:54:41Z",
+      "side": 1,
+      "message": "Done. Sorry I should have understood.",
+      "parentUuid": "a766b734_0f10dada",
+      "revId": "b98313ee8428c6c962eb09e598cd3c808a376cb3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
