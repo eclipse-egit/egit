@@ -66,6 +66,57 @@
     <plugins>
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
+        <artifactId>target-platform-configuration</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <dependency-resolution>
+            <extraRequirements>
+              <requirement>
+                <type>eclipse-feature</type>
+                <id>org.eclipse.jgit</id>
+                <versionRange>0.0.0</versionRange>
+              </requirement>
+            </extraRequirements>
+            <extraRequirements>
+              <requirement>
+                <type>eclipse-feature</type>
+                <id>org.eclipse.jgit.java7</id>
+                <versionRange>0.0.0</versionRange>
+              </requirement>
+            </extraRequirements>
+            <extraRequirements>
+              <requirement>
+                <type>eclipse-feature</type>
+                <id>org.eclipse.egit</id>
+                <versionRange>0.0.0</versionRange>
+              </requirement>
+            </extraRequirements>
+            <extraRequirements>
+              <requirement>
+                <type>eclipse-feature</type>
+                <id>org.eclipse.egit.mylyn</id>
+                <versionRange>0.0.0</versionRange>
+              </requirement>
+            </extraRequirements>
+            <extraRequirements>
+              <requirement>
+                <type>eclipse-feature</type>
+                <id>org.eclipse.pde</id>
+                <versionRange>0.0.0</versionRange>
+              </requirement>
+            </extraRequirements>
+            <extraRequirements>
+              <requirement>
+                <type>eclipse-feature</type>
+                <id>org.eclipse.cvs</id>
+                <versionRange>0.0.0</versionRange>
+              </requirement>
+            </extraRequirements>
+          </dependency-resolution>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-surefire-plugin</artifactId>
         <version>${tycho-version}</version>
         <configuration>
@@ -77,42 +128,6 @@
           <product>org.eclipse.sdk.ide</product>
           <argLine>${ui.test.vmargs}</argLine>
           <application>org.eclipse.ui.ide.workbench</application>
-          <dependency-resolution>
-            <extraRequirements>
-              <requirement>
-                <type>eclipse-feature</type>
-                <id>org.eclipse.jgit.java7</id>
-                <versionRange>0.0.0</versionRange>
-              </requirement>
-            </extraRequirements>
-          </dependency-resolution>
-          <dependencies>
-            <dependency>
-              <type>p2-installable-unit</type>
-              <artifactId>org.eclipse.egit.feature.group</artifactId>
-              <version>3.6.0</version>
-            </dependency>
-            <dependency>
-              <type>p2-installable-unit</type>
-              <artifactId>org.eclipse.egit.mylyn.feature.group</artifactId>
-              <version>3.6.0</version>
-            </dependency>
-            <dependency>
-              <type>p2-installable-unit</type>
-              <artifactId>org.eclipse.jgit.feature.group</artifactId>
-              <version>3.6.0</version>
-            </dependency>
-            <dependency>
-              <type>p2-installable-unit</type>
-              <artifactId>org.eclipse.pde.feature.group</artifactId>
-              <version>${platform-version}</version>
-            </dependency>
-            <dependency>
-              <type>p2-installable-unit</type>
-              <artifactId>org.eclipse.cvs.feature.group</artifactId>
-              <version>[1.1.2,2.0.0)</version>
-            </dependency>
-           </dependencies>
         </configuration>
       </plugin>
     </plugins>
