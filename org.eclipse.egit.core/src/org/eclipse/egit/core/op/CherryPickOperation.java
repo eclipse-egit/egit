@@ -29,10 +29,13 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
+import org.eclipse.jgit.api.CherryPickCommand;
+import org.eclipse.jgit.api.CherryPickResult;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.RebaseCommand;
 import org.eclipse.jgit.api.RebaseCommand.InteractiveHandler;
 import org.eclipse.jgit.api.RebaseResult;
+import org.eclipse.jgit.api.RebaseResult.Status;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.IllegalTodoFileModification;
 import org.eclipse.jgit.lib.Constants;
@@ -77,48 +80,74 @@ public class CherryPickOperation implements IEGitOperation {
 						CoreText.CherryPickOperation_cherryPicking,
 						Integer.valueOf(commits.size())));
 
-				InteractiveHandler handler = new InteractiveHandler() {
-					public void prepareSteps(List<RebaseTodoLine> steps) {
-						for (RebaseTodoLine step : steps) {
-							try {
-								step.setAction(RebaseTodoLine.Action.PICK);
-							} catch (IllegalTodoFileModification e) {
-								// shouldn't happen
+				if (commits.size() == 1) {
+					RevCommit commit = commits.get(0);
+					CherryPickCommand command = new Git(repo).cherryPick()
+							.include(commit.getId());
+					try {
+						CherryPickResult cbresult = command.call();
+						switch (cbresult.getStatus()) {
+						case CONFLICTING:
+							result = RebaseResult.conflicts(Collections
+									.<String> emptyList());
+							break;
+						case FAILED:
+							result = RebaseResult.failed(cbresult
+									.getFailingPaths());
+							break;
+						case OK:
+							result = RebaseResult.result(Status.OK,
+									cbresult.getNewHead());
+							break;
+						}
+					} catch (GitAPIException e) {
+						throw new TeamException(e.getLocalizedMessage(),
+								e.getCause());
+					}
+				} else {
+					InteractiveHandler handler = new InteractiveHandler() {
+						public void prepareSteps(List<RebaseTodoLine> steps) {
+							for (RebaseTodoLine step : steps) {
+								try {
+									step.setAction(RebaseTodoLine.Action.PICK);
+								} catch (IllegalTodoFileModification e) {
+									// shouldn't happen
+								}
+							}
+
+							// apply steps in the chronological order
+							List<RevCommit> stepCommits = new ArrayList<RevCommit>(
+									commits);
+							Collections.reverse(stepCommits);
+
+							for (RevCommit commit : stepCommits) {
+								RebaseTodoLine step = new RebaseTodoLine(
+										RebaseTodoLine.Action.PICK,
+										commit.abbreviate(7), ""); //$NON-NLS-1$
+								steps.add(step);
 							}
 						}
 
-						// apply steps in the chronological order
-						List<RevCommit> stepCommits = new ArrayList<RevCommit>(
-								commits);
-						Collections.reverse(stepCommits);
-
-						for (RevCommit commit : stepCommits) {
-							RebaseTodoLine step = new RebaseTodoLine(
-									RebaseTodoLine.Action.PICK,
-									commit.abbreviate(7), ""); //$NON-NLS-1$
-							steps.add(step);
+						public String modifyCommitMessage(String oldMessage) {
+							return oldMessage;
 						}
-					}
-
-					public String modifyCommitMessage(String oldMessage) {
-						return oldMessage;
-					}
-				};
-				try {
-					Git git = new Git(repo);
-					ObjectId headCommitId = repo.resolve(Constants.HEAD);
-					RevCommit headCommit = new RevWalk(repo)
-							.parseCommit(headCommitId);
-					result = git.rebase()
-							.setUpstream(headCommit.getParent(0))
-							.runInteractively(handler)
+					};
+					try {
+						Git git = new Git(repo);
+						ObjectId headCommitId = repo.resolve(Constants.HEAD);
+						RevCommit headCommit = new RevWalk(repo)
+								.parseCommit(headCommitId);
+						result = git.rebase()
+								.setUpstream(headCommit.getParent(0))
+								.runInteractively(handler)
 							.setOperation(RebaseCommand.Operation.BEGIN).call();
-				} catch (GitAPIException e) {
-					throw new TeamException(e.getLocalizedMessage(),
-							e.getCause());
-				} catch (IOException e) {
-					throw new TeamException(e.getLocalizedMessage(),
-							e.getCause());
+					} catch (GitAPIException e) {
+						throw new TeamException(e.getLocalizedMessage(),
+								e.getCause());
+					} catch (IOException e) {
+						throw new TeamException(e.getLocalizedMessage(),
+								e.getCause());
+					}
 				}
 				pm.worked(1);
 
