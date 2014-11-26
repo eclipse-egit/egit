@@ -16,6 +16,24 @@
       "revId": "33e416cc44d50988609a4e01ca056477ebe3d9bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_5dc9e1bc",
+        "filename": "org.eclipse.egit.mylyn.ui.test/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-26T11:41:25Z",
+      "side": 1,
+      "message": "yes, I know",
+      "parentUuid": "a766b734_7d093da2",
+      "revId": "33e416cc44d50988609a4e01ca056477ebe3d9bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
