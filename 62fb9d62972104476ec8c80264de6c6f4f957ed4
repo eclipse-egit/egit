@@ -33,6 +33,24 @@
       "revId": "62fb9d62972104476ec8c80264de6c6f4f957ed4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_bd49150b",
+        "filename": "org.eclipse.egit.ui.test/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-11-26T10:41:57Z",
+      "side": 1,
+      "message": "thanks for spotting this :-) \n\nshouldn\u0027t Tycho throw an error if the syntax is invalid ?",
+      "parentUuid": "a766b734_bdce3528",
+      "revId": "62fb9d62972104476ec8c80264de6c6f4f957ed4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
