@@ -51,6 +51,24 @@
       "revId": "62fb9d62972104476ec8c80264de6c6f4f957ed4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_bdff55d7",
+        "filename": "org.eclipse.egit.ui.test/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 489
+      },
+      "writtenOn": "2014-11-26T11:26:54Z",
+      "side": 1,
+      "message": "In general, additional/unknown configuration tags are ignored in Maven.\n\nHere, however Tycho and/or Maven could detect that the structure doesn\u0027t make sense. Debug output would also help: \"Using extra requirements org.eclipse.jgit.\" Then you could have seen that the other ones are ignored.\n\nIf you want, open a bug for this.",
+      "parentUuid": "a766b734_bd49150b",
+      "revId": "62fb9d62972104476ec8c80264de6c6f4f957ed4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
