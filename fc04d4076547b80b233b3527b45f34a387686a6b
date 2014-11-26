@@ -33,6 +33,23 @@
       "revId": "fc04d4076547b80b233b3527b45f34a387686a6b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_7dc81d1f",
+        "filename": "org.eclipse.egit.ui.test/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 489
+      },
+      "writtenOn": "2014-11-26T10:02:18Z",
+      "side": 0,
+      "message": "It is interesting that you specified this - but this didn\u0027t have an effect. Good that the new syntax fixed this - it only has one ID.",
+      "revId": "fc04d4076547b80b233b3527b45f34a387686a6b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
