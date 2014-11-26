@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_fd4eed8e",
+        "filename": "org.eclipse.egit.mylyn.ui.test/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 434
+      },
+      "writtenOn": "2014-11-26T08:52:14Z",
+      "side": 0,
+      "message": "this has never worked (configuration option does not exist). \nhttp://eclipse.org/tycho/sitedocs/tycho-surefire/tycho-surefire-plugin/test-mojo.html",
+      "revId": "fc04d4076547b80b233b3527b45f34a387686a6b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_1d9da972",
+        "filename": "org.eclipse.egit.ui.test/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 434
+      },
+      "writtenOn": "2014-11-26T08:52:14Z",
+      "side": 0,
+      "message": "this configuration never had any effect",
+      "revId": "fc04d4076547b80b233b3527b45f34a387686a6b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
