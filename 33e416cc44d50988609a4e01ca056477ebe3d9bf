@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_7d093da2",
+        "filename": "org.eclipse.egit.mylyn.ui.test/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 489
+      },
+      "writtenOn": "2014-11-26T11:27:04Z",
+      "side": 1,
+      "message": "You know that this only sets the lower bound for the requirement, right? If you need an exact version, use [${platform-version},${platform-version}]",
+      "revId": "33e416cc44d50988609a4e01ca056477ebe3d9bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
