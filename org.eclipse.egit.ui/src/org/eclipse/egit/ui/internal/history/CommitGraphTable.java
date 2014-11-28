@@ -71,6 +71,7 @@ import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSourceAdapter;
@@ -157,6 +158,8 @@ class CommitGraphTable {
 	private final TableLoader tableLoader;
 
 	private boolean trace = GitTraceLocation.HISTORYVIEW.isActive();
+
+	private boolean enableAntialias = true;
 
 	CommitGraphTable(Composite parent, final TableLoader loader,
 			final ResourceManager resources) {
@@ -475,6 +478,15 @@ class CommitGraphTable {
 	}
 
 	void doPaint(final Event event) {
+		// enable antialiasing early to avoid different font extent in
+		// PlotRenderer
+		if (this.enableAntialias)
+			try {
+				event.gc.setAntialias(SWT.ON);
+			} catch (SWTException e) {
+				this.enableAntialias = false;
+			}
+
 		final RevCommit c = (RevCommit) ((TableItem) event.item).getData();
 		if (c instanceof SWTCommit) {
 			final SWTLane lane = ((SWTCommit) c).getLane();
