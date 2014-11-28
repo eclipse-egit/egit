@@ -14,7 +14,7 @@
 		style="css/whatsnew.css" alt-style="css/whatsnew.properties" path="whatsnew/@">
 		<group id="content-group" style-id="content-group">
 			<link label="Git"
-				url="http://wiki.eclipse.org/EGit/New_and_Noteworthy/0.10"
+				url="http://wiki.eclipse.org/EGit/New_and_Noteworthy"
 				id="egit-noteworthy" style-id="content-link">
 				<text>
 					Find out the significant changes made to EGit
