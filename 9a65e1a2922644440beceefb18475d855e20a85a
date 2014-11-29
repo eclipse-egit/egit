@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_5aef1c7c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-11-29T17:09:04Z",
+      "side": 1,
+      "message": "Do you have any background info on the problem?",
+      "revId": "9a65e1a2922644440beceefb18475d855e20a85a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_7aead86d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2014-11-29T17:09:04Z",
+      "side": 1,
+      "message": "why not keep the name blobId, since this will always refer to a blob?",
+      "revId": "9a65e1a2922644440beceefb18475d855e20a85a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
