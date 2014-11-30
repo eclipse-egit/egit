@@ -1439,12 +1439,15 @@ public class StagingView extends ViewPart implements IShowInSource {
 			runCommand(ActionCommands.COMPARE_INDEX_WITH_HEAD_ACTION, selection);
 			break;
 
+		case CONFLICTING:
+			runCommand(ActionCommands.COMPARE_WITH_HEAD_ACTION, selection);
+			break;
+
 		case MISSING:
 		case MISSING_AND_CHANGED:
 		case MODIFIED:
 		case MODIFIED_AND_CHANGED:
 		case MODIFIED_AND_ADDED:
-		case CONFLICTING:
 		case UNTRACKED:
 		default:
 			// compare with index
