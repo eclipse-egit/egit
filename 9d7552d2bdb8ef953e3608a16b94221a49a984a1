@@ -16,6 +16,24 @@
       "revId": "9d7552d2bdb8ef953e3608a16b94221a49a984a1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_0b39d856",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-12-01T14:58:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_2b81349d",
+      "revId": "9d7552d2bdb8ef953e3608a16b94221a49a984a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
