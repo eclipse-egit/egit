@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_6bafaced",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-01T15:06:46Z",
+      "side": 1,
+      "message": "I would just return status here, see comment below.",
+      "revId": "6fcbcca029ca708c5068259466f04151da98df63",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_0beb981a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-01T15:06:46Z",
+      "side": 1,
+      "message": "Sorry again, if the monitor is cancelled, the job should return Status.CANCEL_STATUS. Unfortunately user can cancel *and* we might have exception, so to avoid complicated logic it would be nice to return from the catch block and write here something like\nif(monitor.isCancelled())\n   return Status.CANCEL_STATUS;\nreturn Status.OK_STATUS;",
+      "revId": "6fcbcca029ca708c5068259466f04151da98df63",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
