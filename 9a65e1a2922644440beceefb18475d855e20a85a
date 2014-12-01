@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_95e5059b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2014-12-01T09:24:37Z",
+      "side": 1,
+      "message": "Well... when a \"full path\" to a resource looks like \"file.ext Index\" or \"file.ext \u003ccommit SHA1\u003e\", it is obvious that a third-party client won\u0027t be able to tell that what\u0027s after the whitespace is not part of the path, but just an info EGit has appended to it. So there is \"something\" at the end of the path that needs be trimmed to make it resolveable.\n\nFurthermore, there is also \"something\" at the beginning of the path that needs to be trimmed : the IndexBlobStorage and CommitBlobStorage paths look like \"\u003crepo name\u003e/\u003cworkspace relative path\u003e \u003cSHA-1 or \"Index\"\u003e\". A third-party plugin, rooted in the \"eclipse\" environment and aware of the workspace, can only resolve workspace relative paths. Knownledge of anything outside of that (the repository\u0027s folder name) or a git-specific kind of path (with the SHA appended) isn\u0027t available to them.\n\nI haven\u0027t changed the \"fullpath\" implementation though, since the commit message of when those were created indicates that it was done to avoid issues with the compare editor\u0027s dirty state. Furthermore, EGit has knowledge about files that aren\u0027t in the workspace, for which a workspace-relative path makes no sense (which is probably why the repo name is used as the starting point for the storages).\n\nYou can see a few example of what clumsy workarounds a third-party plugins needs to go through in order to make sense of these fullpaths on my change in EMF Compare that uses this one: https://git.eclipse.org/r/#/c/36025/ . For example in https://git.eclipse.org/r/#/c/36025/4/plugins/org.eclipse.emf.compare.ide.ui/src/org/eclipse/emf/compare/ide/ui/internal/logical/resolver/RevisionedURIConverter.java or https://git.eclipse.org/r/#/c/36025/4/plugins/org.eclipse.emf.compare.ide/src/org/eclipse/emf/compare/ide/utils/ResourceUtil.java ... that were far from being fool-proof anyway.\n\nYou can see another example of a third-party plugin trying to resolve (and failing to do so) such paths on bug https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d354801.",
+      "parentUuid": "a766b734_5aef1c7c",
+      "revId": "9a65e1a2922644440beceefb18475d855e20a85a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_7aead86d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2014-11-29T17:09:04Z",
       "side": 1,
       "message": "why not keep the name blobId, since this will always refer to a blob?",
+      "revId": "9a65e1a2922644440beceefb18475d855e20a85a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_551a4d2e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2014-12-01T09:24:37Z",
+      "side": 1,
+      "message": "This is a refactoring from my side that sneaked in when I split the commit. I\u0027ll revert this asap since it adds nothing to this change.",
+      "parentUuid": "a766b734_7aead86d",
       "revId": "9a65e1a2922644440beceefb18475d855e20a85a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
