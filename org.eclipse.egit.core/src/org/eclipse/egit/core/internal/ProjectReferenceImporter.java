@@ -243,14 +243,28 @@ public class ProjectReferenceImporter {
 			if (existingUrl.equals(url))
 				return true;
 
-			// try URLs without user name, since often project sets contain
-			// anonymous URLs, and remote URL might be anonymous as well
-			URIish anonExistingUrl = existingUrl.setUser(null);
-			URIish anonUrl = url.setUser(null);
-			if (anonExistingUrl.equals(anonUrl))
+			// there may be slight differences in the URLs...
+			URIish canonExistingUrl = canonicalizeURL(existingUrl);
+			URIish canonUrl = canonicalizeURL(url);
+			if (canonExistingUrl.equals(canonUrl))
 				return true;
 		}
 		return false;
+	}
+
+	private static URIish canonicalizeURL(URIish existingUrl) {
+		// try URLs without user name, since often project sets contain
+		// anonymous URLs, and remote URL might be anonymous as well
+		URIish newURL = existingUrl.setUser(null);
+
+		// some URLs end with .git, some don't
+		String path = existingUrl.getPath();
+		if (path.endsWith(".git")) { //$NON-NLS-1$
+			newURL = existingUrl.setPath(path.substring(0,
+					path.lastIndexOf(".git"))); //$NON-NLS-1$
+		}
+
+		return newURL;
 	}
 
 	private List<IProject> importProjects(final Set<ProjectReference> projects,
