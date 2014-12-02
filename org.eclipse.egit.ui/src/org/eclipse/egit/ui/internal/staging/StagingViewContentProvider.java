@@ -33,9 +33,15 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.staging.StagingView.Presentation;
 import org.eclipse.egit.ui.internal.staging.StagingView.StagingViewUpdate;
@@ -43,6 +49,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.submodule.SubmoduleWalk;
 import org.eclipse.ui.model.WorkbenchContentProvider;
+import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
 /**
  * ContentProvider for staged and unstaged tree nodes
@@ -57,7 +64,7 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 	/** Root nodes for the "Compact Tree" presentation. */
 	private Object[] compactTreeRoots;
 
-	private StagingView stagingView;
+	private final StagingView stagingView;
 	private boolean unstagedSection;
 
 	private Repository repository;
@@ -268,7 +275,13 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		if (!(newInput instanceof StagingViewUpdate))
 			return;
 
+		if (oldInput == newInput)
+			return;
+
 		StagingViewUpdate update = (StagingViewUpdate) newInput;
+
+		// if we still have update running, cancel it because now it's useless
+		cancelRunningSubmoduleJobs();
 
 		if (update.repository == null || update.indexDiff == null) {
 			content = new StagingEntry[0];
@@ -332,14 +345,15 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 
 		setSymlinkFileMode(indexDiff, nodes);
 
-		try {
-		SubmoduleWalk walk = SubmoduleWalk.forIndex(repository);
-		while(walk.next())
-			for (StagingEntry entry : nodes)
-				entry.setSubmodule(entry.getPath().equals(walk.getPath()));
-		} catch (IOException e) {
-			Activator.error(UIText.StagingViewContentProvider_SubmoduleError, e);
-		}
+		Job submoduleWalkJob = new SubmoduleWalkJob(
+				UIText.StagingViewContentProvider_WalkSubmodules, repository,
+				nodes, stagingView, this);
+		IWorkbenchSiteProgressService service = CommonUtils.getService(
+				stagingView.getSite(), IWorkbenchSiteProgressService.class);
+		if (service != null)
+			service.schedule(submoduleWalkJob, 50, true);
+		else
+			submoduleWalkJob.schedule(50);
 
 		content = nodes.toArray(new StagingEntry[nodes.size()]);
 		Arrays.sort(content, comparator);
@@ -348,8 +362,77 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		compactTreeRoots = null;
 	}
 
+	private static class SubmoduleWalkJob extends Job {
+		private Set<StagingEntry> nodes;
+
+		private Repository repo;
+
+		private final StagingView stagingView;
+
+		private final Object family;
+
+		SubmoduleWalkJob(String name, Repository repository,
+				Set<StagingEntry> nodes, StagingView stagingView, Object family) {
+			super(name);
+			this.nodes = nodes;
+			this.repo = repository;
+			this.stagingView = stagingView;
+			this.family = family;
+			setRule(new ExclusiveRule());
+		}
+
+		@Override
+		protected IStatus run(IProgressMonitor monitor) {
+			if (monitor.isCanceled() || stagingView.isDisposed())
+				return Status.CANCEL_STATUS;
+
+			try {
+				SubmoduleWalk walk = SubmoduleWalk.forIndex(repo);
+				boolean refresh = false;
+				while (!monitor.isCanceled() && !stagingView.isDisposed()
+						&& walk.next()) {
+					for (StagingEntry entry : nodes) {
+						boolean isSubmodule = entry.getPath().equals(
+								walk.getPath());
+						entry.setSubmodule(isSubmodule);
+						if (isSubmodule)
+							refresh = true;
+					}
+				}
+				if (refresh && !stagingView.isDisposed())
+					stagingView.refreshViewersPreservingExpandedElements();
+			} catch (IOException e) {
+				return Activator.createErrorStatus(
+						UIText.StagingViewContentProvider_SubmoduleError, e);
+			}
+			if (monitor.isCanceled())
+				return Status.CANCEL_STATUS;
+			return Status.OK_STATUS;
+		}
+
+		@Override
+		public boolean belongsTo(Object other) {
+			return this.family == other || super.belongsTo(other);
+		}
+
+		static class ExclusiveRule implements ISchedulingRule {
+			public boolean contains(ISchedulingRule rule) {
+				return isConflicting(rule);
+			}
+
+			public boolean isConflicting(ISchedulingRule rule) {
+				return rule instanceof ExclusiveRule;
+			}
+		}
+	}
+
 	public void dispose() {
-		// nothing to dispose
+		cancelRunningSubmoduleJobs();
+		super.dispose();
+	}
+
+	private void cancelRunningSubmoduleJobs() {
+		Job.getJobManager().cancel(this);
 	}
 
 	/**
