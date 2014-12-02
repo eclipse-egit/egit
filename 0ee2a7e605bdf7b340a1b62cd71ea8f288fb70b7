@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_55f526bb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-12-02T13:47:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_12374498",
+      "revId": "0ee2a7e605bdf7b340a1b62cd71ea8f288fb70b7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_727cb82a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
         "patchSetId": 4
@@ -64,6 +82,24 @@
       "writtenOn": "2014-12-02T10:32:29Z",
       "side": 1,
       "message": "please change the order of checks to have cheep check first. Walk.next() can freeze UI.",
+      "revId": "0ee2a7e605bdf7b340a1b62cd71ea8f288fb70b7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_b500fa39",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-12-02T13:47:04Z",
+      "side": 1,
+      "message": "Done\n\nbut I think walk.next can\u0027t freeze the UI since it runs in a background job",
+      "parentUuid": "a766b734_727cb82a",
       "revId": "0ee2a7e605bdf7b340a1b62cd71ea8f288fb70b7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_d5301622",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-12-02T13:47:04Z",
+      "side": 1,
+      "message": "JobFamilies.WALK_SUBMODULES isn\u0027t used anymore",
+      "parentUuid": "a766b734_522c1c4b",
+      "revId": "0ee2a7e605bdf7b340a1b62cd71ea8f288fb70b7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_b2277065",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
         "patchSetId": 4
@@ -98,6 +152,24 @@
       "writtenOn": "2014-12-02T10:29:44Z",
       "side": 1,
       "message": "As explained above, \"this\" should be used as argument here.",
+      "revId": "0ee2a7e605bdf7b340a1b62cd71ea8f288fb70b7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_3524eae4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-12-02T13:47:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_b2277065",
       "revId": "0ee2a7e605bdf7b340a1b62cd71ea8f288fb70b7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
