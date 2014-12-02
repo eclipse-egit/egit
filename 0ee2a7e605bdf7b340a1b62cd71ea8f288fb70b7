@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "a766b734_727cb82a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-02T10:32:29Z",
+      "side": 1,
+      "message": "please change the order of checks to have cheep check first. Walk.next() can freeze UI.",
+      "revId": "0ee2a7e605bdf7b340a1b62cd71ea8f288fb70b7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_522c1c4b",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
         "patchSetId": 4
