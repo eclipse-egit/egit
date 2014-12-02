@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_b2101008",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-02T10:29:44Z",
+      "side": 1,
+      "message": "Missing line:\nBug: 439674",
+      "revId": "0ee2a7e605bdf7b340a1b62cd71ea8f288fb70b7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_920b54dd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-02T10:29:44Z",
+      "side": 1,
+      "message": "Trailing space",
+      "revId": "0ee2a7e605bdf7b340a1b62cd71ea8f288fb70b7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_12374498",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-02T10:29:44Z",
+      "side": 1,
+      "message": "Matthias, we can\u0027t use JobFamilies.WALK_SUBMODULES here because we have two different viewers using two different contant providers for the same view *at same time*.\n\nWe should use \"this\" here and change the code below in belongsTo().",
+      "revId": "0ee2a7e605bdf7b340a1b62cd71ea8f288fb70b7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_522c1c4b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-02T10:29:44Z",
+      "side": 1,
+      "message": "see comment above, we should change this line to:\n\nreturn this.family \u003d\u003d other || JobFamilies.WALK_SUBMODULES \u003d\u003d other || super.belongsTo(other);",
+      "revId": "0ee2a7e605bdf7b340a1b62cd71ea8f288fb70b7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_b2277065",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-02T10:29:44Z",
+      "side": 1,
+      "message": "As explained above, \"this\" should be used as argument here.",
+      "revId": "0ee2a7e605bdf7b340a1b62cd71ea8f288fb70b7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
