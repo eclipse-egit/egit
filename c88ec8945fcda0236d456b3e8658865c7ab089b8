@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_95769ead",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-02T14:26:56Z",
+      "side": 1,
+      "message": "trailing space",
+      "revId": "c88ec8945fcda0236d456b3e8658865c7ab089b8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_35034a1b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-02T14:26:56Z",
+      "side": 1,
+      "message": "I\u0027m missing the lines below as the first check in the method:\n\nif (monitor.isCanceled() || stagingView.isDisposed())\n\t\t\t\treturn Status.CANCEL_STATUS;\n\nThe forIndex(repo) call can be avoided on cancelled jobs.",
+      "revId": "c88ec8945fcda0236d456b3e8658865c7ab089b8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
