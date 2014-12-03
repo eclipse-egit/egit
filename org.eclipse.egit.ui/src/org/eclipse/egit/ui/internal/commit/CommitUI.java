@@ -252,7 +252,8 @@ public class CommitUI  {
 			} else {
 				// could be file outside of workspace
 				for (IResource resource : selectedResources) {
-					if(resource.getFullPath().toFile().equals(new File(uri))) {
+					IPath location = resource.getLocation();
+					if(location != null && location.toFile().equals(new File(uri))) {
 						preselectionCandidates.add(fileName);
 					}
 				}
