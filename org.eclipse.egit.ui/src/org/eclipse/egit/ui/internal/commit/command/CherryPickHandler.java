@@ -33,14 +33,12 @@ import org.eclipse.egit.ui.internal.UIRepositoryUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.internal.handler.SelectionHandler;
-import org.eclipse.egit.ui.internal.rebase.RebaseResultDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -66,7 +64,7 @@ public class CherryPickHandler extends SelectionHandler {
 		List<RevCommit> commits = getSelectedItems(RevCommit.class, event);
 		if ((commits == null) || commits.isEmpty())
 			return null;
-		final Repository repo = getSelectedItem(Repository.class, event);
+		Repository repo = getSelectedItem(Repository.class, event);
 		if (repo == null)
 			return null;
 		final Shell parent = getPart(event).getSite().getShell();
@@ -90,10 +88,6 @@ public class CherryPickHandler extends SelectionHandler {
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
 					op.execute(monitor);
-					RebaseResult result = op.getResult();
-					if (result.getStatus() != RebaseResult.Status.OK) {
-						RebaseResultDialog.show(result, repo);
-					}
 				} catch (CoreException e) {
 					Activator.logError(
 							UIText.CherryPickOperation_InternalError, e);
