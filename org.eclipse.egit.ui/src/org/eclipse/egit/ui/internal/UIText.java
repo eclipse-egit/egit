@@ -2719,6 +2719,12 @@ public class UIText extends NLS {
 	public static String FetchGerritChangePage_CheckoutRadio;
 
 	/** */
+	public static String FetchGerritChangePage_CherryPickRadio;
+
+	/** */
+	public static String FetchGerritChangePage_CherryPickingTaskName;
+
+	/** */
 	public static String FetchGerritChangePage_ContentAssistDescription;
 
 	/** */
