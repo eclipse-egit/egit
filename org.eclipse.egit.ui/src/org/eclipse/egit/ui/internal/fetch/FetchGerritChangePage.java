@@ -17,6 +17,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -535,12 +536,11 @@ public class FetchGerritChangePage extends WizardPage {
 		final RefSpec spec = new RefSpec().setSource(refText.getText())
 				.setDestination(Constants.FETCH_HEAD);
 		final String uri = uriCombo.getText();
-		final boolean doCheckout = checkout.getSelection();
-		final boolean doCreateTag = createTag.getSelection();
-		final boolean doCreateBranch = createBranch.getSelection();
-		final boolean doCheckoutNewBranch = branchCheckoutButton.getSelection();
-		final boolean doActivateAdditionalRefs = (checkout.getSelection() || dontCheckout
-				.getSelection()) && activateAdditionalRefs.getSelection();
+
+		final EnumSet<ActionAfterFetch> actionAfterFetch = ActionAfterFetch
+				.fromSelection(checkout, createTag, createBranch,
+						branchCheckoutButton, dontCheckout,
+						activateAdditionalRefs);
 		final String textForTag = tagText.getText();
 		final String textForBranch = branchText.getText();
 
@@ -552,9 +552,7 @@ public class FetchGerritChangePage extends WizardPage {
 
 				@Override
 				public IStatus runInWorkspace(IProgressMonitor monitor) {
-					internalDoFetch(spec, uri, doCheckout, doCreateTag,
-							doCreateBranch, doCheckoutNewBranch,
-							doActivateAdditionalRefs,
+					internalDoFetch(spec, uri, actionAfterFetch,
 							textForTag, textForBranch, monitor);
 					return org.eclipse.core.runtime.Status.OK_STATUS;
 				}
@@ -577,10 +575,8 @@ public class FetchGerritChangePage extends WizardPage {
 								throws InvocationTargetException,
 								InterruptedException {
 							try {
-								internalDoFetch(spec, uri, doCheckout,
-											doCreateTag, doCreateBranch,
-											doCheckoutNewBranch,
-										doActivateAdditionalRefs, textForTag,
+									internalDoFetch(spec, uri,
+											actionAfterFetch, textForTag,
 										textForBranch, monitor);
 							} catch (RuntimeException e) {
 								throw e;
@@ -602,16 +598,14 @@ public class FetchGerritChangePage extends WizardPage {
 		}
 	}
 
-	private void internalDoFetch(RefSpec spec, String uri, boolean doCheckout,
-			boolean doCreateTag, boolean doCreateBranch,
-			boolean doCheckoutNewBranch,
-			boolean doActivateAdditionalRefs, String textForTag,
+	private void internalDoFetch(RefSpec spec, String uri,
+			EnumSet<ActionAfterFetch> actions, String textForTag,
 			String textForBranch, IProgressMonitor monitor) {
 
 		int totalWork = 1;
-		if (doCheckout)
-			totalWork++;
-		if (doCreateTag || doCreateBranch)
+		if (actions.contains(ActionAfterFetch.CheckoutFetchHead)
+				|| actions.contains(ActionAfterFetch.CreateTag)
+				|| actions.contains(ActionAfterFetch.CreateBranch))
 			totalWork++;
 		monitor.beginTask(
 				UIText.FetchGerritChangePage_GetChangeTaskName,
@@ -621,16 +615,19 @@ public class FetchGerritChangePage extends WizardPage {
 			RevCommit commit = fetchChange(uri, spec,
 					monitor);
 
-			if (doCreateTag)
+			if (actions.contains(ActionAfterFetch.CreateTag))
 				createTag(spec, textForTag, commit, monitor);
 
-			if (doCreateBranch)
-				createBranch(textForBranch, doCheckoutNewBranch, commit, monitor);
+			if (actions.contains(ActionAfterFetch.CreateBranch))
+				createBranch(textForBranch,
+						actions.contains(ActionAfterFetch.CheckoutNewBranch),
+						commit, monitor);
 
-			if (doCheckout || doCreateTag)
+			if (actions.contains(ActionAfterFetch.CheckoutFetchHead)
+					|| actions.contains(ActionAfterFetch.CreateTag))
 				checkout(commit, monitor);
 
-			if (doActivateAdditionalRefs)
+			if (actions.contains(ActionAfterFetch.ActivateAdditionalRefs))
 				activateAdditionalRefs();
 
 			storeLastUsedUri(uri);
@@ -891,6 +888,34 @@ public class FetchGerritChangePage extends WizardPage {
 		@Override
 		public String toString() {
 			return getContent();
+		}
+	}
+
+	private static enum ActionAfterFetch {
+		CreateBranch, CheckoutNewBranch, CreateTag, CheckoutFetchHead, UpdateFetchHead, ActivateAdditionalRefs;
+
+		static EnumSet<ActionAfterFetch> fromSelection(Button checkout,
+				Button createTag, Button createBranch,
+				Button branchCheckoutButton, Button dontCheckout,
+				Button activateAdditionalRefs) {
+			EnumSet<ActionAfterFetch> result = EnumSet.noneOf(ActionAfterFetch.class);
+			if (checkout.getSelection()) {
+				result.add(CheckoutFetchHead);
+			} else if (createTag.getSelection()) {
+				result.add(CreateTag);
+			} else if (createBranch.getSelection()) {
+				result.add(CreateBranch);
+			} else if (dontCheckout.getSelection()) {
+				result.add(UpdateFetchHead);
+			}
+			if (branchCheckoutButton.getSelection()) {
+				result.add(CheckoutNewBranch);
+			}
+			if ((checkout.getSelection() || dontCheckout.getSelection())
+					&& activateAdditionalRefs.getSelection()) {
+				result.add(ActivateAdditionalRefs);
+			}
+			return result;
 		}
 	}
 }
