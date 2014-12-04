@@ -2983,6 +2983,9 @@ public class UIText extends NLS {
 	public static String BranchOperationUI_RunningLaunchTitle;
 
 	/** */
+	public static String BranchOperationUI_SearchRunningLaunchConfiguration;
+
+	/** */
 	public static String BranchRenameDialog_Message;
 
 	/** */
