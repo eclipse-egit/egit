@@ -22,6 +22,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.lib.Repository;
 
@@ -70,13 +71,32 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 		// Git revision control
 		final RepositoryMapping mapping = RepositoryMapping
 				.getMapping(resource);
+
 		if (mapping == null || mapping.getRepository() != repository)
 			// Ignore the change
 			return true;
 
+		// used to lookup ignored resources in the last version of the
+		// IndexDiffCacheEntry. This code is only used during updates to the
+		// index, and only as long as no .gitignore changes (see .gitignore
+		// handling below).
+		IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
+		IndexDiffCacheEntry entry = null;
+
+		if (cache != null)
+			entry = cache.getIndexDiffCacheEntry(mapping.getRepository());
+
 		if (resource instanceof IFolder
 				&& delta.getKind() == IResourceDelta.ADDED) {
-			filesToUpdate.add(mapping.getRepoRelativePath(resource) + "/"); //$NON-NLS-1$
+
+			String repoRelativePath = mapping.getRepoRelativePath(resource)
+					+ "/"; //$NON-NLS-1$
+
+			if (isIgnoredInOldIndex(entry, repoRelativePath)) {
+				return false; // the directory is ignored - stop recursion here.
+			}
+
+			filesToUpdate.add(repoRelativePath);
 			resourcesToUpdate.add(resource);
 			return true;
 		}
@@ -92,17 +112,60 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 		if (resource.getType() != IResource.FILE)
 			return true;
 
+		String repoRelativePath = mapping.getRepoRelativePath(resource);
+		if (isIgnoredInOldIndex(entry, repoRelativePath)) {
+			// ignore the change itself, and also all changes to children of
+			// this resource (it's a file anyway). This even holds true for
+			// .gitignore files, as otherwise .gitignore files copied to /bin/
+			// directories by the Eclipse compiler will cause full re-indexing
+			// of the repository during builds.
+			return false;
+		}
+
 		if (resource.getName().equals(GITIGNORE_NAME)) {
 			gitIgnoreChanged = true;
 			return false;
 		}
 
-		String repoRelativePath = mapping.getRepoRelativePath(resource);
 		if (repoRelativePath!= null)
 			filesToUpdate.add(repoRelativePath);
 		resourcesToUpdate.add(resource);
 
 		return true;
+	}
+
+	/**
+	 * @param entry
+	 *            the {@link IndexDiffCacheEntry} for the repository containing
+	 *            the path.
+	 * @param path
+	 *            the repository relative path of the resource to check
+	 * @return whether the given path is ignored by the given
+	 *         {@link IndexDiffCacheEntry}
+	 */
+	public boolean isIgnoredInOldIndex(IndexDiffCacheEntry entry, String path) {
+		// fall back to processing all changes as long as there is no old index.
+		if (entry == null)
+			return false;
+
+		IndexDiffData indexDiff = entry.getIndexDiff();
+		if (indexDiff == null)
+			return false;
+
+		for (String s : indexDiff.getIgnoredNotInIndex()) {
+			String sWithSlash = s;
+			if (!s.endsWith("/")) { //$NON-NLS-1$
+				sWithSlash = s + '/';
+			}
+
+			// Either paths are equal, or the path is a sub-path of the given
+			// ignored entry to be ignored
+			if (path.equals(s) || path.startsWith(sWithSlash)) {
+				// ignored! skip all children!
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
