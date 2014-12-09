@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_250dc776",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-09T17:32:00Z",
+      "side": 1,
+      "message": "The new folder could contain new .gitignore file somewhere, which *must* be included in the update. So returning \"false\" here is wrong - children of the new folder has to be visited!",
+      "revId": "7e36a0882ff4be8602af250c4094188f85d6de24",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_05108b88",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-09T17:32:00Z",
+      "side": 1,
+      "message": "The assumption in the comment regarding the .gitignore file handling is wrong and is only true for the specific case of bad eclipse project setup where .gitignore files are located on the source path and copied to build path.\nThe problem is that .gitignore rules are hierarchical and rules in subfolders can invert rules in any parent folders.\n\nFor your concrete issue:\nmove .gitignore files from the source path to the project root or level higher OR add .settings/org.eclipse.jdt.core.prefs\nfile with this line: org.eclipse.jdt.core.builder.resourceCopyExclusionFilter\u003d.gitignore\nto prevent copying of .giignore files around.",
+      "revId": "7e36a0882ff4be8602af250c4094188f85d6de24",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_65fa1fb0",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-09T17:32:00Z",
+      "side": 1,
+      "message": "One can return here only if the file is NOT .gitignore.",
+      "revId": "7e36a0882ff4be8602af250c4094188f85d6de24",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
