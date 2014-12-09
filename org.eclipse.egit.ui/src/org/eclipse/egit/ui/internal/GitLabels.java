@@ -13,6 +13,8 @@ package org.eclipse.egit.ui.internal;
 import java.io.IOException;
 
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.clone.ProjectRecord;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
@@ -96,6 +98,24 @@ public class GitLabels {
 				.getRepositoryUtil();
 
 		StyledString string = new StyledString();
+
+		IndexDiffCacheEntry entry = org.eclipse.egit.core.Activator
+				.getDefault().getIndexDiffCache()
+				.getIndexDiffCacheEntry(repository);
+		if (entry != null) {
+			IndexDiffData indexDiffData = entry.getIndexDiff();
+			if (indexDiffData != null
+					&& (!indexDiffData.getAdded().isEmpty()
+							|| !indexDiffData.getChanged().isEmpty()
+							|| !indexDiffData.getRemoved().isEmpty()
+							|| !indexDiffData.getUntracked().isEmpty()
+							|| !indexDiffData.getModified().isEmpty()
+							|| !indexDiffData.getMissing().isEmpty())) {
+				string.append('>');
+				string.append(' ');
+			}
+		}
+
 		string.append(repositoryUtil.getRepositoryName(repository));
 
 		String branch = repositoryUtil.getShortBranch(repository);
