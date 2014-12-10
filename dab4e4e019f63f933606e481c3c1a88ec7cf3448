@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_9e8228a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-12-10T11:54:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_27624e32",
+      "revId": "dab4e4e019f63f933606e481c3c1a88ec7cf3448",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_492fb512",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
         "patchSetId": 1
@@ -112,6 +130,30 @@
       "writtenOn": "2014-10-24T15:01:12Z",
       "side": 1,
       "message": "I think this should be adapted also to mapping.getRepository(resource)",
+      "range": {
+        "startLine": 1880,
+        "startChar": 36,
+        "endLine": 1880,
+        "endChar": 49
+      },
+      "revId": "dab4e4e019f63f933606e481c3c1a88ec7cf3448",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_3e5e74be",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1880,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-12-10T11:54:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_699a71f6",
       "range": {
         "startLine": 1880,
         "startChar": 36,
