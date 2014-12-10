@@ -34,6 +34,24 @@
       "revId": "7b9882916f28bc5dacc66da54117d223fc78cced",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_d9db1a61",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-10T13:55:56Z",
+      "side": 1,
+      "message": "My problem is my huge repository and after spending lot of time to optimize j/egit performance I fear any new possible regression :-)\nLook, if I have only 1000 ignored directories in the repo (and I fear I have much more) and the average path segments count of files is over 15, for only 10 delta files I have here 1000 * 15 * 10 \u003d 150000 lookups which sounds a bit more then 35 (10*2 + 15).\n\nFor sure, for a small projects like e/jgit this optimization doesn\u0027t make sense, because the absolute times here are probably equal for any solution one can imagine.",
+      "parentUuid": "a766b734_d9b4ba1f",
+      "revId": "7b9882916f28bc5dacc66da54117d223fc78cced",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
