@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_5e66d0cc",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-10T10:38:03Z",
+      "side": 1,
+      "message": "I wish me new tests (just few ideas):\n * testAddDirectoryToIgnoredDir\n * testAddFileToIgnoredDir\n * testAddGitIgnoreFileToIgnoredDir\n * testRemoveDirectoryFromIgnoredDir\n * testRemoveFileFromIgnoredDir\n * testRemoveGitIgnoreFileFromIgnoredDir\n\nBasically all the expected optimizations (and possible regressions) of the patch should be tested.",
+      "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_1e88d82c",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-10T10:38:03Z",
+      "side": 1,
+      "message": "I didn\u0027t get why the explicit refresh is needed. Is it now because of your fix? Then the fix isn\u0027t OK.",
+      "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_fe8a3c24",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-10T10:38:03Z",
+      "side": 1,
+      "message": "Same as above",
+      "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_1eec58b5",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-10T10:38:03Z",
+      "side": 1,
+      "message": "Return is OK, but I would not return \"false\" here because of paranoia I have if someone decides to stop visiting because of that.",
+      "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_1e03b81a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-10T10:38:03Z",
+      "side": 1,
+      "message": "As soon as the .gitignore changes are there the old state can\u0027t be consulted anymore. Therefore isIgnoredInOldIndex() should return false if gitIgnoreChanged \u003d\u003d true.",
+      "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_1e79f86b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-10T10:38:03Z",
+      "side": 1,
+      "message": "I fear that iterating through the entire set on huge repos with lot of ignore rules could be expensive.\n\nWhat if you create a set of visited *ignored* folders in the visit() above and have *two* methods: one to check ignored directories and another one to check ignored files.\n\nWe know that directories are always visited first, so check for ignored files will always check if the \"knownIgnoredDir\" contain path of the parent, which should be cheap as the set will be small.\n\nCheck for ignored directories method will not traverse *all* ignored entries from the IndexDiff but check one by one itself, parent path, grand parent path and so on. So worst case we do path.segmentsCount() number of checks which should be for huge repos usually less then getIgnoredNotInIndex() size.",
+      "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
