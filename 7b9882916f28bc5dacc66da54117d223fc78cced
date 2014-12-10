@@ -16,6 +16,24 @@
       "revId": "7b9882916f28bc5dacc66da54117d223fc78cced",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_d9b4ba1f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2014-12-10T13:34:52Z",
+      "side": 1,
+      "message": "Hm, I know what you mean. I\u0027m not sure whether this wouldn\u0027t cause more overhead than it would shove off the times. The visitor is re-created for every resource change event. It could potentially be a lot of resources, yes, but it\u0027s just as common that it\u0027s only a few. This code is not sooo expensive, I think.\n\nStill I can give it a try if you insist.",
+      "parentUuid": "a766b734_be856460",
+      "revId": "7b9882916f28bc5dacc66da54117d223fc78cced",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
