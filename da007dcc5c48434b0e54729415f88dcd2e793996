@@ -191,6 +191,24 @@
       "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_be6ba466",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2014-12-10T11:46:26Z",
+      "side": 1,
+      "message": "Even better. I will use RepositoryUtil.isIgnored in the first place, and ignore the old index completely. Since the auto-ignore resource change listener also uses this, I assume that it is OK to do this :)",
+      "parentUuid": "a766b734_fe36bc99",
+      "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
