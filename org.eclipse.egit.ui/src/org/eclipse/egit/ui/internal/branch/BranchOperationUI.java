@@ -12,6 +12,7 @@ package org.eclipse.egit.ui.internal.branch;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -24,6 +25,7 @@ import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
@@ -55,6 +57,8 @@ import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.operation.ModalContext;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -577,24 +581,42 @@ public class BranchOperationUI {
 	}
 
 	private ILaunchConfiguration getRunningLaunchConfiguration() {
-		Set<IProject> projects = new HashSet<IProject>(
-				Arrays.asList(ProjectUtil.getProjects(repository)));
+		final ILaunchConfiguration[] lc = new ILaunchConfiguration[1];
+		try {
+			ModalContext.run(new IRunnableWithProgress() {
 
-		ILaunchManager launchManager = DebugPlugin.getDefault()
-				.getLaunchManager();
-		ILaunch[] launches = launchManager.getLaunches();
-		for (ILaunch launch : launches) {
-			if (launch.isTerminated())
-				continue;
-			ISourceLocator locator = launch.getSourceLocator();
-			if (locator instanceof ISourceLookupDirector) {
-				ISourceLookupDirector director = (ISourceLookupDirector) locator;
-				ISourceContainer[] containers = director.getSourceContainers();
-				if (isAnyProjectInSourceContainers(containers, projects))
-					return launch.getLaunchConfiguration();
-			}
+				public void run(IProgressMonitor monitor)
+						throws InvocationTargetException, InterruptedException {
+
+					Set<IProject> projects = new HashSet<IProject>(Arrays
+							.asList(ProjectUtil.getProjects(repository)));
+
+					ILaunchManager launchManager = DebugPlugin.getDefault()
+							.getLaunchManager();
+					ILaunch[] launches = launchManager.getLaunches();
+					for (ILaunch launch : launches) {
+						if (launch.isTerminated())
+							continue;
+						ISourceLocator locator = launch.getSourceLocator();
+						if (locator instanceof ISourceLookupDirector) {
+							ISourceLookupDirector director = (ISourceLookupDirector) locator;
+							ISourceContainer[] containers = director
+									.getSourceContainers();
+							if (isAnyProjectInSourceContainers(containers,
+									projects)) {
+								lc[0] = launch.getLaunchConfiguration();
+								return;
+							}
+						}
+					}
+				}
+			}, true, new NullProgressMonitor(), getShell().getDisplay());
+		} catch (@SuppressWarnings("unused") InvocationTargetException e) {
+			// ignore
+		} catch (@SuppressWarnings("unused") InterruptedException e) {
+			// ignore
 		}
-		return null;
+		return lc[0];
 	}
 
 	private boolean isAnyProjectInSourceContainers(
