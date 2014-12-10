@@ -52,6 +52,24 @@
       "revId": "7b9882916f28bc5dacc66da54117d223fc78cced",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_59fa6aaf",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2014-12-10T14:02:41Z",
+      "side": 1,
+      "message": "Yes, we also have a huge repository, and our workspace has very, very easily more than 1000 ignored directories. The thing I\u0027m saying is that it might bring not the benefit you expect to cache this information, as eclipse will fire deltas that include at the very most deltas for a single plugin (if you\u0027re lucky), not more (at least that\u0027s what I see during builds). Thus that optimization will only hit inside a single plugin. I can still do it, as I said.",
+      "parentUuid": "a766b734_d9db1a61",
+      "revId": "7b9882916f28bc5dacc66da54117d223fc78cced",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
