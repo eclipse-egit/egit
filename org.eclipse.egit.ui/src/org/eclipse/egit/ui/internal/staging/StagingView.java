@@ -455,8 +455,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 		parent.addDisposeListener(new DisposeListener() {
 
 			public void widgetDisposed(DisposeEvent e) {
-				if (!commitMessageComponent.isAmending()
-						&& userEnteredCommitMessage())
+				if (commitMessageComponent.isAmending()
+						|| userEnteredCommitMessage())
 					saveCommitMessageComponentState();
 				else
 					deleteCommitMessageComponentState();
@@ -2258,14 +2258,15 @@ public class StagingView extends ViewPart implements IShowInSource {
 			else
 				loadExistingState(helper, oldState);
 		} else { // repository did not change
-			if (!commitMessageComponent.isAmending()
-					&& userEnteredCommitMessage()) {
-				if (!commitMessageComponent.getHeadCommit().equals(
-						helper.getPreviousCommit()))
+			if (!commitMessageComponent.getHeadCommit().equals(
+					helper.getPreviousCommit())) {
+				if (!commitMessageComponent.isAmending()
+						&& userEnteredCommitMessage())
 					addHeadChangedWarning(commitMessageComponent
 							.getCommitMessage());
-			} else
-				loadInitialState(helper);
+				else
+					loadInitialState(helper);
+			}
 		}
 		amendPreviousCommitAction.setChecked(commitMessageComponent
 				.isAmending());
