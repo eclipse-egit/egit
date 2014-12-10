@@ -227,6 +227,24 @@
       "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_de0ca0ce",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-10T12:14:23Z",
+      "side": 1,
+      "message": "I meant that the method which should check directories can still use IndexDiffData but *do not iterate* through the entire set, just check if set contains the current path, the parent path and so on:\nindexDiff.getIgnoredNotInIndex().contains(path) etc...",
+      "parentUuid": "a766b734_bebd6453",
+      "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
