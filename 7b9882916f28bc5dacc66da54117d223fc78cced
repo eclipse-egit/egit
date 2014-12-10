@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_be856460",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-10T13:22:08Z",
+      "side": 1,
+      "message": "Calling isIgnoredInOldIndex() for files could be still expensive (will split paths for each file and do in worst case filesInDelta * path.segmentsCount() lookups).\n\nBefore returning false or true here we could collect *known* ignored/not ignored directories state in the temporary map (key \u003d path, value \u003d boolean) and so remember the \"known\" path state there, saving us the lookup.\n\nFor files which are located in the same directory structure the lookup will be fast because the map will contain already all parents after first \"while\" round.\n\nAt the end we will have something like filesInDelta*2 + max (segmentsCount()) lookups for files from the same tree.",
+      "revId": "7b9882916f28bc5dacc66da54117d223fc78cced",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
