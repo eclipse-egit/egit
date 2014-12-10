@@ -209,6 +209,24 @@
       "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_bebd6453",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2014-12-10T12:01:23Z",
+      "side": 1,
+      "message": "I was wrong. isIgnored is not fast. On the contrary it hangs the build because it\u0027s so slow :( please tell me how you\u0027d imagine your algorithm for directory ignores to work.\n\nBTW. there is one drawback when using a cached directory list to check for ignore: what if the file itself is explicitly ignored...? then it\u0027s directory won\u0027t be on the list and I can only detect by having a look at the ignores.",
+      "parentUuid": "a766b734_be6ba466",
+      "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
