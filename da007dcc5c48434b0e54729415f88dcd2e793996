@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_fe1fdc19",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2014-12-10T11:33:21Z",
+      "side": 1,
+      "message": "Hm, i will have to see whether I have time to write them.. :|",
+      "parentUuid": "a766b734_5e66d0cc",
+      "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_1e88d82c",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheTest.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2014-12-10T10:38:03Z",
       "side": 1,
       "message": "I didn\u0027t get why the explicit refresh is needed. Is it now because of your fix? Then the fix isn\u0027t OK.",
+      "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_9e106808",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2014-12-10T11:33:21Z",
+      "side": 1,
+      "message": "With the fix, adding a (ignored) file to and already ignored directory will not cause the index update job to run. That is EXACTLY what the whole thing is about. Having the updater run all the time for nothing costs us tons of CPU time in real world environments. This is not a problem with 5 files, or 10 files or even 10.000 files. But with \u003e 50.000 files, this is a real problem.\n\nThat\u0027s why I previously said that this test failing is actually proof that the fix works ;)\n\nAlso, to be honest, I don\u0027t get the reason for this test... Why would I want to react on ignored files in ignored folders? It just burns CPU, as the index diff data will not contain any information about it, except that it is ignored (as is the parent folder already).",
+      "parentUuid": "a766b734_1e88d82c",
       "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_7e0bccdd",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2014-12-10T11:33:21Z",
+      "side": 1,
+      "message": "OK. i can do that.",
+      "parentUuid": "a766b734_1eec58b5",
+      "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_1e03b81a",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
         "patchSetId": 2
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_de3dc07b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2014-12-10T11:33:21Z",
+      "side": 1,
+      "message": "As a performance optimization maybe, yes. it will not change anything, as this data is not used at all if a gitignore changes.\n\nStill I will put in the check.",
+      "parentUuid": "a766b734_1e03b81a",
+      "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_1e79f86b",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
         "patchSetId": 2
@@ -98,6 +170,24 @@
       "writtenOn": "2014-12-10T10:38:03Z",
       "side": 1,
       "message": "I fear that iterating through the entire set on huge repos with lot of ignore rules could be expensive.\n\nWhat if you create a set of visited *ignored* folders in the visit() above and have *two* methods: one to check ignored directories and another one to check ignored files.\n\nWe know that directories are always visited first, so check for ignored files will always check if the \"knownIgnoredDir\" contain path of the parent, which should be cheap as the set will be small.\n\nCheck for ignored directories method will not traverse *all* ignored entries from the IndexDiff but check one by one itself, parent path, grand parent path and so on. So worst case we do path.segmentsCount() number of checks which should be for huge repos usually less then getIgnoredNotInIndex() size.",
+      "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_fe36bc99",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2014-12-10T11:33:21Z",
+      "side": 1,
+      "message": "I get what you want, basically ;) However I don\u0027t get how you would want the directory check to look like? Where should I get the ignore information from? I could use RepositoryUtil.isIgnored for that...\n\nI will experiment a little and see whats the outcome.\n\nStill, just to let you know, having this iteration is WAY less expensive than running all the update jobs - it saves me a minute on the build (5 minutes vs. previous 6 minutes) in a workspace with 900 bundles and ~40.000 java files.",
+      "parentUuid": "a766b734_1e79f86b",
       "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
