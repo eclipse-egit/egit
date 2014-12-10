@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_3b6166b2",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2014-12-10T08:12:28Z",
+      "side": 1,
+      "message": "OK. I will keep up the recursion to catch .gitignore files. I will still not add ignored folders here though, OK?",
+      "parentUuid": "a766b734_250dc776",
+      "revId": "7e36a0882ff4be8602af250c4094188f85d6de24",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_05108b88",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_dbeb126f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2014-12-10T08:12:28Z",
+      "side": 1,
+      "message": "OK, I will remove that one also, and only do the check on other files.",
+      "parentUuid": "a766b734_05108b88",
+      "revId": "7e36a0882ff4be8602af250c4094188f85d6de24",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_65fa1fb0",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2014-12-09T17:32:00Z",
       "side": 1,
       "message": "One can return here only if the file is NOT .gitignore.",
+      "revId": "7e36a0882ff4be8602af250c4094188f85d6de24",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_bbee167e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2014-12-10T08:12:28Z",
+      "side": 1,
+      "message": "I will move the check down to the case where only files are left, so this should not be a problem",
+      "parentUuid": "a766b734_65fa1fb0",
       "revId": "7e36a0882ff4be8602af250c4094188f85d6de24",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
