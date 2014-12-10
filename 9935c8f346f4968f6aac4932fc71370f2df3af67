@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_1b13cae8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-12-10T08:58:14Z",
+      "side": 1,
+      "message": "Which entries are updated incrementally?\n\nWhen I change the submodule, either by checking out another commit or by modifying a file, only the IndexDiffData of the submodule is updated but not the IndexDiffData of the super project.  But the latter one is the one which is affected by this change.",
+      "range": {
+        "startLine": 12,
+        "startChar": 28,
+        "endLine": 13,
+        "endChar": 22
+      },
+      "revId": "9935c8f346f4968f6aac4932fc71370f2df3af67",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
