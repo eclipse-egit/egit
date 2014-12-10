@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_bb40d6ee",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabels.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-12-10T08:35:58Z",
+      "side": 1,
+      "message": "don\u0027t hardcode the decorator, it\u0027s configurable under \"Preferences \u003e Team \u003e Git \u003e Label Decorations\" on tab \"Text Decorations\". Also you should decorate the icon to e.g. denote partially staged changes like we do for projects in e.g. package explorer. Decoration of resources is handled in org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator",
+      "revId": "3630946b85593ba361d0c26a53f0c5237ba8eed7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
