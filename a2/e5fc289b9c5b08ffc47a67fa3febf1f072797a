@@ -1,0 +1,10 @@
+Code-Review+2: Matthias Sohn <matthias.sohn@sap.com>
+Verified+1: Matthias Sohn <matthias.sohn@sap.com>
+Code-Review+1: Stefan Lay <stefan.lay@sap.com>
+Verified+1: Hudson CI
+Code-Review+1: Andrey Loskutov <loskutov@gmx.de>
+Submitted-by: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-at: Wed, 10 Dec 2014 18:47:06 -0500
+Reviewed-on: https://git.eclipse.org/r/37487
+Project: egit/egit
+Branch: refs/heads/stable-3.6
