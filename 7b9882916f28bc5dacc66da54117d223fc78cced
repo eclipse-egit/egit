@@ -70,6 +70,24 @@
       "revId": "7b9882916f28bc5dacc66da54117d223fc78cced",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_59370ae6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2014-12-10T14:58:55Z",
+      "side": 1,
+      "message": "I did a performance comparision, one version as we have it here, and one with a cache. It basically remembers the result for every path that it checks. When compiling (that is removing and adding the .class files) 40.000 java sources in my workspace, the caching version is quite a bit slower (reproducible). I took three samples each, and on average it\u0027s ~5:20 for the current version vs. ~5:30 for the optimized version ... 10 seconds slower?! I re-measured everything, and get the same results. The optimization is basically what you suggested. I would have guessed that it improves, but only a little - on the contrary:\n\n\tprivate boolean isIgnoredInOldIndex(IndexDiffCacheEntry entry, String path) {\n\t\t// fall back to processing all changes as long as there is no old index.\n\t\tif (entry \u003d\u003d null || gitIgnoreChanged)\n\t\t\treturn false;\n\n\t\tBoolean cached \u003d knownIgnoredPaths.get(path);\n\t\tif (cached !\u003d null) {\n\t\t\treturn cached.booleanValue();\n\t\t}\n\n\t\tIndexDiffData indexDiff \u003d entry.getIndexDiff();\n\t\tif (indexDiff \u003d\u003d null)\n\t\t\treturn false;\n\n\t\tboolean result \u003d false;\n\t\tString p \u003d path;\n\t\tSet\u003cString\u003e ignored \u003d indexDiff.getIgnoredNotInIndex();\n\t\tSet\u003cString\u003e candidates \u003d new HashSet\u003cString\u003e();\n\t\twhile (p !\u003d null) {\n\t\t\tcandidates.add(p);\n\n\t\t\tif (ignored.contains(p)) {\n\t\t\t\tresult \u003d true;\n\t\t\t\tbreak;\n\t\t\t}\n\n\t\t\tp \u003d skipLastSegment(p);\n\t\t}\n\n\t\tfor (String candidate : candidates) {\n\t\t\tknownIgnoredPaths.put(candidate, Boolean.valueOf(result));\n\t\t}\n\n\t\treturn result;\n\t}",
+      "parentUuid": "a766b734_59fa6aaf",
+      "revId": "7b9882916f28bc5dacc66da54117d223fc78cced",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
