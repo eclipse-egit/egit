@@ -22,6 +22,30 @@
       "revId": "c7409681bc5fedf7d250cea4977d512bfcadf698",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_f9b37600",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-12-10T14:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_be6c4428",
+      "range": {
+        "startLine": 586,
+        "startChar": 3,
+        "endLine": 586,
+        "endChar": 11
+      },
+      "revId": "c7409681bc5fedf7d250cea4977d512bfcadf698",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
