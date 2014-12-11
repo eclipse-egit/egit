@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_ca585a60",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-12-11T12:31:50Z",
+      "side": 1,
+      "message": "I get a warning \"Unnecessary \n @SuppressWarnings(\"unused\")\" here",
+      "range": {
+        "startLine": 621,
+        "startChar": 11,
+        "endLine": 621,
+        "endChar": 37
+      },
+      "revId": "d20eb320fe2ca30040d558f372feec610b40d813",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_aa5b5e58",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-12-11T12:31:50Z",
+      "side": 1,
+      "message": "I get a warning \"Unnecessary \n @SuppressWarnings(\"unused\")\" here",
+      "range": {
+        "startLine": 623,
+        "startChar": 11,
+        "endLine": 623,
+        "endChar": 37
+      },
+      "revId": "d20eb320fe2ca30040d558f372feec610b40d813",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
