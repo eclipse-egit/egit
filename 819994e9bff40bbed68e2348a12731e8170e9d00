@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_c4368a9a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/ReplaceWithOursTheirsMenu.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-12-12T22:22:08Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "819994e9bff40bbed68e2348a12731e8170e9d00",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
