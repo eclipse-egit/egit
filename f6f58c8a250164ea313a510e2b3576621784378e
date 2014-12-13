@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_64d85698",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-12-13T00:12:16Z",
+      "side": 1,
+      "message": "the submodule walk should be run in a background job otherwise it may freeze the UI, see https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d439674 and https://git.eclipse.org/r/#/c/34281/1/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java,cm",
+      "revId": "f6f58c8a250164ea313a510e2b3576621784378e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_24d2de79",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1853,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-12-13T00:12:16Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "range": {
+        "startLine": 1853,
+        "startChar": 35,
+        "endLine": 1853,
+        "endChar": 36
+      },
+      "revId": "f6f58c8a250164ea313a510e2b3576621784378e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
