@@ -361,7 +361,7 @@ public class IndexDiffCacheEntry {
 			updateJob.addChanges(filesToUpdate, resourcesToUpdate);
 			return;
 		}
-		updateJob = new IndexDiffUpdateJob(getUpdateJobName(), 400) {
+		updateJob = new IndexDiffUpdateJob(getUpdateJobName(), 10) {
 			@Override
 			protected IStatus updateIndexDiff(Collection<String> files,
 					Collection<IResource> resources,
@@ -372,7 +372,7 @@ public class IndexDiffCacheEntry {
 				lock.lock();
 				try {
 					long startTime = System.currentTimeMillis();
-					IndexDiffData result = calcIndexDiffDataIncremental(monitor, 
+					IndexDiffData result = calcIndexDiffDataIncremental(monitor,
 							getName(), files, resources);
 					if (monitor.isCanceled() || (result == null))
 						return Status.CANCEL_STATUS;
