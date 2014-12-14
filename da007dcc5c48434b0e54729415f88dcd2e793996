@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_9f4fbb10",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-14T20:07:30Z",
+      "side": 1,
+      "message": "OK, got it, but: if I comment out the line above test do not fail, so please remove it.",
+      "parentUuid": "a766b734_9e106808",
+      "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_fe8a3c24",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheTest.java",
         "patchSetId": 2
@@ -83,6 +101,23 @@
       "writtenOn": "2014-12-10T10:38:03Z",
       "side": 1,
       "message": "Same as above",
+      "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_7f529fb5",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-14T20:07:30Z",
+      "side": 1,
+      "message": "Please add waitForListenerNotCalled(); before this new entry.refresh() call. This one *is* indeed now needed  :-)",
       "revId": "da007dcc5c48434b0e54729415f88dcd2e793996",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
