@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a766b734_45c5549f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2014-12-15T15:41:07Z",
+      "side": 1,
+      "message": "Are you thinking about multiple levels of submodules? If you have a workingtree\n  \n  /.git\n  /.git/...\n  /src\n  /src/plugins\n  /src/plugins/a\n  /src/plugins/a/.git -\u003e /.git/modules/plugins/a\n  /src/plugins/a/src1\n  /src/plugins/a/sub/\n  /src/plugins/a/sub/.git -\u003e /.git/modules/plugins/a/modules/sub\n  /src/plugins/a/sub/src2\n\n\ngetRepositoryOrNestedSubmoduleRepository(\"/src/plugins/a/sub/src2\") would return \n/.git/modules/plugins/a . We could leave this as feature request to a follow up commit - but we should document.",
+      "revId": "37308895b7dd77a989d21e96b9dc4685a6de6640",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_65a170f0",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2014-12-15T15:41:07Z",
+      "side": 1,
+      "message": "We may run into trouble here because the caller of this method doesn\u0027t know whether a submodule repos is returned or not. In case this method has triggered the opening of a new repository the caller might want to close this repository after he has done his work. If this method returned \"db\" the caller maybe don\u0027t want to close this repo. I think the root problem is that this method hides whether it has opened a new repo or not. (That was of cause also a problem with my first proposal).\nSolution could be to return only submodulerepositories or null. If null is returned the caller calls getRepository().",
+      "revId": "37308895b7dd77a989d21e96b9dc4685a6de6640",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
