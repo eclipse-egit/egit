@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a766b734_e533c0a9",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-12-15T14:37:41Z",
+      "side": 1,
+      "message": "Done\n\nThe caller uses a ModalContext",
+      "parentUuid": "a766b734_64d85698",
+      "revId": "f6f58c8a250164ea313a510e2b3576621784378e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_24d2de79",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2014-12-13T00:12:16Z",
       "side": 1,
       "message": "style nit: we don\u0027t use braces around single line blocks",
+      "range": {
+        "startLine": 1853,
+        "startChar": 35,
+        "endLine": 1853,
+        "endChar": 36
+      },
+      "revId": "f6f58c8a250164ea313a510e2b3576621784378e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a766b734_65105007",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1853,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2014-12-15T14:37:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a766b734_24d2de79",
       "range": {
         "startLine": 1853,
         "startChar": 35,
