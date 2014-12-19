@@ -69,7 +69,7 @@ public class RefContentAssistProvider {
 						Activator.getDefault().getPreferenceStore().getInt(
 								UIPreferences.REMOTE_CONNECTION_TIMEOUT));
 
-				new ProgressMonitorDialog(shell).run(false, true,
+				new ProgressMonitorDialog(shell).run(true, true,
 						new IRunnableWithProgress() {
 
 							public void run(IProgressMonitor monitor)
