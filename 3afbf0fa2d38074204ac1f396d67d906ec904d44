@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8761b321_dc2d9c4a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 471
+      },
+      "writtenOn": "2014-12-19T05:48:59Z",
+      "side": 1,
+      "message": "is this needed? plugin.isActive should be false anyways then, right?",
+      "revId": "3afbf0fa2d38074204ac1f396d67d906ec904d44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8761b321_7c39e88a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 471
+      },
+      "writtenOn": "2014-12-19T05:48:59Z",
+      "side": 1,
+      "message": "can this ever return null in this case? if so, I\u0027d log this case to get notified if this assumption is wrong.",
+      "revId": "3afbf0fa2d38074204ac1f396d67d906ec904d44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
