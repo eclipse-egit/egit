@@ -16,6 +16,24 @@
       "revId": "ce5a0c8c689d95c40b5cae6a94d1fe1673e13f05",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8761b321_7f227a62",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-12-19T11:42:36Z",
+      "side": 1,
+      "message": "I know that we have to watch out for newly opened shells, I just didn\u0027t yet find out which event can be used to detect them",
+      "parentUuid": "8761b321_5f55fe24",
+      "revId": "ce5a0c8c689d95c40b5cae6a94d1fe1673e13f05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
