@@ -44,6 +44,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
@@ -487,7 +488,7 @@ public class SimpleConfigureFetchDialog extends TitleAreaDialog {
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == DRY_RUN) {
 			try {
-				new ProgressMonitorDialog(getShell()).run(false, true,
+				new ProgressMonitorDialog(getShell()).run(true, true,
 						new IRunnableWithProgress() {
 							public void run(IProgressMonitor monitor)
 									throws InvocationTargetException,
@@ -497,15 +498,26 @@ public class SimpleConfigureFetchDialog extends TitleAreaDialog {
 										.getPreferenceStore()
 										.getInt(
 												UIPreferences.REMOTE_CONNECTION_TIMEOUT);
-								FetchOperationUI op = new FetchOperationUI(
+								final FetchOperationUI op = new FetchOperationUI(
 										repository, config, timeout, true);
 								try {
-									FetchResultDialog dlg;
-									dlg = new FetchResultDialog(getShell(),
-											repository, op.execute(monitor), op
+									final FetchResult result = op
+											.execute(monitor);
+									getShell().getDisplay().asyncExec(
+											new Runnable() {
+
+												public void run() {
+													FetchResultDialog dlg;
+													dlg = new FetchResultDialog(
+															getShell(),
+															repository,
+															result,
+															op
 													.getSourceString());
-									dlg.showConfigureButton(false);
-									dlg.open();
+													dlg.showConfigureButton(false);
+													dlg.open();
+												}
+											});
 								} catch (CoreException e) {
 									Activator.handleError(e.getMessage(), e,
 											true);
@@ -539,7 +551,7 @@ public class SimpleConfigureFetchDialog extends TitleAreaDialog {
 			}
 			if (buttonId == OK)
 				try {
-					new ProgressMonitorDialog(getShell()).run(false, true,
+					new ProgressMonitorDialog(getShell()).run(true, true,
 							new IRunnableWithProgress() {
 								public void run(IProgressMonitor monitor)
 										throws InvocationTargetException,
