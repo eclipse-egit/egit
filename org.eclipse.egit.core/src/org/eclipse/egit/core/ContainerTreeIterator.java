@@ -292,7 +292,9 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 			FileMode mode = null;
 			try {
 				File file = asFile();
-				if (FS.DETECTED.supportsSymlinks() && file != null
+				if (file == null)
+					mode = FileMode.MISSING;
+				else if (FS.DETECTED.supportsSymlinks()
 						&& FS.DETECTED.isSymLink(file))
 					mode = FileMode.SYMLINK;
 				else {
@@ -345,7 +347,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 					try {
 						File file = asFile();
 						if (file != null)
-							length = FS.DETECTED.length(asFile());
+							length = FS.DETECTED.length(file);
 						else
 							length = 0;
 					} catch (IOException e) {
@@ -360,7 +362,10 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 		public long getLastModified() {
 			if (fileMode == FileMode.SYMLINK) {
 				try {
-					return FS.DETECTED.lastModified(asFile());
+					File file = asFile();
+					if (file != null)
+						return FS.DETECTED.lastModified(file);
+					return 0;
 				} catch (IOException e) {
 					return 0;
 				}
@@ -371,8 +376,11 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 		@Override
 		public InputStream openInputStream() throws IOException {
 			if (fileMode == FileMode.SYMLINK) {
-				return new ByteArrayInputStream(FS.DETECTED.readSymLink(
-						asFile()).getBytes(Constants.CHARACTER_ENCODING));
+				File file = asFile();
+				if (file == null)
+					throw new IOException("Deleted file: " + rsrc); //$NON-NLS-1$
+				return new ByteArrayInputStream(FS.DETECTED.readSymLink(file)
+						.getBytes(Constants.CHARACTER_ENCODING));
 			} else {
 				if (rsrc.getType() == IResource.FILE)
 					try {
