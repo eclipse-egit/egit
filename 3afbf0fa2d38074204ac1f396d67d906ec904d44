@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8761b321_fcb17877",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-12-19T08:13:43Z",
+      "side": 1,
+      "message": "not sure if that\u0027s true during startup, isActive could be called before the listener got registered asynchronously.",
+      "parentUuid": "8761b321_dc2d9c4a",
+      "revId": "3afbf0fa2d38074204ac1f396d67d906ec904d44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8761b321_7c39e88a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-12-19T05:48:59Z",
       "side": 1,
       "message": "can this ever return null in this case? if so, I\u0027d log this case to get notified if this assumption is wrong.",
+      "revId": "3afbf0fa2d38074204ac1f396d67d906ec904d44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8761b321_5c9eacec",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-12-19T08:13:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8761b321_7c39e88a",
       "revId": "3afbf0fa2d38074204ac1f396d67d906ec904d44",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
