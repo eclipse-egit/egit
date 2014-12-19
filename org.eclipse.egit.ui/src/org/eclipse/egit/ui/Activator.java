@@ -55,8 +55,11 @@ import org.eclipse.jgit.transport.SshSessionFactory;
 import org.eclipse.jsch.core.IJSchService;
 import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.osgi.service.debug.DebugOptionsListener;
+import org.eclipse.swt.events.ShellAdapter;
+import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWindowListener;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -75,6 +78,11 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	 *  The one and only instance
 	 */
 	private static Activator plugin;
+
+	/**
+	 * tracking if the workbench shell is active
+	 */
+	private AtomicBoolean isActive = new AtomicBoolean();
 
 	/**
 	 * Property listeners for plugin specific events
@@ -236,18 +244,12 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	}
 
 	static boolean isActive() {
-		if (!PlatformUI.isWorkbenchRunning())
+		if (plugin == null || !PlatformUI.isWorkbenchRunning())
 			return false;
-		final AtomicBoolean ret = new AtomicBoolean();
 		final Display display = PlatformUI.getWorkbench().getDisplay();
 		if (display.isDisposed())
 			return false;
-		display.syncExec(new Runnable() {
-			public void run() {
-				ret.set(display.getActiveShell() != null);
-			}
-		});
-		return ret.get();
+		return plugin.isActive.get();
 	}
 
 	private void setupFocusHandling() {
@@ -513,9 +515,38 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	}
 
 	private void setupRepoChangeScanner() {
+		registerShellListener();
 		rcs = new RepositoryChangeScanner();
 		rcs.setSystem(true);
 		rcs.schedule(RepositoryChangeScanner.REPO_SCAN_INTERVAL);
+	}
+
+	private void registerShellListener() {
+		isActive.set(true);
+		final Display display = PlatformUI.getWorkbench().getDisplay();
+		if (display.isDisposed())
+			return;
+		display.asyncExec(new Runnable() {
+			public void run() {
+				Shell shell = display.getActiveShell();
+				if (shell != null) {
+					shell.addShellListener(new ShellAdapter() {
+
+						public void shellActivated(ShellEvent e) {
+							isActive.set(true);
+						}
+
+						public void shellClosed(ShellEvent e) {
+							isActive.set(false);
+						}
+
+						public void shellDeactivated(ShellEvent e) {
+							isActive.set(false);
+						}
+					});
+				}
+			}
+		});
 	}
 
 	@SuppressWarnings("unchecked")
