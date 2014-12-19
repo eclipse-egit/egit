@@ -139,7 +139,7 @@ public class RepositoryCache {
 	 * TESTING ONLY!
 	 * Unit tests can use this method to get a clean beginning state
 	 */
-	public void clear() {
+	public synchronized void clear() {
 		repositoryCache.clear();
 	}
 
