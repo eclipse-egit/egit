@@ -87,7 +87,7 @@ public class ResetCommand extends
 						return true;
 
 				try {
-					getContainer().run(false, true,
+					getContainer().run(true, true,
 							new IRunnableWithProgress() {
 								public void run(IProgressMonitor monitor)
 										throws InvocationTargetException,

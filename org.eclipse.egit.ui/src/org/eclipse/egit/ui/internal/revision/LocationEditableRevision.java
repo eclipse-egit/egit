@@ -50,7 +50,7 @@ public class LocationEditableRevision extends EditableRevision {
 	@Override
 	public void setContent(final byte[] newContent) {
 		try {
-			runnableContext.run(false, false, new IRunnableWithProgress() {
+			runnableContext.run(true, false, new IRunnableWithProgress() {
 				public void run(IProgressMonitor monitor)
 						throws InvocationTargetException, InterruptedException {
 					IFileStore store = EFS.getLocalFileSystem().getStore(
