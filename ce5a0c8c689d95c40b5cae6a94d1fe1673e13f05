@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8761b321_5f55fe24",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-19T10:04:48Z",
+      "side": 1,
+      "message": "Matthias, this only adds listeners to *current* shells at the startup of egit plugin, but user can open new windows after startup and close old ones - egit will not notice them at all and always report \"notActive\". \nAs said in the bug [1], the solution to listen to existing shells is not sufficient.\n\n[1] https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d455468#c5",
+      "revId": "ce5a0c8c689d95c40b5cae6a94d1fe1673e13f05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
