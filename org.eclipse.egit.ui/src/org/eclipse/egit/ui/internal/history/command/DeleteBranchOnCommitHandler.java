@@ -80,9 +80,9 @@ public class DeleteBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 			branchesToDelete = branchesOfCommit;
 
 		try {
-			new ProgressMonitorDialog(shell).run(false, false,
+			new ProgressMonitorDialog(shell).run(true, false,
 					new IRunnableWithProgress() {
-						public void run(IProgressMonitor monitor)
+						public void run(final IProgressMonitor monitor)
 								throws InvocationTargetException,
 								InterruptedException {
 							try {
@@ -103,16 +103,6 @@ public class DeleteBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 									} else
 										monitor.worked(1);
 								}
-								if (!unmergedBranches.isEmpty()) {
-									MessageDialog messageDialog = new UnmergedBranchDialog<Ref>(
-											shell, unmergedBranches);
-									if (messageDialog.open() == Window.OK) {
-										for (Ref node : unmergedBranches) {
-											deleteBranch(repository, node, true);
-											monitor.worked(1);
-										}
-									}
-								}
 							} catch (CoreException ex) {
 								throw new InvocationTargetException(ex);
 							} finally {
@@ -126,6 +116,42 @@ public class DeleteBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 					e1.getCause(), true);
 		} catch (InterruptedException e1) {
 			// ignore
+		}
+
+		if (!unmergedBranches.isEmpty()) {
+			MessageDialog messageDialog = new UnmergedBranchDialog<Ref>(shell,
+					unmergedBranches);
+			if (messageDialog.open() == Window.OK) {
+				try {
+					new ProgressMonitorDialog(shell).run(true, false,
+							new IRunnableWithProgress() {
+								public void run(final IProgressMonitor monitor)
+										throws InvocationTargetException,
+										InterruptedException {
+									try {
+										monitor.beginTask(
+												UIText.DeleteBranchCommand_DeletingBranchesProgress,
+												unmergedBranches.size());
+										for (Ref node : unmergedBranches) {
+											deleteBranch(repository, node, true);
+											monitor.worked(1);
+										}
+									} catch (CoreException ex) {
+										throw new InvocationTargetException(ex);
+									} finally {
+										monitor.done();
+									}
+								}
+							});
+				} catch (InvocationTargetException e1) {
+					Activator
+							.handleError(
+									UIText.RepositoriesView_BranchDeletionFailureMessage,
+									e1.getCause(), true);
+				} catch (InterruptedException e1) {
+					// ignore
+				}
+			}
 		}
 
 		return null;

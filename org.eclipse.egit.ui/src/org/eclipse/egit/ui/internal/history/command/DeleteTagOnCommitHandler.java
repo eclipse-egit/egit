@@ -107,7 +107,7 @@ public class DeleteTagOnCommitHandler extends AbstractHistoryCommandHandler {
 			final Repository repository, final List<Ref> tagsToDelete)
 			throws InvocationTargetException,
 			InterruptedException {
-		new ProgressMonitorDialog(shell).run(false, false,
+		new ProgressMonitorDialog(shell).run(true, false,
 				new IRunnableWithProgress() {
 					public void run(IProgressMonitor monitor)
 							throws InvocationTargetException,

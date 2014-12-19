@@ -139,7 +139,7 @@ public class FetchSourcePage extends WizardPage {
 					uriToCheck, Activator.getDefault().getPreferenceStore()
 							.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT));
 			try {
-				new ProgressMonitorDialog(getShell()).run(false, true,
+				new ProgressMonitorDialog(getShell()).run(true, true,
 						new IRunnableWithProgress() {
 							public void run(IProgressMonitor monitor)
 									throws InvocationTargetException,

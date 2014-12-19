@@ -41,6 +41,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
+import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTableItem;
@@ -278,8 +279,11 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		// for some reason, checkboxwithlabel doesn't seem to work
 		dialog.bot().checkBox().deselect();
 		dialog.bot().button(IDialogConstants.FINISH_LABEL).click();
+		dialog.bot().waitWhile(Conditions.shellCloses(dialog), 60000);
+		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 		assertNotNull(repo.resolve(Constants.R_HEADS + "NewBranch"));
 	}
+
 
 	@Test
 	public void testAddTag() throws Exception {

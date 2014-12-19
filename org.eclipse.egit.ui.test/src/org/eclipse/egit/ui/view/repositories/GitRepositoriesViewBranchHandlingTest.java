@@ -44,6 +44,7 @@ import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
+import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
@@ -169,6 +170,7 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		createPage.bot().checkBox(UIText.CreateBranchPage_CheckoutButton)
 				.select();
 		createPage.bot().button(IDialogConstants.FINISH_LABEL).click();
+		createPage.bot().waitWhile(Conditions.shellCloses(createPage), 60000);
 		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 		refreshAndWait();
 
