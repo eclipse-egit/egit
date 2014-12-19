@@ -37,6 +37,41 @@
     },
     {
       "key": {
+        "uuid": "8761b321_5cb7cc72",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-19T08:30:30Z",
+      "side": 1,
+      "message": "Or isActive is not set back to false yet...",
+      "parentUuid": "8761b321_dc2d9c4a",
+      "revId": "3afbf0fa2d38074204ac1f396d67d906ec904d44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8761b321_3cbc9055",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-19T08:30:30Z",
+      "side": 1,
+      "message": "we don\u0027t know if the display is active here, so we can\u0027t set isActive to true. The line is not needed.",
+      "revId": "3afbf0fa2d38074204ac1f396d67d906ec904d44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8761b321_7c39e88a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
         "patchSetId": 1
@@ -65,6 +100,24 @@
       "writtenOn": "2014-12-19T08:13:43Z",
       "side": 1,
       "message": "Done",
+      "parentUuid": "8761b321_7c39e88a",
+      "revId": "3afbf0fa2d38074204ac1f396d67d906ec904d44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8761b321_9cc164cc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2014-12-19T08:30:30Z",
+      "side": 1,
+      "message": "the shell can be not active because the other (non-eclipse) window is active at the moment. This is absolutely legal.",
       "parentUuid": "8761b321_7c39e88a",
       "revId": "3afbf0fa2d38074204ac1f396d67d906ec904d44",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
