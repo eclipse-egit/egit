@@ -53,7 +53,7 @@ public class ResourceEditableRevision extends EditableRevision {
 	@Override
 	public void setContent(final byte[] newContent) {
 		try {
-			runnableContext.run(false, false, new IRunnableWithProgress() {
+			runnableContext.run(true, false, new IRunnableWithProgress() {
 				public void run(IProgressMonitor myMonitor)
 						throws InvocationTargetException, InterruptedException {
 					try {
