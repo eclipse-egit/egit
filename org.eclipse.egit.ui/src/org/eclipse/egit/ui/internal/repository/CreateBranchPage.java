@@ -366,16 +366,16 @@ class CreateBranchPage extends WizardPage {
 	}
 
 	/**
+	 * @param newRefName
 	 * @param monitor
 	 * @throws CoreException
 	 * @throws IOException
 	 */
-	public void createBranch(IProgressMonitor monitor) throws CoreException,
+	public void createBranch(String newRefName, IProgressMonitor monitor)
+			throws CoreException,
 			IOException {
 		monitor.beginTask(UIText.CreateBranchPage_CreatingBranchMessage,
 				IProgressMonitor.UNKNOWN);
-
-		String newRefName = getBranchName();
 
 		final CreateLocalBranchOperation cbop;
 
