@@ -1891,6 +1891,15 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	}
 
 	private void formatDiffs(final List<FileDiff> diffs) {
+		if (diffs.isEmpty()) {
+			if (UIUtils.isUsable(diffViewer)) {
+				IDocument document = new Document();
+				diffViewer.setDocument(document);
+				diffViewer.setFormatter(null);
+			}
+			return;
+		}
+
 		final Repository repository = fileViewer.getRepository();
 		Job formatJob = new Job(UIText.GitHistoryPage_FormatDiffJobName) {
 			protected IStatus run(IProgressMonitor monitor) {
