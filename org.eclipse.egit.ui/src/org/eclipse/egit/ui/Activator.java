@@ -22,7 +22,6 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.net.proxy.IProxyService;
 import org.eclipse.core.resources.IProject;
@@ -198,6 +197,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	private ListenerHandle refreshHandle;
 	private DebugOptions debugOptions;
 
+	private volatile boolean uiIsActive;
 	private IWindowListener focusListener;
 
 	/**
@@ -235,37 +235,39 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		CredentialsProvider.setDefault(new EGitCredentialsProvider());
 	}
 
+	/**
+	 * @return true if at least one Eclipse window is active
+	 */
 	static boolean isActive() {
-		if (!PlatformUI.isWorkbenchRunning())
-			return false;
-		final AtomicBoolean ret = new AtomicBoolean();
-		final Display display = PlatformUI.getWorkbench().getDisplay();
-		if (display.isDisposed())
-			return false;
-		display.syncExec(new Runnable() {
-			public void run() {
-				ret.set(display.getActiveShell() != null);
-			}
-		});
-		return ret.get();
+		return getDefault().uiIsActive;
 	}
+
 
 	private void setupFocusHandling() {
 		focusListener = new IWindowListener() {
 
+			void updateUiState() {
+				Display.getCurrent().asyncExec(new Runnable() {
+					public void run() {
+						uiIsActive = Display.getCurrent().getActiveShell() != null;
+					}
+				});
+			}
+
 			public void windowOpened(IWorkbenchWindow window) {
-				// nothing
+				updateUiState();
 			}
 
 			public void windowDeactivated(IWorkbenchWindow window) {
-				// nothing
+				updateUiState();
 			}
 
 			public void windowClosed(IWorkbenchWindow window) {
-				// nothing
+				updateUiState();
 			}
 
 			public void windowActivated(IWorkbenchWindow window) {
+				updateUiState();
 				if (rcs.doReschedule)
 					rcs.schedule();
 				refreshJob.triggerRefresh();
