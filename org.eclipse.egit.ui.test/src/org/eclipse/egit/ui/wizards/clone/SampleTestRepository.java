@@ -109,7 +109,7 @@ public class SampleTestRepository {
 		File gitdir = new File(trash, gitdirName).getCanonicalFile();
 		Repository db = new RepositoryBuilder().setGitDir(gitdir).build();
 		assertFalse(gitdir.exists());
-		db.create();
+		db.create(true);
 		return new TestRepository<Repository>(db);
 	}
 
