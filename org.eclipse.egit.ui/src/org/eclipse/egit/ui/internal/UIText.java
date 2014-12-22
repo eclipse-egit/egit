@@ -982,6 +982,21 @@ public class UIText extends NLS {
 	public static String ReplaceTargetSelectionDialog_ReplaceWindowTitle;
 
 	/** */
+	public static String ReplaceWithOursTheirsMenu_CalculatingOursTheirsCommitsError;
+
+	/** */
+	public static String ReplaceWithOursTheirsMenu_OursWithCommitLabel;
+
+	/** */
+	public static String ReplaceWithOursTheirsMenu_OursWithoutCommitLabel;
+
+	/** */
+	public static String ReplaceWithOursTheirsMenu_TheirsWithCommitLabel;
+
+	/** */
+	public static String ReplaceWithOursTheirsMenu_TheirsWithoutCommitLabel;
+
+	/** */
 	public static String ReplaceWithPreviousActionHandler_NoParentCommitDialogMessage;
 
 	/** */
@@ -1138,6 +1153,30 @@ public class UIText extends NLS {
 	public static String CheckoutHandler_SelectBranchTitle;
 
 	/** */
+	public static String CherryPickHandler_NoCherryPickPerformedMessage;
+
+	/** */
+	public static String CherryPickHandler_NoCherryPickPerformedTitle;
+
+	/** */
+	public static String CherryPickHandler_CherryPickConflictsMessage;
+
+	/** */
+	public static String CherryPickHandler_CherryPickConflictsTitle;
+
+	/** */
+	public static String CherryPickHandler_CherryPickFailedMessage;
+
+	/** */
+	public static String CherryPickHandler_CouldNotDeleteFile;
+
+	/** */
+	public static String CherryPickHandler_ErrorMsgTemplate;
+
+	/** */
+	public static String CherryPickHandler_IndexDirty;
+
+	/** */
 	public static String CherryPickHandler_JobName;
 
 	/** */
@@ -1145,6 +1184,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CherryPickHandler_ConfirmTitle;
+
+	/** */
+	public static String CherryPickHandler_unknown;
+
+	/** */
+	public static String CherryPickHandler_WorktreeDirty;
 
 	/** */
 	public static String CherryPickOperation_InternalError;
@@ -2981,6 +3026,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String BranchOperationUI_RunningLaunchTitle;
+
+	/** */
+	public static String BranchOperationUI_SearchLaunchConfiguration;
 
 	/** */
 	public static String BranchRenameDialog_Message;
@@ -4983,6 +5031,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String StagingView_Refresh;
+
+	/** */
+	public static String StagingView_ReplaceWith;
 
 	/** */
 	public static String StagingView_LinkSelection;

@@ -26,6 +26,7 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jgit.lib.Repository;
@@ -126,6 +127,11 @@ class DecoratableResourceAdapter extends DecoratableResource {
 
 	private void extractContainerProperties() {
 		String repoRelativePath = makeRepoRelative(resource) + "/"; //$NON-NLS-1$
+
+		if (ResourceUtil.isSymbolicLink(repository, repoRelativePath)) {
+			extractResourceProperties();
+			return;
+		}
 
 		Set<String> ignoredFiles = indexDiffData.getIgnoredNotInIndex();
 		Set<String> untrackedFolders = indexDiffData.getUntrackedFolders();

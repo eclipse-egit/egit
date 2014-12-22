@@ -15,19 +15,25 @@ import org.eclipse.jface.text.AbstractReusableInformationControlCreator;
 import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.util.GitDateFormatter;
+import org.eclipse.jgit.util.GitDateFormatter.Format;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.TableItem;
 
 /**
  * For showing tool tips when hovering over cells in the commit graph table.
  */
 class CommitGraphTableHoverManager extends
 		AbstractHoverInformationControlManager {
+
+	private final GitDateFormatter dateFormatter = new GitDateFormatter(
+			Format.ISO);
 
 	private final TableViewer tableViewer;
 
@@ -44,34 +50,73 @@ class CommitGraphTableHoverManager extends
 	protected void computeInformation() {
 		MouseEvent e = getHoverEvent();
 
-		TableItem item = tableViewer.getTable().getItem(new Point(e.x, e.y));
-		if (item != null) {
-			SWTCommit commit = (SWTCommit) item.getData();
-			if (commit != null && commit.getRefCount() > 0) {
-				Rectangle itemBounds = item.getBounds();
-				int firstColumnWidth = tableViewer.getTable().getColumn(0)
-						.getWidth();
-				int relativeX = e.x - firstColumnWidth - itemBounds.x;
-				for (int i = 0; i < commit.getRefCount(); i++) {
-					Ref ref = commit.getRef(i);
-					Point textSpan = renderer.getRefHSpan(ref);
-					if ((textSpan != null)
-							&& (relativeX >= textSpan.x && relativeX <= textSpan.y)) {
-
-						String hoverText = getHoverText(ref, i, commit);
-						int width = textSpan.y - textSpan.x;
-						Rectangle rectangle = new Rectangle(firstColumnWidth
-								+ itemBounds.x + textSpan.x, itemBounds.y,
-								width, itemBounds.height);
-						setInformation(hoverText, rectangle);
-						return;
-					}
-				}
-			}
+		Information information = null;
+		ViewerCell cell = tableViewer.getCell(new Point(e.x, e.y));
+		if (cell != null) {
+			SWTCommit commit = (SWTCommit) cell.getElement();
+			if (commit != null)
+				information = computeInformationForCommit(commit, cell, e);
 		}
 
 		// computeInformation must setInformation in all cases
-		setInformation(null, null);
+		if (information != null)
+			setInformation(information.information, information.subjectArea);
+		else
+			setInformation(null, null);
+	}
+
+	private Information computeInformationForCommit(SWTCommit commit,
+			ViewerCell cell, MouseEvent e) {
+		final int columnIndex = cell.getColumnIndex();
+		switch (columnIndex) {
+		case 1:
+			return computeInformationForRef(commit, cell, e);
+		case 2:
+			return computeInformationForName(commit.getAuthorIdent(), cell);
+		case 3:
+			return computeInformationForDate(commit.getAuthorIdent(), cell);
+		case 4:
+			return computeInformationForName(commit.getCommitterIdent(), cell);
+		case 5:
+			return computeInformationForDate(commit.getCommitterIdent(), cell);
+		}
+		return null;
+	}
+
+	private Information computeInformationForRef(SWTCommit commit,
+			ViewerCell cell, MouseEvent e) {
+		if (commit.getRefCount() == 0)
+			return null;
+		Rectangle itemBounds = cell.getBounds();
+		int relativeX = e.x - itemBounds.x;
+		for (int i = 0; i < commit.getRefCount(); i++) {
+			Ref ref = commit.getRef(i);
+			Point textSpan = renderer.getRefHSpan(ref);
+			if ((textSpan != null)
+					&& (relativeX >= textSpan.x && relativeX <= textSpan.y)) {
+
+				String hoverText = getHoverText(ref, i, commit);
+				int x = itemBounds.x + textSpan.x;
+				int width = textSpan.y - textSpan.x;
+				Rectangle rectangle = new Rectangle(x, itemBounds.y, width,
+						itemBounds.height);
+				return new Information(hoverText, rectangle);
+			}
+		}
+		return null;
+	}
+
+	private Information computeInformationForName(PersonIdent ident,
+			ViewerCell cell) {
+		String nameWithEmail = ident.getName()
+				+ " <" + ident.getEmailAddress() + ">"; //$NON-NLS-1$ //$NON-NLS-2$
+		return new Information(nameWithEmail, cell.getBounds());
+	}
+
+	private Information computeInformationForDate(PersonIdent ident,
+			ViewerCell cell) {
+		String formattedDate = dateFormatter.formatDate(ident);
+		return new Information(formattedDate, cell.getBounds());
 	}
 
 	private String getHoverText(Ref ref, int refIndex, SWTCommit commit) {
@@ -114,6 +159,16 @@ class CommitGraphTableHoverManager extends
 		@Override
 		protected IInformationControl doCreateInformationControl(Shell parent) {
 			return new DefaultInformationControl(parent);
+		}
+	}
+
+	private static class Information {
+		final Object information;
+		final Rectangle subjectArea;
+
+		private Information(Object information, Rectangle subjectArea) {
+			this.information = information;
+			this.subjectArea = subjectArea;
 		}
 	}
 }

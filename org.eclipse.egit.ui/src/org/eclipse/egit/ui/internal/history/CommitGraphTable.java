@@ -753,6 +753,9 @@ class CommitGraphTable {
 						HistoryViewCommands.CREATE_PATCH,
 						UIText.GitHistoryPage_CreatePatchMenuLabel));
 				popupMgr.add(getCommandContributionItem(
+						HistoryViewCommands.CHERRYPICK,
+						UIText.GitHistoryPage_cherryPickMenuItem));
+				popupMgr.add(getCommandContributionItem(
 						HistoryViewCommands.MERGE,
 						UIText.GitHistoryPage_mergeMenuItem));
 				popupMgr.add(getCommandContributionItem(
@@ -778,9 +781,6 @@ class CommitGraphTable {
 
 			popupMgr.add(new Separator());
 
-			popupMgr.add(getCommandContributionItem(
-					HistoryViewCommands.CHERRYPICK,
-					UIText.GitHistoryPage_cherryPickMenuItem));
 			popupMgr.add(getCommandContributionItem(HistoryViewCommands.REVERT,
 					UIText.GitHistoryPage_revertMenuItem));
 
