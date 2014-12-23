@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<title>JGit 3.5 New and Noteworthy</title>
+		<title>JGit 3.6 New and Noteworthy</title>
 		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
 	</head>
 	<body>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
-				<th style="width: 100%" align="center" colspan="3">JGit 3.5 New and Noteworthy</th>
+				<th style="width: 100%" align="center" colspan="3">JGit 3.6 New and Noteworthy</th>
 			</tr>
 			<tr>
 				<td style="width: 20%" align="left"></td>
@@ -28,36 +28,31 @@
 		<h1 id="JGit">JGit</h1>
 		<h2 id="Features">Features</h2>
 		<ul>
-			<li>Added parser and credentials provider for .netrc files</li>
-			<li>RebaseCommand support for option --preserve-merges</li>
-			<li>CommitCommand support for committing merges during rebase</li>
-			<li>Pull with rebase now supports option --preserve-merges</li>
-			<li>CherryPickCommand support for option --no-commit</li>
-			<li>Enhance BranchConfig API to expose branch.* options</li>
-			<li>RepoCommand
-				<ul>
-					<li>Allow projects without path attribute in manifest</li>
-					<li>Handle repo manifest file without default remote</li>
-					<li>Support remote aliases in repo manifest</li>
-					<li>Support non-default remotes in project tag</li>
-					<li>Add support to &lt;include&gt; tag in repo manifest xml</li>
-				</ul>
-			</li>
+			<li>Ignore rule parser was reimplemented to support ** wildcard patterns, negation rules and improve performance</li>
+			<li>Add "aggressive" option to GC</li>
+			<li>GarbageCollectCommand now supports DfsRepository</li>
+			<li>Support for Submodule configuration submodule.&lt;name&gt;.ignore</li>
+			<li>Support for new submodule repository layout (.git/modules of the super project contains the submodule repositories)</li>
+			<li>InitCommand support for option "--separate-git-dir" to store .git meta data directory in a separate directory</li>
+			<li>CloneCommand support to store .git meta data directory in a separate directory</li>
+			<li>Permission bits for "executable" attribute are now set according to the umask on Posix/Java7</li>
+			<li>BundleWriter now supports including HEAD in bundle</li>
+			<li>New config parameter core.trustfolderstat</li>
 		</ul>
-		<h2 id="Command_Line">Command Line</h2>
+		<h2 id="JGit_Command_Line">JGit Command Line</h2>
 		<ul>
-			<li>Merge command support for option -m</li>
-			<li>Use credentials from .netrc if available</li>
+			<li>Add option --bare to clone command</li>
+			<li>Add options --heads and --tags to ls-remote command</li>
 		</ul>
 		<h2 id="Performance_Improvements">Performance Improvements</h2>
 		<ul>
-			<li>Process most in-core merges without local temp files</li>
-			<li>Small performance optimization for ignore rules matcher</li>
+			<li>Reimplemented ignore rule parser to improve performance of ignore rule evaluation</li>
+			<li>Enhance SubmoduleWalk with a fast check whether a repo contains submodules</li>
 		</ul>
 		<h2 id="Build_and_Release_Engineering">Build and Release Engineering</h2>
 		<ul>
-			<li>Updated Maven plugins used in build to latest versions</li>
-			<li>Enable NLS / TranslationBundle to be used in OSGi</li>
+			<li>The java7 feature is now included in org.eclipse.jgit.feature</li>
+			<li>Maven site generation for jgit</li>
 		</ul><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>

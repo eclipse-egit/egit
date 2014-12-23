@@ -715,19 +715,17 @@
 		</p>
 		<h2 id="Inspecting_the_state_of_the_Repository">Inspecting the state of the Repository</h2>
 		<h3 id="Label_Decorations">Label Decorations</h3>
-		<p>Label decorations show Git specific information on resources under Git version control. They appear in all views showing model objects, like Package Explorer, Project Explorer, Navigator, Hierarchy View.</p>
+		<p>Label decorations show Git-specific information about resources under Git version control. They appear in all views showing model objects, like Package Explorer, Project Explorer, Navigator, and Hierarchy View.</p>
 		<p>The Git label decorations can be switched on globally in the Preference Menu (
 			<b>Window &gt; Preferences</b>) under 
-			<b>General &gt; Appearance &gt; Label Decorations</b>.
-		</p>
-		<p>More detailed settings can be done in the Preferences under 
+			<b>General &gt; Appearance &gt; Label Decorations</b>, and more detailed settings can be modified in Preferences under 
 			<b>Team &gt; Git &gt; Label Decorations</b>.
 		</p>
 		<p>There are two different types of label decorations: text decorations and icon decorations.</p>
 		<h4 id="Text_Decorations">Text Decorations</h4>
 		<p>Text decorations appear on the left or right side of the text label. They can be configured on the Preferences dialog under 
-			<b>Team &gt; Git &gt; Label Decorations</b> on the tab 
-			<b>Text Decorations</b>. For example, the default for a dirty resource is a <tt>
+			<b>Team &gt; Git &gt; Label Decorations</b> on the 
+			<b>Text Decorations</b> tab. For example, the default for a dirty resource is a <tt>
 			<b>&gt;</b></tt> on the left side of its name.
 		</p>
 		<p>These are the default settings:</p>
@@ -736,7 +734,7 @@
 		</p>
 		<p>For files and folders there are the variables <tt>"name"</tt>, <tt>"dirty"</tt> and <tt>"staged"</tt>. <tt>"Dirty"</tt> and <tt>"staged"</tt> are flags; if they are true, the text after the colon is displayed.</p>
 		<p>For projects there are the additional variables <tt>"repository"</tt>, <tt>"branch"</tt> and <tt>"branch_status"</tt>. The <tt>"repository"</tt> variable displays the name of the repository.</p>
-		<p>The <tt>"branch"</tt> variable displays the name of the currently checked out branch. If no branch is checked out, the decoration shows the shortened name of the commit (first seven characters followed by ellipsis). If tags and/or remote branches are pointing to this commit, a "best guess" heuristic is applied to also show this information: tags take precedence over remote branches, if several tags apply, the newest one is displayed; if there are several remote branches or tags have no modification date, then alphabetic sorting is applied and the last one is shown. Example: the checked out commit <tt>
+		<p>The <tt>"branch"</tt> variable displays the name of the currently checked out branch. If no branch is checked out, the decoration shows the shortened name of the commit (first seven characters followed by ellipsis). If tags and/or remote branches are pointing to this commit, a "best guess" heuristic is applied to also show this information: tags take precedence over remote branches, and if several tags apply, the newest one is displayed. If there are several remote branches or tags that have no modification date, then alphabetic sorting is applied and the last one is shown. Example: the checked out commit <tt>
 			<b>e49f576...</b></tt> refers to tag <tt>
 			<b>v.0.7.1</b></tt> of repository <tt>
 			<b>egit</b></tt>:
@@ -756,7 +754,7 @@
 			<li>↑N↓M – The local branch and the remote-tracking branch have diverged (the two above apply both).</li>
 			<li>– Empty if the local branch and the remote-tracking branch have the same state.</li>
 		</ul>
-		<p>The status variable can be used with a leading space like this: <tt>{ branch_status}</tt>. This results in the space only being added when the status is not empty.</p>
+		<p>The status variable can be used with a leading space like this: <tt>{ branch_status}</tt>. This results in the space being added only when the status is not empty.</p>
 		<h4 id="Icon_Decorations">Icon Decorations</h4>
 		<p>Icon decorations appear on the lower right corner of the icon displayed in front of the label. They can be configured on the Preferences dialog under 
 			<b>Team &gt; Git &gt; Label Decorations</b> on the tab 

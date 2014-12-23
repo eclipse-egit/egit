@@ -30,6 +30,40 @@
 			</tr>
 		</table><hr/>
 		<h1 id="Documentation">Documentation</h1>
+		<h2 id="JGit_3">JGit</h2>
+		<p>The JGit project generates a project report and javadocs using a Maven site. This Maven site is deployed to 
+			<a href="http://download.eclipse.org/jgit/site/$" target="egit_external">http://download.eclipse.org/jgit/site/$</a>{project.version}.
+			E.g. 
+			<a href="http://download.eclipse.org/jgit/site/3.5.0.201409260305-r/" target="egit_external">http://download.eclipse.org/jgit/site/3.5.0.201409260305-r/</a>
+		</p>
+		<p>Generating the site:</p>
+		<pre><b>$ mvn site:site</b>
+</pre>
+		<p>Staging the site locally under ./target/staging:</p>
+		<pre><b>$ mvn site:stage</b>
+</pre>
+		<p>If you can connect to build.eclipse.org over ssh (ask webmaster if you are a committer and need ssh access) you can deploy a local build of the site:</p>
+		<pre><b>$ mvn site:deploy</b>
+</pre>
+		<p>The site is deployed under 
+			<a href="http://download.eclipse.org/jgit/site/$" target="egit_external">http://download.eclipse.org/jgit/site/$</a>{project.version}
+		</p>
+		<p>To select the ssh key to use for deploying over ssh add the following section to your Maven settings.xml:</p>
+		<pre>&lt;server&gt;
+     &lt;id&gt;jgit.website&lt;/id&gt;
+     &lt;username&gt;username&lt;/username&gt;
+     &lt;privateKey&gt;${user.home}/.ssh/id_rsa&lt;/privateKey&gt;
+     &lt;filePermissions&gt;664&lt;/filePermission&gt;
+     &lt;directoryPermissions&gt;775&lt;/directoryPermissions&gt;
+     &lt;configuration&gt;&lt;/configuration&gt;
+&lt;/server&gt;
+</pre>
+		<p>To deploy the site from EGit HIPP (Hudson) at 
+			<a href="https://hudson.eclipse.org/egit/" target="egit_external">https://hudson.eclipse.org/egit/</a> enable the Maven profile 
+			<b>build-server</b> and add the Maven goals 
+			<b>site:site site:deploy</b>.
+		</p>
+		<h2 id="EGit_3">EGit</h2>
 		<p>The EGit project sources its documentation from the wiki and generates Eclipse help content from it (under the covers, we are using 
 			<a href="http://wiki.eclipse.org/Mylyn/WikiText" target="egit_external">Mylyn WikiText</a> to make this possible). This significantly lowers the barrier for people to contribute documentation to the EGit project. To contribute documentation, simply modify the 
 			<a href="http://wiki.eclipse.org/EGit/User_Guide" target="egit_external">EGit User's Guide</a>. Have a look at the 
