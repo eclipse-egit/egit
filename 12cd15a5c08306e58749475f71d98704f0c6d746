@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8761b321_ba6ff372",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ContainerTreeIterator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-12-31T15:53:19Z",
+      "side": 1,
+      "message": "externalize the error message",
+      "range": {
+        "startLine": 381,
+        "startChar": 27,
+        "endLine": 381,
+        "endChar": 43
+      },
+      "revId": "12cd15a5c08306e58749475f71d98704f0c6d746",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
