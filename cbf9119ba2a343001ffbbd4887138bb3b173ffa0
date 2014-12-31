@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8761b321_dff3c1d7",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-12-31T00:26:05Z",
+      "side": 1,
+      "message": "this wait time is too long, it\u0027s increasing test run time for org.eclipse.core.test from 68sec to 91sec (on my Mac). I think 1sec wait time should be sufficient.",
+      "range": {
+        "startLine": 284,
+        "startChar": 41,
+        "endLine": 284,
+        "endChar": 45
+      },
+      "revId": "cbf9119ba2a343001ffbbd4887138bb3b173ffa0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8761b321_b9a70592",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-12-31T00:26:05Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "range": {
+        "startLine": 89,
+        "startChar": 41,
+        "endLine": 89,
+        "endChar": 42
+      },
+      "revId": "cbf9119ba2a343001ffbbd4887138bb3b173ffa0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8761b321_99acc977",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2014-12-31T00:26:05Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks\n\nstore path.lastIndexOf(\u0027/\u0027) and cache it in a local variable then we don\u0027t need to scan the same string twice if a slash is contained",
+      "range": {
+        "startLine": 162,
+        "startChar": 31,
+        "endLine": 162,
+        "endChar": 32
+      },
+      "revId": "cbf9119ba2a343001ffbbd4887138bb3b173ffa0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
