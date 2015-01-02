@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8761b321_8e93dc60",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/history/HistoryViewTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-02T00:27:44Z",
+      "side": 1,
+      "message": "style nit: unnecessary extra blank line",
+      "revId": "2b693e7dbee887e4363d6d04b468aedcb86266bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8761b321_ee889030",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/SimpleConfigurePushDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-02T00:27:44Z",
+      "side": 1,
+      "message": "here we should also set parameter fork to true",
+      "range": {
+        "startLine": 630,
+        "startChar": 47,
+        "endLine": 630,
+        "endChar": 52
+      },
+      "revId": "2b693e7dbee887e4363d6d04b468aedcb86266bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
