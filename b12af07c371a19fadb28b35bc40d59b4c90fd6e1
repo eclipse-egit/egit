@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8761b321_6e83e0a6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-02T11:22:13Z",
+      "side": 1,
+      "message": "missing file path argument for error message",
+      "revId": "b12af07c371a19fadb28b35bc40d59b4c90fd6e1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8761b321_0e76ac49",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/FileDeleteHookTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-02T11:22:13Z",
+      "side": 1,
+      "message": "this is testing the delete hook which is implemented in egit core hence the test should reside in org.eclipse.egit.core.test",
+      "range": {
+        "startLine": 9,
+        "startChar": 25,
+        "endLine": 9,
+        "endChar": 27
+      },
+      "revId": "b12af07c371a19fadb28b35bc40d59b4c90fd6e1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
