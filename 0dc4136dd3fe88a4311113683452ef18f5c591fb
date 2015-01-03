@@ -55,6 +55,23 @@
     },
     {
       "key": {
+        "uuid": "8761b321_1166cd1b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/CommitMessageEditorDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-03T00:40:56Z",
+      "side": 1,
+      "message": "\"Edit Commit Message\" is already displayed in the dialog so it\u0027s pretty pointless to repeat this in the window title, let\u0027s instead set the title to \"Interactive Rebase - Reword Commit\" to give some more context",
+      "revId": "0dc4136dd3fe88a4311113683452ef18f5c591fb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0756a345_8b18d4a9",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/CommitMessageEditorDialog.java",
         "patchSetId": 1
