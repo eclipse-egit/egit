@@ -365,17 +365,23 @@ class CreateBranchPage extends WizardPage {
 		return nameText.getText();
 	}
 
+	public boolean checkoutNewBranch() {
+		return checkout.getSelection();
+	}
+
 	/**
+	 * @param newRefName
+	 * @param checkoutNewBranch
 	 * @param monitor
 	 * @throws CoreException
 	 * @throws IOException
 	 */
-	public void createBranch(IProgressMonitor monitor) throws CoreException,
+	public void createBranch(String newRefName, boolean checkoutNewBranch,
+			IProgressMonitor monitor)
+			throws CoreException,
 			IOException {
 		monitor.beginTask(UIText.CreateBranchPage_CreatingBranchMessage,
 				IProgressMonitor.UNKNOWN);
-
-		String newRefName = getBranchName();
 
 		final CreateLocalBranchOperation cbop;
 
@@ -390,7 +396,7 @@ class CreateBranchPage extends WizardPage {
 
 		cbop.execute(monitor);
 
-		if (checkout.getSelection()) {
+		if (checkoutNewBranch) {
 			if (monitor.isCanceled())
 				return;
 			monitor.beginTask(UIText.CreateBranchPage_CheckingOutMessage,

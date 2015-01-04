@@ -2,6 +2,7 @@
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2007, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Google Inc.
+ * Copyright (C) 2014, Obeo
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,6 +13,7 @@ package org.eclipse.egit.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Arrays;
 
 import org.eclipse.core.filesystem.URIUtil;
@@ -40,6 +42,7 @@ import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheBuilder;
 import org.eclipse.jgit.dircache.DirCacheEditor;
 import org.eclipse.jgit.dircache.DirCacheEntry;
+import org.eclipse.jgit.errors.LockFailedException;
 import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.team.core.TeamException;
 
@@ -105,6 +108,25 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 				tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(),
 						0, CoreText.MoveDeleteHook_operationError, null));
 			tree.standardDeleteFile(file, updateFlags, monitor);
+		} catch (LockFailedException e) {
+			// FIXME The index is currently locked. This notably happens during
+			// rebase operations. auto-staging deletions should be queued... and
+			// the queued job will have to double-check whether the file has
+			// truly been deleted or if it was only deleted to be replaced by
+			// another version.
+			// This hook only exists to automatically add changes to the index.
+			// If the index is currently locked, do not accept the
+			// responsibility of deleting the file, return false to tell the
+			// workspace it can continue with the standard deletion. The user
+			// will have to stage the deletion later on _if_ this was truly
+			// needed, which won't happen for calls triggered by merge
+			// operations from the merge strategies.
+			Activator.getDefault().getLog()
+					.log(new Status(IStatus.WARNING, Activator.getPluginId(),
+							MessageFormat
+									.format(CoreText.MoveDeleteHook_cannotAutoStageDeletion,
+											file.getLocation())));
+			return FINISH_FOR_ME;
 		} catch (IOException e) {
 			tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(), 0,
 					CoreText.MoveDeleteHook_operationError, e));

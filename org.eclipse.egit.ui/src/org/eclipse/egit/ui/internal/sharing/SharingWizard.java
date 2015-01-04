@@ -75,7 +75,7 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 						.getProjects(true);
 				final Repository selectedRepository = existingPage
 						.getSelectedRepsoitory();
-				getContainer().run(false, false, new IRunnableWithProgress() {
+				getContainer().run(true, false, new IRunnableWithProgress() {
 					public void run(IProgressMonitor monitor)
 							throws InvocationTargetException,
 							InterruptedException {

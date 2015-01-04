@@ -45,7 +45,10 @@ public class IteratorService {
 			// workspace is closed
 			return null;
 		}
-		IContainer container = findContainer(root, repository.getWorkTree());
+		File workTree = repository.getWorkTree();
+		if (!workTree.exists())
+			return null;
+		IContainer container = findContainer(root, workTree);
 		if (container != null)
 			return new ContainerTreeIterator(repository, container);
 		return new AdaptableFileTreeIterator(repository, root);
@@ -63,6 +66,8 @@ public class IteratorService {
 	 *         container does not exist
 	 */
 	public static IContainer findContainer(IWorkspaceRoot root, File file) {
+		if (!file.exists())
+			return null;
 		if (!file.isDirectory())
 			throw new IllegalArgumentException(
 					"file " + file.getAbsolutePath() + " is no directory"); //$NON-NLS-1$//$NON-NLS-2$

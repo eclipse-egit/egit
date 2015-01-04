@@ -15,6 +15,7 @@ package org.eclipse.egit.core.internal.indexdiff;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -22,6 +23,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.lib.Repository;
 
@@ -74,9 +76,20 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 			// Ignore the change
 			return true;
 
+		IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
+		IndexDiffCacheEntry entry = null;
+
+		if (cache != null)
+			entry = cache.getIndexDiffCacheEntry(mapping.getRepository());
+
 		if (resource instanceof IFolder
 				&& delta.getKind() == IResourceDelta.ADDED) {
-			filesToUpdate.add(mapping.getRepoRelativePath(resource) + "/"); //$NON-NLS-1$
+			String path = mapping.getRepoRelativePath(resource) + "/"; //$NON-NLS-1$
+
+			if (isIgnoredInOldIndex(entry, path))
+				return true; // keep going to catch .gitignore files.
+
+			filesToUpdate.add(path);
 			resourcesToUpdate.add(resource);
 			return true;
 		}
@@ -98,11 +111,55 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 		}
 
 		String repoRelativePath = mapping.getRepoRelativePath(resource);
-		if (repoRelativePath!= null)
-			filesToUpdate.add(repoRelativePath);
+		if (repoRelativePath == null) {
+			resourcesToUpdate.add(resource);
+			return true;
+		}
+
+		if (isIgnoredInOldIndex(entry, repoRelativePath)) {
+			// This file is ignored in the old index, and ignore rules did not
+			// change: ignore the delta to avoid unnecessary index updates
+			return false;
+		}
+		filesToUpdate.add(repoRelativePath);
 		resourcesToUpdate.add(resource);
 
 		return true;
+	}
+
+	/**
+	 * @param entry
+	 *            the {@link IndexDiffCacheEntry} for the repository containing
+	 *            the path.
+	 * @param path
+	 *            the repository relative path of the resource to check
+	 * @return whether the given path is ignored by the given
+	 *         {@link IndexDiffCacheEntry}
+	 */
+	private boolean isIgnoredInOldIndex(IndexDiffCacheEntry entry, String path) {
+		// fall back to processing all changes as long as there is no old index.
+		if (entry == null || gitIgnoreChanged)
+			return false;
+
+		IndexDiffData indexDiff = entry.getIndexDiff();
+		if (indexDiff == null)
+			return false;
+
+		String p = path;
+		Set<String> ignored = indexDiff.getIgnoredNotInIndex();
+		while (p != null) {
+			if (ignored.contains(p))
+				return true;
+
+			p = skipLastSegment(p);
+		}
+
+		return false;
+	}
+
+	private String skipLastSegment(String path) {
+		int slashPos = path.lastIndexOf('/');
+		return slashPos == -1 ? null : path.substring(0, slashPos);
 	}
 
 	/**

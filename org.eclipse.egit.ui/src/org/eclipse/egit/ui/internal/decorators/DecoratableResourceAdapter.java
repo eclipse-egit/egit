@@ -25,6 +25,7 @@ import java.util.Set;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -126,7 +127,10 @@ class DecoratableResourceAdapter extends DecoratableResource {
 	}
 
 	private void extractContainerProperties() {
-		String repoRelativePath = makeRepoRelative(resource) + "/"; //$NON-NLS-1$
+		String repoRelative = makeRepoRelative(resource);
+		if (repoRelative == null)
+			return;
+		String repoRelativePath = repoRelative + "/"; //$NON-NLS-1$
 
 		if (ResourceUtil.isSymbolicLink(repository, repoRelativePath)) {
 			extractResourceProperties();
@@ -191,8 +195,10 @@ class DecoratableResourceAdapter extends DecoratableResource {
 	}
 
 	private String makeRepoRelative(IResource res) {
-		return stripWorkDir(repository.getWorkTree(), res.getLocation()
-				.toFile());
+		IPath location = res.getLocation();
+		if (location == null)
+			return null;
+		return stripWorkDir(repository.getWorkTree(), location.toFile());
 	}
 
 	private boolean containsPrefix(Set<String> collection, String prefix) {
