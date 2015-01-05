@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8761b321_ddcbc419",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-05T23:54:12Z",
+      "side": 1,
+      "message": "style nit: s/a/A/ start the commit message header with an uppercase header",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 1
+      },
+      "revId": "c5da4116968b1d0d07a8255ef7d28bf010c07e62",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8761b321_bdd088c3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-05T23:54:12Z",
+      "side": 1,
+      "message": "on Mac there is no blinking cursor on the merge result dialog, though this change doesn\u0027t do any harm on Mac.",
+      "revId": "c5da4116968b1d0d07a8255ef7d28bf010c07e62",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
