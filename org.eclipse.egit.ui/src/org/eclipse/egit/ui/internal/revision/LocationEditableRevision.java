@@ -14,10 +14,15 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.jface.operation.IRunnableContext;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -50,7 +55,19 @@ public class LocationEditableRevision extends EditableRevision {
 	@Override
 	public void setContent(final byte[] newContent) {
 		try {
-			runnableContext.run(true, false, new IRunnableWithProgress() {
+			// Don't fork: if we are called from a thread which locked
+			// workspace our *forked* operation will never complete because it
+			// requires file lock which cannot be acquired from another thread
+			ISchedulingRule rule = Job.getJobManager().currentRule();
+			boolean fork = true;
+			if (rule instanceof IResource) {
+				IFile ourFile = ResourcesPlugin.getWorkspace().getRoot()
+						.getFile(location);
+				if (ourFile.exists()
+						&& ((IResource) rule).isConflicting(ourFile))
+					fork = false;
+			}
+			runnableContext.run(fork, false, new IRunnableWithProgress() {
 				public void run(IProgressMonitor monitor)
 						throws InvocationTargetException, InterruptedException {
 					IFileStore store = EFS.getLocalFileSystem().getStore(
