@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "8761b321_404188bd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-01-07T16:51:27Z",
+      "side": 1,
+      "message": "This class has no synchronization at all. The local variable (and new argument for the method below) is here to keep the code free from data race conditions where the field changes the state during method execution.",
+      "parentUuid": "8761b321_c0c63813",
+      "revId": "ad3847cdae14b84fdaf4eeb55d7c9767bd13b2ba",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8761b321_5d1e8f98",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
         "patchSetId": 1
@@ -48,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "8761b321_c0e0f844",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-01-07T16:51:27Z",
+      "side": 1,
+      "message": "Mist. I forget this after patching workspace code where the braces are allowed.",
+      "parentUuid": "8761b321_5d1e8f98",
+      "revId": "ad3847cdae14b84fdaf4eeb55d7c9767bd13b2ba",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8761b321_00d150c6",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
         "patchSetId": 1
@@ -59,6 +95,24 @@
       "writtenOn": "2015-01-07T15:51:36Z",
       "side": 1,
       "message": "why is this change needed ?",
+      "revId": "ad3847cdae14b84fdaf4eeb55d7c9767bd13b2ba",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8761b321_a03e9c3f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-01-07T16:51:27Z",
+      "side": 1,
+      "message": "See comment above - to avoid data race issues with field access.",
+      "parentUuid": "8761b321_00d150c6",
       "revId": "ad3847cdae14b84fdaf4eeb55d7c9767bd13b2ba",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
