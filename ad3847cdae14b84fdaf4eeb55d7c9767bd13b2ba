@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8761b321_c0c63813",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-07T15:51:36Z",
+      "side": 1,
+      "message": "why do we need this variable ? Looks like just the null check would be sufficient to fix the bug",
+      "range": {
+        "startLine": 683,
+        "startChar": 26,
+        "endLine": 683,
+        "endChar": 35
+      },
+      "revId": "ad3847cdae14b84fdaf4eeb55d7c9767bd13b2ba",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8761b321_5d1e8f98",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-07T15:51:36Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "range": {
+        "startLine": 684,
+        "startChar": 26,
+        "endLine": 684,
+        "endChar": 27
+      },
+      "revId": "ad3847cdae14b84fdaf4eeb55d7c9767bd13b2ba",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8761b321_00d150c6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-07T15:51:36Z",
+      "side": 1,
+      "message": "why is this change needed ?",
+      "revId": "ad3847cdae14b84fdaf4eeb55d7c9767bd13b2ba",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
