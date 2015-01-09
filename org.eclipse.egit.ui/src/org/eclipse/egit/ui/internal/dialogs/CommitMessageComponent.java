@@ -19,6 +19,7 @@ package org.eclipse.egit.ui.internal.dialogs;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,6 +32,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RevUtils;
@@ -44,6 +46,8 @@ import org.eclipse.egit.ui.internal.commit.CommitHelper.CommitInfo;
 import org.eclipse.egit.ui.internal.gerrit.GerritUtil;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jgit.lib.Constants;
@@ -586,12 +590,29 @@ public class CommitMessageComponent {
 	}
 
 	private void getHeadCommitInfo() {
-		CommitInfo headCommitInfo = CommitHelper.getHeadCommitInfo(repository);
-		RevCommit previousCommit = headCommitInfo.getCommit();
+		try {
+			new ProgressMonitorDialog(getShell()).run(true, false,
+					new IRunnableWithProgress() {
 
-		amendingCommitInRemoteBranch = isContainedInAnyRemoteBranch(previousCommit);
-		previousCommitMessage = headCommitInfo.getCommitMessage();
-		previousAuthor = headCommitInfo.getAuthor();
+						public void run(IProgressMonitor monitor)
+								throws InvocationTargetException,
+								InterruptedException {
+							CommitInfo headCommitInfo = CommitHelper
+									.getHeadCommitInfo(repository);
+							RevCommit previousCommit = headCommitInfo
+									.getCommit();
+
+							amendingCommitInRemoteBranch = isContainedInAnyRemoteBranch(previousCommit);
+							previousCommitMessage = headCommitInfo
+									.getCommitMessage();
+							previousAuthor = headCommitInfo.getAuthor();
+						}
+					});
+		} catch (InvocationTargetException e) {
+			org.eclipse.egit.ui.Activator.error(e.getMessage(), e);
+		} catch (InterruptedException e) {
+			org.eclipse.egit.ui.Activator.error(e.getMessage(), e);
+		}
 	}
 
 	private boolean isContainedInAnyRemoteBranch(RevCommit commit) {
