@@ -1441,7 +1441,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			break;
 
 		case CONFLICTING:
-			runCommand(ActionCommands.COMPARE_WITH_HEAD_ACTION, selection);
+			runCommand(ActionCommands.MERGE_TOOL_ACTION, selection);
 			break;
 
 		case MISSING:
