@@ -40,6 +40,7 @@ import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.IteratorService;
 import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.dircache.DirCache;
@@ -172,7 +173,7 @@ public class IndexDiffCacheEntry {
 			}
 
 		};
-		job.setRule(ResourcesPlugin.getWorkspace().getRoot());
+		job.setRule(RuleUtil.getRule(repository));
 		job.schedule();
 	}
 
