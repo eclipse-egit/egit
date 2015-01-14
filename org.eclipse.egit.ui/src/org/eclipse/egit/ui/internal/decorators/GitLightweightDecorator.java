@@ -645,6 +645,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 
 	public void indexDiffChanged(Repository repository,
 			IndexDiffData indexDiffData) {
+		// clear calculated repo data
+		DecoratableResourceHelper.clearState(repository);
 		postLabelEvent();
 	}
 
