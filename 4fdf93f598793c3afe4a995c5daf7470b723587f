@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67fe7f71_bb0c1b4a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-01-15T22:37:57Z",
+      "side": 1,
+      "message": "Unfortunately one can\u0027t disconnect if one starts to listen via showBusyForFamily() API (or I haven\u0027t found a trick). So until view is reopened we are either connected (if we were linked) or not.",
+      "parentUuid": "67fe7f71_bb9a5b79",
+      "revId": "4fdf93f598793c3afe4a995c5daf7470b723587f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67fe7f71_fba4e3bb",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-01-15T22:23:41Z",
       "side": 1,
       "message": "where should I see the busy indication ? I can\u0027t find any visual difference compared to master. Tried with linux kernel repository imported as a general project",
+      "revId": "4fdf93f598793c3afe4a995c5daf7470b723587f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67fe7f71_fb16a353",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-01-15T22:37:57Z",
+      "side": 1,
+      "message": "You should see view title font changed to \"italics\" and mouse cursor over view will change to \"half-busy\". Put breakpoint into the IndexDiffUpdateJob run method, you will see (hopefully) what I mean. At least on RHEL 5.8 it works fine with Eclipse 3.8. Haven\u0027t tested on newer Eclipses.",
+      "parentUuid": "67fe7f71_fba4e3bb",
       "revId": "4fdf93f598793c3afe4a995c5daf7470b723587f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
