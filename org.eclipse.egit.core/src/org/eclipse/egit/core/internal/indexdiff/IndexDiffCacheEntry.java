@@ -144,13 +144,14 @@ public class IndexDiffCacheEntry {
 	}
 
 	/**
-	 * This method starts a Job that refreshes all open projects related to the
-	 * repository and afterwards triggers the (asynchronous) recalculation of
-	 * the IndexDiff. This ensures that the IndexDiff calculation is not working
-	 * on out-dated resources.
+	 * This method creates (but do not starts) a {@link Job} that refreshes all
+	 * open projects related to the repository and afterwards triggers the
+	 * (asynchronous) recalculation of the {@link IndexDiff}. This ensures that
+	 * the {@link IndexDiff} calculation is not working on out-dated resources.
 	 *
+	 * @return new job ready to be scheduled, never null
 	 */
-	public void refreshResourcesAndIndexDiff() {
+	public Job createRefreshResourcesAndIndexDiffJob() {
 		String repositoryName = Activator.getDefault().getRepositoryUtil()
 				.getRepositoryName(repository);
 		String jobName = MessageFormat
@@ -173,7 +174,7 @@ public class IndexDiffCacheEntry {
 
 		};
 		job.setRule(ResourcesPlugin.getWorkspace().getRoot());
-		job.schedule();
+		return job;
 	}
 
 	/**
