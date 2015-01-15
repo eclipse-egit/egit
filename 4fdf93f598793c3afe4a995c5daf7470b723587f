@@ -78,6 +78,24 @@
     },
     {
       "key": {
+        "uuid": "67fe7f71_fbdfc3f7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-01-15T23:03:47Z",
+      "side": 1,
+      "message": "in this case user changed the default not to follow the selection \u003d\u003e most likely he don\u0027t want to change the repository focus. This mean, any other \"visual\" changes will most likely disturb him too.\n\nThis is the weakest point - we can\u0027t disconnect and we can\u0027t use \"family by repository\".",
+      "parentUuid": "67fe7f71_1bf72783",
+      "revId": "4fdf93f598793c3afe4a995c5daf7470b723587f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67fe7f71_fba4e3bb",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 1
@@ -125,6 +143,24 @@
       "side": 1,
       "message": "can\u0027t see any busy indication when breakpoint in IndexDiffUpdateJob\u0027s run method is reached using Mars M4 on Mac OS X 10.10.1 (Yosemite)",
       "parentUuid": "67fe7f71_fb16a353",
+      "revId": "4fdf93f598793c3afe4a995c5daf7470b723587f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67fe7f71_3b9dcb47",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-01-15T23:03:47Z",
+      "side": 1,
+      "message": "I\u0027m sorry :-) Just tried on Fedora 21 + Eclipse 4.5 - it works here fine, but the cursor doesn\u0027t change (haven\u0027t checked yet if this is my desctop configuration or bug in SWT).",
+      "parentUuid": "67fe7f71_7bd593e3",
       "revId": "4fdf93f598793c3afe4a995c5daf7470b723587f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
