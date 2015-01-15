@@ -1183,8 +1183,11 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		refreshAction = new Action(UIText.StagingView_Refresh, IAction.AS_PUSH_BUTTON) {
 			public void run() {
-				if(cacheEntry != null)
-					cacheEntry.refreshResourcesAndIndexDiff();
+				if (cacheEntry != null) {
+					schedule(
+							cacheEntry.createRefreshResourcesAndIndexDiffJob(),
+							false);
+				}
 			}
 		};
 		refreshAction.setImageDescriptor(UIIcons.ELCL16_REFRESH);
