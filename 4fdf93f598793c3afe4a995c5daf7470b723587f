@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "67fe7f71_5bda4f15",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-15T22:58:22Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "range": {
+        "startLine": 14,
+        "startChar": 47,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "4fdf93f598793c3afe4a995c5daf7470b723587f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67fe7f71_bb9a5b79",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 1
@@ -37,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "67fe7f71_1bf72783",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-15T22:58:22Z",
+      "side": 1,
+      "message": "ok, what\u0027s the reason not to show this if reactOnSelection is false ?",
+      "parentUuid": "67fe7f71_bb0c1b4a",
+      "revId": "4fdf93f598793c3afe4a995c5daf7470b723587f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67fe7f71_fba4e3bb",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 1
@@ -66,6 +107,24 @@
       "side": 1,
       "message": "You should see view title font changed to \"italics\" and mouse cursor over view will change to \"half-busy\". Put breakpoint into the IndexDiffUpdateJob run method, you will see (hopefully) what I mean. At least on RHEL 5.8 it works fine with Eclipse 3.8. Haven\u0027t tested on newer Eclipses.",
       "parentUuid": "67fe7f71_fba4e3bb",
+      "revId": "4fdf93f598793c3afe4a995c5daf7470b723587f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67fe7f71_7bd593e3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-15T22:58:22Z",
+      "side": 1,
+      "message": "can\u0027t see any busy indication when breakpoint in IndexDiffUpdateJob\u0027s run method is reached using Mars M4 on Mac OS X 10.10.1 (Yosemite)",
+      "parentUuid": "67fe7f71_fb16a353",
       "revId": "4fdf93f598793c3afe4a995c5daf7470b723587f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
