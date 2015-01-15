@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67fe7f71_bb9a5b79",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-15T22:23:41Z",
+      "side": 1,
+      "message": "reactOnSelection is only checked when constructing the view, this means when reactOnSelection changes value we don\u0027t reconfigure busy indication",
+      "revId": "4fdf93f598793c3afe4a995c5daf7470b723587f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67fe7f71_fba4e3bb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-15T22:23:41Z",
+      "side": 1,
+      "message": "where should I see the busy indication ? I can\u0027t find any visual difference compared to master. Tried with linux kernel repository imported as a general project",
+      "revId": "4fdf93f598793c3afe4a995c5daf7470b723587f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
