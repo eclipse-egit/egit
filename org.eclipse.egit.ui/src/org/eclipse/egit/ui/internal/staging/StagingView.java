@@ -1601,7 +1601,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 	 * elements
 	 */
 	public void refreshViewers() {
-		Display.getDefault().syncExec(new Runnable() {
+		syncExec(new Runnable() {
 			public void run() {
 				refreshViewersInternal();
 			}
@@ -1612,7 +1612,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 	 * Refresh the unstaged and staged viewers, preserving expanded elements
 	 */
 	public void refreshViewersPreservingExpandedElements() {
-		Display.getDefault().syncExec(new Runnable() {
+		syncExec(new Runnable() {
 			public void run() {
 				Object[] unstagedExpanded = unstagedViewer
 						.getExpandedElements();
@@ -2059,8 +2059,10 @@ public class StagingView extends ViewPart implements IShowInSource {
 	 *            {@code}true if rebase is in progress
 	 */
 	protected void updateRebaseButtonVisibility(final boolean isRebasing) {
-		Display.getDefault().asyncExec(new Runnable() {
+		asyncExec(new Runnable() {
 			public void run() {
+				if (isDisposed())
+					return;
 				showControl(rebaseSection, isRebasing);
 				rebaseSection.getParent().layout(true);
 			}
@@ -2078,6 +2080,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 	 *            if the current commit should be amended
 	 */
 	public void setAmending(boolean isAmending) {
+		if (isDisposed())
+			return;
 		if (amendPreviousCommitAction.isChecked() != isAmending) {
 			amendPreviousCommitAction.setChecked(isAmending);
 			amendPreviousCommitAction.run();
@@ -2440,12 +2444,11 @@ public class StagingView extends ViewPart implements IShowInSource {
 		commitJob.addJobChangeListener(new JobChangeAdapter() {
 			@Override
 			public void done(IJobChangeEvent event) {
-				PlatformUI.getWorkbench().getDisplay()
-						.asyncExec(new Runnable() {
-							public void run() {
-								enableAllWidgets(true);
-							}
-						});
+				asyncExec(new Runnable() {
+					public void run() {
+						enableAllWidgets(true);
+					}
+				});
 			}
 		});
 
@@ -2502,6 +2505,10 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private void syncExec(Runnable runnable) {
 		PlatformUI.getWorkbench().getDisplay().syncExec(runnable);
+	}
+
+	private void asyncExec(Runnable runnable) {
+		PlatformUI.getWorkbench().getDisplay().asyncExec(runnable);
 	}
 
 }
