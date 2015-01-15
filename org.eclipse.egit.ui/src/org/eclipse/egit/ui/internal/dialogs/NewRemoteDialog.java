@@ -15,7 +15,6 @@ import java.util.Set;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
@@ -23,6 +22,7 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -78,9 +78,9 @@ public class NewRemoteDialog extends TitleAreaDialog {
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);
-		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(main);
-		GridDataFactory.fillDefaults().indent(5, 5).grab(true, true).applyTo(
-				main);
+		main.setLayout(new GridLayout(2, false));
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
+
 		Label nameLabel = new Label(main, SWT.NONE);
 		nameLabel.setText(UIText.NewRemoteDialog_NameLabel);
 		nameText = new Text(main, SWT.BORDER);
