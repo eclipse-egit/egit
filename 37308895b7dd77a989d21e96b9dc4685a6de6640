@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67fe7f71_19444c1d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-17T01:41:39Z",
+      "side": 1,
+      "message": "added a TODO",
+      "parentUuid": "a766b734_45c5549f",
+      "revId": "37308895b7dd77a989d21e96b9dc4685a6de6640",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_65a170f0",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
         "patchSetId": 3
@@ -47,6 +65,42 @@
       "writtenOn": "2014-12-16T09:54:37Z",
       "side": 1,
       "message": "Yes, right. We even do not make use of EGit\u0027s Repository Cache here. When we only return submodulerepositories, we still should check how such instances are handled e.g. in the Git Repositories View.\n\nThe staging View e.g. doesn\u0027t close a repository. So if we created a submodule repository each time the selection is changed in eclipse we would get a lot of instances.",
+      "parentUuid": "a766b734_65a170f0",
+      "revId": "37308895b7dd77a989d21e96b9dc4685a6de6640",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67fe7f71_7983d8e1",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-17T01:41:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8761b321_56d052c2",
+      "revId": "37308895b7dd77a989d21e96b9dc4685a6de6640",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67fe7f71_997e7c5c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-17T01:41:39Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "a766b734_65a170f0",
       "revId": "37308895b7dd77a989d21e96b9dc4685a6de6640",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
