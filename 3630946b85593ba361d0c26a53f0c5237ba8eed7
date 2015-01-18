@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "67fe7f71_1cc9da4e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabels.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-18T01:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67fe7f71_9cd5cae6",
+      "range": {
+        "startLine": 103,
+        "startChar": 5,
+        "endLine": 103,
+        "endChar": 39
+      },
+      "revId": "3630946b85593ba361d0c26a53f0c5237ba8eed7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766b734_bb40d6ee",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabels.java",
         "patchSetId": 1
