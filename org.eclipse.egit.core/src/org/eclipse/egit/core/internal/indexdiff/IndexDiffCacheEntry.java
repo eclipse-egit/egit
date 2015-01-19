@@ -254,17 +254,25 @@ public class IndexDiffCacheEntry {
 		return indexDiffData;
 	}
 
-	private void scheduleReloadJob(final String trigger) {
+	/**
+	 * THIS METHOD IS PROTECTED FOR TESTS ONLY!
+	 *
+	 * @param trigger
+	 */
+	protected void scheduleReloadJob(final String trigger) {
 		if (reloadJob != null) {
-			if (reloadJobIsInitializing)
+			if (reloadJobIsInitializing) {
 				return;
+			}
 			reloadJob.cancel();
 		}
-		if (updateJob != null)
-			updateJob.cancel();
+		if (updateJob != null) {
+			updateJob.cleanupAndCancel();
+		}
 
-		if (!checkRepository())
+		if (!checkRepository()) {
 			return;
+		}
 		reloadJob = new Job(getReloadJobName()) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
@@ -276,13 +284,15 @@ public class IndexDiffCacheEntry {
 				}
 				lock.lock();
 				try {
-					if (monitor.isCanceled())
+					if (monitor.isCanceled()) {
 						return Status.CANCEL_STATUS;
+					}
 					parallelism.acquire();
 					long startTime = System.currentTimeMillis();
 					IndexDiffData result = calcIndexDiffDataFull(monitor, getName());
-					if (monitor.isCanceled() || (result == null))
+					if (monitor.isCanceled() || (result == null)) {
 						return Status.CANCEL_STATUS;
+					}
 					indexDiffData = result;
 					if (GitTraceLocation.INDEXDIFFCACHE.isActive()) {
 						long time = System.currentTimeMillis() - startTime;
@@ -318,8 +328,9 @@ public class IndexDiffCacheEntry {
 
 			@Override
 			public boolean belongsTo(Object family) {
-				if (JobFamilies.INDEX_DIFF_CACHE_UPDATE.equals(family))
+				if (JobFamilies.INDEX_DIFF_CACHE_UPDATE.equals(family)) {
 					return true;
+				}
 				return super.belongsTo(family);
 			}
 
@@ -351,12 +362,26 @@ public class IndexDiffCacheEntry {
 		}
 	}
 
-	private void scheduleUpdateJob(final Collection<String> filesToUpdate,
+	/**
+	 * THIS METHOD IS PROTECTED FOR TESTS ONLY!
+	 *
+	 * @param filesToUpdate
+	 * @param resourcesToUpdate
+	 */
+	protected void scheduleUpdateJob(final Collection<String> filesToUpdate,
 			final Collection<IResource> resourcesToUpdate) {
 		if (!checkRepository())
 			return;
 		if (reloadJob != null && reloadJobIsInitializing)
 			return;
+
+		if (shouldReload(filesToUpdate)) {
+			// Calculate new IndexDiff if too many resources changed
+			// This happens e.g. when a project is opened
+			scheduleReloadJob("Too many resources changed: " + filesToUpdate.size()); //$NON-NLS-1$
+			return;
+		}
+
 		if (updateJob != null) {
 			updateJob.addChanges(filesToUpdate, resourcesToUpdate);
 			return;
@@ -366,16 +391,31 @@ public class IndexDiffCacheEntry {
 			protected IStatus updateIndexDiff(Collection<String> files,
 					Collection<IResource> resources,
 					IProgressMonitor monitor) {
-				waitForWorkspaceLock(monitor);
-				if (monitor.isCanceled())
+				if (monitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
+				}
+
+				// second check here is required because we collect changes
+				if (shouldReload(files)) {
+					// Calculate new IndexDiff if too many resources changed
+					// This happens e.g. when a project is opened
+					scheduleReloadJob("Too many resources changed: " + files.size()); //$NON-NLS-1$
+					return Status.CANCEL_STATUS;
+				}
+
+				waitForWorkspaceLock(monitor);
+
+				if (monitor.isCanceled()) {
+					return Status.CANCEL_STATUS;
+				}
 				lock.lock();
 				try {
 					long startTime = System.currentTimeMillis();
 					IndexDiffData result = calcIndexDiffDataIncremental(monitor,
 							getName(), files, resources);
-					if (monitor.isCanceled() || (result == null))
+					if (monitor.isCanceled() || (result == null)) {
 						return Status.CANCEL_STATUS;
+					}
 					indexDiffData = result;
 					if (GitTraceLocation.INDEXDIFFCACHE.isActive()) {
 						long time = System.currentTimeMillis() - startTime;
@@ -392,10 +432,11 @@ public class IndexDiffCacheEntry {
 					notifyListeners();
 					return Status.OK_STATUS;
 				} catch (IOException e) {
-					if (GitTraceLocation.INDEXDIFFCACHE.isActive())
+					if (GitTraceLocation.INDEXDIFFCACHE.isActive()) {
 						GitTraceLocation.getTrace().trace(
 								GitTraceLocation.INDEXDIFFCACHE.getLocation(),
 								"Calculating IndexDiff failed", e); //$NON-NLS-1$
+					}
 					return Status.OK_STATUS;
 				} finally {
 					lock.unlock();
@@ -403,14 +444,25 @@ public class IndexDiffCacheEntry {
 			}
 			@Override
 			public boolean belongsTo(Object family) {
-				if (JobFamilies.INDEX_DIFF_CACHE_UPDATE.equals(family))
+				if (JobFamilies.INDEX_DIFF_CACHE_UPDATE.equals(family)) {
 					return true;
+				}
 				return super.belongsTo(family);
 			}
 
 		};
 
 		updateJob.addChanges(filesToUpdate, resourcesToUpdate);
+	}
+
+	/**
+	 * Check if the index update or reload is recommended for given files
+	 *
+	 * @param filesToUpdate
+	 * @return true if the reload operation is preferred
+	 */
+	protected boolean shouldReload(final Collection<String> filesToUpdate) {
+		return filesToUpdate.size() > RESOURCE_LIST_UPDATE_LIMIT;
 	}
 
 	private IndexDiffData calcIndexDiffDataIncremental(IProgressMonitor monitor,
@@ -509,22 +561,28 @@ public class IndexDiffCacheEntry {
 					return;
 				}
 				Collection<String> filesToUpdate = visitor.getFilesToUpdate();
-				if (visitor.getGitIgnoreChanged())
+				if (visitor.getGitIgnoreChanged()) {
 					scheduleReloadJob("A .gitignore changed"); //$NON-NLS-1$
-				else if (indexDiffData == null)
+				} else if (indexDiffData == null) {
 					scheduleReloadJob("Resource changed, no diff available"); //$NON-NLS-1$
-				else if (!filesToUpdate.isEmpty())
-					if (filesToUpdate.size() < RESOURCE_LIST_UPDATE_LIMIT)
-						scheduleUpdateJob(filesToUpdate, visitor.getResourcesToUpdate());
-					else
-						// Calculate new IndexDiff if too many resources changed
-						// This happens e.g. when a project is opened
-						scheduleReloadJob("Too many resources changed"); //$NON-NLS-1$
+				} else if (!filesToUpdate.isEmpty()) {
+					scheduleUpdateJob(filesToUpdate,
+							visitor.getResourcesToUpdate());
+				}
 			}
 
 		};
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(
 				resourceChangeListener, IResourceChangeEvent.POST_CHANGE);
+	}
+
+	/**
+	 * FOR TESTS ONLY
+	 *
+	 * @return job used to schedule incremental updates
+	 */
+	protected IndexDiffUpdateJob getUpdateJob() {
+		return updateJob;
 	}
 
 	/**
