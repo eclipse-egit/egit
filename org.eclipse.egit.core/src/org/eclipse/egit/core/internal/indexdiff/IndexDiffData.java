@@ -190,9 +190,14 @@ public class IndexDiffData {
 	}
 
 	private static boolean isAnyPrefixOf(String pathToCheck, Collection<String> possiblePrefixes) {
-		for (String possiblePrefix : possiblePrefixes)
-			if (pathToCheck.startsWith(possiblePrefix) || possiblePrefix.equals(pathToCheck + '/'))
+		for (String possiblePrefix : possiblePrefixes) {
+			if (pathToCheck.startsWith(possiblePrefix))
 				return true;
+			if (possiblePrefix.length() == pathToCheck.length() + 1
+					&& possiblePrefix.charAt(possiblePrefix.length() - 1) == '/'
+					&& possiblePrefix.startsWith(pathToCheck))
+				return true;
+		}
 		return false;
 	}
 
