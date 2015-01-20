@@ -147,6 +147,7 @@ public class GitRepositoriesViewTestUtils {
 		RemotesNode remotes = new RemotesNode(root, repository);
 
 		String rootText = labelProvider.getStyledText(root).getString();
+		rootText = ignoreRepositoryChangesDecorator(rootText);
 		SWTBotTreeItem rootItem = tree.getTreeItem(rootText);
 		SWTBotTreeItem remotesItem = rootItem.expand().getNode(
 				labelProvider.getStyledText(remotes).getString());
@@ -156,5 +157,12 @@ public class GitRepositoriesViewTestUtils {
 	public Repository lookupRepository(File directory) throws Exception {
 		return org.eclipse.egit.core.Activator.getDefault()
 				.getRepositoryCache().lookupRepository(directory);
+	}
+
+	private String ignoreRepositoryChangesDecorator(String rootText) {
+		if (rootText.startsWith("> ")) {
+			return rootText.substring(2);
+		}
+		return rootText;
 	}
 }
