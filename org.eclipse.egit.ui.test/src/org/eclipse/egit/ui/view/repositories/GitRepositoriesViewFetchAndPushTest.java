@@ -94,8 +94,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
 				clonedRepositoryFile);
 		shareProjects(clonedRepositoryFile);
-		SWTBotTree tree = getOrOpenView().bot().tree();
-		tree.select(0);
+
 
 		Repository repository = lookupRepository(clonedRepositoryFile);
 		// add the configuration for push
@@ -108,6 +107,9 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		String currentBranch = repository.getBranch();
 		new Git(repository).branchRename().setOldName(currentBranch)
 				.setNewName("" + System.currentTimeMillis()).call();
+
+		SWTBotTree tree = getOrOpenView().bot().tree();
+		tree.select(0);
 
 		TestUtil.waitForJobs(50, 5000);
 		selectNode(tree, useRemote, false);
@@ -154,9 +156,11 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		objectIdBefore = objectIdBefore.substring(0, 7);
 		touchAndSubmit(null);
 
-		selectNode(tree, useRemote, false);
+		SWTBotTree updatedTree = getOrOpenView().bot().tree();
+		updatedTree.select(0);
+		selectNode(updatedTree, useRemote, false);
 
-		runPush(tree);
+		runPush(updatedTree);
 
 		confirmed = bot.shell(dialogTitle);
 		treeItems = confirmed.bot().tree().getAllItems();
