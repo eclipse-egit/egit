@@ -192,7 +192,7 @@ public class PushBranchPage extends WizardPage {
 			branchIconLabel
 					.setLayoutData(new RowData(branchIcon.getBounds().width,
 							branchIcon.getBounds().height));
-			branchIconLabel.setBackgroundImage(branchIcon);
+			branchIconLabel.setImage(branchIcon);
 			Label localBranchLabel = new Label(sourceComposite, SWT.NONE);
 			localBranchLabel.setText(Repository.shortenRefName(this.ref
 					.getName()));
@@ -204,7 +204,7 @@ public class PushBranchPage extends WizardPage {
 		Image commitIcon = UIIcons.CHANGESET.createImage();
 		this.disposables.add(commitIcon);
 		Label commitIconLabel = new Label(sourceComposite, SWT.NONE);
-		commitIconLabel.setBackgroundImage(commitIcon);
+		commitIconLabel.setImage(commitIcon);
 		commitIconLabel.setLayoutData(new RowData(commitIcon.getBounds().width,
 				commitIcon.getBounds().height));
 
