@@ -419,19 +419,19 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		myRepoViewUtil.getRootItem(tree, repositoryFile).select();
 		// the selection should be root
-		assertTrue(tree.selection().get(0, 0).startsWith(REPO1));
+		assertTrue(tree.selection().get(0, 0).contains(REPO1));
 
 		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
 		getProjectItem(projectExplorerTree, PROJ1).select();
 
 		// the selection should be still be root
-		assertTrue(tree.selection().get(0, 0).startsWith(REPO1));
+		assertTrue(tree.selection().get(0, 0).contains(REPO1));
 
 		// activate the link with selection
 		toggleLinkWithSelection();
 
 		// the selection should be still be root
-		assertTrue(tree.selection().get(0, 0).startsWith(REPO1));
+		assertTrue(tree.selection().get(0, 0).contains(REPO1));
 
 		// select again the project
 		projectExplorerTree = TestUtil.getExplorerTree();
