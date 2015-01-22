@@ -25,6 +25,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchCommitCommand;
@@ -79,8 +80,8 @@ public abstract class GitRepositoriesViewTestBase extends
 	}
 
 	protected static void setVerboseBranchMode(boolean state) {
-		ICommandService srv = (ICommandService) PlatformUI.getWorkbench()
-				.getService(ICommandService.class);
+		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(),
+				ICommandService.class);
 		State verboseBranchModeState = srv.getCommand(
 				ToggleBranchCommitCommand.ID).getState(
 				ToggleBranchCommitCommand.TOGGLE_STATE);
