@@ -99,8 +99,32 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	 * @param thr The exception through which we noticed the error
 	 */
 	public static void logError(final String message, final Throwable thr) {
-		getDefault().getLog().log(
-				new Status(IStatus.ERROR, getPluginId(), 0, message, thr));
+		getDefault().getLog().log(error(message, thr));
+	}
+
+	/**
+	 * Utility to create a warning status for this plug-in.
+	 *
+	 * @param message
+	 *            User comprehensible message
+	 * @param thr
+	 *            cause
+	 * @return an initialized warning status
+	 */
+	public static IStatus warning(final String message, final Throwable thr) {
+		return new Status(IStatus.WARNING, getPluginId(), 0, message, thr);
+	}
+
+	/**
+	 * Utility method to log warnings for this plug-in.
+	 *
+	 * @param message
+	 *            User comprehensible message
+	 * @param thr
+	 *            The exception through which we noticed the warning
+	 */
+	public static void logWarning(final String message, final Throwable thr) {
+		getDefault().getLog().log(warning(message, thr));
 	}
 
 	/**
