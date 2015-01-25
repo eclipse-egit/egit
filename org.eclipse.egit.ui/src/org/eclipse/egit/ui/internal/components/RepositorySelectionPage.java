@@ -71,6 +71,8 @@ import org.eclipse.ui.PlatformUI;
  */
 public class RepositorySelectionPage extends WizardPage implements IRepositorySearchResult {
 
+	private static final String GIT_CLONE_COMMAND_PREFIX = "git clone "; //$NON-NLS-1$
+
 	private static final String EMPTY_STRING = "";  //$NON-NLS-1$
 
 	private final static String USED_URIS_PREF = "RepositorySelectionPage.UsedUris"; //$NON-NLS-1$
@@ -751,7 +753,8 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 			}
 
 			try {
-				final URIish finalURI = new URIish(uriText.getText().trim());
+				final URIish finalURI = new URIish(
+						stripGitCloneCommand(uriText.getText()));
 				String proto = finalURI.getScheme();
 				if (proto == null && scheme.getSelectionIndex() >= 0)
 					proto = scheme.getItem(scheme.getSelectionIndex());
@@ -851,6 +854,14 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 			selectionComplete(null, remoteConfig);
 			return;
 		}
+	}
+
+	private String stripGitCloneCommand(String input) {
+		input = input.trim();
+		if (input.startsWith(GIT_CLONE_COMMAND_PREFIX)) {
+			return input.substring(GIT_CLONE_COMMAND_PREFIX.length()).trim();
+		}
+		return input.trim();
 	}
 
 	private boolean setSafePassword(String p) {
@@ -988,7 +999,7 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 			if (eventDepth != 1)
 				return;
 
-			final URIish u = new URIish(text);
+			final URIish u = new URIish(stripGitCloneCommand(text));
 			safeSet(hostText, u.getHost());
 			safeSet(pathText, u.getPath());
 			safeSet(userText, u.getUser());
