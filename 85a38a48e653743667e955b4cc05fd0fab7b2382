@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67fe7f71_4eb1cfc8",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/GitCloneWizardTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-25T23:26:08Z",
+      "side": 1,
+      "message": "style nit: remove this unnecessary blank line",
+      "revId": "85a38a48e653743667e955b4cc05fd0fab7b2382",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67fe7f71_eef1a38b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-25T23:26:08Z",
+      "side": 1,
+      "message": "move trimming into the stripGitCloneCommand\n\nwe should tolerate also additional whitespace between \"git clone \" and the url",
+      "revId": "85a38a48e653743667e955b4cc05fd0fab7b2382",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67fe7f71_2eae0b6d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-25T23:26:08Z",
+      "side": 1,
+      "message": "shouldn\u0027t we also trim here ?",
+      "revId": "85a38a48e653743667e955b4cc05fd0fab7b2382",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
