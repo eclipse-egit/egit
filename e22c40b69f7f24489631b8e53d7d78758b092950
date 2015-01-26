@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67fe7f71_9792aa26",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/GitCloneWizardTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-26T22:26:40Z",
+      "side": 1,
+      "message": "add some more whitespace to test the general case or add some more tests for this",
+      "revId": "e22c40b69f7f24489631b8e53d7d78758b092950",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67fe7f71_3795be11",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-01-26T22:26:40Z",
+      "side": 1,
+      "message": "you need to first trim input otherwise this doesn\u0027t match if input starts with whitespace",
+      "revId": "e22c40b69f7f24489631b8e53d7d78758b092950",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
