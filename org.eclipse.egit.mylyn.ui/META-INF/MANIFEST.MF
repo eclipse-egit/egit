@@ -20,7 +20,7 @@ Require-Bundle: org.eclipse.team.core,
  org.eclipse.ui.workbench.texteditor,
  org.eclipse.jface.text,
  org.eclipse.ui.forms
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
 Export-Package: org.eclipse.egit.internal.mylyn.ui;version="4.0.0";x-friends:="org.eclipse.egit.ui.test",
