@@ -92,19 +92,14 @@
         <repository location='http://download.eclipse.org/egit/updates-nightly'/>
       </repositories>
     </iu>
-    <iu id='org.eclipse.pde.api.tools.ee.j2se15.group' name='J2SE-1.5 Execution Environment Description' version='0.0.0'>
-      <repositories size='1'>
-        <repository location='http://download.eclipse.org/eclipse/updates/4.2'/>
-      </repositories>
-    </iu>
-    <iu id='org.eclipse.pde.api.tools.ee.javase16.group' name='JavaSE-1.6 Execution Environment Description' version='0.0.0'>
-      <repositories size='1'>
-        <repository location='http://download.eclipse.org/eclipse/updates/4.2'/>
-      </repositories>
-    </iu>
     <iu id='org.eclipse.pde.api.tools.ee.javase17.group' name='JavaSE-1.7 Execution Environment Description' version='0.0.0'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/eclipse/updates/4.2'/>
+        <repository location='http://download.eclipse.org/eclipse/updates/4.4'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.pde.api.tools.ee.javase18.group' name='JavaSE-1.8 Execution Environment Description' version='0.0.0'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/eclipse/updates/4.4'/>
       </repositories>
     </iu>
     <iu id='com.mountainminds.eclemma.feature.feature.group' name='EclEmma Java Code Coverage' version='0.0.0'>

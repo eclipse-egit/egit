@@ -4,7 +4,7 @@ Bundle-Name: Git Team Provider Mylyn UI Test Fragment
 Bundle-SymbolicName: org.eclipse.egit.mylyn.ui.test
 Bundle-Version: 4.0.0.qualifier
 Fragment-Host: org.eclipse.egit.mylyn.ui
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.apache.log4j;bundle-version="[1.0.0,2.0.0)",
  org.hamcrest;bundle-version="[1.1.0,2.0.0)"
 Bundle-Vendor: Eclipse.org
