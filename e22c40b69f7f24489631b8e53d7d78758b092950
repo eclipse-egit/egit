@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67fe7f71_42987e81",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/GitCloneWizardTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2015-01-27T08:14:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67fe7f71_9792aa26",
+      "revId": "e22c40b69f7f24489631b8e53d7d78758b092950",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67fe7f71_3795be11",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2015-01-26T22:26:40Z",
       "side": 1,
       "message": "you need to first trim input otherwise this doesn\u0027t match if input starts with whitespace",
+      "revId": "e22c40b69f7f24489631b8e53d7d78758b092950",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67fe7f71_629b0280",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2015-01-27T08:14:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67fe7f71_3795be11",
       "revId": "e22c40b69f7f24489631b8e53d7d78758b092950",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
