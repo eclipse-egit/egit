@@ -26,5 +26,5 @@ Import-Package: org.mockito;version="[1.8.0,1.9.0)",
  org.eclipse.jgit.treewalk;version="[4.0.0,4.1.0)",
  org.eclipse.jgit.treewalk.filter;version="[4.0.0,4.1.0)",
  org.eclipse.jgit.util;version="[4.0.0,4.1.0)"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.eclipse.egit.core.test;version="4.0.0"
