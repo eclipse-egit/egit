@@ -19,6 +19,7 @@ package org.eclipse.egit.ui.internal;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.CompareUI;
@@ -34,6 +35,7 @@ import org.eclipse.core.resources.mapping.ResourceTraversal;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.DefaultScope;
@@ -58,6 +60,8 @@ import org.eclipse.egit.ui.internal.revision.GitCompareFileRevisionEditorInput.E
 import org.eclipse.egit.ui.internal.synchronize.GitModelSynchronize;
 import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheEditor;
@@ -79,6 +83,7 @@ import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.jgit.util.IO;
 import org.eclipse.jgit.util.io.EolCanonicalizingInputStream;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.IEditorInput;
@@ -86,6 +91,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IReusableEditor;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 
 /**
@@ -497,6 +503,10 @@ public class CompareUtils {
 			CompareUI.openCompareEditor(in);
 	}
 
+	private static Shell getShell() {
+		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+	}
+
 	/*
 	 * Creates a compare input that can be used to compare a given local file
 	 * with another reference. The given "base" element should always reflect a
@@ -505,36 +515,63 @@ public class CompareUtils {
 	 * base and the reference we compare it with.
 	 */
 	private static CompareEditorInput prepareCompareInput(
-			Repository repository, String gitPath, ITypedElement base,
-			String refName) throws IOException {
-		final ITypedElement destCommit;
-		ITypedElement commonAncestor = null;
+			final Repository repository, final String gitPath,
+			final ITypedElement base, final String refName) throws IOException {
 
-		if (GitFileRevision.INDEX.equals(refName))
-			destCommit = getIndexTypedElement(repository, gitPath);
-		else if (Constants.HEAD.equals(refName))
-			destCommit = getHeadTypedElement(repository, gitPath);
-		else {
-			final ObjectId destCommitId = repository.resolve(refName);
-			RevWalk rw = new RevWalk(repository);
-			RevCommit commit = rw.parseCommit(destCommitId);
-			rw.release();
-			destCommit = getFileRevisionTypedElement(gitPath, commit,
-					repository);
+		final GitCompareFileRevisionEditorInput[] inputs = new GitCompareFileRevisionEditorInput[1];
+		try {
+			new ProgressMonitorDialog(getShell()).run(true, false,
+					new IRunnableWithProgress() {
 
-			if (base != null && commit != null) {
-				final ObjectId headCommitId = repository
-						.resolve(Constants.HEAD);
-				commonAncestor = getFileRevisionTypedElementForCommonAncestor(
-						gitPath, headCommitId, destCommitId, repository);
-			}
+						public void run(IProgressMonitor monitor)
+								throws InvocationTargetException,
+								InterruptedException {
+							ITypedElement destCommit = null;
+							ITypedElement commonAncestor = null;
+							try {
+								if (GitFileRevision.INDEX.equals(refName))
+									destCommit = getIndexTypedElement(
+											repository, gitPath);
+								else if (Constants.HEAD.equals(refName))
+									destCommit = getHeadTypedElement(
+											repository, gitPath);
+								else {
+									final ObjectId destCommitId = repository
+											.resolve(refName);
+									RevWalk rw = new RevWalk(repository);
+									RevCommit commit = rw
+											.parseCommit(destCommitId);
+									rw.release();
+									destCommit = getFileRevisionTypedElement(
+											gitPath, commit, repository);
+
+									if (base != null && commit != null) {
+										final ObjectId headCommitId = repository
+												.resolve(Constants.HEAD);
+										commonAncestor = getFileRevisionTypedElementForCommonAncestor(
+												gitPath, headCommitId,
+												destCommitId, repository);
+									}
+								}
+								final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
+										base, destCommit, commonAncestor, null);
+								in.getCompareConfiguration().setRightLabel(
+										refName);
+								inputs[0] = in;
+							} catch (IOException e) {
+								org.eclipse.egit.ui.Activator.error(
+										e.getMessage(), e);
+							}
+						}
+
+					});
+		} catch (InvocationTargetException e) {
+			org.eclipse.egit.ui.Activator.error(e.getMessage(), e);
+		} catch (InterruptedException e) {
+			org.eclipse.egit.ui.Activator.error(e.getMessage(), e);
 		}
 
-
-		final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
-				base, destCommit, commonAncestor, null);
-		in.getCompareConfiguration().setRightLabel(refName);
-		return in;
+		return inputs[0];
 	}
 
 	/**
