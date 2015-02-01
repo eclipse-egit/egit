@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27080763_6574cc43",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-01T23:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27080763_453a6884",
+      "revId": "68dc2933d43416de47e7643f48eee8a5dededadc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27080763_25180435",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntryTest.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2015-02-01T22:49:51Z",
       "side": 1,
       "message": "missing license header",
+      "revId": "68dc2933d43416de47e7643f48eee8a5dededadc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27080763_a575143f",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntryTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-01T23:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27080763_25180435",
       "revId": "68dc2933d43416de47e7643f48eee8a5dededadc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -59,6 +95,24 @@
     },
     {
       "key": {
+        "uuid": "27080763_654b2c03",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntryTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-01T23:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27080763_851d7027",
+      "revId": "68dc2933d43416de47e7643f48eee8a5dededadc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27080763_e50d5cf3",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntryTest.java",
         "patchSetId": 3
@@ -76,6 +130,24 @@
         "endLine": 80,
         "endChar": 33
       },
+      "revId": "68dc2933d43416de47e7643f48eee8a5dededadc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27080763_058340a7",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntryTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-01T23:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27080763_e50d5cf3",
       "revId": "68dc2933d43416de47e7643f48eee8a5dededadc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "27080763_e57f1c1b",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntryTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-01T23:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27080763_65220c63",
+      "revId": "68dc2933d43416de47e7643f48eee8a5dededadc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27080763_c50658d8",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntryTest.java",
         "patchSetId": 3
@@ -122,6 +212,24 @@
         "endLine": 122,
         "endChar": 28
       },
+      "revId": "68dc2933d43416de47e7643f48eee8a5dededadc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27080763_454c281d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntryTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-01T23:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27080763_c50658d8",
       "revId": "68dc2933d43416de47e7643f48eee8a5dededadc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -151,6 +259,24 @@
     },
     {
       "key": {
+        "uuid": "27080763_255124b1",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntryTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-01T23:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27080763_a50354c6",
+      "revId": "68dc2933d43416de47e7643f48eee8a5dededadc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27080763_0511800b",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntryTest.java",
         "patchSetId": 3
@@ -168,6 +294,24 @@
     },
     {
       "key": {
+        "uuid": "27080763_854610f9",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntryTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-01T23:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27080763_0511800b",
+      "revId": "68dc2933d43416de47e7643f48eee8a5dededadc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27080763_253f6474",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffDataTest.java",
         "patchSetId": 3
@@ -179,6 +323,24 @@
       "writtenOn": "2015-02-01T22:49:51Z",
       "side": 1,
       "message": "missing license header",
+      "revId": "68dc2933d43416de47e7643f48eee8a5dededadc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27080763_c55f78ba",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffDataTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-01T23:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27080763_253f6474",
       "revId": "68dc2933d43416de47e7643f48eee8a5dededadc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -208,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "27080763_a55cf4c6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-01T23:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27080763_85345095",
+      "revId": "68dc2933d43416de47e7643f48eee8a5dededadc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27080763_65396c8b",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffData.java",
         "patchSetId": 3
@@ -231,6 +411,24 @@
     },
     {
       "key": {
+        "uuid": "27080763_055a20c9",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-01T23:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27080763_65396c8b",
+      "revId": "68dc2933d43416de47e7643f48eee8a5dededadc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27080763_c52db84a",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffUpdateJob.java",
         "patchSetId": 3
@@ -248,6 +446,24 @@
         "endLine": 85,
         "endChar": 7
       },
+      "revId": "68dc2933d43416de47e7643f48eee8a5dededadc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27080763_45b70873",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffUpdateJob.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-01T23:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27080763_c52db84a",
       "revId": "68dc2933d43416de47e7643f48eee8a5dededadc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
