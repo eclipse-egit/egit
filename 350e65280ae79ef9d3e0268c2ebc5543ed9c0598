@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27080763_5af24293",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-02T13:03:18Z",
+      "side": 1,
+      "message": "Should we add something like:\n\nCheck  umbrella bug https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d429304 for remaining issues with symbolic links.\n\n?",
+      "revId": "350e65280ae79ef9d3e0268c2ebc5543ed9c0598",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
