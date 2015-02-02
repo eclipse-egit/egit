@@ -48,8 +48,10 @@ There are other components which provide integration with other plugins.
 Warnings/Caveats
 ----------------
 
-- Symbolic links are not yet supported because they used to be
-  unsupported by Java. Such links could be damaged.
+- Symbolic links are supported on Java 7 and higher and require that the
+  optional JGit Java 7 feature is installed. For remaining issues
+  with symbolic link support see
+  https://bugs.eclipse.org/bugs/show_bug.cgi?id=429304.
 
 - CRLF conversion works for some things, but is in general still being
   worked on.
