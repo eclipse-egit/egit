@@ -27,11 +27,18 @@ import org.eclipse.egit.core.op.StashDropOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.commit.CommitEditorInput;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * Command to drop one or all stashed commits
@@ -107,10 +114,42 @@ public class StashDropCommand extends
 								UIText.StashDropCommand_dropFailed,
 								node.getObject().name()), e);
 					}
+					tryToCloseEditor(node);
 					monitor.worked(1);
 				}
 				monitor.done();
 				return Status.OK_STATUS;
+			}
+
+			private void tryToCloseEditor(final StashedCommitNode node) {
+				Display.getDefault().asyncExec(new Runnable() {
+
+					public void run() {
+						IWorkbenchPage activePage = PlatformUI.getWorkbench()
+								.getActiveWorkbenchWindow().getActivePage();
+						IEditorReference[] editorReferences = activePage
+								.getEditorReferences();
+						for (IEditorReference editorReference : editorReferences) {
+							IEditorInput editorInput = null;
+							try {
+								editorInput = editorReference.getEditorInput();
+							} catch (PartInitException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							if (editorInput instanceof CommitEditorInput) {
+								CommitEditorInput comEditorInput = (CommitEditorInput) editorInput;
+								if (comEditorInput.getCommit().getRevCommit()
+										.equals(node.getObject())) {
+									activePage.closeEditor(
+											editorReference.getEditor(false),
+											false);
+								}
+							}
+						}
+					}
+				});
+
 			}
 
 			@Override
