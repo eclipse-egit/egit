@@ -353,11 +353,21 @@ class FetchResultTable {
 			}
 
 			public Object[] getChildren(Object element) {
-				if (element instanceof RepositoryCommit)
+				if (element instanceof RepositoryCommit) {
 					return ((RepositoryCommit) element).getDiffs();
+				}
 				return super.getChildren(element);
 			}
 
+			@Override
+			public boolean hasChildren(Object element) {
+				if (element instanceof RepositoryCommit) {
+					// always return true for commits to avoid commit diff
+					// calculation in UI thread, see bug 458839
+					return true;
+				}
+				return super.hasChildren(element);
+			}
 		});
 
 		new OpenAndLinkWithEditorHelper(treeViewer) {

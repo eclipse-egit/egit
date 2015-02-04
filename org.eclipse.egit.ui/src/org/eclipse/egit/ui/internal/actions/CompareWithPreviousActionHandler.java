@@ -21,6 +21,10 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIText;
@@ -30,8 +34,8 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -42,28 +46,46 @@ public class CompareWithPreviousActionHandler extends RepositoryActionHandler {
 	/**
 	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		Repository repository = getRepository(true, event);
-		if (repository == null)
+	public Object execute(final ExecutionEvent event) throws ExecutionException {
+		final Repository repository = getRepository(true, event);
+		if (repository == null) {
 			return null;
+		}
 
-		IResource[] resources = getSelectedResources(event);
-		if (resources.length == 1) {
-			final PreviousCommit previous = getPreviousRevision(event,
-					resources[0]);
-			if (previous != null) {
-				IWorkbenchPage workBenchPage = HandlerUtil
-						.getActiveWorkbenchWindowChecked(event).getActivePage();
+		final IResource[] resources = getSelectedResources(event);
+		if (resources.length != 1) {
+			return null;
+		}
+
+		Job job = new Job(UIText.CompareUtils_jobName) {
+
+			@Override
+			public IStatus run(IProgressMonitor monitor) {
+				if (monitor.isCanceled()) {
+					return Status.CANCEL_STATUS;
+				}
 				try {
-					CompareUtils.compare(resources, repository, Constants.HEAD,
-							previous.commit.getName(), true, workBenchPage);
-				} catch (IOException e) {
+					IWorkbenchPage workBenchPage = HandlerUtil
+							.getActiveWorkbenchWindowChecked(event)
+							.getActivePage();
+					final PreviousCommit previous = getPreviousRevision(event,
+							resources[0]);
+					if (previous != null) {
+						CompareUtils.compare(resources, repository,
+								Constants.HEAD, previous.commit.getName(),
+								true, workBenchPage);
+					}
+				} catch (Exception e) {
 					Activator.handleError(
 							UIText.CompareWithRefAction_errorOnSynchronize, e,
 							true);
 				}
+				return Status.OK_STATUS;
 			}
-		}
+
+		};
+		job.setUser(true);
+		job.schedule();
 
 		return null;
 	}
@@ -76,14 +98,9 @@ public class CompareWithPreviousActionHandler extends RepositoryActionHandler {
 	}
 
 	private PreviousCommit getPreviousRevision(final ExecutionEvent event,
-			final IResource resource) {
-		final List<PreviousCommit> previousList;
-		try {
-			previousList = findPreviousCommits();
-		} catch (IOException e) {
-			Activator.handleError(e.getMessage(), e, true);
-			return null;
-		}
+			final IResource resource) throws IOException {
+
+		final List<PreviousCommit> previousList = findPreviousCommits();
 
 		final AtomicReference<PreviousCommit> previous = new AtomicReference<PreviousCommit>();
 		if (previousList.size() == 0)
@@ -113,17 +130,17 @@ public class CompareWithPreviousActionHandler extends RepositoryActionHandler {
 		return previous.get();
 	}
 
-	private void showNotFoundDialog(ExecutionEvent event, IResource resource) {
-		final Shell shell = HandlerUtil.getActiveShell(event);
+	private void showNotFoundDialog(final ExecutionEvent event,
+			IResource resource) {
 		final String message = MessageFormat
 				.format(UIText.CompareWithPreviousActionHandler_MessageRevisionNotFound,
 						resource.getName());
-		shell.getDisplay().asyncExec(new Runnable() {
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 
 			public void run() {
 				MessageDialog
 						.openWarning(
-								shell,
+						HandlerUtil.getActiveShell(event),
 								UIText.CompareWithPreviousActionHandler_TitleRevisionNotFound,
 								message);
 			}

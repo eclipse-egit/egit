@@ -177,22 +177,47 @@ public class IndexDiffData {
 		return false;
 	}
 
-	private static Set<String> mergeIgnored(Set<String> oldIgnoredPaths,
+	/**
+	 * THIS METHOD IS PROTECTED FOR TESTS ONLY
+	 *
+	 * @param oldIgnoredPaths
+	 * @param changedPaths
+	 * @param newIgnoredPaths
+	 * @return never null
+	 */
+	protected static Set<String> mergeIgnored(Set<String> oldIgnoredPaths,
 			Collection<String> changedPaths, Set<String> newIgnoredPaths) {
 		Set<String> merged = new HashSet<String>();
 		for (String oldIgnoredPath : oldIgnoredPaths) {
 			boolean changed = isAnyPrefixOf(oldIgnoredPath, changedPaths);
-			if (!changed)
+			if (!changed) {
 				merged.add(oldIgnoredPath);
+			}
 		}
 		merged.addAll(newIgnoredPaths);
 		return merged;
 	}
 
-	private static boolean isAnyPrefixOf(String pathToCheck, Collection<String> possiblePrefixes) {
-		for (String possiblePrefix : possiblePrefixes)
-			if (pathToCheck.startsWith(possiblePrefix) || possiblePrefix.equals(pathToCheck + '/'))
+	/**
+	 * THIS METHOD IS PROTECTED FOR TESTS ONLY
+	 *
+	 * @param pathToCheck
+	 * @param possiblePrefixes
+	 * @return true if given path starts with any of given prefixes (possibly
+	 *         followed by slash)
+	 */
+	protected static boolean isAnyPrefixOf(String pathToCheck,
+			Collection<String> possiblePrefixes) {
+		for (String possiblePrefix : possiblePrefixes) {
+			if (pathToCheck.startsWith(possiblePrefix)) {
 				return true;
+			}
+			if (possiblePrefix.length() == pathToCheck.length() + 1
+					&& possiblePrefix.charAt(possiblePrefix.length() - 1) == '/'
+					&& possiblePrefix.startsWith(pathToCheck)) {
+				return true;
+			}
+		}
 		return false;
 	}
 
