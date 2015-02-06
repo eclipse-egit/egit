@@ -12,9 +12,9 @@
 <introContent>
 	<extensionContent id="org.eclipse.egit" name="EGit"
 		style="css/tutorials.css" alt-style="css/tutorials.properties" path="tutorials/@">
-		<group label="Git" id="egit" style-id="content-group">
+		<group label="Team Support with Git" id="egit" style-id="content-group">
 			<link
-				url="http://wiki.eclipse.org/EGit/User_Guide"
+				url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.eclipse.egit.doc/help/EGit/User_Guide/User-Guide.html"
 				label="Read the EGit User Guide" id="egit-guide" style-id="content-link">
 				<text>Learn about using Git in Eclipse</text>
 			</link>
