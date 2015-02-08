@@ -62,6 +62,10 @@
       <unit id="org.junit.source" version="4.8.2.v4_8_2_v20110321-1705"/>
       <unit id="javax.servlet" version="2.5.0.v201103041518"/>
       <unit id="javax.servlet.source" version="2.5.0.v201103041518"/>
+      <unit id="org.slf4j.api" version="1.7.2.v20121108-1250"/>
+      <unit id="org.slf4j.api.source" version="1.7.2.v20121108-1250"/>
+      <unit id="org.slf4j.impl.log4j12" version="1.7.2.v20131105-2200"/>
+      <unit id="org.slf4j.impl.log4j12.source" version="1.7.2.v20131105-2200"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
       <repository location="http://download.eclipse.org/technology/swtbot/releases/2.1.0/"/>
