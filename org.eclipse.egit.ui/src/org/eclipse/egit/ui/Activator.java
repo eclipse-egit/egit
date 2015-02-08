@@ -42,6 +42,7 @@ import org.eclipse.egit.ui.internal.ConfigurationChecker;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
+import org.eclipse.egit.ui.internal.variables.GitTemplateVariableResolver;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jgit.events.IndexChangedEvent;
@@ -229,10 +230,24 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		setupFocusHandling();
 		setupCredentialsProvider();
 		ConfigurationChecker.checkConfiguration();
+
+		registerTemplateVariableResolvers();
 	}
 
 	private void setupCredentialsProvider() {
 		CredentialsProvider.setDefault(new EGitCredentialsProvider());
+	}
+
+	private void registerTemplateVariableResolvers() {
+		final org.eclipse.jface.text.templates.ContextTypeRegistry codeTemplateContextRegistry = org.eclipse.jdt.internal.ui.JavaPlugin
+				.getDefault().getCodeTemplateContextRegistry();
+		final java.util.Iterator<?> ctIter = codeTemplateContextRegistry
+				.contextTypes();
+		while (ctIter.hasNext()) {
+			final org.eclipse.jface.text.templates.TemplateContextType contextType = (org.eclipse.jface.text.templates.TemplateContextType) ctIter
+					.next();
+			contextType.addResolver(new GitTemplateVariableResolver());
+		}
 	}
 
 	/**
