@@ -159,19 +159,22 @@ public class GitLightweightDecorator extends LabelProvider implements
 	 */
 	public void decorate(Object element, IDecoration decoration) {
 		// Don't decorate if UI plugin is not running
-		if (Activator.getDefault() == null)
+		if (Activator.getDefault() == null) {
 			return;
+		}
 
 		// Don't decorate if the workbench is not running
-		if (!PlatformUI.isWorkbenchRunning())
+		if (!PlatformUI.isWorkbenchRunning()) {
 			return;
+		}
 
 		final IResource resource = getResource(element);
 		try {
-			if (resource == null)
+			if (resource == null) {
 				decorateResourceMapping(element, decoration);
-			else
+			} else {
 				decorateResource(resource, decoration);
+			}
 		} catch (CoreException e) {
 			handleException(resource, e);
 		}
@@ -187,8 +190,9 @@ public class GitLightweightDecorator extends LabelProvider implements
 	private void decorateResource(IResource resource, IDecoration decoration) throws CoreException {
 		IndexDiffData indexDiffData = getIndexDiffDataOrNull(resource);
 
-		if(indexDiffData == null)
+		if(indexDiffData == null) {
 			return;
+		}
 
 		IDecoratableResource decoratableResource = null;
 		final DecorationHelper helper = new DecorationHelper(
@@ -202,22 +206,26 @@ public class GitLightweightDecorator extends LabelProvider implements
 	}
 
 	static IndexDiffData getIndexDiffDataOrNull(IResource resource) {
-		if (resource.getType() == IResource.ROOT)
+		if (resource.getType() == IResource.ROOT) {
 			return null;
+		}
 
 		// Don't decorate non-existing resources
-		if (!resource.exists() && !resource.isPhantom())
+		if (!resource.exists() && !resource.isPhantom()) {
 			return null;
+		}
 
 		// Make sure we're dealing with a project under Git revision control
 		final RepositoryMapping mapping = RepositoryMapping
 				.getMapping(resource);
-		if (mapping == null)
+		if (mapping == null) {
 			return null;
+		}
 
 		// Cannot decorate linked resources
-		if (mapping.getRepoRelativePath(resource) == null)
+		if (mapping.getRepoRelativePath(resource) == null) {
 			return null;
+		}
 
 		IndexDiffData indexDiffData = org.eclipse.egit.core.Activator
 				.getDefault().getIndexDiffCache()
@@ -250,8 +258,9 @@ public class GitLightweightDecorator extends LabelProvider implements
 		 *   2) no indexDiff for the contained projects ready yet.
 		 *  in both cases, don't do anything to not pollute the display of the sets.
 		 */
-		if(!decoRes.isTracked())
+		if(!decoRes.isTracked()) {
 			return;
+		}
 
 		final DecorationHelper helper = new DecorationHelper(
 				Activator.getDefault().getPreferenceStore());
@@ -373,8 +382,9 @@ public class GitLightweightDecorator extends LabelProvider implements
 				IDecoratableResource resource) {
 			decorateFontAndColour(decoration, resource);
 
-			if (resource.isIgnored())
+			if (resource.isIgnored()) {
 				return;
+			}
 
 			decorateText(decoration, resource);
 			decorateIcons(decoration, resource);
@@ -418,8 +428,9 @@ public class GitLightweightDecorator extends LabelProvider implements
 			// In case the color is not changed from the default, do not set the
 			// background because it paints over things from the theme such as
 			// alternating line colors (see bug 412183).
-			if (!color.getRGB().equals(defaultBackgroundRgb))
+			if (!color.getRGB().equals(defaultBackgroundRgb)) {
 				decoration.setBackgroundColor(color);
+			}
 		}
 
 		private void decorateText(IDecoration decoration,
@@ -439,12 +450,13 @@ public class GitLightweightDecorator extends LabelProvider implements
 				// working sets will use the project formatting but only if the
 				// repo and branch is available
 				if (resource.getRepositoryName() != null
-						&& resource.getBranch() != null)
+						&& resource.getBranch() != null) {
 					format = store
 							.getString(UIPreferences.DECORATOR_PROJECTTEXT_DECORATION);
-				else
+				} else {
 					format = store
 							.getString(UIPreferences.DECORATOR_FOLDERTEXT_DECORATION);
+				}
 				break;
 			case IResource.PROJECT:
 				format = store
@@ -469,24 +481,27 @@ public class GitLightweightDecorator extends LabelProvider implements
 			ImageDescriptor overlay = null;
 
 			if (resource.isTracked()) {
-				if (store.getBoolean(UIPreferences.DECORATOR_SHOW_TRACKED_ICON))
+				if (store.getBoolean(UIPreferences.DECORATOR_SHOW_TRACKED_ICON)) {
 					overlay = trackedImage;
+				}
 
 				if (store
 						.getBoolean(UIPreferences.DECORATOR_SHOW_ASSUME_VALID_ICON)
-						&& resource.isAssumeValid())
+						&& resource.isAssumeValid()) {
 					overlay = assumeValidImage;
+				}
 
 				// Staged overrides tracked
 				Staged staged = resource.staged();
 				if (store.getBoolean(UIPreferences.DECORATOR_SHOW_STAGED_ICON)
 						&& staged != Staged.NOT_STAGED) {
-					if (staged == Staged.ADDED)
+					if (staged == Staged.ADDED) {
 						overlay = stagedAddedImage;
-					else if (staged == Staged.REMOVED)
+					} else if (staged == Staged.REMOVED) {
 						overlay = stagedRemovedImage;
-					else
+					} else {
 						overlay = stagedImage;
+					}
 				}
 
 				// Dirty overrides staged
@@ -498,8 +513,9 @@ public class GitLightweightDecorator extends LabelProvider implements
 				// Conflicts override everything
 				if (store
 						.getBoolean(UIPreferences.DECORATOR_SHOW_CONFLICTS_ICON)
-						&& resource.hasConflicts())
+						&& resource.hasConflicts()) {
 					overlay = conflictImage;
+				}
 
 			} else if (store
 					.getBoolean(UIPreferences.DECORATOR_SHOW_UNTRACKED_ICON)) {
@@ -546,8 +562,9 @@ public class GitLightweightDecorator extends LabelProvider implements
 							String[] keyAndBinding = key.split(":", 2); //$NON-NLS-1$
 							key = keyAndBinding[0];
 							if (keyAndBinding.length > 1
-									&& bindings.get(key) != null)
+									&& bindings.get(key) != null) {
 								bindings.put(key, keyAndBinding[1]);
+							}
 						} else {
 							if (key.charAt(0) == ' ') {
 								spaceBefore = true;
@@ -571,11 +588,13 @@ public class GitLightweightDecorator extends LabelProvider implements
 						}
 
 						if (s != null) {
-							if (spaceBefore)
+							if (spaceBefore) {
 								output.append(' ');
+							}
 							output.append(s);
-							if (spaceAfter)
+							if (spaceAfter) {
 								output.append(' ');
+							}
 						} else {
 							// Support removing prefix character if binding is
 							// null
@@ -598,13 +617,15 @@ public class GitLightweightDecorator extends LabelProvider implements
 			}
 
 			String prefixString = prefix.toString().replaceAll("^\\s+", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			if (prefixString.length() > 0)
+			if (prefixString.length() > 0) {
 				decoration.addPrefix(TextProcessor.process(prefixString,
 						"()[].")); //$NON-NLS-1$
+			}
 			String suffixString = suffix.toString().replaceAll("\\s+$", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			if (suffixString.length() > 0)
+			if (suffixString.length() > 0) {
 				decoration.addSuffix(TextProcessor.process(suffixString,
 						"()[].")); //$NON-NLS-1$
+			}
 		}
 	}
 
@@ -672,8 +693,9 @@ public class GitLightweightDecorator extends LabelProvider implements
 			if (resource == null) {
 				final IContributorResourceAdapter adapter = (IContributorResourceAdapter) adaptable
 						.getAdapter(IContributorResourceAdapter.class);
-				if (adapter != null)
+				if (adapter != null) {
 					resource = adapter.getAdaptedResource(adaptable);
+				}
 			}
 		}
 
@@ -713,8 +735,9 @@ public class GitLightweightDecorator extends LabelProvider implements
 	 *            The exception that occurred
 	 */
 	private static void handleException(IResource resource, CoreException e) {
-		if (resource == null || resource.isAccessible())
+		if (resource == null || resource.isAccessible()) {
 			EXCEPTION_COLLECTOR.handleException(e);
+		}
 	}
 }
 
@@ -755,17 +778,20 @@ class LabelEventJob extends Job {
 	 *            LabelProviderChangedEvent
 	 */
 	void postLabelEvent(final GitLightweightDecorator decorator) {
-		if (glwDecorator == null)
+		if (glwDecorator == null) {
 			glwDecorator = decorator;
-		if (getState() == SLEEPING || getState() == WAITING)
+		}
+		if (getState() == SLEEPING || getState() == WAITING) {
 			cancel();
+		}
 		schedule(DELAY);
 	}
 
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
-		if (glwDecorator != null)
+		if (glwDecorator != null) {
 			glwDecorator.fireLabelEvent();
+		}
 		return Status.OK_STATUS;
 	}
 }
