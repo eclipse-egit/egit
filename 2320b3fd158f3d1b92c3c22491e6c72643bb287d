@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "070b0362_e746f826",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeUtil.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 315
+      },
+      "writtenOn": "2015-02-10T15:23:26Z",
+      "side": 1,
+      "message": "Please fix the wrong indentation",
+      "revId": "2320b3fd158f3d1b92c3c22491e6c72643bb287d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
