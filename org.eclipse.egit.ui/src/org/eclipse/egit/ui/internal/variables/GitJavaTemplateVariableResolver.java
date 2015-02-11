@@ -8,12 +8,16 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.variables;
 
+import org.eclipse.jface.text.templates.TemplateContext;
+import org.eclipse.jface.text.templates.TemplateVariable;
+import org.eclipse.jface.text.templates.TemplateVariableResolver;
+
 /**
  * Resolves Git variables within Java templates
  */
-public class GitJavaTemplateVariableResolver extends org.eclipse.jface.text.templates.TemplateVariableResolver {
+public class GitJavaTemplateVariableResolver extends TemplateVariableResolver {
 	@Override
-	public void resolve(org.eclipse.jface.text.templates.TemplateVariable variable, org.eclipse.jface.text.templates.TemplateContext context) {
+	public void resolve(TemplateVariable variable, TemplateContext context) {
 		GitTemplateVariableResolverHelper.resolve(variable, context);
 	}
 }

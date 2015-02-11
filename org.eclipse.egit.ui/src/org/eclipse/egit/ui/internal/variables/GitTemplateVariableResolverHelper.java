@@ -8,6 +8,16 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.variables;
 
+import java.util.List;
+
+import org.eclipse.core.resources.IProject;
+import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jdt.internal.corext.template.java.CodeTemplateContext;
+import org.eclipse.jface.text.templates.TemplateContext;
+import org.eclipse.jface.text.templates.TemplateVariable;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.StoredConfig;
+
 /**
  * Retrieves template variables from Git config
  */
@@ -21,29 +31,33 @@ public class GitTemplateVariableResolverHelper {
 	 * @param context
 	 *            the current context.
 	 */
-	@SuppressWarnings({ "unchecked", "restriction" })
-	public static void resolve(org.eclipse.jface.text.templates.TemplateVariable variable, org.eclipse.jface.text.templates.TemplateContext context) {
-		final java.util.List<String> params = variable.getVariableType().getParams();
+	public static void resolve(TemplateVariable variable,
+			TemplateContext context) {
+
+		final List<String> params = variable.getVariableType().getParams();
 		if (params.isEmpty()) {
 			return;
 		}
+
 		final String gitKey = params.get(0);
 		if ( gitKey == null || gitKey.length() == 0 ) {
 			return;
 		}
 
 		// Get git's config
-		org.eclipse.core.resources.IProject project = ((org.eclipse.jdt.internal.corext.template.java.CodeTemplateContext) context).getJavaProject().getProject();
-		org.eclipse.egit.core.project.RepositoryMapping mapping = org.eclipse.egit.core.project.RepositoryMapping
-				.getMapping(project);
-		org.eclipse.jgit.lib.Repository repository = null;
+		IProject project = ((CodeTemplateContext) context).getJavaProject()
+				.getProject();
+		RepositoryMapping mapping = RepositoryMapping.getMapping(project);
+		Repository repository = null;
+
 		if (mapping != null) {
 			repository = mapping.getRepository();
 		}
 		if (repository == null) {
 			return;
 		}
-		org.eclipse.jgit.lib.StoredConfig config = repository.getConfig();
+
+		StoredConfig config = repository.getConfig();
 		if ( config == null ) {
 			return;
 		}
@@ -53,6 +67,7 @@ public class GitTemplateVariableResolverHelper {
 		String section = null;
 		String subSection = null;
 		String name = null;
+
 		if ( splits.length == 3 ) {
 			section = splits[0];
 			subSection = splits[1];

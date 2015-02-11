@@ -9,11 +9,14 @@
 package org.eclipse.egit.ui.internal.variables;
 
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.jface.text.templates.TemplateContext;
+import org.eclipse.jface.text.templates.TemplateVariable;
+import org.eclipse.jface.text.templates.TemplateVariableResolver;
 
 /**
  * Resolves Git variables within templates
  */
-public class GitTemplateVariableResolver extends org.eclipse.jface.text.templates.TemplateVariableResolver {
+public class GitTemplateVariableResolver extends TemplateVariableResolver {
 
 	/**
 	 * Creates a template variable resolver for Git variables
@@ -24,7 +27,7 @@ public class GitTemplateVariableResolver extends org.eclipse.jface.text.template
 	}
 
 	@Override
-	public void resolve(org.eclipse.jface.text.templates.TemplateVariable variable, org.eclipse.jface.text.templates.TemplateContext context) {
+	public void resolve(TemplateVariable variable, TemplateContext context) {
 		GitTemplateVariableResolverHelper.resolve(variable, context);
 	}
 }
