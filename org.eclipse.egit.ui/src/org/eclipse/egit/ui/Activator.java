@@ -242,14 +242,17 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	}
 
 	private void registerTemplateVariableResolvers() {
-		final ContextTypeRegistry codeTemplateContextRegistry = JavaPlugin
-				.getDefault().getCodeTemplateContextRegistry();
-		final Iterator<?> ctIter = codeTemplateContextRegistry.contextTypes();
+		if (hasJavaPlugin()) {
+			final ContextTypeRegistry codeTemplateContextRegistry = JavaPlugin
+					.getDefault().getCodeTemplateContextRegistry();
+			final Iterator<?> ctIter = codeTemplateContextRegistry
+					.contextTypes();
 
-		while (ctIter.hasNext()) {
-			final TemplateContextType contextType = (TemplateContextType) ctIter
-					.next();
-			contextType.addResolver(new GitTemplateVariableResolver());
+			while (ctIter.hasNext()) {
+				final TemplateContextType contextType = (TemplateContextType) ctIter
+						.next();
+				contextType.addResolver(new GitTemplateVariableResolver());
+			}
 		}
 	}
 
@@ -659,4 +662,11 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		return org.eclipse.egit.core.Activator.getDefault().getRepositoryUtil();
 	}
 
+	private static final boolean hasJavaPlugin() {
+		try {
+			return Class.forName("org.eclipse.jdt.internal.ui.JavaPlugin") != null; //$NON-NLS-1$
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+	}
 }

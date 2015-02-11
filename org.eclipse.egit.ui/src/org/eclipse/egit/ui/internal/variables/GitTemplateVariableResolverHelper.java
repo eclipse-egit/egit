@@ -29,24 +29,36 @@ public class GitTemplateVariableResolverHelper {
 	 * @param variable
 	 *            the current template variable.
 	 * @param context
-	 *            the current context.
+	 *            the current template context.
 	 */
 	public static void resolve(TemplateVariable variable,
 			TemplateContext context) {
+		IProject project = getProject(context);
+		if (project != null) {
+			resolve(variable, project);
+		}
+	}
 
+	/**
+	 * Resolves the git_config variable
+	 *
+	 * @param variable
+	 *            the current template variable.
+	 * @param project
+	 *            the current project.
+	 */
+	public static void resolve(TemplateVariable variable, IProject project) {
 		final List<String> params = variable.getVariableType().getParams();
 		if (params.isEmpty()) {
 			return;
 		}
 
 		final String gitKey = params.get(0);
-		if ( gitKey == null || gitKey.length() == 0 ) {
+		if (gitKey == null || gitKey.length() == 0) {
 			return;
 		}
 
 		// Get git's config
-		IProject project = ((CodeTemplateContext) context).getJavaProject()
-				.getProject();
 		RepositoryMapping mapping = RepositoryMapping.getMapping(project);
 		Repository repository = null;
 
@@ -58,7 +70,7 @@ public class GitTemplateVariableResolverHelper {
 		}
 
 		StoredConfig config = repository.getConfig();
-		if ( config == null ) {
+		if (config == null) {
 			return;
 		}
 
@@ -68,11 +80,11 @@ public class GitTemplateVariableResolverHelper {
 		String subSection = null;
 		String name = null;
 
-		if ( splits.length == 3 ) {
+		if (splits.length == 3) {
 			section = splits[0];
 			subSection = splits[1];
 			name = splits[2];
-		} else if ( splits.length == 2 ) {
+		} else if (splits.length == 2) {
 			section = splits[0];
 			name = splits[1];
 		} else {
@@ -80,8 +92,24 @@ public class GitTemplateVariableResolverHelper {
 		}
 
 		String gitValue = config.getString(section, subSection, name);
-		if ( gitValue != null ) {
-			variable.setValue( gitValue );
+		if (gitValue != null) {
+			variable.setValue(gitValue);
 		}
+	}
+
+	/**
+	 * Retrieves the current project from a template context.
+	 *
+	 * @param context
+	 *            the current template context.
+	 * @return the current project
+	 */
+	public static IProject getProject(TemplateContext context) {
+		IProject project = null;
+		if (context instanceof CodeTemplateContext) {
+			project = ((CodeTemplateContext) context).getJavaProject()
+					.getProject();
+		}
+		return project;
 	}
 }
