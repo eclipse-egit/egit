@@ -385,26 +385,33 @@ public class GitLightweightDecorator extends LabelProvider implements
 		private void decorateFontAndColour(IDecoration decoration,
 				IDecoratableResource resource) {
 			ITheme current = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme();
+			Color bc = null;
+			Color fc = null;
+			Font f = null;
 			if (resource.isIgnored()) {
-				Color bc = current.getColorRegistry().get(
+				bc = current.getColorRegistry().get(
 						UIPreferences.THEME_IgnoredResourceBackgroundColor);
-				Color fc = current.getColorRegistry().get(
+				fc = current.getColorRegistry().get(
 						UIPreferences.THEME_IgnoredResourceForegroundColor);
-				Font f = current.getFontRegistry().get(
+				f = current.getFontRegistry().get(
 						UIPreferences.THEME_IgnoredResourceFont);
-
-				setBackgroundColor(decoration, bc);
-				decoration.setForegroundColor(fc);
-				decoration.setFont(f);
 			} else if (!resource.isTracked()
 					|| resource.isDirty()
 					|| resource.staged() != Staged.NOT_STAGED) {
-				Color bc = current.getColorRegistry().get(UIPreferences.THEME_UncommittedChangeBackgroundColor);
-				Color fc = current.getColorRegistry().get(UIPreferences.THEME_UncommittedChangeForegroundColor);
-				Font f = current.getFontRegistry().get(UIPreferences.THEME_UncommittedChangeFont);
-
+				bc = current.getColorRegistry().get(
+						UIPreferences.THEME_UncommittedChangeBackgroundColor);
+				fc = current.getColorRegistry().get(
+						UIPreferences.THEME_UncommittedChangeForegroundColor);
+				f = current.getFontRegistry().get(
+						UIPreferences.THEME_UncommittedChangeFont);
+			}
+			if (bc != null) {
 				setBackgroundColor(decoration, bc);
+			}
+			if (fc != null) {
 				decoration.setForegroundColor(fc);
+			}
+			if (f != null) {
 				decoration.setFont(f);
 			}
 		}
