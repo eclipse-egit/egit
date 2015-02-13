@@ -5504,6 +5504,15 @@
       </resolver>
    </extension>
    <extension
+         point="org.eclipse.ui.editors.templates">
+      <resolver
+            class="org.eclipse.egit.ui.internal.variables.GitTemplateVariableResolver"
+            contextTypeId="javadoc"
+            type="git_config"
+            description="%GitTemplateVariableResolver_GitConfigDescription">
+      </resolver>
+   </extension>
+   <extension
          point="org.eclipse.ui.elementFactories">
       <factory
             class="org.eclipse.egit.ui.internal.commit.CommitEditorInputFactory"

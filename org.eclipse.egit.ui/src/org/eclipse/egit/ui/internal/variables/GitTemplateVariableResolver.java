@@ -13,8 +13,10 @@ import java.util.List;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.internal.corext.template.java.CodeTemplateContext;
+import org.eclipse.jdt.internal.corext.template.java.CompilationUnitContext;
 import org.eclipse.jface.text.templates.TemplateContext;
 import org.eclipse.jface.text.templates.TemplateVariable;
 import org.eclipse.jface.text.templates.TemplateVariableResolver;
@@ -37,7 +39,7 @@ public class GitTemplateVariableResolver extends TemplateVariableResolver {
 	 * @param description
 	 *            the description for the type
 	 */
-	protected GitTemplateVariableResolver(String type, String description) {
+	public GitTemplateVariableResolver(String type, String description) {
 		super(type, description);
 	}
 
@@ -45,8 +47,7 @@ public class GitTemplateVariableResolver extends TemplateVariableResolver {
 	 * Creates an instance of <code>GitTemplateVariableResolver</code>.
 	 */
 	public GitTemplateVariableResolver() {
-		super("git_config", //$NON-NLS-1$
-				UIText.GitTemplateVariableResolver_GitConfigDescription);
+		super();
 	}
 
 	@Override
@@ -66,11 +67,13 @@ public class GitTemplateVariableResolver extends TemplateVariableResolver {
 			IProject project) {
 		final List<String> params = variable.getVariableType().getParams();
 		if (params.isEmpty()) {
+			variable.setValue(""); //$NON-NLS-1$
 			return;
 		}
 
 		final String gitKey = params.get(0);
 		if (gitKey == null || gitKey.length() == 0) {
+			variable.setValue(""); //$NON-NLS-1$
 			return;
 		}
 
@@ -82,11 +85,13 @@ public class GitTemplateVariableResolver extends TemplateVariableResolver {
 			repository = mapping.getRepository();
 		}
 		if (repository == null) {
+			variable.setValue(""); //$NON-NLS-1$
 			return;
 		}
 
 		StoredConfig config = repository.getConfig();
 		if (config == null) {
+			variable.setValue(""); //$NON-NLS-1$
 			return;
 		}
 
@@ -104,6 +109,7 @@ public class GitTemplateVariableResolver extends TemplateVariableResolver {
 			section = splits[0];
 			name = splits[1];
 		} else {
+			variable.setValue(""); //$NON-NLS-1$
 			return;
 		}
 
@@ -138,10 +144,20 @@ public class GitTemplateVariableResolver extends TemplateVariableResolver {
 	 */
 	protected static IProject getProject(TemplateContext context) {
 		IProject project = null;
-		if (Activator.hasJavaPlugin()
-				&& (context instanceof CodeTemplateContext)) {
-			project = ((CodeTemplateContext) context).getJavaProject()
-					.getProject();
+		if (Activator.hasJavaPlugin()) {
+			if (context instanceof CodeTemplateContext) {
+				IJavaProject javaProject = ((CodeTemplateContext) context)
+						.getJavaProject();
+				if (javaProject != null) {
+					project = javaProject.getProject();
+				}
+			} else if (context instanceof CompilationUnitContext) {
+				ICompilationUnit cu = ((CompilationUnitContext) context)
+						.getCompilationUnit();
+				if (cu != null) {
+					project = cu.getJavaProject().getProject();
+				}
+			}
 		}
 		return project;
 	}
