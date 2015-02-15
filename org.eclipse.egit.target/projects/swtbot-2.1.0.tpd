@@ -1,0 +1,7 @@
+target "swtbot-2.1.0" with source configurePhase
+
+location swtbot-2.1.0 "http://download.eclipse.org/technology/swtbot/releases/2.1.0/" {
+	org.eclipse.swtbot.eclipse.feature.group lazy
+	org.eclipse.swtbot.feature.group lazy
+	org.eclipse.swtbot.eclipse.test.junit.feature.group lazy
+}
