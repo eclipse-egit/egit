@@ -1,0 +1,7 @@
+target "egit-4.5" with source configurePhase
+
+include "projects/jetty-7.6.14.tpd"
+include "projects/swtbot-2.1.0.tpd"
+include "projects/mylyn-latest.tpd"
+include "orbit/S20150202203538-Mars-M5.tpd"
+include "releasetrain/4.5-mars.tpd"
