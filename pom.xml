@@ -71,7 +71,6 @@
     <signer-input-directory>/home/data/httpd/download-staging.priv/egit</signer-input-directory>
     <download-publish-path>/home/data/httpd/download.eclipse.org/egit/updates-nightly</download-publish-path>
     <target-platform>egit-4.3</target-platform>
-    <platform-version>[3.9,4.0)</platform-version>
     <tycho.scmUrl>scm:git:https://git.eclipse.org/r/p/egit/egit.git</tycho.scmUrl>
     <test.vmparams></test.vmparams>
   </properties>
@@ -87,7 +86,6 @@
       </activation>
       <properties>
         <target-platform>egit-4.2</target-platform>
-        <platform-version>[3.8,3.9)</platform-version>
       </properties>
     </profile>
     <profile>
@@ -100,7 +98,6 @@
       </activation>
       <properties>
         <target-platform>egit-4.3</target-platform>
-        <platform-version>[3.9,4.0)</platform-version>
       </properties>
     </profile>
     <profile>
@@ -114,7 +111,6 @@
       </activation>
       <properties>
         <target-platform>egit-4.4</target-platform>
-        <platform-version>[3.10,4.0)</platform-version>
       </properties>
     </profile>
     <profile>
@@ -127,7 +123,6 @@
       </activation>
       <properties>
         <target-platform>egit-4.5</target-platform>
-        <platform-version>[3.10,4.0)</platform-version>
       </properties>
     </profile>
     <profile>
@@ -140,7 +135,6 @@
       </activation>
       <properties>
         <target-platform>egit-4.5-staging</target-platform>
-        <platform-version>[3.10,4.0)</platform-version>
       </properties>
     </profile>
     <profile>
@@ -361,11 +355,6 @@
               <os>win32</os>
               <ws>win32</ws>
               <arch>x86_64</arch>
-            </environment>
-            <environment>
-              <os>macosx</os>
-              <ws>cocoa</ws>
-              <arch>x86</arch>
             </environment>
             <environment>
               <os>macosx</os>

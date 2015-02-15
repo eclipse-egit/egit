@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!--
-   Copyright (C) 2012, Matthias Sohn <matthias.sohn@sap.com>
-
-   All rights reserved. This program and the accompanying materials
-   are made available under the terms of the Eclipse Public License v1.0
-   which accompanies this distribution, and is available at
-   http://www.eclipse.org/legal/epl-v10.html
--->
-<?pde version="3.6"?>
-<target name="egit-4.2.target" sequenceNumber="53">
+<?pde?>
+<!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
+<target name="egit-4.2" sequenceNumber="1424645486">
   <locations>
-    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-      <repository location="http://download.eclipse.org/jetty/updates/jetty-bundles-7.x/7.6.14.v20131031/"/>
+    <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.jetty.client" version="7.6.14.v20131031"/>
       <unit id="org.eclipse.jetty.client.source" version="7.6.14.v20131031"/>
       <unit id="org.eclipse.jetty.continuation" version="7.6.14.v20131031"/>
@@ -28,49 +20,62 @@
       <unit id="org.eclipse.jetty.servlet.source" version="7.6.14.v20131031"/>
       <unit id="org.eclipse.jetty.util" version="7.6.14.v20131031"/>
       <unit id="org.eclipse.jetty.util.source" version="7.6.14.v20131031"/>
+      <repository id="jetty-7.6.14" location="http://download.eclipse.org/jetty/updates/jetty-bundles-7.x/7.6.14.v20131031/"/>
     </location>
-    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository/"/>
-      <unit id="org.apache.ant.source" version="1.8.2.v20120109-1030"/>
-      <unit id="org.apache.ant" version="1.8.2.v20120109-1030"/>
-      <unit id="org.apache.commons.compress" version="1.4.1.v201301140946"/>
-      <unit id="org.apache.commons.compress.source" version="1.4.1.v201301140946"/>
+    <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
+      <unit id="org.eclipse.swtbot.eclipse.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.swtbot.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.swtbot.eclipse.test.junit.feature.group" version="0.0.0"/>
+      <repository id="swtbot-2.2.1" location="http://download.eclipse.org/technology/swtbot/releases/2.1.0/"/>
+    </location>
+    <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
+      <unit id="org.eclipse.mylyn.commons.sdk.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.mylyn.ide_feature.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.mylyn.team_feature.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.mylyn.context.sdk.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.mylyn_feature.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.mylyn.context_feature.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.mylyn.sdk_feature.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.mylyn.wikitext_feature.feature.group" version="0.0.0"/>
+      <repository location="http://download.eclipse.org/mylyn/releases/latest/"/>
+    </location>
+    <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
+      <unit id="org.apache.ant" version="1.9.2.v201404171502"/>
+      <unit id="org.apache.ant.source" version="1.9.2.v201404171502"/>
+      <unit id="org.apache.commons.compress" version="1.6.0.v201310281400"/>
+      <unit id="org.apache.commons.compress.source" version="1.6.0.v201310281400"/>
       <unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
       <unit id="org.apache.log4j.source" version="1.2.15.v201012070815"/>
       <unit id="org.kohsuke.args4j" version="2.0.21.v201301150030"/>
       <unit id="org.kohsuke.args4j.source" version="2.0.21.v201301150030"/>
-      <unit id="org.hamcrest.core" version="1.1.0.v20090501071000"/>
-      <unit id="org.hamcrest.core.source" version="1.1.0.v20090501071000"/>
-      <unit id="org.hamcrest.integration.source" version="1.1.0.v20090501071000"/>
-      <unit id="org.hamcrest.generator" version="1.1.0.v20090501071000"/>
-      <unit id="org.hamcrest.generator.source" version="1.1.0.v20090501071000"/>
-      <unit id="org.hamcrest.integration" version="1.1.0.v20090501071000"/>
-      <unit id="org.hamcrest.library" version="1.1.0.v20090501071000"/>
-      <unit id="org.hamcrest.library.source" version="1.1.0.v20090501071000"/>
+      <unit id="org.hamcrest.core" version="1.3.0.v201303031735"/>
+      <unit id="org.hamcrest.core.source" version="1.3.0.v201303031735"/>
+      <unit id="org.hamcrest.generator" version="1.3.0.v201305210900"/>
+      <unit id="org.hamcrest.generator.source" version="1.3.0.v201305210900"/>
+      <unit id="org.hamcrest.integration" version="1.3.0.v201305210900"/>
+      <unit id="org.hamcrest.integration.source" version="1.3.0.v201305210900"/>
+      <unit id="org.hamcrest.library" version="1.3.0.v201305281000"/>
+      <unit id="org.hamcrest.library.source" version="1.3.0.v201305281000"/>
       <unit id="org.hamcrest" version="1.1.0.v20090501071000"/>
       <unit id="org.hamcrest.text" version="1.1.0.v20090501071000"/>
       <unit id="org.hamcrest.text.source" version="1.1.0.v20090501071000"/>
-      <unit id="javaewah" version="0.5.6.v201210150900"/>
-      <unit id="javaewah.source" version="0.5.6.v201210150900"/>
+      <unit id="javaewah" version="0.7.9.v201401101600"/>
+      <unit id="javaewah.source" version="0.7.9.v201401101600"/>
       <unit id="org.objenesis" version="1.0.0.v201105211943"/>
       <unit id="org.objenesis.source" version="1.0.0.v201105211943"/>
-      <unit id="org.mockito" version="1.8.4.v201102171835"/>
-      <unit id="org.mockito.source" version="1.8.4.v201102171835"/>
-      <unit id="com.jcraft.jsch" version="0.1.46.v201205102330"/>
-      <unit id="com.jcraft.jsch.source" version="0.1.46.v201205102330"/>
-      <unit id="org.junit" version="4.8.2.v4_8_2_v20110321-1705"/>
-      <unit id="org.junit.source" version="4.8.2.v4_8_2_v20110321-1705"/>
+      <unit id="org.mockito" version="1.8.4.v201303031500"/>
+      <unit id="org.mockito.source" version="1.8.4.v201303031500"/>
+      <unit id="com.jcraft.jsch" version="0.1.51.v201410302000"/>
+      <unit id="com.jcraft.jsch.source" version="0.1.51.v201410302000"/>
+      <unit id="org.junit" version="4.11.0.v201303080030"/>
+      <unit id="org.junit.source" version="4.11.0.v201303080030"/>
       <unit id="javax.servlet" version="2.5.0.v201103041518"/>
       <unit id="javax.servlet.source" version="2.5.0.v201103041518"/>
+      <unit id="org.tukaani.xz" version="1.3.0.v201308270617"/>
+      <unit id="org.tukaani.xz.source" version="1.3.0.v201308270617"/>
+      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20150124073747/repository/"/>
     </location>
-    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-      <repository location="http://download.eclipse.org/technology/swtbot/releases/2.1.0/"/>
-      <unit id="org.eclipse.swtbot.eclipse.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.swtbot.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.swtbot.eclipse.test.junit.feature.group" version="0.0.0"/>
-    </location>
-    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-      <repository location="http://download.eclipse.org/releases/juno"/>
+    <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.sdk.ide" version="0.0.0"/>
       <unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.commons.sdk.feature.group" version="0.0.0"/>
@@ -81,6 +86,7 @@
       <unit id="org.eclipse.mylyn.context_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.sdk_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.wikitext_feature.feature.group" version="0.0.0"/>
+      <repository location="http://download.eclipse.org/releases/juno"/>
     </location>
   </locations>
 </target>
