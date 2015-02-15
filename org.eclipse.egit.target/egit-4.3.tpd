@@ -1,0 +1,7 @@
+target "egit-4.3" with source configurePhase
+
+include "projects/jetty-7.6.14.tpd"
+include "projects/swtbot-2.1.0.tpd"
+include "orbit/R20150124073747-Luna-SR2.tpd"
+include "releasetrain/4.3-kepler.tpd"
+
