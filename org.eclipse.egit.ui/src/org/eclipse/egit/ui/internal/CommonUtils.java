@@ -21,6 +21,8 @@ import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.commands.common.CommandException;
 import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.util.Policy;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Ref;
@@ -167,6 +169,29 @@ public class CommonUtils {
 	public static <T> T getService(IServiceLocator locator, Class<T> api) {
 		Object service = locator.getService(api);
 		return (T) service;
+	}
+
+	/**
+	 * @param element
+	 * @param adapterType
+	 * @return the adapted element, or null
+	 */
+	public static <T> T getAdapter(Object element, Class<T> adapterType) {
+		if (adapterType.isInstance(element)) {
+			return adapterType.cast(element);
+		}
+		if (element instanceof IAdaptable) {
+			Object adapted = ((IAdaptable) element).getAdapter(adapterType);
+			if (adapterType.isInstance(adapted)) {
+				return adapterType.cast(adapted);
+			}
+		}
+		Object adapted = Platform.getAdapterManager().getAdapter(element,
+				adapterType);
+		if (adapterType.isInstance(adapted)) {
+			return adapterType.cast(adapted);
+		}
+		return null;
 	}
 
 	private static LinkedList<String> splitIntoDigitAndNonDigitParts(

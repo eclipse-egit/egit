@@ -110,6 +110,11 @@ public class JobFamilies {
 	public static final Object REMOVE_FROM_INDEX = new Object();
 
 	/**
+	 * Updates staging view repository on selection change
+	 */
+	public static final Object UPDATE_SELECTION = new Object();
+
+	/**
 	 * Cherry pick commit job
 	 */
 	public static final Object CHERRY_PICK = new Object();
