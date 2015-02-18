@@ -11,7 +11,6 @@ package org.eclipse.egit.ui.internal.staging;
 import static org.eclipse.egit.ui.internal.CommonUtils.runCommand;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,7 +32,6 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
@@ -95,8 +93,6 @@ import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jface.operation.ModalContext;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -1893,29 +1889,18 @@ public class StagingView extends ViewPart implements IShowInSource {
 			reload(newRep);
 	}
 
-	private Repository getRepositoryOrNestedSubmoduleRepository(
-			final IResource resource) {
-		final Repository[] repo = new Repository[1];
-		try {
-			ModalContext.run(new IRunnableWithProgress() {
-
-				public void run(IProgressMonitor monitor) {
-					IProject project = resource.getProject();
-					RepositoryMapping mapping = RepositoryMapping
-							.getMapping(project);
-					if (mapping == null)
-						return;
-					repo[0] = mapping.getSubmoduleRepository(resource);
-					if (repo[0] == null)
-						repo[0] = mapping.getRepository();
-				}
-			}, true, new NullProgressMonitor(), Display.getDefault());
-		} catch (InvocationTargetException e) {
-			// ignore
-		} catch (InterruptedException e) {
-			// ignore
+	private static Repository getRepositoryOrNestedSubmoduleRepository(
+			IResource resource) {
+		IProject project = resource.getProject();
+		RepositoryMapping mapping = RepositoryMapping.getMapping(project);
+		if (mapping == null) {
+			return null;
 		}
-		return repo[0];
+		Repository repo = mapping.getSubmoduleRepository(resource);
+		if (repo == null) {
+			repo = mapping.getRepository();
+		}
+		return repo;
 	}
 
 	private void stage(IStructuredSelection selection) {
