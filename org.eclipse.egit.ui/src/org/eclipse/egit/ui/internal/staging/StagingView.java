@@ -1960,7 +1960,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 	private boolean shouldUpdateSelection() {
 		return !isDisposed() && !isViewHidden && reactOnSelection;
 	}
-	
+
 	private void reactOnSelection(StructuredSelection selection) {
 		if (selection.size() != 1 || !shouldUpdateSelection()) {
 			return;
@@ -2328,7 +2328,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		final boolean repositoryChanged = currentRepository != repository;
 
-		asyncExec(new Runnable() {
+		syncExec(new Runnable() {
 
 			public void run() {
 				if (isDisposed()) {
