@@ -46,6 +46,30 @@
       "revId": "6bbdd021990ca3e3a01232670e853d6c988bd000",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7f18fa3_11070e91",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/StashDropCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 6603
+      },
+      "writtenOn": "2015-02-19T09:16:51Z",
+      "side": 1,
+      "message": "Thanks! Next time I\u0027ll know ;-)",
+      "parentUuid": "e7f18fa3_0e3feb73",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 138,
+        "endChar": 28
+      },
+      "revId": "6bbdd021990ca3e3a01232670e853d6c988bd000",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
