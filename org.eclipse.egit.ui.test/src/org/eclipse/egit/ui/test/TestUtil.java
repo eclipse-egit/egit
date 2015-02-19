@@ -167,6 +167,25 @@ public class TestUtil {
 	}
 
 	/**
+	 * Process all queued UI events. If called from background thread, blocks
+	 * until all pending events are processed in UI thread.
+	 */
+	public static void processUIEvents() {
+		if (Display.getCurrent() != null) {
+			while (Display.getCurrent().readAndDispatch()) {
+				// process queued ui events
+			}
+		} else {
+			// synchronously refresh UI
+			PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+				public void run() {
+					processUIEvents();
+				}
+			});
+		}
+	}
+
+	/**
 	 * Appends content to given file.
 	 *
 	 * @param file
@@ -569,6 +588,7 @@ public class TestUtil {
 				IWorkbenchPage workbenchPage = workbenchWindow.getActivePage();
 				try {
 					workbenchPage.showView(viewId);
+					processUIEvents();
 				} catch (PartInitException e) {
 					throw new RuntimeException("Showing view with ID " + viewId
 							+ " failed.", e);
