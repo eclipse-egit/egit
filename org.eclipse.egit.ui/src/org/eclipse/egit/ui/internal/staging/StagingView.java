@@ -1960,7 +1960,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 	private boolean shouldUpdateSelection() {
 		return !isDisposed() && !isViewHidden && reactOnSelection;
 	}
-	
+
 	private void reactOnSelection(StructuredSelection selection) {
 		if (selection.size() != 1 || !shouldUpdateSelection()) {
 			return;
