@@ -166,6 +166,15 @@ public class TestUtil {
 		Job.getJobManager().join(family, null);
 	}
 
+	/** Process all queued UI events. */
+	public static void processUIEvents() {
+		if (Display.getCurrent() != null) {
+			while (PlatformUI.getWorkbench().getDisplay().readAndDispatch()) {
+				// process queued ui events
+			}
+		}
+	}
+
 	/**
 	 * Appends content to given file.
 	 *
@@ -569,6 +578,7 @@ public class TestUtil {
 				IWorkbenchPage workbenchPage = workbenchWindow.getActivePage();
 				try {
 					workbenchPage.showView(viewId);
+					processUIEvents();
 				} catch (PartInitException e) {
 					throw new RuntimeException("Showing view with ID " + viewId
 							+ " failed.", e);
