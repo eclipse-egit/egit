@@ -93,13 +93,18 @@
               </requirement>
               <requirement>
                 <type>eclipse-feature</type>
+                <id>org.eclipse.e4.rcp</id>
+                <versionRange>0.0.0</versionRange>
+              </requirement>
+              <requirement>
+                <type>eclipse-feature</type>
                 <id>org.eclipse.pde</id>
-                <versionRange>${platform-version}</versionRange>
+                <versionRange>0.0.0</versionRange>
               </requirement>
               <requirement>
                 <type>eclipse-feature</type>
                 <id>org.eclipse.cvs</id>
-                <versionRange>[1.1.2,2.0.0)</versionRange>
+                <versionRange>0.0.0</versionRange>
               </requirement>
             </extraRequirements>
           </dependency-resolution>

@@ -40,6 +40,7 @@ public class StagingViewTester {
 
 		SWTBotView view = TestUtil.showView(StagingView.VIEW_ID);
 		TestUtil.joinJobs(org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		TestUtil.processUIEvents();
 
 		return new StagingViewTester(view);
 	}
@@ -61,13 +62,19 @@ public class StagingViewTester {
 
 	public void stageFile(String path) {
 		SWTBotTree unstagedTree = stagingView.bot().tree(0);
+
+		TestUtil.waitUntilTreeHasNodeContainsText(stagingView.bot(),
+				unstagedTree, path, 10000);
+
 		TestUtil.getNode(unstagedTree.getAllItems(), path).select();
 
 		JobJoiner jobJoiner = JobJoiner.startListening(
 				org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE, 30,
 				TimeUnit.SECONDS);
+
 		ContextMenuHelper.clickContextMenu(unstagedTree,
 				UIText.StagingView_StageItemMenuLabel);
+
 		jobJoiner.join();
 	}
 

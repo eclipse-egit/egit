@@ -21,6 +21,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.common.StagingViewTester;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
+import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.egit.ui.test.CommitMessageUtil;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestUtils;
@@ -57,6 +58,8 @@ public class StagingViewTest extends LocalRepositoryTestCase {
 
 	@After
 	public void after() {
+		TestUtil.hideView(RepositoriesView.VIEW_ID);
+		TestUtil.hideView(StagingView.VIEW_ID);
 		Activator.getDefault().getRepositoryUtil().removeDir(repositoryFile);
 	}
 

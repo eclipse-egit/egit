@@ -1,70 +1,100 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?p2f version='1.0.0'?>
 <p2f version='1.0.0'>
-  <ius size='30'>
-    <iu id='org.apache.ant' name='Apache Ant' version='1.8.4.v201303080030'>
+  <ius size='39'>
+    <iu id='org.apache.ant' name='Apache Ant' version='1.9.4.v201410062020'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130827064939/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
       </repositories>
     </iu>
-    <iu id='org.apache.commons.compress' name='Apache Commons Compress Plug-in' version='1.4.1.v201301140946'>
+    <iu id='org.apache.commons.compress' name='Apache Commons Compress Plug-in' version='1.6.0.v201310281400'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130827064939/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
       </repositories>
     </iu>
     <iu id='org.apache.log4j' name='Apache Jakarta log4j Plug-in' version='1.2.15.v201012070815'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130827064939/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
       </repositories>
     </iu>
     <iu id='org.kohsuke.args4j' name='Args4j' version='2.0.21.v201301150030'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130827064939/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+      </repositories>
+    </iu>
+    <iu id='org.hamcrest.generator' name='Hamcrest Generator' version='1.3.0.v201305210900'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+      </repositories>
+    </iu>
+    <iu id='org.hamcrest.integration' name='Hamcrest Integration With Other Tools' version='1.3.0.v201305210900'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+      </repositories>
+    </iu>
+    <iu id='org.hamcrest.library' name='Hamcrest Library of Additional Matchers' version='1.3.0.v201305281000'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
       </repositories>
     </iu>
     <iu id='org.hamcrest' name='Hamcrest Library of Matchers' version='1.1.0.v20090501071000'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130827064939/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
       </repositories>
     </iu>
-    <iu id='javaewah' name='JavaEWAH' version='0.5.6.v201307211000'>
+    <iu id='org.hamcrest.text' name='Hamcrest Library of Text Matchers' version='1.1.0.v20090501071000'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130827064939/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+      </repositories>
+    </iu>
+    <iu id='javaewah' name='JavaEWAH' version='0.7.9.v201401101600'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
       </repositories>
     </iu>
     <iu id='org.objenesis' name='org.objenesis' version='1.0.0.v201105211943'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130827064939/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
       </repositories>
     </iu>
-    <iu id='org.mockito' name='Java Mocking and Stubbing Framework' version='1.8.4.v201102171835'>
+    <iu id='org.mockito' name='Java Mocking and Stubbing Framework' version='1.8.4.v201303031500'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130827064939/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
       </repositories>
     </iu>
-    <iu id='com.jcraft.jsch' name='JSch' version='0.1.46.v201205102330'>
+    <iu id='com.jcraft.jsch' name='JSch' version='0.1.51.v201410302000'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130827064939/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
       </repositories>
     </iu>
     <iu id='org.junit' name='JUnit' version='4.11.0.v201303080030'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130827064939/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
       </repositories>
     </iu>
     <iu id='javax.servlet' name='javax.servlet' version='2.5.0.v201103041518'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130827064939/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
       </repositories>
     </iu>
     <iu id='org.tukaani.xz' name='org.tukaani.xz' version='1.3.0.v201308270617'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20130827064939/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
       </repositories>
     </iu>
-    <iu id='org.eclipse.jetty.bundles.f.feature.group' name='Jetty - Bundles: all the jetty bundles' version='7.6.0'>
+    <iu id='org.slf4j.api' name='org.slf4j.api' version='1.7.2.v20121108-1250'>
       <repositories size='1'>
-        <repository location='http://archive.eclipse.org/jetty/updates/jetty-bundles-7.x/7.6.0.v20120127/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+      </repositories>
+    </iu>
+    <iu id='org.slf4j.impl.log4j12' name='org.slf4j.impl.log4j12' version='1.7.2.v20131105-2200'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.jetty.bundles.f.feature.group' name='Jetty - Bundles: all the jetty bundles' version='7.6.14.v20131031'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/jetty/updates/jetty-bundles-7.x/7.6.14.v20131031/'/>
       </repositories>
     </iu>
     <iu id='org.eclipse.egit.feature.group' name='Eclipse EGit' version='0.0.0'>
@@ -92,6 +122,16 @@
         <repository location='http://download.eclipse.org/egit/updates-nightly'/>
       </repositories>
     </iu>
+    <iu id='org.eclipse.pde.api.tools.ee.j2se15.group' name='J2SE-1.5 Execution Environment Description' version='0.0.0'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/eclipse/updates/4.4'/>
+      </repositories>
+    </iu>
+    <iu id='org.eclipse.pde.api.tools.ee.javase16.group' name='JavaSE-1.6 Execution Environment Description' version='0.0.0'>
+      <repositories size='1'>
+        <repository location='http://download.eclipse.org/eclipse/updates/4.4'/>
+      </repositories>
+    </iu>
     <iu id='org.eclipse.pde.api.tools.ee.javase17.group' name='JavaSE-1.7 Execution Environment Description' version='0.0.0'>
       <repositories size='1'>
         <repository location='http://download.eclipse.org/eclipse/updates/4.4'/>
@@ -113,12 +153,12 @@
       </repositories>
     </iu>
     <iu id='org.eclipse.mylyn_feature.feature.group' name='Mylyn' version='0.0.0'>
-      <repositories size='2'>
+      <repositories size='1'>
         <repository location='http://download.eclipse.org/mylyn/snapshots/weekly'/>
       </repositories>
     </iu>
     <iu id='org.eclipse.mylyn.bugzilla_feature.feature.group' name='Mylyn Tasks Connector: Bugzilla' version='0.0.0'>
-      <repositories size='2'>
+      <repositories size='1'>
         <repository location='http://download.eclipse.org/mylyn/snapshots/weekly'/>
       </repositories>
     </iu>
@@ -134,27 +174,32 @@
     </iu>
     <iu id='org.eclipse.swtbot.forms.feature.group' name='SWTBot for Eclipse Forms Testing (incubation)' version='0.0.0'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/technology/swtbot/snapshots'/>
+        <repository location='http://download.eclipse.org/technology/swtbot/releases/latest/'/>
       </repositories>
     </iu>
     <iu id='org.eclipse.swtbot.eclipse.feature.group' name='SWTBot for Eclipse Testing (incubation)' version='0.0.0'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/technology/swtbot/snapshots'/>
+        <repository location='http://download.eclipse.org/technology/swtbot/releases/latest/'/>
       </repositories>
     </iu>
     <iu id='org.eclipse.swtbot.feature.group' name='SWTBot for SWT Testing (incubation)' version='0.0.0'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/technology/swtbot/snapshots'/>
+        <repository location='http://download.eclipse.org/technology/swtbot/releases/latest/'/>
       </repositories>
     </iu>
     <iu id='org.eclipse.swtbot.ide.feature.group' name='SWTBot IDE Features (incubation)' version='0.0.0'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/technology/swtbot/snapshots'/>
+        <repository location='http://download.eclipse.org/technology/swtbot/releases/latest/'/>
       </repositories>
     </iu>
     <iu id='org.eclipse.swtbot.eclipse.test.junit.feature.group' name='SWTBot JUnit Headless launchers for Eclipse (incubation)' version='0.0.0'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/technology/swtbot/snapshots'/>
+        <repository location='http://download.eclipse.org/technology/swtbot/releases/latest/'/>
+      </repositories>
+    </iu>
+    <iu id='fr.obeo.releng.targetplatform-feature.feature.group' name='Target Platform Definition DSL and Generator' version='0.0.0'>
+      <repositories size='1'>
+        <repository location='http://mbarbero.github.io/fr.obeo.releng.targetplatform/p2/latest/'/>
       </repositories>
     </iu>
   </ius>
