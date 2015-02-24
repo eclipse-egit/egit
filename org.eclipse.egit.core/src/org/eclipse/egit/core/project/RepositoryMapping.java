@@ -196,11 +196,7 @@ public class RepositoryMapping {
 	synchronized void setRepository(final Repository r) {
 		db = r;
 
-		try {
-			workdirPrefix = getWorkTree().getCanonicalPath();
-		} catch (IOException err) {
-			workdirPrefix = getWorkTree().getAbsolutePath();
-		}
+		workdirPrefix = getWorkTree().getAbsolutePath();
 		workdirPrefix = workdirPrefix.replace('\\', '/');
 		if (!workdirPrefix.endsWith("/"))  //$NON-NLS-1$
 			workdirPrefix += "/";  //$NON-NLS-1$

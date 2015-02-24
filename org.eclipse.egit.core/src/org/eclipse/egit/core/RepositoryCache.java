@@ -106,19 +106,13 @@ public class RepositoryCache {
 		int largestSegmentCount = 0;
 		for (Repository r : repositories) {
 			if (!r.isBare()) {
-				try {
-					IPath repoPath = new Path(r.getWorkTree()
-							.getCanonicalPath());
-					if (location != null && repoPath.isPrefixOf(location)) {
-						if (repository == null
-								|| repoPath.segmentCount() > largestSegmentCount) {
-							repository = r;
-							largestSegmentCount = repoPath.segmentCount();
-						}
+				IPath repoPath = new Path(r.getWorkTree().getAbsolutePath());
+				if (location != null && repoPath.isPrefixOf(location)) {
+					if (repository == null
+							|| repoPath.segmentCount() > largestSegmentCount) {
+						repository = r;
+						largestSegmentCount = repoPath.segmentCount();
 					}
-				} catch (IOException e) {
-					Activator
-							.error("looking up working tree path of git repository failed", e); //$NON-NLS-1$
 				}
 			}
 		}

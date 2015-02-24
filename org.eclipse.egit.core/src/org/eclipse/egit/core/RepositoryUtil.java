@@ -328,14 +328,6 @@ public class RepositoryUtil {
 		return repos;
 	}
 
-	private String getPath(File repositoryDir) {
-		try {
-			return repositoryDir.getCanonicalPath();
-		} catch (IOException e) {
-			return repositoryDir.getAbsolutePath();
-		}
-	}
-
 	/**
 	 *
 	 * @param repositoryDir
@@ -353,7 +345,7 @@ public class RepositoryUtil {
 						CoreText.RepositoryUtil_DirectoryIsNotGitDirectory,
 						repositoryDir));
 
-			String dirString = getPath(repositoryDir);
+			String dirString = repositoryDir.getAbsolutePath();
 
 			List<String> dirStrings = getConfiguredRepositories();
 			if (dirStrings.contains(dirString)) {
@@ -374,12 +366,10 @@ public class RepositoryUtil {
 	 */
 	public boolean removeDir(File file) {
 		synchronized (prefs) {
-
-			String dir = getPath(file);
-
+			String dirString = file.getAbsolutePath();
 			Set<String> dirStrings = new HashSet<String>();
 			dirStrings.addAll(getConfiguredRepositories());
-			if (dirStrings.remove(dir)) {
+			if (dirStrings.remove(dirString)) {
 				saveDirs(dirStrings);
 				return true;
 			}
@@ -412,7 +402,7 @@ public class RepositoryUtil {
 	 * @return true if contains repository, false otherwise
 	 */
 	public boolean contains(final Repository repository) {
-		return contains(getPath(repository.getDirectory()));
+		return contains(repository.getDirectory().getAbsolutePath());
 	}
 
 	/**
