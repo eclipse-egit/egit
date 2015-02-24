@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_b88eceb6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-24T15:30:48Z",
+      "side": 1,
+      "message": "I was told all resources have to be closed. \nconnection is a resource, so I miss try/finally/close around it.",
+      "revId": "292ad93c9d26d7087afa5f17822061612a3cd0ba",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_989832fe",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-24T15:30:48Z",
+      "side": 1,
+      "message": "-We should use logging.-\n\nNo we should not catch the exception here: it is catched and logged in the caller already",
+      "revId": "292ad93c9d26d7087afa5f17822061612a3cd0ba",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_7818e603",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-24T15:30:48Z",
+      "side": 1,
+      "message": "We do not need to handle error here, we can propagate it to the caller - it does this already.",
+      "revId": "292ad93c9d26d7087afa5f17822061612a3cd0ba",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
