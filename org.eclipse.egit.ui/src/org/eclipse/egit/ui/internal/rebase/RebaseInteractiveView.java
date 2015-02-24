@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2014 SAP AG and others.
+ * Copyright (c) 2013, 2015 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -188,8 +188,7 @@ public class RebaseInteractiveView extends ViewPart implements
 		else if (o instanceof Repository)
 			repo = (Repository) o;
 		else if (o instanceof IAdaptable) {
-			IResource resource = (IResource) ((IAdaptable) o)
-					.getAdapter(IResource.class);
+			IResource resource = CommonUtils.getAdapter(((IAdaptable) o), IResource.class);
 			if (resource != null) {
 				RepositoryMapping mapping = RepositoryMapping
 						.getMapping(resource);

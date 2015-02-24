@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 SAP AG and others.
+ * Copyright (c) 2010, 2015 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -839,8 +839,8 @@ public class UIUtils {
 	}
 
 	private static String getShowInMenuLabel() {
-		IBindingService bindingService = (IBindingService) PlatformUI
-				.getWorkbench().getAdapter(IBindingService.class);
+		IBindingService bindingService = CommonUtils.getAdapter(PlatformUI
+				.getWorkbench(), IBindingService.class);
 		if (bindingService != null) {
 			String keyBinding = bindingService
 					.getBestActiveBindingFormattedFor(IWorkbenchCommandConstants.NAVIGATE_SHOW_IN_QUICK_MENU);
@@ -863,8 +863,8 @@ public class UIUtils {
 	 *         than one {@code Trigger}.
 	 */
 	public static KeyStroke getKeystrokeOfBestActiveBindingFor(String commandId) {
-		IBindingService bindingService = (IBindingService) PlatformUI
-				.getWorkbench().getAdapter(IBindingService.class);
+		IBindingService bindingService = CommonUtils.getAdapter(
+				PlatformUI.getWorkbench(), IBindingService.class);
 		TriggerSequence ts = bindingService.getBestActiveBindingFor(commandId);
 		if (ts == null)
 			return null;

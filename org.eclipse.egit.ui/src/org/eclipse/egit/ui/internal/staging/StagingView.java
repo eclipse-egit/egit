@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2013 Bernard Leach <leachbj@bouncycastle.org> and others.
+ * Copyright (C) 2011, 2015 Bernard Leach <leachbj@bouncycastle.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -1437,7 +1437,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		// For the normal resource undo/redo actions to be active, so that files
 		// deleted via the "Delete" action in the staging view can be restored.
-		IUndoContext workspaceContext = (IUndoContext) ResourcesPlugin.getWorkspace().getAdapter(IUndoContext.class);
+		IUndoContext workspaceContext = CommonUtils.getAdapter(ResourcesPlugin.getWorkspace(), IUndoContext.class);
 		undoRedoActionGroup = new UndoRedoActionGroup(getViewSite(), workspaceContext, true);
 		undoRedoActionGroup.fillActionBars(actionBars);
 
@@ -1972,7 +1972,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				reload(repoNode.getRepository());
 			}
 		} else {
-			IResource resource = CommonUtils.getAdapter(firstElement,
+			IResource resource = CommonUtils.getAdapterForObject(firstElement,
 					IResource.class);
 			showResource(resource);
 		}

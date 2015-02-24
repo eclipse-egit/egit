@@ -2,6 +2,7 @@
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Google Inc.
+ * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -44,6 +45,7 @@ import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
@@ -483,7 +485,7 @@ public class GitProjectData {
 		if (r instanceof IContainer) {
 			c = (IContainer) r;
 		} else if (r != null) {
-			c = (IContainer) r.getAdapter(IContainer.class);
+			c = Utils.getAdapter(r, IContainer.class);
 		}
 
 		if (c == null) {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2013 Benjamin Muskalla and others.
+ * Copyright (c) 2011, 2015 Benjamin Muskalla and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -64,7 +64,7 @@ public class GitLabelProvider extends LabelProvider implements
 			return getRefIcon((Ref) element);
 
 		if (element instanceof GitModelBlob || element instanceof GitModelTree) {
-			Object adapter = ((IAdaptable) element).getAdapter(IResource.class);
+			Object adapter = CommonUtils.getAdapter(((IAdaptable) element), IResource.class);
 			return getWorkbenchLabelProvider().getImage(adapter);
 		}
 
