@@ -36,6 +36,7 @@ import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.core.op.CloneOperation.PostCloneTask;
 import org.eclipse.egit.core.op.ConfigureFetchAfterCloneTask;
+import org.eclipse.egit.core.op.ConfigureGerritAfterCloneTask;
 import org.eclipse.egit.core.op.ConfigurePushAfterCloneTask;
 import org.eclipse.egit.core.op.SetRepositoryConfigPropertyTask;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
@@ -254,6 +255,7 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 		configureFetchSpec(op, gitRepositoryInfo, remoteName);
 		configurePush(op, gitRepositoryInfo, remoteName);
 		configureRepositoryConfig(op, gitRepositoryInfo);
+		configureGerrit(op, gitRepositoryInfo, remoteName);
 
 		if (cloneDestination.isImportProjects()) {
 			final IWorkingSet[] sets = cloneDestination.getWorkingSets();
@@ -343,6 +345,13 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 					p.getValue());
 			op.addPostCloneTask(task);
 		}
+	}
+
+	private void configureGerrit(CloneOperation op,
+			GitRepositoryInfo gitRepositoryInfo, String remoteName) {
+		ConfigureGerritAfterCloneTask task = new ConfigureGerritAfterCloneTask(
+				gitRepositoryInfo.getCloneUri(), remoteName);
+		op.addPostCloneTask(task);
 	}
 
 	private void importProjects(final Repository repository,
