@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_d85f5aba",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-02-24T15:15:06Z",
+      "side": 1,
+      "message": "why isn\u0027t that a method in AdapterUtils ?",
+      "revId": "b7bfdd353468ff006f7d8a591c18d92a0426b3d0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
