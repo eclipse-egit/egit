@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, 2015 Robin Stocker <robin@nibor.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -50,7 +50,7 @@ public class RepositorySaveableFilter extends SaveFilter {
 	}
 
 	private boolean isTextFileBufferInWorkDir(Saveable saveable) {
-		IDocument document = (IDocument) saveable.getAdapter(IDocument.class);
+		IDocument document = CommonUtils.getAdapter(saveable, IDocument.class);
 		if (document == null)
 			return true; // be conservative and assume this needs to be saved
 		ITextFileBuffer textFileBuffer = FileBuffers.getTextFileBufferManager()

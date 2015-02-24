@@ -7,6 +7,7 @@
  * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, 2013 François Rey <eclipse.org_@_francois_._rey_._name>
  * Copyright (C) 2013 Laurent Goubet <laurent.goubet@obeo.fr>
+ * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -262,8 +263,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 				if (o instanceof Repository)
 					repos.add((Repository) o);
 				else if (o instanceof PlatformObject) {
-					Repository repo = (Repository) ((PlatformObject) o)
-							.getAdapter(Repository.class);
+					Repository repo = CommonUtils.getAdapter(((PlatformObject) o), Repository.class);
 					if (repo != null)
 						repos.add(repo);
 				}
@@ -289,8 +289,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 				if (o instanceof Repository)
 					repos.add((Repository) o);
 				else if (o instanceof PlatformObject) {
-					Repository repo = (Repository) ((PlatformObject) o)
-							.getAdapter(Repository.class);
+					Repository repo = CommonUtils.getAdapter(((PlatformObject) o), Repository.class);
 					if (repo != null)
 						repos.add(repo);
 				}

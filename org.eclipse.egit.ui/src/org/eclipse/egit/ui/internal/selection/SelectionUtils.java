@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2014 Robin Stocker <robin@nibor.org> and others.
+ * Copyright (C) 2014, 2015 Robin Stocker <robin@nibor.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -232,8 +232,7 @@ public class SelectionUtils {
 				if (o instanceof Repository)
 					nextRepo = (Repository) o;
 				else if (o instanceof PlatformObject)
-					nextRepo = (Repository) ((PlatformObject) o)
-							.getAdapter(Repository.class);
+					nextRepo = CommonUtils.getAdapter(((PlatformObject) o), Repository.class);
 				if (nextRepo != null && result != null
 						&& !result.equals(nextRepo)) {
 					if (warn)

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010-2012 SAP AG.
+ * Copyright (c) 2010, 2015 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.action.IToolBarManager;
@@ -127,7 +128,7 @@ public class RepositoryPropertySourceProvider implements
 			Ref ref = (Ref) node.getObject();
 			if (ref.getName().startsWith(Constants.R_HEADS) || ref.getName().startsWith(Constants.R_REMOTES)){
 				checkChangeType(SourceType.BRANCH);
-				Repository repository = (Repository) node.getAdapter(Repository.class);
+				Repository repository = CommonUtils.getAdapter(node, Repository.class);
 				lastRepositorySource =  new BranchPropertySource(repository, ref.getName(), myPage);
 				return lastRepositorySource;
 			}

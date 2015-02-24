@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 IBM Corporation and others.
+ * Copyright (c) 2010, 2015 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -27,6 +27,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.viewers.ISelection;
@@ -102,8 +103,7 @@ public class GitSynchronizeWizard extends Wizard {
 				if (!(o instanceof IAdaptable))
 					continue;
 
-				IResource res = (IResource) ((IAdaptable) o)
-						.getAdapter(IResource.class);
+				IResource res = CommonUtils.getAdapter(((IAdaptable) o), IResource.class);
 				if (res == null)
 					continue;
 
