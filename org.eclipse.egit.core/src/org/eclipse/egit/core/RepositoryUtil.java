@@ -474,7 +474,7 @@ public class RepositoryUtil {
 			return null;
 		} finally {
 			if (walk != null)
-				walk.release();
+				walk.close();
 		}
 	}
 
@@ -512,7 +512,7 @@ public class RepositoryUtil {
 					walk.enterSubtree();
 			}
 		} finally {
-			walk.release();
+			walk.close();
 		}
 		return false;
 	}
