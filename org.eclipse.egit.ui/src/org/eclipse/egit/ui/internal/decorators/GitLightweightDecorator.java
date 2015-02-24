@@ -7,6 +7,7 @@
  * Copyright (C) 2008, Tor Arne Vestbø <torarnv@gmail.com>
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2011, Christian Halstrick <christian.halstrick@sap.com>
+ * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -34,6 +35,7 @@ import org.eclipse.egit.core.internal.util.ExceptionCollector;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.IDecoratableResource.Staged;
@@ -663,10 +665,9 @@ public class GitLightweightDecorator extends LabelProvider implements
 			resource = (IResource) element;
 		} else if (element instanceof IAdaptable) {
 			final IAdaptable adaptable = (IAdaptable) element;
-			resource = (IResource) adaptable.getAdapter(IResource.class);
+			resource = CommonUtils.getAdapter(adaptable, IResource.class);
 			if (resource == null) {
-				final IContributorResourceAdapter adapter = (IContributorResourceAdapter) adaptable
-						.getAdapter(IContributorResourceAdapter.class);
+				final IContributorResourceAdapter adapter = CommonUtils.getAdapter(adaptable, IContributorResourceAdapter.class);
 				if (adapter != null)
 					resource = adapter.getAdaptedResource(adaptable);
 			}

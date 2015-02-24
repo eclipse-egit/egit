@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011, 2012 GitHub Inc. and others.
+ *  Copyright (c) 2011, 2015 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
@@ -458,8 +459,7 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 	}
 
 	RepositoryCommit getCommit() {
-		return (RepositoryCommit) getEditor()
-				.getAdapter(RepositoryCommit.class);
+		return CommonUtils.getAdapter(getEditor(), RepositoryCommit.class);
 	}
 
 	/**

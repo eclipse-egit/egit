@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2014 Chris Aniszczyk <caniszczyk@gmail.com> and others.
+ * Copyright (c) 2011, 2015 Chris Aniszczyk <caniszczyk@gmail.com> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -396,8 +396,8 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 				selectedRepo = mapping.getRepository();
 		}
 		if (selectedRepo == null && first instanceof IAdaptable) {
-			IResource adapted = (IResource) ((IAdaptable) ssel
-					.getFirstElement()).getAdapter(IResource.class);
+			IResource adapted = CommonUtils.getAdapter(((IAdaptable) ssel
+					.getFirstElement()), IResource.class);
 			if (adapted != null) {
 				RepositoryMapping mapping = RepositoryMapping
 						.getMapping(adapted);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 SAP AG and others.
+ * Copyright (c) 2010, 2015 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -256,7 +256,7 @@ public class CompareUtils {
 		if (adapterType.isInstance(element))
 			return element;
 		if (element instanceof IAdaptable) {
-			Object adapted = ((IAdaptable) element).getAdapter(adapterType);
+			Object adapted = CommonUtils.getAdapter(((IAdaptable) element), adapterType);
 			if (adapterType.isInstance(adapted))
 				return adapted;
 		}
