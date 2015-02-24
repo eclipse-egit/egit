@@ -11,7 +11,6 @@
 package org.eclipse.egit.ui.internal.repository;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.HashSet;
@@ -408,22 +407,14 @@ public class RepositorySearchDialog extends WizardPage {
 				continue;
 
 			if (FileKey.isGitRepository(child, FS.DETECTED)) {
-				try {
-					strings.add(child.getCanonicalPath());
-				} catch (IOException e) {
-					// ignore here
-				}
+				strings.add(child.getAbsolutePath());
 				monitor.setTaskName(NLS
 						.bind(UIText.RepositorySearchDialog_RepositoriesFound_message,
 								Integer.valueOf(strings.size())));
 			} else if (FileKey.isGitRepository(new File(child,
 					Constants.DOT_GIT), FS.DETECTED)) {
-				try {
-					strings.add(new File(child, Constants.DOT_GIT)
-							.getCanonicalPath());
-				} catch (IOException e) {
-					// ignore here
-				}
+				strings.add(new File(child, Constants.DOT_GIT)
+						.getAbsolutePath());
 				monitor.setTaskName(NLS
 						.bind(UIText.RepositorySearchDialog_RepositoriesFound_message,
 								Integer.valueOf(strings.size())));
@@ -452,15 +443,11 @@ public class RepositorySearchDialog extends WizardPage {
 		if(!file.exists())
 			return;
 
+		prefs.put(PREF_PATH, file.getAbsolutePath());
 		try {
-			prefs.put(PREF_PATH, file.getCanonicalPath());
-			try {
-				prefs.flush();
-			} catch (BackingStoreException e1) {
-				// ignore here
-			}
-		} catch (IOException e2) {
-			// ignore
+			prefs.flush();
+		} catch (BackingStoreException e1) {
+			// ignore here
 		}
 
 		final TreeSet<String> validDirs = new TreeSet<String>(getCheckedItems());
