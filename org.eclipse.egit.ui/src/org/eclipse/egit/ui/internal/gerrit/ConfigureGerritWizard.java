@@ -8,11 +8,10 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.gerrit;
 
-import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
@@ -68,21 +67,13 @@ public class ConfigureGerritWizard extends Wizard {
 
 	private void configurePage() {
 		try {
-			findRemoteConfig();
+			remoteConfig = GerritUtil.findRemoteConfig(config, remoteName);
 			if (remoteConfig != null) {
 				gerritConfiguration.setSelection(getUri(), getProposedTargetBranch());
 			}
 		} catch (URISyntaxException e) {
 			gerritConfiguration.setErrorMessage("Error in configured URI"); //$NON-NLS-1$
 			Activator.logError("Configured URI could not be read", e); //$NON-NLS-1$
-		}
-	}
-
-	private void findRemoteConfig() throws URISyntaxException {
-		List<RemoteConfig> allRemoteConfigs = RemoteConfig.getAllRemoteConfigs(config);
-		for (RemoteConfig rc : allRemoteConfigs) {
-			if (rc.getName().equals(remoteName))
-				remoteConfig = rc;
 		}
 	}
 
@@ -116,55 +107,22 @@ public class ConfigureGerritWizard extends Wizard {
 
 	@Override
 	public boolean performFinish() {
-		configureRemoteSection();
-		configureCreateChangeId();
 		try {
+			configureRemoteSection();
+			GerritUtil.setCreateChangeId(config);
 			config.save();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			gerritConfiguration.setErrorMessage(e.getMessage());
 			return false;
 		}
 		return true;
 	}
 
-	private void configureRemoteSection() {
-		configurePushURI();
-		configurePushRefSpec();
-		configureFetchNotes();
+	private void configureRemoteSection() throws URISyntaxException {
+		GerritUtil.configurePushURI(remoteConfig, gerritConfiguration.getURI());
+		GerritUtil.configurePushRefSpec(remoteConfig,
+				gerritConfiguration.getBranch());
+		GerritUtil.configureFetchNotes(remoteConfig);
 		remoteConfig.update(config);
 	}
-
-	private void configurePushURI() {
-		List<URIish> pushURIs = new ArrayList<URIish>(remoteConfig.getPushURIs());
-		for (URIish urIish : pushURIs) {
-			remoteConfig.removePushURI(urIish);
-		}
-		URIish pushURI = gerritConfiguration.getURI();
-		remoteConfig.addPushURI(pushURI);
-	}
-
-	private void configurePushRefSpec() {
-		String gerritBranch = gerritConfiguration.getBranch();
-		List<RefSpec> pushRefSpecs = new ArrayList<RefSpec>(remoteConfig.getPushRefSpecs());
-		for (RefSpec refSpec : pushRefSpecs) {
-			remoteConfig.removePushRefSpec(refSpec);
-		}
-		remoteConfig.addPushRefSpec(new RefSpec(
-				"HEAD:" + GerritUtil.REFS_FOR + gerritBranch)); //$NON-NLS-1$
-	}
-
-	private void configureFetchNotes() {
-		String notesRef = Constants.R_NOTES + "*"; //$NON-NLS-1$
-		List<RefSpec> fetchRefSpecs = remoteConfig.getFetchRefSpecs();
-		for (RefSpec refSpec : fetchRefSpecs) {
-			if(refSpec.matchSource(notesRef))
-				return;
-		}
-		remoteConfig.addFetchRefSpec(new RefSpec(notesRef + ":" + notesRef)); //$NON-NLS-1$
-	}
-
-	private void configureCreateChangeId() {
-		GerritUtil.setCreateChangeId(config);
-	}
-
 }
