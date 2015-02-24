@@ -78,11 +78,7 @@ public class TestRepository {
 		tmpRepository.close();
 		// use repository instance from RepositoryCache!
 		repository = Activator.getDefault().getRepositoryCache().lookupRepository(gitDir);
-		try {
-			workdirPrefix = repository.getWorkTree().getCanonicalPath();
-		} catch (IOException err) {
-			workdirPrefix = repository.getWorkTree().getAbsolutePath();
-		}
+		workdirPrefix = repository.getWorkTree().getAbsolutePath();
 		workdirPrefix = workdirPrefix.replace('\\', '/');
 		if (!workdirPrefix.endsWith("/")) //$NON-NLS-1$
 			workdirPrefix += "/"; //$NON-NLS-1$
@@ -96,11 +92,7 @@ public class TestRepository {
 	 */
 	public TestRepository(Repository repository) throws IOException {
 		this.repository = repository;
-		try {
-			workdirPrefix = repository.getWorkTree().getCanonicalPath();
-		} catch (IOException err) {
-			workdirPrefix = repository.getWorkTree().getAbsolutePath();
-		}
+		workdirPrefix = repository.getWorkTree().getAbsolutePath();
 		workdirPrefix = workdirPrefix.replace('\\', '/');
 		if (!workdirPrefix.endsWith("/")) //$NON-NLS-1$
 			workdirPrefix += "/"; //$NON-NLS-1$

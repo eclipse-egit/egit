@@ -133,7 +133,7 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 				if (!(gitDirParent.toString() + File.separator)
 						.startsWith(workspacePath.toString() + File.separator))
 					if (!(gitDirParent.toString() + File.separator)
-							.startsWith(getTestDirectory().getCanonicalPath()
+							.startsWith(getTestDirectory().getAbsolutePath()
 									.toString() + File.separator))
 						fail("Attempting cleanup of directory neither in workspace nor test directory"
 								+ canonicalFile);
@@ -242,10 +242,10 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 		existingOrNewPage.assertEnabling(false, false, true);
 		bot.button("Finish").click();
 		Thread.sleep(1000);
-		assertEquals(repo1.getDirectory().getCanonicalPath(), RepositoryMapping
+		assertEquals(repo1.getDirectory().getAbsolutePath(), RepositoryMapping
 				.getMapping(workspace.getRoot().getProject(projectName1))
 				.getRepository().getDirectory().toString());
-		assertEquals(repo2.getDirectory().getCanonicalPath(), RepositoryMapping
+		assertEquals(repo2.getDirectory().getAbsolutePath(), RepositoryMapping
 				.getMapping(workspace.getRoot().getProject(projectName2))
 				.getRepository().getDirectory().toString());
 	}
