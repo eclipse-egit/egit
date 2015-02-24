@@ -103,6 +103,16 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	}
 
 	/**
+	 * Log an info message for this plug-in
+	 *
+	 * @param message
+	 */
+	public static void logInfo(final String message) {
+		getDefault().getLog().log(
+				new Status(IStatus.INFO, getPluginId(), 0, message, null));
+	}
+
+	/**
 	 * Utility to create a warning status for this plug-in.
 	 *
 	 * @param message
