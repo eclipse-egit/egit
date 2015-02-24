@@ -104,6 +104,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_248f5804",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-02-24T23:20:46Z",
+      "side": 1,
+      "message": "https://git.eclipse.org/gitroot/www.eclipse.org/... urls can\u0027t work since this is not Gerrit but git-core which doesn\u0027t support the Gerrit code review workflow and of course also not the Gerrit REST API. So if you want Gerrit you need to clone from Gerrit.\n\nWe can hardcode the Eclipse Gerrit URL but I wanted a solution which also works with other Gerrit servers.\n\nI\u0027ll change the implementation to start with the shortest URL to avoid unnecessary requests. On the other hand this is only done after cloning the repository and these requests shouldn\u0027t generate a considerable load.",
+      "parentUuid": "a7fb1785_44170451",
+      "revId": "1955f933a4ac2ccad291ab2c5f4b5b758cf2e044",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_84a72cc4",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
         "patchSetId": 4
