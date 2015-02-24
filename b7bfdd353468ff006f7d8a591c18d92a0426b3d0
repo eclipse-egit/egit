@@ -16,6 +16,24 @@
       "revId": "b7bfdd353468ff006f7d8a591c18d92a0426b3d0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_b8a7ee3e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 315
+      },
+      "writtenOn": "2015-02-24T15:19:17Z",
+      "side": 1,
+      "message": "Because AdapterUtils is API. We don\u0027t want to make the workaround method API.",
+      "parentUuid": "a7fb1785_d85f5aba",
+      "revId": "b7bfdd353468ff006f7d8a591c18d92a0426b3d0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
