@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_c103e618",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gerrit/GerritUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-24T22:46:11Z",
+      "side": 1,
+      "message": "Can you join the variable definition please?",
+      "revId": "1955f933a4ac2ccad291ab2c5f4b5b758cf2e044",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_010dee44",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gerrit/GerritUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-24T22:46:11Z",
+      "side": 1,
+      "message": "can you put braces around if and add break; after the remote config is found. Not sure if it is intended, but if the name is not unique the last one will win.",
+      "revId": "1955f933a4ac2ccad291ab2c5f4b5b758cf2e044",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_e130a2ee",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gerrit/GerritUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-24T22:46:11Z",
+      "side": 1,
+      "message": "exception is not thrown in the code, why is it needed here?",
+      "revId": "1955f933a4ac2ccad291ab2c5f4b5b758cf2e044",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_a1da1a12",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gerrit/GerritUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-24T22:46:11Z",
+      "side": 1,
+      "message": "can you put braces around if block please.",
+      "revId": "1955f933a4ac2ccad291ab2c5f4b5b758cf2e044",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_81f27e90",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-24T22:46:11Z",
+      "side": 1,
+      "message": "Can you please made a link around it \n\u003ca href\u003d\"https://gerrit-documentation.storage.googleapis.com/Documentation/2.11/rest-api-config.html#get-version\"\u003eGerrit 2.11 API\u003c/a\u003e",
+      "revId": "1955f933a4ac2ccad291ab2c5f4b5b758cf2e044",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_44170451",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-24T22:46:11Z",
+      "side": 1,
+      "message": "I\u0027e tried with this url and it didn\u0027t worked:\nhttps://git.eclipse.org/gitroot/www.eclipse.org/eclipse/news.git\nthis url was OK:\nhttps://git.eclipse.org/r/www.eclipse.org/eclipse/news.git\nbut it required 5 and 4 http requests to get the final answer each time.\n\nI think we should start search from the begin of the path and not from the end to avoid spamming on server and delays on client side.\n\nI also would propose that we should recognize http*://git.eclipse.org/* urls and only try https://git.eclipse.org/r/config/server/version in this case: Eclipse web master and also end users will be really happy to need only one single shot to get the result. Additionally as the example above shows the automatic Gerrit config for git.eclipse.org/gitroot/ URL\u0027s doesn\u0027t work at all.",
+      "revId": "1955f933a4ac2ccad291ab2c5f4b5b758cf2e044",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_84a72cc4",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-24T22:46:11Z",
+      "side": 1,
+      "message": "the method can declare \"throws URISyntaxException, IOException\" and the extra try/catch/log can be removed.",
+      "revId": "1955f933a4ac2ccad291ab2c5f4b5b758cf2e044",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
