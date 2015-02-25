@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_c75f7644",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-25T06:09:16Z",
+      "side": 1,
+      "message": "I actually meant that we should *also* automatically recognize eclipse http non-gerrit repo urls (https://git.eclipse.org/gitroot/ *or* http://git.eclipse.org/gitroot/ *or* git own or ssh protocol urls (all those variants one can see for example in the gerrit review download row) and replace then the first part of the url with the gerrit variant.\n\nIn Eclipse project wikis user learn that they have to fetch from git with git url and may be later there is some info how to push via gerrit. This patch should help in this cases, so that first time contributors can just checkout the code using either url variant and push without  reading wikis and fiddling around with cryptical, very similar looking urls (my own experience btw).\n\nI did not tried / checked what happens if the url contains the user name part - we should support this case too.\n\nSo finally if ee recognize any of the uri variants above and test the gerrit variant availability we can update the uri field to the gerrit variant and configure the push with updated uri.",
+      "revId": "35cb38fa697413264f236cacb04389a5b61df28a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
