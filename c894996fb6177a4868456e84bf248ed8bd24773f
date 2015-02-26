@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_e81a3e74",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-26T10:35:59Z",
+      "side": 1,
+      "message": "1000 * seconds? Isn\u0027t that too much? What is the default timeout?\nOr is the timeout javadoc wrong and it must be milliseconds?",
+      "revId": "c894996fb6177a4868456e84bf248ed8bd24773f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
