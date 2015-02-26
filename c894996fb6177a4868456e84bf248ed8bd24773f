@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_4889d2ac",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-02-26T12:19:32Z",
+      "side": 1,
+      "message": "the incoming value is in seconds, we also store the timeout in EGit preferences in seconds, hence javadoc says timeout is in seconds.\n\nHTTPURL Connection.setReadTimeout() wants the timeout in milliseconds so I multiply the value which was passed to the constructor ConfigureGerritAfterCloneTask() e.g. 30 (sec) by 1000 to yield 30000 (ms) for HTTPURLConnection which wants milliseconds.",
+      "parentUuid": "a7fb1785_2860c676",
+      "revId": "c894996fb6177a4868456e84bf248ed8bd24773f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_e81a3e74",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
         "patchSetId": 10
