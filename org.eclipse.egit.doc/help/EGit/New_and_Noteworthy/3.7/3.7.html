@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<title>JGit 3.6 New and Noteworthy</title>
+		<title>EGit 3.7 New and Noteworthy</title>
 		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
 	</head>
 	<body>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
-				<th style="width: 100%" align="center" colspan="3">JGit 3.6 New and Noteworthy</th>
+				<th style="width: 100%" align="center" colspan="3">EGit 3.7 New and Noteworthy</th>
 			</tr>
 			<tr>
 				<td style="width: 20%" align="left"></td>
@@ -25,34 +25,37 @@
 				<td style="width: 20%" align="right" valign="top">Bug Fixes</td>
 			</tr>
 		</table><hr/>
-		<h1 id="JGit">JGit</h1>
+		<h1 id="EGit">EGit</h1>
 		<h2 id="Features">Features</h2>
 		<ul>
-			<li>Ignore rule parser was reimplemented to support ** wildcard patterns, negation rules and improve performance</li>
-			<li>Add "aggressive" option to GC</li>
-			<li>GarbageCollectCommand now supports DfsRepository</li>
-			<li>Support for Submodule configuration submodule.&lt;name&gt;.ignore</li>
-			<li>Support for new submodule repository layout (.git/modules of the super project contains the submodule repositories)</li>
-			<li>InitCommand support for option "--separate-git-dir" to store .git meta data directory in a separate directory</li>
-			<li>CloneCommand support to store .git meta data directory in a separate directory</li>
-			<li>Permission bits for "executable" attribute are now set according to the umask on Posix/Java7</li>
-			<li>BundleWriter now supports including HEAD in bundle</li>
-			<li>New config parameter core.trustfolderstat</li>
+			<li>Enable using staging view for submodule repositories</li>
+			<li>Double click on conflicting files in staging view opens the merge tool instead of compare view</li>
+			<li>Consider URLs with and without ".git" when importing project sets</li>
+			<li>Handle external files in CommitUI.getSelectedFiles()</li>
 		</ul>
-		<h2 id="JGit_Command_Line">JGit Command Line</h2>
+		<h3 id="GitHub_Connector">GitHub Connector</h3>
 		<ul>
-			<li>Add option --bare to clone command</li>
-			<li>Add options --heads and --tags to ls-remote command</li>
+			<li>No new features</li>
+		</ul>
+		<h2 id="Usability_Improvements">Usability Improvements</h2>
+		<ul>
+			<li>"Updating index" should indicate that view is "busy"</li>
+			<li>"Refresh" operation should indicate that view is "busy"</li>
+			<li>Case insensitive order of remotes in push branch dialog</li>
+			<li>Transparent icons in push branch dialog</li>
+			<li>Make EGit Eclipse welcome page more consistent with other team providers</li>
+			<li>Automatically configure gerrit for projects cloned from a Gerrit server</li>
 		</ul>
 		<h2 id="Performance_Improvements">Performance Improvements</h2>
 		<ul>
-			<li>Reimplemented ignore rule parser to improve performance of ignore rule evaluation</li>
-			<li>Enhance SubmoduleWalk with a fast check whether a repo contains submodules</li>
+			<li>Scalability: don't run incremental update if there are too many changes</li>
+			<li>Scalability: label decorator should cache computed repository branch state. This heavily speeds up resource decoration for large repositories</li>
+			<li>Fixed many UI freezes reported via Mars automated error reporting (see issue list).</li>
 		</ul>
-		<h2 id="Build_and_Release_Engineering">Build and Release Engineering</h2>
+		<h2 id="Release_Engineering_and_Build">Release Engineering and Build</h2>
 		<ul>
-			<li>The java7 feature is now included in org.eclipse.jgit.feature</li>
-			<li>Maven site generation for jgit</li>
+			<li>Update build to Tycho 0.22</li>
+			<li>Use target platform DSL and generator to maintain target platforms</li>
 		</ul><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>

@@ -1093,6 +1093,9 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<p>Then open the Staging View or Commit Dialog again and select the 
 			<b>Amend Previous Commit</b> icon in the toolbar.
 		</p>
+		<p>
+			<img border="0" src="images/EGit_Amend_Commit_Button.png"/>
+		</p>
 		<p>The commit message of your previous commit (the one you want to replace) is then filled into the "Commit Message" field. This gives you the chance not only to correct errors in the content of the version-controlled files but to also correct errors (e.g. typos) in the commit message describing your change.</p>
 		<p>As an alternative to amending you could just commit the corrected version as a subsequent commit. But the first commit containing the typo is of no use to anybody and in order not to clutter the history of your project with unneeded commits you should amend the commit.</p>
 		<p>Be aware that amending commits which are already published to other repositories may cause trouble. Once you have pushed a commit to a remote repository or your local repository was cloned by somebody else, you should be very careful with amending commits. In this case publishing a second commit which corrects the first one is probably a better solution. Otherwise inform all others that you amended a published commit so that they can react accordingly.</p>
