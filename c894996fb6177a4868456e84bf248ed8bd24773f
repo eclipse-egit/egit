@@ -16,6 +16,24 @@
       "revId": "c894996fb6177a4868456e84bf248ed8bd24773f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_68448e1e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-02-26T11:26:04Z",
+      "side": 1,
+      "message": "we store timeout in preferences in seconds and HttURLConnection wants it in milliseconds hence we have to multiply by 1000 here. Default is 30 sec and timeout can be adjusted in EGit preferences.",
+      "parentUuid": "a7fb1785_e81a3e74",
+      "revId": "c894996fb6177a4868456e84bf248ed8bd24773f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
