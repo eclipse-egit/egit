@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_2860c676",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-02-26T12:02:59Z",
+      "side": 1,
+      "message": "Initially it was not clear for me that code below uses milliseconds, because code above says that incoming value is in seconds, so multiplication seem to be redundant or even dangerous for me.\n\nSo *if* the incoming value is in milliseconds I would let the multiplication at same place as it today BUT the javadoc above should be fixed because javadoc and code are not consistent regarding units.",
+      "parentUuid": "a7fb1785_480ef2ef",
+      "revId": "c894996fb6177a4868456e84bf248ed8bd24773f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_e81a3e74",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
         "patchSetId": 10
