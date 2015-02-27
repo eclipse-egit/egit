@@ -275,15 +275,18 @@ git config remote.review.push HEAD:refs/for/master
 			in any way, that is a bug and should be reported and fixed. Java isn't slow, but there is a
 			lot of slow Java code.</p>
 		<h3 id="Braces_for_one-line_statements">Braces for one-line statements</h3>
-		<p>Both in JGit and EGit, the preferred coding style is to leave off braces around statements with one line, e.g.:</p>
+		<p>Before 3.7.0 both in JGit and EGit, the preferred coding style was to leave off braces around statements with one line (with some exceptions to this rule), e.g.:</p>
 		<pre>if (condition)
     doSomething();
 </pre>
-		<p>Some exceptions to this rule:</p>
-		<ul>
-			<li>Don't leave off braces when the inner element is a try block</li>
-			<li>Don't leave off braces when the inner element is a long or deeply-nested if/else block</li>
-		</ul>
+		<p>Starting with 3.7.0 braces are mandatory independently on the number of lines, without exceptions. The old code will remain as is, but the new changes should use the style below:</p>
+		<pre>if (condition) {
+    doSomething();
+}
+</pre>
+		<p>The main reason to the change was to simplify the review process, coding guidelines and to make them more consistent with Eclipse code formatter, see 
+			<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=457592" target="egit_external">bug 457592</a>.
+		</p>
 		<h3 id="Removing_trailing_whitespace">Removing trailing whitespace</h3>
 		<p>In JGit and EGit we have enabled the save action "Remove trailing white spaces on all lines" for Java sources. This works except for empty comment lines, see 
 			<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=414421" target="egit_external">bug 414421</a>.

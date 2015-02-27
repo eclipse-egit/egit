@@ -57,7 +57,7 @@ import org.eclipse.ui.dialogs.WorkingSetGroup;
  * Wizard page that allows the user entering the location of a repository to be
  * cloned.
  */
-class CloneDestinationPage extends WizardPage {
+public class CloneDestinationPage extends WizardPage {
 
 	private final List<Ref> availableRefs = new ArrayList<Ref>();
 
@@ -120,6 +120,16 @@ class CloneDestinationPage extends WizardPage {
 			directoryText.setFocus();
 	}
 
+	/**
+	 * @param repositorySelection
+	 *            selection of remote repository made by user
+	 * @param availableRefs
+	 *            all available refs
+	 * @param branches
+	 *            branches selected to be cloned
+	 * @param head
+	 *            HEAD in source repository
+	 */
 	public void setSelection(RepositorySelection repositorySelection, List<Ref> availableRefs, List<Ref> branches, Ref head){
 		this.availableRefs.clear();
 		this.availableRefs.addAll(availableRefs);

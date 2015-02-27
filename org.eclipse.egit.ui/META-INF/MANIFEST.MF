@@ -37,6 +37,7 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: org.eclipse.egit.core;version="[4.0.0,4.1.0)",
  org.eclipse.egit.core.internal;version="[4.0.0,4.1.0)",
+ org.eclipse.egit.core.internal.gerrit;version="[4.0.0,4.1.0)",
  org.eclipse.egit.core.internal.indexdiff;version="[4.0.0,4.1.0)",
  org.eclipse.egit.core.internal.job;version="[4.0.0,4.1.0)",
  org.eclipse.egit.core.internal.rebase;version="[4.0.0,4.1.0)",
