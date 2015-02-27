@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<title>EGit 3.6 New and Noteworthy</title>
+		<title>JGit 3.7 New and Noteworthy</title>
 		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
 	</head>
 	<body>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
-				<th style="width: 100%" align="center" colspan="3">EGit 3.6 New and Noteworthy</th>
+				<th style="width: 100%" align="center" colspan="3">JGit 3.7 New and Noteworthy</th>
 			</tr>
 			<tr>
 				<td style="width: 20%" align="left"></td>
@@ -25,42 +25,23 @@
 				<td style="width: 20%" align="right" valign="top">Bug Fixes</td>
 			</tr>
 		</table><hr/>
-		<h1 id="EGit">EGit</h1>
+		<h1 id="JGit">JGit</h1>
 		<h2 id="Features">Features</h2>
-		<h3 id="History_View">History View</h3>
 		<ul>
-			<li>New context menu "import changed projects" to import projects changed in the selected commit</li>
+			<li>Add basic support for .gitattributes</li>
+			<li>Use slf4j for logging</li>
+			<li>Introduce hook support into the FS implementations (on Posix and Cygwin)</li>
+			<li>Support for the pre-commit hook</li>
+			<li>Provide more details in exceptions thrown when packfile is invalid</li>
 		</ul>
-		<h3 id="Repositories_View">Repositories View</h3>
+		<h2 id="JGit_Command_Line">JGit Command Line</h2>
 		<ul>
-			<li>Add "Open With" menu for workspace files</li>
+			<li>JGit command line: add option --orphan for checkout command</li>
 		</ul>
-		<h3 id="Staging_View">Staging View</h3>
+		<h2 id="Build_and_Release_Engineering">Build and Release Engineering</h2>
 		<ul>
-			<li>Checkout ours/theirs for files having conflicts</li>
-		</ul>
-		<h3 id="GitHub_Connector">GitHub Connector</h3>
-		<ul>
-			<li>No new features</li>
-		</ul>
-		<h2 id="Usability_Improvements">Usability Improvements</h2>
-		<ul>
-			<li>Handle symlink icon in staging view</li>
-			<li>Add new wizard banners</li>
-			<li>Improved icons for remote commands</li>
-			<li>Link Interactive Rebase view with selected repository</li>
-			<li>Show branch name and status besides repository in Git Staging view</li>
-			<li>In the History view timestamps are now displayed in local time</li>
-		</ul>
-		<h2 id="Tracing">Tracing</h2>
-		<ul>
-			<li>Add tracing for selection handling</li>
-			<li>Register dynamic tracing options on tracing preference page</li>
-		</ul>
-		<h2 id="Release_Engineering_and_Build">Release Engineering and Build</h2>
-		<ul>
-			<li>Update Tycho to 0.21</li>
-			<li>Add target platform for Mars using Orbit S-build</li>
+			<li>Update build to use Tycho 0.22</li>
+			<li>Use target platform DSL and generator to maintain target platforms</li>
 		</ul><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
