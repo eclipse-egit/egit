@@ -182,7 +182,7 @@ public class IndexDiffCacheTest extends GitTestCase {
 		assertThat(data1.getIgnoredNotInIndex(),
 				hasItem("Project-1/sub/ignore"));
 
-		project.createFile("sub/ignored", "Ignored".getBytes());
+		project.createFile("sub/ignored", "Ignored".getBytes("UTF-8"));
 
 		// adding this file will trigger a refresh, so no manual refresh must be
 		// required.
@@ -214,7 +214,7 @@ public class IndexDiffCacheTest extends GitTestCase {
 		assertThat(data1.getIgnoredNotInIndex(), hasItem("Project-1/sub"));
 
 		// creating a file in an ignored directory will not trigger the listener
-		project.createFile("sub/ignored", "Ignored".getBytes());
+		project.createFile("sub/ignored", "Ignored".getBytes("UTF-8"));
 		waitForListenerNotCalled();
 
 		// removing must also not trigger the listener
@@ -240,7 +240,7 @@ public class IndexDiffCacheTest extends GitTestCase {
 		IFile file = project.getProject().getFile("sub/ignore");
 		FileOutputStream str = new FileOutputStream(file.getLocation().toFile());
 		try {
-			str.write("other contents".getBytes());
+			str.write("other contents".getBytes("UTF-8"));
 		} finally {
 			str.close();
 		}

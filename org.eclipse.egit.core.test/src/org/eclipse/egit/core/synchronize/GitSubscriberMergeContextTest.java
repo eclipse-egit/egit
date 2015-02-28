@@ -432,7 +432,7 @@ public class GitSubscriberMergeContextTest extends GitTestCase {
 	private RevCommit setContentsAndCommit(IFile targetFile,
 			String newContents, String commitMessage) throws Exception {
 		targetFile.setContents(
-				new ByteArrayInputStream(newContents.getBytes()),
+				new ByteArrayInputStream(newContents.getBytes("UTF-8")),
 				IResource.FORCE, new NullProgressMonitor());
 		testRepo.addToIndex(targetFile);
 		return testRepo.commit(commitMessage);
@@ -441,7 +441,7 @@ public class GitSubscriberMergeContextTest extends GitTestCase {
 	private void assertContentEquals(IFile file, String expectedContents)
 			throws Exception {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
-				file.getContents()));
+				file.getContents(), "UTF-8"));
 		StringBuilder contentsBuilder = new StringBuilder();
 		String line = reader.readLine();
 		while (line != null) {
