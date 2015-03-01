@@ -249,8 +249,7 @@ public class RemoveCommand extends
 
 	private static void closeSubmoduleRepositories(Repository repo)
 			throws IOException {
-		SubmoduleWalk walk = SubmoduleWalk.forIndex(repo);
-		try {
+		try (SubmoduleWalk walk = SubmoduleWalk.forIndex(repo)) {
 			while (walk.next()) {
 				Repository subRepo = walk.getRepository();
 				if (subRepo != null) {
@@ -266,8 +265,6 @@ public class RemoveCommand extends
 					}
 				}
 			}
-		} finally {
-			walk.release();
 		}
 	}
 
