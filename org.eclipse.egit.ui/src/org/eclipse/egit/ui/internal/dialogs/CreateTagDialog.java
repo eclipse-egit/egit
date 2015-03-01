@@ -630,22 +630,19 @@ public class CreateTagDialog extends TitleAreaDialog {
 	}
 
 	private void setExistingTagFromText(String tagName) {
-		RevWalk revWalk = null;
 		try {
 			ObjectId tagObjectId = repo.resolve(Constants.R_TAGS + tagName);
 			if (tagObjectId != null) {
-				revWalk = new RevWalk(repo);
-				RevObject tagObject = revWalk.parseAny(tagObjectId);
-				setExistingTag(tagObject);
+				try (RevWalk revWalk = new RevWalk(repo)) {
+					RevObject tagObject = revWalk.parseAny(tagObjectId);
+					setExistingTag(tagObject);
+				}
 				return;
 			}
 		} catch (IOException e) {
-			// See below
+			// ignore
 		} catch (RevisionSyntaxException e) {
-			// See below
-		} finally {
-			if (revWalk != null)
-				revWalk.release();
+			// ignore
 		}
 		setNoExistingTag();
 	}
@@ -674,8 +671,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 	}
 
 	private void getRevCommits(Collection<RevCommit> commits) {
-		final RevWalk revWalk = new RevWalk(repo);
-		try {
+		try (final RevWalk revWalk = new RevWalk(repo)) {
 			revWalk.sort(RevSort.COMMIT_TIME_DESC, true);
 			revWalk.sort(RevSort.BOUNDARY, true);
 			AnyObjectId headId = repo.resolve(Constants.HEAD);
@@ -692,8 +688,6 @@ public class CreateTagDialog extends TitleAreaDialog {
 		} catch (IOException e) {
 			Activator.logError(UIText.TagAction_errorWhileGettingRevCommits, e);
 			setErrorMessage(UIText.TagAction_errorWhileGettingRevCommits);
-		} finally {
-			revWalk.release();
 		}
 	}
 

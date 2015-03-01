@@ -351,9 +351,7 @@ public class RebaseResultDialog extends MessageDialog {
 
 		boolean conflictListFailure = false;
 		DirCache dc = null;
-		RevWalk rw = null;
-		try {
-			rw = new RevWalk(repo);
+		try (RevWalk rw = new RevWalk(repo)) {
 			// the commits might not have been fully loaded
 			RevCommit commit = rw.parseCommit(result.getCurrentCommit());
 			commitMessage.getTextWidget().setText(commit.getFullMessage());
@@ -371,8 +369,6 @@ public class RebaseResultDialog extends MessageDialog {
 			// the file list will be empty
 			conflictListFailure = true;
 		} finally {
-			if (rw != null)
-				rw.release();
 			if (dc != null)
 				dc.unlock();
 		}

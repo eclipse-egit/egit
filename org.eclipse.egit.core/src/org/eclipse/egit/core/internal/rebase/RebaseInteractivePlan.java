@@ -267,12 +267,9 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 	}
 
 	private void reparsePlan() {
-		RevWalk walk = new RevWalk(repository.newObjectReader());
-		try {
+		try (RevWalk walk = new RevWalk(repository.newObjectReader())) {
 			doneList = parseDone(walk);
 			todoList = parseTodo(walk);
-		} finally {
-			walk.release();
 		}
 		planList = JoinedList.wrap(doneList, todoList);
 		notifyPlanWasUpdatedFromRepository();

@@ -70,13 +70,10 @@ abstract class AbstractReflogCommandHandler extends AbstractHandler {
 			return null;
 
 		RevCommit commit = null;
-		RevWalk w = new RevWalk(repo);
-		try {
+		try (RevWalk w = new RevWalk(repo)) {
 			commit = w.parseCommit(entry.getNewId());
 		} catch (IOException e) {
 			throw new ExecutionException(e.getMessage(), e);
-		} finally {
-			w.release();
 		}
 		return commit;
 	}

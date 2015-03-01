@@ -468,8 +468,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 			return;
 		final RevCommit baseCommit;
 		final RevCommit compareCommit;
-		RevWalk rw = new RevWalk(repo);
-		try {
+		try (RevWalk rw = new RevWalk(repo)) {
 			ObjectId commitId = repo.resolve(compareVersion);
 			compareCommit = commitId != null ? rw.parseCommit(commitId) : null;
 			if (baseVersion == null)
@@ -481,8 +480,6 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 		} catch (IOException e) {
 			Activator.handleError(e.getMessage(), e, true);
 			return;
-		} finally {
-			rw.release();
 		}
 		showBusy(true);
 		try {

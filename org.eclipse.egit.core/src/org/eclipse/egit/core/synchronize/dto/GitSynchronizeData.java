@@ -165,12 +165,9 @@ public class GitSynchronizeData {
 	 * @throws IOException
 	 */
 	public void updateRevs() throws IOException {
-		ObjectWalk ow = new ObjectWalk(repo);
-		try {
+		try (ObjectWalk ow = new ObjectWalk(repo)) {
 			srcRevCommit = getCommit(srcRev, ow);
 			dstRevCommit = getCommit(dstRev, ow);
-		} finally {
-			ow.release();
 		}
 
 		if (this.dstRevCommit != null && this.srcRevCommit != null)

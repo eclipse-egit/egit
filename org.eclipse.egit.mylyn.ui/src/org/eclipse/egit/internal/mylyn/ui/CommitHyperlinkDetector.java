@@ -123,9 +123,7 @@ public class CommitHyperlinkDetector extends AbstractHyperlinkDetector {
 		}
 
 		private RevCommit getCommit(Repository repository) throws IOException {
-			RevWalk revWalk = null;
-			try {
-				revWalk = new RevWalk(repository);
+			try (RevWalk revWalk = new RevWalk(repository)) {
 				return revWalk.parseCommit(ObjectId.fromString(objectId));
 			} catch (MissingObjectException e) {
 				// ignore
@@ -133,11 +131,7 @@ public class CommitHyperlinkDetector extends AbstractHyperlinkDetector {
 			} catch (IncorrectObjectTypeException e) {
 				// ignore
 				return null;
-			} finally {
-				if (revWalk != null)
-					revWalk.release();
 			}
-
 		}
 
 		@Override

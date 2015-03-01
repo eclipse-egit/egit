@@ -138,14 +138,11 @@ public class TagActionHandler extends RepositoryActionHandler {
 
 	private RevObject getTagTarget(Repository repo, ObjectId objectId)
 			throws IOException {
-		RevWalk rw = new RevWalk(repo);
-		try {
+		try (RevWalk rw = new RevWalk(repo)) {
 			if (objectId == null)
 				return rw.parseAny(repo.resolve(Constants.HEAD));
 			else
 				return rw.parseAny(objectId);
-		} finally {
-			rw.release();
 		}
 	}
 }

@@ -51,12 +51,9 @@ public class CommitEditorInputFactoryTest extends LocalRepositoryTestCase {
 				.lookupRepository(repoFile);
 		assertNotNull(repository);
 
-		RevWalk walk = new RevWalk(repository);
-		try {
+		try (RevWalk walk = new RevWalk(repository)) {
 			commit = walk.parseCommit(repository.resolve(Constants.HEAD));
 			assertNotNull(commit);
-		} finally {
-			walk.release();
 		}
 		memento = XMLMemento.createWriteRoot("test");
 	}
