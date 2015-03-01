@@ -119,8 +119,7 @@ public class RefContentProposal implements IContentProposal {
 	public String getDescription() {
 		if (objectId == null)
 			return null;
-		ObjectReader reader = db.newObjectReader();
-		try {
+		try (ObjectReader reader = db.newObjectReader()) {
 			final ObjectLoader loader = reader.open(objectId);
 			final StringBuilder sb = new StringBuilder();
 			sb.append(refName);
@@ -154,8 +153,6 @@ public class RefContentProposal implements IContentProposal {
 			Activator.logError(NLS.bind(
 					UIText.RefContentProposal_errorReadingObject, objectId), e);
 			return null;
-		} finally {
-			reader.release();
 		}
 	}
 

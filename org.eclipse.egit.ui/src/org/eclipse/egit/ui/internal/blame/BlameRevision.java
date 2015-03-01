@@ -200,8 +200,7 @@ public class BlameRevision extends Revision {
 	}
 
 	private Diff calculateDiffToParent(RevCommit parentCommit) {
-		ObjectReader reader = repository.newObjectReader();
-		try {
+		try (ObjectReader reader = repository.newObjectReader()) {
 			DiffEntry diffEntry = CompareCoreUtils.getChangeDiffEntry(
 					repository, sourcePath, commit, parentCommit, reader);
 			if (diffEntry == null)
@@ -222,8 +221,6 @@ public class BlameRevision extends Revision {
 			return new Diff(diffEntry.getOldPath(), oldText, newText, editList);
 		} catch (IOException e) {
 			return null;
-		} finally {
-			reader.release();
 		}
 	}
 

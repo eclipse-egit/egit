@@ -335,7 +335,7 @@ public class MergeResultDialog extends Dialog {
 		newShell.addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
 				if (objectReader != null)
-					objectReader.release();
+					objectReader.close();
 			}
 		});
 	}
