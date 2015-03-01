@@ -35,9 +35,6 @@ import org.eclipse.egit.ui.internal.history.HistoryPageInput;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -99,12 +96,6 @@ public class ImportChangedProjectsCommand extends
 				}
 			}
 			return files;
-		} catch (MissingObjectException e) {
-			Activator.error(e.getMessage(), e);
-		} catch (IncorrectObjectTypeException e) {
-			Activator.error(e.getMessage(), e);
-		} catch (CorruptObjectException e) {
-			Activator.error(e.getMessage(), e);
 		} catch (IOException e) {
 			Activator.error(e.getMessage(), e);
 		}
