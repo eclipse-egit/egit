@@ -232,42 +232,41 @@ public class GitCompareEditorInput extends CompareEditorInput {
 
 		IDiffContainer result = new DiffNode(Differencer.CONFLICTING);
 
-		TreeWalk tw = new TreeWalk(repository);
+		try (TreeWalk tw = new TreeWalk(repository)) {
 
-		// filter by selected resources
-		if (filterPathStrings.size() > 1) {
-			List<TreeFilter> suffixFilters = new ArrayList<TreeFilter>();
-			for (String filterPath : filterPathStrings)
-				suffixFilters.add(PathFilter.create(filterPath));
-			TreeFilter otf = OrTreeFilter.create(suffixFilters);
-			tw.setFilter(otf);
-		} else if (filterPathStrings.size() > 0) {
-			String path = filterPathStrings.get(0);
-			if (path.length() != 0)
-				tw.setFilter(PathFilter.create(path));
-		}
+			// filter by selected resources
+			if (filterPathStrings.size() > 1) {
+				List<TreeFilter> suffixFilters = new ArrayList<TreeFilter>();
+				for (String filterPath : filterPathStrings)
+					suffixFilters.add(PathFilter.create(filterPath));
+				TreeFilter otf = OrTreeFilter.create(suffixFilters);
+				tw.setFilter(otf);
+			} else if (filterPathStrings.size() > 0) {
+				String path = filterPathStrings.get(0);
+				if (path.length() != 0)
+					tw.setFilter(PathFilter.create(path));
+			}
 
-		tw.setRecursive(true);
+			tw.setRecursive(true);
 
-		int baseTreeIndex;
-		if (baseCommit == null) {
-			// compare workspace with something
-			checkIgnored = true;
-			baseTreeIndex = tw.addTree(new AdaptableFileTreeIterator(
-					repository, ResourcesPlugin.getWorkspace().getRoot()));
-		} else
-			baseTreeIndex = tw.addTree(new CanonicalTreeParser(null, repository
-					.newObjectReader(), baseCommit.getTree()));
-		int compareTreeIndex;
-		if (!useIndex)
-			compareTreeIndex = tw.addTree(new CanonicalTreeParser(null,
-					repository.newObjectReader(), compareCommit.getTree()));
-		else
-			// compare something with the index
-			compareTreeIndex = tw.addTree(new DirCacheIterator(repository
-					.readDirCache()));
+			int baseTreeIndex;
+			if (baseCommit == null) {
+				// compare workspace with something
+				checkIgnored = true;
+				baseTreeIndex = tw.addTree(new AdaptableFileTreeIterator(
+						repository, ResourcesPlugin.getWorkspace().getRoot()));
+			} else
+				baseTreeIndex = tw.addTree(new CanonicalTreeParser(null,
+						repository.newObjectReader(), baseCommit.getTree()));
+			int compareTreeIndex;
+			if (!useIndex)
+				compareTreeIndex = tw.addTree(new CanonicalTreeParser(null,
+						repository.newObjectReader(), compareCommit.getTree()));
+			else
+				// compare something with the index
+				compareTreeIndex = tw.addTree(new DirCacheIterator(repository
+						.readDirCache()));
 
-		try {
 			while (tw.next()) {
 				if (monitor.isCanceled())
 					throw new InterruptedException();
@@ -346,8 +345,6 @@ public class GitCompareEditorInput extends CompareEditorInput {
 					throw new InterruptedException();
 			}
 			return result;
-		} finally {
-			tw.release();
 		}
 	}
 

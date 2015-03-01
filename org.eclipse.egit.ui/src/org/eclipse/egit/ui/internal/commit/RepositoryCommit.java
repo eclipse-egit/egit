@@ -155,20 +155,17 @@ public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
 			RevCommit[] parents = commit.getParents();
 			if (isStash() && commit.getParentCount() > 0)
 				parents = new RevCommit[] { commit.getParent(0) };
-			RevWalk revWalk = new RevWalk(repository);
-			TreeWalk treewalk = new TreeWalk(revWalk.getObjectReader());
-			treewalk.setRecursive(true);
-			treewalk.setFilter(TreeFilter.ANY_DIFF);
-			try {
+
+			try (RevWalk revWalk = new RevWalk(repository);
+					TreeWalk treewalk = new TreeWalk(revWalk.getObjectReader())) {
+				treewalk.setRecursive(true);
+				treewalk.setFilter(TreeFilter.ANY_DIFF);
 				for (RevCommit parent : commit.getParents())
 					revWalk.parseBody(parent);
 				diffs = FileDiff.compute(repository, treewalk, commit, parents,
 						TreeFilter.ALL);
 			} catch (IOException e) {
 				diffs = new FileDiff[0];
-			} finally {
-				revWalk.release();
-				treewalk.release();
 			}
 		}
 		return diffs;
@@ -183,31 +180,24 @@ public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
 	 * @return non-null but possibly empty array of {@link FileDiff} instances.
 	 */
 	public FileDiff[] getDiffs(RevCommit... parents) {
-		RevWalk revWalk = new RevWalk(repository);
-		TreeWalk treewalk = new TreeWalk(revWalk.getObjectReader());
-		treewalk.setRecursive(true);
-		treewalk.setFilter(TreeFilter.ANY_DIFF);
 		FileDiff[] diffsResult = null;
-		try {
+		try (RevWalk revWalk = new RevWalk(repository);
+				TreeWalk treewalk = new TreeWalk(revWalk.getObjectReader())) {
+			treewalk.setRecursive(true);
+			treewalk.setFilter(TreeFilter.ANY_DIFF);
 			loadParents();
 			diffsResult = FileDiff.compute(repository, treewalk, commit,
 					parents, TreeFilter.ALL);
 		} catch (IOException e) {
 			diffsResult = new FileDiff[0];
-		} finally {
-			revWalk.release();
-			treewalk.release();
 		}
 		return diffsResult;
 	}
 
 	private void loadParents() throws IOException {
-		RevWalk revWalk = new RevWalk(repository);
-		try {
+		try (RevWalk revWalk = new RevWalk(repository)) {
 			for (RevCommit parent : commit.getParents())
 				revWalk.parseBody(parent);
-		} finally {
-			revWalk.release();
 		}
 	}
 
