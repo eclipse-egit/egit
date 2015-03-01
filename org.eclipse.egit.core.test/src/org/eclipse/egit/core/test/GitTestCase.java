@@ -101,10 +101,14 @@ public abstract class GitTestCase {
 		byte[] readFully = IO.readFully(file);
 		FileUtils.delete(file);
 		FileOutputStream fileOutputStream = new FileOutputStream(file);
-		byte[] truncatedData = new byte[readFully.length - 1];
-		System.arraycopy(readFully, 0, truncatedData, 0, truncatedData.length);
-		fileOutputStream.write(truncatedData);
-		fileOutputStream.close();
+		try {
+			byte[] truncatedData = new byte[readFully.length - 1];
+			System.arraycopy(readFully, 0, truncatedData, 0,
+					truncatedData.length);
+			fileOutputStream.write(truncatedData);
+		} finally {
+			fileOutputStream.close();
+		}
 		return id;
 	}
 }
