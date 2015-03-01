@@ -98,14 +98,11 @@ public class SelectResetTypePage extends WizardPage {
 		}
 		if (resolved == null)
 			return null;
-		RevWalk walk = new RevWalk(repo);
-		walk.setRetainBody(true);
-		try {
+		try (RevWalk walk = new RevWalk(repo)) {
+			walk.setRetainBody(true);
 			return walk.parseCommit(resolved);
 		} catch (IOException ignored) {
 			return null;
-		} finally {
-			walk.release();
 		}
 	}
 

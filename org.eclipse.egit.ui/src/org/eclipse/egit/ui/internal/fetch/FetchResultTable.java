@@ -147,8 +147,7 @@ class FetchResultTable {
 				// else
 				//$FALL-THROUGH$
 			case FAST_FORWARD:
-				RevWalk walk = new RevWalk(reader);
-				try {
+				try (RevWalk walk = new RevWalk(reader)) {
 					walk.setRetainBody(true);
 					walk.markStart(walk.parseCommit(update.getNewObjectId()));
 					walk.markUninteresting(walk.parseCommit(update
@@ -161,8 +160,6 @@ class FetchResultTable {
 				} catch (IOException e) {
 					Activator.logError(
 							"Error parsing commits from fetch result", e); //$NON-NLS-1$
-				} finally {
-					walk.release();
 				}
 				//$FALL-THROUGH$
 			default:
