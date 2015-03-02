@@ -22,6 +22,30 @@
       "revId": "3c34df85171fe455b4c98881ee60f2080d63f7ae",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_c407628e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/StagedChangeCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-02T10:14:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7fb1785_4476d24a",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 4
+      },
+      "revId": "3c34df85171fe455b4c98881ee60f2080d63f7ae",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
