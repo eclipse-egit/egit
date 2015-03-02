@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_4476d24a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/StagedChangeCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-03-02T09:38:30Z",
+      "side": 1,
+      "message": "why not the following instead of the complete if-else clause:\n  \n  RevCommit headCommit \u003d null;\n  if (headId !\u003d null) {\n    try (RevWalk rw \u003d new RevWalk(repo)) {\n      headCommit \u003d rw.parseCommit(headId);\n    }\n  }",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 4
+      },
+      "revId": "3c34df85171fe455b4c98881ee60f2080d63f7ae",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
