@@ -16,6 +16,24 @@
       "revId": "26b13b28248a4424cb77d480f3b0cb642a255371",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_b756c3d8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-02T23:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7fb1785_17aeb76c",
+      "revId": "26b13b28248a4424cb77d480f3b0cb642a255371",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
