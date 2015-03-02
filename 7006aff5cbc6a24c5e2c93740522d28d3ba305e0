@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_dff9eb8f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/DirCacheResourceVariantTreeProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 460
+      },
+      "writtenOn": "2015-03-02T11:31:09Z",
+      "side": 1,
+      "message": "Terminology changes from base, local, remote to base, ours, theirs",
+      "revId": "7006aff5cbc6a24c5e2c93740522d28d3ba305e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_1f041321",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 460
+      },
+      "writtenOn": "2015-03-02T11:31:09Z",
+      "side": 1,
+      "message": "No test coverage",
+      "revId": "7006aff5cbc6a24c5e2c93740522d28d3ba305e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_bffe9f74",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/GitSyncInfoToDiffConverter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 460
+      },
+      "writtenOn": "2015-03-02T11:31:09Z",
+      "side": 1,
+      "message": "No Test coverage",
+      "revId": "7006aff5cbc6a24c5e2c93740522d28d3ba305e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_1f89b332",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/GitSyncInfoToDiffConverter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 460
+      },
+      "writtenOn": "2015-03-02T11:31:09Z",
+      "side": 1,
+      "message": "Nesting is too deep IMHO.",
+      "revId": "7006aff5cbc6a24c5e2c93740522d28d3ba305e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_5f821b0d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/GitSyncInfoToDiffConverter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 460
+      },
+      "writtenOn": "2015-03-02T11:31:09Z",
+      "side": 1,
+      "message": "extract this block to method, there is another occurence",
+      "revId": "7006aff5cbc6a24c5e2c93740522d28d3ba305e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_7f79d79e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/GitSyncInfoToDiffConverter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 460
+      },
+      "writtenOn": "2015-03-02T11:31:09Z",
+      "side": 1,
+      "message": "extract to package private class",
+      "revId": "7006aff5cbc6a24c5e2c93740522d28d3ba305e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_ff082737",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/AbstractGitResourceVariant.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 460
+      },
+      "writtenOn": "2015-03-02T11:31:09Z",
+      "side": 1,
+      "message": "Low test coverage but might be acceptable.",
+      "revId": "7006aff5cbc6a24c5e2c93740522d28d3ba305e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
