@@ -104,7 +104,7 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 			throws Exception {
 		IWorkbenchPage workBenchPage = HandlerUtil
 				.getActiveWorkbenchWindowChecked(event).getActivePage();
-		IResource[] resources = getSelectedResources();
+		IResource[] resources = getSelectedResources(event);
 
 		if (resources.length > 0) {
 			CompareUtils.compare(resources, repository, GitFileRevision.INDEX,
@@ -120,7 +120,7 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 
 	private Object getSingleSelectedObject(ExecutionEvent event)
 			throws ExecutionException {
-		IResource[] resources = getSelectedResources();
+		IResource[] resources = getSelectedResources(event);
 		if (resources.length == 1) {
 			return resources[0];
 		} else {
