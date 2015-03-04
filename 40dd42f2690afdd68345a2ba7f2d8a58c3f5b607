@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_e6b6dbf2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/MultiPushOperationUI.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-04T09:24:21Z",
+      "side": 1,
+      "message": "missing copyright statement",
+      "revId": "40dd42f2690afdd68345a2ba7f2d8a58c3f5b607",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_2698e380",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/MultiPushResultDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-04T09:24:21Z",
+      "side": 1,
+      "message": "missing copyright statement",
+      "revId": "40dd42f2690afdd68345a2ba7f2d8a58c3f5b607",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
