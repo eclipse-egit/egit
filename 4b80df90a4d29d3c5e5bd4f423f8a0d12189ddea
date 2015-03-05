@@ -16,6 +16,24 @@
       "revId": "4b80df90a4d29d3c5e5bd4f423f8a0d12189ddea",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_a80dbd46",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/merge/GitMergeEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-05T13:02:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7fb1785_457fe250",
+      "revId": "4b80df90a4d29d3c5e5bd4f423f8a0d12189ddea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
