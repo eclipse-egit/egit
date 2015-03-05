@@ -67,6 +67,7 @@ import org.eclipse.jgit.util.IO;
 import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
@@ -107,14 +108,22 @@ public class GitMergeEditorInput extends CompareEditorInput {
 	@Override
 	public Object getAdapter(Class adapter) {
 		if (adapter == IFile.class || adapter == IResource.class) {
-			Object selectedEdition = getSelectedEdition();
-			if (selectedEdition instanceof DiffNode) {
-				DiffNode diffNode = (DiffNode) selectedEdition;
-				ITypedElement element = diffNode.getLeft();
-				if (element instanceof ResourceEditableRevision) {
-					ResourceEditableRevision resourceRevision = (ResourceEditableRevision) element;
-					return resourceRevision.getFile();
+			final IFile[] file = new IFile[1];
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					Object selectedEdition = getSelectedEdition();
+					if (selectedEdition instanceof DiffNode) {
+						DiffNode diffNode = (DiffNode) selectedEdition;
+						ITypedElement element = diffNode.getLeft();
+						if (element instanceof ResourceEditableRevision) {
+							ResourceEditableRevision resourceRevision = (ResourceEditableRevision) element;
+							file[0] = resourceRevision.getFile();
+						}
+					}
 				}
+			});
+			if (file[0] != null) {
+				return file[0];
 			}
 		}
 		return super.getAdapter(adapter);
