@@ -106,7 +106,8 @@ public class GitMergeEditorInput extends CompareEditorInput {
 
 	@Override
 	public Object getAdapter(Class adapter) {
-		if (adapter == IFile.class || adapter == IResource.class) {
+		if ((adapter == IFile.class || adapter == IResource.class)
+				&& isUIThread()) {
 			Object selectedEdition = getSelectedEdition();
 			if (selectedEdition instanceof DiffNode) {
 				DiffNode diffNode = (DiffNode) selectedEdition;
@@ -118,6 +119,11 @@ public class GitMergeEditorInput extends CompareEditorInput {
 			}
 		}
 		return super.getAdapter(adapter);
+	}
+
+	private boolean isUIThread() {
+		return PlatformUI.getWorkbench().getDisplay().getThread() == Thread
+				.currentThread();
 	}
 
 	@Override
