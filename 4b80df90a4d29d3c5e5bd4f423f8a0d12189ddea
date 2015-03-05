@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_457fe250",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/merge/GitMergeEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-03-05T09:07:57Z",
+      "side": 1,
+      "message": "I would prefer not to call syncExec() from getAdapter(). \ngetAdapter() can be called from any thread and the problem could be that the calling thread deadlocks because UI thread is already busy.\n\nI would propose to check IF we are in the UI thread or not, and only call into the getSelectedEdition() if we are in UI.\n\nBTW we should use PlatformUI.getWorkbench().getDisplay() for that.",
+      "revId": "4b80df90a4d29d3c5e5bd4f423f8a0d12189ddea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
