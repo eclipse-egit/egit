@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_a8bf7da6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/merge/GitMergeEditorInput.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-03-05T13:13:33Z",
+      "side": 1,
+      "message": "The method can be static, and the \"standard\" implementation is:\n \nreturn PlatformUI.getWorkbench().getDisplay().getCurrent() !\u003d null;",
+      "revId": "310dd2ba7ef5b2230342d9d5f2c41f5054203808",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
