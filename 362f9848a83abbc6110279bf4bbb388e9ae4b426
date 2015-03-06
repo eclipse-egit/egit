@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_bc14db4b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-06T15:19:08Z",
+      "side": 1,
+      "message": "I would find it more natural to return an IStatus that is not OK_STATUS in the case the commit has failed.\nThat way there\u0027s no need to add some artificial boolean in this Job class to keep track of the result.",
+      "revId": "362f9848a83abbc6110279bf4bbb388e9ae4b426",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_1ccc0f64",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-06T15:19:08Z",
+      "side": 1,
+      "message": "Is the removal below really related to the abort of a commit by a hook?\nI\u0027m pretty sure I\u0027m wrong but I don\u0027t see the relation with the other changes.",
+      "revId": "362f9848a83abbc6110279bf4bbb388e9ae4b426",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_5c1b3779",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2655,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-06T15:19:08Z",
+      "side": 1,
+      "message": "Here you could access the IStatus that was returned by the job.",
+      "revId": "362f9848a83abbc6110279bf4bbb388e9ae4b426",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
