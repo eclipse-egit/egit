@@ -334,11 +334,11 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 				.label(0);
 
 		String noResultLabel = syncViewLabel.getText();
-		String expected = "No changes in 'Git (" + PROJ1 + ")'.";
+		String expected = "No changes in 'Git (";
 		if (!noResultLabel.contains(expected)) {
 			syncViewLabel = bot.viewByTitle("Synchronize").bot().label(2);
 			noResultLabel = syncViewLabel.getText();
-			assertTrue(noResultLabel.contains(expected));
+			assertTrue(noResultLabel.startsWith(expected));
 		}
 	}
 
