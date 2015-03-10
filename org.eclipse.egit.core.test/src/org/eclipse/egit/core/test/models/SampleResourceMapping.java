@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2014 Obeo and others.
+ * Copyright (C) 2014, 2015 Obeo and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,6 +9,7 @@
 package org.eclipse.egit.core.test.models;
 
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
@@ -64,5 +65,20 @@ public class SampleResourceMapping extends ResourceMapping {
 	@Override
 	public IProject[] getProjects() {
 		return new IProject[] { file.getProject(), };
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof SampleResourceMapping) {
+			return file.equals(((SampleResourceMapping) obj).getModelObject())
+					&& providerId.equals(((SampleResourceMapping) obj)
+							.getModelProviderId());
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(file, providerId);
 	}
 }
