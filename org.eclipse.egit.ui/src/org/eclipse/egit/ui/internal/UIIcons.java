@@ -304,6 +304,15 @@ public class UIIcons {
 	/** Reword for current rebase step */
 	public final static ImageDescriptor CURRENT_STEP;
 
+	/** Icon for informative messages */
+	public final static ImageDescriptor INFO;
+
+	/** Icon to decorate warnings */
+	public final static ImageDescriptor WARNING;
+
+	/** Icon to decorate errors */
+	public final static ImageDescriptor ERROR;
+
 	/** base URL */
 	public final static URL base;
 
@@ -406,6 +415,9 @@ public class UIIcons {
 		REWORD = map("obj16/reword.gif"); //$NON-NLS-1$
 		DONE_STEP = map("obj16/done_step.gif"); //$NON-NLS-1$
 		CURRENT_STEP = map("obj16/current_step.gif"); //$NON-NLS-1$
+		INFO = map("obj16/info_obj.gif"); //$NON-NLS-1$
+		WARNING = map("obj16/warning_obj.gif"); //$NON-NLS-1$
+		ERROR = map("obj16/error_obj.gif"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {
