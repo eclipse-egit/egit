@@ -32,6 +32,7 @@ import org.eclipse.egit.ui.internal.push.PushToGerritWizard;
 import org.eclipse.egit.ui.internal.push.SimpleConfigurePushDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.api.errors.AbortedByHookException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
@@ -115,6 +116,14 @@ public class CommitJob extends Job {
 			}
 		} finally {
 			GitLightweightDecorator.refresh();
+		}
+
+		if (CommitValidationResultDialog.validate(repository, commit,
+				pushMode != null) == Window.CANCEL) {
+			// avoid further processing (pushing), as the user pressed abort.
+			// from the infrastructure POV the rest is OK, the user has been
+			// informed of validation issues.
+			return Status.OK_STATUS;
 		}
 
 		if (commit != null) {

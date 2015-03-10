@@ -344,6 +344,15 @@ public class UIIcons {
 	/** {@link #BRANCH} overlaid with {@link #OVR_CHECKEDOUT}. */
 	public final static ImageDescriptor CHECKED_OUT_BRANCH;
 
+	/** Icon for informative messages */
+	public final static ImageDescriptor INFO;
+
+	/** Icon to decorate warnings */
+	public final static ImageDescriptor WARNING;
+
+	/** Icon to decorate errors */
+	public final static ImageDescriptor ERROR;
+
 	/** base URL */
 	public final static URL base;
 
@@ -462,6 +471,9 @@ public class UIIcons {
 		UNTRACK = map("obj16/untrack.png"); //$NON-NLS-1$
 		CHECKED_OUT_BRANCH = new DecorationOverlayDescriptor(BRANCH,
 				OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
+		INFO = map("obj16/info_obj.gif"); //$NON-NLS-1$
+		WARNING = map("obj16/warning_obj.gif"); //$NON-NLS-1$
+		ERROR = map("obj16/error_obj.gif"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {
