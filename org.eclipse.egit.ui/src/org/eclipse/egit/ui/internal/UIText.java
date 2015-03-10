@@ -4928,6 +4928,24 @@ public class UIText extends NLS {
 	public static String CommitUI_pushFailedMessage;
 
 	/** */
+	public static String CommitValidationResultDialog_ButtonAbort;
+
+	/** */
+	public static String CommitValidationResultDialog_ButtonContinue;
+
+	/** */
+	public static String CommitValidationResultDialog_ErrorCreatingExtension;
+
+	/** */
+	public static String CommitValidationResultDialog_Title;
+
+	/** */
+	public static String CommitValidationResultDialog_TitleMessage;
+
+	/** */
+	public static String CommitValidationResultDialog_WrongExtensionType;
+
+	/** */
 	public static String EgitUiEditorUtils_openFailed;
 
 	/** */
