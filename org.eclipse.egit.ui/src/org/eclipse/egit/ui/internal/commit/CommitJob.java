@@ -29,6 +29,7 @@ import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentStateManager;
 import org.eclipse.egit.ui.internal.push.PushBranchWizard;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
 import org.eclipse.egit.ui.internal.push.SimpleConfigurePushDialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.Constants;
@@ -108,6 +109,13 @@ public class CommitJob extends Job {
 					UIText.CommitAction_CommittingFailed, e);
 		} finally {
 			GitLightweightDecorator.refresh();
+		}
+
+		if (CommitValidationResultDialog.validate(commit, pushUpstream) == Window.CANCEL) {
+			// avoid further processing (pushing), as the user pressed abort.
+			// from the infrastructure POV the rest is OK, the user has been
+			// informed of validation issues.
+			return Status.OK_STATUS;
 		}
 
 		if (commit != null) {
