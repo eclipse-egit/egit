@@ -569,6 +569,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private void setupProxy(final BundleContext context) {
 		final ServiceReference proxy;
 
