@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2013 SAP AG and others.
+ * Copyright (c) 2012, 2015 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,6 +9,7 @@
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Chris Aniszczyk <caniszczyk@gmail.com> - tag API changes
  *    Mathias Kinzler (SAP AG) - compare with previous actions
+ *    Laurent Delaigue (Obeo) - update setup
  *******************************************************************************/
 package org.eclipse.egit.ui.test.team.actions;
 
@@ -16,15 +17,20 @@ import static org.eclipse.jface.dialogs.MessageDialogWithToggle.NEVER;
 import static org.eclipse.team.internal.ui.IPreferenceIds.SYNCHRONIZING_COMPLETE_PERSPECTIVE;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.ResetOperation;
 import org.eclipse.egit.core.op.TagOperation;
 import org.eclipse.egit.ui.Activator;
@@ -42,6 +48,7 @@ import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ResetCommand.ResetType;
+import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -77,6 +84,24 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		Repository repo = lookupRepository(repositoryFile);
 
 		disablePerspectiveSwitchPrompt();
+
+		// We're expecting the initial repository to have no changes, yet it has
+		// an untracked file. Amend the initial commit with it.
+		Status status = new Git(repo).status().call();
+		assertFalse(status.hasUncommittedChanges());
+		assertFalse(status.getUntracked().isEmpty());
+		IProject secondProject = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(PROJ2);
+		IFile commitMe = secondProject.getFile(".project");
+		CommitOperation op = new CommitOperation(new IFile[] { commitMe, },
+				Collections.singleton(commitMe), TestUtil.TESTAUTHOR,
+				TestUtil.TESTCOMMITTER, "Initial commit");
+		op.setAmending(true);
+		op.execute(new NullProgressMonitor());
+
+		status = new Git(repo).status().call();
+		assertFalse(status.hasUncommittedChanges());
+		assertTrue(status.getUntracked().isEmpty());
 
 		TagBuilder tag = new TagBuilder();
 		tag.setTag("SomeTag");
@@ -335,11 +360,11 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 				.label(0);
 
 		String noResultLabel = syncViewLabel.getText();
-		String expected = "No changes in 'Git (" + PROJ1 + ")'.";
+		String expected = "No changes in 'Git (";
 		if (!noResultLabel.contains(expected)) {
 			syncViewLabel = bot.viewById(ISynchronizeView.VIEW_ID).bot().label(2);
 			noResultLabel = syncViewLabel.getText();
-			assertTrue(noResultLabel.contains(expected));
+			assertTrue(noResultLabel.startsWith(expected));
 		}
 	}
 
