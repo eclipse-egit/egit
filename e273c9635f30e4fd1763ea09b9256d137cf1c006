@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_f80dc145",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareIndexWithHeadActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-03-11T15:33:11Z",
+      "side": 1,
+      "message": "We must check here if indexDiff is not null, see comment to the getIndexDiff() method.\n\nIn case it is null, and we are called from the diff job, we should partly revert the  code (for \"enablement\" we can just say we don\u0027t care, but for the actual diff we *must* know the real state).",
+      "revId": "e273c9635f30e4fd1763ea09b9256d137cf1c006",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_b804d922",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-03-11T15:33:11Z",
+      "side": 1,
+      "message": "We must check here if indexDiff is not null, see comment to the getIndexDiff() method.",
+      "revId": "e273c9635f30e4fd1763ea09b9256d137cf1c006",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_18788d9a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-03-11T15:33:11Z",
+      "side": 1,
+      "message": "The method should have javadoc stating that the return value can be null if the index diff tata is not calculated yet, and that the caller must check it!",
+      "revId": "e273c9635f30e4fd1763ea09b9256d137cf1c006",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
