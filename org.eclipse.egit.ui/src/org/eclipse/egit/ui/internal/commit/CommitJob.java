@@ -29,7 +29,9 @@ import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentStateManager;
 import org.eclipse.egit.ui.internal.push.PushBranchWizard;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
 import org.eclipse.egit.ui.internal.push.SimpleConfigurePushDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.jgit.api.errors.AbortedByHookException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
@@ -101,11 +103,17 @@ public class CommitJob extends Job {
 			if (mapping != null)
 				mapping.fireRepositoryChanged();
 		} catch (CoreException e) {
-			if (e.getCause() instanceof JGitInternalException)
+			if (e.getCause() instanceof JGitInternalException) {
 				return Activator.createErrorStatus(e.getLocalizedMessage(),
 						e.getCause());
-			return Activator.createErrorStatus(
-					UIText.CommitAction_CommittingFailed, e);
+			}
+			if (e.getCause() instanceof AbortedByHookException) {
+				showAbortedByHook(e.getCause());
+				return Status.CANCEL_STATUS;
+			} else {
+				return Activator.createErrorStatus(
+						UIText.CommitAction_CommittingFailed, e);
+			}
 		} finally {
 			GitLightweightDecorator.refresh();
 		}
@@ -117,6 +125,18 @@ public class CommitJob extends Job {
 				pushUpstream(commit);
 		}
 		return Status.OK_STATUS;
+	}
+
+	private void showAbortedByHook(final Throwable cause) {
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+
+			public void run() {
+				MessageDialog.openWarning(PlatformUI.getWorkbench()
+						.getDisplay().getActiveShell(),
+						UIText.CommitJob_AbortedByHook,
+						cause.getLocalizedMessage());
+			}
+		});
 	}
 
 	private void openCommitEditor(final RevCommit newCommit) {

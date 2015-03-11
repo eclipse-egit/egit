@@ -1216,12 +1216,6 @@ public class StagingView extends ViewPart implements IShowInSource {
 		addChangeIdAction.setEnabled(enabled);
 		commitButton.setEnabled(enabled);
 		commitAndPushButton.setEnabled(enabled);
-
-		if (!enabled) {
-			commitMessageText.setText(""); //$NON-NLS-1$
-			committerText.setText(""); //$NON-NLS-1$
-			authorText.setText(""); //$NON-NLS-1$
-		}
 	}
 
 	private void enableAuthorText(boolean enabled) {
@@ -2646,7 +2640,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		if (amendPreviousCommitAction.isChecked())
 			commitOperation.setAmending(true);
 		commitOperation.setComputeChangeId(addChangeIdAction.isChecked());
-		Job commitJob = new CommitJob(currentRepository, commitOperation)
+		final Job commitJob = new CommitJob(currentRepository, commitOperation)
 			.setOpenCommitEditor(openNewCommitsAction.isChecked())
 			.setPushUpstream(pushUpstream);
 
@@ -2658,6 +2652,9 @@ public class StagingView extends ViewPart implements IShowInSource {
 				asyncExec(new Runnable() {
 					public void run() {
 						enableAllWidgets(true);
+						if (commitJob.getResult().isOK()) {
+							commitMessageText.setText(EMPTY_STRING);
+						}
 					}
 				});
 			}
@@ -2667,7 +2664,6 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		CommitMessageHistory.saveCommitHistory(commitMessage);
 		clearCommitMessageToggles();
-		commitMessageText.setText(EMPTY_STRING);
 	}
 
 	/**
