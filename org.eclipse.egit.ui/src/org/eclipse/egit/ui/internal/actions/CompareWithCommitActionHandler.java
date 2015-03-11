@@ -59,6 +59,7 @@ public class CompareWithCommitActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		return selectionMapsToSingleRepository();
+		return selectionMapsToSingleRepository()
+				&& selectionContainsTrackedFiles();
 	}
 }

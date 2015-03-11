@@ -20,10 +20,12 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -38,6 +40,10 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
@@ -505,6 +511,29 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 			rw.dispose();
 		}
 		return result;
+	}
+
+	protected boolean selectionContainsTrackedFiles() {
+		Map<Repository, Collection<String>> m = ResourceUtil
+				.splitResourcesByRepository(getSelectedResources());
+		for (Repository repo : m.keySet()) {
+			IndexDiffData indexDiff = getIndexDiff(repo);
+			for (String path : m.get(repo)) {
+				if (!indexDiff.getUntracked().contains(path)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	protected IndexDiffData getIndexDiff(Repository repo) {
+		IndexDiffCache indexDiffCache = org.eclipse.egit.core.Activator
+				.getDefault().getIndexDiffCache();
+		IndexDiffCacheEntry indexDiffCacheEntry = indexDiffCache
+				.getIndexDiffCacheEntry(repo);
+		IndexDiffData indexDiff = indexDiffCacheEntry.getIndexDiff();
+		return indexDiff;
 	}
 
 	// keep track of the path of an ancestor (for following renames)

@@ -11,9 +11,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
-import java.io.IOException;
-import java.util.Collections;
-
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
@@ -24,6 +21,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -32,10 +30,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
-import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
@@ -67,7 +62,7 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 				}
 				IPath location = (IPath) (fileOrPath instanceof IPath ? fileOrPath
 						: ((IResource) fileOrPath).getLocation());
-				if (!isStaged(repository, location, true)) {
+				if (!isStaged(repository, location)) {
 					showNoStagedFileInfo(location);
 					return Status.CANCEL_STATUS;
 				}
@@ -147,20 +142,17 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 		Object selected = selection.getFirstElement();
 		IResource resource = AdapterUtils.adapt(selected, IResource.class);
 		if (resource instanceof IFile) {
-			// action is only working on files. Avoid calculation
-			// of unnecessary expensive IndexDiff on a folder
-			return isStaged(repository, resource.getLocation(), false);
+			return isStaged(repository, resource.getLocation());
 		} else if (resource == null) {
 			IPath location = AdapterUtils.adapt(selected, IPath.class);
-			return isStaged(repository, location, false);
+			return isStaged(repository, location);
 		}
 
 		return false;
 	}
 
 
-	private boolean isStaged(Repository repository, IPath location,
-			boolean checkIndex) {
+	private boolean isStaged(Repository repository, IPath location) {
 		if (location == null || location.toFile().isDirectory()) {
 			return false;
 		}
@@ -171,24 +163,9 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 			return false;
 		}
 
-		if (!checkIndex) {
-			// assume there *is* something: otherwise we can hang UI thread due
-			// the diff computation, see bug 457698
-			return true;
-		}
-		try {
-			FileTreeIterator fileTreeIterator = new FileTreeIterator(repository);
-			IndexDiff indexDiff = new IndexDiff(repository, Constants.HEAD,
-					fileTreeIterator);
-			indexDiff.setFilter(PathFilterGroup.createFromStrings(Collections.singletonList(resRelPath)));
-			indexDiff.diff();
-
-			return indexDiff.getAdded().contains(resRelPath) || indexDiff.getChanged().contains(resRelPath)
-					|| indexDiff.getRemoved().contains(resRelPath);
-		} catch (IOException e) {
-			Activator.error(NLS.bind(UIText.GitHistoryPage_errorLookingUpPath,
-					location.toString()), e);
-			return false;
-		}
+		IndexDiffData indexDiff = getIndexDiff(repository);
+		return indexDiff.getAdded().contains(resRelPath)
+				|| indexDiff.getChanged().contains(resRelPath)
+				|| indexDiff.getRemoved().contains(resRelPath);
 	}
 }
