@@ -71,6 +71,7 @@
     <signer-input-directory>/home/data/httpd/download-staging.priv/egit</signer-input-directory>
     <download-publish-path>/home/data/httpd/download.eclipse.org/egit/updates-nightly</download-publish-path>
     <target-platform>egit-4.3</target-platform>
+		<target-platform-version>4.0.0-SNAPSHOT</target-platform-version>
     <tycho.scmUrl>scm:git:https://git.eclipse.org/r/p/egit/egit.git</tycho.scmUrl>
     <test.vmparams></test.vmparams>
   </properties>
@@ -297,6 +298,8 @@
     <module>org.eclipse.egit.source-feature</module>
 
     <module>org.eclipse.egit.repository</module>
+    
+    <module>incubation/org.eclipse.egit.ui.importer</module>
   </modules>
 
   <pluginRepositories>
@@ -329,7 +332,7 @@
             <artifact>
               <groupId>org.eclipse.egit</groupId>
               <artifactId>org.eclipse.egit.target</artifactId>
-              <version>${project.version}</version>
+              <version>${target-platform-version}</version>
               <classifier>${target-platform}</classifier>
             </artifact>
           </target>
