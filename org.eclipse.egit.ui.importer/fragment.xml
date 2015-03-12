@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.importWizards">
+      <wizard
+            category="org.eclipse.egit.ui.internal.clone.gitclonecategory"
+            class="org.eclipse.egit.ui.internal.clone.EasymportGitWizard"
+            id="org.eclipse.egit.ui.importer.wizard"
+            name="%EasymportGitWizard_label">
+      </wizard>
+   </extension>
+</plugin>
