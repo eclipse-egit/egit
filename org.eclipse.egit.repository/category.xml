@@ -30,6 +30,9 @@
    <feature url="features/org.eclipse.jgit.http.apache_0.0.0.qualifier.jar" id="org.eclipse.jgit.http.apache" version="0.0.0">
       <category name="JGit"/>
    </feature>
+   <bundle id="org.eclipse.egit.ui.importer" version="0.0.1.qualifier">
+      <category name="Eclipse Git Team Provider - experimental features (incubation)"/>
+   </bundle>
    <category-def name="Eclipse Git Team Provider" label="Eclipse Git Team Provider">
       <description>
          Eclipse Git Team Provider
@@ -40,4 +43,5 @@
          JGit
       </description>
    </category-def>
+   <category-def name="Eclipse Git Team Provider - experimental features (incubation)" label="Eclipse Git Team Provider - experimental features  (incubation)"/>
 </site>
