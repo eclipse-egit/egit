@@ -1,0 +1,7 @@
+instructions.configure=\
+ org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(type:0,location:http${#58}//download.eclipse.org/e4/snapshots/org.eclipse.e4.ui/,name:org.eclipse.e4.ui,enabled:true);\
+ org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(type:1,location:http${#58}//download.eclipse.org/e4/snapshots/org.eclipse.e4.ui/,name:org.eclipse.e4.ui,enabled:true);
+
+provides.0.namespace = org.eclipse.equinox.p2.iu
+provides.0.name = org.eclipse.egit.import.feature.group
+provides.0.version = $version$
