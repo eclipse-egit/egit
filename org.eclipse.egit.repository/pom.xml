@@ -64,4 +64,34 @@
     </profile>
   </profiles>
 
+  <pluginRepositories>
+    <pluginRepository>
+      <id>jboss-public-repository-group</id>
+      <name>JBoss Public Repository Group</name>
+      <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+    </pluginRepository>
+  </pluginRepositories>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.jboss.tools.tycho-plugins</groupId>
+        <artifactId>repository-utils</artifactId>
+        <version>0.22.0</version>
+        <executions>
+          <execution>
+            <id>generate-facade</id>
+            <phase>package</phase>
+            <goals>
+              <goal>generate-repository-facade</goal>
+            </goals>
+            <configuration>
+              <associateSites>
+                <site>http://download.eclipse.org/e4/snapshots/org.eclipse.e4.ui</site>
+              </associateSites>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>
