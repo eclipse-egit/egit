@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="egit-4.4" sequenceNumber="1424648865">
+<target name="egit-4.4" sequenceNumber="1426584067">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.jetty.client" version="7.6.14.v20131031"/>
@@ -91,6 +91,10 @@
       <unit id="org.eclipse.mylyn.sdk_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.wikitext_feature.feature.group" version="0.0.0"/>
       <repository location="http://download.eclipse.org/releases/luna/"/>
+    </location>
+    <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
+      <unit id="org.eclipse.e4.ui.importer" version="0.1.0.v20150221-1207"/>
+      <repository id="easymport" location="http://download.eclipse.org/e4/snapshots/org.eclipse.e4.ui"/>
     </location>
   </locations>
 </target>

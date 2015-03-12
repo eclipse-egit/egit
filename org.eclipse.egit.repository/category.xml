@@ -40,4 +40,9 @@
          JGit
       </description>
    </category-def>
+   
+   <category-def name="Incubating experimental auto project impor" label="Incubating experimental auto project impor"/>
+   <bundle id="org.eclipse.egit.ui.importer" version="0.0.1.qualifier">
+      <category name="Incubating experimental auto project impor"/>
+   </bundle>
 </site>
