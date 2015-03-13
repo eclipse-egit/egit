@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_1f450ccc",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-13T18:56:26Z",
+      "side": 1,
+      "message": "then we should document that the caller is responsible to pass the right path for the given blob and that this class won\u0027t check this path is correct but just return the path passed to the constructor",
+      "parentUuid": "a7fb1785_c1cc4d35",
+      "revId": "6f6897f9dd59d6f7c52b3c58c28f322597e98826",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_c1d3ad46",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
         "patchSetId": 9
