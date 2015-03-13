@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_c1cc4d35",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2015-03-13T08:32:23Z",
+      "side": 1,
+      "message": "We were already providing a path to this constructor. The paramter was just wrongly named. These storages are created when we already know the path we want a GitBlobStorage for though, so is this really a concern?",
+      "parentUuid": "a7fb1785_41e7bd1e",
+      "revId": "6f6897f9dd59d6f7c52b3c58c28f322597e98826",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_c1d3ad46",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
         "patchSetId": 9
@@ -133,6 +151,24 @@
       "writtenOn": "2015-03-13T00:44:20Z",
       "side": 1,
       "message": "When does this make sense ? If the repository is bare the returned path is non-existing and there are no Eclipse resources mapping to the path since there\u0027s also no project which could be imported. Or do I miss something ?",
+      "revId": "6f6897f9dd59d6f7c52b3c58c28f322597e98826",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_e193492b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2015-03-13T08:32:23Z",
+      "side": 1,
+      "message": "I kinda coded this o be extra sure... but I guess you\u0027re right, there shouldn\u0027t be any case of a \"bare\" repo where eclipse IResources make sense...",
+      "parentUuid": "a7fb1785_21e2710d",
       "revId": "6f6897f9dd59d6f7c52b3c58c28f322597e98826",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
