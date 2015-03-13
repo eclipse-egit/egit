@@ -5,6 +5,7 @@
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2015, Rajagopal Somasundaram <rajagopal.s@blueracetechnologies.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -44,6 +45,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
@@ -63,6 +65,8 @@ public class CloneDestinationPage extends WizardPage {
 
 	private RepositorySelection validatedRepoSelection;
 
+	private String uri;
+
 	private List<Ref> validatedSelectedBranches;
 
 	private Ref validatedHEAD;
@@ -73,7 +77,7 @@ public class CloneDestinationPage extends WizardPage {
 
 	private Text directoryText;
 
-	private Text remoteText;
+	private Combo remoteText;
 
 	private Button importProjectsButton;
 
@@ -133,6 +137,9 @@ public class CloneDestinationPage extends WizardPage {
 	public void setSelection(RepositorySelection repositorySelection, List<Ref> availableRefs, List<Ref> branches, Ref head){
 		this.availableRefs.clear();
 		this.availableRefs.addAll(availableRefs);
+		this.uri = repositorySelection.getURI().getHost();
+		remoteText
+				.setItems(new String[] { Constants.DEFAULT_REMOTE_NAME, uri });
 		checkPreviousPagesSelections(repositorySelection, branches, head);
 		revalidate(repositorySelection,branches, head);
 	}
@@ -216,14 +223,8 @@ public class CloneDestinationPage extends WizardPage {
 				UIText.CloneDestinationPage_groupConfiguration);
 
 		newLabel(g, UIText.CloneDestinationPage_promptRemoteName + ":"); //$NON-NLS-1$
-		remoteText = new Text(g, SWT.BORDER);
-		remoteText.setText(Constants.DEFAULT_REMOTE_NAME);
+		remoteText = new Combo(g, SWT.NONE);
 		remoteText.setLayoutData(createFieldGridData());
-		remoteText.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				checkPage();
-			}
-		});
 	}
 
 	private void createProjectGroup(final Composite parent) {
