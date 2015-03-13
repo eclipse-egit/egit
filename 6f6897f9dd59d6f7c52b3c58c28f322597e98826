@@ -48,6 +48,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_819fe5e6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-13T09:47:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7fb1785_61dc795a",
+      "revId": "6f6897f9dd59d6f7c52b3c58c28f322597e98826",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_41e7bd1e",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
         "patchSetId": 9
@@ -106,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_61a2b92c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-13T09:47:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7fb1785_c1d3ad46",
+      "revId": "6f6897f9dd59d6f7c52b3c58c28f322597e98826",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_01edb500",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
         "patchSetId": 9
@@ -123,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_c199ed01",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-13T09:47:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7fb1785_01edb500",
+      "revId": "6f6897f9dd59d6f7c52b3c58c28f322597e98826",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_e1e7c91d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
         "patchSetId": 9
@@ -134,6 +188,24 @@
       "writtenOn": "2015-03-13T00:44:20Z",
       "side": 1,
       "message": "@Override\n\nwe are on Java 7 now so we should annotate overridden interface methods",
+      "revId": "6f6897f9dd59d6f7c52b3c58c28f322597e98826",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_a19ca1f0",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-13T09:47:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7fb1785_e1e7c91d",
       "revId": "6f6897f9dd59d6f7c52b3c58c28f322597e98826",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -168,6 +240,24 @@
       "writtenOn": "2015-03-13T08:32:23Z",
       "side": 1,
       "message": "I kinda coded this o be extra sure... but I guess you\u0027re right, there shouldn\u0027t be any case of a \"bare\" repo where eclipse IResources make sense...",
+      "parentUuid": "a7fb1785_21e2710d",
+      "revId": "6f6897f9dd59d6f7c52b3c58c28f322597e98826",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_0193f5de",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-13T09:47:31Z",
+      "side": 1,
+      "message": "You\u0027re right, I simplified the code here.",
       "parentUuid": "a7fb1785_21e2710d",
       "revId": "6f6897f9dd59d6f7c52b3c58c28f322597e98826",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
