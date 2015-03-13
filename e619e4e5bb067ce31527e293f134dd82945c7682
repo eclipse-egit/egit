@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_a1114190",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContextTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-13T00:57:17Z",
+      "side": 1,
+      "message": "strange formatting",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 12
+      },
+      "revId": "e619e4e5bb067ce31527e293f134dd82945c7682",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_01f815b5",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/models/ModelTestCase.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-13T00:57:17Z",
+      "side": 1,
+      "message": "please add a short description of the purpose of this class as javadoc",
+      "revId": "e619e4e5bb067ce31527e293f134dd82945c7682",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
