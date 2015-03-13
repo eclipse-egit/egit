@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_61dc795a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-13T00:44:20Z",
+      "side": 1,
+      "message": "s/3.6/4.0/",
+      "range": {
+        "startLine": 38,
+        "startChar": 10,
+        "endLine": 38,
+        "endChar": 13
+      },
+      "revId": "6f6897f9dd59d6f7c52b3c58c28f322597e98826",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_41e7bd1e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-13T00:44:20Z",
+      "side": 1,
+      "message": "How does the caller know which path matches the blobId ? In general there can be multiple tree versions with different paths pointing to the same blob.\n\nfinding all paths referring to a given blob could be expensive",
+      "range": {
+        "startLine": 58,
+        "startChar": 65,
+        "endLine": 58,
+        "endChar": 69
+      },
+      "revId": "6f6897f9dd59d6f7c52b3c58c28f322597e98826",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_c1d3ad46",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-13T00:44:20Z",
+      "side": 1,
+      "message": "@Override\n\nwe are on Java 7 now so we should annotate overridden interface methods",
+      "revId": "6f6897f9dd59d6f7c52b3c58c28f322597e98826",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_01edb500",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-13T00:44:20Z",
+      "side": 1,
+      "message": "@Override\n\nwe are on Java 7 now so we should annotate overridden interface methods",
+      "revId": "6f6897f9dd59d6f7c52b3c58c28f322597e98826",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_e1e7c91d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-13T00:44:20Z",
+      "side": 1,
+      "message": "@Override\n\nwe are on Java 7 now so we should annotate overridden interface methods",
+      "revId": "6f6897f9dd59d6f7c52b3c58c28f322597e98826",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_21e2710d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-13T00:44:20Z",
+      "side": 1,
+      "message": "When does this make sense ? If the repository is bare the returned path is non-existing and there are no Eclipse resources mapping to the path since there\u0027s also no project which could be imported. Or do I miss something ?",
+      "revId": "6f6897f9dd59d6f7c52b3c58c28f322597e98826",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
