@@ -12,6 +12,7 @@
  * Copyright (C) 2014, Marc Khouzam <marc.khouzam@ericsson.com>
  * Copyright (C) 2014, Red Hat Inc.
  * Copyright (C) 2014, Axel Richard <axel.richard@obeo.fr>
+ * Copyright (C) 2015, Rajagopal Somasundaram <rajagopal.s@blueracetechnologies.com>
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -1496,6 +1497,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CloneDestinationPage_importButton;
+
+	/** */
+	public static String CloneDestinationPage_useHostNameButton;
 
 	/** */
 	public static String RefContentProposal_blob;
