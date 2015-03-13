@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_21fd51a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-13T00:59:48Z",
+      "side": 1,
+      "message": "Fix GitSubscriberMergeContextTest which failed on Windows\n\nis there a bug report providing the details what failed ?",
+      "revId": "6ef2c05293f7e054033dcb2bd83bf47843f8f8e1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
