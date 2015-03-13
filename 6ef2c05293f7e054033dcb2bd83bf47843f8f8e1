@@ -16,6 +16,24 @@
       "revId": "6ef2c05293f7e054033dcb2bd83bf47843f8f8e1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_01f775ff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-13T10:34:40Z",
+      "side": 1,
+      "message": "Actually, there is no bug report since the test is introduced in prvious commit.\nThis change is thus a fix of the change it depends on.\n\nI think it would probably be better to squash it into #30190 and abandon this change.\n\nWhat do you think Matthias?",
+      "parentUuid": "a7fb1785_21fd51a4",
+      "revId": "6ef2c05293f7e054033dcb2bd83bf47843f8f8e1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
