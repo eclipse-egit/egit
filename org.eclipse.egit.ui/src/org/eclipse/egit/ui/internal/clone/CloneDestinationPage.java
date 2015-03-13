@@ -5,6 +5,7 @@
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2015, Rajagopal Somasundaram <rajagopal.s@blueracetechnologies.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -41,6 +42,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -62,6 +64,10 @@ public class CloneDestinationPage extends WizardPage {
 	private final List<Ref> availableRefs = new ArrayList<Ref>();
 
 	private RepositorySelection validatedRepoSelection;
+
+	// Bug: 315592 - New uri field declared to store the uri details of the
+	// selected repository
+	private String uri;
 
 	private List<Ref> validatedSelectedBranches;
 
@@ -88,6 +94,8 @@ public class CloneDestinationPage extends WizardPage {
 	private Ref clonedInitialBranch;
 
 	private String clonedRemote;
+
+	private Button setRemoteWebAddr;
 
 	CloneDestinationPage() {
 		super(CloneDestinationPage.class.getName());
@@ -133,6 +141,7 @@ public class CloneDestinationPage extends WizardPage {
 	public void setSelection(RepositorySelection repositorySelection, List<Ref> availableRefs, List<Ref> branches, Ref head){
 		this.availableRefs.clear();
 		this.availableRefs.addAll(availableRefs);
+		uri = repositorySelection.getURI().getHost();
 		checkPreviousPagesSelections(repositorySelection, branches, head);
 		revalidate(repositorySelection,branches, head);
 	}
@@ -222,6 +231,28 @@ public class CloneDestinationPage extends WizardPage {
 		remoteText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				checkPage();
+			}
+		});
+
+		// Bug: 315592 - Creating a new field to populate the remote git host
+		// address
+		setRemoteWebAddr = new Button(g, SWT.CHECK);
+		setRemoteWebAddr.setText("Remote Web Login Address"); //$NON-NLS-1$
+		GridDataFactory.swtDefaults().span(2, 1).applyTo(setRemoteWebAddr);
+		setRemoteWebAddr.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+				remoteText.setText(uri);
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
 			}
 		});
 	}
