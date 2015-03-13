@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a7fb1785_61075958",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-13T00:45:34Z",
+      "side": 1,
+      "message": "you are author and committer of this change so this can be removed, you may want to list Laurent under Also-by:",
+      "range": {
+        "startLine": 17,
+        "startChar": 9,
+        "endLine": 17,
+        "endChar": 44
+      },
+      "revId": "6f6897f9dd59d6f7c52b3c58c28f322597e98826",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_61dc795a",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
         "patchSetId": 9
