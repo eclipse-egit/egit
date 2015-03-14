@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_fa6e4e23",
+        "filename": "org.eclipse.egit.target/egit-4.4.target",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-14T23:28:17Z",
+      "side": 1,
+      "message": "revert this unrelated and unnecessary formatting change",
+      "revId": "c6d7b00798977a8fc483c3341fe07dce18261abd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_5a7e82d2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/CloneDestinationPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-14T23:28:17Z",
+      "side": 1,
+      "message": "this comment is unnecessary, you can find this easily using git blame",
+      "revId": "c6d7b00798977a8fc483c3341fe07dce18261abd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_3a79f6e7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/CloneDestinationPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-14T23:28:17Z",
+      "side": 1,
+      "message": "this comment is unnecessary, this information is already captured in the git history and can be easily retrieved e.g. using git blame",
+      "revId": "c6d7b00798977a8fc483c3341fe07dce18261abd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_f5e77f1d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/CloneDestinationPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-14T23:28:17Z",
+      "side": 1,
+      "message": "all texts shown to the user need to be externalized to enable translation to other languages\n\nI didn\u0027t understand the meaning of this label, maybe better:\n\n \"Use host name as remote name\"\n\nIf I check the checkbox the remote name switches to the host name but I should also be able to go back, so when unchecking the checkbox the default should flip back to origin (or if the user typed something different then it should flip back to this value)\n\nalternatively we could use an editable combobox to define the remote name and prepopulate it with the two default proposals\n\n origin\n \u003chost name\u003e",
+      "revId": "c6d7b00798977a8fc483c3341fe07dce18261abd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_55e7731e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/CloneDestinationPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-14T23:28:17Z",
+      "side": 1,
+      "message": "style nit: remote the generated comments and the unnecessary blank lines",
+      "revId": "c6d7b00798977a8fc483c3341fe07dce18261abd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_35e2a70d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/CloneDestinationPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-14T23:28:17Z",
+      "side": 1,
+      "message": "remove the generated comment and replace it by\n\n // empty",
+      "revId": "c6d7b00798977a8fc483c3341fe07dce18261abd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
