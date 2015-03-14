@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "a7fb1785_557db38b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-14T23:31:48Z",
+      "side": 1,
+      "message": "s/Feature to populate remote host of git URI during cloning/Allow to use host name as default for remote name/",
+      "revId": "c6d7b00798977a8fc483c3341fe07dce18261abd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_3578e79a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-14T23:31:48Z",
+      "side": 1,
+      "message": "Add option to use the host name of the git URL as remote name.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "c6d7b00798977a8fc483c3341fe07dce18261abd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_fa6e4e23",
         "filename": "org.eclipse.egit.target/egit-4.4.target",
         "patchSetId": 1
