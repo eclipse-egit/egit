@@ -42,15 +42,6 @@
           <argLine>${test.vmparams} ${coretest.vmparams}</argLine>
           <useUIHarness>false</useUIHarness>
           <useUIThread>false</useUIThread>
-          <dependency-resolution>
-            <extraRequirements>
-              <requirement>
-                <type>eclipse-feature</type>
-                <id>org.eclipse.jgit.java7</id>
-                <versionRange>0.0.0</versionRange>
-              </requirement>
-            </extraRequirements>
-          </dependency-resolution>
         </configuration>
       </plugin>
     </plugins>
