@@ -186,7 +186,7 @@ public class IndexDiffCacheTest extends GitTestCase {
 
 		// adding this file will trigger a refresh, so no manual refresh must be
 		// required.
-		project.createFile("sub/.gitignore", "ignored\n".getBytes());
+		project.createFile("sub/.gitignore", "ignored\n".getBytes("UTF-8"));
 
 		IndexDiffData data2 = waitForListenerCalled();
 		assertThat(data2.getIgnoredNotInIndex(),

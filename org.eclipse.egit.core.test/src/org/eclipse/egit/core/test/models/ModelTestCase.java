@@ -70,7 +70,7 @@ public abstract class ModelTestCase extends GitTestCase {
 			IFile targetFile, String newContents, String commitMessage)
 			throws Exception {
 		targetFile.setContents(
-				new ByteArrayInputStream(newContents.getBytes()),
+				new ByteArrayInputStream(newContents.getBytes("UTF-8")),
 				IResource.FORCE, new NullProgressMonitor());
 		testRepository.addToIndex(targetFile);
 		return testRepository.commit(commitMessage);
