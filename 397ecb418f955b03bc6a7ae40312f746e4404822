@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_a5cf82d4",
+        "filename": "incubation/org.eclipse.egit.ui.importer/src/org/eclipse/egit/ui/internal/clone/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-03-17T19:04:00Z",
+      "side": 1,
+      "message": "The id is odd.",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_85ca46c2",
+        "filename": "incubation/org.eclipse.egit.ui.importer/src/org/eclipse/egit/ui/internal/clone/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-03-17T19:04:00Z",
+      "side": 1,
+      "message": "Trailing whitespace",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_a5f66200",
+        "filename": "incubation/org.eclipse.egit.ui.importer/src/org/eclipse/egit/ui/internal/clone/EasymportGitWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-03-17T19:04:00Z",
+      "side": 1,
+      "message": "Haven\u0027t tried this code, but looks strange that clone operation is done in setVisible() method call (in UI thread?). Hope that rhis is not the case.",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_25039285",
+        "filename": "incubation/org.eclipse.egit.ui.importer/src/org/eclipse/egit/ui/internal/clone/EasymportGitWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-03-17T19:04:00Z",
+      "side": 1,
+      "message": "Please remove TODO.\n\nPlease rwmove all the trailing spaces in the file.",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
