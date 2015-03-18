@@ -116,6 +116,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_1034d263",
+        "filename": "incubation/org.eclipse.egit.ui.importer/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2015-03-18T07:13:58Z",
+      "side": 1,
+      "message": "It\u0027s because I did put this bundle under an \u0027incubation\u0027 folder. Should I move it up along with regulat bundles?",
+      "parentUuid": "a7fb1785_ca6e1df2",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_6a1ba979",
         "filename": "incubation/org.eclipse.egit.ui.importer/pom.xml",
         "patchSetId": 1
@@ -178,6 +196,24 @@
       "writtenOn": "2015-03-18T00:06:02Z",
       "side": 1,
       "message": "could we make this an optional fragment for host bundle org.eclipse.egit.ui ?",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_502e5a17",
+        "filename": "incubation/org.eclipse.egit.ui.importer/src/org/eclipse/egit/ui/internal/clone/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2015-03-18T07:13:58Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s possible since both org.eclipse.egit.ui and this bundle contribute a plugin.xml.",
+      "parentUuid": "a7fb1785_6a044922",
       "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -303,6 +339,24 @@
       "writtenOn": "2015-03-17T19:04:00Z",
       "side": 1,
       "message": "Haven\u0027t tried this code, but looks strange that clone operation is done in setVisible() method call (in UI thread?). Hope that rhis is not the case.",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_d039aa58",
+        "filename": "incubation/org.eclipse.egit.ui.importer/src/org/eclipse/egit/ui/internal/clone/EasymportGitWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2015-03-18T07:13:58Z",
+      "side": 1,
+      "message": "I\u0027ll try to improve that piece of code, that moreover contains a bug.",
+      "parentUuid": "a7fb1785_a5f66200",
       "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
