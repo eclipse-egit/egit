@@ -2,6 +2,188 @@
   "comments": [
     {
       "key": {
+        "uuid": "a7fb1785_0acf8559",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 1,
+      "message": "add a bit more context so that others seeing this commit have a chance to find out what this is about, probably there\u0027s also some bug for the auto-import itself which could be referenced from here",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_9fca95c2",
+        "filename": "incubation/org.eclipse.egit.ui.importer/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 1,
+      "message": "master is now on version 4.0.0",
+      "range": {
+        "startLine": 10,
+        "startChar": 37,
+        "endLine": 10,
+        "endChar": 42
+      },
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_4a634d0d",
+        "filename": "incubation/org.eclipse.egit.ui.importer/bin/org/eclipse/egit/ui/internal/clone/Activator.class",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 1,
+      "message": "binaries should be ignored",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_aa6911ee",
+        "filename": "incubation/org.eclipse.egit.ui.importer/bin/org/eclipse/egit/ui/internal/clone/EasymportGitWizard$1.class",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 1,
+      "message": "binaries should be ignored",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_8a641514",
+        "filename": "incubation/org.eclipse.egit.ui.importer/bin/org/eclipse/egit/ui/internal/clone/EasymportGitWizard.class",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 1,
+      "message": "binaries should be ignored",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_ca6e1df2",
+        "filename": "incubation/org.eclipse.egit.ui.importer/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 1,
+      "message": "why is this relative path required ?\nlooks like going one level up is enough",
+      "range": {
+        "startLine": 8,
+        "startChar": 2,
+        "endLine": 8,
+        "endChar": 36
+      },
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_6a1ba979",
+        "filename": "incubation/org.eclipse.egit.ui.importer/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 1,
+      "message": "we need to adapt the scripts tools/version.sh and tools/release.sh, so far they are only capable of flipping the same version in all bundles and features.",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_ea7319d6",
+        "filename": "incubation/org.eclipse.egit.ui.importer/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_2a3d21eb",
+        "filename": "incubation/org.eclipse.egit.ui.importer/src/org/eclipse/egit/ui/internal/clone/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_6a044922",
+        "filename": "incubation/org.eclipse.egit.ui.importer/src/org/eclipse/egit/ui/internal/clone/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 1,
+      "message": "could we make this an optional fragment for host bundle org.eclipse.egit.ui ?",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_a5cf82d4",
         "filename": "incubation/org.eclipse.egit.ui.importer/src/org/eclipse/egit/ui/internal/clone/Activator.java",
         "patchSetId": 1
@@ -19,6 +201,29 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_0a40255d",
+        "filename": "incubation/org.eclipse.egit.ui.importer/src/org/eclipse/egit/ui/internal/clone/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 1,
+      "message": "s/org.jboss.tools.playground.eaymport.egit/org.eclipse.egit.ui.importer/",
+      "range": {
+        "startLine": 12,
+        "startChar": 41,
+        "endLine": 12,
+        "endChar": 81
+      },
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_85ca46c2",
         "filename": "incubation/org.eclipse.egit.ui.importer/src/org/eclipse/egit/ui/internal/clone/Activator.java",
         "patchSetId": 1
@@ -30,6 +235,57 @@
       "writtenOn": "2015-03-17T19:04:00Z",
       "side": 1,
       "message": "Trailing whitespace",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_6a372909",
+        "filename": "incubation/org.eclipse.egit.ui.importer/src/org/eclipse/egit/ui/internal/clone/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use see tags to refer to javadoc of superclass",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_4a3a2df1",
+        "filename": "incubation/org.eclipse.egit.ui.importer/src/org/eclipse/egit/ui/internal/clone/EasymportGitWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_aa50f129",
+        "filename": "incubation/org.eclipse.egit.ui.importer/src/org/eclipse/egit/ui/internal/clone/EasymportGitWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 1,
+      "message": "remove trailing whitespaces",
       "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -64,6 +320,97 @@
       "writtenOn": "2015-03-17T19:04:00Z",
       "side": 1,
       "message": "Please remove TODO.\n\nPlease rwmove all the trailing spaces in the file.",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_2aa88193",
+        "filename": "incubation/org.eclipse.egit.ui.importer/src/org/eclipse/egit/ui/internal/clone/EasymportGitWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 1,
+      "message": "remove generated comment, if there\u0027s no implementation put\n\n // empty\n\nto avoid warning",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_4ab50de6",
+        "filename": "org.eclipse.egit.repository/category.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 1,
+      "message": "this is pretty fuzzy, how about \"Incubating experimental auto project import\" ?",
+      "range": {
+        "startLine": 34,
+        "startChar": 33,
+        "endLine": 34,
+        "endChar": 51
+      },
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_6a89e931",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 1,
+      "message": "why do we need yet another version definition here ?",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_8a7d3590",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 1,
+      "message": "remove trailing whitespace",
+      "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_ea7cb992",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 1,
+      "message": "you could use ${egit-version} instead",
       "revId": "397ecb418f955b03bc6a7ae40312f746e4404822",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false

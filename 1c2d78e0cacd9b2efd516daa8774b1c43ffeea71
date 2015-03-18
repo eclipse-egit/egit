@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_0aab0591",
+        "filename": "org.eclipse.egit.core/.settings/org.eclipse.core.resources.prefs",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 0,
+      "message": "why are you deleting this unrelated preference ?",
+      "revId": "1c2d78e0cacd9b2efd516daa8774b1c43ffeea71",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_6ab28901",
+        "filename": "org.eclipse.egit.mylyn-feature/.settings/org.eclipse.core.resources.prefs",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-18T00:06:02Z",
+      "side": 0,
+      "message": "why are you deleting this unrelated preference ?",
+      "revId": "1c2d78e0cacd9b2efd516daa8774b1c43ffeea71",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
