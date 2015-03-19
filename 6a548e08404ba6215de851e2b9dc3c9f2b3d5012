@@ -69,6 +69,24 @@
       "revId": "6a548e08404ba6215de851e2b9dc3c9f2b3d5012",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_113fb13e",
+        "filename": "org.eclipse.egit.ui.importer/META-INF/p2.inf",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 434
+      },
+      "writtenOn": "2015-03-19T12:56:28Z",
+      "side": 1,
+      "message": "I found the tycho bug for this:\nhttps://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d453708\n\nit\u0027s possible now to add referenced sites in category.xml but there is still a problem with Tycho. So for now I think you will need a workaround like Mickael\u0027s mojo or similar.\n\nthe approach with the touchpoint doesn\u0027t work because it comes too late in the process (only when installing the IU, but it needs to be in place when resolving already)",
+      "parentUuid": "a7fb1785_114b3180",
+      "revId": "6a548e08404ba6215de851e2b9dc3c9f2b3d5012",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
