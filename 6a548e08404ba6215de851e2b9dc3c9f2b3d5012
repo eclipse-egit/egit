@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_718c3542",
+        "filename": "org.eclipse.egit.repository/category.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2015-03-19T10:28:14Z",
+      "side": 1,
+      "message": "Unfortunately, Tycho doesn\u0027t support it yet: https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d453708",
+      "parentUuid": "a7fb1785_f145c569",
+      "revId": "6a548e08404ba6215de851e2b9dc3c9f2b3d5012",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_114b3180",
         "filename": "org.eclipse.egit.ui.importer/META-INF/p2.inf",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2015-03-19T10:19:50Z",
       "side": 1,
       "message": "tried this to add a reference to the e4 repo, the touchpoint ends up in content.xml of the egit repository but it doesn\u0027t work ;-(",
+      "revId": "6a548e08404ba6215de851e2b9dc3c9f2b3d5012",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_b17dfd8f",
+        "filename": "org.eclipse.egit.ui.importer/META-INF/p2.inf",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2015-03-19T10:28:14Z",
+      "side": 1,
+      "message": "I believe it\u0027s because touchpoints are only applied while installing the IU, whereas what we want is something that is applied before installation, while resolving dependencies.",
+      "parentUuid": "a7fb1785_114b3180",
       "revId": "6a548e08404ba6215de851e2b9dc3c9f2b3d5012",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
