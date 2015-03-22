@@ -307,14 +307,18 @@ public class RepositoryMapping {
 		if (project == null)
 			return null;
 
-		final RepositoryProvider rp = RepositoryProvider.getProvider(project);
-		if (!(rp instanceof GitProvider))
+		final RepositoryProvider rp = RepositoryProvider.getProvider(project,
+				GitProvider.ID);
+		if (rp == null) {
 			return null;
+		}
 
-		if (((GitProvider)rp).getData() == null)
+		GitProjectData data = ((GitProvider) rp).getData();
+		if (data == null) {
 			return null;
+		}
 
-		return ((GitProvider)rp).getData().getRepositoryMapping(resource);
+		return data.getRepositoryMapping(resource);
 	}
 
 	/**
