@@ -21,7 +21,7 @@
 
   <groupId>org.eclipse.egit</groupId>
   <artifactId>egit-parent</artifactId>
-  <version>4.0.0-SNAPSHOT</version>
+  <version>4.0.0.201503231230-m1</version>
   <packaging>pom</packaging>
 
   <name>EGit Parent</name>
@@ -62,7 +62,7 @@
   </licenses>
 
   <properties>
-    <egit-version>4.0.0-SNAPSHOT</egit-version>
+    <egit-version>4.0.0.201503231230-m1</egit-version>
     <tycho-version>0.22.0</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
     <mockito-version>1.8.4</mockito-version>
@@ -306,6 +306,11 @@
       <id>repo.eclipse.org.cbi-releases</id>
       <url>https://repo.eclipse.org/content/repositories/cbi-releases/</url>
     </pluginRepository>
+    <pluginRepository>
+      <id>jboss-public-repository-group</id>
+      <name>JBoss Public Repository Group</name>
+      <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+    </pluginRepository>
   </pluginRepositories>
 
   <repositories>
@@ -504,6 +509,11 @@
           <groupId>org.eclipse.cbi.maven.plugins</groupId>
           <artifactId>eclipse-jarsigner-plugin</artifactId>
           <version>1.0.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.jboss.tools.tycho-plugins</groupId>
+          <artifactId>repository-utils</artifactId>
+          <version>0.22.0</version>
         </plugin>
       </plugins>
     </pluginManagement>
