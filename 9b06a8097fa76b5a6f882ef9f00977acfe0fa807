@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_9d356be0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-23T19:35:35Z",
+      "side": 1,
+      "message": "style nit: the commit message header should be one line \u003c 70 chars followed by a blank line to ensure it\u0027s rendered properly in diverse git tools, see https://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "revId": "9b06a8097fa76b5a6f882ef9f00977acfe0fa807",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_fd246fb8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/CachedCheckboxTreeViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-23T19:35:35Z",
+      "side": 1,
+      "message": "also remove the @see references to superclass javadoc like you did in the other change",
+      "revId": "9b06a8097fa76b5a6f882ef9f00977acfe0fa807",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_7d307fec",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/FilteredCheckboxTree.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-23T19:35:35Z",
+      "side": 1,
+      "message": "remove @see references like in the other change",
+      "revId": "9b06a8097fa76b5a6f882ef9f00977acfe0fa807",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
