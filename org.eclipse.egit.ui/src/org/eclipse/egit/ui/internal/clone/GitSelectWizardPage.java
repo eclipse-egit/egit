@@ -128,6 +128,7 @@ public class GitSelectWizardPage extends WizardPage {
 		tv.setSelection(new StructuredSelection(input.get(0)));
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 
 		Composite main = new Composite(parent, SWT.NO_RADIO_GROUP);
@@ -197,6 +198,7 @@ public class GitSelectWizardPage extends WizardPage {
 
 		tv.addSelectionChangedListener(new ISelectionChangedListener() {
 
+			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				checkPage();
 			}

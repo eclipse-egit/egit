@@ -46,6 +46,7 @@ class RepositoryLocationLabelProvider extends LabelProvider {
 		return null;
 	}
 
+	@Override
 	public void dispose() {
 		repoImage.dispose();
 		for (Image image  : images)

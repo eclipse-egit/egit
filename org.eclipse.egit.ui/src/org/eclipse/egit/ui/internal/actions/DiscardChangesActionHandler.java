@@ -37,6 +37,7 @@ import org.eclipse.ui.IWorkbenchPart;
  */
 public class DiscardChangesActionHandler extends RepositoryActionHandler {
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
 		IWorkbenchPart part = getPart(event);

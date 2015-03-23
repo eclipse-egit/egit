@@ -28,10 +28,12 @@ public class RepoComboLabelProvider extends BaseLabelProvider implements
 		ILabelProvider {
 	private RepositoryUtil util = Activator.getDefault().getRepositoryUtil();
 
+	@Override
 	public Image getImage(Object element) {
 		return null;
 	}
 
+	@Override
 	public String getText(Object element) {
 		Repository repo = (Repository) element;
 		String repoName = util.getRepositoryName(repo);

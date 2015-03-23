@@ -24,6 +24,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * Fetch a change from Gerrit
  */
 public class FetchChangeFromGerritCommand extends AbstractSharedCommandHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repository = getRepository(event);
 		if (repository == null) {

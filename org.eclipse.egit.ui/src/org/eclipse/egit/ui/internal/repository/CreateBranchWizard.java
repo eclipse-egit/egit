@@ -88,6 +88,7 @@ public class CreateBranchWizard extends Wizard {
 		final boolean checkoutNewBranch = cp.checkoutNewBranch();
 		try {
 			getContainer().run(true, true, new IRunnableWithProgress() {
+				@Override
 				public void run(IProgressMonitor monitor)
 						throws InvocationTargetException, InterruptedException {
 					try {

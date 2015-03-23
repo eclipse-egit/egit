@@ -147,9 +147,11 @@ public class PullOperationUI extends JobChangeAdapter {
 		}
 	}
 
+	@Override
 	public void done(IJobChangeEvent event) {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 
+			@Override
 			public void run() {
 				Map<Repository, Object> res = new LinkedHashMap<Repository, Object>(
 						PullOperationUI.this.results);
@@ -228,6 +230,7 @@ public class PullOperationUI extends JobChangeAdapter {
 
 	private void showResults() {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			@Override
 			public void run() {
 				Shell shell = PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getShell();

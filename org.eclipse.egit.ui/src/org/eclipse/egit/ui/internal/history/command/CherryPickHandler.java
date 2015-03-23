@@ -35,6 +35,7 @@ public class CherryPickHandler extends AbstractHistoryCommandHandler {
 		return repository.getRepositoryState().equals(RepositoryState.SAFE);
 	}
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RevCommit commit = getSelectedCommit(event);
 		Repository repo = getRepository(event);

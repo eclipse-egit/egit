@@ -18,6 +18,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * Opens the "Configure Debug Trace" page
  */
 public class ConfigureDebugTraceCommand extends AbstractHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		new GitTraceConfigurationDialog(HandlerUtil
 				.getActiveShellChecked(event)).open();

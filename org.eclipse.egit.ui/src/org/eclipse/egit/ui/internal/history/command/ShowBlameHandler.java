@@ -37,6 +37,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class ShowBlameHandler extends AbstractHistoryCommandHandler {
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		GitHistoryPage page = getPage(event);
 		Object input = page.getInputInternal().getSingleItem();

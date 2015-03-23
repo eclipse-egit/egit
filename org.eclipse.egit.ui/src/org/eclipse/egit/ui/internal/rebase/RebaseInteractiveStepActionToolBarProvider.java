@@ -85,6 +85,7 @@ public class RebaseInteractiveStepActionToolBarProvider {
 		createToolBarItems();
 		this.theToolbar.addDisposeListener(new DisposeListener() {
 
+			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				dispose();
 			}
@@ -202,6 +203,7 @@ public class RebaseInteractiveStepActionToolBarProvider {
 			this.type = action;
 		}
 
+		@Override
 		public void widgetSelected(SelectionEvent e) {
 			List<RebaseInteractivePlan.PlanElement> selected = getSelectedRebaseTodoLines();
 			if (selected == null || selected.isEmpty())
@@ -225,6 +227,7 @@ public class RebaseInteractiveStepActionToolBarProvider {
 			mapActionItemsToSelection(view.planTreeViewer.getSelection());
 		}
 
+		@Override
 		public void widgetDefaultSelected(SelectionEvent e) {
 			widgetSelected(e);
 		}

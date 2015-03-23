@@ -89,6 +89,7 @@ class PushResultTable {
 		UIUtils.hookDisposal(root, deleteImage);
 
 		root.addDisposeListener(new DisposeListener() {
+			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				if (reader != null)
 					reader.close();
@@ -98,16 +99,19 @@ class PushResultTable {
 		treeViewer.setComparer(new IElementComparer() {
 			// we need this to keep refresh() working while having custom
 			// equals() in PushOperationResult
+			@Override
 			public boolean equals(Object a, Object b) {
 				return a == b;
 			}
 
+			@Override
 			public int hashCode(Object element) {
 				return element.hashCode();
 			}
 		});
 		final IStyledLabelProvider styleProvider = new WorkbenchStyledLabelProvider() {
 
+			@Override
 			public StyledString getStyledText(Object element) {
 				if (element instanceof IWorkbenchAdapter3)
 					return ((IWorkbenchAdapter3) element).getStyledText(element);
@@ -119,6 +123,7 @@ class PushResultTable {
 
 		treeViewer.setSorter(new ViewerSorter() {
 
+			@Override
 			public int compare(Viewer viewer, Object e1, Object e2) {
 
 				if (e1 instanceof RefUpdateElement
@@ -180,6 +185,7 @@ class PushResultTable {
 		final SpellcheckableMessageArea text = new SpellcheckableMessageArea(
 				messageGroup, EMPTY_STRING, true, SWT.BORDER) {
 
+			@Override
 			protected void createMarginPainter() {
 				// Disabled intentionally
 			}
@@ -188,6 +194,7 @@ class PushResultTable {
 		GridDataFactory.fillDefaults().grab(true, true)
 				.hint(SWT.DEFAULT, TEXT_PREFERRED_HEIGHT).applyTo(text);
 		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				ISelection selection = event.getSelection();
 				if (!(selection instanceof IStructuredSelection)) {

@@ -49,6 +49,7 @@ public class GitQuickDiffProvider implements IQuickDiffReferenceProvider {
 			GitTraceLocation.getTrace().traceEntry(GitTraceLocation.QUICKDIFF.getLocation());
 	}
 
+	@Override
 	public void dispose() {
 		if (GitTraceLocation.QUICKDIFF.isActive())
 			GitTraceLocation.getTrace().traceEntry(GitTraceLocation.QUICKDIFF.getLocation());
@@ -56,10 +57,12 @@ public class GitQuickDiffProvider implements IQuickDiffReferenceProvider {
 			document.dispose();
 	}
 
+	@Override
 	public String getId() {
 		return id;
 	}
 
+	@Override
 	public IDocument getReference(IProgressMonitor monitor)
 			throws CoreException {
 		if (GitTraceLocation.QUICKDIFF.isActive())
@@ -84,12 +87,14 @@ public class GitQuickDiffProvider implements IQuickDiffReferenceProvider {
 		}
 	}
 
+	@Override
 	public boolean isEnabled() {
 		return resource != null
 				&& RepositoryProvider.getProvider(resource.getProject(),
 						GitProvider.ID) != null;
 	}
 
+	@Override
 	public void setActiveEditor(ITextEditor editor) {
 		if (GitTraceLocation.QUICKDIFF.isActive())
 			GitTraceLocation.getTrace().traceEntry(
@@ -98,6 +103,7 @@ public class GitQuickDiffProvider implements IQuickDiffReferenceProvider {
 		resource = ResourceUtil.getResource(editorInput);
 	}
 
+	@Override
 	public void setId(String id) {
 		this.id = id;
 	}

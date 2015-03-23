@@ -131,6 +131,7 @@ public class StagingViewLabelProvider extends LabelProvider {
 		return (Image) this.resourceManager.get(decorated);
 	}
 
+	@Override
 	public Image getImage(Object element) {
 
 		if (element instanceof StagingFolderEntry) {

@@ -106,6 +106,7 @@ public class SelectResetTypePage extends WizardPage {
 		}
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 		Composite displayArea = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false)
@@ -178,6 +179,7 @@ public class SelectResetTypePage extends WizardPage {
 			Button soft = new Button(g, SWT.RADIO);
 			soft.setText(UIText.ResetTargetSelectionDialog_ResetTypeSoftButton);
 			soft.addListener(SWT.Selection, new Listener() {
+				@Override
 				public void handleEvent(Event event) {
 					if (((Button) event.widget).getSelection())
 						resetType = ResetType.SOFT;
@@ -189,6 +191,7 @@ public class SelectResetTypePage extends WizardPage {
 		medium.setSelection(true);
 		medium.setText(resetToSelf ? UIText.ResetTargetSelectionDialog_ResetTypeHEADMixedButton : UIText.ResetTargetSelectionDialog_ResetTypeMixedButton);
 		medium.addListener(SWT.Selection, new Listener() {
+			@Override
 			public void handleEvent(Event event) {
 				if (((Button) event.widget).getSelection())
 					resetType = ResetType.MIXED;
@@ -198,6 +201,7 @@ public class SelectResetTypePage extends WizardPage {
 		Button hard = new Button(g, SWT.RADIO);
 		hard.setText(resetToSelf ? UIText.ResetTargetSelectionDialog_ResetTypeHEADHardButton : UIText.ResetTargetSelectionDialog_ResetTypeHardButton);
 		hard.addListener(SWT.Selection, new Listener() {
+			@Override
 			public void handleEvent(Event event) {
 				if (((Button) event.widget).getSelection())
 					resetType = ResetType.HARD;

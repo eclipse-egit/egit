@@ -23,6 +23,7 @@ import org.eclipse.jgit.transport.RemoteConfig;
  * Action for "Simple fetch"
  */
 public class SimpleFetchActionHandler extends RepositoryActionHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repository = getRepository(true, event);
 		if (repository == null)

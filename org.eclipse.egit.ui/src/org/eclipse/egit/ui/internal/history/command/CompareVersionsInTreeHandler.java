@@ -34,6 +34,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class CompareVersionsInTreeHandler extends
 		AbstractHistoryCommandHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IStructuredSelection selection = getSelection(event);
 		if (selection.size() == 2) {

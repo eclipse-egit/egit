@@ -188,6 +188,7 @@ class GenerateHistoryJob extends Job {
 		walk.close();
 		Display.getDefault().asyncExec(new Runnable() {
 
+			@Override
 			public void run() {
 				loadedCommits.dispose();
 			}

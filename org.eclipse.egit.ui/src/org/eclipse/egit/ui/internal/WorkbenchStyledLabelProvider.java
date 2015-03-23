@@ -26,26 +26,32 @@ public class WorkbenchStyledLabelProvider implements IStyledLabelProvider {
 	 */
 	protected final WorkbenchLabelProvider workbenchLabelProvider = new WorkbenchLabelProvider();
 
+	@Override
 	public void removeListener(ILabelProviderListener listener) {
 		// Empty
 	}
 
+	@Override
 	public boolean isLabelProperty(Object element, String property) {
 		return false;
 	}
 
+	@Override
 	public void dispose() {
 		workbenchLabelProvider.dispose();
 	}
 
+	@Override
 	public void addListener(ILabelProviderListener listener) {
 		// Empty
 	}
 
+	@Override
 	public StyledString getStyledText(Object element) {
 		return new StyledString(workbenchLabelProvider.getText(element));
 	}
 
+	@Override
 	public Image getImage(Object element) {
 		return workbenchLabelProvider.getImage(element);
 	}

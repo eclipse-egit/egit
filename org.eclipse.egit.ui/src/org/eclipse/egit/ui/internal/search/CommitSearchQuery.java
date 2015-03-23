@@ -55,6 +55,7 @@ public class CommitSearchQuery implements ISearchQuery {
 
 	private class AuthorMatcher extends SearchMatcher {
 
+		@Override
 		public boolean matches(Pattern pattern, RevCommit commit) {
 			PersonIdent author = commit.getAuthorIdent();
 			if (author != null)
@@ -67,6 +68,7 @@ public class CommitSearchQuery implements ISearchQuery {
 
 	private class CommitterMatcher extends SearchMatcher {
 
+		@Override
 		public boolean matches(Pattern pattern, RevCommit commit) {
 			PersonIdent committer = commit.getCommitterIdent();
 			if (committer != null)
@@ -79,6 +81,7 @@ public class CommitSearchQuery implements ISearchQuery {
 
 	private class MessageMatcher extends SearchMatcher {
 
+		@Override
 		public boolean matches(Pattern pattern, RevCommit commit) {
 			return matches(pattern, commit.getFullMessage());
 		}
@@ -86,6 +89,7 @@ public class CommitSearchQuery implements ISearchQuery {
 
 	private class CommitNameMatcher extends SearchMatcher {
 
+		@Override
 		public boolean matches(Pattern pattern, RevCommit commit) {
 			return matches(pattern, commit.name());
 		}
@@ -94,6 +98,7 @@ public class CommitSearchQuery implements ISearchQuery {
 
 	private class TreeMatcher extends SearchMatcher {
 
+		@Override
 		public boolean matches(Pattern pattern, RevCommit commit) {
 			RevTree tree = commit.getTree();
 			return tree != null ? matches(pattern, tree.name()) : false;
@@ -102,6 +107,7 @@ public class CommitSearchQuery implements ISearchQuery {
 
 	private class ParentMatcher extends SearchMatcher {
 
+		@Override
 		public boolean matches(Pattern pattern, RevCommit commit) {
 			for (RevCommit parent : commit.getParents())
 				if (matches(pattern, parent.name()))
@@ -160,6 +166,7 @@ public class CommitSearchQuery implements ISearchQuery {
 	/**
 	 * @see org.eclipse.search.ui.ISearchQuery#run(org.eclipse.core.runtime.IProgressMonitor)
 	 */
+	@Override
 	public IStatus run(IProgressMonitor monitor)
 			throws OperationCanceledException {
 		this.result.removeAll();
@@ -231,6 +238,7 @@ public class CommitSearchQuery implements ISearchQuery {
 	/**
 	 * @see org.eclipse.search.ui.ISearchQuery#getLabel()
 	 */
+	@Override
 	public String getLabel() {
 		return UIText.CommitSearchQuery_Label;
 	}
@@ -238,6 +246,7 @@ public class CommitSearchQuery implements ISearchQuery {
 	/**
 	 * @see org.eclipse.search.ui.ISearchQuery#canRerun()
 	 */
+	@Override
 	public boolean canRerun() {
 		return true;
 	}
@@ -245,6 +254,7 @@ public class CommitSearchQuery implements ISearchQuery {
 	/**
 	 * @see org.eclipse.search.ui.ISearchQuery#canRunInBackground()
 	 */
+	@Override
 	public boolean canRunInBackground() {
 		return true;
 	}
@@ -252,6 +262,7 @@ public class CommitSearchQuery implements ISearchQuery {
 	/**
 	 * @see org.eclipse.search.ui.ISearchQuery#getSearchResult()
 	 */
+	@Override
 	public ISearchResult getSearchResult() {
 		return this.result;
 	}

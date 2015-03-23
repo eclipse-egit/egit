@@ -34,6 +34,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
  * together into one.
  */
 public class SquashHandler extends AbstractHistoryCommandHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repository = getRepository(event);
 		List<RevCommit> commits = getSelectedCommits(event);

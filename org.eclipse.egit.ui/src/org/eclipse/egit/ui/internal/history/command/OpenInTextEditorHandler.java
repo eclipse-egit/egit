@@ -36,6 +36,7 @@ import org.eclipse.team.core.history.IFileRevision;
  * Open a file or files in a text editor
  */
 public class OpenInTextEditorHandler extends AbstractHistoryCommandHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IStructuredSelection selection = getSelection(event);
 		if (selection.size() < 1)

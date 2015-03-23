@@ -24,6 +24,7 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class ConfigureRemoteCommand extends
 		RepositoriesViewCommandHandler<RemotesNode> {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RemotesNode node = getSelectedNodes(event).get(0);
 		Repository repository = node.getRepository();

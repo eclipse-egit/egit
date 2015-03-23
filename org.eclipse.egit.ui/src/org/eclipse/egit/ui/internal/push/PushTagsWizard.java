@@ -49,6 +49,7 @@ public class PushTagsWizard extends Wizard {
 	public static void openWizardDialog(final Repository repository,
 			final String... tagNames) {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			@Override
 			public void run() {
 				Shell shell = PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getShell();

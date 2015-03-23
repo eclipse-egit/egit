@@ -35,6 +35,7 @@ public class DeleteFetchCommand extends
 
 	private static final String PUSHURL = "pushurl"; //$NON-NLS-1$
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		FetchNode node = getSelectedNodes(event).get(0);
 		RemoteNode remote = (RemoteNode) node.getParent();

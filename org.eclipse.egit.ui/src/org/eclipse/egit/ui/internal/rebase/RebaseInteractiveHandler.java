@@ -26,11 +26,13 @@ public enum RebaseInteractiveHandler implements InteractiveHandler {
 	 */
 	INSTANCE;
 
+	@Override
 	public String modifyCommitMessage(final String commitMessage) {
 		final String[] result = new String[1];
 		result[0] = commitMessage;
 		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
+			@Override
 			public void run() {
 				CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(
 						PlatformUI.getWorkbench()
@@ -44,6 +46,7 @@ public enum RebaseInteractiveHandler implements InteractiveHandler {
 		return result[0];
 	}
 
+	@Override
 	public void prepareSteps(List<RebaseTodoLine> steps) {
 		// do not change list of steps here. Instead change the list via
 		// writeRebaseTodoFile of class Repository

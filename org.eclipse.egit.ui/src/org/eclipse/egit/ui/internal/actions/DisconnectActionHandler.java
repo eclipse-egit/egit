@@ -30,6 +30,7 @@ import org.eclipse.team.core.RepositoryProvider;
  * @see DisconnectProviderOperation
  */
 public class DisconnectActionHandler extends RepositoryActionHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IProject[] selectedProjects = getProjectsForSelectedResources();
 		List<IProject> projects = new ArrayList<IProject>(selectedProjects.length);

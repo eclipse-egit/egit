@@ -61,6 +61,7 @@ class GitActionContributor extends SynchronizePageActionGroup {
 
 	private OpenWorkingFileAction openWorkingFileAction;
 
+	@Override
 	public void fillContextMenu(IMenuManager menu) {
 		IStructuredSelection selection = (IStructuredSelection) getContext()
 				.getSelection();

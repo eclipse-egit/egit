@@ -49,6 +49,7 @@ abstract class StorageTypedElement implements ITypedElement,
 		this.localEncoding = localEncoding;
 	}
 
+	@Override
 	public InputStream getContents() throws CoreException {
 		if (bufferedContents == null) {
 			cacheContents(new NullProgressMonitor());
@@ -88,10 +89,12 @@ abstract class StorageTypedElement implements ITypedElement,
 		return bufferedContents;
 	}
 
+	@Override
 	public Image getImage() {
 		return CompareUI.getImage(getType());
 	}
 
+	@Override
 	public String getType() {
 		String name = getName();
 		if (name != null) {
@@ -105,6 +108,7 @@ abstract class StorageTypedElement implements ITypedElement,
 		return ITypedElement.FOLDER_TYPE;
 	}
 
+	@Override
 	public String getCharset() throws CoreException {
 		if (localEncoding != null)
 			return localEncoding;
@@ -118,16 +122,19 @@ abstract class StorageTypedElement implements ITypedElement,
 		return null;
 	}
 
+	@Override
 	public Object getAdapter(Class adapter) {
 		if (adapter == ISharedDocumentAdapter.class) {
 			synchronized (this) {
 				if (sharedDocumentAdapter == null)
 					sharedDocumentAdapter = new SharedDocumentAdapter() {
+						@Override
 						public IEditorInput getDocumentKey(Object element) {
 							return StorageTypedElement.this
 									.getDocumentKey(element);
 						}
 
+						@Override
 						public void flushDocument(IDocumentProvider provider,
 								IEditorInput documentKey, IDocument document,
 								boolean overwrite) throws CoreException {

@@ -297,16 +297,19 @@ public class StagingView extends ViewPart implements IShowInSource {
 			this.provider = provider;
 		}
 
+		@Override
 		public void dragStart(DragSourceEvent event) {
 			event.doit = !provider.getSelection().isEmpty();
 		}
 
+		@Override
 		public void dragFinished(DragSourceEvent event) {
 			if (LocalSelectionTransfer.getTransfer().isSupportedType(
 					event.dataType))
 				LocalSelectionTransfer.getTransfer().setSelection(null);
 		}
 
+		@Override
 		public void dragSetData(DragSourceEvent event) {
 			IStructuredSelection selection = (IStructuredSelection) provider
 					.getSelection();
@@ -341,22 +344,27 @@ public class StagingView extends ViewPart implements IShowInSource {
 	private final class PartListener implements IPartListener2 {
 		StructuredSelection lastSelection;
 
+		@Override
 		public void partVisible(IWorkbenchPartReference partRef) {
 			updateHiddenState(partRef, false);
 		}
 
+		@Override
 		public void partOpened(IWorkbenchPartReference partRef) {
 			updateHiddenState(partRef, false);
 		}
 
+		@Override
 		public void partHidden(IWorkbenchPartReference partRef) {
 			updateHiddenState(partRef, true);
 		}
 
+		@Override
 		public void partClosed(IWorkbenchPartReference partRef) {
 			updateHiddenState(partRef, true);
 		}
 
+		@Override
 		public void partActivated(IWorkbenchPartReference partRef) {
 			if (isMe(partRef)) {
 				if (lastSelection != null) {
@@ -413,14 +421,17 @@ public class StagingView extends ViewPart implements IShowInSource {
 			return partRef.getPart(false) == StagingView.this;
 		}
 
+		@Override
 		public void partDeactivated(IWorkbenchPartReference partRef) {
 			//
 		}
 
+		@Override
 		public void partBroughtToTop(IWorkbenchPartReference partRef) {
 			//
 		}
 
+		@Override
 		public void partInputChanged(IWorkbenchPartReference partRef) {
 			//
 		}
@@ -449,6 +460,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			return image;
 		}
 
+		@Override
 		public String getText(Object element) {
 			return provider.getText(element);
 		}
@@ -469,6 +481,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			currentThreadIx = globalThreadIndex;
 		}
 
+		@Override
 		public void run() {
 			synchronized (lock) {
 				if (currentThreadIx < globalThreadIndex)
@@ -481,6 +494,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private final IPreferenceChangeListener prefListener = new IPreferenceChangeListener() {
 
+		@Override
 		public void preferenceChange(PreferenceChangeEvent event) {
 			if (!RepositoryUtil.PREFS_DIRECTORIES.equals(event.getKey()))
 				return;
@@ -514,6 +528,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 	private SashForm stagingSashForm;
 
 	private IndexDiffChangedListener myIndexDiffListener = new IndexDiffChangedListener() {
+		@Override
 		public void indexDiffChanged(Repository repository,
 				IndexDiffData indexDiffData) {
 			reload(repository);
@@ -554,6 +569,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		toolkit = new FormToolkit(parent.getDisplay());
 		parent.addDisposeListener(new DisposeListener() {
 
+			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				if (commitMessageComponent.isAmending()
 						|| userEnteredCommitMessage())
@@ -611,6 +627,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		unstagedViewer.addDropSupport(DND.DROP_MOVE,
 				new Transfer[] { LocalSelectionTransfer.getTransfer() },
 				new DropTargetAdapter() {
+					@Override
 					public void drop(DropTargetEvent event) {
 						// Bug 411466: It is very important that detail is set
 						// to DND.DROP_COPY. If it was left as DND.DROP_MOVE and
@@ -623,11 +640,13 @@ public class StagingView extends ViewPart implements IShowInSource {
 						}
 					}
 
+					@Override
 					public void dragOver(DropTargetEvent event) {
 						event.detail = DND.DROP_MOVE;
 					}
 				});
 		unstagedViewer.addOpenListener(new IOpenListener() {
+			@Override
 			public void open(OpenEvent event) {
 				compareWith(event);
 			}
@@ -704,6 +723,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		amendPreviousCommitAction = new Action(
 				UIText.StagingView_Ammend_Previous_Commit, IAction.AS_CHECK_BOX) {
 
+			@Override
 			public void run() {
 				commitMessageComponent.setAmendingButtonSelection(isChecked());
 				updateMessage();
@@ -715,6 +735,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		signedOffByAction = new Action(UIText.StagingView_Add_Signed_Off_By,
 				IAction.AS_CHECK_BOX) {
 
+			@Override
 			public void run() {
 				commitMessageComponent.setSignedOffButtonSelection(isChecked());
 			}
@@ -725,6 +746,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		addChangeIdAction = new Action(UIText.StagingView_Add_Change_ID,
 				IAction.AS_CHECK_BOX) {
 
+			@Override
 			public void run() {
 				commitMessageComponent.setChangeIdButtonSelection(isChecked());
 			}
@@ -874,6 +896,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		stagedViewer.addDropSupport(DND.DROP_MOVE,
 				new Transfer[] { LocalSelectionTransfer.getTransfer() },
 				new DropTargetAdapter() {
+					@Override
 					public void drop(DropTargetEvent event) {
 						// Bug 411466: It is very important that detail is set
 						// to DND.DROP_COPY. If it was left as DND.DROP_MOVE and
@@ -886,11 +909,13 @@ public class StagingView extends ViewPart implements IShowInSource {
 						}
 					}
 
+					@Override
 					public void dragOver(DropTargetEvent event) {
 						event.detail = DND.DROP_MOVE;
 					}
 				});
 		stagedViewer.addOpenListener(new IOpenListener() {
+			@Override
 			public void open(OpenEvent event) {
 				compareWith(event);
 			}
@@ -899,6 +924,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		addListenerToDisableAutoExpandOnCollapse(stagedViewer);
 
 		selectionChangedListener = new ISelectionListener() {
+			@Override
 			public void selectionChanged(IWorkbenchPart part,
 					ISelection selection) {
 				if (part == getSite().getPart()) {
@@ -934,14 +960,17 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		final ICommitMessageComponentNotifications listener = new ICommitMessageComponentNotifications() {
 
+			@Override
 			public void updateSignedOffToggleSelection(boolean selection) {
 				signedOffByAction.setChecked(selection);
 			}
 
+			@Override
 			public void updateChangeIdToggleSelection(boolean selection) {
 				addChangeIdAction.setChecked(selection);
 			}
 
+			@Override
 			public void statusUpdated() {
 				updateMessage();
 			}
@@ -952,6 +981,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		// allow to commit with ctrl-enter
 		commitMessageText.getTextWidget().addVerifyKeyListener(new VerifyKeyListener() {
+			@Override
 			public void verifyKey(VerifyEvent event) {
 				if (UIUtils.isSubmitKeyEvent(event)) {
 					event.doit = false;
@@ -961,6 +991,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		});
 
 		commitMessageText.getTextWidget().addFocusListener(new FocusListener() {
+			@Override
 			public void focusGained(FocusEvent e) {
 				// Ctrl+Enter shortcut only works when the focus is on the commit message text
 				String commitButtonTooltip = MessageFormat.format(
@@ -969,6 +1000,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				commitButton.setToolTipText(commitButtonTooltip);
 			}
 
+			@Override
 			public void focusLost(FocusEvent e) {
 				commitButton.setToolTipText(null);
 			}
@@ -1052,6 +1084,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		unstagedSection.setTextClient(unstagedToolbarComposite);
 		unstagedExpandAllAction = new Action(UIText.UIUtils_ExpandAll,
 				IAction.AS_PUSH_BUTTON) {
+			@Override
 			public void run() {
 				unstagedViewer.expandAll();
 				enableAutoExpand(unstagedViewer);
@@ -1061,6 +1094,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		unstagedCollapseAllAction = new Action(UIText.UIUtils_CollapseAll,
 				IAction.AS_PUSH_BUTTON) {
+			@Override
 			public void run() {
 				unstagedViewer.collapseAll();
 				disableAutoExpand(unstagedViewer);
@@ -1085,6 +1119,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		stagedSection.setTextClient(stagedToolbarComposite);
 		stagedExpandAllAction = new Action(UIText.UIUtils_ExpandAll,
 				IAction.AS_PUSH_BUTTON) {
+			@Override
 			public void run() {
 				stagedViewer.expandAll();
 				enableAutoExpand(stagedViewer);
@@ -1094,6 +1129,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		stagedCollapseAllAction = new Action(UIText.UIUtils_CollapseAll,
 				IAction.AS_PUSH_BUTTON) {
+			@Override
 			public void run() {
 				stagedViewer.collapseAll();
 				disableAutoExpand(stagedViewer);
@@ -1123,10 +1159,12 @@ public class StagingView extends ViewPart implements IShowInSource {
 	private static void addListenerToDisableAutoExpandOnCollapse(
 			TreeViewer treeViewer) {
 		treeViewer.addTreeListener(new ITreeViewerListener() {
+			@Override
 			public void treeCollapsed(TreeExpansionEvent event) {
 				disableAutoExpand(event.getTreeViewer());
 			}
 
+			@Override
 			public void treeExpanded(TreeExpansionEvent event) {
 				// Nothing to do
 			}
@@ -1148,6 +1186,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		return currentRepository;
 	}
 
+	@Override
 	public ShowInContext getShowInContext() {
 		if (stagedViewer != null && stagedViewer.getTree().isFocusControl())
 			return getShowInContext(stagedViewer);
@@ -1254,10 +1293,12 @@ public class StagingView extends ViewPart implements IShowInSource {
 				filterText.setLayoutData(data);
 				final Display display = Display.getCurrent();
 				filterText.addModifyListener(new ModifyListener() {
+					@Override
 					public void modifyText(ModifyEvent e) {
 						final StagingViewSearchThread searchThread = new StagingViewSearchThread(
 								StagingView.this);
 						display.timerExec(200, new Runnable() {
+							@Override
 							public void run() {
 								searchThread.start();
 							}
@@ -1274,6 +1315,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		toolbar.add(controlContribution);
 
 		refreshAction = new Action(UIText.StagingView_Refresh, IAction.AS_PUSH_BUTTON) {
+			@Override
 			public void run() {
 				if (cacheEntry != null) {
 					schedule(
@@ -1303,6 +1345,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		openNewCommitsAction = new Action(UIText.StagingView_OpenNewCommits,
 				IAction.AS_CHECK_BOX) {
 
+			@Override
 			public void run() {
 				getPreferenceStore().setValue(
 						UIPreferences.STAGING_VIEW_SHOW_NEW_COMMITS, isChecked());
@@ -1314,6 +1357,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		columnLayoutAction = new Action(UIText.StagingView_ColumnLayout,
 				IAction.AS_CHECK_BOX) {
 
+			@Override
 			public void run() {
 				getPreferenceStore().setValue(
 						UIPreferences.STAGING_VIEW_COLUMN_LAYOUT, isChecked());
@@ -1327,6 +1371,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		fileNameModeAction = new Action(UIText.StagingView_ShowFileNamesFirst,
 				IAction.AS_CHECK_BOX) {
 
+			@Override
 			public void run() {
 				final boolean enable = isChecked();
 				getLabelProvider(stagedViewer).setFileNameMode(enable);
@@ -1346,6 +1391,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				UIText.StagingView_Presentation);
 		listPresentationAction = new Action(UIText.StagingView_List,
 				IAction.AS_RADIO_BUTTON) {
+			@Override
 			public void run() {
 				if (!isChecked())
 					return;
@@ -1364,6 +1410,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		treePresentationAction = new Action(UIText.StagingView_Tree,
 				IAction.AS_RADIO_BUTTON) {
+			@Override
 			public void run() {
 				if (!isChecked())
 					return;
@@ -1382,6 +1429,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		compactTreePresentationAction = new Action(UIText.StagingView_CompactTree,
 				IAction.AS_RADIO_BUTTON) {
+			@Override
 			public void run() {
 				if (!isChecked())
 					return;
@@ -1567,6 +1615,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		control.setMenu(menuMgr.createContextMenu(control));
 		menuMgr.addMenuListener(new IMenuListener() {
 
+			@Override
 			public void menuAboutToShow(IMenuManager manager) {
 				final IStructuredSelection selection = (IStructuredSelection) treeViewer
 						.getSelection();
@@ -1718,6 +1767,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 	 */
 	public void refreshViewers() {
 		syncExec(new Runnable() {
+			@Override
 			public void run() {
 				refreshViewersInternal();
 			}
@@ -1729,6 +1779,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 	 */
 	public void refreshViewersPreservingExpandedElements() {
 		syncExec(new Runnable() {
+			@Override
 			public void run() {
 				Object[] unstagedExpanded = unstagedViewer
 						.getExpandedElements();
@@ -2262,6 +2313,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 	 */
 	protected void updateRebaseButtonVisibility(final boolean isRebasing) {
 		asyncExec(new Runnable() {
+			@Override
 			public void run() {
 				if (isDisposed())
 					return;
@@ -2309,6 +2361,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		}
 		if (repository == null) {
 			asyncExec(new Runnable() {
+				@Override
 				public void run() {
 					clearRepository();
 				}
@@ -2324,6 +2377,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		asyncExec(new Runnable() {
 
+			@Override
 			public void run() {
 				if (isDisposed()) {
 					return;
@@ -2348,6 +2402,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 					refsChangedListener = repository.getListenerList()
 							.addRefsChangedListener(new RefsChangedListener() {
 
+								@Override
 								public void onRefsChanged(RefsChangedEvent event) {
 									updateRebaseButtonVisibility(repository
 											.getRepositoryState().isRebasing());
@@ -2650,6 +2705,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			@Override
 			public void done(IJobChangeEvent event) {
 				asyncExec(new Runnable() {
+					@Override
 					public void run() {
 						enableAllWidgets(true);
 						if (commitJob.getResult().isOK()) {

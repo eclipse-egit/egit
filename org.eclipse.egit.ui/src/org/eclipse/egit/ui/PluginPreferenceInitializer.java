@@ -36,6 +36,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 	/**
 	 * This method initializes the plugin preferences with default values.
 	 */
+	@Override
 	public void initializeDefaultPreferences() {
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 		int[] w;

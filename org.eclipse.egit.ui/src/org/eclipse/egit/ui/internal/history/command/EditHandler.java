@@ -38,6 +38,7 @@ import org.eclipse.ui.progress.UIJob;
 
 /** Checks out a commit (in interactive rebase mode) for editing. */
 public class EditHandler extends AbstractHistoryCommandHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repository = getRepository(event);
 		final RevCommit commit = getSelectedCommit(event);

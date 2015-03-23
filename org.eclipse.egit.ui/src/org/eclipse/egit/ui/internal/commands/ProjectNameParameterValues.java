@@ -25,6 +25,7 @@ import org.eclipse.team.core.RepositoryProvider;
  */
 public class ProjectNameParameterValues implements IParameterValues {
 
+	@Override
 	public Map getParameterValues() {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IProject[] projects = root.getProjects();

@@ -20,6 +20,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
  */
 public class CheckoutHandler extends AbstractReflogCommandHandler {
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repo = getRepository(event);
 		RevCommit commit = getSelectedCommit(event, repo);

@@ -74,10 +74,12 @@ class FetchResultTable {
 			this.update = update;
 		}
 
+		@Override
 		public String getLabel(Object object) {
 			return getStyledText(object).getString();
 		}
 
+		@Override
 		public ImageDescriptor getImageDescriptor(Object object) {
 			switch (update.getResult()) {
 			case IO_FAILURE:
@@ -136,6 +138,7 @@ class FetchResultTable {
 					StyledString.COUNTER_STYLER);
 		}
 
+		@Override
 		public Object[] getChildren(Object object) {
 			if (children != null)
 				return children;
@@ -178,6 +181,7 @@ class FetchResultTable {
 			return NoteMap.shortenRefName(Repository.shortenRefName(ref));
 		}
 
+		@Override
 		public StyledString getStyledText(Object object) {
 			StyledString styled = new StyledString();
 			final String remote = update.getRemoteName();
@@ -255,6 +259,7 @@ class FetchResultTable {
 
 		final IStyledLabelProvider styleProvider = new WorkbenchStyledLabelProvider() {
 
+			@Override
 			public StyledString getStyledText(Object element) {
 				// TODO Replace with use of IWorkbenchAdapter3 when is no longer
 				// supported
@@ -293,6 +298,7 @@ class FetchResultTable {
 		});
 		treeViewer.setSorter(new ViewerSorter() {
 
+			@Override
 			public int compare(Viewer viewer, Object e1, Object e2) {
 				if (e1 instanceof FetchResultAdapter
 						&& e2 instanceof FetchResultAdapter) {
@@ -328,6 +334,7 @@ class FetchResultTable {
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(tree);
 
 		treePanel.addDisposeListener(new DisposeListener() {
+			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				if (reader != null)
 					reader.close();
@@ -336,6 +343,7 @@ class FetchResultTable {
 
 		treeViewer.setContentProvider(new WorkbenchContentProvider() {
 
+			@Override
 			public Object[] getElements(Object inputElement) {
 				if (inputElement == null)
 					return new FetchResultAdapter[0];
@@ -349,6 +357,7 @@ class FetchResultTable {
 				return elements;
 			}
 
+			@Override
 			public Object[] getChildren(Object element) {
 				if (element instanceof RepositoryCommit) {
 					return ((RepositoryCommit) element).getDiffs();

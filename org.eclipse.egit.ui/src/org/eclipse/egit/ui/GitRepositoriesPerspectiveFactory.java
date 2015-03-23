@@ -25,6 +25,7 @@ import org.eclipse.ui.IPerspectiveFactory;
  */
 public class GitRepositoriesPerspectiveFactory implements IPerspectiveFactory {
 
+	@Override
 	public void createInitialLayout(IPageLayout layout) {
 
 		// repositories on the left hand

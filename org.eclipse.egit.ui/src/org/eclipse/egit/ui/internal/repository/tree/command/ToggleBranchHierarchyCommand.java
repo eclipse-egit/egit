@@ -34,6 +34,7 @@ public class ToggleBranchHierarchyCommand extends
 	 */
 	public static final String TOGGLE_STATE = "org.eclipse.ui.commands.toggleState"; //$NON-NLS-1$
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		HandlerUtil.toggleCommandState(event.getCommand());
 		IWorkbenchPart part = HandlerUtil.getActivePartChecked(event);

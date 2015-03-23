@@ -23,6 +23,7 @@ import org.eclipse.jgit.lib.RepositoryState;
  */
 public class RebaseActionHandler extends RepositoryActionHandler {
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RebaseCurrentRefCommand rebaseCurrent = new RebaseCurrentRefCommand();
 		rebaseCurrent.setEnabled(event.getApplicationContext());

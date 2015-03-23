@@ -30,6 +30,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * Create a tag based on a commit.
  */
 public class CreateTagOnCommitHandler extends AbstractHistoryCommandHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ObjectId commitId = getSelectedCommitId(event);
 		final Repository repo = getRepository(event);

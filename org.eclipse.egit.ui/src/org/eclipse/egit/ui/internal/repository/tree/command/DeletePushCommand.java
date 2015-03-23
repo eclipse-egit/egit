@@ -23,6 +23,7 @@ import org.eclipse.jgit.lib.StoredConfig;
  * Deletes the Push
  */
 public class DeletePushCommand extends RepositoriesViewCommandHandler<PushNode> {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		PushNode node = getSelectedNodes(event).get(0);
 		RemoteNode remote = (RemoteNode) node.getParent();

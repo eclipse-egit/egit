@@ -79,6 +79,7 @@ public class BlameOperation implements IEGitOperation {
 			this.commit = commit;
 		}
 
+		@Override
 		public Object getAdapter(Class adapter) {
 			if (RevCommit.class == adapter)
 				return commit;
@@ -103,6 +104,7 @@ public class BlameOperation implements IEGitOperation {
 				nonResourceFile = new File(repository.getWorkTree(), path);
 		}
 
+		@Override
 		public void selectionChanged(SelectionChangedEvent event) {
 			// Don't show the commit for the first selection change, as that was
 			// not initiated by the user directly. Instead, show the commit the
@@ -194,6 +196,7 @@ public class BlameOperation implements IEGitOperation {
 		this.lineNumberToReveal = lineNumberToReveal;
 	}
 
+	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
 		final RevisionInformation info = new RevisionInformation();
 
@@ -262,6 +265,7 @@ public class BlameOperation implements IEGitOperation {
 			previous.register();
 
 		shell.getDisplay().asyncExec(new Runnable() {
+			@Override
 			public void run() {
 				openEditor(info);
 			}
@@ -356,6 +360,7 @@ public class BlameOperation implements IEGitOperation {
 		}
 	}
 
+	@Override
 	public ISchedulingRule getSchedulingRule() {
 		return null;
 	}

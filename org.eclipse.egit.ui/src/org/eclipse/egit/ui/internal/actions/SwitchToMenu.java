@@ -205,6 +205,7 @@ public class SwitchToMenu extends ContributionItem implements
 		return true;
 	}
 
+	@Override
 	public void initialize(IServiceLocator serviceLocator) {
 		handlerService = CommonUtils.getService(serviceLocator, IHandlerService.class);
 	}

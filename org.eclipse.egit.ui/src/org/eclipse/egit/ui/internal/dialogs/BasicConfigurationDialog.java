@@ -71,6 +71,7 @@ public class BasicConfigurationDialog extends TitleAreaDialog {
 				.getBoolean(UIPreferences.SHOW_INITIAL_CONFIG_DIALOG)
 				&& isImplicitUserConfig(repositories))
 			PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+				@Override
 				public void run() {
 					new BasicConfigurationDialog(PlatformUI.getWorkbench()
 							.getDisplay().getActiveShell()).open();
@@ -147,6 +148,7 @@ public class BasicConfigurationDialog extends TitleAreaDialog {
 		if (currentName != null)
 			userName.setText(currentName);
 		userName.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				needsUpdate = true;
 			}
@@ -163,6 +165,7 @@ public class BasicConfigurationDialog extends TitleAreaDialog {
 		if (currentMail != null)
 			email.setText(currentMail);
 		email.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				needsUpdate = true;
 			}

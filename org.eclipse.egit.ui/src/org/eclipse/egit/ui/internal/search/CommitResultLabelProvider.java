@@ -43,6 +43,7 @@ public class CommitResultLabelProvider extends WorkbenchLabelProvider {
 	/**
 	 * @see org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider#getStyledText(java.lang.Object)
 	 */
+	@Override
 	public StyledString getStyledText(Object element) {
 		StyledString styled = new StyledString();
 		if (element instanceof RepositoryCommit) {

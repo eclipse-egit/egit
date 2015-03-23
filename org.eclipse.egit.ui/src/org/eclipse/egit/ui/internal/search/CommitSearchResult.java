@@ -53,6 +53,7 @@ public class CommitSearchResult extends AbstractTextSearchResult implements
 	/**
 	 * @see org.eclipse.search.ui.ISearchResult#getLabel()
 	 */
+	@Override
 	public String getLabel() {
 		int matches = getMatchCount();
 		String pattern = ((CommitSearchQuery) query).getPattern();
@@ -67,6 +68,7 @@ public class CommitSearchResult extends AbstractTextSearchResult implements
 	/**
 	 * @see org.eclipse.search.ui.ISearchResult#getTooltip()
 	 */
+	@Override
 	public String getTooltip() {
 		return getLabel();
 	}
@@ -74,6 +76,7 @@ public class CommitSearchResult extends AbstractTextSearchResult implements
 	/**
 	 * @see org.eclipse.search.ui.ISearchResult#getImageDescriptor()
 	 */
+	@Override
 	public ImageDescriptor getImageDescriptor() {
 		return null;
 	}
@@ -81,6 +84,7 @@ public class CommitSearchResult extends AbstractTextSearchResult implements
 	/**
 	 * @see org.eclipse.search.ui.ISearchResult#getQuery()
 	 */
+	@Override
 	public ISearchQuery getQuery() {
 		return this.query;
 	}
@@ -88,6 +92,7 @@ public class CommitSearchResult extends AbstractTextSearchResult implements
 	/**
 	 * @see org.eclipse.search.ui.text.AbstractTextSearchResult#getEditorMatchAdapter()
 	 */
+	@Override
 	public IEditorMatchAdapter getEditorMatchAdapter() {
 		return null;
 	}
@@ -95,6 +100,7 @@ public class CommitSearchResult extends AbstractTextSearchResult implements
 	/**
 	 * @see org.eclipse.search.ui.text.AbstractTextSearchResult#getFileMatchAdapter()
 	 */
+	@Override
 	public IFileMatchAdapter getFileMatchAdapter() {
 		return null;
 	}
@@ -102,6 +108,7 @@ public class CommitSearchResult extends AbstractTextSearchResult implements
 	/**
 	 * @see org.eclipse.ui.model.IWorkbenchAdapter#getChildren(java.lang.Object)
 	 */
+	@Override
 	public Object[] getChildren(Object o) {
 		return getElements();
 	}
@@ -109,6 +116,7 @@ public class CommitSearchResult extends AbstractTextSearchResult implements
 	/**
 	 * @see org.eclipse.ui.model.IWorkbenchAdapter#getImageDescriptor(java.lang.Object)
 	 */
+	@Override
 	public ImageDescriptor getImageDescriptor(Object object) {
 		return null;
 	}
@@ -116,6 +124,7 @@ public class CommitSearchResult extends AbstractTextSearchResult implements
 	/**
 	 * @see org.eclipse.ui.model.IWorkbenchAdapter#getLabel(java.lang.Object)
 	 */
+	@Override
 	public String getLabel(Object o) {
 		return getLabel();
 	}
@@ -123,6 +132,7 @@ public class CommitSearchResult extends AbstractTextSearchResult implements
 	/**
 	 * @see org.eclipse.ui.model.IWorkbenchAdapter#getParent(java.lang.Object)
 	 */
+	@Override
 	public Object getParent(Object o) {
 		return null;
 	}

@@ -37,6 +37,7 @@ import org.eclipse.swt.widgets.Shell;
  * Delete a branch pointing to a commit.
  */
 public class DeleteBranchOnCommitHandler extends AbstractHistoryCommandHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repository = getRepository(event);
 		if (repository == null)
@@ -82,6 +83,7 @@ public class DeleteBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 		try {
 			new ProgressMonitorDialog(shell).run(true, false,
 					new IRunnableWithProgress() {
+						@Override
 						public void run(final IProgressMonitor monitor)
 								throws InvocationTargetException,
 								InterruptedException {
@@ -125,6 +127,7 @@ public class DeleteBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 				try {
 					new ProgressMonitorDialog(shell).run(true, false,
 							new IRunnableWithProgress() {
+								@Override
 								public void run(final IProgressMonitor monitor)
 										throws InvocationTargetException,
 										InterruptedException {

@@ -130,6 +130,7 @@ public class CommitJob extends Job {
 	private void showAbortedByHook(final Throwable cause) {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 
+			@Override
 			public void run() {
 				MessageDialog.openWarning(PlatformUI.getWorkbench()
 						.getDisplay().getActiveShell(),
@@ -142,6 +143,7 @@ public class CommitJob extends Job {
 	private void openCommitEditor(final RevCommit newCommit) {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 
+			@Override
 			public void run() {
 				CommitEditor.openQuiet(new RepositoryCommit(repository,
 						newCommit));
@@ -156,6 +158,7 @@ public class CommitJob extends Job {
 			final Display display = Display.getDefault();
 			display.asyncExec(new Runnable() {
 
+				@Override
 				public void run() {
 					try {
 						PushBranchWizard pushWizard = null;

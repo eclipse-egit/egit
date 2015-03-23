@@ -113,6 +113,7 @@ public class RebaseTargetSelectionDialog extends AbstractBranchSelectionDialog {
 				.setText(UIText.RebaseTargetSelectionDialog_InteractiveButton);
 		interactivebutton.addSelectionListener(new SelectionAdapter() {
 
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				interactive = interactivebutton.getSelection();
 			}
@@ -122,6 +123,7 @@ public class RebaseTargetSelectionDialog extends AbstractBranchSelectionDialog {
 				.setText(UIText.RebaseTargetSelectionDialog_PreserveMergesButton);
 		preserveMergesButton.addSelectionListener(new SelectionAdapter() {
 
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				preserveMerges = preserveMergesButton.getSelection();
 			}

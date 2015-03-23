@@ -89,6 +89,7 @@ public class HeaderText {
 			titleLabel.setForeground(heading.getForeground());
 			titleLabel.setFont(heading.getFont());
 			titleLabel.addFocusListener(new FocusAdapter() {
+				@Override
 				public void focusLost(FocusEvent e) {
 					titleLabel.setSelection(0);
 					Event selectionEvent= new Event();
@@ -105,12 +106,14 @@ public class HeaderText {
 			busyLabel.setImage(emptyImage);
 
 			busyLabel.addControlListener(new ControlAdapter() {
+				@Override
 				public void controlMoved(ControlEvent e) {
 					updateSizeAndLocations();
 				}
 			});
 			titleLabel.moveAbove(busyLabel);
 			titleRegion.addControlListener(new ControlAdapter() {
+				@Override
 				public void controlResized(ControlEvent e) {
 					updateSizeAndLocations();
 				}
@@ -142,6 +145,7 @@ public class HeaderText {
 		copySHA1MenuItem.setText(UIText.Header_contextMenu_copy_SHA1);
 		final Shell shell = styledText.getShell();
 		copySHA1MenuItem.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent event) {
 				copyToClipboard(sha1String, shell);
 			}
@@ -151,11 +155,13 @@ public class HeaderText {
 		copyMenuItem.setText(UIText.Header_contextMenu_copy);
 		copyMenuItem.setEnabled(false);
 		copyMenuItem.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent event) {
 				styledText.copy();
 			}
 		});
 		styledText.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				copyMenuItem.setEnabled(styledText.getSelectionCount() > 0);
 			}

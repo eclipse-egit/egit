@@ -73,12 +73,14 @@ public class NonDeletedFilesTree extends TreeViewer {
 		final Menu menu = new Menu(dropDownBar);
 		dropDownItem.addDisposeListener(new DisposeListener() {
 
+			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				menu.dispose();
 			}
 		});
 		dropDownItem.addSelectionListener(new SelectionAdapter() {
 
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Rectangle b = dropDownItem.getBounds();
 				Point p = dropDownItem.getParent().toDisplay(

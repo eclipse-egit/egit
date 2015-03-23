@@ -36,6 +36,7 @@ class StorageSizeFieldEditor extends StringFieldEditor {
 		maxValidValue = max;
 	}
 
+	@Override
 	protected boolean checkState() {
 		final Text text = getTextControl();
 		if (text == null)
@@ -62,6 +63,7 @@ class StorageSizeFieldEditor extends StringFieldEditor {
 		return number >= minValidValue && number <= maxValidValue;
 	}
 
+	@Override
 	protected void doLoad() {
 		final Text text = getTextControl();
 		if (text != null) {
@@ -70,6 +72,7 @@ class StorageSizeFieldEditor extends StringFieldEditor {
 		}
 	}
 
+	@Override
 	protected void doLoadDefault() {
 		final Text text = getTextControl();
 		if (text != null) {
@@ -79,6 +82,7 @@ class StorageSizeFieldEditor extends StringFieldEditor {
 		valueChanged();
 	}
 
+	@Override
 	protected void doStore() {
 		final Text text = getTextControl();
 		if (text != null) {

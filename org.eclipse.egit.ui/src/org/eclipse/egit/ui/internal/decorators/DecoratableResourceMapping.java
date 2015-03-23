@@ -124,12 +124,14 @@ public class DecoratableResourceMapping extends DecoratableResource {
 		}
 	}
 
+	@Override
 	public int getType() {
 		if (mapping.getModelObject() instanceof IWorkingSet)
 			return WORKING_SET;
 		return RESOURCE_MAPPING;
 	}
 
+	@Override
 	public String getName() {
 		// TODO: check whether something other than a WorkingSet can
 		//       appear here, and calculate a proper name for it.

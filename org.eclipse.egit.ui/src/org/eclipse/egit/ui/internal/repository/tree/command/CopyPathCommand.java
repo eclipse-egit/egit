@@ -24,6 +24,7 @@ import org.eclipse.swt.dnd.Transfer;
  */
 public class CopyPathCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RepositoryTreeNode node = getSelectedNodes(event).get(0);
 		String path;

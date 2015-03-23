@@ -70,6 +70,7 @@ public class GitProjectsImportPage extends WizardPage {
 	private final class ProjectLabelProvider extends GitLabelProvider implements
 			IColorProvider {
 
+		@Override
 		public Color getForeground(Object element) {
 			if (isProjectInWorkspace(((ProjectRecord) element).getProjectName()))
 				return PlatformUI.getWorkbench().getDisplay().getSystemColor(
@@ -77,6 +78,7 @@ public class GitProjectsImportPage extends WizardPage {
 			return null;
 		}
 
+		@Override
 		public Color getBackground(Object element) {
 			return null;
 		}
@@ -124,6 +126,7 @@ public class GitProjectsImportPage extends WizardPage {
 		setDescription(UIText.WizardProjectsImportPage_ImportProjectsDescription);
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 
 		initializeDialogUnits(parent);
@@ -209,6 +212,7 @@ public class GitProjectsImportPage extends WizardPage {
 		projectsList.getControl().setLayoutData(listData);
 		projectsList.addCheckStateListener(new ICheckStateListener() {
 
+			@Override
 			public void checkStateChanged(CheckStateChangedEvent event) {
 				ProjectRecord element = (ProjectRecord) event.getElement();
 				if (isProjectInWorkspace(element.getProjectName())) {
@@ -223,26 +227,32 @@ public class GitProjectsImportPage extends WizardPage {
 
 		projectsList.setContentProvider(new ITreeContentProvider() {
 
+			@Override
 			public Object[] getChildren(Object parentElement) {
 				return children;
 			}
 
+			@Override
 			public Object[] getElements(Object inputElement) {
 				return selectedProjects;
 			}
 
+			@Override
 			public boolean hasChildren(Object element) {
 				return false;
 			}
 
+			@Override
 			public Object getParent(Object element) {
 				return null;
 			}
 
+			@Override
 			public void dispose() {
 				// ignore
 			}
 
+			@Override
 			public void inputChanged(Viewer viewer, Object oldInput,
 					Object newInput) {
 				// ignore
@@ -251,6 +261,7 @@ public class GitProjectsImportPage extends WizardPage {
 		});
 
 		projectsList.getTree().addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				checkPageComplete();
 			}
@@ -281,6 +292,7 @@ public class GitProjectsImportPage extends WizardPage {
 		selectAll = new Button(buttonsComposite, SWT.PUSH);
 		selectAll.setText(UIText.WizardProjectsImportPage_selectAll);
 		selectAll.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				selectAllNewProjects();
 				enableSelectAllButtons();
@@ -293,6 +305,7 @@ public class GitProjectsImportPage extends WizardPage {
 		deselectAll = new Button(buttonsComposite, SWT.PUSH);
 		deselectAll.setText(UIText.WizardProjectsImportPage_deselectAll);
 		deselectAll.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				for (TreeItem item : projectsList.getTree().getItems())
 					projectsList.setChecked(item.getData(), false);
@@ -389,6 +402,7 @@ public class GitProjectsImportPage extends WizardPage {
 		try {
 			getContainer().run(true, true, new IRunnableWithProgress() {
 
+				@Override
 				public void run(IProgressMonitor monitor) {
 
 					monitor.beginTask(
@@ -421,6 +435,7 @@ public class GitProjectsImportPage extends WizardPage {
 						if (files.isEmpty())
 							// run in UI thread
 							Display.getDefault().syncExec(new Runnable() {
+								@Override
 								public void run() {
 									setErrorMessage(UIText.GitProjectsImportPage_NoProjectsMessage);
 								}

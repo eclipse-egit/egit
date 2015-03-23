@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Display;
  */
 public class ImportProjectsCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		List<RepositoryTreeNode> selectedNodes = getSelectedNodes(event);
 		if (selectedNodes == null || selectedNodes.isEmpty()) {

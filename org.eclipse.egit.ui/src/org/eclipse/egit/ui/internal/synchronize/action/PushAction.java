@@ -48,6 +48,7 @@ public class PushAction extends SynchronizeModelAction {
 	protected SynchronizeModelOperation getSubscriberOperation(
 			ISynchronizePageConfiguration configuration, IDiffElement[] elements) {
 		return new SynchronizeModelOperation(configuration, elements) {
+			@Override
 			public void run(IProgressMonitor monitor) throws InvocationTargetException,
 					InterruptedException {
 				runPushOperation();

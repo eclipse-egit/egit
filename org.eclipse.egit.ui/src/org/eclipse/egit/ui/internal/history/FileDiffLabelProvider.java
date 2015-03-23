@@ -36,10 +36,12 @@ public class FileDiffLabelProvider extends ColumnLabelProvider {
 		dimmedForegroundColor = resourceManager.createColor(dimmedForegroundRgb);
 	}
 
+	@Override
 	public String getText(final Object element) {
 		return ((FileDiff) element).getLabel(element);
 	}
 
+	@Override
 	public Image getImage(final Object element) {
 		final FileDiff c = (FileDiff) element;
 		return (Image) resourceManager.get(c.getImageDescriptor(c));
@@ -51,6 +53,7 @@ public class FileDiffLabelProvider extends ColumnLabelProvider {
 		super.dispose();
 	}
 
+	@Override
 	public Color getForeground(Object element) {
 		final FileDiff c = (FileDiff) element;
 		if (!c.isMarked(FileDiffContentProvider.INTERESTING_MARK_TREE_FILTER_INDEX))

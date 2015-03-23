@@ -31,6 +31,7 @@ import org.eclipse.ui.IWorkingSet;
  */
 public class SelectionPropertyTester extends PropertyTester {
 
+	@Override
 	public boolean test(Object receiver, String property, Object[] args,
 			Object expectedValue) {
 		Collection<?> collection = (Collection<?>) receiver;

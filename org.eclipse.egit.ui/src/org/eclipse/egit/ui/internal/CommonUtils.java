@@ -50,6 +50,7 @@ public class CommonUtils {
 	 * string1.equals(String2) returns false
 	 */
 	public static final Comparator<String> STRING_ASCENDING_COMPARATOR = new Comparator<String>() {
+		@Override
 		public int compare(String o1, String o2) {
 			if (o1.length() == 0 || o2.length() == 0)
 				return o1.length() - o2.length();
@@ -96,6 +97,7 @@ public class CommonUtils {
 	 * {@link CommonUtils#STRING_ASCENDING_COMPARATOR}.
 	 */
 	public static final Comparator<Ref> REF_ASCENDING_COMPARATOR = new Comparator<Ref>() {
+		@Override
 		public int compare(Ref o1, Ref o2) {
 			return STRING_ASCENDING_COMPARATOR.compare(o1.getName(), o2.getName());
 		}
@@ -106,6 +108,7 @@ public class CommonUtils {
 	 * {@link IResource#getName()}.
 	 */
 	public static final Comparator<IResource> RESOURCE_NAME_COMPARATOR = new Comparator<IResource>() {
+		@Override
 		public int compare(IResource r1, IResource r2) {
 			return Policy.getComparator().compare(r1.getName(), r2.getName());
 		}

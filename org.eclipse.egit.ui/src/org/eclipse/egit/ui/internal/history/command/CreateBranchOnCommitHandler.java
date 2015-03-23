@@ -32,6 +32,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * Create a branch based on a commit.
  */
 public class CreateBranchOnCommitHandler extends AbstractHistoryCommandHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repo = getRepository(event);
 		IStructuredSelection selection = getSelection(event);
@@ -47,6 +48,7 @@ public class CreateBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 			// prefer to create new branch based on a remote tracking branch
 			Collections.sort(branches, new Comparator<Ref>() {
 
+				@Override
 				public int compare(Ref o1, Ref o2) {
 					String refName1 = o1.getName();
 					String refName2 = o2.getName();

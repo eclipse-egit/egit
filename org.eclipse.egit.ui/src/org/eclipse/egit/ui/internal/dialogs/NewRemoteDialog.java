@@ -86,6 +86,7 @@ public class NewRemoteDialog extends TitleAreaDialog {
 		nameText = new Text(main, SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(nameText);
 		nameText.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				checkPage();
 			}

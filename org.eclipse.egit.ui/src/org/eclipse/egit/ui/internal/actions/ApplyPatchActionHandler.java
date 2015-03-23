@@ -27,6 +27,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class ApplyPatchActionHandler extends RepositoryActionHandler {
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IResource[] resources = getSelectedResources(event);
 		IResource resource = null;

@@ -167,6 +167,7 @@ public class FetchGerritChangePage extends WizardPage {
 				Constants.R_TAGS, true);
 	}
 
+	@Override
 	protected IDialogSettings getDialogSettings() {
 		IDialogSettings s = Activator.getDefault().getDialogSettings();
 		IDialogSettings section = s
@@ -176,6 +177,7 @@ public class FetchGerritChangePage extends WizardPage {
 		return section;
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 		Clipboard clipboard = new Clipboard(parent.getDisplay());
 		String clipText = (String) clipboard.getContents(TextTransfer
@@ -245,6 +247,7 @@ public class FetchGerritChangePage extends WizardPage {
 		branchText = new Text(checkoutGroup, SWT.SINGLE | SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(branchText);
 		branchText.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				checkPage();
 			}
@@ -291,6 +294,7 @@ public class FetchGerritChangePage extends WizardPage {
 		GridDataFactory.fillDefaults().exclude(true).grab(true, false)
 				.applyTo(tagText);
 		tagText.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				checkPage();
 			}
@@ -337,6 +341,7 @@ public class FetchGerritChangePage extends WizardPage {
 				.setToolTipText(UIText.FetchGerritChangePage_ActivateAdditionalRefsTooltip);
 
 		refText.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				Change change = Change.fromRef(refText.getText());
 				if (change != null) {
@@ -486,6 +491,7 @@ public class FetchGerritChangePage extends WizardPage {
 			final String uriText = uriCombo.getText();
 			getWizard().getContainer().run(true, true,
 					new IRunnableWithProgress() {
+						@Override
 						public void run(IProgressMonitor monitor)
 								throws InvocationTargetException,
 								InterruptedException {
@@ -511,6 +517,7 @@ public class FetchGerritChangePage extends WizardPage {
 							}
 							Collections.sort(changeRefs,
 									new Comparator<Change>() {
+										@Override
 										public int compare(Change o1, Change o2) {
 											// change number descending
 											int changeDiff = o2.changeNumber
@@ -573,6 +580,7 @@ public class FetchGerritChangePage extends WizardPage {
 			try {
 			getWizard().getContainer().run(true, true,
 					new IRunnableWithProgress() {
+						@Override
 						public void run(IProgressMonitor monitor)
 								throws InvocationTargetException,
 								InterruptedException {
@@ -698,6 +706,7 @@ public class FetchGerritChangePage extends WizardPage {
 					final Shell shell = getWizard().getContainer().getShell();
 
 					shell.getDisplay().asyncExec(new Runnable() {
+						@Override
 						public void run() {
 							new CheckoutConflictDialog(shell, repository,
 									result.getConflictList()).open();
@@ -721,6 +730,7 @@ public class FetchGerritChangePage extends WizardPage {
 		// do this in the UI thread as it results in a
 		// refresh() on the history page
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			@Override
 			public void run() {
 				Activator
 						.getDefault()
@@ -741,6 +751,7 @@ public class FetchGerritChangePage extends WizardPage {
 					stroke.format()));
 
 		IContentProposalProvider cp = new IContentProposalProvider() {
+			@Override
 			public IContentProposal[] getProposals(String contents, int position) {
 				List<IContentProposal> resultList = new ArrayList<IContentProposal>();
 
@@ -866,20 +877,24 @@ public class FetchGerritChangePage extends WizardPage {
 			myChange = change;
 		}
 
+		@Override
 		public String getContent() {
 			return myChange.getRefName();
 		}
 
+		@Override
 		public int getCursorPosition() {
 			return 0;
 		}
 
+		@Override
 		public String getDescription() {
 			return NLS.bind(
 					UIText.FetchGerritChangePage_ContentAssistDescription,
 					myChange.getPatchSetNumber(), myChange.getChangeNumber());
 		}
 
+		@Override
 		public String getLabel() {
 			return NLS
 					.bind("{0} - {1}", myChange.getChangeNumber(), myChange.getPatchSetNumber()); //$NON-NLS-1$

@@ -111,6 +111,7 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 		table.setRelativeDate(GitHistoryPage.isShowingRelativeDates());
 		table.getTableView().addSelectionChangedListener(
 				new ISelectionChangedListener() {
+					@Override
 					public void selectionChanged(SelectionChangedEvent event) {
 						commitId = null;
 						IStructuredSelection sel = (IStructuredSelection) event
@@ -122,6 +123,7 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 					}
 				});
 		table.getTableView().addOpenListener(new IOpenListener() {
+			@Override
 			public void open(OpenEvent event) {
 				if (getButton(OK).isEnabled())
 					buttonPressed(OK);
@@ -147,6 +149,7 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 		try {
 			PlatformUI.getWorkbench().getProgressService().run(true, true,
 					new IRunnableWithProgress() {
+						@Override
 						public void run(IProgressMonitor monitor)
 								throws InvocationTargetException,
 								InterruptedException {
@@ -202,6 +205,7 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 								}
 								getShell().getDisplay().asyncExec(
 										new Runnable() {
+											@Override
 											public void run() {
 												updateUi();
 											}

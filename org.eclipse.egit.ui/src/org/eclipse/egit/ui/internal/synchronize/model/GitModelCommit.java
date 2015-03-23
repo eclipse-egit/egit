@@ -56,6 +56,7 @@ public class GitModelCommit extends GitModelObjectContainer implements
 		return new Path(repo.getWorkTree().getAbsolutePath());
 	}
 
+	@Override
 	public IProject[] getProjects() {
 		return projects;
 	}
@@ -84,16 +85,19 @@ public class GitModelCommit extends GitModelObjectContainer implements
 
 	private GitModelObject[] createChildren() {
 		FileModelFactory fileModelFactory = new FileModelFactory() {
+			@Override
 			public GitModelBlob createFileModel(GitModelObjectContainer parent,
 					Repository repository, Change change, IPath fullPath) {
 				return new GitModelBlob(parent, repository, change, fullPath);
 			}
 
+			@Override
 			public boolean isWorkingTree() {
 				return false;
 			}
 		};
 		TreeModelFactory treeModelFactory = new TreeModelFactory() {
+			@Override
 			public GitModelTree createTreeModel(GitModelObjectContainer parent,
 					IPath fullPath, int kind) {
 				return new GitModelTree(parent, fullPath, kind);

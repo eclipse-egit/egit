@@ -215,6 +215,7 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 		this.parent = parent;
 	}
 
+	@Override
 	public int getProblemSeverity() {
 		if (file == null)
 			return SEVERITY_NONE;
@@ -226,6 +227,7 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 		}
 	}
 
+	@Override
 	public Object getAdapter(Class adapter) {
 		if (adapter == IResource.class)
 			return getFile();
@@ -234,10 +236,12 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 		return null;
 	}
 
+	@Override
 	public int getType() {
 		return IResource.FILE;
 	}
 
+	@Override
 	public String getName() {
 		if (name == null) {
 			IPath parsed = Path.fromOSString(getPath());
@@ -246,31 +250,38 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 		return name;
 	}
 
+	@Override
 	public String getRepositoryName() {
 		return null;
 	}
 
+	@Override
 	public String getBranch() {
 		return null;
 	}
 
+	@Override
 	public String getBranchStatus() {
 		return null;
 	}
 
+	@Override
 	public boolean isTracked() {
 		return state != State.UNTRACKED;
 	}
 
+	@Override
 	public boolean isIgnored() {
 		return false;
 	}
 
+	@Override
 	public boolean isDirty() {
 		return state == State.MODIFIED || state == State.MODIFIED_AND_CHANGED
 				|| state == State.MODIFIED_AND_ADDED;
 	}
 
+	@Override
 	public Staged staged() {
 		switch (state) {
 		case ADDED:
@@ -287,10 +298,12 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 		}
 	}
 
+	@Override
 	public boolean hasConflicts() {
 		return state == State.CONFLICTING;
 	}
 
+	@Override
 	public boolean isAssumeValid() {
 		return false;
 	}

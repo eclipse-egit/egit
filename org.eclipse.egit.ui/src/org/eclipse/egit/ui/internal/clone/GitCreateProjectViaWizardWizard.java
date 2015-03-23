@@ -126,6 +126,7 @@ public class GitCreateProjectViaWizardWizard extends Wizard {
 	public boolean performFinish() {
 		try {
 			getContainer().run(true, true, new IRunnableWithProgress() {
+				@Override
 				public void run(IProgressMonitor monitor)
 						throws InvocationTargetException, InterruptedException {
 					importProjects(monitor);
@@ -152,6 +153,7 @@ public class GitCreateProjectViaWizardWizard extends Wizard {
 			final List<IWorkingSet> workingSets = new ArrayList<IWorkingSet>();
 			// get the data from the page in the UI thread
 			PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+				@Override
 				public void run() {
 					projectsToCreate.addAll(myProjectsImportPage
 							.getCheckedProjects());
@@ -171,12 +173,14 @@ public class GitCreateProjectViaWizardWizard extends Wizard {
 					.asList(ResourcesPlugin.getWorkspace().getRoot()
 							.getProjects());
 			PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+				@Override
 				public void run() {
 					new NewProjectAction(PlatformUI.getWorkbench()
 							.getActiveWorkbenchWindow()).run();
 				}
 			});
 			IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
+				@Override
 				public void run(IProgressMonitor actMonitor)
 						throws CoreException {
 					IProject[] currentProjects = ResourcesPlugin.getWorkspace()
@@ -203,6 +207,7 @@ public class GitCreateProjectViaWizardWizard extends Wizard {
 			final boolean[] defaultLocation = new boolean[1];
 			// get the data from the page in the UI thread
 			PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+				@Override
 				public void run() {
 					projectName[0] = myCreateGeneralProjectPage
 							.getProjectName();
@@ -213,6 +218,7 @@ public class GitCreateProjectViaWizardWizard extends Wizard {
 
 			try {
 				IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
+					@Override
 					public void run(IProgressMonitor actMonitor)
 							throws CoreException {
 						final IProjectDescription desc = ResourcesPlugin

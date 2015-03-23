@@ -40,6 +40,7 @@ public class AddSubmoduleWizard extends Wizard {
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_IMPORT_REPO);
 	}
 
+	@Override
 	public void addPages() {
 		pathPage = new SubmodulePathWizardPage(repo);
 		addPage(pathPage);
@@ -66,6 +67,7 @@ public class AddSubmoduleWizard extends Wizard {
 		return uriPage.getSelection().getURI();
 	}
 
+	@Override
 	public boolean performFinish() {
 		if (uriPage.getStoreInSecureStore()
 				&& !SecureStoreUtils.storeCredentials(uriPage.getCredentials(),

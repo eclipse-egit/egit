@@ -115,10 +115,12 @@ public class BranchPropertySource implements IPropertySource {
 		}
 	}
 
+	@Override
 	public Object getEditableValue() {
 		return null;
 	}
 
+	@Override
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 		List<IPropertyDescriptor> resultList = new ArrayList<IPropertyDescriptor>();
 
@@ -138,6 +140,7 @@ public class BranchPropertySource implements IPropertySource {
 		return resultList.toArray(new IPropertyDescriptor[0]);
 	}
 
+	@Override
 	public Object getPropertyValue(Object id) {
 		String actId = ((String) id);
 		String value = myRepository.getConfig().getString(
@@ -148,14 +151,17 @@ public class BranchPropertySource implements IPropertySource {
 		return value;
 	}
 
+	@Override
 	public boolean isPropertySet(Object id) {
 		return false;
 	}
 
+	@Override
 	public void resetPropertyValue(Object id) {
 		// no editing here
 	}
 
+	@Override
 	public void setPropertyValue(Object id, Object value) {
 		// no editing here
 	}

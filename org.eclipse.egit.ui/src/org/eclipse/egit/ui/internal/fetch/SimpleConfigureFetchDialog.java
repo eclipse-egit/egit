@@ -292,6 +292,7 @@ public class SimpleConfigureFetchDialog extends TitleAreaDialog {
 		});
 
 		commonUriText.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				deleteCommonUri
 						.setEnabled(commonUriText.getText().length() > 0);
@@ -415,6 +416,7 @@ public class SimpleConfigureFetchDialog extends TitleAreaDialog {
 		});
 
 		specViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection sel = (IStructuredSelection) specViewer
 						.getSelection();
@@ -490,6 +492,7 @@ public class SimpleConfigureFetchDialog extends TitleAreaDialog {
 			try {
 				new ProgressMonitorDialog(getShell()).run(true, true,
 						new IRunnableWithProgress() {
+							@Override
 							public void run(IProgressMonitor monitor)
 									throws InvocationTargetException,
 									InterruptedException {
@@ -505,6 +508,7 @@ public class SimpleConfigureFetchDialog extends TitleAreaDialog {
 									getShell().getDisplay().asyncExec(
 											new Runnable() {
 
+												@Override
 												public void run() {
 													FetchResultDialog dlg;
 													dlg = new FetchResultDialog(
@@ -551,6 +555,7 @@ public class SimpleConfigureFetchDialog extends TitleAreaDialog {
 				try {
 					new ProgressMonitorDialog(getShell()).run(true, true,
 							new IRunnableWithProgress() {
+								@Override
 								public void run(IProgressMonitor monitor)
 										throws InvocationTargetException,
 										InterruptedException {

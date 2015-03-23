@@ -32,6 +32,7 @@ public class EditHandler extends SelectionHandler {
 	/** Command id */
 	public static final String ID = "org.eclipse.egit.ui.commit.Edit"; //$NON-NLS-1$
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RevCommit commit = getSelectedItem(RevCommit.class, event);
 		if (commit == null)

@@ -43,6 +43,7 @@ public class SquashHandler extends SelectionHandler {
 	/** Command id */
 	public static final String ID = "org.eclipse.egit.ui.commit.Squash"; //$NON-NLS-1$
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		List<RevCommit> commits = getSelectedItems(RevCommit.class, event);
 		if ((commits == null) || commits.isEmpty())
@@ -64,10 +65,12 @@ public class SquashHandler extends SelectionHandler {
 		}
 
 		InteractiveHandler messageHandler = new InteractiveHandler() {
+			@Override
 			public void prepareSteps(List<RebaseTodoLine> steps) {
 				// not used
 			}
 
+			@Override
 			public String modifyCommitMessage(String oldMessage) {
 				return promptCommitMessage(shell, oldMessage);
 			}
@@ -103,6 +106,7 @@ public class SquashHandler extends SelectionHandler {
 	private String promptCommitMessage(final Shell shell, final String message) {
 		final String[] msg = { message };
 		shell.getDisplay().syncExec(new Runnable() {
+			@Override
 			public void run() {
 				CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(
 						shell, msg[0]);

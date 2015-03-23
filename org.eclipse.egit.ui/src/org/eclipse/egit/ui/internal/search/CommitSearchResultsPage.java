@@ -35,6 +35,7 @@ public class CommitSearchResultsPage extends AbstractTextSearchViewPage {
 
 	private static class CommitSorter extends ViewerSorter {
 
+		@Override
 		public int compare(Viewer viewer, Object e1, Object e2) {
 			if (e1 instanceof RepositoryCommit
 					&& e2 instanceof RepositoryCommit) {
@@ -55,6 +56,7 @@ public class CommitSearchResultsPage extends AbstractTextSearchViewPage {
 	/**
 	 * @see org.eclipse.search.ui.text.AbstractTextSearchViewPage#elementsChanged(java.lang.Object[])
 	 */
+	@Override
 	protected void elementsChanged(Object[] objects) {
 		getViewer().refresh();
 	}
@@ -62,6 +64,7 @@ public class CommitSearchResultsPage extends AbstractTextSearchViewPage {
 	/**
 	 * @see org.eclipse.search.ui.text.AbstractTextSearchViewPage#clear()
 	 */
+	@Override
 	protected void clear() {
 		getViewer().refresh();
 	}
@@ -70,6 +73,7 @@ public class CommitSearchResultsPage extends AbstractTextSearchViewPage {
 		viewer.setSorter(new CommitSorter());
 		viewer.setContentProvider(new WorkbenchContentProvider() {
 
+			@Override
 			public Object[] getElements(Object element) {
 				if (getLayout() == FLAG_LAYOUT_TREE) {
 					Map<Repository, RepositoryMatch> repos = new HashMap<Repository, RepositoryMatch>();
@@ -96,6 +100,7 @@ public class CommitSearchResultsPage extends AbstractTextSearchViewPage {
 	/**
 	 * @see org.eclipse.search.ui.text.AbstractTextSearchViewPage#configureTreeViewer(org.eclipse.jface.viewers.TreeViewer)
 	 */
+	@Override
 	protected void configureTreeViewer(TreeViewer viewer) {
 		configureViewer(viewer);
 	}
@@ -103,10 +108,12 @@ public class CommitSearchResultsPage extends AbstractTextSearchViewPage {
 	/**
 	 * @see org.eclipse.search.ui.text.AbstractTextSearchViewPage#configureTableViewer(org.eclipse.jface.viewers.TableViewer)
 	 */
+	@Override
 	protected void configureTableViewer(TableViewer viewer) {
 		configureViewer(viewer);
 	}
 
+	@Override
 	protected void showMatch(Match match, int currentOffset, int currentLength,
 			boolean activate) throws PartInitException {
 		if (match instanceof CommitMatch)

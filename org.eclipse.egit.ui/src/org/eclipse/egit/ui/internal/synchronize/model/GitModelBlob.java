@@ -136,57 +136,68 @@ public class GitModelBlob extends GitModelObject implements
 		return "ModelBlob[objectId=" + change.getObjectId() + ", location=" + getLocation() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
+	@Override
 	public Image getImage() {
 		// not used
 		return null;
 	}
 
+	@Override
 	public ITypedElement getAncestor() {
 		prepareTypedElements();
 		return ancestorElement;
 	}
 
+	@Override
 	public ITypedElement getLeft() {
 		prepareTypedElements();
 		return leftElement;
 	}
 
+	@Override
 	public ITypedElement getRight() {
 		prepareTypedElements();
 		return rightElement;
 	}
 
+	@Override
 	public void addCompareInputChangeListener(
 			ICompareInputChangeListener listener) {
 		// data in commit will never change, therefore change listeners are
 		// useless
 	}
 
+	@Override
 	public void removeCompareInputChangeListener(
 			ICompareInputChangeListener listener) {
 		// data in commit will never change, therefore change listeners are
 		// useless
 	}
 
+	@Override
 	public void copy(boolean leftToRight) {
 		// do nothing, we should disallow coping content between commits
 	}
 
+	@Override
 	public SaveableComparison getSaveable() {
 		// unused
 		return null;
 	}
 
+	@Override
 	public void prepareInput(CompareConfiguration configuration,
 			IProgressMonitor monitor) throws CoreException {
 		configuration.setLeftLabel(getFileRevisionLabel(getLeft()));
 		configuration.setRightLabel(getFileRevisionLabel(getRight()));
 	}
 
+	@Override
 	public String getFullPath() {
 		return path.toOSString();
 	}
 
+	@Override
 	public boolean isCompareInputFor(Object object) {
 		// not used
 		return false;
@@ -272,6 +283,7 @@ public class GitModelBlob extends GitModelObject implements
 		rightElement = compareInput.getRight();
 	}
 
+	@Override
 	public IResource getResource() {
 		IFile file = ResourcesPlugin.getWorkspace().getRoot()
 				.getFileForLocation(path);

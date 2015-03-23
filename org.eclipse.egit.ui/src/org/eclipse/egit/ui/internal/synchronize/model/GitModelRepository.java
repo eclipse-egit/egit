@@ -86,6 +86,7 @@ public class GitModelRepository extends GitModelObjectContainer implements HasPr
 		return gsd.getRepository().getWorkTree().toString();
 	}
 
+	@Override
 	public IProject[] getProjects() {
 		return gsd.getProjects().toArray(new IProject[gsd.getProjects().size()]);
 	}

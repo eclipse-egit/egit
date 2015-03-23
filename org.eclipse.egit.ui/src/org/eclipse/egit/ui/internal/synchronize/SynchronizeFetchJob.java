@@ -88,6 +88,7 @@ class SynchronizeFetchJob extends WorkspaceJob {
 	private void showInformationDialog(final String remoteName) {
 		final Display display = PlatformUI.getWorkbench().getDisplay();
 		display.syncExec(new Runnable() {
+			@Override
 			public void run() {
 				MessageDialog.openInformation(display.getActiveShell(), NLS
 						.bind(UIText.SynchronizeFetchJob_FetchFailedTitle,

@@ -128,6 +128,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 			final List<String> actColors) {
 		final Display display = PlatformUI.getWorkbench().getDisplay();
 		display.syncExec(new Runnable() {
+			@Override
 			public void run() {
 				ITheme theme  = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme();
 				for (int i = 0; i < actColors.size(); i++) {
@@ -159,6 +160,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 	 * @see org.eclipse.jface.viewers.ILightweightLabelDecorator#decorate(java.lang.Object,
 	 *      org.eclipse.jface.viewers.IDecoration)
 	 */
+	@Override
 	public void decorate(Object element, IDecoration decoration) {
 		// Don't decorate if UI plugin is not running
 		if (Activator.getDefault() == null)
@@ -313,6 +315,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 				this.descriptor = descriptor;
 			}
 
+			@Override
 			public ImageData getImageData() {
 				if (data == null) {
 					data = descriptor.getImageData();
@@ -617,6 +620,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 	 */
 	public static void refresh() {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			@Override
 			public void run() {
 				Activator.getDefault().getWorkbench().getDecoratorManager()
 						.update(DECORATOR_ID);
@@ -632,6 +636,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 	 *
 	 * @see org.eclipse.jface.util.IPropertyChangeListener#propertyChange(org.eclipse.jface.util.PropertyChangeEvent)
 	 */
+	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		final String prop = event.getProperty();
 		// If the property is of any interest to us
@@ -650,6 +655,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 		}
 	}
 
+	@Override
 	public void indexDiffChanged(Repository repository,
 			IndexDiffData indexDiffData) {
 		// clear calculated repo data
@@ -698,6 +704,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 				this);
 		// Re-trigger decoration process (in UI thread)
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			@Override
 			public void run() {
 				fireLabelProviderChanged(event);
 			}

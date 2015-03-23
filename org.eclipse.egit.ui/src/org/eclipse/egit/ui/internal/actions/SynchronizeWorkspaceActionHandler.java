@@ -48,6 +48,7 @@ public class SynchronizeWorkspaceActionHandler extends RepositoryActionHandler {
 		return true;
 	}
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IResource[] resources = getSelectedResources(event);
 		Map<Repository, Set<IResource>> containerMap = mapContainerResources(resources);

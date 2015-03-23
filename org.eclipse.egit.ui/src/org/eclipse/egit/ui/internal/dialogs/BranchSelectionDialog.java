@@ -106,12 +106,15 @@ public class BranchSelectionDialog<T> extends MessageDialog {
 				/*
 				 * Overridden to check page when refreshing is done.
 				 */
+				@Override
 				protected WorkbenchJob doCreateRefreshJob() {
 					WorkbenchJob refreshJob = super.doCreateRefreshJob();
 					refreshJob.addJobChangeListener(new JobChangeAdapter() {
+						@Override
 						public void done(IJobChangeEvent event) {
 							if (event.getResult().isOK()) {
 								getDisplay().asyncExec(new Runnable() {
+									@Override
 									public void run() {
 										checkPage();
 									}
@@ -126,33 +129,40 @@ public class BranchSelectionDialog<T> extends MessageDialog {
 			CachedCheckboxTreeViewer viewer = fTree.getCheckboxTreeViewer();
 			GridDataFactory.fillDefaults().grab(true, true).applyTo(fTree);
 			viewer.setContentProvider(new ITreeContentProvider() {
+				@Override
 				public void inputChanged(Viewer actViewer, Object oldInput,
 						Object newInput) {
 					// nothing
 				}
 
+				@Override
 				public void dispose() {
 					// nothing
 				}
 
+				@Override
 				public boolean hasChildren(Object element) {
 					return false;
 				}
 
+				@Override
 				public Object getParent(Object element) {
 					return null;
 				}
 
+				@Override
 				public Object[] getElements(Object inputElement) {
 					return ((List) inputElement).toArray();
 				}
 
+				@Override
 				public Object[] getChildren(Object parentElement) {
 					return null;
 				}
 			});
 
 			viewer.addCheckStateListener(new ICheckStateListener() {
+				@Override
 				public void checkStateChanged(CheckStateChangedEvent event) {
 					checkPage();
 				}
@@ -174,11 +184,13 @@ public class BranchSelectionDialog<T> extends MessageDialog {
 			branchesList.setInput(nodes);
 			branchesList
 					.addSelectionChangedListener(new ISelectionChangedListener() {
+						@Override
 						public void selectionChanged(SelectionChangedEvent event) {
 							checkPage();
 						}
 					});
 			branchesList.addDoubleClickListener(new IDoubleClickListener() {
+				@Override
 				public void doubleClick(DoubleClickEvent event) {
 					buttonPressed(OK);
 				}

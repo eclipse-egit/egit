@@ -47,6 +47,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * the file content.
  */
 public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		boolean compareMode = Boolean.TRUE.toString().equals(
 				event.getParameter(HistoryViewCommands.COMPARE_MODE_PARAM));

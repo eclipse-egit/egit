@@ -294,6 +294,7 @@ public class ConfigurationEditorComponent {
 		final TextCellEditor editor = new TextCellEditor(tree);
 		editor.setValidator(new ICellEditorValidator() {
 
+			@Override
 			public String isValid(Object value) {
 				String editedValue = value.toString();
 				return editedValue.length() > 0 ? null
@@ -302,15 +303,18 @@ public class ConfigurationEditorComponent {
 		});
 		editor.addListener(new ICellEditorListener() {
 
+			@Override
 			public void editorValueChanged(boolean oldValidState,
 					boolean newValidState) {
 				setErrorMessage(editor.getErrorMessage());
 			}
 
+			@Override
 			public void cancelEditor() {
 				setErrorMessage(null);
 			}
 
+			@Override
 			public void applyEditorValue() {
 				setErrorMessage(null);
 			}
@@ -322,6 +326,7 @@ public class ConfigurationEditorComponent {
 		new TreeViewerColumn(tv, value)
 				.setEditingSupport(new EditingSupport(tv) {
 
+					@Override
 					protected void setValue(Object element, Object newValue) {
 						Entry entry = (Entry) element;
 						if (!entry.value.equals(newValue)) {
@@ -330,14 +335,17 @@ public class ConfigurationEditorComponent {
 						}
 					}
 
+					@Override
 					protected Object getValue(Object element) {
 						return ((Entry) element).value;
 					}
 
+					@Override
 					protected CellEditor getCellEditor(Object element) {
 						return editor;
 					}
 
+					@Override
 					protected boolean canEdit(Object element) {
 						return editable && element instanceof Entry;
 					}
@@ -475,6 +483,7 @@ public class ConfigurationEditorComponent {
 		});
 
 		tv.addSelectionChangedListener(new ISelectionChangedListener() {
+			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				updateEnablement();
 			}
@@ -596,6 +605,7 @@ public class ConfigurationEditorComponent {
 			return this;
 		}
 
+		@Override
 		public Object[] getChildren(Object o) {
 			if (children == null)
 				if (config != null) {
@@ -605,6 +615,7 @@ public class ConfigurationEditorComponent {
 						sections.add(new Section(this, sectionName));
 					Collections.sort(sections, new Comparator<Section>() {
 
+						@Override
 						public int compare(Section o1, Section o2) {
 							return o1.name.compareTo(o2.name);
 						}
@@ -660,10 +671,12 @@ public class ConfigurationEditorComponent {
 			return true;
 		}
 
+		@Override
 		public Object getParent(Object object) {
 			return parent;
 		}
 
+		@Override
 		public Object[] getChildren(Object o) {
 			if (children == null) {
 				List<Object> allChildren = new ArrayList<Object>();
@@ -692,6 +705,7 @@ public class ConfigurationEditorComponent {
 			return children;
 		}
 
+		@Override
 		public String getLabel(Object o) {
 			return name;
 		}
@@ -752,6 +766,7 @@ public class ConfigurationEditorComponent {
 			return true;
 		}
 
+		@Override
 		public Object[] getChildren(Object o) {
 			if (children == null) {
 				List<Entry> entries = new ArrayList<Entry>();
@@ -773,10 +788,12 @@ public class ConfigurationEditorComponent {
 			return children;
 		}
 
+		@Override
 		public String getLabel(Object o) {
 			return name;
 		}
 
+		@Override
 		public Object getParent(Object object) {
 			return parent;
 		}
@@ -972,10 +989,12 @@ public class ConfigurationEditorComponent {
 			this.defaultFont = defaultFont;
 		}
 
+		@Override
 		public Image getColumnImage(Object element, int columnIndex) {
 			return null;
 		}
 
+		@Override
 		public String getColumnText(Object element, int columnIndex) {
 			switch (columnIndex) {
 			case 0:
@@ -999,6 +1018,7 @@ public class ConfigurationEditorComponent {
 			}
 		}
 
+		@Override
 		public Font getFont(Object element) {
 			if (element instanceof Section || element instanceof SubSection)
 				return getBoldFont();

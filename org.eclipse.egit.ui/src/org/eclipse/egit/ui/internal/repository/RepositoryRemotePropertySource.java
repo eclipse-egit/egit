@@ -44,10 +44,12 @@ public class RepositoryRemotePropertySource implements IPropertySource {
 		myName = remoteName;
 	}
 
+	@Override
 	public Object getEditableValue() {
 		return null;
 	}
 
+	@Override
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 
 		try {
@@ -75,6 +77,7 @@ public class RepositoryRemotePropertySource implements IPropertySource {
 		return resultList.toArray(new IPropertyDescriptor[resultList.size()]);
 	}
 
+	@Override
 	public Object getPropertyValue(Object id) {
 		String[] list = myConfig.getStringList(RepositoriesView.REMOTE, myName,
 				(String) id);
@@ -91,15 +94,18 @@ public class RepositoryRemotePropertySource implements IPropertySource {
 		return myConfig.getString(RepositoriesView.REMOTE, myName, (String) id);
 	}
 
+	@Override
 	public boolean isPropertySet(Object id) {
 		// no default values
 		return false;
 	}
 
+	@Override
 	public void resetPropertyValue(Object id) {
 		// nothing to do
 	}
 
+	@Override
 	public void setPropertyValue(Object id, Object value) {
 		// read-only
 	}

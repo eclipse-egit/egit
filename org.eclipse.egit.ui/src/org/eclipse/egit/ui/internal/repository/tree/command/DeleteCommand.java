@@ -17,6 +17,7 @@ import org.eclipse.core.commands.ExecutionException;
  * Deletes a Repository
  */
 public class DeleteCommand extends RemoveCommand {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		super.removeRepository(event, true);
 		return null;

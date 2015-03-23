@@ -23,6 +23,7 @@ public class MoveProjectsLabelProvider extends BaseLabelProvider implements
 		ITableLabelProvider {
 	IPath targetFolder;
 
+	@Override
 	public Image getColumnImage(Object element, int columnIndex) {
 		if (columnIndex == 0)
 			return PlatformUI.getWorkbench().getSharedImages()
@@ -31,6 +32,7 @@ public class MoveProjectsLabelProvider extends BaseLabelProvider implements
 			return null;
 	}
 
+	@Override
 	public String getColumnText(Object element, int columnIndex) {
 		IProject prj = (IProject) element;
 		switch (columnIndex) {

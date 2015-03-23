@@ -146,6 +146,7 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 
 		Combo repoCombo = new Combo(repositoryComposite, SWT.READ_ONLY);
 		repoCombo.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Combo combo = (Combo) e.widget;
 				showRepositoryConfiguration(combo.getSelectionIndex());
@@ -237,6 +238,7 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 		super.performDefaults();
 	}
 
+	@Override
 	public void init(IWorkbench workbench) {
 		if (sysConfig == null)
 			sysConfig = SystemReader.getInstance().openSystemConfig(null, FS.DETECTED);
@@ -268,6 +270,7 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 	private void sortRepositoriesByName() {
 		Collections.sort(repositories, new Comparator<Repository>() {
 
+			@Override
 			public int compare(Repository repo1, Repository repo2) {
 				return getName(repo1).compareTo(getName(repo2));
 			}
@@ -303,6 +306,7 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 					.getFS());
 			repositoryConfig.addChangeListener(new ConfigChangedListener() {
 
+				@Override
 				public void onConfigChanged(ConfigChangedEvent event) {
 					repository.getListenerList().dispatch(
 							new ConfigChangedEvent());

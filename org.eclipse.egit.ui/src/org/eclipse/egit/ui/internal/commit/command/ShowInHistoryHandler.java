@@ -27,6 +27,7 @@ public class ShowInHistoryHandler extends CommitCommandHandler {
 	 */
 	public static final String ID = "org.eclipse.egit.ui.commit.ShowInHistory"; //$NON-NLS-1$
 
+	@Override
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		List<RepositoryCommit> commits = getCommits(event);
 		if (commits.size() == 1) {

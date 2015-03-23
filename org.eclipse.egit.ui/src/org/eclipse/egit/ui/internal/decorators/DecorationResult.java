@@ -45,35 +45,43 @@ public class DecorationResult implements IDecoration {
 	 * Copies the behavior of <code>DecorationBuilder</code> of only allowing
 	 * the overlay to be set once.
 	 */
+	@Override
 	public void addOverlay(ImageDescriptor overlayImage) {
 		if (overlay == null)
 			overlay = overlayImage;
 	}
 
+	@Override
 	public void addOverlay(ImageDescriptor overlayImage, int quadrant) {
 		addOverlay(overlayImage);
 	}
 
+	@Override
 	public void addPrefix(String prefix) {
 		prefixes.add(prefix);
 	}
 
+	@Override
 	public void addSuffix(String suffix) {
 		suffixes.add(suffix);
 	}
 
+	@Override
 	public IDecorationContext getDecorationContext() {
 		return new DecorationContext();
 	}
 
+	@Override
 	public void setBackgroundColor(Color color) {
 		backgroundColor = color;
 	}
 
+	@Override
 	public void setForegroundColor(Color color) {
 		foregroundColor = color;
 	}
 
+	@Override
 	public void setFont(Font font) {
 		this.font = font;
 	}

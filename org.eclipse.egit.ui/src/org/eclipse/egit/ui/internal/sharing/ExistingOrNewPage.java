@@ -127,6 +127,7 @@ class ExistingOrNewPage extends WizardPage {
 		this.myWizard = w;
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 		final RepositoryUtil util = Activator.getDefault().getRepositoryUtil();
 		Composite main = new Composite(parent, SWT.NONE);
@@ -204,6 +205,7 @@ class ExistingOrNewPage extends WizardPage {
 				.setText(UIText.ExistingOrNewPage_RelativePathLabel);
 		relPath = new Text(externalComposite, SWT.BORDER);
 		relPath.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				updateControls();
 			}
@@ -252,6 +254,7 @@ class ExistingOrNewPage extends WizardPage {
 		projectMoveViewer.setLabelProvider(moveProjectsLabelProvider);
 		projectMoveViewer.setInput(myWizard.projects);
 		projectMoveViewer.addCheckStateListener(new ICheckStateListener() {
+			@Override
 			public void checkStateChanged(CheckStateChangedEvent event) {
 				updateControls();
 			}
@@ -286,6 +289,7 @@ class ExistingOrNewPage extends WizardPage {
 				.span(3, 1).create());
 		viewer.addCheckStateListener(new ICheckStateListener() {
 
+			@Override
 			public void checkStateChanged(CheckStateChangedEvent event) {
 				if (event.getChecked()) {
 					ProjectAndRepo checkable = (ProjectAndRepo) event
@@ -377,6 +381,7 @@ class ExistingOrNewPage extends WizardPage {
 		createRepo.setLayoutData(GridDataFactory.fillDefaults().create());
 		createRepo.setText(UIText.ExistingOrNewPage_CreateButton);
 		createRepo.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				File gitDir = new File(repositoryToCreate.getText(),
 						Constants.DOT_GIT);
@@ -426,6 +431,7 @@ class ExistingOrNewPage extends WizardPage {
 		repositoryToCreate.setLayoutData(GridDataFactory.fillDefaults()
 				.grab(true, false).span(1, 1).create());
 		repositoryToCreate.addListener(SWT.Modify, new Listener() {
+			@Override
 			public void handleEvent(Event e) {
 				if (repositoryToCreate.getText().equals("")) { //$NON-NLS-1$
 					createRepo.setEnabled(false);
@@ -445,6 +451,7 @@ class ExistingOrNewPage extends WizardPage {
 				.align(SWT.LEFT, SWT.CENTER).create());
 
 		tree.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				tree.select((TreeItem) e.item);
 				updateControls();

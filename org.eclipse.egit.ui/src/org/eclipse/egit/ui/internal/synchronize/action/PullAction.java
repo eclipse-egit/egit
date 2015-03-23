@@ -45,6 +45,7 @@ public class PullAction extends SynchronizeModelAction {
 
 		return new SynchronizeModelOperation(configuration, elements) {
 
+			@Override
 			public void run(IProgressMonitor monitor)
 					throws InvocationTargetException, InterruptedException {
 				GitSynchronizeDataSet gsds = (GitSynchronizeDataSet) getConfiguration()

@@ -36,6 +36,7 @@ public class ValidationUtils {
 	public static IInputValidator getRefNameInputValidator(
 			final Repository repo, final String refPrefix, final boolean errorOnEmptyName) {
 		return new IInputValidator() {
+			@Override
 			public String isValid(String newText) {
 				if (newText.length() == 0) {
 					if (errorOnEmptyName)

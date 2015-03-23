@@ -53,10 +53,12 @@ public class CommitSelectionDialog extends FilteredItemsSelectionDialog {
 
 	private static class CommitLabelProvider extends GitLabelProvider {
 
+		@Override
 		public String getText(Object element) {
 			return getStyledText(element).getString();
 		}
 
+		@Override
 		public StyledString getStyledText(Object element) {
 			StyledString styled = new StyledString();
 			if (element instanceof RepositoryCommit) {
@@ -112,6 +114,7 @@ public class CommitSelectionDialog extends FilteredItemsSelectionDialog {
 		setInitialPattern(Constants.HEAD, FULL_SELECTION);
 	}
 
+	@Override
 	protected Control createExtendedContentArea(Composite parent) {
 		Composite displayArea = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().applyTo(displayArea);
@@ -119,6 +122,7 @@ public class CommitSelectionDialog extends FilteredItemsSelectionDialog {
 		link.setText(UIText.CommitSelectionDialog_LinkSearch);
 		link.addSelectionListener(new SelectionAdapter() {
 
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				close();
 				NewSearchUI.openSearchDialog(PlatformUI.getWorkbench()
@@ -129,6 +133,7 @@ public class CommitSelectionDialog extends FilteredItemsSelectionDialog {
 		return displayArea;
 	}
 
+	@Override
 	protected IDialogSettings getDialogSettings() {
 		IDialogSettings settings = Activator.getDefault().getDialogSettings();
 		IDialogSettings section = settings
@@ -138,30 +143,37 @@ public class CommitSelectionDialog extends FilteredItemsSelectionDialog {
 		return section;
 	}
 
+	@Override
 	protected IStatus validateItem(Object item) {
 		return Status.OK_STATUS;
 	}
 
+	@Override
 	protected ItemsFilter createFilter() {
 		return new ItemsFilter() {
 
+			@Override
 			public boolean isSubFilter(ItemsFilter filter) {
 				return false;
 			}
 
+			@Override
 			public boolean matchItem(Object item) {
 				return true;
 			}
 
+			@Override
 			public boolean isConsistentItem(Object item) {
 				return true;
 			}
 		};
 	}
 
+	@Override
 	protected Comparator getItemsComparator() {
 		return new Comparator<RepositoryCommit>() {
 
+			@Override
 			public int compare(RepositoryCommit o1, RepositoryCommit o2) {
 				int compare = o1.getRepositoryName().compareToIgnoreCase(
 						o2.getRepositoryName());
@@ -177,6 +189,7 @@ public class CommitSelectionDialog extends FilteredItemsSelectionDialog {
 				.getRepositoryCache().getAllRepositories();
 	}
 
+	@Override
 	protected void fillContentProvider(AbstractContentProvider contentProvider,
 			ItemsFilter itemsFilter, IProgressMonitor progressMonitor)
 			throws CoreException {
@@ -208,6 +221,7 @@ public class CommitSelectionDialog extends FilteredItemsSelectionDialog {
 		}
 	}
 
+	@Override
 	public String getElementName(Object item) {
 		return labelProvider.getText(item);
 	}

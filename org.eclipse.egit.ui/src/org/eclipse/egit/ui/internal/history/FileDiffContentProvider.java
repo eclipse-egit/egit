@@ -40,6 +40,7 @@ public class FileDiffContentProvider implements IStructuredContentProvider {
 
 	private Repository repo;
 
+	@Override
 	public void inputChanged(final Viewer newViewer, final Object oldInput,
 			final Object newInput) {
 		if (newInput != null) {
@@ -67,6 +68,7 @@ public class FileDiffContentProvider implements IStructuredContentProvider {
 		this.diff = null;
 	}
 
+	@Override
 	public Object[] getElements(final Object inputElement) {
 		if (diff == null && walk != null && commit != null)
 			try {
@@ -78,6 +80,7 @@ public class FileDiffContentProvider implements IStructuredContentProvider {
 		return diff != null ? diff : new Object[0];
 	}
 
+	@Override
 	public void dispose() {
 		// Nothing.
 	}
