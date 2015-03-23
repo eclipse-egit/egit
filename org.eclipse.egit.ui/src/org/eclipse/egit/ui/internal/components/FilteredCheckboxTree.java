@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 Red Hat, Inc.
+ * Copyright (c) 2010, 2015 Red Hat, Inc.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Chris Aniszczyk <caniszczyk@gmail.com> - initial implementation
+ *    Lars Vogel <Lars.Vogel@vogella.com> - Bug 462866
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.components;
 
@@ -119,6 +120,16 @@ public class FilteredCheckboxTree extends FilteredTree {
 			return fToolkit.createText(actParent, null, style);
 		}
 		return parentText;
+	}
+
+	@Override
+	protected String getFilterString() {
+		String filterString = super.getFilterString();
+		if (filterString.indexOf("*") != 0 && filterString.indexOf("?") != 0 //$NON-NLS-1$ //$NON-NLS-2$
+				&& filterString.indexOf(".") != 0) {//$NON-NLS-1$
+			filterString = "*" + filterString; //$NON-NLS-1$
+		}
+		return filterString;
 	}
 
 	/**
