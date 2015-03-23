@@ -47,6 +47,7 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 	protected CachedCheckboxTreeViewer(Tree tree) {
 		super(tree);
 		addCheckStateListener(new ICheckStateListener() {
+			@Override
 			public void checkStateChanged(CheckStateChangedEvent event) {
 				updateCheckState(event.getElement(), event.getChecked());
 			}
@@ -156,6 +157,7 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.viewers.ICheckable#setChecked(java.lang.Object, boolean)
 	 */
+	@Override
 	public boolean setChecked(Object element, boolean state) {
 		updateCheckState(element, state);
 		return super.setChecked(element, state);
@@ -164,6 +166,7 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.viewers.CheckboxTreeViewer#setCheckedElements(java.lang.Object[])
 	 */
+	@Override
 	public void setCheckedElements(Object[] elements) {
 		super.setCheckedElements(elements);
 			checkState.clear();
@@ -186,6 +189,7 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.viewers.CheckboxTreeViewer#setAllChecked(boolean)
 	 */
+	@Override
 	public void setAllChecked(boolean state) {
 		for (TreeItem item: super.getTree().getItems())
 			item.setChecked(state);
@@ -244,6 +248,7 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.viewers.AbstractTreeViewer#remove(java.lang.Object[])
 	 */
+	@Override
 	public void remove(Object[] elementsOrTreePaths) {
 		for (int i = 0; i < elementsOrTreePaths.length; i++) {
 			updateCheckState(elementsOrTreePaths[i], false);
@@ -254,6 +259,7 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.viewers.AbstractTreeViewer#remove(java.lang.Object)
 	 */
+	@Override
 	public void remove(Object elementsOrTreePaths) {
 		updateCheckState(elementsOrTreePaths, false);
 		super.remove(elementsOrTreePaths);
