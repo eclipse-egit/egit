@@ -277,6 +277,7 @@ public class UIUtils {
 
 		IContentProposalProvider cp = new IContentProposalProvider() {
 
+			@Override
 			public IContentProposal[] getProposals(String contents, int position) {
 
 				List<IContentProposal> resultList = new ArrayList<IContentProposal>();
@@ -322,18 +323,22 @@ public class UIUtils {
 
 						IContentProposal propsal = new IContentProposal() {
 
+							@Override
 							public String getLabel() {
 								return null;
 							}
 
+							@Override
 							public String getDescription() {
 								return null;
 							}
 
+							@Override
 							public int getCursorPosition() {
 								return 0;
 							}
 
+							@Override
 							public String getContent() {
 								return uriString;
 							}
@@ -354,6 +359,7 @@ public class UIUtils {
 				.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
 
 		return new IPreviousValueProposalHandler() {
+			@Override
 			public void updateProposals() {
 				String value = textField.getText();
 				// don't store empty values
@@ -422,6 +428,7 @@ public class UIUtils {
 							stroke.format()));
 
 		IContentProposalProvider cp = new IContentProposalProvider() {
+			@Override
 			public IContentProposal[] getProposals(String contents, int position) {
 				List<IContentProposal> resultList = new ArrayList<IContentProposal>();
 
@@ -508,6 +515,7 @@ public class UIUtils {
 
 		widget.addDisposeListener(new DisposeListener() {
 
+			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				resource.dispose();
 			}
@@ -527,6 +535,7 @@ public class UIUtils {
 
 		widget.addDisposeListener(new DisposeListener() {
 
+			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				resources.dispose();
 			}
@@ -580,6 +589,7 @@ public class UIUtils {
 		collapseItem.setToolTipText(UIText.UIUtils_CollapseAll);
 		collapseItem.addSelectionListener(new SelectionAdapter() {
 
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				viewer.collapseAll();
 			}
@@ -593,6 +603,7 @@ public class UIUtils {
 		expandItem.setToolTipText(UIText.UIUtils_ExpandAll);
 		expandItem.addSelectionListener(new SelectionAdapter() {
 
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				viewer.expandAll();
 			}
@@ -751,6 +762,7 @@ public class UIUtils {
 					UIText.CancelAfterSaveDialog_Title, null,
 					cancelConfirmationQuestion,
 					MessageDialog.QUESTION, buttons, 0) {
+				@Override
 				protected int getShellStyle() {
 					return (SWT.TITLE | SWT.BORDER | SWT.APPLICATION_MODAL
 							| SWT.SHEET | getDefaultOrientation());
