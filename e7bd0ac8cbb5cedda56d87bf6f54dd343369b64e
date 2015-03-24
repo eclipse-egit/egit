@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_c8073056",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1141,
+      "author": {
+        "id": 6071
+      },
+      "writtenOn": "2015-03-24T16:19:33Z",
+      "side": 1,
+      "message": "Hi Laurent, Axel,\n\nI updated this condition because it looked like it was incorrect. Bug 462931 is related to this.",
+      "range": {
+        "startLine": 1141,
+        "startChar": 11,
+        "endLine": 1141,
+        "endChar": 41
+      },
+      "revId": "e7bd0ac8cbb5cedda56d87bf6f54dd343369b64e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
