@@ -67,12 +67,11 @@ public class ResourceUtil {
 	 * @return the resources, or null
 	 */
 	public static IResource getResourceForLocation(IPath location) {
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		URI uri = URIUtil.toURI(location);
-		IFile file = getFileForLocationURI(root, uri);
-		if (file != null)
+		IFile file = getFileForLocation(location);
+		if (file != null) {
 			return file;
-		return getContainerForLocationURI(root, uri);
+		}
+		return getContainerForLocation(location);
 	}
 
 	/**
@@ -87,8 +86,33 @@ public class ResourceUtil {
 	 */
 	public static IFile getFileForLocation(IPath location) {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		IFile file = root.getFileForLocation(location);
+		if (file == null) {
+			return null;
+		}
+		if (isValid(file)) {
+			return file;
+		}
 		URI uri = URIUtil.toURI(location);
 		return getFileForLocationURI(root, uri);
+	}
+
+	/**
+	 * sort out closed, linked or not shared resources
+	 *
+	 * @param resource
+	 * @return true if the resource is shared with git, not a link and
+	 *         accessible in Eclipse
+	 */
+	private static boolean isValid(IResource resource) {
+		return resource.isAccessible()
+				&& !resource.isLinked(IResource.CHECK_ANCESTORS)
+				&& isSharedWithGit(resource);
+	}
+
+	private static boolean isSharedWithGit(IResource resource) {
+		return RepositoryProvider.getProvider(resource.getProject(),
+				GitProvider.ID) != null;
 	}
 
 	/**
@@ -103,6 +127,13 @@ public class ResourceUtil {
 	 */
 	public static IContainer getContainerForLocation(IPath location) {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		IContainer dir = root.getContainerForLocation(location);
+		if (dir == null) {
+			return null;
+		}
+		if (isValid(dir)) {
+			return dir;
+		}
 		URI uri = URIUtil.toURI(location);
 		return getContainerForLocationURI(root, uri);
 	}
@@ -161,7 +192,7 @@ public class ResourceUtil {
 			File f = new Path(repository.getWorkTree().getAbsolutePath())
 					.append((repoRelativePath)).toFile();
 			return FS.DETECTED.isSymLink(f);
-		} catch (@SuppressWarnings("unused") IOException e) {
+		} catch (IOException e) {
 			return false;
 		}
 	}
@@ -259,12 +290,12 @@ public class ResourceUtil {
 		int shortestPathSegmentCount = Integer.MAX_VALUE;
 		T shortestPath = null;
 		for (T resource : resources) {
-			if (!resource.exists())
+			if (!resource.exists()) {
 				continue;
-			RepositoryProvider provider = RepositoryProvider.getProvider(
-					resource.getProject(), GitProvider.ID);
-			if (provider == null)
+			}
+			if (!isSharedWithGit(resource)) {
 				continue;
+			}
 			IPath fullPath = resource.getFullPath();
 			int segmentCount = fullPath.segmentCount();
 			if (segmentCount < shortestPathSegmentCount) {
