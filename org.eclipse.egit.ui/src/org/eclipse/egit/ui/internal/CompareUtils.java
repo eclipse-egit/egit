@@ -1183,7 +1183,7 @@ public class CompareUtils {
 	 *         providers.
 	 * @throws IOException
 	 */
-	private static RemoteResourceMappingContext prepareContext(
+	public static RemoteResourceMappingContext prepareContext(
 			Repository repository, String leftRev, String rightRev,
 			boolean includeLocal) throws IOException {
 		GitSynchronizeData gsd = new GitSynchronizeData(repository, leftRev,
