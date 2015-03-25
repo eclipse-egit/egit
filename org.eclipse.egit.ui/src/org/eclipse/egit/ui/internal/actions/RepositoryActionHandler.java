@@ -8,6 +8,7 @@
  * Copyright (C) 2012, 2013 François Rey <eclipse.org_@_francois_._rey_._name>
  * Copyright (C) 2013 Laurent Goubet <laurent.goubet@obeo.fr>
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
+ * Copyright (C) 2015, Alexandra Buzila <abuzila@eclipsesource.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -34,12 +35,19 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.mapping.ResourceMapping;
+import org.eclipse.core.resources.mapping.ResourceMappingContext;
+import org.eclipse.core.resources.mapping.ResourceTraversal;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.CommonUtils;
+import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -53,6 +61,8 @@ import org.eclipse.jgit.revwalk.FollowFilter;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevSort;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.treewalk.filter.OrTreeFilter;
+import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -475,9 +485,8 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		rw.sort(RevSort.BOUNDARY, true);
 		try {
 			if (path.length() > 0) {
-				DiffConfig diffConfig = repository.getConfig().get(
-						DiffConfig.KEY);
-				FollowFilter filter = FollowFilter.create(path, diffConfig);
+				TreeFilter filter = getFilterOverLogicalModel(resource,
+						repository);
 				rw.setTreeFilter(filter);
 			}
 
@@ -505,6 +514,59 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 			rw.dispose();
 		}
 		return result;
+	}
+
+	/**
+	 * Creates a path filter (with copy/rename detection) for all the resources
+	 * in all the resource mappings of the resource provided as a parameter.
+	 *
+	 * @param resource
+	 *            The resource for which we need the filter
+	 * @param repository
+	 *            The repository in which the resource resides
+	 * @return the filter
+	 * @throws IOException
+	 */
+	private TreeFilter getFilterOverLogicalModel(IResource resource,
+			Repository repository) throws IOException {
+
+		DiffConfig diffConfig = repository.getConfig().get(DiffConfig.KEY);
+		String path = RepositoryMapping.getMapping(resource.getProject())
+				.getRepoRelativePath(resource);
+		TreeFilter filter = FollowFilter.create(path, diffConfig);
+
+		// expand the filter over the logical model if the preference is true
+		if (!Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.USE_LOGICAL_MODEL)) {
+			return filter;
+		}
+		ResourceMappingContext mappingContext = CompareUtils.prepareContext(
+				repository, Constants.HEAD, Constants.HEAD, true);
+		final ResourceMapping[] mappings = ResourceUtil.getResourceMappings(
+				resource, mappingContext);
+		for (ResourceMapping mapping : mappings) {
+			try {
+				final ResourceTraversal[] traversals = mapping.getTraversals(
+						mappingContext, null);
+				for (ResourceTraversal traversal : traversals) {
+					final IResource[] resources = traversal.getResources();
+					if (resources.length > 1
+							&& Arrays.asList(resources).contains(resource)) {
+						for (IResource r : resources) {
+							if (r.equals(resource))
+								continue;
+							path = RepositoryMapping.getMapping(r.getProject())
+									.getRepoRelativePath(r);
+							filter = OrTreeFilter.create(filter,
+									FollowFilter.create(path, diffConfig));
+						}
+					}
+				}
+			} catch (CoreException e) {
+				Activator.logError(e.getMessage(), e);
+			}
+		}
+		return filter;
 	}
 
 	// keep track of the path of an ancestor (for following renames)
