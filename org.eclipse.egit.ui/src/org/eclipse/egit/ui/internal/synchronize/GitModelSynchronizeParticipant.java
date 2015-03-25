@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2014 Dariusz Luksza <dariusz@luksza.org> and others.
+ * Copyright (C) 2010, 2015 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,6 +10,7 @@
  *     Dariusz Luksza <dariusz@luksza.org> - initial API and implementation
  *     Laurent Goubet <laurent.goubet@obeo.fr> - Logical Model enhancements
  *     Gunnar Wagenknecht <gunnar@wagenknecht.org> - Logical Model enhancements
+ *     Axel Richard <axel.richard@obeo.fr> - Logical Model enhancements
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize;
 
@@ -251,6 +252,12 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 						final ITypedElement newSource = new FileRevisionTypedElement(
 								revision, getLocalEncoding(resource));
 						((ResourceDiffCompareInput) input).setLeft(newSource);
+					}
+					if (input.getRight() == null) {
+						final ITypedElement newEmptyRemote = new GitCompareFileRevisionEditorInput.EmptyTypedElement(
+								resource.getName());
+						((ResourceDiffCompareInput) input)
+								.setRight(newEmptyRemote);
 					}
 				} catch (TeamException e) {
 					// Keep the input from super as-is
