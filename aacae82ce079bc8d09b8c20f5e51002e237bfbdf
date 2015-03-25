@@ -16,6 +16,24 @@
       "revId": "aacae82ce079bc8d09b8c20f5e51002e237bfbdf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_3d30adeb",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-25T22:33:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7fb1785_9fe9fc7a",
+      "revId": "aacae82ce079bc8d09b8c20f5e51002e237bfbdf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
