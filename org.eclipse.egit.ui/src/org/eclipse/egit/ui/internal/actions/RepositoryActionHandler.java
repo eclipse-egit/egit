@@ -47,7 +47,6 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.CommonUtils;
-import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -540,7 +539,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 				.getBoolean(UIPreferences.USE_LOGICAL_MODEL)) {
 			return filter;
 		}
-		ResourceMappingContext mappingContext = CompareUtils.prepareContext(
+		ResourceMappingContext mappingContext = ResourceUtil.prepareContext(
 				repository, Constants.HEAD, Constants.HEAD, true);
 		final ResourceMapping[] mappings = ResourceUtil.getResourceMappings(
 				resource, mappingContext);
