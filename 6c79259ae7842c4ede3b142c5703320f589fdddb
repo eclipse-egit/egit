@@ -1,0 +1,330 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_631e16f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-26T14:25:37Z",
+      "side": 1,
+      "message": "Don\u0027t add an Also-by entry for the commit author, maybe you meant someone else",
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_437e7a8b",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriberTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-26T14:25:37Z",
+      "side": 1,
+      "message": "create this in a try-with-resource statement to ensure that the walk is closed when it\u0027s no longer needed",
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_e3fa0682",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProviderTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-26T14:25:37Z",
+      "side": 1,
+      "message": "create this in a try-with-resource statement to ensure that the walk is closed when it\u0027s no longer needed",
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_03f1128a",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProviderTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-26T14:25:37Z",
+      "side": 1,
+      "message": "why a NameConflictTreeWalk which is more expensive than a plain TreeWalk ?",
+      "range": {
+        "startLine": 61,
+        "startChar": 20,
+        "endLine": 61,
+        "endChar": 40
+      },
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_c3738a8b",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProviderTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-26T14:25:37Z",
+      "side": 1,
+      "message": "it looks like some of the code above could be moved into the TreeWalkResourceVariantTreeProvider, instead of passing a configured TreeWalk and 3 indices you could instead pass the repo and the 3 versions into the constructor. Then both the TreeWalk and the RevWalk would be internals of the provider\u0027s implementation.\n\nthen the constructor\u0027s signature would look like\n\n TreeWalkResourceVariantTreeProvider(Repository repo, AnyObjectId base, \n       AnyObjectId ours, AnyObjectId theirs)\n\n\nIs the common base determined by the merge implementation ?",
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_03c632e1",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/VariantsTestCase.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-26T14:25:37Z",
+      "side": 1,
+      "message": "use try-with-resource instead:\n\ntry (Scanner scanner \u003d new Scanner() {\n\n}",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 3
+      },
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_208a4427",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/coretext.properties",
+        "patchSetId": 7
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-26T14:25:37Z",
+      "side": 1,
+      "message": "s/Variant/Variant Tree/ ?",
+      "range": {
+        "startLine": 159,
+        "startChar": 53,
+        "endLine": 159,
+        "endChar": 61
+      },
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_83b18278",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/DirCacheResourceVariantTreeProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-26T14:25:37Z",
+      "side": 1,
+      "message": "I\u0027d write STAGE_0 here to make it explicit that we skip stage 0 (no conflict)",
+      "range": {
+        "startLine": 85,
+        "startChar": 3,
+        "endLine": 85,
+        "endChar": 10
+      },
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_201c0470",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/GitSyncInfoToDiffConverter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-26T14:25:37Z",
+      "side": 1,
+      "message": "s/side a/side of a/",
+      "range": {
+        "startLine": 118,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 18
+      },
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_a02f548e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/GitSyncInfoToDiffConverter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-26T14:25:37Z",
+      "side": 1,
+      "message": "copied",
+      "range": {
+        "startLine": 135,
+        "startChar": 4,
+        "endLine": 135,
+        "endChar": 15
+      },
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_802a187c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/GitSyncInfoToDiffConverter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-26T14:25:37Z",
+      "side": 1,
+      "message": "copied",
+      "range": {
+        "startLine": 164,
+        "startChar": 4,
+        "endLine": 164,
+        "endChar": 15
+      },
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_40bb10ba",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-26T14:25:37Z",
+      "side": 1,
+      "message": "do you want it to contain all resources or only those which differ between the different trees this TreeWalk is configured to walk, usually most of the trees/files are unchanged between versions involved in a merge so traversing also the unchanged resources implies a lot of overhead.\n\nIf you are only interested in the resources which are different between the trees in the TreeWalk you should add an TreeFilter.ANY_DIFF filter to the TreeWalk. This will ensure that the walk skips all resources which don\u0027t have differences between the 3 trees.",
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_23cd2e2f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-26T14:25:37Z",
+      "side": 1,
+      "message": "I think the signature should be changed to what I proposed in https://git.eclipse.org/r/#/c/42873/7/org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProviderTest.java",
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_007e2854",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-26T14:25:37Z",
+      "side": 1,
+      "message": "this array is unused, so why is it created ?",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 69
+      },
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_60b28ccf",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-26T14:25:37Z",
+      "side": 1,
+      "message": "I think this should read:\n\n if (resource !\u003d null \u0026\u0026 resource.getProject().isAccessible())",
+      "range": {
+        "startLine": 101,
+        "startChar": 7,
+        "endLine": 101,
+        "endChar": 23
+      },
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_438e7ab9",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/AbstractGitResourceVariant.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-26T14:25:37Z",
+      "side": 1,
+      "message": "wouldn\u0027t it be safer to not store this redundantly as it\u0027s already part of the path ?",
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
