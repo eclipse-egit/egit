@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_4e7a2130",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/NetUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-27T08:24:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7fb1785_6e8efd07",
+      "revId": "413ae4496e9ecedd5c626c23afb349191177af59",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_2e2a3530",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/NetUtil.java",
         "patchSetId": 1
@@ -48,6 +66,42 @@
       "side": 1,
       "message": "What a severe bug. Thanks, good catch!",
       "parentUuid": "a7fb1785_2e2a3530",
+      "revId": "413ae4496e9ecedd5c626c23afb349191177af59",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_2e75153d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/NetUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-27T08:24:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7fb1785_2e2a3530",
+      "revId": "413ae4496e9ecedd5c626c23afb349191177af59",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_d44dfe19",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/NetUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-27T08:24:18Z",
+      "side": 1,
+      "message": "found this by testing with ssl.Verify\u003dfalse against a server using a certificate my JVM didn\u0027t trust ;-)",
+      "parentUuid": "a7fb1785_3475623d",
       "revId": "413ae4496e9ecedd5c626c23afb349191177af59",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
