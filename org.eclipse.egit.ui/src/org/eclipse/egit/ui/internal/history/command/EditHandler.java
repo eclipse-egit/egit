@@ -33,6 +33,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.progress.UIJob;
 
@@ -70,8 +71,8 @@ public class EditHandler extends AbstractHistoryCommandHandler {
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
 				try {
-					IWorkbenchPage workbenchPage = getPage().getSite()
-							.getPage();
+					IWorkbenchPage workbenchPage = PlatformUI.getWorkbench()
+							.getActiveWorkbenchWindow().getActivePage();
 					final StagingView stagingView = (StagingView) workbenchPage
 							.showView(StagingView.VIEW_ID);
 					stagingView.reload(repository);
