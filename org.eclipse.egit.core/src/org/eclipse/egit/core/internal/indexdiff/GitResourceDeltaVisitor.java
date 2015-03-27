@@ -14,6 +14,7 @@ package org.eclipse.egit.core.internal.indexdiff;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -46,9 +47,9 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 
 	private final Repository repository;
 
-	private final Collection<String> filesToUpdate;
+	private Collection<String> filesToUpdate;
 
-	private final Collection<IResource> resourcesToUpdate;
+	private Collection<IResource> resourcesToUpdate;
 
 	private boolean gitIgnoreChanged = false;
 
@@ -61,13 +62,14 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 	 */
 	public GitResourceDeltaVisitor(Repository repository) {
 		this.repository = repository;
-
-		filesToUpdate = new HashSet<String>();
-		resourcesToUpdate = new HashSet<IResource>();
 	}
 
 	public boolean visit(IResourceDelta delta) throws CoreException {
 		final IResource resource = delta.getResource();
+
+		if (resource.isDerived()) {
+			return false;
+		}
 		// If the resource is not part of a project under
 		// Git revision control
 		final RepositoryMapping mapping = RepositoryMapping
@@ -89,8 +91,8 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 			if (isIgnoredInOldIndex(entry, path))
 				return true; // keep going to catch .gitignore files.
 
-			filesToUpdate.add(path);
-			resourcesToUpdate.add(resource);
+			getFilesToUpdateLazily().add(path);
+			getResourcesToUpdateLazily().add(resource);
 			return true;
 		}
 
@@ -121,8 +123,8 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 			// change: ignore the delta to avoid unnecessary index updates
 			return false;
 		}
-		filesToUpdate.add(repoRelativePath);
-		resourcesToUpdate.add(resource);
+		getFilesToUpdateLazily().add(repoRelativePath);
+		getResourcesToUpdateLazily().add(resource);
 
 		return true;
 	}
@@ -177,6 +179,9 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 	 * @return collection of resources to update
 	 */
 	public Collection<IResource> getResourcesToUpdate() {
+		if (resourcesToUpdate == null) {
+			return Collections.emptySet();
+		}
 		return resourcesToUpdate;
 	}
 
@@ -184,6 +189,9 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 	 * @return collection of files / folders to update. Folder paths end with /
 	 */
 	public Collection<String> getFilesToUpdate() {
+		if (filesToUpdate == null) {
+			return Collections.emptySet();
+		}
 		return filesToUpdate;
 	}
 
@@ -193,5 +201,20 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 	 */
 	public boolean getGitIgnoreChanged() {
 		return gitIgnoreChanged;
+	}
+
+	private Collection<String> getFilesToUpdateLazily() {
+		if (filesToUpdate == null) {
+			filesToUpdate = new HashSet<String>();
+		}
+
+		return filesToUpdate;
+	}
+
+	private Collection<IResource> getResourcesToUpdateLazily() {
+		if (resourcesToUpdate == null) {
+			resourcesToUpdate = new HashSet<IResource>();
+		}
+		return resourcesToUpdate;
 	}
 }
