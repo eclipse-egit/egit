@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_773fe93d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-28T00:07:36Z",
+      "side": 1,
+      "message": "style nits:\n\nwe reference the bug in the footer in the following format\n\n Bug: 463296\n\nThe commit message header is too wide, keep it \u003c 70 characters,\nsee https://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "revId": "041acc004365dacc88ede970c62e1a12163a3bd2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_37f72100",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-28T00:07:36Z",
+      "side": 1,
+      "message": "no, I think this is not ok since then EGit and git-core would show different status\n\nyou can already configure EGit to auto-ignore derived resources (\"Preferences \u003e Team \u003e Git \u003e Projects \u003e Automatically ignore derived resources by adding them to .gitignore\"). That\u0027s done by adding derived resources to .gitignore and this ensures git-core shows the same status as EGit does.",
+      "revId": "041acc004365dacc88ede970c62e1a12163a3bd2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_77f1a906",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-28T00:07:36Z",
+      "side": 1,
+      "message": "why do we need two implementations ? Couldn\u0027t we replace the current getFilesToUpdate() with this implementation",
+      "revId": "041acc004365dacc88ede970c62e1a12163a3bd2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
