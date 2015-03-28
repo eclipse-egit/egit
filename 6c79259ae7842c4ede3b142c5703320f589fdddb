@@ -299,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_37a9e1dc",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/DirCacheResourceVariantTreeProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-28T00:39:47Z",
+      "side": 1,
+      "message": "good catch",
+      "parentUuid": "a7fb1785_8ebc09a2",
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_83b18278",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/DirCacheResourceVariantTreeProvider.java",
         "patchSetId": 7
@@ -351,6 +369,24 @@
       "writtenOn": "2015-03-27T17:29:58Z",
       "side": 1,
       "message": "This doesn\u0027t look good since the variant is already stored in the parent. Plus, each method need to check the type of the variant.\nLet\u0027s use a more object-oriented approach.",
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_17a4a501",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/GitResourceVariantFileRevision.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-28T00:39:47Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "a7fb1785_248ed1b8",
       "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -550,6 +586,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_9783755a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-28T00:39:47Z",
+      "side": 1,
+      "message": "which change is that ? can you rebase it on top of this change so that I can see how you intend to use this ?",
+      "parentUuid": "a7fb1785_c421cda8",
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_007e2854",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProvider.java",
         "patchSetId": 7
@@ -626,6 +680,29 @@
       "side": 1,
       "message": "Done.",
       "parentUuid": "a7fb1785_60b28ccf",
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_77a369fa",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-28T00:39:47Z",
+      "side": 1,
+      "message": "I don\u0027t understand why this is needed, you set these trees above in line 72-75 and here you reset them, but they are not used anywhere\n\nLooks like line 72-75 and 119-122 can be deleted without changing the observable behavior of this method",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 3
+      },
       "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
