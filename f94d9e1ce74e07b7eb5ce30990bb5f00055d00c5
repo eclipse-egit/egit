@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_979895ce",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriberTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-28T00:39:35Z",
+      "side": 1,
+      "message": "you can close the try block after line 283 since then you don\u0027t need the revwalk any longer",
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_17bdc51d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriberTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-28T00:39:35Z",
+      "side": 1,
+      "message": "why a NameConflictTreeWalk ?",
+      "range": {
+        "startLine": 284,
+        "startChar": 21,
+        "endLine": 284,
+        "endChar": 41
+      },
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_77cc09cf",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriberTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-28T00:39:35Z",
+      "side": 1,
+      "message": "why a NameConflictTreeWalk ?",
+      "range": {
+        "startLine": 313,
+        "startChar": 21,
+        "endLine": 313,
+        "endChar": 41
+      },
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_57c74da9",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriberTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-28T00:39:35Z",
+      "side": 1,
+      "message": "why a NameConflictTreeWalk ?",
+      "range": {
+        "startLine": 347,
+        "startChar": 21,
+        "endLine": 347,
+        "endChar": 41
+      },
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_b795d197",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProviderTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-28T00:39:35Z",
+      "side": 1,
+      "message": "you can close the try block after line 59 since then you don\u0027t need the revwalk any longer",
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_f78f5985",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/DirCacheResourceVariantTreeProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-28T00:39:35Z",
+      "side": 1,
+      "message": "would look nicer as the first case in this switch statement\n\nput the comment on an extra line after case statement",
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_d7921daa",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/DirCacheResourceVariantTreeProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-28T00:39:35Z",
+      "side": 1,
+      "message": "I think \"default:\" isn\u0027t needed since there\u0027s no other stage",
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_579e2db5",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/AbstractGitResourceVariant.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-28T00:39:35Z",
+      "side": 1,
+      "message": "funny, this should also work when there is no separator in the path since -1+1\u003d0 :-)",
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
