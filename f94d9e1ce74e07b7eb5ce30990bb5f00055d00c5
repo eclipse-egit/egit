@@ -139,6 +139,52 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_b7679143",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-28T00:41:12Z",
+      "side": 1,
+      "message": "s/an/a/",
+      "range": {
+        "startLine": 28,
+        "startChar": 14,
+        "endLine": 28,
+        "endChar": 16
+      },
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_176f8521",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-28T00:41:12Z",
+      "side": 1,
+      "message": "I guess you mean a remote tracking branch",
+      "range": {
+        "startLine": 32,
+        "startChar": 38,
+        "endLine": 32,
+        "endChar": 44
+      },
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_579e2db5",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/AbstractGitResourceVariant.java",
         "patchSetId": 8
