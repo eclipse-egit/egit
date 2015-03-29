@@ -33,6 +33,8 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.jobs.IJobManager;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.TreeWalk;
@@ -297,6 +299,43 @@ public class TestUtils {
 				message.append(" ");
 			}
 			fail(message.toString());
+		}
+	}
+
+	/**
+	 * Waits at least 50 milliseconds until no jobs of given family are running
+	 *
+	 * @param maxWaitTime
+	 * @param family
+	 * @throws InterruptedException
+	 */
+	public void waitForJobs(long maxWaitTime, Object family)
+			throws InterruptedException {
+		waitForJobs(maxWaitTime, 50, family);
+	}
+
+	/**
+	 * Waits at least <code>minWaitTime</code> milliseconds until no jobs of
+	 * given family are running
+	 *
+	 * @param maxWaitTime
+	 * @param minWaitTime
+	 * @param family
+	 * @throws InterruptedException
+	 */
+	public void waitForJobs(long maxWaitTime, long minWaitTime, Object family)
+			throws InterruptedException {
+		Thread.sleep(minWaitTime);
+		long start = System.currentTimeMillis();
+		IJobManager jobManager = Job.getJobManager();
+
+		Job[] jobs = jobManager.find(family);
+		while (jobs.length > 0) {
+			Thread.sleep(100);
+			jobs = jobManager.find(family);
+			if (System.currentTimeMillis() - start > maxWaitTime) {
+				return;
+			}
 		}
 	}
 

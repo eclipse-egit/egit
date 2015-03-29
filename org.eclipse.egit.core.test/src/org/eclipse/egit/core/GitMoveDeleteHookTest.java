@@ -146,8 +146,9 @@ public class GitMoveDeleteHookTest {
 				"some text");
 		testUtils.addFileToProject(project.getProject(), "file2.txt",
 				"some  more text");
+		IFile file = project.getProject().getFile("file.txt");
 		AddToIndexOperation addToIndexOperation = new AddToIndexOperation(
-				new IResource[] { project.getProject().getFile("file.txt"),
+				new IResource[] { file,
 						project.getProject().getFile("file2.txt") });
 		addToIndexOperation.execute(null);
 
@@ -158,9 +159,12 @@ public class GitMoveDeleteHookTest {
 		assertNotNull(dirCache.getEntry("file.txt"));
 		assertNotNull(dirCache.getEntry("file2.txt"));
 		// Modify the content before the move
-		testUtils.changeContentOfFile(project.getProject(), project
-				.getProject().getFile("file.txt"), "other text");
-		project.getProject().getFile("file.txt").delete(true, null);
+		testUtils.changeContentOfFile(project.getProject(), file, "other text");
+		testUtils.waitForJobs(10000, 1000, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+
+		file.delete(true, null);
+
+		testUtils.waitForJobs(10000, 1000, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		// Check index for the deleted file
 		dirCache.read();
@@ -168,7 +172,7 @@ public class GitMoveDeleteHookTest {
 		assertNull(dirCache.getEntry("file.txt"));
 		assertNotNull(dirCache.getEntry("file2.txt"));
 		// Actual file is deleted
-		assertFalse(project.getProject().getFile("file.txt").exists());
+		assertFalse(file.exists());
 		// But a non-affected file remains
 		assertTrue(project.getProject().getFile("file2.txt").exists());
 	}
