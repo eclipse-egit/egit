@@ -201,8 +201,8 @@ public class GitProjectData {
 	public synchronized static GitProjectData get(final IProject p) {
 		try {
 			GitProjectData d = lookup(p);
-			if (d == null
-					&& RepositoryProvider.getProvider(p) instanceof GitProvider) {
+			if (d == null && RepositoryProvider.getProvider(p,
+					GitProvider.ID) != null) {
 				d = new GitProjectData(p).load();
 				cache(p, d);
 			}
