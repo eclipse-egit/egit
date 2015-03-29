@@ -131,16 +131,20 @@ class BranchProjectTracker {
 		final String workDir = repository.getWorkTree().getAbsolutePath();
 		for (IProject project : projects) {
 			IPath path = project.getLocation();
-			if (path == null)
+			if (path == null) {
 				continue;
+			}
 			// Only remember mapped projects
-			if (!(RepositoryProvider.getProvider(project) instanceof GitProvider))
+			if (RepositoryProvider.getProvider(project,
+					GitProvider.ID) == null) {
 				continue;
+			}
 			String fullPath = path.toOSString();
 			if (fullPath.startsWith(workDir)) {
 				String relative = fullPath.substring(workDir.length());
-				if (relative.length() == 0)
+				if (relative.length() == 0) {
 					relative = REPO_ROOT;
+				}
 				IMemento child = memento.createChild(KEY_PROJECT);
 				child.putTextData(relative);
 			}
