@@ -130,16 +130,17 @@ public class LinkedResourcesTest {
 						.getLocation(), 0, null);
 		// Make sure linked folder is refreshed
 		folder.refreshLocal(IResource.DEPTH_INFINITE, null);
+		project2.getFile("project2folder1/project2folder1file1.txt")
+				.touch(null);
 
 		// Links are written to the .project file
 		resourceDeltaTestHelper1
 				.assertChangedResources(new String[] { "/project1/.project" });
+
+
 		// Changes to linked resources are reported against their repository
 		resourceDeltaTestHelper2.assertChangedResources(new String[] {
-						"/project1/link2project2/project2folder1",
-						"/project1/link2project2/.project",
-						"/project1/link2project2/project2folder1/project2folder1file1.txt",
-						"/project1/link2project2" });
+				"/project2/project2folder1/project2folder1file1.txt" });
 	}
 
 	@Test
