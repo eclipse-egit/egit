@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_5cb00d72",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriberTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-30T22:57:14Z",
+      "side": 1,
+      "message": "you are right",
+      "parentUuid": "a7fb1785_155c9dc4",
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_17bdc51d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriberTest.java",
         "patchSetId": 8
@@ -72,6 +90,24 @@
       "side": 1,
       "message": "Argh. Copy/paste...\nDone.",
       "parentUuid": "a7fb1785_17bdc51d",
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_bca01124",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriberTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-30T22:57:14Z",
+      "side": 1,
+      "message": "where ? you didn\u0027t push a new patchset",
+      "parentUuid": "a7fb1785_755b61cd",
       "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -195,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_fc9619cf",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProviderTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-30T22:57:14Z",
+      "side": 1,
+      "message": "you are right, no need to change this",
+      "parentUuid": "a7fb1785_95bb6d5d",
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_f78f5985",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/DirCacheResourceVariantTreeProvider.java",
         "patchSetId": 8
@@ -230,6 +284,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_dc9b5df6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/DirCacheResourceVariantTreeProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-30T22:57:14Z",
+      "side": 1,
+      "message": "where ? you didn\u0027t push a new patchset",
+      "parentUuid": "a7fb1785_d5c5f5d5",
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_d7921daa",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/DirCacheResourceVariantTreeProvider.java",
         "patchSetId": 8
@@ -259,6 +331,24 @@
       "side": 1,
       "message": "I would let it and throw an IllegalStateException then, It seems the safest way of handling that. Is that ok for you?",
       "parentUuid": "a7fb1785_d7921daa",
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_3c9421c5",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/DirCacheResourceVariantTreeProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-30T22:57:14Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "a7fb1785_f5c2b1cc",
       "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -376,6 +466,24 @@
       "side": 1,
       "message": "Yes, I did that on purpose actually ;)",
       "parentUuid": "a7fb1785_579e2db5",
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_7c8a29a4",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/AbstractGitResourceVariant.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-30T22:57:14Z",
+      "side": 1,
+      "message": ":-)",
+      "parentUuid": "a7fb1785_75b6c171",
       "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
