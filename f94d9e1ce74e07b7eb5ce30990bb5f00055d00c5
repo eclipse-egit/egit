@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_155c9dc4",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriberTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-30T07:47:27Z",
+      "side": 1,
+      "message": "I thought of that, but I\u0027d have to declare the 3 RevTree variables before the block, it would add lines for nothing.\nDo you want me to do it anyway?",
+      "parentUuid": "a7fb1785_979895ce",
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_17bdc51d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriberTest.java",
         "patchSetId": 8
@@ -36,6 +54,24 @@
         "endLine": 284,
         "endChar": 41
       },
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_755b61cd",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriberTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-30T07:47:27Z",
+      "side": 1,
+      "message": "Argh. Copy/paste...\nDone.",
+      "parentUuid": "a7fb1785_17bdc51d",
       "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -65,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_555625a4",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriberTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-30T07:47:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7fb1785_77cc09cf",
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_57c74da9",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriberTest.java",
         "patchSetId": 8
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_b5b82963",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriberTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-30T07:47:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7fb1785_57c74da9",
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_b795d197",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProviderTest.java",
         "patchSetId": 8
@@ -99,6 +171,24 @@
       "writtenOn": "2015-03-28T00:39:35Z",
       "side": 1,
       "message": "you can close the try block after line 59 since then you don\u0027t need the revwalk any longer",
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_95bb6d5d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProviderTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-30T07:47:27Z",
+      "side": 1,
+      "message": "Same question: Do you want me to declare the RevTree variables before?",
+      "parentUuid": "a7fb1785_b795d197",
       "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_d5c5f5d5",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/DirCacheResourceVariantTreeProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-30T07:47:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7fb1785_f78f5985",
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_d7921daa",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/DirCacheResourceVariantTreeProvider.java",
         "patchSetId": 8
@@ -133,6 +241,24 @@
       "writtenOn": "2015-03-28T00:39:35Z",
       "side": 1,
       "message": "I think \"default:\" isn\u0027t needed since there\u0027s no other stage",
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_f5c2b1cc",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/DirCacheResourceVariantTreeProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-30T07:47:27Z",
+      "side": 1,
+      "message": "I would let it and throw an IllegalStateException then, It seems the safest way of handling that. Is that ok for you?",
+      "parentUuid": "a7fb1785_d7921daa",
       "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -162,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_35ac3924",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-30T07:47:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7fb1785_b7679143",
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_176f8521",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriber.java",
         "patchSetId": 8
@@ -185,6 +329,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_55b10575",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-30T07:47:27Z",
+      "side": 1,
+      "message": "No, actually we just meant \"branch\" instead of \"remote branch\".",
+      "parentUuid": "a7fb1785_176f8521",
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_579e2db5",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/AbstractGitResourceVariant.java",
         "patchSetId": 8
@@ -196,6 +358,24 @@
       "writtenOn": "2015-03-28T00:39:35Z",
       "side": 1,
       "message": "funny, this should also work when there is no separator in the path since -1+1\u003d0 :-)",
+      "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_75b6c171",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/AbstractGitResourceVariant.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-30T07:47:27Z",
+      "side": 1,
+      "message": "Yes, I did that on purpose actually ;)",
+      "parentUuid": "a7fb1785_579e2db5",
       "revId": "f94d9e1ce74e07b7eb5ce30990bb5f00055d00c5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
