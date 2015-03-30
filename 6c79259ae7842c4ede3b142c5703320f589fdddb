@@ -604,6 +604,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_b5ae69ef",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-30T07:51:44Z",
+      "side": 1,
+      "message": "Sure! It\u0027s change #22674, I will rebase it and push it later today.",
+      "parentUuid": "a7fb1785_9783755a",
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_007e2854",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProvider.java",
         "patchSetId": 7
@@ -703,6 +721,24 @@
         "endLine": 122,
         "endChar": 3
       },
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_f5b8f131",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-03-30T07:51:44Z",
+      "side": 1,
+      "message": "I must have misunderstood the way TreeWalk works:\n\nI thought that iterating over the TreeWalk (lines 81 and 113-114) actually changes the state of its trees. Isn\u0027t it the case?",
+      "parentUuid": "a7fb1785_77a369fa",
       "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
