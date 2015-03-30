@@ -551,6 +551,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_1c9165d4",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-03-30T22:57:31Z",
+      "side": 1,
+      "message": "using ANY_DIFF has a huge impact on performance, typically there are many thousands of unchanged objects and only a few changed, with ANY_DIFF filter you will only traverse the changed objects otherwise all of them",
+      "parentUuid": "a7fb1785_2ecb55c9",
+      "revId": "6c79259ae7842c4ede3b142c5703320f589fdddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_23cd2e2f",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProvider.java",
         "patchSetId": 7
