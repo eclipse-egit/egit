@@ -33,6 +33,24 @@
       "revId": "03343a995b0c0cca1dcdd99c116b6182fc815672",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_3f841317",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-03-31T04:43:18Z",
+      "side": 1,
+      "message": "Leftover from experiments with folders.",
+      "parentUuid": "a7fb1785_fc01f911",
+      "revId": "03343a995b0c0cca1dcdd99c116b6182fc815672",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
