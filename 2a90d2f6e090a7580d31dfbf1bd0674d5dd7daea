@@ -104,6 +104,24 @@
       "revId": "2a90d2f6e090a7580d31dfbf1bd0674d5dd7daea",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_b1ae729e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-04-01T15:02:54Z",
+      "side": 1,
+      "message": "I guess we rather lack some initialization in the code reusing this TreeWalk after it has been reset",
+      "parentUuid": "a7fb1785_9116d67a",
+      "revId": "2a90d2f6e090a7580d31dfbf1bd0674d5dd7daea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
