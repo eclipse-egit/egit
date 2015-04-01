@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_d12cded2",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/merge/GitResourceVariantTreeSubscriberTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-04-01T14:49:01Z",
+      "side": 1,
+      "message": "I agrree too.",
+      "parentUuid": "a7fb1785_967b6ce0",
+      "revId": "2a90d2f6e090a7580d31dfbf1bd0674d5dd7daea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_f68c708b",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProvider.java",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a7fb1785_71136a8b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-04-01T14:49:01Z",
+      "side": 1,
+      "message": "I agree here, the API is much cleaner without the 3 indexes :)",
+      "parentUuid": "a7fb1785_f68c708b",
+      "revId": "2a90d2f6e090a7580d31dfbf1bd0674d5dd7daea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fb1785_567584ec",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProvider.java",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2015-04-01T14:36:45Z",
       "side": 1,
       "message": "this still looks fishy to me, but I didn\u0027t yet find a solution which doesn\u0027t break the tests, will ask Chris to have a look next week when he\u0027s back from vacation",
+      "revId": "2a90d2f6e090a7580d31dfbf1bd0674d5dd7daea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_9116d67a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-04-01T14:49:01Z",
+      "side": 1,
+      "message": "I wonder if what we need here is some kind of clone() on TreeWalk and its subclasses?\nIt\u0027d allow us to iterate a copy of the given treewalk without side-effects and no reset would be needed.",
+      "parentUuid": "a7fb1785_567584ec",
       "revId": "2a90d2f6e090a7580d31dfbf1bd0674d5dd7daea",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
