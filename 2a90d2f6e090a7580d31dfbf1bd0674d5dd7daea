@@ -122,6 +122,24 @@
       "revId": "2a90d2f6e090a7580d31dfbf1bd0674d5dd7daea",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_dc57d22c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/merge/TreeWalkResourceVariantTreeProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-04-02T13:35:49Z",
+      "side": 1,
+      "message": "Now that the TreeFilter.ANY_DIFF filter is used, it\u0027s impossible to iterate twice on the received TreeWalk: resetting the trees is not sufficient, because the DirCacheBuildIterator will try to add to the index files that have been already added to the DirCache.\n\nThe exception that occurs then is: \"Duplicate stages not allowed: 0 \u003cfile name\u003e\".",
+      "parentUuid": "a7fb1785_b1ae729e",
+      "revId": "2a90d2f6e090a7580d31dfbf1bd0674d5dd7daea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
