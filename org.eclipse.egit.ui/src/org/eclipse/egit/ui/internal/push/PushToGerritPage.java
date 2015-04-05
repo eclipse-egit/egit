@@ -15,6 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -320,7 +321,12 @@ class PushToGerritPage extends WizardPage {
 					// simply ignore, no proposals then
 				}
 
-				for (final String proposal : proposals) {
+				ArrayList<String> sortedProposals = new ArrayList<String>(
+						proposals);
+				Collections
+						.sort(sortedProposals, String.CASE_INSENSITIVE_ORDER);
+
+				for (final String proposal : sortedProposals) {
 					if (pattern != null && !pattern.matcher(proposal).matches())
 						continue;
 					IContentProposal propsal = new BranchContentProposal(
