@@ -314,7 +314,8 @@ class PushToGerritPage extends WizardPage {
 					pattern = null;
 				}
 
-				Set<String> proposals = new TreeSet<String>();
+				Set<String> proposals = new TreeSet<String>(
+						String.CASE_INSENSITIVE_ORDER);
 
 				try {
 					Set<String> remotes = repository.getRefDatabase()
