@@ -127,7 +127,9 @@ public class ConfigureGerritAfterCloneTask implements PostCloneTask {
 		}
 
 		if (path != null && (HTTP.equals(s) || HTTPS.equals(s))) {
-			String baseURL = uri.substring(0, uri.lastIndexOf(path));
+			String uriDecoded = u.toString();
+			String baseURL = uriDecoded.substring(0,
+					uriDecoded.lastIndexOf(path));
 			String tmpPath = ""; //$NON-NLS-1$
 			HttpURLConnection httpConnection = null;
 			try {
