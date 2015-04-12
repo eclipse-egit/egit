@@ -106,6 +106,7 @@ public class RebaseInteractiveStepActionToolBarProvider {
 		itemPick.addSelectionListener(new ActionSelectionListener(
 				RebaseInteractivePlan.ElementAction.PICK));
 		itemPick.setText(UIText.RebaseInteractiveStepActionToolBarProvider_PickText);
+		itemPick.setToolTipText(UIText.RebaseInteractiveStepActionToolBarProvider_PickDesc);
 		rebaseActionItems[0] = itemPick;
 
 		itemSkip = new ToolItem(theToolbar, SWT.RADIO);
@@ -113,6 +114,7 @@ public class RebaseInteractiveStepActionToolBarProvider {
 		itemSkip.addSelectionListener(new ActionSelectionListener(
 				RebaseInteractivePlan.ElementAction.SKIP));
 		itemSkip.setText(UIText.RebaseInteractiveStepActionToolBarProvider_SkipText);
+		itemSkip.setToolTipText(UIText.RebaseInteractiveStepActionToolBarProvider_SkipDesc);
 		rebaseActionItems[1] = itemSkip;
 
 		itemEdit = new ToolItem(theToolbar, SWT.RADIO);
@@ -120,6 +122,7 @@ public class RebaseInteractiveStepActionToolBarProvider {
 		itemEdit.addSelectionListener(new ActionSelectionListener(
 				RebaseInteractivePlan.ElementAction.EDIT));
 		itemEdit.setText(UIText.RebaseInteractiveStepActionToolBarProvider_EditText);
+		itemEdit.setToolTipText(UIText.RebaseInteractiveStepActionToolBarProvider_EditDesc);
 		rebaseActionItems[2] = itemEdit;
 
 		itemSquash = new ToolItem(theToolbar, SWT.RADIO);
@@ -128,6 +131,8 @@ public class RebaseInteractiveStepActionToolBarProvider {
 				RebaseInteractivePlan.ElementAction.SQUASH));
 		itemSquash
 				.setText(UIText.RebaseInteractiveStepActionToolBarProvider_SquashText);
+		itemSquash
+				.setToolTipText(UIText.RebaseInteractiveStepActionToolBarProvider_SquashDesc);
 		rebaseActionItems[3] = itemSquash;
 
 		itemFixup = new ToolItem(theToolbar, SWT.RADIO);
@@ -136,6 +141,8 @@ public class RebaseInteractiveStepActionToolBarProvider {
 				RebaseInteractivePlan.ElementAction.FIXUP));
 		itemFixup
 				.setText(UIText.RebaseInteractiveStepActionToolBarProvider_FixupText);
+		itemFixup
+				.setToolTipText(UIText.RebaseInteractiveStepActionToolBarProvider_FixupDesc);
 		rebaseActionItems[4] = itemFixup;
 
 		itemReword = new ToolItem(theToolbar, SWT.RADIO);
@@ -144,6 +151,8 @@ public class RebaseInteractiveStepActionToolBarProvider {
 				RebaseInteractivePlan.ElementAction.REWORD));
 		itemReword
 				.setText(UIText.RebaseInteractiveStepActionToolBarProvider_RewordText);
+		itemReword
+				.setToolTipText(UIText.RebaseInteractiveStepActionToolBarProvider_RewordDesc);
 		rebaseActionItems[5] = itemReword;
 
 		new ToolItem(theToolbar, SWT.SEPARATOR);
@@ -152,6 +161,8 @@ public class RebaseInteractiveStepActionToolBarProvider {
 		itemMoveUp.setImage(getImage(UIIcons.ELCL16_PREVIOUS));
 		itemMoveUp
 				.setText(UIText.RebaseInteractiveStepActionToolBarProvider_MoveUpText);
+		itemMoveUp
+				.setToolTipText(UIText.RebaseInteractiveStepActionToolBarProvider_MoveUpDesc);
 		itemMoveUp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -175,6 +186,8 @@ public class RebaseInteractiveStepActionToolBarProvider {
 		itemMoveDown.setImage(getImage(UIIcons.ELCL16_NEXT));
 		itemMoveDown
 				.setText(UIText.RebaseInteractiveStepActionToolBarProvider_MoveDownText);
+		itemMoveDown
+				.setToolTipText(UIText.RebaseInteractiveStepActionToolBarProvider_MoveDownDesc);
 		itemMoveDown.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
