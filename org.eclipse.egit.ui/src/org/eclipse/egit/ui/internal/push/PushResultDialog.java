@@ -118,7 +118,8 @@ class PushResultDialog extends TitleAreaDialog {
 		} else
 			title = NLS.bind(UIText.PushResultDialog_label, destinationString);
 		setTitle(title);
-		final PushResultTable table = new PushResultTable(composite);
+		final PushResultTable table = new PushResultTable(composite,
+				getDialogBoundsSettings());
 		table.setData(localDb, result);
 		final Control tableControl = table.getControl();
 		final GridData tableLayout = new GridData(SWT.FILL, SWT.FILL, true,
