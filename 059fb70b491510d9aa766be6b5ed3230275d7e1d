@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_5c257434",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-04-20T22:17:04Z",
+      "side": 1,
+      "message": "this depends on the selected ordering of the steps in the interactive rebase view, double click the step\u0027s column header to flip the order, either flip texts in this case (we also flip the icons displayed in the table) or choose a neutral text which doesn\u0027t need to change if displayed step order is flipped",
+      "range": {
+        "startLine": 326,
+        "startChar": 96,
+        "endLine": 326,
+        "endChar": 101
+      },
+      "revId": "059fb70b491510d9aa766be6b5ed3230275d7e1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_3c22282d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-04-20T22:17:04Z",
+      "side": 1,
+      "message": "like above, this depends on the selected ordering of the steps",
+      "range": {
+        "startLine": 328,
+        "startChar": 92,
+        "endLine": 328,
+        "endChar": 99
+      },
+      "revId": "059fb70b491510d9aa766be6b5ed3230275d7e1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
