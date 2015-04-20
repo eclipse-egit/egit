@@ -301,6 +301,9 @@ public class CoreText extends NLS {
 	public static String PushOperation_taskNameNormalRun;
 
 	/** */
+	public static String RenameRemoteOperation_TaskName;
+
+	/** */
 	public static String AddToIndexOperation_failed;
 
 	/** */
