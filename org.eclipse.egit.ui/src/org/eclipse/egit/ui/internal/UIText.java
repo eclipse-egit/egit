@@ -3860,6 +3860,21 @@ public class UIText extends NLS {
 	public static String MergeTargetSelectionDialog_MergeTypeSquashButton;
 
 	/** */
+	public static String RemoteRenameDialog_Message;
+
+	/** */
+	public static String RemoteRenameDialog_NewNameLabel;
+
+	/** */
+	public static String RemoteRenameDialog_RenameExceptionMessage;
+
+	/** */
+	public static String RemoteRenameDialog_Title;
+
+	/** */
+	public static String RemoteRenameDialog_WindowTitle;
+
+	/** */
 	public static String MixedResetToRevisionAction_mixedReset;
 
 	/** */
@@ -4774,6 +4789,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String ValidationUtils_RefNameConflictsWithExistingMessage;
+
+	/** */
+	public static String ValidationUtils_RemoteAlreadyExistsMessage;
 
 	/** */
 	public static String ValidationUtils_PleaseEnterNameMessage;

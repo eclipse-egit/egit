@@ -15,9 +15,11 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.osgi.util.NLS;
 
@@ -34,7 +36,8 @@ public class ValidationUtils {
 	 * @return input validator for refNames
 	 */
 	public static IInputValidator getRefNameInputValidator(
-			final Repository repo, final String refPrefix, final boolean errorOnEmptyName) {
+			final Repository repo, final String refPrefix,
+			final boolean errorOnEmptyName) {
 		return new IInputValidator() {
 			@Override
 			public String isValid(String newText) {
@@ -56,20 +59,51 @@ public class ValidationUtils {
 								UIText.ValidationUtils_RefAlreadyExistsMessage,
 								testFor);
 					RefDatabase refDatabase = repo.getRefDatabase();
-					Collection<String> conflictingNames = refDatabase.getConflictingNames(testFor);
+					Collection<String> conflictingNames = refDatabase
+							.getConflictingNames(testFor);
 					if (!conflictingNames.isEmpty()) {
-						ArrayList<String> names = new ArrayList<String>(conflictingNames);
+						ArrayList<String> names = new ArrayList<String>(
+								conflictingNames);
 						Collections.sort(names);
 						String joined = StringUtils.join(names, ", "); //$NON-NLS-1$
-						return NLS.bind(
-								UIText.ValidationUtils_RefNameConflictsWithExistingMessage,
-								joined);
+						return NLS
+								.bind(UIText.ValidationUtils_RefNameConflictsWithExistingMessage,
+										joined);
 					}
 				} catch (IOException e1) {
 					Activator.logError(NLS.bind(
 							UIText.ValidationUtils_CanNotResolveRefMessage,
 							testFor), e1);
 					return e1.getMessage();
+				}
+				return null;
+			}
+		};
+	}
+
+	/**
+	 * Creates and returns input validator for remote names
+	 *
+	 * @param config
+	 * @param errorOnEmptyName
+	 * @return input validator for remote names
+	 */
+	public static IInputValidator getRemoteNameInputValidator(
+			final StoredConfig config, final boolean errorOnEmptyName) {
+		return new IInputValidator() {
+			@Override
+			public String isValid(String newText) {
+				if (newText.length() == 0) {
+					if (errorOnEmptyName)
+						return UIText.ValidationUtils_PleaseEnterNameMessage;
+					else
+						// ignore this
+						return null;
+				}
+				if (config.getNames(RepositoriesView.REMOTE, newText).size() > 0) {
+					return NLS.bind(
+							UIText.ValidationUtils_RemoteAlreadyExistsMessage,
+							newText);
 				}
 				return null;
 			}
