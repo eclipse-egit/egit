@@ -46,6 +46,7 @@ import org.eclipse.egit.ui.internal.commit.CommitHelper.CommitInfo;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentListener;
@@ -444,8 +445,11 @@ public class CommitMessageComponent {
 					UIText.CommitMessageComponent_AmendingCommitInRemoteBranch,
 					IMessageProvider.WARNING);
 
-		String formatIssue = formatIssuesInCommitMessage(
-				commitText.getDocument());
+		// Check format of commit message. The soft-wrapped text in the SWT
+		// control must be converted to a hard-wrapped text, since this will be
+		// the resulting commit message.
+		String message = commitText.getCommitMessage();
+		String formatIssue = formatIssuesInCommitMessage(message);
 		if (formatIssue != null) {
 			return new CommitStatus(formatIssue, IMessageProvider.WARNING);
 		}
@@ -453,7 +457,8 @@ public class CommitMessageComponent {
 		return CommitStatus.OK;
 	}
 
-	static String formatIssuesInCommitMessage(IDocument document) {
+	static String formatIssuesInCommitMessage(String message) {
+		IDocument document = new Document(message);
 		int numberOfLines = document.getNumberOfLines();
 		if (numberOfLines > 1) {
 			try {
