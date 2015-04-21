@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_6f5354b9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-04-21T07:01:18Z",
+      "side": 1,
+      "message": "this still implies a direction which might be wrong depending on the selected step order",
+      "range": {
+        "startLine": 326,
+        "startChar": 72,
+        "endLine": 326,
+        "endChar": 91
+      },
+      "revId": "fe4db0297c524ba50a94fe8277a626161f49e8d5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
