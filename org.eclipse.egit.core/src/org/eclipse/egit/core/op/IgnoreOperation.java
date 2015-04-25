@@ -18,7 +18,6 @@ import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.core.resources.IContainer;
@@ -64,20 +63,6 @@ public class IgnoreOperation implements IEGitOperation {
 		this.paths = paths;
 		gitignoreOutsideWSChanged = false;
 		schedulingRule = calcSchedulingRule();
-	}
-
-	/**
-	 * @param resources
-	 * @deprecated use {@link #IgnoreOperation(Collection)}
-	 */
-	@Deprecated
-	public IgnoreOperation(IResource[] resources) {
-		paths = new ArrayList<IPath>(resources.length);
-		for (IResource resource : resources) {
-			IPath location = resource.getLocation();
-			if (location != null)
-				paths.add(location);
-		}
 	}
 
 	public void execute(IProgressMonitor monitor) throws CoreException {
