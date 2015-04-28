@@ -7,6 +7,7 @@
  *
  * Contributors:
  *     Andrea Guarinoni - initial API and implementation
+ *     Fabio Zadrozny - Bug 465672 - EGit staging view and commit page are not properly styled
  *******************************************************************************/
 
 /* ############################## EGIT preferences ############################## */
@@ -26,3 +27,11 @@ IEclipsePreferences#org-eclipse-ui-workbench {
 			'org.eclipse.egit.ui.UncommittedChangeBackgroundColor=42,42,42'
 			'org.eclipse.egit.ui.UncommittedChangeForegroundColor=114,157,186'
 }
+
+
+#org-eclipse-egit-ui-StagingView StyledText,
+Form Section LayoutComposite StyledText
+ {
+    background-color: #313538;
+    color: #dddddd;
+ }
