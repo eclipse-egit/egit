@@ -8,6 +8,7 @@
  * Copyright (C) 2012-2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, François Rey <eclipse.org_@_francois_._rey_._name>
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
+ * Copyright (C) 2015, Alexandra Buzila <abuzila@eclipsesource.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,6 +20,7 @@ package org.eclipse.egit.ui.internal.history;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
@@ -26,6 +28,10 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.mapping.ResourceMapping;
+import org.eclipse.core.resources.mapping.ResourceMappingContext;
+import org.eclipse.core.resources.mapping.ResourceTraversal;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -35,6 +41,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
@@ -1703,8 +1710,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				return;
 			}
 
-			List<FilterPath> paths = buildFilterPaths(input.getItems(), input
-					.getFileList(), db);
+			IResource[] resources = getResourcesFromInput();
+			List<FilterPath> paths = buildFilterPaths(resources,
+					input.getFileList(), db);
 
 			if (forceNewWalk || shouldRedraw(db, headId, paths)) {
 				releaseGenerateHistoryJob();
@@ -1725,6 +1733,51 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 						GitTraceLocation.HISTORYVIEW.getLocation());
 
 		}
+	}
+
+	private IResource[] getResourcesFromInput() {
+		IResource[] items = input.getItems();
+		if (items == null)
+			return null;
+		HashSet<IResource> result = new HashSet<IResource>();
+		result.addAll(Arrays.asList(items));
+
+		// collect resources from the logical model
+		if (Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.USE_LOGICAL_MODEL)) {
+			try {
+				ResourceMappingContext context = CompareUtils.prepareContext(
+						input.getRepository(), Constants.HEAD, Constants.HEAD,
+						true);
+				for (IResource item : items) {
+					final ResourceMapping[] mappings = ResourceUtil
+							.getResourceMappings(item, context);
+					for (ResourceMapping mapping : mappings) {
+						try {
+							final ResourceTraversal[] traversals = mapping
+									.getTraversals(context, null);
+							for (ResourceTraversal traversal : traversals) {
+								final List<IResource> traversalResources = Arrays
+										.asList(traversal.getResources());
+								if (traversalResources.size() > 1
+										&& traversalResources.contains(item)) {
+									result.addAll(traversalResources);
+								}
+							}
+						} catch (CoreException e) {
+							Activator.logError(e.getMessage(), e);
+						}
+					}
+				}
+			} catch (IOException e) {
+				Activator.logError(e.getMessage(), e);
+			}
+		}
+
+		IResource[] resourceArray = new IResource[result.size()];
+		resourceArray = result.toArray(resourceArray);
+
+		return resourceArray;
 	}
 
 	private boolean shouldRedraw(Repository db, AnyObjectId headId, List<FilterPath> paths) {
