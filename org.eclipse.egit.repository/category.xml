@@ -27,6 +27,9 @@
    <feature url="features/org.eclipse.jgit.http.apache_0.0.0.qualifier.jar" id="org.eclipse.jgit.http.apache" version="0.0.0">
       <category name="JGit"/>
    </feature>
+   <feature url="features/org.eclipse.egit.gitflow.feature_0.0.0.qualifier.jar" id="org.eclipse.egit.gitflow.feature" version="0.0.0">
+      <category name="Eclipse Git Team Provider - experimental features (incubation)"/>
+   </feature>
    <bundle id="org.eclipse.egit.ui.importer" version="0.0.1.qualifier">
       <category name="Eclipse Git Team Provider - experimental features (incubation)"/>
    </bundle>
