@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7fb1785_5b88cc2d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RenameRemoteOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-04-30T08:31:37Z",
+      "side": 1,
+      "message": "this wasn\u0027t done by SAP and probably not started in 2010",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 46
+      },
+      "revId": "d63c3e48687117f707a2b4bd4f190fc0213df5f4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_bb7610ad",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/RemoteRenameDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-04-30T08:31:37Z",
+      "side": 1,
+      "message": "wrong copyright holder and year",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 46
+      },
+      "revId": "d63c3e48687117f707a2b4bd4f190fc0213df5f4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7fb1785_fbfff86f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RenameRemoteCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-04-30T08:31:37Z",
+      "side": 1,
+      "message": "wrong copyright holder and year",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 46
+      },
+      "revId": "d63c3e48687117f707a2b4bd4f190fc0213df5f4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
