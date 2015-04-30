@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: GitFlow UI
+Bundle-SymbolicName: org.eclipse.egit.gitflow.ui;singleton:=true
+Bundle-Version: 4.0.0.qualifier
+Bundle-Activator: org.eclipse.egit.gitflow.ui.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.jgit,
+ org.eclipse.core.jobs,
+ org.eclipse.egit.gitflow,
+ org.eclipse.egit.ui,
+ org.eclipse.egit.core,
+ org.eclipse.core.expressions,
+ org.eclipse.team.ui,
+ org.eclipse.core.resources
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Bundle-Localization: plugin

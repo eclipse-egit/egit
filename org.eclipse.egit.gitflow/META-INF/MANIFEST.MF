@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Gitflow
+Bundle-SymbolicName: org.eclipse.egit.gitflow
+Bundle-Version: 4.0.0.qualifier
+Bundle-Activator: org.eclipse.egit.gitflow.Activator
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.egit.core,
+ org.eclipse.jgit,
+ org.eclipse.core.resources
+Export-Package: org.eclipse.egit.gitflow,
+ org.eclipse.egit.gitflow.op
