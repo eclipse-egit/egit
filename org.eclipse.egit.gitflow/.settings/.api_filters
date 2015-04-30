@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.egit.gitflow" version="2">
+    <resource path="src/org/eclipse/egit/gitflow/op/CurrentBranchPublishOperation.java" type="org.eclipse.egit.gitflow.op.CurrentBranchPublishOperation">
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="PushOperationResult"/>
+                <message_argument value="CurrentBranchPublishOperation"/>
+                <message_argument value="getOperationResult()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/egit/gitflow/op/GitFlowOperation.java" type="org.eclipse.egit.gitflow.op.GitFlowOperation">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="IEGitOperation"/>
+                <message_argument value="GitFlowOperation"/>
+            </message_arguments>
+        </filter>
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="CreateLocalBranchOperation"/>
+                <message_argument value="GitFlowOperation"/>
+                <message_argument value="createBranchFromHead(String, RevCommit)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>
