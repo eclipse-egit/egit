@@ -2427,6 +2427,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				updateRebaseButtonVisibility(repository.getRepositoryState()
 						.isRebasing());
 
+				enableCommitWidgets(indexDiffAvailable && noConflicts);
 
 				boolean commitEnabled = indexDiffAvailable
 						&& repository.getRepositoryState().canCommit()
@@ -2434,7 +2435,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 				commitButton.setEnabled(commitEnabled);
 
 				boolean commitAndPushEnabled = commitEnabled
-						&& !repository.getRepositoryState().isRebasing();
+						&& !repository.getRepositoryState().isRebasing()
+						&& !repository.getRemoteNames().isEmpty();
 				commitAndPushButton.setEnabled(commitAndPushEnabled);
 
 				boolean rebaseContinueEnabled = indexDiffAvailable
@@ -2444,7 +2446,6 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 				form.setText(GitLabels.getStyledLabelSafe(repository).toString());
 				updateCommitMessageComponent(repositoryChanged, indexDiffAvailable);
-				enableCommitWidgets(indexDiffAvailable && noConflicts);
 				updateSectionText();
 			}
 		});
