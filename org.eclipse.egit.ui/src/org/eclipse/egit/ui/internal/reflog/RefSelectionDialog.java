@@ -38,10 +38,12 @@ public class RefSelectionDialog extends AbstractBranchSelectionDialog {
 				| EXPAND_REMOTE_BRANCHES_NODE | SHOW_REFERENCES);
 	}
 
+	@Override
 	protected void refNameSelected(String refName) {
 		getButton(Window.OK).setEnabled(refName != null);
 	}
 
+	@Override
 	protected String getTitle() {
 		String repoName;
 		if (!repo.isBare())
@@ -55,6 +57,7 @@ public class RefSelectionDialog extends AbstractBranchSelectionDialog {
 	protected void createCustomArea(Composite parent) {
 		branchTree.addFilter(new ViewerFilter() {
 
+			@Override
 			public boolean select(Viewer viewer, Object parentElement,
 					Object element) {
 				if (element instanceof AdditionalRefNode) {
@@ -66,6 +69,7 @@ public class RefSelectionDialog extends AbstractBranchSelectionDialog {
 		});
 	}
 
+	@Override
 	protected String getMessageText() {
 		return UIText.RefSelectionDialog_Messsage;
 	}

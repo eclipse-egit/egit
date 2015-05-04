@@ -57,6 +57,7 @@ public class ReplaceWithOursTheirsMenu extends CompoundContributionItem
 
 	private IServiceLocator serviceLocator;
 
+	@Override
 	public void initialize(IServiceLocator locator) {
 		serviceLocator = locator;
 	}

@@ -24,6 +24,7 @@ import org.eclipse.jface.wizard.WizardDialog;
  */
 public class FetchCommand extends
 		RepositoriesViewCommandHandler<RepositoryNode> {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RepositoryNode node = getSelectedNodes(event).get(0);
 

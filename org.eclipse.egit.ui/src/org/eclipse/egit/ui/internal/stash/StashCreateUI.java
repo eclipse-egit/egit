@@ -106,6 +106,7 @@ public class StashCreateUI {
 	private static void showNoChangesToStash() {
 		Display.getDefault().asyncExec(new Runnable() {
 
+			@Override
 			public void run() {
 				Shell shell = PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getShell();
@@ -167,6 +168,7 @@ public class StashCreateUI {
 			return composite;
 		}
 
+		@Override
 		protected void buttonPressed(int buttonId) {
 			if (buttonId == IDialogConstants.OK_ID) {
 				commitMessage = text.getText();

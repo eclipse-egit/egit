@@ -55,6 +55,7 @@ public class NotesBlock extends MasterDetailsBlock {
 		this.commit = commit;
 	}
 
+	@Override
 	public void createContent(IManagedForm managedForm, Composite parent) {
 		super.createContent(managedForm, parent);
 		sashForm.setWeights(new int[] { 25, 75 });
@@ -95,6 +96,7 @@ public class NotesBlock extends MasterDetailsBlock {
 		part = new SectionPart(refsSection);
 		refsViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
+			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				managedForm.fireSelectionChanged(part, event.getSelection());
 			}

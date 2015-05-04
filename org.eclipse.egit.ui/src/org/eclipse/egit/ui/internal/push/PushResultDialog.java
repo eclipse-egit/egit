@@ -51,9 +51,11 @@ class PushResultDialog extends TitleAreaDialog {
 			final PushOperationResult result, final String sourceString,
 			final boolean showConfigureButton) {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			@Override
 			public void run() {
 				PlatformUI.getWorkbench().getDisplay().asyncExec(
 						new Runnable() {
+							@Override
 							public void run() {
 								Shell shell = PlatformUI.getWorkbench()
 										.getActiveWorkbenchWindow().getShell();
@@ -93,6 +95,7 @@ class PushResultDialog extends TitleAreaDialog {
 		if (buttonId == CONFIGURE) {
 			super.buttonPressed(IDialogConstants.OK_ID);
 			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+				@Override
 				public void run() {
 					Dialog dlg = SimpleConfigurePushDialog.getDialog(PlatformUI
 							.getWorkbench().getDisplay().getActiveShell(),
@@ -115,7 +118,8 @@ class PushResultDialog extends TitleAreaDialog {
 		} else
 			title = NLS.bind(UIText.PushResultDialog_label, destinationString);
 		setTitle(title);
-		final PushResultTable table = new PushResultTable(composite);
+		final PushResultTable table = new PushResultTable(composite,
+				getDialogBoundsSettings());
 		table.setData(localDb, result);
 		final Control tableControl = table.getControl();
 		final GridData tableLayout = new GridData(SWT.FILL, SWT.FILL, true,
@@ -147,6 +151,7 @@ class PushResultDialog extends TitleAreaDialog {
 		this.hideConfigure = !show;
 	}
 
+	@Override
 	protected IDialogSettings getDialogBoundsSettings() {
 		return UIUtils.getDialogBoundSettings(getClass());
 	}

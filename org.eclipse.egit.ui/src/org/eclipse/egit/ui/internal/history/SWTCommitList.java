@@ -89,6 +89,7 @@ class SWTCommitList extends PlotCommitList<SWTCommitList.SWTLane> implements Dis
 		availableColors.add(lane.color);
 	}
 
+	@Override
 	public void widgetDisposed(DisposeEvent e) {
 		dispose();
 	}

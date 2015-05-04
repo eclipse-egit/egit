@@ -24,10 +24,12 @@ import org.eclipse.ui.model.WorkbenchContentProvider;
  */
 class RefUpdateContentProvider extends WorkbenchContentProvider {
 
+	@Override
 	public Object[] getElements(final Object element) {
 		return element instanceof Object[] ? (Object[]) element : new Object[0];
 	}
 
+	@Override
 	public Object[] getChildren(Object element) {
 		if (element instanceof RepositoryCommit) {
 			return ((RepositoryCommit) element).getDiffs();

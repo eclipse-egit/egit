@@ -81,46 +81,57 @@ public class DecoratableResource implements IDecoratableResource {
 		this.resource = resource;
 	}
 
+	@Override
 	public int getType() {
 		return resource != null ? resource.getType() : 0;
 	}
 
+	@Override
 	public String getName() {
 		return resource != null ? resource.getName() : null;
 	}
 
+	@Override
 	public String getRepositoryName() {
 		return repositoryName;
 	}
 
+	@Override
 	public String getBranch() {
 		return branch;
 	}
 
+	@Override
 	public String getBranchStatus() {
 		return branchStatus;
 	}
 
+	@Override
 	public boolean isTracked() {
 		return tracked;
 	}
 
+	@Override
 	public boolean isIgnored() {
 		return ignored;
 	}
 
+	@Override
 	public boolean isDirty() {
 		return dirty;
 	}
 
+	@Override
 	public Staged staged() {
 		return staged;
 	}
 
+	@Override
 	public boolean hasConflicts() {
 		return conflicts;
 	}
 
+	@Override
 	public boolean isAssumeValid() {
 		return assumeValid;
 	}

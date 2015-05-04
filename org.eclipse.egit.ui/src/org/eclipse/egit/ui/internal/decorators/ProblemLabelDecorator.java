@@ -60,6 +60,7 @@ public class ProblemLabelDecorator extends BaseLabelProvider implements
 			ResourcesPlugin.getWorkspace().addResourceChangeListener(this);
 	}
 
+	@Override
 	public void dispose() {
 		resourceManager.dispose();
 		if (this.viewer != null)
@@ -67,6 +68,7 @@ public class ProblemLabelDecorator extends BaseLabelProvider implements
 		super.dispose();
 	}
 
+	@Override
 	public Image decorateImage(Image image, Object element) {
 		IProblemDecoratable decoratable = getProblemDecoratable(element);
 		if (decoratable != null) {
@@ -79,6 +81,7 @@ public class ProblemLabelDecorator extends BaseLabelProvider implements
 		return null;
 	}
 
+	@Override
 	public String decorateText(String text, Object element) {
 		// No decoration
 		return null;
@@ -98,6 +101,7 @@ public class ProblemLabelDecorator extends BaseLabelProvider implements
 		return (Image) this.resourceManager.get(decorated);
 	}
 
+	@Override
 	public void resourceChanged(IResourceChangeEvent event) {
 		Set<IResource> resources = new HashSet<IResource>();
 
@@ -116,6 +120,7 @@ public class ProblemLabelDecorator extends BaseLabelProvider implements
 			final Object[] updateElements = elements.toArray(new Object[elements.size()]);
 			Display display = viewer.getControl().getDisplay();
 			display.asyncExec(new Runnable() {
+				@Override
 				public void run() {
 					viewer.update(updateElements, null);
 				}

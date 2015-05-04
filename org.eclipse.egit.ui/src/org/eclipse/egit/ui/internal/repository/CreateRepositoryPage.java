@@ -57,6 +57,7 @@ public class CreateRepositoryPage extends WizardPage {
 		setPageComplete(false);
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(3, false));
@@ -90,9 +91,11 @@ public class CreateRepositoryPage extends WizardPage {
 			GridDataFactory.fillDefaults().indent(10, 0).span(3, 1)
 					.applyTo(bareButton);
 			bareButton.addSelectionListener(new SelectionListener() {
+				@Override
 				public void widgetSelected(SelectionEvent e) {
 					checkPage();
 				}
+				@Override
 				public void widgetDefaultSelected(SelectionEvent e) {
 					checkPage();
 				}
@@ -100,6 +103,7 @@ public class CreateRepositoryPage extends WizardPage {
 		}
 
 		directoryText.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				checkPage();
 			}

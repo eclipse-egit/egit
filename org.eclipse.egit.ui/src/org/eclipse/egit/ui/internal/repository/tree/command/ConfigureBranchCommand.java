@@ -23,6 +23,7 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class ConfigureBranchCommand extends
 		RepositoriesViewCommandHandler<RefNode> {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final List<RefNode> nodes = getSelectedNodes(event);
 		if (nodes.size() == 1) {

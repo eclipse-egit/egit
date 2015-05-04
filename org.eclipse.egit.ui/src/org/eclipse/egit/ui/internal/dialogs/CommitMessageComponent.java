@@ -9,6 +9,7 @@
  * Copyright (C) 2012, IBM Corporation (Markus Keller <markus_keller@ch.ibm.com>)
  * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2014 IBM Corporation (Daniel Megert <daniel_megert@ch.ibm.com>)
+ * Copyright (C) 2015 SAP SE (Christian Georgi <christian.georgi@sap.com>)
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -44,8 +45,12 @@ import org.eclipse.egit.ui.internal.commit.CommitHelper;
 import org.eclipse.egit.ui.internal.commit.CommitHelper.CommitInfo;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.DocumentEvent;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentListener;
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -96,10 +101,12 @@ public class CommitMessageComponent {
 			this.type = type;
 		}
 
+		@Override
 		public String getMessage() {
 			return message;
 		}
 
+		@Override
 		public int getMessageType() {
 			return type;
 		}
@@ -438,7 +445,32 @@ public class CommitMessageComponent {
 					UIText.CommitMessageComponent_AmendingCommitInRemoteBranch,
 					IMessageProvider.WARNING);
 
+		// Check format of commit message. The soft-wrapped text in the SWT
+		// control must be converted to a hard-wrapped text, since this will be
+		// the resulting commit message.
+		String message = commitText.getCommitMessage();
+		String formatIssue = formatIssuesInCommitMessage(message);
+		if (formatIssue != null) {
+			return new CommitStatus(formatIssue, IMessageProvider.WARNING);
+		}
+
 		return CommitStatus.OK;
+	}
+
+	static String formatIssuesInCommitMessage(String message) {
+		IDocument document = new Document(message);
+		int numberOfLines = document.getNumberOfLines();
+		if (numberOfLines > 1) {
+			try {
+				IRegion lineInfo = document.getLineInformation(1);
+				if (lineInfo.getLength() > 0) {
+					return UIText.CommitMessageComponent_MessageSecondLineNotEmpty;
+				}
+			} catch (BadLocationException e) {
+				Activator.logError(e.getMessage(), e);
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -496,6 +528,7 @@ public class CommitMessageComponent {
 		authorHandler = UIUtils.addPreviousValuesContentProposalToText(
 				authorText, AUTHOR_VALUES_PREF);
 		authorText.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				if (!listenersEnabled || !authorText.isEnabled())
 					return;
@@ -505,6 +538,7 @@ public class CommitMessageComponent {
 		committerText.addModifyListener(new ModifyListener() {
 			String oldCommitter = committerText.getText();
 
+			@Override
 			public void modifyText(ModifyEvent e) {
 				if (!listenersEnabled || !committerText.isEnabled())
 					return;
@@ -524,6 +558,7 @@ public class CommitMessageComponent {
 		committerHandler = UIUtils.addPreviousValuesContentProposalToText(
 				committerText, COMMITTER_VALUES_PREF);
 		commitText.getDocument().addDocumentListener(new IDocumentListener() {
+			@Override
 			public void documentChanged(DocumentEvent event) {
 				if (!listenersEnabled || !commitText.isEnabled())
 					return;
@@ -531,6 +566,7 @@ public class CommitMessageComponent {
 				updateChangeIdButton();
 				listener.statusUpdated();
 			}
+			@Override
 			public void documentAboutToBeChanged(DocumentEvent event) {
 				// nothing to do
 			}

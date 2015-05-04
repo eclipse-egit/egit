@@ -81,6 +81,7 @@ public class ProjectUtils {
 			final IWorkingSet[] selectedWorkingSets, IProgressMonitor monitor)
 			throws InvocationTargetException, InterruptedException {
 		IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
+			@Override
 			public void run(IProgressMonitor actMonitor) throws CoreException {
 				IWorkingSetManager workingSetManager = PlatformUI
 						.getWorkbench().getWorkingSetManager();

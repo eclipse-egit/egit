@@ -44,6 +44,7 @@ public class GitModelCache extends GitModelObjectContainer {
 	public GitModelCache(GitModelRepository parent, Repository repo,
 			Map<String, Change> cache) {
 		this(parent, repo, cache, new FileModelFactory() {
+			@Override
 			public GitModelBlob createFileModel(
 					GitModelObjectContainer objParent, Repository nestedRepo,
 					Change change, IPath path) {
@@ -51,6 +52,7 @@ public class GitModelCache extends GitModelObjectContainer {
 						path);
 			}
 
+			@Override
 			public boolean isWorkingTree() {
 				return false;
 			}
@@ -75,6 +77,7 @@ public class GitModelCache extends GitModelObjectContainer {
 
 		this.children = TreeBuilder.build(this, repo, changes, fileFactory,
 				new TreeModelFactory() {
+					@Override
 					public GitModelTree createTreeModel(
 							GitModelObjectContainer parentObject,
 							IPath fullPath,

@@ -297,32 +297,45 @@ public class RepositoryMapping {
 	 *         GitProvider.
 	 */
 	public static RepositoryMapping getMapping(final IResource resource) {
-		if (isNonWorkspace(resource))
+		if (isNonWorkspace(resource)) {
 			return null;
-
-		if (resource.isLinked(IResource.CHECK_ANCESTORS))
+		}
+		if (resource.isLinked(IResource.CHECK_ANCESTORS)) {
 			return getMapping(resource.getLocation());
+		}
+		return getMapping(resource.getProject());
+	}
 
-		IProject project = resource.getProject();
-		if (project == null)
+	/**
+	 * Get the repository mapping for a project.
+	 *
+	 * @param project
+	 * @return the RepositoryMapping for this project, or null for non
+	 *         GitProvider.
+	 */
+	public static RepositoryMapping getMapping(final IProject project) {
+		if (project == null || isNonWorkspace(project)) {
 			return null;
-
-		final RepositoryProvider rp = RepositoryProvider.getProvider(project);
-		if (!(rp instanceof GitProvider))
+		}
+		final RepositoryProvider rp = RepositoryProvider.getProvider(project,
+				GitProvider.ID);
+		if (rp == null) {
 			return null;
+		}
 
-		if (((GitProvider)rp).getData() == null)
+		GitProjectData data = ((GitProvider) rp).getData();
+		if (data == null) {
 			return null;
+		}
 
-		return ((GitProvider)rp).getData().getRepositoryMapping(resource);
+		return data.getRepositoryMapping(project);
 	}
 
 	/**
 	 * Get the repository mapping for a path if it exists.
 	 *
 	 * @param path
-	 * @return the RepositoryMapping for this path,
-	 *         or null for non GitProvider.
+	 * @return the RepositoryMapping for this path, or null for non GitProvider.
 	 */
 	public static RepositoryMapping getMapping(IPath path) {
 		IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()

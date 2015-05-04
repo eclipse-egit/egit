@@ -34,12 +34,14 @@ public abstract class CommitMessageArea extends SpellcheckableMessageArea {
 		super(parent, initialText, styles);
 	}
 
+	@Override
 	protected IContentAssistant createContentAssistant(ISourceViewer viewer) {
 		ContentAssistant assistant = new ContentAssistant();
 		assistant.enableAutoInsert(true);
 		final CommitProposalProcessor processor = getCommitProposalProcessor();
 		getTextWidget().addDisposeListener(new DisposeListener() {
 
+			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				processor.dispose();
 			}

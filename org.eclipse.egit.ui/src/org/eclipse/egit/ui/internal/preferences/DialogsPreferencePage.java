@@ -35,10 +35,12 @@ public class DialogsPreferencePage extends FieldEditorPreferencePage implements
 		super(GRID);
 	}
 
+	@Override
 	protected IPreferenceStore doGetPreferenceStore() {
 		return Activator.getDefault().getPreferenceStore();
 	}
 
+	@Override
 	public void init(final IWorkbench workbench) {
 		// Do nothing.
 	}

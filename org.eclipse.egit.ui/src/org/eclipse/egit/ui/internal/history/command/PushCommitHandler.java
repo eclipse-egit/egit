@@ -26,6 +26,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * Command handler to enable pushing commits from the Git History View
  */
 public class PushCommitHandler extends AbstractHistoryCommandHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		PlotCommit commit = (PlotCommit) getSelection(event).getFirstElement();
 		final Repository repo = getRepository(event);

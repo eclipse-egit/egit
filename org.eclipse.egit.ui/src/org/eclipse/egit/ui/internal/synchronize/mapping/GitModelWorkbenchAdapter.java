@@ -22,6 +22,7 @@ public class GitModelWorkbenchAdapter implements IWorkbenchAdapter {
 
 	private GitChangeSetLabelProvider gitLabelProvider;
 
+	@Override
 	public Object[] getChildren(Object o) {
 		if (o instanceof GitModelObject)
 			return ((GitModelObject) o).getChildren();
@@ -32,6 +33,7 @@ public class GitModelWorkbenchAdapter implements IWorkbenchAdapter {
 		return null;
 	}
 
+	@Override
 	public ImageDescriptor getImageDescriptor(Object object) {
 		if (gitLabelProvider == null)
 			gitLabelProvider = new GitChangeSetLabelProvider();
@@ -41,6 +43,7 @@ public class GitModelWorkbenchAdapter implements IWorkbenchAdapter {
 		return ImageDescriptor.createFromImage(image);
 	}
 
+	@Override
 	public String getLabel(Object o) {
 		if (o instanceof GitModelObject)
 			return ((GitModelObject) o).getName();
@@ -48,6 +51,7 @@ public class GitModelWorkbenchAdapter implements IWorkbenchAdapter {
 		return null;
 	}
 
+	@Override
 	public Object getParent(Object o) {
 		if (o instanceof GitModelRepository)
 			return null; // repository node has no parent

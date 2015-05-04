@@ -22,6 +22,7 @@ import org.eclipse.jgit.lib.Repository;
  * "Set quickdiff baseline" to selected commit.
  */
 public class SetQuickdiffBaselineHandler extends AbstractHistoryCommandHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repo = getRepository(event);
 		String baseline = getSelectedCommitId(event).name();

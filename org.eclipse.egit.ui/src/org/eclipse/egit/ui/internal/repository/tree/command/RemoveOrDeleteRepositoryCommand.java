@@ -23,6 +23,7 @@ import org.eclipse.jgit.lib.Repository;
  * Removes or deletes a repository, depending on user input from dialog.
  */
 public class RemoveOrDeleteRepositoryCommand extends RemoveCommand {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		List<RepositoryNode> selectedNodes = getSelectedNodes(event);
 		if (selectedNodes.size() != 1)

@@ -94,6 +94,7 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 		 */
 		public Color lineBackground = null;
 
+		@Override
 		public boolean similarTo(StyleRange style) {
 			return super.similarTo(style) && style instanceof DiffStyleRange
 					&& diffType == ((DiffStyleRange) style).diffType;
@@ -124,6 +125,7 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 			}
 		}
 
+		@Override
 		public void write(byte[] b, int off, int len) throws IOException {
 			if (charset == null)
 				lineBuffer.append(new String(b, off, len, "UTF-8")); //$NON-NLS-1$
@@ -131,10 +133,12 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 				lineBuffer.append(new String(b, off, len, charset));
 		}
 
+		@Override
 		public void write(byte[] b) throws IOException {
 			write(b, 0, b.length);
 		}
 
+		@Override
 		public void write(int b) throws IOException {
 			write(new byte[] { (byte) b });
 		}
@@ -222,6 +226,7 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 	 * @see org.eclipse.jgit.diff.DiffFormatter#writeHunkHeader(int, int, int,
 	 *      int)
 	 */
+	@Override
 	protected void writeHunkHeader(int aStartLine, int aEndLine,
 			int bStartLine, int bEndLine) throws IOException {
 		int start = stream.offset;
@@ -234,6 +239,7 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 	 * @see org.eclipse.jgit.diff.DiffFormatter#writeLine(char,
 	 *      org.eclipse.jgit.diff.RawText, int)
 	 */
+	@Override
 	protected void writeLine(char prefix, RawText text, int cur)
 			throws IOException {
 		if (prefix == ' ') {

@@ -51,6 +51,7 @@ public class RepositorySearchWizard extends Wizard {
 		return searchPage.getDirectories();
 	}
 
+	@Override
 	public boolean performFinish() {
 		return true;
 	}

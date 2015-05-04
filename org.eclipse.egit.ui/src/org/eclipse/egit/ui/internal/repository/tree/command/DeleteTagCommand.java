@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class DeleteTagCommand extends RepositoriesViewCommandHandler<TagNode> {
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final List<TagNode> tags = getSelectedNodes(event);
 		if (tags.isEmpty())
@@ -45,6 +46,7 @@ public class DeleteTagCommand extends RepositoriesViewCommandHandler<TagNode> {
 		final Shell shell = getActiveShell(event);
 		shell.getDisplay().syncExec(new Runnable() {
 
+			@Override
 			public void run() {
 				String message;
 				if (tags.size() > 1)

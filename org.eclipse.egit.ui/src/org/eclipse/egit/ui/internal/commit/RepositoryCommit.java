@@ -96,6 +96,7 @@ public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
 		this.commit = commit;
 	}
 
+	@Override
 	public Object getAdapter(Class adapter) {
 		if (Repository.class == adapter)
 			return repository;
@@ -231,18 +232,22 @@ public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
 		return notes;
 	}
 
+	@Override
 	public Object[] getChildren(Object o) {
 		return new Object[0];
 	}
 
+	@Override
 	public ImageDescriptor getImageDescriptor(Object object) {
 		return UIIcons.CHANGESET;
 	}
 
+	@Override
 	public String getLabel(Object o) {
 		return abbreviate();
 	}
 
+	@Override
 	public Object getParent(Object o) {
 		return null;
 	}

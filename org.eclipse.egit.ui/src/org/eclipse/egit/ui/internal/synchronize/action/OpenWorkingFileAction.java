@@ -107,6 +107,7 @@ public class OpenWorkingFileAction extends SelectionListenerAction {
 	/*
 	 * (non-Javadoc) Method declared on IAction.
 	 */
+	@Override
 	public void run() {
 		IStructuredSelection selection = getStructuredSelection();
 
@@ -142,6 +143,7 @@ public class OpenWorkingFileAction extends SelectionListenerAction {
 	/**
 	 * Enable the action only if the selection contains IFiles
 	 */
+	@Override
 	protected boolean updateSelection(IStructuredSelection selection) {
 		return super.updateSelection(selection)
 				&& selectionIsOfType(IResource.FILE);

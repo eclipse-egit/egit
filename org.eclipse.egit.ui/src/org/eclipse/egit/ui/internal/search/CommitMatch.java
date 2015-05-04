@@ -48,18 +48,22 @@ public class CommitMatch extends Match implements IWorkbenchAdapter {
 		return this.commit;
 	}
 
+	@Override
 	public Object[] getChildren(Object o) {
 		return new Object[0];
 	}
 
+	@Override
 	public ImageDescriptor getImageDescriptor(Object object) {
 		return this.commit.getImageDescriptor(object);
 	}
 
+	@Override
 	public String getLabel(Object o) {
 		return this.commit.getLabel(o);
 	}
 
+	@Override
 	public Object getParent(Object o) {
 		return null;
 	}

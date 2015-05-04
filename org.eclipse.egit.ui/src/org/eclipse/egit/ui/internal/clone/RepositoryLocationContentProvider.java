@@ -28,25 +28,30 @@ class RepositoryLocationContentProvider implements ITreeContentProvider {
 
 	private Map<RepositoryServerInfo, CloneSourceProvider> parents = new HashMap<RepositoryServerInfo, CloneSourceProvider>();
 
+	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		// nothing to do
 	}
 
+	@Override
 	public void dispose() {
 		// nothing to do
 	}
 
+	@Override
 	public boolean hasChildren(Object element) {
 		Object[] children = calculateChildren(element);
 		return children != null && children.length > 0;
 	}
 
+	@Override
 	public Object getParent(Object element) {
 		if (element instanceof RepositoryServerInfo)
 			return parents.get(element);
 		return null;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public Object[] getElements(Object inputElement) {
 		List<CloneSourceProvider> repositoryImports = (List<CloneSourceProvider>) inputElement;
@@ -54,6 +59,7 @@ class RepositoryLocationContentProvider implements ITreeContentProvider {
 				.size()]);
 	}
 
+	@Override
 	public Object[] getChildren(Object parentElement) {
 		return calculateChildren(parentElement);
 	}

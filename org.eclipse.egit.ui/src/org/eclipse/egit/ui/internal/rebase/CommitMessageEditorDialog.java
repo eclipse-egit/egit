@@ -61,6 +61,7 @@ public class CommitMessageEditorDialog extends TitleAreaDialog {
 		toolkit = new FormToolkit(parent.getDisplay());
 		parent.addDisposeListener(new DisposeListener() {
 
+			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				CommitMessageEditorDialog.this.commitMessage = messageArea
 						.getCommitMessage();

@@ -30,6 +30,7 @@ import org.eclipse.jgit.lib.Repository;
 public class AddToIndexCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> {
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		List<? extends RepositoryTreeNode> selectedNodes = getSelectedNodes(event);
 		if (selectedNodes.isEmpty() || selectedNodes.get(0).getRepository() == null)

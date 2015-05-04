@@ -46,6 +46,7 @@ public class EditableRevision extends FileRevisionTypedElement implements
 			/* (non-Javadoc)
 			 * see IContentChangeNotifier.addChangeListener
 			 */
+			@Override
 			public void addContentChangeListener(IContentChangeListener listener) {
 				if (fListenerList == null)
 					fListenerList= new ListenerList();
@@ -55,6 +56,7 @@ public class EditableRevision extends FileRevisionTypedElement implements
 			/* (non-Javadoc)
 			 * see IContentChangeNotifier.removeChangeListener
 			 */
+			@Override
 			public void removeContentChangeListener(IContentChangeListener listener) {
 				if (fListenerList != null) {
 					fListenerList.remove(listener);
@@ -72,14 +74,17 @@ public class EditableRevision extends FileRevisionTypedElement implements
 				}
 				// Legacy listeners may expect to be notified in the UI thread.
 				Runnable runnable = new Runnable() {
+					@Override
 					public void run() {
 						Object[] listeners= fListenerList.getListeners();
 						for (int i= 0; i < listeners.length; i++) {
 							final IContentChangeListener contentChangeListener = (IContentChangeListener)listeners[i];
 							SafeRunner.run(new ISafeRunnable() {
+								@Override
 								public void run() throws Exception {
 									(contentChangeListener).contentChanged(element);
 								}
+								@Override
 								public void handleException(Throwable exception) {
 									// Logged by safe runner
 								}
@@ -117,10 +122,12 @@ public class EditableRevision extends FileRevisionTypedElement implements
 		super(fileRevision, encoding);
 	}
 
+	@Override
 	public boolean isEditable() {
 		return true;
 	}
 
+	@Override
 	public ITypedElement replace(ITypedElement dest, ITypedElement src) {
 		return null;
 	}
@@ -133,6 +140,7 @@ public class EditableRevision extends FileRevisionTypedElement implements
 		return super.getContents();
 	}
 
+	@Override
 	public void setContent(byte[] newContent) {
 		modifiedContent = newContent;
 		fireContentChanged();
@@ -146,6 +154,7 @@ public class EditableRevision extends FileRevisionTypedElement implements
 		return modifiedContent;
 	}
 
+	@Override
 	public Object getAdapter(Class adapter) {
 		if (adapter == ISharedDocumentAdapter.class) {
 			return getSharedDocumentAdapter();
@@ -157,22 +166,27 @@ public class EditableRevision extends FileRevisionTypedElement implements
 		if (sharedDocumentAdapter == null)
 			sharedDocumentAdapter = new EditableSharedDocumentAdapter(
 					new EditableSharedDocumentAdapter.ISharedDocumentAdapterListener() {
+						@Override
 						public void handleDocumentConnected() {
 							// nothing
 						}
 
+						@Override
 						public void handleDocumentFlushed() {
 							// nothing
 						}
 
+						@Override
 						public void handleDocumentDeleted() {
 							// nothing
 						}
 
+						@Override
 						public void handleDocumentSaved() {
 							// nothing
 						}
 
+						@Override
 						public void handleDocumentDisconnected() {
 							// nothing
 						}
@@ -180,12 +194,14 @@ public class EditableRevision extends FileRevisionTypedElement implements
 		return sharedDocumentAdapter;
 	}
 
+	@Override
 	public void addContentChangeListener(IContentChangeListener listener) {
 		if (fChangeNotifier == null)
 			fChangeNotifier = new ContentChangeNotifier(this);
 		fChangeNotifier.addContentChangeListener(listener);
 	}
 
+	@Override
 	public void removeContentChangeListener(IContentChangeListener listener) {
 		if (fChangeNotifier != null) {
 			fChangeNotifier.removeContentChangeListener(listener);

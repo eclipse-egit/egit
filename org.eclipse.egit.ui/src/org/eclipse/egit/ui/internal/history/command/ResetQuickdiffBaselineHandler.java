@@ -22,6 +22,7 @@ import org.eclipse.jgit.lib.Repository;
 public class ResetQuickdiffBaselineHandler extends
 		AbstractHistoryCommandHandler {
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
 		String baseline = event

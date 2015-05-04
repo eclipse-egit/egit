@@ -20,6 +20,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
  */
 public class OpenInCommitViewerHandler extends AbstractReflogCommandHandler {
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repository = getRepository(event);
 		RevCommit commit = getSelectedCommit(event, repository);

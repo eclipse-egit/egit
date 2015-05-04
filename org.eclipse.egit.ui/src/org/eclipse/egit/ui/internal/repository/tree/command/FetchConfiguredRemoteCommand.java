@@ -34,6 +34,7 @@ import org.eclipse.jgit.transport.RemoteConfig;
  */
 public class FetchConfiguredRemoteCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RepositoryTreeNode node = getSelectedNodes(event).get(0);
 		RemoteConfig config = getRemoteConfig(node);

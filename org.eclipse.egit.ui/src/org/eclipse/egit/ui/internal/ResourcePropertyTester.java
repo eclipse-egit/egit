@@ -63,6 +63,7 @@ import org.eclipse.jgit.transport.RemoteConfig;
  */
 public class ResourcePropertyTester extends PropertyTester {
 
+	@Override
 	public boolean test(Object receiver, String property, Object[] args,
 			Object expectedValue) {
 		boolean value = internalTest(receiver, property);

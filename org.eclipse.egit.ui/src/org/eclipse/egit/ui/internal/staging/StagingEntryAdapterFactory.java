@@ -18,10 +18,12 @@ import org.eclipse.egit.ui.internal.CommonUtils;
  */
 public class StagingEntryAdapterFactory implements IAdapterFactory {
 
+	@Override
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
 		return CommonUtils.getAdapter(((StagingEntry)adaptableObject), IResource.class);
 	}
 
+	@Override
 	public Class[] getAdapterList() {
 		return new Class[] { IResource.class };
 	}

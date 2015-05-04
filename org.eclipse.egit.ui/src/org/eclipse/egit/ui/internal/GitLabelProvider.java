@@ -84,6 +84,7 @@ public class GitLabelProvider extends LabelProvider implements
 		return super.getImage(element);
 	}
 
+	@Override
 	public StyledString getStyledText(Object element) {
 		return GitLabels.getStyledLabelExtendedSafe(element);
 	}

@@ -12,6 +12,7 @@
  * Copyright (C) 2014, Marc Khouzam <marc.khouzam@ericsson.com>
  * Copyright (C) 2014, Red Hat Inc.
  * Copyright (C) 2014, Axel Richard <axel.richard@obeo.fr>
+ * Copyright (C) 2015, SAP SE (Christian Georgi <christian.georgi@sap.com>)
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -742,19 +743,37 @@ public class UIText extends NLS {
 	public static String RebaseInteractiveStepActionToolBarProvider_SkipText;
 
 	/** */
+	public static String RebaseInteractiveStepActionToolBarProvider_SkipDesc;
+
+	/** */
 	public static String RebaseInteractiveStepActionToolBarProvider_EditText;
+
+	/** */
+	public static String RebaseInteractiveStepActionToolBarProvider_EditDesc;
 
 	/** */
 	public static String RebaseInteractiveStepActionToolBarProvider_FixupText;
 
 	/** */
+	public static String RebaseInteractiveStepActionToolBarProvider_FixupDesc;
+
+	/** */
 	public static String RebaseInteractiveStepActionToolBarProvider_MoveDownText;
+
+	/** */
+	public static String RebaseInteractiveStepActionToolBarProvider_MoveDownDesc;
 
 	/** */
 	public static String RebaseInteractiveStepActionToolBarProvider_MoveUpText;
 
 	/** */
+	public static String RebaseInteractiveStepActionToolBarProvider_MoveUpDesc;
+
+	/** */
 	public static String RebaseInteractiveStepActionToolBarProvider_PickText;
+
+	/** */
+	public static String RebaseInteractiveStepActionToolBarProvider_PickDesc;
 
 	/** */
 	public static String RebaseInteractiveStepActionToolBarProvider_RedoText;
@@ -763,7 +782,13 @@ public class UIText extends NLS {
 	public static String RebaseInteractiveStepActionToolBarProvider_RewordText;
 
 	/** */
+	public static String RebaseInteractiveStepActionToolBarProvider_RewordDesc;
+
+	/** */
 	public static String RebaseInteractiveStepActionToolBarProvider_SquashText;
+
+	/** */
+	public static String RebaseInteractiveStepActionToolBarProvider_SquashDesc;
 
 	/** */
 	public static String RebaseInteractiveStepActionToolBarProvider_UndoText;
@@ -2438,6 +2463,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommitMessageComponent_AmendingCommitInRemoteBranch;
+
+	/** */
+	public static String CommitMessageComponent_MessageSecondLineNotEmpty;
 
 	/** */
 	public static String CommitMessageEditorDialog_EditCommitMessageTitle;

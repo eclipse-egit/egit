@@ -24,6 +24,7 @@ import org.eclipse.jgit.transport.TrackingRefUpdate;
  * @see TrackingRefUpdate
  */
 class TrackingRefUpdateContentProvider implements IStructuredContentProvider {
+	@Override
 	public Object[] getElements(final Object inputElement) {
 		if (inputElement == null)
 			return new TrackingRefUpdate[0];
@@ -32,10 +33,12 @@ class TrackingRefUpdateContentProvider implements IStructuredContentProvider {
 		return result.getTrackingRefUpdates().toArray(new TrackingRefUpdate[0]);
 	}
 
+	@Override
 	public void dispose() {
 		// nothing to do
 	}
 
+	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		// nothing to do
 	}

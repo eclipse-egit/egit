@@ -39,6 +39,7 @@ public class RewordHandler extends SelectionHandler {
 	/** Command id */
 	public static final String ID = "org.eclipse.egit.ui.commit.Reword"; //$NON-NLS-1$
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RevCommit commit = getSelectedItem(RevCommit.class, event);
 		if (commit == null)
@@ -94,6 +95,7 @@ public class RewordHandler extends SelectionHandler {
 	private String promptCommitMessage(final Shell shell, RevCommit commit) {
 		final String[] message = { commit.getFullMessage() };
 		shell.getDisplay().syncExec(new Runnable() {
+			@Override
 			public void run() {
 				CommitMessageEditorDialog dialog = new CommitMessageEditorDialog(
 						shell, message[0]);

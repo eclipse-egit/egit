@@ -146,6 +146,7 @@ public class GitScopeUtil {
 
 		final List<IResource> relatedChanges = new ArrayList<IResource>();
 		IRunnableWithProgress runnable = new IRunnableWithProgress() {
+			@Override
 			public void run(IProgressMonitor monitor)
 					throws InvocationTargetException, InterruptedException {
 				try {

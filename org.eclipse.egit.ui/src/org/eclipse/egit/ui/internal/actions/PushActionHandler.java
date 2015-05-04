@@ -29,6 +29,7 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class PushActionHandler extends RepositoryActionHandler {
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repository = getRepository(true, event);
 		if (repository == null)

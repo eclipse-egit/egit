@@ -59,6 +59,7 @@ public class GitChangeSetLabelProvider extends SynchronizationLabelProvider impl
 		return delegateLabelProvider;
 	}
 
+	@Override
 	public StyledString getStyledText(Object element) {
 		// need to compare classes as everything is 'instanceof GitModelCommit'
 		if (element.getClass().equals(GitModelCommit.class)) {

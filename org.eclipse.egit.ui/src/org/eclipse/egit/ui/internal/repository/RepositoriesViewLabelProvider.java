@@ -328,6 +328,7 @@ public class RepositoriesViewLabelProvider extends ColumnLabelProvider
 		return string;
 	}
 
+	@Override
 	public StyledString getStyledText(Object element) {
 		if (!(element instanceof RepositoryTreeNode))
 			return null;
@@ -548,6 +549,7 @@ public class RepositoriesViewLabelProvider extends ColumnLabelProvider
 	 * @see org.eclipse.core.commands.IStateListener#handleStateChange(org.eclipse.core.commands.State,
 	 *      java.lang.Object)
 	 */
+	@Override
 	public void handleStateChange(State state, Object oldValue) {
 		try {
 			this.verboseBranchMode = ((Boolean) state.getValue())

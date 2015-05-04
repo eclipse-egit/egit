@@ -115,6 +115,7 @@ public class CommitEditorInputFactory implements IElementFactory {
 	/**
 	 * @see org.eclipse.ui.IElementFactory#createElement(org.eclipse.ui.IMemento)
 	 */
+	@Override
 	public IAdaptable createElement(IMemento memento) {
 		Repository repository = getRepository(memento);
 		if (repository == null)

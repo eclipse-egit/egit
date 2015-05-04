@@ -21,6 +21,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * Push current HEAD to Gerrit
  */
 public class PushHeadToGerritCommand extends AbstractSharedCommandHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repository = getRepository(event);
 		if (repository == null)

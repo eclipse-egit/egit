@@ -57,6 +57,7 @@ public class GitOpenInCompareAction extends Action {
 		this.oldAction = oldAction;
 	}
 
+	@Override
 	public void run() {
 		ISelection selection = conf.getSite().getSelectionProvider()
 				.getSelection();

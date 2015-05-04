@@ -108,14 +108,17 @@ public class RefContentProposal implements IContentProposal {
 		this.objectId = objectId;
 	}
 
+	@Override
 	public String getContent() {
 		return refName;
 	}
 
+	@Override
 	public int getCursorPosition() {
 		return refName.length();
 	}
 
+	@Override
 	public String getDescription() {
 		if (objectId == null)
 			return null;
@@ -156,6 +159,7 @@ public class RefContentProposal implements IContentProposal {
 		}
 	}
 
+	@Override
 	public String getLabel() {
 		for (int i = 0; i < PREFIXES.length; i++)
 			if (refName.startsWith(PREFIXES[i]))

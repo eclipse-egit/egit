@@ -27,6 +27,7 @@ import org.eclipse.osgi.util.NLS;
  */
 public class RemoveRemoteCommand extends
 		RepositoriesViewCommandHandler<RemoteNode> {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final RemoteNode node = getSelectedNodes(event).get(0);
 		final String configName = node.getObject();

@@ -174,6 +174,7 @@ class CreateBranchPage extends WizardPage {
 		setMessage(UIText.CreateBranchPage_ChooseNameMessage);
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(4, false));
@@ -211,12 +212,14 @@ class CreateBranchPage extends WizardPage {
 		nameText = new Text(main, SWT.BORDER);
 		// give focus to the nameText if label is activated using the mnemonic
 		nameLabel.addTraverseListener(new TraverseListener() {
+			@Override
 			public void keyTraversed(TraverseEvent e) {
 				nameText.setFocus();
 			}
 		});
 
 		nameText.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				nameIsSuggestion = false;
 			}
@@ -233,6 +236,7 @@ class CreateBranchPage extends WizardPage {
 
 		upstreamConfigComponent
 				.addUpstreamConfigSelectionListener(new UpstreamConfigSelectionListener() {
+					@Override
 					public void upstreamConfigSelected(
 							UpstreamConfig newUpstreamConfig) {
 						upstreamConfig = newUpstreamConfig;
@@ -269,6 +273,7 @@ class CreateBranchPage extends WizardPage {
 		nameText.setFocus();
 		// add the listener just now to avoid unneeded checkPage()
 		nameText.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				checkPage();
 			}
@@ -444,6 +449,7 @@ class CreateBranchPage extends WizardPage {
 		final IBranchNameProvider branchNameProvider = getBranchNameProvider();
 		if (branchNameProvider != null)
 			SafeRunner.run(new SafeRunnable() {
+				@Override
 				public void run() throws Exception {
 					ref.set(branchNameProvider.getBranchNameSuggestion());
 				}

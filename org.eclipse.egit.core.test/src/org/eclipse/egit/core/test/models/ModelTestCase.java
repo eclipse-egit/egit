@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.op.MergeOperation;
 import org.eclipse.egit.core.synchronize.GitResourceVariantTreeSubscriber;
 import org.eclipse.egit.core.synchronize.GitSubscriberMergeContext;
@@ -44,7 +45,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.team.core.mapping.IMergeContext;
 import org.eclipse.team.core.mapping.IResourceMappingMerger;
-import org.eclipse.team.core.mapping.ResourceMappingMerger;
 import org.eclipse.team.core.subscribers.SubscriberScopeManager;
 import org.junit.Before;
 
@@ -105,8 +105,7 @@ public abstract class ModelTestCase extends GitTestCase {
 				.getModelProviderDescriptor(
 						SampleModelProvider.SAMPLE_PROVIDER_ID)
 				.getModelProvider();
-		return (ResourceMappingMerger) Platform.getAdapterManager().getAdapter(
-				provider, IResourceMappingMerger.class);
+		return Utils.getAdapter(provider, IResourceMappingMerger.class);
 	}
 
 	protected IMergeContext prepareContext(Repository repository,

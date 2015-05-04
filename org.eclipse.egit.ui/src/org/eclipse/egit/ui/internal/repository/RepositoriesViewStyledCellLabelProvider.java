@@ -29,6 +29,7 @@ public class RepositoriesViewStyledCellLabelProvider extends
 		super(new RepositoriesViewLabelProvider());
 	}
 
+	@Override
 	public String getText(Object element) {
 		return getStyledStringProvider().getStyledText(element).getString();
 	}

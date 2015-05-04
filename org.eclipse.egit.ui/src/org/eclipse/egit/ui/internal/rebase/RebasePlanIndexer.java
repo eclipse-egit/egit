@@ -124,6 +124,7 @@ public class RebasePlanIndexer {
 	}
 
 	private class RebasePlanChangeListener implements RebaseInteractivePlanChangeListener {
+		@Override
 		public void planElementTypeChanged(
 				RebaseInteractivePlan rebaseInteractivePlan,
 				PlanElement element, ElementAction oldType,
@@ -131,12 +132,14 @@ public class RebasePlanIndexer {
 			// do nothing
 		}
 
+		@Override
 		public void planElementsOrderChanged(
 				RebaseInteractivePlan rebaseInteractivePlan,
 				PlanElement element, int oldIndex, int newIndex) {
 			createIndex();
 		}
 
+		@Override
 		public void planWasUpdatedFromRepository(RebaseInteractivePlan newPlan) {
 			createIndex();
 		}

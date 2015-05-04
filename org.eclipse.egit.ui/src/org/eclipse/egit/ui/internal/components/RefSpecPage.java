@@ -112,6 +112,7 @@ public class RefSpecPage extends WizardPage {
 		this.credentials = credentials;
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 		final Composite panel = new Composite(parent, SWT.NULL);
 		panel.setLayout(new GridLayout());
@@ -120,6 +121,7 @@ public class RefSpecPage extends WizardPage {
 		specsPanel.getControl().setLayoutData(
 				new GridData(SWT.FILL, SWT.FILL, true, true));
 		specsPanel.addRefSpecTableListener(new SelectionChangeListener() {
+			@Override
 			public void selectionChanged() {
 				checkPage();
 			}
@@ -226,6 +228,7 @@ public class RefSpecPage extends WizardPage {
 		validatedRepoSelection = null;
 		transportError = null;
 		getControl().getDisplay().asyncExec(new Runnable() {
+			@Override
 			public void run() {
 				revalidateImpl(currentRepoSelection);
 			}
@@ -245,6 +248,7 @@ public class RefSpecPage extends WizardPage {
 						.setCredentialsProvider(new EGitCredentialsProvider(
 								credentials.getUser(), credentials.getPassword()));
 			getContainer().run(true, true, new IRunnableWithProgress() {
+				@Override
 				public void run(IProgressMonitor monitor)
 						throws InvocationTargetException, InterruptedException {
 					listRemotesOp.run(monitor);

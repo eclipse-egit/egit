@@ -33,6 +33,7 @@ public class CommittingPreferencePage extends FieldEditorPreferencePage
 		setTitle(UIText.CommittingPreferencePage_title);
 	}
 
+	@Override
 	public void init(IWorkbench workbench) {
 		// Nothing to do
 	}

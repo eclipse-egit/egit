@@ -26,6 +26,7 @@ import org.eclipse.jgit.lib.Repository;
  * Action for pulling into the currently checked-out branch.
  */
 public class PullFromUpstreamActionHandler extends RepositoryActionHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository[] repos = getRepositories(event);
 		if (repos.length == 0)

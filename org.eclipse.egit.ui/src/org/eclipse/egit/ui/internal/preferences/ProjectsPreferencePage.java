@@ -34,6 +34,7 @@ public class ProjectsPreferencePage extends FieldEditorPreferencePage implements
 		setPreferenceStore(store);
 	}
 
+	@Override
 	public void init(final IWorkbench workbench) {
 		// Do nothing.
 	}
@@ -46,6 +47,7 @@ public class ProjectsPreferencePage extends FieldEditorPreferencePage implements
 		addField(new BooleanFieldEditor(UIPreferences.CHECKOUT_PROJECT_RESTORE,
 				UIText.ProjectsPreferencePage_RestoreBranchProjects,
 				getFieldEditorParent()) {
+			@Override
 			public IPreferenceStore getPreferenceStore() {
 				return org.eclipse.egit.ui.Activator.getDefault()
 						.getPreferenceStore();

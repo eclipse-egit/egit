@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 Red Hat, Inc.
+ * Copyright (c) 2010, 2015 Red Hat, Inc.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Chris Aniszczyk <caniszczyk@gmail.com> - initial implementation
+ *    Lars Vogel <Lars.Vogel@vogella.com> - Bug 462864
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.components;
 
@@ -47,6 +48,7 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 	protected CachedCheckboxTreeViewer(Tree tree) {
 		super(tree);
 		addCheckStateListener(new ICheckStateListener() {
+			@Override
 			public void checkStateChanged(CheckStateChangedEvent event) {
 				updateCheckState(event.getElement(), event.getChecked());
 			}
@@ -70,8 +72,8 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 			if (contentProvider != null) {
 				Object[] children = contentProvider.getChildren(element);
 				if (children != null && children.length > 0) {
-					for (int i = 0; i < children.length; i++) {
-						updateCheckState(children[i], state);
+					for (Object child : children) {
+						updateCheckState(child, state);
 					}
 				} else {
 					checkState.add(element);
@@ -89,8 +91,8 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 			if (contentProvider != null) {
 				Object[] children = contentProvider.getChildren(element);
 				if (children !=null && children.length > 0) {
-					for (int i = 0; i < children.length; i++) {
-						updateCheckState(children[i], state);
+					for (Object child : children) {
+						updateCheckState(child, state);
 					}
 
 				}
@@ -153,17 +155,13 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 		return checkState.size();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.ICheckable#setChecked(java.lang.Object, boolean)
-	 */
+	@Override
 	public boolean setChecked(Object element, boolean state) {
 		updateCheckState(element, state);
 		return super.setChecked(element, state);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.CheckboxTreeViewer#setCheckedElements(java.lang.Object[])
-	 */
+	@Override
 	public void setCheckedElements(Object[] elements) {
 		super.setCheckedElements(elements);
 			checkState.clear();
@@ -183,9 +181,7 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.CheckboxTreeViewer#setAllChecked(boolean)
-	 */
+	@Override
 	public void setAllChecked(boolean state) {
 		for (TreeItem item: super.getTree().getItems())
 			item.setChecked(state);
@@ -200,13 +196,13 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 			}
 
 			if (contentProvider == null) {
-				for (int i = 0; i < visible.length; i++) {
-					checkState.add(visible[i]);
+				for (Object element : visible) {
+					checkState.add(element);
 				}
 			} else {
 				Set<Object> toCheck = new HashSet<Object>();
-				for (int i = 0; i < visible.length; i++) {
-					addFilteredChildren(visible[i], contentProvider, toCheck);
+				for (Object element : visible) {
+					addFilteredChildren(element, contentProvider, toCheck);
 				}
 				checkState.addAll(toCheck);
 			}
@@ -214,8 +210,8 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 			// Remove any item in the check state that is visible (passes the filters)
 			if (checkState != null) {
 				Object[] visible = filter(checkState.toArray());
-				for (int i = 0; i < visible.length; i++) {
-					checkState.remove(visible[i]);
+				for (Object element : visible) {
+					checkState.remove(element);
 				}
 			}
 		}
@@ -235,25 +231,21 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 			result.add(element);
 		} else {
 			Object[] visibleChildren = getFilteredChildren(element);
-			for (int i = 0; i < visibleChildren.length; i++) {
-				addFilteredChildren(visibleChildren[i], contentProvider, result);
+			for (Object visibleChild : visibleChildren) {
+				addFilteredChildren(visibleChild, contentProvider, result);
 			}
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.AbstractTreeViewer#remove(java.lang.Object[])
-	 */
+	@Override
 	public void remove(Object[] elementsOrTreePaths) {
-		for (int i = 0; i < elementsOrTreePaths.length; i++) {
-			updateCheckState(elementsOrTreePaths[i], false);
+		for (Object elementsOrTreePath : elementsOrTreePaths) {
+			updateCheckState(elementsOrTreePath, false);
 		}
 		super.remove(elementsOrTreePaths);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.AbstractTreeViewer#remove(java.lang.Object)
-	 */
+	@Override
 	public void remove(Object elementsOrTreePaths) {
 		updateCheckState(elementsOrTreePaths, false);
 		super.remove(elementsOrTreePaths);

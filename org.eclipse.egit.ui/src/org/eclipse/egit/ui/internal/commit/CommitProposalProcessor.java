@@ -74,6 +74,7 @@ public abstract class CommitProposalProcessor implements IContentAssistProcessor
 			return display.toLowerCase(Locale.US).startsWith(prefix);
 		}
 
+		@Override
 		public int compareTo(CommitFile other) {
 			return display.compareTo(other.display);
 		}
@@ -122,6 +123,7 @@ public abstract class CommitProposalProcessor implements IContentAssistProcessor
 		return doc.get(start + 1, length);
 	}
 
+	@Override
 	public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer,
 			int offset) {
 		String prefix;
@@ -187,23 +189,28 @@ public abstract class CommitProposalProcessor implements IContentAssistProcessor
 		return files;
 	}
 
+	@Override
 	public IContextInformation[] computeContextInformation(ITextViewer viewer,
 			int offset) {
 		return null;
 	}
 
+	@Override
 	public char[] getCompletionProposalAutoActivationCharacters() {
 		return null;
 	}
 
+	@Override
 	public char[] getContextInformationAutoActivationCharacters() {
 		return null;
 	}
 
+	@Override
 	public String getErrorMessage() {
 		return null;
 	}
 
+	@Override
 	public IContextInformationValidator getContextInformationValidator() {
 		return null;
 	}

@@ -24,6 +24,7 @@ final class RebaseInteractiveDragSourceListener extends DragSourceAdapter {
 		this.rebaseInteractiveView = rebaseInteractiveView;
 	}
 
+	@Override
 	public void dragSetData(DragSourceEvent event) {
 		if (!this.rebaseInteractiveView.isDragAndDropEnabled())
 			return;

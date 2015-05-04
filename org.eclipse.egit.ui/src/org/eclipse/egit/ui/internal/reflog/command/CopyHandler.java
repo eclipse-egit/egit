@@ -23,6 +23,7 @@ import org.eclipse.swt.dnd.Transfer;
  */
 public class CopyHandler extends AbstractReflogCommandHandler {
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repo = getRepository(event);
 		RevCommit commit = getSelectedCommit(event, repo);

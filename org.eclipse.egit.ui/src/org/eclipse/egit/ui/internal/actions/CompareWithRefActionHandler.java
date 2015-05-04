@@ -34,6 +34,7 @@ import org.eclipse.ui.PlatformUI;
  * file as found in the working directory and the version in the selected ref.
  */
 public class CompareWithRefActionHandler extends RepositoryActionHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repo = getRepository(true, event);
 		// assert all resources map to the same repository

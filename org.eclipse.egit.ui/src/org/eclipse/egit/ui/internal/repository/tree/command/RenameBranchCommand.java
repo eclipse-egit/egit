@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class RenameBranchCommand extends
 		RepositoriesViewCommandHandler<RefNode> {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final List<RefNode> nodes = getSelectedNodes(event);
 		RefNode refNode = nodes.get(0);

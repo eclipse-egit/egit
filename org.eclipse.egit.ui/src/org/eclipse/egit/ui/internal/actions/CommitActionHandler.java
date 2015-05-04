@@ -30,6 +30,7 @@ import org.eclipse.ui.IWorkbenchPart;
  */
 public class CommitActionHandler extends RepositoryActionHandler {
 
+	@Override
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		final Repository repo = getRepository(true, event);
 		if (repo == null)

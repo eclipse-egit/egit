@@ -70,6 +70,7 @@ public class AddConfigEntryDialog extends TitleAreaDialog {
 		}
 
 		keyText.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				check();
 			}
@@ -79,6 +80,7 @@ public class AddConfigEntryDialog extends TitleAreaDialog {
 				.setText(UIText.AddConfigEntryDialog_ValueLabel);
 		valueText = new Text(main, SWT.BORDER);
 		valueText.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				check();
 			}

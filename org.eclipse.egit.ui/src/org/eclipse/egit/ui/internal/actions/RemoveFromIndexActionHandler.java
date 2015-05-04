@@ -31,6 +31,7 @@ import org.eclipse.egit.ui.internal.UIText;
  */
 public class RemoveFromIndexActionHandler extends RepositoryActionHandler {
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final IPath[] sel = getSelectedLocations(event);
 		if (sel.length == 0)

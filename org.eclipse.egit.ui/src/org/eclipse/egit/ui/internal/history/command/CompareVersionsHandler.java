@@ -29,6 +29,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * Compare the file contents of two commits.
  */
 public class CompareVersionsHandler extends AbstractHistoryCommandHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IStructuredSelection selection = getSelection(event);
 		if (selection.size() == 2) {

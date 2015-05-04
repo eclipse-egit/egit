@@ -37,6 +37,7 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class MergeToolActionHandler extends RepositoryActionHandler {
 
+	@Override
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		int mergeMode = Activator.getDefault().getPreferenceStore().getInt(
 				UIPreferences.MERGE_MODE);
@@ -55,6 +56,7 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 		return null;
 	}
 
+	@Override
 	public boolean isEnabled() {
 		IPath[] paths = getSelectedLocations();
 		Map<Repository, Collection<String>> pathsByRepository = ResourceUtil

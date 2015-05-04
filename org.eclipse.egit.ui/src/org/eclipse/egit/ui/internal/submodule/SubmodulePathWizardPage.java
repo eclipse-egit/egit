@@ -45,6 +45,7 @@ public class SubmodulePathWizardPage extends WizardPage {
 		this.repo = repo;
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 		Composite displayArea = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.swtDefaults().numColumns(2).equalWidth(false)
@@ -60,6 +61,7 @@ public class SubmodulePathWizardPage extends WizardPage {
 
 		pathText.addModifyListener(new ModifyListener() {
 
+			@Override
 			public void modifyText(ModifyEvent e) {
 				validate();
 			}

@@ -22,6 +22,7 @@ import org.eclipse.egit.ui.internal.repository.tree.FileNode;
  */
 public class DeleteFileCommand extends RepositoriesViewCommandHandler<FileNode> {
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Collection<IPath> paths = getSelectedFileAndFolderPaths(event);
 

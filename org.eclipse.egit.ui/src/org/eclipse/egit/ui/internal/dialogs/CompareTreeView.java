@@ -181,6 +181,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(tree.getTree());
 
 		tree.addOpenListener(new IOpenListener() {
+			@Override
 			public void open(OpenEvent event) {
 				reactOnOpen(event);
 			}
@@ -486,6 +487,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 			// this does the hard work...
 			new ProgressMonitorDialog(getViewSite().getShell()).run(true, true,
 					new IRunnableWithProgress() {
+						@Override
 						public void run(IProgressMonitor monitor)
 								throws InvocationTargetException,
 								InterruptedException {
@@ -495,6 +497,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 											monitor);
 								PlatformUI.getWorkbench().getDisplay()
 										.asyncExec(new Runnable() {
+											@Override
 											public void run() {
 												tree.setInput(input);
 												tree
@@ -909,6 +912,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 	 */
 	private final class PathNodeContentProvider implements ITreeContentProvider {
 
+		@Override
 		public Object[] getElements(Object inputElement) {
 			ContainerNode rootContainer = containerNodes.get(new Path("")); //$NON-NLS-1$
 			if (rootContainer.isOnlyEqualContent() && !showEquals)
@@ -931,6 +935,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 				return new PathNode[] { rootContainer };
 		}
 
+		@Override
 		public Object[] getChildren(Object parentElement) {
 			if (parentElement instanceof ContainerNode) {
 				ContainerNode containerNode = (ContainerNode) parentElement;
@@ -939,6 +944,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 				return new Object[] {};
 		}
 
+		@Override
 		public boolean hasChildren(Object element) {
 			if (element instanceof ContainerNode) {
 				ContainerNode containerNode = (ContainerNode) element;
@@ -947,6 +953,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 				return false;
 		}
 
+		@Override
 		public Object getParent(Object element) {
 			if (element instanceof PathNode) {
 				PathNode pathNode = (PathNode) element;
@@ -959,10 +966,12 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 				return null;
 		}
 
+		@Override
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 			// Do nothing
 		}
 
+		@Override
 		public void dispose() {
 			// Do nothing
 		}
@@ -976,6 +985,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 
 		private final WorkbenchLabelProvider workbenchLabelProvider = new WorkbenchLabelProvider();
 
+		@Override
 		public Image getImage(Object element) {
 			if (element instanceof String)
 				return null;
@@ -1007,6 +1017,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 			return null;
 		}
 
+		@Override
 		public String getText(Object element) {
 			if (element instanceof String)
 				return (String) element;
@@ -1050,6 +1061,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 	 * @see org.eclipse.jface.action.IMenuListener#menuAboutToShow(org.eclipse.jface.action.IMenuManager)
 	 * @since 2.1
 	 */
+	@Override
 	public void menuAboutToShow(IMenuManager manager) {
 		ITreeSelection selection = (ITreeSelection) tree.getSelection();
 		if (selection.isEmpty())
@@ -1071,6 +1083,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 	 * @see org.eclipse.ui.part.IShowInSource#getShowInContext()
 	 * @since 2.1
 	 */
+	@Override
 	public ShowInContext getShowInContext() {
 		IPath repoPath = getRepositoryPath();
 		ITreeSelection selection = (ITreeSelection) tree.getSelection();

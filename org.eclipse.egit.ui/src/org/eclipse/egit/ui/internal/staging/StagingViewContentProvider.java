@@ -66,6 +66,7 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		comparator = new EntryComparator();
 	}
 
+	@Override
 	public Object getParent(Object element) {
 		if (element instanceof StagingFolderEntry)
 			return ((StagingFolderEntry) element).getParent();
@@ -74,14 +75,17 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		return null;
 	}
 
+	@Override
 	public boolean hasChildren(Object element) {
 		return !(element instanceof StagingEntry);
 	}
 
+	@Override
 	public Object[] getElements(Object inputElement) {
 		return getChildren(inputElement);
 	}
 
+	@Override
 	public Object[] getChildren(Object parentElement) {
 		if (repository == null)
 			return new Object[0];
@@ -260,6 +264,7 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		return content;
 	}
 
+	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		if (!(newInput instanceof StagingViewUpdate))
 			return;
@@ -282,6 +287,7 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 
 		Set<StagingEntry> nodes = new TreeSet<StagingEntry>(
 				new Comparator<StagingEntry>() {
+					@Override
 					public int compare(StagingEntry o1, StagingEntry o2) {
 						return o1.getPath().compareTo(o2.getPath());
 					}
@@ -336,6 +342,7 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		compactTreeRoots = null;
 	}
 
+	@Override
 	public void dispose() {
 		// nothing to dispose
 	}
@@ -367,6 +374,7 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 	private static class EntryComparator implements Comparator<Object> {
 		boolean fileNameMode;
 
+		@Override
 		public int compare(Object o1, Object o2) {
 			if (o1 instanceof StagingEntry) {
 				if (o2 instanceof StagingEntry) {

@@ -258,6 +258,7 @@ public class BranchOperationUI {
 						final AtomicReference<IMemento> memento = new AtomicReference<IMemento>();
 						bop.addPreExecuteTask(new PreExecuteTask() {
 
+							@Override
 							public void preExecute(Repository pRepo,
 									IProgressMonitor pMonitor)
 									throws CoreException {
@@ -268,6 +269,7 @@ public class BranchOperationUI {
 						});
 						bop.addPostExecuteTask(new PostExecuteTask() {
 
+							@Override
 							public void postExecute(Repository pRepo,
 									IProgressMonitor pMonitor)
 									throws CoreException {
@@ -328,6 +330,7 @@ public class BranchOperationUI {
 	public void run(IProgressMonitor monitor) throws CoreException {
 		if (!repository.getRepositoryState().canCheckout()) {
 			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+				@Override
 				public void run() {
 					MessageDialog.openError(getShell(),
 							UIText.BranchAction_cannotCheckout, NLS.bind(
@@ -381,6 +384,7 @@ public class BranchOperationUI {
 	private String getTargetWithDialog() {
 		final String[] dialogResult = new String[1];
 		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+			@Override
 			public void run() {
 				dialogResult[0] = getTargetWithDialogInUI();
 			}
@@ -424,6 +428,7 @@ public class BranchOperationUI {
 	private String getTargetWithCheckoutRemoteTrackingDialog() {
 		final String[] dialogResult = new String[1];
 		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+			@Override
 			public void run() {
 				dialogResult[0] = getTargetWithCheckoutRemoteTrackingDialogInUI();
 			}
@@ -471,6 +476,7 @@ public class BranchOperationUI {
 	public void show(final CheckoutResult result) {
 		if (result.getStatus() == CheckoutResult.Status.CONFLICTS) {
 			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+				@Override
 				public void run() {
 					Shell shell = PlatformUI.getWorkbench()
 							.getActiveWorkbenchWindow().getShell();
@@ -501,6 +507,7 @@ public class BranchOperationUI {
 			if (!show)
 				return;
 			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+				@Override
 				public void run() {
 					Shell shell = PlatformUI.getWorkbench()
 							.getActiveWorkbenchWindow().getShell();
@@ -516,6 +523,7 @@ public class BranchOperationUI {
 
 	private void showDetachedHeadWarning() {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			@Override
 			public void run() {
 				IPreferenceStore store = Activator.getDefault()
 						.getPreferenceStore();
@@ -549,6 +557,7 @@ public class BranchOperationUI {
 		if (launchConfiguration != null) {
 			final boolean[] dialogResult = new boolean[1];
 			PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+				@Override
 				public void run() {
 					dialogResult[0] = showContinueDialogInUI(store,
 							launchConfiguration);
@@ -588,6 +597,7 @@ public class BranchOperationUI {
 		try {
 			ModalContext.run(new IRunnableWithProgress() {
 
+				@Override
 				public void run(IProgressMonitor m)
 						throws InvocationTargetException, InterruptedException {
 

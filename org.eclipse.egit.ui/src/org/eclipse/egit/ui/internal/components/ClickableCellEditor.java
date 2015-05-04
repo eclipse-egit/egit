@@ -61,6 +61,7 @@ public class ClickableCellEditor extends CellEditor {
 		fireApplyEditorValue();
 	}
 
+	@Override
 	public void activate(ColumnViewerEditorActivationEvent activationEvent) {
 		if (activationEvent.eventType != ColumnViewerEditorActivationEvent.TRAVERSAL) {
 			super.activate(activationEvent);

@@ -22,6 +22,7 @@ import org.eclipse.egit.ui.internal.operations.IgnoreOperationUI;
 /** Action for ignoring files via .gitignore. */
 public class IgnoreActionHandler extends RepositoryActionHandler {
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final IResource[] resources = getSelectedResources(event);
 		if (resources.length == 0)

@@ -23,6 +23,7 @@ import org.eclipse.jgit.lib.Repository;
  * "Push Branch..." action for repository
  */
 public class PushBranchActionHandler extends RepositoryActionHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repository = getRepository(true, event);
 

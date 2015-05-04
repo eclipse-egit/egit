@@ -25,6 +25,7 @@ import org.eclipse.ui.part.ShowInContext;
  */
 public class ShowRepositoriesViewActionHandler extends RepositoryActionHandler {
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RepositoriesView view;
 		try {

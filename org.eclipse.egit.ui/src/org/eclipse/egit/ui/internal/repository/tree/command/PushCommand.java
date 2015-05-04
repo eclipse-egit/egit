@@ -33,6 +33,7 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class PushCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		List<RepositoryTreeNode> nodes = getSelectedNodes(event);
 		RepositoryTreeNode node = nodes.get(0);

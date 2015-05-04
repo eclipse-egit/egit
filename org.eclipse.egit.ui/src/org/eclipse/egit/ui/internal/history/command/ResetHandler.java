@@ -18,6 +18,7 @@ import org.eclipse.jgit.lib.Repository;
  * "Reset" with parameter (hard, mixed, soft).
  */
 public class ResetHandler extends AbstractHistoryCommandHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repo = getRepository(event);
 		final ObjectId commitId = getSelectedCommitId(event);

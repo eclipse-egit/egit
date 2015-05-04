@@ -45,6 +45,7 @@ public class StashDropHandler extends SelectionHandler {
 	 */
 	public static final String ID = "org.eclipse.egit.ui.commit.StashDrop"; //$NON-NLS-1$
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final RevCommit commit = getSelectedItem(RevCommit.class, event);
 		if (commit == null)
@@ -124,6 +125,7 @@ public class StashDropHandler extends SelectionHandler {
 		final AtomicBoolean confirmed = new AtomicBoolean(false);
 
 		shell.getDisplay().syncExec(new Runnable() {
+			@Override
 			public void run() {
 				String message = MessageFormat.format(
 						UIText.StashDropCommand_confirmSingle,

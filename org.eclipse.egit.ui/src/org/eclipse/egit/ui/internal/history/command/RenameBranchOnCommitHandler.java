@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Shell;
  * Rename a branch pointing to a commit.
  */
 public class RenameBranchOnCommitHandler extends AbstractHistoryCommandHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repository = getRepository(event);
 		if (repository == null)

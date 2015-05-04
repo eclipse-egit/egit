@@ -21,6 +21,7 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class StashCreateHandler extends RepositoryActionHandler {
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repository = getRepository();
 		if (repository == null)

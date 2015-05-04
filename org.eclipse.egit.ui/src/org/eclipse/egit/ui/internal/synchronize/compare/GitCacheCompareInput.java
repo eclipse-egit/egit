@@ -51,6 +51,7 @@ public class GitCacheCompareInput extends GitCompareInput {
 		this.baseFile = baseFile;
 	}
 
+	@Override
 	public ITypedElement getLeft() {
 		try {
 			return getIndexTypedElement(baseFile);
@@ -59,6 +60,7 @@ public class GitCacheCompareInput extends GitCompareInput {
 		}
 	}
 
+	@Override
 	public ITypedElement getRight() {
 		return getFileRevisionTypedElement(gitPath, baseCommit, repo);
 	}

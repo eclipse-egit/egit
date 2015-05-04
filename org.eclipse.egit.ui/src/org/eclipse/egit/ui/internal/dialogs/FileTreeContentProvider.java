@@ -212,26 +212,32 @@ public class FileTreeContentProvider implements ITreeContentProvider {
 		this.mode = mode;
 	}
 
+	@Override
 	public Object[] getChildren(Object parent) {
 		return ((Node) parent).getChildren().toArray();
 	}
 
+	@Override
 	public Object getParent(Object child) {
 		return ((Node) child).getParent();
 	}
 
+	@Override
 	public boolean hasChildren(Object parent) {
 		return ((Node) parent).hasChildren();
 	}
 
+	@Override
 	public Object[] getElements(Object arg0) {
 		return rootNodes.toArray();
 	}
 
+	@Override
 	public void dispose() {
 		// nothing to dispose
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		rootNodes.clear();

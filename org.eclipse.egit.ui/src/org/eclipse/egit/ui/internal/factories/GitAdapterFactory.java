@@ -50,6 +50,7 @@ public class GitAdapterFactory implements IAdapterFactory {
 	private static final IWorkspaceRoot root = ResourcesPlugin.getWorkspace()
 			.getRoot();
 
+	@Override
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
 		if (adapterType.isAssignableFrom(IHistoryPageSource.class)) {
 			return historyPageSource;
@@ -101,6 +102,7 @@ public class GitAdapterFactory implements IAdapterFactory {
 		return null;
 	}
 
+	@Override
 	public Class[] getAdapterList() {
 		return new Class[] { IHistoryPageSource.class,
 				ISynchronizationCompareAdapter.class, ResourceMapping.class,

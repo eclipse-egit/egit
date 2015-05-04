@@ -40,34 +40,42 @@ public class NoteDetailsPage implements IDetailsPage, IDetailsPageProvider {
 
 	private RepositoryCommitNote selectedNote;
 
+	@Override
 	public void initialize(IManagedForm form) {
 		toolkit = form.getToolkit();
 	}
 
+	@Override
 	public void dispose() {
 		// Does nothing
 	}
 
+	@Override
 	public boolean isDirty() {
 		return false;
 	}
 
+	@Override
 	public void commit(boolean onSave) {
 		// Update notes not currently supported
 	}
 
+	@Override
 	public boolean setFormInput(Object input) {
 		return true;
 	}
 
+	@Override
 	public void setFocus() {
 		notesText.setFocus();
 	}
 
+	@Override
 	public boolean isStale() {
 		return false;
 	}
 
+	@Override
 	public void refresh() {
 		if (selectedNote != null)
 			notesText.setText(selectedNote.getNoteText());
@@ -75,6 +83,7 @@ public class NoteDetailsPage implements IDetailsPage, IDetailsPageProvider {
 			notesText.setText(""); //$NON-NLS-1$
 	}
 
+	@Override
 	public void selectionChanged(IFormPart part, ISelection selection) {
 		Object first = ((IStructuredSelection) selection).getFirstElement();
 		if (first instanceof RepositoryCommitNote)
@@ -84,6 +93,7 @@ public class NoteDetailsPage implements IDetailsPage, IDetailsPageProvider {
 		refresh();
 	}
 
+	@Override
 	public void createContents(Composite parent) {
 		GridLayoutFactory.swtDefaults().applyTo(parent);
 		Section notesSection = toolkit.createSection(parent,
@@ -99,6 +109,7 @@ public class NoteDetailsPage implements IDetailsPage, IDetailsPageProvider {
 
 		notesText = new SpellcheckableMessageArea(notesArea, "", SWT.NONE) { //$NON-NLS-1$
 
+			@Override
 			protected void createMarginPainter() {
 				// Disabled intentionally
 			}
@@ -115,10 +126,12 @@ public class NoteDetailsPage implements IDetailsPage, IDetailsPageProvider {
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(notesText);
 	}
 
+	@Override
 	public Object getPageKey(Object object) {
 		return this;
 	}
 
+	@Override
 	public IDetailsPage getPage(Object key) {
 		return this;
 	}

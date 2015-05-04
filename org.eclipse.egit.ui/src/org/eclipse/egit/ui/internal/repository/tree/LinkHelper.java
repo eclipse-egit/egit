@@ -37,6 +37,7 @@ import org.eclipse.ui.navigator.ILinkHelper;
  * Link Helper for Git Repositories View
  */
 public class LinkHelper implements ILinkHelper {
+	@Override
 	public void activateEditor(IWorkbenchPage aPage,
 			IStructuredSelection aSelection) {
 
@@ -73,6 +74,7 @@ public class LinkHelper implements ILinkHelper {
 	/**
 	 * TODO javadoc missing
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public IStructuredSelection findSelection(IEditorInput anInput) {
 		if (!(anInput instanceof IURIEditorInput)) {

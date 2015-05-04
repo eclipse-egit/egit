@@ -47,6 +47,7 @@ import org.eclipse.swt.dnd.TextTransfer;
 public class PasteCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> {
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		// we check if the pasted content is a directory
 		// repository location and try to add this

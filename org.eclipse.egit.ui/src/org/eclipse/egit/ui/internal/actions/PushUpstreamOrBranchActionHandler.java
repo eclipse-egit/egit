@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Shell;
  * Action for "Push to Upstream" or "Push Branch..." if not configured
  */
 public class PushUpstreamOrBranchActionHandler extends RepositoryActionHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repository = getRepository(true, event);
 		if (repository == null)

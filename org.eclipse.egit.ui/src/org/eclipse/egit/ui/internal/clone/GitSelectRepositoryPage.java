@@ -89,6 +89,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 		return ((RepositoryTreeNode) obj).getRepository();
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);
 
@@ -147,6 +148,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 
 		tv.addSelectionChangedListener(new ISelectionChangedListener() {
 
+			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				checkPage();
 			}
@@ -154,6 +156,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 
 		tv.addDoubleClickListener(new IDoubleClickListener() {
 
+			@Override
 			public void doubleClick(DoubleClickEvent event) {
 				checkPage();
 				if (isPageComplete())
@@ -164,9 +167,11 @@ public class GitSelectRepositoryPage extends WizardPage {
 		tv.setInput(util.getConfiguredRepositories());
 
 		configChangeListener = new IPreferenceChangeListener() {
+			@Override
 			public void preferenceChange(PreferenceChangeEvent event) {
 				Display display = tv.getControl().getDisplay();
 				display.asyncExec(new Runnable() {
+					@Override
 					public void run() {
 						refreshRepositoryList();
 						checkPage();

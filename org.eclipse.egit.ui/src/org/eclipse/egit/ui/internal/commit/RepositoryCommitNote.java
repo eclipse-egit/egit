@@ -78,6 +78,7 @@ public class RepositoryCommitNote extends PlatformObject implements
 		return ""; //$NON-NLS-1$
 	}
 
+	@Override
 	public Object getAdapter(Class adapter) {
 		if (RepositoryCommit.class == adapter)
 			return this.commit;
@@ -88,18 +89,22 @@ public class RepositoryCommitNote extends PlatformObject implements
 		return super.getAdapter(adapter);
 	}
 
+	@Override
 	public Object[] getChildren(Object o) {
 		return new Object[0];
 	}
 
+	@Override
 	public ImageDescriptor getImageDescriptor(Object object) {
 		return UIIcons.NOTE;
 	}
 
+	@Override
 	public String getLabel(Object o) {
 		return NoteMap.shortenRefName(ref.getName());
 	}
 
+	@Override
 	public Object getParent(Object o) {
 		return commit;
 	}

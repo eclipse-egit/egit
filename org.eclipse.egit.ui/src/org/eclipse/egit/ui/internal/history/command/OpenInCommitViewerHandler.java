@@ -27,6 +27,7 @@ import org.eclipse.ui.PartInitException;
  */
 public class OpenInCommitViewerHandler extends AbstractHistoryCommandHandler {
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repository = getRepository(event);
 		List<RevCommit> commits = getSelectedCommits(event);

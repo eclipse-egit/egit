@@ -159,6 +159,7 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 			return true;
 		}
 
+		@Override
 		public int compareTo(OptionNode o) {
 			return option.compareTo(o.option);
 		}
@@ -172,12 +173,14 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 			this.myOptionsMap = optionsMap;
 		}
 
+		@Override
 		public Object[] getElements(Object inputElement) {
 			if (inputElement instanceof Object[])
 				return (Object[]) inputElement;
 			return new Object[0];
 		}
 
+		@Override
 		public Object[] getChildren(Object parentElement) {
 			if (parentElement instanceof PluginNode) {
 				PluginNode node = (PluginNode) parentElement;
@@ -194,20 +197,24 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 			return null;
 		}
 
+		@Override
 		public Object getParent(Object element) {
 			if (element instanceof OptionNode)
 				return ((OptionNode) element).getPlugin();
 			return null;
 		}
 
+		@Override
 		public boolean hasChildren(Object element) {
 			return element instanceof PluginNode;
 		}
 
+		@Override
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 			// Do nothing
 		}
 
+		@Override
 		public void dispose() {
 			// Do nothing
 		}
@@ -310,6 +317,7 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 		});
 
 		tv.addCheckStateListener(new ICheckStateListener() {
+			@Override
 			public void checkStateChanged(CheckStateChangedEvent event) {
 				setDirty(true);
 			}
@@ -345,10 +353,12 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 		DebugOptions options = getOptions();
 		fillOptionsMapFromCurrent(options);
 		tv.setCheckStateProvider(new ICheckStateProvider() {
+			@Override
 			public boolean isGrayed(Object element) {
 				return false;
 			}
 
+			@Override
 			public boolean isChecked(Object element) {
 				Object data = element;
 				Properties props;

@@ -41,6 +41,7 @@ public class WindowCachePreferencePage extends FieldEditorPreferencePage
 				GitCorePreferences.core_packedGitWindowSize,
 				UIText.WindowCachePreferencePage_packedGitWindowSize,
 				getFieldEditorParent(), 512, 128 * MB) {
+			@Override
 			protected boolean checkValue(final int number) {
 				return super.checkValue(number)
 						&& Integer.bitCount(number) == 1;
@@ -65,6 +66,7 @@ public class WindowCachePreferencePage extends FieldEditorPreferencePage
 				getFieldEditorParent()));
 	}
 
+	@Override
 	public boolean performOk() {
 		// first put the editor values into the configuration
 		super.performOk();
@@ -77,6 +79,7 @@ public class WindowCachePreferencePage extends FieldEditorPreferencePage
 		}
 	}
 
+	@Override
 	public void init(IWorkbench workbench) {
 		// Nothing to do
 	}

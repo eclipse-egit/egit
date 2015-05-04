@@ -30,16 +30,19 @@ import org.eclipse.team.core.RepositoryProvider;
  * @see DisconnectProviderOperation
  */
 public class DisconnectActionHandler extends RepositoryActionHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IProject[] selectedProjects = getProjectsForSelectedResources();
 		List<IProject> projects = new ArrayList<IProject>(selectedProjects.length);
 		for (IProject project : selectedProjects) {
-			if (project.isOpen()
-					&& RepositoryProvider.getProvider(project) instanceof GitProvider)
+			if (project.isOpen() && RepositoryProvider.getProvider(project,
+					GitProvider.ID) != null) {
 				projects.add(project);
+			}
 		}
-		if (projects.isEmpty())
+		if (projects.isEmpty()) {
 			return null;
+		}
 		JobUtil.scheduleUserJob(new DisconnectProviderOperation(projects),
 				UIText.Disconnect_disconnect,
 				JobFamilies.DISCONNECT, new JobChangeAdapter() {

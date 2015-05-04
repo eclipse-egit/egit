@@ -153,6 +153,7 @@ public class CommitFileDiffViewer extends TableViewer {
 		setLabelProvider(new FileDiffLabelProvider(dimmedForegroundRgb));
 		setContentProvider(new FileDiffContentProvider());
 		addOpenListener(new IOpenListener() {
+			@Override
 			public void open(final OpenEvent event) {
 				final ISelection s = event.getSelection();
 				if (s.isEmpty() || !(s instanceof IStructuredSelection))
@@ -181,6 +182,7 @@ public class CommitFileDiffViewer extends TableViewer {
 		});
 
 		addSelectionChangedListener(new ISelectionChangedListener() {
+			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				updateActionEnablement(event.getSelection());
 			}
@@ -188,6 +190,7 @@ public class CommitFileDiffViewer extends TableViewer {
 
 		clipboard = new Clipboard(rawTable.getDisplay());
 		rawTable.addDisposeListener(new DisposeListener() {
+			@Override
 			public void widgetDisposed(final DisposeEvent e) {
 				clipboard.dispose();
 			}
@@ -307,6 +310,7 @@ public class CommitFileDiffViewer extends TableViewer {
 		if (site instanceof IPageSite) {
 			final IPageSite pageSite = (IPageSite) site;
 			getControl().addFocusListener(new FocusListener() {
+				@Override
 				public void focusLost(FocusEvent e) {
 					pageSite.getActionBars().setGlobalActionHandler(
 							ActionFactory.SELECT_ALL.getId(), null);
@@ -315,6 +319,7 @@ public class CommitFileDiffViewer extends TableViewer {
 					pageSite.getActionBars().updateActionBars();
 				}
 
+				@Override
 				public void focusGained(FocusEvent e) {
 					updateActionEnablement(getSelection());
 					pageSite.getActionBars().setGlobalActionHandler(
@@ -719,6 +724,7 @@ public class CommitFileDiffViewer extends TableViewer {
 				if (marked) {
 					// Does not yet work reliably, see comment on bug 393610.
 					getTable().getDisplay().asyncExec(new Runnable() {
+						@Override
 						public void run() {
 							reveal(element);
 						}

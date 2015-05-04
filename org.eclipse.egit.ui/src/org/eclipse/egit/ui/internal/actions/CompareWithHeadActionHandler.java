@@ -28,6 +28,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * the HEAD commit.
  */
 public class CompareWithHeadActionHandler extends RepositoryActionHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repository = getRepository(true, event);
 		// assert all resources map to the same repository

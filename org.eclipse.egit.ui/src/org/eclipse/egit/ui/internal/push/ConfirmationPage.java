@@ -82,6 +82,7 @@ class ConfirmationPage extends WizardPage {
 		setDescription(UIText.ConfirmationPage_description);
 	}
 
+	@Override
 	public void createControl(final Composite parent) {
 		final Composite panel = new Composite(parent, SWT.NONE);
 		panel.setLayout(new GridLayout());
@@ -163,6 +164,7 @@ class ConfirmationPage extends WizardPage {
 		setErrorMessage(null);
 		setPageComplete(false);
 		getControl().getDisplay().asyncExec(new Runnable() {
+			@Override
 			public void run() {
 				revalidateImpl();
 			}
@@ -201,6 +203,7 @@ class ConfirmationPage extends WizardPage {
 				operation.setCredentialsProvider(new EGitCredentialsProvider(
 						credentials.getUser(), credentials.getPassword()));
 			getContainer().run(true, true, new IRunnableWithProgress() {
+				@Override
 				public void run(IProgressMonitor monitor)
 						throws InvocationTargetException, InterruptedException {
 					operation.run(monitor);

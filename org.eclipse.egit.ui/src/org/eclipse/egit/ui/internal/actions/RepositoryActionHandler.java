@@ -325,6 +325,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		return SelectionUtils.getSelection(evaluationContext);
 	}
 
+	@Override
 	public void setEnabled(Object evaluationContext) {
 		this.evaluationContext = (IEvaluationContext) evaluationContext;
 	}

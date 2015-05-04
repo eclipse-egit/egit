@@ -71,6 +71,7 @@ public class FindToolbarThread extends Thread {
 		currentThreadIx = globalThreadIx;
 	}
 
+	@Override
 	public void run() {
 		synchronized (EXEC_LOCK) {
 			execFind();
@@ -109,6 +110,7 @@ public class FindToolbarThread extends Thread {
 				if (System.currentTimeMillis() - lastUIUpdate > 500) {
 					final int percentage = (int) (((i + 1F) / totalRevisions) * 100);
 					toolbar.getDisplay().asyncExec(new Runnable() {
+						@Override
 						public void run() {
 							if (toolbar.isDisposed()) {
 								return;
@@ -241,6 +243,7 @@ public class FindToolbarThread extends Thread {
 		// Updates the toolbar with the result find info.
 		final boolean overflow = maxResultsOverflow;
 		toolbar.getDisplay().syncExec(new Runnable() {
+			@Override
 			public void run() {
 				if (toolbar.isDisposed()) {
 					return;

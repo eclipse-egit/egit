@@ -129,6 +129,7 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 			commit.setSelection(true);
 		commit.setText(UIText.MergeTargetSelectionDialog_MergeTypeCommitButton);
 		commit.addListener(SWT.Selection, new Listener() {
+			@Override
 			public void handleEvent(Event event) {
 				if (((Button) event.widget).getSelection()) {
 					mergeSquash = false;
@@ -142,6 +143,7 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 			noCommit.setSelection(true);
 		noCommit.setText(UIText.MergeTargetSelectionDialog_MergeTypeNoCommitButton);
 		noCommit.addListener(SWT.Selection, new Listener() {
+			@Override
 			public void handleEvent(Event event) {
 				if (((Button) event.widget).getSelection()) {
 					mergeSquash = false;
@@ -155,6 +157,7 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 			squash.setSelection(true);
 		squash.setText(UIText.MergeTargetSelectionDialog_MergeTypeSquashButton);
 		squash.addListener(SWT.Selection, new Listener() {
+			@Override
 			public void handleEvent(Event event) {
 				if (((Button) event.widget).getSelection()) {
 					mergeSquash = true;
@@ -186,6 +189,7 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 		Button btn = new Button(grp, SWT.RADIO);
 		btn.setText(text);
 		btn.addListener(SWT.Selection, new Listener() {
+			@Override
 			public void handleEvent(Event event) {
 				if (((Button) event.widget).getSelection())
 					fastForwardMode = ffMode;

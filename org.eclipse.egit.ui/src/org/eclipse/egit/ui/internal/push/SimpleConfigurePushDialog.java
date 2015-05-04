@@ -282,6 +282,7 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 		});
 
 		commonUriText.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				deleteCommonUri
 						.setEnabled(commonUriText.getText().length() > 0);
@@ -295,6 +296,7 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 		pushUriArea.setExpanded(!config.getPushURIs().isEmpty());
 		pushUriArea.addExpansionListener(new ExpansionAdapter() {
 
+			@Override
 			public void expansionStateChanged(ExpansionEvent e) {
 				main.layout(true, true);
 				main.getShell().pack();
@@ -362,6 +364,7 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 		});
 
 		uriViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				deleteUri.setEnabled(!uriViewer.getSelection().isEmpty());
 				changeUri.setEnabled(((IStructuredSelection) uriViewer
@@ -483,6 +486,7 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 		});
 
 		specViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection sel = (IStructuredSelection) specViewer
 						.getSelection();
@@ -573,6 +577,7 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 			try {
 				new ProgressMonitorDialog(getShell()).run(true, true,
 						new IRunnableWithProgress() {
+							@Override
 							public void run(IProgressMonitor monitor)
 									throws InvocationTargetException,
 									InterruptedException {
@@ -584,6 +589,7 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 									getShell().getDisplay().asyncExec(
 											new Runnable() {
 
+												@Override
 												public void run() {
 													PushResultDialog dlg = new PushResultDialog(
 															getShell(),
@@ -629,6 +635,7 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 				try {
 					new ProgressMonitorDialog(getShell()).run(true, true,
 							new IRunnableWithProgress() {
+								@Override
 								public void run(IProgressMonitor monitor)
 										throws InvocationTargetException,
 										InterruptedException {

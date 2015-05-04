@@ -23,6 +23,7 @@ import org.eclipse.jface.dialogs.Dialog;
  */
 public class ConfigurePushCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RepositoryTreeNode selectedNode = getFirstOrNull(getSelectedNodes(event));
 

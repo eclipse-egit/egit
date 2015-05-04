@@ -48,6 +48,7 @@ public class GitVariableResolver implements IDynamicVariableResolver {
 	private static final String GIT_WORK_TREE = "git_work_tree"; //$NON-NLS-1$
 	private static final String GIT_BRANCH = "git_branch"; //$NON-NLS-1$
 
+	@Override
 	public String resolveValue(IDynamicVariable variable, String argument)
 			throws CoreException {
 		if (variable.getName().equals(GIT_DIR))
@@ -145,6 +146,7 @@ public class GitVariableResolver implements IDynamicVariableResolver {
 		else {
 			final IResource[] resource = new IResource[1];
 			display.syncExec(new Runnable() {
+				@Override
 				public void run() {
 					resource[0] = getSelectedResource();
 				}

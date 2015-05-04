@@ -33,11 +33,13 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.progress.UIJob;
 
 /** Checks out a commit (in interactive rebase mode) for editing. */
 public class EditHandler extends AbstractHistoryCommandHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repository = getRepository(event);
 		final RevCommit commit = getSelectedCommit(event);
@@ -69,8 +71,8 @@ public class EditHandler extends AbstractHistoryCommandHandler {
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
 				try {
-					IWorkbenchPage workbenchPage = getPage().getSite()
-							.getPage();
+					IWorkbenchPage workbenchPage = PlatformUI.getWorkbench()
+							.getActiveWorkbenchWindow().getActivePage();
 					final StagingView stagingView = (StagingView) workbenchPage
 							.showView(StagingView.VIEW_ID);
 					stagingView.reload(repository);

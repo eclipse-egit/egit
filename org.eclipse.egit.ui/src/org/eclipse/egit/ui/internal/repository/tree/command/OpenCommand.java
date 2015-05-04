@@ -30,6 +30,7 @@ import org.eclipse.egit.ui.internal.repository.tree.TagNode;
  */
 public class OpenCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> {
+	@Override
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		final List<RepositoryTreeNode> nodes = getSelectedNodes(event);
 		if (nodes.isEmpty())

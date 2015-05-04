@@ -21,10 +21,12 @@ import org.eclipse.swt.graphics.Image;
  */
 public class FileTreeLabelProvider extends BaseLabelProvider implements ILabelProvider {
 
+	@Override
 	public Image getImage(Object element) {
 		return ((Node) element).getImage();
 	}
 
+	@Override
 	public String getText(Object element) {
 		return ((Node) element).getName();
 	}

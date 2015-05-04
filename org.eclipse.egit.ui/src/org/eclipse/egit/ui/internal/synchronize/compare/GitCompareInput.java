@@ -91,20 +91,24 @@ public class GitCompareInput implements ISynchronizationCompareInput {
 				.substring(gitPath.lastIndexOf('/') + 1);
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
 
+	@Override
 	public Image getImage() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
 	public int getKind() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@Override
 	public ITypedElement getAncestor() {
 		if (objectExist(ancestorCommit, ancestorId))
 			return CompareUtils.getFileRevisionTypedElement(gitPath,
@@ -113,28 +117,33 @@ public class GitCompareInput implements ISynchronizationCompareInput {
 		return null;
 	}
 
+	@Override
 	public ITypedElement getLeft() {
 		return CompareUtils.getFileRevisionTypedElement(gitPath, baseCommit,
 				repo, baseId);
 	}
 
+	@Override
 	public ITypedElement getRight() {
 		return CompareUtils.getFileRevisionTypedElement(gitPath, remoteCommit,
 				repo, remoteId);
 	}
 
+	@Override
 	public void addCompareInputChangeListener(
 			ICompareInputChangeListener listener) {
 		// data in commit will never change, therefore change listeners are
 		// useless
 	}
 
+	@Override
 	public void removeCompareInputChangeListener(
 			ICompareInputChangeListener listener) {
 		// data in commit will never change, therefore change listeners are
 		// useless
 	}
 
+	@Override
 	public void copy(boolean leftToRight) {
 		// do nothing, we should disallow coping content between commits
 	}
@@ -143,21 +152,25 @@ public class GitCompareInput implements ISynchronizationCompareInput {
 		return commit != null && id != null && !id.equals(zeroId());
 	}
 
+	@Override
 	public SaveableComparison getSaveable() {
 		// not used
 		return null;
 	}
 
+	@Override
 	public void prepareInput(CompareConfiguration configuration,
 			IProgressMonitor monitor) throws CoreException {
 		configuration.setLeftLabel(getFileRevisionLabel(getLeft()));
 		configuration.setRightLabel(getFileRevisionLabel(getRight()));
 	}
 
+	@Override
 	public String getFullPath() {
 		return gitPath;
 	}
 
+	@Override
 	public boolean isCompareInputFor(Object object) {
 		// not used
 		return false;

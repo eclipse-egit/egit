@@ -16,6 +16,7 @@ import org.eclipse.jgit.lib.Repository;
  * "Push Tags..." action for repository
  */
 public class PushTagsActionHandler extends RepositoryActionHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repository = getRepository(true, event);
 
