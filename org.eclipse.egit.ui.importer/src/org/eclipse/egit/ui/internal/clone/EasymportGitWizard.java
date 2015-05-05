@@ -27,7 +27,8 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.internal.wizards.datatransfer.Activator;
-import org.eclipse.ui.internal.wizards.datatransfer.NestedProjectsWizardPage;
+import org.eclipse.ui.internal.wizards.datatransfer.EasymportJob;
+import org.eclipse.ui.internal.wizards.datatransfer.EasymportJobReportDialog;
 import org.eclipse.ui.internal.wizards.datatransfer.SelectImportRootWizardPage;
 
 /**
@@ -48,7 +49,6 @@ public class EasymportGitWizard extends AbstractGitCloneWizard implements IImpor
 			super.setVisible(visible);
 		}
 	};
-	private NestedProjectsWizardPage nestedProjectsPage;
 	private GitSelectRepositoryPage selectRepoPage = new GitSelectRepositoryPage();
 	private Repository existingRepo;
 
@@ -75,21 +75,26 @@ public class EasymportGitWizard extends AbstractGitCloneWizard implements IImpor
 	@Override
 	protected void addPostClonePages() {
 		addPage(this.selectRootPage);
-		this.nestedProjectsPage = new NestedProjectsWizardPage(this, this.selectRootPage);
-		addPage(this.nestedProjectsPage);
 	}
 
 	@Override
 	public boolean performFinish() {
-		this.nestedProjectsPage.performNestedImport();
+		EasymportJob job = new EasymportJob(
+				this.selectRootPage.getSelectedRootDirectory(),
+				this.selectRootPage.getSelectedWorkingSets(),
+				this.selectRootPage.isConfigureAndDetectNestedProject());
+		EasymportJobReportDialog dialog = new EasymportJobReportDialog(
+				getShell(), job);
+		job.schedule();
+		if (this.selectRootPage.isConfigureAndDetectNestedProject()) {
+			dialog.open();
+		}
 		return true;
 	}
 
 	@Override
 	public boolean canFinish() {
-		return getContainer().getCurrentPage().equals(this.nestedProjectsPage)
-				|| (getContainer().getCurrentPage().equals(this.selectRootPage) && this.selectRootPage
-						.canFlipToNextPage());
+		return getContainer().getCurrentPage() == this.selectRootPage && this.selectRootPage.isPageComplete();
 	}
 
 	@Override
