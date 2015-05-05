@@ -76,6 +76,7 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -1021,6 +1022,16 @@ public class SpellcheckableMessageArea extends Composite {
 	public void setText(String text) {
 		if (text != null)
 			getTextWidget().setText(text);
+	}
+
+	/**
+	 * Set the same background color to the styledText widget as the Composite
+	 */
+	@Override
+	public void setBackground(Color color) {
+		super.setBackground(color);
+		StyledText textWidget = getTextWidget();
+		textWidget.setBackground(color);
 	}
 
 	/**
