@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_6f512d5a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-05T23:28:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_6fedad2d",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 67
+      },
+      "revId": "b05389f3a43a66a534b8772b23aefadb868381d7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_2f572553",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-05T23:28:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_2ff3a512",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "b05389f3a43a66a534b8772b23aefadb868381d7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_8fd9f99e",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
         "patchSetId": 3
@@ -59,6 +107,24 @@
       "writtenOn": "2015-05-05T23:25:49Z",
       "side": 1,
       "message": "style nit: remove this unrelated formatting change",
+      "revId": "b05389f3a43a66a534b8772b23aefadb868381d7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_d2b1e62e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-05T23:28:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_8fd9f99e",
       "revId": "b05389f3a43a66a534b8772b23aefadb868381d7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_b2b6da23",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushResultTable.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-05T23:28:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_6fd64d6d",
+      "revId": "b05389f3a43a66a534b8772b23aefadb868381d7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_ef019d79",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushResultTable.java",
         "patchSetId": 3
@@ -93,6 +177,24 @@
       "writtenOn": "2015-05-05T23:25:49Z",
       "side": 1,
       "message": "style nit: this line looks too wide, we use max line width of 80 chars, best you use our formatter settings http://git.eclipse.org/c/egit/egit.git/tree/tools/eclipse-JGit-Format.xml",
+      "revId": "b05389f3a43a66a534b8772b23aefadb868381d7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_f2c06276",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushResultTable.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-05T23:28:42Z",
+      "side": 1,
+      "message": "my fault, this line wasn\u0027t touched in this change",
+      "parentUuid": "87f6139c_ef019d79",
       "revId": "b05389f3a43a66a534b8772b23aefadb868381d7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
