@@ -285,7 +285,7 @@
     <module>org.eclipse.egit.core</module>
     <module>org.eclipse.egit.ui</module>
 
-<!--    <module>org.eclipse.egit.ui.importer</module> -->
+    <module>org.eclipse.egit.ui.importer</module>
 
     <module>org.eclipse.egit.mylyn.ui</module>
     <module>org.eclipse.egit.mylyn-feature</module>
