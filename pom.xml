@@ -65,6 +65,7 @@
     <egit-version>4.0.0-SNAPSHOT</egit-version>
     <tycho-version>0.22.0</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
+    <jboss-tycho-plugins-version>${tycho-version}</jboss-tycho-plugins-version>
     <mockito-version>1.8.4</mockito-version>
     <junit-version>4.11</junit-version>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.repository/target/repository</jgit-site>
@@ -284,7 +285,7 @@
     <module>org.eclipse.egit.core</module>
     <module>org.eclipse.egit.ui</module>
 
-    <module>org.eclipse.egit.ui.importer</module>
+<!--    <module>org.eclipse.egit.ui.importer</module> -->
 
     <module>org.eclipse.egit.mylyn.ui</module>
     <module>org.eclipse.egit.mylyn-feature</module>
@@ -439,7 +440,11 @@
           <artifactId>tycho-pack200b-plugin</artifactId>
           <version>${tycho-extras-version}</version>
         </plugin>
-
+        <plugin>
+          <groupId>org.jboss.tools.tycho-plugins</groupId>
+          <artifactId>repository-utils</artifactId>
+          <version>${jboss-tycho-plugins-version}</version>
+        </plugin>
         <!-- other plugins -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
