@@ -58,6 +58,20 @@ import org.eclipse.ui.model.IWorkbenchAdapter3;
  * Table displaying push operation results.
  */
 class PushResultTable {
+
+	private final static class SpellcheckableMessageAreaExtension
+			extends SpellcheckableMessageArea {
+		private SpellcheckableMessageAreaExtension(Composite parent,
+				String initialText, boolean readOnly, int styles) {
+			super(parent, initialText, readOnly, styles);
+		}
+
+		@Override
+		protected void createMarginPainter() {
+			// Disabled intentionally
+		}
+	}
+
 	private static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
 	private static final String SPACE = " "; //$NON-NLS-1$
@@ -191,15 +205,8 @@ class PushResultTable {
 		GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
 				.applyTo(messageGroup);
 
-		final SpellcheckableMessageArea text = new SpellcheckableMessageArea(
-				messageGroup, EMPTY_STRING, true, SWT.BORDER) {
-
-			@Override
-			protected void createMarginPainter() {
-				// Disabled intentionally
-			}
-
-		};
+		final SpellcheckableMessageArea text = new SpellcheckableMessageAreaExtension(messageGroup, EMPTY_STRING, true,
+				SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(text);
 		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
