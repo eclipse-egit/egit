@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f6139c_faf2fe0b",
+        "filename": "org.eclipse.egit.repository/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-05T09:06:11Z",
+      "side": 1,
+      "message": "must stay 0.22.0",
+      "range": {
+        "startLine": 79,
+        "startChar": 17,
+        "endLine": 79,
+        "endChar": 38
+      },
+      "revId": "a6ab46239d98e085e1545c4b2e45e311050d4a6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_5af07203",
+        "filename": "org.eclipse.egit.ui.importer/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-05T09:06:11Z",
+      "side": 1,
+      "message": "0.0.1",
+      "range": {
+        "startLine": 6,
+        "startChar": 16,
+        "endLine": 6,
+        "endChar": 21
+      },
+      "revId": "a6ab46239d98e085e1545c4b2e45e311050d4a6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_3aeda62e",
+        "filename": "org.eclipse.egit.ui.importer/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-05T09:06:11Z",
+      "side": 1,
+      "message": "0.0.1",
+      "range": {
+        "startLine": 15,
+        "startChar": 60,
+        "endLine": 15,
+        "endChar": 65
+      },
+      "revId": "a6ab46239d98e085e1545c4b2e45e311050d4a6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
