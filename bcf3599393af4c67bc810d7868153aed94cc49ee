@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_e4b1bc2e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-06T21:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_899f31b0",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "bcf3599393af4c67bc810d7868153aed94cc49ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_298a7d6f",
         "filename": "org.eclipse.egit.ui.importer/src/org/eclipse/egit/ui/internal/clone/EasymportGitWizard.java",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2015-05-06T21:02:46Z",
       "side": 1,
       "message": "these lines are too wide, we use http://git.eclipse.org/c/egit/egit.git/tree/tools/eclipse-JGit-Format.xml",
+      "revId": "bcf3599393af4c67bc810d7868153aed94cc49ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_8951f15c",
+        "filename": "org.eclipse.egit.ui.importer/src/org/eclipse/egit/ui/internal/clone/EasymportGitWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-06T21:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_298a7d6f",
       "revId": "bcf3599393af4c67bc810d7868153aed94cc49ee",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
