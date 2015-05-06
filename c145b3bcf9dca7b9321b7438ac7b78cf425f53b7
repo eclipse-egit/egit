@@ -16,6 +16,24 @@
       "revId": "c145b3bcf9dca7b9321b7438ac7b78cf425f53b7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_8941f10e",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 315
+      },
+      "writtenOn": "2015-05-06T19:56:25Z",
+      "side": 1,
+      "message": "OK. The whole platform doesn\u0027t specify the version and the quick fix generates what I\u0027ve proposed.\n\nI might come back to this but not in the near future.",
+      "parentUuid": "87f6139c_e96fd5a3",
+      "revId": "c145b3bcf9dca7b9321b7438ac7b78cf425f53b7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
