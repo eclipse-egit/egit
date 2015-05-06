@@ -22,6 +22,30 @@
       "revId": "06a7590a042380d221076e67de0de268430b9830",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_a4cfb4a2",
+        "filename": "org.eclipse.egit.ui.importer/src/org/eclipse/egit/ui/internal/clone/EasymportGitWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2015-05-06T21:07:27Z",
+      "side": 1,
+      "message": "Not really, Easymport is supposed to be a pun Easy + Import \u003d Easymport. But no-one gets it except French people apparently...",
+      "parentUuid": "87f6139c_a954ad4c",
+      "range": {
+        "startLine": 30,
+        "startChar": 52,
+        "endLine": 30,
+        "endChar": 64
+      },
+      "revId": "06a7590a042380d221076e67de0de268430b9830",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
