@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_6f0e4df0",
+        "filename": "org.eclipse.egit.gitflow-feature/.gitignore",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_375ae6c9",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_57bcd255",
         "filename": "org.eclipse.egit.gitflow-feature/.project",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_a7933160",
+        "filename": "org.eclipse.egit.gitflow-feature/.project",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_57bcd255",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_f10cee4a",
         "filename": "org.eclipse.egit.gitflow-feature/feature.xml",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "this feature should declare dependencies that need to be present before this feature can be installed, at least org.eclipse.jgit, org.eclipse.egit.core and org.eclipse.egit.ui are required",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_0f350990",
+        "filename": "org.eclipse.egit.gitflow-feature/feature.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_f10cee4a",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_cc302274",
+        "filename": "org.eclipse.egit.gitflow.test/.classpath",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "I believe this was set by m2e.",
+      "parentUuid": "87f6139c_17b24a7b",
+      "range": {
+        "startLine": 6,
+        "startChar": 37,
+        "endLine": 6,
+        "endChar": 51
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_f7917ed6",
         "filename": "org.eclipse.egit.gitflow.test/.project",
         "patchSetId": 1
@@ -87,6 +165,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "remove the maven builder and nature",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_07896532",
+        "filename": "org.eclipse.egit.gitflow.test/.project",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_f7917ed6",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_12bc0e04",
+        "filename": "org.eclipse.egit.gitflow.test/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_c00da278",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_00f7aac7",
         "filename": "org.eclipse.egit.gitflow.test/pom.xml",
         "patchSetId": 1
@@ -127,6 +247,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "style nit: trailing whitespace",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_8f54594d",
+        "filename": "org.eclipse.egit.gitflow.test/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_00f7aac7",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_4f5a717c",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/AllTests.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_11141a4a",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_579972d0",
         "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/AbstractDualRepositoryTestCase.java",
         "patchSetId": 1
@@ -161,6 +317,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "don\u0027t suppress these warnings but instead add this test bundle to the x-friends of the egit bundles it wants to use (in their manifest.mf)",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_efc6bde0",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/AbstractDualRepositoryTestCase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_579972d0",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -184,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_2fa8c50e",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/AbstractDualRepositoryTestCase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_77090ebc",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_373e6642",
         "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/AbstractDualRepositoryTestCase.java",
         "patchSetId": 1
@@ -195,6 +387,30 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "s/getRemote/getRemoteName/",
+      "range": {
+        "startLine": 123,
+        "startChar": 18,
+        "endLine": 123,
+        "endChar": 27
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_6fb2cd7c",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/AbstractDualRepositoryTestCase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_373e6642",
       "range": {
         "startLine": 123,
         "startChar": 18,
@@ -230,6 +446,30 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_4f9271db",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/AbstractDualRepositoryTestCase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "I renamed it, and moved it to GitFlowRepository.",
+      "parentUuid": "87f6139c_5735f25f",
+      "range": {
+        "startLine": 130,
+        "startChar": 18,
+        "endLine": 130,
+        "endChar": 26
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_97eaba20",
         "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/AbstractFeatureOperationTest.java",
         "patchSetId": 1
@@ -241,6 +481,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "why is this empty class needed ?",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_2f1a85fa",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/AbstractFeatureOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "It was intended to hold some otherwise redundant code, but I forgot to refactor it.",
+      "parentUuid": "87f6139c_97eaba20",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -316,6 +574,78 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_8f27393e",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/AbstractGitFlowOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_5707b28f",
+      "range": {
+        "startLine": 62,
+        "startChar": 49,
+        "endLine": 62,
+        "endChar": 57
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_6f248d39",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/AbstractGitFlowOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_97011a7b",
+      "range": {
+        "startLine": 62,
+        "startChar": 21,
+        "endLine": 62,
+        "endChar": 31
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_cf302174",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/AbstractGitFlowOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_b7fc16e6",
+      "range": {
+        "startLine": 62,
+        "startChar": 58,
+        "endLine": 62,
+        "endChar": 62
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_77946e9a",
         "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/CurrentBranchPublishOperationTest.java",
         "patchSetId": 1
@@ -327,6 +657,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "don\u0027t suppress these warnings but instead add this test bundle to the x-friends of the egit bundles it wants to use (in their manifest.mf)",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_0f2b4908",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/CurrentBranchPublishOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_77946e9a",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -350,6 +698,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_4f4431d0",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/FeatureCheckoutOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_b78ed689",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_978e3a81",
         "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/FeatureFinishOperationTest.java",
         "patchSetId": 1
@@ -361,6 +727,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "why all these blank lines ?",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_2f41e5be",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/FeatureFinishOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_978e3a81",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -384,6 +768,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_6f3bed50",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/HotfixFinishOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_1751aa5a",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_b2bb840c",
         "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/HotfixStartOperationTest.java",
         "patchSetId": 1
@@ -395,6 +797,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "style nit: remove this blank line",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_afe03543",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/HotfixStartOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_b2bb840c",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -418,6 +838,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_4fcf11d6",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/ReleaseFinishOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_12cc18ad",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_f2eb4ceb",
         "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/ReleaseFinishOperationTest.java",
         "patchSetId": 1
@@ -429,6 +867,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "you could use instead\n\n @Test(expected \u003d WrongGitFlowStateException.class)",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_c6c655e1",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/ReleaseFinishOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "I decided not to use annotations because EclEmma will then show the complete method as not executed, but so far I was not very consequent with that.\nIf you prefer the annotations in EGit, I\u0027ll change it.",
+      "parentUuid": "87f6139c_f2eb4ceb",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -452,6 +908,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_4c4432d0",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/ReleaseFinishOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "See above comment.",
+      "parentUuid": "87f6139c_d2e8d0f1",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_b22a6401",
         "filename": "org.eclipse.egit.gitflow.ui/.project",
         "patchSetId": 1
@@ -469,6 +943,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_e78d393f",
+        "filename": "org.eclipse.egit.gitflow.ui/.project",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_b22a6401",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_80555a28",
         "filename": "org.eclipse.egit.gitflow.ui/META-INF/MANIFEST.MF",
         "patchSetId": 1
@@ -480,6 +972,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "use versioned package dependencies instead, see the other egit bundles, we use ./tools/version.sh to flip the version numbers of jgit and egit package dependencies, this ensures that users can\u0027t mix egit bundle versions, e.g. egit.core 3.6 can\u0027t be installed with egit.ui 3.7",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_ef935dad",
+        "filename": "org.eclipse.egit.gitflow.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "I am using imports w/o versions for git flow packages, and imports with versions for all other egit packages.\nFor eclipse I use versioned requires.\nIs that ok?",
+      "parentUuid": "87f6139c_80555a28",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -532,6 +1042,54 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_c69db5ed",
+        "filename": "org.eclipse.egit.gitflow.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "In the beginning I tried to label the operations according to their CLI equivalent, e.g. \"$ git flow init\", but I have to admit the current state is not consistent because it should also be \"[...] feature start\" instead of \"Start Feature\".",
+      "parentUuid": "87f6139c_12d6d86b",
+      "range": {
+        "startLine": 1,
+        "startChar": 32,
+        "endLine": 1,
+        "endChar": 45
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_2fa565ff",
+        "filename": "org.eclipse.egit.gitflow.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_605aee57",
+      "range": {
+        "startLine": 1,
+        "startChar": 30,
+        "endLine": 1,
+        "endChar": 31
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_32d9549d",
         "filename": "org.eclipse.egit.gitflow.ui/plugin.xml",
         "patchSetId": 1
@@ -543,6 +1101,30 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "there\u0027s no obvious relationship between git-flow and the \"Show In\" submenu, hence I propose to put gitflow menu in its own group and separate it from the other commands with a separator",
+      "range": {
+        "startLine": 7,
+        "startChar": 74,
+        "endLine": 7,
+        "endChar": 84
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_4c9272db",
+        "filename": "org.eclipse.egit.gitflow.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_32d9549d",
       "range": {
         "startLine": 7,
         "startChar": 74,
@@ -572,6 +1154,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_6f9f6db1",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_e0653e10",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_2070e6c9",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/Activator.java",
         "patchSetId": 1
@@ -589,6 +1189,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_cf7f81d2",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_2070e6c9",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_e04c1e9a",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/Activator.java",
         "patchSetId": 1
@@ -600,6 +1218,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "style nit: trailing whitespace",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_0f8a296f",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_e04c1e9a",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -629,6 +1265,30 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_4f73910a",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_80a71ac4",
+      "range": {
+        "startLine": 88,
+        "startChar": 19,
+        "endLine": 88,
+        "endChar": 21
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_c0b122fd",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/Activator.java",
         "patchSetId": 1
@@ -640,6 +1300,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "incorrect since tag",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_cf666148",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_c0b122fd",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -663,6 +1341,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_af6b150f",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_40a532b5",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_009b2a80",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/AbstractPublishHandler.java",
         "patchSetId": 1
@@ -674,6 +1370,30 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "what is this ?",
+      "range": {
+        "startLine": 31,
+        "startChar": 12,
+        "endLine": 31,
+        "endChar": 20
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_668cc1bf",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/AbstractPublishHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_009b2a80",
       "range": {
         "startLine": 31,
         "startChar": 12,
@@ -766,6 +1486,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_1ea89561",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureFinishHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done. Also for Hotfix and ReleaseFinishHandler.",
+      "parentUuid": "87f6139c_b2b70440",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_52b22052",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureFinishHandler.java",
         "patchSetId": 1
@@ -846,6 +1584,30 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_a6306972",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureStartHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "The name of the feature. I realize now that my JavaDoc requires some knowledge of the git flow CLI.",
+      "parentUuid": "87f6139c_9293e8ae",
+      "range": {
+        "startLine": 33,
+        "startChar": 26,
+        "endLine": 33,
+        "endChar": 31
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_f2a7cc06",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureStartHandler.java",
         "patchSetId": 1
@@ -857,6 +1619,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "if this touches workspace files lock on repository level and use WorkspaceJob",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_0c618a2d",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureStartHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_f2a7cc06",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -880,6 +1660,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_5e4a1d2e",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureTrackHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Unfortunately I need org.eclipse.egit.ui.internal.selection",
+      "parentUuid": "87f6139c_d2a45005",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_80f9da90",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialog/AbstractSelectionDialog.java",
         "patchSetId": 1
@@ -891,6 +1689,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "missing license header",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_3e475125",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialog/AbstractSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_80f9da90",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -920,6 +1736,30 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_9e44851f",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialog/AbstractSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_727f5cd4",
+      "range": {
+        "startLine": 34,
+        "startChar": 22,
+        "endLine": 34,
+        "endChar": 45
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_a0085636",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialog/AbstractSelectionDialog.java",
         "patchSetId": 1
@@ -937,6 +1777,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_7e41d90b",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialog/AbstractSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_a0085636",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_000dea44",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/factories/GitFlowAdapterFactory.java",
         "patchSetId": 1
@@ -948,6 +1806,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "missing license header",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_1ecc1532",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/factories/GitFlowAdapterFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_000dea44",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -988,6 +1864,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_5efcdd32",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/selection/SelectionPropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_e009be38",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_2014664a",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/validation/HotfixNameValidator.java",
         "patchSetId": 1
@@ -999,6 +1893,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "style nit: unnecessary blank line",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_7ef3995f",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/validation/HotfixNameValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_2014664a",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -1028,6 +1940,30 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_de13ad18",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/validation/HotfixNameValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_8020baa4",
+      "range": {
+        "startLine": 23,
+        "startChar": 11,
+        "endLine": 23,
+        "endChar": 17
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_6025ceb2",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/validation/NameValidator.java",
         "patchSetId": 1
@@ -1039,6 +1975,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "style nit: unnecessary blank line",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_7e0ef9ef",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/validation/NameValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_6025ceb2",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -1068,6 +2022,30 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_de3a8d82",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/validation/NameValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done. There already is a BranchNameValidator.",
+      "parentUuid": "87f6139c_b260a42a",
+      "range": {
+        "startLine": 20,
+        "startChar": 22,
+        "endLine": 20,
+        "endChar": 35
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_3254b44b",
         "filename": "org.eclipse.egit.gitflow/.project",
         "patchSetId": 1
@@ -1079,6 +2057,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "remove maven builder and nature",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_47824d0d",
+        "filename": "org.eclipse.egit.gitflow/.project",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_3254b44b",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -1102,6 +2098,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_44e9b0f2",
+        "filename": "org.eclipse.egit.gitflow/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_e0309eee",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_402ed294",
         "filename": "org.eclipse.egit.gitflow/META-INF/MANIFEST.MF",
         "patchSetId": 1
@@ -1113,6 +2127,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "version exported packages [4.0,4.1)",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_47ec0d05",
+        "filename": "org.eclipse.egit.gitflow/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "4.0.0?",
+      "parentUuid": "87f6139c_402ed294",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -1136,6 +2168,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_87e6f520",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_e6bb910b",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_c6c01577",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/Activator.java",
         "patchSetId": 1
@@ -1147,6 +2197,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "we don\u0027t use @see tags on overridden methods",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_67e30912",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_c6c01577",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -1170,6 +2238,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_c4fe4076",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_86dd6d58",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_e6d27143",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
         "patchSetId": 1
@@ -1181,6 +2267,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "so gitflow doesn\u0027t allow hierarchical branch names ?",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_e46ffca3",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done\nApparently it does.",
+      "parentUuid": "87f6139c_e6d27143",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -1204,6 +2308,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_64630cbd",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/GitFlowDefaults.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_80cb9a4c",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_c0d5a2e5",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/GitFlowRepository.java",
         "patchSetId": 1
@@ -1215,6 +2337,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "missing license header",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_644aec2e",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/GitFlowRepository.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_c0d5a2e5",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -1261,6 +2401,30 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_a46df4a8",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/GitFlowRepository.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_512502b2",
+      "range": {
+        "startLine": 133,
+        "startChar": 20,
+        "endLine": 133,
+        "endChar": 27
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_b11a6673",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/GitFlowRepository.java",
         "patchSetId": 1
@@ -1284,6 +2448,30 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_245104e0",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/GitFlowRepository.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_b11a6673",
+      "range": {
+        "startLine": 141,
+        "startChar": 28,
+        "endLine": 141,
+        "endChar": 40
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_911f6a64",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/GitFlowRepository.java",
         "patchSetId": 1
@@ -1295,6 +2483,30 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "name \"master\"",
+      "range": {
+        "startLine": 149,
+        "startChar": 28,
+        "endLine": 149,
+        "endChar": 39
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_045688d7",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/GitFlowRepository.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_911f6a64",
       "range": {
         "startLine": 149,
         "startChar": 28,
@@ -1364,6 +2576,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_e73b79f2",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/AbstractVersionFinishOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "That means I could catch and handle the TeamException.\nUnfortunately, a TeamException does not always mean that the tag already exists, which I think is an important distinction here because it likely means that the same git flow operation was started before (and maybe failed).",
+      "parentUuid": "87f6139c_46470572",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_a6550928",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/AbstractVersionFinishOperation.java",
         "patchSetId": 1
@@ -1375,6 +2605,30 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "use Java 7 multi-catch instead of repeating the same code 3 times",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 3
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_24358490",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/AbstractVersionFinishOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_a6550928",
       "range": {
         "startLine": 66,
         "startChar": 0,
@@ -1427,6 +2681,30 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_043a0880",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/FeatureListOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_667cc191",
+      "range": {
+        "startLine": 96,
+        "startChar": 20,
+        "endLine": 96,
+        "endChar": 28
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_4679c59e",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/FeatureRebaseOperation.java",
         "patchSetId": 1
@@ -1450,6 +2728,30 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_8425585f",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/FeatureRebaseOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_4679c59e",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 3
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_86fe0d75",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
         "patchSetId": 1
@@ -1461,6 +2763,30 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "git path separator ?",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 17
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_e4653c95",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_86fe0d75",
       "range": {
         "startLine": 45,
         "startChar": 4,
@@ -1507,6 +2833,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_a6ad09f7",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "I assume the WorkbenchErrorHandler will show a generic error dialog. I don\u0027t know, how I can improve on that in this case.",
+      "parentUuid": "87f6139c_c6081538",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_060a1d2c",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
         "patchSetId": 1
@@ -1524,6 +2868,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_874a7579",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "See comment above.",
+      "parentUuid": "87f6139c_060a1d2c",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_00e68ad4",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/InitOperation.java",
         "patchSetId": 1
@@ -1535,6 +2897,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "style nit: trailing whitespace",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_a48334a5",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/InitOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_00e68ad4",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -1598,6 +2978,30 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_c7a75dc3",
+        "filename": "org.eclipse.egit.repository/category.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_7120fea3",
+      "range": {
+        "startLine": 30,
+        "startChar": 59,
+        "endLine": 30,
+        "endChar": 64
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_c0a76291",
         "filename": "org.eclipse.egit.ui.importer/.settings/org.eclipse.jdt.core.prefs",
         "patchSetId": 1
@@ -1615,6 +3019,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_98e01844",
+        "filename": "org.eclipse.egit.ui.importer/.settings/org.eclipse.jdt.core.prefs",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "whoops...\nDone",
+      "parentUuid": "87f6139c_c0a76291",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_00984a49",
         "filename": "pom.xml",
         "patchSetId": 1
@@ -1626,6 +3048,41 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "style nit: trailing whitespace",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_18cc28df",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_00984a49",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_78d9ec9b",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-07T22:25:44Z",
+      "side": 1,
+      "message": "This shouldn\u0027t have been committed.\nI removed those bundles from the build because they were not compiling in the commit that I forked the repository.",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
