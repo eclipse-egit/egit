@@ -2900,6 +2900,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_95c57686",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-11T12:59:21Z",
+      "side": 1,
+      "message": "there are a lot of gitflow operations inheriting from this abstract class, if some of them don\u0027t touch the working tree (modify files in the working tree) there\u0027s no need to lock any resources, this reduces the chance that another unrelated job has to wait until the gitflow job finished",
+      "parentUuid": "87f6139c_0aade5a3",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_c6081538",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
         "patchSetId": 1
