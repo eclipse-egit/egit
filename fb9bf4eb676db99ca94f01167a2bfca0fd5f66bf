@@ -1429,6 +1429,30 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_8a0a752a",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/AbstractPublishHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-11T10:56:03Z",
+      "side": 1,
+      "message": "It seems I\u0027m working with an outdated milestone release of Mars. Let me update my environment first.",
+      "parentUuid": "87f6139c_d2bd701f",
+      "range": {
+        "startLine": 42,
+        "startChar": 26,
+        "endLine": 42,
+        "endChar": 38
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_72ad9cf4",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureCheckoutHandler.java",
         "patchSetId": 1
@@ -1440,6 +1464,30 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "checkout can potentially run a long time when executed on a large repository\n\nCould you use BranchOperationUI which runs checkout in a workspaceJob to run the checkout in the background and prevent premature UI refreshes (see commit 786698088)",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 7
+      },
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_6a1bc979",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureCheckoutHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-11T10:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_72ad9cf4",
       "range": {
         "startLine": 73,
         "startChar": 2,
@@ -2658,6 +2706,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_2afa6183",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/CurrentBranchPublishOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-11T10:56:03Z",
+      "side": 1,
+      "message": "I see you point, but I\u0027m unsure how to properly check for that, and what to do in this case.\nHowever, I think it\u0027s not a typical git flow scenario, hence this i not very urgent IMO.",
+      "parentUuid": "87f6139c_269bd980",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_667cc191",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/FeatureListOperation.java",
         "patchSetId": 1
@@ -2816,6 +2882,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_0aade5a3",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-11T10:56:03Z",
+      "side": 1,
+      "message": "Is there something here that I need to change?\nCurrently only the JobUtils are calling this method.",
+      "parentUuid": "87f6139c_e6039118",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_c6081538",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
         "patchSetId": 1
@@ -2938,6 +3022,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_2aa8a193",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/ReleaseStartOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-11T10:56:03Z",
+      "side": 1,
+      "message": "Done\nAccording to the doc Repository#resolve(String) will throw a MissingObjectException.\nI decided to wrap it into a WrongGitFlowStateException because an empty repository is not something you would normally operate on with git flow.",
+      "parentUuid": "87f6139c_c61f7563",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_662e8195",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/ReleaseStartOperation.java",
         "patchSetId": 1
@@ -2949,6 +3051,24 @@
       "writtenOn": "2015-05-04T13:02:30Z",
       "side": 1,
       "message": "what if the commit is null ?",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_aa82d109",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/ReleaseStartOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-11T10:56:03Z",
+      "side": 1,
+      "message": "Done\nI decide to throw an IllegalStateException.",
+      "parentUuid": "87f6139c_662e8195",
       "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
