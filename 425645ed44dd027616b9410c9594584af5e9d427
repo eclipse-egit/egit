@@ -1,0 +1,220 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f6139c_aa1db1f4",
+        "filename": "org.eclipse.egit.gitflow-feature/feature.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-11T12:59:07Z",
+      "side": 1,
+      "message": "we use this version requirement in other places:\n\n version\u003d\"4.0.0\" match\u003d\"equivalent\"\n\nto express we require at least 4.0.0 and accept higher service level (3rd part of the version number maybe higher, see http://help.eclipse.org/luna/index.jsp?topic\u003d%2Forg.eclipse.platform.doc.isv%2Freference%2Fmisc%2Ffeature_manifest.html",
+      "range": {
+        "startLine": 27,
+        "startChar": 41,
+        "endLine": 27,
+        "endChar": 66
+      },
+      "revId": "425645ed44dd027616b9410c9594584af5e9d427",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_8a1a75f8",
+        "filename": "org.eclipse.egit.gitflow-feature/feature.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-11T12:59:07Z",
+      "side": 1,
+      "message": "add the same version requirement as for jgit",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 44
+      },
+      "revId": "425645ed44dd027616b9410c9594584af5e9d427",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_ea3e9940",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/JobUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-11T12:59:07Z",
+      "side": 1,
+      "message": "use the corresponding methods already available in org.eclipse.egit.core.internal.job.JobUtil instead",
+      "revId": "425645ed44dd027616b9410c9594584af5e9d427",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_35d80263",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/GitFlowHandlerUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-11T12:59:07Z",
+      "side": 1,
+      "message": "why don\u0027t you simply use Utils.getAdapter() right away ?",
+      "revId": "425645ed44dd027616b9410c9594584af5e9d427",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_0a08459e",
+        "filename": "org.eclipse.egit.gitflow/build.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-11T12:59:07Z",
+      "side": 1,
+      "message": "include about.html",
+      "revId": "425645ed44dd027616b9410c9594584af5e9d427",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_6afd89e0",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/Activator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-11T12:59:07Z",
+      "side": 1,
+      "message": "put the @since 4.0 annotation on this new class instead of on each method",
+      "revId": "425645ed44dd027616b9410c9594584af5e9d427",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_4a024d7e",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-11T12:59:07Z",
+      "side": 1,
+      "message": "this is a new class so move the since tag to the class level",
+      "revId": "425645ed44dd027616b9410c9594584af5e9d427",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_aaf65100",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/GitFlowConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-11T12:59:07Z",
+      "side": 1,
+      "message": "move since tag to class level",
+      "revId": "425645ed44dd027616b9410c9594584af5e9d427",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_8af39510",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/GitFlowRepository.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-11T12:59:07Z",
+      "side": 1,
+      "message": "move since tag to class level",
+      "revId": "425645ed44dd027616b9410c9594584af5e9d427",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_2aaee1f1",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/WrongGitFlowStateException.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-11T12:59:07Z",
+      "side": 1,
+      "message": "move since tag to class level",
+      "revId": "425645ed44dd027616b9410c9594584af5e9d427",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_6ab8e930",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/internal/coretext.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-11T12:59:07Z",
+      "side": 1,
+      "message": "remove trailing whitespaces",
+      "revId": "425645ed44dd027616b9410c9594584af5e9d427",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_cac8fdbb",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/internal/coretext.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-11T12:59:07Z",
+      "side": 1,
+      "message": "looks like you didn\u0027t finish replacing string concatenation by parameters",
+      "revId": "425645ed44dd027616b9410c9594584af5e9d427",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
