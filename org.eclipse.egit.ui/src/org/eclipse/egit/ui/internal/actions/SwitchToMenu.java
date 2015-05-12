@@ -9,6 +9,7 @@
 package org.eclipse.egit.ui.internal.actions;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -27,6 +28,7 @@ import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.ReflogEntry;
+import org.eclipse.jgit.lib.ReflogReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -114,8 +116,14 @@ public class SwitchToMenu extends ContributionItem implements
 					CommonUtils.STRING_ASCENDING_COMPARATOR);
 
 			// Add the MAX_NUM_MENU_ENTRIES most recently used branches first
-			List<ReflogEntry> reflogEntries = repository.getReflogReader(
-					Constants.HEAD).getReverseEntries();
+			ReflogReader reflogReader = repository.getReflogReader(
+					Constants.HEAD);
+			List<ReflogEntry> reflogEntries;
+			if (reflogReader == null) {
+				reflogEntries = Collections.emptyList();
+			} else {
+				reflogEntries = reflogReader.getReverseEntries();
+			}
 			for (ReflogEntry entry : reflogEntries) {
 				CheckoutEntry checkout = entry.parseCheckout();
 				if (checkout != null) {
