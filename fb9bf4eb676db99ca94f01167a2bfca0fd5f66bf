@@ -2918,6 +2918,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_160a2cb1",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-12T09:23:30Z",
+      "side": 1,
+      "message": "I see. But the doc says \"It can also be useful to use a rule for reading resources to avoid changes on the resources by other threads while the operation is running.\"\nSo wouldn\u0027t it be necessary for read-only operations as well?\n\nI have now overridden getSchedulingRule() in two sub-classes with: RuleUtil.getRuleForContainers(Collections.\u003cIPath\u003e emptySet())\nBut I am unsure if that is correct. Shouldn\u0027t I lock on the git-config? Is that even possible?\n\nMost EGit operations seem to lock on an least one repository. Some lock on a list of resources, but I don\u0027t think that applies on any git flow operations. They either, at least checkout branches, or, perform operations on the remote, which either reads or read/writes the git config.",
+      "parentUuid": "87f6139c_95c57686",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_c6081538",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
         "patchSetId": 1
