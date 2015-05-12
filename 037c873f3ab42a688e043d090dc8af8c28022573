@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f6139c_0a2b20ba",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-12T12:25:16Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "037c873f3ab42a688e043d090dc8af8c28022573",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_ea2fb4c2",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-12T12:25:16Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "037c873f3ab42a688e043d090dc8af8c28022573",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_4a2528e1",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/GitFlowConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-12T12:25:16Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "037c873f3ab42a688e043d090dc8af8c28022573",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_2a2a5cb2",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/GitFlowRepository.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-12T12:25:16Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "037c873f3ab42a688e043d090dc8af8c28022573",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_8a1ef095",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/WrongGitFlowStateException.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-12T12:25:16Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "037c873f3ab42a688e043d090dc8af8c28022573",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_6a1bc4a6",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/CurrentBranchPublishOperation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-12T12:25:16Z",
+      "side": 1,
+      "message": "can\u0027t you just return null ?",
+      "revId": "037c873f3ab42a688e043d090dc8af8c28022573",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_ca18f8aa",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/FeatureListOperation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-12T12:25:16Z",
+      "side": 1,
+      "message": "return null ?",
+      "revId": "037c873f3ab42a688e043d090dc8af8c28022573",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
