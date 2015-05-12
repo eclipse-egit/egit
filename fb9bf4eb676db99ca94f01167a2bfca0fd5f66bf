@@ -2936,6 +2936,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_aafe4c9e",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-12T12:29:09Z",
+      "side": 1,
+      "message": "Not sure about the read-only case, I have in mind we only use lock operations modifying the working tree. Using the right scheduling rule is especially important for jobs modifying files since otherwise a concurrently started build job would have to be cancelled potentially multiple times which can eat a lot of valuable time.\n\nI think you can\u0027t lock git config using resource API since JGit doesn\u0027t know about it. JGit and EGit don\u0027t cache configuration in memory and JGit uses org.eclipse.jgit.internal.storage.file.FileSnapshot to avoid unnecessy re-reading the same configuration.",
+      "parentUuid": "87f6139c_160a2cb1",
+      "revId": "fb9bf4eb676db99ca94f01167a2bfca0fd5f66bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_c6081538",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
         "patchSetId": 1
