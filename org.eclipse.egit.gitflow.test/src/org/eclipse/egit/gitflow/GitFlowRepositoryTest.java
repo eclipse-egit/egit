@@ -14,10 +14,14 @@ import static org.eclipse.egit.gitflow.GitFlowDefaults.HOTFIX_PREFIX;
 import static org.eclipse.egit.gitflow.GitFlowDefaults.RELEASE_PREFIX;
 import static org.eclipse.egit.gitflow.GitFlowDefaults.VERSION_TAG;
 import static org.eclipse.jgit.lib.Constants.R_HEADS;
+import static org.eclipse.jgit.lib.Constants.DOT_GIT;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
+import java.io.File;
+
+import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.egit.gitflow.op.AbstractDualRepositoryTestCase;
 import org.eclipse.egit.gitflow.op.FeatureStartOperation;
 import org.eclipse.egit.gitflow.op.HotfixStartOperation;
@@ -29,6 +33,15 @@ import org.eclipse.jgit.lib.Repository;
 import org.junit.Test;
 
 public class GitFlowRepositoryTest extends AbstractDualRepositoryTestCase {
+	@Test(expected = WrongGitFlowStateException.class)
+	public void testFindHeadFailOnEmptyRepository() throws Exception {
+		File workdir3 = testUtils.createTempDir("Repository3");
+		TestRepository repository3 = new TestRepository(new File(workdir3, DOT_GIT));
+		GitFlowRepository gfRepo = new GitFlowRepository(repository3.getRepository());
+
+		gfRepo.findHead();
+	}
+
 	@Test
 	public void testIsMaster() throws Exception {
 		repository1.createInitialCommit("testIsMaster\n\nfirst commit\n");

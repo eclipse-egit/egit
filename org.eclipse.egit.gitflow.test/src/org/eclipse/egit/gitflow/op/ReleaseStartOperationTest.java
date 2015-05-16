@@ -8,8 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.gitflow.op;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.op.TagOperation;
@@ -23,16 +22,62 @@ public class ReleaseStartOperationTest extends AbstractGitFlowOperationTest {
 	@Test
 	public void testReleaseBranchCreated() throws Exception {
 		testRepository
-				.createInitialCommit("testReleaseStart\n\nfirst commit\n");
+				.createInitialCommit("testReleaseBranchCreated\n\nfirst commit\n");
 
 		Repository repository = testRepository.getRepository();
 		new InitOperation(repository).execute(null);
 		GitFlowRepository gfRepo = new GitFlowRepository(repository);
 
-		new ReleaseStartOperation(gfRepo, MY_RELEASE).execute(null);
+		ReleaseStartOperation releaseStartOperation = new ReleaseStartOperation(
+				gfRepo, MY_RELEASE);
+		releaseStartOperation.execute(null);
+
+		assertNull(releaseStartOperation.getSchedulingRule());
 
 		assertEquals(gfRepo.getConfig().getFullReleaseBranchName(MY_RELEASE),
 				repository.getFullBranch());
+	}
+
+	@Test
+	public void testReleaseBranchCreatedFromHeadCommit() throws Exception {
+		RevCommit initialCommit = testRepository
+				.createInitialCommit("testReleaseBranchCreatedFromHeadCommit\n\nfirst commit\n");
+
+		Repository repository = testRepository.getRepository();
+		new InitOperation(repository).execute(null);
+		GitFlowRepository gfRepo = new GitFlowRepository(repository);
+
+		ReleaseStartOperation releaseStartOperation = new ReleaseStartOperation(
+				gfRepo, initialCommit.getName(), MY_RELEASE);
+		releaseStartOperation.execute(null);
+
+		assertNull(releaseStartOperation.getSchedulingRule());
+
+		assertEquals(gfRepo.getConfig().getFullReleaseBranchName(MY_RELEASE),
+				repository.getFullBranch());
+	}
+
+	@Test
+	public void testReleaseBranchCreatedFromCommit() throws Exception {
+		RevCommit initialCommit = testRepository
+				.createInitialCommit("testReleaseBranchCreatedFromCommit\n\nfirst commit\n");
+		testRepository
+				.createInitialCommit("testReleaseBranchCreatedFromCommit\n\nsecond commit\n");
+
+		Repository repository = testRepository.getRepository();
+		new InitOperation(repository).execute(null);
+		GitFlowRepository gfRepo = new GitFlowRepository(repository);
+
+		ReleaseStartOperation releaseStartOperation = new ReleaseStartOperation(
+				gfRepo, initialCommit.getName(), MY_RELEASE);
+		releaseStartOperation.execute(null);
+
+		assertNotNull(releaseStartOperation.getSchedulingRule());
+
+		assertEquals(gfRepo.getConfig().getFullReleaseBranchName(MY_RELEASE),
+				repository.getFullBranch());
+
+		assertEquals(initialCommit, gfRepo.findHead());
 	}
 
 	@Test

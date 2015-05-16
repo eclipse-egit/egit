@@ -8,7 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.gitflow.op;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.op.BranchOperation;
@@ -22,7 +22,9 @@ public class FeatureStartOperationTest extends AbstractFeatureOperationTest {
 		Repository repository = testRepository.getRepository();
 		GitFlowRepository gfRepo = init("testFeatureStart\n\nfirst commit\n");
 
-		new FeatureStartOperation(gfRepo, MY_FEATURE).execute(null);
+		FeatureStartOperation featureStartOperation = new FeatureStartOperation(gfRepo, MY_FEATURE);
+		assertNull(featureStartOperation.getSchedulingRule());
+		featureStartOperation.execute(null);
 
 		assertEquals(gfRepo.getConfig().getFullFeatureBranchName(MY_FEATURE),
 				repository.getFullBranch());

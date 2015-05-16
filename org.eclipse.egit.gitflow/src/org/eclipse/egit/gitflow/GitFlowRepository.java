@@ -137,6 +137,10 @@ public class GitFlowRepository {
 		try (RevWalk walk = new RevWalk(repository)) {
 			try {
 				ObjectId head = repository.resolve(HEAD);
+				if (head == null) {
+					throw new WrongGitFlowStateException(
+							CoreText.GitFlowRepository_gitFlowRepositoryMayNotBeEmpty);
+				}
 				return walk.parseCommit(head);
 			} catch (MissingObjectException e) {
 				throw new WrongGitFlowStateException(CoreText.GitFlowRepository_gitFlowRepositoryMayNotBeEmpty);
