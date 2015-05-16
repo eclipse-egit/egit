@@ -28,6 +28,9 @@ public class UIText extends NLS {
 	}
 
 	/**	 */
+	public static String DynamicHistoryMenu_startGitflowReleaseFrom;
+
+	/**	 */
 	public static String FeatureFinishHandler_finishingFeature;
 
 	/**	 */

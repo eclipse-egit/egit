@@ -10,28 +10,32 @@ package org.eclipse.egit.gitflow.ui.internal.factories;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdapterFactory;
-import org.eclipse.core.runtime.PlatformObject;
-import org.eclipse.egit.core.internal.Utils;
-import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import static org.eclipse.egit.core.project.RepositoryMapping.getMapping;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.team.ui.history.IHistoryPage;
+import org.eclipse.team.ui.history.IHistoryView;
 
 /**
  * Get JGit repository for element selected in Git Flow UI.
  */
 public class GitFlowAdapterFactory implements IAdapterFactory {
-	@SuppressWarnings("unchecked")
 	@Override
-	public Object getAdapter(Object adaptableObject, Class adapterType) {
+	public Repository getAdapter(Object adaptableObject, Class adapterType) {
 		Repository repository = null;
 		if (adaptableObject instanceof IResource) {
 			IResource resource = (IResource) adaptableObject;
-			RepositoryMapping repositoryMapping = RepositoryMapping
-					.getMapping(resource.getProject());
-			repository = repositoryMapping.getRepository();
-		} else if (adaptableObject instanceof PlatformObject) {
-			PlatformObject platformObject = (PlatformObject) adaptableObject;
-			repository = Utils.getAdapter(platformObject, Repository.class);
+			repository = getRepository(resource);
+		} else if (adaptableObject instanceof IHistoryView) {
+			IHistoryView historyView = (IHistoryView) adaptableObject;
+			IHistoryPage historyPage = historyView.getHistoryPage();
+			Object input = historyPage.getInput();
+			if (input instanceof RepositoryNode) {
+				RepositoryNode node = (RepositoryNode) input;
+				repository = node.getRepository();
+			} else if (input instanceof IResource) {
+				repository = getRepository((IResource) input);
+			}
 		} else {
 			throw new IllegalStateException();
 		}
@@ -39,10 +43,12 @@ public class GitFlowAdapterFactory implements IAdapterFactory {
 		return repository;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public Class[] getAdapterList() {
-		return new Class[] { IResource.class, RepositoryTreeNode.class };
+	private Repository getRepository(IResource resource) {
+		return getMapping(resource.getProject()).getRepository();
 	}
 
+	@Override
+	public Class[] getAdapterList() {
+		return new Class[] { IResource.class, IHistoryView.class };
+	}
 }
