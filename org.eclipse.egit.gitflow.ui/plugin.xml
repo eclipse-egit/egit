@@ -127,18 +127,6 @@
 				</command>
 			</menu>
 		</menuContribution>
-		<menuContribution
-            allPopups="false"
-            locationURI="popup:org.eclipse.egit.ui.historyPageContributions?after=additions">
-			<menu
-                  label="%TeamGitFlowMenu.name">
-				<command
-                     commandId="org.eclipse.egit.gitflow.ui.command.releaseStart"
-                     label="%TeamGitFlowReleaseStart.name"
-                     style="push">
-				</command>
-			</menu>
-		</menuContribution>
 	</extension>
 	<extension
          point="org.eclipse.ui.commands">
@@ -615,6 +603,13 @@
 			<adapter type="org.eclipse.jgit.lib.Repository"/>
 		</factory>
 	</extension>
+	<extension
+         point="org.eclipse.core.runtime.adapters">
+		<factory adaptableType="org.eclipse.team.ui.history.IHistoryView"
+             class="org.eclipse.egit.gitflow.ui.internal.factories.GitFlowAdapterFactory">
+			<adapter type="org.eclipse.jgit.lib.Repository"/>
+		</factory>
+	</extension>
 
 
 	<extension
@@ -740,4 +735,18 @@
 			</command>
 		</menuContribution>
 	</extension>
+ <extension
+       point="org.eclipse.ui.menus">
+    <menuContribution
+          allPopups="false"
+          locationURI="popup:org.eclipse.egit.ui.historyPageContributions?after=additions">
+       <menu
+             label="%TeamGitFlowMenu.name">
+          <dynamic
+                class="org.eclipse.egit.gitflow.ui.internal.menu.DynamicHistoryMenu"
+                id="org.eclipse.egit.gitflow.menu.history">
+          </dynamic>
+       </menu>
+    </menuContribution>
+ </extension>
 </plugin>
