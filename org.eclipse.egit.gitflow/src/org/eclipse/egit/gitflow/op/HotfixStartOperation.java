@@ -10,6 +10,7 @@ package org.eclipse.egit.gitflow.op;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 
 /**
@@ -29,5 +30,10 @@ public final class HotfixStartOperation extends AbstractHotfixOperation {
 		String branchName = repository.getConfig().getHotfixBranchName(versionName);
 
 		start(monitor, branchName, repository.findHead(repository.getConfig().getMaster()));
+	}
+
+	@Override
+	public ISchedulingRule getSchedulingRule() {
+		return null;
 	}
 }

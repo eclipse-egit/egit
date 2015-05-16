@@ -14,6 +14,7 @@ import java.io.IOException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.WrongGitFlowStateException;
 import org.eclipse.egit.gitflow.internal.CoreText;
@@ -52,5 +53,10 @@ public final class FeatureStartOperation extends AbstractFeatureOperation {
 			throw new CoreException(error(e));
 		}
 		start(monitor, branchName, head);
+	}
+
+	@Override
+	public ISchedulingRule getSchedulingRule() {
+		return null;
 	}
 }

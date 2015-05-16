@@ -14,6 +14,7 @@ import static java.lang.String.format;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 
 import static org.eclipse.egit.gitflow.Activator.error;
 import static org.eclipse.jgit.lib.Constants.*;
@@ -33,6 +34,8 @@ import org.eclipse.osgi.util.NLS;
 public final class ReleaseStartOperation extends AbstractReleaseOperation {
 	private String startCommitSha1;
 
+	private boolean isHead;
+
 	/**
 	 * start release from given commit
 	 *
@@ -42,8 +45,7 @@ public final class ReleaseStartOperation extends AbstractReleaseOperation {
 	 */
 	public ReleaseStartOperation(GitFlowRepository repository,
 			String startCommitSha1, String releaseName) {
-		super(repository, releaseName);
-		this.startCommitSha1 = startCommitSha1;
+		this(repository, startCommitSha1, releaseName, isHead(repository, startCommitSha1));
 	}
 
 	/**
@@ -51,12 +53,17 @@ public final class ReleaseStartOperation extends AbstractReleaseOperation {
 	 *
 	 * @param repository
 	 * @param releaseName
-	 * @throws WrongGitFlowStateException
 	 */
 	public ReleaseStartOperation(GitFlowRepository repository,
-			String releaseName) throws WrongGitFlowStateException {
+			String releaseName) {
+		this(repository, findHead(repository), releaseName, true);
+	}
+
+	private ReleaseStartOperation(GitFlowRepository repository,
+			String startCommitSha1, String releaseName, boolean isHead) {
 		super(repository, releaseName);
-		this.startCommitSha1 = repository.findHead().getName();
+		this.startCommitSha1 = startCommitSha1;
+		this.isHead = isHead;
 	}
 
 	@Override
@@ -97,5 +104,31 @@ public final class ReleaseStartOperation extends AbstractReleaseOperation {
 			IncorrectObjectTypeException, IOException {
 		return null != repository.getRepository().resolve(
 				R_TAGS + repository.getConfig().getVersionTagPrefix() + versionName);
+	}
+
+	@Override
+	public ISchedulingRule getSchedulingRule() {
+		if (isHead) {
+			return null;
+		} else {
+			return super.getSchedulingRule();
+		}
+	}
+
+	private static boolean isHead(final GitFlowRepository gfRepo, final String sha1) {
+		try {
+			RevCommit head = gfRepo.findHead();
+			return sha1.equals(head.getName());
+		} catch (WrongGitFlowStateException e) {
+			return false;
+		}
+	}
+
+	private static String findHead(GitFlowRepository repository) {
+		try {
+			return repository.findHead().getName();
+		} catch (WrongGitFlowStateException e) {
+			throw new IllegalStateException(e);
+		}
 	}
 }
