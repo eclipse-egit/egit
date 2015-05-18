@@ -56,6 +56,24 @@
       "revId": "0a30498622b990dcecbdf48156c35620bf829481",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_e5d075c2",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/ReleaseStartOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-18T12:01:34Z",
+      "side": 1,
+      "message": "Done\nI thought this was covered by MissingObjectException.\nCreated new test case.",
+      "parentUuid": "87f6139c_4f8408ae",
+      "revId": "0a30498622b990dcecbdf48156c35620bf829481",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
