@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f6139c_6f50e4ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-18T05:51:36Z",
+      "side": 1,
+      "message": "what is EGitFlow ? if you want to tag this commit is about gitflow I\u0027d prefix this with\n\n [gitflow]",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 21
+      },
+      "revId": "0a30498622b990dcecbdf48156c35620bf829481",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_2f7ffc1d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-18T05:51:36Z",
+      "side": 1,
+      "message": "remove this empty line, commit message footers should be located in the last paragraph by convention",
+      "revId": "0a30498622b990dcecbdf48156c35620bf829481",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_4f8408ae",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/ReleaseStartOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-18T05:51:36Z",
+      "side": 1,
+      "message": "this will throw an NPE on an empty repository (HEAD not yet created), also check for potential NPE in findHead()",
+      "revId": "0a30498622b990dcecbdf48156c35620bf829481",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
