@@ -16,12 +16,18 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.jobs.IJobManager;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.WrongGitFlowStateException;
 import org.eclipse.egit.gitflow.op.ReleaseFinishOperation;
 import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jgit.api.MergeResult.MergeStatus;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * git flow release finish
@@ -29,19 +35,48 @@ import org.eclipse.egit.gitflow.ui.internal.UIText;
 public class ReleaseFinishHandler extends AbstractHandler {
 
 	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
+	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		final GitFlowRepository gfRepo = GitFlowHandlerUtil.getRepository(event);
 
-		ReleaseFinishOperation releaseFinishOperation;
+		final ReleaseFinishOperation releaseFinishOperation;
 		try {
 			releaseFinishOperation = new ReleaseFinishOperation(gfRepo);
 			JobUtil.scheduleUserWorkspaceJob(releaseFinishOperation,
 					UIText.ReleaseFinishHandler_finishingRelease,
 					JobFamilies.GITFLOW_FAMILY);
-		} catch (WrongGitFlowStateException | CoreException | IOException e) {
+			IJobManager jobMan = Job.getJobManager();
+			jobMan.join(JobFamilies.GITFLOW_FAMILY, null);
+
+			MergeStatus mergeResult = releaseFinishOperation.getMergeResult();
+			if (!MergeStatus.CONFLICTING.equals(mergeResult)) {
+				return null;
+			}
+			if (handleConflictsOnMaster(gfRepo)) {
+				return null;
+			}
+			handleConflictsOnDevelop();
+		} catch (WrongGitFlowStateException | CoreException | IOException
+				| OperationCanceledException | InterruptedException e) {
 			return error(e.getMessage(), e);
 		}
 
 		return null;
+	}
+
+	private void handleConflictsOnDevelop() {
+		MessageDialog.openWarning(null, UIText.ReleaseFinishHandler_Conflicts,
+				UIText.ReleaseFinishHandler_releaseFinishConflicts);
+	}
+
+	private boolean handleConflictsOnMaster(GitFlowRepository gfRepo)
+			throws IOException {
+		String master = gfRepo.getConfig().getMaster();
+		if (gfRepo.getRepository().getBranch().equals(master)) {
+			MessageDialog.openError(null, UIText.ReleaseFinishHandler_Conflicts,
+					NLS.bind(UIText.ReleaseFinishOperation_unexpectedConflictsReleaseAborted,
+							master));
+			return true;
+		}
+		return false;
 	}
 }
