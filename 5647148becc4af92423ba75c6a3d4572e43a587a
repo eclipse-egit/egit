@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f6139c_fbe7721d",
+        "filename": "org.eclipse.egit.gitflow.ui/plugin.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-18T21:09:30Z",
+      "side": 1,
+      "message": "s/Provide/Provider/",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 28
+      },
+      "revId": "5647148becc4af92423ba75c6a3d4572e43a587a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_5be7a61e",
+        "filename": "org.eclipse.egit.gitflow/plugin.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-18T21:09:30Z",
+      "side": 1,
+      "message": "s/Provide/Provider/",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 28
+      },
+      "revId": "5647148becc4af92423ba75c6a3d4572e43a587a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
