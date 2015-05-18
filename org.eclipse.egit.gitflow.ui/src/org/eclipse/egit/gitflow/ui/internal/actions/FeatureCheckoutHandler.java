@@ -18,7 +18,10 @@ import java.util.List;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobManager;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.op.FeatureCheckoutOperation;
@@ -69,6 +72,9 @@ public class FeatureCheckoutHandler extends AbstractHandler {
 			JobUtil.scheduleUserWorkspaceJob(checkoutOperation,
 					UIText.FeatureCheckoutHandler_checkingOutFeature,
 					JobFamilies.GITFLOW_FAMILY);
+			IJobManager jobMan = Job.getJobManager();
+			jobMan.join(JobFamilies.GITFLOW_FAMILY, null);
+
 			CheckoutResult result = checkoutOperation.getResult();
 			if (!CheckoutResult.Status.OK.equals(result.getStatus())) {
 				Shell shell = HandlerUtil.getActiveShell(event);
@@ -81,7 +87,8 @@ public class FeatureCheckoutHandler extends AbstractHandler {
 							JobFamilies.GITFLOW_FAMILY);
 				}
 			}
-		} catch (GitAPIException e) {
+		} catch (GitAPIException | OperationCanceledException
+				| InterruptedException e) {
 			throw new RuntimeException(e);
 		}
 
