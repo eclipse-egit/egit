@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f6139c_cf8f5886",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-18T07:28:23Z",
+      "side": 1,
+      "message": "s/EGitFlow:/[gitflow]/",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "a9bf9ea6bb0ea8f467d33f6e6a2da09ef2e40e80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_efa334f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-18T07:28:23Z",
+      "side": 1,
+      "message": "remove this blank line so that footer is in last paragraph",
+      "revId": "a9bf9ea6bb0ea8f467d33f6e6a2da09ef2e40e80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_2fc7fcaa",
+        "filename": "org.eclipse.egit.gitflow.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-18T07:28:23Z",
+      "side": 1,
+      "message": "Bundle and feature names should be understandable by end users who may not know about Eclipse project names, so maybe better\n\n Git Team Provide - UI for Gitflow support",
+      "revId": "a9bf9ea6bb0ea8f467d33f6e6a2da09ef2e40e80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_6f98e4cd",
+        "filename": "org.eclipse.egit.gitflow/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-18T07:28:23Z",
+      "side": 1,
+      "message": "Bundle and feature names should be understandable by end users who may not know about Eclipse project names, so maybe better\n\n Git Team Provide - Gitflow support",
+      "revId": "a9bf9ea6bb0ea8f467d33f6e6a2da09ef2e40e80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
