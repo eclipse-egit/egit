@@ -102,7 +102,7 @@ public class HotfixFinishOperationTest extends AbstractGitFlowOperationTest {
 		RevCommit developHead = gfRepo.findHead(DEVELOP);
 		assertEquals(developCommit, developHead);
 		assertEquals(MergeResult.MergeStatus.CONFLICTING, hotfixFinishOperation
-				.getOperationResult().getMergeStatus());
+				.getMergeResult().getMergeStatus());
 
 		// merged on master
 		RevCommit masterHead = gfRepo.findHead(MY_MASTER);
