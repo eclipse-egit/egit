@@ -504,10 +504,11 @@ class CommitGraphTable {
 			if (lane != null && lane.color.isDisposed())
 				return;
 		}
-		if (highlight != null && c.has(highlight))
+		if (highlight != null && c != null && c.has(highlight)) {
 			event.gc.setFont(hFont);
-		else
+		} else {
 			event.gc.setFont(nFont);
+		}
 
 		if (event.index == 1) {
 			renderer.paint(event, input == null ? null : input.getHead());

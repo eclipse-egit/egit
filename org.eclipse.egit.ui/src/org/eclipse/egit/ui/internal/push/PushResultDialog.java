@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
  * Copyright (C) 2010, Mathias Kinzler mathias.kinzler@sap.com>
+ * Copyright (C) 2015, Christian Georgi <christian.georgi@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -72,7 +73,7 @@ class PushResultDialog extends TitleAreaDialog {
 	PushResultDialog(final Shell parentShell, final Repository localDb,
 			final PushOperationResult result, final String destinationString) {
 		super(parentShell);
-		setShellStyle(getShellStyle() | SWT.RESIZE);
+		setShellStyle(getShellStyle() & ~SWT.APPLICATION_MODAL | SWT.RESIZE);
 		this.localDb = localDb;
 		this.result = result;
 		this.destinationString = destinationString;
