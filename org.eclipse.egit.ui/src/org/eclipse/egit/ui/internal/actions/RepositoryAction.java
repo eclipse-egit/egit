@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2006, 2013 Shawn O. Pearce <spearce@spearce.org> and others.
+ * Copyright (C) 2006, 2016 Shawn O. Pearce <spearce@spearce.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -94,9 +94,22 @@ public abstract class RepositoryAction extends AbstractHandler implements
 		Command command = srv.getCommand(commandId);
 
 		ExecutionEvent event = hsrv.createExecutionEvent(command, null);
-		if (event.getApplicationContext() instanceof IEvaluationContext)
-			((IEvaluationContext) event.getApplicationContext()).addVariable(
-					ISources.ACTIVE_CURRENT_SELECTION_NAME, mySelection);
+		if (event.getApplicationContext() instanceof IEvaluationContext) {
+			IEvaluationContext context = (IEvaluationContext) event
+					.getApplicationContext();
+
+			context.addVariable(ISources.ACTIVE_CURRENT_SELECTION_NAME,
+					mySelection);
+
+			// save current menu selection (from parent) if it exists
+			Object menuSelection = context
+					.getVariable(ISources.ACTIVE_MENU_SELECTION_NAME);
+			if (menuSelection != null) {
+				context.addVariable(ISources.ACTIVE_MENU_SELECTION_NAME,
+						menuSelection);
+			}
+		}
+
 		return event;
 	}
 
