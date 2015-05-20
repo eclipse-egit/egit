@@ -94,12 +94,9 @@ public class TagOperation implements IEGitOperation {
 		try {
 			ObjectId tagId;
 			repo.open(startPointRef);
-			ObjectInserter inserter = repo.newObjectInserter();
-			try {
+			try (ObjectInserter inserter = repo.newObjectInserter()) {
 				tagId = inserter.insert(tag);
 				inserter.flush();
-			} finally {
-				inserter.release();
 			}
 			return tagId;
 		} catch (IOException e) {
