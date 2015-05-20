@@ -6,6 +6,7 @@
  * Copyright (C) 2014, IBM Corporation (Markus Keller <markus_keller@ch.ibm.com>)
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
  * Copyright (C) 2015, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, Stefan Dirix <sdirix@eclipsesource.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,6 +19,7 @@ import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,6 +31,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.util.Policy;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.ui.ISources;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
@@ -262,5 +265,25 @@ public class CommonUtils {
 			return start + 1;
 		}
 		return -1;
+	}
+
+	/**
+	 * Creates a comma separated list of all non-null resource names. The last
+	 * element is separated with an ampersand.
+	 *
+	 * @param resources
+	 *            the collection of {@link IResource}s.
+	 * @return A comma separated list the resource names. The last element is
+	 *         separated with an ampersand.
+	 */
+	public static String getResourceNames(Iterable<IResource> resources) {
+		final List<String> names = new LinkedList<>();
+		for (IResource resource : resources) {
+			if (resource.getName() != null) {
+				names.add(resource.getName());
+			}
+		}
+
+		return StringUtils.join(names, ", ", " & "); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }
