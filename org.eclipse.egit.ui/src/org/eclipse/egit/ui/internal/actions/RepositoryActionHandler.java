@@ -8,6 +8,7 @@
  * Copyright (C) 2012, 2013 François Rey <eclipse.org_@_francois_._rey_._name>
  * Copyright (C) 2013 Laurent Goubet <laurent.goubet@obeo.fr>
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
+ * Copyright (C) 2016, Stefan Dirix <sdirix@eclipsesource.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,6 +20,7 @@ package org.eclipse.egit.ui.internal.actions;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -51,6 +53,8 @@ import org.eclipse.jgit.revwalk.FollowFilter;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevSort;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.treewalk.filter.OrTreeFilter;
+import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -454,20 +458,18 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 			return path;
 	}
 
-	protected List<PreviousCommit> findPreviousCommits() throws IOException {
-		List<PreviousCommit> result = new ArrayList<>();
+	protected RevCommit getHeadCommit(IResource resource) throws IOException {
 		Repository repository = getRepository();
-		IResource resource = getSelectedResources()[0];
 		if (resource == null) {
-			return result;
+			return null;
 		}
 		RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
 		if (mapping == null) {
-			return result;
+			return null;
 		}
 		String path = mapping.getRepoRelativePath(resource);
 		if (path == null) {
-			return result;
+			return null;
 		}
 		try (RevWalk rw = new RevWalk(repository)) {
 			rw.sort(RevSort.COMMIT_TIME_DESC, true);
@@ -479,7 +481,59 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 				rw.setTreeFilter(filter);
 			}
 
-			Ref head = repository.exactRef(Constants.HEAD);
+			Ref head = repository.findRef(Constants.HEAD);
+			if (head == null) {
+				return null;
+			}
+			RevCommit headCommit = rw.parseCommit(head.getObjectId());
+			rw.close();
+			return headCommit;
+		}
+	}
+
+	/**
+	 * Returns the previous commit of the given resources.
+	 *
+	 * @param resources
+	 *            The {@link IResource} for which the previous commit shall be
+	 *            determined.
+	 * @return The second to last commit which touched any of the given
+	 *         resources.
+	 * @throws IOException
+	 *             When the commit can not be parsed.
+	 */
+	protected List<RevCommit> findPreviousCommits(
+			Collection<IResource> resources) throws IOException {
+		List<RevCommit> result = new ArrayList<>();
+		Repository repository = getRepository();
+		RepositoryMapping mapping = RepositoryMapping.getMapping(resources
+				.iterator().next()
+				.getProject());
+		if (mapping == null) {
+			return result;
+		}
+		try (RevWalk rw = new RevWalk(repository)) {
+			rw.sort(RevSort.COMMIT_TIME_DESC, true);
+			rw.sort(RevSort.BOUNDARY, true);
+
+			List<TreeFilter> filters = new ArrayList<>();
+			DiffConfig diffConfig = repository.getConfig().get(DiffConfig.KEY);
+			for (IResource resource : resources) {
+				String path = mapping.getRepoRelativePath(resource);
+
+				if (path != null && path.length() > 0) {
+					filters.add(FollowFilter.create(path, diffConfig));
+				}
+			}
+
+			if (filters.size() >= 2) {
+				TreeFilter filter = OrTreeFilter.create(filters);
+				rw.setTreeFilter(filter);
+			} else if (filters.size() == 1) {
+				rw.setTreeFilter(filters.get(0));
+			}
+
+			Ref head = repository.findRef(Constants.HEAD);
 			if (head == null) {
 				return result;
 			}
@@ -495,10 +549,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 			RevCommit previousCommit = rw.next();
 			while (previousCommit != null && result.size() < directParents.size()) {
 				if (directParents.contains(previousCommit)) {
-					String previousPath = getPreviousPath(repository,
-							rw.getObjectReader(), headCommit, previousCommit,
-							path);
-					result.add(new PreviousCommit(previousCommit, previousPath));
+					result.add(previousCommit);
 				}
 				previousCommit = rw.next();
 			}
