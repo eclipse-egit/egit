@@ -126,21 +126,25 @@ public class SelectionUtils {
 	public static IPath[] getSelectedLocations(IStructuredSelection selection) {
 		Set<IPath> result = new LinkedHashSet<IPath>();
 		for (Object o : selection.toList()) {
-			IResource resource = AdapterUtils.adapt(o, IResource.class);
-			if (resource != null) {
-				IPath location = resource.getLocation();
-				if (location != null)
-					result.add(location);
+			ResourceMapping mapping = AdapterUtils.adapt(o,
+					ResourceMapping.class);
+			if (mapping != null) {
+				for (IResource r : extractResourcesFromMapping(mapping)) {
+					IPath l = r.getLocation();
+					if (l != null)
+						result.add(l);
+				}
 			} else {
-				IPath location = AdapterUtils.adapt(o, IPath.class);
-				if (location != null)
-					result.add(location);
-				else
-					for (IResource r : extractResourcesFromMapping(o)) {
-						IPath l = r.getLocation();
-						if (l != null)
-							result.add(l);
-					}
+				IResource resource = AdapterUtils.adapt(o, IResource.class);
+				if (resource != null) {
+					IPath location = resource.getLocation();
+					if (location != null)
+						result.add(location);
+				} else {
+					IPath location = AdapterUtils.adapt(o, IPath.class);
+					if (location != null)
+						result.add(location);
+				}
 			}
 		}
 		return result.toArray(new IPath[result.size()]);
@@ -154,17 +158,22 @@ public class SelectionUtils {
 			IStructuredSelection selection) {
 		Set<IResource> result = new LinkedHashSet<IResource>();
 		for (Object o : selection.toList()) {
-			IResource resource = AdapterUtils.adapt(o, IResource.class);
-			if (resource != null)
-				result.add(resource);
-			else
-				result.addAll(extractResourcesFromMapping(o));
+			ResourceMapping mapping = AdapterUtils.adapt(o,
+					ResourceMapping.class);
+			if (mapping != null) {
+				result.addAll(extractResourcesFromMapping(mapping));
+			} else {
+				IResource resource = AdapterUtils.adapt(o, IResource.class);
+				if (resource != null)
+					result.add(resource);
+			}
+
 		}
 		return result.toArray(new IResource[result.size()]);
 	}
 
-	private static List<IResource> extractResourcesFromMapping(Object o) {
-		ResourceMapping mapping = AdapterUtils.adapt(o, ResourceMapping.class);
+	private static List<IResource> extractResourcesFromMapping(
+			ResourceMapping mapping) {
 		if (mapping == null)
 			return Collections.emptyList();
 
@@ -232,7 +241,8 @@ public class SelectionUtils {
 				if (o instanceof Repository)
 					nextRepo = (Repository) o;
 				else if (o instanceof PlatformObject)
-					nextRepo = CommonUtils.getAdapter(((PlatformObject) o), Repository.class);
+					nextRepo = CommonUtils.getAdapter(((PlatformObject) o),
+							Repository.class);
 				if (nextRepo != null && result != null
 						&& !result.equals(nextRepo)) {
 					if (warn)
@@ -294,7 +304,8 @@ public class SelectionUtils {
 		// no active window during Eclipse shutdown
 		if (activeWorkbenchWindow == null)
 			return null;
-		IHandlerService hsr = CommonUtils.getService(activeWorkbenchWindow, IHandlerService.class);
+		IHandlerService hsr = CommonUtils.getService(activeWorkbenchWindow,
+				IHandlerService.class);
 		ctx = hsr.getCurrentState();
 		return ctx;
 	}

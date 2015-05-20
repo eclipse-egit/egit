@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011, 2013 GitHub Inc. and others.
+ *  Copyright (c) 2011, 2015 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -9,12 +9,14 @@
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
  *    François Rey - gracefully ignore linked resources
  *    Laurent Goubet <laurent.goubet@obeo.fr>
+ *    Stefan Dirix <sdirix@eclipsesource.com>
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -34,6 +36,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -54,9 +57,6 @@ public class CompareWithPreviousActionHandler extends RepositoryActionHandler {
 		}
 
 		final IResource[] resources = getSelectedResources(event);
-		if (resources.length != 1) {
-			return null;
-		}
 
 		Job job = new Job(UIText.CompareUtils_jobName) {
 
@@ -69,12 +69,16 @@ public class CompareWithPreviousActionHandler extends RepositoryActionHandler {
 					IWorkbenchPage workBenchPage = HandlerUtil
 							.getActiveWorkbenchWindowChecked(event)
 							.getActivePage();
-					final PreviousCommit previous = getPreviousRevision(event,
-							resources[0]);
+
+					final PreviousCommit previous = getLatestRevision(event,
+							resources);
+
 					if (previous != null) {
 						CompareUtils.compare(resources, repository,
 								Constants.HEAD, previous.commit.getName(),
 								true, workBenchPage);
+					} else {
+						showNotFoundDialog(event, resources);
 					}
 				} catch (Exception e) {
 					Activator.handleError(
@@ -91,6 +95,25 @@ public class CompareWithPreviousActionHandler extends RepositoryActionHandler {
 		return null;
 	}
 
+	private PreviousCommit getLatestRevision(ExecutionEvent event,
+			IResource[] resources) throws IOException {
+		PreviousCommit latestRevision = null;
+		for (IResource resource : resources) {
+			PreviousCommit previousRevision = getPreviousRevision(event,
+					resource);
+			if (latestRevision == null) {
+				latestRevision = previousRevision;
+			} else if (previousRevision != null) {
+				final int latestTime = latestRevision.commit.getCommitTime();
+				final int currentTime = previousRevision.commit.getCommitTime();
+				if (currentTime > latestTime) {
+					latestRevision = previousRevision;
+				}
+			}
+		}
+		return latestRevision;
+	}
+
 	@Override
 	public boolean isEnabled() {
 		IResource[] selectedResources = getSelectedResources();
@@ -101,12 +124,11 @@ public class CompareWithPreviousActionHandler extends RepositoryActionHandler {
 	private PreviousCommit getPreviousRevision(final ExecutionEvent event,
 			final IResource resource) throws IOException {
 
-		final List<PreviousCommit> previousList = findPreviousCommits();
+		final List<PreviousCommit> previousList = findPreviousCommits(resource);
 
 		final AtomicReference<PreviousCommit> previous = new AtomicReference<PreviousCommit>();
-		if (previousList.size() == 0)
-			showNotFoundDialog(event, resource);
-		else if (previousList.size() == 1)
+
+		if (previousList.size() == 1)
 			previous.set(previousList.get(0));
 		else {
 			final List<RevCommit> commits = new ArrayList<RevCommit>();
@@ -133,10 +155,20 @@ public class CompareWithPreviousActionHandler extends RepositoryActionHandler {
 	}
 
 	private void showNotFoundDialog(final ExecutionEvent event,
-			IResource resource) {
+			IResource[] resources) {
+
+		final List<String> names = new LinkedList<String>();
+		for (IResource resource : resources) {
+			if (resource.getName() != null) {
+				names.add(resource.getName());
+			}
+		}
+
+		final String resourceNames = StringUtils.join(names, ",", "&"); //$NON-NLS-1$ //$NON-NLS-2$
+
 		final String message = MessageFormat
 				.format(UIText.CompareWithPreviousActionHandler_MessageRevisionNotFound,
-						resource.getName());
+						resourceNames);
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 
 			@Override
