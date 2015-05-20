@@ -40,8 +40,8 @@ public class CreateBranchCommand extends
 
 		if (node.getType() == RepositoryTreeNodeType.ADDITIONALREF) {
 			Ref ref = (Ref) node.getObject();
-			try {
-				RevCommit baseCommit = new RevWalk(node.getRepository())
+			try (RevWalk rw = new RevWalk(node.getRepository())) {
+				RevCommit baseCommit = rw
 						.parseCommit(ref.getLeaf().getObjectId());
 				WizardDialog dlg = new WizardDialog(
 						getShell(event),

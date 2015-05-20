@@ -535,17 +535,17 @@ class ExistingOrNewPage extends WizardPage {
 					ObjectId headCommitId = repo.resolve(Constants.HEAD);
 					if (headCommitId != null) {
 						// Not an empty repo
-						RevWalk revWalk = new RevWalk(repo);
-						RevCommit headCommit = revWalk
-								.parseCommit(headCommitId);
-						RevTree headTree = headCommit.getTree();
-						TreeWalk projectInRepo = TreeWalk.forPath(repo,
-								repoRelativePath, headTree);
-						if (projectInRepo != null) {
-							// the .project file is tracked by this repo
-							treeItem.setChecked(true);
+						try (RevWalk revWalk = new RevWalk(repo)) {
+							RevCommit headCommit = revWalk
+									.parseCommit(headCommitId);
+							RevTree headTree = headCommit.getTree();
+							TreeWalk projectInRepo = TreeWalk.forPath(repo,
+									repoRelativePath, headTree);
+							if (projectInRepo != null) {
+								// the .project file is tracked by this repo
+								treeItem.setChecked(true);
+							}
 						}
-						revWalk.dispose();
 					}
 				}
 				repo.close();

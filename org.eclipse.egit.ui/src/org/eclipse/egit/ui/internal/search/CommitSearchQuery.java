@@ -198,8 +198,7 @@ public class CommitSearchQuery implements ISearchQuery {
 
 	private void walkRepository(Repository repository, Pattern pattern,
 			IProgressMonitor monitor) throws IOException {
-		RevWalk walk = new RevWalk(repository);
-		try {
+		try (RevWalk walk = new RevWalk(repository)) {
 			walk.setRetainBody(true);
 			List<RevCommit> commits = new LinkedList<RevCommit>();
 			if (this.settings.isAllBranches()) {
@@ -230,8 +229,6 @@ public class CommitSearchQuery implements ISearchQuery {
 						}
 				}
 			}
-		} finally {
-			walk.dispose();
 		}
 	}
 

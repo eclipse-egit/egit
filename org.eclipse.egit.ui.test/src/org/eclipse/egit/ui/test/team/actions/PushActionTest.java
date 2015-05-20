@@ -65,50 +65,52 @@ public class PushActionTest extends LocalRepositoryTestCase {
 			throws Exception, MissingObjectException,
 			IncorrectObjectTypeException, IOException {
 		Repository repo = lookupRepository(remoteRepositoryFile);
-		RevWalk rw = new RevWalk(repo);
-		String previous = rw.parseCommit(repo.resolve("HEAD")).name();
+		try (RevWalk rw = new RevWalk(repo)) {
+			String previous = rw.parseCommit(repo.resolve("HEAD")).name();
+			touchAndSubmit(null);
+			SWTBotShell pushDialog = openPushDialog();
 
-		touchAndSubmit(null);
-		SWTBotShell pushDialog = openPushDialog();
+			SWTBotCombo destinationCombo = pushDialog.bot().comboBox();
+			String[] items = destinationCombo.items();
+			for (int i = 0; i < items.length; i++) {
+				if (items[i].startsWith(destination))
+					destinationCombo.setSelection(i);
+			}
 
-		SWTBotCombo destinationCombo = pushDialog.bot().comboBox();
-		String[] items = destinationCombo.items();
-		for (int i = 0; i < items.length; i++) {
-			if (items[i].startsWith(destination))
-				destinationCombo.setSelection(i);
-		}
-
-		pushDialog.bot().button(IDialogConstants.NEXT_LABEL).click();
-		if (withConfirmPage)
 			pushDialog.bot().button(IDialogConstants.NEXT_LABEL).click();
-		pushDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
-		SWTBotShell confirm = bot.shell(NLS.bind(UIText.PushResultDialog_title,
-				destination));
-		String result = confirm.bot().tree().getAllItems()[0].getText();
+			if (withConfirmPage)
+				pushDialog.bot().button(IDialogConstants.NEXT_LABEL).click();
+			pushDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
+			SWTBotShell confirm = bot.shell(
+					NLS.bind(UIText.PushResultDialog_title, destination));
+			String result = confirm.bot().tree().getAllItems()[0].getText();
 
-		assertTrue("Wrong result", result.contains(previous.substring(0, 7)));
+			assertTrue("Wrong result",
+					result.contains(previous.substring(0, 7)));
 
-		confirm.close();
+			confirm.close();
 
-		pushDialog = openPushDialog();
+			pushDialog = openPushDialog();
 
-		destinationCombo = pushDialog.bot().comboBox();
-		for (int i = 0; i < items.length; i++) {
-			if (items[i].startsWith(destination))
-				destinationCombo.setSelection(i);
-		}
+			destinationCombo = pushDialog.bot().comboBox();
+			for (int i = 0; i < items.length; i++) {
+				if (items[i].startsWith(destination))
+					destinationCombo.setSelection(i);
+			}
 
-		pushDialog.bot().button(IDialogConstants.NEXT_LABEL).click();
-		if (withConfirmPage)
 			pushDialog.bot().button(IDialogConstants.NEXT_LABEL).click();
-		pushDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
-		confirm = bot.shell(NLS.bind(UIText.PushResultDialog_title, destination));
-		result = confirm.bot().tree().getAllItems()[0].getText();
+			if (withConfirmPage)
+				pushDialog.bot().button(IDialogConstants.NEXT_LABEL).click();
+			pushDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
+			confirm = bot.shell(
+					NLS.bind(UIText.PushResultDialog_title, destination));
+			result = confirm.bot().tree().getAllItems()[0].getText();
 
-		confirm.close();
+			confirm.close();
 
-		assertTrue("Wrong result",
-				result.contains(UIText.PushResultTable_statusUpToDate));
+			assertTrue("Wrong result",
+					result.contains(UIText.PushResultTable_statusUpToDate));
+		}
 	}
 
 	private SWTBotShell openPushDialog() throws Exception {

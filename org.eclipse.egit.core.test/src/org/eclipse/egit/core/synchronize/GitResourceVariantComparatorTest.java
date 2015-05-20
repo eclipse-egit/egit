@@ -586,21 +586,22 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 		testRepo.addToIndex(testRepo.getIFile(iProject, file2));
 		RevCommit commit = testRepo.commit("initial commit");
 
-		TreeWalk tw = new TreeWalk(repo);
-		int nth = tw.addTree(commit.getTree());
+		try (TreeWalk tw = new TreeWalk(repo)) {
+			int nth = tw.addTree(commit.getTree());
 
-		tw.next();
-		tw.enterSubtree(); // enter project node
-		tw.next();
-		GitRemoteFolder base = new GitRemoteFolder(repo, null, commit,
-				tw.getObjectId(nth), tw.getNameString());
+			tw.next();
+			tw.enterSubtree(); // enter project node
+			tw.next();
+			GitRemoteFolder base = new GitRemoteFolder(repo, null, commit,
+					tw.getObjectId(nth), tw.getNameString());
 
-		tw.next();
-		GitRemoteFolder remote = new GitRemoteFolder(repo, null, commit,
-				tw.getObjectId(nth), tw.getNameString());
+			tw.next();
+			GitRemoteFolder remote = new GitRemoteFolder(repo, null, commit,
+					tw.getObjectId(nth), tw.getNameString());
 
-		// then
-		assertFalse(grvc.compare(base, remote));
+			// then
+			assertFalse(grvc.compare(base, remote));
+		}
 	}
 
 	/**
