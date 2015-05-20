@@ -8,7 +8,6 @@
 		<artifactId>egit-parent</artifactId>
 	</parent>
 	<artifactId>org.eclipse.egit.ui.importer</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 
 	<name>Git Team Provider (experimental auto-import wizard, incubation)</name>
