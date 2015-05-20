@@ -94,8 +94,7 @@ public class TagOperationTest extends DualRepositoryTestCase {
 			// expected
 		}
 		Ref tagRef = repository1.getRepository().getTags().get("TheNewTag");
-		RevWalk walk = new RevWalk(repository1.getRepository());
-		try {
+		try (RevWalk walk = new RevWalk(repository1.getRepository())) {
 			RevTag tag = walk.parseTag(repository1.getRepository().resolve(
 					tagRef.getName()));
 
@@ -107,7 +106,6 @@ public class TagOperationTest extends DualRepositoryTestCase {
 					tagRef.getName()));
 			assertTrue("Messages be same",
 					tag.getFullMessage().equals(newTag.getMessage()));
-		} finally {
 			walk.dispose();
 		}
 	}

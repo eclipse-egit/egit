@@ -274,21 +274,24 @@ public class RemoveCommand extends
 	private boolean isTracked(File file, Repository repo) throws IOException {
 		ObjectId objectId = repo.resolve(Constants.HEAD);
 		RevTree tree;
-		if (objectId != null)
-			tree = new RevWalk(repo).parseTree(objectId);
-		else
-			tree = null;
+		try (RevWalk rw = new RevWalk(repo);
+				TreeWalk treeWalk = new TreeWalk(repo)) {
+			if (objectId != null)
+				tree = rw.parseTree(objectId);
+			else
+				tree = null;
 
-		TreeWalk treeWalk = new TreeWalk(repo);
-		treeWalk.setRecursive(true);
-		if (tree != null)
-			treeWalk.addTree(tree);
-		else
-			treeWalk.addTree(new EmptyTreeIterator());
-		treeWalk.addTree(new DirCacheIterator(repo.readDirCache()));
-		treeWalk.setFilter(PathFilterGroup.createFromStrings(Collections.singleton(
-				Repository.stripWorkDir(repo.getWorkTree(), file))));
-		return treeWalk.next();
+			treeWalk.setRecursive(true);
+			if (tree != null)
+				treeWalk.addTree(tree);
+			else
+				treeWalk.addTree(new EmptyTreeIterator());
+			treeWalk.addTree(new DirCacheIterator(repo.readDirCache()));
+			treeWalk.setFilter(PathFilterGroup
+					.createFromStrings(Collections.singleton(Repository
+							.stripWorkDir(repo.getWorkTree(), file))));
+			return treeWalk.next();
+		}
 
 	}
 

@@ -247,11 +247,10 @@ public class GitModelBlob extends GitModelObject implements
 		ComparisonDataSource baseData;
 		ComparisonDataSource remoteData;
 
-		RevWalk rw = new RevWalk(repo);
-		rw.setRetainBody(true);
 		RevCommit baseCommit = null;
 		RevCommit remoteCommit = null;
-		try {
+		try (RevWalk rw = new RevWalk(repo)) {
+			rw.setRetainBody(true);
 			if (change.getCommitId() != null)
 				baseCommit = rw.parseCommit(change.getCommitId().toObjectId());
 			if (change.getRemoteCommitId() != null)
@@ -259,8 +258,6 @@ public class GitModelBlob extends GitModelObject implements
 						.toObjectId());
 		} catch (IOException e) {
 			Activator.logError(e.getMessage(), e);
-		} finally {
-			rw.dispose();
 		}
 		if (baseCommit == null && remoteCommit != null)
 			baseCommit = remoteCommit; // prevent from NPE for deleted files

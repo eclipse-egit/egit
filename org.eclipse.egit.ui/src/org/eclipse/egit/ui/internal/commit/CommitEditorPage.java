@@ -523,8 +523,7 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 	private List<Ref> loadBranches() {
 		Repository repository = getCommit().getRepository();
 		RevCommit commit = getCommit().getRevCommit();
-		RevWalk revWalk = new RevWalk(repository);
-		try {
+		try (RevWalk revWalk = new RevWalk(repository)) {
 			Map<String, Ref> refsMap = new HashMap<String, Ref>();
 			refsMap.putAll(repository.getRefDatabase().getRefs(
 					Constants.R_HEADS));

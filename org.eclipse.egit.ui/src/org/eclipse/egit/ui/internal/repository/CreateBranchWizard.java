@@ -49,11 +49,11 @@ public class CreateBranchWizard extends Wizard {
 	 *            a {@link Ref} name or {@link RevCommit} id, or null
 	 */
 	public CreateBranchWizard(Repository repository, String base) {
-		try {
+		try (RevWalk rw = new RevWalk(repository)) {
 			if (base == null) {
 				myPage = new CreateBranchPage(repository, (Ref) null);
 			} else if (ObjectId.isId(base)) {
-				RevCommit commit = new RevWalk(repository).parseCommit(ObjectId
+				RevCommit commit = rw.parseCommit(ObjectId
 						.fromString(base));
 				myPage = new CreateBranchPage(repository, commit);
 			} else {
@@ -64,8 +64,8 @@ public class CreateBranchWizard extends Wizard {
 					myPage = new CreateBranchPage(repository, currentBranch);
 				} else {
 					// the page only knows some special Refs
-					RevCommit commit = new RevWalk(repository)
-							.parseCommit(repository.resolve(base + "^{commit}")); //$NON-NLS-1$
+					RevCommit commit = rw.parseCommit(
+							repository.resolve(base + "^{commit}")); //$NON-NLS-1$
 					myPage = new CreateBranchPage(repository, commit);
 				}
 			}
