@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2012, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2012, 2016 Mathias Kinzler <mathias.kinzler@sap.com>
  * and other copyright owners as documented in the project's IP log.
  *
  * All rights reserved. This program and the accompanying materials
@@ -11,7 +11,7 @@ package org.eclipse.egit.ui.internal.actions;
 
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.CommitSelectDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.revwalk.RevCommit;
 
@@ -34,15 +35,10 @@ public class ReplaceWithPreviousActionHandler extends
 	protected String gatherRevision(ExecutionEvent event)
 			throws ExecutionException {
 		IResource[] resources = getSelectedResources(event);
-		if (resources.length != 1)
-			throw new ExecutionException(
-					"Unexpected number of selected Resources"); //$NON-NLS-1$
 		try {
-			List<PreviousCommit> pcs = findPreviousCommits();
-			List<RevCommit> previousCommits = new ArrayList<>();
-			for (PreviousCommit pc: pcs)
-				previousCommits.add(pc.commit);
-			int parentCount = previousCommits.size();
+			List<RevCommit> pcs = findPreviousCommits(Arrays.asList(resources));
+
+			int parentCount = pcs.size();
 			if (parentCount == 0) {
 				MessageDialog
 						.openError(
@@ -54,13 +50,13 @@ public class ReplaceWithPreviousActionHandler extends
 				throw new OperationCanceledException();
 			} else if (parentCount > 1) {
 				CommitSelectDialog dlg = new CommitSelectDialog(
-						getShell(event), previousCommits);
+						getShell(event), pcs);
 				if (dlg.open() == Window.OK)
 					return dlg.getSelectedCommit().getName();
 				else
 					throw new OperationCanceledException();
 			} else
-				return previousCommits.get(0).getName();
+				return pcs.get(0).getName();
 		} catch (IOException e) {
 			throw new ExecutionException(e.getMessage(), e);
 		}
@@ -68,8 +64,8 @@ public class ReplaceWithPreviousActionHandler extends
 
 	@Override
 	public boolean isEnabled() {
-		IResource[] selectedResources = getSelectedResources();
-		return super.isEnabled() && selectedResources.length == 1 &&
-				selectionMapsToSingleRepository();
+		IStructuredSelection selection = getSelection();
+		return super.isEnabled() && selection.size() == 1
+				&& selectionMapsToSingleRepository();
 	}
 }
