@@ -62,8 +62,8 @@ public class CompareWithWorkingTreeHandler extends
 			// TODO can we create a ITypedElement from the local file?
 			Repository repo = getRepository(event);
 			RevCommit leftCommit;
-			try {
-				leftCommit = new RevWalk(repo).parseCommit(repo
+			try (RevWalk rw = new RevWalk(repo)) {
+				leftCommit = rw.parseCommit(repo
 						.resolve(Constants.HEAD));
 			} catch (Exception e) {
 				throw new ExecutionException(e.getMessage(), e);

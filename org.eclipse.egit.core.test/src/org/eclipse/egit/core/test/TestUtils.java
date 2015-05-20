@@ -238,14 +238,16 @@ public class TestUtils {
 		Set<String> expectedfiles = new HashSet<String>();
 		for (String path : paths)
 			expectedfiles.add(path);
-		TreeWalk treeWalk = new TreeWalk(repository);
-		treeWalk.addTree(repository.resolve("HEAD^{tree}"));
-		treeWalk.setRecursive(true);
-		while (treeWalk.next()) {
-			String path = treeWalk.getPathString();
-			if (!expectedfiles.contains(path))
-				fail("Repository contains unexpected expected file " + path);
-			expectedfiles.remove(path);
+		try (TreeWalk treeWalk = new TreeWalk(repository)) {
+			treeWalk.addTree(repository.resolve("HEAD^{tree}"));
+			treeWalk.setRecursive(true);
+			while (treeWalk.next()) {
+				String path = treeWalk.getPathString();
+				if (!expectedfiles.contains(path))
+					fail("Repository contains unexpected expected file "
+							+ path);
+				expectedfiles.remove(path);
+			}
 		}
 		if (expectedfiles.size() > 0) {
 			StringBuilder message = new StringBuilder(
@@ -273,23 +275,25 @@ public class TestUtils {
 	public void assertRepositoryContainsFilesWithContent(Repository repository,
 			String... args) throws Exception {
 		HashMap<String, String> expectedfiles = mkmap(args);
-		TreeWalk treeWalk = new TreeWalk(repository);
-		treeWalk.addTree(repository.resolve("HEAD^{tree}"));
-		treeWalk.setRecursive(true);
-		while (treeWalk.next()) {
-			String path = treeWalk.getPathString();
-			assertTrue(expectedfiles.containsKey(path));
-			ObjectId objectId = treeWalk.getObjectId(0);
-			byte[] expectedContent = expectedfiles.get(path).getBytes("UTF-8");
-			byte[] repoContent = treeWalk.getObjectReader().open(objectId)
-					.getBytes();
-			if (!Arrays.equals(repoContent, expectedContent)) {
-				fail("File " + path + " has repository content "
-						+ new String(repoContent, "UTF-8")
-						+ " instead of expected content "
-						+ new String(expectedContent, "UTF-8"));
+		try (TreeWalk treeWalk = new TreeWalk(repository)) {
+			treeWalk.addTree(repository.resolve("HEAD^{tree}"));
+			treeWalk.setRecursive(true);
+			while (treeWalk.next()) {
+				String path = treeWalk.getPathString();
+				assertTrue(expectedfiles.containsKey(path));
+				ObjectId objectId = treeWalk.getObjectId(0);
+				byte[] expectedContent = expectedfiles.get(path)
+						.getBytes("UTF-8");
+				byte[] repoContent = treeWalk.getObjectReader().open(objectId)
+						.getBytes();
+				if (!Arrays.equals(repoContent, expectedContent)) {
+					fail("File " + path + " has repository content "
+							+ new String(repoContent, "UTF-8")
+							+ " instead of expected content "
+							+ new String(expectedContent, "UTF-8"));
+				}
+				expectedfiles.remove(path);
 			}
-			expectedfiles.remove(path);
 		}
 		if (expectedfiles.size() > 0) {
 			StringBuilder message = new StringBuilder(

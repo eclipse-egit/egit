@@ -138,8 +138,7 @@ public class RevUtils {
 
 		final int skew = 24 * 60 * 60; // one day clock skew
 
-		RevWalk walk = new RevWalk(repo);
-		try {
+		try (RevWalk walk = new RevWalk(repo)) {
 			RevCommit commit = walk.parseCommit(commitId);
 			for (Ref ref : refs) {
 				RevCommit refCommit = walk.parseCommit(ref.getObjectId());
@@ -154,7 +153,6 @@ public class RevUtils {
 				if (contained)
 					return true;
 			}
-		} finally {
 			walk.dispose();
 		}
 		return false;

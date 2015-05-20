@@ -132,15 +132,18 @@ public class RefContentProposal implements IContentProposal {
 
 			switch (loader.getType()) {
 			case Constants.OBJ_COMMIT:
-				RevCommit c = new RevWalk(db).parseCommit(objectId);
-				appendObjectSummary(sb, UIText.RefContentProposal_commit, c
-						.getAuthorIdent(), c.getFullMessage());
+				try (RevWalk rw = new RevWalk(db)) {
+					RevCommit c = rw.parseCommit(objectId);
+					appendObjectSummary(sb, UIText.RefContentProposal_commit,
+							c.getAuthorIdent(), c.getFullMessage());
+				}
 				break;
 			case Constants.OBJ_TAG:
-				RevWalk walk = new RevWalk(db);
-				RevTag t = walk.parseTag(objectId);
-				appendObjectSummary(sb, UIText.RefContentProposal_tag, t
-						.getTaggerIdent(), t.getFullMessage());
+				try (RevWalk rw = new RevWalk(db)) {
+					RevTag t = rw.parseTag(objectId);
+					appendObjectSummary(sb, UIText.RefContentProposal_tag,
+							t.getTaggerIdent(), t.getFullMessage());
+				}
 				break;
 			case Constants.OBJ_TREE:
 				sb.append(UIText.RefContentProposal_tree);

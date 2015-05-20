@@ -113,15 +113,14 @@ public class GitCompareEditorInput extends CompareEditorInput {
 	protected Object prepareInput(IProgressMonitor monitor)
 			throws InvocationTargetException, InterruptedException {
 		// make sure all resources belong to the same repository
-		RevWalk rw = null;
-		try {
+		try (RevWalk rw = new RevWalk(repository)) {
 			monitor.beginTask(
 					UIText.GitCompareEditorInput_CompareResourcesTaskName,
 					IProgressMonitor.UNKNOWN);
 
 			for (IResource resource : resources) {
-				RepositoryMapping map = RepositoryMapping.getMapping(resource
-						.getProject());
+				RepositoryMapping map = RepositoryMapping
+						.getMapping(resource.getProject());
 				if (repository != null && repository != map.getRepository())
 					throw new InvocationTargetException(
 							new IllegalStateException(
@@ -134,80 +133,81 @@ public class GitCompareEditorInput extends CompareEditorInput {
 						return FOLDER_IMAGE;
 					}
 				};
-				diffRoots
-						.put(new Path(map.getRepoRelativePath(resource)), node);
+				diffRoots.put(new Path(map.getRepoRelativePath(resource)),
+						node);
 				repository = map.getRepository();
 			}
 
 			if (repository == null)
-				throw new InvocationTargetException(
-						new IllegalStateException(
-								UIText.GitCompareEditorInput_ResourcesInDifferentReposMessagge));
+				throw new InvocationTargetException(new IllegalStateException(
+						UIText.GitCompareEditorInput_ResourcesInDifferentReposMessagge));
 
 			if (monitor.isCanceled())
 				throw new InterruptedException();
 
-			rw = new RevWalk(repository);
-
 			final RevCommit baseCommit;
 			try {
-				baseCommit = rw.parseCommit(repository.resolve(baseVersion));
-			} catch (IOException e) {
-				throw new InvocationTargetException(e);
-			}
-
-			final RevCommit compareCommit;
-			if (compareVersion == null)
-				compareCommit = null;
-			else
 				try {
-					compareCommit = rw.parseCommit(repository
-							.resolve(compareVersion));
+					baseCommit = rw
+							.parseCommit(repository.resolve(baseVersion));
 				} catch (IOException e) {
 					throw new InvocationTargetException(e);
 				}
 
-			if (monitor.isCanceled())
-				throw new InterruptedException();
+				final RevCommit compareCommit;
+				if (compareVersion == null) {
+					compareCommit = null;
+				} else {
+					try {
+						compareCommit = rw.parseCommit(
+								repository.resolve(compareVersion));
+					} catch (IOException e) {
+						throw new InvocationTargetException(e);
+					}
+				}
+				if (monitor.isCanceled())
+					throw new InterruptedException();
 
-			// set the labels
-			CompareConfiguration config = getCompareConfiguration();
-			config.setLeftLabel(compareVersion);
-			config.setRightLabel(baseVersion);
-			// set title and icon
-			if (resources.length == 0) {
-				Object[] titleParameters = new Object[] {
-						Activator.getDefault().getRepositoryUtil()
-								.getRepositoryName(repository),
-						CompareUtils.truncatedRevision(compareVersion),
-						CompareUtils.truncatedRevision(baseVersion) };
-				setTitle(NLS.bind(UIText.GitCompareEditorInput_EditorTitle,
-						titleParameters));
-			} else if (resources.length == 1) {
-				Object[] titleParameters = new Object[] {
-						resources[0].getFullPath().makeRelative().toString(),
-						CompareUtils.truncatedRevision(compareVersion),
-						CompareUtils.truncatedRevision(baseVersion) };
-				setTitle(NLS.bind(
-						UIText.GitCompareEditorInput_EditorTitleSingleResource,
-						titleParameters));
-			} else
-				setTitle(NLS
-						.bind(
-								UIText.GitCompareEditorInput_EditorTitleMultipleResources,
-								CompareUtils.truncatedRevision(compareVersion),
-								CompareUtils.truncatedRevision(baseVersion)));
+				// set the labels
+				CompareConfiguration config = getCompareConfiguration();
+				config.setLeftLabel(compareVersion);
+				config.setRightLabel(baseVersion);
+				// set title and icon
+				if (resources.length == 0) {
+					Object[] titleParameters = new Object[] {
+							Activator.getDefault().getRepositoryUtil()
+									.getRepositoryName(repository),
+							CompareUtils.truncatedRevision(compareVersion),
+							CompareUtils.truncatedRevision(baseVersion) };
+					setTitle(NLS.bind(UIText.GitCompareEditorInput_EditorTitle,
+							titleParameters));
+				} else if (resources.length == 1) {
+					Object[] titleParameters = new Object[] {
+							resources[0].getFullPath().makeRelative()
+									.toString(),
+							CompareUtils.truncatedRevision(compareVersion),
+							CompareUtils.truncatedRevision(baseVersion) };
+					setTitle(NLS.bind(
+							UIText.GitCompareEditorInput_EditorTitleSingleResource,
+							titleParameters));
+				} else {
+					setTitle(NLS
+							.bind(UIText.GitCompareEditorInput_EditorTitleMultipleResources,
+									CompareUtils.truncatedRevision(
+											compareVersion),
+							CompareUtils.truncatedRevision(baseVersion)));
+				}
 
-			// build the nodes
-			try {
-				return buildDiffContainer(baseCommit, compareCommit, monitor);
-			} catch (IOException e) {
-				throw new InvocationTargetException(e);
+				// build the nodes
+				try {
+					return buildDiffContainer(baseCommit, compareCommit,
+							monitor);
+				} catch (IOException e) {
+					throw new InvocationTargetException(e);
+				}
+			} finally {
+				monitor.done();
 			}
-		} finally {
-			if (rw != null)
-				rw.dispose();
-			monitor.done();
 		}
 	}
 

@@ -446,10 +446,14 @@ public class TestRepository {
 			return true;
 
 		Ref ref = repository.getRef(Constants.HEAD);
-		RevCommit c = new RevWalk(repository).parseCommit(ref.getObjectId());
-		TreeWalk tw = TreeWalk.forPath(repository, getRepoRelativePath(absolutePath), c.getTree());
+		try (RevWalk rw = new RevWalk(repository)) {
+			RevCommit c = rw.parseCommit(ref.getObjectId());
 
-		return tw == null || dc.getObjectId().equals(tw.getObjectId(0));
+			try (TreeWalk tw = TreeWalk.forPath(repository,
+					getRepoRelativePath(absolutePath), c.getTree())) {
+				return tw == null || dc.getObjectId().equals(tw.getObjectId(0));
+			}
+		}
 	}
 
 	public long lastModifiedInIndex(String path) throws IOException {

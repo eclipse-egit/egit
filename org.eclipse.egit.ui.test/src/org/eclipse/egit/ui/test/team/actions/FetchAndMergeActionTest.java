@@ -140,9 +140,10 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 
 	private RevCommit getCommitForHead() throws Exception {
 		Repository repo = lookupRepository(repositoryFile);
-		RevWalk rw = new RevWalk(repo);
-		ObjectId id = repo.resolve(repo.getFullBranch());
-		return rw.parseCommit(id);
+		try (RevWalk rw = new RevWalk(repo)) {
+			ObjectId id = repo.resolve(repo.getFullBranch());
+			return rw.parseCommit(id);
+		}
 	}
 
 	private void mergeBranch(String branchToMerge, boolean squash) throws Exception {
