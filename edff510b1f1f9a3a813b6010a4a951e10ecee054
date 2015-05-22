@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f6139c_c35a7f7a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-22T14:16:21Z",
+      "side": 1,
+      "message": "please revert all these unrelated formatting changes, they create a lot of noise for reviewers and can lead to nasty unnecessary merge conflicts",
+      "revId": "edff510b1f1f9a3a813b6010a4a951e10ecee054",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_e34fbbb8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-22T14:16:21Z",
+      "side": 1,
+      "message": "remove these unrelated formatting changes",
+      "revId": "edff510b1f1f9a3a813b6010a4a951e10ecee054",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
