@@ -147,10 +147,24 @@ public class SelectionUtils {
 	}
 
 	/**
+	 * Returns the resources specified in the given selection.
+	 *
 	 * @param selection
 	 * @return the resources in the selection
 	 */
 	public static IResource[] getSelectedResources(
+			IStructuredSelection selection) {
+		Set<IResource> result = getSelectedResourcesSet(selection);
+		return result.toArray(new IResource[result.size()]);
+	}
+
+	/**
+	 * Returns the resources specified in the given selection.
+	 *
+	 * @param selection
+	 * @return the resources in the selection
+	 */
+	public static Set<IResource> getSelectedResourcesSet(
 			IStructuredSelection selection) {
 		Set<IResource> result = new LinkedHashSet<IResource>();
 		for (Object o : selection.toList()) {
@@ -160,7 +174,7 @@ public class SelectionUtils {
 			else
 				result.addAll(extractResourcesFromMapping(o));
 		}
-		return result.toArray(new IResource[result.size()]);
+		return result;
 	}
 
 	private static List<IResource> extractResourcesFromMapping(Object o) {
@@ -232,7 +246,8 @@ public class SelectionUtils {
 				if (o instanceof Repository)
 					nextRepo = (Repository) o;
 				else if (o instanceof PlatformObject)
-					nextRepo = CommonUtils.getAdapter(((PlatformObject) o), Repository.class);
+					nextRepo = CommonUtils.getAdapter(((PlatformObject) o),
+							Repository.class);
 				if (nextRepo != null && result != null
 						&& !result.equals(nextRepo)) {
 					if (warn)
@@ -294,7 +309,8 @@ public class SelectionUtils {
 		// no active window during Eclipse shutdown
 		if (activeWorkbenchWindow == null)
 			return null;
-		IHandlerService hsr = CommonUtils.getService(activeWorkbenchWindow, IHandlerService.class);
+		IHandlerService hsr = CommonUtils.getService(activeWorkbenchWindow,
+				IHandlerService.class);
 		ctx = hsr.getCurrentState();
 		return ctx;
 	}
