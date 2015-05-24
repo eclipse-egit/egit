@@ -172,8 +172,6 @@ public class UIPreferences {
 	/** */
 	public static final String SHOW_HOME_DIR_WARNING = "show_home_drive_warning"; //$NON-NLS-1$
 	/** */
-	public static final String SHOW_GIT_PREFIX_WARNING = "show_git_prefix_warning"; //$NON-NLS-1$
-	/** */
 	public static final String SHOW_DETACHED_HEAD_WARNING = "show_detached_head_warning"; //$NON-NLS-1$
 	/** */
 	public static final String SHOW_CHECKOUT_CONFIRMATION = "show_checkout_confirmation"; //$NON-NLS-1$

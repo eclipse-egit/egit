@@ -57,7 +57,7 @@ public class RepositoryPropertyPage extends PropertyPage {
 				}
 			});
 		}
-		editor = new ConfigurationEditorComponent(displayArea, config, true, false) {
+		editor = new ConfigurationEditorComponent(displayArea, config, true) {
 			@Override
 			protected void setErrorMessage(String message) {
 				RepositoryPropertyPage.this.setErrorMessage(message);
