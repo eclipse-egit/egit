@@ -99,6 +99,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.DATE_FORMAT,
 				UIPreferences.DEFAULT_DATE_FORMAT);
 		store.setDefault(UIPreferences.HISTORY_MAX_NUM_COMMITS, 10000);
+		store.setDefault(UIPreferences.HISTORY_SHOW_BRANCH_SEQUENCE, true);
 		store.setDefault(UIPreferences.HISTORY_SHOW_TAG_SEQUENCE, false);
 		store.setDefault(UIPreferences.BLAME_IGNORE_WHITESPACE, false);
 		store.setDefault(UIPreferences.REMOTE_CONNECTION_TIMEOUT, 30 /* seconds */);

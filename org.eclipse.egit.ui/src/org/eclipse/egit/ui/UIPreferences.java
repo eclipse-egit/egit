@@ -194,6 +194,8 @@ public class UIPreferences {
 	/** */
 	public static final String HISTORY_SHOW_TAG_SEQUENCE = "HistoryView_ShowTagSequence"; //$NON-NLS-1$
 	/** */
+	public static final String HISTORY_SHOW_BRANCH_SEQUENCE = "HistoryView_ShowBranchSequence"; //$NON-NLS-1$
+	/** */
 	public static final String STAGING_VIEW_SHOW_NEW_COMMITS = "StagingView_ShowNewCommits"; //$NON-NLS-1$
 	/** */
 	public static final String STAGING_VIEW_COLUMN_LAYOUT = "StagingView_ColumnLayout"; //$NON-NLS-1$

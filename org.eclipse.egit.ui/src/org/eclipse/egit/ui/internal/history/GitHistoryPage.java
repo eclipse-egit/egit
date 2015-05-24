@@ -256,6 +256,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 		BooleanPrefAction showTagSequenceAction;
 
+		BooleanPrefAction showBranchSequenceAction;
+
 		BooleanPrefAction wrapCommentAction;
 
 		BooleanPrefAction fillCommentAction;
@@ -308,6 +310,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			createShowEmailAddressesAction();
 			createShowNotesAction();
 			createShowTagSequenceAction();
+			createShowBranchSequenceAction();
 			createWrapCommentAction();
 			createFillCommentAction();
 			createFollowRenamesAction();
@@ -517,6 +520,20 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			};
 			showTagSequenceAction.apply(showTagSequenceAction.isChecked());
 			actionsToDispose.add(showTagSequenceAction);
+		}
+
+		private void createShowBranchSequenceAction() {
+			showBranchSequenceAction = new BooleanPrefAction(
+					UIPreferences.HISTORY_SHOW_BRANCH_SEQUENCE,
+					UIText.ResourceHistory_ShowBranchSequence) {
+				@Override
+				void apply(boolean value) {
+					// nothing, just set the Preference
+				}
+			};
+			showBranchSequenceAction
+					.apply(showBranchSequenceAction.isChecked());
+			actionsToDispose.add(showBranchSequenceAction);
 		}
 
 		private void createWrapCommentAction() {
@@ -1110,6 +1127,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		IMenuManager showInMessageManager = new MenuManager(
 				UIText.GitHistoryPage_InRevisionCommentSubMenuLabel);
 		showSubMenuMgr.add(showInMessageManager);
+		showInMessageManager.add(actions.showBranchSequenceAction);
 		showInMessageManager.add(actions.showTagSequenceAction);
 		showInMessageManager.add(actions.wrapCommentAction);
 		showInMessageManager.add(actions.fillCommentAction);

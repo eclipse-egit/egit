@@ -101,6 +101,9 @@ public class HistoryPreferencePage extends FieldEditorPreferencePage implements
 				.applyTo(commentGroup);
 		commentGroup.setText(UIText.HistoryPreferencePage_ShowInRevCommentGroupLabel);
 		addField(new BooleanFieldEditor(
+				UIPreferences.HISTORY_SHOW_BRANCH_SEQUENCE,
+				UIText.ResourceHistory_ShowBranchSequence, commentGroup));
+		addField(new BooleanFieldEditor(
 				UIPreferences.HISTORY_SHOW_TAG_SEQUENCE,
 				UIText.ResourceHistory_ShowTagSequence, commentGroup));
 		addField(new BooleanFieldEditor(

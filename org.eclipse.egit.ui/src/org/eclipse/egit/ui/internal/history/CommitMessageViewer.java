@@ -108,6 +108,8 @@ class CommitMessageViewer extends SourceViewer {
 
 	private BooleanPrefAction showTagSequencePrefAction;
 
+	private BooleanPrefAction showBranchSequencePrefAction;
+
 	private BooleanPrefAction wrapCommentsPrefAction;
 
 	private BooleanPrefAction fillParagraphsPrefAction;
@@ -156,12 +158,15 @@ class CommitMessageViewer extends SourceViewer {
 		listener = new IPropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent event) {
-				if (event.getProperty().equals(
+				String property = event.getProperty();
+				if (property.equals(
 						UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL)) {
 					setFill(((Boolean) event.getNewValue()).booleanValue());
 					return;
 				}
-				if (event.getProperty().equals(UIPreferences.HISTORY_SHOW_TAG_SEQUENCE)) {
+				if (property.equals(UIPreferences.HISTORY_SHOW_TAG_SEQUENCE)
+						|| property.equals(
+								UIPreferences.HISTORY_SHOW_BRANCH_SEQUENCE)) {
 					format();
 					return;
 				}
@@ -223,6 +228,16 @@ class CommitMessageViewer extends SourceViewer {
 		c.setMenu(mgr.createContextMenu(c));
 
 		IPersistentPreferenceStore pstore = (IPersistentPreferenceStore) store;
+
+		showBranchSequencePrefAction = new BooleanPrefAction(pstore,
+				UIPreferences.HISTORY_SHOW_BRANCH_SEQUENCE,
+				UIText.ResourceHistory_ShowBranchSequence) {
+			@Override
+			protected void apply(boolean value) {
+				// nothing, just toggle
+			}
+		};
+		mgr.add(showBranchSequencePrefAction);
 
 		showTagSequencePrefAction = new BooleanPrefAction(pstore,
 				UIPreferences.HISTORY_SHOW_TAG_SEQUENCE,
@@ -288,6 +303,7 @@ class CommitMessageViewer extends SourceViewer {
 		if (refsChangedListener != null)
 			refsChangedListener.remove();
 		refsChangedListener = null;
+		showBranchSequencePrefAction.dispose();
 		showTagSequencePrefAction.dispose();
 		wrapCommentsPrefAction.dispose();
 		fillParagraphsPrefAction.dispose();
