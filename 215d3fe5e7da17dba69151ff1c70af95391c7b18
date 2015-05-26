@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_f66ad20a",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureFinishHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-26T09:16:31Z",
+      "side": 1,
+      "message": "I think this information is somewhat redundant, and too technical for git flow.\n\"Feature finish\" always is a merge of the HEAD of feature/x to develop. The only interesting part IMO is \"x\", which the user should know at this point.\nHowever, for those who are git experts but git flow novices, we could show a dialog with a detail area (i.e. a ErrorDialog with a MultiStatus), providing that information.\nWould that work?",
+      "parentUuid": "87f6139c_16eafe6c",
+      "revId": "215d3fe5e7da17dba69151ff1c70af95391c7b18",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_36d0dac1",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_16af9eee",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-26T09:16:31Z",
+      "side": 1,
+      "message": "I did this to avoid NPEs, but you are right that not all GitFlowOperations involve a merge operation. I wanted to refactor this in a later commit to remove Merge-related code from GitFlowOperation entirely. What do you think? Can simply add a TODO, or open a new bug?",
+      "parentUuid": "87f6139c_36d0dac1",
+      "revId": "215d3fe5e7da17dba69151ff1c70af95391c7b18",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_d645161b",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2015-05-26T08:28:21Z",
       "side": 1,
       "message": "I think this is wrong, we should return MergeResult since it also contains the information which merge failed which would be useful to make the displayed dialogs more useful, e.g. if merge fails due to a conflict we should show the 2 branches we tried to merge since this is important information. The code receiving this MergeResult can still extract the merge status and take decisions based on that.",
+      "revId": "215d3fe5e7da17dba69151ff1c70af95391c7b18",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_36bc5a23",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-26T09:16:31Z",
+      "side": 1,
+      "message": "I changed it from MergeResult because so far only the status was used, making the code unnecessarily complex.\nAs soon as we need the MergeResult I will change it back.",
+      "parentUuid": "87f6139c_d645161b",
       "revId": "215d3fe5e7da17dba69151ff1c70af95391c7b18",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
