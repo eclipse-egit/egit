@@ -82,13 +82,10 @@ public abstract class GitTestCase {
 		fileWriter.write(content);
 		fileWriter.close();
 		byte[] fileContents = IO.readFully(file);
-		ObjectInserter inserter = repository.newObjectInserter();
-		try {
+		try (ObjectInserter inserter = repository.newObjectInserter()) {
 			ObjectId objectId = inserter.insert(Constants.OBJ_BLOB, fileContents);
 			inserter.flush();
 			return objectId;
-		} finally {
-			inserter.release();
 		}
 	}
 

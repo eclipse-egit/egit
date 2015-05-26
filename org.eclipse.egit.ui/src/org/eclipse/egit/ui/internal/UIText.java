@@ -1925,6 +1925,9 @@ public class UIText extends NLS {
 	public static String ResourceHistory_ShowTagSequence;
 
 	/** */
+	public static String ResourceHistory_ShowBranchSequence;
+
+	/** */
 	public static String ResourceHistory_toggleRelativeDate;
 
 	/** */
@@ -2342,31 +2345,16 @@ public class UIText extends NLS {
 	public static String CommitDialog_Title;
 
 	/** */
-	public static String ConfigurationChecker_gitPrefixWarningMessage;
-
-	/** */
 	public static String ConfigurationChecker_checkConfiguration;
 
 	/** */
 	public static String ConfigurationChecker_homeNotSet;
 
 	/** */
-	public static String ConfigurationEditorComponent_BrowseForPrefix;
-
-	/** */
-	public static String ConfigurationEditorComponent_CannotChangeGitPrefixError;
-
-	/** */
 	public static String ConfigurationEditorComponent_ConfigLocationLabel;
 
 	/** */
 	public static String ConfigurationEditorComponent_EmptyStringNotAllowed;
-
-	/** */
-	public static String ConfigurationEditorComponent_GitPrefixSelectionErrorMessage;
-
-	/** */
-	public static String ConfigurationEditorComponent_GitPrefixSelectionErrorTitle;
 
 	/** */
 	public static String ConfigurationEditorComponent_KeyColumnHeader;
@@ -3480,9 +3468,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String DialogsPreferencePage_HomeDirWarning;
-
-	/** */
-	public static String DialogsPreferencePage_GitPrefixWarning;
 
 	/** */
 	public static String DialogsPreferencePage_RebaseCheckbox;

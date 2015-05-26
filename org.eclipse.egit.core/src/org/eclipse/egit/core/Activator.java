@@ -169,11 +169,6 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		}
 		GitProjectData.attachToWorkspace(true);
 
-		IEclipsePreferences node = InstanceScope.INSTANCE.getNode(Activator.getPluginId());
-		String gitPrefix = node.get(GitCorePreferences.core_gitPrefix, null);
-		if (gitPrefix != null)
-			FS.DETECTED.setGitPrefix(new File(gitPrefix));
-
 		repositoryUtil = new RepositoryUtil();
 
 		secureStore = new EGitSecureStore(SecurePreferencesFactory.getDefault());

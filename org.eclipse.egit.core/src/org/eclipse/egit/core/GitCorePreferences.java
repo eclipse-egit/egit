@@ -33,7 +33,4 @@ public class GitCorePreferences {
 	/** */
 	public static final String core_autoIgnoreDerivedResources =
 		"core_autoIgnoreDerivedResources"; //$NON-NLS-1$
-	/** */
-	public static final String core_gitPrefix =
-		"core_gitPrefix"; //$NON-NLS-1$
 }

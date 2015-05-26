@@ -507,7 +507,7 @@ public class RepositoryPropertySource implements IPropertySource {
 			Composite main = (Composite) super.createDialogArea(parent);
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true,
 					true).applyTo(main);
-			editor = new ConfigurationEditorComponent(main, myConfig, true, false) {
+			editor = new ConfigurationEditorComponent(main, myConfig, true) {
 				@Override
 				protected void setErrorMessage(String message) {
 					EditDialog.this.setErrorMessage(message);
