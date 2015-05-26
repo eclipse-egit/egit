@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.egit.mylyn"
       label="%featureName"
-      version="4.0.0.201505260635-rc2"
+      version="4.0.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.egit">
 
