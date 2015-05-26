@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f6139c_16eafe6c",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureFinishHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-26T08:28:21Z",
+      "side": 1,
+      "message": "I think we should also display the involved branches/commits which the user tried to merge (in the same way we do that for a plain merge operation failing due to merge conflicts)",
+      "revId": "215d3fe5e7da17dba69151ff1c70af95391c7b18",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_36d0dac1",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-26T08:28:21Z",
+      "side": 1,
+      "message": "this looks wrong since not all GitFlowOperations involve a merge operation, so I would expect this default to be null here and set by the subclasses involving a merge operation",
+      "revId": "215d3fe5e7da17dba69151ff1c70af95391c7b18",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_d645161b",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-26T08:28:21Z",
+      "side": 1,
+      "message": "I think this is wrong, we should return MergeResult since it also contains the information which merge failed which would be useful to make the displayed dialogs more useful, e.g. if merge fails due to a conflict we should show the 2 branches we tried to merge since this is important information. The code receiving this MergeResult can still extract the merge status and take decisions based on that.",
+      "revId": "215d3fe5e7da17dba69151ff1c70af95391c7b18",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
