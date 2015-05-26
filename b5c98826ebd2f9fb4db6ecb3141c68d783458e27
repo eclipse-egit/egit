@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f6139c_7665420e",
+        "filename": "org.eclipse.egit.gitflow.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-26T07:46:57Z",
+      "side": 1,
+      "message": "the following looks strange in the history view context menu:\n\n ----------------------------\n Import Changed Projects\n Start GitFlow release from commit deadbeef\n Copy\n ----------------------------\n\nUse \"Git Flow\" instead of \"GitFlow\" to ensure consistency with the other menus\n\nI think the gitflow commands should be separated from other commands in the history view\u0027s context menu by separators:\n\n ----------------------------\n Import Changed Projects\n Copy\n ----------------------------\n Start Git Flow release from commit deadbeef\n ----------------------------\n\nor the Gitflow commands should be nested in a submenu (or both)\n\n ----------------------------\n Import Changed Projects\n Git Flow -\u003e Start release from commit deadbeef\n Copy\n ----------------------------\n\nI prefer the latter (sub menu) since that\u0027s more similar to how these commands are shown in repositories view",
+      "revId": "b5c98826ebd2f9fb4db6ecb3141c68d783458e27",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
