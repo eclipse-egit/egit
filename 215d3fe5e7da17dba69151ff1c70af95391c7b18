@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_c1e2720c",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureFinishHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-26T09:34:48Z",
+      "side": 1,
+      "message": "yes, this sounds good",
+      "parentUuid": "87f6139c_f66ad20a",
+      "revId": "215d3fe5e7da17dba69151ff1c70af95391c7b18",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_36d0dac1",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
         "patchSetId": 3
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_21053650",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-26T09:34:48Z",
+      "side": 1,
+      "message": "simply add a TODO",
+      "parentUuid": "87f6139c_16af9eee",
+      "revId": "215d3fe5e7da17dba69151ff1c70af95391c7b18",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_d645161b",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
         "patchSetId": 3
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "I changed it from MergeResult because so far only the status was used, making the code unnecessarily complex.\nAs soon as we need the MergeResult I will change it back.",
       "parentUuid": "87f6139c_d645161b",
+      "revId": "215d3fe5e7da17dba69151ff1c70af95391c7b18",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_41120294",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-26T09:34:48Z",
+      "side": 1,
+      "message": "fine with me, but GitFlowOperation is API so this would involve a breaking change for potential extenders (which we can do in a minor release following OSGi semantic versioning rules)",
+      "parentUuid": "87f6139c_36bc5a23",
       "revId": "215d3fe5e7da17dba69151ff1c70af95391c7b18",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
