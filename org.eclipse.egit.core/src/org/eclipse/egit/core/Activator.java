@@ -27,11 +27,13 @@ import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -280,14 +282,15 @@ public class Activator extends Plugin implements DebugOptionsListener {
 				shareGitProjectsJob, IResourceChangeEvent.POST_CHANGE);
 	}
 
-	private static class AutoShareProjects implements
-			IResourceChangeListener {
+	private static class AutoShareProjects implements IResourceChangeListener {
 
 		private static int INTERESTING_CHANGES = IResourceDelta.ADDED
 				| IResourceDelta.OPEN;
 
+		private final CheckProjectsToShare checkProjectsJob;
+
 		public AutoShareProjects() {
-			// empty
+			checkProjectsJob = new CheckProjectsToShare();
 		}
 
 		private boolean doAutoShare() {
@@ -301,75 +304,149 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		}
 
 		public void resourceChanged(IResourceChangeEvent event) {
+			if (!doAutoShare()) {
+				return;
+			}
 			try {
-
-				final Map<IProject, File> projects = new HashMap<IProject, File>();
-
+				final Set<IProject> projectCandidates = new LinkedHashSet<>();
 				event.getDelta().accept(new IResourceDeltaVisitor() {
 					public boolean visit(IResourceDelta delta)
 							throws CoreException {
-						return visitConnect(delta, projects);
+						return collectOpenedProjects(delta,
+								projectCandidates);
 					}
 				});
-
-				if (projects.size() > 0) {
-					ConnectProviderOperation op = new ConnectProviderOperation(
-							projects);
-					JobUtil.scheduleUserJob(op,
-							CoreText.Activator_AutoShareJobName,
-							JobFamilies.AUTO_SHARE);
+				if(!projectCandidates.isEmpty()){
+					checkProjectsJob.addProjectsToCheck(projectCandidates);
 				}
-
 			} catch (CoreException e) {
 				Activator.logError(e.getMessage(), e);
 				return;
 			}
 		}
 
-		private boolean visitConnect(IResourceDelta delta,
-				final Map<IProject, File> projects) throws CoreException {
-			if (!doAutoShare())
-				return false;
+		/*
+		 * This method should not use RepositoryMapping.getMapping(project) or
+		 * RepositoryProvider.getProvider(project) which can trigger
+		 * RepositoryProvider.map(project) and deadlock current thread. See
+		 * https://bugs.eclipse.org/bugs/show_bug.cgi?id=468270
+		 */
+		private boolean collectOpenedProjects(IResourceDelta delta,
+				Set<IProject> projects) {
 			if (delta.getKind() == IResourceDelta.CHANGED
-					&& (delta.getFlags() & INTERESTING_CHANGES) == 0)
+					&& (delta.getFlags() & INTERESTING_CHANGES) == 0) {
 				return true;
+			}
 			final IResource resource = delta.getResource();
-			if (!resource.exists() || !resource.isAccessible() ||
-					resource.isLinked(IResource.CHECK_ANCESTORS))
-				return false;
-			if (resource.getType() != IResource.PROJECT)
+			if (resource.getType() == IResource.ROOT) {
 				return true;
-			if (RepositoryMapping.getMapping(resource) != null)
+			}
+			if (resource.getType() != IResource.PROJECT) {
 				return false;
-			final IProject project = (IProject) resource;
+			}
+			if (!resource.isAccessible()) {
+				return false;
+			}
+			projects.add((IProject) resource);
+			return false;
+		}
+
+	}
+
+	private static class CheckProjectsToShare extends Job {
+		private Object lock = new Object();
+
+		private Set<IProject> projectCandidates;
+
+		public CheckProjectsToShare() {
+			super(CoreText.Activator_AutoShareJobName);
+			this.projectCandidates = new LinkedHashSet<IProject>();
+			setUser(false);
+			setSystem(true);
+		}
+
+		public void addProjectsToCheck(Set<IProject> projects) {
+			synchronized (lock) {
+				this.projectCandidates.addAll(projects);
+				if (!projectCandidates.isEmpty()) {
+					schedule(100);
+				}
+			}
+		}
+
+		@Override
+		protected IStatus run(IProgressMonitor monitor) {
+			Set<IProject> projectsToCheck;
+			synchronized (lock) {
+				projectsToCheck = projectCandidates;
+				projectCandidates = new LinkedHashSet<>();
+			}
+			if (projectsToCheck.isEmpty()) {
+				return Status.OK_STATUS;
+			}
+
+			final Map<IProject, File> projects = new HashMap<IProject, File>();
+			for (IProject project : projectsToCheck) {
+				if (project.isAccessible()) {
+					try {
+						visitConnect(project, projects);
+					} catch (CoreException e) {
+						logError(e.getMessage(), e);
+					}
+				}
+			}
+			if (monitor.isCanceled()) {
+				return Status.CANCEL_STATUS;
+			}
+			if (projects.size() > 0) {
+				ConnectProviderOperation op = new ConnectProviderOperation(
+						projects);
+				JobUtil.scheduleUserJob(op,
+						CoreText.Activator_AutoShareJobName,
+						JobFamilies.AUTO_SHARE);
+			}
+			return Status.OK_STATUS;
+		}
+
+		private void visitConnect(IProject project,
+				final Map<IProject, File> projects) throws CoreException {
+
+			if (RepositoryMapping.getMapping(project) != null) {
+				return;
+			}
 			RepositoryProvider provider = RepositoryProvider
 					.getProvider(project);
 			// respect if project is already shared with another
 			// team provider
-			if (provider != null)
-				return false;
+			if (provider != null) {
+				return;
+			}
 			RepositoryFinder f = new RepositoryFinder(project);
 			f.setFindInChildren(false);
 			Collection<RepositoryMapping> mappings = f.find(new NullProgressMonitor());
-			if (mappings.size() != 1)
-				return false;
+			if (mappings.size() != 1) {
+				return;
+			}
 
 			RepositoryMapping m = mappings.iterator().next();
 			IPath gitDirPath = m.getGitDirAbsolutePath();
-			if (gitDirPath.segmentCount() == 0)
-				return false;
+			if (gitDirPath.segmentCount() == 0) {
+				return;
+			}
 
 			IPath workingDir = gitDirPath.removeLastSegments(1);
 			// Don't connect "/" or "C:\"
-			if (workingDir.isRoot())
-				return false;
+			if (workingDir.isRoot()) {
+				return;
+			}
 
 			File userHome = FS.DETECTED.userHome();
 			if (userHome != null) {
 				Path userHomePath = new Path(userHome.getAbsolutePath());
 				// Don't connect "/home" or "/home/username"
-				if (workingDir.isPrefixOf(userHomePath))
-					return false;
+				if (workingDir.isPrefixOf(userHomePath)) {
+					return;
+				}
 			}
 
 			// connect
@@ -382,7 +459,6 @@ public class Activator extends Plugin implements DebugOptionsListener {
 			} catch (IllegalArgumentException e) {
 				logError(CoreText.Activator_AutoSharingFailed, e);
 			}
-			return false;
 		}
 	}
 
