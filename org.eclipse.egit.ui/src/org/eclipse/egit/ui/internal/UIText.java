@@ -13,6 +13,8 @@
  * Copyright (C) 2014, Red Hat Inc.
  * Copyright (C) 2014, Axel Richard <axel.richard@obeo.fr>
  * Copyright (C) 2015, SAP SE (Christian Georgi <christian.georgi@sap.com>)
+ * Copyright (C) 2015, Andre Bossert <anb0s@anbos.de>
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -660,6 +662,51 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitPreferenceRoot_MergeModeTooltip;
+
+	/** */
+	public static String GitPreferenceRoot_MergeTool_0_Label;
+
+	/** */
+	public static String GitPreferenceRoot_MergeTool_1_Label;
+
+	/** */
+	public static String GitPreferenceRoot_MergeTool_2_Label;
+
+	/** */
+	public static String GitPreferenceRoot_MergeToolCustomLabel;
+
+	/** */
+	public static String GitPreferenceRoot_MergeToolCustomTooltip;
+
+	/** */
+	public static String GitPreferenceRoot_MergeToolLabel;
+
+	/** */
+	public static String GitPreferenceRoot_MergeToolTooltip;
+
+	/** */
+	public static String GitPreferenceRoot_DiffGroupHeader;
+
+	/** */
+	public static String GitPreferenceRoot_DiffTool_0_Label;
+
+	/** */
+	public static String GitPreferenceRoot_DiffTool_1_Label;
+
+	/** */
+	public static String GitPreferenceRoot_DiffTool_2_Label;
+
+	/** */
+	public static String GitPreferenceRoot_DiffToolCustomLabel;
+
+	/** */
+	public static String GitPreferenceRoot_DiffToolCustomTooltip;
+
+	/** */
+	public static String GitPreferenceRoot_DiffToolLabel;
+
+	/** */
+	public static String GitPreferenceRoot_DiffToolTooltip;
 
 	/** */
 	public static String GitPreferenceRoot_RemoteConnectionsGroupHeader;
