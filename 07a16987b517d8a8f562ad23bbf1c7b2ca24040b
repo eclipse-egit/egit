@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f6139c_dc140b04",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareWithPreviousActionHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-27T22:04:14Z",
+      "side": 1,
+      "message": "could you explain what you are trying to achieve here ?",
+      "revId": "07a16987b517d8a8f562ad23bbf1c7b2ca24040b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_fc38e788",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-27T22:04:14Z",
+      "side": 1,
+      "message": "remove these unrelated formatting changes",
+      "revId": "07a16987b517d8a8f562ad23bbf1c7b2ca24040b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_5c2f7b41",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-05-27T22:04:14Z",
+      "side": 1,
+      "message": "unrelated formatting change",
+      "revId": "07a16987b517d8a8f562ad23bbf1c7b2ca24040b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
