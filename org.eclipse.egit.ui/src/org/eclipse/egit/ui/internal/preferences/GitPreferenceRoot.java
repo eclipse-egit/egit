@@ -353,6 +353,51 @@ public class GitPreferenceRoot extends FieldEditorPreferencePage implements
 				ConfigConstants.CONFIG_DIFF_SECTION);
 	}
 
+	/**
+	 * @return true if Eclipse diff tool (internal compare) should used
+	 */
+	public static boolean useEclipseDiffTool() {
+		int diffTool = Activator.getDefault().getPreferenceStore()
+				.getInt(UIPreferences.DIFF_TOOL);
+		if (diffTool != 0) {
+			String diffToolCustom = Activator.getDefault().getPreferenceStore()
+					.getString(UIPreferences.DIFF_TOOL_CUSTOM);
+			if (diffToolCustom.equals("none")) { //$NON-NLS-1$
+				return true;
+			}
+		} else {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * @return external diff tool command
+	 */
+	public static String getExternalDiffToolCommand() {
+		String diffCmd = null;
+		int diffTool = Activator.getDefault().getPreferenceStore()
+				.getInt(UIPreferences.DIFF_TOOL);
+		if (diffTool != 0) {
+			String diffToolCustom = Activator.getDefault().getPreferenceStore()
+					.getString(UIPreferences.DIFF_TOOL_CUSTOM);
+			if (!diffToolCustom.equals("none")) { //$NON-NLS-1$
+				diffCmd = getExternalDiffToolCommandByName(diffToolCustom);
+			}
+		}
+		return diffCmd;
+	}
+
+	private static String getExternalDiffToolCommandByName(String name) {
+		String diffCmd = null;
+		StoredConfig userScopedConfig = loadUserScopedConfig();
+		if (userScopedConfig != null) {
+			// get default diff / merge tool
+			diffCmd = userScopedConfig.getString("difftool", name, "cmd"); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+		return diffCmd;
+	}
+
 	private void updateMargins(Group group) {
 		// make sure there is some room between the group border
 		// and the controls in the group
