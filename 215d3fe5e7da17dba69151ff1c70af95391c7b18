@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_7bf19406",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureFinishHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-30T09:07:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_c1e2720c",
+      "revId": "215d3fe5e7da17dba69151ff1c70af95391c7b18",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_36d0dac1",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
         "patchSetId": 3
@@ -108,6 +126,23 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_dcd9ab6b",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-30T09:07:58Z",
+      "side": 1,
+      "message": "Done",
+      "revId": "215d3fe5e7da17dba69151ff1c70af95391c7b18",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_d645161b",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
         "patchSetId": 3
@@ -155,6 +190,23 @@
       "side": 1,
       "message": "fine with me, but GitFlowOperation is API so this would involve a breaking change for potential extenders (which we can do in a minor release following OSGi semantic versioning rules)",
       "parentUuid": "87f6139c_36bc5a23",
+      "revId": "215d3fe5e7da17dba69151ff1c70af95391c7b18",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_9c4ba37e",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-05-30T09:07:58Z",
+      "side": 1,
+      "message": "Done",
       "revId": "215d3fe5e7da17dba69151ff1c70af95391c7b18",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
