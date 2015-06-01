@@ -9,10 +9,14 @@
 package org.eclipse.egit.gitflow.ui.internal.actions;
 
 import static org.eclipse.egit.gitflow.ui.Activator.error;
+import static org.eclipse.egit.gitflow.ui.internal.JobFamilies.GITFLOW_FAMILY;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.jobs.IJobManager;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.op.FeatureRebaseOperation;
@@ -22,7 +26,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * git flow feature rebase
@@ -38,16 +41,22 @@ public class FeatureRebaseHandler extends AbstractHandler {
 		JobUtil.scheduleUserWorkspaceJob(featureRebaseOperation,
 				UIText.FeatureRebaseHandler_rebasingFeature,
 				JobFamilies.GITFLOW_FAMILY);
+		IJobManager jobMan = Job.getJobManager();
+		try {
+			jobMan.join(GITFLOW_FAMILY, null);
+		} catch (OperationCanceledException | InterruptedException e) {
+			return error(e.getMessage(), e);
+		}
 
 		RebaseResult.Status status = featureRebaseOperation
 				.getOperationResult().getStatus();
 		if (RebaseResult.Status.FAILED.equals(status)) {
 			return error(UIText.FeatureRebaseHandler_rebaseFailed);
 		}
-		if (!RebaseResult.Status.CONFLICTS.equals(status)) {
+		if (!RebaseResult.Status.STOPPED.equals(status)) {
 			return null;
 		}
-		MessageDialog.openInformation(HandlerUtil.getActiveShell(event),
+		MessageDialog.openWarning(null,
 				UIText.FeatureRebaseHandler_conflicts,
 				UIText.FeatureRebaseHandler_resolveConflictsManually);
 		try {

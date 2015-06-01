@@ -18,13 +18,19 @@ import java.util.List;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobManager;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.op.FeatureListOperation;
 import org.eclipse.egit.gitflow.op.FeatureTrackOperation;
+
+import static org.eclipse.egit.gitflow.ui.Activator.error;
+
 import org.eclipse.egit.gitflow.ui.Activator;
-import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
+import static org.eclipse.egit.gitflow.ui.internal.JobFamilies.GITFLOW_FAMILY;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.gitflow.ui.internal.dialog.AbstractGitFlowBranchSelectionDialog;
 import org.eclipse.egit.ui.UIPreferences;
@@ -49,7 +55,15 @@ public class FeatureTrackHandler extends AbstractHandler {
 		FeatureListOperation featureListOperation = new FeatureListOperation(
 				gfRepo, timeout);
 		JobUtil.scheduleUserWorkspaceJob(featureListOperation,
-				UIText.FeatureTrackHandler_fetchingRemoteFeatures, JobFamilies.GITFLOW_FAMILY);
+				UIText.FeatureTrackHandler_fetchingRemoteFeatures,
+				GITFLOW_FAMILY);
+		IJobManager jobMan = Job.getJobManager();
+		try {
+			jobMan.join(GITFLOW_FAMILY, null);
+		} catch (OperationCanceledException | InterruptedException e) {
+			return error(e.getMessage(), e);
+		}
+
 		List<Ref> remoteFeatures = featureListOperation.getResult();
 		if (remoteFeatures.isEmpty()) {
 			MessageDialog.openInformation(activeShell, UIText.FeatureTrackHandler_noRemoteFeatures,
@@ -75,7 +89,7 @@ public class FeatureTrackHandler extends AbstractHandler {
 		FeatureTrackOperation featureTrackOperation = new FeatureTrackOperation(
 				gfRepo, ref);
 		JobUtil.scheduleUserWorkspaceJob(featureTrackOperation,
-				UIText.FeatureTrackHandler_trackingFeature, JobFamilies.GITFLOW_FAMILY);
+				UIText.FeatureTrackHandler_trackingFeature, GITFLOW_FAMILY);
 
 
 		return null;
