@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.egit.gitflow.feature"
       label="%featureName"
-      version="4.0.0.qualifier"
+      version="4.1.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.egit.gitflow">
 
@@ -24,9 +24,9 @@
    </url>
 
    <requires>
-      <import feature="org.eclipse.jgit" version="4.0.0" match="equivalent"/>
-      <import plugin="org.eclipse.egit.core" version="4.0.0" match="equivalent"/>
-      <import plugin="org.eclipse.egit.ui" version="4.0.0" match="equivalent"/>
+      <import feature="org.eclipse.jgit" version="4.1.0" match="equivalent"/>
+      <import plugin="org.eclipse.egit.core" version="4.1.0" match="equivalent"/>
+      <import plugin="org.eclipse.egit.ui" version="4.1.0" match="equivalent"/>
    </requires>
 
    <plugin
