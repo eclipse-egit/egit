@@ -20,6 +20,7 @@ import org.eclipse.team.ui.history.IHistoryView;
  * Get JGit repository for element selected in Git Flow UI.
  */
 public class GitFlowAdapterFactory implements IAdapterFactory {
+	@SuppressWarnings("unchecked")
 	@Override
 	public Repository getAdapter(Object adaptableObject, Class adapterType) {
 		Repository repository = null;
@@ -49,6 +50,7 @@ public class GitFlowAdapterFactory implements IAdapterFactory {
 		return mapping != null ? mapping.getRepository() : null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Class[] getAdapterList() {
 		return new Class[] { IResource.class, IHistoryView.class };
