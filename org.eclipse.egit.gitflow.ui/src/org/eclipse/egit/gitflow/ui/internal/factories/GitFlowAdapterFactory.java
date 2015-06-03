@@ -10,7 +10,7 @@ package org.eclipse.egit.gitflow.ui.internal.factories;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdapterFactory;
-import static org.eclipse.egit.core.project.RepositoryMapping.getMapping;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.ui.history.IHistoryPage;
@@ -44,7 +44,9 @@ public class GitFlowAdapterFactory implements IAdapterFactory {
 	}
 
 	private Repository getRepository(IResource resource) {
-		return getMapping(resource.getProject()).getRepository();
+		RepositoryMapping mapping = RepositoryMapping
+				.getMapping(resource.getProject());
+		return mapping != null ? mapping.getRepository() : null;
 	}
 
 	@Override
