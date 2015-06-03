@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CommitUtil;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
@@ -107,7 +108,11 @@ public class SquashCommitsOperation implements IEGitOperation {
 					Git git = new Git(repository);
 					git.rebase().setUpstream(commits.get(0).getParent(0))
 							.runInteractively(handler)
-							.setOperation(RebaseCommand.Operation.BEGIN).call();
+							.setOperation(RebaseCommand.Operation.BEGIN)
+							.setStrategy(
+									Activator.getDefault()
+											.getPreferredMergeStrategy())
+							.call();
 				} catch (GitAPIException e) {
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());

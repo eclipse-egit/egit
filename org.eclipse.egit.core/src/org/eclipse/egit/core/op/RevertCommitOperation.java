@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
@@ -84,7 +85,8 @@ public class RevertCommitOperation implements IEGitOperation {
 				pm.subTask(MessageFormat.format(
 						CoreText.RevertCommitOperation_reverting,
 						Integer.valueOf(commits.size())));
-				RevertCommand command = new Git(repo).revert();
+				RevertCommand command = new Git(repo).revert().setStrategy(
+						Activator.getDefault().getPreferredMergeStrategy());
 				for (RevCommit commit : commits)
 					command.include(commit);
 				try {

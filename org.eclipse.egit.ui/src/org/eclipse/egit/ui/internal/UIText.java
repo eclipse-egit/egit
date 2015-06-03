@@ -677,6 +677,15 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_useLogicalModel;
 
 	/** */
+	public static String GitPreferenceRoot_preferreModelMergeStrategy;
+
+	/** */
+	public static String GitPreferenceRoot_modelMergeStrategyLoadError;
+
+	/** */
+	public static String GitPreferenceRoot_defaultMergeStrategyLabel;
+
+	/** */
 	public static String ProcessStepsRebaseCommand_CancelDialogMessage;
 
 	/** */

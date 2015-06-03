@@ -13,6 +13,7 @@ package org.eclipse.egit.core;
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.jgit.merge.MergeStrategy;
 
 /** Initializes plugin preferences with default values. */
 public class GitCorePreferenceInitializer extends AbstractPreferenceInitializer {
@@ -28,5 +29,8 @@ public class GitCorePreferenceInitializer extends AbstractPreferenceInitializer 
 		p.putInt(GitCorePreferences.core_streamFileThreshold, 50 * MB);
 		p.putBoolean(GitCorePreferences.core_autoShareProjects, true);
 		p.putBoolean(GitCorePreferences.core_autoIgnoreDerivedResources, true);
+		p.putBoolean(GitCorePreferences.core_enableLogicalModel, true);
+		p.put(GitCorePreferences.core_preferredModelMergeStrategy,
+				MergeStrategy.RECURSIVE.getName());
 	}
 }

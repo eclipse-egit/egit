@@ -94,6 +94,8 @@ public class PullOperation implements IEGitOperation {
 								new SubProgressMonitor(mymonitor, 1)));
 						pull.setTimeout(timeout);
 						pull.setCredentialsProvider(credentialsProvider);
+						pull.setStrategy(Activator.getDefault()
+								.getPreferredMergeStrategy());
 						pullResult = pull.call();
 						results.put(repository, pullResult);
 					} catch (DetachedHeadException e) {

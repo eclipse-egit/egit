@@ -28,9 +28,9 @@ import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.RebaseCommand;
-import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.RebaseCommand.InteractiveHandler;
 import org.eclipse.jgit.api.RebaseCommand.Operation;
+import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.api.errors.NoHeadException;
@@ -138,7 +138,10 @@ public class RebaseOperation implements IEGitOperation {
 			public void run(IProgressMonitor actMonitor) throws CoreException {
 				RebaseCommand cmd = new Git(repository).rebase()
 						.setProgressMonitor(
-								new EclipseGitProgressTransformer(actMonitor));
+								new EclipseGitProgressTransformer(actMonitor))
+						.setStrategy(
+								Activator.getDefault()
+										.getPreferredMergeStrategy());
 				try {
 					if (handler != null)
 						cmd.runInteractively(handler, true);

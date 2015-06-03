@@ -33,4 +33,16 @@ public class GitCorePreferences {
 	/** */
 	public static final String core_autoIgnoreDerivedResources =
 		"core_autoIgnoreDerivedResources"; //$NON-NLS-1$
+
+	/** Holds true if the logical model should be used. */
+	public static final String core_enableLogicalModel =
+		"core_enableLogicalModel"; //$NON-NLS-1$
+
+	/**
+	 * Holds the key to the preferred model merge strategy in the MergeStrategy
+	 * registry, i.e. the preferred strategy can be obtained by
+	 * {@code MergeStrategy.get(key)}.
+	 */
+	public static final String core_preferredModelMergeStrategy =
+		"core_preferredModelMergeStrategy"; //$NON-NLS-1$
 }
