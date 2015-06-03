@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014 Maik Schreiber
+ * Copyright (c) 2014, 2015 Maik Schreiber and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  *    Maik Schreiber - initial implementation
+ *    Laurent Delaigue (Obeo) - use of preferred merge strategy
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
@@ -22,6 +23,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CommitUtil;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
@@ -107,7 +109,11 @@ public class SquashCommitsOperation implements IEGitOperation {
 					Git git = new Git(repository);
 					git.rebase().setUpstream(commits.get(0).getParent(0))
 							.runInteractively(handler)
-							.setOperation(RebaseCommand.Operation.BEGIN).call();
+							.setOperation(RebaseCommand.Operation.BEGIN)
+							.setStrategy(
+									Activator.getDefault()
+											.getPreferredMergeStrategy())
+							.call();
 				} catch (GitAPIException e) {
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
