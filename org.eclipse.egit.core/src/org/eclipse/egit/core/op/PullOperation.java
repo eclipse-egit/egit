@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2015 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler <mathias.kinzler@sap.com> - initial implementation
+ *    Laurent Delaigue (Obeo) - use of preferred merge strategy
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
@@ -94,6 +95,8 @@ public class PullOperation implements IEGitOperation {
 								new SubProgressMonitor(mymonitor, 1)));
 						pull.setTimeout(timeout);
 						pull.setCredentialsProvider(credentialsProvider);
+						pull.setStrategy(Activator.getDefault()
+								.getPreferredMergeStrategy());
 						pullResult = pull.call();
 						results.put(repository, pullResult);
 					} catch (DetachedHeadException e) {

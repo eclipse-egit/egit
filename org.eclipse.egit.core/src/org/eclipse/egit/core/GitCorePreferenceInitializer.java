@@ -2,6 +2,7 @@
  * Copyright (C) 2008, Roger C. Soares <rogersoares@intelinet.com.br>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2013, Matthias Sohn <matthias.sohn@sap.com>
+ * Copyright (C) 2015, Obeo
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,6 +14,7 @@ package org.eclipse.egit.core;
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.jgit.merge.MergeStrategy;
 
 /** Initializes plugin preferences with default values. */
 public class GitCorePreferenceInitializer extends AbstractPreferenceInitializer {
@@ -28,5 +30,8 @@ public class GitCorePreferenceInitializer extends AbstractPreferenceInitializer 
 		p.putInt(GitCorePreferences.core_streamFileThreshold, 50 * MB);
 		p.putBoolean(GitCorePreferences.core_autoShareProjects, true);
 		p.putBoolean(GitCorePreferences.core_autoIgnoreDerivedResources, true);
+		p.putBoolean(GitCorePreferences.core_enableLogicalModel, true);
+		p.put(GitCorePreferences.core_preferredModelMergeStrategy,
+				MergeStrategy.RECURSIVE.getName());
 	}
 }
