@@ -29,6 +29,12 @@ public class CoreText extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.egit.core.internal.coretext"; //$NON-NLS-1$
 
 	/** */
+	public static String Activator_invalidPreferredModelMergeStrategy;
+
+	/** */
+	public static String Activator_missingPreferredModelMergeStrategy;
+
+	/** */
 	public static String Activator_autoIgnoreDerivedResources;
 
 	/** */

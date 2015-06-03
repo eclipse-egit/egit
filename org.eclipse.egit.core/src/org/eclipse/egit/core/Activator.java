@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2008, 2013 Shawn O. Pearce <spearce@spearce.org> and others.
+ * Copyright (C) 2008, 2015 Shawn O. Pearce <spearce@spearce.org> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -49,9 +49,11 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.securestorage.EGitSecureStore;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.osgi.service.debug.DebugOptionsListener;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.RepositoryProvider;
 import org.osgi.framework.BundleContext;
 
@@ -223,7 +225,39 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	}
 
 	/**
-	 *  @return cache for Repository objects
+	 * Provides the 3-way merge strategy to use according to the user's
+	 * preferences. This strategy will always be {@code MergeStrategy.RECURSIVE}
+	 * except if the user has activated the preference "enable_logical_model"
+	 * and has chosen a different strategy among the registered strategies.
+	 *
+	 * @return The MergeStrategy to use, never {@code null}.
+	 */
+	public MergeStrategy getPreferredMergeStrategy() {
+		final IEclipsePreferences prefs = InstanceScope.INSTANCE
+				.getNode(Activator.getPluginId());
+		if (prefs.getBoolean(GitCorePreferences.core_enableLogicalModel, false)) {
+			String preferredMergeStrategyKey = prefs.get(
+					GitCorePreferences.core_preferredModelMergeStrategy,
+					MergeStrategy.RECURSIVE.getName());
+			if (preferredMergeStrategyKey != null
+					&& !preferredMergeStrategyKey.isEmpty()) {
+				MergeStrategy result = MergeStrategy
+						.get(preferredMergeStrategyKey);
+				if (result != null) {
+					return result;
+				}
+				logError(NLS.bind(
+						CoreText.Activator_invalidPreferredModelMergeStrategy,
+						preferredMergeStrategyKey), null);
+			}
+			logError(CoreText.Activator_missingPreferredModelMergeStrategy,
+					null);
+		}
+		return MergeStrategy.RECURSIVE;
+	}
+
+	/**
+	 * @return cache for Repository objects
 	 */
 	public RepositoryCache getRepositoryCache() {
 		return repositoryCache;
