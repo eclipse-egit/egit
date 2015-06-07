@@ -200,6 +200,9 @@ public class CoreText extends NLS {
 	public static String ResourceUtil_SaveLocalHistoryFailed;
 
 	/** */
+	public static String ResourceUtil_mapProjectJob;
+
+	/** */
 	public static String MergeOperation_InternalError;
 
 	/** */
