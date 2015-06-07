@@ -43,6 +43,7 @@ import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryFinder;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.RepositoryProvider;
@@ -213,11 +214,14 @@ public class ConnectProviderOperation implements IEGitOperation {
 	 * @return a repository mapping which corresponds to a suggested repository
 	 *         location, <code>null</code> otherwise
 	 */
+	@Nullable
 	private RepositoryMapping findActualRepository(
 			Collection<RepositoryMapping> repos, File suggestedRepo) {
+		IPath path = Path.fromOSString(suggestedRepo.getPath());
 		for (RepositoryMapping rm : repos) {
-			if (rm.getGitDirAbsolutePath().equals(Path.fromOSString(suggestedRepo.getPath())))
+			if (path.equals(rm.getGitDirAbsolutePath())) {
 				return rm;
+			}
 		}
 		return null;
 	}

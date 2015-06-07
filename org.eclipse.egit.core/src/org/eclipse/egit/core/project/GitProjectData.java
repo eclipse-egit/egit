@@ -32,6 +32,7 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.QualifiedName;
@@ -42,11 +43,13 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitCorePreferences;
-import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.WindowCacheConfig;
@@ -198,11 +201,11 @@ public class GitProjectData {
 	 *         Git provider is not associated with the project or an exception
 	 *         occurred
 	 */
-	public synchronized static GitProjectData get(final IProject p) {
+	@Nullable
+	public synchronized static GitProjectData get(final @NonNull IProject p) {
 		try {
 			GitProjectData d = lookup(p);
-			if (d == null && RepositoryProvider.getProvider(p,
-					GitProvider.ID) != null) {
+			if (d == null && ResourceUtil.isSharedWithGit(p)) {
 				d = new GitProjectData(p).load();
 				cache(p, d);
 			}
@@ -358,7 +361,9 @@ public class GitProjectData {
 	 * @param resource any workbench resource contained within this project.
 	 * @return the mapping for the specified project
 	 */
-	public RepositoryMapping getRepositoryMapping(IResource resource) {
+	@Nullable
+	public /* TODO static */ RepositoryMapping getRepositoryMapping(
+			@Nullable IResource resource) {
 		IResource r = resource;
 		try {
 			for (; r != null; r = r.getParent()) {
@@ -494,7 +499,12 @@ public class GitProjectData {
 		}
 		m.setContainer(c);
 
-		git = m.getGitDirAbsolutePath().toFile();
+		IPath absolutePath = m.getGitDirAbsolutePath();
+		if (absolutePath == null) {
+			logAndUnmapGoneMappedResource(m);
+			return;
+		}
+		git = absolutePath.toFile();
 		if (!git.isDirectory() || !new File(git, "config").isFile()) { //$NON-NLS-1$
 			logAndUnmapGoneMappedResource(m);
 			return;
