@@ -33,9 +33,9 @@ import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.submodule.SubmoduleWalk;
-import org.eclipse.team.core.RepositoryProvider;
 
 /**
  * This class provides means to map resources, projects and repositories
@@ -330,17 +330,21 @@ public class RepositoryMapping {
 		if (project == null || isNonWorkspace(project)) {
 			return null;
 		}
-		final RepositoryProvider rp = RepositoryProvider.getProvider(project,
-				GitProvider.ID);
+		final GitProvider rp = ResourceUtil.getGitProvider(project);
+		GitProjectData data;
+		// The provider could not yet be mapped
 		if (rp == null) {
-			return null;
+			// Load the data directly
+			data = GitProjectData.get(project);
+			if (data == null) {
+				return null;
+			}
+		} else {
+			data = rp.getData();
 		}
-
-		GitProjectData data = ((GitProvider) rp).getData();
 		if (data == null) {
 			return null;
 		}
-
 		return data.getRepositoryMapping(project);
 	}
 
