@@ -106,8 +106,12 @@ public class ProjectUtils {
 						if (!mappings.isEmpty()) {
 							RepositoryMapping mapping = mappings.iterator()
 									.next();
-							projectsToConnect.put(project, mapping
-									.getGitDirAbsolutePath().toFile());
+							IPath absolutePath = mapping
+									.getGitDirAbsolutePath();
+							if (absolutePath != null) {
+								projectsToConnect.put(project,
+										absolutePath.toFile());
+							}
 						}
 
 						if (selectedWorkingSets != null
