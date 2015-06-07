@@ -33,9 +33,9 @@ import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.submodule.SubmoduleWalk;
-import org.eclipse.team.core.RepositoryProvider;
 
 /**
  * This class provides means to map resources, projects and repositories
@@ -79,16 +79,27 @@ public class RepositoryMapping {
 	}
 
 	/**
-	 * Construct a {@link RepositoryMapping} for previously
-	 * unknown project.
+	 * Construct a {@link RepositoryMapping} for previously unknown project.
 	 *
 	 * @param mappedContainer
 	 * @param gitDir
+	 * @return a new RepositoryMapping for given container. Returns <code>null
+	 *         <code> if container does not exists.
 	 */
-	public RepositoryMapping(@NonNull final IContainer mappedContainer,
+	@Nullable
+	public static RepositoryMapping create(@NonNull IContainer mappedContainer,
+			@NonNull File gitDir) {
+		IPath location = mappedContainer.getLocation();
+		if (location == null) {
+			return null;
+		}
+		return new RepositoryMapping(mappedContainer, location, gitDir);
+	}
+
+	private RepositoryMapping(@NonNull
+	final IContainer mappedContainer, final @NonNull IPath location,
 			@NonNull final File gitDir) {
-		final IPath cLoc = mappedContainer.getLocation()
-				.removeTrailingSeparator();
+		final IPath cLoc = location.removeTrailingSeparator();
 		final IPath gLoc = Path.fromOSString(gitDir.getAbsolutePath())
 				.removeTrailingSeparator();
 		final IPath gLocParent = gLoc.removeLastSegments(1);
@@ -313,7 +324,11 @@ public class RepositoryMapping {
 			return null;
 		}
 		if (resource.isLinked(IResource.CHECK_ANCESTORS)) {
-			return getMapping(resource.getLocation());
+			IPath location = resource.getLocation();
+			if (location == null) {
+				return null;
+			}
+			return getMapping(location);
 		}
 		return getMapping(resource.getProject());
 	}
@@ -330,17 +345,21 @@ public class RepositoryMapping {
 		if (project == null || isNonWorkspace(project)) {
 			return null;
 		}
-		final RepositoryProvider rp = RepositoryProvider.getProvider(project,
-				GitProvider.ID);
+		final GitProvider rp = ResourceUtil.getGitProvider(project);
+		GitProjectData data;
+		// The provider could not yet be mapped
 		if (rp == null) {
-			return null;
+			// Load the data directly
+			data = GitProjectData.get(project);
+			if (data == null) {
+				return null;
+			}
+		} else {
+			data = rp.getData();
 		}
-
-		GitProjectData data = ((GitProvider) rp).getData();
 		if (data == null) {
 			return null;
 		}
-
 		return data.getRepositoryMapping(project);
 	}
 

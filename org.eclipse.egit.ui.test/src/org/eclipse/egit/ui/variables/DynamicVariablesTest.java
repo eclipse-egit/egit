@@ -85,8 +85,8 @@ public class DynamicVariablesTest extends EGitTestCase {
 		repository2 = FileRepositoryBuilder.create(gitDir2);
 		repository2.create();
 
-		RepositoryMapping mapping = new RepositoryMapping(project, gitDir);
-		RepositoryMapping mapping2 = new RepositoryMapping(project2, gitDir2);
+		RepositoryMapping mapping = RepositoryMapping.create(project, gitDir);
+		RepositoryMapping mapping2 = RepositoryMapping.create(project2, gitDir2);
 
 		GitProjectData projectData = new GitProjectData(project);
 		GitProjectData projectData2 = new GitProjectData(project2);
