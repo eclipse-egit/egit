@@ -33,7 +33,6 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.AdapterUtils;
-import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.synchronize.GitResourceVariantTreeSubscriber;
@@ -46,7 +45,6 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.CompareTreeView;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.team.core.subscribers.SubscriberScopeManager;
 import org.eclipse.team.ui.TeamUI;
 import org.eclipse.team.ui.synchronize.ISynchronizeParticipant;
@@ -226,10 +224,7 @@ public class GitModelSynchronize {
 	private static boolean isMappedToGitProvider(ResourceMapping element) {
 		IProject[] projects = element.getProjects();
 		for (IProject project: projects) {
-			RepositoryProvider provider = RepositoryProvider
-					.getProvider(project, GitProvider.ID);
-
-			if (provider != null) {
+			if (ResourceUtil.isSharedWithGit(project)) {
 				return true;
 			}
 		}
