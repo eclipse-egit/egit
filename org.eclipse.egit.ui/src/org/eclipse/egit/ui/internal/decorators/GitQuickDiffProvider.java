@@ -16,17 +16,15 @@ import java.util.WeakHashMap;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.team.core.RepositoryProvider;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.ide.ResourceUtil;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.quickdiff.IQuickDiffReferenceProvider;
-import org.eclipse.jgit.lib.Repository;
 
 /**
  * This class provides input for the Eclipse Quick Diff feature.
@@ -90,8 +88,8 @@ public class GitQuickDiffProvider implements IQuickDiffReferenceProvider {
 	@Override
 	public boolean isEnabled() {
 		return resource != null
-				&& RepositoryProvider.getProvider(resource.getProject(),
-						GitProvider.ID) != null;
+				&& org.eclipse.egit.core.internal.util.ResourceUtil
+						.isSharedWithGit(resource.getProject());
 	}
 
 	@Override

@@ -339,36 +339,48 @@ class ExistingOrNewPage extends WizardPage {
 					allProjectsInExistingRepos = false;
 				} else if (!mi.hasNext()) {
 					// exactly one mapping found
-					TreeItem treeItem = new TreeItem(tree, SWT.NONE);
-					updateProjectTreeItem(treeItem, project);
-					treeItem.setText(1, project.getLocation().toOSString());
-					fillTreeItemWithGitDirectory(m, treeItem, false);
-					treeItem.setData(new ProjectAndRepo(project, m
-							.getGitDirAbsolutePath().toOSString()));
-					treeItem.setChecked(true);
+					IPath path = m.getGitDirAbsolutePath();
+					if (path != null) {
+						TreeItem treeItem = new TreeItem(tree, SWT.NONE);
+						updateProjectTreeItem(treeItem, project);
+						treeItem.setText(1, project.getLocation().toOSString());
+						fillTreeItemWithGitDirectory(m, treeItem, path, false);
+						treeItem.setData(
+								new ProjectAndRepo(project, path.toOSString()));
+						treeItem.setChecked(true);
+					}
 				}
 
 				else {
-					TreeItem treeItem = new TreeItem(tree, SWT.NONE);
-					updateProjectTreeItem(treeItem, project);
-					treeItem.setText(1, project.getLocation().toOSString());
-					treeItem.setData(new ProjectAndRepo(project, "")); //$NON-NLS-1$
+					IPath path = m.getGitDirAbsolutePath();
+					TreeItem treeItem = null;
+					if (path != null) {
+						treeItem = new TreeItem(tree, SWT.NONE);
+						updateProjectTreeItem(treeItem, project);
+						treeItem.setText(1, project.getLocation().toOSString());
+						treeItem.setData(new ProjectAndRepo(project, "")); //$NON-NLS-1$
 
-					TreeItem treeItem2 = new TreeItem(treeItem, SWT.NONE);
-					updateProjectTreeItem(treeItem2, project);
-					fillTreeItemWithGitDirectory(m, treeItem2, true);
-					treeItem2.setData(new ProjectAndRepo(project, m
-							.getGitDirAbsolutePath().toOSString()));
+						TreeItem treeItem2 = new TreeItem(treeItem, SWT.NONE);
+						updateProjectTreeItem(treeItem2, project);
+						fillTreeItemWithGitDirectory(m, treeItem2, path, true);
+						treeItem2.setData(
+								new ProjectAndRepo(project, path.toOSString()));
+					}
 					while (mi.hasNext()) { // fill in additional mappings
 						m = mi.next();
-						treeItem2 = new TreeItem(treeItem, SWT.NONE);
-						updateProjectTreeItem(treeItem2, project);
-						fillTreeItemWithGitDirectory(m, treeItem2, true);
-						treeItem2.setData(new ProjectAndRepo(m.getContainer()
-								.getProject(), m.getGitDirAbsolutePath()
-								.toOSString()));
+						IPath path2 = m.getGitDirAbsolutePath();
+						if (path2 != null) {
+							TreeItem ti = new TreeItem(treeItem, SWT.NONE);
+							updateProjectTreeItem(ti, project);
+							fillTreeItemWithGitDirectory(m, ti, path, true);
+							ti.setData(new ProjectAndRepo(
+									m.getContainer().getProject(),
+									path2.toOSString()));
+						}
 					}
-					treeItem.setExpanded(true);
+					if (treeItem != null) {
+						treeItem.setExpanded(true);
+					}
 					allProjectsInExistingRepos = false;
 				}
 			} catch (CoreException e) {
@@ -504,7 +516,7 @@ class ExistingOrNewPage extends WizardPage {
 	}
 
 	private void fillTreeItemWithGitDirectory(RepositoryMapping m,
-			TreeItem treeItem, boolean isAlternative) {
+			TreeItem treeItem, IPath gitDir, boolean isAlternative) {
 		if (m.getGitDir() == null)
 			treeItem.setText(2,
 					UIText.ExistingOrNewPage_SymbolicValueEmptyMapping);
@@ -522,8 +534,8 @@ class ExistingOrNewPage extends WizardPage {
 			treeItem.setText(2, relativePath.toOSString());
 			try {
 				IProject project = m.getContainer().getProject();
-				Repository repo = new RepositoryBuilder().setGitDir(
-						m.getGitDirAbsolutePath().toFile()).build();
+				Repository repo = new RepositoryBuilder()
+						.setGitDir(gitDir.toFile()).build();
 				File workTree = repo.getWorkTree();
 				IPath workTreePath = Path.fromOSString(workTree
 						.getAbsolutePath());
