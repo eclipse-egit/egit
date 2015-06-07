@@ -27,6 +27,7 @@ import java.util.Set;
 import org.eclipse.core.filesystem.URIUtil;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -38,6 +39,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.RepositoryCache;
@@ -54,6 +56,10 @@ import org.eclipse.team.core.RepositoryProvider;
  *
  */
 public class ResourceUtil {
+	// The id used to associate a provider with a project, see
+	// TeamPlugin.PROVIDER_PROP_KEY
+	private final static QualifiedName PROVIDER_PROP_KEY = new QualifiedName(
+			"org.eclipse.team.core", "repository"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * Return the corresponding resource if it exists and has the Git repository
@@ -110,9 +116,85 @@ public class ResourceUtil {
 				&& isSharedWithGit(resource);
 	}
 
-	private static boolean isSharedWithGit(IResource resource) {
-		return RepositoryProvider.getProvider(resource.getProject(),
-				GitProvider.ID) != null;
+	/**
+	 * @param resource
+	 *            non null
+	 * @return true if the project is configured with git provider
+	 */
+	public static boolean isSharedWithGit(IResource resource) {
+		IProject project = resource.getProject();
+		if (!project.isAccessible()) {
+			return false;
+		}
+		try {
+			// Look for an existing provider
+			RepositoryProvider provider = lookupProviderProp(project);
+			if (provider != null) {
+				if (GitProvider.ID.equals(provider.getID())) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+			// There isn't one so check the persistent property
+			String existingID = project
+					.getPersistentProperty(PROVIDER_PROP_KEY);
+			return GitProvider.ID.equals(existingID);
+		} catch (CoreException e) {
+			Activator.getDefault().getLog().log(e.getStatus());
+			return false;
+		}
+	}
+
+	/**
+	 * Returns a provider of type with the given id if associated with the given
+	 * project or <code>null</code> if the project is not associated with a
+	 * provider of that type or the nature id is that of a non-team repository
+	 * provider nature.
+	 *
+	 * @param project
+	 *            the project to query for a provider
+	 * @param mapIfNeeded
+	 *            true if the provider must be instantiated if not yet done.
+	 *            This requires locks and is not recommended.
+	 * @return the repository provider
+	 */
+	final public static GitProvider getGitProvider(IProject project,
+			boolean mapIfNeeded) {
+		if (!project.isAccessible()) {
+			return null;
+		}
+		try {
+			// Look for an existing provider
+			GitProvider provider = lookupProviderProp(project);
+			if (provider != null) {
+				if (GitProvider.ID.equals(provider.getID())) {
+					return provider;
+				} else {
+					return null;
+				}
+			}
+			if (!mapIfNeeded) {
+				return null;
+			}
+			return (GitProvider) RepositoryProvider.getProvider(project,
+					GitProvider.ID);
+		} catch (CoreException e) {
+			Activator.getDefault().getLog().log(e.getStatus());
+		}
+		return null;
+	}
+
+	/*
+	 * Return the provider mapped to project, or null if none;
+	 */
+	private static GitProvider lookupProviderProp(IProject project)
+			throws CoreException {
+		Object provider = project.getSessionProperty(PROVIDER_PROP_KEY);
+		if (provider instanceof GitProvider) {
+			return (GitProvider) provider;
+		}
+		return null;
 	}
 
 	/**

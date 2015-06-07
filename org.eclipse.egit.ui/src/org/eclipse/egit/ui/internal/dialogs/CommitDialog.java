@@ -36,7 +36,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.AdaptableFileTreeIterator;
-import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
@@ -118,7 +117,6 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
-import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -1352,8 +1350,7 @@ public class CommitDialog extends TitleAreaDialog {
 
 	private void compare(CommitItem commitItem) {
 		IFile file = findFile(commitItem.path);
-		if (file == null || RepositoryProvider.getProvider(file.getProject(),
-				GitProvider.ID) == null) {
+		if (file == null || !ResourceUtil.isSharedWithGit(file.getProject())) {
 			CompareUtils.compareHeadWithWorkingTree(repository,
 					commitItem.path);
 		} else {

@@ -41,6 +41,7 @@ import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.op.IgnoreOperation;
 import org.eclipse.egit.core.project.GitProjectData;
@@ -189,8 +190,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 					if (resource instanceof IProject) {
 						IProject project = (IProject) resource;
 						if (project.isAccessible()) {
-							if (RepositoryProvider.getProvider(project,
-									GitProvider.ID) != null) {
+							if (ResourceUtil.isSharedWithGit(project)) {
 								IResource dotGit = project
 										.findMember(Constants.DOT_GIT);
 								if (dotGit != null && dotGit

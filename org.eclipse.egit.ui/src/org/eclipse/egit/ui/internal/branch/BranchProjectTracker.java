@@ -26,14 +26,13 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.clone.ProjectRecord;
 import org.eclipse.egit.ui.internal.clone.ProjectUtils;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.XMLMemento;
@@ -135,8 +134,7 @@ class BranchProjectTracker {
 				continue;
 			}
 			// Only remember mapped projects
-			if (RepositoryProvider.getProvider(project,
-					GitProvider.ID) == null) {
+			if (!ResourceUtil.isSharedWithGit(project)) {
 				continue;
 			}
 			String fullPath = path.toOSString();
