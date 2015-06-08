@@ -1,0 +1,7 @@
+Verified+1: Hudson CI
+Code-Review+2: Christian Halstrick <christian.halstrick@sap.com>
+Submitted-by: Christian Halstrick <christian.halstrick@sap.com>
+Submitted-at: Mon, 08 Jun 2015 08:12:09 -0400
+Reviewed-on: https://git.eclipse.org/r/49325
+Project: egit/egit
+Branch: refs/heads/stable-4.0
