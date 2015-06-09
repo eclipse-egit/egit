@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_76fb4fed",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/IndexFileRevision.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1156
+      },
+      "writtenOn": "2015-06-09T10:52:17Z",
+      "side": 1,
+      "message": "locateBlobObjectId, if already called, will have already cached the object.\n\nPlease suggest a faster way to get the timestamp from the index.  Is there an object that tracks the index file and allows access from the StagingItem passed into the LabelProvider?",
+      "parentUuid": "87f6139c_d645e369",
+      "revId": "77844d6311edbcf522862ed093fc1b82076d4ca2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_b69db774",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 1
@@ -81,6 +99,24 @@
       "writtenOn": "2015-06-09T06:51:05Z",
       "side": 1,
       "message": "Shouldn\u0027t be here refreshViewersPreservingExpandedElements(); instead of two calls above?",
+      "revId": "77844d6311edbcf522862ed093fc1b82076d4ca2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_56bbb32b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1156
+      },
+      "writtenOn": "2015-06-09T10:52:17Z",
+      "side": 1,
+      "message": "Yes, that is much better!",
+      "parentUuid": "87f6139c_b69db774",
       "revId": "77844d6311edbcf522862ed093fc1b82076d4ca2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -121,6 +157,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_d69de3b8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1587,
+      "author": {
+        "id": 1156
+      },
+      "writtenOn": "2015-06-09T10:52:17Z",
+      "side": 1,
+      "message": "I now resize the name column to take all available space, with a fixed minimum.",
+      "parentUuid": "87f6139c_f6a3bfaf",
+      "revId": "77844d6311edbcf522862ed093fc1b82076d4ca2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_36aa678d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewLabelProvider.java",
         "patchSetId": 1
@@ -138,6 +192,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_d6c683ac",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1156
+      },
+      "writtenOn": "2015-06-09T10:52:17Z",
+      "side": 1,
+      "message": "I saw that error from the Hudson build.  \n\nWe should really take the \u0027string\u0027, making it static, and refactor it into a common class.  It is used in 4 places.",
+      "parentUuid": "87f6139c_36aa678d",
+      "revId": "77844d6311edbcf522862ed093fc1b82076d4ca2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_16af6b9d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewLabelProvider.java",
         "patchSetId": 1
@@ -149,6 +221,24 @@
       "writtenOn": "2015-06-09T06:51:05Z",
       "side": 1,
       "message": "can you please use {} brackets around single line if/else too?",
+      "revId": "77844d6311edbcf522862ed093fc1b82076d4ca2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_369707a0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1156
+      },
+      "writtenOn": "2015-06-09T10:52:17Z",
+      "side": 1,
+      "message": "This code is copied from the same project.  Do you want me to change the source as well?",
+      "parentUuid": "87f6139c_16af6b9d",
       "revId": "77844d6311edbcf522862ed093fc1b82076d4ca2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
