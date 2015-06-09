@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2011, 2015 Bernard Leach <leachbj@bouncycastle.org> and others.
- *
+ * Copyright (C) 2015, Steven Spungin <steven@spungin.tv>
+*
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -97,7 +98,9 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
+import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.LocalSelectionTransfer;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ContentViewer;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
@@ -108,11 +111,13 @@ import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.ITreeViewerListener;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jgit.api.AddCommand;
@@ -437,7 +442,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		}
 	}
 
-	static class TreeDecoratingLabelProvider extends DecoratingLabelProvider {
+	static class TreeDecoratingLabelProvider extends DecoratingLabelProvider implements ITableLabelProvider {
 
 		ILabelProvider provider;
 
@@ -463,6 +468,34 @@ public class StagingView extends ViewPart implements IShowInSource {
 		@Override
 		public String getText(Object element) {
 			return provider.getText(element);
+		}
+
+		@Override
+		public Image getColumnImage(Object element, int columnIndex) {
+			if (provider instanceof ITableLabelProvider) {
+				return ((ITableLabelProvider) provider).getColumnImage(element,
+						columnIndex);
+			} else {
+				if (columnIndex == 0) {
+					return getImage(element);
+				} else {
+					return null;
+				}
+			}
+		}
+
+		@Override
+		public String getColumnText(Object element, int columnIndex) {
+			if (provider instanceof ITableLabelProvider) {
+				return ((ITableLabelProvider) provider).getColumnText(element,
+						columnIndex);
+			} else {
+				if (columnIndex == 0) {
+					return getText(element);
+				} else {
+					return null;
+				}
+			}
 		}
 	}
 
@@ -558,6 +591,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private boolean disposed;
 
+	private Action showRelativeDateAction;
+
 	private Image getImage(ImageDescriptor descriptor) {
 		return (Image) this.resources.get(descriptor);
 	}
@@ -617,7 +652,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 				.applyTo(unstagedViewer.getControl());
 		unstagedViewer.getTree().setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TREE_BORDER);
-		unstagedViewer.setLabelProvider(createLabelProvider(unstagedViewer));
+		unstagedViewer.setLabelProvider(createLabelProvider(unstagedViewer,
+				false));
 		unstagedViewer.setContentProvider(createStagingContentProvider(true));
 		unstagedViewer.addDragSupport(DND.DROP_MOVE | DND.DROP_COPY
 				| DND.DROP_LINK,
@@ -886,7 +922,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				.applyTo(stagedViewer.getControl());
 		stagedViewer.getTree().setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TREE_BORDER);
-		stagedViewer.setLabelProvider(createLabelProvider(stagedViewer));
+		stagedViewer.setLabelProvider(createLabelProvider(stagedViewer, true));
 		stagedViewer.setContentProvider(createStagingContentProvider(false));
 		stagedViewer.addDragSupport(
 				DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_LINK,
@@ -1386,6 +1422,42 @@ public class StagingView extends ViewPart implements IShowInSource {
 		fileNameModeAction.setChecked(getPreferenceStore().getBoolean(
 				UIPreferences.STAGING_VIEW_FILENAME_MODE));
 
+		showRelativeDateAction = new Action(
+				UIText.ResourceHistory_toggleRelativeDate, IAction.AS_CHECK_BOX) {
+
+			@Override
+			public void run() {
+				final boolean enable = isChecked();
+				getPreferenceStore().setValue(
+						UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE,
+						enable);
+			}
+		};
+		// react on changes in the date preferences
+		IPropertyChangeListener listener = new IPropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent event) {
+				if (event.getProperty().equals(
+						UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE)) {
+					boolean showRelativeDate = (Boolean) event.getNewValue();
+					getLabelProvider(stagedViewer).setShowRelativeDate(
+							showRelativeDate);
+					getLabelProvider(unstagedViewer).setShowRelativeDate(
+							showRelativeDate);
+					stagedViewer.refresh();
+					unstagedViewer.refresh();
+					return;
+				}
+			}
+		};
+		boolean showRelatvieDate = Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE);
+		showRelativeDateAction.setChecked(showRelatvieDate);
+		Activator.getDefault().getPreferenceStore()
+				.addPropertyChangeListener(listener);
+		getLabelProvider(stagedViewer).setShowRelativeDate(showRelatvieDate);
+		getLabelProvider(unstagedViewer).setShowRelativeDate(showRelatvieDate);
+
 		IMenuManager dropdownMenu = actionBars.getMenuManager();
 		MenuManager presentationMenu = new MenuManager(
 				UIText.StagingView_Presentation);
@@ -1474,6 +1546,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		dropdownMenu.add(openNewCommitsAction);
 		dropdownMenu.add(columnLayoutAction);
 		dropdownMenu.add(fileNameModeAction);
+		dropdownMenu.add(showRelativeDateAction);
 
 		actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), new GlobalDeleteActionHandler());
 
@@ -1503,12 +1576,24 @@ public class StagingView extends ViewPart implements IShowInSource {
 		Tree tree = toolkit.createTree(composite, SWT.FULL_SELECTION
 				| SWT.MULTI);
 		TreeViewer treeViewer = new TreeViewer(tree);
+
+		TreeViewerColumn columnName = new TreeViewerColumn(treeViewer, SWT.LEFT);
+		columnName.getColumn().setText("File"); //$NON-NLS-1$
+		TreeViewerColumn columnModified = new TreeViewerColumn(treeViewer,
+				SWT.LEFT);
+		columnModified.getColumn().setText("Modified"); //$NON-NLS-1$
+
+		tree.setHeaderVisible(true);
+		tree.getColumn(0).setWidth(250);
+		tree.getColumn(1).setWidth(100);
+
 		return treeViewer;
 	}
 
-	private IBaseLabelProvider createLabelProvider(TreeViewer treeViewer) {
+	private IBaseLabelProvider createLabelProvider(TreeViewer treeViewer,
+			boolean bIsStaged) {
 		StagingViewLabelProvider baseProvider = new StagingViewLabelProvider(
-				this);
+				this, bIsStaged);
 		baseProvider.setFileNameMode(getPreferenceStore().getBoolean(
 				UIPreferences.STAGING_VIEW_FILENAME_MODE));
 
