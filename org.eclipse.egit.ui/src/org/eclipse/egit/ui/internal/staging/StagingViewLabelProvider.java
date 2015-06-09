@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2011, 2014 Bernard Leach <leachbj@bouncycastle.org> and others.
+ * Copyright (C) 2015, Steven Spungin <steven@spungin.tv>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,6 +11,8 @@ package org.eclipse.egit.ui.internal.staging;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -26,9 +29,14 @@ import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jface.viewers.IDecoration;
+import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StyledString;
+import org.eclipse.jgit.dircache.DirCache;
+import org.eclipse.jgit.dircache.DirCacheEntry;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.util.FS;
+import org.eclipse.jgit.util.RelativeDateFormatter;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
@@ -37,7 +45,8 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
 /**
  * Label provider for {@link StagingEntry} objects
  */
-public class StagingViewLabelProvider extends LabelProvider {
+public class StagingViewLabelProvider extends LabelProvider implements
+		ITableLabelProvider {
 
 	private StagingView stagingView;
 
@@ -54,15 +63,28 @@ public class StagingViewLabelProvider extends LabelProvider {
 	private final DecorationHelper decorationHelper = new DecorationHelper(
 			Activator.getDefault().getPreferenceStore());
 
-
 	private boolean fileNameMode = false;
+
+	private boolean isStaged;
+
+	boolean showRelativeDate = false;
+
+	final private SimpleDateFormat absoluteFormatter = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
+
+	private DirCache dirCache;
+
+	private Repository dirCacheRepo;
 
 	/**
 	 * @param stagingView
+	 * @param isStaged
+	 *            true if in index, false if in working directory
 	 */
-	public StagingViewLabelProvider(StagingView stagingView) {
+	public StagingViewLabelProvider(StagingView stagingView, boolean isStaged) {
 		super();
 		this.stagingView = stagingView;
+		this.isStaged = isStaged;
 	}
 
 	/**
@@ -92,8 +114,8 @@ public class StagingViewLabelProvider extends LabelProvider {
 
 		Image image;
 		if (diff.getPath() != null) {
-			image = (Image) resourceManager
-					.get(UIUtils.getEditorImage(diff.getPath()));
+			image = (Image) resourceManager.get(UIUtils.getEditorImage(diff
+					.getPath()));
 		} else {
 			image = (Image) resourceManager.get(UIUtils.DEFAULT_FILE_IMG);
 		}
@@ -191,6 +213,80 @@ public class StagingViewLabelProvider extends LabelProvider {
 			styled.append(stagingEntry.getName());
 		}
 		return styled.toString();
+	}
+
+	@Override
+	public Image getColumnImage(Object element, int columnIndex) {
+		if (columnIndex == 0) {
+			return getImage(element);
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public String getColumnText(Object element, int columnIndex) {
+		switch (columnIndex) {
+		case 0:
+			return getText(element);
+		case 1:
+			try {
+				if (element instanceof StagingFolderEntry) {
+					return null;
+				}
+				StagingEntry stagingEntry = (StagingEntry) element;
+				Date modified;
+
+				if (isStaged) {
+					loadDirCache();
+					DirCacheEntry dirCacheEntry = dirCache
+							.getEntry(stagingEntry.getPath());
+					if (dirCacheEntry != null) {
+						modified = new Date(dirCacheEntry.getLastModified());
+					} else {
+						modified = new Date(-1L);
+					}
+				} else {
+					File file = new File(stagingEntry.getRepository()
+							.getWorkTree(), stagingEntry.getPath());
+					modified = new Date(file.lastModified());
+				}
+
+				if (showRelativeDate) {
+					return RelativeDateFormatter.format(modified);
+				}
+				else {
+					return absoluteFormatter.format(modified);
+				}
+			} catch (Exception e) {
+				Activator.error(e.getCause().getMessage(), e.getCause());
+				return null;
+			}
+		default:
+			return null;
+		}
+	}
+
+	private void loadDirCache() {
+		if (dirCache == null
+				|| dirCacheRepo != stagingView.getCurrentRepository()) {
+			try {
+				Repository repository = stagingView.getCurrentRepository();
+				dirCacheRepo = repository;
+				dirCache = new DirCache(repository.getIndexFile(),
+						repository.getFS());
+				dirCache.read();
+			} catch (Exception e) {
+				Activator.error(e.getMessage(), e);
+			}
+		}
+	}
+
+	/**
+	 * @param showRelativeDate
+	 */
+	public void setShowRelativeDate(boolean showRelativeDate) {
+		this.showRelativeDate = showRelativeDate;
 	}
 
 }
