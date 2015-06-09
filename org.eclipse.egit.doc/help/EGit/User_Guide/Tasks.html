@@ -713,6 +713,20 @@
 		<p>
 			<img border="0" src="images/Egit-3.1-GerritDownloadCommand.png"/>
 		</p>
+		<h2 id="Working_with_Gitflow">Working with Gitflow</h2>
+		<p>If you are using Gitflow (
+			<a href="http://nvie.com/posts/a-successful-git-branching-model/" target="egit_external">http://nvie.com/posts/a-successful-git-branching-model/</a>), EGit allows you to work with Gitflow operations, managing feature, release and hotfix branches.
+		</p>
+		<h3 id="Enabling_Gitflow_for_a_repository">Enabling Gitflow for a repository</h3>
+		<p>Gitflow operation will not appear, unless the selected repository is configured for Gitflow. To do that, open the context menu on a repository in the Git Repositories view and select 
+			<b>Init Git Flow</b>.
+			You can skip this step, if your repository was already configured for Gitflow by another client.
+		</p>
+		<h3 id="Starting_a_feature.2Frelease.2Fhotfix">Starting a feature/release/hotfix</h3>
+		<p>Right-click on a repository, select 
+			<b>Git Flow</b>, and select the appropriate start command.
+		</p>
+		<p>A dialog will appear that lets you enter a name for the Gitflow branch, adding the correct prefix automatically.</p>
 		<h2 id="Inspecting_the_state_of_the_Repository">Inspecting the state of the Repository</h2>
 		<h3 id="Label_Decorations">Label Decorations</h3>
 		<p>Label decorations show Git-specific information about resources under Git version control. They appear in all views showing model objects, like Package Explorer, Project Explorer, Navigator, and Hierarchy View.</p>
@@ -1025,7 +1039,8 @@
 			<img border="0" src="images/Egit-1.2-commit-dialog-path-assist.png"/>
 		</p>
 		<p>The commit message editor supports content assist for file names shown in Files section of the commit dialog, which can be activated pressing Ctrl+Space.</p>
-		<p>
+		<p><div id="Footer_Tags"></div>
+
 			<b>Footer Tags</b>
 
 			<br/>

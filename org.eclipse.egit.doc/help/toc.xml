@@ -99,6 +99,10 @@
 				</topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Fetching_a_change_from_a_Gerrit_Code_Review_Server" label="Fetching a change from a Gerrit Code Review Server"></topic>
 			</topic>
+			<topic href="help/EGit/User_Guide/Tasks.html#Working_with_Gitflow" label="Working with Gitflow">
+				<topic href="help/EGit/User_Guide/Tasks.html#Enabling_Gitflow_for_a_repository" label="Enabling Gitflow for a repository"></topic>
+				<topic href="help/EGit/User_Guide/Tasks.html#Starting_a_feature.2Frelease.2Fhotfix" label="Starting a feature/release/hotfix"></topic>
+			</topic>
 			<topic href="help/EGit/User_Guide/Tasks.html#Inspecting_the_state_of_the_Repository" label="Inspecting the state of the Repository">
 				<topic href="help/EGit/User_Guide/Tasks.html#Label_Decorations" label="Label Decorations">
 					<topic href="help/EGit/User_Guide/Tasks.html#Text_Decorations" label="Text Decorations"></topic>
@@ -437,28 +441,32 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/3.7/3.7.html" label="EGit 3.7 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/3.7/3.7.html" label="EGit">
-			<topic href="help/EGit/New_and_Noteworthy/3.7/3.7.html#Features" label="Features">
-				<topic href="help/EGit/New_and_Noteworthy/3.7/3.7.html#GitHub_Connector" label="GitHub Connector"></topic>
-			</topic>
-			<topic href="help/EGit/New_and_Noteworthy/3.7/3.7.html#Usability_Improvements" label="Usability Improvements"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/3.7/3.7.html#Performance_Improvements" label="Performance Improvements"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/3.7/3.7.html#Release_Engineering_and_Build" label="Release Engineering and Build"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/4.0/4.0.html" label="EGit 4.0 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/4.0/4.0.html" label="EGit">
+			<topic href="help/EGit/New_and_Noteworthy/4.0/4.0.html#Features" label="Features"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/4.0/4.0.html#Usability_Improvements" label="Usability Improvements"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/4.0/4.0.html#Performance_Improvements" label="Performance Improvements"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/4.0/4.0.html#Build_and_release_engineering" label="Build and release engineering"></topic>
 		</topic>
-		<topic href="help/EGit/New_and_Noteworthy/3.7/Bug-Fixes.html" label="Bug Fixes"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/3.7/Contributors.html" label="Contributors"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/3.7/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/4.0/Bug-Fixes.html" label="Bug Fixes"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/4.0/Contributors.html" label="Contributors"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/4.0/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/3.7/3.7.html" label="JGit 3.7 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/3.7/3.7.html" label="JGit">
-			<topic href="help/JGit/New_and_Noteworthy/3.7/3.7.html#Features" label="Features"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/3.7/3.7.html#JGit_Command_Line" label="JGit Command Line"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/3.7/3.7.html#Build_and_Release_Engineering" label="Build and Release Engineering"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/4.0/4.0.html" label="JGit 4.0 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/4.0/4.0.html" label="JGit">
+			<topic href="help/JGit/New_and_Noteworthy/4.0/4.0.html#Update_to_Java_7" label="Update to Java 7"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/4.0/4.0.html#API_cleanup" label="API cleanup"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/4.0/4.0.html#Configuration" label="Configuration"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/4.0/4.0.html#Protocol" label="Protocol"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/4.0/4.0.html#Hooks" label="Hooks"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/4.0/4.0.html#Misc._Enhancements" label="Misc. Enhancements"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/4.0/4.0.html#Introduce_logging" label="Introduce logging"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/4.0/4.0.html#Performance_Improvements" label="Performance Improvements"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/4.0/4.0.html#Build_and_release_engineering" label="Build and release engineering"></topic>
 		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/3.7/Bug-Fixes.html" label="Bug Fixes"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/3.7/Contributors.html" label="Contributors"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/3.7/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/4.0/Bug-Fixes.html" label="Bug Fixes"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/4.0/Contributors.html" label="Contributors"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/4.0/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>

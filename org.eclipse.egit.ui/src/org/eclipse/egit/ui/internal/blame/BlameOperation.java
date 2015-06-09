@@ -264,6 +264,10 @@ public class BlameOperation implements IEGitOperation {
 		if (previous != null)
 			previous.register();
 
+		if (shell.isDisposed()) {
+			return;
+		}
+
 		shell.getDisplay().asyncExec(new Runnable() {
 			@Override
 			public void run() {
