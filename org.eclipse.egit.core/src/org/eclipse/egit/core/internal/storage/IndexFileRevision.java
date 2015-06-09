@@ -4,6 +4,7 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2015, Steven Spungin <steven@spungin.tv>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -67,7 +68,12 @@ public class IndexFileRevision extends GitFileRevision implements
 	}
 
 	public long getTimestamp() {
-		return -1;
+		try {
+			return locateBlobObjectStamp();
+		} catch (CoreException e) {
+			Activator.logError(e.getMessage(), e);
+			return -1;
+		}
 	}
 
 	public String getComment() {
@@ -98,6 +104,32 @@ public class IndexFileRevision extends GitFileRevision implements
 					return entry.getObjectId();
 			}
 			return null;
+		} catch (IOException e) {
+			throw new CoreException(Activator.error(NLS.bind(
+					CoreText.IndexFileRevision_errorLookingUpPath, path), e));
+		}
+	}
+
+	private long locateBlobObjectStamp() throws CoreException {
+		try {
+			DirCache dc = db.readDirCache();
+			int firstIndex = dc.findEntry(path);
+			if (firstIndex < 0)
+				return -1;
+
+			// Try to avoid call to nextEntry if first entry already matches
+			DirCacheEntry firstEntry = dc.getEntry(firstIndex);
+			if (stage == FIRST_AVAILABLE || firstEntry.getStage() == stage)
+				return firstEntry.getLastModified();
+
+			// Ok, we have to search
+			int nextIndex = dc.nextEntry(firstIndex);
+			for (int i = firstIndex; i < nextIndex; i++) {
+				DirCacheEntry entry = dc.getEntry(i);
+				if (entry.getStage() == stage)
+					return entry.getLastModified();
+			}
+			return -1;
 		} catch (IOException e) {
 			throw new CoreException(Activator.error(NLS.bind(
 					CoreText.IndexFileRevision_errorLookingUpPath, path), e));
