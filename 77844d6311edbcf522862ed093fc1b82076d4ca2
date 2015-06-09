@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f6139c_b652d72f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-06-09T06:51:05Z",
+      "side": 1,
+      "message": "We put \"Bug: 469385\" on a new line before change-id, see https://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "revId": "77844d6311edbcf522862ed093fc1b82076d4ca2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_563a93f0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-06-09T06:51:05Z",
+      "side": 1,
+      "message": "Trailing space",
+      "revId": "77844d6311edbcf522862ed093fc1b82076d4ca2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_964fdb8b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/IndexFileRevision.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-06-09T06:51:05Z",
+      "side": 1,
+      "message": "errors should be properly logged, and not just printed to the system error.",
+      "revId": "77844d6311edbcf522862ed093fc1b82076d4ca2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_d645e369",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/IndexFileRevision.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-06-09T06:51:05Z",
+      "side": 1,
+      "message": "I\u0027m concerned regarding performance of this (I have not tried it yet). Can you please try how this code performs if you have 1000 - 10000 files in the index?",
+      "revId": "77844d6311edbcf522862ed093fc1b82076d4ca2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_b69db774",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-06-09T06:51:05Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be here refreshViewersPreservingExpandedElements(); instead of two calls above?",
+      "revId": "77844d6311edbcf522862ed093fc1b82076d4ca2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_969a3b78",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1581,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-06-09T06:51:05Z",
+      "side": 1,
+      "message": "Why is this not externalized? And the next one too?",
+      "revId": "77844d6311edbcf522862ed093fc1b82076d4ca2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_f6a3bfaf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1587,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-06-09T06:51:05Z",
+      "side": 1,
+      "message": "Is there a way to compute staging view size relative width or automatically size it to the available space? I have files with very long paths in the repo and this change would be a major issue for me since it will cut off lot of content on a 1900 width monitor.",
+      "revId": "77844d6311edbcf522862ed093fc1b82076d4ca2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_36aa678d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-06-09T06:51:05Z",
+      "side": 1,
+      "message": "This should not be static, because SimpleDateFormat is not thread safe.",
+      "revId": "77844d6311edbcf522862ed093fc1b82076d4ca2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_16af6b9d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-06-09T06:51:05Z",
+      "side": 1,
+      "message": "can you please use {} brackets around single line if/else too?",
+      "revId": "77844d6311edbcf522862ed093fc1b82076d4ca2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
