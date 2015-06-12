@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f6139c_59f91774",
+        "filename": "org.eclipse.egit.core/schema/modelMergeStrategy.exsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 460
+      },
+      "writtenOn": "2015-06-12T12:27:26Z",
+      "side": 1,
+      "message": "What happens if there are multiple stratey extensions registered? Should there be a priority attribute of type double to determine who wins?",
+      "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_b422c2d7",
+        "filename": "org.eclipse.egit.core/schema/modelMergeStrategy.exsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 460
+      },
+      "writtenOn": "2015-06-12T12:27:26Z",
+      "side": 1,
+      "message": "Where is this actually used? I cannot see it maybe I am blind ;).",
+      "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_d9e4e7cc",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 460
+      },
+      "writtenOn": "2015-06-12T12:27:26Z",
+      "side": 1,
+      "message": "Log error or warning? here and below.",
+      "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
