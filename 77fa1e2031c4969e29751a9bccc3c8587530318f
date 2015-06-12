@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "87f6139c_6805234f",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/PreferredMergeStrategyTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 7214
+      },
+      "writtenOn": "2015-06-12T12:29:22Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be called test...WhenModelEnabled...()? Because we set GitCorePreferences.core_enableLogicalModel to true (and we have a test for disabled model with valid preference already).",
+      "range": {
+        "startLine": 111,
+        "startChar": 51,
+        "endLine": 111,
+        "endChar": 59
+      },
+      "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_59f91774",
         "filename": "org.eclipse.egit.core/schema/modelMergeStrategy.exsd",
         "patchSetId": 3
@@ -36,6 +59,29 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_a80b8b61",
+        "filename": "org.eclipse.egit.core/schema/modelMergeStrategy.exsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 7214
+      },
+      "writtenOn": "2015-06-12T12:29:22Z",
+      "side": 1,
+      "message": "2015",
+      "range": {
+        "startLine": 111,
+        "startChar": 23,
+        "endLine": 111,
+        "endChar": 27
+      },
+      "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_d9e4e7cc",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
         "patchSetId": 3
@@ -47,6 +93,29 @@
       "writtenOn": "2015-06-12T12:27:26Z",
       "side": 1,
       "message": "Log error or warning? here and below.",
+      "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_e86ab3df",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/SynchronizePreferencePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7214
+      },
+      "writtenOn": "2015-06-12T12:29:22Z",
+      "side": 1,
+      "message": "Missed to update copyright",
+      "range": {
+        "startLine": 2,
+        "startChar": 3,
+        "endLine": 2,
+        "endChar": 12
+      },
       "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
