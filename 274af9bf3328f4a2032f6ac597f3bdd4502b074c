@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f6139c_f4c60a8f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 460
+      },
+      "writtenOn": "2015-06-12T12:04:21Z",
+      "side": 1,
+      "message": "Is there test coverage?",
+      "revId": "274af9bf3328f4a2032f6ac597f3bdd4502b074c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
