@@ -54,6 +54,8 @@ import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.externaltools.ITool;
+import org.eclipse.egit.ui.internal.externaltools.ToolsUtils;
 import org.eclipse.egit.ui.internal.merge.GitCompareEditorInput;
 import org.eclipse.egit.ui.internal.preferences.GitPreferenceRoot;
 import org.eclipse.egit.ui.internal.revision.EditableRevision;
@@ -86,7 +88,6 @@ import org.eclipse.jgit.util.io.EolCanonicalizingInputStream;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.IEditorInput;
@@ -228,7 +229,8 @@ public class CompareUtils {
 		}
 		return ancestor;
 	}
-/**
+
+	/**
 	 * @param element
 	 * @param adapterType
 	 * @return the adapted element, or null
@@ -294,19 +296,7 @@ public class CompareUtils {
 	 * @param workBenchPage
 	 *            the page to open the compare editor in
 	 */
-	public static void openInCompare(RevCommit commit1, RevCommit commit2,
-			String commit1Path, String commit2Path, Repository repository,
-			IWorkbenchPage workBenchPage) {
-		if (GitPreferenceRoot.useEclipseDiffTool()) {
-			openInCompareInternal(commit1, commit2, commit1Path, commit2Path,
-					repository, workBenchPage);
-		} else {
-			openInCompareExternal(commit1, commit2, commit1Path, commit2Path,
-					repository, workBenchPage);
-		}
-	}
-
-	private static void openInCompareInternal(RevCommit commit1,
+	public static void openInCompare(RevCommit commit1,
 			RevCommit commit2, String commit1Path, String commit2Path,
 			Repository repository, IWorkbenchPage workBenchPage) {
 		final ITypedElement base = CompareUtils
@@ -315,28 +305,25 @@ public class CompareUtils {
 				.getFileRevisionTypedElement(commit2Path, commit2, repository);
 		CompareEditorInput in = new GitCompareFileRevisionEditorInput(base,
 				next, null);
-		CompareUtils.openInCompare(workBenchPage, in);
-	}
-
-	private static void openInCompareExternal(RevCommit commit1,
-			RevCommit commit2,
-			String commit1Path, String commit2Path, Repository repository,
-			IWorkbenchPage workBenchPage) {
-		// TODO
-		String diffCmd = GitPreferenceRoot.getExternalDiffToolCommand();
-
-		MessageBox mbox = new MessageBox(Display.getCurrent().getActiveShell(),
-                SWT.ICON_INFORMATION | SWT.OK);
-		mbox.setText("getExternalDiffToolCommand"); //$NON-NLS-1$
-		mbox.setMessage(diffCmd);
-		mbox.open();
+		CompareUtils.openInCompare(workBenchPage, repository, in);
 	}
 
 	/**
 	 * @param workBenchPage
+	 * @param repository
 	 * @param input
 	 */
 	public static void openInCompare(IWorkbenchPage workBenchPage,
+			Repository repository,
+			CompareEditorInput input) {
+		if (GitPreferenceRoot.useExternalDiffTool()) {
+			openInCompareExternal(repository, input);
+		} else {
+			openInCompareInternal(workBenchPage, input);
+		}
+	}
+
+	private static void openInCompareInternal(IWorkbenchPage workBenchPage,
 			CompareEditorInput input) {
 		IEditorPart editor = findReusableCompareEditor(input, workBenchPage);
 		if (editor != null) {
@@ -348,7 +335,8 @@ public class CompareUtils {
 				else
 					workBenchPage.bringToTop(editor);
 			} else {
-				// if editor is currently not open on that input either re-use
+				// if editor is currently not open on that input either
+				// re-use
 				// existing
 				CompareUI.reuseCompareEditor(input, (IReusableEditor) editor);
 				if (OpenStrategy.activateOnOpen())
@@ -358,6 +346,91 @@ public class CompareUtils {
 			}
 		} else {
 			CompareUI.openCompareEditor(input);
+		}
+	}
+
+	private static void openInCompareExternal(Repository repository,
+			CompareEditorInput input) {
+		System.out.println(
+				"---------------- openInCompare with external tool ------------------"); //$NON-NLS-1$
+		GitCompareFileRevisionEditorInput gitCompareInput = (GitCompareFileRevisionEditorInput) input;
+		FileRevisionTypedElement leftRevision = gitCompareInput
+				.getLeftRevision();
+		IFile leftResource = (IFile) gitCompareInput.getAdapter(IFile.class);
+		FileRevisionTypedElement rightRevision = gitCompareInput
+				.getRightRevision();
+		String mergedCompareFilePath = null;
+		String mergedCompareFileName = null;
+		String localCompareFilePath = null;
+		String remoteCompareFilePath = null;
+		String baseCompareFilePath = null;
+		String diffCmd = null;
+		boolean prompt = false;
+		boolean writeToTemp = false;
+		boolean keepTemporaries = false; // not supported in CGit, TODO:
+											// disable?
+		File baseDir = null;
+		File tempDir = null;
+		if (leftResource != null) {
+			mergedCompareFilePath = leftResource.getRawLocation().toOSString();
+			mergedCompareFileName = leftResource.getName();
+			baseDir = leftResource.getRawLocation().toFile().getParentFile();
+			System.out.println("mergedCompareFilePath: " //$NON-NLS-1$
+					+ mergedCompareFilePath);
+		}
+		if (mergedCompareFilePath != null
+				&& rightRevision != null) {
+			// get the tool
+			ITool tool = GitPreferenceRoot.getExternalDiffTool();
+			if (tool != null) {
+				// get the command
+				diffCmd = tool.getCommand();
+				// get other attribute values
+				prompt = GitPreferenceRoot
+						.getExternalDiffToolAttributeValueBoolean(
+								tool.getName(), "prompt"); //$NON-NLS-1$
+				writeToTemp = GitPreferenceRoot
+						.getExternalDiffToolAttributeValueBoolean(
+								tool.getName(), "writeToTemp"); //$NON-NLS-1$
+				keepTemporaries = GitPreferenceRoot
+						.getExternalDiffToolAttributeValueBoolean(
+								tool.getName(), "keepTemporaries"); //$NON-NLS-1$
+				// first check if we should ask user
+				if (prompt) {
+					int response = ToolsUtils.askUserAboutToolExecution(
+							"difftool", //$NON-NLS-1$
+							"Comparing file: " //$NON-NLS-1$
+									+ mergedCompareFilePath + "\n\nLaunch '" //$NON-NLS-1$
+									+ tool.getName() + "' ?"); //$NON-NLS-1$
+					if (response != SWT.YES) {
+						return;
+					}
+				}
+				// check if temp dir should be created
+				if (writeToTemp) {
+					tempDir = ToolsUtils.createDirectoryForTempFiles();
+					baseDir = tempDir;
+				}
+				if (leftRevision != null) {
+					localCompareFilePath = ToolsUtils.loadToTempFile(baseDir,
+							mergedCompareFileName, "LOCAL", //$NON-NLS-1$
+							leftRevision, writeToTemp);
+				} else {
+					localCompareFilePath = mergedCompareFilePath;
+					System.out.println("localCompareFilePath: " //$NON-NLS-1$
+							+ localCompareFilePath);
+				}
+				remoteCompareFilePath = ToolsUtils.loadToTempFile(baseDir,
+						mergedCompareFileName, "REMOTE", //$NON-NLS-1$
+						rightRevision, writeToTemp);
+			}
+		}
+		// execute
+		ToolsUtils.executeTool(mergedCompareFilePath, localCompareFilePath,
+				remoteCompareFilePath, baseCompareFilePath, diffCmd, tempDir);
+		// delete temp
+		if (tempDir != null && !keepTemporaries) {
+			ToolsUtils.deleteDirectoryForTempFiles(tempDir);
 		}
 	}
 
@@ -508,7 +581,7 @@ public class CompareUtils {
 				if (monitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
 				}
-				openCompareEditorRunnable(page, in);
+				openCompareEditorRunnable(page, repository, in);
 				return Status.OK_STATUS;
 			}
 		};
@@ -523,25 +596,28 @@ public class CompareUtils {
 	 *
 	 * @param page
 	 *            can be null
+	 * @param repository
+	 *            non null
 	 * @param in
 	 *            non null
 	 */
 	private static void openCompareEditorRunnable(
 			final IWorkbenchPage page,
+			final Repository repository,
 			final CompareEditorInput in) {
 		// safety check: make sure we open compare editor from UI thread
 		if (Display.getCurrent() == null) {
 			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 				@Override
 				public void run() {
-					openCompareEditorRunnable(page, in);
+					openCompareEditorRunnable(page, repository, in);
 				}
 			});
 			return;
 		}
 
 		if (page != null) {
-			openInCompare(page, in);
+			openInCompare(page, repository, in);
 		} else {
 			CompareUI.openCompareEditor(in);
 		}
@@ -590,7 +666,7 @@ public class CompareUtils {
 				if (monitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
 				}
-				openCompareEditorRunnable(page, in);
+				openCompareEditorRunnable(page, repository, in);
 				return Status.OK_STATUS;
 			}
 		};
@@ -849,7 +925,7 @@ public class CompareUtils {
 				if (monitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
 				}
-				openCompareEditorRunnable(page, in);
+				openCompareEditorRunnable(page, repository, in);
 				return Status.OK_STATUS;
 			}
 		};

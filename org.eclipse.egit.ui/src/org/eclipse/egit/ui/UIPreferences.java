@@ -175,6 +175,8 @@ public class UIPreferences {
 	public static final String DIFF_TOOL = "diff_tool"; //$NON-NLS-1$
 	/** */
 	public static final String DIFF_TOOL_CUSTOM = "diff_tool_custom"; //$NON-NLS-1$
+	/** */
+	public static final String BASH_PATH = "bash_path"; //$NON-NLS-1$
 
 	/** */
 	public static final String SHOW_REBASE_CONFIRM = "show_rebase_confirm"; //$NON-NLS-1$
