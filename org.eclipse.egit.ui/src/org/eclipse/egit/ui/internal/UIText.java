@@ -709,6 +709,18 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_DiffToolTooltip;
 
 	/** */
+	public static String GitPreferenceRoot_BashGroupHeader;
+
+	/** */
+	public static String GitPreferenceRoot_BashPathLabel;
+
+	/** */
+	public static String GitPreferenceRoot_BashPathTooltip;
+
+	/** */
+	public static String GitPreferenceRoot_BashPathVariableButton;
+
+	/** */
 	public static String GitPreferenceRoot_RemoteConnectionsGroupHeader;
 
 	/** */
