@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_7e4e7444",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/PreferredMergeStrategyTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-06-15T15:53:03Z",
+      "side": 1,
+      "message": "Nice catch, you\u0027re right!\nAlso need to change the comments in the middle of the code that are wrong...",
+      "parentUuid": "87f6139c_6805234f",
+      "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_59f91774",
         "filename": "org.eclipse.egit.core/schema/modelMergeStrategy.exsd",
         "patchSetId": 3
@@ -42,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_5e7c585b",
+        "filename": "org.eclipse.egit.core/schema/modelMergeStrategy.exsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-06-15T15:53:03Z",
+      "side": 1,
+      "message": "The user must choose which strategy they want to use among all the registered ones.\nIf they choose a strategy and later uninstall it, a warning is logged and the default strategy is used, they must go back to the preferences to choose again.",
+      "parentUuid": "87f6139c_59f91774",
+      "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_b422c2d7",
         "filename": "org.eclipse.egit.core/schema/modelMergeStrategy.exsd",
         "patchSetId": 3
@@ -53,6 +89,24 @@
       "writtenOn": "2015-06-12T12:27:26Z",
       "side": 1,
       "message": "Where is this actually used? I cannot see it maybe I am blind ;).",
+      "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_9e61a0b4",
+        "filename": "org.eclipse.egit.core/schema/modelMergeStrategy.exsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-06-15T15:53:03Z",
+      "side": 1,
+      "message": "This is used in the plugin.xml editor, to warn implementors that they must provide a class that extends ThreeWayMergeStrategy.",
+      "parentUuid": "87f6139c_b422c2d7",
       "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -82,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_de3e888f",
+        "filename": "org.eclipse.egit.core/schema/modelMergeStrategy.exsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-06-15T15:53:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_a80b8b61",
+      "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_d9e4e7cc",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
         "patchSetId": 3
@@ -93,6 +165,24 @@
       "writtenOn": "2015-06-12T12:27:26Z",
       "side": 1,
       "message": "Log error or warning? here and below.",
+      "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_5ece182b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-06-15T15:53:03Z",
+      "side": 1,
+      "message": "Well... Don\u0027t know what to answer exactly!\nI preferred to log an error since I think warnings are easily ignored by users.",
+      "parentUuid": "87f6139c_d9e4e7cc",
       "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -116,6 +206,24 @@
         "endLine": 2,
         "endChar": 12
       },
+      "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_3ec34c05",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/SynchronizePreferencePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-06-15T15:53:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_e86ab3df",
       "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
