@@ -149,6 +149,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_17c7533b",
+        "filename": "org.eclipse.egit.core/schema/modelMergeStrategy.exsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 460
+      },
+      "writtenOn": "2015-06-16T10:42:10Z",
+      "side": 1,
+      "message": "We talked on the phone, it all makes sense now ;)",
+      "parentUuid": "87f6139c_f77607ae",
+      "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_a80b8b61",
         "filename": "org.eclipse.egit.core/schema/modelMergeStrategy.exsd",
         "patchSetId": 3
