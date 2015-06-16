@@ -78,6 +78,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_7706972a",
+        "filename": "org.eclipse.egit.core/schema/modelMergeStrategy.exsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 460
+      },
+      "writtenOn": "2015-06-16T10:38:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_59f91774",
+      "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_b422c2d7",
         "filename": "org.eclipse.egit.core/schema/modelMergeStrategy.exsd",
         "patchSetId": 3
@@ -106,6 +124,24 @@
       "writtenOn": "2015-06-15T15:53:03Z",
       "side": 1,
       "message": "This is used in the plugin.xml editor, to warn implementors that they must provide a class that extends ThreeWayMergeStrategy.",
+      "parentUuid": "87f6139c_b422c2d7",
+      "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_f77607ae",
+        "filename": "org.eclipse.egit.core/schema/modelMergeStrategy.exsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 460
+      },
+      "writtenOn": "2015-06-16T10:38:33Z",
+      "side": 1,
+      "message": "My question was misleading. Which class reads in these extensions for actual use? I can only see that it is being used to initialize the you in the SyncPrefPage class. I expected a code location where the strategy is instantiated and used for Merging. I have the feeling I am not understanding something here ;).",
       "parentUuid": "87f6139c_b422c2d7",
       "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
@@ -148,6 +184,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "87f6139c_a80b8b61",
+      "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_f711e75a",
+        "filename": "org.eclipse.egit.core/schema/modelMergeStrategy.exsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 460
+      },
+      "writtenOn": "2015-06-16T10:38:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_a80b8b61",
+      "range": {
+        "startLine": 111,
+        "startChar": 23,
+        "endLine": 111,
+        "endChar": 27
+      },
       "revId": "77fa1e2031c4969e29751a9bccc3c8587530318f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
