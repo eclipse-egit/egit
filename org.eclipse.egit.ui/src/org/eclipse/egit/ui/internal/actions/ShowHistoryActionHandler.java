@@ -18,8 +18,10 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.ui.history.IHistoryView;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * An action to show the history for a resource.
@@ -29,20 +31,27 @@ public class ShowHistoryActionHandler extends RepositoryActionHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repo = getRepository(true, event);
 		// assert all resources map to the same repository
-		if (repo == null)
+		if (repo == null) {
 			return null;
+		}
 		IHistoryView view;
 		try {
-			view = (IHistoryView) PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow().getActivePage().showView(
-							IHistoryView.VIEW_ID);
-			IResource[] resources = getSelectedResources(event);
-			if (resources.length == 1) {
-				view.showHistoryFor(resources[0]);
-				return null;
+			IWorkbenchWindow activeWorkbenchWindow = HandlerUtil
+					.getActiveWorkbenchWindow(event);
+			if (activeWorkbenchWindow != null) {
+				IWorkbenchPage page = activeWorkbenchWindow.getActivePage();
+				if (page != null) {
+					view = (IHistoryView) page.showView(IHistoryView.VIEW_ID);
+					IResource[] resources = getSelectedResources(event);
+					if (resources.length == 1) {
+						view.showHistoryFor(resources[0]);
+						return null;
+					}
+					HistoryPageInput list = new HistoryPageInput(repo,
+							resources);
+					view.showHistoryFor(list);
+				}
 			}
-			HistoryPageInput list = new HistoryPageInput(repo, resources);
-			view.showHistoryFor(list);
 		} catch (PartInitException e) {
 			throw new ExecutionException(e.getMessage(), e);
 		}
