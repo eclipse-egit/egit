@@ -18,10 +18,14 @@ import org.eclipse.egit.gitflow.op.FeatureStartOperation;
 import org.eclipse.egit.gitflow.op.InitOperation;
 import org.eclipse.egit.gitflow.ui.Activator;
 import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
+import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.Status;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swtbot.eclipse.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
@@ -36,7 +40,11 @@ import org.junit.runner.RunWith;
 public class FeatureRebaseHandlerTest extends AbstractGitflowHandlerTest {
 
 	@Test
-	public void testRebase() throws Exception {
+	public void testRebaseFailOnConflict() throws Exception {
+		// if AUTOMATED_MODE is true, we wouldn't get the error
+		// dialog which is part of what we want to test here
+		ErrorDialog.AUTOMATED_MODE = false;
+
 		Git git = Git.wrap(repository);
 
 		init();
@@ -50,13 +58,46 @@ public class FeatureRebaseHandlerTest extends AbstractGitflowHandlerTest {
 		checkoutFeature(FEATURE_NAME);
 
 		rebaseFeature();
+		acceptError(RebaseResult.Status.STOPPED);
 
-		Status call = git.status().call();
-		Object[] conflicting = call.getConflicting().toArray();
+		Status status = git.status().call();
+		Object[] conflicting = status.getConflicting().toArray();
 		assertEquals(1, conflicting.length);
 		assertEquals(FILE1_PATH, conflicting[0]);
 
 		assertEquals("org.eclipse.egit.ui.InteractiveRebaseView", bot.activeView().getReference().getId());
+	}
+
+	private void acceptError(org.eclipse.jgit.api.RebaseResult.Status status) {
+		bot.button("Details >>").click();
+		bot.list().select(NLS.bind(
+				UIText.FeatureRebaseHandler_statusWas, status.toString()));
+		bot.button("OK").click();
+	}
+
+	@Test
+	public void testRebaseFailOnDirtyWorkingDirectory() throws Exception {
+		// if AUTOMATED_MODE is true, we wouldn't get the error
+		// dialog which is part of what we want to test here
+		ErrorDialog.AUTOMATED_MODE = false;
+
+		Git git = Git.wrap(repository);
+
+		init();
+		setContentAddAndCommit("bar");
+
+		createFeature(FEATURE_NAME);
+		setContentAddAndCommit("foo");
+
+		setTestFileContent("foobar");
+
+		rebaseFeature();
+		acceptError(RebaseResult.Status.UNCOMMITTED_CHANGES);
+
+		Status status = git.status().call();
+		Object[] uncommitted = status.getUncommittedChanges().toArray();
+		assertEquals(1, uncommitted.length);
+		assertEquals(FILE1_PATH, uncommitted[0]);
 	}
 
 	private void init() throws CoreException {
@@ -90,7 +131,6 @@ public class FeatureRebaseHandlerTest extends AbstractGitflowHandlerTest {
 				ContextMenuHelper.clickContextMenuSync(projectExplorerTree, menuPath);
 			}
 		});
-		bot.button().click();
 		bot.waitUntil(Conditions.waitForJobs(JobFamilies.GITFLOW_FAMILY, "Git flow jobs"));
 	}
 }
