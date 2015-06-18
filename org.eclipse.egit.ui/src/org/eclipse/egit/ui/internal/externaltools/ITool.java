@@ -25,14 +25,18 @@ public interface ITool {
 	public String getPath();
 
 	/**
+	 * @param optionsNr
+	 *            the options number from option set to use (can be empty)
 	 * @return return the tool options
 	 */
-	public String getOptions();
+	public String getOptions(int... optionsNr);
 
 	/**
+	 * @param optionsNr
+	 *            the options number from option set to use (can be empty)
 	 * @return return the whole command string
 	 */
-	public String getCommand();
+	public String getCommand(int... optionsNr);
 
 	/**
 	 * @return return the attribute set
