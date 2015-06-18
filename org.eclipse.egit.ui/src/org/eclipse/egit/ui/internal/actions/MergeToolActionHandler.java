@@ -129,18 +129,19 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 					String remoteAbsoluteFilePath = null;
 					String baseAbsoluteFilePath = null;
 					String mergeCmd = null;
+					String mergeBaseLessCmd = null;
 					boolean prompt = false;
 					boolean trustExitCode = true;
 					// boolean keepBackup = false; // TODO
 					boolean writeToTemp = false;
 					boolean keepTemporaries = false;
-					File baseDir = null;
-					File tempDir = null;
+					File mergedDirPath = null;
+					File tempDirPath = null;
 					if (leftResource != null) {
 						mergedAbsoluteFilePath = leftResource.getRawLocation()
 								.toOSString();
 						mergedFileName = leftResource.getName();
-						baseDir = leftResource.getRawLocation().toFile()
+						mergedDirPath = leftResource.getRawLocation().toFile()
 								.getParentFile();
 						System.out.println("file: " //$NON-NLS-1$
 								+ mergedAbsoluteFilePath);
@@ -153,7 +154,8 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 						ITool tool = GitPreferenceRoot.getExternalMergeTool();
 						if (tool != null) {
 							// get the command
-							mergeCmd = tool.getCommand();
+							mergeCmd = tool.getCommand(); // empty or index = 0 is the default command (with $BASE support)
+							mergeBaseLessCmd = tool.getCommand(1); // index = 1 is the alternative command (without $BASE support)
 							// get other attribute values
 							prompt = GitPreferenceRoot
 									.getExternalMergeToolAttributeValueBoolean(
@@ -187,17 +189,20 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 							}
 							// check if temp dir should be created
 							if (writeToTemp) {
-								tempDir = ToolsUtils
+								tempDirPath = ToolsUtils
 										.createDirectoryForTempFiles();
-								baseDir = tempDir;
+								mergedDirPath = tempDirPath;
 							}
-							localAbsoluteFilePath = ToolsUtils.loadToTempFile(baseDir,
+							localAbsoluteFilePath = ToolsUtils.loadToTempFile(
+									mergedDirPath,
 									mergedFileName, "LOCAL", //$NON-NLS-1$
 									leftRevision, writeToTemp);
-							remoteAbsoluteFilePath = ToolsUtils.loadToTempFile(baseDir,
+							remoteAbsoluteFilePath = ToolsUtils.loadToTempFile(
+									mergedDirPath,
 									mergedFileName, "REMOTE", //$NON-NLS-1$
 									rightRevision, writeToTemp);
-							baseAbsoluteFilePath = ToolsUtils.loadToTempFile(baseDir,
+							baseAbsoluteFilePath = ToolsUtils.loadToTempFile(
+									mergedDirPath,
 									mergedFileName, "BASE", //$NON-NLS-1$
 									baseRevision, writeToTemp);
 						}
@@ -207,7 +212,10 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 					try {
 						exitCode = ToolsUtils.executeTool(mergedAbsoluteFilePath,
 								localAbsoluteFilePath, remoteAbsoluteFilePath,
-								baseAbsoluteFilePath, mergeCmd, tempDir);
+										baseAbsoluteFilePath,
+										baseAbsoluteFilePath != null ? mergeCmd
+												: mergeBaseLessCmd,
+										tempDirPath);
 					} catch (IOException | InterruptedException e) {
 						e.printStackTrace();
 						ToolsUtils.informUserAboutError("mergetool - error", //$NON-NLS-1$
@@ -217,8 +225,8 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 						System.out.println("exitCode: " //$NON-NLS-1$
 								+ Integer.toString(exitCode));
 						// delete temp
-						if (tempDir != null && !keepTemporaries) {
-							ToolsUtils.deleteDirectoryForTempFiles(tempDir);
+						if (tempDirPath != null && !keepTemporaries) {
+							ToolsUtils.deleteDirectoryForTempFiles(tempDirPath);
 						}
 					}
 					// add file to stage if successfully merged

@@ -29,7 +29,7 @@ public class UserDefinedTool extends BaseTool {
 	}
 
 	@Override
-	public String getCommand() {
+	public String getCommand(int... optionsNr) {
 		return cmd;
 	}
 }
