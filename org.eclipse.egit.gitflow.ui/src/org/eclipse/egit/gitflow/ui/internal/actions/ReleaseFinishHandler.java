@@ -34,7 +34,7 @@ import org.eclipse.osgi.util.NLS;
 /**
  * git flow release finish
  */
-public class ReleaseFinishHandler extends AbstractFinishHandler {
+public class ReleaseFinishHandler extends AbstractGitFlowHandler {
 
 	@Override
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
@@ -60,7 +60,9 @@ public class ReleaseFinishHandler extends AbstractFinishHandler {
 			if (handleConflictsOnMaster(gfRepo)) {
 				return null;
 			}
-			MultiStatus warning = createConflictWarning(develop, releaseBranch, mergeResult);
+			MultiStatus conflictInfo = createMergeConflictInfo(develop, releaseBranch);
+			MultiStatus warning = createMergeConflictWarning(mergeResult);
+			conflictInfo.addAll(warning);
 			ErrorDialog.openError(null, UIText.ReleaseFinishHandler_Conflicts, null, warning);
 		} catch (WrongGitFlowStateException | CoreException | IOException
 				| OperationCanceledException | InterruptedException e) {
