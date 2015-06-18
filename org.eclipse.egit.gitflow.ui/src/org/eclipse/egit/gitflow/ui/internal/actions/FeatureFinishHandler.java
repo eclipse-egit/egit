@@ -32,7 +32,7 @@ import org.eclipse.jgit.api.MergeResult.MergeStatus;
 /**
  * git flow feature finish
  */
-public class FeatureFinishHandler extends AbstractFinishHandler {
+public class FeatureFinishHandler extends AbstractGitFlowHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final GitFlowRepository gfRepo = GitFlowHandlerUtil.getRepository(event);
@@ -50,8 +50,8 @@ public class FeatureFinishHandler extends AbstractFinishHandler {
 			MergeResult mergeResult = operation.getMergeResult();
 			MergeStatus mergeStatus = mergeResult.getMergeStatus();
 			if (MergeStatus.CONFLICTING.equals(mergeStatus)) {
-				MultiStatus warning = createConflictWarning(develop, featureBranch, mergeResult);
-				ErrorDialog.openError(null, UIText.FeatureFinishHandler_Conflicts, null, warning);
+				MultiStatus status = createMergeConflictInfo(develop, featureBranch, mergeResult);
+				ErrorDialog.openError(null, UIText.FeatureFinishHandler_Conflicts, null, status);
 			}
 		} catch (WrongGitFlowStateException | CoreException | IOException
 				| OperationCanceledException | InterruptedException e) {
