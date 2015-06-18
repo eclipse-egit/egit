@@ -10,35 +10,40 @@ package org.eclipse.egit.gitflow.ui.internal.actions;
 
 import static org.eclipse.egit.gitflow.ui.Activator.error;
 import static org.eclipse.egit.gitflow.ui.internal.JobFamilies.GITFLOW_FAMILY;
+import static org.eclipse.jgit.api.RebaseResult.Status.STOPPED;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.op.FeatureRebaseOperation;
+import org.eclipse.egit.gitflow.ui.Activator;
 import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
-import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jgit.api.RebaseResult;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * git flow feature rebase
  */
-public class FeatureRebaseHandler extends AbstractHandler {
+public class FeatureRebaseHandler extends AbstractGitFlowHandler {
 	private static final String INTERACTIVE_REBASE_VIEW_ID = "org.eclipse.egit.ui.InteractiveRebaseView"; //$NON-NLS-1$
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final GitFlowRepository gfRepo = GitFlowHandlerUtil.getRepository(event);
 
-		FeatureRebaseOperation featureRebaseOperation = new FeatureRebaseOperation(gfRepo);
-		JobUtil.scheduleUserWorkspaceJob(featureRebaseOperation,
+		FeatureRebaseOperation rebaseOperation = new FeatureRebaseOperation(gfRepo);
+		JobUtil.scheduleUserWorkspaceJob(rebaseOperation,
 				UIText.FeatureRebaseHandler_rebasingFeature,
 				JobFamilies.GITFLOW_FAMILY);
 		IJobManager jobMan = Job.getJobManager();
@@ -48,24 +53,42 @@ public class FeatureRebaseHandler extends AbstractHandler {
 			return error(e.getMessage(), e);
 		}
 
-		RebaseResult.Status status = featureRebaseOperation
-				.getOperationResult().getStatus();
-		if (RebaseResult.Status.FAILED.equals(status)) {
-			return error(UIText.FeatureRebaseHandler_rebaseFailed);
-		}
-		if (!RebaseResult.Status.STOPPED.equals(status)) {
+		RebaseResult operationResult = rebaseOperation.getOperationResult();
+		RebaseResult.Status status = operationResult.getStatus();
+
+		if (status.isSuccessful()) {
 			return null;
 		}
-		MessageDialog.openWarning(null,
-				UIText.FeatureRebaseHandler_conflicts,
-				UIText.FeatureRebaseHandler_resolveConflictsManually);
-		try {
-			PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-					.getActivePage().showView(INTERACTIVE_REBASE_VIEW_ID);
-		} catch (PartInitException e) {
-			return error(e.getMessage(), e);
+
+		if (STOPPED.equals(status)) {
+			try {
+				showInteractiveRebaseView(event);
+			} catch (PartInitException e) {
+				return error(e.getMessage(), e);
+			}
 		}
 
+		openWarning(operationResult);
+
 		return null;
+	}
+
+	private void showInteractiveRebaseView(ExecutionEvent event) throws PartInitException, ExecutionException {
+		HandlerUtil.getActiveWorkbenchWindowChecked(event).getActivePage()
+				.showView(INTERACTIVE_REBASE_VIEW_ID);
+	}
+
+	private void openWarning(RebaseResult operationResult) {
+		RebaseResult.Status status = operationResult.getStatus();
+		String pluginId = Activator.getPluginId();
+		MultiStatus info = new MultiStatus(pluginId, 1,
+				UIText.FeatureRebaseHandler_problemsOcccurredDuringRebase, null);
+		info.add(new Status(IStatus.WARNING, pluginId, NLS.bind(
+				UIText.FeatureRebaseHandler_statusWas, status.name())));
+		if (operationResult.getConflicts() != null && !operationResult.getConflicts().isEmpty()) {
+			MultiStatus warning = createRebaseConflictWarning(operationResult);
+			info.addAll(warning);
+		}
+		ErrorDialog.openError(null, UIText.FeatureRebaseHandler_problemsOccurred, null, info);
 	}
 }
