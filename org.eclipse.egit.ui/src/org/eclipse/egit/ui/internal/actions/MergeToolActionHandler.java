@@ -43,6 +43,8 @@ import org.eclipse.egit.ui.internal.preferences.GitPreferenceRoot;
 import org.eclipse.egit.ui.internal.revision.FileRevisionTypedElement;
 import org.eclipse.egit.ui.internal.revision.ResourceEditableRevision;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
 
@@ -249,26 +251,27 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 							return; // abort the merge process
 						}
 					}
-					if (addFile) {
+					if (addFile && GitPreferenceRoot.autoAddToIndex()
+							&& mergedAbsoluteFilePath != null) {
 						System.out.println("addFile: " //$NON-NLS-1$
 								+ mergedFileName);
-						/*
-						 * TODO: implement add
-						AddCommand addCommand = new Git(repo).add();
-						boolean fileAdded = false;
-						for (String path : notTracked)
-							if (commitFileList.contains(path)) {
-								addCommand.addFilepattern(path);
-								fileAdded = true;
-							}
-						if (fileAdded)
+						IPath[] paths = new Path[1];
+						paths[0] = new Path(mergedAbsoluteFilePath);
+						Map<Repository, Collection<String>> pathsByRepository = ResourceUtil
+								.splitPathsByRepository(Arrays.asList(paths));
+						Set<Repository> repos = pathsByRepository.keySet();
+						if (repos.size() == 1) {
+							Repository repo = repos.iterator().next();
+							Git git = new Git(repo);
 							try {
-								addCommand.call();
-							} catch (Exception e) {
-								throw new CoreException(Activator
-										.error(e.getMessage(), e));
+								git.add().addFilepattern(mergedRelativeFilePath)
+										.call();
+							} catch (GitAPIException e) {
+								e.printStackTrace();
 							}
-						*/
+							git.close();
+							repo.close();
+						}
 					}
 					break;
 				}
