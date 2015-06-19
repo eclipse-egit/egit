@@ -264,6 +264,14 @@ public class GitPreferenceRoot extends FieldEditorPreferencePage implements
 		return null;
 	}
 
+	/**
+	 * @return true if add to index automatically is enabled
+	 */
+	public static boolean autoAddToIndex() {
+		return Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.MERGE_TOOL_AUTO_ADD_TO_INDEX);
+	}
+
 	private static ITool getExternalTool(String prefNameTool,
 			String prefNameToolCustom, BaseToolManager manager) {
 		ITool tool = null;
@@ -436,6 +444,10 @@ public class GitPreferenceRoot extends FieldEditorPreferencePage implements
 		mergeToolCustom.getLabelControl(mergeGroup).setToolTipText(
 				UIText.GitPreferenceRoot_MergeToolCustomTooltip);
 		addField(mergeToolCustom);
+		BooleanFieldEditor autoAddToIndex = new BooleanFieldEditor(
+				UIPreferences.MERGE_TOOL_AUTO_ADD_TO_INDEX,
+				UIText.GitPreferenceRoot_MergeToolAutoAddLabel, mergeGroup);
+		addField(autoAddToIndex);
 		updateMargins(mergeGroup);
 
 		Group diffGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
