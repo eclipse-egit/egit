@@ -749,4 +749,21 @@
        </menu>
     </menuContribution>
  </extension>
+   <extension point="org.eclipse.ui.decorators">
+      <decorator
+            lightweight="true"
+            adaptable="true"
+            label="%Decorator_name"
+            class="org.eclipse.egit.gitflow.ui.internal.decorators.GitFlowLightweightDecorator"
+            state="true"
+            location="TOP_RIGHT"
+            id="org.eclipse.egit.gitflow.ui.internal.decorators.GitflowLightweightDecorator">
+            <enablement>
+              <objectClass name="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode"/>
+            </enablement>
+         <description>
+            %Decorator_description
+         </description>
+      </decorator>
+   </extension>
 </plugin>
