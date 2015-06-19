@@ -116,6 +116,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.MERGE_MODE, "2"); //$NON-NLS-1$
 		store.setDefault(UIPreferences.MERGE_TOOL, "0"); //$NON-NLS-1$
 		store.setDefault(UIPreferences.MERGE_TOOL_CUSTOM, "none"); //$NON-NLS-1$
+		store.setDefault(UIPreferences.MERGE_TOOL_AUTO_ADD_TO_INDEX, true);
 		store.setDefault(UIPreferences.DIFF_TOOL, "0"); //$NON-NLS-1$
 		store.setDefault(UIPreferences.DIFF_TOOL_CUSTOM, "none"); //$NON-NLS-1$
 		store.setDefault(UIPreferences.USE_LOGICAL_MODEL, true);
