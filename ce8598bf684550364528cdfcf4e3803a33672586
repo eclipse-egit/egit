@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f6139c_f3cd6ddc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-06-19T21:45:03Z",
+      "side": 1,
+      "message": "it looks like these are independent changes, if that\u0027s true split this change \n\nsmall changes doing one logical improvement are easier to review and can be individually reverted or cherry-picked",
+      "revId": "ce8598bf684550364528cdfcf4e3803a33672586",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_b3e8052a",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureFinishHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-06-19T21:45:03Z",
+      "side": 1,
+      "message": "it looks like createMergeConflictInfo() always shows the warning, then  adding the warning should be an implementation detail of createMergeConflictInfor() and the mergeResult needs to be passed to it as a parameter",
+      "revId": "ce8598bf684550364528cdfcf4e3803a33672586",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_13d11975",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureRebaseHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-06-19T21:45:03Z",
+      "side": 1,
+      "message": "maybe it would be better to first open the interactive rebase view and then show the warning so that the user can see both to understand what happened",
+      "revId": "ce8598bf684550364528cdfcf4e3803a33672586",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_d3e3114c",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureRebaseHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-06-19T21:45:03Z",
+      "side": 1,
+      "message": "in order to determine the active page use\n\nHandlerUtil.getActiveWorkbenchWindowChecked(event).getActivePage()",
+      "revId": "ce8598bf684550364528cdfcf4e3803a33672586",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
