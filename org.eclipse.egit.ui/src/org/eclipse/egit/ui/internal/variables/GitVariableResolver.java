@@ -68,6 +68,9 @@ public class GitVariableResolver implements IDynamicVariableResolver {
 		RepositoryMapping mapping = RepositoryMapping.getMapping(res);
 		if (mapping != null) {
 			String repoRelativePath = mapping.getRepoRelativePath(res);
+			if (repoRelativePath == null) {
+				return ""; //$NON-NLS-1$
+			}
 			if (repoRelativePath.equals("")) //$NON-NLS-1$
 				return "."; //$NON-NLS-1$
 			else

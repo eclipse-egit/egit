@@ -318,9 +318,8 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 			return moveProjectHelperMoveOnlyProject(tree, source, description, updateFlags,
 					monitor, srcm, newLocationFile);
 		} else {
-			int dstAboveSrcRepo = newLocation.matchingFirstSegments(RepositoryMapping
-					.getMapping(source).getGitDirAbsolutePath());
-			int srcAboveSrcRepo = sourceLocation.matchingFirstSegments(RepositoryMapping.getMapping(source).getGitDirAbsolutePath());
+			int dstAboveSrcRepo = newLocation.matchingFirstSegments(srcm.getGitDirAbsolutePath());
+			int srcAboveSrcRepo = sourceLocation.matchingFirstSegments(srcm.getGitDirAbsolutePath());
 			if (dstAboveSrcRepo > 0 && srcAboveSrcRepo > 0) {
 				return moveProjectHelperMoveRepo(tree, source, description, updateFlags, monitor,
 					srcm, newLocation, sourceLocation);
