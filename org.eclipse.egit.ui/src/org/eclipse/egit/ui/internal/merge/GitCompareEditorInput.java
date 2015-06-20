@@ -121,6 +121,11 @@ public class GitCompareEditorInput extends CompareEditorInput {
 			for (IResource resource : resources) {
 				RepositoryMapping map = RepositoryMapping
 						.getMapping(resource.getProject());
+				if (map == null) {
+					throw new InvocationTargetException(
+							new IllegalStateException(
+									UIText.GitCompareEditorInput_ResourcesInDifferentReposMessagge));
+				}
 				if (repository != null && repository != map.getRepository())
 					throw new InvocationTargetException(
 							new IllegalStateException(

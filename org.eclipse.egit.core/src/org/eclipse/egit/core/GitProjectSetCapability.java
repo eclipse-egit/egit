@@ -28,6 +28,7 @@ import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.GitURI;
 import org.eclipse.egit.core.internal.ProjectReferenceImporter;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.osgi.util.NLS;
@@ -47,14 +48,22 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 	public String[] asReference(IProject[] projects,
 			ProjectSetSerializationContext context, IProgressMonitor monitor)
 			throws TeamException {
-		String[] references = new String[projects.length];
-		for (int i = 0; i < projects.length; i++)
-			references[i] = asReference(projects[i]);
-		return references;
+		List<String> references = new ArrayList<>(projects.length);
+		for (int i = 0; i < projects.length; i++) {
+			String reference = asReference(projects[i]);
+			if(reference != null){
+				references.add(reference);
+			}
+		}
+		return references.toArray(new String[references.size()]);
 	}
 
+	@Nullable
 	private String asReference(IProject project) throws TeamException {
 		RepositoryMapping mapping = RepositoryMapping.getMapping(project);
+		if (mapping == null) {
+			return null;
+		}
 		String branch;
 		try {
 			branch = mapping.getRepository().getBranch();
@@ -74,6 +83,9 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 					project.getName()));
 
 		String projectPath = mapping.getRepoRelativePath(project);
+		if (projectPath == null) {
+			return null;
+		}
 		if (projectPath.equals("")) //$NON-NLS-1$
 			projectPath = "."; //$NON-NLS-1$
 

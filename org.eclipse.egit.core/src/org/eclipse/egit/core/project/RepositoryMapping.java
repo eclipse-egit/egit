@@ -31,6 +31,8 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.submodule.SubmoduleWalk;
 import org.eclipse.team.core.RepositoryProvider;
@@ -68,7 +70,8 @@ public class RepositoryMapping {
 	 * @param p TODO
 	 * @param initialKey TODO
 	 */
-	public RepositoryMapping(final Properties p, final String initialKey) {
+	public RepositoryMapping(@NonNull final Properties p,
+			@NonNull final String initialKey) {
 		final int dot = initialKey.lastIndexOf('.');
 
 		containerPathString = initialKey.substring(0, dot);
@@ -82,7 +85,8 @@ public class RepositoryMapping {
 	 * @param mappedContainer
 	 * @param gitDir
 	 */
-	public RepositoryMapping(final IContainer mappedContainer, final File gitDir) {
+	public RepositoryMapping(@NonNull final IContainer mappedContainer,
+			@NonNull final File gitDir) {
 		final IPath cLoc = mappedContainer.getLocation()
 				.removeTrailingSeparator();
 		final IPath gLoc = Path.fromOSString(gitDir.getAbsolutePath())
@@ -118,12 +122,14 @@ public class RepositoryMapping {
 	/**
 	 * @return the container path corresponding to git repository
 	 */
+	@NonNull
 	public IPath getContainerPath() {
 		if (containerPath == null)
 			containerPath = Path.fromPortableString(containerPathString);
 		return containerPath;
 	}
 
+	@NonNull
 	IPath getGitDirPath() {
 		if (gitDirPath == null)
 			gitDirPath = Path.fromPortableString(gitDirPathString);
@@ -146,6 +152,7 @@ public class RepositoryMapping {
 	/**
 	 * @return a reference to the repository object handled by this mapping
 	 */
+	/* TODO currently the value is @Nullable but it must be NonNull */
 	public synchronized Repository getRepository() {
 		return db;
 	}
@@ -160,7 +167,8 @@ public class RepositoryMapping {
 	 *
 	 *         TODO add support for multiple nesting levels of submodules
 	 */
-	public synchronized Repository getSubmoduleRepository(IResource res) {
+	@Nullable
+	public synchronized Repository getSubmoduleRepository(@NonNull IResource res) {
 		IPath projectRelativePath = res.getProjectRelativePath();
 		if (projectRelativePath == null)
 			return null;
@@ -205,6 +213,7 @@ public class RepositoryMapping {
 	/**
 	 * @return the mapped container (currently project)
 	 */
+	/* TODO currently the value is @Nullable but it must be NonNull */
 	public synchronized IContainer getContainer() {
 		return container;
 	}
@@ -257,7 +266,8 @@ public class RepositoryMapping {
 	 *         working directory (root). <code>null</code> if the path cannot be
 	 *         determined.
 	 */
-	public String getRepoRelativePath(final IResource rsrc) {
+	@Nullable
+	public String getRepoRelativePath(@NonNull final IResource rsrc) {
 		IPath location = rsrc.getLocation();
 		if (location == null)
 			return null;
@@ -276,7 +286,8 @@ public class RepositoryMapping {
 	 *         working directory (root). <code>null</code> if the path cannot be
 	 *         determined.
 	 */
-	public String getRepoRelativePath(IPath location) {
+	@Nullable
+	public String getRepoRelativePath(@NonNull IPath location) {
 		final int pfxLen = workdirPrefix.length();
 		final String p = location.toString();
 		final int pLen = p.length();
@@ -296,7 +307,8 @@ public class RepositoryMapping {
 	 * @return the RepositoryMapping for this resource, or null for non
 	 *         GitProvider.
 	 */
-	public static RepositoryMapping getMapping(final IResource resource) {
+	@Nullable
+	public static RepositoryMapping getMapping(@NonNull final IResource resource) {
 		if (isNonWorkspace(resource)) {
 			return null;
 		}
@@ -313,7 +325,8 @@ public class RepositoryMapping {
 	 * @return the RepositoryMapping for this project, or null for non
 	 *         GitProvider.
 	 */
-	public static RepositoryMapping getMapping(final IProject project) {
+	@Nullable
+	public static RepositoryMapping getMapping(@Nullable final IProject project) {
 		if (project == null || isNonWorkspace(project)) {
 			return null;
 		}
@@ -337,7 +350,8 @@ public class RepositoryMapping {
 	 * @param path
 	 * @return the RepositoryMapping for this path, or null for non GitProvider.
 	 */
-	public static RepositoryMapping getMapping(IPath path) {
+	@Nullable
+	public static RepositoryMapping getMapping(@NonNull IPath path) {
 		IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects();
 
@@ -372,7 +386,9 @@ public class RepositoryMapping {
 	 * @return a RepositoryMapping related to repository. Null if no
 	 *         RepositoryMapping exists.
 	 */
-	public static RepositoryMapping findRepositoryMapping(Repository repository) {
+	@Nullable
+	public static RepositoryMapping findRepositoryMapping(
+			@NonNull Repository repository) {
 		final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects();
 		for (IProject project : projects) {
