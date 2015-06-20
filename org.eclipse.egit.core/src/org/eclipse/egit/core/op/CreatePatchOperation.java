@@ -395,6 +395,9 @@ public class CreatePatchOperation implements IEGitOperation {
 	 */
 	public static IPath computeWorkspacePath(final IPath path, final IProject project) {
 		RepositoryMapping rm = RepositoryMapping.getMapping(project);
+		if (rm == null) {
+			return path;
+		}
 		String repoRelativePath = rm.getRepoRelativePath(project);
 		// the relative path cannot be determined, return unchanged
 		if (repoRelativePath == null)

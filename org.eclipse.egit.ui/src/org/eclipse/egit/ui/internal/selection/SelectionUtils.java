@@ -213,10 +213,10 @@ public class SelectionUtils {
 		for (IPath location : locations) {
 			RepositoryMapping repositoryMapping = RepositoryMapping
 					.getMapping(location);
-			if (mapping == null)
-				mapping = repositoryMapping;
 			if (repositoryMapping == null)
 				return null;
+			if (mapping == null)
+				mapping = repositoryMapping;
 			if (mapping.getRepository() != repositoryMapping.getRepository()) {
 				if (warn)
 					MessageDialog.openError(shell,
