@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_e91bbefb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-06-21T13:44:35Z",
+      "side": 1,
+      "message": "I see. I think in this case it would be too much overhead to split them.\nOne is a variable rename and UIText change, the other is a minor refactoring to remove a redundancy that would only be introduced by the rest of the patch-set.",
+      "parentUuid": "87f6139c_f3cd6ddc",
+      "revId": "ce8598bf684550364528cdfcf4e3803a33672586",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_b3e8052a",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureFinishHandler.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-06-19T21:45:03Z",
       "side": 1,
       "message": "it looks like createMergeConflictInfo() always shows the warning, then  adding the warning should be an implementation detail of createMergeConflictInfor() and the mergeResult needs to be passed to it as a parameter",
+      "revId": "ce8598bf684550364528cdfcf4e3803a33672586",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_09d1ea74",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureFinishHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-06-21T13:44:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_b3e8052a",
       "revId": "ce8598bf684550364528cdfcf4e3803a33672586",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_29d4a661",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureRebaseHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-06-21T13:44:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_13d11975",
+      "revId": "ce8598bf684550364528cdfcf4e3803a33672586",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_d3e3114c",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureRebaseHandler.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2015-06-19T21:45:03Z",
       "side": 1,
       "message": "in order to determine the active page use\n\nHandlerUtil.getActiveWorkbenchWindowChecked(event).getActivePage()",
+      "revId": "ce8598bf684550364528cdfcf4e3803a33672586",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_8904ba8c",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureRebaseHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-06-21T13:44:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_d3e3114c",
       "revId": "ce8598bf684550364528cdfcf4e3803a33672586",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
