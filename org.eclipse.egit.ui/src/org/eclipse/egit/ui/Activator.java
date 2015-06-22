@@ -16,7 +16,6 @@ import java.net.Authenticator;
 import java.net.ProxySelector;
 import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -392,35 +391,62 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 
 		ResourceRefreshJob() {
 			super(UIText.Activator_refreshJobName);
+			setUser(false);
+			setSystem(true);
 		}
 
-		private Set<IProject> projectsToScan = new LinkedHashSet<IProject>();
-		private Set<Repository> repositoriesChanged = new HashSet<Repository>();
+		private Set<Repository> repositoriesChanged = new LinkedHashSet<Repository>();
 
 		@Override
 		public IStatus runInWorkspace(IProgressMonitor monitor) {
-			IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-			monitor.beginTask(UIText.Activator_refreshingProjects, projects.length);
+			Set<Repository> repos;
+			synchronized (repositoriesChanged) {
+				if (repositoriesChanged.isEmpty()) {
+					return Status.OK_STATUS;
+				}
+				repos = new LinkedHashSet<>(repositoriesChanged);
+				repositoriesChanged.clear();
+			}
+			IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
+					.getProjects();
+			Set<IProject> toRefresh = new LinkedHashSet<>();
+			for (IProject p : projects) {
+				if (!p.isAccessible()) {
+					continue;
+				}
+				RepositoryMapping mapping = RepositoryMapping.getMapping(p);
+				if (mapping != null
+						&& repos.contains(mapping.getRepository())) {
+					toRefresh.add(p);
+				}
+			}
+			monitor.beginTask(UIText.Activator_refreshingProjects,
+					toRefresh.size());
 
-			while (projectsToScan.size() > 0) {
-				IProject p;
-				synchronized (projectsToScan) {
-					if (projectsToScan.size() == 0)
-						break;
-					Iterator<IProject> i = projectsToScan.iterator();
-					p = i.next();
-					i.remove();
+			for (IProject p : toRefresh) {
+				if (monitor.isCanceled()) {
+					return Status.CANCEL_STATUS;
 				}
 				ISchedulingRule rule = p.getWorkspace().getRuleFactory().refreshRule(p);
 				try {
 					getJobManager().beginRule(rule, monitor);
-					if(p.exists()) // handle missing projects after branch switch
+					// handle missing projects after branch switch
+					if (p.isAccessible()) {
 						p.refreshLocal(IResource.DEPTH_INFINITE, new SubProgressMonitor(monitor, 1));
+					}
 				} catch (CoreException e) {
 					handleError(UIText.Activator_refreshFailed, e, false);
 					return new Status(IStatus.ERROR, getPluginId(), e.getMessage());
 				} finally {
 					getJobManager().endRule(rule);
+				}
+			}
+			if (!monitor.isCanceled()) {
+				// re-schedule if we got some changes in the meantime
+				synchronized (repositoriesChanged) {
+					if (!repositoriesChanged.isEmpty()) {
+						schedule(100);
+					}
 				}
 			}
 			monitor.done();
@@ -430,8 +456,9 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		@Override
 		public void onIndexChanged(IndexChangedEvent e) {
 			if (Activator.getDefault().getPreferenceStore()
-					.getBoolean(UIPreferences.REFESH_ON_INDEX_CHANGE))
+					.getBoolean(UIPreferences.REFESH_ON_INDEX_CHANGE)) {
 				mayTriggerRefresh(e);
+			}
 		}
 
 		/**
@@ -442,11 +469,14 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		 *            The {@link RepositoryEvent} that triggered this refresh
 		 */
 		private void mayTriggerRefresh(RepositoryEvent e) {
-			repositoriesChanged.add(e.getRepository());
+			synchronized (repositoriesChanged) {
+				repositoriesChanged.add(e.getRepository());
+			}
 			if (!Activator.getDefault().getPreferenceStore()
 					.getBoolean(UIPreferences.REFESH_ONLY_WHEN_ACTIVE)
-					|| isActive())
+					|| isActive()) {
 				triggerRefresh();
+			}
 		}
 
 		/**
@@ -454,29 +484,12 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		 * project to refresh and schedule the refresh as a job.
 		 */
 		void triggerRefresh() {
-			if (GitTraceLocation.REPOSITORYCHANGESCANNER.isActive())
+			if (GitTraceLocation.REPOSITORYCHANGESCANNER.isActive()) {
 				GitTraceLocation.getTrace().trace(
 						GitTraceLocation.REPOSITORYCHANGESCANNER.getLocation(),
 						"Triggered refresh"); //$NON-NLS-1$
-			IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
-					.getProjects();
-			Set<IProject> toRefresh = new HashSet<IProject>();
-			synchronized (repositoriesChanged) {
-				for (IProject p : projects) {
-					RepositoryMapping mapping = RepositoryMapping.getMapping(p);
-					if (mapping != null
-							&& repositoriesChanged.contains(mapping
-									.getRepository())) {
-						toRefresh.add(p);
-					}
-				}
-				repositoriesChanged.clear();
 			}
-			synchronized (projectsToScan) {
-				projectsToScan.addAll(toRefresh);
-			}
-			if (projectsToScan.size() > 0)
-				schedule();
+			schedule();
 		}
 	}
 
