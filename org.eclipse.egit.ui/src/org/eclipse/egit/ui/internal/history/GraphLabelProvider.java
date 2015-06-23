@@ -23,6 +23,9 @@ import org.eclipse.egit.ui.internal.dialogs.CommitLabelProvider;
 class GraphLabelProvider extends CommitLabelProvider {
 	@Override
 	public String getColumnText(Object element, int columnIndex) {
+		if (element == null) {
+			return ""; //$NON-NLS-1$
+		}
 		final SWTCommit c = (SWTCommit) element;
 		try {
 			c.parseBody();
