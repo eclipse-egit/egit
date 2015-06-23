@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_59e45bca",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-06-23T07:51:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_99288386",
+      "revId": "13f31f7ac8f5e1ee2411032d0982234f9e986019",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_f9cee75b",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2015-06-23T07:48:10Z",
       "side": 1,
       "message": "bad formatting",
+      "revId": "13f31f7ac8f5e1ee2411032d0982234f9e986019",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_b9df3ff8",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-06-23T07:51:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_f9cee75b",
       "revId": "13f31f7ac8f5e1ee2411032d0982234f9e986019",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
