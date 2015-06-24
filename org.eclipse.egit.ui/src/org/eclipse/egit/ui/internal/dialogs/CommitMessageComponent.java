@@ -623,6 +623,9 @@ public class CommitMessageComponent {
 
 	private void getHeadCommitInfo() {
 		CommitInfo headCommitInfo = CommitHelper.getHeadCommitInfo(repository);
+		if (headCommitInfo == null) {
+			return;
+		}
 		RevCommit previousCommit = headCommitInfo.getCommit();
 
 		amendingCommitInRemoteBranch = isContainedInAnyRemoteBranch(previousCommit);
