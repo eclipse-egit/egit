@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2013 Benjamin Muskalla <bmuskalla@eclipsesource.com> and others.
+ * Copyright (C) 2010, 2015 Benjamin Muskalla <bmuskalla@eclipsesource.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,6 +9,7 @@
  * Contributors:
  *    Benjamin Muskalla (EclipseSource) - initial implementation
  *    Tomasz Zarna (IBM) - show whitespace action, bug 371353
+ *    Wayne Beaton (Eclipse Foundation) - Bug 433721
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
@@ -1057,7 +1058,7 @@ public class SpellcheckableMessageArea extends Composite {
 	 *
 	 */
 	@Override
-	public boolean setFocus() {
+	public boolean forceFocus() {
 		return getTextWidget().setFocus();
 	}
 
