@@ -376,11 +376,25 @@ public class CompareUtils {
 			mergedAbsoluteFilePath = leftResource.getRawLocation().toOSString();
 			mergedFileName = leftResource.getName();
 			baseDir = leftResource.getRawLocation().toFile().getParentFile();
-			System.out.println("file: " //$NON-NLS-1$
-					+ mergedAbsoluteFilePath);
+		} else if (leftRevision != null) {
+			mergedFileName = leftRevision.getName();
+			// System.out.println("leftRevision.getName: " + mergedFileName);
+			// //$NON-NLS-1$
+			String leftFilePath = leftRevision.getPath();
+			if (leftFilePath != null) {
+				// System.out.println("leftRevision.getPath: " + leftFilePath);
+				// //$NON-NLS-1$
+				IPath leftFile = ResourceUtil
+						.getFileForLocation(repository, leftFilePath)
+						.getRawLocation();
+				mergedAbsoluteFilePath = leftFile.toOSString();
+				baseDir = leftFile.toFile().getParentFile();
+			}
 		}
 		if (mergedAbsoluteFilePath != null
 				&& rightRevision != null) {
+			System.out.println("file: " //$NON-NLS-1$
+					+ mergedAbsoluteFilePath);
 			// get the relative project path from right revision here
 			mergedRelativeFilePath = rightRevision.getPath();
 			// get the tool
