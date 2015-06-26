@@ -370,12 +370,13 @@ public class CompareUtils {
 		boolean writeToTemp = false;
 		boolean keepTemporaries = false; // not supported in CGit, TODO:
 											// disable?
-		File baseDir = null;
-		File tempDir = null;
+		File mergedDirPath = null;
+		File tempDirPath = null;
+		File workDirPath = null;
 		if (leftResource != null) {
 			mergedAbsoluteFilePath = leftResource.getRawLocation().toOSString();
 			mergedFileName = leftResource.getName();
-			baseDir = leftResource.getRawLocation().toFile().getParentFile();
+			mergedDirPath = leftResource.getRawLocation().toFile().getParentFile();
 		} else if (leftRevision != null) {
 			mergedFileName = leftRevision.getName();
 			// System.out.println("leftRevision.getName: " + mergedFileName);
@@ -388,9 +389,10 @@ public class CompareUtils {
 						.getFileForLocation(repository, leftFilePath)
 						.getRawLocation();
 				mergedAbsoluteFilePath = leftFile.toOSString();
-				baseDir = leftFile.toFile().getParentFile();
+				mergedDirPath = leftFile.toFile().getParentFile();
 			}
 		}
+		workDirPath = repository.getWorkTree();
 		if (mergedAbsoluteFilePath != null
 				&& rightRevision != null) {
 			System.out.println("file: " //$NON-NLS-1$
@@ -425,11 +427,11 @@ public class CompareUtils {
 				}
 				// check if temp dir should be created
 				if (writeToTemp) {
-					tempDir = ToolsUtils.createDirectoryForTempFiles();
-					baseDir = tempDir;
+					tempDirPath = ToolsUtils.createDirectoryForTempFiles();
+					mergedDirPath = tempDirPath;
 				}
 				if (leftRevision != null) {
-					localAbsoluteFilePath = ToolsUtils.loadToTempFile(baseDir,
+					localAbsoluteFilePath = ToolsUtils.loadToTempFile(mergedDirPath,
 							mergedFileName, "LOCAL", //$NON-NLS-1$
 							leftRevision, writeToTemp);
 				} else {
@@ -437,7 +439,7 @@ public class CompareUtils {
 					System.out.println("localCompareFilePath: " //$NON-NLS-1$
 							+ localAbsoluteFilePath);
 				}
-				remoteAbsoluteFilePath = ToolsUtils.loadToTempFile(baseDir,
+				remoteAbsoluteFilePath = ToolsUtils.loadToTempFile(mergedDirPath,
 						mergedFileName, "REMOTE", //$NON-NLS-1$
 						rightRevision, writeToTemp);
 			}
@@ -445,10 +447,11 @@ public class CompareUtils {
 		// execute
 		int exitCode = -1;
 		try {
-			exitCode = ToolsUtils.executeTool(mergedAbsoluteFilePath,
+			exitCode = ToolsUtils.executeTool(workDirPath,
+					mergedAbsoluteFilePath,
 					localAbsoluteFilePath,
 					remoteAbsoluteFilePath, baseAbsoluteFilePath, diffCmd,
-					tempDir);
+					tempDirPath);
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 			ToolsUtils.informUserAboutError("difftool - error", //$NON-NLS-1$
@@ -457,8 +460,8 @@ public class CompareUtils {
 			System.out.println("exitCode: " //$NON-NLS-1$
 					+ Integer.toString(exitCode));
 			// delete temp
-			if (tempDir != null && !keepTemporaries) {
-				ToolsUtils.deleteDirectoryForTempFiles(tempDir);
+			if (tempDirPath != null && !keepTemporaries) {
+				ToolsUtils.deleteDirectoryForTempFiles(tempDirPath);
 			}
 		}
 	}
