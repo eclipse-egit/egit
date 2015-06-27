@@ -173,6 +173,9 @@ public class ConnectProviderOperation implements IEGitOperation {
 
 	private void autoIgnoreDerivedResources(IProject project,
 			IProgressMonitor monitor) throws CoreException {
+		if (!Activator.autoIgnoreDerived()) {
+			return;
+		}
 		List<IPath> paths = findDerivedResources(project);
 		if (paths.size() > 0) {
 			IgnoreOperation ignoreOp = new IgnoreOperation(paths);
