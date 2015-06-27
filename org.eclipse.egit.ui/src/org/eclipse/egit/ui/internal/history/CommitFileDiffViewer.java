@@ -625,7 +625,8 @@ public class CommitFileDiffViewer extends TableViewer {
 				oldObjectId);
 		final ITypedElement newSide = createTypedElement(np, newCommit,
 				newObjectId);
-		CompareUtils.openInCompare(page, new GitCompareFileRevisionEditorInput(
+		CompareUtils.openInCompare(page, getRepository(),
+				new GitCompareFileRevisionEditorInput(
 				newSide, oldSide, null));
 	}
 
