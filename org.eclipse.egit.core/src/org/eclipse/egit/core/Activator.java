@@ -469,26 +469,30 @@ public class Activator extends Plugin implements DebugOptionsListener {
 				IResourceChangeEvent.POST_CHANGE);
 	}
 
+	/**
+	 * @return true if the derived resources should be automatically added to
+	 *         the .gitignore files
+	 */
+	public static boolean autoIgnoreDerived() {
+		IEclipsePreferences d = DefaultScope.INSTANCE
+				.getNode(Activator.getPluginId());
+		IEclipsePreferences p = InstanceScope.INSTANCE
+				.getNode(Activator.getPluginId());
+		return p.getBoolean(GitCorePreferences.core_autoIgnoreDerivedResources,
+				d.getBoolean(GitCorePreferences.core_autoIgnoreDerivedResources,
+						true));
+	}
+
 	private static class IgnoreDerivedResources implements
 			IResourceChangeListener {
 
-		protected boolean autoIgnoreDerived() {
-			IEclipsePreferences d = DefaultScope.INSTANCE.getNode(Activator
-					.getPluginId());
-			IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator
-					.getPluginId());
-			return p.getBoolean(
-					GitCorePreferences.core_autoIgnoreDerivedResources,
-					d.getBoolean(
-							GitCorePreferences.core_autoIgnoreDerivedResources,
-							true));
-		}
 
 		public void resourceChanged(IResourceChangeEvent event) {
 			try {
 				IResourceDelta d = event.getDelta();
-				if (d == null || !autoIgnoreDerived())
+				if (d == null || !autoIgnoreDerived()) {
 					return;
+				}
 
 				final Set<IPath> toBeIgnored = new LinkedHashSet<IPath>();
 
