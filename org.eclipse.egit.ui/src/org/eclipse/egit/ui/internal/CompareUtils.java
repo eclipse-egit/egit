@@ -379,17 +379,15 @@ public class CompareUtils {
 			mergedDirPath = leftResource.getRawLocation().toFile().getParentFile();
 		} else if (leftRevision != null) {
 			mergedFileName = leftRevision.getName();
-			// System.out.println("leftRevision.getName: " + mergedFileName);
-			// //$NON-NLS-1$
 			String leftFilePath = leftRevision.getPath();
 			if (leftFilePath != null) {
-				// System.out.println("leftRevision.getPath: " + leftFilePath);
-				// //$NON-NLS-1$
-				IPath leftFile = ResourceUtil
-						.getFileForLocation(repository, leftFilePath)
-						.getRawLocation();
-				mergedAbsoluteFilePath = leftFile.toOSString();
-				mergedDirPath = leftFile.toFile().getParentFile();
+				IFile leftFile = ResourceUtil.getFileForLocation(repository,
+						leftFilePath);
+				if (leftFile != null) {
+					IPath leftPath = leftFile.getRawLocation();
+					mergedAbsoluteFilePath = leftPath.toOSString();
+					mergedDirPath = leftPath.toFile().getParentFile();
+				}
 			}
 		}
 		workDirPath = repository.getWorkTree();
