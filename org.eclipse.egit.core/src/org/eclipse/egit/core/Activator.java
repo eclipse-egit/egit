@@ -518,8 +518,10 @@ public class Activator extends Plugin implements DebugOptionsListener {
 
 						if (r.isDerived()) {
 							try {
-								if (!RepositoryUtil.isIgnored(r.getLocation()))
-									toBeIgnored.add(r.getLocation());
+								IPath location = r.getLocation();
+								if (RepositoryUtil.canBeAutoIgnored(location)) {
+									toBeIgnored.add(location);
+								}
 							} catch (IOException e) {
 								logError(
 										MessageFormat.format(

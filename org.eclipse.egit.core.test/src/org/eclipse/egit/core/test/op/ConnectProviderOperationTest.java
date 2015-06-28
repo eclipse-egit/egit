@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.jobs.Job;
@@ -77,22 +78,113 @@ public class ConnectProviderOperationTest extends GitTestCase {
 		// enable auto-ignore
 		IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator
 				.getPluginId());
-		p.putBoolean(GitCorePreferences.core_autoIgnoreDerivedResources, true);
-		Repository repository = FileRepositoryBuilder.create(gitDir);
-		repository.create();
-		repository.close();
-		project.setBinFolderDerived();
-		ConnectProviderOperation operation = new ConnectProviderOperation(
-				project.getProject(), gitDir);
-		operation.execute(null);
+		boolean autoignore = p.getBoolean(
+				GitCorePreferences.core_autoIgnoreDerivedResources, false);
+		if (!autoignore) {
+			p.putBoolean(GitCorePreferences.core_autoIgnoreDerivedResources,
+					true);
+		}
+		try {
+			Repository repository = FileRepositoryBuilder.create(gitDir);
+			repository.create();
+			repository.close();
+			project.setBinFolderDerived();
+			project.createSourceFolder();
 
-		assertTrue(RepositoryProvider.isShared(project.getProject()));
-		Job.getJobManager().join(JobFamilies.AUTO_IGNORE, null);
+			// not connected: no ignore
+			IFolder binFolder = project.getProject().getFolder("bin");
+			IPath binPath = binFolder.getLocation();
+			assertTrue(binFolder.exists());
+			assertFalse(RepositoryUtil.canBeAutoIgnored(binPath));
 
-		IPath binPath = project.getProject().getLocation().append("bin");
-		assertTrue(RepositoryUtil.isIgnored(binPath));
-		assertTrue(gitDir.exists());
-		p.putBoolean(GitCorePreferences.core_autoIgnoreDerivedResources, false);
+			IFolder srcFolder = project.getProject().getFolder("src");
+			IPath srcPath = srcFolder.getLocation();
+			assertTrue(srcFolder.exists());
+			assertFalse(RepositoryUtil.canBeAutoIgnored(srcPath));
+
+			IFolder notThere = project.getProject().getFolder("notThere");
+			IPath notTherePath = notThere.getLocation();
+			assertFalse(notThere.exists());
+			assertFalse(RepositoryUtil.canBeAutoIgnored(notTherePath));
+
+			// connect to git
+			ConnectProviderOperation operation = new ConnectProviderOperation(
+					project.getProject(), gitDir);
+			operation.execute(null);
+			assertTrue(RepositoryProvider.isShared(project.getProject()));
+			Job.getJobManager().join(JobFamilies.AUTO_IGNORE, null);
+
+			// connected, and already automatically ignored
+			assertFalse(RepositoryUtil.canBeAutoIgnored(binPath));
+			// connected, and *can* be automatically ignored
+			assertTrue(RepositoryUtil.canBeAutoIgnored(srcPath));
+			// connected but not existing: we should not autoignore
+			assertFalse(RepositoryUtil.canBeAutoIgnored(notTherePath));
+
+			assertTrue(gitDir.exists());
+		} finally {
+			if (!autoignore) {
+				p.putBoolean(GitCorePreferences.core_autoIgnoreDerivedResources,
+						false);
+			}
+		}
+	}
+
+	@Test
+	public void testNoAutoIgnoresDerivedFolder() throws Exception {
+		// disable auto-ignore
+		IEclipsePreferences p = InstanceScope.INSTANCE
+				.getNode(Activator.getPluginId());
+		boolean autoignore = p.getBoolean(
+				GitCorePreferences.core_autoIgnoreDerivedResources, false);
+		if (autoignore) {
+			p.putBoolean(GitCorePreferences.core_autoIgnoreDerivedResources,
+					false);
+		}
+		try {
+			Repository repository = FileRepositoryBuilder.create(gitDir);
+			repository.create();
+			repository.close();
+			project.setBinFolderDerived();
+			project.createSourceFolder();
+
+			// not connected: no ignore
+			IFolder binFolder = project.getProject().getFolder("bin");
+			IPath binPath = binFolder.getLocation();
+			assertTrue(binFolder.exists());
+			assertFalse(RepositoryUtil.canBeAutoIgnored(binPath));
+
+			IFolder srcFolder = project.getProject().getFolder("src");
+			IPath srcPath = srcFolder.getLocation();
+			assertTrue(srcFolder.exists());
+			assertFalse(RepositoryUtil.canBeAutoIgnored(srcPath));
+
+			IFolder notThere = project.getProject().getFolder("notThere");
+			IPath notTherePath = notThere.getLocation();
+			assertFalse(notThere.exists());
+			assertFalse(RepositoryUtil.canBeAutoIgnored(notTherePath));
+
+			// connect to git
+			ConnectProviderOperation operation = new ConnectProviderOperation(
+					project.getProject(), gitDir);
+			operation.execute(null);
+			assertTrue(RepositoryProvider.isShared(project.getProject()));
+			Job.getJobManager().join(JobFamilies.AUTO_IGNORE, null);
+
+			// connected, and *can* be automatically ignored
+			assertTrue(RepositoryUtil.canBeAutoIgnored(binPath));
+			// connected, and *can* be automatically ignored
+			assertTrue(RepositoryUtil.canBeAutoIgnored(srcPath));
+			// connected but not existing: we should not autoignore
+			assertFalse(RepositoryUtil.canBeAutoIgnored(notTherePath));
+
+			assertTrue(gitDir.exists());
+		} finally {
+			if (autoignore) {
+				p.putBoolean(GitCorePreferences.core_autoIgnoreDerivedResources,
+						true);
+			}
+		}
 	}
 
 	@Test
