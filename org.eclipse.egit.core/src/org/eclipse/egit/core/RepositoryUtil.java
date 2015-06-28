@@ -463,38 +463,95 @@ public class RepositoryUtil {
 	}
 
 	/**
-	 * Checks if resource with given path is to be ignored.
+	 * Checks if existing resource with given path is to be ignored.
+	 * <p>
+	 * <b>Note:</b>The check makes sense only for files which exists in the
+	 * working directory. This method returns false for paths to not existing
+	 * files or directories.
 	 *
 	 * @param path
-	 *            Path to be checked
-	 * @return true if the path matches an ignore rule or no repository mapping
-	 *         could be found, false otherwise
+	 *            Path to be checked, file or directory must exist on the disk
+	 * @return true if the path is either not inside git repository or exists
+	 *         and matches an ignore rule
 	 * @throws IOException
 	 * @since 2.3
 	 */
 	public static boolean isIgnored(IPath path) throws IOException {
 		RepositoryMapping mapping = RepositoryMapping.getMapping(path);
-		if (mapping == null)
+		if (mapping == null) {
 			return true; // Linked resources may not be mapped
+		}
 		Repository repository = mapping.getRepository();
 		WorkingTreeIterator treeIterator = IteratorService
 				.createInitialIterator(repository);
-		if (treeIterator == null)
+		if (treeIterator == null) {
 			return true;
+		}
 		String repoRelativePath = mapping.getRepoRelativePath(path);
+		if (repoRelativePath == null || repoRelativePath.isEmpty()) {
+			return true;
+		}
 		try (TreeWalk walk = new TreeWalk(repository)) {
 			walk.addTree(treeIterator);
 			walk.setFilter(PathFilter.create(repoRelativePath));
 			while (walk.next()) {
 				WorkingTreeIterator workingTreeIterator = walk.getTree(0,
 						WorkingTreeIterator.class);
-				if (walk.getPathString().equals(repoRelativePath))
+				if (walk.getPathString().equals(repoRelativePath)) {
 					return workingTreeIterator.isEntryIgnored();
+				}
 				if (workingTreeIterator.getEntryFileMode()
-						.equals(FileMode.TREE))
+						.equals(FileMode.TREE)) {
 					walk.enterSubtree();
+				}
 			}
 		}
+		return false;
+	}
+
+	/**
+	 * Checks if the existing resource with given path can be automatically
+	 * added to the .gitignore file.
+	 *
+	 * @param path
+	 *            Path to be checked, file or directory must exist on the disk
+	 * @return true if the file or directory at given path exists, is inside
+	 *         known git repository and does not match any existing ignore rule,
+	 *         false otherwise
+	 * @throws IOException
+	 * @since 4.1.0
+	 */
+	public static boolean canBeAutoIgnored(IPath path) throws IOException {
+		RepositoryMapping mapping = RepositoryMapping.getMapping(path);
+		if (mapping == null) {
+			return false; // Linked resources may not be mapped
+		}
+		Repository repository = mapping.getRepository();
+		WorkingTreeIterator treeIterator = IteratorService
+				.createInitialIterator(repository);
+		if (treeIterator == null) {
+			return false;
+		}
+		String repoRelativePath = mapping.getRepoRelativePath(path);
+		if (repoRelativePath == null || repoRelativePath.isEmpty()) {
+			return false;
+		}
+		try (TreeWalk walk = new TreeWalk(repository)) {
+			walk.addTree(treeIterator);
+			walk.setFilter(PathFilter.create(repoRelativePath));
+			while (walk.next()) {
+				WorkingTreeIterator workingTreeIterator = walk.getTree(0,
+						WorkingTreeIterator.class);
+				if (walk.getPathString().equals(repoRelativePath)) {
+					return !workingTreeIterator.isEntryIgnored();
+				}
+				if (workingTreeIterator.getEntryFileMode()
+						.equals(FileMode.TREE)) {
+					walk.enterSubtree();
+				}
+			}
+		}
+		// path not found in tree, we should not automatically ignore it
 		return false;
 	}
 
