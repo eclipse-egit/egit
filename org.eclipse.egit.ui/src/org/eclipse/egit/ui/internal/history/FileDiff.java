@@ -413,6 +413,16 @@ public class FileDiff extends WorkbenchAdapter {
 				|| diffEntry.getNewMode() == FileMode.GITLINK;
 	}
 
+	/**
+	 * Is there a diff entry? Currently for merge commits there is no diff entry
+	 * computed.
+	 *
+	 * @return true if diff entry is set.
+	 */
+	public boolean hasDiffEntry() {
+		return diffEntry != null;
+	}
+
 	@Override
 	public ImageDescriptor getImageDescriptor(Object object) {
 		final ImageDescriptor base;
