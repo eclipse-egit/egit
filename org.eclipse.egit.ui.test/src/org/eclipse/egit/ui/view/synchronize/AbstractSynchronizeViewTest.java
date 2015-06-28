@@ -50,7 +50,6 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
-import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
@@ -59,6 +58,7 @@ import org.eclipse.team.ui.TeamUI;
 import org.eclipse.team.ui.mapping.ITeamContentProviderDescriptor;
 import org.eclipse.team.ui.mapping.ITeamContentProviderManager;
 import org.eclipse.team.ui.synchronize.ISynchronizeManager;
+import org.eclipse.team.ui.synchronize.ISynchronizeView;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -86,16 +86,17 @@ public abstract class AbstractSynchronizeViewTest extends
 
 	@After
 	public void closeSynchronizeView() {
-		SWTBotView syncView = bot.viewByTitle("Synchronize");
-		syncView.close();
+		TestUtil.hideView(ISynchronizeView.VIEW_ID);
 	}
 
 	@After
 	public void deleteEmptyProject() throws Exception {
 		IProject prj = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(EMPTY_PROJECT);
-		if (prj.exists())
+		if (prj.exists()) {
 			prj.delete(false, false, null);
+			TestUtil.waitForJobs(100, 5000);
+		}
 	}
 
 	@Before
@@ -196,8 +197,10 @@ public abstract class AbstractSynchronizeViewTest extends
 		IProject firstProject = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(EMPTY_PROJECT);
 
-		if (firstProject.exists())
+		if (firstProject.exists()) {
 			firstProject.delete(true, null);
+			TestUtil.waitForJobs(100, 5000);
+		}
 		IProjectDescription desc = ResourcesPlugin.getWorkspace()
 				.newProjectDescription(EMPTY_PROJECT);
 		desc.setLocation(new Path(new File(myRepository.getWorkTree(),
@@ -213,6 +216,7 @@ public abstract class AbstractSynchronizeViewTest extends
 		IFile textFile2 = folder.getFile(FILE2);
 		textFile2.create(new ByteArrayInputStream("Some more content"
 				.getBytes(firstProject.getDefaultCharset())), false, null);
+		TestUtil.waitForJobs(100, 5000);
 
 		new ConnectProviderOperation(firstProject, gitDir).execute(null);
 	}

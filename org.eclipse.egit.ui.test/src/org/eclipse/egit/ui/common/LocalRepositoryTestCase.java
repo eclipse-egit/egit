@@ -272,7 +272,6 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 				.getPath()));
 		secondProject.create(desc, null);
 		secondProject.open(null);
-		TestUtil.waitForJobs(100, 5000);
 
 		IFolder secondfolder = secondProject.getFolder(FOLDER);
 		secondfolder.create(false, true, null);
@@ -282,6 +281,9 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		IFile secondtextFile2 = secondfolder.getFile(FILE2);
 		secondtextFile2.create(new ByteArrayInputStream("Some more content"
 				.getBytes(firstProject.getDefaultCharset())), false, null);
+
+		TestUtil.waitForJobs(100, 5000);
+
 		// TODO we should be able to hide the .project
 		// IFile gitignore = secondPoject.getFile(".gitignore");
 		// gitignore.create(new ByteArrayInputStream("/.project\n"
