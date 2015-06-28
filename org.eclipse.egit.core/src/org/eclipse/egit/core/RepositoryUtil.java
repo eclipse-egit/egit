@@ -471,6 +471,9 @@ public class RepositoryUtil {
 	 *         could be found, false otherwise
 	 * @throws IOException
 	 * @since 2.3
+	 * @deprecated current implementation does not fulfill the javadoc contract
+	 *             for files not in the working tree. Use
+	 *             {@link #canBeAutoIgnored(IPath)} instead
 	 */
 	public static boolean isIgnored(IPath path) throws IOException {
 		RepositoryMapping mapping = RepositoryMapping.getMapping(path);
@@ -495,6 +498,49 @@ public class RepositoryUtil {
 					walk.enterSubtree();
 			}
 		}
+		return false;
+	}
+
+	/**
+	 * Checks if the existing resource with given path can be automatically
+	 * added to the .gitignore file.
+	 *
+	 * @param path
+	 *            Path to be checked, must exist on the disk
+	 * @return true if the file at given path exists, is inside known git
+	 *         repository and does not match any existing ignore rule, false
+	 *         otherwise
+	 * @throws IOException
+	 * @since 4.1.0
+	 */
+	public static boolean canBeAutoIgnored(IPath path) throws IOException {
+		RepositoryMapping mapping = RepositoryMapping.getMapping(path);
+		if (mapping == null) {
+			return false; // Linked resources may not be mapped
+		}
+		Repository repository = mapping.getRepository();
+		WorkingTreeIterator treeIterator = IteratorService
+				.createInitialIterator(repository);
+		if (treeIterator == null) {
+			return false;
+		}
+		String repoRelativePath = mapping.getRepoRelativePath(path);
+		try (TreeWalk walk = new TreeWalk(repository)) {
+			walk.addTree(treeIterator);
+			walk.setFilter(PathFilter.create(repoRelativePath));
+			while (walk.next()) {
+				WorkingTreeIterator workingTreeIterator = walk.getTree(0,
+						WorkingTreeIterator.class);
+				if (walk.getPathString().equals(repoRelativePath)) {
+					return !workingTreeIterator.isEntryIgnored();
+				}
+				if (workingTreeIterator.getEntryFileMode()
+						.equals(FileMode.TREE)) {
+					walk.enterSubtree();
+				}
+			}
+		}
+		// path not found in tree, we should not automatically ignore it
 		return false;
 	}
 
