@@ -55,9 +55,9 @@
   <setupTask
       xsi:type="pde:APIBaselineTask"
       name="EGit"
-      version="3.7"
+      version="4.0.1"
       location="${workspace.location/../api.baseline}"
-      remoteURI="http://download.eclipse.org/egit/updates/org.eclipse.egit.repository-3.7.0.201502260915-r.zip"/>
+      remoteURI="http://download.eclipse.org/egit/updates-4.0.1/org.eclipse.egit.repository-4.0.1.201506240215-r.zip"/>
   <stream name="master">
     <setupTask
         xsi:type="git:GitCloneTask"
