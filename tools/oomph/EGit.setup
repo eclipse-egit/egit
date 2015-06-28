@@ -123,10 +123,6 @@
         <requirement
             name="org.eclipse.jgit.http.apache.feature.group"/>
         <requirement
-            name="org.eclipse.jgit.java7.feature.group"/>
-        <requirement
-            name="org.eclipse.jgit.java7.test"/>
-        <requirement
             name="org.eclipse.jgit.junit.feature.group"/>
         <requirement
             name="org.eclipse.jgit.pgm.feature.group"/>
