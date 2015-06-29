@@ -7,9 +7,11 @@
  *
  * Contributors:
  *     Laurent Goubet <laurent.goubet@obeo.fr> - initial API and implementation
+ *     Axel Richard <axel.richard@obeo.fr> - Update #registerHandledFiles()
  *******************************************************************************/
 package org.eclipse.egit.core.internal.merge;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
@@ -30,8 +32,8 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
+import org.eclipse.egit.core.internal.storage.AbstractGitResourceVariant;
 import org.eclipse.egit.core.internal.storage.TreeParserResourceVariant;
-import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.diff.RawText;
 import org.eclipse.jgit.dircache.DirCacheBuildIterator;
@@ -61,6 +63,7 @@ import org.eclipse.team.core.subscribers.Subscriber;
 import org.eclipse.team.core.subscribers.SubscriberMergeContext;
 import org.eclipse.team.core.subscribers.SubscriberResourceMappingContext;
 import org.eclipse.team.core.subscribers.SubscriberScopeManager;
+import org.eclipse.team.core.variants.IResourceVariant;
 
 /**
  * This extends the recursive merger in order to take into account specific
@@ -108,7 +111,7 @@ public class RecursiveModelMerger extends RecursiveMerger {
 	@Override
 	protected boolean mergeTreeWalk(TreeWalk treeWalk, boolean ignoreConflicts)
 			throws IOException {
-		final GitResourceVariantTreeProvider variantTreeProvider = new TreeWalkResourceVariantTreeProvider(
+		final TreeWalkResourceVariantTreeProvider variantTreeProvider = new TreeWalkResourceVariantTreeProvider(
 				getRepository(), treeWalk, T_BASE, T_OURS, T_THEIRS);
 		final GitResourceVariantTreeSubscriber subscriber = new GitResourceVariantTreeSubscriber(
 				variantTreeProvider);
@@ -159,7 +162,7 @@ public class RecursiveModelMerger extends RecursiveMerger {
 
 			final int nonZeroMode = modeBase != 0 ? modeBase
 					: modeOurs != 0 ? modeOurs : modeTheirs;
-			final IResource resource = ResourceUtil
+			final IResource resource = variantTreeProvider
 					.getResourceHandleForLocation(getRepository(), path,
 							FileMode.fromBits(nonZeroMode) == FileMode.TREE);
 			Set<IResource> logicalModel = logicalModels.getModel(resource);
@@ -183,9 +186,13 @@ public class RecursiveModelMerger extends RecursiveMerger {
 			}
 			if (modelMerger != null) {
 				enterSubtree = true;
-				if (!new ModelMerge(this, subscriber, remoteMappingContext,
-						path, logicalModel, modelMerger).run()) {
+				boolean success = new ModelMerge(this, subscriber,
+						remoteMappingContext, path, logicalModel, modelMerger)
+						.run();
+				if (!success) {
 					return false;
+				} else if (!unmergedPaths.contains(path)) {
+					registerMergedPath(path);
 				}
 				if (treeWalk.isSubtree()) {
 					enterSubtree = true;
@@ -309,8 +316,10 @@ public class RecursiveModelMerger extends RecursiveMerger {
 	 */
 	private void refreshRoots(IResource[] resources) throws CoreException {
 		for (IResource root : resources) {
-			root.refreshLocal(IResource.DEPTH_INFINITE,
-					new NullProgressMonitor());
+			if (root.isAccessible()) {
+				root.refreshLocal(IResource.DEPTH_INFINITE,
+						new NullProgressMonitor());
+			}
 		}
 	}
 
@@ -382,18 +391,56 @@ public class RecursiveModelMerger extends RecursiveMerger {
 		}
 
 		private void registerHandledFiles(final IMergeContext mergeContext,
-				final IStatus status) throws TeamException {
+				final IStatus status) throws TeamException, CoreException {
 			for (IResource handledFile : logicalModel) {
-				final String filePath = getRepoRelativePath(handledFile);
-				merger.modifiedFiles.add(filePath);
-				merger.handledPaths.add(filePath);
+				String filePath = getRepoRelativePath(handledFile);
+				if (filePath == null) {
+					IResourceVariant sourceVariant = subscriber
+							.getSourceTree().getResourceVariant(handledFile);
+					IResourceVariant remoteVariant = subscriber.getRemoteTree()
+							.getResourceVariant(handledFile);
+					IResourceVariant baseVariant = subscriber.getBaseTree()
+							.getResourceVariant(handledFile);
+					if (sourceVariant instanceof AbstractGitResourceVariant) {
+						String sourcePath = ((AbstractGitResourceVariant) sourceVariant)
+								.getAbsolutePath();
+						if (new File(sourcePath).exists()) {
+							filePath = ((AbstractGitResourceVariant) sourceVariant)
+									.getPath();
+						}
+					}
+					if (filePath == null
+							&& remoteVariant instanceof AbstractGitResourceVariant) {
+						String remotePath = ((AbstractGitResourceVariant) remoteVariant)
+								.getAbsolutePath();
+						if (new File(remotePath).exists()) {
+							filePath = ((AbstractGitResourceVariant) remoteVariant)
+									.getPath();
+						}
+					}
+					if (filePath == null
+							&& baseVariant instanceof AbstractGitResourceVariant) {
+						String basePath = ((AbstractGitResourceVariant) baseVariant)
+								.getAbsolutePath();
+						if (new File(basePath).exists()) {
+							filePath = ((AbstractGitResourceVariant) baseVariant)
+									.getPath();
+						}
+					}
+
+				}
+
+				if (filePath != null) {
+					merger.modifiedFiles.add(filePath);
+					merger.handledPaths.add(filePath);
+				}
 
 				// The merge failed. If some parts of the model were
 				// auto-mergeable, the model merger told us so through
 				// GitMergeContext#markAsMerged() (stored within #makeInSync).
 				// All other components of the logical model should be marked as
 				// conflicts.
-				if (status.getSeverity() != IStatus.OK
+				if (filePath != null && status.getSeverity() != IStatus.OK
 						&& !merger.makeInSync.contains(filePath)) {
 					merger.unmergedPaths.add(filePath);
 					merger.mergeResults.put(filePath, new MergeResult<RawText>(
