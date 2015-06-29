@@ -171,6 +171,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 				.getProjects())
 			project.delete(false, false, null);
 		shutDownRepositories();
+		TestUtil.waitForJobs(50, 5000);
 	}
 
 	@BeforeClass
@@ -235,14 +236,17 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		IProject firstProject = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(PROJ1);
 
-		if (firstProject.exists())
+		if (firstProject.exists()) {
 			firstProject.delete(true, null);
+			TestUtil.waitForJobs(100, 5000);
+		}
 		IProjectDescription desc = ResourcesPlugin.getWorkspace()
 				.newProjectDescription(PROJ1);
 		desc.setLocation(new Path(new File(myRepository.getWorkTree(), PROJ1)
 				.getPath()));
 		firstProject.create(desc, null);
 		firstProject.open(null);
+		TestUtil.waitForJobs(100, 5000);
 
 		IFolder folder = firstProject.getFolder(FOLDER);
 		folder.create(false, true, null);
@@ -258,8 +262,10 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		IProject secondProject = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(PROJ2);
 
-		if (secondProject.exists())
+		if (secondProject.exists()) {
 			secondProject.delete(true, null);
+			TestUtil.waitForJobs(100, 5000);
+		}
 
 		desc = ResourcesPlugin.getWorkspace().newProjectDescription(PROJ2);
 		desc.setLocation(new Path(new File(myRepository.getWorkTree(), PROJ2)
@@ -275,6 +281,9 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		IFile secondtextFile2 = secondfolder.getFile(FILE2);
 		secondtextFile2.create(new ByteArrayInputStream("Some more content"
 				.getBytes(firstProject.getDefaultCharset())), false, null);
+
+		TestUtil.waitForJobs(100, 5000);
+
 		// TODO we should be able to hide the .project
 		// IFile gitignore = secondPoject.getFile(".gitignore");
 		// gitignore.create(new ByteArrayInputStream("/.project\n"
