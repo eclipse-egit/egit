@@ -95,7 +95,7 @@ public abstract class AbstractSynchronizeViewTest extends
 				.getProject(EMPTY_PROJECT);
 		if (prj.exists()) {
 			prj.delete(false, false, null);
-			TestUtil.waitForJobs(100, 5000);
+			TestUtil.waitForJobs(50, 5000);
 		}
 	}
 
@@ -199,7 +199,7 @@ public abstract class AbstractSynchronizeViewTest extends
 
 		if (firstProject.exists()) {
 			firstProject.delete(true, null);
-			TestUtil.waitForJobs(100, 5000);
+			TestUtil.waitForJobs(50, 5000);
 		}
 		IProjectDescription desc = ResourcesPlugin.getWorkspace()
 				.newProjectDescription(EMPTY_PROJECT);
@@ -216,9 +216,11 @@ public abstract class AbstractSynchronizeViewTest extends
 		IFile textFile2 = folder.getFile(FILE2);
 		textFile2.create(new ByteArrayInputStream("Some more content"
 				.getBytes(firstProject.getDefaultCharset())), false, null);
-		TestUtil.waitForJobs(100, 5000);
+		TestUtil.waitForJobs(50, 5000);
 
 		new ConnectProviderOperation(firstProject, gitDir).execute(null);
+
+		TestUtil.waitForJobs(50, 5000);
 	}
 
 	protected SWTBotTreeItem waitForNodeWithText(SWTBotTree tree, String name) {
