@@ -207,16 +207,17 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 	protected static void deleteAllProjects() throws Exception {
 		for (IProject prj : ResourcesPlugin.getWorkspace().getRoot()
-				.getProjects())
-			if (prj.getName().equals(PROJ1))
+				.getProjects()) {
+			if (prj.getName().equals(PROJ1)) {
 				prj.delete(false, false, null);
-			else if (prj.getName().equals(PROJ2)) {
+			} else if (prj.getName().equals(PROJ2)) {
 				// delete the .project on disk
 				File dotProject = prj.getLocation().append(".project").toFile();
 				prj.delete(false, false, null);
 				FileUtils.delete(dotProject, FileUtils.RETRY);
 			}
-
+		}
+		TestUtil.waitForJobs(50, 5000);
 	}
 
 	protected File createProjectAndCommitToRepository() throws Exception {
@@ -238,7 +239,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 		if (firstProject.exists()) {
 			firstProject.delete(true, null);
-			TestUtil.waitForJobs(100, 5000);
+			TestUtil.waitForJobs(50, 5000);
 		}
 		IProjectDescription desc = ResourcesPlugin.getWorkspace()
 				.newProjectDescription(PROJ1);
@@ -246,7 +247,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 				.getPath()));
 		firstProject.create(desc, null);
 		firstProject.open(null);
-		TestUtil.waitForJobs(100, 5000);
+		TestUtil.waitForJobs(50, 5000);
 
 		IFolder folder = firstProject.getFolder(FOLDER);
 		folder.create(false, true, null);
@@ -264,7 +265,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 		if (secondProject.exists()) {
 			secondProject.delete(true, null);
-			TestUtil.waitForJobs(100, 5000);
+			TestUtil.waitForJobs(50, 5000);
 		}
 
 		desc = ResourcesPlugin.getWorkspace().newProjectDescription(PROJ2);
@@ -282,7 +283,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		secondtextFile2.create(new ByteArrayInputStream("Some more content"
 				.getBytes(firstProject.getDefaultCharset())), false, null);
 
-		TestUtil.waitForJobs(100, 5000);
+		TestUtil.waitForJobs(50, 5000);
 
 		// TODO we should be able to hide the .project
 		// IFile gitignore = secondPoject.getFile(".gitignore");
@@ -290,6 +291,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		// .getBytes(firstProject.getDefaultCharset())), false, null);
 
 		new ConnectProviderOperation(secondProject, gitDir).execute(null);
+		TestUtil.waitForJobs(50, 1000);
 
 		IFile[] commitables = new IFile[] { firstProject.getFile(".project"),
 				textFile, textFile2, secondtextFile, secondtextFile2 };
@@ -404,6 +406,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		updateRef
 				.setRefLogMessage("branch: Created from " + startBranch, false); //$NON-NLS-1$
 		updateRef.update();
+		TestUtil.waitForJobs(50, 5000);
 	}
 
 	protected void assertClickOpens(SWTBotTree tree, String menu, String window) {
@@ -421,7 +424,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 	 * @throws InterruptedException
 	 */
 	protected static void waitInUI() throws InterruptedException {
-		Thread.sleep(1000);
+		TestUtil.processUIEvents(1000);
 	}
 
 	protected void shareProjects(File repositoryDir) throws Exception {
@@ -431,8 +434,8 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 				return name.equals(".project");
 			}
 		};
-		for (File file : myRepository.getWorkTree().listFiles())
-			if (file.isDirectory())
+		for (File file : myRepository.getWorkTree().listFiles()) {
+			if (file.isDirectory()) {
 				if (file.list(projectFilter).length > 0) {
 					IProjectDescription desc = ResourcesPlugin.getWorkspace()
 							.newProjectDescription(file.getName());
@@ -445,6 +448,9 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 					new ConnectProviderOperation(prj, myRepository
 							.getDirectory()).execute(null);
 				}
+			}
+		}
+		TestUtil.waitForJobs(50, 5000);
 	}
 
 	@SuppressWarnings("boxing")
@@ -496,6 +502,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 				untracked, TestUtil.TESTAUTHOR, TestUtil.TESTCOMMITTER,
 				message);
 		op.execute(null);
+		TestUtil.waitForJobs(50, 5000);
 	}
 
 	/**
@@ -558,6 +565,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 				untracked, TestUtil.TESTAUTHOR, TestUtil.TESTCOMMITTER,
 				commitMessage);
 		op.execute(null);
+		TestUtil.waitForJobs(50, 5000);
 	}
 
 	protected static void setTestFileContent(String newContent)
