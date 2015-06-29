@@ -5,14 +5,27 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ *     Laurent Goubet <laurent.goubet@obeo.fr> - initial API and implementation
+ *     Axel Richard <axel.richard@obeo.fr> - Add GitPathToProjectPathConverter
  *******************************************************************************/
 package org.eclipse.egit.core.internal.merge;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.internal.storage.TreeParserResourceVariant;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.jgit.lib.FileMode;
@@ -20,6 +33,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.team.core.variants.IResourceVariantTree;
 
 /**
@@ -41,6 +55,8 @@ public class TreeWalkResourceVariantTreeProvider implements
 	private final Set<IResource> roots;
 
 	private final Set<IResource> knownResources;
+
+	private final LinkedHashMap<IPath, IProject> map = new LinkedHashMap<>();
 
 	/**
 	 * Constructs the resource variant trees by iterating over the given tree
@@ -99,26 +115,24 @@ public class TreeWalkResourceVariantTreeProvider implements
 
 			final int nonZeroMode = modeBase != 0 ? modeBase
 					: modeOurs != 0 ? modeOurs : modeTheirs;
-			final IResource resource = ResourceUtil
-					.getResourceHandleForLocation(repository,
+			final IResource resource = getResourceHandleForLocation(repository,
 							treeWalk.getPathString(),
-							FileMode.fromBits(nonZeroMode) == FileMode.TREE);
-			// Resource variants only make sense for IResources. Do not consider
-			// files outside of the workspace or otherwise non accessible.
+					FileMode.fromBits(nonZeroMode) == FileMode.TREE);
 
-			if (resource != null && resource.getProject() != null
-					&& resource.getProject().isAccessible()) {
+			// Resource variants only make sense for IResources.
+			if (resource != null) {
+				IPath workspacePath = resource.getFullPath();
 				if (modeBase != 0) {
-					baseCache.setVariant(resource,
-							TreeParserResourceVariant.create(repository, base));
+					baseCache.setVariant(resource, TreeParserResourceVariant
+							.create(repository, base, workspacePath));
 				}
 				if (modeOurs != 0) {
-					oursCache.setVariant(resource,
-							TreeParserResourceVariant.create(repository, ours));
+					oursCache.setVariant(resource, TreeParserResourceVariant
+							.create(repository, ours, workspacePath));
 				}
 				if (modeTheirs != 0) {
-					theirsCache.setVariant(resource,
-							TreeParserResourceVariant.create(repository, theirs));
+					theirsCache.setVariant(resource, TreeParserResourceVariant
+							.create(repository, theirs, workspacePath));
 				}
 			}
 
@@ -184,4 +198,95 @@ public class TreeWalkResourceVariantTreeProvider implements
 	public Set<IResource> getRoots() {
 		return roots;
 	}
+
+	/**
+	 * Returns a resource handle for this path in the workspace. Note that
+	 * neither the resource nor the result need exist in the workspace : this
+	 * may return inexistent or otherwise non-accessible IResources.
+	 *
+	 * @param repository
+	 *            The repository within which is tracked this file.
+	 * @param repoRelativePath
+	 *            Repository-relative path of the file we need an handle for.
+	 * @param isFolder
+	 *            <code>true</code> if the file being sought is a folder.
+	 * @return The resource handle for the given path in the workspace.
+	 */
+	public IResource getResourceHandleForLocation(Repository repository,
+			String repoRelativePath, boolean isFolder) {
+		IResource resource = null;
+
+		final String workDir = repository.getWorkTree().getAbsolutePath();
+		final IPath path = new Path(workDir + '/' + repoRelativePath);
+		final File file = path.toFile();
+		if (file.exists()) {
+			if (isFolder) {
+				resource = ResourceUtil.getContainerForLocation(path);
+			} else {
+				resource = ResourceUtil.getFileForLocation(path);
+			}
+		}
+
+		if (repoRelativePath.endsWith(".project")) { //$NON-NLS-1$
+			IPath parentPath = path.removeLastSegments(1);
+			IProject p = ResourcesPlugin
+					.getWorkspace()
+					.getRoot()
+					.getProject(parentPath.lastSegment().toString());
+			if (map.get(parentPath) == null) {
+				map.put(parentPath, p);
+			}
+		}
+
+		if (resource == null) {
+			// It may be a file that only exists on remote side. We need to
+			// create an IResource for it.
+			// If it is a project file, then create an IProject.
+			final List<IPath> list = new ArrayList<IPath>(map.keySet());
+			for (int i = list.size() - 1; i >= 0; i--) {
+				IPath projectPath = list.get(i);
+				if (projectPath.isPrefixOf(path) && !projectPath.equals(path)) {
+					final IPath projectRelativePath = path
+							.makeRelativeTo(projectPath);
+					if (isFolder) {
+						resource = map.get(projectPath).getFolder(
+								projectRelativePath);
+					} else {
+						resource = map.get(projectPath)
+								.getFile(projectRelativePath);
+					}
+					break;
+				}
+			}
+		}
+
+		if (resource == null) {
+			// This is a file that no longer exists locally, yet we still need
+			// to determine an IResource for it.
+			// Try and find a Project in the workspace which path is a prefix of
+			// the file we seek and which is mapped to the current repository.
+			final IWorkspaceRoot root = ResourcesPlugin.getWorkspace()
+					.getRoot();
+			for (IProject project : root.getProjects()) {
+				if (RepositoryProvider.getProvider(project, GitProvider.ID) != null) {
+					final IPath projectLocation = project.getLocation();
+					if (projectLocation != null
+							&& projectLocation.isPrefixOf(path)) {
+						final IPath projectRelativePath = path
+								.makeRelativeTo(projectLocation);
+						if (isFolder) {
+							resource = project.getFolder(projectRelativePath);
+						} else {
+							resource = project.getFile(projectRelativePath);
+						}
+						break;
+					}
+				}
+			}
+		}
+
+
+		return resource;
+	}
+
 }
