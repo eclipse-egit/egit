@@ -119,6 +119,7 @@ public abstract class GitRepositoriesViewTestBase extends
 		JobJoiner jobJoiner = JobJoiner.startListening(JobFamilies.REPO_VIEW_REFRESH, 60, TimeUnit.SECONDS);
 		view.refresh();
 		jobJoiner.join();
+		TestUtil.processUIEvents();
 	}
 
 	@SuppressWarnings("boxing")
