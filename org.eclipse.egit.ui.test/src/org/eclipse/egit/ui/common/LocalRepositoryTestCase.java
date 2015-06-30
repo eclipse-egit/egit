@@ -328,7 +328,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		return gitDir;
 	}
 
-	private void assertConnected(IProject project) {
+	protected RepositoryMapping assertConnected(IProject project) {
 		RepositoryProvider provider = RepositoryProvider.getProvider(project,
 				GitProvider.ID);
 		if (provider == null) {
@@ -350,6 +350,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 			mapping = data.getRepositoryMapping(project);
 		}
 		assertNotNull("RepositoryMapping is null for: " + project, mapping);
+		return mapping;
 	}
 
 	protected File createRemoteRepository(File repositoryDir)

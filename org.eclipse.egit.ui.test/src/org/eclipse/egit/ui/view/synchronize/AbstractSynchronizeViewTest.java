@@ -16,6 +16,7 @@ import static org.eclipse.egit.ui.test.TestUtil.waitUntilTreeHasNodeContainsText
 import static org.eclipse.jface.dialogs.MessageDialogWithToggle.NEVER;
 import static org.eclipse.jgit.lib.Constants.R_TAGS;
 import static org.eclipse.team.internal.ui.IPreferenceIds.SYNCHRONIZING_COMPLETE_PERSPECTIVE;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -168,7 +169,8 @@ public abstract class AbstractSynchronizeViewTest extends
 			String dstRef, boolean includeLocal) throws IOException {
 		IProject project = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(projectName);
-		Repository repo = RepositoryMapping.getMapping(project).getRepository();
+		RepositoryMapping mapping = assertConnected(project);
+		Repository repo = mapping.getRepository();
 
 		GitSynchronizeData data = new GitSynchronizeData(repo, srcRef, dstRef,
 				includeLocal);
@@ -207,6 +209,8 @@ public abstract class AbstractSynchronizeViewTest extends
 				EMPTY_PROJECT).getPath()));
 		firstProject.create(desc, null);
 		firstProject.open(null);
+		assertTrue("Project is not accessible: " + firstProject,
+				firstProject.isAccessible());
 
 		IFolder folder = firstProject.getFolder(FOLDER);
 		folder.create(false, true, null);
@@ -219,8 +223,7 @@ public abstract class AbstractSynchronizeViewTest extends
 		TestUtil.waitForJobs(50, 5000);
 
 		new ConnectProviderOperation(firstProject, gitDir).execute(null);
-
-		TestUtil.waitForJobs(50, 5000);
+		assertConnected(firstProject);
 	}
 
 	protected SWTBotTreeItem waitForNodeWithText(SWTBotTree tree, String name) {
