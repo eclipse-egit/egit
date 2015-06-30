@@ -1,0 +1,8 @@
+Code-Review-1: Hudson CI
+Code-Review+2: Andrey Loskutov <loskutov@gmx.de>
+Verified+1: Andrey Loskutov <loskutov@gmx.de>
+Submitted-by: Andrey Loskutov <loskutov@gmx.de>
+Submitted-at: Tue, 30 Jun 2015 00:39:28 -0400
+Reviewed-on: https://git.eclipse.org/r/51072
+Project: egit/egit
+Branch: refs/heads/master
