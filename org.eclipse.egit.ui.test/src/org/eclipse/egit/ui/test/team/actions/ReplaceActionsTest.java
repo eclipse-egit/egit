@@ -89,6 +89,8 @@ public class ReplaceActionsTest extends LocalRepositoryTestCase {
 
 		git.merge().include(sideCommit).call();
 
+		TestUtil.waitForJobs(100, 5000);
+
 		String contentAfterMerge = getTestFileContent();
 		assertEquals("side", contentAfterMerge);
 
@@ -101,6 +103,8 @@ public class ReplaceActionsTest extends LocalRepositoryTestCase {
 				.shell(UIText.CommitSelectDialog_WindowTitle);
 		assertEquals(2, selectDialog.bot().table().rowCount());
 		selectDialog.close();
+		TestUtil.processUIEvents();
+
 		// we have closed, so nothing should have changed
 		String contentAfterClose = getTestFileContent();
 		assertEquals(contentAfterMerge, contentAfterClose);
@@ -108,12 +112,15 @@ public class ReplaceActionsTest extends LocalRepositoryTestCase {
 		clickReplaceWith(menuLabel);
 		bot.shell(UIText.DiscardChangesAction_confirmActionTitle).bot()
 				.button(IDialogConstants.OK_LABEL).click();
+		TestUtil.waitForJobs(100, 5000);
+
 		selectDialog = bot.shell(UIText.CommitSelectDialog_WindowTitle);
 		// Select first parent, which should be the master commit
 		SWTBotTable table = selectDialog.bot().table();
 		assertEquals("Master commit", table.cell(0, 1));
 		table.select(0);
 		executeReplace(selectDialog);
+		TestUtil.waitForJobs(100, 5000);
 
 		String replacedContent = getTestFileContent();
 		assertThat(replacedContent, not(contentAfterMerge));

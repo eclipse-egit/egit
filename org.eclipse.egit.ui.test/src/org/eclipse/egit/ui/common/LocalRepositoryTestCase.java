@@ -244,7 +244,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 		if (firstProject.exists()) {
 			firstProject.delete(true, null);
-			TestUtil.waitForJobs(50, 5000);
+			TestUtil.waitForJobs(100, 5000);
 		}
 		IProjectDescription desc = ResourcesPlugin.getWorkspace()
 				.newProjectDescription(PROJ1);
@@ -274,7 +274,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 		if (secondProject.exists()) {
 			secondProject.delete(true, null);
-			TestUtil.waitForJobs(50, 5000);
+			TestUtil.waitForJobs(100, 5000);
 		}
 
 		desc = ResourcesPlugin.getWorkspace().newProjectDescription(PROJ2);
@@ -332,9 +332,11 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		RepositoryProvider provider = RepositoryProvider.getProvider(project,
 				GitProvider.ID);
 		if (provider == null) {
-			TestUtil.waitForJobs(100, 5000);
+			TestUtil.waitForJobs(500, 10000);
 			provider = RepositoryProvider.getProvider(project, GitProvider.ID);
 		}
+		assertTrue("Project is not accessible: " + project,
+				project.isAccessible());
 		assertNotNull("GitProvider not mapped to: " + project, provider);
 
 		GitProjectData data = ((GitProvider) provider).getData();

@@ -201,7 +201,7 @@ public abstract class AbstractSynchronizeViewTest extends
 
 		if (firstProject.exists()) {
 			firstProject.delete(true, null);
-			TestUtil.waitForJobs(50, 5000);
+			TestUtil.waitForJobs(100, 5000);
 		}
 		IProjectDescription desc = ResourcesPlugin.getWorkspace()
 				.newProjectDescription(EMPTY_PROJECT);

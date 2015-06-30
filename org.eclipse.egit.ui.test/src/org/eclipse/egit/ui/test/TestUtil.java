@@ -167,7 +167,7 @@ public class TestUtil {
 	public static void joinJobs(Object family) throws InterruptedException  {
 		// join() returns immediately if the job is not yet scheduled.
 		// To avoid unstable tests, let us first wait some time
-		TestUtil.waitForJobs(50, 1000);
+		TestUtil.waitForJobs(100, 1000);
 		Job.getJobManager().join(family, null);
 		TestUtil.processUIEvents();
 	}
