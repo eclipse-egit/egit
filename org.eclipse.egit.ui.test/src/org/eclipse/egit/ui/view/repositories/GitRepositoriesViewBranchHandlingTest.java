@@ -48,6 +48,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.eclipse.ui.IPageLayout;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -375,7 +376,7 @@ public class GitRepositoriesViewBranchHandlingTest extends
 				myUtil.getPluginLocalizedValue("ShowIn"),
 				"Properties");
 
-		SWTBotView propsView = bot.viewByTitle("Properties");
+		SWTBotView propsView = bot.viewById(IPageLayout.ID_PROP_SHEET);
 		SWTBotTreeItem rootItem = propsView
 				.bot()
 				.tree()
@@ -459,7 +460,7 @@ public class GitRepositoriesViewBranchHandlingTest extends
 				myUtil.getPluginLocalizedValue("ShowIn"),
 				"Properties");
 
-		propsView = bot.viewByTitle("Properties");
+		propsView = bot.viewById(IPageLayout.ID_PROP_SHEET);
 		rootItem = propsView
 				.bot()
 				.tree()

@@ -26,6 +26,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.search.ui.NewSearchUI;
 import org.eclipse.search2.internal.ui.InternalSearchUI;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.results.Result;
@@ -78,7 +79,7 @@ public class CommitSearchDialogTest extends LocalRepositoryTestCase {
 		TestUtil.waitForJobs(500, 5000);
 
 		TestUtil.joinJobs(InternalSearchUI.FAMILY_SEARCH);
-		bot.viewByTitle("Search").show();
+		bot.viewById(NewSearchUI.SEARCH_VIEW_ID).show();
 		TestUtil.processUIEvents();
 
 		final SWTBotTreeItem[] repos = bot.activeView().bot().tree()

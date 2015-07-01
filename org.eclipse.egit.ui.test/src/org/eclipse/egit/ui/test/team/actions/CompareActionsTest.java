@@ -56,6 +56,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.team.internal.ui.TeamUIPlugin;
 import org.eclipse.team.ui.synchronize.ISynchronizeManager;
+import org.eclipse.team.ui.synchronize.ISynchronizeView;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -330,20 +331,20 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 
 	private void assertSynchronizeNoChange() {
 		// 0 => title, 1 => ?, 2 => "no result" Label
-		SWTBotLabel syncViewLabel = bot.viewByTitle("Synchronize").bot()
+		SWTBotLabel syncViewLabel = bot.viewById(ISynchronizeView.VIEW_ID).bot()
 				.label(0);
 
 		String noResultLabel = syncViewLabel.getText();
 		String expected = "No changes in 'Git (" + PROJ1 + ")'.";
 		if (!noResultLabel.contains(expected)) {
-			syncViewLabel = bot.viewByTitle("Synchronize").bot().label(2);
+			syncViewLabel = bot.viewById(ISynchronizeView.VIEW_ID).bot().label(2);
 			noResultLabel = syncViewLabel.getText();
 			assertTrue(noResultLabel.contains(expected));
 		}
 	}
 
 	private void assertSynchronizeFile1Changed() {
-		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
+		SWTBotTree syncViewTree = bot.viewById(ISynchronizeView.VIEW_ID).bot().tree();
 		SWTBotTreeItem[] syncItems = syncViewTree.getAllItems();
 		assertEquals(syncItems.length, 1);
 		String text = syncItems[0].getText();

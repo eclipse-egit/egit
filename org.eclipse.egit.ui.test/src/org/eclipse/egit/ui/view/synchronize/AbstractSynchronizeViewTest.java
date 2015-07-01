@@ -46,6 +46,7 @@ import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.synchronize.GitModelSynchronize;
 import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.egit.ui.test.TestUtil;
+import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
@@ -125,7 +126,7 @@ public abstract class AbstractSynchronizeViewTest extends
 	}
 
 	protected void changeFilesInProject() throws Exception {
-		SWTBot packageExlBot = bot.viewByTitle("Package Explorer").bot();
+		SWTBot packageExlBot = bot.viewById(JavaUI.ID_PACKAGES).bot();
 		SWTBotTreeItem coreTreeItem = selectProject(PROJ1, packageExlBot.tree());
 		SWTBotTreeItem rootNode = coreTreeItem.expand().getNode(0)
 				.expand().select();

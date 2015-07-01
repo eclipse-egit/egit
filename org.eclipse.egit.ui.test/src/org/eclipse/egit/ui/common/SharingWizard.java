@@ -12,6 +12,7 @@
 package org.eclipse.egit.ui.common;
 
 import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 
@@ -20,7 +21,7 @@ public class SharingWizard {
 	private static final SWTWorkbenchBot bot = new SWTWorkbenchBot();
 
 	public ExistingOrNewPage openWizard(String ... projectNames) {
-		SWTBotTree tree = bot.viewByTitle("Package Explorer").bot().tree();
+		SWTBotTree tree = bot.viewById(JavaUI.ID_PACKAGES).bot().tree();
 
 		tree.select(projectNames);
 		ContextMenuHelper.clickContextMenu(tree, "Team", "Share Project...");

@@ -47,6 +47,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTableItem;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarToggleButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.eclipse.team.ui.history.IHistoryView;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -172,7 +173,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 	private void initFilter(int filter) throws Exception {
 		getHistoryViewTable(PROJ1);
 		SWTBotView view = bot
-				.viewById("org.eclipse.team.ui.GenericHistoryView");
+				.viewById(IHistoryView.VIEW_ID);
 		SWTBotToolbarToggleButton folder = (SWTBotToolbarToggleButton) view
 				.toolbarButton(UIText.GitHistoryPage_AllInParentTooltip);
 		SWTBotToolbarToggleButton project = (SWTBotToolbarToggleButton) view
@@ -436,7 +437,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 	private void toggleShowAllBranchesButton(boolean checked) throws Exception{
 		getHistoryViewTable(PROJ1);
 		SWTBotView view = bot
-				.viewById("org.eclipse.team.ui.GenericHistoryView");
+				.viewById(IHistoryView.VIEW_ID);
 		SWTBotToolbarToggleButton showAllBranches = (SWTBotToolbarToggleButton) view
 				.toolbarButton(UIText.GitHistoryPage_showAllBranches);
 		boolean isChecked = showAllBranches.isChecked();
