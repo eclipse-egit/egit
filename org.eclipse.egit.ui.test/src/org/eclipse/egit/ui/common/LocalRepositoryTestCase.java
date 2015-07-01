@@ -169,12 +169,15 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 	@After
 	public void resetWorkspace() throws Exception {
+		TestUtil.processUIEvents();
 		// close all editors/dialogs
 		new Eclipse().reset();
+		TestUtil.processUIEvents();
 		// cleanup
 		for (IProject project : ResourcesPlugin.getWorkspace().getRoot()
-				.getProjects())
+				.getProjects()) {
 			project.delete(false, false, null);
+		}
 		shutDownRepositories();
 		TestUtil.waitForJobs(50, 5000);
 	}

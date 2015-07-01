@@ -329,6 +329,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		createBranchDialog.bot()
 				.checkBox(UIText.CreateBranchPage_CheckoutButton).deselect();
 		createBranchDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
+		TestUtil.waitForJobs(100, 5000);
 
 		ObjectId resolvedBranch = repo.resolve("branch-from-tag");
 		ObjectId resolvedTagCommit = repo.resolve("SomeTag^{commit}");

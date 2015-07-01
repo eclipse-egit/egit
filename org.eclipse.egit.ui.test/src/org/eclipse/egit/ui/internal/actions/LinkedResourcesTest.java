@@ -13,6 +13,8 @@ package org.eclipse.egit.ui.internal.actions;
 
 import static org.eclipse.jgit.junit.JGitTestUtil.write;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -28,6 +30,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.util.FileUtils;
@@ -102,22 +105,27 @@ public class LinkedResourcesTest extends LocalRepositoryTestCase {
 		write(standaloneFile, "Something");
 		// Create linked file in project that points the file above
 		IFile linkedFile = project.getFile(LINKED_FILE);
+		assertFalse(linkedFile.exists());
 		linkedFile.createLink(standaloneFile.toURI(),
 				IResource.ALLOW_MISSING_LOCAL, null);
+
 		// Prepare a mixed selection
 		Object[] mixedSelection = { linkedFile,
 				project.getFile(FILE1), project.getFile(FILE2) };
 		for (RepositoryActionHandler handler : handlers) {
+			assertTrue(linkedFile.exists());
+			assertTrue(linkedFile.isLinked(IResource.CHECK_ANCESTORS));
+			assertNotNull(linkedFile.getLocation());
+			assertNull(RepositoryMapping.getMapping(linkedFile.getLocation()));
+
 			handler.setSelection(new StructuredSelection(linkedFile));
-			assertFalse(
-					handler.getClass().getSimpleName()
-							+ " is enabled on a linked resource pointing outside any project and repository.",
-					handler.isEnabled());
+			assertFalse(handler.getClass().getSimpleName()
+					+ " is enabled on a linked resource pointing outside any project and repository: "
+					+ linkedFile.getLocation(), handler.isEnabled());
 			handler.setSelection(new StructuredSelection(mixedSelection));
-			assertFalse(
-					handler.getClass().getSimpleName()
-							+ " is enabled when selection contains a linked resource pointing outside any project and repository.",
-					handler.isEnabled());
+			assertFalse(handler.getClass().getSimpleName()
+					+ " is enabled when selection contains a linked resource pointing outside any project and repository: "
+					+ linkedFile.getLocation(), handler.isEnabled());
 		}
 	}
 }
