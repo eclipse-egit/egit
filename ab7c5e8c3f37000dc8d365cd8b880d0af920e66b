@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f6139c_445e1dbf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-07-02T13:21:13Z",
+      "side": 1,
+      "message": "it looks like you are combining multiple unrelated changes into one",
+      "revId": "ab7c5e8c3f37000dc8d365cd8b880d0af920e66b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_a4f54145",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ResourceUtil.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-07-02T13:21:13Z",
+      "side": 1,
+      "message": "I would move that into MappingJob and call it INSTANCE",
+      "revId": "ab7c5e8c3f37000dc8d365cd8b880d0af920e66b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_640a39de",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ResourceUtil.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-07-02T13:21:13Z",
+      "side": 1,
+      "message": "I would move that into MappingJob",
+      "revId": "ab7c5e8c3f37000dc8d365cd8b880d0af920e66b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_2434b192",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-07-02T13:21:13Z",
+      "side": 1,
+      "message": "this looks like an unrelated change",
+      "revId": "ab7c5e8c3f37000dc8d365cd8b880d0af920e66b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_e44f490f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/sharing/ExistingOrNewPage.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-07-02T13:21:13Z",
+      "side": 1,
+      "message": "what does this do ?",
+      "revId": "ab7c5e8c3f37000dc8d365cd8b880d0af920e66b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
