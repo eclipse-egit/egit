@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f6139c_87dac705",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-07-02T14:58:40Z",
+      "side": 1,
+      "message": "I am ok with that if it\u0027s fixing the problem, though this behavior should be mentioned in the javadoc for this method",
+      "revId": "e26ad0e0b02d899c65b1979ab484c42ef7d73b43",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
