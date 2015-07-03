@@ -32,6 +32,7 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.QualifiedName;
@@ -494,7 +495,12 @@ public class GitProjectData {
 		}
 		m.setContainer(c);
 
-		git = m.getGitDirAbsolutePath().toFile();
+		IPath absolutePath = m.getGitDirAbsolutePath();
+		if (absolutePath == null) {
+			logAndUnmapGoneMappedResource(m);
+			return;
+		}
+		git = absolutePath.toFile();
 		if (!git.isDirectory() || !new File(git, "config").isFile()) { //$NON-NLS-1$
 			logAndUnmapGoneMappedResource(m);
 			return;

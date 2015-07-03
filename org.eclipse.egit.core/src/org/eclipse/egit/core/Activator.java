@@ -430,7 +430,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 
 			RepositoryMapping m = mappings.iterator().next();
 			IPath gitDirPath = m.getGitDirAbsolutePath();
-			if (gitDirPath.segmentCount() == 0) {
+			if (gitDirPath == null || gitDirPath.segmentCount() == 0) {
 				return;
 			}
 

@@ -407,8 +407,10 @@ public class RepositoryMapping {
 	}
 
 	/**
-	 * @return The GIT DIR absolute path
+	 * @return The GIT DIR absolute path, or null if path is container relative
+	 *         and container does not exist
 	 */
+	@Nullable
 	public synchronized IPath getGitDirAbsolutePath() {
 		if (gitDirAbsolutePath == null) {
 			IPath p = getGitDirPath();

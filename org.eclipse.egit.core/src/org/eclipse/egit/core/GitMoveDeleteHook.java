@@ -393,11 +393,14 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 		// Moving repo, we need to unplug the previous location and
 		// Re-plug it again with the new location.
 		IPath gitDir = srcm.getGitDirAbsolutePath();
-		if (unmapProject(tree, source))
+		if (unmapProject(tree, source)) {
 			return true; // Error information in tree
+		}
 
 		monitor.worked(100);
-
+		if (gitDir == null) {
+			return true; // mapping on deleted container with relative path
+		}
 		IPath relativeGitDir = gitDir.makeRelativeTo(sourceLocation);
 		tree.standardMoveProject(source, description, updateFlags,
 				monitor);
