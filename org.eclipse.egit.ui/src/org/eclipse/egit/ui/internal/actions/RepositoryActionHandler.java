@@ -278,7 +278,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 *
 	 * @return repositories for selection, or an empty array
 	 */
-	protected Repository[] getRepositories() {
+	public Repository[] getRepositories() {
 		IProject[] selectedProjects = getProjectsForSelectedResources();
 		if (selectedProjects.length > 0)
 			return getRepositoriesFor(selectedProjects);
