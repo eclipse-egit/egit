@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_d3680d6e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-07-03T21:30:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_445e1dbf",
+      "revId": "ab7c5e8c3f37000dc8d365cd8b880d0af920e66b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_a4f54145",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ResourceUtil.java",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2015-07-02T13:21:13Z",
       "side": 1,
       "message": "I would move that into MappingJob and call it INSTANCE",
+      "revId": "ab7c5e8c3f37000dc8d365cd8b880d0af920e66b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_9327a565",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ResourceUtil.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-07-03T21:30:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_a4f54145",
       "revId": "ab7c5e8c3f37000dc8d365cd8b880d0af920e66b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_7322f955",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ResourceUtil.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-07-03T21:30:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_640a39de",
+      "revId": "ab7c5e8c3f37000dc8d365cd8b880d0af920e66b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_2434b192",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
         "patchSetId": 10
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "87f6139c_136f3574",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-07-03T21:30:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f6139c_2434b192",
+      "revId": "ab7c5e8c3f37000dc8d365cd8b880d0af920e66b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f6139c_e44f490f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/sharing/ExistingOrNewPage.java",
         "patchSetId": 10
@@ -81,6 +153,24 @@
       "writtenOn": "2015-07-02T13:21:13Z",
       "side": 1,
       "message": "what does this do ?",
+      "revId": "ab7c5e8c3f37000dc8d365cd8b880d0af920e66b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_f371c952",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/sharing/ExistingOrNewPage.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-07-03T21:30:02Z",
+      "side": 1,
+      "message": "Creates additional entries \"where the repository was found for the current project, if there are multiple candidates in the file tree\" in the dialog, but honestly speaking, I had to run tests in the debugger to understand what it is. I never seen/used this live before, but fortunately there were tests exact for this case.",
+      "parentUuid": "87f6139c_e44f490f",
       "revId": "ab7c5e8c3f37000dc8d365cd8b880d0af920e66b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
