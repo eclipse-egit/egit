@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f6139c_f39a69f2",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ResourceUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-07-03T22:38:00Z",
+      "side": 1,
+      "message": "should be private",
+      "revId": "2280e52aa772f413b77bb1bd4a1746acc482c584",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f6139c_53953dc0",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ResourceUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-07-03T22:38:00Z",
+      "side": 1,
+      "message": "* style nit: move static method to beginning of the class\n* visibility can be reduced to private",
+      "revId": "2280e52aa772f413b77bb1bd4a1746acc482c584",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
