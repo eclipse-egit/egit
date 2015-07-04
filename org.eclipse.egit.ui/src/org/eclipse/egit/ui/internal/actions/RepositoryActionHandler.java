@@ -285,14 +285,19 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		IStructuredSelection selection = getSelection();
 		if (!selection.isEmpty()) {
 			Set<Repository> repos = new LinkedHashSet<Repository>();
-			for (Object o : selection.toArray())
-				if (o instanceof Repository)
+			for (Object o : selection.toArray()) {
+				if (o instanceof Repository) {
 					repos.add((Repository) o);
-				else if (o instanceof PlatformObject) {
+				} else if (o instanceof PlatformObject) {
 					Repository repo = CommonUtils.getAdapter(((PlatformObject) o), Repository.class);
-					if (repo != null)
+					if (repo != null) {
 						repos.add(repo);
+					} else {
+						// no repository found for one of the objects!
+						return new Repository[0];
+					}
 				}
+			}
 			return repos.toArray(new Repository[repos.size()]);
 		}
 		return new Repository[0];
