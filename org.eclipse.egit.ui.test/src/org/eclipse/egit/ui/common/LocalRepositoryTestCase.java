@@ -37,6 +37,7 @@ import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.op.AddToIndexOperation;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.core.op.CommitOperation;
@@ -340,7 +341,10 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 				GitProvider.ID);
 		if (provider == null) {
 			TestUtil.waitForJobs(5000, 10000);
-			provider = RepositoryProvider.getProvider(project, GitProvider.ID);
+			assertTrue("Project not shared with git: " + project,
+					ResourceUtil.isSharedWithGit(project));
+			TestUtil.waitForJobs(1000, 10000);
+			provider = RepositoryProvider.getProvider(project);
 		}
 		assertTrue("Project is not accessible: " + project,
 				project.isAccessible());
