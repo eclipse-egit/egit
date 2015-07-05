@@ -30,9 +30,11 @@ import org.eclipse.egit.gitflow.op.FeatureTrackOperation;
 import static org.eclipse.egit.gitflow.ui.Activator.error;
 
 import org.eclipse.egit.gitflow.ui.Activator;
+
 import static org.eclipse.egit.gitflow.ui.internal.JobFamilies.GITFLOW_FAMILY;
+
 import org.eclipse.egit.gitflow.ui.internal.UIText;
-import org.eclipse.egit.gitflow.ui.internal.dialog.AbstractGitFlowBranchSelectionDialog;
+import org.eclipse.egit.gitflow.ui.internal.dialogs.AbstractGitFlowBranchSelectionDialog;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
