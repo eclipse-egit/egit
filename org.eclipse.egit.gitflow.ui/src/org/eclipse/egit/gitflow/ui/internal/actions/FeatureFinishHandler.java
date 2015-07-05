@@ -23,11 +23,19 @@ import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.WrongGitFlowStateException;
 import org.eclipse.egit.gitflow.op.FeatureFinishOperation;
+import org.eclipse.egit.gitflow.ui.Activator;
 import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
+import org.eclipse.egit.gitflow.ui.internal.dialogs.FinishFeatureDialog;
+import org.eclipse.egit.ui.internal.UIRepositoryUtils;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.MergeResult.MergeStatus;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * git flow feature finish
@@ -36,9 +44,34 @@ public class FeatureFinishHandler extends AbstractGitFlowHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final GitFlowRepository gfRepo = GitFlowHandlerUtil.getRepository(event);
+		String featureBranch;
+		Repository repo = gfRepo.getRepository();
 		try {
-			FeatureFinishOperation operation = new FeatureFinishOperation(gfRepo);
-			String featureBranch = gfRepo.getRepository().getBranch();
+			featureBranch = repo.getBranch();
+		} catch (IOException e) {
+			return error(e.getMessage(), e);
+		}
+
+		Shell activeShell = HandlerUtil.getActiveShell(event);
+		FinishFeatureDialog dialog = new FinishFeatureDialog(activeShell,
+				featureBranch);
+		if (dialog.open() != Window.OK) {
+			return null;
+		}
+		boolean squash = dialog.isSquash();
+
+		try {
+			try {
+				if (squash && !UIRepositoryUtils.handleUncommittedFiles(repo, activeShell))
+					return null;
+			} catch (GitAPIException e) {
+				Activator.logError(e.getMessage(), e);
+				return null;
+			}
+
+			FeatureFinishOperation operation = new FeatureFinishOperation(
+					gfRepo);
+			operation.setSquash(squash);
 			String develop = gfRepo.getConfig().getDevelop();
 
 			JobUtil.scheduleUserWorkspaceJob(operation,
