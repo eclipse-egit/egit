@@ -36,16 +36,22 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.team.core.RepositoryProvider;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ConnectProviderOperationTest extends GitTestCase {
 
 	@Test
-	public void testNoRepository() throws CoreException {
+	public void testNoRepository() throws Exception {
 
 		ConnectProviderOperation operation = new ConnectProviderOperation(
 				project.getProject(), new File("../..", Constants.DOT_GIT));
-		operation.execute(null);
+		try {
+			operation.execute(null);
+			Assert.fail("Connect without repository should fail!");
+		} catch (CoreException e) {
+			// expected
+		}
 
 		assertFalse(RepositoryProvider.isShared(project.getProject()));
 		assertFalse(gitDir.exists());
