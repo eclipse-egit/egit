@@ -25,9 +25,12 @@ import org.eclipse.egit.gitflow.WrongGitFlowStateException;
 import org.eclipse.egit.gitflow.op.FeatureFinishOperation;
 import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
+import org.eclipse.egit.gitflow.ui.internal.dialogs.FinishFeatureDialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.MergeResult.MergeStatus;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * git flow feature finish
@@ -36,9 +39,24 @@ public class FeatureFinishHandler extends AbstractFinishHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final GitFlowRepository gfRepo = GitFlowHandlerUtil.getRepository(event);
+		String featureBranch;
 		try {
-			FeatureFinishOperation operation = new FeatureFinishOperation(gfRepo);
-			String featureBranch = gfRepo.getRepository().getBranch();
+			featureBranch = gfRepo.getRepository().getBranch();
+		} catch (IOException e) {
+			return error(e.getMessage(), e);
+		}
+
+		FinishFeatureDialog dialog = new FinishFeatureDialog(
+				HandlerUtil.getActiveShell(event), featureBranch);
+		if (dialog.open() != Window.OK) {
+			return null;
+		}
+		boolean squash = dialog.isSquash();
+
+		try {
+			FeatureFinishOperation operation = new FeatureFinishOperation(
+					gfRepo);
+			operation.setSquash(squash);
 			String develop = gfRepo.getConfig().getDevelop();
 
 			JobUtil.scheduleUserWorkspaceJob(operation,
