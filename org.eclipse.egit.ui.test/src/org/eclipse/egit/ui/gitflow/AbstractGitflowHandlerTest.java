@@ -11,7 +11,13 @@ package org.eclipse.egit.ui.gitflow;
 import java.io.File;
 import java.io.IOException;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.egit.gitflow.GitFlowRepository;
+import org.eclipse.egit.gitflow.op.FeatureCheckoutOperation;
+import org.eclipse.egit.gitflow.op.FeatureStartOperation;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.ui.test.TestUtil;
+import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.AbortedByHookException;
 import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
@@ -49,6 +55,19 @@ public abstract class AbstractGitflowHandlerTest extends LocalRepositoryTestCase
 
 		Git git = Git.wrap(repository);
 		git.add().addFilepattern(".").call();
-		return git.commit().setMessage(newContent).call();
+		CommitCommand commit = git.commit().setMessage(newContent);
+		commit.setAuthor(TestUtil.TESTCOMMITTER_NAME, TestUtil.TESTCOMMITTER_EMAIL);
+		commit.setCommitter(TestUtil.TESTCOMMITTER_NAME, TestUtil.TESTCOMMITTER_EMAIL);
+		return commit.call();
+	}
+
+	protected void createFeature(String featureName) throws CoreException {
+		new FeatureStartOperation(new GitFlowRepository(repository),
+				featureName).execute(null);
+	}
+
+	protected void checkoutFeature(String featureName) throws CoreException {
+		new FeatureCheckoutOperation(new GitFlowRepository(repository),
+				featureName).execute(null);
 	}
 }

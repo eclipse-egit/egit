@@ -9,6 +9,11 @@
 package org.eclipse.egit.ui.gitflow;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+import java.util.Iterator;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.op.BranchOperation;
@@ -19,38 +24,68 @@ import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
-import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellIsActive;
 import org.eclipse.swtbot.eclipse.finder.waits.Conditions;
+import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.ui.PlatformUI;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * Tests for the Team->Gitflow->Feature Start/Finish actions
+ * Tests for the Team->Gitflow->Feature Finish action with squash option
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
-public class FeatureStartFinishHandlerTest extends AbstractGitflowHandlerTest {
+public class FeatureFinishSquashHandlerTest extends AbstractGitflowHandlerTest {
+
+	private static final String SQUASHED_COMMENT_SUMMARY = "Hello World";
 
 	@Test
-	public void testFeatureStart() throws Exception {
+	public void testFeatureFinishSquash() throws Exception {
+		int expectedCommitCount = 2;
+
 		init();
 
 		setContentAddAndCommit("bar");
+		expectedCommitCount++;
 
 		createFeature(FEATURE_NAME);
-		RevCommit featureBranchCommit = setContentAddAndCommit("foo");
+		RevCommit commit1 = setContentAddAndCommit("commit 1");
+		expectedCommitCount++;
+		RevCommit commit2 = setContentAddAndCommit("commit 2");
+		expectedCommitCount++;
 
 		checkoutBranch(DEVELOP);
 
 		checkoutFeature(FEATURE_NAME);
 
 		finishFeature();
+		expectedCommitCount--;
 
 		RevCommit developHead = new GitFlowRepository(repository).findHead();
-		assertEquals(developHead, featureBranchCommit);
+		assertNotEquals(developHead, commit1);
+		assertNotEquals(developHead, commit2);
+
+		assertEquals(expectedCommitCount, countCommits());
+
+		assertTrue(developHead.getFullMessage().startsWith(
+				SQUASHED_COMMENT_SUMMARY));
+	}
+
+	private int countCommits() throws GitAPIException, NoHeadException,
+			IOException {
+		Iterable<RevCommit> commits = Git.wrap(repository).log().all().call();
+		Iterator<RevCommit> iterator = commits.iterator();
+		int count = 0;
+
+		while (iterator.hasNext()) {
+			iterator.next();
+			count++;
+		}
+		return count;
 	}
 
 	private void finishFeature() {
@@ -66,56 +101,17 @@ public class FeatureStartFinishHandlerTest extends AbstractGitflowHandlerTest {
 				ContextMenuHelper.clickContextMenuSync(projectExplorerTree, menuPath);
 			}
 		});
+		bot.checkBox(UIText.FinishFeatureDialog_squashCheck).click();
+		bot.button("OK").click();
+		int firstLine = 0;
+		bot.styledText().selectLine(firstLine);
+		bot.styledText().typeText(SQUASHED_COMMENT_SUMMARY);
 		bot.button("OK").click();
 		bot.waitUntil(Conditions.waitForJobs(JobFamilies.GITFLOW_FAMILY, "Git flow jobs"));
 	}
 
 	private void init() throws CoreException {
 		new InitOperation(repository).execute(null);
-	}
-
-	@Override
-	protected void createFeature(String featureName) {
-		final SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
-		getProjectItem(projectExplorerTree, PROJ1).select();
-		final String[] menuPath = new String[] {
-				util.getPluginLocalizedValue("TeamMenu.label"),
-				util.getPluginLocalizedValue("TeamGitFlowMenu.name", false, Activator.getDefault().getBundle()),
-				util.getPluginLocalizedValue("TeamGitFlowFeatureStart.name", false, Activator.getDefault().getBundle()) };
-
-		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				ContextMenuHelper.clickContextMenuSync(projectExplorerTree, menuPath);
-			}
-		});
-
-		bot.waitUntil(shellIsActive(UIText.FeatureStartHandler_provideFeatureName));
-		bot.text().typeText(featureName);
-		bot.button("OK").click();
-		bot.waitUntil(Conditions.waitForJobs(JobFamilies.GITFLOW_FAMILY, "Git flow jobs"));
-	}
-
-	@Override
-	public void checkoutFeature(String featureName) {
-		final SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
-		getProjectItem(projectExplorerTree, PROJ1).select();
-		final String[] menuPath = new String[] {
-				util.getPluginLocalizedValue("TeamMenu.label"),
-				util.getPluginLocalizedValue("TeamGitFlowMenu.name", false, Activator.getDefault().getBundle()),
-				util.getPluginLocalizedValue("TeamGitFlowFeatureCheckout.name", false, Activator.getDefault().getBundle()) };
-
-		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				ContextMenuHelper.clickContextMenuSync(projectExplorerTree, menuPath);
-			}
-		});
-
-		bot.waitUntil(shellIsActive(UIText.FeatureCheckoutHandler_selectFeature));
-		bot.table().select(featureName);
-		bot.button("OK").click();
-		bot.waitUntil(Conditions.waitForJobs(JobFamilies.GITFLOW_FAMILY, "Git flow jobs"));
 	}
 
 	private void checkoutBranch(String branchToCheckout) throws CoreException {
