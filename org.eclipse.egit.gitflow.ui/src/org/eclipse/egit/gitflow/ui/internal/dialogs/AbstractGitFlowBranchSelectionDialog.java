@@ -6,7 +6,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package org.eclipse.egit.gitflow.ui.internal.dialog;
+package org.eclipse.egit.gitflow.ui.internal.dialogs;
 
 import java.util.ArrayList;
 import java.util.List;
