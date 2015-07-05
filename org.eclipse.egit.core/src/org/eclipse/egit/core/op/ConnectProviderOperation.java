@@ -16,10 +16,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.core.resources.IContainer;
@@ -28,11 +28,9 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.MultiRule;
@@ -52,7 +50,7 @@ import org.eclipse.team.core.RepositoryProvider;
  * Connects Eclipse to an existing Git repository
  */
 public class ConnectProviderOperation implements IEGitOperation {
-	private final Map<IProject, File> projects = new HashMap<IProject, File>();
+	private final Map<IProject, File> projects = new LinkedHashMap<IProject, File>();
 
 	/**
 	 * Create a new connection operation to execute within the workspace.
@@ -89,9 +87,6 @@ public class ConnectProviderOperation implements IEGitOperation {
 		this.projects.putAll(projects);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.egit.core.op.IEGitOperation#execute(org.eclipse.core.runtime.IProgressMonitor)
-	 */
 	public void execute(IProgressMonitor m) throws CoreException {
 		IProgressMonitor monitor;
 		if (m == null) {
@@ -102,73 +97,83 @@ public class ConnectProviderOperation implements IEGitOperation {
 
 		monitor.beginTask(CoreText.ConnectProviderOperation_connecting,
 				100 * projects.size());
+		MultiStatus ms = new MultiStatus(Activator.getPluginId(), 0,
+				CoreText.ConnectProviderOperation_ConnectErrors, null);
 		try {
-
-			for (Iterator iterator = projects.keySet().iterator(); iterator.hasNext();) {
-				IProject project = (IProject) iterator.next();
-				monitor.setTaskName(NLS.bind(
-						CoreText.ConnectProviderOperation_ConnectingProject,
-						project.getName()));
-				// TODO is this the right location?
-				if (GitTraceLocation.CORE.isActive())
-					GitTraceLocation.getTrace().trace(
-							GitTraceLocation.CORE.getLocation(),
-							"Locating repository for " + project); //$NON-NLS-1$
-
-				RepositoryFinder finder = new RepositoryFinder(project);
-				finder.setFindInChildren(false);
-				Collection<RepositoryMapping> repos = finder.find(new SubProgressMonitor(monitor, 40));
-				File suggestedRepo = projects.get(project);
-				RepositoryMapping actualMapping= findActualRepository(repos, suggestedRepo);
-				if (actualMapping != null) {
-					GitProjectData projectData = new GitProjectData(project);
-					try {
-						projectData.setRepositoryMappings(Arrays.asList(actualMapping));
-						projectData.store();
-						GitProjectData.add(project, projectData);
-					} catch (CoreException ce) {
-						try {
-							GitProjectData.delete(project);
-						} catch (IOException e) {
-							MultiStatus status = new MultiStatus(
-									Activator.getPluginId(), IStatus.ERROR,
-									e.getMessage(), e);
-							status.add(new Status(IStatus.ERROR, Activator
-									.getPluginId(), ce.getMessage(), ce));
-							throw new CoreException(status);
-						}
-						throw ce;
-					} catch (RuntimeException ce) {
-						try {
-							GitProjectData.delete(project);
-						} catch (IOException e) {
-							MultiStatus status = new MultiStatus(
-									Activator.getPluginId(), IStatus.ERROR,
-									e.getMessage(), e);
-							status.add(new Status(IStatus.ERROR, Activator
-									.getPluginId(), ce.getMessage(), ce));
-							throw new CoreException(status);
-					}
-						throw ce;
-					}
-					RepositoryProvider
-							.map(project, GitProvider.class.getName());
-					autoIgnoreDerivedResources(project, monitor);
-					project.refreshLocal(IResource.DEPTH_INFINITE,
-							new SubProgressMonitor(monitor, 50));
-					monitor.worked(10);
-				} else {
-					// TODO is this the right location?
-					if (GitTraceLocation.CORE.isActive())
-						GitTraceLocation.getTrace().trace(
-								GitTraceLocation.CORE.getLocation(),
-								"Attempted to share project without repository ignored :" //$NON-NLS-1$
-										+ project);
-					monitor.worked(60);
-				}
+			for (Entry<IProject, File> entry : projects.entrySet()) {
+				connectProject(entry, ms, monitor);
 			}
 		} finally {
 			monitor.done();
+		}
+		if (!ms.isOK()) {
+			throw new CoreException(ms);
+		}
+	}
+
+	private void connectProject(Entry<IProject, File> entry, MultiStatus ms,
+			IProgressMonitor monitor) throws CoreException {
+		IProject project = entry.getKey();
+
+		String taskName = NLS.bind(
+				CoreText.ConnectProviderOperation_ConnectingProject,
+				project.getName());
+		monitor.setTaskName(taskName);
+
+		if (GitTraceLocation.CORE.isActive()) {
+			GitTraceLocation.getTrace()
+					.trace(GitTraceLocation.CORE.getLocation(), taskName);
+		}
+
+		RepositoryFinder finder = new RepositoryFinder(project);
+		finder.setFindInChildren(false);
+		Collection<RepositoryMapping> repos = finder
+				.find(new SubProgressMonitor(monitor, 40));
+		if (repos.isEmpty()) {
+			ms.add(Activator.error(NLS.bind(
+					CoreText.ConnectProviderOperation_NoRepositoriesError,
+					project.getName()), null));
+			monitor.worked(60);
+			return;
+		}
+		RepositoryMapping actualMapping = findActualRepository(repos,
+				entry.getValue());
+		if (actualMapping == null) {
+			ms.add(Activator.error(NLS.bind(
+					CoreText.ConnectProviderOperation_UnexpectedRepositoryError,
+					new Object[] { project.getName(),
+							entry.getValue().toString(), repos.toString() }),
+					null));
+
+			monitor.worked(60);
+			return;
+		}
+		GitProjectData projectData = new GitProjectData(project);
+		try {
+			projectData.setRepositoryMappings(Arrays.asList(actualMapping));
+			projectData.store();
+			GitProjectData.add(project, projectData);
+		} catch (CoreException ce) {
+			ms.add(ce.getStatus());
+			deleteGitProvider(ms, project);
+			return;
+		} catch (RuntimeException ce) {
+			ms.add(Activator.error(ce.getMessage(), ce));
+			deleteGitProvider(ms, project);
+			return;
+		}
+		RepositoryProvider.map(project, GitProvider.ID);
+		autoIgnoreDerivedResources(project, monitor);
+		project.refreshLocal(IResource.DEPTH_INFINITE,
+				new SubProgressMonitor(monitor, 50));
+		monitor.worked(10);
+	}
+
+	private void deleteGitProvider(MultiStatus ms, IProject project) {
+		try {
+			GitProjectData.delete(project);
+		} catch (IOException e) {
+			ms.add(Activator.error(e.getMessage(), e));
 		}
 	}
 
@@ -198,9 +203,6 @@ public class ConnectProviderOperation implements IEGitOperation {
 		return derived;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.egit.core.op.IEGitOperation#getSchedulingRule()
-	 */
 	public ISchedulingRule getSchedulingRule() {
 		Set<IProject> projectSet = projects.keySet();
 		return new MultiRule(projectSet.toArray(new IProject[projectSet.size()]));
