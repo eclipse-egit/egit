@@ -617,64 +617,53 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		scheduleRefresh(0);
 	}
 
-	private Job scheduleRefresh(long delay) {
-		boolean trace = GitTraceLocation.REPOSITORIESVIEW.isActive();
-		if (trace)
-			GitTraceLocation.getTrace().trace(
-					GitTraceLocation.REPOSITORIESVIEW.getLocation(),
-					"Entering scheduleRefresh()"); //$NON-NLS-1$
+	private void trace(String message) {
+		GitTraceLocation.getTrace().trace(
+				GitTraceLocation.REPOSITORIESVIEW.getLocation(), message);
+	}
 
-		if (scheduledJob != null
-				&& (scheduledJob.getState() == Job.RUNNING
-						|| scheduledJob.getState() == Job.WAITING || scheduledJob
-						.getState() == Job.SLEEPING)) {
-			if (trace)
-				GitTraceLocation.getTrace().trace(
-						GitTraceLocation.REPOSITORIESVIEW.getLocation(),
-						"Pending refresh job, returning"); //$NON-NLS-1$
-			return scheduledJob;
+	private Job scheduleRefresh(long delay) {
+		if (GitTraceLocation.REPOSITORIESVIEW.isActive()) {
+			trace("Entering scheduleRefresh()"); //$NON-NLS-1$
 		}
 
-		final CommonViewer tv = getCommonViewer();
-		final boolean needsNewInput = lastInputChange > lastInputUpdate;
-
-		if (trace)
-			GitTraceLocation.getTrace().trace(
-					GitTraceLocation.REPOSITORIESVIEW.getLocation(),
-					"New input required: " + needsNewInput); //$NON-NLS-1$
+		if (scheduledJob != null) {
+			schedule(scheduledJob, delay);
+			return scheduledJob;
+		}
 
 		Job job = new Job("Refreshing Git Repositories view") { //$NON-NLS-1$
 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				boolean actTrace = GitTraceLocation.REPOSITORIESVIEW.isActive();
-				if (actTrace)
-					GitTraceLocation.getTrace().trace(
-							GitTraceLocation.REPOSITORIESVIEW.getLocation(),
-							"Running the update"); //$NON-NLS-1$
+				final boolean trace = GitTraceLocation.REPOSITORIESVIEW
+						.isActive();
+				final boolean needsNewInput = lastInputChange > lastInputUpdate;
+				if (trace) {
+					trace("Running the update, new input required: " //$NON-NLS-1$
+									+ (lastInputChange > lastInputUpdate));
+				}
 				lastInputUpdate = System.currentTimeMillis();
-				if (needsNewInput)
+				if (needsNewInput) {
 					initRepositoriesAndListeners();
+				}
 
-				if (!UIUtils.isUsable(tv))
+				final CommonViewer tv = getCommonViewer();
+				if (!UIUtils.isUsable(tv)) {
 					return Status.CANCEL_STATUS;
+				}
 				PlatformUI.getWorkbench().getDisplay()
-						.asyncExec(new Runnable() {
+						.syncExec(new Runnable() {
 					@Override
 					public void run() {
-						if (!UIUtils.isUsable(tv))
+						if (!UIUtils.isUsable(tv)) {
 							return;
-						long start = 0;
-						boolean traceActive = GitTraceLocation.REPOSITORIESVIEW
-								.isActive();
-						if (traceActive) {
-							start = System.currentTimeMillis();
-							GitTraceLocation.getTrace().trace(
-									GitTraceLocation.REPOSITORIESVIEW
-											.getLocation(),
-									"Starting async update job"); //$NON-NLS-1$
 						}
-
+						long start = 0;
+						if (trace) {
+							start = System.currentTimeMillis();
+							trace("Starting async update job"); //$NON-NLS-1$
+						}
 
 						if (needsNewInput) {
 							// keep expansion state and selection so that we can
@@ -684,8 +673,9 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 							tv.setInput(ResourcesPlugin.getWorkspace()
 									.getRoot());
 							tv.setExpandedElements(expanded);
-						} else
+						} else {
 							tv.refresh(true);
+						}
 
 						IViewPart part = PlatformUI.getWorkbench()
 								.getActiveWorkbenchWindow().getActivePage()
@@ -693,27 +683,27 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 						if (part instanceof PropertySheet) {
 							PropertySheet sheet = (PropertySheet) part;
 							IPage page = sheet.getCurrentPage();
-							if (page instanceof PropertySheetPage)
+							if (page instanceof PropertySheetPage) {
 								((PropertySheetPage) page).refresh();
+							}
 						}
-						if (traceActive)
-							GitTraceLocation
-									.getTrace()
-									.trace(
-											GitTraceLocation.REPOSITORIESVIEW
-													.getLocation(),
-											"Ending async update job after " + (System.currentTimeMillis() - start) + " ms"); //$NON-NLS-1$ //$NON-NLS-2$
-						if (!repositories.isEmpty())
+						if (trace) {
+							trace("Ending async update job after " //$NON-NLS-1$
+									+ (System.currentTimeMillis() - start)
+									+ " ms"); //$NON-NLS-1$
+						}
+						if (!repositories.isEmpty()) {
 							layout.topControl = getCommonViewer().getControl();
-						else
+						} else {
 							layout.topControl = emptyArea;
+						}
 						emptyArea.getParent().layout(true, true);
 					}
 				});
 
 				if (lastInputChange > lastInputUpdate
 						|| lastRepositoryChange > lastInputUpdate) {
-					if (actTrace)
+					if (trace)
 						GitTraceLocation.getTrace()
 								.trace(
 										GitTraceLocation.REPOSITORIESVIEW
@@ -734,16 +724,21 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		};
 		job.setSystem(true);
 
-		IWorkbenchSiteProgressService service = CommonUtils.getService(getSite(), IWorkbenchSiteProgressService.class);
-
-		if (trace)
-			GitTraceLocation.getTrace().trace(
-					GitTraceLocation.REPOSITORIESVIEW.getLocation(),
-					"Scheduling refresh job"); //$NON-NLS-1$
-		service.schedule(job, delay);
+		schedule(job, delay);
 
 		scheduledJob = job;
 		return scheduledJob;
+	}
+
+	private void schedule(Job job, long delay) {
+		IWorkbenchSiteProgressService service = CommonUtils.getService(getSite(), IWorkbenchSiteProgressService.class);
+
+		if (GitTraceLocation.REPOSITORIESVIEW.isActive()) {
+			GitTraceLocation.getTrace().trace(
+					GitTraceLocation.REPOSITORIESVIEW.getLocation(),
+					"Scheduling refresh job"); //$NON-NLS-1$
+		}
+		service.schedule(job, delay);
 	}
 
 	private void unregisterRepositoryListener() {
