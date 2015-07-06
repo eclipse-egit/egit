@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f6139c_776ca427",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-07-06T07:28:42Z",
+      "side": 1,
+      "message": "For me it look\u0027s strange that somebody who was previously calling isIgnored() to find out whether a path is ignored is now guided to use a method \"canBeAutoIgnored()\". I like the new method canBeAutoIgnored() but I can imagine that in future we have more arguments why pathes should be auto-ignoreable or not. The fact whether a path is already in the ignored resources is only one argument.\n\nTherefore I would like to seperate the questions isIgnored() and canBeAutIgnored(). I suggest that we only update the javadoc of this method saying that it only works on existing pathes. In the end I think we need both methods.",
+      "revId": "11524efe06b74be348728cfa919263edaac73c17",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
