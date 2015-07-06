@@ -624,14 +624,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 					GitTraceLocation.REPOSITORIESVIEW.getLocation(),
 					"Entering scheduleRefresh()"); //$NON-NLS-1$
 
-		if (scheduledJob != null
-				&& (scheduledJob.getState() == Job.RUNNING
-						|| scheduledJob.getState() == Job.WAITING || scheduledJob
-						.getState() == Job.SLEEPING)) {
-			if (trace)
-				GitTraceLocation.getTrace().trace(
-						GitTraceLocation.REPOSITORIESVIEW.getLocation(),
-						"Pending refresh job, returning"); //$NON-NLS-1$
+		if (scheduledJob != null) {
+			schedule(scheduledJob, delay);
 			return scheduledJob;
 		}
 
@@ -734,16 +728,21 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		};
 		job.setSystem(true);
 
-		IWorkbenchSiteProgressService service = CommonUtils.getService(getSite(), IWorkbenchSiteProgressService.class);
-
-		if (trace)
-			GitTraceLocation.getTrace().trace(
-					GitTraceLocation.REPOSITORIESVIEW.getLocation(),
-					"Scheduling refresh job"); //$NON-NLS-1$
-		service.schedule(job, delay);
+		schedule(job, delay);
 
 		scheduledJob = job;
 		return scheduledJob;
+	}
+
+	private void schedule(Job job, long delay) {
+		IWorkbenchSiteProgressService service = CommonUtils.getService(getSite(), IWorkbenchSiteProgressService.class);
+
+		if (GitTraceLocation.REPOSITORIESVIEW.isActive()) {
+			GitTraceLocation.getTrace().trace(
+					GitTraceLocation.REPOSITORIESVIEW.getLocation(),
+					"Scheduling refresh job"); //$NON-NLS-1$
+		}
+		service.schedule(job, delay);
 	}
 
 	private void unregisterRepositoryListener() {
