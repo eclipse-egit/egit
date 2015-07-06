@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f6139c_806c6828",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-07-06T23:16:41Z",
+      "side": 1,
+      "message": "I don\u0027t understand the two cases you mention here left and right of the \"or\". The index is not inspected and doesn\u0027t play a role, I wouldn\u0027t mention it. I would simply say: ... This method returns false for pathes to not existing files or directories.",
+      "range": {
+        "startLine": 469,
+        "startChar": 23,
+        "endLine": 471,
+        "endChar": 15
+      },
+      "revId": "547f6fab1904e0fdb98263186b84a122fa6db40a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
