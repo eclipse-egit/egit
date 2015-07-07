@@ -318,7 +318,13 @@ public class ConfigurationEditorComponent {
 				AddConfigEntryDialog dlg = new AddConfigEntryDialog(getShell(),
 						suggestedKey);
 				if (dlg.open() == Window.OK) {
-					StringTokenizer st = new StringTokenizer(dlg.getKey(), DOT);
+					String result = dlg.getKey();
+					if (result == null) {
+						// bug in swt bot, see
+						// https://bugs.eclipse.org/bugs/show_bug.cgi?id=472110
+						return;
+					}
+					StringTokenizer st = new StringTokenizer(result, DOT);
 					if (st.countTokens() == 2) {
 						String sectionName = st.nextToken();
 						String entryName = st.nextToken();
