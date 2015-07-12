@@ -3830,7 +3830,7 @@
                <visibleWhen
                      checkEnabled="false">
                   <test
-                        property="GitSelection.projectSingleRepository">
+                        property="GitSelection.projectsWithRepositories">
                   </test>
                </visibleWhen>
             </command>
