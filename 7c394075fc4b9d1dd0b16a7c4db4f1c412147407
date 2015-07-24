@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_daf2a30c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-07-24T21:24:13Z",
+      "side": 1,
+      "message": "- style nit: we link to the bug in the commit message footer (and not in the header) as described in [1]\n- the commit message header is too wide (see the warning in the staging view or commit message dialog)\n- style nit: remove trailing whitespace\n- in the commit message header describe what the change fixes, so better: \"Fix unexpected tab order in push dialog\u0027s \"Push refspec\" page\"\n\n[1] https://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "revId": "7c394075fc4b9d1dd0b16a7c4db4f1c412147407",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
