@@ -213,6 +213,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private IMemento memento;
 
+	private ISelection initialSelection;
+
 	private FormToolkit toolkit;
 
 	private Form form;
@@ -581,6 +583,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 			throws PartInitException {
 		super.init(site, viewMemento);
 		this.memento = viewMemento;
+		initialSelection = site.getWorkbenchWindow().getSelectionService()
+				.getSelection();
 	}
 
 	@Override
@@ -1057,6 +1061,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		stagedViewer.addFilter(filter);
 
 		restoreSashFormWeights();
+		reactOnInitialSelection();
 
 		IWorkbenchSiteProgressService service = CommonUtils.getService(
 				getSite(), IWorkbenchSiteProgressService.class);
@@ -1073,6 +1078,12 @@ public class StagingView extends ViewPart implements IShowInSource {
 					MEMENTO_HORIZONTAL_SASH_FORM_WEIGHT);
 			restoreSashFormWeights(stagingSashForm,
 					MEMENTO_STAGING_SASH_FORM_WEIGHT);
+		}
+	}
+
+	private void reactOnInitialSelection() {
+		if (initialSelection instanceof StructuredSelection) {
+			reactOnSelection((StructuredSelection) initialSelection);
 		}
 	}
 
