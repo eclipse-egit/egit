@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_fa720705",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2015-07-24T21:14:04Z",
+      "side": 1,
+      "message": "Add Bug number here",
+      "revId": "85cac832849d1b5204c0485f5b8e9004a6073d3e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
