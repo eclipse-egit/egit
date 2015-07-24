@@ -4619,7 +4619,7 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesLinkWithSelection"
-            icon="icons/elcl16/synced.gif">
+            icon="icons/elcl16/synced.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.ShowRepositoriesView"
