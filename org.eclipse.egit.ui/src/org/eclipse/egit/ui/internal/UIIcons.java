@@ -342,7 +342,7 @@ public class UIIcons {
 		ELCL16_TRASH = map("elcl16/trash.gif"); //$NON-NLS-1$
 		ELCL16_CLEAR = map("elcl16/clear.gif"); //$NON-NLS-1$
 		ELCL16_REFRESH = map("elcl16/refresh.gif"); //$NON-NLS-1$
-		ELCL16_SYNCED = map("elcl16/synced.gif"); //$NON-NLS-1$
+		ELCL16_SYNCED = map("elcl16/synced.png"); //$NON-NLS-1$
 		ELCL16_FILTER = map("elcl16/filter_ps.gif"); //$NON-NLS-1$
 		ELCL16_ID = map("elcl16/sha1.gif"); //$NON-NLS-1$
 		CHECKBOX_ENABLED_CHECKED = map("checkboxes/enabled_checked.gif"); //$NON-NLS-1$
