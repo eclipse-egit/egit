@@ -11,6 +11,7 @@ package org.eclipse.egit.gitflow.ui.internal.actions;
 import static org.eclipse.egit.gitflow.ui.Activator.error;
 
 import java.io.IOException;
+import java.util.Collections;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -20,16 +21,21 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.internal.job.JobUtil;
+import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.WrongGitFlowStateException;
 import org.eclipse.egit.gitflow.op.FeatureFinishOperation;
 import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.gitflow.ui.internal.dialogs.FinishFeatureDialog;
+import org.eclipse.egit.ui.internal.commit.CommitHelper;
+import org.eclipse.egit.ui.internal.dialogs.CommitDialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.MergeResult.MergeStatus;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -46,8 +52,9 @@ public class FeatureFinishHandler extends AbstractGitFlowHandler {
 			return error(e.getMessage(), e);
 		}
 
+		Shell activeShell = HandlerUtil.getActiveShell(event);
 		FinishFeatureDialog dialog = new FinishFeatureDialog(
-				HandlerUtil.getActiveShell(event), featureBranch);
+				activeShell, featureBranch);
 		if (dialog.open() != Window.OK) {
 			return null;
 		}
@@ -66,6 +73,11 @@ public class FeatureFinishHandler extends AbstractGitFlowHandler {
 			jobMan.join(JobFamilies.GITFLOW_FAMILY, null);
 
 			MergeResult mergeResult = operation.getMergeResult();
+
+			if (squash && mergeResult.getMergedCommits().length > 1) {
+				rewordCommitMessage(activeShell, gfRepo);
+			}
+
 			MergeStatus mergeStatus = mergeResult.getMergeStatus();
 			if (MergeStatus.CONFLICTING.equals(mergeStatus)) {
 				MultiStatus status = createMergeConflictInfo(develop, featureBranch, mergeResult);
@@ -77,5 +89,23 @@ public class FeatureFinishHandler extends AbstractGitFlowHandler {
 		}
 
 		return null;
+	}
+
+	private void rewordCommitMessage(Shell activeShell,
+			final GitFlowRepository gfRepo) throws CoreException {
+		Repository repository = gfRepo.getRepository();
+		CommitHelper commitHelper = new CommitHelper(repository);
+		CommitDialog commitDialog = new CommitDialog(activeShell);
+		commitDialog.setAmending(true);
+		commitDialog.setFiles(repository, Collections.<String> emptySet(), null);
+		commitDialog.setCommitter(commitHelper.getCommitter());
+
+		if (Window.OK == commitDialog.open()) {
+			CommitOperation commitOperation = new CommitOperation(repository,
+					commitHelper.getAuthor(), commitHelper.getCommitter(),
+					commitDialog.getCommitMessage());
+			commitOperation.setAmending(true);
+			commitOperation.execute(null);
+		}
 	}
 }
