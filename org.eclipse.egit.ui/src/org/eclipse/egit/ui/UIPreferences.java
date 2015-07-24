@@ -6,6 +6,7 @@
  * Copyright (C) 2012, Daniel Megert <daniel_megert@ch.ibm.com>
  * Copyright (C) 2013, Tobias Pfeifer <to.pfeifer@sap.com>
  * Copyright (C) 2014, Marc Khouzam <marc.khouzam@ericsson.com>
+ * Copyright (C) 2015, Jan-Ove Weichel <ovi.weichel@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -201,6 +202,8 @@ public class UIPreferences {
 	public static final String STAGING_VIEW_COLUMN_LAYOUT = "StagingView_ColumnLayout"; //$NON-NLS-1$
 	/** */
 	public static final String STAGING_VIEW_SYNC_SELECTION = "StagingView_SyncWithSelection"; //$NON-NLS-1$
+	/**	 */
+	public static final String STAGING_VIEW_COMPARE_MODE = "StagingView_CompareMode"; //$NON-NLS-1$
 	/** */
 	public static final String STAGING_VIEW_FILENAME_MODE = "StagingView_FileNameMode"; //$NON-NLS-1$
 	/** */
