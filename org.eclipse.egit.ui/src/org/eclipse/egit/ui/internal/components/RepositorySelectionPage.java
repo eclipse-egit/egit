@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
@@ -554,7 +555,8 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 					}
 				// if nothing else, we start the search from the default folder for repositories
 				if (EMPTY_STRING.equals(dialog.getFilterPath()))
-					dialog.setFilterPath(UIUtils.getDefaultRepositoryDir());
+					dialog.setFilterPath(
+							RepositoryUtil.getDefaultRepositoryDir());
 				String result = dialog.open();
 				if (result != null)
 					uriText.setText("file:///" + result); //$NON-NLS-1$

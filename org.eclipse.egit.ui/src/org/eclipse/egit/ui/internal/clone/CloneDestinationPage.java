@@ -17,10 +17,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.jface.dialogs.Dialog;
@@ -448,13 +447,8 @@ public class CloneDestinationPage extends WizardPage {
 			// update repo-related selection only if it changed
 			final String n = validatedRepoSelection.getURI().getHumanishName();
 			setDescription(NLS.bind(UIText.CloneDestinationPage_description, n));
-			String defaultRepoDir = UIUtils.getDefaultRepositoryDir();
-			File parentDir;
-			if (defaultRepoDir.length() > 0)
-				parentDir = new File(defaultRepoDir);
-			else
-				parentDir = ResourcesPlugin.getWorkspace().getRoot()
-						.getRawLocation().toFile();
+			String defaultRepoDir = RepositoryUtil.getDefaultRepositoryDir();
+			File parentDir = new File(defaultRepoDir);
 			directoryText.setText(new File(parentDir, n).getAbsolutePath());
 		}
 

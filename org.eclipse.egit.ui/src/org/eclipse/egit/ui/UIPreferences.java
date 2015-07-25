@@ -157,13 +157,6 @@ public class UIPreferences {
 	/** Holds true if the logical model should be used. */
 	public static final String USE_LOGICAL_MODEL = "enable_logical_model"; //$NON-NLS-1$
 
-	/**
-	 * When reading this preference, use
-	 * {@link UIUtils#getDefaultRepositoryDir()} instead (for variable
-	 * substitution).
-	 */
-	public static final String DEFAULT_REPO_DIR = "default_repository_dir"; //$NON-NLS-1$
-
 	/** */
 	public static final String MERGE_MODE = "merge_mode"; //$NON-NLS-1$
 	/** */

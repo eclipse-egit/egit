@@ -24,13 +24,19 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.core.variables.IStringVariableManager;
+import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.CheckoutEntry;
 import org.eclipse.jgit.lib.Constants;
@@ -79,6 +85,63 @@ public class RepositoryUtil {
 	void dispose() {
 		commitMappingCache.clear();
 		repositoryNameCache.clear();
+	}
+
+	/**
+	 * @return The default repository directory as configured in the
+	 *         preferences, with variables substituted. Returns workspace
+	 *         location if there was an error during substitution.
+	 */
+	@NonNull
+	public static String getDefaultRepositoryDir() {
+		String key = GitCorePreferences.core_defaultRepositoryDir;
+		String dir = migrateRepoRootPreference();
+		IEclipsePreferences p = InstanceScope.INSTANCE
+				.getNode(Activator.getPluginId());
+		if (dir == null) {
+			dir = p.get(key, getDefaultDefaultRepositoryDir());
+		} else {
+			p.put(key, dir);
+		}
+		IStringVariableManager manager = VariablesPlugin.getDefault()
+				.getStringVariableManager();
+		String result;
+		try {
+			result = manager.performStringSubstitution(dir);
+		} catch (CoreException e) {
+			result = ""; //$NON-NLS-1$
+		}
+		if (result == null || result.isEmpty()) {
+			result = ResourcesPlugin.getWorkspace().getRoot().getRawLocation()
+					.toOSString();
+		}
+		return result;
+	}
+
+	@NonNull
+	static String getDefaultDefaultRepositoryDir() {
+		return new File(FS.DETECTED.userHome(), "git").getPath(); //$NON-NLS-1$
+	}
+
+	/**
+	 * Prior to 4.1 the preference was hosted in the UI plugin. So if this one
+	 * exists, we remove it from there and return. Otherwise null is returned.
+	 *
+	 * @return previously existing UI preference or null
+	 */
+	@Nullable
+	private static String migrateRepoRootPreference() {
+		IEclipsePreferences p = InstanceScope.INSTANCE
+				.getNode("org.eclipse.egit.ui"); //$NON-NLS-1$
+		String deprecatedUiKey = "default_repository_dir"; //$NON-NLS-1$
+		String value = p.get(deprecatedUiKey, null);
+		if (value != null && value.isEmpty()) {
+			value = null;
+		}
+		if (value != null) {
+			p.remove(deprecatedUiKey);
+		}
+		return value;
 	}
 
 	/**
@@ -286,7 +349,7 @@ public class RepositoryUtil {
 			return ""; //$NON-NLS-1$
 
 		synchronized (repositoryNameCache) {
-			final String path = dir.getPath().toString();
+			final String path = dir.getPath();
 			String name = repositoryNameCache.get(path);
 			if (name != null)
 				return name;
