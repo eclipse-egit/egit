@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Tobias Baumann <tobbaumann@gmail.com> - Bug 373969
+ *    Tobias Baumann <tobbaumann@gmail.com> - Bug 373969, 473544
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.staging;
 
@@ -213,6 +213,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private IMemento memento;
 
+	private ISelection initialSelection;
+
 	private FormToolkit toolkit;
 
 	private Form form;
@@ -392,18 +394,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				return;
 			}
 			IWorkbenchPart part = partRef.getPart(false);
-			StructuredSelection sel = null;
-			if (part instanceof IEditorPart) {
-				IResource resource = getResource((IEditorPart) part);
-				if (resource != null) {
-					sel = new StructuredSelection(resource);
-				}
-			} else {
-				ISelection selection = partRef.getPage().getSelection();
-				if (selection instanceof StructuredSelection) {
-					sel = (StructuredSelection) selection;
-				}
-			}
+			StructuredSelection sel = getSelectionOfPart(part);
 			if (isViewHidden) {
 				// remember last selection in the part so that we can
 				// synchronize on it as soon as we will be visible
@@ -415,15 +406,6 @@ public class StagingView extends ViewPart implements IShowInSource {
 				}
 			}
 
-		}
-
-		private IResource getResource(IEditorPart part) {
-			IEditorInput input = part.getEditorInput();
-			if (input instanceof IFileEditorInput) {
-				return ((IFileEditorInput) input).getFile();
-			} else {
-				return CommonUtils.getAdapter(input, IResource.class);
-			}
 		}
 
 		private void updateHiddenState(IWorkbenchPartReference partRef,
@@ -583,6 +565,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 			throws PartInitException {
 		super.init(site, viewMemento);
 		this.memento = viewMemento;
+		this.initialSelection = site.getWorkbenchWindow().getSelectionService()
+				.getSelection();
 	}
 
 	@Override
@@ -1059,6 +1043,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		stagedViewer.addFilter(filter);
 
 		restoreSashFormWeights();
+		reactOnInitialSelection();
 
 		IWorkbenchSiteProgressService service = CommonUtils.getService(
 				getSite(), IWorkbenchSiteProgressService.class);
@@ -1092,6 +1077,52 @@ public class StagingView extends ViewPart implements IShowInSource {
 			ints[i] = Integer.valueOf(parts[i]).intValue();
 		}
 		return ints;
+	}
+
+	private void reactOnInitialSelection() {
+		StructuredSelection sel = null;
+		if (initialSelection instanceof StructuredSelection) {
+			sel = (StructuredSelection) initialSelection;
+		} else if (initialSelection != null && !initialSelection.isEmpty()) {
+			sel = getSelectionOfActiveEditor();
+		}
+		if (sel != null) {
+			reactOnSelection(sel);
+		}
+		initialSelection = null;
+	}
+
+	private StructuredSelection getSelectionOfActiveEditor() {
+		IEditorPart activeEditor = getSite().getPage().getActiveEditor();
+		if (activeEditor == null) {
+			return null;
+		}
+		return getSelectionOfPart(activeEditor);
+	}
+
+	private static StructuredSelection getSelectionOfPart(IWorkbenchPart part) {
+		StructuredSelection sel = null;
+		if (part instanceof IEditorPart) {
+			IResource resource = getResource((IEditorPart) part);
+			if (resource != null) {
+				sel = new StructuredSelection(resource);
+			}
+		} else {
+			ISelection selection = part.getSite().getPage().getSelection();
+			if (selection instanceof StructuredSelection) {
+				sel = (StructuredSelection) selection;
+			}
+		}
+		return sel;
+	}
+
+	private static IResource getResource(IEditorPart part) {
+		IEditorInput input = part.getEditorInput();
+		if (input instanceof IFileEditorInput) {
+			return ((IFileEditorInput) input).getFile();
+		} else {
+			return CommonUtils.getAdapter(input, IResource.class);
+		}
 	}
 
 	private void executeRebaseOperation(AbstractRebaseCommandHandler command) {
