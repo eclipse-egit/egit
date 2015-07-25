@@ -14,8 +14,10 @@ package org.eclipse.egit.ui.internal.preferences;
 import java.io.File;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.core.variables.IStringVariableManager;
 import org.eclipse.core.variables.VariablesPlugin;
+import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
@@ -38,6 +40,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 /** Root preference page for the all of our workspace preferences. */
 public class GitPreferenceRoot extends FieldEditorPreferencePage implements
@@ -84,11 +87,24 @@ public class GitPreferenceRoot extends FieldEditorPreferencePage implements
 		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
 				.applyTo(cloningGroup);
 		DirectoryFieldEditor editor = new DirectoryFieldEditor(
-				UIPreferences.DEFAULT_REPO_DIR,
+				GitCorePreferences.core_defaultRepositoryDir,
 				UIText.GitPreferenceRoot_DefaultRepoFolderLabel, cloningGroup) {
 
 			/** The own control is the variableButton */
 			private static final int NUMBER_OF_OWN_CONTROLS = 1;
+
+			@Override
+			public void setPreferenceStore(IPreferenceStore store) {
+				if (store == null) {
+					// allow reset store on dispose
+					super.setPreferenceStore(store);
+				} else if (getPreferenceStore() == null) {
+					// only allow set store once, to the egit core version
+					super.setPreferenceStore(new ScopedPreferenceStore(
+							InstanceScope.INSTANCE,
+							org.eclipse.egit.core.Activator.getPluginId()));
+				}
+			}
 
 			@Override
 			protected boolean doCheckState() {
