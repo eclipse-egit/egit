@@ -33,4 +33,12 @@ public class GitCorePreferences {
 	/** */
 	public static final String core_autoIgnoreDerivedResources =
 		"core_autoIgnoreDerivedResources"; //$NON-NLS-1$
+
+	/**
+	 * When reading this preference, use
+	 * {@link RepositoryUtil#getDefaultRepositoryDir()} instead, (for variable
+	 * substitution).
+	 */
+	public static final String core_defaultRepositoryDir =
+		"core_defaultRepositoryDir"; //$NON-NLS-1$
 }
