@@ -164,8 +164,9 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		if (!repoRoot.exists())
 			FileUtils.mkdir(repoRoot, true);
 		// make sure the default directory for Repos is not the user home
-		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
-				.setValue(UIPreferences.DEFAULT_REPO_DIR, repoRoot.getPath());
+		IEclipsePreferences p = InstanceScope.INSTANCE
+				.getNode(Activator.getPluginId());
+		p.put(GitCorePreferences.core_defaultRepositoryDir, repoRoot.getPath());
 	}
 
 	@After

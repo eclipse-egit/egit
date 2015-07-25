@@ -27,8 +27,13 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.core.GitProjectSetCapability;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -51,22 +56,66 @@ public class GitProjectSetCapabilityTest {
 	private List<IProject> createdProjects = new ArrayList<IProject>();
 	private List<File> pathsToClean = new ArrayList<File>();
 
+	protected final static TestUtils testUtils = new TestUtils();
+
+	private static int testMethodNumber = 0;
+
+	// the temporary directory
+	private File testDirectory;
+
 	@Before
-	public void setUp() {
-		Activator.getDefault().getRepositoryCache().clear();
+	public void setUp() throws Exception {
+		shutDownRepositories();
 		capability = new GitProjectSetCapability();
+		initNewTestDirectory();
+	}
+
+	private void initNewTestDirectory() throws Exception {
+		testMethodNumber++;
+		// create standalone temporary directory
+		testDirectory = testUtils
+				.createTempDir("LocalRepositoriesTests" + testMethodNumber);
+		if (testDirectory.exists()) {
+			FileUtils.delete(testDirectory,
+					FileUtils.RECURSIVE | FileUtils.RETRY);
+		}
+		if (!testDirectory.exists()) {
+			FileUtils.mkdir(testDirectory, true);
+		}
+		// we don't want to clone into <user_home> but into our test directory
+		File repoRoot = new File(testDirectory, "RepositoryRoot");
+		if (!repoRoot.exists()) {
+			FileUtils.mkdir(repoRoot, true);
+		}
+		// make sure the default directory for Repos is not the user home
+		IEclipsePreferences p = InstanceScope.INSTANCE
+				.getNode(Activator.getPluginId());
+		p.put(GitCorePreferences.core_defaultRepositoryDir, repoRoot.getPath());
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		ResourcesPlugin.getWorkspace().getRoot().delete(IResource.FORCE, null);
-		Activator.getDefault().getRepositoryCache().clear();
-		for (IProject project : createdProjects)
-			if (project.exists())
+		for (IProject project : createdProjects) {
+			if (project.exists()) {
 				project.delete(true, true, null);
-		for (File pathToClean : pathsToClean)
-			if (pathToClean.exists())
-				FileUtils.delete(pathToClean, FileUtils.RECURSIVE | FileUtils.RETRY);
+			}
+		}
+		for (File pathToClean : pathsToClean) {
+			if (pathToClean.exists()) {
+				FileUtils.delete(pathToClean,
+						FileUtils.RECURSIVE | FileUtils.RETRY);
+			}
+		}
+		shutDownRepositories();
+	}
+
+	protected static void shutDownRepositories() {
+		RepositoryCache cache = Activator.getDefault().getRepositoryCache();
+		for (Repository repository : cache.getAllRepositories()) {
+			repository.close();
+		}
+		cache.clear();
 	}
 
 	@Test
@@ -100,7 +149,7 @@ public class GitProjectSetCapabilityTest {
 	@Test
 	public void testImport() throws Exception {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IPath reposPath = root.getLocation().append("repos");
+		IPath reposPath = new Path(testDirectory.getPath()).append("repos");
 		pathsToClean.add(reposPath.toFile());
 
 		IPath aPath = reposPath.append("a");
@@ -138,13 +187,15 @@ public class GitProjectSetCapabilityTest {
 		IProject baImported = root.getProject("ba");
 		createdProjects.add(baImported);
 		assertTrue(baImported.exists());
-		assertEquals(root.getLocation().append("b/ba"), baImported.getLocation());
+		assertEquals(new Path(RepositoryUtil.getDefaultRepositoryDir())
+				.append("b/ba"), baImported.getLocation());
 		assertNotNull(RepositoryMapping.getMapping(baImported));
 
 		IProject bbImported = root.getProject("bb");
 		createdProjects.add(bbImported);
 		assertTrue(bbImported.exists());
-		assertEquals(root.getLocation().append("b/bb"), bbImported.getLocation());
+		assertEquals(new Path(RepositoryUtil.getDefaultRepositoryDir())
+				.append("b/bb"), bbImported.getLocation());
 		assertNotNull(RepositoryMapping.getMapping(bbImported));
 
 		IProject cImported = root.getProject("c");
@@ -158,7 +209,7 @@ public class GitProjectSetCapabilityTest {
 	@Test
 	public void testImportWithDifferentBranchesOfSameRepo() throws Exception {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IPath reposPath = root.getLocation().append("repos");
+		IPath reposPath = new Path(testDirectory.getPath()).append("repos");
 		pathsToClean.add(reposPath.toFile());
 
 		IPath xPath = reposPath.append("x");
@@ -180,7 +231,8 @@ public class GitProjectSetCapabilityTest {
 		IProject xaImported = root.getProject("xa");
 		createdProjects.add(xaImported);
 		assertTrue(xaImported.exists());
-		assertEquals(root.getLocation().append("x/xa"), xaImported.getLocation());
+		assertEquals(new Path(RepositoryUtil.getDefaultRepositoryDir())
+				.append("x/xa"), xaImported.getLocation());
 		RepositoryMapping xaMapping = RepositoryMapping.getMapping(xaImported);
 		assertNotNull(xaMapping);
 		assertEquals("master", xaMapping.getRepository().getBranch());
@@ -188,7 +240,8 @@ public class GitProjectSetCapabilityTest {
 		IProject xbImported = root.getProject("xb");
 		createdProjects.add(xbImported);
 		assertTrue(xbImported.exists());
-		assertEquals(root.getLocation().append("x_stable/xb"), xbImported.getLocation());
+		assertEquals(new Path(RepositoryUtil.getDefaultRepositoryDir())
+				.append("x_stable/xb"), xbImported.getLocation());
 		RepositoryMapping xbMapping = RepositoryMapping.getMapping(xbImported);
 		assertNotNull(xbMapping);
 		assertEquals("stable", xbMapping.getRepository().getBranch());
@@ -237,10 +290,10 @@ public class GitProjectSetCapabilityTest {
 	@Test
 	public void testImportWhereRepoAlreadyExistsAtDifferentLocation() throws Exception {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IPath reposPath = root.getLocation().append("existingbutdifferent");
+		IPath reposPath = new Path(testDirectory.getPath()).append("repo");
 		pathsToClean.add(reposPath.toFile());
 
-		IPath repoPath = reposPath.append("repo");
+		IPath repoPath = reposPath.append("existingbutdifferent");
 		IProject project = createProject(repoPath, "project");
 		project.delete(false, true, null);
 		String url = createUrl(repoPath);
@@ -259,7 +312,9 @@ public class GitProjectSetCapabilityTest {
 
 		IProject imported = root.getProject("project");
 		assertEquals("Expected imported project to be from already existing repository",
-				root.getLocation().append("existingbutdifferent/repo/project"), imported.getLocation());
+				reposPath.append("existingbutdifferent/project")
+						.toOSString(),
+				imported.getLocation().toOSString());
 	}
 
 	@Test
