@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2014 Robin Stocker <robin@nibor.org> and others.
+ * Copyright (C) 2014, 2015 Robin Stocker <robin@nibor.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,6 +10,8 @@ package org.eclipse.egit.ui.internal.selection;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.resources.IFile;
@@ -75,6 +77,13 @@ public class SelectionPropertyTester extends PropertyTester {
 				if (m != null)
 					return testRepositoryProperties(m.getRepository(), args);
 			}
+		} else if ("resourcesAllInRepository".equals(property)) { //$NON-NLS-1$
+			IStructuredSelection selection = getStructuredSelection(collection);
+
+			IResource[] resources = SelectionUtils
+					.getSelectedResources(selection);
+			Set<Repository> repositories = getRepositoriesOfResources(resources);
+			return !repositories.contains(null);
 		}
 		return false;
 	}
@@ -153,6 +162,22 @@ public class SelectionPropertyTester extends PropertyTester {
 				repo = r;
 		}
 		return repo;
+	}
+
+	/**
+	 * @param resources
+	 *            the resources
+	 * @return all repositories that the resources map to, including
+	 *         <code>null</code> indicating no repository.
+	 */
+	private static Set<Repository> getRepositoriesOfResources(
+			IResource[] resources) {
+		Set<Repository> repos = new HashSet<Repository>();
+		for (IResource resource : resources) {
+			Repository r = getRepositoryOfMapping(resource);
+			repos.add(r);
+		}
+		return repos;
 	}
 
 	private static Repository getRepositoryOfProject(Object object) {
