@@ -27,14 +27,13 @@ import org.junit.Test;
 
 public class FeatureFinishOperationTest extends AbstractFeatureOperationTest {
 	@Test
-	public void testFeatureFinish() throws Exception {
-		String fileName = "theFirstFile.txt";
-
+	public void testFeatureFinishFastForward() throws Exception {
 		Repository repository = testRepository.getRepository();
 		GitFlowRepository gfRepo = init("testFeatureFinish\n\nfirst commit\n");
 
 		new FeatureStartOperation(gfRepo, MY_FEATURE).execute(null);
-		RevCommit branchCommit = addFileAndCommit(fileName, "adding file on feature branch");
+		RevCommit branchCommit = addFileAndCommit("foo.txt",
+				"testFeatureFinish\n\nbranch commit 1\n");
 		new FeatureFinishOperation(gfRepo).execute(null);
 		assertEquals(gfRepo.getConfig().getDevelopFull(), repository.getFullBranch());
 
@@ -43,11 +42,8 @@ public class FeatureFinishOperationTest extends AbstractFeatureOperationTest {
 
 		RevCommit developHead = gfRepo.findHead();
 		assertEquals(branchCommit, developHead);
-
-		assertEquals(2, countCommits(repository));
-		assertTrue(new File(repository.getDirectory() + "/../" + fileName).exists());
 	}
-
+	
 	@Test
 	public void testFeatureFinishSquash() throws Exception {
 		String fileName = "theFirstFile.txt";
@@ -86,6 +82,23 @@ public class FeatureFinishOperationTest extends AbstractFeatureOperationTest {
 			count++;
 		}
 		return count;
+	}
+
+	public void testFeatureFinish() throws Exception {
+		Repository repository = testRepository.getRepository();
+		GitFlowRepository gfRepo = init("testFeatureFinish\n\nfirst commit\n");
+
+		new FeatureStartOperation(gfRepo, MY_FEATURE).execute(null);
+		addFileAndCommit("foo.txt", "testFeatureFinish\n\nbranch commit 1\n");
+		addFileAndCommit("bar.txt", "testFeatureFinish\n\nbranch commit 2\n");
+		new FeatureFinishOperation(gfRepo).execute(null);
+		assertEquals(gfRepo.getConfig().getDevelopFull(),
+				repository.getFullBranch());
+
+		String branchName = gfRepo.getConfig().getFeatureBranchName(MY_FEATURE);
+
+		assertEquals(formatMergeCommitMessage(branchName), gfRepo.findHead()
+				.getFullMessage());
 	}
 
 	@Test(expected = WrongGitFlowStateException.class)
