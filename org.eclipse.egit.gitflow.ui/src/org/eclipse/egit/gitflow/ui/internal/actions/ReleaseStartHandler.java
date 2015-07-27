@@ -77,7 +77,11 @@ public class ReleaseStartHandler extends AbstractHandler {
 			RevCommit plotCommit = (RevCommit) selection.getFirstElement();
 			return plotCommit.getName();
 		} else {
-			GitFlowRepository gitFlowRepository = new GitFlowRepository(getRepository(event));
+			Repository repository = getRepository(event);
+			if (repository == null) {
+				throw new ExecutionException(UIText.ReleaseStartHandler_startCommitCouldNotBeDetermined);
+			}
+			GitFlowRepository gitFlowRepository = new GitFlowRepository(repository);
 			RevCommit head;
 			try {
 				head = gitFlowRepository.findHead();
