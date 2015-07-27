@@ -54,9 +54,10 @@ public final class HotfixFinishOperation extends AbstractHotfixOperation {
 			return;
 		}
 
-		finish(monitor, hotfixBranchName);
 		// this may result in conflicts, but that's ok
 		safeCreateTag(monitor, versionName,
 				NLS.bind(CoreText.HotfixFinishOperation_hotfix, versionName));
+
+		finish(monitor, hotfixBranchName);
 	}
 }
