@@ -23,7 +23,7 @@ import org.junit.Test;
 
 public class HotfixFinishOperationTest extends AbstractGitFlowOperationTest {
 	@Test
-	public void testHotfixFinish() throws Exception {
+	public void testHotfixFinishFastForward() throws Exception {
 		testRepository
 				.createInitialCommit("testHotfixFinish\n\nfirst commit\n");
 
@@ -72,6 +72,8 @@ public class HotfixFinishOperationTest extends AbstractGitFlowOperationTest {
 
 		testRepository.appendContentAndCommit(project.getProject(), file,
 				"Hello Release", "Release Commit");
+		testRepository.appendContentAndCommit(project.getProject(), file,
+				"Hello Merge Commit", "Release Commit 2");
 
 		new ReleaseFinishOperation(gfRepo).execute(null);
 
@@ -106,7 +108,7 @@ public class HotfixFinishOperationTest extends AbstractGitFlowOperationTest {
 
 		// merged on master
 		RevCommit masterHead = gfRepo.findHead(MY_MASTER);
-		assertEquals(hotfixCommit, masterHead);
+		assertEquals(String.format("Merge branch '%s'", branchName), masterHead.getFullMessage());
 
 		assertEquals(gfRepo.getConfig().getDevelopFull(), repository.getFullBranch());
 	}
