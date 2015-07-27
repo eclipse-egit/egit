@@ -61,7 +61,8 @@ public class ReleaseFinishOperationTest extends AbstractGitFlowOperationTest {
 		// branch removed?
 		assertEquals(findBranch(repository, branchName), null);
 
-		RevCommit developHead = gfRepo.findHead();
+		RevCommit developHead = gfRepo.findHead(DEVELOP);
+		//TODO: as soon as we start using NO_FF for all finish operations, this must be not equals.
 		assertEquals(branchCommit, developHead);
 
 		RevCommit masterHead = gfRepo.findHead(MY_MASTER);
