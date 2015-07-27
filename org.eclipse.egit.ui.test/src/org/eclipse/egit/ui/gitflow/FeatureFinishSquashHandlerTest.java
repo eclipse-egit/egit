@@ -12,9 +12,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
-import java.util.Iterator;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.gitflow.GitFlowRepository;
@@ -24,9 +21,6 @@ import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swtbot.eclipse.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
@@ -73,19 +67,6 @@ public class FeatureFinishSquashHandlerTest extends AbstractGitflowHandlerTest {
 
 		assertTrue(developHead.getFullMessage().startsWith(
 				SQUASHED_COMMENT_SUMMARY));
-	}
-
-	private int countCommits() throws GitAPIException, NoHeadException,
-			IOException {
-		Iterable<RevCommit> commits = Git.wrap(repository).log().all().call();
-		Iterator<RevCommit> iterator = commits.iterator();
-		int count = 0;
-
-		while (iterator.hasNext()) {
-			iterator.next();
-			count++;
-		}
-		return count;
 	}
 
 	private void finishFeature() {

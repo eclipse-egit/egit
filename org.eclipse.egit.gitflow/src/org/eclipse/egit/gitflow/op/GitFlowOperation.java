@@ -10,6 +10,7 @@ package org.eclipse.egit.gitflow.op;
 
 import static java.lang.String.format;
 import static org.eclipse.egit.gitflow.Activator.error;
+import static org.eclipse.jgit.api.MergeCommand.FastForwardMode.NO_FF;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -29,7 +30,6 @@ import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.internal.CoreText;
 import org.eclipse.jgit.api.CheckoutResult;
 import org.eclipse.jgit.api.CheckoutResult.Status;
-import static org.eclipse.jgit.api.MergeCommand.FastForwardMode.NO_FF;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Ref;
@@ -174,7 +174,9 @@ abstract public class GitFlowOperation implements IEGitOperation {
 			if (squash) {
 				mergeOperation.setCommit(true);
 			}
-			mergeOperation.setFastForwardMode(NO_FF);
+			if (!squash) {
+				mergeOperation.setFastForwardMode(NO_FF);
+			}
 			mergeOperation.execute(monitor);
 
 			return mergeOperation.getResult();

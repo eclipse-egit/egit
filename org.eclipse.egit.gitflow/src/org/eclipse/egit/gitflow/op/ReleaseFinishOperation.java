@@ -55,9 +55,10 @@ public final class ReleaseFinishOperation extends AbstractReleaseOperation {
 			return;
 		}
 
-		finish(monitor, releaseBranchName, false /* TODO: squash should also be supported for releases */);
 		// this may result in conflicts, but that's ok
 		safeCreateTag(monitor, repository.getConfig().getVersionTagPrefix() + versionName,
 				NLS.bind(CoreText.ReleaseFinishOperation_releaseOf, versionName));
+
+		finish(monitor, releaseBranchName, false /* TODO: squash should also be supported for releases */);
 	}
 }

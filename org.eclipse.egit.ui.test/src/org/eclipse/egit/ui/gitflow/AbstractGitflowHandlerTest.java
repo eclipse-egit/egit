@@ -10,6 +10,7 @@ package org.eclipse.egit.ui.gitflow;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.gitflow.GitFlowRepository;
@@ -69,5 +70,17 @@ public abstract class AbstractGitflowHandlerTest extends LocalRepositoryTestCase
 	protected void checkoutFeature(String featureName) throws CoreException {
 		new FeatureCheckoutOperation(new GitFlowRepository(repository),
 				featureName).execute(null);
+	}
+
+	protected int countCommits() throws GitAPIException,
+			NoHeadException {
+		int count = 0;
+		Iterable<RevCommit> commits = Git.wrap(repository).log().call();
+		Iterator<RevCommit> iterator = commits.iterator();
+		while (iterator.hasNext()) {
+			iterator.next();
+			count++;
+		}
+		return count;
 	}
 }

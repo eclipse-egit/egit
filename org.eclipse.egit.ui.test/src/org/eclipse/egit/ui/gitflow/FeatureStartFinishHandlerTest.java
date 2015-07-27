@@ -8,7 +8,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.gitflow;
 
+import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellIsActive;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.op.BranchOperation;
@@ -20,9 +22,8 @@ import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
-import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellIsActive;
 import org.eclipse.swtbot.eclipse.finder.waits.Conditions;
+import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.ui.PlatformUI;
 import org.junit.Test;
@@ -36,21 +37,27 @@ public class FeatureStartFinishHandlerTest extends AbstractGitflowHandlerTest {
 
 	@Test
 	public void testFeatureStart() throws Exception {
+		int expectedCommitCount = 2;
 		init();
 
 		setContentAddAndCommit("bar");
+		expectedCommitCount++;
 
 		createFeature(FEATURE_NAME);
 		RevCommit featureBranchCommit = setContentAddAndCommit("foo");
+		expectedCommitCount++;
 
 		checkoutBranch(DEVELOP);
 
 		checkoutFeature(FEATURE_NAME);
 
 		finishFeature();
+		expectedCommitCount++;
 
 		RevCommit developHead = new GitFlowRepository(repository).findHead();
-		assertEquals(developHead, featureBranchCommit);
+		assertNotEquals(developHead, featureBranchCommit);
+
+		assertEquals(expectedCommitCount, countCommits());
 	}
 
 	private void finishFeature() {
