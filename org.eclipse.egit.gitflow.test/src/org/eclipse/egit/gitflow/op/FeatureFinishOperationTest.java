@@ -19,21 +19,39 @@ import org.junit.Test;
 
 public class FeatureFinishOperationTest extends AbstractFeatureOperationTest {
 	@Test
+	public void testFeatureFinishFastForward() throws Exception {
+		Repository repository = testRepository.getRepository();
+		GitFlowRepository gfRepo = init("testFeatureFinish\n\nfirst commit\n");
+
+		new FeatureStartOperation(gfRepo, MY_FEATURE).execute(null);
+		RevCommit branchCommit = addFileAndCommit("foo.txt",
+				"testFeatureFinish\n\nbranch commit 1\n");
+		new FeatureFinishOperation(gfRepo).execute(null);
+		assertEquals(gfRepo.getConfig().getDevelopFull(), repository.getFullBranch());
+
+		String branchName = gfRepo.getConfig().getFeatureBranchName(MY_FEATURE);
+		assertEquals(null, findBranch(repository, branchName));
+
+		RevCommit developHead = gfRepo.findHead();
+		assertEquals(branchCommit, developHead);
+	}
+
+	@Test
 	public void testFeatureFinish() throws Exception {
 		Repository repository = testRepository.getRepository();
 		GitFlowRepository gfRepo = init("testFeatureFinish\n\nfirst commit\n");
 
 		new FeatureStartOperation(gfRepo, MY_FEATURE).execute(null);
+		addFileAndCommit("foo.txt", "testFeatureFinish\n\nbranch commit 1\n");
+		addFileAndCommit("bar.txt", "testFeatureFinish\n\nbranch commit 2\n");
 		new FeatureFinishOperation(gfRepo).execute(null);
-		assertEquals(gfRepo.getConfig().getDevelopFull(), repository.getFullBranch());
+		assertEquals(gfRepo.getConfig().getDevelopFull(),
+				repository.getFullBranch());
 
 		String branchName = gfRepo.getConfig().getFeatureBranchName(MY_FEATURE);
-		RevCommit branchCommit = testRepository
-				.createInitialCommit("testFeatureFinish\n\nbranch commit\n");
-		assertEquals(findBranch(repository, branchName), null);
 
-		RevCommit developHead = gfRepo.findHead();
-		assertEquals(branchCommit, developHead);
+		assertEquals(formatMergeCommitMessage(branchName), gfRepo.findHead()
+				.getFullMessage());
 	}
 
 	@Test(expected = WrongGitFlowStateException.class)
