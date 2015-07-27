@@ -55,9 +55,10 @@ public final class ReleaseFinishOperation extends AbstractReleaseOperation {
 			return;
 		}
 
-		finish(monitor, releaseBranchName);
 		// this may result in conflicts, but that's ok
 		safeCreateTag(monitor, repository.getConfig().getVersionTagPrefix() + versionName,
 				NLS.bind(CoreText.ReleaseFinishOperation_releaseOf, versionName));
+
+		finish(monitor, releaseBranchName);
 	}
 }
