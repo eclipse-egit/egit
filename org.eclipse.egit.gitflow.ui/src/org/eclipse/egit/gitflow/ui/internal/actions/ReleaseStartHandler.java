@@ -20,6 +20,7 @@ import org.eclipse.egit.gitflow.op.ReleaseStartOperation;
 import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.gitflow.ui.internal.validation.ReleaseNameValidator;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
@@ -77,7 +78,11 @@ public class ReleaseStartHandler extends AbstractHandler {
 			RevCommit plotCommit = (RevCommit) selection.getFirstElement();
 			return plotCommit.getName();
 		} else {
-			GitFlowRepository gitFlowRepository = new GitFlowRepository(getRepository(event));
+			Repository repository = getRepository(event);
+			if (repository == null) {
+				throw new ExecutionException(UIText.ReleaseStartHandler_startCommitCouldNotBeDetermined);
+			}
+			GitFlowRepository gitFlowRepository = new GitFlowRepository(repository);
 			RevCommit head;
 			try {
 				head = gitFlowRepository.findHead();
@@ -88,7 +93,7 @@ public class ReleaseStartHandler extends AbstractHandler {
 		}
 	}
 
-	private Repository getRepository(ExecutionEvent event)
+	private @Nullable Repository getRepository(ExecutionEvent event)
 			throws ExecutionException {
 		PlatformObject firstElement;
 		IStructuredSelection selection = (IStructuredSelection) HandlerUtil

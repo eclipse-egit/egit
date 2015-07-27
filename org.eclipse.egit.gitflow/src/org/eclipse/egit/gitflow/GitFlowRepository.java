@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.egit.gitflow.internal.CoreText;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
@@ -43,8 +43,7 @@ public class GitFlowRepository {
 	/**
 	 * @param repository
 	 */
-	public GitFlowRepository(Repository repository) {
-		Assert.isNotNull(repository);
+	public GitFlowRepository(@NonNull Repository repository) {
 		this.repository = repository;
 		this.config = new GitFlowConfig(repository);
 	}
