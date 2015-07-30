@@ -6,6 +6,7 @@
  * Copyright (C) 2013, Daniel Megert <daniel_megert@ch.ibm.com>
  * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
  * Copyright (C) 2014, Axel Richard <axel.richard@obeo.fr>
+ * Copyright (C) 2015, Denis Zygann <d.zygann@web.de>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -304,6 +305,9 @@ public class UIIcons {
 	/** Reword for current rebase step */
 	public final static ImageDescriptor CURRENT_STEP;
 
+	/** Sort alphabetically icon */
+	public final static ImageDescriptor ALPHABETICALLY_SORT;
+
 	/** base URL */
 	public final static URL base;
 
@@ -406,6 +410,7 @@ public class UIIcons {
 		REWORD = map("obj16/reword.gif"); //$NON-NLS-1$
 		DONE_STEP = map("obj16/done_step.gif"); //$NON-NLS-1$
 		CURRENT_STEP = map("obj16/current_step.gif"); //$NON-NLS-1$
+		ALPHABETICALLY_SORT = map("obj16/alphab_sort_co.gif"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {
