@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_2a043fce",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 3091
+      },
+      "writtenOn": "2015-07-30T23:16:40Z",
+      "side": 1,
+      "message": "Since you are using DialogSettings now, you can remove the saveState method again",
+      "revId": "9693cd96ba520636898c66494ea43d06f1e60f33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_cac123fd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1250,
+      "author": {
+        "id": 3091
+      },
+      "writtenOn": "2015-07-30T23:16:40Z",
+      "side": 1,
+      "message": "You can remove the comparator.sort(...) invocation, since it is invoked during the refresh().",
+      "revId": "9693cd96ba520636898c66494ea43d06f1e60f33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_4ad533b1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2998,
+      "author": {
+        "id": 3091
+      },
+      "writtenOn": "2015-07-30T23:16:40Z",
+      "side": 1,
+      "message": "Could you please also call the member variable \"sortAlphabetically\" instead of \"sort\"?",
+      "revId": "9693cd96ba520636898c66494ea43d06f1e60f33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_2af9df41",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3058,
+      "author": {
+        "id": 3091
+      },
+      "writtenOn": "2015-07-30T23:16:40Z",
+      "side": 1,
+      "message": "Maybe call the variable \"label\" rather than \"name1\"",
+      "revId": "9693cd96ba520636898c66494ea43d06f1e60f33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_ca13e318",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3091
+      },
+      "writtenOn": "2015-07-30T23:16:40Z",
+      "side": 1,
+      "message": "Change 2014 to 2015",
+      "revId": "9693cd96ba520636898c66494ea43d06f1e60f33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_6af3d75f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3091
+      },
+      "writtenOn": "2015-07-30T23:16:40Z",
+      "side": 1,
+      "message": "You are using different syntax for the copyright header",
+      "revId": "9693cd96ba520636898c66494ea43d06f1e60f33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
