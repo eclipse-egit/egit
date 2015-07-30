@@ -1,10 +1,13 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2014 Bernard Leach <leachbj@bouncycastle.org> and others.
+ * Copyright (C) 2011, 2015 Bernard Leach <leachbj@bouncycastle.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * 		Denis Zygann <d.zygann@web.de> - Bug 473919
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.staging;
 
@@ -30,6 +33,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
@@ -157,7 +161,12 @@ public class StagingViewLabelProvider extends LabelProvider {
 			return stagingFolderEntry.getNodePath().toString();
 		}
 
-		StagingEntry stagingEntry = (StagingEntry) element;
+		StagingEntry stagingEntry = getStagingEntry(element);
+
+		if (stagingEntry == null) {
+			return ""; //$NON-NLS-1$
+		}
+
 		final DecorationResult decoration = new DecorationResult();
 		decorationHelper.decorate(decoration, stagingEntry);
 		final StyledString styled = new StyledString();
@@ -191,6 +200,22 @@ public class StagingViewLabelProvider extends LabelProvider {
 			styled.append(stagingEntry.getName());
 		}
 		return styled.toString();
+	}
+
+	private StagingEntry getStagingEntry(Object element) {
+		StagingEntry entry = null;
+
+		if (element instanceof StagingEntry) {
+			entry = (StagingEntry) element;
+		}
+
+		if (element instanceof TreeItem) {
+			TreeItem item = (TreeItem) element;
+			if (item.getData() instanceof StagingEntry) {
+				entry = (StagingEntry) item.getData();
+			}
+		}
+		return entry;
 	}
 
 }

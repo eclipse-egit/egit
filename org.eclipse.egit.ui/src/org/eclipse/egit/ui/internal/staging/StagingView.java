@@ -8,6 +8,7 @@
  *
  * Contributors:
  *    Tobias Baumann <tobbaumann@gmail.com> - Bug 373969, 473544
+ *    Denis Zygann   <d.zygann@web.de> - Bug 473919
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.staging;
 
@@ -119,6 +120,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.CheckoutCommand;
@@ -167,6 +169,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -202,12 +205,18 @@ import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
  */
 public class StagingView extends ViewPart implements IShowInSource {
 
+
 	/**
 	 * Staging view id
 	 */
 	public static final String VIEW_ID = "org.eclipse.egit.ui.StagingView"; //$NON-NLS-1$
 
 	private static final String EMPTY_STRING = ""; //$NON-NLS-1$
+
+	private static final String SORT_ITEM_TOOLBAR_ID = "sortItem"; //$NON-NLS-1$
+
+	private static final String STORE_SORT_STATE = SORT_ITEM_TOOLBAR_ID
+			+ "State"; //$NON-NLS-1$
 
 	private static final String HORIZONTAL_SASH_FORM_WEIGHT = "HORIZONTAL_SASH_FORM_WEIGHT"; //$NON-NLS-1$
 
@@ -523,6 +532,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private Action refreshAction;
 
+	private Action sortAction;
+
 	private SashForm stagingSashForm;
 
 	private IndexDiffChangedListener myIndexDiffListener = new IndexDiffChangedListener() {
@@ -613,10 +624,12 @@ public class StagingView extends ViewPart implements IShowInSource {
 		unstagedSection = toolkit.createSection(stagingSashForm,
 				ExpandableComposite.TITLE_BAR);
 
+		unstagedSection.setLayoutData(
+				GridDataFactory.fillDefaults().grab(true, true).create());
+
 		createUnstagedToolBarComposite();
 
-		Composite unstagedComposite = toolkit
-				.createComposite(unstagedSection);
+		Composite unstagedComposite = toolkit.createComposite(unstagedSection);
 		toolkit.paintBordersFor(unstagedComposite);
 		unstagedSection.setClient(unstagedComposite);
 		GridLayoutFactory.fillDefaults().extendedMargins(2, 2, 2, 2)
@@ -661,6 +674,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 				compareWith(event);
 			}
 		});
+		unstagedViewer
+				.setComparator(new UnstagedComparator(getSortCheckState()));
 		enableAutoExpand(unstagedViewer);
 		addListenerToDisableAutoExpandOnCollapse(unstagedViewer);
 
@@ -1156,6 +1171,10 @@ public class StagingView extends ViewPart implements IShowInSource {
 		}
 	}
 
+	private boolean getSortCheckState() {
+		return getDialogSettings().getBoolean(STORE_SORT_STATE);
+	}
+
 	private void executeRebaseOperation(AbstractRebaseCommandHandler command) {
 		try {
 			command.execute(currentRepository);
@@ -1214,8 +1233,25 @@ public class StagingView extends ViewPart implements IShowInSource {
 		};
 		unstagedCollapseAllAction.setImageDescriptor(UIIcons.COLLAPSEALL);
 
+		sortAction = new Action(UIText.StagingView_UnstagedSort,
+				IAction.AS_CHECK_BOX) {
+
+			@Override
+			public void run() {
+				UnstagedComparator comparator = (UnstagedComparator) unstagedViewer
+						.getComparator();
+				comparator.setAlphabeticallySortActive(isChecked());
+				unstagedViewer.refresh();
+			}
+		};
+
+		sortAction.setImageDescriptor(UIIcons.ALPHABETICALLY_SORT);
+		sortAction.setId(SORT_ITEM_TOOLBAR_ID);
+		sortAction.setChecked(getSortCheckState());
+
 		unstagedToolBarManager = new ToolBarManager(SWT.FLAT | SWT.HORIZONTAL);
 
+		unstagedToolBarManager.add(sortAction);
 		unstagedToolBarManager.add(unstagedExpandAllAction);
 		unstagedToolBarManager.add(unstagedCollapseAllAction);
 
@@ -1615,14 +1651,21 @@ public class StagingView extends ViewPart implements IShowInSource {
 	}
 
 	private void setExpandCollapseActionsVisible(boolean visible) {
-		for (IContributionItem item : unstagedToolBarManager.getItems())
-			item.setVisible(visible);
-		for (IContributionItem item : stagedToolBarManager.getItems())
-			item.setVisible(visible);
+		for (IContributionItem item : unstagedToolBarManager.getItems()) {
+			if (!SORT_ITEM_TOOLBAR_ID.equals(item.getId())) {
+				item.setVisible(visible);
+			}
+		}
+		for (IContributionItem item : stagedToolBarManager.getItems()) {
+			if (!SORT_ITEM_TOOLBAR_ID.equals(item.getId())) {
+				item.setVisible(visible);
+			}
+		}
 		unstagedExpandAllAction.setEnabled(visible);
 		unstagedCollapseAllAction.setEnabled(visible);
 		stagedExpandAllAction.setEnabled(visible);
 		stagedCollapseAllAction.setEnabled(visible);
+		sortAction.setEnabled(true);
 		unstagedToolBarManager.update(true);
 		stagedToolBarManager.update(true);
 	}
@@ -2923,6 +2966,9 @@ public class StagingView extends ViewPart implements IShowInSource {
 		if (refsChangedListener != null) {
 			refsChangedListener.remove();
 		}
+
+		getDialogSettings().put(STORE_SORT_STATE, sortAction.isChecked());
+
 		disposed = true;
 	}
 
@@ -2936,6 +2982,103 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private void asyncExec(Runnable runnable) {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(runnable);
+	}
+
+	private class UnstagedComparator extends ViewerComparator {
+
+		private boolean alphabeticallySort;
+
+		public UnstagedComparator(boolean sortAlphabetically) {
+			this.alphabeticallySort = sortAlphabetically;
+		}
+
+		public void setAlphabeticallySortActive(boolean sort) {
+			this.alphabeticallySort = sort;
+		}
+
+		public boolean isAlphabeticallySortActive() {
+			return alphabeticallySort;
+		}
+
+		@Override
+		public int category(Object element) {
+
+			if (!isAlphabeticallySortActive()) {
+				if (element instanceof TreeItem) {
+					TreeItem item = (TreeItem) element;
+					if (item.getData() instanceof StagingEntry) {
+						return getState(item.getData());
+					}
+				}
+				if (element instanceof StagingEntry) {
+					return getState(element);
+				}
+			}
+
+			return super.category(element);
+		}
+
+		@Override
+		public int compare(Viewer viewer, Object e1, Object e2) {
+			int cat1 = category(e1);
+			int cat2 = category(e2);
+
+			if (cat1 != cat2) {
+				return cat1 - cat2;
+			}
+
+			String name1 = getLabel(viewer, e1);
+			String name2 = getLabel(viewer, e2);
+
+			name1 = filterChangeChar(name1);
+			name2 = filterChangeChar(name2);
+
+			// use the comparator to compare the strings
+			return getComparator().compare(name1, name2);
+		}
+
+		private String filterChangeChar(String name) {
+			String test = name.toLowerCase();
+			if (test.startsWith("> ") && test.length() > 1) { //$NON-NLS-1$
+				return name.substring(2);
+			}
+			return name;
+		}
+
+		private String getLabel(Viewer viewer, Object e1) {
+			String name;
+			if (viewer == null || !(viewer instanceof ContentViewer)) {
+				name = e1.toString();
+			} else {
+				IBaseLabelProvider prov = ((ContentViewer) viewer)
+						.getLabelProvider();
+				if (prov instanceof ILabelProvider) {
+					ILabelProvider lprov = (ILabelProvider) prov;
+					name = lprov.getText(e1);
+				} else {
+					name = e1.toString();
+				}
+			}
+			if (name == null) {
+				name = "";//$NON-NLS-1$
+			}
+			return name;
+		}
+
+		private int getState(Object element) {
+			final StagingEntry entry = (StagingEntry) element;
+			switch (entry.getState()) {
+			case UNTRACKED:
+				return 1;
+			case MISSING:
+				return 2;
+			case MODIFIED:
+				return 3;
+			default:
+				return super.category(element);
+			}
+		}
+
 	}
 
 }
