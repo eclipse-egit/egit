@@ -15,6 +15,7 @@
  * Copyright (C) 2015, SAP SE (Christian Georgi <christian.georgi@sap.com>)
  * Copyright (C) 2015, Jan-Ove Weichel <ovi.weichel@gmail.com>
  * Copyright (C) 2015, Laurent Delaigue <laurent.delaigue@obeo.fr>
+ * Copyright (C) 2015, Denis Zygann <d.zygann@web.de>
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -5137,6 +5138,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String StagingView_UnstageItemMenuLabel;
+
+	/** */
+	public static String StagingView_UnstagedSort;
 
 	/** */
 	public static String StagingView_StageItemMenuLabel;

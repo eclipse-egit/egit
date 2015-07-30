@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2011, 2015 Bernard Leach <leachbj@bouncycastle.org> and others.
  * Copyright (C) 2015 SAP SE (Christian Georgi <christian.georgi@sap.com>)
+ * Copyright (C) 2015 Denis Zygann <d.zygann@web.de>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,6 +19,7 @@ import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -126,6 +128,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.CheckoutCommand;
@@ -174,6 +177,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -215,6 +219,11 @@ public class StagingView extends ViewPart implements IShowInSource {
 	public static final String VIEW_ID = "org.eclipse.egit.ui.StagingView"; //$NON-NLS-1$
 
 	private static final String EMPTY_STRING = ""; //$NON-NLS-1$
+
+	private static final String SORT_ITEM_TOOLBAR_ID = "sortItem"; //$NON-NLS-1$
+
+	private static final String STORE_SORT_STATE = SORT_ITEM_TOOLBAR_ID
+			+ "State"; //$NON-NLS-1$
 
 	private static final String HORIZONTAL_SASH_FORM_WEIGHT = "HORIZONTAL_SASH_FORM_WEIGHT"; //$NON-NLS-1$
 
@@ -548,6 +557,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private Action refreshAction;
 
+	private Action sortAction;
+
 	private SashForm stagingSashForm;
 
 	private IndexDiffChangedListener myIndexDiffListener = new IndexDiffChangedListener() {
@@ -640,10 +651,12 @@ public class StagingView extends ViewPart implements IShowInSource {
 		unstagedSection = toolkit.createSection(stagingSashForm,
 				ExpandableComposite.TITLE_BAR);
 
+		unstagedSection.setLayoutData(
+				GridDataFactory.fillDefaults().grab(true, true).create());
+
 		createUnstagedToolBarComposite();
 
-		Composite unstagedComposite = toolkit
-				.createComposite(unstagedSection);
+		Composite unstagedComposite = toolkit.createComposite(unstagedSection);
 		toolkit.paintBordersFor(unstagedComposite);
 		unstagedSection.setClient(unstagedComposite);
 		GridLayoutFactory.fillDefaults().extendedMargins(2, 2, 2, 2)
@@ -688,6 +701,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 				compareWith(event);
 			}
 		});
+		unstagedViewer
+				.setComparator(new UnstagedComparator(getSortCheckState()));
 		enableAutoExpand(unstagedViewer);
 		addListenerToDisableAutoExpandOnCollapse(unstagedViewer);
 
@@ -1275,6 +1290,10 @@ public class StagingView extends ViewPart implements IShowInSource {
 		}
 	}
 
+	private boolean getSortCheckState() {
+		return getDialogSettings().getBoolean(STORE_SORT_STATE);
+	}
+
 	private void executeRebaseOperation(AbstractRebaseCommandHandler command) {
 		try {
 			command.execute(currentRepository);
@@ -1333,8 +1352,25 @@ public class StagingView extends ViewPart implements IShowInSource {
 		};
 		unstagedCollapseAllAction.setImageDescriptor(UIIcons.COLLAPSEALL);
 
+		sortAction = new Action(UIText.StagingView_UnstagedSort,
+				IAction.AS_CHECK_BOX) {
+
+			@Override
+			public void run() {
+				UnstagedComparator comparator = (UnstagedComparator) unstagedViewer
+						.getComparator();
+				comparator.setAlphabeticSort(isChecked());
+				unstagedViewer.refresh();
+			}
+		};
+
+		sortAction.setImageDescriptor(UIIcons.ALPHABETICALLY_SORT);
+		sortAction.setId(SORT_ITEM_TOOLBAR_ID);
+		sortAction.setChecked(getSortCheckState());
+
 		unstagedToolBarManager = new ToolBarManager(SWT.FLAT | SWT.HORIZONTAL);
 
+		unstagedToolBarManager.add(sortAction);
 		unstagedToolBarManager.add(unstagedExpandAllAction);
 		unstagedToolBarManager.add(unstagedCollapseAllAction);
 
@@ -1748,14 +1784,21 @@ public class StagingView extends ViewPart implements IShowInSource {
 	}
 
 	private void setExpandCollapseActionsVisible(boolean visible) {
-		for (IContributionItem item : unstagedToolBarManager.getItems())
-			item.setVisible(visible);
-		for (IContributionItem item : stagedToolBarManager.getItems())
-			item.setVisible(visible);
+		for (IContributionItem item : unstagedToolBarManager.getItems()) {
+			if (!SORT_ITEM_TOOLBAR_ID.equals(item.getId())) {
+				item.setVisible(visible);
+			}
+		}
+		for (IContributionItem item : stagedToolBarManager.getItems()) {
+			if (!SORT_ITEM_TOOLBAR_ID.equals(item.getId())) {
+				item.setVisible(visible);
+			}
+		}
 		unstagedExpandAllAction.setEnabled(visible);
 		unstagedCollapseAllAction.setEnabled(visible);
 		stagedExpandAllAction.setEnabled(visible);
 		stagedCollapseAllAction.setEnabled(visible);
+		sortAction.setEnabled(true);
 		unstagedToolBarManager.update(true);
 		stagedToolBarManager.update(true);
 	}
@@ -1948,10 +1991,11 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 					Action openCompareWithIndex = new Action(
 							UIText.StagingView_CompareWithIndexMenuLabel) {
+						@Override
 						public void run() {
 							runCommand(ActionCommands.COMPARE_WITH_INDEX_ACTION,
 									fileSelection);
-						};
+						}
 					};
 					menuMgr.add(openCompareWithIndex);
 				}
@@ -3192,6 +3236,9 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		getPreferenceStore().removePropertyChangeListener(uiPrefsListener);
 
+
+		getDialogSettings().put(STORE_SORT_STATE, sortAction.isChecked());
+
 		disposed = true;
 	}
 
@@ -3207,4 +3254,91 @@ public class StagingView extends ViewPart implements IShowInSource {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(runnable);
 	}
 
+	/**
+	 * This comparator sorts the {@link StagingEntry}s in a grouped or in a
+	 * alphabetically order. The grouped order is also in a alphabetically order
+	 * sorted.
+	 */
+	private static class UnstagedComparator extends ViewerComparator {
+
+		private boolean alphabeticSort;
+
+		private Comparator<String> comparator;
+
+		private UnstagedComparator(boolean alphabeticSort) {
+			this.alphabeticSort = alphabeticSort;
+			comparator = CommonUtils.STRING_ASCENDING_COMPARATOR;
+		}
+
+		private void setAlphabeticSort(boolean sort) {
+			this.alphabeticSort = sort;
+		}
+
+		private boolean isAlphabeticSort() {
+			return alphabeticSort;
+		}
+
+		@Override
+		public int category(Object element) {
+			if (!isAlphabeticSort()) {
+				StagingEntry stagingEntry = getStagingEntry(element);
+				if (stagingEntry != null) {
+					return getState(stagingEntry);
+				}
+			}
+			return super.category(element);
+		}
+
+		@Override
+		public int compare(Viewer viewer, Object e1, Object e2) {
+			int cat1 = category(e1);
+			int cat2 = category(e2);
+
+			if (cat1 != cat2) {
+				return cat1 - cat2;
+			}
+
+			String name1 = getStagingEntryName(e1);
+			String name2 = getStagingEntryName(e2);
+
+			return comparator.compare(name1, name2);
+		}
+
+		private String getStagingEntryName(Object element) {
+			String name = ""; //$NON-NLS-1$
+			StagingEntry stagingEntry = getStagingEntry(element);
+			if (stagingEntry != null) {
+				name = stagingEntry.getName();
+			}
+			return name;
+		}
+
+		@Nullable
+		private StagingEntry getStagingEntry(Object element) {
+			StagingEntry entry = null;
+			if (element instanceof StagingEntry) {
+				entry = (StagingEntry) element;
+			}
+			if (element instanceof TreeItem) {
+				TreeItem item = (TreeItem) element;
+				if (item.getData() instanceof StagingEntry) {
+					entry = (StagingEntry) item.getData();
+				}
+			}
+			return entry;
+		}
+
+		private int getState(StagingEntry entry) {
+			switch (entry.getState()) {
+			case UNTRACKED:
+				return 1;
+			case MISSING:
+				return 2;
+			case MODIFIED:
+				return 3;
+			default:
+				return super.category(entry);
+			}
+		}
+	}
 }
