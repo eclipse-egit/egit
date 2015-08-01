@@ -18,6 +18,7 @@ package org.eclipse.egit.ui.internal.decorators;
 
 import static org.eclipse.jgit.lib.Repository.stripWorkDir;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,6 +31,7 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jgit.lib.Repository;
 
 class DecoratableResourceAdapter extends DecoratableResource {
@@ -194,11 +196,17 @@ class DecoratableResourceAdapter extends DecoratableResource {
 		return false;
 	}
 
+	@Nullable
 	private String makeRepoRelative(IResource res) {
 		IPath location = res.getLocation();
-		if (location == null)
+		if (location == null) {
 			return null;
-		return stripWorkDir(repository.getWorkTree(), location.toFile());
+		}
+		if (repository.isBare()) {
+			return null;
+		}
+		File workTree = repository.getWorkTree();
+		return stripWorkDir(workTree, location.toFile());
 	}
 
 	private boolean containsPrefix(Set<String> collection, String prefix) {
