@@ -530,6 +530,9 @@ public class ResourceUtil {
 		IndexDiffCacheEntry indexDiffCacheEntry = org.eclipse.egit.core.Activator
 				.getDefault().getIndexDiffCache()
 				.getIndexDiffCacheEntry(repository);
+		if (indexDiffCacheEntry == null) {
+			return;
+		}
 		IndexDiffData indexDiffData = indexDiffCacheEntry.getIndexDiff();
 		if (indexDiffData != null) {
 			Collection<IResource> changedResources = indexDiffData

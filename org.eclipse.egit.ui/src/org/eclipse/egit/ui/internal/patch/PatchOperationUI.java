@@ -15,6 +15,7 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.op.CreatePatchOperation;
 import org.eclipse.egit.ui.internal.UIText;
@@ -110,8 +111,13 @@ public class PatchOperationUI {
 		IndexDiffCache diffCache = org.eclipse.egit.core.Activator.getDefault()
 				.getIndexDiffCache();
 		if (diffCache != null) {
-			IndexDiffData diffData = diffCache.getIndexDiffCacheEntry(
-					repository).getIndexDiff();
+			IndexDiffCacheEntry diffCacheEntry = diffCache
+					.getIndexDiffCacheEntry(
+					repository);
+			if (diffCacheEntry == null) {
+				return true;
+			}
+			IndexDiffData diffData = diffCacheEntry.getIndexDiff();
 			if (diffData != null) {
 				Set<String> modified = diffData.getModified();
 				Set<String> untracked = diffData.getUntracked();
