@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.IndexDiff;
 
@@ -51,6 +52,24 @@ public class IndexDiffData {
 	private final Collection<IResource> changedResources;
 
 	/**
+	 * Empty, immutable data
+	 */
+	public IndexDiffData() {
+		added = Collections.emptySet();
+		changed = Collections.emptySet();
+		removed = Collections.emptySet();
+		missing = Collections.emptySet();
+		modified = Collections.emptySet();
+		untracked = Collections.emptySet();
+		untrackedFolders = Collections.emptySet();
+		conflicts = Collections.emptySet();
+		ignored = Collections.emptySet();
+		symlinks = Collections.emptySet();
+		submodules = Collections.emptySet();
+		changedResources = Collections.emptySet();
+	}
+
+	/**
 	 * @param indexDiff
 	 */
 	public IndexDiffData(IndexDiff indexDiff) {
@@ -75,7 +94,7 @@ public class IndexDiffData {
 				.getPathsWithIndexMode(FileMode.SYMLINK)));
 		submodules = Collections.unmodifiableSet(new HashSet<String>(indexDiff
 				.getPathsWithIndexMode(FileMode.GITLINK)));
-		changedResources = null;
+		changedResources = Collections.emptySet();
 	}
 
 	private Set<String> getUntrackedFolders(IndexDiff indexDiff) {
@@ -224,6 +243,7 @@ public class IndexDiffData {
 	/**
 	 * @return list of files added to the index, not in the tree
 	 */
+	@NonNull
 	public Set<String> getAdded() {
 		return Collections.unmodifiableSet(added);
 	}
@@ -231,6 +251,7 @@ public class IndexDiffData {
 	/**
 	 * @return list of files changed from tree to index
 	 */
+	@NonNull
 	public Set<String> getChanged() {
 		return changed;
 	}
@@ -238,6 +259,7 @@ public class IndexDiffData {
 	/**
 	 * @return list of files removed from index, but in tree
 	 */
+	@NonNull
 	public Set<String> getRemoved() {
 		return removed;
 	}
@@ -245,6 +267,7 @@ public class IndexDiffData {
 	/**
 	 * @return list of files in index, but not filesystem
 	 */
+	@NonNull
 	public Set<String> getMissing() {
 		return missing;
 	}
@@ -252,6 +275,7 @@ public class IndexDiffData {
 	/**
 	 * @return list of files modified on disk relative to the index
 	 */
+	@NonNull
 	public Set<String> getModified() {
 		return modified;
 	}
@@ -259,6 +283,7 @@ public class IndexDiffData {
 	/**
 	 * @return list of files that are not ignored, and not in the index.
 	 */
+	@NonNull
 	public Set<String> getUntracked() {
 		return untracked;
 	}
@@ -267,6 +292,7 @@ public class IndexDiffData {
 	 * @return list of folders containing only untracked files/folders
 	 * The folder paths end with /
 	 */
+	@NonNull
 	public Set<String> getUntrackedFolders() {
 		return untrackedFolders;
 	}
@@ -274,6 +300,7 @@ public class IndexDiffData {
 	/**
 	 * @return list of files that are in conflict
 	 */
+	@NonNull
 	public Set<String> getConflicting() {
 		return conflicts;
 	}
@@ -282,6 +309,7 @@ public class IndexDiffData {
 	 * @see IndexDiff#getIgnoredNotInIndex()
 	 * @return list of files that are ignored
 	 */
+	@NonNull
 	public Set<String> getIgnoredNotInIndex() {
 		return ignored;
 	}
@@ -289,6 +317,7 @@ public class IndexDiffData {
 	/**
 	 * @return list of files that are symlinks
 	 */
+	@NonNull
 	public Set<String> getSymlinks() {
 		return symlinks;
 	}
@@ -296,6 +325,7 @@ public class IndexDiffData {
 	/**
 	 * @return list of files that are submodules
 	 */
+	@NonNull
 	public Set<String> getSubmodules() {
 		return submodules;
 	}
@@ -303,6 +333,7 @@ public class IndexDiffData {
 	/**
 	 * @return the changed files
 	 */
+	@NonNull
 	public Collection<IResource> getChangedResources() {
 		return changedResources;
 	}
