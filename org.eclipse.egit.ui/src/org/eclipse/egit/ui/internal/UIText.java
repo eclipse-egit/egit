@@ -3180,6 +3180,9 @@ public class UIText extends NLS {
 	public static String Decorator_exceptionMessage;
 
 	/** */
+	public static String Decorator_exceptionMessageCommon;
+
+	/** */
 	public static String DecoratorPreferencesPage_addVariablesTitle;
 
 	/** */
