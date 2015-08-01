@@ -5044,6 +5044,9 @@ public class UIText extends NLS {
 	public static String StagingView_noStagedFiles;
 
 	/** */
+	public static String StagingView_BareRepoSelection;
+
+	/** */
 	public static String StagingView_NoSelectionTitle;
 
 	/** */
