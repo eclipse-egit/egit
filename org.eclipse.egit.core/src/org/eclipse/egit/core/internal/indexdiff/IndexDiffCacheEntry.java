@@ -333,6 +333,7 @@ public class IndexDiffCacheEntry {
 			}
 
 		};
+		reloadJob.setSystem(true);
 		reloadJob.schedule();
 	}
 
@@ -344,6 +345,12 @@ public class IndexDiffCacheEntry {
 		return true;
 	}
 
+	/**
+	 * Jobs accessing this code should be configured as "system" jobs, to not
+	 * interrupt autobuild jobs, see bug 474003
+	 *
+	 * @param monitor
+	 */
 	private void waitForWorkspaceLock(IProgressMonitor monitor) {
 		// Wait for the workspace lock to avoid starting the calculation
 		// of an IndexDiff while the workspace changes (e.g. due to a
