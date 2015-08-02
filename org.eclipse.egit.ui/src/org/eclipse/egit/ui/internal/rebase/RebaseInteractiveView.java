@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Tobias Pfeifer (SAP AG) - initial implementation
+ *    Tobias Baumann (tobbaumann@gmail.com) - Bug 473950
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.rebase;
 
@@ -99,8 +100,10 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
+import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.Form;
@@ -159,11 +162,27 @@ public class RebaseInteractiveView extends ViewPart implements
 
 	private IPreferenceChangeListener prefListener;
 
-	/**
-	 * View for handling interactive rebase
-	 */
-	public RebaseInteractiveView() {
+	private InitialSelection initialSelection;
+
+	@Override
+	public void init(IViewSite site) throws PartInitException {
+		super.init(site);
 		setPartName(UIText.InteractiveRebaseView_this_partName);
+		initInitialSelection(site);
+	}
+
+	private void initInitialSelection(IViewSite site) {
+		this.initialSelection = new InitialSelection(
+				site.getWorkbenchWindow().getSelectionService().getSelection());
+		if (!isViewInputDerivableFromSelection(initialSelection.selection)) {
+			this.initialSelection.activeEditor = site.getPage()
+					.getActiveEditor();
+		}
+	}
+
+	private static boolean isViewInputDerivableFromSelection(Object o) {
+		return o instanceof StructuredSelection
+				&& ((StructuredSelection) o).size() == 1;
 	}
 
 	/**
@@ -176,11 +195,8 @@ public class RebaseInteractiveView extends ViewPart implements
 		if (o == null)
 			return;
 
-		if (o instanceof StructuredSelection) {
-			StructuredSelection sel = (StructuredSelection) o;
-			if (sel.size() != 1)
-				return;
-			o = sel.getFirstElement();
+		if (isViewInputDerivableFromSelection(o)) {
+			o = ((StructuredSelection) o).getFirstElement();
 		}
 		Repository repo = null;
 		if (o instanceof RepositoryTreeNode<?>)
@@ -343,6 +359,8 @@ public class RebaseInteractiveView extends ViewPart implements
 		};
 		linkSelectionAction.setImageDescriptor(UIIcons.ELCL16_SYNCED);
 		toolbar.add(linkSelectionAction);
+
+		reactOnInitalSelection();
 	}
 
 	private void createCommandToolBar(Form theForm, FormToolkit toolkit) {
@@ -491,6 +509,22 @@ public class RebaseInteractiveView extends ViewPart implements
 
 		ISelectionService srv = CommonUtils.getService(getSite(), ISelectionService.class);
 		srv.addPostSelectionListener(selectionChangedListener);
+	}
+
+	private void reactOnInitalSelection() {
+		selectionChangedListener.selectionChanged(initialSelection.activeEditor,
+				initialSelection.selection);
+		this.initialSelection = null;
+	}
+
+	private static final class InitialSelection {
+		ISelection selection;
+
+		IEditorPart activeEditor;
+
+		InitialSelection(ISelection selection) {
+			this.selection = selection;
+		}
 	}
 
 	private class RebaseCommandItemSelectionListener extends SelectionAdapter {
