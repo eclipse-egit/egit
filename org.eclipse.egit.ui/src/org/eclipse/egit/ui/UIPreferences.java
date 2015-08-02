@@ -191,6 +191,9 @@ public class UIPreferences {
 	/** */
 	public static final String HISTORY_MAX_BRANCH_LENGTH = "HistoryView_MaxBranchLength"; //$NON-NLS-1$
 	/** */
+	public static final String HISTORY_MAX_DIFF_LINES = "HistoryView_MaxDiffLines"; //$NON-NLS-1$
+
+	/** */
 	public static final String HISTORY_CUT_AT_START = "HistoryView_CutAtStart"; //$NON-NLS-1$
 	/** */
 	public static final String HISTORY_SHOW_TAG_SEQUENCE = "HistoryView_ShowTagSequence"; //$NON-NLS-1$

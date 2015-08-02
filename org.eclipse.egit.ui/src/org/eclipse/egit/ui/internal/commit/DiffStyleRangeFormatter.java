@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.egit.core.internal.CompareCoreUtils;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.DiffStyleRangeFormatter.DiffStyleRange.Type;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.text.BadLocationException;
@@ -27,6 +28,7 @@ import org.eclipse.jgit.diff.EditList;
 import org.eclipse.jgit.diff.RawText;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.graphics.Color;
 
@@ -160,20 +162,35 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 
 	private List<DiffStyleRange> ranges = new ArrayList<DiffStyleRange>();
 
+	private final int maxLines;
+
+	private int linesWritten;
+
 	/**
 	 * @param document
 	 * @param offset
 	 */
 	public DiffStyleRangeFormatter(IDocument document, int offset) {
-		super(new DocumentOutputStream(document, offset));
-		this.stream = (DocumentOutputStream) getOutputStream();
+		this(document, offset, -1);
 	}
 
 	/**
 	 * @param document
 	 */
 	public DiffStyleRangeFormatter(IDocument document) {
-		this(document, document.getLength());
+		this(document, document.getLength(), -1);
+	}
+
+	/**
+	 * @param document
+	 * @param offset
+	 * @param maxLines
+	 */
+	public DiffStyleRangeFormatter(IDocument document, int offset,
+			int maxLines) {
+		super(new DocumentOutputStream(document, offset));
+		this.stream = (DocumentOutputStream) getOutputStream();
+		this.maxLines = maxLines;
 	}
 
 	/**
@@ -242,6 +259,19 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 	@Override
 	protected void writeLine(char prefix, RawText text, int cur)
 			throws IOException {
+		if (maxLines > 0 && linesWritten > maxLines) {
+			if (linesWritten == maxLines + 1) {
+				int start = stream.offset;
+				stream.flushLine();
+				stream.write(
+						NLS.bind(UIText.DiffStyleRangeFormatter_diffTruncated,
+								Integer.valueOf(maxLines)));
+				stream.write("\n"); //$NON-NLS-1$
+				addRange(Type.HEADLINE, start, stream.offset);
+				linesWritten++;
+			}
+			return;
+		}
 		if (prefix == ' ') {
 			super.writeLine(prefix, text, cur);
 			stream.flushLine();
@@ -252,6 +282,7 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 			stream.flushLine();
 			addRange(type, start, stream.offset);
 		}
+		linesWritten++;
 	}
 
 	/**

@@ -92,6 +92,9 @@ public class HistoryPreferencePage extends FieldEditorPreferencePage implements
 				UIPreferences.HISTORY_MAX_BRANCH_LENGTH,
 				UIText.HistoryPreferencePage_MaxBranchLength,
 				showGroup));
+		addField(new IntegerFieldEditor(UIPreferences.HISTORY_MAX_DIFF_LINES,
+				UIText.HistoryPreferencePage_MaxDiffLines, showGroup));
+
 		addField(new BooleanFieldEditor(UIPreferences.HISTORY_CUT_AT_START,
 				UIText.HistoryPreferencePage_toggleShortenAtStart, showGroup));
 		updateMargins(showGroup);

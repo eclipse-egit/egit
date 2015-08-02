@@ -113,6 +113,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.CHECKOUT_PROJECT_RESTORE, true);
 		store.setDefault(UIPreferences.HISTORY_MAX_TAG_LENGTH, 18);
 		store.setDefault(UIPreferences.HISTORY_MAX_BRANCH_LENGTH, 18);
+		store.setDefault(UIPreferences.HISTORY_MAX_DIFF_LINES, 1000);
 		store.setDefault(UIPreferences.CLONE_WIZARD_SHOW_DETAILED_FAILURE_DIALOG, true);
 		store.setDefault(UIPreferences.MERGE_MODE, "2"); //$NON-NLS-1$
 		store.setDefault(UIPreferences.USE_LOGICAL_MODEL, true);

@@ -1964,16 +1964,23 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				if (monitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
 				}
+				int maxLines = Activator.getDefault().getPreferenceStore()
+						.getInt(UIPreferences.HISTORY_MAX_DIFF_LINES);
 				final IDocument document = new Document();
 				final DiffStyleRangeFormatter formatter = new DiffStyleRangeFormatter(
-						document);
+						document, document.getLength(), maxLines);
 
 				monitor.beginTask("", diffs.size()); //$NON-NLS-1$
 				for (FileDiff diff : diffs) {
-					if (monitor.isCanceled())
+					if (monitor.isCanceled()) {
 						break;
-					if (diff.getCommit().getParentCount() > 1)
+					}
+					if (diff.getCommit().getParentCount() > 1) {
 						break;
+					}
+					if (document.getNumberOfLines() > maxLines) {
+						break;
+					}
 					monitor.setTaskName(diff.getPath());
 					try {
 						formatter.write(repository, diff);
