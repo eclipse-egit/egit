@@ -2028,17 +2028,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			start = System.currentTimeMillis();
 		}
 
-		int widthHint;
-		if (commentViewer.getTextWidget().getWordWrap()) {
-			widthHint = commentAndDiffScrolledComposite.getClientArea().width;
-			if (commentAndDiffScrolledComposite.getVerticalBar() != null
-					&& !commentAndDiffScrolledComposite.getVerticalBar().isVisible())
-				widthHint -= commentAndDiffScrolledComposite.getVerticalBar().getSize().x;
-		} else {
-			widthHint = SWT.DEFAULT;
-		}
 		Point size = commentAndDiffComposite
-				.computeSize(widthHint, SWT.DEFAULT);
+				.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		commentAndDiffScrolledComposite.setMinSize(size);
 		resizing = false;
 
