@@ -756,6 +756,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 	private Composite commentAndDiffComposite;
 
+	private volatile boolean resizing;
+
 	/**
 	 * Determine if the input can be shown in this viewer.
 	 *
@@ -915,8 +917,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		commentAndDiffScrolledComposite.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(ControlEvent e) {
-				if (commentViewer.getTextWidget().getWordWrap())
+				if (!resizing && commentViewer.getTextWidget()
+						.getWordWrap()) {
 					resizeCommentAndDiffScrolledComposite();
+				}
 			}
 		});
 
@@ -1957,6 +1961,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		Job formatJob = new Job(UIText.GitHistoryPage_FormatDiffJobName) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
+				if (monitor.isCanceled()) {
+					return Status.CANCEL_STATUS;
+				}
 				final IDocument document = new Document();
 				final DiffStyleRangeFormatter formatter = new DiffStyleRangeFormatter(
 						document);
@@ -1975,10 +1982,16 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					}
 					monitor.worked(1);
 				}
+				if (monitor.isCanceled()) {
+					return Status.CANCEL_STATUS;
+				}
 				monitor.done();
 				UIJob uiJob = new UIJob(UIText.GitHistoryPage_FormatDiffJobName) {
 					@Override
 					public IStatus runInUIThread(IProgressMonitor uiMonitor) {
+						if (uiMonitor.isCanceled()) {
+							return Status.CANCEL_STATUS;
+						}
 						if (UIUtils.isUsable(diffViewer)) {
 							diffViewer.setDocument(document);
 							diffViewer.setFormatter(formatter);
@@ -2001,6 +2014,20 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	}
 
 	private void resizeCommentAndDiffScrolledComposite() {
+		resizing = true;
+		long start = 0;
+		int lines = 0;
+		if (trace) {
+			IDocument document = diffViewer.getDocument();
+			lines = document != null ? document.getNumberOfLines() : 0;
+			System.out.println("Lines: " + lines); //$NON-NLS-1$
+			if (lines > 1) {
+				new Exception("resizeCommentAndDiffScrolledComposite") //$NON-NLS-1$
+						.printStackTrace(System.out);
+			}
+			start = System.currentTimeMillis();
+		}
+
 		int widthHint;
 		if (commentViewer.getTextWidget().getWordWrap()) {
 			widthHint = commentAndDiffScrolledComposite.getClientArea().width;
@@ -2012,8 +2039,16 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		}
 		Point size = commentAndDiffComposite
 				.computeSize(widthHint, SWT.DEFAULT);
-		commentAndDiffComposite.setSize(size);
 		commentAndDiffScrolledComposite.setMinSize(size);
+		resizing = false;
+
+		if (trace) {
+			long stop = System.currentTimeMillis();
+			long time = stop - start;
+			long lps = (lines * 1000) / (time + 1);
+			System.out
+					.println("Resize + diff: " + time + " ms, line/s: " + lps); //$NON-NLS-1$ //$NON-NLS-2$
+		}
 	}
 
 	private TreeWalk createFileWalker(RevWalk walk, Repository db, List<FilterPath> paths) {
