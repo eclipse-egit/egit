@@ -211,6 +211,12 @@ public class UIPreferences {
 	public static final String STAGING_VIEW_FILENAME_MODE = "StagingView_FileNameMode"; //$NON-NLS-1$
 	/** */
 	public static final String STAGING_VIEW_PRESENTATION = "StagingView_Presentation"; //$NON-NLS-1$
+
+	/**
+	 * Presentation mode which was chosen by user before automatic switch to
+	 * faster mode
+	 */
+	public static final String STAGING_VIEW_PRESENTATION_BEFORE = "StagingView_Presentation_Before"; //$NON-NLS-1$
 	/** */
 	public static final String PAGE_COMMIT_PREFERENCES = "org.eclipse.egit.ui.internal.preferences.CommitDialogPreferencePage"; //$NON-NLS-1$
 	/** */
