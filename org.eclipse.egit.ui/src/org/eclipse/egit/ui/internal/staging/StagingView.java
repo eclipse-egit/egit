@@ -1561,15 +1561,10 @@ public class StagingView extends ViewPart implements IShowInSource {
 			public void run() {
 				if (!isChecked())
 					return;
-				presentation = Presentation.COMPACT_TREE;
-				getPreferenceStore().setValue(
-						UIPreferences.STAGING_VIEW_PRESENTATION,
-						Presentation.COMPACT_TREE.name());
-				listPresentationAction.setChecked(false);
-				treePresentationAction.setChecked(false);
-				setExpandCollapseActionsVisible(true);
+				switchToCompactModeInternal();
 				refreshViewers();
 			}
+
 		};
 		compactTreePresentationAction.setImageDescriptor(UIIcons.COMPACT);
 		presentationMenu.add(compactTreePresentationAction);
@@ -2572,6 +2567,16 @@ public class StagingView extends ViewPart implements IShowInSource {
 						.getExpandedElements();
 				Object[] stagedExpanded = stagedViewer
 						.getExpandedElements();
+
+				int elementsCount = updateAutoExpand(unstagedViewer,
+						getUnstaged(indexDiff));
+				elementsCount += updateAutoExpand(stagedViewer,
+						getStaged(indexDiff));
+				if (elementsCount > 10000) {
+					compactTreePresentationAction.setChecked(true);
+					switchToCompactModeInternal();
+				}
+
 				unstagedViewer.setInput(update);
 				stagedViewer.setInput(update);
 				expandPreviousExpandedAndPaths(unstagedExpanded, unstagedViewer,
@@ -2606,6 +2611,45 @@ public class StagingView extends ViewPart implements IShowInSource {
 		});
 	}
 
+	/**
+	 * @param indexDiff
+	 * @return number of unstaged changes
+	 */
+	protected int getUnstaged(IndexDiffData indexDiff) {
+		int size = indexDiff.getUntracked().size();
+		size += indexDiff.getMissing().size();
+		size += indexDiff.getModified().size();
+		size += indexDiff.getConflicting().size();
+		return size;
+	}
+
+	/**
+	 * @param indexDiff
+	 * @return number of staged changes
+	 */
+	protected int getStaged(IndexDiffData indexDiff) {
+		int size = indexDiff.getAdded().size();
+		size += indexDiff.getChanged().size();
+		size += indexDiff.getRemoved().size();
+		return size;
+	}
+
+	private int updateAutoExpand(TreeViewer viewer, int newSize) {
+		if (newSize > 10000) {
+			disableAutoExpand(viewer);
+		}
+		return newSize;
+	}
+
+	void switchToCompactModeInternal() {
+		presentation = Presentation.COMPACT_TREE;
+		getPreferenceStore().setValue(UIPreferences.STAGING_VIEW_PRESENTATION,
+				Presentation.COMPACT_TREE.name());
+		listPresentationAction.setChecked(false);
+		treePresentationAction.setChecked(false);
+		setExpandCollapseActionsVisible(true);
+	}
+
 	private IndexDiffData doReload(final Repository repository) {
 		IndexDiffCacheEntry entry = org.eclipse.egit.core.Activator.getDefault()
 				.getIndexDiffCache().getIndexDiffCacheEntry(repository);
@@ -2621,9 +2665,18 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private void expandPreviousExpandedAndPaths(Object[] previous,
 			TreeViewer viewer, Set<IPath> additionalPaths) {
+
+		StagingViewContentProvider stagedContentProvider = getContentProvider(
+				viewer);
+		int count = stagedContentProvider.getCount();
+		if (count > 10000) {
+			disableAutoExpand(viewer);
+		}
+
 		// Auto-expand is on, so don't change expanded items
-		if (viewer.getAutoExpandLevel() == AbstractTreeViewer.ALL_LEVELS)
+		if (viewer.getAutoExpandLevel() == AbstractTreeViewer.ALL_LEVELS) {
 			return;
+		}
 
 		// No need to expand anything
 		if (getPresentation() == Presentation.LIST)
@@ -2637,7 +2690,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			if (element instanceof StagingFolderEntry)
 				addPathAndParentPaths(((StagingFolderEntry) element).getPath(), paths);
 		List<StagingFolderEntry> expand = new ArrayList<StagingFolderEntry>();
-		StagingViewContentProvider stagedContentProvider = getContentProvider(viewer);
+
 		calculateNodesToExpand(paths, stagedContentProvider.getElements(null),
 				expand);
 		viewer.setExpandedElements(expand.toArray());
