@@ -207,6 +207,14 @@ public class UIPreferences {
 	public static final String STAGING_VIEW_FILENAME_MODE = "StagingView_FileNameMode"; //$NON-NLS-1$
 	/** */
 	public static final String STAGING_VIEW_PRESENTATION = "StagingView_Presentation"; //$NON-NLS-1$
+
+	/** max number of files in the view to allow for the list mode */
+	public static final String STAGING_VIEW_MAX_LIMIT_LIST_MODE = "StagingView_MaxLimitListMode"; //$NON-NLS-1$
+
+	/**
+	 * List presentation mode was automatically switched to faster mode
+	 */
+	public static final String STAGING_VIEW_PRESENTATION_CHANGED = "StagingView_Presentation_Changed"; //$NON-NLS-1$
 	/** */
 	public static final String PAGE_COMMIT_PREFERENCES = "org.eclipse.egit.ui.internal.preferences.CommitDialogPreferencePage"; //$NON-NLS-1$
 	/** */
