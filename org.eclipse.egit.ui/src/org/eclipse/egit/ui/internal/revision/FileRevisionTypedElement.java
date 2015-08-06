@@ -86,8 +86,9 @@ public class FileRevisionTypedElement extends StorageTypedElement {
 	 */
 	public String getPath() {
 		URI uri = fileRevision.getURI();
-		if (uri != null)
+		if (uri != null) {
 			return uri.getPath();
+		}
 		return getName();
 	}
 

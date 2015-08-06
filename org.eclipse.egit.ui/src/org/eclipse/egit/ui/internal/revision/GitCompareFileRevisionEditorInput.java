@@ -48,6 +48,7 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.team.core.history.IFileRevision;
@@ -76,41 +77,59 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 	private ITypedElement left;
 	private ITypedElement right;
 	private ITypedElement ancestor;
+	private Repository repository;
 
 	/**
 	 * Creates a new CompareFileRevisionEditorInput.
+	 *
 	 * @param left
 	 * @param right
+	 * @param repository
+	 *            repository where resources are coming from
 	 * @param page
 	 */
-	public GitCompareFileRevisionEditorInput(ITypedElement left, ITypedElement right, IWorkbenchPage page) {
+	public GitCompareFileRevisionEditorInput(ITypedElement left,
+			ITypedElement right, Repository repository, IWorkbenchPage page) {
 		super(new CompareConfiguration(), page);
 		this.left = left;
 		this.right = right;
+		this.repository = repository;
 	}
 
 	/**
 	 * Creates a new CompareFileRevisionEditorInput.
+	 *
 	 * @param left
 	 * @param right
 	 * @param ancestor
+	 * @param repository
+	 *            repository where resources are coming from
 	 * @param page
 	 */
-	public GitCompareFileRevisionEditorInput(ITypedElement left, ITypedElement right, ITypedElement ancestor, IWorkbenchPage page) {
+	public GitCompareFileRevisionEditorInput(ITypedElement left,
+			ITypedElement right, ITypedElement ancestor, Repository repository,
+			IWorkbenchPage page) {
 		super(new CompareConfiguration(), page);
 		this.left = left;
 		this.right = right;
 		this.ancestor = ancestor;
+		this.repository = repository;
 	}
 
-	FileRevisionTypedElement getRightRevision() {
+	/**
+	 * @return the revision
+	 */
+	public FileRevisionTypedElement getRightRevision() {
 		if (right instanceof FileRevisionTypedElement) {
 			return (FileRevisionTypedElement) right;
 		}
 		return null;
 	}
 
-	FileRevisionTypedElement getLeftRevision() {
+	/**
+	 * @return the revision
+	 */
+	public FileRevisionTypedElement getLeftRevision() {
 		if (left instanceof FileRevisionTypedElement) {
 			return (FileRevisionTypedElement) left;
 		}
@@ -121,6 +140,13 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		if (ancestor instanceof FileRevisionTypedElement)
 			return (FileRevisionTypedElement) ancestor;
 		return null;
+	}
+
+	/**
+	 * @return repository where resources are coming from
+	 */
+	public Repository getRepository() {
+		return repository;
 	}
 
 	private static void ensureContentsCached(FileRevisionTypedElement left, FileRevisionTypedElement right, FileRevisionTypedElement ancestor,
@@ -383,7 +409,11 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		return element.getName();
 	}
 
-	private String getLongName(ITypedElement element) {
+	/**
+	 * @param element
+	 * @return the long name / e.g. path
+	 */
+	public String getLongName(ITypedElement element) {
 		if (element instanceof FileRevisionTypedElement){
 			FileRevisionTypedElement fileRevisionElement = (FileRevisionTypedElement) element;
 			return fileRevisionElement.getPath();

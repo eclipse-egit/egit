@@ -102,7 +102,7 @@ public class GitOpenInCompareAction extends Action {
 		}
 
 		GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
-				left, right, null);
+				left, right, getRepository(obj), null);
 
 		IWorkbenchPage page = getWorkbenchPage(conf.getSite());
 		OpenInCompareAction.openCompareEditor(in, page, reuseEditor);
@@ -118,6 +118,15 @@ public class GitOpenInCompareAction extends Action {
 			page = site.getWorkbenchSite().getPage();
 
 		return page;
+	}
+
+	private Repository getRepository(GitModelBlob blob) {
+		IPath location = blob.getLocation();
+		RepositoryMapping mapping = RepositoryMapping.getMapping(location);
+		if (mapping == null) {
+			return null;
+		}
+		return mapping.getRepository();
 	}
 
 	private ITypedElement getCachedFileElement(GitModelBlob blob) {
