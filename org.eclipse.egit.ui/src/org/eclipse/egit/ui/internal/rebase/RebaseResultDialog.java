@@ -560,9 +560,8 @@ public class RebaseResultDialog extends MessageDialog {
 						try {
 							// make sure to refresh before opening the merge
 							// tool
-							project
-									.refreshLocal(IResource.DEPTH_INFINITE,
-											null);
+							project.refreshLocal(IResource.DEPTH_INFINITE,
+									null);
 						} catch (CoreException e) {
 							Activator.handleError(e.getMessage(), e, false);
 						}
@@ -590,7 +589,8 @@ public class RebaseResultDialog extends MessageDialog {
 					input = new GitMergeEditorInput(useWorkspace,
 							locations);
 				}
-				CompareUI.openCompareEditor(input);
+				CompareUI.openCompareEditor(input); // TODO: anb0s: howto call
+													// external tool here?
 				return;
 			} else if (skipCommitButton.getSelection()) {
 				// skip the rebase
