@@ -54,7 +54,10 @@ import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.externaltools.ITool;
+import org.eclipse.egit.ui.internal.externaltools.ToolsUtils;
 import org.eclipse.egit.ui.internal.merge.GitCompareEditorInput;
+import org.eclipse.egit.ui.internal.preferences.GitPreferenceRoot;
 import org.eclipse.egit.ui.internal.revision.EditableRevision;
 import org.eclipse.egit.ui.internal.revision.FileRevisionTypedElement;
 import org.eclipse.egit.ui.internal.revision.GitCompareFileRevisionEditorInput;
@@ -83,6 +86,7 @@ import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.jgit.util.IO;
 import org.eclipse.jgit.util.io.EolCanonicalizingInputStream;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
@@ -225,7 +229,8 @@ public class CompareUtils {
 		}
 		return ancestor;
 	}
-/**
+
+	/**
 	 * @param element
 	 * @param adapterType
 	 * @return the adapted element, or null
@@ -291,15 +296,15 @@ public class CompareUtils {
 	 * @param workBenchPage
 	 *            the page to open the compare editor in
 	 */
-	public static void openInCompare(RevCommit commit1, RevCommit commit2,
-			String commit1Path, String commit2Path, Repository repository,
-			IWorkbenchPage workBenchPage) {
-		final ITypedElement base = CompareUtils.getFileRevisionTypedElement(
-				commit1Path, commit1, repository);
-		final ITypedElement next = CompareUtils.getFileRevisionTypedElement(
-				commit2Path, commit2, repository);
+	public static void openInCompare(RevCommit commit1,
+			RevCommit commit2, String commit1Path, String commit2Path,
+			Repository repository, IWorkbenchPage workBenchPage) {
+		final ITypedElement base = CompareUtils
+				.getFileRevisionTypedElement(commit1Path, commit1, repository);
+		final ITypedElement next = CompareUtils
+				.getFileRevisionTypedElement(commit2Path, commit2, repository);
 		CompareEditorInput in = new GitCompareFileRevisionEditorInput(base,
-				next, null);
+				next, repository, null);
 		CompareUtils.openInCompare(workBenchPage, in);
 	}
 
@@ -308,6 +313,15 @@ public class CompareUtils {
 	 * @param input
 	 */
 	public static void openInCompare(IWorkbenchPage workBenchPage,
+			CompareEditorInput input) {
+		if (GitPreferenceRoot.useExternalDiffTool()) {
+			openCompareToolExternal(input);
+		} else {
+			openCompareToolInternal(workBenchPage, input);
+		}
+	}
+
+	private static void openCompareToolInternal(IWorkbenchPage workBenchPage,
 			CompareEditorInput input) {
 		IEditorPart editor = findReusableCompareEditor(input, workBenchPage);
 		if (editor != null) {
@@ -319,7 +333,8 @@ public class CompareUtils {
 				else
 					workBenchPage.bringToTop(editor);
 			} else {
-				// if editor is currently not open on that input either re-use
+				// if editor is currently not open on that input either
+				// re-use
 				// existing
 				CompareUI.reuseCompareEditor(input, (IReusableEditor) editor);
 				if (OpenStrategy.activateOnOpen())
@@ -329,6 +344,114 @@ public class CompareUtils {
 			}
 		} else {
 			CompareUI.openCompareEditor(input);
+		}
+	}
+
+	private static void openCompareToolExternal(CompareEditorInput input) {
+		System.out.println(
+				"---------------- openCompareToolExternal ----------------"); //$NON-NLS-1$
+		GitCompareFileRevisionEditorInput gitCompareInput = (GitCompareFileRevisionEditorInput) input;
+		Repository repository = gitCompareInput.getRepository();
+		FileRevisionTypedElement leftRevision = gitCompareInput
+				.getLeftRevision();
+		IFile leftResource = (IFile) gitCompareInput.getAdapter(IFile.class);
+		FileRevisionTypedElement rightRevision = gitCompareInput
+				.getRightRevision();
+		String mergedAbsoluteFilePath = null;
+		String mergedRelativeFilePath = null;
+		String mergedFileName = null;
+		String localAbsoluteFilePath = null;
+		String remoteAbsoluteFilePath = null;
+		String baseAbsoluteFilePath = null;
+		String diffCmd = null;
+		boolean prompt = false;
+		boolean writeToTemp = false;
+		boolean keepTemporaries = false; // not supported in CGit, TODO:
+											// disable?
+		File mergedDirPath = null;
+		File tempDirPath = null;
+		File workDirPath = null;
+		if (leftResource != null) {
+			mergedAbsoluteFilePath = leftResource.getRawLocation().toOSString();
+			mergedFileName = leftResource.getName();
+			mergedDirPath = leftResource.getRawLocation().toFile().getParentFile();
+		} else if (leftRevision != null) {
+			mergedFileName = leftRevision.getName();
+			String leftFilePath = leftRevision.getPath();
+			if (leftFilePath != null) {
+				IFile leftFile = ResourceUtil.getFileForLocation(repository,
+						leftFilePath);
+				if (leftFile != null) {
+					IPath leftPath = leftFile.getRawLocation();
+					mergedAbsoluteFilePath = leftPath.toOSString();
+					mergedDirPath = leftPath.toFile().getParentFile();
+				}
+			}
+		}
+		System.out.println("file: " //$NON-NLS-1$
+				+ mergedAbsoluteFilePath);
+		workDirPath = repository.getWorkTree();
+		// get the tool
+		ITool tool = GitPreferenceRoot.getExternalDiffTool();
+		// check all params and execute
+		if (mergedAbsoluteFilePath != null && rightRevision != null && tool != null) {
+			// get the relative project path from right revision here
+			mergedRelativeFilePath = rightRevision.getPath();
+			// get the command
+			diffCmd = tool.getCommand();
+			// get other attribute values
+			prompt = GitPreferenceRoot.getExternalDiffToolAttributeValueBoolean(
+					tool.getName(), "prompt"); //$NON-NLS-1$
+			writeToTemp = GitPreferenceRoot
+					.getExternalDiffToolAttributeValueBoolean(tool.getName(),
+							"writeToTemp"); //$NON-NLS-1$
+			keepTemporaries = GitPreferenceRoot
+					.getExternalDiffToolAttributeValueBoolean(tool.getName(),
+							"keepTemporaries"); //$NON-NLS-1$
+			// first check if we should ask user
+			if (prompt) {
+				int response = ToolsUtils.askUserAboutToolExecution("difftool", //$NON-NLS-1$
+						"Comparing file: " //$NON-NLS-1$
+								+ mergedRelativeFilePath + "\n\nLaunch '" //$NON-NLS-1$
+								+ tool.getName() + "' ?"); //$NON-NLS-1$
+				if (response != SWT.YES) {
+					return;
+				}
+			}
+			// check if temp dir should be created
+			if (writeToTemp) {
+				tempDirPath = ToolsUtils.createDirectoryForTempFiles();
+				mergedDirPath = tempDirPath;
+			}
+			if (leftRevision != null) {
+				localAbsoluteFilePath = ToolsUtils.loadToTempFile(mergedDirPath,
+						mergedFileName, "LOCAL", //$NON-NLS-1$
+						leftRevision, writeToTemp);
+			} else {
+				localAbsoluteFilePath = mergedAbsoluteFilePath;
+			}
+			remoteAbsoluteFilePath = ToolsUtils.loadToTempFile(mergedDirPath,
+					mergedFileName, "REMOTE", //$NON-NLS-1$
+					rightRevision, writeToTemp);
+			// execute
+			int exitCode = -1;
+			try {
+				exitCode = ToolsUtils.executeTool(workDirPath,
+						mergedAbsoluteFilePath, localAbsoluteFilePath,
+						remoteAbsoluteFilePath, baseAbsoluteFilePath, diffCmd,
+						tempDirPath);
+			} catch (IOException | InterruptedException e) {
+				e.printStackTrace();
+				ToolsUtils.informUserAboutError("difftool - error", //$NON-NLS-1$
+						e.getMessage());
+			} finally {
+				System.out.println("exitCode: " //$NON-NLS-1$
+						+ Integer.toString(exitCode));
+				// delete temp
+				if (tempDirPath != null && !keepTemporaries) {
+					ToolsUtils.deleteDirectoryForTempFiles(tempDirPath);
+				}
+			}
 		}
 	}
 
@@ -437,7 +560,7 @@ public class CompareUtils {
 		}
 		ITypedElement next = new FileRevisionTypedElement(nextFile, encoding);
 		GitCompareFileRevisionEditorInput input = new GitCompareFileRevisionEditorInput(
-				next, base, null);
+				next, base, repository, null);
 		CompareUI.openCompareDialog(input);
 	}
 
@@ -521,7 +644,6 @@ public class CompareUtils {
 			});
 			return;
 		}
-
 		if (page != null) {
 			openInCompare(page, in);
 		} else {
@@ -603,7 +725,6 @@ public class CompareUtils {
 				RevCommit commit = rw.parseCommit(destCommitId);
 				destCommit = getFileRevisionTypedElement(gitPath, commit,
 						repository);
-
 				if (base != null && commit != null) {
 					final ObjectId headCommitId = repository
 							.resolve(Constants.HEAD);
@@ -613,9 +734,8 @@ public class CompareUtils {
 			}
 		}
 
-
 		final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
-				base, destCommit, commonAncestor, null);
+				base, destCommit, commonAncestor, repository, null);
 		in.getCompareConfiguration().setRightLabel(refName);
 		return in;
 	}
@@ -830,7 +950,7 @@ public class CompareUtils {
 				}
 
 				final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
-						left, right, commonAncestor, null);
+						left, right, commonAncestor, repository, null);
 				in.getCompareConfiguration().setLeftLabel(leftRev);
 				in.getCompareConfiguration().setRightLabel(rightRev);
 				if (monitor.isCanceled()) {
@@ -911,7 +1031,7 @@ public class CompareUtils {
 		String encoding = ResourcesPlugin.getEncoding();
 		ITypedElement next = new FileRevisionTypedElement(nextFile, encoding);
 		GitCompareFileRevisionEditorInput input = new GitCompareFileRevisionEditorInput(
-				next, base, null);
+				next, base, repository, null);
 		CompareUI.openCompareDialog(input);
 	}
 
