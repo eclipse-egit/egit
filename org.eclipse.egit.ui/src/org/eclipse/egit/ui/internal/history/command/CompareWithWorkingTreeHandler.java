@@ -56,7 +56,7 @@ public class CompareWithWorkingTreeHandler extends
 						commitPath, commit, mapping.getRepository());
 				final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
 						SaveableCompareEditorInput.createFileElement(file),
-						right, null);
+						right, mapping.getRepository(), null);
 				CompareUtils.openInCompare(workBenchPage, in);
 			}
 		} else if (input instanceof File) {
