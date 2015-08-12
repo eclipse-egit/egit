@@ -15,15 +15,18 @@ package org.eclipse.egit.core.internal;
 import java.io.IOException;
 import java.util.List;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IEncodedStorage;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jgit.diff.DiffEntry;
-import org.eclipse.jgit.diff.RenameDetector;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
-import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.diff.RenameDetector;
 import org.eclipse.jgit.lib.NullProgressMonitor;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
@@ -43,16 +46,19 @@ public class CompareCoreUtils {
 	 *            the repository
 	 * @param repoPath
 	 *            the path in the git repository
-	 * @return the encoding used in eclipse for the resource or null if
+	 * @return the encoding used in eclipse for the resource or null if no
+	 *         resource was found for given path
 	 *
 	 */
+	@Nullable
 	public static String getResourceEncoding(Repository db, String repoPath) {
-		if (db.isBare())
+		if (db.isBare()) {
 			return null;
+		}
 		IFile resource = ResourceUtil.getFileForLocation(db, repoPath);
-		if (resource == null)
+		if (resource == null) {
 			return null;
-
+		}
 		return getResourceEncoding(resource);
 	}
 
@@ -60,22 +66,35 @@ public class CompareCoreUtils {
 	 * Determine the encoding used by eclipse for the resource.
 	 *
 	 * @param resource
-	 *            must be an instance of IEncodedStorage
-	 * @return the encoding used in Eclipse for the resource if found or null
+	 *            must be non null
+	 * @return the encoding used in Eclipse for the resource if found, never
+	 *         null
 	 */
-	public static String getResourceEncoding(IResource resource) {
+	@NonNull
+	public static String getResourceEncoding(@NonNull IResource resource) {
 		// Get the encoding for the current version. As a matter of
 		// principle one might want to use the eclipse settings for the
 		// version we are retrieving as that may be defined by the
 		// project settings, but there is no historic API for this.
 		String charset;
-		IEncodedStorage encodedStorage = ((IEncodedStorage) resource);
-		try {
-			charset = encodedStorage.getCharset();
-			if (charset == null)
-				charset = resource.getParent().getDefaultCharset();
-		} catch (CoreException e) {
-			charset = Constants.CHARACTER_ENCODING;
+		if (resource instanceof IEncodedStorage) {
+			IEncodedStorage encodedStorage = ((IEncodedStorage) resource);
+			try {
+				charset = encodedStorage.getCharset();
+				if (charset == null) {
+					charset = resource.getParent().getDefaultCharset();
+				}
+			} catch (CoreException e) {
+				charset = ResourcesPlugin.getEncoding();
+			}
+		} else if (resource instanceof IContainer) {
+			try {
+				charset = ((IContainer) resource).getDefaultCharset();
+			} catch (CoreException e) {
+				charset = ResourcesPlugin.getEncoding();
+			}
+		} else {
+			charset = ResourcesPlugin.getEncoding();
 		}
 		return charset;
 	}
