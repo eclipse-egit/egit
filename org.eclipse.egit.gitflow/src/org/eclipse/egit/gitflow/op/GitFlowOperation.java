@@ -104,6 +104,7 @@ abstract public class GitFlowOperation implements IEGitOperation {
 	 * @param branchName
 	 * @param squash
 	 * @throws CoreException
+	 * @since 4.1
 	 */
 	protected void finish(IProgressMonitor monitor, String branchName,
 			boolean squash)
@@ -145,6 +146,7 @@ abstract public class GitFlowOperation implements IEGitOperation {
 	 * @param squash
 	 * @return result of merging back to targetBranchName
 	 * @throws CoreException
+	 * @since 4.1
 	 */
 	protected MergeResult mergeTo(IProgressMonitor monitor, String branchName,
 			String targetBranchName, boolean squash) throws CoreException {
