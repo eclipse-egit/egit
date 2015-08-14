@@ -52,6 +52,7 @@ public final class FeatureFinishOperation extends AbstractFeatureOperation {
 
 	/**
 	 * @param squash
+	 * @since 4.1
 	 */
 	public void setSquash(boolean squash) {
 		this.squash = squash;
