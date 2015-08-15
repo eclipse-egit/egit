@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_49698c6e",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/ReleaseStartHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-15T23:14:02Z",
+      "side": 1,
+      "message": "GitFlowRepository() should mark its parameter with @NonNull then null analysis can detect at compile time if null could be passed",
+      "revId": "a50dc866dc25c3675d38787509787d0fe12a1546",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_0924b45f",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/ReleaseStartHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-15T23:14:02Z",
+      "side": 1,
+      "message": "mark return value as @Nullable then null analysis can detect such NPEs at compile time",
+      "range": {
+        "startLine": 95,
+        "startChar": 9,
+        "endLine": 95,
+        "endChar": 19
+      },
+      "revId": "a50dc866dc25c3675d38787509787d0fe12a1546",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_696610a2",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/selection/SelectionPropertyTester.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-15T23:14:02Z",
+      "side": 1,
+      "message": "this null check can be done before casting to Repository, also you should check if the passed object is of type Repository in order to prevent CCEs",
+      "revId": "a50dc866dc25c3675d38787509787d0fe12a1546",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
