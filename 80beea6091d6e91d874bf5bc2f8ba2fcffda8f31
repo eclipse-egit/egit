@@ -16,6 +16,24 @@
       "revId": "80beea6091d6e91d874bf5bc2f8ba2fcffda8f31",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_e9604079",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-16T01:10:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_694d7018",
+      "revId": "80beea6091d6e91d874bf5bc2f8ba2fcffda8f31",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
