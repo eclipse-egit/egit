@@ -5137,9 +5137,6 @@ public class UIText extends NLS {
 	public static String StagingViewContentProvider_SubmoduleError;
 
 	/** */
-	public static String StagingViewLabelProvider_SymlinkError;
-
-	/** */
 	public static String StashApplyCommand_applyFailed;
 
 	/** */
