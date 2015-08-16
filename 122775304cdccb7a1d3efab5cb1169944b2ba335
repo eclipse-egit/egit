@@ -1,0 +1,272 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_0c696299",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-16T22:24:22Z",
+      "side": 1,
+      "message": "missing colon: s/Bug/Bug:/",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 3
+      },
+      "revId": "122775304cdccb7a1d3efab5cb1169944b2ba335",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_6c573ed7",
+        "filename": "org.eclipse.egit.gitflow.ui/icons/ovr/staged_renamed.gif",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-16T22:24:22Z",
+      "side": 1,
+      "message": "I\u0027ll upload another proposal for a gitflow icon to bug 470626",
+      "revId": "122775304cdccb7a1d3efab5cb1169944b2ba335",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_aca81663",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/UIIcons.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-16T22:24:22Z",
+      "side": 1,
+      "message": "wrong Activator, use org.eclipse.egit.gitflow.ui.Activator",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 36
+      },
+      "revId": "122775304cdccb7a1d3efab5cb1169944b2ba335",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_2c6ee6a3",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/UIIcons.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-16T22:24:22Z",
+      "side": 1,
+      "message": "since this icon represents git flow it should be named e.g. flow or git-flow",
+      "range": {
+        "startLine": 29,
+        "startChar": 25,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "122775304cdccb7a1d3efab5cb1169944b2ba335",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_e9f68001",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/decorators/GitFlowLightweightDecorator.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-16T22:24:22Z",
+      "side": 1,
+      "message": "* style nit: unnecessary empy comment line\n* s/annotations/decorations/",
+      "revId": "122775304cdccb7a1d3efab5cb1169944b2ba335",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_c9f1fc09",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/decorators/GitFlowLightweightDecorator.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-16T22:24:22Z",
+      "side": 1,
+      "message": "shorten to one-line empty comment",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 4
+      },
+      "revId": "122775304cdccb7a1d3efab5cb1169944b2ba335",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_ec696eed",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/decorators/GitFlowLightweightDecorator.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-16T22:24:22Z",
+      "side": 1,
+      "message": "mark as @Nullable",
+      "revId": "122775304cdccb7a1d3efab5cb1169944b2ba335",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_29cc18ce",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/decorators/GitFlowLightweightDecorator.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-16T22:24:22Z",
+      "side": 1,
+      "message": "this class could be private if the unused public constant is removed",
+      "range": {
+        "startLine": 112,
+        "startChar": 1,
+        "endLine": 112,
+        "endChar": 7
+      },
+      "revId": "122775304cdccb7a1d3efab5cb1169944b2ba335",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_89bb842b",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/decorators/GitFlowLightweightDecorator.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-16T22:24:22Z",
+      "side": 1,
+      "message": "why is this unused constant needed ?",
+      "revId": "122775304cdccb7a1d3efab5cb1169944b2ba335",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_e9c16098",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/decorators/GitFlowLightweightDecorator.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-16T22:24:22Z",
+      "side": 1,
+      "message": "member should be private",
+      "revId": "122775304cdccb7a1d3efab5cb1169944b2ba335",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_c9bc5c24",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/decorators/GitFlowLightweightDecorator.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-16T22:24:22Z",
+      "side": 1,
+      "message": "member should be private",
+      "revId": "122775304cdccb7a1d3efab5cb1169944b2ba335",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_8c3a72ee",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/decorators/GitFlowLightweightDecorator.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-16T22:24:22Z",
+      "side": 1,
+      "message": "* can be declared final\n* it\u0027s a constant so the name should be all uppercase\n* use a less generic and more descriptive name for this constant as you want to add more images to the same class",
+      "revId": "122775304cdccb7a1d3efab5cb1169944b2ba335",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_ac25b6e3",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/decorators/GitFlowLightweightDecorator.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-16T22:24:22Z",
+      "side": 1,
+      "message": "this method seems unused",
+      "revId": "122775304cdccb7a1d3efab5cb1169944b2ba335",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_ec504e2b",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/uitext.properties",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-16T22:24:22Z",
+      "side": 1,
+      "message": "add a parameter to explain which image can\u0027t be loaded",
+      "revId": "122775304cdccb7a1d3efab5cb1169944b2ba335",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
