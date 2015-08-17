@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_2c29c63a",
+        "filename": "org.eclipse.egit.gitflow.ui/icons/ovr/staged_renamed.gif",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-08-17T00:49:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_6c573ed7",
+      "revId": "122775304cdccb7a1d3efab5cb1169944b2ba335",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_aca81663",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/UIIcons.java",
         "patchSetId": 9
