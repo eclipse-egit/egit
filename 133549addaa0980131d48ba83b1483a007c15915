@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_18f7d84d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-17T21:33:25Z",
+      "side": 1,
+      "message": "this explanation is too short, please motivate why this change is needed. \nThe git history should be self-contained, so we want to be able to understand the motivation for changes from their commit message.\n\nAlso it\u0027s unclear what users gain from this change, please provide some example.",
+      "revId": "133549addaa0980131d48ba83b1483a007c15915",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
