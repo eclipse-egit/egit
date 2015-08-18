@@ -13,11 +13,11 @@ import static org.eclipse.egit.gitflow.GitFlowDefaults.FEATURE_PREFIX;
 import static org.eclipse.egit.gitflow.GitFlowDefaults.HOTFIX_PREFIX;
 import static org.eclipse.egit.gitflow.GitFlowDefaults.RELEASE_PREFIX;
 import static org.eclipse.egit.gitflow.GitFlowDefaults.VERSION_TAG;
-import static org.eclipse.jgit.lib.Constants.R_HEADS;
 import static org.eclipse.jgit.lib.Constants.DOT_GIT;
+import static org.eclipse.jgit.lib.Constants.R_HEADS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
@@ -121,9 +121,14 @@ public class GitFlowRepositoryTest extends AbstractDualRepositoryTestCase {
 		Repository repository = repository1.getRepository();
 		GitFlowRepository gfRepo = new GitFlowRepository(repository);
 
-		new InitOperation(repository, DEVELOP, GitFlowDefaults.MASTER,
-				FEATURE_PREFIX, RELEASE_PREFIX, HOTFIX_PREFIX, VERSION_TAG)
-				.execute(null);
+		InitParameters initParameters = new InitParameters();
+		initParameters.setDevelop(DEVELOP);
+		initParameters.setMaster(GitFlowDefaults.MASTER);
+		initParameters.setFeature(FEATURE_PREFIX);
+		initParameters.setRelease(RELEASE_PREFIX);
+		initParameters.setHotfix(HOTFIX_PREFIX);
+		initParameters.setVersionTag(VERSION_TAG);
+		new InitOperation(repository, initParameters).execute(null);
 
 		assertTrue(gfRepo.getFeatureBranches().isEmpty());
 
