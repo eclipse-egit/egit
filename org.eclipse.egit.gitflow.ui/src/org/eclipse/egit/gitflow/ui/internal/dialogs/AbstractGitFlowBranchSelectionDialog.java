@@ -8,12 +8,14 @@
  *******************************************************************************/
 package org.eclipse.egit.gitflow.ui.internal.dialogs;
 
+import static org.eclipse.jface.dialogs.IDialogConstants.CANCEL_LABEL;
+import static org.eclipse.jface.dialogs.IDialogConstants.OK_LABEL;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
-import static org.eclipse.jface.dialogs.IDialogConstants.*;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
