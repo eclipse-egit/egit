@@ -16,6 +16,10 @@ import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.op.InitOperation;
 import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
+import org.eclipse.egit.gitflow.ui.internal.dialogs.InitDialog;
+import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * git flow feature init
@@ -29,7 +33,14 @@ public class InitHandler extends AbstractHandler {
 			return null;
 		}
 
-		InitOperation initOperation = new InitOperation(gfRepo.getRepository());
+		Shell activeShell = HandlerUtil.getActiveShell(event);
+		InitDialog dialog = new InitDialog(activeShell);
+		if (dialog.open() != Window.OK) {
+			return null;
+		}
+
+		InitOperation initOperation = new InitOperation(gfRepo.getRepository(),
+				dialog.getResult());
 		JobUtil.scheduleUserWorkspaceJob(initOperation,
 				UIText.InitHandler_initializing, JobFamilies.GITFLOW_FAMILY);
 
