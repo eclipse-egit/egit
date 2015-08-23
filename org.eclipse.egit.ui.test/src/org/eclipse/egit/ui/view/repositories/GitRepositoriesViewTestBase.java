@@ -115,7 +115,7 @@ public abstract class GitRepositoriesViewTestBase extends
 
 	protected void refreshAndWait() throws Exception {
 		RepositoriesView view = (RepositoriesView) getOrOpenView()
-				.getReference().getPart(false);
+				.getReference().getPart(true);
 		JobJoiner jobJoiner = JobJoiner.startListening(JobFamilies.REPO_VIEW_REFRESH, 60, TimeUnit.SECONDS);
 		view.refresh();
 		jobJoiner.join();
