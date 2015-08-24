@@ -39,6 +39,9 @@ public class ReleaseFinishHandler extends AbstractGitFlowHandler {
 	@Override
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		final GitFlowRepository gfRepo = GitFlowHandlerUtil.getRepository(event);
+		if (gfRepo == null) {
+			return error(UIText.Handlers_noGitflowRepositoryFound);
+		}
 
 		final ReleaseFinishOperation releaseFinishOperation;
 		try {
