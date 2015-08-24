@@ -22,6 +22,30 @@
       "revId": "edaadae4c47832ab1dca89451a6570af4429416d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_07d002c1",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-08-24T17:08:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_a71936ae",
+      "range": {
+        "startLine": 30,
+        "startChar": 37,
+        "endLine": 30,
+        "endChar": 55
+      },
+      "revId": "edaadae4c47832ab1dca89451a6570af4429416d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
