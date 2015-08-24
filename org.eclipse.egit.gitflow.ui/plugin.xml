@@ -482,6 +482,20 @@
 					</or>
 				</iterate>
 			</activeWhen>
+			<enabledWhen>
+				<iterate
+                  ifEmpty="false"
+                  operator="and">
+					<and>
+							<adapt type="org.eclipse.jgit.lib.Repository">
+								<test
+                           forcePluginActivation="true"
+                           property="GitFlowRepository.isInitialized">
+								</test>
+							</adapt>
+					</and>
+				</iterate>
+			</enabledWhen>
 		</handler>
 		<handler
             commandId="org.eclipse.egit.gitflow.ui.command.featureRebase">
