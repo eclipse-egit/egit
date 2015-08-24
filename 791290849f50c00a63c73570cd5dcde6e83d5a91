@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_6161ee7a",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/GitFlowRepositoryTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-24T08:33:26Z",
+      "side": 1,
+      "message": "if InitParameters would have a fluent API this could be written as\n\n new InitParameters().setDevelop(DEVELOP)\n\t\t.setMaster(GitFlowDefaults.MASTER)\n\t\t.setFeature(FEATURE_PREFIX).setRelease(RELEASE_PREFIX)\n\t\t.setHotfix(HOTFIX_PREFIX).setVersionTag(VERSION_TAG)",
+      "range": {
+        "startLine": 131,
+        "startChar": 32,
+        "endLine": 131,
+        "endChar": 46
+      },
+      "revId": "791290849f50c00a63c73570cd5dcde6e83d5a91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_415caac5",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/InitParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-24T08:33:26Z",
+      "side": 1,
+      "message": "I suggest you make this a fluent API by letting all setters return this",
+      "revId": "791290849f50c00a63c73570cd5dcde6e83d5a91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
