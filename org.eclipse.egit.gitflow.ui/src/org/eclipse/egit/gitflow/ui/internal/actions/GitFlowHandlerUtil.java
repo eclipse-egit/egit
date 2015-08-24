@@ -12,6 +12,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.gitflow.GitFlowRepository;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -24,7 +25,7 @@ public class GitFlowHandlerUtil {
 	 * @param event
 	 * @return Selected GitFlowRepository
 	 */
-	public static GitFlowRepository getRepository(ExecutionEvent event) {
+	public static @Nullable GitFlowRepository getRepository(ExecutionEvent event) {
 		IStructuredSelection selection = (IStructuredSelection) HandlerUtil
 				.getCurrentSelection(event);
 		PlatformObject firstElement = (PlatformObject) selection

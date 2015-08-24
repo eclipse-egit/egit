@@ -47,6 +47,10 @@ public class FeatureCheckoutHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final GitFlowRepository gfRepo = GitFlowHandlerUtil.getRepository(event);
+		if (gfRepo == null) {
+			return error(UIText.Handlers_noGitflowRepositoryFound);
+		}
+
 		Repository repository = gfRepo.getRepository();
 
 		final List<Ref> refs = gfRepo.getFeatureBranches();
