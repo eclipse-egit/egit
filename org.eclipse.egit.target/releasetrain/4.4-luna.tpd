@@ -11,4 +11,5 @@ location "http://download.eclipse.org/releases/luna/" {
 	org.eclipse.mylyn.context_feature.feature.group lazy
 	org.eclipse.mylyn.sdk_feature.feature.group lazy
 	org.eclipse.mylyn.wikitext_feature.feature.group lazy
+	org.eclipse.ui.net lazy
 }

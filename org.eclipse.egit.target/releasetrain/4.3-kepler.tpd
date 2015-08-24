@@ -11,4 +11,5 @@ location eclipse-kepler "http://download.eclipse.org/releases/kepler/" {
 	org.eclipse.mylyn.context_feature.feature.group lazy
 	org.eclipse.mylyn.sdk_feature.feature.group lazy
 	org.eclipse.mylyn.wikitext_feature.feature.group lazy
+	org.eclipse.ui.net lazy
 }

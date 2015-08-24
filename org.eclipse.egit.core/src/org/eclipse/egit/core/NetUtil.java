@@ -21,11 +21,17 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.X509HostnameVerifier;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.eclipse.jgit.lib.Repository;
 
 /**
  * Networking utilities
  */
+@SuppressWarnings("restriction")
 public class NetUtil {
 
 	private static TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
@@ -79,5 +85,46 @@ public class NetUtil {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Creates and configures a {@link HttpClient} according to the value of the
+	 * repositories configuration parameter "http.sslVerify". When this value is
+	 * false and when the URL is for the "https" protocol then all hostnames are
+	 * accepted and certificates are also accepted when they can't be validated
+	 *
+	 * @param repo
+	 *            the repository to be asked for the configuration parameter
+	 *            http.sslVerify
+	 * @return the configured HttpClient
+	 * @throws IOException
+	 */
+	public static CloseableHttpClient createSSLConfiguredHttpClient(
+			Repository repo)
+			throws IOException {
+		CloseableHttpClient httpclient = null;
+		X509HostnameVerifier verifier = null;
+		try {
+			SSLContext sslcontext = null;
+			if (!repo.getConfig().getBoolean("http", "sslVerify", true)) { //$NON-NLS-1$ //$NON-NLS-2$
+				sslcontext = SSLContext
+						.getInstance(SSLConnectionSocketFactory.TLS);
+				sslcontext.init(null, trustAllCerts, null);
+				verifier = SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
+			} else {
+				sslcontext = SSLContext.getDefault();
+				verifier = SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER;
+			}
+			SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+					sslcontext, new String[] { "TLSv1", "TLSv1.1", "TLSv1.2" }, //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+					null, verifier);
+			httpclient = HttpClients.custom().setSSLSocketFactory(sslsf)
+					.build();
+		} catch (KeyManagementException e) {
+			throw new IOException(e.getMessage());
+		} catch (NoSuchAlgorithmException e) {
+			throw new IOException(e.getMessage());
+		}
+		return httpclient;
 	}
 }

@@ -14,8 +14,13 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.net.URL;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.Activator;
@@ -31,6 +36,7 @@ import org.eclipse.jgit.transport.URIish;
 /**
  * Configure Gerrit if repository was cloned from a Gerrit server
  */
+@SuppressWarnings("restriction")
 public class ConfigureGerritAfterCloneTask implements PostCloneTask {
 
 	private static final String GIT_ECLIPSE_ORG = "git.eclipse.org"; //$NON-NLS-1$
@@ -82,8 +88,8 @@ public class ConfigureGerritAfterCloneTask implements PostCloneTask {
 			throws CoreException {
 		try {
 			if (isGerrit(repository)) {
-				Activator.logInfo(uri
-						+ " was detected to be hosted by a Gerrit server"); //$NON-NLS-1$
+				Activator.logInfo(
+						uri + " was detected to be hosted by a Gerrit server"); //$NON-NLS-1$
 				configureGerrit(repository);
 			}
 		} catch (Exception e) {
@@ -130,23 +136,27 @@ public class ConfigureGerritAfterCloneTask implements PostCloneTask {
 			String baseURL = u.setPath("/").toString(); //$NON-NLS-1$
 			baseURL = baseURL.substring(0, baseURL.length() - 1);
 			String tmpPath = ""; //$NON-NLS-1$
-			HttpURLConnection httpConnection = null;
+			CloseableHttpClient httpclient = NetUtil
+					.createSSLConfiguredHttpClient(repo);
 			try {
 				int slash = 1;
 				while (true) {
 					InputStream in = null;
+					CloseableHttpResponse r = null;
 					try {
-						httpConnection = (HttpURLConnection) new URL(baseURL
-								+ tmpPath + GERRIT_CONFIG_SERVER_VERSION_API)
-								.openConnection();
-						NetUtil.setSslVerification(repo, httpConnection);
-						httpConnection.setRequestMethod("GET"); //$NON-NLS-1$
-						httpConnection.setReadTimeout(1000 * timeout);
-						int responseCode = httpConnection.getResponseCode();
-						switch (responseCode) {
+						HttpGet httpGet = new HttpGet(baseURL + tmpPath
+								+ GERRIT_CONFIG_SERVER_VERSION_API);
+						RequestConfig c = RequestConfig.custom()
+								.setConnectTimeout(1000 * timeout)
+								.setSocketTimeout(1000 * timeout).build();
+						httpGet.setConfig(c);
+						r = httpclient.execute(httpGet);
+						switch (r.getStatusLine().getStatusCode()) {
 						case HttpURLConnection.HTTP_OK:
-							in = httpConnection.getInputStream();
+							HttpEntity entity = r.getEntity();
+							in = entity.getContent();
 							String response = readFully(in, "UTF-8"); //$NON-NLS-1$
+							EntityUtils.consume(entity);
 							if (response.startsWith(GERRIT_XSSI_MAGIC_STRING)) {
 								return true;
 							} else {
@@ -167,15 +177,21 @@ public class ConfigureGerritAfterCloneTask implements PostCloneTask {
 						default:
 							return false;
 						}
+					} catch (Exception e) {
+						// give up to detect Gerrit if we hit an exception
+						return false;
 					} finally {
+						if (r != null) {
+							r.close();
+						}
 						if (in != null) {
 							in.close();
 						}
 					}
 				}
 			} finally {
-				if (httpConnection != null) {
-					httpConnection.disconnect();
+				if (httpclient != null) {
+					httpclient.close();
 				}
 			}
 		}

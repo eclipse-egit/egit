@@ -15,8 +15,9 @@ import java.net.UnknownHostException;
 
 import org.eclipse.core.net.proxy.IProxyData;
 import org.eclipse.core.net.proxy.IProxyService;
+import org.eclipse.ui.internal.net.auth.NetAuthenticator;
 
-class EclipseAuthenticator extends Authenticator {
+class EclipseAuthenticator extends NetAuthenticator {
 	private final IProxyService service;
 
 	EclipseAuthenticator(final IProxyService s) {
@@ -26,15 +27,19 @@ class EclipseAuthenticator extends Authenticator {
 	@Override
 	protected PasswordAuthentication getPasswordAuthentication() {
 		final IProxyData[] data = service.getProxyData();
-		if (data == null)
-			return null;
-		for (final IProxyData d : data) {
-			if (d.getUserId() == null || d.getHost() == null)
-				continue;
-			if (d.getPort() == getRequestingPort() && hostMatches(d))
-				return auth(d);
+		if (data == null
+				|| getRequestorType() == Authenticator.RequestorType.SERVER) {
+			return super.getPasswordAuthentication();
 		}
-		return null;
+		for (final IProxyData d : data) {
+			if (d.getUserId() == null || d.getHost() == null) {
+				continue;
+			}
+			if (d.getPort() == getRequestingPort() && hostMatches(d)) {
+				return auth(d);
+			}
+		}
+		return super.getPasswordAuthentication();
 	}
 
 	private PasswordAuthentication auth(final IProxyData d) {
