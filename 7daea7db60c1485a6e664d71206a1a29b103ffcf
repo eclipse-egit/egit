@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_13ee80af",
+        "filename": "org.eclipse.egit.core/schema/modelMergeStrategy.exsd",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-08-25T14:58:49Z",
+      "side": 1,
+      "message": "Is this extension point realy only usable when models are active? You could use this extension point to implement arbitrary strategies which have eclipse dependencies.",
+      "range": {
+        "startLine": 9,
+        "startChar": 83,
+        "endLine": 9,
+        "endChar": 106
+      },
+      "revId": "7daea7db60c1485a6e664d71206a1a29b103ffcf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_d34d081a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-08-25T14:58:49Z",
+      "side": 1,
+      "message": "If this extension point does also make sense for strategies not using models then we don\u0027t need this check.",
+      "range": {
+        "startLine": 238,
+        "startChar": 6,
+        "endLine": 238,
+        "endChar": 73
+      },
+      "revId": "7daea7db60c1485a6e664d71206a1a29b103ffcf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_d357c8d4",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-08-25T14:58:49Z",
+      "side": 1,
+      "message": "Imagine logical model support is not switched on. JGit already defines a default mergeStrategy. EGit should not hardcode a different default mergeStrategy. What happens if in the future JGit implements a new default merge strategy. We shouldn\u0027t be forced to update EGit in such a case.\n\nCurrently JGit doesn\u0027t expose the default strategy. This could be fixed easily through a static method getDefaultStrategy() in MergeCommand.",
+      "range": {
+        "startLine": 256,
+        "startChar": 2,
+        "endLine": 256,
+        "endChar": 32
+      },
+      "revId": "7daea7db60c1485a6e664d71206a1a29b103ffcf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_53d638bf",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitCorePreferenceInitializer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-08-25T14:58:49Z",
+      "side": 1,
+      "message": "Again: we should not hardcode the default MergeStrategy",
+      "revId": "7daea7db60c1485a6e664d71206a1a29b103ffcf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_53ac7824",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/SynchronizePreferencePage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2015-08-25T14:58:49Z",
+      "side": 1,
+      "message": "the default shouldn\u0027t be hardcoded.",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 37
+      },
+      "revId": "7daea7db60c1485a6e664d71206a1a29b103ffcf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
