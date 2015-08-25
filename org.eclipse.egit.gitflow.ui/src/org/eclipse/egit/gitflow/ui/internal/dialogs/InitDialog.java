@@ -17,11 +17,11 @@ import static org.eclipse.egit.gitflow.InitParameters.MASTER_BRANCH_PROPERTY;
 import static org.eclipse.egit.gitflow.InitParameters.RELEASE_BRANCH_PREFIX_PROPERTY;
 import static org.eclipse.egit.gitflow.InitParameters.VERSION_TAG_PROPERTY;
 import static org.eclipse.egit.gitflow.ui.Activator.error;
-import static org.eclipse.egit.gitflow.ui.internal.UIText.FinishFeatureDialog_title;
 import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_chooseBranchNamesAndPrefixes;
 import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_developBranch;
 import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_featureBranchPrefix;
 import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_hotfixBranchPrefix;
+import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_initializeRepository;
 import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_invalidBranchName;
 import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_invalidPrefix;
 import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_masterBranch;
@@ -92,7 +92,7 @@ public class InitDialog extends TitleAreaDialog {
 	@Override
 	public void create() {
 		super.create();
-		setTitle(FinishFeatureDialog_title);
+		setTitle(InitDialog_initializeRepository);
 		setMessage(InitDialog_chooseBranchNamesAndPrefixes);
 	}
 

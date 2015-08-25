@@ -124,6 +124,9 @@ public class UIText extends NLS {
 	public static String InitDialog_hotfixBranchPrefix;
 
 	/**	 */
+	public static String InitDialog_initializeRepository;
+
+	/**	 */
 	public static String InitDialog_invalidBranchName;
 
 	/**	 */
