@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_92126e0e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionPropertyTester.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-08-25T08:11:40Z",
+      "side": 1,
+      "message": "Looks really strange.\nWhy not use \nboolean hasRepo \u003d haveRepositories(resources);\nreturn hasRepo;\n?",
+      "range": {
+        "startLine": 86,
+        "startChar": 11,
+        "endLine": 86,
+        "endChar": 23
+      },
+      "revId": "faf4998c9c48247c3a047ea2d80413ef9aac8b76",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_322aa230",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionPropertyTester.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-08-25T08:11:40Z",
+      "side": 1,
+      "message": "This is really unexpected. We do not use set content at all, so method should just return \"false\" if there is at least one resource without mapping.",
+      "range": {
+        "startLine": 170,
+        "startChar": 16,
+        "endLine": 170,
+        "endChar": 28
+      },
+      "revId": "faf4998c9c48247c3a047ea2d80413ef9aac8b76",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
