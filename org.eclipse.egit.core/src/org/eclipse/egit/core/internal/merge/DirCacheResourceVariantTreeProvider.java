@@ -76,7 +76,17 @@ public class DirCacheResourceVariantTreeProvider implements
 			}
 			switch (entry.getStage()) {
 			case DirCacheEntry.STAGE_0:
-				// Skipped on purpose (no conflict)
+				if (useWorkspace) {
+					sourceCache.setVariant(resource,
+							new GitLocalResourceVariant(resource));
+				} else {
+					sourceCache.setVariant(resource,
+							IndexResourceVariant.create(repository, entry));
+				}
+				baseCache.setVariant(resource,
+						IndexResourceVariant.create(repository, entry));
+				remoteCache.setVariant(resource,
+						IndexResourceVariant.create(repository, entry));
 				break;
 			case DirCacheEntry.STAGE_1:
 				baseCache.setVariant(resource,
