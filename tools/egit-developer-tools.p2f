@@ -4,92 +4,92 @@
   <ius size='39'>
     <iu id='org.apache.ant' name='Apache Ant' version='1.9.4.v201410062020'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
     <iu id='org.apache.commons.compress' name='Apache Commons Compress Plug-in' version='1.6.0.v201310281400'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
     <iu id='org.apache.log4j' name='Apache Jakarta log4j Plug-in' version='1.2.15.v201012070815'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
     <iu id='org.kohsuke.args4j' name='Args4j' version='2.0.21.v201301150030'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
     <iu id='org.hamcrest.generator' name='Hamcrest Generator' version='1.3.0.v201305210900'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
     <iu id='org.hamcrest.integration' name='Hamcrest Integration With Other Tools' version='1.3.0.v201305210900'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
     <iu id='org.hamcrest.library' name='Hamcrest Library of Additional Matchers' version='1.3.0.v201305281000'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
     <iu id='org.hamcrest' name='Hamcrest Library of Matchers' version='1.1.0.v20090501071000'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
     <iu id='org.hamcrest.text' name='Hamcrest Library of Text Matchers' version='1.1.0.v20090501071000'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
     <iu id='javaewah' name='JavaEWAH' version='0.7.9.v201401101600'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
     <iu id='org.objenesis' name='org.objenesis' version='1.0.0.v201105211943'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
     <iu id='org.mockito' name='Java Mocking and Stubbing Framework' version='1.8.4.v201303031500'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
     <iu id='com.jcraft.jsch' name='JSch' version='0.1.51.v201410302000'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
     <iu id='org.junit' name='JUnit' version='4.11.0.v201303080030'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
     <iu id='javax.servlet' name='javax.servlet' version='2.5.0.v201103041518'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
     <iu id='org.tukaani.xz' name='org.tukaani.xz' version='1.3.0.v201308270617'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
     <iu id='org.slf4j.api' name='org.slf4j.api' version='1.7.2.v20121108-1250'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
     <iu id='org.slf4j.impl.log4j12' name='org.slf4j.impl.log4j12' version='1.7.2.v20131105-2200'>
       <repositories size='1'>
-        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/S20150202203538/repository/'/>
+        <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
     <iu id='org.eclipse.jetty.bundles.f.feature.group' name='Jetty - Bundles: all the jetty bundles' version='7.6.14.v20131031'>
