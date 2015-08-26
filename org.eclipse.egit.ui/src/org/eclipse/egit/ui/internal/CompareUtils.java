@@ -13,6 +13,7 @@
  *    Robin Stocker <robin@nibor.org>
  *    Laurent Goubet <laurent.goubet@obeo.fr>
  *    Gunnar Wagenknecht <gunnar@wagenknecht.org>
+ *    Laurent Delaigue <laurent.delaigue@obeo.fr>
  *******************************************************************************/
 package org.eclipse.egit.ui.internal;
 
@@ -45,6 +46,7 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
@@ -53,7 +55,6 @@ import org.eclipse.egit.core.internal.storage.WorkspaceFileRevision;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.merge.GitCompareEditorInput;
 import org.eclipse.egit.ui.internal.revision.EditableRevision;
 import org.eclipse.egit.ui.internal.revision.FileRevisionTypedElement;
@@ -1111,9 +1112,9 @@ public class CompareUtils {
 		 * be done by relying on the local model only.
 		 */
 		// Only builds the logical model if the preference holds true
-		if (Activator.getDefault().getPreferenceStore()
-				.getBoolean(UIPreferences.USE_LOGICAL_MODEL)) {
-
+		if (InstanceScope.INSTANCE.getNode(
+				org.eclipse.egit.core.Activator.getPluginId()).getBoolean(
+				GitCorePreferences.core_enableLogicalModel, false)) {
 			final ResourceMapping[] mappings = ResourceUtil
 					.getResourceMappings(file,
 							ResourceMappingContext.LOCAL_CONTEXT);
