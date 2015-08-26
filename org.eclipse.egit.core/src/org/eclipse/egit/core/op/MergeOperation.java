@@ -2,6 +2,7 @@
  * Copyright (c) 2010, 2014 SAP AG and others.
  * Copyright (C) 2012, 2013 Tomasz Zarna <tzarna@gmail.com>
  * Copyright (C) 2014 Axel Richard <axel.richard@obeo.fr>
+ * Copyright (C) 2015 Obeo
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,6 +13,7 @@
  *    Stefan Lay (SAP AG) - initial implementation
  *    Tomasz Zarna (IBM) - merge squash, bug 382720
  *    Axel Richard (Obeo) - merge message, bug 422886
+ *    Laurent Delaigue (Obeo) - use of preferred merge strategy
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
@@ -57,7 +59,7 @@ public class MergeOperation implements IEGitOperation {
 
 	private final String refName;
 
-	private MergeStrategy mergeStrategy;
+	private final MergeStrategy mergeStrategy;
 
 	private Boolean squash;
 
@@ -70,26 +72,39 @@ public class MergeOperation implements IEGitOperation {
 	private String message;
 
 	/**
+	 * Initializes the MergeStrategy with the preferred merge strategy,
+	 * according to preferences.
+	 *
 	 * @param repository
-	 * @param refName name of a commit which should be merged
+	 * @param refName
+	 *            name of a commit which should be merged
 	 */
 	public MergeOperation(Repository repository, String refName) {
 		this.repository = repository;
 		this.refName = refName;
+		this.mergeStrategy = Activator.getDefault().getPreferredMergeStrategy();
 	}
 
 	/**
-	* Create a MergeOperation object
-	* @param repository
-	* @param refName name of a commit which should be merged
-	* @param mergeStrategy the strategy to use for merge
-	*/
+	 * Create a MergeOperation object
+	 *
+	 * @param repository
+	 * @param refName
+	 *            name of a commit which should be merged
+	 * @param mergeStrategy
+	 *            the strategy to use for merge. If null or not registered, the
+	 *            default merge strategy according to preferences will be used.
+	 */
 	public MergeOperation(Repository repository, String refName,
 		String mergeStrategy) {
 		this.repository = repository;
 		this.refName = refName;
-		if (mergeStrategy != null)
-			this.mergeStrategy = MergeStrategy.get(mergeStrategy);
+		MergeStrategy target = null;
+		if (mergeStrategy != null) {
+			target = MergeStrategy.get(mergeStrategy);
+		}
+		this.mergeStrategy = target != null ? target : Activator.getDefault()
+				.getPreferredMergeStrategy();
 	}
 
 	/**

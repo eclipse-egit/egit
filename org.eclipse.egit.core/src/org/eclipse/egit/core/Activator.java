@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2008, 2013 Shawn O. Pearce <spearce@spearce.org> and others.
+ * Copyright (C) 2008, 2015 Shawn O. Pearce <spearce@spearce.org> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,9 +11,11 @@ import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -26,11 +28,17 @@ import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IRegistryEventListener;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
@@ -50,9 +58,11 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.securestorage.EGitSecureStore;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.osgi.service.debug.DebugOptionsListener;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.RepositoryProvider;
 import org.osgi.framework.BundleContext;
 
@@ -70,6 +80,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	private AutoShareProjects shareGitProjectsJob;
 	private IResourceChangeListener preDeleteProjectListener;
 	private IgnoreDerivedResources ignoreDerivedResourcesListener;
+	private MergeStrategyRegistryListener mergeStrategyRegistryListener;
 
 	/**
 	 * @return the singleton {@link Activator}
@@ -179,6 +190,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		registerAutoShareProjects();
 		registerAutoIgnoreDerivedResources();
 		registerPreDeleteResourceChangeListener();
+		registerMergeStrategyRegistryListener();
 	}
 
 	private void registerPreDeleteResourceChangeListener() {
@@ -223,7 +235,51 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	}
 
 	/**
-	 *  @return cache for Repository objects
+	 * Provides the 3-way merge strategy to use according to the user's
+	 * preferences. The preferred merge strategy is JGit's default merge
+	 * strategy unless the user has explicitly chosen a different strategy among
+	 * the registered strategies.
+	 *
+	 * @return The MergeStrategy to use, can be {@code null}, in which case the
+	 *         default merge strategy should be used as defined by JGit.
+	 * @since 4.1
+	 */
+	public MergeStrategy getPreferredMergeStrategy() {
+		final IEclipsePreferences prefs = InstanceScope.INSTANCE
+				.getNode(Activator.getPluginId());
+		String preferredMergeStrategyKey = prefs.get(
+				GitCorePreferences.core_preferredMergeStrategy, null);
+		if (preferredMergeStrategyKey != null
+				&& !preferredMergeStrategyKey.isEmpty()) {
+			MergeStrategy result = MergeStrategy.get(preferredMergeStrategyKey);
+			if (result != null) {
+				return result;
+			}
+			logError(NLS.bind(CoreText.Activator_invalidPreferredMergeStrategy,
+					preferredMergeStrategyKey), null);
+		}
+		return null;
+	}
+
+	/**
+	 * @return Provides a read-only view of the registered MergeStrategies
+	 *         available.
+	 * @since 4.1
+	 */
+	public Collection<MergeStrategyDescriptor> getRegisteredMergeStrategies() {
+		return mergeStrategyRegistryListener.getStrategies();
+	}
+
+	private void registerMergeStrategyRegistryListener() {
+		mergeStrategyRegistryListener = new MergeStrategyRegistryListener(
+				Platform.getExtensionRegistry());
+		Platform.getExtensionRegistry().addListener(
+				mergeStrategyRegistryListener,
+				"org.eclipse.egit.core.mergeStrategy"); //$NON-NLS-1$
+	}
+
+	/**
+	 * @return cache for Repository objects
 	 */
 	public RepositoryCache getRepositoryCache() {
 		return repositoryCache;
@@ -541,6 +597,186 @@ public class Activator extends Plugin implements DebugOptionsListener {
 				Activator.logError(e.getMessage(), e);
 				return;
 			}
+		}
+	}
+
+	/**
+	 * Describes a MergeStrategy which can be registered with the mergeStrategy
+	 * extension point.
+	 *
+	 * @since 4.1
+	 */
+	public static class MergeStrategyDescriptor {
+		private final String name;
+
+		private final String label;
+
+		private final Class<?> implementedBy;
+
+		/**
+		 * @param name
+		 *            The referred strategy's name, to use for retrieving the
+		 *            strategy from MergeRegistry via
+		 *            {@link MergeStrategy#get(String)}
+		 * @param label
+		 *            The label to display to users so they can select the
+		 *            strategy they need
+		 * @param implementedBy
+		 *            The class of the MergeStrategy registered through the
+		 *            mergeStrategy extension point
+		 */
+		public MergeStrategyDescriptor(String name, String label,
+				Class<?> implementedBy) {
+			this.name = name;
+			this.label = label;
+			this.implementedBy = implementedBy;
+		}
+
+		/**
+		 * @return The actual strategy's name, which can be used to retrieve
+		 *         that actual strategy via {@link MergeStrategy#get(String)}.
+		 */
+		public String getName() {
+			return name;
+		}
+
+		/**
+		 * @return The strategy label, for display purposes.
+		 */
+		public String getLabel() {
+			return label;
+		}
+
+		/**
+		 * @return The class of the MergeStrategy registered through the
+		 *         mergeStrategy extension point.
+		 */
+		public Class<?> getImplementedBy() {
+			return implementedBy;
+		}
+	}
+
+	private static class MergeStrategyRegistryListener implements
+			IRegistryEventListener {
+
+		private Map<String, MergeStrategyDescriptor> strategies;
+
+		private MergeStrategyRegistryListener(IExtensionRegistry registry) {
+			strategies = new LinkedHashMap<>();
+			IConfigurationElement[] elements = registry
+					.getConfigurationElementsFor("org.eclipse.egit.core.mergeStrategy"); //$NON-NLS-1$
+			loadMergeStrategies(elements);
+		}
+
+		private Collection<MergeStrategyDescriptor> getStrategies() {
+			return Collections.unmodifiableCollection(strategies.values());
+		}
+
+		@Override
+		public void added(IExtension[] extensions) {
+			for (IExtension extension : extensions) {
+				loadMergeStrategies(extension.getConfigurationElements());
+			}
+		}
+
+		@Override
+		public void added(IExtensionPoint[] extensionPoints) {
+			// Nothing to do here
+		}
+
+		@Override
+		public void removed(IExtension[] extensions) {
+			for (IExtension extension : extensions) {
+				for (IConfigurationElement element : extension
+						.getConfigurationElements()) {
+					try {
+						Object ext = element.createExecutableExtension("class"); //$NON-NLS-1$
+						if (ext instanceof MergeStrategy) {
+							MergeStrategy strategy = (MergeStrategy) ext;
+							strategies.remove(strategy.getName());
+						}
+					} catch (CoreException e) {
+						Activator.logError(CoreText.MergeStrategy_UnloadError,
+								e);
+					}
+				}
+			}
+		}
+
+		@Override
+		public void removed(IExtensionPoint[] extensionPoints) {
+			// Nothing to do here
+		}
+
+		private void loadMergeStrategies(IConfigurationElement[] elements) {
+			for (IConfigurationElement element : elements) {
+				try {
+					Object ext = element.createExecutableExtension("class"); //$NON-NLS-1$
+					if (ext instanceof MergeStrategy) {
+						MergeStrategy strategy = (MergeStrategy) ext;
+						String name = element.getAttribute("name"); //$NON-NLS-1$
+						if (name == null || name.isEmpty()) {
+							name = strategy.getName();
+						}
+						if (canRegister(name, strategy)) {
+							if (MergeStrategy.get(name) == null) {
+								MergeStrategy.register(name, strategy);
+							}
+							strategies
+									.put(name,
+											new MergeStrategyDescriptor(
+													name,
+													element.getAttribute("label"), //$NON-NLS-1$
+													strategy.getClass()));
+						}
+					}
+				} catch (CoreException e) {
+					Activator.logError(CoreText.MergeStrategy_LoadError, e);
+				}
+			}
+		}
+
+		/**
+		 * Checks whether it's possible to register the provided strategy with
+		 * the given name
+		 *
+		 * @param name
+		 *            Name to use to register the strategy
+		 * @param strategy
+		 *            Strategy to register
+		 * @return <code>true</code> if the name is neither null nor empty, no
+		 *         other strategy is already register for the same name, and the
+		 *         name is not one of the core JGit strategies. If the given
+		 *         name is that of a core JGit strategy, the method will return
+		 *         <code>true</code> only if the strategy is the matching JGit
+		 *         strategy for that name.
+		 */
+		private boolean canRegister(String name, MergeStrategy strategy) {
+			boolean result = true;
+			if (name == null || name.isEmpty()) {
+				// name is mandatory
+				Activator.logError(
+						NLS.bind(CoreText.MergeStrategy_MissingName,
+								strategy.getClass()), null);
+				result = false;
+			} else if (strategies.containsKey(name)) {
+				// Other strategy already registered for this name
+				Activator.logError(NLS.bind(
+						CoreText.MergeStrategy_DuplicateName, new Object[] {
+								name, strategies.get(name).getImplementedBy(),
+								strategy.getClass() }), null);
+				result = false;
+			} else if (MergeStrategy.get(name) != null
+					&& MergeStrategy.get(name) != strategy) {
+				// The name is reserved by a core JGit strategy, and the
+				// provided instance is not that of JGit
+				Activator.logError(NLS.bind(
+						CoreText.MergeStrategy_ReservedName, new Object[] {
+								name, MergeStrategy.get(name).getClass(),
+								strategy.getClass() }), null);
+				result = false;
+			}
+			return result;
 		}
 	}
 }
