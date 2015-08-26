@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="org.eclipse.egit.core" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="org.eclipse.egit.core" id="mergeStrategy" name="Merge Strategy"/>
+      </appInfo>
+      <documentation>
+         This extension point can be used in order to implement and register custom merge strategies which can be used by EGit operations that require merge (merge, rebase, pull, revert, squash, stash, submodule update).
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="strategy" minOccurs="1" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  ID of the extension point, &quot;org.eclipse.egit.core.mergeStrategy&quot; for this extension point.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  ID of the extension, not mandatory
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  Name of the extension, not mandatory
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="strategy">
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The class that implements the logic of merging with logical models involved.
+Since MergeStrategies are registered by name, be careful the class you register provides a name that is neither null nor empty, and if possible is qualified so as to prevent collisions.
+It is possible to use attribute &quot;name&quot; to specify the name by which the provided strategy should be registered, in which case the value of getName() is ignored.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="org.eclipse.jgit.merge.ThreeWayMergeStrategy:"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="label" type="string" use="required">
+            <annotation>
+               <documentation>
+                  This label will be displayed to users in the synchronize preference page where they can choose the preferred merge strategy.
+Use a label that allows users to recognize which strategy is which.
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  This is optional:
+If present, it will be used to register the provided MergeStrategy.
+If not, the result of calling getName() on the provided strategy will be used to register it.
+This attribute can be used to prevent name collisions. Since MergeStrategies are registered by name, try and provide a qualified name so as to prevent collisions.
+The provided name must not be empty.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         4.1.0
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         &lt;extension point=&quot;org.eclipse.egit.core.mergeStrategy&quot;&gt;
+  &lt;strategy class=&quot;org.eclipse.some.project.merge.MyMergeStrategy&quot; label=&quot;My Merge Strategy&quot;/&gt;
+&lt;/extension&gt;
+&lt;!--
+In the following example, the attribute name will be used to register the provided strategy.
+Please note that it&apos;s highly recommended to use a qualified name to avoid collisions.
+--&gt;
+&lt;extension point=&quot;org.eclipse.egit.core.mergeStrategy&quot;&gt;
+  &lt;strategy class=&quot;org.eclipse.some.project.merge.OtherMergeStrategy&quot; label=&quot;Another Strategy with an explicit name&quot; name=&quot;org.eclipse.some.project.OtherName&quot;/&gt;
+&lt;/extension&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiinfo"/>
+      </appInfo>
+      <documentation>
+         You must provide a class that extends org.eclipse.jgit.merge.ThreeWayMergeStrategy.
+      </documentation>
+   </annotation>
+
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         Copyright (c) 2015 Obeo.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+    Obeo - initial API and implementation
+      </documentation>
+   </annotation>
+
+</schema>
