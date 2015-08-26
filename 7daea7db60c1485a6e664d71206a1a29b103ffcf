@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_74f7df4c",
+        "filename": "org.eclipse.egit.core/schema/modelMergeStrategy.exsd",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-26T14:44:09Z",
+      "side": 1,
+      "message": "You\u0027re right, I was blinded by my use-case but there\u0027s no reason to limit this extension point to models.\nDone.",
+      "parentUuid": "2721e7e2_13ee80af",
+      "revId": "7daea7db60c1485a6e664d71206a1a29b103ffcf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_d34d081a",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
         "patchSetId": 5
@@ -42,6 +60,24 @@
         "endLine": 238,
         "endChar": 73
       },
+      "revId": "7daea7db60c1485a6e664d71206a1a29b103ffcf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_94ec1389",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-26T14:44:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_d34d081a",
       "revId": "7daea7db60c1485a6e664d71206a1a29b103ffcf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_f4e3cf93",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-26T14:44:09Z",
+      "side": 1,
+      "message": "You\u0027re completely right.\nI have reworked the code to avoid that without having to add anything in JGit.",
+      "parentUuid": "2721e7e2_d357c8d4",
+      "revId": "7daea7db60c1485a6e664d71206a1a29b103ffcf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_53d638bf",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitCorePreferenceInitializer.java",
         "patchSetId": 5
@@ -82,6 +136,24 @@
       "writtenOn": "2015-08-25T14:58:49Z",
       "side": 1,
       "message": "Again: we should not hardcode the default MergeStrategy",
+      "revId": "7daea7db60c1485a6e664d71206a1a29b103ffcf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_54f29b5b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitCorePreferenceInitializer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-26T14:44:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_53d638bf",
       "revId": "7daea7db60c1485a6e664d71206a1a29b103ffcf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -105,6 +177,24 @@
         "endLine": 99,
         "endChar": 37
       },
+      "revId": "7daea7db60c1485a6e664d71206a1a29b103ffcf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_b414b702",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/SynchronizePreferencePage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-26T14:44:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_53ac7824",
       "revId": "7daea7db60c1485a6e664d71206a1a29b103ffcf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
