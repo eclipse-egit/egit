@@ -27,6 +27,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.IUndoContext;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -72,6 +73,7 @@ import org.eclipse.egit.ui.internal.commit.CommitJob;
 import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
 import org.eclipse.egit.ui.internal.components.ToggleableWarningLabel;
+import org.eclipse.egit.ui.internal.decorators.IProblemDecoratable;
 import org.eclipse.egit.ui.internal.decorators.ProblemLabelDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageArea;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponent;
@@ -550,6 +552,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private Button rebaseAbortButton;
 
+	private Button ignoreErrors;
+
 	private ListenerHandle refsChangedListener;
 
 	private LocalResourceManager resources = new LocalResourceManager(
@@ -846,6 +850,32 @@ public class StagingView extends ViewPart implements IShowInSource {
 		GridLayoutFactory.fillDefaults().numColumns(2)
 				.applyTo(buttonsContainer);
 
+		if (getPreferenceStore()
+				.getBoolean(UIPreferences.CHECK_BEFORE_COMMITTING)) {
+			ignoreErrors = toolkit.createButton(buttonsContainer,
+					UIText.StagingView_IgnoreErrors, SWT.CHECK);
+			ignoreErrors.setSelection(true);
+			ignoreErrors.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					Button button = (Button) e.getSource();
+					if (!button.getSelection()
+							&& getProblemsSeverity() >= IMarker.SEVERITY_WARNING) {
+						commitAndPushButton.setEnabled(false);
+						commitButton.setEnabled(false);
+						warningLabel
+								.showMessage(UIText.StagingView_MessageErrors);
+					} else {
+						commitAndPushButton.setEnabled(true);
+						commitButton.setEnabled(true);
+						warningLabel.hideMessage();
+					}
+				}
+			});
+			GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.BEGINNING)
+					.grab(true, true).applyTo(ignoreErrors);
+		}
+
 		Label filler = toolkit.createLabel(buttonsContainer, ""); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL)
 				.grab(true, true).applyTo(filler);
@@ -856,6 +886,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				.applyTo(commitButtonsContainer);
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(true)
 				.applyTo(commitButtonsContainer);
+
 
 		this.commitAndPushButton = toolkit.createButton(commitButtonsContainer,
 				UIText.StagingView_CommitAndPush, SWT.PUSH);
@@ -1056,6 +1087,21 @@ public class StagingView extends ViewPart implements IShowInSource {
 			// that the view is busy (e.g. reload() will trigger this job in
 			// background!).
 			service.showBusyForFamily(org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+	}
+
+	private int getProblemsSeverity() {
+		int result = IProblemDecoratable.SEVERITY_NONE;
+		StagingViewContentProvider stagedContentProvider = getContentProvider(
+				stagedViewer);
+		StagingEntry[] entries = stagedContentProvider.getStagingEntries();
+		for (StagingEntry entry : entries) {
+			if (entry.getProblemSeverity() >= IMarker.SEVERITY_WARNING) {
+				if (result < entry.getProblemSeverity()) {
+					result = entry.getProblemSeverity();
+				}
+			}
+		}
+		return result;
 	}
 
 	private void saveSashFormWeightsOnDisposal(final SashForm sashForm,
@@ -2543,6 +2589,11 @@ public class StagingView extends ViewPart implements IShowInSource {
 				final IndexDiffData indexDiff = doReload(repository);
 				boolean indexDiffAvailable;
 				boolean noConflicts;
+				boolean noErrors = getPreferenceStore()
+						.getBoolean(UIPreferences.CHECK_BEFORE_COMMITTING)
+								? (ignoreErrors.getSelection()
+										|| getProblemsSeverity() < IMarker.SEVERITY_WARNING)
+								: true;
 				if (indexDiff == null) {
 					indexDiffAvailable = false;
 					noConflicts = true;
@@ -2586,11 +2637,12 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 				boolean commitEnabled = indexDiffAvailable
 						&& repository.getRepositoryState().canCommit()
-						&& noConflicts;
+						&& noConflicts && noErrors;
 				commitButton.setEnabled(commitEnabled);
 
 				boolean commitAndPushEnabled = commitEnabled
-						&& !repository.getRepositoryState().isRebasing();
+						&& !repository.getRepositoryState().isRebasing()
+						&& noErrors;
 				commitAndPushButton.setEnabled(commitAndPushEnabled);
 
 				boolean rebaseContinueEnabled = indexDiffAvailable
