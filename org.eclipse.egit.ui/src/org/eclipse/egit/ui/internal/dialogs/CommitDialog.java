@@ -370,6 +370,8 @@ public class CommitDialog extends TitleAreaDialog {
 
 	Button commitAndPushButton;
 
+	Button ignoreErrors;
+
 	ArrayList<CommitItem> items = new ArrayList<CommitItem>();
 
 	private String commitMessage = null;
@@ -565,6 +567,7 @@ public class CommitDialog extends TitleAreaDialog {
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		toolkit.adapt(parent, false, false);
+
 		commitAndPushButton = createButton(parent, COMMIT_AND_PUSH_ID,
 				UIText.CommitDialog_CommitAndPush, false);
 		commitButton = createButton(parent, IDialogConstants.OK_ID,
@@ -724,7 +727,13 @@ public class CommitDialog extends TitleAreaDialog {
 		UIUtils.hookDisposal(parent, titleImage);
 		setTitleImage(titleImage);
 		setTitle(UIText.CommitDialog_Title);
-		setMessage(UIText.CommitDialog_Message, IMessageProvider.INFORMATION);
+		if (ignoreErrors != null) {
+			setMessage(UIText.CommitDialog_MessageErrors,
+					IMessageProvider.WARNING);
+		} else {
+			setMessage(UIText.CommitDialog_Message,
+					IMessageProvider.INFORMATION);
+		}
 
 		filesViewer.addCheckStateListener(new ICheckStateListener() {
 
@@ -794,8 +803,29 @@ public class CommitDialog extends TitleAreaDialog {
 				.hint(600, 200).grab(true, true).create());
 
 		resourcesTree.addSelectionListener(new CommitItemSelectionListener());
-
 		resourcesTree.setHeaderVisible(true);
+
+
+		if (getPreferenceStore()
+				.getBoolean(UIPreferences.CHECK_BEFORE_COMMITTING)
+				&& getProblemsSeverity() >= IMarker.SEVERITY_WARNING) {
+			ignoreErrors = new Button(resourcesTreeComposite, SWT.CHECK);
+			ignoreErrors.setText(UIText.CommitDialog_IgnoreErrors);
+
+			ignoreErrors.setSelection(false);
+			ignoreErrors.addSelectionListener(new SelectionAdapter() {
+
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					Button button = (Button) e.getSource();
+					boolean enable = button.getSelection()
+							|| getProblemsSeverity() < IMarker.SEVERITY_WARNING;
+					updateCommitButtons(enable);
+					updateMessage();
+				}
+			});
+		}
+
 		TreeColumn statCol = new TreeColumn(resourcesTree, SWT.LEFT);
 		statCol.setText(UIText.CommitDialog_Status);
 		statCol.setWidth(150);
@@ -928,6 +958,16 @@ public class CommitDialog extends TitleAreaDialog {
 		statCol.pack();
 		resourceCol.pack();
 		return filesSection;
+	}
+
+	private void updateCommitButtons(boolean enable) {
+		if (enable) {
+			commitAndPushButton.setEnabled(true);
+			commitButton.setEnabled(true);
+		} else {
+			commitAndPushButton.setEnabled(false);
+			commitButton.setEnabled(false);
+		}
 	}
 
 	private Composite createMessageAndPersonArea(Composite container) {
@@ -1123,24 +1163,32 @@ public class CommitDialog extends TitleAreaDialog {
 		String message = null;
 		int type = IMessageProvider.NONE;
 
-		String commitMsg = commitMessageComponent.getCommitMessage();
-		if (commitMsg == null || commitMsg.trim().length() == 0) {
-			message = UIText.CommitDialog_Message;
-			type = IMessageProvider.INFORMATION;
-		} else if (!isCommitWithoutFilesAllowed()) {
-			message = UIText.CommitDialog_MessageNoFilesSelected;
-			type = IMessageProvider.INFORMATION;
+		boolean hasErrorsOrWarnings = getPreferenceStore()
+				.getBoolean(UIPreferences.CHECK_BEFORE_COMMITTING)
+						? (getProblemsSeverity() >= IMarker.SEVERITY_WARNING
+								&& !ignoreErrors.getSelection())
+						: false;
+		if (hasErrorsOrWarnings) {
+			message = UIText.CommitDialog_MessageErrors;
+			type = IMessageProvider.WARNING;
 		} else {
-			CommitStatus status = commitMessageComponent.getStatus();
-			message = status.getMessage();
-			type = status.getMessageType();
+			String commitMsg = commitMessageComponent.getCommitMessage();
+			if (commitMsg == null || commitMsg.trim().length() == 0) {
+				message = UIText.CommitDialog_Message;
+				type = IMessageProvider.INFORMATION;
+			} else if (!isCommitWithoutFilesAllowed()) {
+				message = UIText.CommitDialog_MessageNoFilesSelected;
+				type = IMessageProvider.INFORMATION;
+			} else {
+				CommitStatus status = commitMessageComponent.getStatus();
+				message = status.getMessage();
+				type = status.getMessageType();
+			}
 		}
-
 		setMessage(message, type);
-		boolean commitEnabled = type == IMessageProvider.WARNING
-				|| type == IMessageProvider.NONE;
-		commitButton.setEnabled(commitEnabled);
-		commitAndPushButton.setEnabled(commitEnabled);
+		boolean commitEnabled = (type == IMessageProvider.WARNING
+				|| type == IMessageProvider.NONE) && !hasErrorsOrWarnings;
+		updateCommitButtons(commitEnabled);
 	}
 
 	private boolean isCommitWithoutFilesAllowed() {
@@ -1341,6 +1389,18 @@ public class CommitDialog extends TitleAreaDialog {
 		settings.put(SHOW_UNTRACKED_PREF, showUntracked);
 		CommitMessageHistory.saveCommitHistory(getCommitMessage());
 		super.okPressed();
+	}
+
+	private int getProblemsSeverity() {
+		int result = IProblemDecoratable.SEVERITY_NONE;
+		for (final CommitItem item : items) {
+			if (item.getProblemSeverity() >= IMarker.SEVERITY_WARNING) {
+				if (result < item.getProblemSeverity()) {
+					result = item.getProblemSeverity();
+				}
+			}
+		}
+		return result;
 	}
 
 	@Override
