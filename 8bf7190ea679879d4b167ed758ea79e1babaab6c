@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_617efc21",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIText.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2352,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-08-27T11:15:05Z",
+      "side": 1,
+      "message": "Following to the style in this class, the field should be named CommitWarningDialog_Title.\n\nAlso all other new fields below.",
+      "revId": "8bf7190ea679879d4b167ed758ea79e1babaab6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_c167e89a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-08-27T11:15:05Z",
+      "side": 1,
+      "message": "Please do not reformat code if there are no other changes. I can\u0027t see the actual change behind this formatting changes.",
+      "revId": "8bf7190ea679879d4b167ed758ea79e1babaab6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_0133c0ac",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1333,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-08-27T11:15:05Z",
+      "side": 1,
+      "message": "Please check here if the settings require a dialog to be shhown.",
+      "revId": "8bf7190ea679879d4b167ed758ea79e1babaab6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_212d2448",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-08-27T11:15:05Z",
+      "side": 1,
+      "message": "why do you need \"serial\" here? Because of the anonymous ArrayList below?",
+      "revId": "8bf7190ea679879d4b167ed758ea79e1babaab6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_81269068",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-08-27T11:15:05Z",
+      "side": 1,
+      "message": "I would not create anonymous class here to only add the item. It can be done with less and more \"standard\" code.",
+      "revId": "8bf7190ea679879d4b167ed758ea79e1babaab6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_016e2077",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitWarningDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-08-27T11:15:05Z",
+      "side": 1,
+      "message": "There is a constant for this: IPageLayout.ID_PROBLEM_VIEW",
+      "revId": "8bf7190ea679879d4b167ed758ea79e1babaab6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_e172ec55",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitWarningDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-08-27T11:15:05Z",
+      "side": 1,
+      "message": "Please properly log error",
+      "revId": "8bf7190ea679879d4b167ed758ea79e1babaab6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_417bf832",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitWarningDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-08-27T11:15:05Z",
+      "side": 1,
+      "message": "Why is this overridden?",
+      "revId": "8bf7190ea679879d4b167ed758ea79e1babaab6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
