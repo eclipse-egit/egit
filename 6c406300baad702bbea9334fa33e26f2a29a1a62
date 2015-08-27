@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_ed065d28",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-27T23:17:49Z",
+      "side": 1,
+      "message": "style nit: we link to the bug in the commit message footer not in the header, see https://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 13
+      },
+      "revId": "6c406300baad702bbea9334fa33e26f2a29a1a62",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
