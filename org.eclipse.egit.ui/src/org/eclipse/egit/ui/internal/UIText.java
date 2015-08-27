@@ -2349,6 +2349,33 @@ public class UIText extends NLS {
 	public static String CommitDialog_Title;
 
 	/** */
+	public static String CommitWarningDialog_Title;
+
+	/** */
+	public static String CommitWarningDialog_Description;
+
+	/** */
+	public static String CommitWarningDialog_Warnings;
+
+	/** */
+	public static String CommitWarningDialog_WarningsLabel;
+
+	/** */
+	public static String CommitWarningDialog_Errors;
+
+	/** */
+	public static String CommitWarningDialog_ErrorsLabel;
+
+	/** */
+	public static String CommitWarningDialog_WarningsErrors;
+
+	/** */
+	public static String CommitWarningDialog_ProblemsViewLink;
+
+	/** */
+	public static String CommitWarningDialog_ProblemsViewError;
+
+	/** */
 	public static String ConfigurationChecker_checkConfiguration;
 
 	/** */
@@ -3492,6 +3519,9 @@ public class UIText extends NLS {
 	public static String DialogsPreferencePage_ShowCloneFailedDialog;
 
 	/** */
+	public static String DialogsPreferencePage_CheckBeforeCommitting;
+
+	/** */
 	public static String DiffEditorPage_TaskGeneratingDiff;
 
 	/** */
@@ -4172,6 +4202,7 @@ public class UIText extends NLS {
 
 	/** */
 	public static String Header_contextMenu_copy_SHA1;
+
 	/** */
 
 	public static String Header_copy_SHA1_error_title;
