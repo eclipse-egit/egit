@@ -87,6 +87,13 @@ public class CommittingPreferencePage extends FieldEditorPreferencePage
 		includeUntracked.getDescriptionControl(main).setToolTipText(
 				UIText.CommittingPreferencePage_includeUntrackedFilesTooltip);
 		addField(includeUntracked);
+
+		BooleanFieldEditor checkBeforeCommitting = new BooleanFieldEditor(
+				UIPreferences.CHECK_BEFORE_COMMITTING,
+				UIText.CommittingPreferencePage_CheckBeforeCommitting, main);
+		checkBeforeCommitting.getDescriptionControl(main).setToolTipText(
+				UIText.CommittingPreferencePage_checkBeforeCommittingTooltip);
+		addField(checkBeforeCommitting);
 	}
 
 	private void updateMargins(Group group) {
