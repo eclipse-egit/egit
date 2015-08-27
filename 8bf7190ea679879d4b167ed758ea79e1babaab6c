@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2721e7e2_c7b9b867",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-27T15:47:58Z",
+      "side": 1,
+      "message": "* style nit: this commit message header is too wide, see https://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines\n* remove prefix [egit-ui] since it doesn\u0027t really add value",
+      "revId": "8bf7190ea679879d4b167ed758ea79e1babaab6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_617efc21",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIText.java",
         "patchSetId": 1
@@ -13,6 +30,40 @@
       "writtenOn": "2015-08-27T11:15:05Z",
       "side": 1,
       "message": "Following to the style in this class, the field should be named CommitWarningDialog_Title.\n\nAlso all other new fields below.",
+      "revId": "8bf7190ea679879d4b167ed758ea79e1babaab6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_07c0f0c3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIText.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4082,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-27T15:47:58Z",
+      "side": 1,
+      "message": "revert this unrelated formatting change",
+      "revId": "8bf7190ea679879d4b167ed758ea79e1babaab6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_e7c4bcda",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIText.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4193,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-27T15:47:58Z",
+      "side": 1,
+      "message": "revert this unrelated formatting change",
       "revId": "8bf7190ea679879d4b167ed758ea79e1babaab6c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +138,23 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_a7a5a434",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitWarningDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-27T15:47:58Z",
+      "side": 1,
+      "message": "* who is that ? \n* we don\u0027t use author tags, instead we prefer real javadoc for public classes",
+      "revId": "8bf7190ea679879d4b167ed758ea79e1babaab6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_016e2077",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitWarningDialog.java",
         "patchSetId": 1
@@ -132,6 +200,63 @@
       "writtenOn": "2015-08-27T11:15:05Z",
       "side": 1,
       "message": "Why is this overridden?",
+      "revId": "8bf7190ea679879d4b167ed758ea79e1babaab6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_c70b78b3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-27T15:47:58Z",
+      "side": 1,
+      "message": "this looks strange and isn\u0027t consistent with how you spell this in the strings below, I\u0027d avoid abbreviating this",
+      "range": {
+        "startLine": 817,
+        "startChar": 31,
+        "endLine": 817,
+        "endChar": 39
+      },
+      "revId": "8bf7190ea679879d4b167ed758ea79e1babaab6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_0712b0e3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-27T15:47:58Z",
+      "side": 1,
+      "message": "* I feel it would be more interesting to get the number of warnings instead of the number of files being affected\n* \"file(s)\"is distracting from what is important in this message\n\nI would phrase it like this:\n\nThere are {0} warnings in the files to be committed",
+      "revId": "8bf7190ea679879d4b167ed758ea79e1babaab6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_a7376468",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-27T15:47:58Z",
+      "side": 1,
+      "message": "There are {0} warnings and {1] errors in the files to be committed. ...",
       "revId": "8bf7190ea679879d4b167ed758ea79e1babaab6c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
