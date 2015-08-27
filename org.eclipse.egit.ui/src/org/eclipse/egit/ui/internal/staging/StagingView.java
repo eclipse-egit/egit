@@ -28,6 +28,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.IUndoContext;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -73,6 +74,7 @@ import org.eclipse.egit.ui.internal.commit.CommitJob;
 import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
 import org.eclipse.egit.ui.internal.components.ToggleableWarningLabel;
+import org.eclipse.egit.ui.internal.decorators.IProblemDecoratable;
 import org.eclipse.egit.ui.internal.decorators.ProblemLabelDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageArea;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponent;
@@ -570,6 +572,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private Button rebaseAbortButton;
 
+	private Button ignoreErrors;
+
 	private ListenerHandle refsChangedListener;
 
 	private LocalResourceManager resources = new LocalResourceManager(
@@ -866,6 +870,34 @@ public class StagingView extends ViewPart implements IShowInSource {
 		GridLayoutFactory.fillDefaults().numColumns(2)
 				.applyTo(buttonsContainer);
 
+		ignoreErrors = toolkit.createButton(buttonsContainer,
+					UIText.StagingView_IgnoreErrors, SWT.CHECK);
+		ignoreErrors.setSelection(false);
+		ignoreErrors.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updateMessage();
+				updateCommitButtons();
+			}
+		});
+		getPreferenceStore()
+				.addPropertyChangeListener(new IPropertyChangeListener() {
+					@Override
+					public void propertyChange(PropertyChangeEvent event) {
+						if (isDisposed()) {
+							getPreferenceStore()
+									.removePropertyChangeListener(this);
+						}
+						updateIgnoreErrorsButtonVisibility();
+						updateMessage();
+						updateCommitButtons();
+					}
+				});
+
+		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.BEGINNING)
+				.grab(true, true).applyTo(ignoreErrors);
+		updateIgnoreErrorsButtonVisibility();
+
 		Label filler = toolkit.createLabel(buttonsContainer, ""); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL)
 				.grab(true, true).applyTo(filler);
@@ -876,6 +908,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				.applyTo(commitButtonsContainer);
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(true)
 				.applyTo(commitButtonsContainer);
+
 
 		this.commitAndPushButton = toolkit.createButton(commitButtonsContainer,
 				UIText.StagingView_CommitAndPush, SWT.PUSH);
@@ -1078,6 +1111,53 @@ public class StagingView extends ViewPart implements IShowInSource {
 			// that the view is busy (e.g. reload() will trigger this job in
 			// background!).
 			service.showBusyForFamily(org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+	}
+
+	private boolean commitAndPushEnabled(boolean commitEnabled) {
+		return commitEnabled
+				&& !currentRepository.getRepositoryState().isRebasing();
+	}
+
+	private void updateIgnoreErrorsButtonVisibility() {
+		boolean visible = getPreferenceStore()
+				.getBoolean(UIPreferences.WARN_BEFORE_COMMITTING)
+				&& getPreferenceStore().getBoolean(UIPreferences.BLOCK_COMMIT);
+		showControl(ignoreErrors, visible);
+		ignoreErrors.getParent().layout(true);
+	}
+
+	private int getProblemsSeverity() {
+		int result = IProblemDecoratable.SEVERITY_NONE;
+		StagingViewContentProvider stagedContentProvider = getContentProvider(
+				stagedViewer);
+		StagingEntry[] entries = stagedContentProvider.getStagingEntries();
+		for (StagingEntry entry : entries) {
+			if (entry.getProblemSeverity() >= IMarker.SEVERITY_WARNING) {
+				if (result < entry.getProblemSeverity()) {
+					result = entry.getProblemSeverity();
+				}
+			}
+		}
+		return result;
+	}
+
+	private void updateCommitButtons() {
+		IndexDiffData indexDiff;
+		if (cacheEntry != null) {
+			indexDiff = cacheEntry.getIndexDiff();
+		} else {
+			indexDiff = doReload(currentRepository);
+		}
+		boolean indexDiffAvailable = indexDiffAvailable(indexDiff);
+		boolean noConflicts = noConflicts(indexDiff);
+
+		boolean commitEnabled = !isCommitBlocked() && noConflicts
+				&& indexDiffAvailable;
+
+		boolean commitAndPushEnabled = commitAndPushEnabled(commitEnabled);
+
+		commitButton.setEnabled(commitEnabled);
+		commitAndPushButton.setEnabled(commitAndPushEnabled);
 	}
 
 	private void saveSashFormWeightsOnDisposal(final SashForm sashForm,
@@ -1711,20 +1791,25 @@ public class StagingView extends ViewPart implements IShowInSource {
 	}
 
 	private void updateMessage() {
-		String message = commitMessageComponent.getStatus().getMessage();
-		boolean needsRedraw = false;
-		if (message != null) {
-			warningLabel.showMessage(message);
-			needsRedraw = true;
-		} else {
-			needsRedraw = warningLabel.getVisible();
-			warningLabel.hideMessage();
-		}
-		// Without this explicit redraw, the ControlDecoration of the
-		// commit message area would not get updated and cause visual
-		// corruption.
-		if (needsRedraw)
+		if (hasErrorsOrWarnings()) {
+			warningLabel.showMessage(UIText.StagingView_MessageErrors);
 			commitMessageSection.redraw();
+		} else {
+			String message = commitMessageComponent.getStatus().getMessage();
+			boolean needsRedraw = false;
+			if (message != null) {
+				warningLabel.showMessage(message);
+				needsRedraw = true;
+			} else {
+				needsRedraw = warningLabel.getVisible();
+				warningLabel.hideMessage();
+			}
+			// Without this explicit redraw, the ControlDecoration of the
+			// commit message area would not get updated and cause visual
+			// corruption.
+			if (needsRedraw)
+				commitMessageSection.redraw();
+		}
 	}
 
 	private void compareWith(OpenEvent event) {
@@ -2475,6 +2560,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		} else {
 			form.setText(UIText.StagingView_NoSelectionTitle);
 		}
+		updateIgnoreErrorsButtonVisibility();
 	}
 
 	/**
@@ -2563,15 +2649,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 				}
 
 				final IndexDiffData indexDiff = doReload(repository);
-				boolean indexDiffAvailable;
-				boolean noConflicts;
-				if (indexDiff == null) {
-					indexDiffAvailable = false;
-					noConflicts = true;
-				} else {
-					indexDiffAvailable = true;
-					noConflicts = indexDiff.getConflicting().isEmpty();
-				}
+				boolean indexDiffAvailable = indexDiffAvailable(indexDiff);
+				boolean noConflicts = noConflicts(indexDiff);
 
 				if (repositoryChanged) {
 					// Reset paths, they're from the old repository
@@ -2605,15 +2684,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				updateRebaseButtonVisibility(repository.getRepositoryState()
 						.isRebasing());
 
-
-				boolean commitEnabled = indexDiffAvailable
-						&& repository.getRepositoryState().canCommit()
-						&& noConflicts;
-				commitButton.setEnabled(commitEnabled);
-
-				boolean commitAndPushEnabled = commitEnabled
-						&& !repository.getRepositoryState().isRebasing();
-				commitAndPushButton.setEnabled(commitAndPushEnabled);
+				updateIgnoreErrorsButtonVisibility();
 
 				boolean rebaseContinueEnabled = indexDiffAvailable
 						&& repository.getRepositoryState().isRebasing()
@@ -2623,9 +2694,40 @@ public class StagingView extends ViewPart implements IShowInSource {
 				form.setText(GitLabels.getStyledLabelSafe(repository).toString());
 				updateCommitMessageComponent(repositoryChanged, indexDiffAvailable);
 				enableCommitWidgets(indexDiffAvailable && noConflicts);
+
+				updateCommitButtons();
 				updateSectionText();
 			}
+
 		});
+	}
+
+	private static boolean noConflicts(IndexDiffData indexDiff) {
+		return indexDiff == null ? true : indexDiff.getConflicting().isEmpty();
+	}
+
+	private static boolean indexDiffAvailable(IndexDiffData indexDiff) {
+		return indexDiff == null ? false : true;
+	}
+
+	private boolean hasErrorsOrWarnings() {
+		return getPreferenceStore()
+				.getBoolean(UIPreferences.WARN_BEFORE_COMMITTING)
+				? (getProblemsSeverity() >= Integer.valueOf(getPreferenceStore()
+						.getString(UIPreferences.WARN_BEFORE_COMMITTING_LEVEL))
+				&& !ignoreErrors.getSelection()) : false;
+	}
+
+	@SuppressWarnings("boxing")
+	private boolean isCommitBlocked() {
+		return getPreferenceStore()
+				.getBoolean(UIPreferences.WARN_BEFORE_COMMITTING)
+				&& getPreferenceStore().getBoolean(UIPreferences.BLOCK_COMMIT)
+						? (getProblemsSeverity() >= Integer
+								.valueOf(getPreferenceStore().getString(
+										UIPreferences.BLOCK_COMMIT_LEVEL))
+								&& !ignoreErrors.getSelection())
+						: false;
 	}
 
 	private IndexDiffData doReload(final Repository repository) {
