@@ -23,7 +23,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
@@ -78,6 +81,7 @@ import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.DecoratingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -1315,6 +1319,7 @@ public class CommitDialog extends TitleAreaDialog {
 		return IProblemDecoratable.SEVERITY_NONE;
 	}
 
+	@SuppressWarnings("boxing")
 	@Override
 	protected void okPressed() {
 		if (!isCommitWithoutFilesAllowed()) {
@@ -1324,6 +1329,25 @@ public class CommitDialog extends TitleAreaDialog {
 
 		if (!commitMessageComponent.checkCommitInfo())
 			return;
+
+		if (!getSeverityItems().isEmpty()) {
+			int warnings = 0;
+			int errors = 0;
+			if ((getSeverityItems().get(IMarker.SEVERITY_WARNING) != null)) {
+				warnings = getSeverityItems().get(IMarker.SEVERITY_WARNING)
+						.size();
+			}
+
+			if (getSeverityItems().get(IMarker.SEVERITY_ERROR) != null) {
+				errors = getSeverityItems().get(IMarker.SEVERITY_ERROR).size();
+			}
+			CommitWarningDialog dialog = new CommitWarningDialog(PlatformUI
+					.getWorkbench().getActiveWorkbenchWindow().getShell(),
+					warnings, errors);
+			if (dialog.open() == Window.CANCEL) {
+				return;
+			}
+		}
 
 		Object[] checkedElements = filesViewer.getCheckedElements();
 		selectedFiles.clear();
@@ -1341,6 +1365,27 @@ public class CommitDialog extends TitleAreaDialog {
 		settings.put(SHOW_UNTRACKED_PREF, showUntracked);
 		CommitMessageHistory.saveCommitHistory(getCommitMessage());
 		super.okPressed();
+	}
+
+	@SuppressWarnings({ "boxing", "serial" })
+	private Map<Integer, List<CommitItem>> getSeverityItems() {
+		Map<Integer, List<CommitItem>> result = new HashMap<>();
+		for (final CommitItem item : items) {
+			if (item.getProblemSeverity() >= IMarker.SEVERITY_WARNING) {
+				if (result.get(item.getProblemSeverity()) == null) {
+					result.put(item.getProblemSeverity(),
+							new ArrayList<CommitItem>() {
+								{
+
+									add(item);
+								}
+							});
+				} else {
+					result.get(item.getProblemSeverity()).add(item);
+				}
+			}
+		}
+		return result;
 	}
 
 	@Override

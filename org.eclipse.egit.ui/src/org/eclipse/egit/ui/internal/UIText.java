@@ -2349,6 +2349,24 @@ public class UIText extends NLS {
 	public static String CommitDialog_Title;
 
 	/** */
+	public static String CommitWarningDialogTitle;
+
+	/** */
+	public static String CommitWarningDialogDescription;
+
+	/** */
+	public static String CommitWarningDialogWarnings;
+
+	/** */
+	public static String CommitWarningDialogErrors;
+
+	/** */
+	public static String CommitWarningDialogWarningsErrors;
+
+	/** */
+	public static String CommitWarningDialogProblemsViewLink;
+
+	/** */
 	public static String ConfigurationChecker_checkConfiguration;
 
 	/** */
@@ -4060,8 +4078,8 @@ public class UIText extends NLS {
 
 	/**
 	 * Do not in-line this into the static initializer as the
-	 * "Find Broken Externalized Strings" tool will not be
-	 * able to find the corresponding bundle file.
+	 * "Find Broken Externalized Strings" tool will not be able to find the
+	 * corresponding bundle file.
 	 */
 	private static final String BUNDLE_NAME = "org.eclipse.egit.ui.internal.uitext"; //$NON-NLS-1$
 
@@ -4172,6 +4190,7 @@ public class UIText extends NLS {
 
 	/** */
 	public static String Header_contextMenu_copy_SHA1;
+
 	/** */
 
 	public static String Header_copy_SHA1_error_title;

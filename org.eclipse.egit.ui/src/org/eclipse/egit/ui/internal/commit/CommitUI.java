@@ -15,7 +15,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commit;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -58,7 +57,7 @@ import org.eclipse.ui.PlatformUI;
 /**
  * UI component for performing a commit
  */
-public class CommitUI  {
+public class CommitUI {
 
 	private IndexDiff indexDiff;
 
@@ -82,6 +81,7 @@ public class CommitUI  {
 
 	/**
 	 * Constructs a CommitUI object
+	 *
 	 * @param shell
 	 *            Shell to use for UI interaction. Must not be null.
 	 * @param repo
@@ -92,11 +92,11 @@ public class CommitUI  {
 	 *            if selectedResources contains a resource that is parent of the
 	 *            file. selectedResources must not be null.
 	 * @param preselectAll
-	 * 			  preselect all changed files in the commit dialog.
-	 * 			  If set to true selectedResources are ignored.
+	 *            preselect all changed files in the commit dialog. If set to
+	 *            true selectedResources are ignored.
 	 */
-	public CommitUI(Shell shell, Repository repo,
-			IResource[] selectedResources, boolean preselectAll) {
+	public CommitUI(Shell shell, Repository repo, IResource[] selectedResources,
+			boolean preselectAll) {
 		this.shell = shell;
 		this.repo = repo;
 		this.selectedResources = new IResource[selectedResources.length];
@@ -106,8 +106,9 @@ public class CommitUI  {
 		this.preselectAll = preselectAll;
 	}
 
-	/**1
-	 * Performs a commit
+	/**
+	 * 1 Performs a commit
+	 *
 	 * @return true if a commit operation was triggered
 	 */
 	public boolean commit() {
@@ -116,26 +117,28 @@ public class CommitUI  {
 		if (!UIUtils.saveAllEditors(repo))
 			return false;
 
-		BasicConfigurationDialog.show(new Repository[]{repo});
+		BasicConfigurationDialog.show(new Repository[] { repo });
 
 		resetState();
 		final IProject[] projects = getProjectsOfRepositories();
 		try {
-			PlatformUI.getWorkbench().getProgressService().busyCursorWhile(new IRunnableWithProgress() {
+			PlatformUI.getWorkbench().getProgressService()
+					.busyCursorWhile(new IRunnableWithProgress() {
 
-				@Override
-				public void run(IProgressMonitor monitor) throws InvocationTargetException,
-						InterruptedException {
-					try {
-						buildIndexHeadDiffList(projects, monitor);
-					} catch (IOException e) {
-						throw new InvocationTargetException(e);
-					}
-				}
-			});
+						@Override
+						public void run(IProgressMonitor monitor)
+								throws InvocationTargetException,
+								InterruptedException {
+							try {
+								buildIndexHeadDiffList(projects, monitor);
+							} catch (IOException e) {
+								throw new InvocationTargetException(e);
+							}
+						}
+					});
 		} catch (InvocationTargetException e) {
-			Activator.handleError(UIText.CommitAction_errorComputingDiffs, e.getCause(),
-					true);
+			Activator.handleError(UIText.CommitAction_errorComputingDiffs,
+					e.getCause(), true);
 			return false;
 		} catch (InterruptedException e) {
 			return false;
@@ -144,9 +147,7 @@ public class CommitUI  {
 		CommitHelper commitHelper = new CommitHelper(repo);
 
 		if (!commitHelper.canCommit()) {
-			MessageDialog.openError(
-					shell,
-					UIText.CommitAction_cannotCommit,
+			MessageDialog.openError(shell, UIText.CommitAction_cannotCommit,
 					commitHelper.getCannotCommitMessage());
 			return false;
 		}
@@ -175,18 +176,18 @@ public class CommitUI  {
 		commitDialog.setPreselectAll(preselectAll);
 		commitDialog.setAuthor(commitHelper.getAuthor());
 		commitDialog.setCommitter(commitHelper.getCommitter());
-		commitDialog.setAllowToChangeSelection(!commitHelper.isMergedResolved && !commitHelper.isCherryPickResolved);
+		commitDialog.setAllowToChangeSelection(!commitHelper.isMergedResolved
+				&& !commitHelper.isCherryPickResolved);
 		commitDialog.setCommitMessage(commitHelper.getCommitMessage());
 
 		if (commitDialog.open() != IDialogConstants.OK_ID)
 			return false;
-
 		final CommitOperation commitOperation;
 		try {
-			commitOperation= new CommitOperation(
-					repo,
-					commitDialog.getSelectedFiles(), notTracked, commitDialog.getAuthor(),
-					commitDialog.getCommitter(), commitDialog.getCommitMessage());
+			commitOperation = new CommitOperation(repo,
+					commitDialog.getSelectedFiles(), notTracked,
+					commitDialog.getAuthor(), commitDialog.getCommitter(),
+					commitDialog.getCommitMessage());
 		} catch (CoreException e1) {
 			Activator.handleError(UIText.CommitUI_commitFailed, e1, true);
 			return false;
@@ -197,8 +198,8 @@ public class CommitUI  {
 		commitOperation.setCommitAll(commitHelper.isMergedResolved);
 		if (commitHelper.isMergedResolved)
 			commitOperation.setRepository(repo);
-		Job commitJob = new CommitJob(repo, commitOperation).
-				setPushUpstream(commitDialog.isPushRequested());
+		Job commitJob = new CommitJob(repo, commitOperation)
+				.setPushUpstream(commitDialog.isPushRequested());
 		commitJob.schedule();
 
 		return true;
@@ -255,7 +256,8 @@ public class CommitUI  {
 				// could be file outside of workspace
 				for (IResource resource : selectedResources) {
 					IPath location = resource.getLocation();
-					if(location != null && location.toFile().equals(new File(uri))) {
+					if (location != null
+							&& location.toFile().equals(new File(uri))) {
 						preselectionCandidates.add(fileName);
 					}
 				}
@@ -265,8 +267,8 @@ public class CommitUI  {
 	}
 
 	private void buildIndexHeadDiffList(IProject[] selectedProjects,
-			IProgressMonitor monitor) throws IOException,
-			OperationCanceledException {
+			IProgressMonitor monitor)
+					throws IOException, OperationCanceledException {
 
 		monitor.beginTask(UIText.CommitActionHandler_calculatingChanges, 1000);
 		EclipseGitProgressTransformer jgitMonitor = new EclipseGitProgressTransformer(
@@ -283,9 +285,9 @@ public class CommitUI  {
 		if (it == null)
 			throw new OperationCanceledException(); // workspace is closed
 		indexDiff = new IndexDiff(repo, Constants.HEAD, it);
-		indexDiff.diff(jgitMonitor, counter.count, 0, NLS.bind(
-				UIText.CommitActionHandler_repository, repo.getDirectory()
-						.getPath()));
+		indexDiff.diff(jgitMonitor, counter.count, 0,
+				NLS.bind(UIText.CommitActionHandler_repository,
+						repo.getDirectory().getPath()));
 
 		includeList(indexDiff.getAdded(), indexChanges);
 		includeList(indexDiff.getChanged(), indexChanges);
@@ -300,6 +302,7 @@ public class CommitUI  {
 
 	static class CountingVisitor implements IResourceVisitor {
 		int count;
+
 		@Override
 		public boolean visit(IResource resource) throws CoreException {
 			count++;
