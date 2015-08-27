@@ -2349,6 +2349,9 @@ public class UIText extends NLS {
 	public static String CommitDialog_Title;
 
 	/** */
+	public static String CommitDialog_IgnoreErrors;
+
+	/** */
 	public static String ConfigurationChecker_checkConfiguration;
 
 	/** */
@@ -3492,6 +3495,9 @@ public class UIText extends NLS {
 	public static String DialogsPreferencePage_ShowCloneFailedDialog;
 
 	/** */
+	public static String DialogsPreferencePage_CheckBeforeCommitting;
+
+	/** */
 	public static String DiffEditorPage_TaskGeneratingDiff;
 
 	/** */
@@ -4172,6 +4178,7 @@ public class UIText extends NLS {
 
 	/** */
 	public static String Header_contextMenu_copy_SHA1;
+
 	/** */
 
 	public static String Header_copy_SHA1_error_title;
@@ -5135,6 +5142,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String StagingViewContentProvider_SubmoduleError;
+
+	/** */
+	public static String StagingView_IgnoreErrors;
 
 	/** */
 	public static String StashApplyCommand_applyFailed;
