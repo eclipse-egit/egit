@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_5f658cbe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-08-28T08:32:35Z",
+      "side": 1,
+      "message": "Is that the one shown as my username here in Gerrit? That\u0027s twolfaq6 . Couldn\u0027t find any other place that would show me some user id; elsewhere on eclipse.org I\u0027m identified by e-mail \u0026 password.",
+      "parentUuid": "2721e7e2_ffd8c01c",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "cdb87b98a87b89922308e1d4fa159dbeea33e1f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_2d1cf5f4",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
         "patchSetId": 3
