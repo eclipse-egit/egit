@@ -17,6 +17,8 @@ import static org.eclipse.egit.gitflow.InitParameters.MASTER_BRANCH_PROPERTY;
 import static org.eclipse.egit.gitflow.InitParameters.RELEASE_BRANCH_PREFIX_PROPERTY;
 import static org.eclipse.egit.gitflow.InitParameters.VERSION_TAG_PROPERTY;
 import static org.eclipse.egit.gitflow.ui.Activator.error;
+import static org.eclipse.egit.gitflow.ui.Activator.warning;
+import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_branchDoesNotExistYetAndWillBeCreated;
 import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_chooseBranchNamesAndPrefixes;
 import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_developBranch;
 import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_featureBranchPrefix;
@@ -25,29 +27,44 @@ import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_initializeR
 import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_invalidBranchName;
 import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_invalidPrefix;
 import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_masterBranch;
+import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_masterBranchIsMissing;
 import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_releaseBranchPrefix;
+import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_selectedMasterBranchDoesNotExistCreateNow;
 import static org.eclipse.egit.gitflow.ui.internal.UIText.InitDialog_versionTagPrefix;
 import static org.eclipse.jface.databinding.swt.WidgetProperties.text;
 import static org.eclipse.jface.dialogs.IDialogConstants.OK_ID;
 import static org.eclipse.jface.dialogs.IMessageProvider.ERROR;
-import static org.eclipse.jface.dialogs.IMessageProvider.INFORMATION;
+import static org.eclipse.jface.dialogs.MessageDialog.openQuestion;
+import static org.eclipse.jgit.lib.Constants.R_HEADS;
 import static org.eclipse.jgit.lib.Repository.isValidRefName;
 import static org.eclipse.swt.SWT.Modify;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.ValidationStatusProvider;
 import org.eclipse.core.databinding.validation.IValidator;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.egit.core.op.CreateLocalBranchOperation;
+import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.InitParameters;
+import org.eclipse.egit.gitflow.WrongGitFlowStateException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jface.databinding.dialog.TitleAreaDialogSupport;
 import org.eclipse.jface.databinding.dialog.ValidationMessageProvider;
+import org.eclipse.jface.databinding.fieldassist.ControlDecorationSupport;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -62,6 +79,35 @@ import org.eclipse.swt.widgets.Text;
  * Dialog to gather inputs for the git flow init operation.
  */
 public class InitDialog extends TitleAreaDialog {
+	private final class BranchValidator implements IValidator {
+		@Override
+		public IStatus validate(Object value) {
+			if (value == null || !isValidRefName(R_HEADS + value)) {
+				return error(NLS.bind(InitDialog_invalidBranchName, value));
+			}
+			return Status.OK_STATUS;
+		}
+	}
+
+	private final class BranchExistsValidator implements IValidator {
+		private List<String> list;
+
+		public BranchExistsValidator(List<Ref> branchList) {
+			list = new ArrayList<>();
+			for (Ref ref : branchList) {
+				list.add(ref.getName());
+			}
+		}
+
+		@Override
+		public IStatus validate(Object value) {
+			if (value == null || !list.contains(R_HEADS + value)) {
+				return warning(NLS.bind(InitDialog_branchDoesNotExistYetAndWillBeCreated, value));
+			}
+			return Status.OK_STATUS;
+		}
+	}
+
 	private Text developText;
 
 	private InitParameters gitflowInitConfig = new InitParameters();
@@ -82,11 +128,20 @@ public class InitDialog extends TitleAreaDialog {
 
 	private static final int TEXT_WIDTH = 100;
 
+	private GitFlowRepository gfRepo;
+
+	private List<Ref> branchList;
+
 	/**
 	 * @param parentShell
+	 * @param gfRepo
+	 * @param branchList
 	 */
-	public InitDialog(Shell parentShell) {
+	public InitDialog(Shell parentShell, GitFlowRepository gfRepo,
+			List<Ref> branchList) {
 		super(parentShell);
+		this.gfRepo = gfRepo;
+		this.branchList = branchList;
 	}
 
 	@Override
@@ -123,9 +178,7 @@ public class InitDialog extends TitleAreaDialog {
 				if(okButton != null) {
 					okButton.setEnabled(type != ERROR);
 				}
-				if (ERROR != type) {
-					return INFORMATION;
-				}
+
 				return type;
 			}
 		});
@@ -154,24 +207,21 @@ public class InitDialog extends TitleAreaDialog {
 
 		UpdateValueStrategy noModelToTarget = new UpdateValueStrategy(false, POLICY_ON_REQUEST);
 
-		UpdateValueStrategy targetToModel = new UpdateValueStrategy();
-		targetToModel.setBeforeSetValidator(new IValidator() {
-			@Override
-			public IStatus validate(Object value) {
-				if (value == null || !isValidRefName(Constants.R_HEADS + value)) {
-					return error(NLS.bind(InitDialog_invalidBranchName, value));
-				}
-				return Status.OK_STATUS;
-			}
-		});
-		bind(context, noModelToTarget, targetToModel, DEVELOP_BRANCH_PROPERTY, developText);
-		bind(context, noModelToTarget, targetToModel, MASTER_BRANCH_PROPERTY, masterText);
+		UpdateValueStrategy developUpdateStrategy = new UpdateValueStrategy();
+		developUpdateStrategy.setBeforeSetValidator(new BranchValidator());
+		bind(context, noModelToTarget, developUpdateStrategy, DEVELOP_BRANCH_PROPERTY, developText);
+
+		UpdateValueStrategy masterUpdateStrategy = new UpdateValueStrategy();
+		masterUpdateStrategy.setBeforeSetValidator(new BranchValidator());
+		masterUpdateStrategy.setAfterConvertValidator(new BranchExistsValidator(branchList));
+		bind(context, noModelToTarget, masterUpdateStrategy, MASTER_BRANCH_PROPERTY, masterText);
 
 		UpdateValueStrategy prefixTargetToModel = new UpdateValueStrategy();
 		prefixTargetToModel.setBeforeSetValidator(new IValidator() {
 			@Override
 			public IStatus validate(Object value) {
-				if (value == null || !isValidRefName(Constants.R_HEADS + value + DUMMY_POSTFIX)) {
+				if (value == null
+						|| !isValidRefName(R_HEADS + value + DUMMY_POSTFIX)) {
 					return error(NLS.bind(InitDialog_invalidPrefix, value));
 				}
 				return Status.OK_STATUS;
@@ -190,9 +240,11 @@ public class InitDialog extends TitleAreaDialog {
 	private void bind(DataBindingContext dataBindingContext,
 			UpdateValueStrategy noModelToTargetUpdate,
 			UpdateValueStrategy targetToModel, String modelProperty, Text widget) {
-		dataBindingContext.bindValue(text(Modify).observe(widget),
+		Binding binding = dataBindingContext.bindValue(
+				text(Modify).observe(widget),
 				value(modelProperty).observe(gitflowInitConfig), targetToModel,
 				noModelToTargetUpdate);
+		ControlDecorationSupport.create(binding, SWT.TOP | SWT.LEFT);
 	}
 
 	@Override
@@ -209,6 +261,38 @@ public class InitDialog extends TitleAreaDialog {
 	@Override
 	protected boolean isResizable() {
 		return true;
+	}
+
+	@Override
+	protected void okPressed() {
+		String master = gitflowInitConfig.getMaster();
+		Repository repository = gfRepo.getRepository();
+		if (isMasterBranchAvailable(master, repository)) {
+			super.okPressed();
+			return;
+		}
+		boolean createBranch = openQuestion(getShell(),
+				InitDialog_masterBranchIsMissing,
+				NLS.bind(InitDialog_selectedMasterBranchDoesNotExistCreateNow, master));
+		if (!createBranch) {
+			return;
+		}
+
+		try {
+			RevCommit head = gfRepo.findHead();
+			new CreateLocalBranchOperation(repository, master, head).execute(null);
+		} catch (CoreException | WrongGitFlowStateException e) {
+			throw new RuntimeException(e);
+		}
+		super.okPressed();
+	}
+
+	private boolean isMasterBranchAvailable(String master, Repository repository) {
+		try {
+			return repository.getRef(R_HEADS + master) != null;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
