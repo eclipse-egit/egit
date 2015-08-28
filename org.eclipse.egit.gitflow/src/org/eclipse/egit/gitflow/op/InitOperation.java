@@ -16,6 +16,7 @@ import static org.eclipse.egit.gitflow.GitFlowConfig.MASTER_KEY;
 import static org.eclipse.egit.gitflow.GitFlowConfig.RELEASE_KEY;
 import static org.eclipse.egit.gitflow.GitFlowConfig.VERSION_TAG_KEY;
 import static org.eclipse.egit.gitflow.GitFlowDefaults.VERSION_TAG;
+import static org.eclipse.jgit.lib.Constants.R_HEADS;
 
 import java.io.IOException;
 
@@ -33,6 +34,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * git flow init
@@ -129,6 +131,10 @@ public final class InitOperation extends GitFlowOperation {
 		}
 
 		try {
+			if (!isMasterBranchAvailable()) {
+				throw new CoreException(error(NLS.bind(CoreText.InitOperation_localMasterDoesNotExist, master)));
+			}
+
 			RevCommit head = repository.findHead();
 			if (!repository.hasBranch(develop)) {
 				CreateLocalBranchOperation branchFromHead = createBranchFromHead(
@@ -158,5 +164,13 @@ public final class InitOperation extends GitFlowOperation {
 		GitFlowConfig config = repository.getConfig();
 		config.setBranch(DEVELOP_KEY, develop);
 		config.setBranch(MASTER_KEY, master);
+	}
+
+	private boolean isMasterBranchAvailable() throws CoreException {
+		try {
+			return repository.getRepository().getRef(R_HEADS + master) != null;
+		} catch (IOException e) {
+			throw new CoreException(error(e.getMessage(), e));
+		}
 	}
 }
