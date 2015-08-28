@@ -11,6 +11,8 @@ package org.eclipse.egit.gitflow.op;
 import static org.junit.Assert.assertEquals;
 import static org.eclipse.egit.gitflow.GitFlowDefaults.*;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.egit.core.op.RenameBranchOperation;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 
 import static org.eclipse.egit.gitflow.GitFlowConfig.*;
@@ -57,5 +59,17 @@ public class InitOperationTest extends AbstractGitFlowOperationTest {
 		initOperation.execute(null);
 		GitFlowRepository gfRepo = new GitFlowRepository(repository);
 		assertEquals(gfRepo.getConfig().getDevelopFull(), repository.getFullBranch());
+	}
+
+	@Test(expected = CoreException.class)
+	public void testInitLocalMasterMissing() throws Exception {
+		testRepository
+				.createInitialCommit("testInitLocalMasterMissing\n\nfirst commit\n");
+
+		Repository repository = testRepository.getRepository();
+		new RenameBranchOperation(repository, repository.getRef(repository
+				.getBranch()), "foobar").execute(null);
+
+		new InitOperation(repository).execute(null);
 	}
 }
