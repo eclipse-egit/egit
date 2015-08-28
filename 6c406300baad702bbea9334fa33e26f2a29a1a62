@@ -70,6 +70,30 @@
       "revId": "6c406300baad702bbea9334fa33e26f2a29a1a62",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_8d5881d1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-28T06:38:12Z",
+      "side": 1,
+      "message": "The convention to link to bugs in the footer is much older than Genie\u0027s ability to auto-link from Bugzilla ...\n\nAuto-linking links in the footer was implemented some weeks ago and works fine, see bug 465045",
+      "parentUuid": "2721e7e2_0d1c9127",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 13
+      },
+      "revId": "6c406300baad702bbea9334fa33e26f2a29a1a62",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
