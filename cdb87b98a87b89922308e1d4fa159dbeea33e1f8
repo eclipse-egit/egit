@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_df905c57",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-08-28T08:19:07Z",
+      "side": 1,
+      "message": "Will do. The period was just to re-trigger that unstable build, as I have no way to re-trigger directly on Hudson.",
+      "parentUuid": "2721e7e2_4d75e9ec",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "cdb87b98a87b89922308e1d4fa159dbeea33e1f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_2d1cf5f4",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2015-08-28T07:26:31Z",
       "side": 1,
       "message": "this could lead to false positives in case a non-Gerrit git server listens on this port, so I\u0027d rather not fast-track this since a false positive will confuse the user",
+      "revId": "cdb87b98a87b89922308e1d4fa159dbeea33e1f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_7f45f067",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-08-28T08:19:07Z",
+      "side": 1,
+      "message": "Ok, will change.",
+      "parentUuid": "2721e7e2_2d1cf5f4",
       "revId": "cdb87b98a87b89922308e1d4fa159dbeea33e1f8",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -70,6 +112,24 @@
       "writtenOn": "2015-08-28T07:26:31Z",
       "side": 1,
       "message": "we could move this to JGit to allow reuse",
+      "revId": "cdb87b98a87b89922308e1d4fa159dbeea33e1f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_9f71c4d1",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-08-28T08:19:07Z",
+      "side": 1,
+      "message": "A reusable version of this would need quite a bit of work:\n\n* how can the caller inspect stderr? (This version just discards it.)\n* how to pass the whole stdout to the caller? (This version just reads the first line.)\n* make timeouts configurable by the caller.\n\nMaking this reusable looks like something for a later change.",
+      "parentUuid": "2721e7e2_edff7dd6",
       "revId": "cdb87b98a87b89922308e1d4fa159dbeea33e1f8",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
