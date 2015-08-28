@@ -46,6 +46,30 @@
       "revId": "6c406300baad702bbea9334fa33e26f2a29a1a62",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_0d1c9127",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-08-28T04:46:11Z",
+      "side": 1,
+      "message": "See the initial patch set. Somebody should change the Eclipse Genie to pick up bug numbers also in the footer so that the Gerrit changes get linked from the Bugzilla entry. What\u0027s the Eclipse component to file a feature request for Eclipse Genie? :-)",
+      "parentUuid": "2721e7e2_cd2279ab",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 13
+      },
+      "revId": "6c406300baad702bbea9334fa33e26f2a29a1a62",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
