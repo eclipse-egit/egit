@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_4d75e9ec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-28T07:26:31Z",
+      "side": 1,
+      "message": "s/Gerrit autoconfig after ssh clone./Auto-configure Gerrit after ssh clone/\n\nstyle nit: we don\u0027t put a period at the end of the commit message header, https://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "cdb87b98a87b89922308e1d4fa159dbeea33e1f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_2d1cf5f4",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-28T07:26:31Z",
+      "side": 1,
+      "message": "this could lead to false positives in case a non-Gerrit git server listens on this port, so I\u0027d rather not fast-track this since a false positive will confuse the user",
+      "revId": "cdb87b98a87b89922308e1d4fa159dbeea33e1f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_8d252138",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-28T07:26:31Z",
+      "side": 1,
+      "message": "u.getPort \u003c 0 \n\nmaps to the ssh default port 22, theoretically Gerrit could listen on this port, but this is pretty unlikely and false negatives won\u0027t confuse the user so I think this condition is ok",
+      "revId": "cdb87b98a87b89922308e1d4fa159dbeea33e1f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_edff7dd6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-28T07:26:31Z",
+      "side": 1,
+      "message": "we could move this to JGit to allow reuse",
+      "revId": "cdb87b98a87b89922308e1d4fa159dbeea33e1f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
