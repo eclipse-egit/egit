@@ -8,6 +8,8 @@
  *******************************************************************************/
 package org.eclipse.egit.gitflow.ui.internal.actions;
 
+import java.util.List;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -18,6 +20,9 @@ import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.gitflow.ui.internal.dialogs.InitDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -33,8 +38,15 @@ public class InitHandler extends AbstractHandler {
 			return null;
 		}
 
+		List<Ref> branchList;
+		try {
+			branchList = Git.wrap(gfRepo.getRepository()).branchList().call();
+		} catch (GitAPIException e) {
+			throw new ExecutionException(e.getMessage());
+		}
+
 		Shell activeShell = HandlerUtil.getActiveShell(event);
-		InitDialog dialog = new InitDialog(activeShell);
+		InitDialog dialog = new InitDialog(activeShell, gfRepo, branchList);
 		if (dialog.open() != Window.OK) {
 			return null;
 		}
