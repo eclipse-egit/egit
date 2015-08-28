@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_420c9347",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-28T12:14:52Z",
+      "side": 1,
+      "message": "again this patch has only unrelated formatting changes.\n\nWe avoid unrelated formatting changes since they can lead to nasty unnecessary conflicts. If there\u0027s something really badly formatted you can fix that in a separate change. Avoid large pure formatting changes since this may lead to many unnecessary conflicts.",
+      "revId": "2f6c9ea5ea409cecbb0fc6c9938f38fc501c602b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
