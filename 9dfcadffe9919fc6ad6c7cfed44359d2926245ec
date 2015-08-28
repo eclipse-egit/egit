@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_4d94c9c5",
+        "filename": "org.eclipse.egit.core/plugin.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-28T09:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_e7aafc58",
+      "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_077d9060",
         "filename": "org.eclipse.egit.core/schema/mergeStrategy.exsd",
         "patchSetId": 6
@@ -48,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_6d870d9a",
+        "filename": "org.eclipse.egit.core/schema/mergeStrategy.exsd",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-28T09:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_077d9060",
+      "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_c786d8f3",
         "filename": "org.eclipse.egit.core/schema/mergeStrategy.exsd",
         "patchSetId": 6
@@ -59,6 +95,24 @@
       "writtenOn": "2015-08-27T15:22:27Z",
       "side": 1,
       "message": "replace the trailing whitespace by some documentation for this attribute, same below",
+      "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_cd0b99b3",
+        "filename": "org.eclipse.egit.core/schema/mergeStrategy.exsd",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-28T09:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_c786d8f3",
       "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -82,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_cdaf19ec",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-28T09:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_87906020",
+      "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_1eb03dc3",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
         "patchSetId": 6
@@ -93,6 +165,24 @@
       "writtenOn": "2015-08-27T15:22:27Z",
       "side": 1,
       "message": "missing @since 4.1 tag for new API",
+      "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_0db65144",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-28T09:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_1eb03dc3",
       "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_edbadd26",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-28T09:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_3e9a6143",
+      "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_fe7c4966",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
         "patchSetId": 6
@@ -133,6 +241,24 @@
       "writtenOn": "2015-08-27T15:22:27Z",
       "side": 1,
       "message": "missing @since 4.1 tag for new API",
+      "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_4dc329a0",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-28T09:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_fe7c4966",
       "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -162,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_ff53a0e4",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-28T09:58:49Z",
+      "side": 1,
+      "message": "I add the implementation class name.\nAs to name collisions, see my other comment below.",
+      "parentUuid": "2721e7e2_1e979d1a",
+      "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_1e62fdb6",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
         "patchSetId": 6
@@ -179,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_2dc07591",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-28T09:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_1e62fdb6",
+      "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_fe772976",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
         "patchSetId": 6
@@ -190,6 +352,24 @@
       "writtenOn": "2015-08-27T15:22:27Z",
       "side": 1,
       "message": "how to prevent name clashes if there are multiple extension point implementations ?",
+      "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_ad9bc5c8",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-28T09:58:49Z",
+      "side": 1,
+      "message": "I don\u0027t think we really can...\nI\u0027ll update the extension point documentation to suggest implementors should use qualified names for their MergeStrategy implementations.\n\nI also add an optional attribute \"name\" to the extension point itself, which would be used if present instead of the result of strategy.getName(). Since JGit allows to register strategies with or without an explicit name, it can be useful.\nI think it\u0027ll be more flexible that way, but name collisions are still possible.\n\nI try to make the error messages and the extension point documentation as clear as possible about this.",
+      "parentUuid": "2721e7e2_fe772976",
       "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -219,6 +399,24 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_ad10e5dc",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/coretext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-28T09:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_de5345e5",
+      "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_3e4c2148",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/coretext.properties",
         "patchSetId": 6
@@ -236,6 +434,24 @@
         "endLine": 174,
         "endChar": 94
       },
+      "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_0d12d1e3",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/coretext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-28T09:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_3e4c2148",
       "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -288,6 +504,42 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_7feb301a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/coretext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-28T09:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_1e495d37",
+      "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_dfafbceb",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/coretext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-28T09:58:49Z",
+      "side": 1,
+      "message": "Done, adapted because of new optional parameter in extension point.",
+      "parentUuid": "2721e7e2_bec3f102",
+      "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_27fb743b",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/SynchronizePreferencePage.java",
         "patchSetId": 6
@@ -299,6 +551,24 @@
       "writtenOn": "2015-08-27T15:22:27Z",
       "side": 1,
       "message": "this looks ugly could you increase the distance between this group and the widgets above, see screenshot http://imgur.com/a0qbsP6",
+      "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_9f3c244a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/SynchronizePreferencePage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-28T09:58:49Z",
+      "side": 1,
+      "message": "Done.\nI\u0027ve also added a tooltip text to state the operations that are concerned (it was too long for a label imho)",
+      "parentUuid": "2721e7e2_27fb743b",
       "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -322,6 +592,24 @@
         "endLine": 245,
         "endChar": 106
       },
+      "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_8deec129",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2015-08-28T09:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_a71ac42b",
       "revId": "9dfcadffe9919fc6ad6c7cfed44359d2926245ec",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
