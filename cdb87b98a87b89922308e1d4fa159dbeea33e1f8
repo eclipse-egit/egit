@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_ffd8c01c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-28T08:23:34Z",
+      "side": 1,
+      "message": "what\u0027s your Eclipse user id ? With that I can grant you permission to retrigger builds",
+      "parentUuid": "2721e7e2_df905c57",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "cdb87b98a87b89922308e1d4fa159dbeea33e1f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_2d1cf5f4",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
         "patchSetId": 3
@@ -130,6 +154,24 @@
       "side": 1,
       "message": "A reusable version of this would need quite a bit of work:\n\n* how can the caller inspect stderr? (This version just discards it.)\n* how to pass the whole stdout to the caller? (This version just reads the first line.)\n* make timeouts configurable by the caller.\n\nMaking this reusable looks like something for a later change.",
       "parentUuid": "2721e7e2_edff7dd6",
+      "revId": "cdb87b98a87b89922308e1d4fa159dbeea33e1f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_5fc10c26",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-28T08:23:34Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "2721e7e2_9f71c4d1",
       "revId": "cdb87b98a87b89922308e1d4fa159dbeea33e1f8",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
