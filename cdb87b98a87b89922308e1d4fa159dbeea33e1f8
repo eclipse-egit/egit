@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_027d7b57",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-08-28T12:34:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_4d75e9ec",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "cdb87b98a87b89922308e1d4fa159dbeea33e1f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_2d1cf5f4",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
         "patchSetId": 3
@@ -126,6 +150,24 @@
       "side": 1,
       "message": "Ok, will change.",
       "parentUuid": "2721e7e2_2d1cf5f4",
+      "revId": "cdb87b98a87b89922308e1d4fa159dbeea33e1f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_82684b96",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-08-28T12:34:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_7f45f067",
       "revId": "cdb87b98a87b89922308e1d4fa159dbeea33e1f8",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
