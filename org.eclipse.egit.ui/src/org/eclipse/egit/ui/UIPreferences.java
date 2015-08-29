@@ -7,6 +7,7 @@
  * Copyright (C) 2013, Tobias Pfeifer <to.pfeifer@sap.com>
  * Copyright (C) 2014, Marc Khouzam <marc.khouzam@ericsson.com>
  * Copyright (C) 2015, Jan-Ove Weichel <ovi.weichel@gmail.com>
+ * Copyright (C) 2015, SAP SE (Christian Georgi <christian.georgi@sap.com>)
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -65,6 +66,8 @@ public class UIPreferences {
 	public final static String FINDTOOLBAR_FIND_IN = "findtoolbar_find_in"; //$NON-NLS-1$
 	/** */
 	public final static String COMMIT_DIALOG_HARD_WRAP_MESSAGE = "commit_dialog_hard_wrap_message"; //$NON-NLS-1$
+	/** */
+	public final static String COMMIT_DIALOG_WARN_ABOUT_MESSAGE_SECOND_LINE = "commit_dialog_warn_about_message_second_line"; //$NON-NLS-1$
 	/** */
 	public final static String COMMIT_DIALOG_SIGNED_OFF_BY = "commit_dialog_signed_off_by"; //$NON-NLS-1$
 	/** */

@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2010, 2013 Robin Stocker <robin@nibor.org> and others.
+ * Copyright (C) 2015 SAP SE (Christian Georgi <christian.georgi@sap.com>)
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -58,6 +59,13 @@ public class CommittingPreferencePage extends FieldEditorPreferencePage
 		hardWrap.getDescriptionControl(formattingGroup).setToolTipText(
 				UIText.CommittingPreferencePage_hardWrapMessageTooltip);
 		addField(hardWrap);
+
+		BooleanFieldEditor secondLineCheck = new BooleanFieldEditor(
+				UIPreferences.COMMIT_DIALOG_WARN_ABOUT_MESSAGE_SECOND_LINE,
+				UIText.CommittingPreferencePage_warnAboutCommitMessageSecondLine,
+				formattingGroup);
+		addField(secondLineCheck);
+
 		updateMargins(formattingGroup);
 
 		Group footersGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
