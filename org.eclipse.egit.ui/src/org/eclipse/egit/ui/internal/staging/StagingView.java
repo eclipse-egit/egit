@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2011, 2015 Bernard Leach <leachbj@bouncycastle.org> and others.
+ * Copyright (C) 2015 SAP SE (Christian Georgi <christian.georgi@sap.com>)
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -103,7 +104,9 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
+import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.LocalSelectionTransfer;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ContentViewer;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
@@ -508,6 +511,23 @@ public class StagingView extends ViewPart implements IShowInSource {
 			reload(null);
 		}
 
+	};
+
+	private final IPropertyChangeListener uiPrefsListener = new IPropertyChangeListener() {
+		@Override
+		public void propertyChange(PropertyChangeEvent event) {
+			if (UIPreferences.COMMIT_DIALOG_WARN_ABOUT_MESSAGE_SECOND_LINE
+					.equals(event.getProperty())) {
+				asyncExec(new Runnable() {
+					@Override
+					public void run() {
+						if (!commitMessageSection.isDisposed()) {
+							updateMessage();
+						}
+					}
+				});
+			}
+		}
 	};
 
 	private Action signedOffByAction;
@@ -956,6 +976,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 					UIPreferences.STAGING_VIEW_SYNC_SELECTION);
 		else
 			preferenceStore.setDefault(UIPreferences.STAGING_VIEW_SYNC_SELECTION, true);
+
+		preferenceStore.addPropertyChangeListener(uiPrefsListener);
 
 		InstanceScope.INSTANCE.getNode(
 				org.eclipse.egit.core.Activator.getPluginId())
@@ -2936,6 +2958,9 @@ public class StagingView extends ViewPart implements IShowInSource {
 		if (refsChangedListener != null) {
 			refsChangedListener.remove();
 		}
+
+		getPreferenceStore().removePropertyChangeListener(uiPrefsListener);
+
 		disposed = true;
 	}
 

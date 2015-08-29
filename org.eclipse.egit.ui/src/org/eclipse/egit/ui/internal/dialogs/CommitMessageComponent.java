@@ -448,10 +448,13 @@ public class CommitMessageComponent {
 		// Check format of commit message. The soft-wrapped text in the SWT
 		// control must be converted to a hard-wrapped text, since this will be
 		// the resulting commit message.
-		String message = commitText.getCommitMessage();
-		String formatIssue = formatIssuesInCommitMessage(message);
-		if (formatIssue != null) {
-			return new CommitStatus(formatIssue, IMessageProvider.WARNING);
+		if (org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.COMMIT_DIALOG_WARN_ABOUT_MESSAGE_SECOND_LINE)) {
+			String message = commitText.getCommitMessage();
+			String formatIssue = formatIssuesInCommitMessage(message);
+			if (formatIssue != null) {
+				return new CommitStatus(formatIssue, IMessageProvider.WARNING);
+			}
 		}
 
 		return CommitStatus.OK;
