@@ -3162,6 +3162,12 @@ public class UIText extends NLS {
 	public static String CommittingPreferencePage_hardWrapMessageTooltip;
 
 	/** */
+	public static String CommittingPreferencePage_secondLineCheckMessage;
+
+	/** */
+	public static String CommittingPreferencePage_secondLineCheckTooltip;
+
+	/** */
 	public static String CommittingPreferencePage_footers;
 
 	/** */
