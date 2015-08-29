@@ -5,6 +5,7 @@
  * Copyright (C) 2012, Daniel Megert <daniel_megert@ch.ibm.com>
  * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
  * Copyright (C) 2015, Jan-Ove Weichel <ovi.weichel@gmail.com>
+ * Copyright (C) 2015, SAP SE (Christian Georgi <christian.georgi@sap.com>)
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -75,6 +76,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.FINDTOOLBAR_FIND_IN,
 				FindToolbar.PREFS_FINDIN_ALL);
 		store.setDefault(UIPreferences.COMMIT_DIALOG_HARD_WRAP_MESSAGE, true);
+		store.setDefault(UIPreferences.COMMIT_DIALOG_WARN_ABOUT_MESSAGE_SECOND_LINE, true);
 		store.setDefault(UIPreferences.COMMIT_DIALOG_SIGNED_OFF_BY, false);
 
 		store.setDefault(UIPreferences.REFESH_ON_INDEX_CHANGE, true);
