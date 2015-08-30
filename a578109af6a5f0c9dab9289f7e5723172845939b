@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_6ec1c026",
+        "filename": "org.eclipse.egit.core.test/fragment.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-30T21:04:44Z",
+      "side": 1,
+      "message": "this line is too wide",
+      "revId": "a578109af6a5f0c9dab9289f7e5723172845939b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_4ebe7cab",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/MergeWithPreferredStrategyTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-30T21:04:44Z",
+      "side": 1,
+      "message": "weird formatting",
+      "revId": "a578109af6a5f0c9dab9289f7e5723172845939b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_6ee8a0a0",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/MergeWithPreferredStrategyTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-30T21:04:44Z",
+      "side": 1,
+      "message": "s/SIDE/master/",
+      "range": {
+        "startLine": 116,
+        "startChar": 58,
+        "endLine": 116,
+        "endChar": 62
+      },
+      "revId": "a578109af6a5f0c9dab9289f7e5723172845939b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_4ee5dcc5",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/MergeWithPreferredStrategyTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-30T21:04:44Z",
+      "side": 1,
+      "message": "wrong indentation",
+      "revId": "a578109af6a5f0c9dab9289f7e5723172845939b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
