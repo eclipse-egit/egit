@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_0e2804b8",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-30T20:39:02Z",
+      "side": 1,
+      "message": "JGit\u0027s default merge strategy",
+      "range": {
+        "startLine": 239,
+        "startChar": 46,
+        "endLine": 239,
+        "endChar": 77
+      },
+      "revId": "fa264a4fe29ecda9b20738a439a2e454f08d12bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_2e2348df",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-30T20:39:02Z",
+      "side": 1,
+      "message": "no, this condition was removed",
+      "range": {
+        "startLine": 240,
+        "startChar": 23,
+        "endLine": 241,
+        "endChar": 8
+      },
+      "revId": "fa264a4fe29ecda9b20738a439a2e454f08d12bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_8e13548a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-30T20:39:02Z",
+      "side": 1,
+      "message": "this constructor can be declared private",
+      "revId": "fa264a4fe29ecda9b20738a439a2e454f08d12bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_ee57702c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-30T20:39:02Z",
+      "side": 1,
+      "message": "this method can be declared private",
+      "revId": "fa264a4fe29ecda9b20738a439a2e454f08d12bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_8efcf4a8",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-30T20:39:02Z",
+      "side": 1,
+      "message": "s/iff/if/",
+      "range": {
+        "startLine": 747,
+        "startChar": 31,
+        "endLine": 747,
+        "endChar": 34
+      },
+      "revId": "fa264a4fe29ecda9b20738a439a2e454f08d12bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_aeff389c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-30T20:39:02Z",
+      "side": 1,
+      "message": "typo s/erturn/return/",
+      "range": {
+        "startLine": 750,
+        "startChar": 67,
+        "endLine": 750,
+        "endChar": 73
+      },
+      "revId": "fa264a4fe29ecda9b20738a439a2e454f08d12bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
