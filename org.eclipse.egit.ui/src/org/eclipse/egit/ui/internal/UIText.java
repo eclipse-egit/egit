@@ -2040,10 +2040,16 @@ public class UIText extends NLS {
 	public static String HistoryPreferencePage_toggleEmailAddresses;
 
 	/** */
+	public static String PullOperationUI_ConfigurationProblem;
+
+	/** */
 	public static String PullOperationUI_ConnectionProblem;
 
 	/** */
 	public static String PullOperationUI_NotTriedMessage;
+
+	/** */
+	public static String PullOperationUI_NothingToFetch;
 
 	/** */
 	public static String PullOperationUI_PullCanceledWindowTitle;
@@ -2746,6 +2752,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String FetchOperationUI_FetchJobName;
+
+	/** */
+	public static String FetchOperationUI_FetchFailed;
+
+	/** */
+	public static String FetchOperationUI_NothingToFetch;
 
 	/** */
 	public static String FetchDestinationPage_CouldNotGetBranchesMessage;

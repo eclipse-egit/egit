@@ -42,6 +42,7 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.api.PullResult;
 import org.eclipse.jgit.api.RebaseResult;
+import org.eclipse.jgit.api.errors.InvalidConfigurationException;
 import org.eclipse.jgit.errors.TransportException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
@@ -260,8 +261,17 @@ public class PullOperationUI extends JobChangeAdapter {
 				} else if (status.getException() instanceof TransportException) {
 					ErrorDialog.openError(shell,
 							UIText.PullOperationUI_PullFailed,
-							UIText.PullOperationUI_ConnectionProblem,
-							status);
+							UIText.PullOperationUI_ConnectionProblem, status);
+				} else if (status.getException() instanceof InvalidConfigurationException) {
+					ErrorDialog.openError(shell,
+							UIText.PullOperationUI_PullFailed,
+							UIText.PullOperationUI_ConfigurationProblem, status);
+				} else if ((status.getException() instanceof org.eclipse.jgit.api.errors.TransportException)
+						&& ("Nothing to fetch.".equalsIgnoreCase(status //$NON-NLS-1$
+								.getException().getMessage()))) {
+					ErrorDialog.openError(shell,
+							UIText.PullOperationUI_PullFailed,
+							UIText.PullOperationUI_NothingToFetch, status);
 				} else
 					Activator.handleError(status.getMessage(), status
 							.getException(), true);

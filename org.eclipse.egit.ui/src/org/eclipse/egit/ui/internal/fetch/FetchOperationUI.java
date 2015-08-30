@@ -26,6 +26,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.FetchResult;
@@ -34,6 +35,8 @@ import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.TagOpt;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * UI Wrapper for {@link FetchOperation}
@@ -122,6 +125,9 @@ public class FetchOperationUI {
 				try {
 					execute(monitor);
 				} catch (CoreException e) {
+					if (reportException(e))
+						return Status.CANCEL_STATUS;
+
 					return Activator.createErrorStatus(e.getStatus()
 							.getMessage(), e);
 				}
@@ -140,7 +146,9 @@ public class FetchOperationUI {
 		job.addJobChangeListener(new JobChangeAdapter() {
 			@Override
 			public void done(IJobChangeEvent event) {
-				if (event.getResult().isOK())
+				if (event.getResult() == Status.CANCEL_STATUS) {
+					// error displayed else where
+				} else if (event.getResult().isOK())
 					FetchResultDialog.show(repository, op.getOperationResult(),
 							sourceString);
 				else
@@ -148,6 +156,30 @@ public class FetchOperationUI {
 							.getResult().getException(), true);
 			}
 		});
+	}
+
+	private boolean reportException(CoreException e) {
+		final IStatus status = e.getStatus();
+
+		if ((status.getException() instanceof org.eclipse.jgit.api.errors.TransportException)
+				&& ("Nothing to fetch.".equalsIgnoreCase(status.getException() //$NON-NLS-1$
+						.getMessage()))) {
+			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					Shell shell = PlatformUI.getWorkbench()
+							.getActiveWorkbenchWindow().getShell();
+
+					ErrorDialog.openError(shell,
+							UIText.FetchOperationUI_FetchFailed,
+							UIText.FetchOperationUI_NothingToFetch, status);
+				}
+			});
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
