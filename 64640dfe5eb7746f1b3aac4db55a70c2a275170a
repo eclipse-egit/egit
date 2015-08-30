@@ -22,6 +22,30 @@
       "revId": "64640dfe5eb7746f1b3aac4db55a70c2a275170a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_0e82c4dc",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/MergeOperation.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-08-30T21:24:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_ee8650f3",
+      "range": {
+        "startLine": 95,
+        "startChar": 46,
+        "endLine": 95,
+        "endChar": 53
+      },
+      "revId": "64640dfe5eb7746f1b3aac4db55a70c2a275170a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
