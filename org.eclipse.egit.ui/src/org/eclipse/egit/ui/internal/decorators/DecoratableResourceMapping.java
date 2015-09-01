@@ -18,8 +18,10 @@ import java.util.Set;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.ResourceMapping;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.IWorkingSet;
 
@@ -78,7 +80,11 @@ public class DecoratableResourceMapping extends DecoratableResource {
 			tracked = true;
 
 			Repository repository = repoMapping.getRepository();
-			String repoRelative = makeRepoRelative(repository, prj) + "/"; //$NON-NLS-1$
+			String repoRelative = makeRepoRelative(repository, prj);
+			if (repoRelative == null) {
+				continue;
+			}
+			repoRelative += "/"; //$NON-NLS-1$
 
 			Set<String> modified = diffData.getModified();
 			Set<String> conflicting = diffData.getConflicting();
@@ -143,9 +149,16 @@ public class DecoratableResourceMapping extends DecoratableResource {
 		return "<unknown>"; //$NON-NLS-1$
 	}
 
+	@Nullable
 	private String makeRepoRelative(Repository repository, IResource res) {
-		return stripWorkDir(repository.getWorkTree(), res.getLocation()
-				.toFile());
+		if (repository.isBare()) {
+			return null;
+		}
+		IPath location = res.getLocation();
+		if (location == null) {
+			return null;
+		}
+		return stripWorkDir(repository.getWorkTree(), location.toFile());
 	}
 
 	private boolean containsPrefix(Set<String> collection, String prefix) {
