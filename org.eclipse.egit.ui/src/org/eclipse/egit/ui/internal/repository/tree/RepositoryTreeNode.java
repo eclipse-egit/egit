@@ -15,9 +15,9 @@ import java.io.File;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.PlatformObject;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
 
 /**
  * A node in the Git Repositories view tree
@@ -253,8 +253,8 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 		case REMOTETRACKING:
 			// fall through
 		case BRANCHHIERARCHY:
-			return myObject.toString().compareTo(
-					otherNode.getObject().toString());
+			return CommonUtils.STRING_ASCENDING_COMPARATOR.compare(
+					myObject.toString(), otherNode.getObject().toString());
 		case REMOTES:
 			// fall through
 		case ADDITIONALREFS:
@@ -275,38 +275,40 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 		case PUSH:
 			// fall through
 		case REMOTE:
-			return ((String) myObject)
-					.compareTo((String) otherNode.getObject());
+			return CommonUtils.STRING_ASCENDING_COMPARATOR
+					.compare((String) myObject, (String) otherNode.getObject());
 		case FILE:
 			// fall through
 		case FOLDER:
-			return ((File) myObject).getName().compareTo(
+			return CommonUtils.STRING_ASCENDING_COMPARATOR
+					.compare(((File) myObject).getName(),
 					((File) otherNode.getObject()).getName());
 		case STASHED_COMMIT:
-			return ((RevCommit) myObject).compareTo(((RevCommit) otherNode
-					.getObject()));
+			// ok for positive indexes < ~2 billion
+			return ((StashedCommitNode) this).getIndex()
+					- ((StashedCommitNode) otherNode).getIndex();
 		case TAG:
 			// fall through
 		case ADDITIONALREF:
 			// fall through
 		case REF:
-			return ((Ref) myObject).getName().compareTo(
-					((Ref) otherNode.getObject()).getName());
+			return CommonUtils.REF_ASCENDING_COMPARATOR.compare((Ref) myObject,
+					(Ref) otherNode.getObject());
 		case REPO:
-			int nameCompare = getDirectoryContainingRepo((Repository) myObject)
-					.getName()
-					.compareTo(
-							getDirectoryContainingRepo((Repository) otherNode.getObject())
+			int nameCompare = CommonUtils.STRING_ASCENDING_COMPARATOR.compare(
+					getDirectoryContainingRepo((Repository) myObject).getName(),
+					getDirectoryContainingRepo(
+							(Repository) otherNode.getObject())
 									.getName());
 			if (nameCompare != 0)
 				return nameCompare;
 			// if the name is not unique, let's look at the whole path
-			return getDirectoryContainingRepo((Repository) myObject)
-					.getParentFile()
-					.getPath()
-					.compareTo(
-							getDirectoryContainingRepo((Repository) otherNode.getObject())
-									.getParentFile().getPath());
+			return CommonUtils.STRING_ASCENDING_COMPARATOR.compare(
+					getDirectoryContainingRepo((Repository) myObject)
+							.getParentFile().getPath(),
+					getDirectoryContainingRepo(
+							(Repository) otherNode.getObject()).getParentFile()
+									.getPath());
 		}
 		return 0;
 	}
