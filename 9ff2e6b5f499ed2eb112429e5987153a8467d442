@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_c47b64df",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-09-02T11:14:51Z",
+      "side": 1,
+      "message": "Please remove it. If there is no use for it, it is just a burden to maintain extra code.",
+      "parentUuid": "2721e7e2_64f6f8ca",
+      "revId": "9ff2e6b5f499ed2eb112429e5987153a8467d442",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_d9950d46",
         "filename": "org.eclipse.egit.ui/plugin.xml",
         "patchSetId": 4
