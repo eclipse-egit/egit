@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_7fc321a0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-09-02T14:21:27Z",
+      "side": 1,
+      "message": "Please use asyncExec(Runnable) method from the view.",
+      "revId": "a74b9cef4eadc43d257db1932b331d2e9b83f313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_df9b2dc8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-09-02T14:21:27Z",
+      "side": 1,
+      "message": "Please check if(isDisposed()) before updating the message",
+      "revId": "a74b9cef4eadc43d257db1932b331d2e9b83f313",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
