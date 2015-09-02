@@ -25,6 +25,7 @@ import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.core.op.PushOperationSpecification;
@@ -201,7 +202,14 @@ class PushToGerritPage extends WizardPage {
 	}
 
 	private void setLastUsedBranch() {
-		String lastBranch = settings.get(lastBranchKey);
+		String lastBranch = null;
+		if (!RepositoryUtil.isDetachedHead(repository)) {
+			try {
+				lastBranch = repository.getBranch();
+			} catch (final IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
 		if (lastBranch != null)
 			branchText.setText(lastBranch);
 	}
