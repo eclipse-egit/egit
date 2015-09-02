@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_6a023e17",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-02T21:50:27Z",
+      "side": 1,
+      "message": "it\u0027s unclear what is the consequence of a failing check. \nI\u0027d remove the tooltip and change the label to\n\ns/Check for empty second line/Warn if second line of commit message is empty/",
+      "range": {
+        "startLine": 1023,
+        "startChar": 48,
+        "endLine": 1023,
+        "endChar": 75
+      },
+      "revId": "609437d246c9dfce827b3bf836fdd61b4f4e9373",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
