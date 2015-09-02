@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_042d7ccc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 10602
+      },
+      "writtenOn": "2015-09-02T08:06:55Z",
+      "side": 1,
+      "message": "I agree this wording is a little bit misleading ;)",
+      "parentUuid": "2721e7e2_198cc540",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "9ff2e6b5f499ed2eb112429e5987153a8467d442",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_b9a3f9b0",
         "filename": "org.eclipse.egit.ui/plugin.xml",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_64f6f8ca",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 10602
+      },
+      "writtenOn": "2015-09-02T08:06:55Z",
+      "side": 1,
+      "message": "You are right, for the purpose of this patch this additional test is not necessary. \n\nI added it to be consistent with the other definitions which also use this test, so it could possibly be reused like the other ones in the future.",
+      "parentUuid": "2721e7e2_b9a3f9b0",
+      "revId": "9ff2e6b5f499ed2eb112429e5987153a8467d442",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_d9950d46",
         "filename": "org.eclipse.egit.ui/plugin.xml",
         "patchSetId": 4
@@ -53,6 +95,24 @@
       "writtenOn": "2015-09-01T22:05:34Z",
       "side": 1,
       "message": "The motivation to re-define the \"default\" popup menu structure is that it should appear on non-IResource elements adapting to ResourceMapping only, mapped to git repo? Right?",
+      "revId": "9ff2e6b5f499ed2eb112429e5987153a8467d442",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_44d1343e",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4628,
+      "author": {
+        "id": 10602
+      },
+      "writtenOn": "2015-09-02T08:06:55Z",
+      "side": 1,
+      "message": "Yes, up until now there is no CompareWith/ReplaceWith menu on elements only adapting to ResourceMapping. That is why I added it here. If there should be such a menu in the future, this menu contribution (as long as that future menu has the same id) does not interfere.\n\nThis is consistent with the way eGit contributes to the Team menu in the org.eclipse.ui.menus extension point (line 3816)",
+      "parentUuid": "2721e7e2_d9950d46",
       "revId": "9ff2e6b5f499ed2eb112429e5987153a8467d442",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
