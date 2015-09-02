@@ -8,9 +8,12 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.preferences;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator.MergeStrategyDescriptor;
 import org.eclipse.egit.core.GitCorePreferences;
@@ -21,6 +24,8 @@ import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.RadioGroupFieldEditor;
+import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.util.Policy;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -73,16 +78,21 @@ public class SynchronizePreferencePage extends FieldEditorPreferencePage
 		preferredMergeStrategyEditor = new RadioGroupFieldEditor(
 				GitCorePreferences.core_preferredMergeStrategy,
 				UIText.GitPreferenceRoot_preferreMergeStrategy_group, 1,
-				getAvailableMergeStrategies(), modelStrategyParent, false) {
-			@Override
-			public IPreferenceStore getPreferenceStore() {
-				return getCorePreferenceStore();
-			}
-
-		};
+				getAvailableMergeStrategies(), modelStrategyParent, false);
 		preferredMergeStrategyEditor.getLabelControl(modelStrategyParent)
-				.setToolTipText(UIText.GitPreferenceRoot_preferreMergeStrategy_label);
+				.setToolTipText(
+						UIText.GitPreferenceRoot_preferreMergeStrategy_label);
 		addField(preferredMergeStrategyEditor);
+	}
+
+	@Override
+	protected void initialize() {
+		super.initialize();
+		// The default initialize sets the same preference store for every field
+		// We want the preferred strategy to use the core store
+		preferredMergeStrategyEditor
+				.setPreferenceStore(getCorePreferenceStore());
+		preferredMergeStrategyEditor.load();
 	}
 
 	private String[][] getAvailableMergeStrategies() {
@@ -106,5 +116,30 @@ public class SynchronizePreferencePage extends FieldEditorPreferencePage
 					org.eclipse.egit.core.Activator.getPluginId());
 		}
 		return corePreferenceStore;
+	}
+
+	@Override
+	public boolean performOk() {
+		if (super.performOk()) {
+			// Need to save the core preference store because the
+			// PreferenceDialog will only save the store provided
+			// by doGetPreferenceStore()
+			if (getCorePreferenceStore().needsSaving()) {
+				try {
+					getCorePreferenceStore().save();
+				} catch (IOException e) {
+					String message = JFaceResources
+							.format("PreferenceDialog.saveErrorMessage", new Object[] { //$NON-NLS-1$
+									getTitle(), e.getMessage() });
+					Policy.getStatusHandler()
+							.show(new Status(IStatus.ERROR, Policy.JFACE,
+									message, e),
+									JFaceResources
+											.getString("PreferenceDialog.saveErrorTitle")); //$NON-NLS-1$
+
+				}
+			}
+		}
+		return true;
 	}
 }
