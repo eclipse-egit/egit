@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_d1132189",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-02T14:48:26Z",
+      "side": 1,
+      "message": "more precisely:\n\ns/in a grouping order/grouped by their git status/",
+      "range": {
+        "startLine": 9,
+        "startChar": 69,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "76f1e762052db3ddbfec25cd307a3bba7e5e1c6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_513a91f0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-02T14:48:26Z",
+      "side": 1,
+      "message": "s/which is also alphabetically sorted/groups are also ordered alphabetically/",
+      "range": {
+        "startLine": 10,
+        "startChar": 18,
+        "endLine": 10,
+        "endChar": 53
+      },
+      "revId": "76f1e762052db3ddbfec25cd307a3bba7e5e1c6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_b184ad18",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-02T14:48:26Z",
+      "side": 1,
+      "message": "this also fixes sorting which was case-sensitive (was sorting uppercase before lowercase which looks strange) which is nice",
+      "revId": "76f1e762052db3ddbfec25cd307a3bba7e5e1c6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_d145e169",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-02T14:48:26Z",
+      "side": 1,
+      "message": "suppress the warning on this line as we can\u0027t fix the superclass\u0027 interface",
+      "revId": "76f1e762052db3ddbfec25cd307a3bba7e5e1c6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_9f39b559",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2991,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-02T14:48:26Z",
+      "side": 1,
+      "message": "doesn\u0027t need to be public",
+      "revId": "76f1e762052db3ddbfec25cd307a3bba7e5e1c6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_31aa7d8d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2995,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-02T14:48:26Z",
+      "side": 1,
+      "message": "doesn\u0027t need to be public",
+      "revId": "76f1e762052db3ddbfec25cd307a3bba7e5e1c6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_11af799d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2999,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-02T14:48:26Z",
+      "side": 1,
+      "message": "doesn\u0027t need to be public",
+      "revId": "76f1e762052db3ddbfec25cd307a3bba7e5e1c6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_ffdd518f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewLabelProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-02T14:48:26Z",
+      "side": 1,
+      "message": "tag as @Nullable since it can return null",
+      "revId": "76f1e762052db3ddbfec25cd307a3bba7e5e1c6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
