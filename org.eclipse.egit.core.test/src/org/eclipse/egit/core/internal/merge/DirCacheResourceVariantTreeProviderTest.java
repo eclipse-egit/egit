@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.core.internal.merge;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -29,7 +30,7 @@ public class DirCacheResourceVariantTreeProviderTest extends VariantsTestCase {
 
 		// untracked file : not part of the index
 		DirCacheResourceVariantTreeProvider treeProvider = new DirCacheResourceVariantTreeProvider(
-				repo);
+				repo, true);
 		assertTrue(treeProvider.getKnownResources().isEmpty());
 		assertFalse(treeProvider.getBaseTree().hasResourceVariant(iFile1));
 		assertFalse(treeProvider.getSourceTree().hasResourceVariant(iFile1));
@@ -37,13 +38,12 @@ public class DirCacheResourceVariantTreeProviderTest extends VariantsTestCase {
 
 		testRepo.addToIndex(iFile1);
 
-		// We now have a stage 0, but this isn't represented in the resource
-		// variant tree provider
-		treeProvider = new DirCacheResourceVariantTreeProvider(repo);
-		assertTrue(treeProvider.getKnownResources().isEmpty());
-		assertFalse(treeProvider.getBaseTree().hasResourceVariant(iFile1));
-		assertFalse(treeProvider.getSourceTree().hasResourceVariant(iFile1));
-		assertFalse(treeProvider.getRemoteTree().hasResourceVariant(iFile1));
+		// We now have a stage 0, present in each tree
+		treeProvider = new DirCacheResourceVariantTreeProvider(repo, true);
+		assertEquals(1, treeProvider.getKnownResources().size());
+		assertTrue(treeProvider.getBaseTree().hasResourceVariant(iFile1));
+		assertTrue(treeProvider.getSourceTree().hasResourceVariant(iFile1));
+		assertTrue(treeProvider.getRemoteTree().hasResourceVariant(iFile1));
 	}
 
 	@Test
@@ -77,19 +77,19 @@ public class DirCacheResourceVariantTreeProviderTest extends VariantsTestCase {
 		// try and merge the branch into master
 		new MergeOperation(repo, BRANCH).execute(null);
 
-		// no conflict on either file : nothing in the trees
+		// no conflict on either file : present in the trees anyway
 		DirCacheResourceVariantTreeProvider treeProvider = new DirCacheResourceVariantTreeProvider(
-				repo);
-		assertTrue(treeProvider.getKnownResources().isEmpty());
+				repo, true);
+		assertEquals(2, treeProvider.getKnownResources().size());
 
-		assertFalse(treeProvider.getBaseTree().hasResourceVariant(iFile1));
-		assertFalse(treeProvider.getBaseTree().hasResourceVariant(iFile2));
+		assertTrue(treeProvider.getBaseTree().hasResourceVariant(iFile1));
+		assertTrue(treeProvider.getBaseTree().hasResourceVariant(iFile2));
 
-		assertFalse(treeProvider.getSourceTree().hasResourceVariant(iFile1));
-		assertFalse(treeProvider.getSourceTree().hasResourceVariant(iFile2));
+		assertTrue(treeProvider.getSourceTree().hasResourceVariant(iFile1));
+		assertTrue(treeProvider.getSourceTree().hasResourceVariant(iFile2));
 
-		assertFalse(treeProvider.getRemoteTree().hasResourceVariant(iFile1));
-		assertFalse(treeProvider.getRemoteTree().hasResourceVariant(iFile2));
+		assertTrue(treeProvider.getRemoteTree().hasResourceVariant(iFile1));
+		assertTrue(treeProvider.getRemoteTree().hasResourceVariant(iFile2));
 	}
 
 	@Test
@@ -126,20 +126,20 @@ public class DirCacheResourceVariantTreeProviderTest extends VariantsTestCase {
 		new MergeOperation(repo, BRANCH).execute(null);
 
 		// conflict on file 1 : present in all three trees
-		// no conflict on file 2 : not present in any tree
+		// no conflict on file 2 : present anyway
 		DirCacheResourceVariantTreeProvider treeProvider = new DirCacheResourceVariantTreeProvider(
-				repo);
+				repo, true);
 		assertTrue(treeProvider.getKnownResources().contains(iFile1));
-		assertFalse(treeProvider.getKnownResources().contains(iFile2));
+		assertTrue(treeProvider.getKnownResources().contains(iFile2));
 
 		assertTrue(treeProvider.getBaseTree().hasResourceVariant(iFile1));
-		assertFalse(treeProvider.getBaseTree().hasResourceVariant(iFile2));
+		assertTrue(treeProvider.getBaseTree().hasResourceVariant(iFile2));
 
 		assertTrue(treeProvider.getSourceTree().hasResourceVariant(iFile1));
-		assertFalse(treeProvider.getSourceTree().hasResourceVariant(iFile2));
+		assertTrue(treeProvider.getSourceTree().hasResourceVariant(iFile2));
 
 		assertTrue(treeProvider.getRemoteTree().hasResourceVariant(iFile1));
-		assertFalse(treeProvider.getRemoteTree().hasResourceVariant(iFile2));
+		assertTrue(treeProvider.getRemoteTree().hasResourceVariant(iFile2));
 	}
 
 	@Test
@@ -178,7 +178,7 @@ public class DirCacheResourceVariantTreeProviderTest extends VariantsTestCase {
 		// conflict on file 1 : file 1 has three stages.
 		// conflict on file 2, but was not in the base : only stage 2 and 3
 		DirCacheResourceVariantTreeProvider treeProvider = new DirCacheResourceVariantTreeProvider(
-				repo);
+				repo, true);
 		assertTrue(treeProvider.getKnownResources().contains(iFile1));
 		assertTrue(treeProvider.getKnownResources().contains(iFile2));
 

@@ -20,7 +20,7 @@ import org.eclipse.team.core.TeamException;
  * Implementation of a resource variant populated through a Repository's
  * DirCache information.
  */
-public class IndexResourceVariant extends AbstractGitResourceVariant {
+final public class IndexResourceVariant extends AbstractGitResourceVariant {
 	private IndexResourceVariant(Repository repository, String path,
 			boolean isContainer, ObjectId objectId, int rawMode) {
 		super(repository, path, isContainer, objectId, rawMode);
