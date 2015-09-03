@@ -2,6 +2,229 @@
   "comments": [
     {
       "key": {
+        "uuid": "2721e7e2_36738b5c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIText.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3192,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-09-03T22:18:23Z",
+      "side": 1,
+      "message": "Typo. _c -\u003e _C",
+      "range": {
+        "startLine": 3192,
+        "startChar": 22,
+        "endLine": 3192,
+        "endChar": 75
+      },
+      "revId": "cee29f36f50f306a85cb46bfe3417d2474fc961e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_d6814f9e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-09-03T22:18:23Z",
+      "side": 1,
+      "message": "Please don\u0027t add unrelated white space changes",
+      "revId": "cee29f36f50f306a85cb46bfe3417d2474fc961e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_d625cf36",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-09-03T22:18:23Z",
+      "side": 1,
+      "message": "here we should put an \"if(ignoreErrors !\u003d null)\" where we decide if we should show a normal information above or setMessage(UIText.CommitDialog_MessageErrors, IMessageProvider.WARNING);",
+      "range": {
+        "startLine": 730,
+        "startChar": 2,
+        "endLine": 730,
+        "endChar": 12
+      },
+      "revId": "cee29f36f50f306a85cb46bfe3417d2474fc961e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_164f6712",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-09-03T22:18:23Z",
+      "side": 1,
+      "message": "please restore new line",
+      "revId": "cee29f36f50f306a85cb46bfe3417d2474fc961e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_d6582fd2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-09-03T22:18:23Z",
+      "side": 1,
+      "message": "Why \"true\"? It should be \"false\" - do *not* ignore warnings/errors because check_before_committing is *on*.\n\nAdditionally I miss the warning shown if the dialog is opened. Might be it works for you, but on Linux while dialog is not shown the event is not dispatched. \n\nSo I would put this line above adding the listener, and put setMessage(UIText.CommitDialog_MessageErrors, IMessageProvider.WARNING); at line 730 above.",
+      "range": {
+        "startLine": 820,
+        "startChar": 3,
+        "endLine": 820,
+        "endChar": 15
+      },
+      "revId": "cee29f36f50f306a85cb46bfe3417d2474fc961e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_5457182e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-09-03T22:18:23Z",
+      "side": 1,
+      "message": "the method does not what the name says. It should just be named \"updateCommitButtons\" and take a boolean. So you can use this in another place too.",
+      "range": {
+        "startLine": 957,
+        "startChar": 14,
+        "endLine": 957,
+        "endChar": 33
+      },
+      "revId": "cee29f36f50f306a85cb46bfe3417d2474fc961e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_b41c949e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1173,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-09-03T22:18:23Z",
+      "side": 1,
+      "message": "The check should happen before defining commit status message/type, and if noErrors \u003d\u003d false the message/type must be set to the warning.",
+      "range": {
+        "startLine": 1173,
+        "startChar": 0,
+        "endLine": 1173,
+        "endChar": 2
+      },
+      "revId": "cee29f36f50f306a85cb46bfe3417d2474fc961e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_74621c0a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-09-03T22:18:23Z",
+      "side": 1,
+      "message": "should be not selected by default.",
+      "range": {
+        "startLine": 855,
+        "startChar": 16,
+        "endLine": 855,
+        "endChar": 28
+      },
+      "revId": "cee29f36f50f306a85cb46bfe3417d2474fc961e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_34aee4a0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-09-03T22:18:23Z",
+      "side": 1,
+      "message": "whitespace change again",
+      "revId": "cee29f36f50f306a85cb46bfe3417d2474fc961e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_94afd09a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2600,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-09-03T22:18:23Z",
+      "side": 1,
+      "message": "the check happens before the content is updated, so it must be moved after content update.",
+      "revId": "cee29f36f50f306a85cb46bfe3417d2474fc961e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_d49ca878",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2664,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-09-03T22:18:23Z",
+      "side": 1,
+      "message": "this line overrides the button eneblement again. Not your fault, but we should fix it to get it working.",
+      "revId": "cee29f36f50f306a85cb46bfe3417d2474fc961e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_9434f004",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 5
