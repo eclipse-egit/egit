@@ -29,7 +29,7 @@ public class DirCacheResourceVariantTreeProviderTest extends VariantsTestCase {
 
 		// untracked file : not part of the index
 		DirCacheResourceVariantTreeProvider treeProvider = new DirCacheResourceVariantTreeProvider(
-				repo);
+				repo, true);
 		assertTrue(treeProvider.getKnownResources().isEmpty());
 		assertFalse(treeProvider.getBaseTree().hasResourceVariant(iFile1));
 		assertFalse(treeProvider.getSourceTree().hasResourceVariant(iFile1));
@@ -39,7 +39,7 @@ public class DirCacheResourceVariantTreeProviderTest extends VariantsTestCase {
 
 		// We now have a stage 0, but this isn't represented in the resource
 		// variant tree provider
-		treeProvider = new DirCacheResourceVariantTreeProvider(repo);
+		treeProvider = new DirCacheResourceVariantTreeProvider(repo, true);
 		assertTrue(treeProvider.getKnownResources().isEmpty());
 		assertFalse(treeProvider.getBaseTree().hasResourceVariant(iFile1));
 		assertFalse(treeProvider.getSourceTree().hasResourceVariant(iFile1));
@@ -79,7 +79,7 @@ public class DirCacheResourceVariantTreeProviderTest extends VariantsTestCase {
 
 		// no conflict on either file : nothing in the trees
 		DirCacheResourceVariantTreeProvider treeProvider = new DirCacheResourceVariantTreeProvider(
-				repo);
+				repo, true);
 		assertTrue(treeProvider.getKnownResources().isEmpty());
 
 		assertFalse(treeProvider.getBaseTree().hasResourceVariant(iFile1));
@@ -128,7 +128,7 @@ public class DirCacheResourceVariantTreeProviderTest extends VariantsTestCase {
 		// conflict on file 1 : present in all three trees
 		// no conflict on file 2 : not present in any tree
 		DirCacheResourceVariantTreeProvider treeProvider = new DirCacheResourceVariantTreeProvider(
-				repo);
+				repo, true);
 		assertTrue(treeProvider.getKnownResources().contains(iFile1));
 		assertFalse(treeProvider.getKnownResources().contains(iFile2));
 
@@ -178,7 +178,7 @@ public class DirCacheResourceVariantTreeProviderTest extends VariantsTestCase {
 		// conflict on file 1 : file 1 has three stages.
 		// conflict on file 2, but was not in the base : only stage 2 and 3
 		DirCacheResourceVariantTreeProvider treeProvider = new DirCacheResourceVariantTreeProvider(
-				repo);
+				repo, true);
 		assertTrue(treeProvider.getKnownResources().contains(iFile1));
 		assertTrue(treeProvider.getKnownResources().contains(iFile2));
 

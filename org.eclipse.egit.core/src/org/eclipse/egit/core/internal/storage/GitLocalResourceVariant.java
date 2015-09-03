@@ -1,5 +1,5 @@
-/*******************************************************************************
- * Copyright (c) 2013 Obeo.
+/******************************************************************************
+ * Copyright (c) 2015 Obeo.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,7 +8,7 @@
  * Contributors:
  *     Laurent Goubet <laurent.goubet@obeo.fr> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.egit.core.synchronize;
+package org.eclipse.egit.core.internal.storage;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
@@ -26,10 +26,16 @@ import org.eclipse.team.core.variants.IResourceVariant;
  * Mimics Team's LocalResourceVariant.
  * </p>
  */
-class GitLocalResourceVariant implements IResourceVariant {
+public class GitLocalResourceVariant implements IResourceVariant {
 	private final IResource resource;
 
-	GitLocalResourceVariant(IResource resource) {
+	/**
+	 * Default constructor.
+	 *
+	 * @param resource
+	 *            The resource we need a local variant for.
+	 */
+	public GitLocalResourceVariant(IResource resource) {
 		this.resource = resource;
 	}
 
@@ -46,8 +52,9 @@ class GitLocalResourceVariant implements IResourceVariant {
 	}
 
 	public IStorage getStorage(IProgressMonitor monitor) throws TeamException {
-		if (resource.getType() == IResource.FILE)
-			return (IFile) resource;
+		if (resource.getType() == IResource.FILE) {
+			return (IFile)resource;
+		}
 		return null;
 	}
 
@@ -59,7 +66,10 @@ class GitLocalResourceVariant implements IResourceVariant {
 		return resource.getName();
 	}
 
-	IResource getResource() {
+	/**
+	 * @return the underlying resource of this variant.
+	 */
+	public IResource getResource() {
 		return resource;
 	}
 }

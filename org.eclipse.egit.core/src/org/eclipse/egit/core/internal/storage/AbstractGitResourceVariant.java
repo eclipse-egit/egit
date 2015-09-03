@@ -8,6 +8,8 @@
  *******************************************************************************/
 package org.eclipse.egit.core.internal.storage;
 
+import java.io.File;
+
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.core.variants.IResourceVariant;
@@ -60,6 +62,21 @@ public abstract class AbstractGitResourceVariant implements IResourceVariant {
 	public String getName() {
 		int lastSeparator = path.lastIndexOf('/');
 		return path.substring(lastSeparator + 1);
+	}
+
+	/**
+	 * @return repository-relative path of this resource.
+	 */
+	public String getPath() {
+		return path;
+	}
+
+	/**
+	 * @return absolute path of this resource.
+	 */
+	public String getAbsolutePath() {
+		return repository.getWorkTree().getAbsolutePath() + File.separator
+				+ path;
 	}
 
 	public boolean isContainer() {
