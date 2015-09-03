@@ -37,6 +37,7 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.SubMenuManager;
 import org.eclipse.jface.commands.ActionHandler;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.JFacePreferences;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
@@ -52,8 +53,6 @@ import org.eclipse.jface.text.WhitespaceCharacterPainter;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
-import org.eclipse.jface.text.hyperlink.IHyperlinkPresenter;
-import org.eclipse.jface.text.hyperlink.MultipleHyperlinkPresenter;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
 import org.eclipse.jface.text.quickassist.IQuickAssistInvocationContext;
@@ -303,7 +302,25 @@ public class SpellcheckableMessageArea extends Composite {
 			}
 		};
 		Activator.getDefault().getPreferenceStore().addPropertyChangeListener(propertyChangeListener);
+		final IPropertyChangeListener syntaxColoringChangeListener = new IPropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent event) {
+				if (JFacePreferences.HYPERLINK_COLOR
+						.equals(event.getProperty())) {
+					getDisplay().asyncExec(new Runnable() {
+						@Override
+						public void run() {
+							if (!isDisposed()) {
+								sourceViewer.refresh();
+							}
+						}
+					});
+				}
+			}
 
+		};
+		JFacePreferences.getPreferenceStore()
+				.addPropertyChangeListener(syntaxColoringChangeListener);
 		final SourceViewerDecorationSupport support = configureAnnotationPreferences();
 		if (isEditable(sourceViewer)) {
 			quickFixActionHandler = createQuickFixActionHandler(sourceViewer);
@@ -323,13 +340,6 @@ public class SpellcheckableMessageArea extends Composite {
 			@Override
 			protected Map getHyperlinkDetectorTargets(ISourceViewer targetViewer) {
 				return getHyperlinkTargets();
-			}
-
-			@Override
-			public IHyperlinkPresenter getHyperlinkPresenter(
-					ISourceViewer targetViewer) {
-				return new MultipleHyperlinkPresenter(PlatformUI.getWorkbench()
-						.getDisplay().getSystemColor(SWT.COLOR_BLUE).getRGB());
 			}
 
 			@Override
@@ -385,6 +395,9 @@ public class SpellcheckableMessageArea extends Composite {
 			public void widgetDisposed(DisposeEvent disposeEvent) {
 				support.uninstall();
 				Activator.getDefault().getPreferenceStore().removePropertyChangeListener(propertyChangeListener);
+				JFacePreferences.getPreferenceStore()
+						.removePropertyChangeListener(
+								syntaxColoringChangeListener);
 			}
 		});
 	}

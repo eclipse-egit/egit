@@ -9,6 +9,9 @@
 package org.eclipse.egit.ui.internal.dialogs;
 
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jface.resource.JFaceColors;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
@@ -18,16 +21,13 @@ import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.ITokenScanner;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.swt.graphics.Color;
 
 /**
  * A simple {@link ITokenScanner} that recognizes hyperlinks using
  * {@link IHyperlinkDetector}s.
  */
 public class HyperlinkTokenScanner implements ITokenScanner {
-
-	/** The {@link IToken} returned for hyperlinks. */
-	protected static final IToken HYPERLINK = new Token(
-			new HyperlinkDamagerRepairer.HyperlinkTextAttribute(null));
 
 	/** The {@link IToken} returned for all non-hyperlink content. */
 	protected static final IToken DEFAULT = new Token(null);
@@ -37,6 +37,8 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 	private int currentOffset;
 
 	private int tokenStart;
+
+	private IToken hyperlinkToken;
 
 	private final ISourceViewer viewer;
 
@@ -58,10 +60,8 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 
 	@Override
 	public void setRange(IDocument document, int offset, int length) {
-		Assert.isTrue(document == viewer.getDocument());
-		this.endOfRange = offset + length;
-		this.currentOffset = offset;
-		this.tokenStart = -1;
+		setRangeAndColor(document, offset, length, JFaceColors
+				.getHyperlinkText(viewer.getTextWidget().getDisplay()));
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 						region.getOffset() + region.getLength());
 				if (end > tokenStart) {
 					currentOffset = end;
-					return HYPERLINK;
+					return hyperlinkToken;
 				}
 			}
 		}
@@ -97,4 +97,30 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 		return currentOffset - tokenStart;
 	}
 
+	/**
+	 * Configures the scanner by providing access to the document range that
+	 * should be scanned, plus defining the foreground color to use for hyperlink
+	 * syntax coloring.
+	 *
+	 * @param document
+	 *            the document to scan
+	 * @param offset
+	 *            the offset of the document range to scan
+	 * @param length
+	 *            the length of the document range to scan
+	 * @param color
+	 *            the foreground color to use for hyperlinks; may be
+	 *            {@code null} in which case the SWT default color for the
+	 *            {@link org.eclipse.swt.SWT#UNDERLINE_LINK SWT.UNDERLINE_LINK}
+	 *            style is applied
+	 */
+	protected void setRangeAndColor(@NonNull IDocument document, int offset,
+			int length, @Nullable Color color) {
+		Assert.isTrue(document == viewer.getDocument());
+		this.endOfRange = offset + length;
+		this.currentOffset = offset;
+		this.tokenStart = -1;
+		hyperlinkToken = new Token(
+				new HyperlinkDamagerRepairer.HyperlinkTextAttribute(color));
+	}
 }
