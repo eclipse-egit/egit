@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="egit-4.5-staging" sequenceNumber="1433163953">
+<target name="egit-4.5-staging" sequenceNumber="1441320495">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.jetty.client" version="9.2.10.v20150310"/>
@@ -44,6 +44,12 @@
       <unit id="org.apache.ant.source" version="1.9.4.v201504302020"/>
       <unit id="org.apache.commons.compress" version="1.6.0.v201310281400"/>
       <unit id="org.apache.commons.compress.source" version="1.6.0.v201310281400"/>
+      <unit id="org.apache.commons.logging" version="1.1.1.v201101211721"/>
+      <unit id="org.apache.commons.logging.source" version="1.1.1.v201101211721"/>
+      <unit id="org.apache.httpcomponents.httpcore" version="4.3.3.v201411290715"/>
+      <unit id="org.apache.httpcomponents.httpcore.source" version="4.3.3.v201411290715"/>
+      <unit id="org.apache.httpcomponents.httpclient" version="4.3.6.v201411290715"/>
+      <unit id="org.apache.httpcomponents.httpclient.source" version="4.3.6.v201411290715"/>
       <unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
       <unit id="org.apache.log4j.source" version="1.2.15.v201012070815"/>
       <unit id="org.kohsuke.args4j" version="2.0.21.v201301150030"/>
@@ -65,8 +71,8 @@
       <unit id="org.objenesis.source" version="1.0.0.v201505121915"/>
       <unit id="org.mockito" version="1.8.4.v201303031500"/>
       <unit id="org.mockito.source" version="1.8.4.v201303031500"/>
-      <unit id="com.jcraft.jsch" version="0.1.51.v201410302000"/>
-      <unit id="com.jcraft.jsch.source" version="0.1.51.v201410302000"/>
+      <unit id="com.jcraft.jsch" version="0.1.53.v201508180515"/>
+      <unit id="com.jcraft.jsch.source" version="0.1.53.v201508180515"/>
       <unit id="org.junit" version="4.11.0.v201303080030"/>
       <unit id="org.junit.source" version="4.11.0.v201303080030"/>
       <unit id="javax.servlet" version="3.1.0.v201410161800"/>
@@ -77,7 +83,7 @@
       <unit id="org.slf4j.api.source" version="1.7.2.v20121108-1250"/>
       <unit id="org.slf4j.impl.log4j12" version="1.7.2.v20131105-2200"/>
       <unit id="org.slf4j.impl.log4j12.source" version="1.7.2.v20131105-2200"/>
-      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/"/>
+      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20150821153341/repository/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.sdk.ide" version="0.0.0"/>
