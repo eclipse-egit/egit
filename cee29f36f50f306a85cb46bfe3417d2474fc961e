@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_9434f004",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-03T22:09:50Z",
+      "side": 1,
+      "message": "s/contains/contain/",
+      "range": {
+        "startLine": 1027,
+        "startChar": 100,
+        "endLine": 1027,
+        "endChar": 108
+      },
+      "revId": "cee29f36f50f306a85cb46bfe3417d2474fc961e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
