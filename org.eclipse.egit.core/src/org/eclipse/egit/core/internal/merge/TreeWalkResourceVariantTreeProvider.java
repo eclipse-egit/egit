@@ -13,10 +13,9 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.storage.TreeParserResourceVariant;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
+import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
@@ -98,9 +97,12 @@ public class TreeWalkResourceVariantTreeProvider implements
 			final CanonicalTreeParser theirs = treeWalk.getTree(theirIndex,
 					CanonicalTreeParser.class);
 
-			final IPath path = new Path(treeWalk.getPathString());
+			final int nonZeroMode = modeBase != 0 ? modeBase
+					: modeOurs != 0 ? modeOurs : modeTheirs;
 			final IResource resource = ResourceUtil
-					.getResourceHandleForLocation(path);
+					.getResourceHandleForLocation(repository,
+					treeWalk.getPathString(),
+					FileMode.fromBits(nonZeroMode) == FileMode.TREE);
 			// Resource variants only make sense for IResources. Do not consider
 			// files outside of the workspace or otherwise non accessible.
 			if (resource != null && resource.getProject().isAccessible()) {
