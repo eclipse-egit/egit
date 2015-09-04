@@ -21,7 +21,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
@@ -37,7 +36,7 @@ import org.eclipse.team.core.TeamException;
 /**
  * Cherry pick operation
  */
-public class CherryPickOperation implements IEGitOperation {
+public class CherryPickOperation extends AbstractMergingOperation {
 
 	private final Repository repo;
 
@@ -75,8 +74,7 @@ public class CherryPickOperation implements IEGitOperation {
 						commit.name()));
 				CherryPickCommand command = new Git(repo).cherryPick().include(
 						commit.getId());
-				MergeStrategy strategy = Activator.getDefault()
-						.getPreferredMergeStrategy();
+				MergeStrategy strategy = getApplicableMergeStrategy();
 				if (strategy != null) {
 					command.setStrategy(strategy);
 				}

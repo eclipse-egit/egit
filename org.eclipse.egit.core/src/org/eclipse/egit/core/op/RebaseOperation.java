@@ -43,7 +43,7 @@ import org.eclipse.jgit.merge.MergeStrategy;
 /**
  * This class implements rebase.
  */
-public class RebaseOperation implements IEGitOperation {
+public class RebaseOperation extends AbstractMergingOperation {
 	private final Repository repository;
 
 	private final Ref ref;
@@ -141,8 +141,7 @@ public class RebaseOperation implements IEGitOperation {
 				RebaseCommand cmd = new Git(repository).rebase()
 						.setProgressMonitor(
 								new EclipseGitProgressTransformer(actMonitor));
-				MergeStrategy strategy = Activator.getDefault()
-						.getPreferredMergeStrategy();
+				MergeStrategy strategy = getApplicableMergeStrategy();
 				if (strategy != null) {
 					cmd.setStrategy(strategy);
 				}

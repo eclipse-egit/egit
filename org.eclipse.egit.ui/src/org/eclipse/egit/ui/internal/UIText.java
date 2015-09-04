@@ -688,6 +688,9 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_defaultMergeStrategyLabel;
 
 	/** */
+	public static String GitPreferenceRoot_hideMergeStrategyDialog;
+
+	/** */
 	public static String ProcessStepsRebaseCommand_CancelDialogMessage;
 
 	/** */
@@ -5379,6 +5382,36 @@ public class UIText extends NLS {
 
 	/** */
 	public static String DiffStyleRangeFormatter_diffTruncated;
+
+	/** */
+	public static String PreferredStrategyDialog_ShellTitle;
+
+	/** */
+	public static String PreferredStrategyDialog_Title;
+
+	/** */
+	public static String PreferredStrategyDialog_Message;
+
+	/** */
+	public static String PreferredStrategyDialog_Explanation;
+
+	/** */
+	public static String PreferredStrategyDialog_DontAskAgain;
+
+	/** */
+	public static String PreferredMergeStrategy_Ours_Label;
+
+	/** */
+	public static String PreferredMergeStrategy_Theirs_Label;
+
+	/** */
+	public static String PreferredMergeStrategy_SimpleTwoWayInCore_Label;
+
+	/** */
+	public static String PreferredMergeStrategy_Resolve_Label;
+
+	/** */
+	public static String PreferredMergeStrategy_Recursive_Label;
 
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);

@@ -15,11 +15,7 @@ import java.io.IOException;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.WorkspaceJob;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
@@ -28,6 +24,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.BasicConfigurationDialog;
 import org.eclipse.egit.ui.internal.dialogs.MergeTargetSelectionDialog;
+import org.eclipse.egit.ui.internal.jobs.MergeJob;
 import org.eclipse.egit.ui.internal.merge.MergeResultDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -65,17 +62,7 @@ public class MergeActionHandler extends RepositoryActionHandler {
 			op.setSquash(mergeTargetSelectionDialog.isMergeSquash());
 			op.setFastForwardMode(mergeTargetSelectionDialog.getFastForwardMode());
 			op.setCommit(mergeTargetSelectionDialog.isCommit());
-			Job job = new WorkspaceJob(jobname) {
-				@Override
-				public IStatus runInWorkspace(IProgressMonitor monitor) {
-					try {
-						op.execute(monitor);
-					} catch (final CoreException e) {
-						return e.getStatus();
-					}
-					return Status.OK_STATUS;
-				}
-			};
+			Job job = new MergeJob(jobname, op);
 			job.setUser(true);
 			job.setRule(op.getSchedulingRule());
 			job.addJobChangeListener(new JobChangeAdapter() {

@@ -50,7 +50,7 @@ import org.eclipse.osgi.util.NLS;
 /**
  * Wraps the JGit API {@link PullCommand} into an operation
  */
-public class PullOperation implements IEGitOperation {
+public class PullOperation extends AbstractMergingOperation {
 	private final Repository[] repositories;
 
 	private final Map<Repository, Object> results = new LinkedHashMap<Repository, Object>();
@@ -96,8 +96,7 @@ public class PullOperation implements IEGitOperation {
 								new SubProgressMonitor(mymonitor, 1)));
 						pull.setTimeout(timeout);
 						pull.setCredentialsProvider(credentialsProvider);
-						MergeStrategy strategy = Activator.getDefault()
-								.getPreferredMergeStrategy();
+						MergeStrategy strategy = getApplicableMergeStrategy();
 						if (strategy != null) {
 							pull.setStrategy(strategy);
 						}

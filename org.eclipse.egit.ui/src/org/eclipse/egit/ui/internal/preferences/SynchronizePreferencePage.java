@@ -8,44 +8,29 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.preferences;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.egit.core.Activator.MergeStrategyDescriptor;
-import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.preference.RadioGroupFieldEditor;
-import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.jface.util.Policy;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 /** Preference page for views preferences */
 public class SynchronizePreferencePage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {
 
-	private RadioGroupFieldEditor preferredMergeStrategyEditor;
-
-	private ScopedPreferenceStore corePreferenceStore;
+	private final PreferredMergedStrategyHelper helper;
 
 	/**
 	 * The default constructor
 	 */
 	public SynchronizePreferencePage() {
 		super(FLAT);
+		helper = new PreferredMergedStrategyHelper(true);
 	}
 
 	@Override
@@ -74,48 +59,18 @@ public class SynchronizePreferencePage extends FieldEditorPreferencePage
 
 		Label spacer = new Label(getFieldEditorParent(), SWT.NONE);
 		spacer.setSize(0, 12);
-		Composite modelStrategyParent = getFieldEditorParent();
-		preferredMergeStrategyEditor = new RadioGroupFieldEditor(
-				GitCorePreferences.core_preferredMergeStrategy,
-				UIText.GitPreferenceRoot_preferreMergeStrategy_group, 1,
-				getAvailableMergeStrategies(), modelStrategyParent, false);
-		preferredMergeStrategyEditor.getLabelControl(modelStrategyParent)
-				.setToolTipText(
-						UIText.GitPreferenceRoot_preferreMergeStrategy_label);
-		addField(preferredMergeStrategyEditor);
+		helper.createPreferredStrategyPanel(getFieldEditorParent());
+
+		addField(new BooleanFieldEditor(
+				UIPreferences.PREFERRED_MERGE_STRATEGY_HIDE_DIALOG,
+				UIText.GitPreferenceRoot_hideMergeStrategyDialog,
+				getFieldEditorParent()));
 	}
 
 	@Override
 	protected void initialize() {
 		super.initialize();
-		// The default initialize sets the same preference store for every field
-		// We want the preferred strategy to use the core store
-		preferredMergeStrategyEditor
-				.setPreferenceStore(getCorePreferenceStore());
-		preferredMergeStrategyEditor.load();
-	}
-
-	private String[][] getAvailableMergeStrategies() {
-		org.eclipse.egit.core.Activator coreActivator = org.eclipse.egit.core.Activator
-				.getDefault();
-		List<String[]> strategies = new ArrayList<>();
-		strategies.add(new String[] {
-				UIText.GitPreferenceRoot_defaultMergeStrategyLabel, "" }); //$NON-NLS-1$
-		for (MergeStrategyDescriptor strategy : coreActivator
-				.getRegisteredMergeStrategies()) {
-			strategies.add(new String[] { strategy.getLabel(),
-					strategy.getName() });
-		}
-		return strategies.toArray(new String[strategies.size()][2]);
-	}
-
-	private ScopedPreferenceStore getCorePreferenceStore() {
-		if (corePreferenceStore == null) {
-			corePreferenceStore = new ScopedPreferenceStore(
-					InstanceScope.INSTANCE,
-					org.eclipse.egit.core.Activator.getPluginId());
-		}
-		return corePreferenceStore;
+		helper.load();
 	}
 
 	@Override
@@ -124,21 +79,8 @@ public class SynchronizePreferencePage extends FieldEditorPreferencePage
 			// Need to save the core preference store because the
 			// PreferenceDialog will only save the store provided
 			// by doGetPreferenceStore()
-			if (getCorePreferenceStore().needsSaving()) {
-				try {
-					getCorePreferenceStore().save();
-				} catch (IOException e) {
-					String message = JFaceResources
-							.format("PreferenceDialog.saveErrorMessage", new Object[] { //$NON-NLS-1$
-									getTitle(), e.getMessage() });
-					Policy.getStatusHandler()
-							.show(new Status(IStatus.ERROR, Policy.JFACE,
-									message, e),
-									JFaceResources
-											.getString("PreferenceDialog.saveErrorTitle")); //$NON-NLS-1$
-
-				}
-			}
+			helper.store();
+			helper.save();
 		}
 		return true;
 	}
