@@ -111,7 +111,7 @@ public class GitLabels {
 							|| !indexDiffData.getUntracked().isEmpty()
 							|| !indexDiffData.getModified().isEmpty() || !indexDiffData
 							.getMissing().isEmpty())) {
-				string.append('>');
+				string.append('>', StyledString.DECORATIONS_STYLER);
 				string.append(' ');
 			}
 		}
