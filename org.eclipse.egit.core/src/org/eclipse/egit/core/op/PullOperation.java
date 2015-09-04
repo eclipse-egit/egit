@@ -55,7 +55,7 @@ import org.eclipse.osgi.util.NLS;
 /**
  * Wraps the JGit API {@link PullCommand} into an operation
  */
-public class PullOperation implements IEGitOperation {
+public class PullOperation extends AbstractMergingOperation {
 
 	/**
 	 * This describe a specification of a Pull command
@@ -185,8 +185,7 @@ public class PullOperation implements IEGitOperation {
 							pull.setRebase(config
 									.getUpstreamConfig() == UpstreamConfig.REBASE);
 						}
-						MergeStrategy strategy = Activator.getDefault()
-								.getPreferredMergeStrategy();
+						MergeStrategy strategy = getApplicableMergeStrategy();
 						if (strategy != null) {
 							pull.setStrategy(strategy);
 						}

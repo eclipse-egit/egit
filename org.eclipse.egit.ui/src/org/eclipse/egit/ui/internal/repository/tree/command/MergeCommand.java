@@ -92,6 +92,7 @@ public class MergeCommand extends
 			op.setFastForwardMode(mergeTargetSelectionDialog
 					.getFastForwardMode());
 			op.setCommit(mergeTargetSelectionDialog.isCommit());
+			op.setMergeStrategy(mergeTargetSelectionDialog.getMergeStrategy());
 		}
 
 		String jobname = NLS.bind(UIText.MergeAction_JobNameMerge, refName);

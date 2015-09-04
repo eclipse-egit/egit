@@ -21,4 +21,24 @@
 			serialization="org.eclipse.ui.cheatsheets.openCheatSheet(cheatSheetId=org.eclipse.egit.cheatsheets.push)"
 			label="Pushing to another Git Repository" />
 	</context>
+	<context id="mergeStrategy_ours" title="Merge Strategy 'ours'">
+		<description>This merge strategy uses local files and content and ignores remote files and content.</description>
+		<topic href="help/JGit/User_Guide/Concepts.html#MergeStrategyOurs" label="Help_Topic"/>
+	</context>
+	<context id="mergeStrategy_theirs" title="Merge Strategy 'theirs'">
+		<description>This merge strategy uses remote files and content and ignores local files and content.</description>
+		<topic href="help/JGit/User_Guide/Concepts.html#MergeStrategyTheirs" label="Help_Topic"/>
+	</context>
+	<context id="mergeStrategy_simple2wayInCore" title="Merge Strategy 'simple-two-way-in-core'">
+		<description>This merge strategy merges using two-way comparisons only (no ancestor is taken into account).</description>
+		<topic href="help/JGit/User_Guide/Concepts.html#MergeStrategySimple2WayInCore" label="Help_Topic"/>
+	</context>
+	<context id="mergeStrategy_resolve" title="Merge Strategy 'resolve'">
+		<description>This merge strategy merges files and content and support only one base.</description>
+		<topic href="help/JGit/User_Guide/Concepts.html#MergeStrategyResolve" label="Help_Topic"/>
+	</context>
+	<context id="mergeStrategy_recursive" title="Merge Strategy 'recursive'">
+		<description>This merge strategy merges files and content and supports several bases.</description>
+		<topic href="help/JGit/User_Guide/Concepts.html#MergeStrategyRecursive" label="Help_Topic"/>
+	</context>
 </contexts>

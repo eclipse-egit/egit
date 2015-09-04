@@ -36,6 +36,7 @@ import org.eclipse.egit.ui.internal.UIRepositoryUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.internal.handler.SelectionHandler;
+import org.eclipse.egit.ui.internal.preferences.MergeStrategyHelper;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -46,13 +47,19 @@ import org.eclipse.jgit.api.CherryPickResult;
 import org.eclipse.jgit.api.CherryPickResult.CherryPickStatus;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.merge.ResolveMerger.MergeFailureReason;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.WorkbenchContentProvider;
@@ -62,6 +69,8 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
  * Handler to cherry pick the commit onto the current branch
  */
 public class CherryPickHandler extends SelectionHandler {
+
+	private MergeStrategy mergeStrategy;
 
 	/**
 	 * Command id
@@ -90,6 +99,7 @@ public class CherryPickHandler extends SelectionHandler {
 		}
 
 		final CherryPickOperation op = new CherryPickOperation(repo, commit);
+		op.setMergeStrategy(mergeStrategy);
 		Job job = new Job(MessageFormat.format(
 				UIText.CherryPickHandler_JobName, 1)) {
 			@Override
@@ -155,7 +165,10 @@ public class CherryPickHandler extends SelectionHandler {
 				ConfirmCherryPickDialog dialog = new ConfirmCherryPickDialog(
 						shell, message, repository, Arrays.asList(commit));
 				int result = dialog.open();
-				confirmed.set(result == Window.OK);
+				if (result == Window.OK) {
+					confirmed.set(true);
+					mergeStrategy = dialog.helper.getSelectedStrategy();
+				}
 			}
 		});
 		return confirmed.get();
@@ -164,6 +177,8 @@ public class CherryPickHandler extends SelectionHandler {
 	private static class ConfirmCherryPickDialog extends MessageDialog {
 
 		private RepositoryCommit[] commits;
+
+		private MergeStrategyHelper helper;
 
 		public ConfirmCherryPickDialog(Shell parentShell,
 				String message, Repository repository, List<RevCommit> revCommits) {
@@ -177,6 +192,7 @@ public class CherryPickHandler extends SelectionHandler {
 			for (RevCommit commit : revCommits)
 				repoCommits.add(new RepositoryCommit(repository, commit));
 			this.commits = repoCommits.toArray(new RepositoryCommit[0]);
+			this.helper = new MergeStrategyHelper(false);
 		}
 
 		@Override
@@ -191,6 +207,31 @@ public class CherryPickHandler extends SelectionHandler {
 			treeViewer.setLabelProvider(new DelegatingStyledCellLabelProvider(
 					new WorkbenchLabelProvider()));
 			treeViewer.setInput(commits);
+
+			Button cbStrategy = new Button(parent, SWT.CHECK);
+			cbStrategy.setText(UIText.MergeDialog_cbStrategy_Text);
+			cbStrategy.setToolTipText(UIText.MergeDialog_cbStrategy_Tooltip);
+			final Group strategyGroup = new Group(parent, SWT.NONE);
+			strategyGroup
+					.setText(UIText.MergeTargetSelectionDialog_MergeStrategy);
+			GridDataFactory.fillDefaults().grab(true, false)
+					.applyTo(strategyGroup);
+			strategyGroup.setLayout(new GridLayout(1, false));
+			strategyGroup.setVisible(false);
+
+			cbStrategy.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					if (((Button) e.widget).getSelection()) {
+						strategyGroup.setVisible(true);
+					} else {
+						strategyGroup.setVisible(false);
+					}
+				}
+			});
+
+			helper.createContents(strategyGroup);
+			helper.load();
 
 			return area;
 		}

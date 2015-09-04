@@ -239,6 +239,8 @@ public class UIPreferences {
 	public final static String REBASE_INTERACTIVE_ORDER_REVERSE = "rebase_interactive_order_reverse"; //$NON-NLS-1$
 	/** */
 	public static final String REBASE_INTERACTIVE_SYNC_SELECTION = "RebaseInteractive_SyncWithSelection"; //$NON-NLS-1$
+	/** */
+	public static final String PREFERRED_MERGE_STRATEGY_HIDE_DIALOG = "PreferredMergeStrategy_HideDialog"; //$NON-NLS-1$
 
 	/** */
 	public static final String WARN_BEFORE_COMMITTING = "checkBeforeCommitting"; //$NON-NLS-1$
