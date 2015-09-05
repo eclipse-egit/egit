@@ -21,36 +21,27 @@ import org.eclipse.egit.ui.internal.clone.GitCloneSourceProviderExtension.CloneS
 import org.eclipse.egit.ui.internal.provisional.wizards.GitRepositoryInfo;
 import org.eclipse.egit.ui.internal.provisional.wizards.NoRepositoryInfoException;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.dialogs.IPageChangeProvider;
+import org.eclipse.jface.dialogs.IPageChangedListener;
+import org.eclipse.jface.dialogs.PageChangedEvent;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.internal.wizards.datatransfer.Activator;
-import org.eclipse.ui.internal.wizards.datatransfer.EasymportJob;
-import org.eclipse.ui.internal.wizards.datatransfer.EasymportJobReportDialog;
+import org.eclipse.ui.internal.wizards.datatransfer.EasymportWizard;
 import org.eclipse.ui.internal.wizards.datatransfer.SelectImportRootWizardPage;
 
 /**
  * Alternative Git clone wizard using auto import framework incubating in e4
  */
-public class EasymportGitWizard extends AbstractGitCloneWizard implements IImportWizard {
+public class EasymportGitWizard extends AbstractGitCloneWizard
+		implements IImportWizard, IPageChangedListener {
 
-	private SelectImportRootWizardPage selectRootPage = new SelectImportRootWizardPage(this, null, null) {
-		@Override
-		public void setVisible(boolean visible) {
-			if (visible) {
-				if (existingRepo != null) {
-					this.setInitialSelectedDirectory(existingRepo.getWorkTree());
-				} else if (needToCloneRepository()) {
-					this.setInitialSelectedDirectory(doClone());
-				}
-			}
-			super.setVisible(visible);
-		}
-	};
+	private EasymportWizard easymportWizard;
 	private GitSelectRepositoryPage selectRepoPage = new GitSelectRepositoryPage();
-	private Repository existingRepo;
 
 	/**
 	 * Constructor
@@ -63,6 +54,7 @@ public class EasymportGitWizard extends AbstractGitCloneWizard implements IImpor
 			setDialogSettings(dialogSettings);
 		}
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_IMPORT_REPO);
+		this.easymportWizard = new EasymportWizard();
 	}
 
 	@Override
@@ -74,27 +66,19 @@ public class EasymportGitWizard extends AbstractGitCloneWizard implements IImpor
 
 	@Override
 	protected void addPostClonePages() {
-		addPage(this.selectRootPage);
+		this.easymportWizard.addPages();
 	}
 
 	@Override
 	public boolean performFinish() {
-		EasymportJob job = new EasymportJob(
-				this.selectRootPage.getSelectedRootDirectory(),
-				this.selectRootPage.getSelectedWorkingSets(),
-				this.selectRootPage.isConfigureAndDetectNestedProject());
-		EasymportJobReportDialog dialog = new EasymportJobReportDialog(
-				getShell(), job);
-		job.schedule();
-		if (this.selectRootPage.isConfigureAndDetectNestedProject()) {
-			dialog.open();
-		}
-		return true;
+		return true; // delegated to EasymportWizard
 	}
 
 	@Override
 	public boolean canFinish() {
-		return getContainer().getCurrentPage() == this.selectRootPage && this.selectRootPage.isPageComplete();
+		return getContainer().getCurrentPage()
+				.getWizard() == this.easymportWizard
+				&& this.easymportWizard.canFinish();
 	}
 
 	@Override
@@ -118,9 +102,8 @@ public class EasymportGitWizard extends AbstractGitCloneWizard implements IImpor
 
 	@Override
 	public IWizardPage getNextPage(IWizardPage page) {
-		if (page == selectRepoPage) {
-			this.existingRepo = this.selectRepoPage.getRepository();
-			return this.selectRootPage;
+		if (page == selectRepoPage || page == this.cloneDestination) {
+			return this.easymportWizard.getPages()[0];
 		}
 		return super.getNextPage(page);
 	}
@@ -157,5 +140,35 @@ public class EasymportGitWizard extends AbstractGitCloneWizard implements IImpor
 			org.eclipse.egit.ui.Activator.error(e.getMessage(), e);
 		}
 		return getCloneDestinationPage().getDestinationFile();
+	}
+
+	@Override
+	public void pageChanged(PageChangedEvent event) {
+		SelectImportRootWizardPage selectRootPage = (SelectImportRootWizardPage) this.easymportWizard.getPages()[0];
+		if (event.getSelectedPage() == selectRootPage) {
+			Repository existingRepo = selectRepoPage.getRepository();
+			if (existingRepo != null) {
+				selectRootPage.setInitialSelectedDirectory(existingRepo.getWorkTree());
+			} else if (needToCloneRepository()) {
+				selectRootPage.setInitialSelectedDirectory(doClone());
+			}
+		}
+	}
+
+	@Override
+	public void setContainer(IWizardContainer container) {
+		if (container instanceof IPageChangeProvider) {
+			((IPageChangeProvider) container).addPageChangedListener(this);
+		}
+		super.setContainer(container);
+	}
+
+	@Override
+	public void dispose() {
+		if (getContainer() instanceof IPageChangeProvider) {
+			((IPageChangeProvider) getContainer())
+					.removePageChangedListener(this);
+		}
+		super.dispose();
 	}
 }
