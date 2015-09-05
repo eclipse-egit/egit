@@ -6,6 +6,7 @@
  * Copyright (C) 2011, Stefan Lay <stefan.lay@sap.com>
  * Copyright (C) 2014, Marc-Andre Laperle <marc-andre.laperle@ericsson.com>
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
+ * Copyright (C) 2015, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -34,10 +35,21 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.JFacePreferences;
 import org.eclipse.jface.text.DefaultTextDoubleClickStrategy;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IDocumentPartitioner;
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextOperationTarget;
+import org.eclipse.jface.text.ITextViewer;
+import org.eclipse.jface.text.TextUtilities;
+import org.eclipse.jface.text.hyperlink.IHyperlink;
+import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
+import org.eclipse.jface.text.rules.FastPartitioner;
+import org.eclipse.jface.text.rules.IPartitionTokenScanner;
+import org.eclipse.jface.text.rules.IToken;
+import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
@@ -51,43 +63,30 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Cursor;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.IWorkbenchPartSite;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
 class CommitMessageViewer extends SourceViewer {
 
-	private static final Color SYS_LINKCOLOR = PlatformUI.getWorkbench()
-			.getDisplay().getSystemColor(SWT.COLOR_BLUE);
+	static final String HEADER_CONTENT_TYPE = "__egit_commit_msg_header"; //$NON-NLS-1$
 
-	private static final Color SYS_DARKGRAY = PlatformUI.getWorkbench()
-			.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY);
-
-	private static final Cursor SYS_LINK_CURSOR = PlatformUI.getWorkbench()
-			.getDisplay().getSystemCursor(SWT.CURSOR_HAND);
-
-	private final Cursor sys_normalCursor;
+	static final String FOOTER_CONTENT_TYPE = "__egit_commit_msg_footer"; //$NON-NLS-1$
 
 	// notified when clicking on a link in the message (branch, commit...)
 	private final ListenerList navListeners = new ListenerList();
 
 	// listener to detect changes in the wrap and fill preferences
 	private final IPropertyChangeListener listener;
+
+	// Listener to react on syntax coloring preferences changes
+	private final IPropertyChangeListener syntaxColoringListener;
 
 	// the current repository
 	private Repository db;
@@ -121,35 +120,6 @@ class CommitMessageViewer extends SourceViewer {
 		final StyledText t = getTextWidget();
 		t.setFont(UIUtils.getFont(UIPreferences.THEME_CommitMessageFont));
 
-		sys_normalCursor = t.getCursor();
-
-		// set the cursor when hovering over a link
-		t.addListener(SWT.MouseMove, new Listener() {
-			@Override
-			public void handleEvent(final Event e) {
-				StyleRange styleRange = getStyleRange(e.x, e.y);
-				if (styleRange != null && styleRange.underline)
-					t.setCursor(SYS_LINK_CURSOR);
-				else
-					t.setCursor(sys_normalCursor);
-			}
-		});
-		// react on link click
-		t.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDown(final MouseEvent e) {
-				// only process the hyper link if it was a primary mouse click
-				if (e.button != 1)
-					return;
-
-				final StyleRange r = getStyleRange(e.x, e.y);
-				if (r instanceof ObjectLink) {
-					final RevCommit c = ((ObjectLink) r).targetCommit;
-					for (final Object l : navListeners.getListeners())
-						((CommitNavigationListener) l).showCommit(c);
-				}
-			}
-		});
 		setTextDoubleClickStrategy(new DefaultTextDoubleClickStrategy(),
 				IDocument.DEFAULT_CONTENT_TYPE);
 		activatePlugins();
@@ -172,11 +142,23 @@ class CommitMessageViewer extends SourceViewer {
 				}
 			}
 		};
-
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 		store.addPropertyChangeListener(listener);
 		fill = store
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL);
+
+		// React on changes in the JFace color preferences
+		syntaxColoringListener = new IPropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent event) {
+				if (JFacePreferences.HYPERLINK_COLOR
+						.equals(event.getProperty())) {
+					format();
+				}
+			}
+		};
+		JFacePreferences.getPreferenceStore()
+				.addPropertyChangeListener(syntaxColoringListener);
 
 		// global action handlers for select all and copy
 		final IAction selectAll = new Action() {
@@ -300,6 +282,8 @@ class CommitMessageViewer extends SourceViewer {
 		}
 		Activator.getDefault().getPreferenceStore()
 				.removePropertyChangeListener(listener);
+		JFacePreferences.getPreferenceStore()
+				.removePropertyChangeListener(syntaxColoringListener);
 		if (refsChangedListener != null)
 			refsChangedListener.remove();
 		refsChangedListener = null;
@@ -387,8 +371,7 @@ class CommitMessageViewer extends SourceViewer {
 		if (siteService == null)
 			return;
 		FormatJob.FormatRequest formatRequest = new FormatJob.FormatRequest(
-				getRepository(), commit, fill, SYS_LINKCOLOR, SYS_DARKGRAY,
-				allRefs);
+				getRepository(), commit, fill, allRefs);
 		formatJob = new FormatJob(formatRequest);
 		addDoneListenerToFormatJob();
 		siteService.schedule(formatJob, 0 /* now */, true /*
@@ -402,68 +385,196 @@ class CommitMessageViewer extends SourceViewer {
 		if (!UIUtils.isUsable(text))
 			return;
 
-		setDocument(new Document(formatResult.getCommitInfo()));
-
-		// Set style ranges from format job. We know that they are already
-		// ordered and don't overlap.
-		text.setStyleRanges(formatResult.getStyleRange());
-
-		// Apply additional styles. If we combined them with the above style
-		// ranges and set them all at once, we would have to manually remove
-		// overlapping ones.
-		UIUtils.applyHyperlinkDetectorStyleRanges(CommitMessageViewer.this,
-				fHyperlinkDetectors);
+		setDocument(new CommitDocument(formatResult));
 	}
 
-	static final class ObjectLink extends StyleRange {
-		RevCommit targetCommit;
+	static class ObjectLink {
+		private final RevCommit target;
+		private final IRegion region;
 
-		@Override
-		public boolean similarTo(final StyleRange style) {
-			if (!(style instanceof ObjectLink))
-				return false;
-			if (targetCommit != ((ObjectLink) style).targetCommit)
-				return false;
-			return super.similarTo(style);
+		public ObjectLink(RevCommit target, IRegion region) {
+			this.target = target;
+			this.region = region;
+		}
+
+		public IRegion getRegion() {
+			return region;
+		}
+
+		public RevCommit getTarget() {
+			return target;
+		}
+
+	}
+
+	private class ObjectHyperlink implements IHyperlink {
+
+		ObjectLink link;
+
+		public ObjectHyperlink(ObjectLink link) {
+			this.link = link;
 		}
 
 		@Override
-		public boolean equals(Object object) {
-			return super.equals(object)
-					&& targetCommit.equals(((ObjectLink) object).targetCommit);
+		public IRegion getHyperlinkRegion() {
+			return link.getRegion();
 		}
 
 		@Override
-		public int hashCode() {
-			return super.hashCode() ^ targetCommit.hashCode();
+		public String getTypeLabel() {
+			return null;
 		}
+
+		@Override
+		public String getHyperlinkText() {
+			return link.getTarget().name();
+		}
+
+		@Override
+		public void open() {
+			for (final Object l : navListeners.getListeners())
+				((CommitNavigationListener) l).showCommit(link.getTarget());
+		}
+
+	}
+
+	private class CommitDocument extends Document {
+
+		private final List<IHyperlink> hyperlinks;
+
+		private final int headerEnd;
+
+		private final int footerStart;
+
+		public CommitDocument(FormatResult format) {
+			super(format.getCommitInfo());
+			headerEnd = format.getHeaderEnd();
+			footerStart = format.getFooterStart();
+			List<ObjectLink> knownLinks = format.getKnownLinks();
+			hyperlinks = new ArrayList<>(knownLinks.size());
+			for (ObjectLink o : knownLinks) {
+				hyperlinks.add(new ObjectHyperlink(o));
+			}
+			IDocumentPartitioner partitioner = new FastPartitioner(
+					new CommitPartitionTokenScanner(),
+					new String[] { IDocument.DEFAULT_CONTENT_TYPE,
+							HEADER_CONTENT_TYPE, FOOTER_CONTENT_TYPE });
+			partitioner.connect(this);
+			this.setDocumentPartitioner(partitioner);
+		}
+
+		public List<IHyperlink> getKnownHyperlinks() {
+			return hyperlinks;
+		}
+
+		public int getHeaderEnd() {
+			return headerEnd;
+		}
+
+		public int getFooterStart() {
+			return footerStart;
+		}
+	}
+
+	private static class CommitPartitionTokenScanner
+			implements IPartitionTokenScanner {
+
+		private static final IToken HEADER = new Token(HEADER_CONTENT_TYPE);
+
+		private static final IToken BODY = new Token(
+				IDocument.DEFAULT_CONTENT_TYPE);
+
+		private static final IToken FOOTER = new Token(FOOTER_CONTENT_TYPE);
+
+		private int headerEnd;
+
+		private int footerStart;
+
+		private int currentOffset;
+
+		private int end;
+
+		private int tokenStart;
+
+		@Override
+		public void setRange(IDocument document, int offset, int length) {
+			if (document instanceof CommitDocument) {
+				CommitDocument d = (CommitDocument) document;
+				headerEnd = d.getHeaderEnd();
+				footerStart = d.getFooterStart();
+			} else {
+				headerEnd = 0;
+				footerStart = document.getLength();
+			}
+			currentOffset = offset;
+			end = offset + length;
+			tokenStart = -1;
+		}
+
+		@Override
+		public IToken nextToken() {
+			if (currentOffset < end) {
+				tokenStart = currentOffset;
+				if (currentOffset < headerEnd) {
+					currentOffset = Math.min(headerEnd, end);
+					return HEADER;
+				} else if (currentOffset < footerStart) {
+					currentOffset = Math.min(footerStart, end);
+					return BODY;
+				} else {
+					currentOffset = end;
+					return FOOTER;
+				}
+			}
+			return Token.EOF;
+		}
+
+		@Override
+		public int getTokenOffset() {
+			return tokenStart;
+		}
+
+		@Override
+		public int getTokenLength() {
+			return currentOffset - tokenStart;
+		}
+
+		@Override
+		public void setPartialRange(IDocument document, int offset, int length,
+				String contentType, int partitionOffset) {
+			setRange(document, offset, length);
+		}
+
+	}
+
+	static class KnownHyperlinksDetector implements IHyperlinkDetector {
+
+		@Override
+		public IHyperlink[] detectHyperlinks(ITextViewer textViewer,
+				IRegion region, boolean canShowMultipleHyperlinks) {
+			IDocument document = textViewer.getDocument();
+			if (document instanceof CommitDocument) {
+				List<IHyperlink> knownLinks = ((CommitDocument) document)
+						.getKnownHyperlinks();
+				List<IHyperlink> result = new ArrayList<>();
+				for (IHyperlink link : knownLinks) {
+					IRegion linkRegion = link.getHyperlinkRegion();
+					if (TextUtilities.overlaps(linkRegion, region)) {
+						result.add(link);
+					}
+				}
+				if (!result.isEmpty()) {
+					return result.toArray(new IHyperlink[result.size()]);
+				}
+			}
+			return null;
+		}
+
 	}
 
 	private void setFill(boolean fill) {
 		this.fill = fill;
 		format();
-	}
-
-	/**
-	 * Get style range at x/y coordinates
-	 *
-	 * @param x
-	 * @param y
-	 * @return style range, will be null when no style range exists at given
-	 *         coordinates
-	 */
-	private StyleRange getStyleRange(final int x, final int y) {
-		final StyledText t = getTextWidget();
-		final int offset;
-		try {
-			offset = t.getOffsetAtLocation(new Point(x, y));
-		} catch (IllegalArgumentException e) {
-			return null;
-		}
-		if (offset < t.getCharCount())
-			return t.getStyleRangeAtOffset(offset);
-		else
-			return null;
 	}
 
 }
