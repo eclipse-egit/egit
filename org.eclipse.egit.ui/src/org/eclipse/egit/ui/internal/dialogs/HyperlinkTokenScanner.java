@@ -30,13 +30,6 @@ import org.eclipse.swt.graphics.Color;
  */
 public class HyperlinkTokenScanner implements ITokenScanner {
 
-	/** The {@link IToken} returned for all non-hyperlink content. */
-	protected static final IToken DEFAULT = new Token(null);
-
-	private int endOfRange;
-
-	private int currentOffset;
-
 	private int tokenStart;
 
 	private IToken hyperlinkToken;
@@ -44,6 +37,18 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 	private final ISourceViewer viewer;
 
 	private final IHyperlinkDetector[] hyperlinkDetectors;
+
+	/** The current offset in the document. */
+	protected int currentOffset;
+
+	/** The end of the range to tokenize. */
+	protected int endOfRange;
+
+	/** The {@link IDocument} the current scan operates on. */
+	protected IDocument document;
+
+	/** The {@link IToken} to use for default content. */
+	protected final IToken defaultToken;
 
 	/**
 	 * Creates a new instance that uses the given hyperlink detector and viewer.
@@ -55,8 +60,25 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 	 */
 	public HyperlinkTokenScanner(IHyperlinkDetector[] hyperlinkDetectors,
 			ISourceViewer viewer) {
+		this(hyperlinkDetectors, viewer, null);
+	}
+
+	/**
+	 * Creates a new instance that uses the given hyperlink detector and viewer.
+	 *
+	 * @param hyperlinkDetectors
+	 *            the {@link IHyperlinkDetector}s to use
+	 * @param viewer
+	 *            the {@link ISourceViewer} to operate in
+	 * @param defaultAttribute
+	 *            the {@link TextAttribute} to use for the default token; may be
+	 *            {@code null} to use the default style of the viewer
+	 */
+	public HyperlinkTokenScanner(IHyperlinkDetector[] hyperlinkDetectors,
+			ISourceViewer viewer, @Nullable TextAttribute defaultAttribute) {
 		this.hyperlinkDetectors = hyperlinkDetectors;
 		this.viewer = viewer;
+		this.defaultToken = new Token(defaultAttribute);
 	}
 
 	@Override
@@ -84,8 +106,13 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 				}
 			}
 		}
-		currentOffset++;
-		return DEFAULT;
+		int actualOffset = currentOffset;
+		IToken token = scanToken();
+		if (token != null && actualOffset < currentOffset) {
+			return token;
+		}
+		currentOffset = actualOffset + 1;
+		return defaultToken;
 	}
 
 	@Override
@@ -116,10 +143,22 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 	protected void setRangeAndColor(@NonNull IDocument document, int offset,
 			int length, @Nullable Color color) {
 		Assert.isTrue(document == viewer.getDocument());
+		this.document = document;
 		this.endOfRange = offset + length;
 		this.currentOffset = offset;
 		this.tokenStart = -1;
 		this.hyperlinkToken = new Token(
 				new TextAttribute(color, null, TextAttribute.UNDERLINE));
+	}
+
+	/**
+	 * Invoked if there is no hyperlink at the current position; may check for
+	 * additional tokens. If a token is found, must advance currentOffset and
+	 * return the token.
+	 *
+	 * @return the {@link IToken}, or {@code null} if none.
+	 */
+	protected IToken scanToken() {
+		return null;
 	}
 }

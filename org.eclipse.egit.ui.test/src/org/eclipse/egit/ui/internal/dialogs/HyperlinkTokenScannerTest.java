@@ -101,7 +101,7 @@ public class HyperlinkTokenScannerTest {
 		IDocument testDocument = new Document(text);
 		when(viewer.getDocument()).thenReturn(testDocument);
 		HyperlinkTokenScanner scanner = new HyperlinkTokenScanner(detectors,
-				viewer);
+				viewer, null);
 		scanner.setRangeAndColor(testDocument, offset, length, null);
 		IToken token = null;
 		char[] found = new char[text.length()];
@@ -110,15 +110,13 @@ public class HyperlinkTokenScannerTest {
 			int tokenOffset = scanner.getTokenOffset();
 			int tokenLength = scanner.getTokenLength();
 			char ch = 'x';
-			if (token == HyperlinkTokenScanner.DEFAULT) {
+			Object data = token.getData();
+			if (data == null) {
 				ch = 'D';
-			} else {
-				Object data = token.getData();
-				if (data instanceof TextAttribute) {
-					int style = ((TextAttribute) data).getStyle();
-					if ((style & TextAttribute.UNDERLINE) != 0) {
-						ch = 'H';
-					}
+			} else if (data instanceof TextAttribute) {
+				int style = ((TextAttribute) data).getStyle();
+				if ((style & TextAttribute.UNDERLINE) != 0) {
+					ch = 'H';
 				}
 			}
 			Arrays.fill(found, tokenOffset, tokenOffset + tokenLength, ch);
