@@ -22,6 +22,30 @@
       "revId": "c31158727fc17de676cbb4278f1baf07e1769dec",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_83379496",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNode.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-06T21:48:35Z",
+      "side": 1,
+      "message": "no, I think this is correct: if there is more than one entry with the same file name e.g. \"x\" then compare the complete file path e.g. /a/x and /b/x which is guaranteed to be unique by the file system",
+      "parentUuid": "2721e7e2_0312845e",
+      "range": {
+        "startLine": 305,
+        "startChar": 21,
+        "endLine": 305,
+        "endChar": 24
+      },
+      "revId": "c31158727fc17de676cbb4278f1baf07e1769dec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
