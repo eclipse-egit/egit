@@ -56,6 +56,24 @@
       "revId": "91ab0a54fc51a16a8184114a6ab70c71c1329dd8",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_436c7c7f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3080,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-06T21:55:42Z",
+      "side": 1,
+      "message": "I tried, and found the decoration character is already configurable under \"Preferences \u003e Team \u003e Git \u003e Label Decorations \u003e Text Decorations \u003e Files\" since StagingViewLabelProvider.getText() is using GitLightweightDecorator.DecorationHelper.decorate()",
+      "parentUuid": "2721e7e2_c3998c86",
+      "revId": "91ab0a54fc51a16a8184114a6ab70c71c1329dd8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
