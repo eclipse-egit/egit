@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_237a2895",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3032,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-06T10:00:29Z",
+      "side": 1,
+      "message": "odd setter name, I\u0027d use \"alphabeticSort\" consistently:\n\n private boolean alphabeticSort;\n\n private void setAlphabeticSort(boolean alphabeticSort) { ...\n\n private boolean isAlphabeticSort() { ...",
+      "range": {
+        "startLine": 3032,
+        "startChar": 15,
+        "endLine": 3032,
+        "endChar": 42
+      },
+      "revId": "91ab0a54fc51a16a8184114a6ab70c71c1329dd8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_c3998c86",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3080,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-06T10:00:29Z",
+      "side": 1,
+      "message": "This is brittle, if we later allow to configure the decoration character this code will break.\n\nThe entries shown in the staging view represent files so I\u0027d compare the file names/paths of StagingEntry-s instead of the label texts which contain decoration which is irrelevant for sorting.\n\nIn many other similar cases we use CommonUtils.STRING_ASCENDING_COMPARATOR which sorts case-insensitive and sorts strings containing numbers in natural order.\n\nThis looks similar to sorting of repositories in the repositories view https://git.eclipse.org/r/#/c/55047/3/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/RepositoryTreeNode.java",
+      "revId": "91ab0a54fc51a16a8184114a6ab70c71c1329dd8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
