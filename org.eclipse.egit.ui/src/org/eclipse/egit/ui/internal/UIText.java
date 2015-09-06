@@ -3175,9 +3175,6 @@ public class UIText extends NLS {
 	public static String CommittingPreferencePage_warnAboutCommitMessageSecondLine;
 
 	/** */
-	public static String CommittingPreferencePage_secondLineCheckTooltip;
-
-	/** */
 	public static String CommittingPreferencePage_footers;
 
 	/** */
