@@ -60,8 +60,6 @@ public class CommitInfoBuilder {
 
 	private static final int MAXBRANCHES = 20;
 
-	private final DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
-
 	private static final Pattern FOOTER_PATTERN = Pattern
 			.compile("(?:\n(?:[A-Z](?:[A-Za-z]+-)*[A-Za-z]+:[^\n]*))+$"); //$NON-NLS-1$
 
@@ -72,6 +70,8 @@ public class CommitInfoBuilder {
 	private final boolean fill;
 
 	private final Collection<Ref> allRefs;
+
+	private final DateFormat fmt;
 
 	/**
 	 * @param db the repository
@@ -85,6 +85,21 @@ public class CommitInfoBuilder {
 		this.commit = commit;
 		this.fill = fill;
 		this.allRefs = allRefs;
+		String dateFormat = Activator.getDefault().getPreferenceStore()
+				.getString(UIPreferences.DATE_FORMAT);
+		DateFormat date = null;
+		if (dateFormat != null) {
+			try {
+				date = new SimpleDateFormat(dateFormat);
+			} catch (IllegalArgumentException e) {
+				// Shouldn't occur: corrupted preferences. Ignore and set
+				// default below.
+			}
+		}
+		if (date == null) {
+			date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
+		}
+		this.fmt = date;
 	}
 
 	/**
