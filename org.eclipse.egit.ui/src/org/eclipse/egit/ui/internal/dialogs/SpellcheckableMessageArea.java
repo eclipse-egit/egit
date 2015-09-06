@@ -977,7 +977,7 @@ public class SpellcheckableMessageArea extends Composite {
 	 * @return text
 	 */
 	public String getText() {
-		return getTextWidget().getText();
+		return getDocument().get();
 	}
 
 	/**
@@ -991,8 +991,9 @@ public class SpellcheckableMessageArea extends Composite {
 	 * @param text
 	 */
 	public void setText(String text) {
-		if (text != null)
-			getTextWidget().setText(text);
+		if (text != null) {
+			getDocument().set(text);
+		}
 	}
 
 	/**
