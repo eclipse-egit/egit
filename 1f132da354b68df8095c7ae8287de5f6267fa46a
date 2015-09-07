@@ -1,0 +1,266 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_237b48e2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T08:30:32Z",
+      "side": 1,
+      "message": "remove trailing whitespaces",
+      "revId": "1f132da354b68df8095c7ae8287de5f6267fa46a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_83631434",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T08:30:32Z",
+      "side": 1,
+      "message": "\"comparison\" sounds strange, maybe better:\n\n\"Corresponding to the multi pull dialog also support multi-push.\"\n\n- Could you provide some more details?\n- Does this imply any changes for how single push works ?\n- what happens if some of the pushes fail ?\n- what happens if some of the repositories have upstream configured and some not ?",
+      "revId": "1f132da354b68df8095c7ae8287de5f6267fa46a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_83ff94d7",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PushOperationResult.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T08:30:32Z",
+      "side": 1,
+      "message": "s/repository/repositories/",
+      "range": {
+        "startLine": 99,
+        "startChar": 54,
+        "endLine": 99,
+        "endChar": 64
+      },
+      "revId": "1f132da354b68df8095c7ae8287de5f6267fa46a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_e3f770fc",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PushOperationResult.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T08:30:32Z",
+      "side": 1,
+      "message": "s/isSuccessfulConnectionForAllURI/isSuccessfulConnectionForAllURIs/",
+      "range": {
+        "startLine": 102,
+        "startChar": 16,
+        "endLine": 102,
+        "endChar": 47
+      },
+      "revId": "1f132da354b68df8095c7ae8287de5f6267fa46a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_23a068ec",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 9
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T08:30:32Z",
+      "side": 1,
+      "message": "Why are you removing the feature that we show the push branch wizard if upstream isn\u0027t configured ?\n\nWhat will happen if the user clicks push and multiple repositories are selected out of which some or all have no upstream configured ?",
+      "revId": "1f132da354b68df8095c7ae8287de5f6267fa46a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_c3f4ecfa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIText.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3947,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T08:30:32Z",
+      "side": 1,
+      "message": "style nit: remove trailing whitespace",
+      "revId": "1f132da354b68df8095c7ae8287de5f6267fa46a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_e3c2d09a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/MultiPushOperationUI.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T08:30:32Z",
+      "side": 1,
+      "message": "style nit: remove unnecessary blank line",
+      "revId": "1f132da354b68df8095c7ae8287de5f6267fa46a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_03c604ad",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/MultiPushOperationUI.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T08:30:32Z",
+      "side": 1,
+      "message": "we could push to different repositories in parallel, this would probably reduce the time to finish the multi-push",
+      "revId": "1f132da354b68df8095c7ae8287de5f6267fa46a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_a38c5893",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/MultiPushOperationUI.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T08:30:32Z",
+      "side": 1,
+      "message": "style nit: we switched to use braces around single line blocks for new code since a while [1], more occurrences in this patch\n\n[1] https://wiki.eclipse.org/EGit/Contributor_Guide#Braces_for_one-line_statements",
+      "revId": "1f132da354b68df8095c7ae8287de5f6267fa46a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_039d64b7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/MultiPushOperationUI.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T08:30:32Z",
+      "side": 1,
+      "message": "this is used once only so you could inline this call",
+      "range": {
+        "startLine": 139,
+        "startChar": 10,
+        "endLine": 139,
+        "endChar": 25
+      },
+      "revId": "1f132da354b68df8095c7ae8287de5f6267fa46a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_6396e0a3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/MultiPushOperationUI.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T08:30:32Z",
+      "side": 1,
+      "message": "mark as @Nullable since this method can return null",
+      "revId": "1f132da354b68df8095c7ae8287de5f6267fa46a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_6381c052",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/MultiPushOperationUI.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T08:30:32Z",
+      "side": 1,
+      "message": "missing braces",
+      "revId": "1f132da354b68df8095c7ae8287de5f6267fa46a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_439bdcc9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/MultiPushResultDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T08:30:32Z",
+      "side": 1,
+      "message": "did you mean \"either ... or\" ? what\u0027s the other case ?",
+      "range": {
+        "startLine": 54,
+        "startChar": 53,
+        "endLine": 54,
+        "endChar": 59
+      },
+      "revId": "1f132da354b68df8095c7ae8287de5f6267fa46a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_839154a8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/MultiPushResultDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T08:30:32Z",
+      "side": 1,
+      "message": "missing braces",
+      "revId": "1f132da354b68df8095c7ae8287de5f6267fa46a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
