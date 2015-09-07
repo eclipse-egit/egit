@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_bbf8fcb6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T22:50:53Z",
+      "side": 1,
+      "message": "style nit: commit message header is way too long, it should fit on a single line shorter than 70 characters, see https://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "revId": "91cfc00e12eb610c4a0693d9b4cac04688a57794",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_bbed9c02",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T22:50:53Z",
+      "side": 1,
+      "message": "I think this isn\u0027t your name but an abbreviation, please fix your git configuration and set user.name to your real name",
+      "range": {
+        "startLine": 17,
+        "startChar": 15,
+        "endLine": 17,
+        "endChar": 22
+      },
+      "revId": "91cfc00e12eb610c4a0693d9b4cac04688a57794",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_9bea58e6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T22:50:53Z",
+      "side": 1,
+      "message": "style nit: since 3.7 we use braces around single line blocks, see https://wiki.eclipse.org/EGit/Contributor_Guide#Braces_for_one-line_statements",
+      "revId": "91cfc00e12eb610c4a0693d9b4cac04688a57794",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_3b052c50",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T22:50:53Z",
+      "side": 1,
+      "message": "- Are you sure all git servers respond exactly with this message when no new commits are available ? \n- What happens if the message looks slightly different ?",
+      "revId": "91cfc00e12eb610c4a0693d9b4cac04688a57794",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_fbe3940f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T22:50:53Z",
+      "side": 1,
+      "message": "I\u0027d say fetch succeeded in this case but there was no update available",
+      "revId": "91cfc00e12eb610c4a0693d9b4cac04688a57794",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_dbe05006",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T22:50:53Z",
+      "side": 1,
+      "message": "DRY: extract this to a method instead of repeating this comparison",
+      "range": {
+        "startLine": 270,
+        "startChar": 10,
+        "endLine": 271,
+        "endChar": 36
+      },
+      "revId": "91cfc00e12eb610c4a0693d9b4cac04688a57794",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_7b0b2463",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T22:50:53Z",
+      "side": 1,
+      "message": "s/they have the fetch/fetch is configured for each of these remotes/",
+      "range": {
+        "startLine": 713,
+        "startChar": 106,
+        "endLine": 713,
+        "endChar": 125
+      },
+      "revId": "91cfc00e12eb610c4a0693d9b4cac04688a57794",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_1b0ae85f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T22:50:53Z",
+      "side": 1,
+      "message": "s/being pulled against/you pull from/",
+      "range": {
+        "startLine": 713,
+        "startChar": 55,
+        "endLine": 713,
+        "endChar": 75
+      },
+      "revId": "91cfc00e12eb610c4a0693d9b4cac04688a57794",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_5b10e089",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T22:50:53Z",
+      "side": 1,
+      "message": "same as PullOperationUI_NothingToFetch",
+      "range": {
+        "startLine": 925,
+        "startChar": 56,
+        "endLine": 925,
+        "endChar": 76
+      },
+      "revId": "91cfc00e12eb610c4a0693d9b4cac04688a57794",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
