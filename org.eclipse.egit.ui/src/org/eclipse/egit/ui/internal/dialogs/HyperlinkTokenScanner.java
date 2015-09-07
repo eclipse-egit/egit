@@ -15,6 +15,7 @@ import org.eclipse.jface.resource.JFaceColors;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
+import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
 import org.eclipse.jface.text.rules.IToken;
@@ -99,8 +100,8 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 
 	/**
 	 * Configures the scanner by providing access to the document range that
-	 * should be scanned, plus defining the foreground color to use for hyperlink
-	 * syntax coloring.
+	 * should be scanned, plus defining the foreground color to use for
+	 * hyperlink syntax coloring.
 	 *
 	 * @param document
 	 *            the document to scan
@@ -110,9 +111,7 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 	 *            the length of the document range to scan
 	 * @param color
 	 *            the foreground color to use for hyperlinks; may be
-	 *            {@code null} in which case the SWT default color for the
-	 *            {@link org.eclipse.swt.SWT#UNDERLINE_LINK SWT.UNDERLINE_LINK}
-	 *            style is applied
+	 *            {@code null} in which case the default color is applied
 	 */
 	protected void setRangeAndColor(@NonNull IDocument document, int offset,
 			int length, @Nullable Color color) {
@@ -120,7 +119,7 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 		this.endOfRange = offset + length;
 		this.currentOffset = offset;
 		this.tokenStart = -1;
-		hyperlinkToken = new Token(
-				new HyperlinkDamagerRepairer.HyperlinkTextAttribute(color));
+		this.hyperlinkToken = new Token(
+				new TextAttribute(color, null, TextAttribute.UNDERLINE));
 	}
 }

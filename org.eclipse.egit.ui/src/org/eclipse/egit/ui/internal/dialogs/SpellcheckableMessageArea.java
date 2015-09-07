@@ -58,6 +58,7 @@ import org.eclipse.jface.text.presentation.PresentationReconciler;
 import org.eclipse.jface.text.quickassist.IQuickAssistInvocationContext;
 import org.eclipse.jface.text.quickassist.IQuickAssistProcessor;
 import org.eclipse.jface.text.reconciler.IReconciler;
+import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.AnnotationModel;
 import org.eclipse.jface.text.source.IAnnotationAccess;
@@ -372,7 +373,7 @@ public class SpellcheckableMessageArea extends Composite {
 				PresentationReconciler reconciler = new PresentationReconciler();
 				reconciler.setDocumentPartitioning(
 						getConfiguredDocumentPartitioning(sourceViewer));
-				HyperlinkDamagerRepairer hyperlinkDamagerRepairer = new HyperlinkDamagerRepairer(
+				DefaultDamagerRepairer hyperlinkDamagerRepairer = new DefaultDamagerRepairer(
 						new HyperlinkTokenScanner(
 								getHyperlinkDetectors(sourceViewer),
 								sourceViewer));
