@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_49101ddc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/HyperlinkDamagerRepairer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-09-07T17:51:43Z",
+      "side": 0,
+      "message": "There goes the funny-named class...",
+      "revId": "00aaabadbcf41e3a1efe89e274d5d0d32f36dac9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
