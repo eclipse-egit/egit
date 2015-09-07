@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_941190e1",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/dialogs/HyperlinkTokenScannerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T09:43:35Z",
+      "side": 1,
+      "message": "funny class name",
+      "range": {
+        "startLine": 115,
+        "startChar": 27,
+        "endLine": 115,
+        "endChar": 51
+      },
+      "revId": "b0abff3d1878a6c5ce0828f0d3652df07215a3fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_1425a035",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/HyperlinkTokenScanner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T09:43:35Z",
+      "side": 1,
+      "message": "mark as @NonNull",
+      "range": {
+        "startLine": 115,
+        "startChar": 33,
+        "endLine": 115,
+        "endChar": 51
+      },
+      "revId": "b0abff3d1878a6c5ce0828f0d3652df07215a3fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_d41e68ee",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/HyperlinkTokenScanner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-07T09:43:35Z",
+      "side": 1,
+      "message": "mark as @Nullable",
+      "range": {
+        "startLine": 116,
+        "startChar": 3,
+        "endLine": 116,
+        "endChar": 14
+      },
+      "revId": "b0abff3d1878a6c5ce0828f0d3652df07215a3fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
