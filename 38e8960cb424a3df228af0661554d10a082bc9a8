@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_c3586c83",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-09-07T07:48:06Z",
+      "side": 1,
+      "message": "doReload() does more then we want here. You can pass cacheEntry.getIndexDiff() as argument to this method (if cacheEntry exists of course).\n\nAlso I would prefer that the code in the job started from reload() method re-uses this method to update the commit buttons.",
+      "revId": "38e8960cb424a3df228af0661554d10a082bc9a8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
