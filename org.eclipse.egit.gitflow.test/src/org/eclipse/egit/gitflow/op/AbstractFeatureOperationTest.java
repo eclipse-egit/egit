@@ -8,8 +8,14 @@
  *******************************************************************************/
 package org.eclipse.egit.gitflow.op;
 
+import java.util.Iterator;
+
 import org.eclipse.egit.gitflow.GitFlowRepository;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 
 abstract public class AbstractFeatureOperationTest extends
 		AbstractGitFlowOperationTest {
@@ -19,5 +25,17 @@ abstract public class AbstractFeatureOperationTest extends
 		Repository repository = testRepository.getRepository();
 		new InitOperation(repository).execute(null);
 		return new GitFlowRepository(repository);
+	}
+
+	protected int countCommits(Repository repository) throws GitAPIException,
+			NoHeadException {
+		int count = 0;
+		Iterable<RevCommit> commits = Git.wrap(repository).log().call();
+		Iterator<RevCommit> iterator = commits.iterator();
+		while (iterator.hasNext()) {
+			iterator.next();
+			count++;
+		}
+		return count;
 	}
 }
