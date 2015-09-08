@@ -47,7 +47,7 @@ public final class FeatureFinishOperation extends AbstractFeatureOperation {
 
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
-		finish(monitor, repository.getConfig().getFeatureBranchName(featureName), squash);
+		finish(monitor, repository.getConfig().getFeatureBranchName(featureName), squash, true);
 	}
 
 	/**
