@@ -76,4 +76,8 @@ abstract public class AbstractGitFlowOperationTest extends GitTestCase {
 		return testRepository.addAndCommit(project.project,
 				new File(file.getLocationURI()), commitMessage);
 	}
+
+	protected String formatMergeCommitMessage(String branchName) {
+		return String.format("Merge branch '%s'", branchName);
+	}
 }

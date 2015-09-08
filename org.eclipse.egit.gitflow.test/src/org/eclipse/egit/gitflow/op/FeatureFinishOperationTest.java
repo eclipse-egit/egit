@@ -12,24 +12,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.util.Iterator;
 
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.WrongGitFlowStateException;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.junit.Test;
 
 public class FeatureFinishOperationTest extends AbstractFeatureOperationTest {
 	@Test
-	public void testFeatureFinish() throws Exception {
+	public void testFeatureFinishFastForward() throws Exception {
 		String fileName = "theFirstFile.txt";
-
 		Repository repository = testRepository.getRepository();
 		GitFlowRepository gfRepo = init("testFeatureFinish\n\nfirst commit\n");
 
@@ -76,16 +72,22 @@ public class FeatureFinishOperationTest extends AbstractFeatureOperationTest {
 		assertTrue(status.hasUncommittedChanges());
 	}
 
-	private int countCommits(Repository repository) throws GitAPIException,
-			NoHeadException {
-		int count = 0;
-		Iterable<RevCommit> commits = Git.wrap(repository).log().call();
-		Iterator<RevCommit> iterator = commits.iterator();
-		while (iterator.hasNext()) {
-			iterator.next();
-			count++;
-		}
-		return count;
+	@Test
+	public void testFeatureFinish() throws Exception {
+		Repository repository = testRepository.getRepository();
+		GitFlowRepository gfRepo = init("testFeatureFinish\n\nfirst commit\n");
+
+		new FeatureStartOperation(gfRepo, MY_FEATURE).execute(null);
+		addFileAndCommit("foo.txt", "testFeatureFinish\n\nbranch commit 1\n");
+		addFileAndCommit("bar.txt", "testFeatureFinish\n\nbranch commit 2\n");
+		new FeatureFinishOperation(gfRepo).execute(null);
+		assertEquals(gfRepo.getConfig().getDevelopFull(),
+				repository.getFullBranch());
+
+		String branchName = gfRepo.getConfig().getFeatureBranchName(MY_FEATURE);
+
+		assertEquals(formatMergeCommitMessage(branchName) + " into develop", gfRepo.findHead()
+				.getFullMessage());
 	}
 
 	@Test(expected = WrongGitFlowStateException.class)
