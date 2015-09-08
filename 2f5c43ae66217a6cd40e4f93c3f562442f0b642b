@@ -16,6 +16,24 @@
       "revId": "2f5c43ae66217a6cd40e4f93c3f562442f0b642b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_f47a81db",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/AbstractFeatureOperationTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-09-08T22:46:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_f4d6016b",
+      "revId": "2f5c43ae66217a6cd40e4f93c3f562442f0b642b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
