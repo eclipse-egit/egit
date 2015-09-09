@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_a061e3b3",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/uitext.properties",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-09T23:28:02Z",
+      "side": 1,
+      "message": "you should mention that this first commit will be empty, or open the commit dialog so that the user can choose if he wants to add some content for the first commit",
+      "range": {
+        "startLine": 50,
+        "startChar": 97,
+        "endLine": 50,
+        "endChar": 109
+      },
+      "revId": "b66cf7f2eea6ee6d2995626f05db54dea9c963db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
