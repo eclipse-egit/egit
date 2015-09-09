@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_85d311ff",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-09-09T15:08:05Z",
+      "side": 1,
+      "message": "BTW (unrelated to this change): there are menu items and preferences for \"wrap\" and \"fill paragraphs\". However, I don\u0027t see any implementation for \"wrap\", and \"fill\" is IMO not useful without soft-wrap as it just turns every paragraph into a single long line, which doesn\u0027t strike me as user-friendly.\n\nWhat\u0027s up with these two features? Is anybody planning on completing them, or should they be simply removed?",
+      "revId": "ba4b0b78c626b6e53b8dfd0b99dbcdfd091d09a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
