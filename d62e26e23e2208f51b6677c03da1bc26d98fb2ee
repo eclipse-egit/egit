@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_061c48f4",
+        "filename": "org.eclipse.egit.ui.importer.tests/.settings/org.eclipse.jdt.core.prefs",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-10T10:23:52Z",
+      "side": 1,
+      "message": "copy the settings from another existing egit test bundle, we\u0027d like to use consistent settings for all our bundles",
+      "revId": "d62e26e23e2208f51b6677c03da1bc26d98fb2ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_e61134e0",
+        "filename": "org.eclipse.egit.ui.importer.tests/build.properties",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-10T10:23:52Z",
+      "side": 1,
+      "message": "either include about.html or remove it (we don\u0027t ship tests so I think we don\u0027t need an about.html for test bundles",
+      "revId": "d62e26e23e2208f51b6677c03da1bc26d98fb2ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_c616b0d6",
+        "filename": "org.eclipse.egit.ui.importer.tests/plugin.properties",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-10T10:23:52Z",
+      "side": 1,
+      "message": "mention this are tests for the importer here ?",
+      "revId": "d62e26e23e2208f51b6677c03da1bc26d98fb2ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_261fccec",
+        "filename": "org.eclipse.egit.ui.importer.tests/src/org/eclipse/egit/ui/importer/tests/EasymportWizardTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-10T10:23:52Z",
+      "side": 1,
+      "message": "style nit: remove the trailing whitespace in this class",
+      "revId": "d62e26e23e2208f51b6677c03da1bc26d98fb2ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
