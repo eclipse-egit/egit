@@ -87,7 +87,7 @@ public final class ReleaseStartOperation extends AbstractReleaseOperation {
 
 		RevCommit commit = repository.findCommit(startCommitSha1);
 		if (commit == null) {
-			throw new IllegalStateException(NLS.bind(CoreText.ReleaseStartOperation_unableToFindCommit, commit));
+			throw new IllegalStateException(NLS.bind(CoreText.ReleaseStartOperation_unableToFindCommit, startCommitSha1));
 		}
 		start(monitor, branchName, commit);
 	}
