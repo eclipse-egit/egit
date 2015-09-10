@@ -335,7 +335,10 @@ public class SpellcheckableMessageArea extends Composite {
 
 			@Override
 			public int getHyperlinkStateMask(ISourceViewer targetViewer) {
-				return SWT.NONE;
+				if (!targetViewer.isEditable()) {
+					return SWT.NONE;
+				}
+				return super.getHyperlinkStateMask(targetViewer);
 			}
 
 			@Override
