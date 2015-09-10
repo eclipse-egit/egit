@@ -52,7 +52,6 @@ import org.eclipse.jface.text.TextEvent;
 import org.eclipse.jface.text.WhitespaceCharacterPainter;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
-import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
 import org.eclipse.jface.text.quickassist.IQuickAssistInvocationContext;
@@ -267,8 +266,8 @@ public class SpellcheckableMessageArea extends Composite {
 		setLayout(new FillLayout());
 
 		AnnotationModel annotationModel = new AnnotationModel();
-		sourceViewer = new SourceViewer(this, null, null, true, SWT.MULTI
-				| SWT.V_SCROLL | SWT.WRAP);
+		sourceViewer = new HyperlinkSourceViewer(this, null, null, true,
+				SWT.MULTI | SWT.V_SCROLL | SWT.WRAP);
 		getTextWidget().setAlwaysShowScrollBars(false);
 		getTextWidget().setFont(UIUtils
 				.getFont(UIPreferences.THEME_CommitMessageEditorFont));
@@ -318,7 +317,6 @@ public class SpellcheckableMessageArea extends Composite {
 					});
 				}
 			}
-
 		};
 		JFacePreferences.getPreferenceStore()
 				.addPropertyChangeListener(syntaxColoringChangeListener);
@@ -329,24 +327,20 @@ public class SpellcheckableMessageArea extends Composite {
 
 		Document document = new Document(initialText);
 
-		configuration = new TextSourceViewerConfiguration(
-				EditorsUI
-				.getPreferenceStore()) {
+		configuration = new HyperlinkSourceViewer.Configuration(
+				EditorsUI.getPreferenceStore()) {
 
 			@Override
 			public int getHyperlinkStateMask(ISourceViewer targetViewer) {
-				return SWT.NONE;
+				if (!targetViewer.isEditable()) {
+					return SWT.NONE;
+				}
+				return super.getHyperlinkStateMask(targetViewer);
 			}
 
 			@Override
 			protected Map getHyperlinkDetectorTargets(ISourceViewer targetViewer) {
 				return getHyperlinkTargets();
-			}
-
-			@Override
-			public IHyperlinkDetector[] getHyperlinkDetectors(
-					ISourceViewer targetViewer) {
-				return getRegisteredHyperlinkDetectors(sourceViewer);
 			}
 
 			@Override
@@ -372,11 +366,9 @@ public class SpellcheckableMessageArea extends Composite {
 					ISourceViewer viewer) {
 				PresentationReconciler reconciler = new PresentationReconciler();
 				reconciler.setDocumentPartitioning(
-						getConfiguredDocumentPartitioning(sourceViewer));
+						getConfiguredDocumentPartitioning(viewer));
 				DefaultDamagerRepairer hyperlinkDamagerRepairer = new DefaultDamagerRepairer(
-						new HyperlinkTokenScanner(
-								getHyperlinkDetectors(sourceViewer),
-								sourceViewer));
+						new HyperlinkTokenScanner(this, viewer));
 				reconciler.setDamager(hyperlinkDamagerRepairer,
 						IDocument.DEFAULT_CONTENT_TYPE);
 				reconciler.setRepairer(hyperlinkDamagerRepairer,
@@ -964,7 +956,7 @@ public class SpellcheckableMessageArea extends Composite {
 	 * @return map of targets
 	 */
 	protected Map<String, IAdaptable> getHyperlinkTargets() {
-		return Collections.singletonMap("org.eclipse.ui.DefaultTextEditor", //$NON-NLS-1$
+		return Collections.singletonMap(EditorsUI.DEFAULT_TEXT_EDITOR_ID,
 				getDefaultTarget());
 	}
 
