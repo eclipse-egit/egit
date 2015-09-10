@@ -937,11 +937,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					ISourceViewer viewer) {
 				PresentationReconciler reconciler = new PresentationReconciler();
 				reconciler.setDocumentPartitioning(
-						getConfiguredDocumentPartitioning(commentViewer));
+						getConfiguredDocumentPartitioning(viewer));
 				DefaultDamagerRepairer hyperlinkDamagerRepairer = new DefaultDamagerRepairer(
-						new HyperlinkTokenScanner(
-								getHyperlinkDetectors(commentViewer),
-								commentViewer));
+						new HyperlinkTokenScanner(getHyperlinkDetectors(viewer),
+								viewer));
 				reconciler.setDamager(hyperlinkDamagerRepairer,
 						IDocument.DEFAULT_CONTENT_TYPE);
 				reconciler.setRepairer(hyperlinkDamagerRepairer,
@@ -950,17 +949,15 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 						PlatformUI.getWorkbench().getDisplay()
 								.getSystemColor(SWT.COLOR_DARK_GRAY));
 				DefaultDamagerRepairer headerDamagerRepairer = new DefaultDamagerRepairer(
-						new HyperlinkTokenScanner(
-								getHyperlinkDetectors(commentViewer),
-								commentViewer, headerDefault));
+						new HyperlinkTokenScanner(getHyperlinkDetectors(viewer),
+								viewer, headerDefault));
 				reconciler.setDamager(headerDamagerRepairer,
 						CommitMessageViewer.HEADER_CONTENT_TYPE);
 				reconciler.setRepairer(headerDamagerRepairer,
 						CommitMessageViewer.HEADER_CONTENT_TYPE);
 				DefaultDamagerRepairer footerDamagerRepairer = new DefaultDamagerRepairer(
-						new FooterTokenScanner(
-								getHyperlinkDetectors(commentViewer),
-								commentViewer));
+						new FooterTokenScanner(getHyperlinkDetectors(viewer),
+								viewer));
 				reconciler.setDamager(footerDamagerRepairer,
 						CommitMessageViewer.FOOTER_CONTENT_TYPE);
 				reconciler.setRepairer(footerDamagerRepairer,
@@ -1672,7 +1669,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	}
 
 	@Override
-	public Object getAdapter(final Class adapter) {
+	public <T> T getAdapter(final Class<T> adapter) {
 		return null;
 	}
 

@@ -31,7 +31,6 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.history.CommitMessageViewer.ObjectLink;
 import org.eclipse.egit.ui.internal.history.FormatJob.FormatResult;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.text.Region;
@@ -53,8 +52,6 @@ import org.eclipse.osgi.util.NLS;
  * Class to build and format commit info in History View
  */
 public class CommitInfoBuilder {
-
-	private static final String SPACE = " "; //$NON-NLS-1$
 
 	private static final String LF = "\n"; //$NON-NLS-1$
 
@@ -104,56 +101,23 @@ public class CommitInfoBuilder {
 		final StringBuilder d = new StringBuilder();
 		final PersonIdent author = commit.getAuthorIdent();
 		final PersonIdent committer = commit.getCommitterIdent();
-		List<ObjectLink> hyperlinks = new ArrayList<>();
+		List<GitCommitReference> hyperlinks = new ArrayList<>();
 		d.append(UIText.CommitMessageViewer_commit);
-		d.append(SPACE);
+		d.append(' ');
 		d.append(commit.getId().name());
 		d.append(LF);
 
-		if (author != null) {
-			d.append(UIText.CommitMessageViewer_author);
-			d.append(": "); //$NON-NLS-1$
-			d.append(author.getName());
-			d.append(" <"); //$NON-NLS-1$
-			d.append(author.getEmailAddress());
-			d.append("> "); //$NON-NLS-1$
-			d.append(fmt.format(author.getWhen()));
-			d.append(LF);
-		}
-
-		if (committer != null) {
-			d.append(UIText.CommitMessageViewer_committer);
-			d.append(": "); //$NON-NLS-1$
-			d.append(committer.getName());
-			d.append(" <"); //$NON-NLS-1$
-			d.append(committer.getEmailAddress());
-			d.append("> "); //$NON-NLS-1$
-			d.append(fmt.format(committer.getWhen()));
-			d.append(LF);
-		}
+		addPersonIdent(d, author, UIText.CommitMessageViewer_author);
+		addPersonIdent(d, committer, UIText.CommitMessageViewer_committer);
 
 		for (int i = 0; i < commit.getParentCount(); i++) {
-			final SWTCommit p = (SWTCommit)commit.getParent(i);
-			p.parseBody();
-			d.append(UIText.CommitMessageViewer_parent);
-			d.append(": "); //$NON-NLS-1$
-			addLink(d, hyperlinks, p);
-			d.append(" ("); //$NON-NLS-1$
-			d.append(p.getShortMessage());
-			d.append(")"); //$NON-NLS-1$
-			d.append(LF);
+			addCommit(d, (SWTCommit) commit.getParent(i),
+					UIText.CommitMessageViewer_parent, hyperlinks);
 		}
 
 		for (int i = 0; i < commit.getChildCount(); i++) {
-			final SWTCommit p = (SWTCommit)commit.getChild(i);
-			p.parseBody();
-			d.append(UIText.CommitMessageViewer_child);
-			d.append(": "); //$NON-NLS-1$
-			addLink(d, hyperlinks, p);
-			d.append(" ("); //$NON-NLS-1$
-			d.append(p.getShortMessage());
-			d.append(")"); //$NON-NLS-1$
-			d.append(LF);
+			addCommit(d, (SWTCommit) commit.getChild(i),
+					UIText.CommitMessageViewer_child, hyperlinks);
 		}
 
 		if(Activator.getDefault().getPreferenceStore().getBoolean(
@@ -197,30 +161,16 @@ public class CommitInfoBuilder {
 				UIPreferences.HISTORY_SHOW_TAG_SEQUENCE)) {
 			try (RevWalk rw = new RevWalk(db)) {
 				monitor.setTaskName(UIText.CommitMessageViewer_GettingPreviousTagTaskName);
-				Ref followingTag = getNextTag(false, monitor);
-				if (followingTag != null) {
-					d.append(UIText.CommitMessageViewer_follows);
-					d.append(": "); //$NON-NLS-1$
-					RevCommit p = rw.parseCommit(followingTag
-							.getObjectId());
-					addLink(d, formatTagRef(followingTag), hyperlinks, p);
-					d.append(LF);
-				}
+				addTag(d, UIText.CommitMessageViewer_follows, rw,
+						getNextTag(false, monitor), hyperlinks);
 			} catch (IOException e) {
 				Activator.logError(e.getMessage(), e);
 			}
 
 			try (RevWalk rw = new RevWalk(db)) {
 				monitor.setTaskName(UIText.CommitMessageViewer_GettingNextTagTaskName);
-				Ref precedingTag = getNextTag(true, monitor);
-				if (precedingTag != null) {
-					d.append(UIText.CommitMessageViewer_precedes);
-					d.append(": "); //$NON-NLS-1$
-					RevCommit p = rw.parseCommit(precedingTag
-							.getObjectId());
-					addLink(d, formatTagRef(precedingTag), hyperlinks, p);
-					d.append(LF);
-				}
+				addTag(d, UIText.CommitMessageViewer_precedes, rw,
+						getNextTag(true, monitor), hyperlinks);
 			} catch (IOException e) {
 				Activator.logError(e.getMessage(), e);
 			}
@@ -258,15 +208,47 @@ public class CommitInfoBuilder {
 	}
 
 	private void addLink(StringBuilder d, String linkLabel,
-			Collection<ObjectLink> hyperlinks, RevCommit to) {
+			Collection<GitCommitReference> hyperlinks, RevCommit to) {
 		hyperlinks.add(
-				new ObjectLink(to, new Region(d.length(), linkLabel.length())));
+				new GitCommitReference(to, new Region(d.length(), linkLabel.length())));
 		d.append(linkLabel);
 	}
 
-	private void addLink(StringBuilder d, Collection<ObjectLink> hyperlinks,
+	private void addLink(StringBuilder d, Collection<GitCommitReference> hyperlinks,
 			RevCommit to) {
 		addLink(d, to.getId().name(), hyperlinks, to);
+	}
+
+	private void addPersonIdent(StringBuilder d, PersonIdent ident,
+			String label) {
+		if (ident != null) {
+			d.append(label).append(": "); //$NON-NLS-1$
+			d.append(ident.getName().trim());
+			d.append(" <").append(ident.getEmailAddress().trim()).append("> "); //$NON-NLS-1$ //$NON-NLS-2$
+			d.append(fmt.format(ident.getWhen()));
+			d.append(LF);
+		}
+	}
+
+	private void addCommit(StringBuilder d, SWTCommit gitcommit, String label,
+			List<GitCommitReference> hyperlinks) throws IOException {
+		if (gitcommit != null) {
+			d.append(label).append(": "); //$NON-NLS-1$
+			gitcommit.parseBody();
+			addLink(d, hyperlinks, gitcommit);
+			d.append(" (").append(gitcommit.getShortMessage()).append(')'); //$NON-NLS-1$
+			d.append(LF);
+		}
+	}
+
+	private void addTag(StringBuilder d, String label, RevWalk walk, Ref tag,
+			List<GitCommitReference> hyperlinks) throws IOException {
+		if (tag != null) {
+			d.append(label).append(": "); //$NON-NLS-1$
+			RevCommit p = walk.parseCommit(tag.getObjectId());
+			addLink(d, formatTagRef(tag), hyperlinks, p);
+			d.append(LF);
+		}
 	}
 
 	/**

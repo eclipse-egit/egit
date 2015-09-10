@@ -61,7 +61,6 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
-import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.FocusEvent;
@@ -147,13 +146,22 @@ class CommitMessageViewer extends SourceViewer {
 		fill = store
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL);
 
-		// React on changes in the JFace color preferences
+		// React on changes in the JFace color preferences by updating the view
 		syntaxColoringListener = new IPropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent event) {
 				if (JFacePreferences.HYPERLINK_COLOR
 						.equals(event.getProperty())) {
-					format();
+					if (!t.isDisposed()) {
+						t.getDisplay().asyncExec(new Runnable() {
+							@Override
+							public void run() {
+								if (!t.isDisposed()) {
+									refresh();
+								}
+							}
+						});
+					}
 				}
 			}
 		};
@@ -255,7 +263,6 @@ class CommitMessageViewer extends SourceViewer {
 
 	void addDoneListenerToFormatJob() {
 		formatJob.addJobChangeListener(new JobChangeAdapter() {
-
 			@Override
 			public void done(IJobChangeEvent event) {
 				if (!event.getResult().isOK())
@@ -263,11 +270,12 @@ class CommitMessageViewer extends SourceViewer {
 				final StyledText text = getTextWidget();
 				if (text == null || text.isDisposed())
 					return;
-				final FormatJob job = (FormatJob) event.getJob();
+				final FormatResult result = ((FormatJob) event.getJob())
+						.getFormatResult();
 				text.getDisplay().asyncExec(new Runnable() {
 					@Override
 					public void run() {
-						applyFormatJobResultInUI(job.getFormatResult());
+						applyFormatJobResultInUI(result);
 					}
 				});
 			}
@@ -388,30 +396,11 @@ class CommitMessageViewer extends SourceViewer {
 		setDocument(new CommitDocument(formatResult));
 	}
 
-	static class ObjectLink {
-		private final RevCommit target;
-		private final IRegion region;
-
-		public ObjectLink(RevCommit target, IRegion region) {
-			this.target = target;
-			this.region = region;
-		}
-
-		public IRegion getRegion() {
-			return region;
-		}
-
-		public RevCommit getTarget() {
-			return target;
-		}
-
-	}
-
 	private class ObjectHyperlink implements IHyperlink {
 
-		ObjectLink link;
+		private final GitCommitReference link;
 
-		public ObjectHyperlink(ObjectLink link) {
+		public ObjectHyperlink(GitCommitReference link) {
 			this.link = link;
 		}
 
@@ -432,8 +421,9 @@ class CommitMessageViewer extends SourceViewer {
 
 		@Override
 		public void open() {
-			for (final Object l : navListeners.getListeners())
+			for (final Object l : navListeners.getListeners()) {
 				((CommitNavigationListener) l).showCommit(link.getTarget());
+			}
 		}
 
 	}
@@ -450,9 +440,9 @@ class CommitMessageViewer extends SourceViewer {
 			super(format.getCommitInfo());
 			headerEnd = format.getHeaderEnd();
 			footerStart = format.getFooterStart();
-			List<ObjectLink> knownLinks = format.getKnownLinks();
+			List<GitCommitReference> knownLinks = format.getKnownLinks();
 			hyperlinks = new ArrayList<>(knownLinks.size());
-			for (ObjectLink o : knownLinks) {
+			for (GitCommitReference o : knownLinks) {
 				hyperlinks.add(new ObjectHyperlink(o));
 			}
 			IDocumentPartitioner partitioner = new FastPartitioner(
@@ -513,8 +503,8 @@ class CommitMessageViewer extends SourceViewer {
 
 		@Override
 		public IToken nextToken() {
+			tokenStart = currentOffset;
 			if (currentOffset < end) {
-				tokenStart = currentOffset;
 				if (currentOffset < headerEnd) {
 					currentOffset = Math.min(headerEnd, end);
 					return HEADER;
