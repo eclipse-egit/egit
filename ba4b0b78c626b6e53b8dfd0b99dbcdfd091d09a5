@@ -34,6 +34,24 @@
       "revId": "ba4b0b78c626b6e53b8dfd0b99dbcdfd091d09a5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_6fe4f719",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-09-10T20:06:44Z",
+      "side": 1,
+      "message": "So no objections if I remove both wrap and fill completely?\n\nBesides wrap not being implemented, fill also causes an exception:\n\n* Switch on \"fill paragraphs\" in git history preferences\n* Have a commit message visible in the git history\n* Open preferences again, go to git history preference\n  page, select \"reset defaults\" and \"apply\".\n\nResults in an exception:\n\njava.lang.ClassCastException: java.lang.String cannot be cast to java.lang.Boolean\n\tat org.eclipse.egit.ui.internal.history.CommitMessageViewer$1.propertyChange(CommitMessageViewer.java:134)\n\tat org.eclipse.ui.preferences.ScopedPreferenceStore$3.run(ScopedPreferenceStore.java:351)\n\tat org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)\n\tat org.eclipse.ui.preferences.ScopedPreferenceStore.firePropertyChangeEvent(ScopedPreferenceStore.java:347)\n\tat org.eclipse.ui.preferences.ScopedPreferenceStore.setToDefault(ScopedPreferenceStore.java:544)\n\tat org.eclipse.jface.preference.FieldEditor.store(FieldEditor.java:681)\n\tat org.eclipse.jface.preference.FieldEditorPreferencePage.performOk(FieldEditorPreferencePage.java:344)\n\tat org.eclipse.jface.preference.PreferencePage.performApply(PreferencePage.java:464)\n\n\nThe PreferenceChangeEvent contains String values in this case.\n\nThe exception is reported to the user as an error dialog.",
+      "parentUuid": "2721e7e2_0c72a904",
+      "revId": "ba4b0b78c626b6e53b8dfd0b99dbcdfd091d09a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
