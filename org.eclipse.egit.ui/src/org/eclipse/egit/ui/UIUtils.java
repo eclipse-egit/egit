@@ -810,7 +810,16 @@ public class UIUtils {
 	 *
 	 * @param textViewer
 	 * @param hyperlinkDetectors
+	 * @deprecated Instead of applying SWT styling directly use JFace
+	 *             infrastructure (
+	 *             {@link org.eclipse.jface.text.rules.DefaultDamagerRepairer
+	 *             DefaultDamagerRepairer},
+	 *             {@link org.eclipse.jface.text.rules.ITokenScanner
+	 *             ITokenScanner}) to do syntax coloring. See also
+	 *             {@link org.eclipse.egit.ui.internal.dialogs.HyperlinkTokenScanner}
+	 *             .
 	 */
+	@Deprecated
 	public static void applyHyperlinkDetectorStyleRanges(
 			ITextViewer textViewer, IHyperlinkDetector[] hyperlinkDetectors) {
 		StyleRange[] styleRanges = getHyperlinkDetectorStyleRanges(textViewer,
@@ -829,7 +838,16 @@ public class UIUtils {
 	 * @param textViewer
 	 * @param hyperlinkDetectors
 	 * @return the style ranges to render the detected hyperlinks
+	 * @deprecated Instead of applying SWT styling directly use JFace
+	 *             infrastructure (
+	 *             {@link org.eclipse.jface.text.rules.DefaultDamagerRepairer
+	 *             DefaultDamagerRepairer},
+	 *             {@link org.eclipse.jface.text.rules.ITokenScanner
+	 *             ITokenScanner}) to do syntax coloring. See also
+	 *             {@link org.eclipse.egit.ui.internal.dialogs.HyperlinkTokenScanner}
+	 *             .
 	 */
+	@Deprecated
 	public static StyleRange[] getHyperlinkDetectorStyleRanges(
 			ITextViewer textViewer, IHyperlinkDetector[] hyperlinkDetectors) {
 		HashSet<StyleRange> styleRangeList = new LinkedHashSet<StyleRange>();
