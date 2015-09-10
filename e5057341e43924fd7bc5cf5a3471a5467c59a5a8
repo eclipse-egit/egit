@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_899175a8",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/AbstractMergingOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-10T14:00:30Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "e5057341e43924fd7bc5cf5a3471a5467c59a5a8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_6981a152",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/MergingOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-10T14:00:30Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "e5057341e43924fd7bc5cf5a3471a5467c59a5a8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_297b29e2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/PreferredStrategyDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-10T14:00:30Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "e5057341e43924fd7bc5cf5a3471a5467c59a5a8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_0978e5e1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/jobs/MergeJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-10T14:00:30Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "e5057341e43924fd7bc5cf5a3471a5467c59a5a8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_a95ef96e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/PreferredMergedStrategyHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-10T14:00:30Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "e5057341e43924fd7bc5cf5a3471a5467c59a5a8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_89c84b20",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-10T14:00:30Z",
+      "side": 1,
+      "message": "Always use the preferred strategy",
+      "range": {
+        "startLine": 249,
+        "startChar": 42,
+        "endLine": 249,
+        "endChar": 104
+      },
+      "revId": "e5057341e43924fd7bc5cf5a3471a5467c59a5a8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_095f3bbb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1896,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-10T14:00:30Z",
+      "side": 1,
+      "message": "see picture attached to https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d476788#c2",
+      "range": {
+        "startLine": 1896,
+        "startChar": 32,
+        "endLine": 1896,
+        "endChar": 93
+      },
+      "revId": "e5057341e43924fd7bc5cf5a3471a5467c59a5a8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_89be8b4c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1903,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-10T14:00:30Z",
+      "side": 1,
+      "message": "we should also have a short recognizable name matching the name in native git if it exists there as well, e.g. ours, theirs, resolve, recursive",
+      "revId": "e5057341e43924fd7bc5cf5a3471a5467c59a5a8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
