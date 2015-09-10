@@ -49,6 +49,7 @@ import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.DiffStyleRangeFormatter;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
+import org.eclipse.egit.ui.internal.dialogs.HyperlinkSourceViewer;
 import org.eclipse.egit.ui.internal.dialogs.HyperlinkTokenScanner;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
 import org.eclipse.egit.ui.internal.repository.tree.FileNode;
@@ -87,6 +88,7 @@ import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelection;
@@ -151,7 +153,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.editors.text.EditorsUI;
-import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.part.IShowInSource;
 import org.eclipse.ui.part.IShowInTargetList;
 import org.eclipse.ui.part.ShowInContext;
@@ -903,7 +904,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				.getBackground());
 
 
-		TextSourceViewerConfiguration configuration = new TextSourceViewerConfiguration(
+		HyperlinkSourceViewer.Configuration configuration = new HyperlinkSourceViewer.Configuration(
 				EditorsUI.getPreferenceStore()) {
 
 			@Override
@@ -912,16 +913,23 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			}
 
 			@Override
-			public IHyperlinkDetector[] getHyperlinkDetectors(
+			protected IHyperlinkDetector[] internalGetHyperlinkDetectors(
 					ISourceViewer sourceViewer) {
-				IHyperlinkDetector[] registered = getRegisteredHyperlinkDetectors(
+				IHyperlinkDetector[] registered = super.internalGetHyperlinkDetectors(
 						sourceViewer);
-				// Add our special detector for commit hyperlinks.
-				IHyperlinkDetector[] result = new IHyperlinkDetector[registered.length
-						+ 1];
-				System.arraycopy(registered, 0, result, 0, registered.length);
-				result[registered.length] = new CommitMessageViewer.KnownHyperlinksDetector();
-				return result;
+				// Always add our special detector for commit hyperlinks; we
+				// want those to show always.
+				if (registered == null) {
+					return new IHyperlinkDetector[] {
+							new CommitMessageViewer.KnownHyperlinksDetector() };
+				} else {
+					IHyperlinkDetector[] result = new IHyperlinkDetector[registered.length
+							+ 1];
+					System.arraycopy(registered, 0, result, 0,
+							registered.length);
+					result[registered.length] = new CommitMessageViewer.KnownHyperlinksDetector();
+					return result;
+				}
 			}
 
 			@Override
@@ -939,8 +947,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				reconciler.setDocumentPartitioning(
 						getConfiguredDocumentPartitioning(viewer));
 				DefaultDamagerRepairer hyperlinkDamagerRepairer = new DefaultDamagerRepairer(
-						new HyperlinkTokenScanner(getHyperlinkDetectors(viewer),
-								viewer));
+						new HyperlinkTokenScanner(this, viewer));
 				reconciler.setDamager(hyperlinkDamagerRepairer,
 						IDocument.DEFAULT_CONTENT_TYPE);
 				reconciler.setRepairer(hyperlinkDamagerRepairer,
@@ -949,15 +956,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 						PlatformUI.getWorkbench().getDisplay()
 								.getSystemColor(SWT.COLOR_DARK_GRAY));
 				DefaultDamagerRepairer headerDamagerRepairer = new DefaultDamagerRepairer(
-						new HyperlinkTokenScanner(getHyperlinkDetectors(viewer),
-								viewer, headerDefault));
+						new HyperlinkTokenScanner(this, viewer, headerDefault));
 				reconciler.setDamager(headerDamagerRepairer,
 						CommitMessageViewer.HEADER_CONTENT_TYPE);
 				reconciler.setRepairer(headerDamagerRepairer,
 						CommitMessageViewer.HEADER_CONTENT_TYPE);
 				DefaultDamagerRepairer footerDamagerRepairer = new DefaultDamagerRepairer(
-						new FooterTokenScanner(getHyperlinkDetectors(viewer),
-								viewer));
+						new FooterTokenScanner(this, viewer));
 				reconciler.setDamager(footerDamagerRepairer,
 						CommitMessageViewer.FOOTER_CONTENT_TYPE);
 				reconciler.setRepairer(footerDamagerRepairer,
@@ -2400,9 +2405,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 		private final IToken italicToken;
 
-		public FooterTokenScanner(IHyperlinkDetector[] hyperlinkDetectors,
+		public FooterTokenScanner(SourceViewerConfiguration configuration,
 				ISourceViewer viewer) {
-			super(hyperlinkDetectors, viewer);
+			super(configuration, viewer);
 			Object defaults = defaultToken.getData();
 			TextAttribute italic;
 			if (defaults instanceof TextAttribute) {

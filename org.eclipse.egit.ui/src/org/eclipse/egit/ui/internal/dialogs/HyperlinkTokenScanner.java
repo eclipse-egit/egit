@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.JFaceColors;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
@@ -31,7 +32,10 @@ import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.ITokenScanner;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.ui.editors.text.EditorsUI;
+import org.eclipse.ui.texteditor.AbstractTextEditor;
 
 /**
  * A simple {@link ITokenScanner} that recognizes hyperlinks using
@@ -39,15 +43,24 @@ import org.eclipse.swt.graphics.Color;
  */
 public class HyperlinkTokenScanner implements ITokenScanner {
 
+	private static final String URL_HYPERLINK_DETECTOR_KEY = "org.eclipse.ui.internal.editors.text.URLHyperlinkDetector"; //$NON-NLS-1$
+
 	private int tokenStart;
 
 	private int lastLineStart;
 
 	private IToken hyperlinkToken;
 
+	private IHyperlinkDetector[] hyperlinkDetectors;
+
 	private final ISourceViewer viewer;
 
-	private final IHyperlinkDetector[] hyperlinkDetectors;
+	private final SourceViewerConfiguration configuration;
+
+	/**
+	 * The preference store to use to look up hyperlinking-related preferences.
+	 */
+	private final IPreferenceStore preferenceStore;
 
 	/**
 	 * Caches all hyperlinks on a line to avoid calling the hyperlink detectors
@@ -70,49 +83,61 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 	/**
 	 * Creates a new instance that uses the given hyperlink detector and viewer.
 	 *
-	 * @param hyperlinkDetectors
-	 *            the {@link IHyperlinkDetector}s to use
+	 * @param configuration
+	 *            the {@link SourceViewerConfiguration}s to get the
+	 *            {@link IHyperlinkDetector}s from
 	 * @param viewer
 	 *            the {@link ISourceViewer} to operate in
 	 */
-	public HyperlinkTokenScanner(IHyperlinkDetector[] hyperlinkDetectors,
+	public HyperlinkTokenScanner(SourceViewerConfiguration configuration,
 			ISourceViewer viewer) {
-		this(hyperlinkDetectors, viewer, null);
+		this(configuration, viewer, null);
 	}
 
 	/**
 	 * Creates a new instance that uses the given hyperlink detector and viewer.
 	 *
-	 * @param hyperlinkDetectors
-	 *            the {@link IHyperlinkDetector}s to use
+	 * @param configuration
+	 *            the {@link SourceViewerConfiguration}s to get the
+	 *            {@link IHyperlinkDetector}s from
 	 * @param viewer
 	 *            the {@link ISourceViewer} to operate in
 	 * @param defaultAttribute
 	 *            the {@link TextAttribute} to use for the default token; may be
 	 *            {@code null} to use the default style of the viewer
 	 */
-	public HyperlinkTokenScanner(IHyperlinkDetector[] hyperlinkDetectors,
+	public HyperlinkTokenScanner(SourceViewerConfiguration configuration,
 			ISourceViewer viewer, @Nullable TextAttribute defaultAttribute) {
-		IHyperlinkDetector[] allDetectors;
-		if (hyperlinkDetectors == null || hyperlinkDetectors.length == 0) {
-			allDetectors = new IHyperlinkDetector[0];
-		} else {
-			allDetectors = new IHyperlinkDetector[hyperlinkDetectors.length
-					+ 1];
-			System.arraycopy(hyperlinkDetectors, 0, allDetectors, 0,
-					hyperlinkDetectors.length);
-			// URLHyperlinkDetector can only detect hyperlinks at the start of
-			// the range. We need one that can detect all hyperlinks in a given
-			// region.
-			allDetectors[hyperlinkDetectors.length] = new MultiURLHyperlinkDetector();
-		}
-		this.hyperlinkDetectors = allDetectors;
+		this(configuration, viewer, null, defaultAttribute);
+	}
+
+	/**
+	 * Creates a new instance that uses the given hyperlink detector and viewer.
+	 *
+	 * @param configuration
+	 *            the {@link SourceViewerConfiguration}s to get the
+	 *            {@link IHyperlinkDetector}s from
+	 * @param viewer
+	 *            the {@link ISourceViewer} to operate in
+	 * @param preferenceStore
+	 *            to use to look up preferences related to hyperlinking
+	 * @param defaultAttribute
+	 *            the {@link TextAttribute} to use for the default token; may be
+	 *            {@code null} to use the default style of the viewer
+	 */
+	protected HyperlinkTokenScanner(SourceViewerConfiguration configuration,
+			ISourceViewer viewer, @Nullable IPreferenceStore preferenceStore,
+			@Nullable TextAttribute defaultAttribute) {
 		this.viewer = viewer;
 		this.defaultToken = new Token(defaultAttribute);
+		this.configuration = configuration;
+		this.preferenceStore = preferenceStore == null
+				? EditorsUI.getPreferenceStore() : preferenceStore;
 	}
 
 	@Override
 	public void setRange(IDocument document, int offset, int length) {
+		Assert.isNotNull(document);
 		setRangeAndColor(document, offset, length, JFaceColors
 				.getHyperlinkText(viewer.getTextWidget().getDisplay()));
 	}
@@ -124,7 +149,7 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 			hyperlinksOnLine.clear();
 			return Token.EOF;
 		}
-		if (hyperlinkDetectors.length > 0) {
+		if (hyperlinkDetectors != null && hyperlinkDetectors.length > 0) {
 			try {
 				IRegion currentLine = document
 						.getLineInformationOfOffset(currentOffset);
@@ -132,10 +157,16 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 					// Compute all hyperlinks in the line
 					hyperlinksOnLine.clear();
 					for (IHyperlinkDetector hyperlinkDetector : hyperlinkDetectors) {
-						IHyperlink[] newLinks = hyperlinkDetector
-								.detectHyperlinks(viewer, currentLine, false);
-						if (newLinks != null && newLinks.length > 0) {
-							Collections.addAll(hyperlinksOnLine, newLinks);
+						// The NoMaskHyperlinkDetectors can be skipped; if there
+						// are any, they're only duplicates of others to ensure
+						// hyperlinks open also if no modifier key is active.
+						if (!(hyperlinkDetector instanceof HyperlinkSourceViewer.NoMaskHyperlinkDetector)) {
+							IHyperlink[] newLinks = hyperlinkDetector
+									.detectHyperlinks(viewer, currentLine,
+											false);
+							if (newLinks != null && newLinks.length > 0) {
+								Collections.addAll(hyperlinksOnLine, newLinks);
+							}
 						}
 					}
 					// Sort them by offset, and with increasing length
@@ -231,6 +262,7 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 		this.tokenStart = -1;
 		this.hyperlinkToken = new Token(
 				new TextAttribute(color, null, TextAttribute.UNDERLINE));
+		this.hyperlinkDetectors = getHyperlinkDetectors();
 	}
 
 	/**
@@ -242,6 +274,29 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 	 */
 	protected IToken scanToken() {
 		return null;
+	}
+
+	private @NonNull IHyperlinkDetector[] getHyperlinkDetectors() {
+		IHyperlinkDetector[] allDetectors;
+		IHyperlinkDetector[] configuredDetectors = configuration
+				.getHyperlinkDetectors(viewer);
+		if (configuredDetectors == null || configuredDetectors.length == 0) {
+			allDetectors = new IHyperlinkDetector[0];
+		} else if (preferenceStore.getBoolean(URL_HYPERLINK_DETECTOR_KEY)
+				|| !preferenceStore.getBoolean(
+						AbstractTextEditor.PREFERENCE_HYPERLINKS_ENABLED)) {
+			allDetectors = configuredDetectors;
+		} else {
+			allDetectors = new IHyperlinkDetector[configuredDetectors.length
+					+ 1];
+			System.arraycopy(configuredDetectors, 0, allDetectors, 0,
+					configuredDetectors.length);
+			// URLHyperlinkDetector can only detect hyperlinks at the start of
+			// the range. We need one that can detect all hyperlinks in a given
+			// region.
+			allDetectors[configuredDetectors.length] = new MultiURLHyperlinkDetector();
+		}
+		return allDetectors;
 	}
 
 	/**
