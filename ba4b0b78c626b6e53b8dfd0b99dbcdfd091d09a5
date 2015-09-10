@@ -16,6 +16,24 @@
       "revId": "ba4b0b78c626b6e53b8dfd0b99dbcdfd091d09a5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_0c72a904",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-10T19:21:53Z",
+      "side": 1,
+      "message": "they are around since years and I agree they seem to be not really useful",
+      "parentUuid": "2721e7e2_85d311ff",
+      "revId": "ba4b0b78c626b6e53b8dfd0b99dbcdfd091d09a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
