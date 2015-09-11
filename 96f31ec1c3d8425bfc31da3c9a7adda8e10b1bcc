@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_f0bd5fae",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/CommittingPreferencePage.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-11T23:35:42Z",
+      "side": 1,
+      "message": "these trace statements should be removed",
+      "revId": "96f31ec1c3d8425bfc31da3c9a7adda8e10b1bcc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
