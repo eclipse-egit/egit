@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_cfba4327",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-09-11T06:18:39Z",
+      "side": 1,
+      "message": "1. Didn\u0027t use @see because that would be displayed at the very bottom of the javadoc hover. I wanted it to be included in the deprecation message.\n\n2. Is HyperlinkTokenScanner good enough to be made public API so that external clients have access and can use it? (Don\u0027t know if there _are_ any external users of these two functions at all.)",
+      "range": {
+        "startLine": 818,
+        "startChar": 55,
+        "endLine": 818,
+        "endChar": 63
+      },
+      "revId": "f447a9afd6df0be37075b6400e44c8795facd770",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
