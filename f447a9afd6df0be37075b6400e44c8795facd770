@@ -22,6 +22,30 @@
       "revId": "f447a9afd6df0be37075b6400e44c8795facd770",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_3a399b57",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-11T09:34:35Z",
+      "side": 1,
+      "message": "1. ok\n\n2. I\u0027d wait until someone explicitly requests this, we don\u0027t block usage since the package is exported as x-internal so potential adopters can use it if they accept a discouraged access warning",
+      "parentUuid": "2721e7e2_cfba4327",
+      "range": {
+        "startLine": 818,
+        "startChar": 55,
+        "endLine": 818,
+        "endChar": 63
+      },
+      "revId": "f447a9afd6df0be37075b6400e44c8795facd770",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
