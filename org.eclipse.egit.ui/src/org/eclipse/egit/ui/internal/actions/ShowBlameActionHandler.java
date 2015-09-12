@@ -17,6 +17,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.storage.CommitFileRevision;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -66,20 +67,15 @@ public class ShowBlameActionHandler extends RepositoryActionHandler {
 			return null;
 
 		Object element = selection.getFirstElement();
-		if (element instanceof IResource) {
-			IResource resource = (IResource) element;
+		IResource resource = AdapterUtils.adapt(element, IResource.class);
+		if (resource instanceof IStorage) {
+			IStorage storage = (IStorage) resource;
+			RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
 
-			if (resource instanceof IStorage) {
-				IStorage storage = (IStorage) resource;
-				RepositoryMapping mapping = RepositoryMapping
-						.getMapping(resource);
-
-				if (mapping != null) {
-					String repoRelativePath = mapping
-							.getRepoRelativePath(resource);
-					return new Data(mapping.getRepository(), repoRelativePath,
-							storage, null);
-				}
+			if (mapping != null) {
+				String repoRelativePath = mapping.getRepoRelativePath(resource);
+				return new Data(mapping.getRepository(), repoRelativePath,
+						storage, null);
 			}
 		} else if (element instanceof CommitFileRevision) {
 			CommitFileRevision revision = (CommitFileRevision) element;
