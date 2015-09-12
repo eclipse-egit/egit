@@ -85,6 +85,7 @@ import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
 import org.eclipse.egit.ui.internal.operations.DeletePathsOperationUI;
 import org.eclipse.egit.ui.internal.operations.IgnoreOperationUI;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ControlContribution;
@@ -277,6 +278,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private Action compareModeAction;
 
+	@Nullable
 	private Repository currentRepository;
 
 	private Presentation presentation = Presentation.LIST;
@@ -1114,8 +1116,11 @@ public class StagingView extends ViewPart implements IShowInSource {
 	}
 
 	private boolean commitAndPushEnabled(boolean commitEnabled) {
-		return commitEnabled
-				&& !currentRepository.getRepositoryState().isRebasing();
+		Repository repo = currentRepository;
+		if (repo == null) {
+			return false;
+		}
+		return commitEnabled && !repo.getRepositoryState().isRebasing();
 	}
 
 	private void updateIgnoreErrorsButtonVisibility() {
@@ -1146,7 +1151,12 @@ public class StagingView extends ViewPart implements IShowInSource {
 		if (cacheEntry != null) {
 			indexDiff = cacheEntry.getIndexDiff();
 		} else {
-			indexDiff = doReload(currentRepository);
+			Repository repo = currentRepository;
+			if (repo == null) {
+				indexDiff = null;
+			} else {
+				indexDiff = doReload(repo);
+			}
 		}
 		boolean indexDiffAvailable = indexDiffAvailable(indexDiff);
 		boolean noConflicts = noConflicts(indexDiff);
@@ -1473,12 +1483,13 @@ public class StagingView extends ViewPart implements IShowInSource {
 	}
 
 	private void enableAuthorText(boolean enabled) {
-		if (currentRepository != null
-				&& currentRepository.getRepositoryState().equals(
-				RepositoryState.CHERRY_PICKING_RESOLVED))
+		Repository repo = currentRepository;
+		if (repo != null && repo.getRepositoryState()
+				.equals(RepositoryState.CHERRY_PICKING_RESOLVED)) {
 			authorText.setEnabled(false);
-		else
+		} else {
 			authorText.setEnabled(enabled);
+		}
 	}
 
 	private void updateToolbar() {
@@ -2204,14 +2215,16 @@ public class StagingView extends ViewPart implements IShowInSource {
 	}
 
 	private void openSelectionInEditor(ISelection s) {
-		if (s.isEmpty() || !(s instanceof IStructuredSelection))
+		Repository repo = currentRepository;
+		if (repo == null || s.isEmpty() || !(s instanceof IStructuredSelection)) {
 			return;
+		}
 		final IStructuredSelection iss = (IStructuredSelection) s;
 		for (Object element : iss.toList()) {
 			if (element instanceof StagingEntry) {
 				StagingEntry entry = (StagingEntry) element;
 				String relativePath = entry.getPath();
-				String path = new Path(currentRepository.getWorkTree()
+				String path = new Path(repo.getWorkTree()
 						.getAbsolutePath()).append(relativePath)
 						.toOSString();
 				openFileInEditor(path);
@@ -2730,7 +2743,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 						: false;
 	}
 
-	private IndexDiffData doReload(final Repository repository) {
+	private IndexDiffData doReload(@NonNull	final Repository repository) {
 		IndexDiffCacheEntry entry = org.eclipse.egit.core.Activator.getDefault()
 				.getIndexDiffCache().getIndexDiffCacheEntry(repository);
 
@@ -2893,8 +2906,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 			return false;
 
 		String chIdLine = "Change-Id: I" + ObjectId.zeroId().name(); //$NON-NLS-1$
-
-		if (GerritUtil.getCreateChangeId(currentRepository.getConfig())
+		Repository repo = currentRepository;
+		if (repo != null && GerritUtil.getCreateChangeId(repo.getConfig())
 				&& commitMessageComponent.getCreateChangeId()) {
 			if (message.trim().equals(chIdLine))
 				return false;

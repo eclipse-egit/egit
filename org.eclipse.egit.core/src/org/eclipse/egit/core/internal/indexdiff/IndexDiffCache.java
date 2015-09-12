@@ -16,6 +16,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.Repository;
@@ -44,7 +45,7 @@ public class IndexDiffCache {
 	 * @return cache entry
 	 */
 	@Nullable
-	public IndexDiffCacheEntry getIndexDiffCacheEntry(Repository repository) {
+	public IndexDiffCacheEntry getIndexDiffCacheEntry(@NonNull Repository repository) {
 		IndexDiffCacheEntry entry;
 		synchronized (entries) {
 			entry = entries.get(repository);
