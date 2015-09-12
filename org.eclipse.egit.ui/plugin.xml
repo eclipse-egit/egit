@@ -462,6 +462,15 @@
       </page>
       <page
             category="org.eclipse.egit.ui.GitPreferences"
+            class="org.eclipse.egit.ui.internal.preferences.StagingViewPreferencePage"
+            id="org.eclipse.egit.ui.internal.preferences.StagingViewPreferencePage"
+            name="%GitPreferences_StagingViewPreferencePage_name">
+         <keywordReference
+               id="org.eclipse.egit.ui.keyword.git">
+         </keywordReference>
+      </page>
+      <page
+            category="org.eclipse.egit.ui.GitPreferences"
             class="org.eclipse.egit.ui.internal.preferences.DialogsPreferencePage"
             id="org.eclipse.egit.ui.internal.preferences.DialogsPreferencePage"
             name="%DialogsPreferencePage.name">
