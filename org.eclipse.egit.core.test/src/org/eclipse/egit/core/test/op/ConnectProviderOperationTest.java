@@ -10,7 +10,9 @@
  *******************************************************************************/
 package org.eclipse.egit.core.test.op;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -22,6 +24,7 @@ import java.io.IOException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -35,6 +38,7 @@ import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.eclipse.jgit.util.FS;
 import org.eclipse.team.core.RepositoryProvider;
 import org.junit.Test;
 
@@ -59,6 +63,42 @@ public class ConnectProviderOperationTest extends GitTestCase {
 		repository.close();
 		ConnectProviderOperation operation = new ConnectProviderOperation(
 				project.getProject(), gitDir);
+		operation.execute(null);
+
+		assertTrue(RepositoryProvider.isShared(project.getProject()));
+
+		assertTrue(gitDir.exists());
+	}
+
+	@Test
+	public void testNewRepositoryCaseSensitive()
+			throws CoreException, IOException {
+		if (FS.detect().isCaseSensitive()) {
+			return;
+		}
+		Repository repository = FileRepositoryBuilder.create(gitDir);
+		repository.create();
+		repository.close();
+
+		IPath path = new Path(gitDir.toString());
+		String device = path.getDevice();
+		if (device == null) {
+			// not windows???
+			return;
+		}
+		if (!device.toLowerCase().equals(device)) {
+			path = path.setDevice(device.toLowerCase());
+		} else {
+			path = path.setDevice(device.toUpperCase());
+		}
+		assertNotEquals(path, new Path(gitDir.toString()));
+		assertNotEquals(path.toFile().toString(),
+				new Path(gitDir.toString()).toFile().toString());
+		assertEquals(path.toFile(), gitDir);
+
+		ConnectProviderOperation operation = new ConnectProviderOperation(
+				project.getProject(),
+				path.toFile());
 		operation.execute(null);
 
 		assertTrue(RepositoryProvider.isShared(project.getProject()));
