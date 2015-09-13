@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_4381079c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1757,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-13T21:52:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_c31b372f",
+      "revId": "fdfe11c882df12ee1ce8a1564a3d6ecae4b364b8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_a320c358",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2015-09-13T21:51:50Z",
       "side": 1,
       "message": "this method can be declared private",
+      "revId": "fdfe11c882df12ee1ce8a1564a3d6ecae4b364b8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_237e9320",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2776,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-13T21:52:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_a320c358",
       "revId": "fdfe11c882df12ee1ce8a1564a3d6ecae4b364b8",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_834e5f13",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2781,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-13T21:52:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_0309cfe7",
+      "revId": "fdfe11c882df12ee1ce8a1564a3d6ecae4b364b8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_e3059bcb",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2015-09-13T21:51:50Z",
       "side": 1,
       "message": "this method can be declared private",
+      "revId": "fdfe11c882df12ee1ce8a1564a3d6ecae4b364b8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_63536bb9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2792,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-13T21:52:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_e3059bcb",
       "revId": "fdfe11c882df12ee1ce8a1564a3d6ecae4b364b8",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_c344d7f3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2802,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-13T21:52:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_430f47eb",
+      "revId": "fdfe11c882df12ee1ce8a1564a3d6ecae4b364b8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_230cd3f4",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 4
@@ -98,6 +188,24 @@
       "writtenOn": "2015-09-13T21:51:50Z",
       "side": 1,
       "message": "this method can be declared private",
+      "revId": "fdfe11c882df12ee1ce8a1564a3d6ecae4b364b8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_a349e30a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2810,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-13T21:52:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_230cd3f4",
       "revId": "fdfe11c882df12ee1ce8a1564a3d6ecae4b364b8",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
