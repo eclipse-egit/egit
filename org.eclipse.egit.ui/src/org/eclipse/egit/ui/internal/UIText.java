@@ -5411,6 +5411,12 @@ public class UIText extends NLS {
 	/** */
 	public static String DiffStyleRangeFormatter_diffTruncated;
 
+	/** */
+	public static String StagingViewPreferencePage_title;
+
+	/** */
+	public static String StagingViewPreferencePage_maxLimitListMode;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
