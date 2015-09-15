@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "2721e7e2_c6533e62",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-15T23:42:56Z",
+      "side": 1,
+      "message": "s/Attempt to unbreak tycho build/Pin tycho-surefire-plugin\u0027s version/",
+      "revId": "39691ec137456287f075c9445f1b81c7e07eab36",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_865dc674",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-15T23:42:56Z",
+      "side": 1,
+      "message": "I don\u0027t think this breaks the ui tests, they worked for me, swtbot tests are sometimes instable",
+      "revId": "39691ec137456287f075c9445f1b81c7e07eab36",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_867666f8",
         "filename": "org.eclipse.egit.ui.importer.tests/pom.xml",
         "patchSetId": 1
