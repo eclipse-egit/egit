@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_867666f8",
+        "filename": "org.eclipse.egit.ui.importer.tests/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-15T23:38:55Z",
+      "side": 1,
+      "message": "that\u0027s already defined in the parent pom.xml\nhttp://git.eclipse.org/c/egit/egit.git/tree/pom.xml#n382",
+      "revId": "39691ec137456287f075c9445f1b81c7e07eab36",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_6671b2ff",
+        "filename": "org.eclipse.egit.ui.importer.tests/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-15T23:38:55Z",
+      "side": 1,
+      "message": "that\u0027s already defined in the parent pom.xml\nhttp://git.eclipse.org/c/egit/egit.git/tree/pom.xml#n382",
+      "revId": "39691ec137456287f075c9445f1b81c7e07eab36",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_066a760c",
+        "filename": "org.eclipse.egit.ui.importer.tests/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-15T23:38:55Z",
+      "side": 1,
+      "message": "the version should be pinned in the parent pom.xml\u0027s pluginManagement section, some of the other test modules pin the version in the module\u0027s pom.xml, this should be removed and replaced by pinning the version in the parent pom.xml. This will ensure that we use the same version across all modules consistently",
+      "revId": "39691ec137456287f075c9445f1b81c7e07eab36",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
