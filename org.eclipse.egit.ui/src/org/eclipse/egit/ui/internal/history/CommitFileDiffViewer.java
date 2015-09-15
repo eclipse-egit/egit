@@ -40,6 +40,8 @@ import org.eclipse.egit.ui.internal.blame.BlameOperation;
 import org.eclipse.egit.ui.internal.revision.GitCompareFileRevisionEditorInput;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -307,6 +309,13 @@ public class CommitFileDiffViewer extends TableViewer {
 		mgr.add(selectAll = createStandardAction(ActionFactory.SELECT_ALL));
 		mgr.add(copy = createStandardAction(ActionFactory.COPY));
 
+		// See https://bugs.eclipse.org/bugs/show_bug.cgi?id=477510
+		mgr.addMenuListener(new IMenuListener() {
+			@Override
+			public void menuAboutToShow(IMenuManager manager) {
+				getControl().setFocus();
+			}
+		});
 		if (site instanceof IPageSite) {
 			final IPageSite pageSite = (IPageSite) site;
 			getControl().addFocusListener(new FocusListener() {
