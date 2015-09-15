@@ -4708,7 +4708,7 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ImportChangedProjectsCommand"
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.ImportChangedProjectsCommand"
             id="org.eclipse.egit.ui.ImportChangedProjectsCommandId"
             name="%ImportChangedProjectsCommand"
             description="%ImportProjectsCommand_description">
