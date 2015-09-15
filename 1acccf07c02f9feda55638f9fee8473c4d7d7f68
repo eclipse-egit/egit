@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_06a2762b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-09-15T21:31:18Z",
+      "side": 1,
+      "message": "Oops, wrong bug number. Fixed to 477510 in PS 2. Please remove this change from the bugzilla entry of 475510. Sorry.",
+      "revId": "1acccf07c02f9feda55638f9fee8473c4d7d7f68",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
