@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_fa85315f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-16T23:24:24Z",
+      "side": 1,
+      "message": "this comment is redundant as the link to the bug is already mentioned in the commit message so the link can be easily found by running git blame on this file",
+      "revId": "c31ca187742db952cef72f9144365ab8e31b643e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
