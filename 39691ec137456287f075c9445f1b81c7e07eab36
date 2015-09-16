@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_4979216b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-09-16T07:24:06Z",
+      "side": 1,
+      "message": "That\u0027s what I then discovered, too. Anyway, in build 7609 maven loudly warns about this missing version at the beginning of the log. That\u0027s fixed by this change. I can rephrase the commit message, if you want.\n\nIn some other comment here you mentioned that the version actually should be removed from some other test bundles\u0027 poms. I suspect maven will then complain again. It\u0027s unclear to me what the way forward should be:\n\n1. abandon this change. (I\u0027m not going to fiddle with other poms.)\n2. the change is basically right but needs rephrasing of the commit message.\n\nPlease advise.\n\nThat SWTBot tests can be unstable is well known to me -- we\u0027ve fought years against that. It\u0027s a major nuisance, and it\u0027s not easy to write stable SWTbot tests. Which is why I avoid them like the plague and try to test as much as I can in other ways.",
+      "parentUuid": "2721e7e2_865dc674",
+      "revId": "39691ec137456287f075c9445f1b81c7e07eab36",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_867666f8",
         "filename": "org.eclipse.egit.ui.importer.tests/pom.xml",
         "patchSetId": 1
