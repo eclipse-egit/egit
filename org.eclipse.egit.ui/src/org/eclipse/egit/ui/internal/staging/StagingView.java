@@ -889,10 +889,16 @@ public class StagingView extends ViewPart implements IShowInSource {
 						if (isDisposed()) {
 							getPreferenceStore()
 									.removePropertyChangeListener(this);
+							return;
 						}
-						updateIgnoreErrorsButtonVisibility();
-						updateMessage();
-						updateCommitButtons();
+						asyncExec(new Runnable() {
+							@Override
+							public void run() {
+								updateIgnoreErrorsButtonVisibility();
+								updateMessage();
+								updateCommitButtons();
+							}
+						});
 					}
 				});
 
