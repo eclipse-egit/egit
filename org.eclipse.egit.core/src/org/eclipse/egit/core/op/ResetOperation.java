@@ -56,6 +56,7 @@ public class ResetOperation implements IEGitOperation {
 		this.type = type;
 	}
 
+	@Override
 	public ISchedulingRule getSchedulingRule() {
 		if (type == ResetType.HARD)
 			return RuleUtil.getRule(repository);
@@ -63,6 +64,7 @@ public class ResetOperation implements IEGitOperation {
 			return null;
 	}
 
+	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
 		IProgressMonitor monitor;
 		if (m == null)
@@ -71,6 +73,7 @@ public class ResetOperation implements IEGitOperation {
 			monitor = m;
 		if (type == ResetType.HARD) {
 			IWorkspaceRunnable action = new IWorkspaceRunnable() {
+				@Override
 				public void run(IProgressMonitor actMonitor) throws CoreException {
 					reset(actMonitor);
 				}

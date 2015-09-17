@@ -39,6 +39,7 @@ public class SquashCommitsOperationTest extends GitTestCase {
 	private RevCommit commit2;
 	private RevCommit commit3;
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -59,6 +60,7 @@ public class SquashCommitsOperationTest extends GitTestCase {
 				"commit 3");
 	}
 
+	@Override
 	@After
 	public void tearDown() throws Exception {
 		testRepository.dispose();
@@ -68,10 +70,12 @@ public class SquashCommitsOperationTest extends GitTestCase {
 	@Test
 	public void squash() throws Exception {
 		InteractiveHandler messageHandler = new InteractiveHandler() {
+			@Override
 			public void prepareSteps(List<RebaseTodoLine> steps) {
 				// not used
 			}
 
+			@Override
 			public String modifyCommitMessage(String commit) {
 				return "squashed";
 			}

@@ -85,6 +85,7 @@ public class CreatePatchOperationTest extends GitTestCase {
 
 	private TestRepository testRepository;
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -99,6 +100,7 @@ public class CreatePatchOperationTest extends GitTestCase {
 				"new file");
 	}
 
+	@Override
 	@After
 	public void tearDown() throws Exception {
 		testRepository.dispose();

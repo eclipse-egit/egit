@@ -37,11 +37,13 @@ public abstract class GitRemoteResource extends CachedResourceVariant {
 		this.commitId = commitId;
 	}
 
+	@Override
 	public String getName() {
 		int lastSeparator = path.lastIndexOf("/"); //$NON-NLS-1$
 		return path.substring(lastSeparator + 1, path.length());
 	}
 
+	@Override
 	public String getContentIdentifier() {
 		if (commitId == null)
 			return ""; //$NON-NLS-1$
@@ -59,6 +61,7 @@ public abstract class GitRemoteResource extends CachedResourceVariant {
 		return s.toString();
 	}
 
+	@Override
 	public byte[] asBytes() {
 		try {
 			return getObjectId().name().getBytes("UTF-8"); //$NON-NLS-1$

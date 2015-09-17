@@ -41,6 +41,7 @@ public class RemoveFromIndexOperationTest extends GitTestCase {
 	private TestRepository testRepo2;
 	private TestProject project2;
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -58,6 +59,7 @@ public class RemoveFromIndexOperationTest extends GitTestCase {
 		testRepo2.commit("initial commit repo 2");
 	}
 
+	@Override
 	@After
 	public void tearDown() throws Exception {
 		testRepo.dispose();

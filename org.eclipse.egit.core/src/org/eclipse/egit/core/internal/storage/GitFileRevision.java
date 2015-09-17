@@ -89,20 +89,24 @@ public abstract class GitFileRevision extends FileRevision {
 		this.path = path;
 	}
 
+	@Override
 	public String getName() {
 		final int last = path.lastIndexOf('/');
 		return last >= 0 ? path.substring(last + 1) : path;
 	}
 
+	@Override
 	public boolean isPropertyMissing() {
 		return false;
 	}
 
+	@Override
 	public IFileRevision withAllProperties(final IProgressMonitor monitor)
 			throws CoreException {
 		return this;
 	}
 
+	@Override
 	public URI getURI() {
 		try {
 			return new URI(null, null, path, null);

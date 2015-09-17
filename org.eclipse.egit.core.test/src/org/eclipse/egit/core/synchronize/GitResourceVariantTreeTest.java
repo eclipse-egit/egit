@@ -121,6 +121,7 @@ public class GitResourceVariantTreeTest extends GitTestCase {
 			IResource[] roots = grvt.roots();
 			// sort in order to be able to assert the project instances
 			Arrays.sort(roots, new Comparator<IResource>() {
+				@Override
 				public int compare(IResource r1, IResource r2) {
 					String path1 = r1.getFullPath().toString();
 					String path2 = r2.getFullPath().toString();

@@ -53,6 +53,7 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 		this.gitCache = gitCache;
 	}
 
+	@Override
 	public IResource[] roots() {
 		Set<IResource> roots = new HashSet<IResource>();
 		for (GitSynchronizeData gsd : gsds)
@@ -149,6 +150,7 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 		}
 	}
 
+	@Override
 	public IResourceVariant getResourceVariant(final IResource resource)
 			throws TeamException {
 		return fetchVariant(resource, 0, null);

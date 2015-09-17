@@ -52,12 +52,14 @@ public class ProjectUtilTest extends GitTestCase {
 
 	private TestProject project2;
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
 		repository = new TestRepository(gitDir);
 	}
 
+	@Override
 	@After
 	public void tearDown() throws Exception {
 		super.tearDown();

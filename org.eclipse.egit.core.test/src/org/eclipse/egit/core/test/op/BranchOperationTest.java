@@ -29,6 +29,7 @@ public class BranchOperationTest extends GitTestCase{
 	TestRepository testRepository;
 	Repository repository;
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -36,6 +37,7 @@ public class BranchOperationTest extends GitTestCase{
 		repository = testRepository.getRepository();
 	}
 
+	@Override
 	@After
 	public void tearDown() throws Exception {
 		testRepository.dispose();

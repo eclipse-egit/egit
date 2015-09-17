@@ -252,6 +252,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		Job.getJobManager().join(JobFamilies.GENERATE_HISTORY, null);
 		// join UI update triggered by GenerateHistoryJob
 		projectExplorerTree.widget.getDisplay().syncExec(new Runnable() {
+			@Override
 			public void run() {
 				// empty
 			}
@@ -293,6 +294,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 
 		Display.getDefault().syncExec(new Runnable() {
 
+			@Override
 			public void run() {
 				TableItem tableItem = table.widget.getSelection()[0];
 				ensureTableItemLoaded(tableItem);
@@ -350,6 +352,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 
 		Display.getDefault().syncExec(new Runnable() {
 
+			@Override
 			public void run() {
 				TableItem tableItem = table.widget.getSelection()[0];
 				ensureTableItemLoaded(tableItem);
@@ -411,6 +414,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 
 		Display.getDefault().syncExec(new Runnable() {
 
+			@Override
 			public void run() {
 				TableItem tableItem = table.widget.getSelection()[0];
 				ensureTableItemLoaded(tableItem);

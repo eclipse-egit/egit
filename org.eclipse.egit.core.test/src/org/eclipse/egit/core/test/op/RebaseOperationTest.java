@@ -45,6 +45,7 @@ public class RebaseOperationTest extends GitTestCase {
 
 	Git git;
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();

@@ -118,6 +118,7 @@ public class ConfigureGerritAfterCloneTask implements PostCloneTask {
 		this.credentialsProvider = credentialsProvider;
 	}
 
+	@Override
 	public void execute(Repository repository, IProgressMonitor monitor)
 			throws CoreException {
 		try {
