@@ -36,30 +36,36 @@ class GitCachedResourceVariantTree implements IResourceVariantTree {
 		this.cache = cache;
 	}
 
+	@Override
 	public IResource[] roots() {
 		final Set<IResource> roots = cache.getRoots();
 		return roots.toArray(new IResource[roots.size()]);
 	}
 
+	@Override
 	public IResource[] members(IResource resource) throws TeamException {
 		return cache.members(resource);
 	}
 
+	@Override
 	public IResourceVariant getResourceVariant(IResource resource)
 			throws TeamException {
 		return cache.getVariant(resource);
 	}
 
+	@Override
 	public boolean hasResourceVariant(IResource resource) throws TeamException {
 		return cache.getVariant(resource) != null;
 	}
 
+	@Override
 	public IResource[] refresh(IResource[] resources, int depth,
 			IProgressMonitor monitor) throws TeamException {
 		// This does not react to refresh calls
 		return new IResource[0];
 	}
 
+	@Override
 	public void flushVariants(IResource resource, int depth)
 			throws TeamException {
 		// Empty implementation

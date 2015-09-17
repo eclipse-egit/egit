@@ -79,11 +79,13 @@ public class CompareEditorTester {
 			this.titleSubstring = titleSubstring;
 		}
 
+		@Override
 		public void describeTo(Description description) {
 			description.appendText("Compare editor that title contains text: "
 					+ titleSubstring);
 		}
 
+		@Override
 		public boolean matches(Object item) {
 			if (item instanceof IEditorReference) {
 				IEditorReference editor = (IEditorReference) item;

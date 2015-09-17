@@ -73,6 +73,7 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		waitInUI();
 		Display.getDefault().syncExec(new Runnable() {
 
+			@Override
 			public void run() {
 				Clipboard clp = new Clipboard(Display.getCurrent());
 				clp.clearContents();
@@ -104,6 +105,7 @@ public class GitRepositoriesViewRepoHandlingTest extends
 				UIText.RepositoriesView_messsageEmpty);
 		Display.getDefault().syncExec(new Runnable() {
 
+			@Override
 			public void run() {
 				Clipboard clip = null;
 				try {

@@ -44,6 +44,7 @@ public class ConfigurePushAfterCloneTask implements PostCloneTask {
 	 * @param monitor
 	 * @throws CoreException
 	 */
+	@Override
 	public void execute(Repository repository, IProgressMonitor monitor)
 			throws CoreException {
 		try {

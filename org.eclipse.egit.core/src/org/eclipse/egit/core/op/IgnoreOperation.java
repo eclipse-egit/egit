@@ -80,6 +80,7 @@ public class IgnoreOperation implements IEGitOperation {
 		}
 	}
 
+	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
 		monitor.beginTask(CoreText.IgnoreOperation_taskName, paths.size());
 		try {
@@ -116,6 +117,7 @@ public class IgnoreOperation implements IEGitOperation {
 		return gitignoreOutsideWSChanged;
 	}
 
+	@Override
 	public ISchedulingRule getSchedulingRule() {
 		return schedulingRule;
 	}

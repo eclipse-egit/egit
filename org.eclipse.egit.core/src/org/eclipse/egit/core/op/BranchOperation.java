@@ -95,6 +95,7 @@ public class BranchOperation extends BaseOperation {
 		this.delete = delete;
 	}
 
+	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
 		IProgressMonitor monitor;
 		if (m == null)
@@ -104,6 +105,7 @@ public class BranchOperation extends BaseOperation {
 
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
+			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
 				preExecute(pm);
 
@@ -165,6 +167,7 @@ public class BranchOperation extends BaseOperation {
 				IWorkspace.AVOID_UPDATE, monitor);
 	}
 
+	@Override
 	public ISchedulingRule getSchedulingRule() {
 		return RuleUtil.getRule(repository);
 	}

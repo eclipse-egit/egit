@@ -487,6 +487,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 	protected void shareProjects(File repositoryDir) throws Exception {
 		Repository myRepository = lookupRepository(repositoryDir);
 		FilenameFilter projectFilter = new FilenameFilter() {
+			@Override
 			public boolean accept(File dir, String name) {
 				return name.equals(".project");
 			}

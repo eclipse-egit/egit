@@ -28,26 +28,32 @@ public class WorkspaceFileRevision extends GitFileRevision {
 		rsrc = resource;
 	}
 
+	@Override
 	public IStorage getStorage(IProgressMonitor monitor) throws CoreException {
 		return rsrc instanceof IStorage ? (IStorage) rsrc : null;
 	}
 
+	@Override
 	public boolean isPropertyMissing() {
 		return false;
 	}
 
+	@Override
 	public String getAuthor() {
 		return "";  //$NON-NLS-1$
 	}
 
+	@Override
 	public long getTimestamp() {
 		return -1;
 	}
 
+	@Override
 	public String getComment() {
 		return "";  //$NON-NLS-1$
 	}
 
+	@Override
 	public String getContentIdentifier() {
 		return WORKSPACE;
 	}

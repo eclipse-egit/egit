@@ -62,10 +62,12 @@ public class RewordCommitOperation implements IEGitOperation {
 		this.newMessage = newMessage;
 	}
 
+	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
 		IProgressMonitor monitor = m != null ? m : new NullProgressMonitor();
 
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
+			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
 				pm.beginTask("", 2); //$NON-NLS-1$
 
@@ -73,6 +75,7 @@ public class RewordCommitOperation implements IEGitOperation {
 						commit.name()));
 
 				InteractiveHandler handler = new InteractiveHandler() {
+					@Override
 					public void prepareSteps(List<RebaseTodoLine> steps) {
 						for (RebaseTodoLine step : steps) {
 							if (step.getCommit().prefixCompare(commit) == 0) {
@@ -85,6 +88,7 @@ public class RewordCommitOperation implements IEGitOperation {
 						}
 					}
 
+					@Override
 					public String modifyCommitMessage(String oldMessage) {
 						return newMessage;
 					}
@@ -112,6 +116,7 @@ public class RewordCommitOperation implements IEGitOperation {
 				IWorkspace.AVOID_UPDATE, monitor);
 	}
 
+	@Override
 	public ISchedulingRule getSchedulingRule() {
 		return RuleUtil.getRule(repository);
 	}

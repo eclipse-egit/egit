@@ -39,6 +39,7 @@ public class DeleteTagOperation implements IEGitOperation {
 		this.tag = tag;
 	}
 
+	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
 		try {
 			Git.wrap(repository).tagDelete().setTags(tag).call();
@@ -48,6 +49,7 @@ public class DeleteTagOperation implements IEGitOperation {
 		}
 	}
 
+	@Override
 	public ISchedulingRule getSchedulingRule() {
 		return null;
 	}

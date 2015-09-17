@@ -69,18 +69,22 @@ public class CommitHyperlinkDetector extends AbstractHyperlinkDetector {
 			this.objectId = objectId;
 		}
 
+		@Override
 		public IRegion getHyperlinkRegion() {
 			return region;
 		}
 
+		@Override
 		public String getTypeLabel() {
 			return null;
 		}
 
+		@Override
 		public String getHyperlinkText() {
 			return objectId;
 		}
 
+		@Override
 		public void open() {
 			try {
 				RepositoryCommit commit;
@@ -151,6 +155,7 @@ public class CommitHyperlinkDetector extends AbstractHyperlinkDetector {
 	 * Detects and returns all available hyperlinks for the given
 	 * {@link TextViewer} which link to a Git commit.
 	 */
+	@Override
 	public IHyperlink[] detectHyperlinks(ITextViewer textViewer,
 			final IRegion region, boolean canShowMultipleHyperlinks) {
 		IDocument document = textViewer.getDocument();

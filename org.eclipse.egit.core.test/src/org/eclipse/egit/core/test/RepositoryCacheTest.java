@@ -35,6 +35,7 @@ public class RepositoryCacheTest extends GitTestCase {
 	private Repository repository;
 	private RepositoryCache cache;
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -43,6 +44,7 @@ public class RepositoryCacheTest extends GitTestCase {
 		this.cache = Activator.getDefault().getRepositoryCache();
 	}
 
+	@Override
 	@After
 	public void tearDown() throws Exception {
 		testRepository.dispose();

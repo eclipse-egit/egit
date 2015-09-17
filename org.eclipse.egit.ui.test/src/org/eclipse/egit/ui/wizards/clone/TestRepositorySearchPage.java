@@ -26,12 +26,14 @@ public class TestRepositorySearchPage extends WizardPage implements
 		setMessage("Do the needful");
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);
 		new Label(main, SWT.NULL).setText("Search for Repos");
 		setControl(main);
 	}
 
+	@Override
 	public GitRepositoryInfo getGitRepositoryInfo() {
 			return new GitRepositoryInfo(
 					"http://egit.eclipse.org/r/p/egit-training");

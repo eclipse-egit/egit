@@ -57,6 +57,7 @@ public class GitRepositoryProviderType extends RepositoryProviderType {
 		subscriber = gitSubscriber;
 	}
 
+	@Override
 	public Subscriber getSubscriber() {
 		return subscriber;
 	}

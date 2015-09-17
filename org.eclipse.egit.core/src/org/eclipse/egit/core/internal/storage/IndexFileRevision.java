@@ -52,28 +52,34 @@ public class IndexFileRevision extends GitFileRevision implements
 		this.stage = stage;
 	}
 
+	@Override
 	public IStorage getStorage(IProgressMonitor monitor) throws CoreException {
 		if (blobId == null)
 			blobId = locateBlobObjectId();
 		return new IndexBlobStorage(db, path, blobId);
 	}
 
+	@Override
 	public boolean isPropertyMissing() {
 		return false;
 	}
 
+	@Override
 	public String getAuthor() {
 		return "";  //$NON-NLS-1$
 	}
 
+	@Override
 	public long getTimestamp() {
 		return -1;
 	}
 
+	@Override
 	public String getComment() {
 		return null;
 	}
 
+	@Override
 	public String getContentIdentifier() {
 		return INDEX;
 	}
@@ -104,10 +110,12 @@ public class IndexFileRevision extends GitFileRevision implements
 		}
 	}
 
+	@Override
 	public Repository getRepository() {
 		return db;
 	}
 
+	@Override
 	public String getGitPath() {
 		return path;
 	}

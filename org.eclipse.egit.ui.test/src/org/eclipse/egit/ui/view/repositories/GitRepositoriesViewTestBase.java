@@ -121,6 +121,7 @@ public abstract class GitRepositoriesViewTestBase extends
 		TestUtil.processUIEvents();
 	}
 
+	@Override
 	@SuppressWarnings("boxing")
 	protected void assertProjectExistence(String projectName, boolean existence) {
 		IProject prj = ResourcesPlugin.getWorkspace().getRoot().getProject(

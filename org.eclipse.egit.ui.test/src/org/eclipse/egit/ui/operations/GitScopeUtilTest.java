@@ -136,6 +136,7 @@ public class GitScopeUtilTest extends LocalRepositoryTestCase {
 
 		final IResource[] selectedResources = new IResource[] { modelFile };
 		UIThreadRunnable.asyncExec(new VoidResult() {
+			@Override
 			public void run() {
 				try {
 					GitScopeUtil.getRelatedChanges(part, selectedResources);
@@ -167,6 +168,7 @@ public class GitScopeUtilTest extends LocalRepositoryTestCase {
 			final IResource[] selectedResources) {
 		final IResource[][] relatedChanges = new IResource[1][];
 		UIThreadRunnable.syncExec(new VoidResult() {
+			@Override
 			public void run() {
 				try {
 					relatedChanges[0] = GitScopeUtil.getRelatedChanges(part,

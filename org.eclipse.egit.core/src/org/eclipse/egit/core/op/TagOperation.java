@@ -48,6 +48,7 @@ public class TagOperation implements IEGitOperation {
 	}
 
 
+	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
 		IProgressMonitor monitor;
 		if (m == null)
@@ -106,6 +107,7 @@ public class TagOperation implements IEGitOperation {
 	}
 
 
+	@Override
 	public ISchedulingRule getSchedulingRule() {
 		return null;
 	}

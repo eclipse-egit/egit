@@ -419,6 +419,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 		return location != null ? location.toFile() : null;
 	}
 
+	@Override
 	protected byte[] idSubmodule(Entry e) {
 		File nodeFile = asFile(node);
 		if (nodeFile != null)

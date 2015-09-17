@@ -252,6 +252,7 @@ public class TestRepository {
 	public void trackAllFiles(IProject project) throws CoreException {
 		project.accept(new IResourceVisitor() {
 
+			@Override
 			public boolean visit(IResource resource) throws CoreException {
 				if (resource instanceof IFile) {
 					try {

@@ -143,6 +143,7 @@ public class MergeOperation implements IEGitOperation {
 		this.message = message;
 	}
 
+	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
 		if (mergeResult != null)
 			throw new CoreException(new Status(IStatus.ERROR, Activator
@@ -154,6 +155,7 @@ public class MergeOperation implements IEGitOperation {
 			monitor = m;
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
+			@Override
 			public void run(IProgressMonitor mymonitor) throws CoreException {
 				IProject[] validProjects = ProjectUtil.getValidOpenProjects(repository);
 				mymonitor.beginTask(NLS.bind(CoreText.MergeOperation_ProgressMerge, refName), 3);
@@ -214,6 +216,7 @@ public class MergeOperation implements IEGitOperation {
 		return this.mergeResult;
 	}
 
+	@Override
 	public ISchedulingRule getSchedulingRule() {
 		return RuleUtil.getRule(repository);
 	}

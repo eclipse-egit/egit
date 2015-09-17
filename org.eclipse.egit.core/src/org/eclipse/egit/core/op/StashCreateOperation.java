@@ -82,9 +82,11 @@ public class StashCreateOperation implements IEGitOperation {
 		return commit;
 	}
 
+	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
+			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
 				try {
 					StashCreateCommand command = Git.wrap(repository).stashCreate();
@@ -110,6 +112,7 @@ public class StashCreateOperation implements IEGitOperation {
 				monitor != null ? monitor : new NullProgressMonitor());
 	}
 
+	@Override
 	public ISchedulingRule getSchedulingRule() {
 		return RuleUtil.getRule(repository);
 	}

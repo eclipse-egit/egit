@@ -71,6 +71,7 @@ public class TrackUntrackOperationTest extends DualRepositoryTestCase {
 
 		project.accept(new IResourceVisitor() {
 
+			@Override
 			public boolean visit(IResource resource) throws CoreException {
 				if (resource instanceof IFile)
 					files.add((IFile) resource);
@@ -116,6 +117,7 @@ public class TrackUntrackOperationTest extends DualRepositoryTestCase {
 
 		project.accept(new IResourceVisitor() {
 
+			@Override
 			public boolean visit(IResource resource) throws CoreException {
 				if (resource instanceof IFile)
 					files.add((IFile) resource);
