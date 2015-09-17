@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_fd94084a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-09-17T19:03:26Z",
+      "side": 1,
+      "message": "This logic looks wrong. (Yes, already before your change.) Shouldn\u0027t this be\n\n  else {\n    closeMissingProject(p, projectFile, subMonitor.newChild(1));\n  }\n\n?",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 24
+      },
+      "revId": "a0060255df6b90b4e1d29649cae388d59d5d4abc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
