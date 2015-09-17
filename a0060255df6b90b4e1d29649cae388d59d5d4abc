@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "2721e7e2_1d3e3c77",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-17T21:34:41Z",
+      "side": 1,
+      "message": "why ?\n\nYou link a bug which links multiple bugs which have a lot of text, this can help to dig up the details. But if the commit message itself doesn\u0027t explain the reason for the change it can take a lot of time to understand why the change is done. If a developer is offline this hurts even more.\n\nHence the commit message should always explain the gist of why the change is done. This helps to quickly understand the motivation for the change.",
+      "revId": "a0060255df6b90b4e1d29649cae388d59d5d4abc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_7d2c984b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-17T21:34:41Z",
+      "side": 1,
+      "message": "what about the other occurrences ?",
+      "revId": "a0060255df6b90b4e1d29649cae388d59d5d4abc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_fd94084a",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
         "patchSetId": 1
