@@ -41,6 +41,7 @@ abstract public class AbstractGitFlowOperationTest extends GitTestCase {
 
 	protected static final String MY_HOTFIX = "myHotfix";
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -50,6 +51,7 @@ abstract public class AbstractGitFlowOperationTest extends GitTestCase {
 		testRepository.connect(project.getProject());
 	}
 
+	@Override
 	@After
 	public void tearDown() throws Exception {
 		testRepository.dispose();

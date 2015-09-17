@@ -442,6 +442,7 @@ class TestDecoratableResource extends DecoratableResource {
 		return this;
 	}
 
+	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof IDecoratableResource))
 			return false;
@@ -465,6 +466,7 @@ class TestDecoratableResource extends DecoratableResource {
 		return true;
 	}
 
+	@Override
 	public int hashCode() {
 		// this appeases FindBugs
 		return super.hashCode();

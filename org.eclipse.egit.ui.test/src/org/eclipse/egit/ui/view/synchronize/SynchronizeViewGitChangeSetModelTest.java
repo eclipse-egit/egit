@@ -310,6 +310,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 
 		// when
 		Display.getDefault().syncExec(new Runnable() {
+			@Override
 			public void run() {
 				CommonUtils.runCommand("org.eclipse.compare.copyLeftToRight",
 						null);
@@ -337,6 +338,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 
 		// when
 		Display.getDefault().syncExec(new Runnable() {
+			@Override
 			public void run() {
 				CommonUtils.runCommand("org.eclipse.compare.copyRightToLeft",
 						null);

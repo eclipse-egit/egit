@@ -21,15 +21,18 @@ import org.eclipse.team.core.history.provider.FileHistoryProvider;
  * specific versions of a tracked resource.
  */
 public class GitFileHistoryProvider extends FileHistoryProvider {
+	@Override
 	public IFileHistory getFileHistoryFor(IResource resource, int flags,
 			IProgressMonitor monitor) {
 		return new GitFileHistory(resource, flags, monitor);
 	}
 
+	@Override
 	public IFileRevision getWorkspaceFileRevision(IResource resource) {
 		return new WorkspaceFileRevision(resource);
 	}
 
+	@Override
 	public IFileHistory getFileHistoryFor(IFileStore store, int flags,
 			IProgressMonitor monitor) {
 		// TODO: implement getFileHistoryFor(IFileStore ...)

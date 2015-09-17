@@ -35,6 +35,7 @@ public final class ReleaseStartFromCommitHandler extends SelectionAdapter {
 		releaseStartHandler = new ReleaseStartHandler();
 	}
 
+	@Override
 	public void widgetSelected(SelectionEvent e) {
 		releaseStartHandler.doExecute(gfRepo, startCommitSha1, activeShell);
 	}

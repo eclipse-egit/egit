@@ -186,6 +186,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 			assertEquals("ToBeDeleted", showUndeleted.bot().tree()
 					.getAllItems()[0].getItems()[0].getItems()[0].getText());
 			Display.getDefault().syncExec(new Runnable() {
+				@Override
 				public void run() {
 					assertSame(folderImage, showUndeleted.bot().tree()
 							.getAllItems()[0].widget.getImage());
@@ -218,6 +219,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 			assertEquals("ToBeDeleted", showUndeleted.bot().tree()
 					.getAllItems()[0].getItems()[0].getItems()[0].getText());
 			Display.getDefault().syncExec(new Runnable() {
+				@Override
 				public void run() {
 					assertSame(projectImage, showUndeleted.bot().tree()
 							.getAllItems()[0].widget.getImage());
@@ -226,14 +228,17 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 
 			ICondition treeEmpty = new ICondition() {
 
+				@Override
 				public boolean test() throws Exception {
 					return showUndeleted.bot().tree().getAllItems().length == 0;
 				}
 
+				@Override
 				public void init(SWTBot actBot) {
 					// nothing
 				}
 
+				@Override
 				public String getFailureMessage() {
 					return "Not deleted";
 				}

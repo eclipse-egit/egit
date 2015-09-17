@@ -65,9 +65,11 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 		return this;
 	}
 
+	@Override
 	public void execute(final IProgressMonitor monitor) throws CoreException {
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
+			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
 				pm.beginTask("", 3); //$NON-NLS-1$
 				Git git = Git.wrap(repository);
@@ -124,6 +126,7 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 				monitor != null ? monitor : new NullProgressMonitor());
 	}
 
+	@Override
 	public ISchedulingRule getSchedulingRule() {
 		return ResourcesPlugin.getWorkspace().getRoot();
 	}

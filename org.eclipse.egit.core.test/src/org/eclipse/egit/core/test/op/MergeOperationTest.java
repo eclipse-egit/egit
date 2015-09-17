@@ -39,6 +39,7 @@ public class MergeOperationTest extends GitTestCase {
 	private TestRepository testRepository;
 	private RevCommit secondCommit;
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -57,6 +58,7 @@ public class MergeOperationTest extends GitTestCase {
 		testRepository.checkoutBranch(SIDE);
 	}
 
+	@Override
 	@After
 	public void tearDown() throws Exception {
 		testRepository.dispose();

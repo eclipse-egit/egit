@@ -153,6 +153,7 @@ public class TraceConfigurationDialogTest {
 
 	private void getDialog() {
 		Display.getDefault().syncExec(new Runnable() {
+			@Override
 			public void run() {
 				if (configurationDialog != null)
 					configurationDialog.close();

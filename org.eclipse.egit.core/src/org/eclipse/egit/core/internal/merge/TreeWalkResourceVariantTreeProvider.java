@@ -145,22 +145,27 @@ public class TreeWalkResourceVariantTreeProvider implements
 		knownResources.addAll(theirsCache.getKnownResources());
 	}
 
+	@Override
 	public IResourceVariantTree getBaseTree() {
 		return baseTree;
 	}
 
+	@Override
 	public IResourceVariantTree getRemoteTree() {
 		return theirsTree;
 	}
 
+	@Override
 	public IResourceVariantTree getSourceTree() {
 		return oursTree;
 	}
 
+	@Override
 	public Set<IResource> getKnownResources() {
 		return knownResources;
 	}
 
+	@Override
 	public Set<IResource> getRoots() {
 		return roots;
 	}

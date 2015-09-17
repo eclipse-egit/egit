@@ -42,6 +42,7 @@ public class ResetOperationTest extends GitTestCase {
 
 	IFile fileInIndex;
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -49,6 +50,7 @@ public class ResetOperationTest extends GitTestCase {
 		repository = testRepository.getRepository();
 	}
 
+	@Override
 	@After
 	public void tearDown() throws Exception {
 		testRepository.dispose();

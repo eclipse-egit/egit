@@ -66,6 +66,7 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 		resourcesToUpdate = new HashSet<IResource>();
 	}
 
+	@Override
 	public boolean visit(IResourceDelta delta) throws CoreException {
 		final IResource resource = delta.getResource();
 		if (resource.getType() == IResource.ROOT) {

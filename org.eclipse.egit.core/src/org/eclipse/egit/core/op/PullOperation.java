@@ -71,6 +71,7 @@ public class PullOperation implements IEGitOperation {
 				.size()]);
 	}
 
+	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
 		if (!results.isEmpty())
 			throw new CoreException(new Status(IStatus.ERROR, Activator
@@ -83,6 +84,7 @@ public class PullOperation implements IEGitOperation {
 		monitor.beginTask(NLS.bind(CoreText.PullOperation_TaskName, Integer
 				.valueOf(repositories.length)), repositories.length * 2);
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
+			@Override
 			public void run(IProgressMonitor mymonitor) throws CoreException {
 				for (int i = 0; i < repositories.length; i++) {
 					Repository repository = repositories[i];
@@ -154,6 +156,7 @@ public class PullOperation implements IEGitOperation {
 		return this.results;
 	}
 
+	@Override
 	public ISchedulingRule getSchedulingRule() {
 		return RuleUtil.getRuleForRepositories(Arrays.asList(repositories));
 	}

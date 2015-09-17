@@ -258,6 +258,7 @@ public class TestUtil {
 		} else {
 			// synchronously refresh UI
 			PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+				@Override
 				public void run() {
 					processUIEvents();
 				}
@@ -301,6 +302,7 @@ public class TestUtil {
 			throws TimeoutException {
 		bot.waitUntil(new ICondition() {
 
+			@Override
 			public boolean test() throws Exception {
 				for (SWTBotTreeItem item : tree.getAllItems())
 					if (item.getText().contains(text))
@@ -308,10 +310,12 @@ public class TestUtil {
 				return false;
 			}
 
+			@Override
 			public void init(SWTBot bot2) {
 				// empty
 			}
 
+			@Override
 			public String getFailureMessage() {
 				return null;
 			}
@@ -331,6 +335,7 @@ public class TestUtil {
 			throws TimeoutException {
 		bot.waitUntil(new ICondition() {
 
+			@Override
 			public boolean test() throws Exception {
 				for (SWTBotTreeItem item : treeItem.getItems())
 					if (item.getText().contains(text))
@@ -338,10 +343,12 @@ public class TestUtil {
 				return false;
 			}
 
+			@Override
 			public void init(SWTBot bot2) {
 				// empty
 			}
 
+			@Override
 			public String getFailureMessage() {
 				return null;
 			}
@@ -362,14 +369,17 @@ public class TestUtil {
 			throws TimeoutException {
 		bot.waitUntil(new ICondition() {
 
+			@Override
 			public boolean test() throws Exception {
 				return tree.selection().get(0, 0).equals(text);
 			}
 
+			@Override
 			public void init(SWTBot bot2) {
 				// empty
 			}
 
+			@Override
 			public String getFailureMessage() {
 				return null;
 			}
@@ -388,16 +398,19 @@ public class TestUtil {
 			final String text, long timeout) throws TimeoutException {
 		bot.waitUntil(new ICondition() {
 
+			@Override
 			public boolean test() throws Exception {
 				if (table.indexOf(text)<0)
 					return false;
 				return true;
 			}
 
+			@Override
 			public void init(SWTBot bot2) {
 				// empty
 			}
 
+			@Override
 			public String getFailureMessage() {
 				return null;
 			}
@@ -408,14 +421,17 @@ public class TestUtil {
 			final SWTBotEditor editor, long timeout) {
 		bot.waitUntil(new ICondition() {
 
+			@Override
 			public boolean test() throws Exception {
 				return editor.isActive();
 			}
 
+			@Override
 			public void init(SWTBot bot2) {
 				// empty
 			}
 
+			@Override
 			public String getFailureMessage() {
 				return null;
 			}
@@ -620,12 +636,14 @@ public class TestUtil {
 
 	public static void waitUntilViewWithGivenIdShows(final String viewId) {
 		waitForView(new BaseMatcher<IViewReference>() {
+			@Override
 			public boolean matches(Object item) {
 				if (item instanceof IViewReference)
 					return viewId.equals(((IViewReference) item).getId());
 				return false;
 			}
 
+			@Override
 			public void describeTo(Description description) {
 				description.appendText("Wait for view with ID=" + viewId);
 			}
@@ -634,6 +652,7 @@ public class TestUtil {
 
 	public static void waitUntilViewWithGivenTitleShows(final String viewTitle) {
 		waitForView(new BaseMatcher<IViewReference>() {
+			@Override
 			public boolean matches(Object item) {
 				if (item instanceof IViewReference)
 					return viewTitle.equals(((IViewReference) item).getTitle());
@@ -641,6 +660,7 @@ public class TestUtil {
 				return false;
 			}
 
+			@Override
 			public void describeTo(Description description) {
 				description.appendText("Wait for view with title " + viewTitle);
 			}
@@ -657,6 +677,7 @@ public class TestUtil {
 				return title != null && title.startsWith(titlePrefix);
 			}
 
+			@Override
 			public void describeTo(Description description) {
 				description.appendText("Shell with title starting with '"
 						+ titlePrefix + "'");
@@ -669,6 +690,7 @@ public class TestUtil {
 
 	public static SWTBotView showView(final String viewId) {
 		Display.getDefault().syncExec(new Runnable() {
+			@Override
 			public void run() {
 				IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow();
@@ -692,6 +714,7 @@ public class TestUtil {
 
 	public static void hideView(final String viewId) {
 		Display.getDefault().syncExec(new Runnable() {
+			@Override
 			public void run() {
 				IWorkbenchWindow[] windows = PlatformUI.getWorkbench()
 						.getWorkbenchWindows();

@@ -34,6 +34,7 @@ public class StashCreateOperationTest extends GitTestCase {
 
 	Repository repository;
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -45,6 +46,7 @@ public class StashCreateOperationTest extends GitTestCase {
 		testRepository.commit("initial commit");
 	}
 
+	@Override
 	@After
 	public void tearDown() throws Exception {
 		testRepository.dispose();

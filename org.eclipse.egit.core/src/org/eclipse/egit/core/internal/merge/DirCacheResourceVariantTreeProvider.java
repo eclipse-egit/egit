@@ -107,22 +107,27 @@ public class DirCacheResourceVariantTreeProvider implements
 		knownResources.addAll(remoteCache.getKnownResources());
 	}
 
+	@Override
 	public IResourceVariantTree getBaseTree() {
 		return baseTree;
 	}
 
+	@Override
 	public IResourceVariantTree getRemoteTree() {
 		return remoteTree;
 	}
 
+	@Override
 	public IResourceVariantTree getSourceTree() {
 		return sourceTree;
 	}
 
+	@Override
 	public Set<IResource> getKnownResources() {
 		return knownResources;
 	}
 
+	@Override
 	public Set<IResource> getRoots() {
 		return roots;
 	}
