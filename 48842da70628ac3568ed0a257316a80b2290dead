@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_f519c239",
+        "filename": "org.eclipse.egit.gitflow.ui/icons/obj16/git-flow_16x14.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-17T09:01:36Z",
+      "side": 1,
+      "message": "I feel that as standalone icon of this size the icon should have a smaller height, I tried to scale it to 16x10: http://imgur.com/6tdWY4V and think this looks better at this size",
+      "revId": "48842da70628ac3568ed0a257316a80b2290dead",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
