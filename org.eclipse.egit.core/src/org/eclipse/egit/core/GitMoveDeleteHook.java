@@ -31,7 +31,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
@@ -266,6 +266,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 		IProject destination = source.getWorkspace().getRoot()
 				.getProject(description.getName());
 		RepositoryMapping repositoryMapping = RepositoryMapping.create(destination, gitDir.toFile());
+		SubMonitor subMonitor = SubMonitor.convert(monitor, 50);
 		if (repositoryMapping != null) {
 			GitProjectData projectData = new GitProjectData(destination);
 			projectData.setRepositoryMappings(Arrays.asList(repositoryMapping));
@@ -273,7 +274,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 			GitProjectData.add(destination, projectData);
 			RepositoryProvider.map(destination, GitProvider.class.getName());
 			destination.refreshLocal(IResource.DEPTH_INFINITE,
-					new SubProgressMonitor(monitor, 50));
+					subMonitor.newChild(50));
 		}
 	}
 

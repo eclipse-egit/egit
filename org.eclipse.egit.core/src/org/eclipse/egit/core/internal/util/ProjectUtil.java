@@ -4,6 +4,7 @@
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2015, Lars Vogel<Lars.Vogel@vogella.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -34,7 +35,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.lib.Constants;
@@ -126,31 +127,29 @@ public class ProjectUtil {
 	 */
 	public static void refreshValidProjects(IProject[] projects,
 			boolean delete, IProgressMonitor monitor) throws CoreException {
-		try {
-			monitor.beginTask(CoreText.ProjectUtil_refreshingProjects,
-					projects.length);
-			for (IProject p : projects) {
-				if (monitor.isCanceled())
-					break;
-				IPath projectLocation = p.getLocation();
-				if (projectLocation == null)
-					continue;
-				String projectFilePath = projectLocation.append(
-						IProjectDescription.DESCRIPTION_FILE_NAME).toOSString();
-				File projectFile = new File(projectFilePath);
-				if (projectFile.exists())
-					p.refreshLocal(IResource.DEPTH_INFINITE,
-							new SubProgressMonitor(monitor, 1));
-				else if (delete)
-					p.delete(false, true, new SubProgressMonitor(monitor, 1));
-				else
-					closeMissingProject(p, projectFile, monitor);
-				monitor.worked(1);
-			}
-		} finally {
-			monitor.done();
+		SubMonitor subMonitor = SubMonitor.convert(monitor,
+				CoreText.ProjectUtil_refreshingProjects, projects.length);
+		for (IProject p : projects) {
+			if (subMonitor.isCanceled())
+				break;
+			IPath projectLocation = p.getLocation();
+			if (projectLocation == null)
+				continue;
+			String projectFilePath = projectLocation
+					.append(IProjectDescription.DESCRIPTION_FILE_NAME)
+					.toOSString();
+			File projectFile = new File(projectFilePath);
+			if (projectFile.exists())
+				p.refreshLocal(IResource.DEPTH_INFINITE,
+						subMonitor.newChild(1));
+			else if (delete)
+				p.delete(false, true, subMonitor.newChild(1));
+			else
+				closeMissingProject(p, projectFile, monitor);
+			subMonitor.worked(1);
 		}
 	}
+
 
 	/**
 	 * Close a project that has already been deleted on disk. This will fall
@@ -173,13 +172,15 @@ public class ProjectUtil {
 		// Create temporary .project file so it can be closed
 		boolean closeFailed = false;
 		File projectRoot = projectFile.getParentFile();
+
+		SubMonitor subMonitor = SubMonitor.convert(monitor, 1);
 		if (!projectRoot.isFile()) {
 			boolean hasRoot = projectRoot.exists();
 			try {
 				if (!hasRoot)
 					FileUtils.mkdirs(projectRoot, true);
 				if (projectFile.createNewFile())
-					p.close(new SubProgressMonitor(monitor, 1));
+					p.close(subMonitor.newChild(1));
 				else
 					closeFailed = true;
 			} catch (IOException e) {
@@ -205,7 +206,7 @@ public class ProjectUtil {
 			closeFailed = true;
 		// Delete projects that can't be closed
 		if (closeFailed)
-			p.delete(false, true, new SubProgressMonitor(monitor, 1));
+			p.delete(false, true, subMonitor.newChild(1));
 	}
 
 	/**
@@ -218,19 +219,14 @@ public class ProjectUtil {
 	 */
 	public static void refreshResources(IResource[] resources,
 			IProgressMonitor monitor) throws CoreException {
-		try {
-			monitor.beginTask(CoreText.ProjectUtil_refreshing,
-					resources.length);
+		SubMonitor subMonitor = SubMonitor.convert(monitor, CoreText.ProjectUtil_refreshing,
+				resources.length);
 			for (IResource resource : resources) {
-				if (monitor.isCanceled())
+				if (subMonitor.isCanceled())
 					break;
-				resource.refreshLocal(IResource.DEPTH_INFINITE,
-						new SubProgressMonitor(monitor, 1));
-				monitor.worked(1);
+			resource.refreshLocal(IResource.DEPTH_INFINITE,
+					subMonitor.newChild(1));
 			}
-		} finally {
-			monitor.done();
-		}
 	}
 
 	/**
