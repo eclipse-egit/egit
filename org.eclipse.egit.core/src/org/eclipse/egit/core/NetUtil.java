@@ -29,20 +29,24 @@ import org.eclipse.jgit.lib.Repository;
 public class NetUtil {
 
 	private static TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+		@Override
 		public X509Certificate[] getAcceptedIssuers() {
 			return null;
 		}
 
+		@Override
 		public void checkClientTrusted(X509Certificate[] certs, String authType) {
 			// no check
 		}
 
+		@Override
 		public void checkServerTrusted(X509Certificate[] certs, String authType) {
 			// no check
 		}
 	} };
 
 	private static HostnameVerifier trustAllHostNames = new HostnameVerifier() {
+		@Override
 		public boolean verify(String hostname, SSLSession session) {
 			// always accept
 			return true;

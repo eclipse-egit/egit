@@ -44,6 +44,7 @@ public class RebaseInteractivePlanTest extends GitTestCase {
 
 	private TestRepository testRepository;
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -56,6 +57,7 @@ public class RebaseInteractivePlanTest extends GitTestCase {
 		moveHelper = new RebaseInteractivePlan.MoveHelper(toDoElements, plan);
 	}
 
+	@Override
 	@After
 	public void tearDown() throws Exception {
 		plan.dispose();

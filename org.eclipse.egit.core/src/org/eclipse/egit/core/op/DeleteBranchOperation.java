@@ -92,6 +92,7 @@ public class DeleteBranchOperation implements IEGitOperation {
 		return status;
 	}
 
+	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
 		IProgressMonitor monitor;
 		if (m == null)
@@ -100,6 +101,7 @@ public class DeleteBranchOperation implements IEGitOperation {
 			monitor = m;
 
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
+			@Override
 			public void run(IProgressMonitor actMonitor) throws CoreException {
 
 				String taskName;
@@ -145,6 +147,7 @@ public class DeleteBranchOperation implements IEGitOperation {
 				IWorkspace.AVOID_UPDATE, monitor);
 	}
 
+	@Override
 	public ISchedulingRule getSchedulingRule() {
 		return RuleUtil.getRule(repository);
 	}

@@ -130,10 +130,12 @@ public class DiscardChangesOperation implements IEGitOperation {
 	 *
 	 * @see org.eclipse.egit.core.op.IEGitOperation#getSchedulingRule()
 	 */
+	@Override
 	public ISchedulingRule getSchedulingRule() {
 		return schedulingRule;
 	}
 
+	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
 		IProgressMonitor monitor;
 		if (m == null)
@@ -141,6 +143,7 @@ public class DiscardChangesOperation implements IEGitOperation {
 		else
 			monitor = m;
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
+			@Override
 			public void run(IProgressMonitor actMonitor) throws CoreException {
 				discardChanges(actMonitor);
 			}

@@ -33,6 +33,7 @@ public class CommitUtilTest extends GitTestCase {
 
 	private RevCommit commit3;
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -53,6 +54,7 @@ public class CommitUtilTest extends GitTestCase {
 				"commit 3");
 	}
 
+	@Override
 	@After
 	public void tearDown() throws Exception {
 		testRepository.dispose();

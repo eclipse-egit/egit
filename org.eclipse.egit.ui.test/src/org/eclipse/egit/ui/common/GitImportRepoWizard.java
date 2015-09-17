@@ -107,6 +107,7 @@ public class GitImportRepoWizard {
 	private void pressAltAndChar(final SWTBotShell shell, final char charToPress) {
 		final Display display = Display.getDefault();
 		display.syncExec(new Runnable() {
+			@Override
 			public void run() {
 				Event evt = new Event();
 				// Alt down

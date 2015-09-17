@@ -162,6 +162,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		plugin = a;
 	}
 
+	@Override
 	public void start(final BundleContext context) throws Exception {
 
 		super.start(context);
@@ -197,6 +198,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		if (preDeleteProjectListener == null) {
 			preDeleteProjectListener = new IResourceChangeListener() {
 
+				@Override
 				public void resourceChanged(IResourceChangeEvent event) {
 					IResource resource = event.getResource();
 					if (resource instanceof IProject) {
@@ -229,6 +231,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		}
 	}
 
+	@Override
 	public void optionsChanged(DebugOptions options) {
 		// initialize the trace stuff
 		GitTraceLocation.initializeFromOptions(options, isDebugging());
@@ -306,6 +309,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		return secureStore;
 	}
 
+	@Override
 	public void stop(final BundleContext context) throws Exception {
 		GitProjectData.detachFromWorkspace();
 		repositoryCache = null;
@@ -359,6 +363,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 							true));
 		}
 
+		@Override
 		public void resourceChanged(IResourceChangeEvent event) {
 			if (!doAutoShare()) {
 				return;
@@ -366,6 +371,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 			try {
 				final Set<IProject> projectCandidates = new LinkedHashSet<>();
 				event.getDelta().accept(new IResourceDeltaVisitor() {
+					@Override
 					public boolean visit(IResourceDelta delta)
 							throws CoreException {
 						return collectOpenedProjects(delta,
@@ -543,6 +549,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 			IResourceChangeListener {
 
 
+		@Override
 		public void resourceChanged(IResourceChangeEvent event) {
 			try {
 				IResourceDelta d = event.getDelta();
@@ -554,6 +561,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 
 				d.accept(new IResourceDeltaVisitor() {
 
+					@Override
 					public boolean visit(IResourceDelta delta)
 							throws CoreException {
 						if ((delta.getKind() & (IResourceDelta.ADDED | IResourceDelta.CHANGED)) == 0)

@@ -56,6 +56,7 @@ import org.junit.Before;
 public abstract class ModelTestCase extends GitTestCase {
 	protected static final String SAMPLE_FILE_EXTENSION = SampleModelProvider.SAMPLE_FILE_EXTENSION;
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();

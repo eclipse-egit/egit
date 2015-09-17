@@ -40,6 +40,7 @@ public class EditCommitOperationTest extends GitTestCase {
 
 	private RevCommit secondCommit;
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -58,6 +59,7 @@ public class EditCommitOperationTest extends GitTestCase {
 				.addAndCommit(project.getProject(), file, "second commit");
 	}
 
+	@Override
 	@After
 	public void tearDown() throws Exception {
 		testRepository.dispose();

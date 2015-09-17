@@ -65,10 +65,12 @@ public class SquashCommitsOperation implements IEGitOperation {
 		this.messageHandler = messageHandler;
 	}
 
+	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
 		IProgressMonitor monitor = m != null ? m : new NullProgressMonitor();
 
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
+			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
 				pm.beginTask("", 2); //$NON-NLS-1$
 
@@ -77,6 +79,7 @@ public class SquashCommitsOperation implements IEGitOperation {
 						Integer.valueOf(commits.size())));
 
 				InteractiveHandler handler = new InteractiveHandler() {
+					@Override
 					public void prepareSteps(List<RebaseTodoLine> steps) {
 						RevCommit firstCommit = commits.get(0);
 						for (RebaseTodoLine step : steps) {
@@ -102,6 +105,7 @@ public class SquashCommitsOperation implements IEGitOperation {
 						return false;
 					}
 
+					@Override
 					public String modifyCommitMessage(String oldMessage) {
 						return messageHandler.modifyCommitMessage(oldMessage);
 					}
@@ -135,6 +139,7 @@ public class SquashCommitsOperation implements IEGitOperation {
 				IWorkspace.AVOID_UPDATE, monitor);
 	}
 
+	@Override
 	public ISchedulingRule getSchedulingRule() {
 		return RuleUtil.getRule(repository);
 	}

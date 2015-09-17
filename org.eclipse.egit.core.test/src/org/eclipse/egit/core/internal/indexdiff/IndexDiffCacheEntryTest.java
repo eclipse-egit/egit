@@ -113,6 +113,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 		cleanEntryFlags();
 
 		ResourcesPlugin.getWorkspace().run(new IWorkspaceRunnable() {
+			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				try {
 					project.createFile("bla", "bla\n".getBytes("UTF-8"));
@@ -132,6 +133,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 		cleanEntryFlags();
 
 		ResourcesPlugin.getWorkspace().run(new IWorkspaceRunnable() {
+			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				try {
 					project.createFile("blip", "blip\n".getBytes("UTF-8"));
@@ -149,6 +151,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 		cleanEntryFlags();
 
 		ResourcesPlugin.getWorkspace().run(new IWorkspaceRunnable() {
+			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				try {
 					project.createFile(".gitignore", "\n".getBytes("UTF-8"));
@@ -194,6 +197,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 		return entry;
 	}
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -201,6 +205,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 		repository = testRepository.getRepository();
 	}
 
+	@Override
 	@After
 	public void tearDown() throws Exception {
 		entry.dispose();
@@ -237,6 +242,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 			return filesToUpdate.size() > MAX_FILES_FOR_UPDATE;
 		}
 
+		@Override
 		public IndexDiffUpdateJob getUpdateJob() {
 			return super.getUpdateJob();
 		}

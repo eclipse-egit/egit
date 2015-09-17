@@ -434,6 +434,7 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		final AtomicBoolean changed = new AtomicBoolean();
 		ConfigChangedListener listener =
 		new ConfigChangedListener() {
+			@Override
 			public void onConfigChanged(ConfigChangedEvent event) {
 				changed.set(true);
 			}

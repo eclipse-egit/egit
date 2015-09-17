@@ -55,6 +55,7 @@ public class HistoryTest extends GitTestCase {
 	private File workDir;
 	private Repository thisGit;
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();

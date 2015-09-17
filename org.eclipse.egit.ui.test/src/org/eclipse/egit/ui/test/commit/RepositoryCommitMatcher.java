@@ -44,6 +44,7 @@ public final class RepositoryCommitMatcher extends
 		return true;
 	}
 
+	@Override
 	public void describeTo(Description description) {
 		description.appendText("commit id=")
 				.appendValue(wanted.abbreviate())

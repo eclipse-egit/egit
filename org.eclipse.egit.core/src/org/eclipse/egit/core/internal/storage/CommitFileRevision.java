@@ -62,14 +62,17 @@ public class CommitFileRevision extends GitFileRevision implements
 		blobId = blob;
 	}
 
+	@Override
 	public Repository getRepository() {
 		return db;
 	}
 
+	@Override
 	public String getGitPath() {
 		return path;
 	}
 
+	@Override
 	public IStorage getStorage(final IProgressMonitor monitor)
 			throws CoreException {
 		if (blobId == null)
@@ -77,26 +80,32 @@ public class CommitFileRevision extends GitFileRevision implements
 		return new CommitBlobStorage(db, path, blobId, commit);
 	}
 
+	@Override
 	public long getTimestamp() {
 		return author != null ? author.getWhen().getTime() : 0;
 	}
 
+	@Override
 	public String getContentIdentifier() {
 		return commit.getId().name();
 	}
 
+	@Override
 	public String getAuthor() {
 		return author != null ? author.getName() : null;
 	}
 
+	@Override
 	public String getComment() {
 		return commit.getShortMessage();
 	}
 
+	@Override
 	public String toString() {
 		return commit.getId() + ":" + path;  //$NON-NLS-1$
 	}
 
+	@Override
 	public ITag[] getTags() {
 		final Collection<GitTag> ret = new ArrayList<GitTag>();
 		for (final Map.Entry<String, Ref> tag : db.getTags().entrySet()) {

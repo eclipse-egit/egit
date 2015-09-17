@@ -235,6 +235,7 @@ public class CreatePatchActionTest extends LocalRepositoryTestCase {
 	private static void assertClipboard(final String expected) {
 		final String[] value = { null };
 		Display.getDefault().syncExec(new Runnable() {
+			@Override
 			public void run() {
 				Clipboard clp = new Clipboard(Display.getCurrent());
 				value[0] = (String) clp.getContents(TextTransfer.getInstance());

@@ -33,6 +33,7 @@ public class ActiveTaskBranchNameProvider implements IBranchNameProvider {
 		return TasksUi.getTaskActivityManager().getActiveTask();
 	}
 
+	@Override
 	public String getBranchNameSuggestion() {
 		ITask task = getCurrentTask();
 		if (task == null)
