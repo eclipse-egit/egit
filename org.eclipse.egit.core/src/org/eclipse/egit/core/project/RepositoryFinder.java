@@ -25,7 +25,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
@@ -131,48 +131,42 @@ public class RepositoryFinder {
 		return results;
 	}
 
-	private void find(final IProgressMonitor m, final IContainer c, boolean searchLinkedFolders)
-				throws CoreException {
+	private void find(final IProgressMonitor monitor, final IContainer c,
+			boolean searchLinkedFolders) throws CoreException {
 		if (!searchLinkedFolders && c.isLinked())
 			return; // Ignore linked folders
 		final IPath loc = c.getLocation();
+		SubMonitor subMonitor = SubMonitor.convert(monitor, 101);
+		subMonitor.setTaskName(CoreText.RepositoryFinder_finding);
+		if (loc == null) {
+			throw new CoreException(Activator.error(
+					NLS.bind(CoreText.RepositoryFinder_ResourceDoesNotExist, c),
+					null));
+		}
+		final File fsLoc = loc.toFile();
+		assert fsLoc.isAbsolute();
 
-		m.beginTask("", 101);  //$NON-NLS-1$
-		m.subTask(CoreText.RepositoryFinder_finding);
-		try {
-			if (loc == null) {
-				throw new CoreException(Activator.error(
-						NLS.bind(CoreText.RepositoryFinder_ResourceDoesNotExist,
-								c),
-						null));
-			}
-			final File fsLoc = loc.toFile();
-			assert fsLoc.isAbsolute();
+		if (c instanceof IProject)
+			findInDirectoryAndParents(c, fsLoc);
+		else
+			findInDirectory(c, fsLoc);
+		subMonitor.worked(1);
 
-			if (c instanceof IProject)
-				findInDirectoryAndParents(c, fsLoc);
-			else
-				findInDirectory(c, fsLoc);
-			m.worked(1);
-
-			if (findInChildren) {
-				final IResource[] children = c.members();
-				if (children != null && children.length > 0) {
-					final int scale = 100 / children.length;
-					for (int k = 0; k < children.length; k++) {
-						final IResource o = children[k];
-						if (o instanceof IContainer
-								&& !o.getName().equals(Constants.DOT_GIT)) {
-							find(new SubProgressMonitor(m, scale),
-									(IContainer) o, searchLinkedFolders);
-						} else {
-							m.worked(scale);
-						}
+		if (findInChildren) {
+			final IResource[] children = c.members();
+			if (children != null && children.length > 0) {
+				final int scale = 100 / children.length;
+				for (int k = 0; k < children.length; k++) {
+					final IResource o = children[k];
+					if (o instanceof IContainer
+							&& !o.getName().equals(Constants.DOT_GIT)) {
+						find(subMonitor.newChild(scale), (IContainer) o,
+								searchLinkedFolders);
+					} else {
+						subMonitor.worked(scale);
 					}
 				}
 			}
-		} finally {
-			m.done();
 		}
 	}
 
