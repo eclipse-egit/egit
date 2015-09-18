@@ -3,6 +3,7 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2012, Matthias Sohn <matthias.sohn@sap.com>
+ * Copyright (C) 2015, Philipp Bumann <bumannp@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -32,7 +33,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.RepositoryCache;
@@ -430,7 +431,8 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 				workspace.run(new IWorkspaceRunnable() {
 					@Override
 					public void run(IProgressMonitor m) throws CoreException {
-						m.beginTask(UIText.Activator_refreshingProjects,
+						SubMonitor subMonitor = SubMonitor.convert(m,
+								UIText.Activator_refreshingProjects,
 								toRefresh.size());
 						for (IProject p : toRefresh) {
 							if (m.isCanceled()) {
@@ -441,7 +443,8 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 								getJobManager().beginRule(rule, m);
 								// handle missing projects after branch switch
 								if (p.isAccessible()) {
-									p.refreshLocal(IResource.DEPTH_INFINITE, new SubProgressMonitor(m, 1));
+									p.refreshLocal(IResource.DEPTH_INFINITE,
+											subMonitor);
 								}
 							} catch (CoreException e) {
 								handleError(UIText.Activator_refreshFailed, e, false);
