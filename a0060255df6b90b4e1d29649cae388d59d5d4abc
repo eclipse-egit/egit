@@ -56,6 +56,30 @@
       "revId": "a0060255df6b90b4e1d29649cae388d59d5d4abc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_4039ebf9",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2015-09-18T07:49:16Z",
+      "side": 1,
+      "message": "Thanks Thomas, I will update the review",
+      "parentUuid": "2721e7e2_fd94084a",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 24
+      },
+      "revId": "a0060255df6b90b4e1d29649cae388d59d5d4abc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
