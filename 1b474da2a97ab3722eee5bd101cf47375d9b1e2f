@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_91585382",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2015-09-18T20:10:59Z",
+      "side": 1,
+      "message": "subMonitor.newChild",
+      "revId": "1b474da2a97ab3722eee5bd101cf47375d9b1e2f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
