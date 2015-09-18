@@ -9,6 +9,7 @@
  *   Chris Aniszczyk <caniszczyk@gmail.com> - initial implementation
  *   EclipseSource - Filtered Viewer
  *   Robin Stocker <robin@nibor.org> - Show In support
+ *   Tobias Baumann <tobbaumann@gmail.com> - Bug 475836
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.reflog;
 
@@ -401,7 +402,13 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 				if (mapping != null)
 					selectedRepo = mapping.getRepository();
 			}
+			if (selectedRepo == null) {
+				selectedRepo = CommonUtils.getAdapter(
+						((IAdaptable) ssel.getFirstElement()),
+						Repository.class);
+			}
 		}
+
 		if (selectedRepo == null && first instanceof RepositoryTreeNode) {
 			RepositoryTreeNode repoNode = (RepositoryTreeNode) ssel
 					.getFirstElement();
