@@ -16,6 +16,24 @@
       "revId": "48842da70628ac3568ed0a257316a80b2290dead",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_80800303",
+        "filename": "org.eclipse.egit.gitflow.ui/icons/obj16/git-flow_16x14.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-09-18T07:53:41Z",
+      "side": 1,
+      "message": "Looks good.",
+      "parentUuid": "2721e7e2_f519c239",
+      "revId": "48842da70628ac3568ed0a257316a80b2290dead",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
