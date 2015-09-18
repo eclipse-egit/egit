@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2012, Markus Duft <markus.duft@salomon.at>
+ * Copyright (C) 2015, Philipp Bumann <bumannp@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,7 +17,7 @@ import java.util.TreeSet;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
@@ -258,7 +259,8 @@ public class CleanRepositoryPage extends WizardPage {
 				@Override
 				public void run(IProgressMonitor monitor) throws InvocationTargetException,
 						InterruptedException {
-					monitor.beginTask(UIText.CleanRepositoryPage_cleaningItems, IProgressMonitor.UNKNOWN);
+					SubMonitor subMonitor = SubMonitor.convert(monitor,
+							UIText.CleanRepositoryPage_cleaningItems, 1);
 
 					Git git = Git.wrap(repository);
 					CleanCommand command = git.clean().setDryRun(false);
@@ -273,12 +275,11 @@ public class CleanRepositoryPage extends WizardPage {
 
 					try {
 						IProject[] projects = ProjectUtil.getProjectsContaining(repository, itemsToClean);
-						ProjectUtil.refreshResources(projects, new SubProgressMonitor(monitor, 1));
+						ProjectUtil.refreshResources(projects,
+								subMonitor.newChild(1));
 					} catch (CoreException e) {
 						// could not refresh... not a "real" problem
 					}
-
-					monitor.done();
 				}
 			});
 		} catch (Exception e) {
