@@ -22,6 +22,46 @@
       "revId": "e557c8ea8c1c21b6c866aa153b822fc5229fa7e4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_acaee01a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryFinder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-09-19T19:43:49Z",
+      "side": 1,
+      "message": "Delete and pass on m.",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 15
+      },
+      "revId": "e557c8ea8c1c21b6c866aa153b822fc5229fa7e4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_8ca95c15",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryFinder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-09-19T19:43:49Z",
+      "side": 1,
+      "message": "On second thought, this logic is strange. scale \u003d\u003d 0 if children.length \u003e 100.\n\nWhy not create the monitor with 2 ticks above (line 139) and do here\n\n  subMonitor.setWorkRemaining(children.length);\n\nand then\n\n  subMonitor.newChild(1)\n\nin lines 163 and 166 below?",
+      "revId": "e557c8ea8c1c21b6c866aa153b822fc5229fa7e4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
