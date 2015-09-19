@@ -28,7 +28,11 @@ public class FinishFeatureDialog extends TitleAreaDialog {
 
 	private boolean squash;
 
+	private boolean keep;
+
 	private Button squashButton;
+
+	private Button keepButton;
 
 	private String featureBranch;
 
@@ -61,6 +65,9 @@ public class FinishFeatureDialog extends TitleAreaDialog {
 		squashButton = new Button(container, SWT.CHECK);
 		squashButton.setText(UIText.FinishFeatureDialog_squashCheck);
 
+		keepButton = new Button(container, SWT.CHECK);
+		keepButton.setText(UIText.FinishFeatureDialog_keepBranch);
+
 		return area;
 	}
 
@@ -82,7 +89,7 @@ public class FinishFeatureDialog extends TitleAreaDialog {
 
 	private void saveInput() {
 		this.squash = squashButton.getSelection();
-
+		this.keep = keepButton.getSelection();
 	}
 
 	@Override
@@ -96,5 +103,12 @@ public class FinishFeatureDialog extends TitleAreaDialog {
 	 */
 	public boolean isSquash() {
 		return squash;
+	}
+
+	/**
+	 * @return is keep
+	 */
+	public boolean isKeep() {
+		return keep;
 	}
 }

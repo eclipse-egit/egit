@@ -15,23 +15,13 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.util.Iterator;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.gitflow.GitFlowRepository;
-import org.eclipse.egit.gitflow.op.InitOperation;
-import org.eclipse.egit.gitflow.ui.Activator;
-import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
-import org.eclipse.egit.ui.test.ContextMenuHelper;
-import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.swtbot.eclipse.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
-import org.eclipse.ui.PlatformUI;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -39,7 +29,8 @@ import org.junit.runner.RunWith;
  * Tests for the Team->Gitflow->Feature Finish action with squash option
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
-public class FeatureFinishSquashHandlerTest extends AbstractGitflowHandlerTest {
+public class FeatureFinishSquashHandlerTest extends
+		AbstractFeatureFinishHandlerTest {
 
 	private static final String SQUASHED_COMMENT_SUMMARY = "Hello World";
 
@@ -88,33 +79,16 @@ public class FeatureFinishSquashHandlerTest extends AbstractGitflowHandlerTest {
 		return count;
 	}
 
-	private void finishFeature() {
-		final SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
-		getProjectItem(projectExplorerTree, PROJ1).select();
-		final String[] menuPath = new String[] {
-				util.getPluginLocalizedValue("TeamMenu.label"),
-				util.getPluginLocalizedValue("TeamGitFlowMenu.name", false, Activator.getDefault().getBundle()),
-				util.getPluginLocalizedValue("TeamGitFlowFeatureFinish.name", false, Activator.getDefault().getBundle()) };
-		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				ContextMenuHelper.clickContextMenuSync(projectExplorerTree, menuPath);
-			}
-		});
-		bot.checkBox(UIText.FinishFeatureDialog_squashCheck).click();
-		bot.button("OK").click();
+	@Override
+	protected void preFinish() {
 		int firstLine = 0;
 		bot.styledText().selectLine(firstLine);
 		bot.styledText().typeText(SQUASHED_COMMENT_SUMMARY);
 		bot.button("OK").click();
-		bot.waitUntil(Conditions.waitForJobs(JobFamilies.GITFLOW_FAMILY, "Git flow jobs"));
 	}
 
-	private void init() throws CoreException {
-		new InitOperation(repository).execute(null);
-	}
-
-	private void checkoutBranch(String branchToCheckout) throws CoreException {
-		new BranchOperation(repository, branchToCheckout).execute(null);
+	@Override
+	protected void selectOptions() {
+		bot.checkBox(UIText.FinishFeatureDialog_squashCheck).click();
 	}
 }

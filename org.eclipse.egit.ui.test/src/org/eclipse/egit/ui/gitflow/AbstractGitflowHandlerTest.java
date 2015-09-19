@@ -8,6 +8,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.gitflow;
 
+import static org.eclipse.jgit.lib.Constants.R_HEADS;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -26,6 +28,7 @@ import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.api.errors.NoMessageException;
 import org.eclipse.jgit.api.errors.UnmergedPathsException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
@@ -69,5 +72,9 @@ public abstract class AbstractGitflowHandlerTest extends LocalRepositoryTestCase
 	protected void checkoutFeature(String featureName) throws CoreException {
 		new FeatureCheckoutOperation(new GitFlowRepository(repository),
 				featureName).execute(null);
+	}
+
+	protected Ref findBranch(String branchName) throws IOException {
+		return repository.getRef(R_HEADS + branchName);
 	}
 }

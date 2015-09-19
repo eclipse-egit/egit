@@ -21,6 +21,8 @@ import org.eclipse.egit.gitflow.WrongGitFlowStateException;
 public final class FeatureFinishOperation extends AbstractFeatureOperation {
 	private boolean squash = false;
 
+	private boolean keep = false;
+
 	/**
 	 * Finish given feautre.
 	 *
@@ -47,7 +49,7 @@ public final class FeatureFinishOperation extends AbstractFeatureOperation {
 
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
-		finish(monitor, repository.getConfig().getFeatureBranchName(featureName), squash, true);
+		finish(monitor, repository.getConfig().getFeatureBranchName(featureName), squash, keep, true);
 	}
 
 	/**
@@ -56,6 +58,14 @@ public final class FeatureFinishOperation extends AbstractFeatureOperation {
 	 */
 	public void setSquash(boolean squash) {
 		this.squash = squash;
+	}
+
+	/**
+	 * @param keep
+	 * @since 4.1
+	 */
+	public void setKeep(boolean keep) {
+		this.keep = keep;
 	}
 
 }
