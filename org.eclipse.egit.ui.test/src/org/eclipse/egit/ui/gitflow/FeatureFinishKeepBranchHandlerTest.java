@@ -9,9 +9,10 @@
 package org.eclipse.egit.ui.gitflow;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
 
 import org.eclipse.egit.gitflow.GitFlowRepository;
+import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.junit.Test;
@@ -21,10 +22,11 @@ import org.junit.runner.RunWith;
  * Tests for the Team->Gitflow->Feature Start/Finish actions
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
-public class FeatureStartFinishHandlerTest extends AbstractFeatureFinishHandlerTest {
+public class FeatureFinishKeepBranchHandlerTest extends
+		AbstractFeatureFinishHandlerTest {
 
 	@Test
-	public void testFeatureStart() throws Exception {
+	public void testFeatureFinishKeepBranch() throws Exception {
 		init();
 
 		setContentAddAndCommit("bar");
@@ -42,11 +44,11 @@ public class FeatureStartFinishHandlerTest extends AbstractFeatureFinishHandlerT
 		RevCommit developHead = gfRepo.findHead();
 		assertEquals(developHead, featureBranchCommit);
 
-		assertNull(findBranch(gfRepo.getConfig().getFeatureBranchName(FEATURE_NAME)));
+		assertNotNull(findBranch(gfRepo.getConfig().getFeatureBranchName(FEATURE_NAME)));
 	}
 
 	@Override
 	protected void selectOptions() {
-		// do nothing
+		bot.checkBox(UIText.FinishFeatureDialog_keepBranch).click();
 	}
 }
