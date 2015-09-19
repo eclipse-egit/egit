@@ -10,7 +10,7 @@ package org.eclipse.egit.ui.gitflow;
 
 import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellIsActive;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.op.BranchOperation;
@@ -33,10 +33,10 @@ import org.junit.runner.RunWith;
  * Tests for the Team->Gitflow->Feature Start/Finish actions
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
-public class FeatureStartFinishHandlerTest extends AbstractGitflowHandlerTest {
+public class FeatureFinishKeepBranchHandlerTest extends AbstractGitflowHandlerTest {
 
 	@Test
-	public void testFeatureStart() throws Exception {
+	public void testFeatureFinishKeepBranch() throws Exception {
 		init();
 
 		setContentAddAndCommit("bar");
@@ -54,7 +54,7 @@ public class FeatureStartFinishHandlerTest extends AbstractGitflowHandlerTest {
 		RevCommit developHead = gfRepo.findHead();
 		assertEquals(developHead, featureBranchCommit);
 
-		assertNull(findBranch(gfRepo.getConfig().getFeatureBranchName(FEATURE_NAME)));
+		assertNotNull(findBranch(gfRepo.getConfig().getFeatureBranchName(FEATURE_NAME)));
 	}
 
 	private void finishFeature() {
@@ -70,34 +70,13 @@ public class FeatureStartFinishHandlerTest extends AbstractGitflowHandlerTest {
 				ContextMenuHelper.clickContextMenuSync(projectExplorerTree, menuPath);
 			}
 		});
+		bot.checkBox(UIText.FinishFeatureDialog_keepBranch).click();
 		bot.button("OK").click();
 		bot.waitUntil(Conditions.waitForJobs(JobFamilies.GITFLOW_FAMILY, "Git flow jobs"));
 	}
 
 	private void init() throws CoreException {
 		new InitOperation(repository).execute(null);
-	}
-
-	@Override
-	protected void createFeature(String featureName) {
-		final SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
-		getProjectItem(projectExplorerTree, PROJ1).select();
-		final String[] menuPath = new String[] {
-				util.getPluginLocalizedValue("TeamMenu.label"),
-				util.getPluginLocalizedValue("TeamGitFlowMenu.name", false, Activator.getDefault().getBundle()),
-				util.getPluginLocalizedValue("TeamGitFlowFeatureStart.name", false, Activator.getDefault().getBundle()) };
-
-		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				ContextMenuHelper.clickContextMenuSync(projectExplorerTree, menuPath);
-			}
-		});
-
-		bot.waitUntil(shellIsActive(UIText.FeatureStartHandler_provideFeatureName));
-		bot.text().typeText(featureName);
-		bot.button("OK").click();
-		bot.waitUntil(Conditions.waitForJobs(JobFamilies.GITFLOW_FAMILY, "Git flow jobs"));
 	}
 
 	@Override

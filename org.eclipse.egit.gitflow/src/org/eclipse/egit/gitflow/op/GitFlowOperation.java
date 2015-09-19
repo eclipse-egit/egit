@@ -109,11 +109,12 @@ abstract public class GitFlowOperation implements IEGitOperation {
 	 * @param branchName
 	 * @param squash
 	 * @param fastForwardSingleCommit Has no effect if {@code squash} is true.
+	 * @param keepBranch
 	 * @throws CoreException
 	 * @since 4.1
 	 */
 	protected void finish(IProgressMonitor monitor, String branchName,
-			boolean squash, boolean fastForwardSingleCommit)
+			boolean squash, boolean keepBranch, boolean fastForwardSingleCommit)
 			throws CoreException {
 		try {
 			mergeResult = mergeTo(monitor, branchName, repository.getConfig()
@@ -128,16 +129,19 @@ abstract public class GitFlowOperation implements IEGitOperation {
 						CoreText.GitFlowOperation_branchMissing, branchName));
 			}
 			boolean forceDelete = squash;
-			new DeleteBranchOperation(repository.getRepository(), branch, forceDelete)
-					.execute(monitor);
+
+			if (!keepBranch) {
+				new DeleteBranchOperation(repository.getRepository(), branch,
+						forceDelete).execute(monitor);
+			}
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	/**
-	 * Finish without squash and NO_FF for single commit branches:
-	 * {@link org.eclipse.egit.gitflow.op.GitFlowOperation#finish(IProgressMonitor, String, boolean, boolean)}
+	 * Finish without squash, NO_FF and keep for single commit branches:
+	 * {@link org.eclipse.egit.gitflow.op.GitFlowOperation#finish(IProgressMonitor, String, boolean, boolean, boolean)}
 	 *
 	 * @param monitor
 	 * @param branchName
@@ -145,7 +149,7 @@ abstract public class GitFlowOperation implements IEGitOperation {
 	 */
 	protected void finish(IProgressMonitor monitor, String branchName)
 			throws CoreException {
-		finish(monitor, branchName, false, false);
+		finish(monitor, branchName, false, false, false);
 	}
 
 	/**

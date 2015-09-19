@@ -59,6 +59,7 @@ public final class ReleaseFinishOperation extends AbstractReleaseOperation {
 		safeCreateTag(monitor, repository.getConfig().getVersionTagPrefix() + versionName,
 				NLS.bind(CoreText.ReleaseFinishOperation_releaseOf, versionName));
 
-		finish(monitor, releaseBranchName, false /* TODO: squash should also be supported for releases */, false);
+		finish(monitor, releaseBranchName, false /* TODO: squash should also be supported for releases */
+				, false /* TODO: keep should also be supported for releases */, false);
 	}
 }
