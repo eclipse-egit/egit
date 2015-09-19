@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_0c8bacfc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-09-19T12:39:30Z",
+      "side": 1,
+      "message": "subMonitor",
+      "range": {
+        "startLine": 438,
+        "startChar": 11,
+        "endLine": 438,
+        "endChar": 12
+      },
+      "revId": "eb1eaf226bfb4462d40dbefd12786b38dbb4eed2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_6c7ea85e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-09-19T12:39:30Z",
+      "side": 1,
+      "message": "subMonitor",
+      "range": {
+        "startLine": 443,
+        "startChar": 40,
+        "endLine": 443,
+        "endChar": 41
+      },
+      "revId": "eb1eaf226bfb4462d40dbefd12786b38dbb4eed2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
