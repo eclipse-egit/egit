@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_d2912a5a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SWTCommit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-09-20T21:47:56Z",
+      "side": 1,
+      "message": "can be on the previous line",
+      "revId": "99afc6aff04a44df5c1e28f3507985c7c67e8447",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_729f9e68",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SWTCommit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-09-20T21:47:56Z",
+      "side": 1,
+      "message": "Introduces a new warning.",
+      "revId": "99afc6aff04a44df5c1e28f3507985c7c67e8447",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
