@@ -16,6 +16,24 @@
       "revId": "eda9b8e61bd75ebf13e504c7891678188f0fbd0d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2721e7e2_b2ff5671",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/HyperlinkSourceViewer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-20T21:55:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_1288e22c",
+      "revId": "eda9b8e61bd75ebf13e504c7891678188f0fbd0d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
