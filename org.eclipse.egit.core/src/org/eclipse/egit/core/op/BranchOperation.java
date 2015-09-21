@@ -4,6 +4,7 @@
  * Copyright (C) 2006, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2010, 2011, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2015, Stephan Hackstedt <stephan.hackstedt@googlemail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,8 +29,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
@@ -97,36 +97,29 @@ public class BranchOperation extends BaseOperation {
 
 	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
-		IProgressMonitor monitor;
-		if (m == null)
-			monitor = new NullProgressMonitor();
-		else
-			monitor = m;
-
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
 			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
-				preExecute(pm);
+				SubMonitor progress = SubMonitor.convert(pm, 4);
+				preExecute(progress.newChild(1));
 
 				IProject[] missing = getMissingProjects(target, ProjectUtil
 						.getValidOpenProjects(repository));
 
-				pm.beginTask(NLS.bind(
-						CoreText.BranchOperation_performingBranch, target),
-						missing.length > 0 ? 3 : 2);
+				progress.setTaskName(NLS.bind(
+						CoreText.BranchOperation_performingBranch, target));
+				progress.setWorkRemaining(missing.length > 0 ? 4 : 3);
 
 				if (missing.length > 0) {
-					SubProgressMonitor closeMonitor = new SubProgressMonitor(
-							pm, 1);
-					closeMonitor.beginTask("", missing.length); //$NON-NLS-1$
+					SubMonitor closeMonitor = progress.newChild(1);
+					closeMonitor.setWorkRemaining(missing.length);
 					for (IProject project : missing) {
 						closeMonitor.subTask(MessageFormat.format(
 								CoreText.BranchOperation_closingMissingProject,
 								project.getName()));
-						project.close(closeMonitor);
+						project.close(closeMonitor.newChild(1));
 					}
-					closeMonitor.done();
 				}
 
 				CheckoutCommand co = new Git(repository).checkout();
@@ -145,7 +138,7 @@ public class BranchOperation extends BaseOperation {
 				}
 				if (result.getStatus() == Status.NONDELETED)
 					retryDelete(result.getUndeletedList());
-				pm.worked(1);
+				progress.worked(1);
 
 				List<String> pathsToHandle = new ArrayList<String>();
 				pathsToHandle.addAll(co.getResult().getModifiedList());
@@ -154,17 +147,14 @@ public class BranchOperation extends BaseOperation {
 				IProject[] refreshProjects = ProjectUtil
 						.getProjectsContaining(repository, pathsToHandle);
 				ProjectUtil.refreshValidProjects(refreshProjects, delete,
-						new SubProgressMonitor(pm, 1));
-				pm.worked(1);
+						progress.newChild(1));
 
-				postExecute(pm);
-
-				pm.done();
+				postExecute(progress.newChild(1));
 			}
 		};
 		// lock workspace to protect working tree changes
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
-				IWorkspace.AVOID_UPDATE, monitor);
+				IWorkspace.AVOID_UPDATE, m);
 	}
 
 	@Override
