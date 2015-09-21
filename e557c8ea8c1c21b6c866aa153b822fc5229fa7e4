@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_9b006d3a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-09-21T15:26:22Z",
+      "side": 1,
+      "message": "I\u0027ll get back to it once you\u0027re done with these monitor changes. Don\u0027t think such an internal clean-up needed a bug report, does it?",
+      "parentUuid": "2721e7e2_d8694b19",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 48
+      },
+      "revId": "e557c8ea8c1c21b6c866aa153b822fc5229fa7e4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_acaee01a",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryFinder.java",
         "patchSetId": 3
