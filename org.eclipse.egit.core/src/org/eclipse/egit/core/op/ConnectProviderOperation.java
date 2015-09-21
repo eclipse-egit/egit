@@ -3,11 +3,15 @@
  * Copyright (C) 2008, Google Inc.
  * Copyright (C) 2009, Mykola Nikishov <mn@mn.com.ua>
  * Copyright (C) 2013, Matthias Sohn <matthias.sohn@sap.com>
+ * Copyright (C) 2015, Stephan Hackstedt <stephan.hackstedt@googlemail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Stephan Hackstedt - Bug 477695
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
@@ -31,7 +35,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.egit.core.Activator;
@@ -114,12 +118,13 @@ public class ConnectProviderOperation implements IEGitOperation {
 
 	private void connectProject(Entry<IProject, File> entry, MultiStatus ms,
 			IProgressMonitor monitor) throws CoreException {
+
 		IProject project = entry.getKey();
 
 		String taskName = NLS.bind(
 				CoreText.ConnectProviderOperation_ConnectingProject,
 				project.getName());
-		monitor.setTaskName(taskName);
+		SubMonitor progress = SubMonitor.convert(monitor, taskName, 220);
 
 		if (GitTraceLocation.CORE.isActive()) {
 			GitTraceLocation.getTrace()
@@ -129,12 +134,12 @@ public class ConnectProviderOperation implements IEGitOperation {
 		RepositoryFinder finder = new RepositoryFinder(project);
 		finder.setFindInChildren(false);
 		Collection<RepositoryMapping> repos = finder
-				.find(new SubProgressMonitor(monitor, 40));
+				.find(progress.newChild(40));
 		if (repos.isEmpty()) {
 			ms.add(Activator.error(NLS.bind(
 					CoreText.ConnectProviderOperation_NoRepositoriesError,
 					project.getName()), null));
-			monitor.worked(60);
+			progress.worked(60);
 			return;
 		}
 		RepositoryMapping actualMapping = findActualRepository(repos,
@@ -146,7 +151,7 @@ public class ConnectProviderOperation implements IEGitOperation {
 							entry.getValue().toString(), repos.toString() }),
 					null));
 
-			monitor.worked(60);
+			progress.worked(60);
 			return;
 		}
 		GitProjectData projectData = new GitProjectData(project);
@@ -164,10 +169,10 @@ public class ConnectProviderOperation implements IEGitOperation {
 			return;
 		}
 		RepositoryProvider.map(project, GitProvider.ID);
-		autoIgnoreDerivedResources(project, monitor);
+		autoIgnoreDerivedResources(project, progress);
 		project.refreshLocal(IResource.DEPTH_INFINITE,
-				new SubProgressMonitor(monitor, 50));
-		monitor.worked(10);
+				progress.newChild(50));
+		progress.worked(10);
 	}
 
 	private void deleteGitProvider(MultiStatus ms, IProject project) {
@@ -186,8 +191,7 @@ public class ConnectProviderOperation implements IEGitOperation {
 		List<IPath> paths = findDerivedResources(project);
 		if (paths.size() > 0) {
 			IgnoreOperation ignoreOp = new IgnoreOperation(paths);
-			IProgressMonitor subMonitor = new SubProgressMonitor(monitor, 1);
-			ignoreOp.execute(subMonitor);
+			ignoreOp.execute(SubMonitor.convert(monitor, 1).newChild(1));
 		}
 	}
 

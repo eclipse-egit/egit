@@ -3,11 +3,15 @@
  * Copyright (C) 2007, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Google Inc.
  * Copyright (C) 2014, Obeo
+ * Copyright (C) 2015, Stephan Hackstedt <stephan.hackstedt@googlemail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Stephan Hackstedt - Bug 477695
  *******************************************************************************/
 package org.eclipse.egit.core;
 
@@ -31,7 +35,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
@@ -263,6 +267,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 			final IProjectDescription description,
 			final IProgressMonitor monitor, IPath gitDir) throws CoreException,
 			TeamException {
+		SubMonitor progress = SubMonitor.convert(monitor, 100);
 		IProject destination = source.getWorkspace().getRoot()
 				.getProject(description.getName());
 		RepositoryMapping repositoryMapping = RepositoryMapping.create(destination, gitDir.toFile());
@@ -273,7 +278,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 			GitProjectData.add(destination, projectData);
 			RepositoryProvider.map(destination, GitProvider.class.getName());
 			destination.refreshLocal(IResource.DEPTH_INFINITE,
-					new SubProgressMonitor(monitor, 50));
+					progress.newChild(100));
 		}
 	}
 

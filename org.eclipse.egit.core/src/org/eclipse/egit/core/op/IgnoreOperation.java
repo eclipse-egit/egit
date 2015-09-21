@@ -2,11 +2,15 @@
  * Copyright (C) 2009, Alex Blewitt <alex.blewitt@gmail.com>
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2015, Stephan Hackstedt <stephan.hackstedt@googlemail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Stephan Hackstedt - Bug 477695
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
@@ -30,7 +34,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryUtil;
@@ -124,6 +128,7 @@ public class IgnoreOperation implements IEGitOperation {
 
 	private void addIgnore(IProgressMonitor monitor, IPath path)
 			throws UnsupportedEncodingException, CoreException, IOException {
+		SubMonitor progress = SubMonitor.convert(monitor, 100);
 		IPath parent = path.removeLastSegments(1);
 		IResource resource = ResourceUtil.getResourceForLocation(path);
 		IContainer container = null;
@@ -172,7 +177,7 @@ public class IgnoreOperation implements IEGitOperation {
 			IFile gitignore = container.getFile(new Path(
 					Constants.GITIGNORE_FILENAME));
 			entry = getEntry(gitignore.getLocation().toFile(), entry);
-			IProgressMonitor subMonitor = new SubProgressMonitor(monitor, 1);
+			IProgressMonitor subMonitor = progress.newChild(100);
 			ByteArrayInputStream entryBytes = asStream(entry);
 			if (gitignore.exists())
 				gitignore.appendContents(entryBytes, true, true, subMonitor);

@@ -1,15 +1,19 @@
 /*******************************************************************************
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2015, Stephan Hackstedt <stephan.hackstedt@googlemail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Stephan Hackstedt - Bug 477695
  *******************************************************************************/
 package org.eclipse.egit.core;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jgit.lib.ProgressMonitor;
 
 /** Create a new Git to Eclipse progress monitor. */
@@ -47,7 +51,7 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 		msg = name;
 		lastWorked = 0;
 		totalWork = total;
-		task = new SubProgressMonitor(root, 1000);
+		task = SubMonitor.convert(root);
 		if (totalWork == UNKNOWN)
 			task.beginTask(EMPTY_STRING, IProgressMonitor.UNKNOWN);
 		else
