@@ -3,6 +3,7 @@
  * Copyright (C) 2012, 2013 Tomasz Zarna <tzarna@gmail.com>
  * Copyright (C) 2014 Axel Richard <axel.richard@obeo.fr>
  * Copyright (C) 2015 Obeo
+ * Copyright (C) 2015, Stephan Hackstedt <stephan.hackstedt@googlemail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,6 +15,7 @@
  *    Tomasz Zarna (IBM) - merge squash, bug 382720
  *    Axel Richard (Obeo) - merge message, bug 422886
  *    Laurent Delaigue (Obeo) - use of preferred merge strategy
+ *    Stephan Hackstedt - bug 477695
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
@@ -28,7 +30,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
@@ -158,9 +160,10 @@ public class MergeOperation implements IEGitOperation {
 			@Override
 			public void run(IProgressMonitor mymonitor) throws CoreException {
 				IProject[] validProjects = ProjectUtil.getValidOpenProjects(repository);
-				mymonitor.beginTask(NLS.bind(CoreText.MergeOperation_ProgressMerge, refName), 3);
+				SubMonitor progress = SubMonitor.convert(mymonitor, NLS.bind(
+						CoreText.MergeOperation_ProgressMerge, refName), 3);
 				Git git = new Git(repository);
-				mymonitor.worked(1);
+				progress.worked(1);
 				MergeCommand merge = git.merge();
 				try {
 					Ref ref = repository.getRef(refName);
@@ -184,7 +187,7 @@ public class MergeOperation implements IEGitOperation {
 					merge.setMessage(message);
 				try {
 					mergeResult = merge.call();
-					mymonitor.worked(1);
+					progress.worked(1);
 					if (MergeResult.MergeStatus.NOT_SUPPORTED.equals(mergeResult.getMergeStatus()))
 						throw new TeamException(new Status(IStatus.INFO, Activator.getPluginId(), mergeResult.toString()));
 				} catch (NoHeadException e) {
@@ -197,9 +200,8 @@ public class MergeOperation implements IEGitOperation {
 				} catch (GitAPIException e) {
 					throw new TeamException(e.getLocalizedMessage(), e.getCause());
 				} finally {
-					ProjectUtil.refreshValidProjects(validProjects, new SubProgressMonitor(
-							mymonitor, 1));
-					mymonitor.done();
+					ProjectUtil.refreshValidProjects(validProjects,
+							progress.newChild(1));
 				}
 			}
 		};

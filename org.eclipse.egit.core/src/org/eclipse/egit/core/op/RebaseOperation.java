@@ -8,6 +8,7 @@
  * Contributors:
  *    Mathias Kinzler <mathias.kinzler@sap.com> - initial implementation
  *    Laurent Delaigue (Obeo) - use of preferred merge strategy
+ *    Stephan Hackstedt <stephan.hackstedt@googlemail.com> - Bug 477695
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
@@ -20,7 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
@@ -140,9 +141,10 @@ public class RebaseOperation implements IEGitOperation {
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 			@Override
 			public void run(IProgressMonitor actMonitor) throws CoreException {
+				SubMonitor progress = SubMonitor.convert(actMonitor, 100);
 				RebaseCommand cmd = new Git(repository).rebase()
 						.setProgressMonitor(
-								new EclipseGitProgressTransformer(actMonitor));
+								new EclipseGitProgressTransformer(progress));
 				MergeStrategy strategy = Activator.getDefault()
 						.getPreferredMergeStrategy();
 				if (strategy != null) {
@@ -169,7 +171,7 @@ public class RebaseOperation implements IEGitOperation {
 				} finally {
 					if (refreshNeeded())
 						ProjectUtil.refreshValidProjects(validProjects,
-								new SubProgressMonitor(actMonitor, 1));
+								progress.newChild(100));
 				}
 			}
 		};

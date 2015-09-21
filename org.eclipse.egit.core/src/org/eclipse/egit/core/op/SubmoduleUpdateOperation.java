@@ -8,6 +8,7 @@
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
  *    Laurent Delaigue (Obeo) - use of preferred merge strategy
+ *    Stephan Hackstedt <stephan.hackstedt@googlemail.com - bug 477695
  *****************************************************************************/
 package org.eclipse.egit.core.op;
 
@@ -21,7 +22,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
@@ -71,7 +72,8 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 
 			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
-				pm.beginTask("", 3); //$NON-NLS-1$
+				SubMonitor progress = SubMonitor.convert(pm, 3);
+
 				Git git = Git.wrap(repository);
 
 				Collection<String> updated = null;
@@ -80,22 +82,21 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 					for (String path : paths)
 						init.addPath(path);
 					init.call();
-					pm.worked(1);
+					progress.worked(1);
 
 					SubmoduleUpdateCommand update = git.submoduleUpdate();
 					for (String path : paths)
 						update.addPath(path);
 					update.setProgressMonitor(new EclipseGitProgressTransformer(
-							new SubProgressMonitor(pm, 2)));
+							progress.newChild(2)));
 					MergeStrategy strategy = Activator.getDefault()
 							.getPreferredMergeStrategy();
 					if (strategy != null) {
 						update.setStrategy(strategy);
 					}
 					updated = update.call();
-					pm.worked(1);
-					SubProgressMonitor refreshMonitor = new SubProgressMonitor(
-							pm, 1);
+					progress.worked(1);
+					SubMonitor refreshMonitor = progress.newChild(1);
 					refreshMonitor.beginTask("", updated.size()); //$NON-NLS-1$
 					for (String path : updated) {
 						Repository subRepo = SubmoduleWalk
@@ -103,11 +104,10 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 						if (subRepo != null)
 							ProjectUtil.refreshValidProjects(
 									ProjectUtil.getValidOpenProjects(subRepo),
-									new SubProgressMonitor(refreshMonitor, 1));
+									refreshMonitor.newChild(1));
 						else
 							refreshMonitor.worked(1);
 					}
-					refreshMonitor.done();
 				} catch (GitAPIException e) {
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
@@ -117,7 +117,6 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 				} finally {
 					if (updated != null && !updated.isEmpty())
 						repository.notifyIndexChanged();
-					pm.done();
 				}
 			}
 		};

@@ -8,6 +8,7 @@
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
  *    Laurent Delaigue (Obeo) - use of preferred merge strategy
+ *    Stephan Hackstedt - Bug 477695
  *****************************************************************************/
 package org.eclipse.egit.core.op;
 
@@ -19,7 +20,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
@@ -70,9 +71,9 @@ public class CherryPickOperation implements IEGitOperation {
 
 			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
-				pm.beginTask("", 2); //$NON-NLS-1$
+				SubMonitor progress = SubMonitor.convert(pm, 2);
 
-				pm.subTask(MessageFormat.format(
+				progress.subTask(MessageFormat.format(
 						CoreText.CherryPickOperation_cherryPicking,
 						commit.name()));
 				CherryPickCommand command = new Git(repo).cherryPick().include(
@@ -88,13 +89,11 @@ public class CherryPickOperation implements IEGitOperation {
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
 				}
-				pm.worked(1);
+				progress.worked(1);
 
 				ProjectUtil.refreshValidProjects(
 						ProjectUtil.getValidOpenProjects(repo),
-						new SubProgressMonitor(pm, 1));
-
-				pm.done();
+						progress.newChild(1));
 			}
 		};
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),

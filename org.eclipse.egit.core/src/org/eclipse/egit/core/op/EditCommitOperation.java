@@ -1,5 +1,7 @@
 /*******************************************************************************
  *  Copyright (c) 2014 Maik Schreiber
+ *  Copyright (C) 2015, Stephan Hackstedt <stephan.hackstedt@googlemail.com>
+ *
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,6 +9,7 @@
  *
  *  Contributors:
  *    Maik Schreiber - initial implementation
+ *    Stephan Hackstedt - Bug 477695
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
@@ -19,7 +22,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
@@ -63,9 +66,9 @@ public class EditCommitOperation implements IEGitOperation {
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
-				pm.beginTask("", 2); //$NON-NLS-1$
+				SubMonitor progress = SubMonitor.convert(pm, 2);
 
-				pm.subTask(MessageFormat.format(
+				progress.subTask(MessageFormat.format(
 						CoreText.EditCommitOperation_editing,
 						commit.name()));
 
@@ -97,13 +100,11 @@ public class EditCommitOperation implements IEGitOperation {
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
 				}
-				pm.worked(1);
+				progress.worked(1);
 
 				ProjectUtil.refreshValidProjects(
 						ProjectUtil.getValidOpenProjects(repository),
-						new SubProgressMonitor(pm, 1));
-
-				pm.done();
+						progress.newChild(1));
 			}
 		};
 
