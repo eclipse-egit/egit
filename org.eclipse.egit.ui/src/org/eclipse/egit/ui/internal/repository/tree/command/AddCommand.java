@@ -101,6 +101,7 @@ public class AddCommand extends
 		if (!connections.isEmpty()) {
 			ConnectProviderOperation operation = new ConnectProviderOperation(
 					connections);
+			operation.setRefreshResources(false);
 			JobUtil.scheduleUserJob(operation,
 					CoreText.Activator_AutoShareJobName, JobFamilies.AUTO_SHARE);
 		}
