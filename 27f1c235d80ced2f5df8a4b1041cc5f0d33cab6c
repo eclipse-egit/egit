@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2721e7e2_c687acee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-21T22:14:02Z",
+      "side": 1,
+      "message": "this commit message doesn\u0027t follow the guidelines in the contributor guide\nhttps://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines which makes it hard to understand what this change is about and why it\u0027s necessary.",
+      "revId": "27f1c235d80ced2f5df8a4b1041cc5f0d33cab6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
