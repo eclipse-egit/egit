@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_d8694b19",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2015-09-21T15:12:19Z",
+      "side": 1,
+      "message": "Could point. Can you create a bug report for this and provide a Gerrit review?",
+      "parentUuid": "2721e7e2_ccb514b4",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 48
+      },
+      "revId": "e557c8ea8c1c21b6c866aa153b822fc5229fa7e4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_acaee01a",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryFinder.java",
         "patchSetId": 3
