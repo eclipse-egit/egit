@@ -8,7 +8,10 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.gitflow;
 
+import static org.eclipse.egit.gitflow.ui.internal.UIPreferences.FEATURE_FINISH_KEEP_BRANCH;
+import static org.eclipse.egit.gitflow.ui.internal.UIPreferences.FEATURE_FINISH_SQUASH;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -16,7 +19,9 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import org.eclipse.egit.gitflow.GitFlowRepository;
+import org.eclipse.egit.gitflow.ui.Activator;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
@@ -64,6 +69,11 @@ public class FeatureFinishSquashHandlerTest extends
 
 		assertTrue(developHead.getFullMessage().startsWith(
 				SQUASHED_COMMENT_SUMMARY));
+
+		IPreferenceStore prefStore = Activator.getDefault()
+				.getPreferenceStore();
+		assertTrue(prefStore.getBoolean(FEATURE_FINISH_SQUASH));
+		assertFalse(prefStore.getBoolean(FEATURE_FINISH_KEEP_BRANCH));
 	}
 
 	private int countCommits() throws GitAPIException, NoHeadException,
