@@ -42,7 +42,7 @@ class SWTCommit extends PlotCommit<SWTCommitList.SWTLane> implements IAdaptable 
 	}
 
 	@Override
-	public <T> T getAdapter(Class<T> adapter) {
+	public Object getAdapter(Class adapter) {
 		if (adapter != Repository.class) {
 			return null;
 		}
