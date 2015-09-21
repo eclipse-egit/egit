@@ -1674,7 +1674,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	}
 
 	@Override
-	public <T> T getAdapter(final Class<T> adapter) {
+	public Object getAdapter(final Class adapter) {
 		return null;
 	}
 
