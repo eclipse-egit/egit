@@ -8,7 +8,10 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.gitflow;
 
+import static org.eclipse.egit.gitflow.ui.internal.UIPreferences.FEATURE_FINISH_KEEP_BRANCH;
+import static org.eclipse.egit.gitflow.ui.internal.UIPreferences.FEATURE_FINISH_SQUASH;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -24,6 +27,7 @@ import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
@@ -73,6 +77,11 @@ public class FeatureFinishSquashHandlerTest extends AbstractGitflowHandlerTest {
 
 		assertTrue(developHead.getFullMessage().startsWith(
 				SQUASHED_COMMENT_SUMMARY));
+
+		IPreferenceStore prefStore = Activator.getDefault()
+				.getPreferenceStore();
+		assertTrue(prefStore.getBoolean(FEATURE_FINISH_SQUASH));
+		assertFalse(prefStore.getBoolean(FEATURE_FINISH_KEEP_BRANCH));
 	}
 
 	private int countCommits() throws GitAPIException, NoHeadException,
@@ -102,6 +111,7 @@ public class FeatureFinishSquashHandlerTest extends AbstractGitflowHandlerTest {
 			}
 		});
 		bot.checkBox(UIText.FinishFeatureDialog_squashCheck).click();
+		bot.checkBox(UIText.FinishFeatureDialog_saveAsDefault).click();
 		bot.button("OK").click();
 		int firstLine = 0;
 		bot.styledText().selectLine(firstLine);
