@@ -8,10 +8,15 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.gitflow;
 
+import static org.eclipse.egit.gitflow.ui.internal.UIPreferences.FEATURE_FINISH_KEEP_BRANCH;
+import static org.eclipse.egit.gitflow.ui.internal.UIPreferences.FEATURE_FINISH_SQUASH;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
 import org.eclipse.egit.gitflow.GitFlowRepository;
+import org.eclipse.egit.gitflow.ui.Activator;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.junit.Test;
@@ -43,6 +48,11 @@ public class FeatureStartFinishHandlerTest extends AbstractFeatureFinishHandlerT
 		assertEquals(developHead, featureBranchCommit);
 
 		assertNull(findBranch(gfRepo.getConfig().getFeatureBranchName(FEATURE_NAME)));
+
+		IPreferenceStore prefStore = Activator.getDefault()
+				.getPreferenceStore();
+		assertFalse(prefStore.getBoolean(FEATURE_FINISH_SQUASH));
+		assertFalse(prefStore.getBoolean(FEATURE_FINISH_KEEP_BRANCH));
 	}
 
 	@Override
