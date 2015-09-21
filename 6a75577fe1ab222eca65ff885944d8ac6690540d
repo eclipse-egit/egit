@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2721e7e2_d523d4ad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-09-21T09:28:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2721e7e2_95e5dc17",
+      "revId": "6a75577fe1ab222eca65ff885944d8ac6690540d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2721e7e2_72f03e52",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureFinishHandler.java",
         "patchSetId": 1
