@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2007, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2015, Stephan Hackstedt <stephan.hackstedt@googlemail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,8 +16,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.egit.core.internal.CoreText;
@@ -49,30 +49,20 @@ public class DisconnectProviderOperation implements IEGitOperation {
 	 */
 	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
-		IProgressMonitor monitor;
-		if (m == null)
-			monitor = new NullProgressMonitor();
-		else
-			monitor = m;
 
-		monitor.beginTask(CoreText.DisconnectProviderOperation_disconnecting,
+		SubMonitor progress = SubMonitor.convert(m,
+				CoreText.DisconnectProviderOperation_disconnecting,
 				projectList.size() * 200);
-		try {
-			for (IProject p : projectList) {
-				// TODO is this the right location?
-				if (GitTraceLocation.CORE.isActive())
-					GitTraceLocation.getTrace().trace(
-							GitTraceLocation.CORE.getLocation(),
-							"disconnect " + p.getName()); //$NON-NLS-1$
-				unmarkTeamPrivate(p);
-				RepositoryProvider.unmap(p);
-				monitor.worked(100);
-
-				p.refreshLocal(IResource.DEPTH_INFINITE,
-						new SubProgressMonitor(monitor, 100));
-			}
-		} finally {
-			monitor.done();
+		for (IProject p : projectList) {
+			// TODO is this the right location?
+			if (GitTraceLocation.CORE.isActive())
+				GitTraceLocation.getTrace().trace(
+						GitTraceLocation.CORE.getLocation(),
+						"disconnect " + p.getName()); //$NON-NLS-1$
+			unmarkTeamPrivate(p);
+			RepositoryProvider.unmap(p);
+			progress.worked(100);
+			p.refreshLocal(IResource.DEPTH_INFINITE, progress.newChild(100));
 		}
 	}
 

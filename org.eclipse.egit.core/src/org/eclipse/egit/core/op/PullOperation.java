@@ -8,6 +8,7 @@
  * Contributors:
  *    Mathias Kinzler <mathias.kinzler@sap.com> - initial implementation
  *    Laurent Delaigue (Obeo) - use of preferred merge strategy
+ *    Stephan Hackstedt - bug 477695
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
@@ -23,9 +24,8 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
@@ -76,26 +76,25 @@ public class PullOperation implements IEGitOperation {
 		if (!results.isEmpty())
 			throw new CoreException(new Status(IStatus.ERROR, Activator
 					.getPluginId(), CoreText.OperationAlreadyExecuted));
-		IProgressMonitor monitor;
-		if (m == null)
-			monitor = new NullProgressMonitor();
-		else
-			monitor = m;
-		monitor.beginTask(NLS.bind(CoreText.PullOperation_TaskName, Integer
-				.valueOf(repositories.length)), repositories.length * 2);
+		SubMonitor progress = SubMonitor.convert(m,
+				NLS.bind(CoreText.PullOperation_TaskName,
+						Integer.valueOf(repositories.length)),
+				1);
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 			@Override
 			public void run(IProgressMonitor mymonitor) throws CoreException {
+				if (mymonitor.isCanceled())
+					throw new CoreException(Status.CANCEL_STATUS);
+				SubMonitor progress = SubMonitor.convert(mymonitor,
+						repositories.length * 2);
 				for (int i = 0; i < repositories.length; i++) {
 					Repository repository = repositories[i];
-					if (mymonitor.isCanceled())
-						throw new CoreException(Status.CANCEL_STATUS);
 					IProject[] validProjects = ProjectUtil.getValidOpenProjects(repository);
 					PullCommand pull = new Git(repository).pull();
 					PullResult pullResult = null;
 					try {
 						pull.setProgressMonitor(new EclipseGitProgressTransformer(
-								new SubProgressMonitor(mymonitor, 1)));
+										progress.newChild(1)));
 						pull.setTimeout(timeout);
 						pull.setCredentialsProvider(credentialsProvider);
 						MergeStrategy strategy = Activator.getDefault()
@@ -123,11 +122,12 @@ public class PullOperation implements IEGitOperation {
 						results.put(repository,
 								Activator.error(cause.getMessage(), cause));
 					} finally {
-						mymonitor.worked(1);
+						progress.worked(1);
 						if (refreshNeeded(pullResult)) {
+							progress.setWorkRemaining(2);
 							ProjectUtil.refreshValidProjects(validProjects,
-									new SubProgressMonitor(mymonitor, 1));
-							mymonitor.worked(1);
+									progress.newChild(1));
+							progress.worked(1);
 						}
 					}
 				}
@@ -135,7 +135,7 @@ public class PullOperation implements IEGitOperation {
 		};
 		// lock workspace to protect working tree changes
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
-				IWorkspace.AVOID_UPDATE, monitor);
+				IWorkspace.AVOID_UPDATE, progress);
 	}
 
 	private boolean refreshNeeded(PullResult pullResult) {

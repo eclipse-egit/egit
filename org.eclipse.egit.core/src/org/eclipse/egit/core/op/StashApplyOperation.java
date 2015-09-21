@@ -8,6 +8,7 @@
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
  *    Laurent Delaigue (Obeo) - use of preferred merge strategy
+ *    Stephan Hackstedt <stephan.hackstedt@googlemail.com - bug 477695
  *****************************************************************************/
 package org.eclipse.egit.core.op;
 
@@ -17,8 +18,7 @@ import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.job.RuleUtil;
@@ -59,11 +59,11 @@ public class StashApplyOperation implements IEGitOperation {
 
 			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
-				pm.beginTask("", 3); //$NON-NLS-1$
+				SubMonitor progress = SubMonitor.convert(pm, 3);
 				try {
 					IProject[] validProjects = ProjectUtil
 							.getValidOpenProjects(repository);
-					pm.worked(1);
+					progress.worked(1);
 					StashApplyCommand command = Git.wrap(repository)
 							.stashApply().setStashRef(commit.name());
 					MergeStrategy strategy = Activator.getDefault()
@@ -72,23 +72,20 @@ public class StashApplyOperation implements IEGitOperation {
 						command.setStrategy(strategy);
 					}
 					command.call();
-					pm.worked(1);
+					progress.worked(1);
 					ProjectUtil.refreshValidProjects(validProjects,
-							new SubProgressMonitor(pm, 1));
+							progress.newChild(1));
 				} catch (JGitInternalException e) {
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
 				} catch (GitAPIException e) {
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
-				} finally {
-					pm.done();
 				}
 			}
 		};
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
-				IWorkspace.AVOID_UPDATE,
-				monitor != null ? monitor : new NullProgressMonitor());
+				IWorkspace.AVOID_UPDATE, monitor);
 	}
 
 	@Override
