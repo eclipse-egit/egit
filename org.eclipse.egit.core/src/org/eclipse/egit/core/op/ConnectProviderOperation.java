@@ -29,10 +29,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.MultiStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.egit.core.Activator;
@@ -92,23 +90,12 @@ public class ConnectProviderOperation implements IEGitOperation {
 
 	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
-		IProgressMonitor monitor;
-		if (m == null) {
-			monitor = new NullProgressMonitor();
-		} else {
-			monitor = m;
-		}
-
-		monitor.beginTask(CoreText.ConnectProviderOperation_connecting,
-				100 * projects.size());
+		SubMonitor progress = SubMonitor.convert(m,
+				CoreText.ConnectProviderOperation_connecting, projects.size());
 		MultiStatus ms = new MultiStatus(Activator.getPluginId(), 0,
 				CoreText.ConnectProviderOperation_ConnectErrors, null);
-		try {
-			for (Entry<IProject, File> entry : projects.entrySet()) {
-				connectProject(entry, ms, monitor);
-			}
-		} finally {
-			monitor.done();
+		for (Entry<IProject, File> entry : projects.entrySet()) {
+			connectProject(entry, ms, progress.newChild(1));
 		}
 		if (!ms.isOK()) {
 			throw new CoreException(ms);
@@ -170,7 +157,7 @@ public class ConnectProviderOperation implements IEGitOperation {
 			subMon.worked(40);
 		}
 
-		autoIgnoreDerivedResources(project, subMon);
+		autoIgnoreDerivedResources(project, subMon.newChild(10));
 	}
 
 	private void deleteGitProvider(MultiStatus ms, IProject project) {
@@ -189,8 +176,7 @@ public class ConnectProviderOperation implements IEGitOperation {
 		List<IPath> paths = findDerivedResources(project);
 		if (paths.size() > 0) {
 			IgnoreOperation ignoreOp = new IgnoreOperation(paths);
-			IProgressMonitor subMonitor = new SubProgressMonitor(monitor, 1);
-			ignoreOp.execute(subMonitor);
+			ignoreOp.execute(monitor);
 		}
 	}
 
