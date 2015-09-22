@@ -79,7 +79,7 @@ import org.eclipse.swt.widgets.Text;
  * Dialog to gather inputs for the git flow init operation.
  */
 public class InitDialog extends TitleAreaDialog {
-	private final class BranchValidator implements IValidator {
+	private static final class BranchValidator implements IValidator {
 		@Override
 		public IStatus validate(Object value) {
 			if (value == null || !isValidRefName(R_HEADS + value)) {
@@ -89,7 +89,7 @@ public class InitDialog extends TitleAreaDialog {
 		}
 	}
 
-	private final class BranchExistsValidator implements IValidator {
+	private static final class BranchExistsValidator implements IValidator {
 		private List<String> list;
 
 		public BranchExistsValidator(List<Ref> branchList) {
