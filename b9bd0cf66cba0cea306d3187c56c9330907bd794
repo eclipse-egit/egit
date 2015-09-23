@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0724e3f1_f0b4f669",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 460
+      },
+      "writtenOn": "2015-09-23T14:13:26Z",
+      "side": 1,
+      "message": "Without further thought and from a pure symmetry perspective, why is there not if case for input.getLeft() \u003d\u003d null?",
+      "revId": "b9bd0cf66cba0cea306d3187c56c9330907bd794",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
