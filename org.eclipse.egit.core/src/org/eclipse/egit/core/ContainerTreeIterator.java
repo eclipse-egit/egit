@@ -175,7 +175,8 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 	private Entry[] entries(final boolean hasInheritedResourceFilters) {
 		final IResource[] resources;
 		try {
-			resources = node.members(IContainer.INCLUDE_HIDDEN);
+			resources = node.members(IContainer.INCLUDE_HIDDEN
+					| IContainer.INCLUDE_TEAM_PRIVATE_MEMBERS);
 		} catch (CoreException err) {
 			return EOF;
 		}
@@ -185,9 +186,18 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 		boolean inheritableResourceFilter = addFilteredEntriesIfFiltersActive(
 				hasInheritedResourceFilters, resources, entries);
 
-		for (IResource resource : resources)
-			if (!resource.isLinked())
-				entries.add(new ResourceEntry(resource, inheritableResourceFilter));
+		java.nio.file.Path gitDir = repository != null
+				? repository.getDirectory().toPath() : null;
+		for (IResource resource : resources) {
+			if (resource.isLinked()) {
+				continue;
+			}
+			if (gitDir != null && resource.getLocation().toFile().toPath()
+					.startsWith(gitDir)) {
+				continue;
+			}
+			entries.add(new ResourceEntry(resource, inheritableResourceFilter));
+		}
 
 		return entries.toArray(new Entry[entries.size()]);
 	}
