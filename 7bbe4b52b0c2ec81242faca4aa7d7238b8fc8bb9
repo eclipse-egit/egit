@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0724e3f1_e640bb0a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-24T22:02:47Z",
+      "side": 1,
+      "message": "style nit: we link to the bug in the footer (last paragraph):\n\n Bug: 460500\n\nhttps://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "7bbe4b52b0c2ec81242faca4aa7d7238b8fc8bb9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_86e29f90",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-24T22:02:47Z",
+      "side": 1,
+      "message": "- unnecessary braces\n- bad indentation",
+      "revId": "7bbe4b52b0c2ec81242faca4aa7d7238b8fc8bb9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_6655ebca",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-24T22:02:47Z",
+      "side": 1,
+      "message": "use ResourcePropertyTester.hasGerritConfiguration(Repository repository) instead",
+      "range": {
+        "startLine": 198,
+        "startChar": 29,
+        "endLine": 198,
+        "endChar": 61
+      },
+      "revId": "7bbe4b52b0c2ec81242faca4aa7d7238b8fc8bb9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_066d0fa7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-24T22:02:47Z",
+      "side": 1,
+      "message": "commented out code ?",
+      "revId": "7bbe4b52b0c2ec81242faca4aa7d7238b8fc8bb9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_e6243b63",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-24T22:02:47Z",
+      "side": 1,
+      "message": "I think this doesn\u0027t make sense since typically you have more than one local branch pushed for review to the same upstream branch. The name of the local branch is typically used to remember which change is done on which branch (at least that\u0027s how I choose local branch names).\n\nInstead I propose we check if the current branch tracks a branch in the upstream repository. If yes push to refs/for/trackedBranch, if not use the branch we pushed to last time (settings.get(lastBranchKey).\n\nYou can find the tracked upstream branch in the following way:\n\n BranchConfig branchConfig \u003d new BranchConfig(repository.getConfig(),\n\t\t\t\trepository.getBranch());\n String trackedBranch \u003d branchConfig.getMerge()\n\nsee PushBranchPage.hasDifferentUpstreamConfiguration()",
+      "revId": "7bbe4b52b0c2ec81242faca4aa7d7238b8fc8bb9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_0644ef1c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2856,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-09-24T22:02:47Z",
+      "side": 1,
+      "message": "use ResourcePropertyTester.hasGerritConfiguration(Repository repository) instead",
+      "range": {
+        "startLine": 2856,
+        "startChar": 29,
+        "endLine": 2856,
+        "endChar": 58
+      },
+      "revId": "7bbe4b52b0c2ec81242faca4aa7d7238b8fc8bb9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
