@@ -740,20 +740,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		@Override
 		public void propertyChange(PropertyChangeEvent event) {
 			final String prop = event.getProperty();
-			if (UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE.equals(prop)) {
-				Object oldValue = event.getOldValue();
-				if (oldValue == null || !oldValue.equals(event.getNewValue())) {
-					graph.setRelativeDate(isShowingRelativeDates());
-					graph.getTableView().refresh();
-				}
-			}
-			if (UIPreferences.RESOURCEHISTORY_SHOW_EMAIL_ADDRESSES.equals(prop)) {
-				Object oldValue = event.getOldValue();
-				if (oldValue == null || !oldValue.equals(event.getNewValue())) {
-					graph.setShowEmailAddresses(isShowingEmailAddresses());
-					graph.getTableView().refresh();
-				}
-			}
 			if (UIPreferences.HISTORY_MAX_BRANCH_LENGTH.equals(prop)
 					|| UIPreferences.HISTORY_MAX_TAG_LENGTH.equals(prop))
 				graph.getTableView().refresh();
@@ -871,8 +857,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		graph = new CommitGraphTable(graphDetailSplit, getSite(), popupMgr,
 				this, resources);
 
-		graph.setRelativeDate(isShowingRelativeDates());
-		graph.setShowEmailAddresses(isShowingEmailAddresses());
 		Activator.getDefault().getPreferenceStore()
 				.addPropertyChangeListener(listener);
 
@@ -2364,14 +2348,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			job.release();
 			job = null;
 		}
-	}
-
-	static boolean isShowingRelativeDates() {
-		return Activator.getDefault().getPreferenceStore().getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE);
-	}
-
-	private boolean isShowingEmailAddresses() {
-		return Activator.getDefault().getPreferenceStore().getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_EMAIL_ADDRESSES);
 	}
 
 	@Override
