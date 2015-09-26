@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2010, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2012, Daniel Megert <daniel_megert@ch.ibm.com>
+ * Copyright (C) 2015, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,19 +10,27 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.mapping;
 
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.atomic.AtomicReference;
 
+import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Commit;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
+import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.synchronize.GitChangeSetModelProvider;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.util.SafeRunnable;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
+import org.eclipse.jface.viewers.ILabelProviderListener;
+import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jgit.lib.AbbreviatedObjectId;
 import org.eclipse.team.ui.mapping.SynchronizationLabelProvider;
@@ -43,13 +52,38 @@ public class GitChangeSetLabelProvider extends SynchronizationLabelProvider impl
 	/** */
 	public static final String BINDING_CHANGESET_DATE = "{date}"; //$NON-NLS-1$
 
-
-	private IPreferenceStore store = org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore();
-
-	private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(
-			store.getString(UIPreferences.DATE_FORMAT));
-
 	private GitLabelProvider delegateLabelProvider;
+
+	private final ListenerList listeners = new ListenerList(
+			ListenerList.IDENTITY);
+
+	private final IPreferenceStore store = Activator.getDefault()
+			.getPreferenceStore();
+
+	private final IPropertyChangeListener uiPrefsListener;
+
+	private final AtomicReference<PreferenceBasedDateFormatter> dateFormatter = new AtomicReference<>();
+
+	/**
+	 * Creates a new {@link GitChangeSetLabelProvider}.
+	 */
+	public GitChangeSetLabelProvider() {
+		dateFormatter.set(PreferenceBasedDateFormatter.create());
+		uiPrefsListener = new IPropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent event) {
+				String property = event.getProperty();
+				if (UIPreferences.DATE_FORMAT.equals(property)
+						|| UIPreferences.DATE_FORMAT_CHOICE.equals(property)) {
+					dateFormatter.set(PreferenceBasedDateFormatter.create());
+					fireLabelProviderChanged(new LabelProviderChangedEvent(
+							GitChangeSetLabelProvider.this));
+				}
+
+			}
+		};
+		store.addPropertyChangeListener(uiPrefsListener);
+	}
 
 	@Override
 	protected GitLabelProvider getDelegateLabelProvider() {
@@ -82,7 +116,8 @@ public class GitChangeSetLabelProvider extends SynchronizationLabelProvider impl
 
 		Commit commit = commitModel.getCachedCommitObj();
 		Map<String, String> bindings = new HashMap<String, String>();
-		bindings.put(BINDING_CHANGESET_DATE, DATE_FORMAT.format(commit.getCommitDate()));
+		bindings.put(BINDING_CHANGESET_DATE,
+				dateFormatter.get().formatDate(commit.getCommitDate()));
 		bindings.put(BINDING_CHANGESET_AUTHOR, commit.getAuthorName());
 		bindings.put(BINDING_CHANGESET_COMMITTER, commit.getCommitterName());
 		bindings.put(BINDING_CHANGESET_SHORT_MESSAGE, commit.getShortMessage());
@@ -109,4 +144,39 @@ public class GitChangeSetLabelProvider extends SynchronizationLabelProvider impl
 		return shortId.name().substring(0, 6);
 	}
 
+	// The super class adds the listeners to the delegate label provider, where
+	// we don't have access. Therefore we keep our own listener list, and do the
+	// notification ourselves when the date format preferences change.
+
+	@Override
+	public void addListener(ILabelProviderListener listener) {
+		super.addListener(listener);
+		listeners.add(listener);
+	}
+
+	@Override
+	public void removeListener(ILabelProviderListener listener) {
+		listeners.remove(listener);
+		super.removeListener(listener);
+	}
+
+	private void fireLabelProviderChanged(
+			final LabelProviderChangedEvent event) {
+		for (Object o : listeners.getListeners()) {
+			final ILabelProviderListener l = (ILabelProviderListener) o;
+			SafeRunnable.run(new SafeRunnable() {
+				@Override
+				public void run() {
+					l.labelProviderChanged(event);
+				}
+			});
+		}
+	}
+
+	@Override
+	public void dispose() {
+		store.removePropertyChangeListener(uiPrefsListener);
+		listeners.clear();
+		super.dispose();
+	}
 }

@@ -7,12 +7,12 @@
  *
  * Contributors:
  *     IBM Corporation - initial API and implementation
+ *     Thomas Wolf <thomas.wolf@paranor.ch> - Bug 477248
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.revision;
 
 import java.io.InputStream;
 import java.net.URI;
-import java.text.DateFormat;
 import java.util.Date;
 
 import org.eclipse.core.resources.IEncodedStorage;
@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
+import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
@@ -187,14 +188,16 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	@Override
 	public String getName() {
 		IFileRevision rev = CommonUtils.getAdapter(this, IFileRevision.class);
-		if (rev != null)
+		if (rev != null) {
 			return NLS.bind(
 					UIText.FileRevisionEditorInput_NameAndRevisionTitle,
 					new String[] { rev.getName(), rev.getContentIdentifier() });
+		}
 		IFileState state = CommonUtils.getAdapter(this, IFileState.class);
-		if (state != null)
-			return state.getName()
-					+ " " + DateFormat.getInstance().format(new Date(state.getModificationTime())); //$NON-NLS-1$
+		if (state != null) {
+			return state.getName() + ' ' + PreferenceBasedDateFormatter.create()
+					.formatDate(new Date(state.getModificationTime()));
+		}
 		return storage.getName();
 
 	}
