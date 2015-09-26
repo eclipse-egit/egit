@@ -2,6 +2,7 @@
  * Copyright (c) 2000, 2012 IBM Corporation and others.
  * Copyright (C) 2009, Tor Arne Vestbø <torarnv@gmail.com>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2015, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,7 +12,6 @@
 package org.eclipse.egit.ui.internal.preferences;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -25,6 +25,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
+import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.SWTUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.DecorationHelper;
@@ -106,7 +107,13 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 	private static final Map<String, String> CHANGESET_LABEL_BINDINGS;
 
-	private static IPropertyChangeListener themeListener;
+	private IPropertyChangeListener themeListener;
+
+	/**
+	 * Listens to changes in the date preferences and updates the
+	 * changeSetPreview if the preferences change.
+	 */
+	private IPropertyChangeListener uiPrefsListener;
 
 	static {
 		final PreviewResource project = new PreviewResource(
@@ -254,6 +261,18 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		};
 		PlatformUI.getWorkbench().getThemeManager().addPropertyChangeListener(
 				themeListener);
+
+		uiPrefsListener = new IPropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent event) {
+				String property = event.getProperty();
+				if (UIPreferences.DATE_FORMAT.equals(property)
+						|| UIPreferences.DATE_FORMAT_CHOICE.equals(property)) {
+					changeSetPreview.refresh();
+				}
+			}
+		};
+		getPreferenceStore().addPropertyChangeListener(uiPrefsListener);
 
 		Dialog.applyDialogFont(parent);
 
@@ -417,14 +436,6 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 		private final FormatEditor changeSetLabelFormat;
 
-		private final Text dateFormat;
-
-		private final Label dateFormatPreview;
-
-		private final Date exampleDate = new Date();
-
-		private boolean formatValid;
-
 		public OtherDecorationTab(TabFolder parent) {
 			Composite composite = SWTUtils.createHVFillComposite(parent,
 					SWTUtils.MARGINS_DEFAULT, 3);
@@ -437,60 +448,30 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 			final TabItem tabItem = new TabItem(parent, SWT.NONE);
 
-			Label dfLabel = SWTUtils.createLabel(composite, UIText.DecoratorPreferencesPage_dateFormat);
-			dfLabel.setLayoutData(SWTUtils.createGridData(SWT.DEFAULT,
-					SWT.DEFAULT, false, false));
-			dateFormat = SWTUtils.createText(composite, 2);
-
-			Label dpLabel = SWTUtils.createLabel(composite, UIText.DecoratorPreferencesPage_dateFormatPreview);
-			dpLabel.setLayoutData(SWTUtils.createGridData(SWT.DEFAULT,
-					SWT.DEFAULT, false, false));
-			dateFormatPreview = SWTUtils.createLabel(composite, null, 2);
-
 			tabItem.setText(UIText.DecoratorPreferencesPage_otherDecorations);
 			tabItem.setControl(composite);
 			tabItem.setData(UIText.DecoratorPreferencesPage_otherDecorations);
 
 			changeSetLabelFormat.addModifyListener(this);
-			dateFormat.addModifyListener(this);
-		}
-
-		private void updateDateFormatPreview() {
-			SimpleDateFormat sdf;
-			try {
-				sdf = new SimpleDateFormat(dateFormat.getText());
-				dateFormatPreview.setText(sdf.format(exampleDate));
-				formatValid = true;
-			} catch (Exception ex) {
-				dateFormatPreview.setText(UIText.DecoratorPreferencesPage_wrongDateFormat);
-				formatValid = false;
-			}
 		}
 
 		@Override
 		public void initializeValues(IPreferenceStore store) {
 			changeSetLabelFormat.initializeValue(store);
-			dateFormat.setText(store.getString(UIPreferences.DATE_FORMAT));
 		}
 
 		@Override
 		public void performDefaults(IPreferenceStore store) {
 			changeSetLabelFormat.performDefaults(store);
-			dateFormat.setText(store.getDefaultString(UIPreferences.DATE_FORMAT));
 		}
 
 		@Override
 		public void performOk(IPreferenceStore store) {
 			changeSetLabelFormat.performOk(store);
-
-			if (formatValid) {
-				store.setValue(UIPreferences.DATE_FORMAT, dateFormat.getText());
-			}
 		}
 
 		@Override
 		public void modifyText(ModifyEvent e) {
-			updateDateFormatPreview();
 			setChanged();
 			notifyObservers();
 		}
@@ -778,6 +759,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 	public void dispose() {
 		PlatformUI.getWorkbench().getThemeManager()
 				.removePropertyChangeListener(themeListener);
+		getPreferenceStore().removePropertyChangeListener(uiPrefsListener);
 		super.dispose();
 	}
 
@@ -848,8 +830,8 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 				public String getText(Object element) {
 					if (element instanceof GitModelCommitMockup) {
 						String format = store.getString(UIPreferences.SYNC_VIEW_CHANGESET_LABEL_FORMAT);
-						String dateFormat = store.getString(UIPreferences.DATE_FORMAT);
-						return ((GitModelCommitMockup)element).getMokeupText(format, dateFormat);
+						return ((GitModelCommitMockup) element)
+								.getMokeupText(format);
 					}
 					return super.getText(element);
 				}
@@ -1023,11 +1005,13 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		private static final Date date = new Date();
 		private static final String committer = "Committer Name";  //$NON-NLS-1$
 
-		public String getMokeupText(String format, String dateFormat) {
-			SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+		public String getMokeupText(String format) {
+			PreferenceBasedDateFormatter formatter = PreferenceBasedDateFormatter
+					.create();
 
 			Map<String, String> bindings = new HashMap<String, String>();
-			bindings.put(GitChangeSetLabelProvider.BINDING_CHANGESET_DATE, sdf.format(date));
+			bindings.put(GitChangeSetLabelProvider.BINDING_CHANGESET_DATE,
+					formatter.formatDate(date));
 			bindings.put(GitChangeSetLabelProvider.BINDING_CHANGESET_AUTHOR, author);
 			bindings.put(GitChangeSetLabelProvider.BINDING_CHANGESET_COMMITTER, committer);
 			bindings.put(GitChangeSetLabelProvider.BINDING_CHANGESET_SHORT_MESSAGE, message);

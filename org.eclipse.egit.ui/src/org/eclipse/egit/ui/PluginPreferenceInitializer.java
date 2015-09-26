@@ -113,6 +113,8 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.SYNC_VIEW_FETCH_BEFORE_LAUNCH, true);
 		store.setDefault(UIPreferences.DATE_FORMAT,
 				UIPreferences.DEFAULT_DATE_FORMAT);
+		store.setDefault(UIPreferences.DATE_FORMAT_CHOICE,
+				UIPreferences.DEFAULT_DATE_FORMAT_CHOICE);
 		store.setDefault(UIPreferences.HISTORY_MAX_NUM_COMMITS, 10000);
 		store.setDefault(UIPreferences.HISTORY_SHOW_BRANCH_SEQUENCE, true);
 		store.setDefault(UIPreferences.HISTORY_SHOW_TAG_SEQUENCE, false);

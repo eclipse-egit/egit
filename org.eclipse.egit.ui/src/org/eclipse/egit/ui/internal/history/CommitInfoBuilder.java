@@ -15,8 +15,6 @@
 package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -30,6 +28,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.history.FormatJob.FormatResult;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
@@ -57,8 +56,6 @@ public class CommitInfoBuilder {
 
 	private static final int MAXBRANCHES = 20;
 
-	private final DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
-
 	private static final Pattern FOOTER_PATTERN = Pattern
 			.compile("(?:\n(?:[A-Z](?:[A-Za-z]+-)*[A-Za-z]+:[^\n]*))+$"); //$NON-NLS-1$
 
@@ -69,6 +66,8 @@ public class CommitInfoBuilder {
 	private final boolean fill;
 
 	private final Collection<Ref> allRefs;
+
+	private final PreferenceBasedDateFormatter dateFormatter;
 
 	/**
 	 * @param db the repository
@@ -82,6 +81,7 @@ public class CommitInfoBuilder {
 		this.commit = commit;
 		this.fill = fill;
 		this.allRefs = allRefs;
+		this.dateFormatter = PreferenceBasedDateFormatter.create();
 	}
 
 	/**
@@ -209,13 +209,15 @@ public class CommitInfoBuilder {
 
 	private void addLink(StringBuilder d, String linkLabel,
 			Collection<GitCommitReference> hyperlinks, RevCommit to) {
-		hyperlinks.add(
-				new GitCommitReference(to, new Region(d.length(), linkLabel.length())));
+		if (to != null) {
+			hyperlinks.add(new GitCommitReference(to,
+					new Region(d.length(), linkLabel.length())));
+		}
 		d.append(linkLabel);
 	}
 
 	private void addLink(StringBuilder d, Collection<GitCommitReference> hyperlinks,
-			RevCommit to) {
+ RevCommit to) {
 		addLink(d, to.getId().name(), hyperlinks, to);
 	}
 
@@ -225,7 +227,7 @@ public class CommitInfoBuilder {
 			d.append(label).append(": "); //$NON-NLS-1$
 			d.append(ident.getName().trim());
 			d.append(" <").append(ident.getEmailAddress().trim()).append("> "); //$NON-NLS-1$ //$NON-NLS-2$
-			d.append(fmt.format(ident.getWhen()));
+			d.append(dateFormatter.formatDate(ident));
 			d.append(LF);
 		}
 	}
