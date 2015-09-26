@@ -147,7 +147,13 @@ public class UIPreferences {
 	/** */
 	public final static String DATE_FORMAT = "date_format"; //$NON-NLS-1$
 	/** */
+	public final static String DATE_FORMAT_CHOICE = "date_format_choice"; //$NON-NLS-1$
+	/** */
+	public static final String DATE_FORMAT_CUSTOM = "CUSTOM"; //$NON-NLS-1$
+	/** */
 	public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";  //$NON-NLS-1$
+	/** */
+	public static final String DEFAULT_DATE_FORMAT_CHOICE = DATE_FORMAT_CUSTOM;
 	/** */
 	public static final String DEFAULT_CHANGESET_FORMAT = "[{author}] ({date}) {short_message}"; //$NON-NLS-1$
 	/** */
