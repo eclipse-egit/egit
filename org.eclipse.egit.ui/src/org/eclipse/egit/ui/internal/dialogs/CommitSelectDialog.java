@@ -19,8 +19,10 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -63,12 +65,20 @@ public class CommitSelectDialog extends TitleAreaDialog {
 		Composite main = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().applyTo(main);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
-		TableViewer tv = new TableViewer(main, SWT.SINGLE | SWT.BORDER
+		final TableViewer tv = new TableViewer(main,
+				SWT.SINGLE | SWT.BORDER
 				| SWT.FULL_SELECTION);
 		GridDataFactory.fillDefaults().grab(true, true)
 				.applyTo(tv.getControl());
 		tv.setContentProvider(ArrayContentProvider.getInstance());
-		tv.setLabelProvider(new CommitLabelProvider());
+		CommitLabelProvider labelProvider = new CommitLabelProvider();
+		labelProvider.addListener(new ILabelProviderListener() {
+			@Override
+			public void labelProviderChanged(LabelProviderChangedEvent event) {
+				tv.refresh();
+			}
+		});
+		tv.setLabelProvider(labelProvider);
 		Table table = tv.getTable();
 		TableColumn c0 = new TableColumn(table, SWT.NONE);
 		c0.setWidth(70);

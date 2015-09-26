@@ -49,12 +49,14 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -153,8 +155,6 @@ class CommitGraphTable {
 
 	private RevCommit commitToShow;
 
-	private GraphLabelProvider graphLabelProvider;
-
 	private final TableLoader tableLoader;
 
 	private boolean trace = GitTraceLocation.HISTORYVIEW.isActive();
@@ -163,6 +163,11 @@ class CommitGraphTable {
 
 	CommitGraphTable(Composite parent, final TableLoader loader,
 			final ResourceManager resources) {
+		this(parent, loader, resources, true);
+	}
+
+	CommitGraphTable(Composite parent, final TableLoader loader,
+			final ResourceManager resources, boolean canShowEmailAddresses) {
 		nFont = UIUtils.getFont(UIPreferences.THEME_CommitGraphNormalFont);
 		hFont = highlightFont();
 		tableLoader = loader;
@@ -205,8 +210,14 @@ class CommitGraphTable {
 			}
 		};
 
-		graphLabelProvider = new GraphLabelProvider();
-
+		GraphLabelProvider graphLabelProvider = new GraphLabelProvider(
+				canShowEmailAddresses);
+		graphLabelProvider.addListener(new ILabelProviderListener() {
+			@Override
+			public void labelProviderChanged(LabelProviderChangedEvent event) {
+				table.refresh();
+			}
+		});
 		table.setLabelProvider(graphLabelProvider);
 		table.setContentProvider(new GraphContentProvider());
 		renderer = new SWTPlotRenderer(rawTable.getDisplay(), resources);
@@ -348,14 +359,6 @@ class CommitGraphTable {
 
 	void removeSelectionChangedListener(final ISelectionChangedListener l) {
 		table.removePostSelectionChangedListener(l);
-	}
-
-	void setRelativeDate(boolean booleanValue) {
-		graphLabelProvider.setRelativeDate(booleanValue);
-	}
-
-	void setShowEmailAddresses(boolean booleanValue) {
-		graphLabelProvider.setShowEmailAddresses(booleanValue);
 	}
 
 	private boolean canDoCopy() {
