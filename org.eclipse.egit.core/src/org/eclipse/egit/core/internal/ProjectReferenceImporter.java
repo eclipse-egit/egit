@@ -148,6 +148,11 @@ public class ProjectReferenceImporter {
 		final Map<URIish, Map<String, Set<ProjectReference>>> repositories = new LinkedHashMap<URIish, Map<String, Set<ProjectReference>>>();
 
 		for (final String reference : referenceStrings) {
+			if (reference == null) {
+				// BundleImporterDelegate doesn't check invalid project URI's,
+				// so we can receive null references.
+				continue;
+			}
 			try {
 				final ProjectReference projectReference = new ProjectReference(
 						reference);
