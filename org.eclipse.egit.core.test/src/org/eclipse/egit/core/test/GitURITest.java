@@ -40,6 +40,14 @@ public class GitURITest {
 
 	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidScmUriWithoutPath() throws Exception {
+		new GitURI(URI
+				.create("scm:git:git://git.eclipse.org/gitroot/cdo/cdo.git"));
+		// expected IAE, it doesn't contain semicolon and path part
+	}
+
+	@SuppressWarnings("unused")
+	@Test(expected = IllegalArgumentException.class)
 	public void testInvalidScmUriForCVS() throws Exception {
 		new GitURI(URI.create("scm:cvs:pserver:dev.eclipse.org:/cvsroot/eclipse:org.eclipse.compare"));
 		// expected IAE, it's a CVS SCM URL
