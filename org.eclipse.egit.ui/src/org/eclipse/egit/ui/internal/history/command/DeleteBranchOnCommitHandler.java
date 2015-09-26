@@ -52,7 +52,9 @@ public class DeleteBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 					.size();
 			branchesOfCommit = getBranchesOfCommit(selection, repository, true);
 		} catch (IOException e) {
-			throw new ExecutionException("Could not obtain current Branch", e); //$NON-NLS-1$
+			throw new ExecutionException(
+					UIText.AbstractHistoryCommitHandler_cantGetBranches,
+					e);
 		}
 		// this should have been checked by isEnabled()
 		if (branchesOfCommit.isEmpty())
@@ -180,7 +182,9 @@ public class DeleteBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 			branchesOfCommit = getBranchesOfCommit(getSelection(page),
 					repository, true);
 		} catch (IOException e) {
-			Activator.logError("Could not calculate Enablement", e); //$NON-NLS-1$
+			Activator.logError(
+					UIText.AbstractHistoryCommitHandler_cantGetBranches,
+					e);
 			return false;
 		}
 		return !branchesOfCommit.isEmpty();
