@@ -50,6 +50,9 @@ public class UIText extends NLS {
 	public static String AbstractHistoryCommanndHandler_NoInputMessage;
 
 	/** */
+	public static String AbstractHistoryCommitHandler_cantGetBranches;
+
+	/** */
 	public static String AbstractRebaseCommand_DialogTitle;
 
 	/** */
