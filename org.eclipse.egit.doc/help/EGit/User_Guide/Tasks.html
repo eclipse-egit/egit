@@ -718,15 +718,30 @@
 			<a href="http://nvie.com/posts/a-successful-git-branching-model/" target="egit_external">http://nvie.com/posts/a-successful-git-branching-model/</a>), EGit allows you to work with Gitflow operations, managing feature, release and hotfix branches.
 		</p>
 		<h3 id="Enabling_Gitflow_for_a_repository">Enabling Gitflow for a repository</h3>
-		<p>Gitflow operation will not appear, unless the selected repository is configured for Gitflow. To do that, open the context menu on a repository in the Git Repositories view and select 
+		<p>Gitflow operations will not appear unless the selected repository is configured for Gitflow. To do that, open the context menu on a repository in the Git Repositories view and select 
 			<b>Init Git Flow</b>.
-			You can skip this step, if your repository was already configured for Gitflow by another client.
+
+			<img border="0" src="images/Egit-4.0-git_flow_init-repository_node_right_click.png"/>
 		</p>
+		<p>You can skip this step if your repository was already configured for Gitflow by another client.</p>
 		<h3 id="Starting_a_feature.2Frelease.2Fhotfix">Starting a feature/release/hotfix</h3>
 		<p>Right-click on a repository, select 
 			<b>Git Flow</b>, and select the appropriate start command.
 		</p>
+		<p>
+			<img border="0" src="images/Egit-4.0-git_flow-repository_node_right_click.png"/>
+
+			<img border="0" src="images/Egit-4.0-git_flow_submenu-repository_node_right_click.png"/>
+		</p>
 		<p>A dialog will appear that lets you enter a name for the Gitflow branch, adding the correct prefix automatically.</p>
+		<h3 id="Starting_release_from_a_commit_other_than_HEAD">Starting release from a commit other than HEAD</h3>
+		<p>Go to the EGit History view, and right-click the commit you want to start the release from.
+			In the context menu, go to 
+			<b>Git Flow</b>, and select 
+			<b>Start release from commit &lt;sha1&gt;</b>.
+
+			<img border="0" src="images/Egit-4.0-git_flow_start_release_from_history_view_context_menu.png"/>
+		</p>
 		<h2 id="Inspecting_the_state_of_the_Repository">Inspecting the state of the Repository</h2>
 		<h3 id="Label_Decorations">Label Decorations</h3>
 		<p>Label decorations show Git-specific information about resources under Git version control. They appear in all views showing model objects, like Package Explorer, Project Explorer, Navigator, and Hierarchy View.</p>

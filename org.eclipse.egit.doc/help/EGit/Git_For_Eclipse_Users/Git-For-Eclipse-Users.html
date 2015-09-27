@@ -428,7 +428,7 @@ Unpacking objects: 100% (5/5), done.
 To /tmp/other
  * <a href="new">branch</a>      french -&gt; french
  * <a href="new">branch</a>      web -&gt; web
-$ cd /tmp/other # Switch to 'other' repository
+$ cd /tmp/other # Switch to 'other' repository. git commands now apply to this repository
 $ git config --bool core.bare false # need to allow this repository to have checked out files
 $ ls # Nothing to be seen, but it's there
 $ git branch
@@ -442,7 +442,7 @@ $ echo '&lt;h1&gt;Git rocks!&lt;/h1&gt;' &gt;&gt; index.html
 $ git commit -a -m "Added Git Rocks!"
 <a href="web">510621a</a> Added Git Rocks
  1 files changed, 1 insertions(+), 0 deletions(-)
-$ cd /tmp/example # Back to first repo
+$ cd /tmp/example # Back to first repo. git commands now apply to 'example' repository
 $ git pull other web # Pull changes from 'other' repo 'web' branch
 remote: Counting objects: 5, done.
 remote: Compressing objects: 100% (3/3), done.

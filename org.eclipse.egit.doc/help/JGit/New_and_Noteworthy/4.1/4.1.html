@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>JGit 4.1 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">JGit 4.1 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bug-Fixes.html" title="Bug Fixes">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bug Fixes</td>
+			</tr>
+		</table><hr/>
+		<h1 id="JGit">JGit</h1>
+		<h2 id="Basic_Support_for_Push_Certificates">Basic Support for Push Certificates</h2>
+		<ul>
+			<li>Push certificates are used to verify the pusher's identity when a git server receives a signed pack</li>
+			<li>Parsing of push certificates</li>
+			<li>Storage of push certificates, they are stored in a special ref "refs/meta/push-certs". The filenames in the tree are ref names followed by the special suffix "cert", and the contents are the latest push cert affecting that ref.</li>
+			<li>Configuration for server-side signed push verification</li>
+			<li>Support for push certificates in BaseReceivePack and RefUpdate</li>
+		</ul>
+		<h2 id="Ignore_Handling">Ignore Handling</h2>
+		<ul>
+			<li>Allow leading/trailing spaces in ignore rules</li>
+			<li>Allow leading literal '#' and '!' in ignore rules if they are escaped</li>
+			<li>Don't trim trailing space if it is escaped with backslash</li>
+		</ul>
+		<h2 id="Other_Enhancements">Other Enhancements</h2>
+		<ul>
+			<li>Add setTargetBranch in RepoCommand.</li>
+			<li>Add API to remove repositories from RepositoryCache</li>
+			<li>Add new submodule layout to SubmoduleAddCommand</li>
+			<li>Handle stale NFS file handles on packed-refs file</li>
+			<li>Add a grace period for packfiles during GC so that they are retained during GC until configured expiration age is reached</li>
+		</ul>
+		<h2 id="Performance_Improvements">Performance Improvements</h2>
+		<ul>
+			<li>Use java.io.File instead of NIO to check existence of loose objects in ObjectDirectory to speed up inserting of loose objects</li>
+			<li>Reduce memory consumption when creating bitmaps during writing pack files</li>
+		</ul>
+		<h2 id="Build_and_Release_Engineering">Build and Release Engineering</h2>
+		<ul>
+			<li>Enable annotation based NPE analysis in jgit</li>
+			<li>Update Jetty to 9.2.13.v20150730</li>
+			<li>Update org.apache.httpcomponents to 4.3</li>
+		</ul><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bug-Fixes.html" title="Bug Fixes">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bug Fixes</td>
+			</tr>
+		</table>
+	</body>
+</html>
