@@ -31,6 +31,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * NB: most of the tests here will break after bug 476585 will be fixed in
+ * Eclipse 4.6, since the Resources API will always return inner most project
+ * per default.
+ */
 public class ResourceUtilTest extends GitTestCase {
 
 	private Repository repository;
@@ -50,33 +55,38 @@ public class ResourceUtilTest extends GitTestCase {
 	@Test
 	public void getResourceForLocationShouldReturnFile() throws Exception {
 		IFile file = project.createFile("file", new byte[] {});
-		IResource resource = ResourceUtil.getResourceForLocation(file.getLocation());
+		IResource resource = ResourceUtil.getResourceForLocation(file.getLocation(), false);
 		assertThat(resource, instanceOf(IFile.class));
 	}
 
 	@Test
 	public void getResourceForLocationShouldReturnFolder() throws Exception {
 		IFolder folder = project.createFolder("folder");
-		IResource resource = ResourceUtil.getResourceForLocation(folder.getLocation());
+		IResource resource = ResourceUtil.getResourceForLocation(folder.getLocation(), false);
 		assertThat(resource, instanceOf(IFolder.class));
 	}
 
 	@Test
 	public void getResourceForLocationShouldReturnNullForInexistentFile() throws Exception {
 		IPath location = project.getProject().getLocation().append("inexistent");
-		IResource resource = ResourceUtil.getResourceForLocation(location);
+		IResource resource = ResourceUtil.getResourceForLocation(location, false);
 		assertThat(resource, nullValue());
 	}
 
 	@Test
 	public void getFileForLocationShouldReturnExistingFileInCaseOfNestedProject()
 			throws Exception {
-		TestProject nested = new TestProject(true, "Project-1/Project-0");
+		TestProject nested = new TestProject(true, "Project-1/Project-2");
 		connect(nested.getProject());
 		IFile file = nested.createFile("a.txt", new byte[] {});
 		IPath location = file.getLocation();
 
-		IFile result = ResourceUtil.getFileForLocation(location);
+		IFile result = ResourceUtil.getFileForLocation(location, false);
+		assertThat(result, notNullValue());
+		assertTrue("Returned IFile should exist", result.exists());
+		assertThat(result.getProject(), is(project.getProject()));
+
+		result = ResourceUtil.getFileForLocation(location, true);
 		assertThat(result, notNullValue());
 		assertTrue("Returned IFile should exist", result.exists());
 		assertThat(result.getProject(), is(nested.getProject()));
@@ -85,15 +95,20 @@ public class ResourceUtilTest extends GitTestCase {
 	@Test
 	public void getFileForLocationShouldReturnExistingFileInCaseOfNestedNotClosedProject()
 			throws Exception {
-		TestProject nested = new TestProject(true, "Project-1/Project-0");
+		TestProject nested = new TestProject(true, "Project-1/Project-2");
 		connect(nested.getProject());
 		TestProject nested2 = new TestProject(true,
-				"Project-1/Project-0/Project");
+				"Project-1/Project-2/Project-3");
 		connect(nested2.getProject());
 		IFile file = nested2.createFile("a.txt", new byte[] {});
 		IPath location = file.getLocation();
 		nested2.project.close(new NullProgressMonitor());
-		IFile result = ResourceUtil.getFileForLocation(location);
+		IFile result = ResourceUtil.getFileForLocation(location, false);
+		assertThat(result, notNullValue());
+		assertTrue("Returned IFile should exist", result.exists());
+		assertThat(result.getProject(), is(project.getProject()));
+
+		result = ResourceUtil.getFileForLocation(location, true);
 		assertThat(result, notNullValue());
 		assertTrue("Returned IFile should exist", result.exists());
 		assertThat(result.getProject(), is(nested.getProject()));
@@ -102,14 +117,31 @@ public class ResourceUtilTest extends GitTestCase {
 	@Test
 	public void getFileForLocationShouldNotUseFilesWithoutRepositoryMapping()
 			throws Exception {
-		TestProject nested = new TestProject(true, "Project-1/Project-0");
+		TestProject nested = new TestProject(true, "Project-1/Project-2");
 		IFile file = nested.createFile("a.txt", new byte[] {});
 		IPath location = file.getLocation();
 
-		IFile result = ResourceUtil.getFileForLocation(location);
+		IFile result = ResourceUtil.getFileForLocation(location, false);
 		assertThat(result, notNullValue());
 		assertTrue("Returned IFile should exist", result.exists());
 		assertThat(result.getProject(), is(project.getProject()));
+
+		result = ResourceUtil.getFileForLocation(location, true);
+		assertThat(result, notNullValue());
+		assertTrue("Returned IFile should exist", result.exists());
+		assertThat(result.getProject(), is(project.getProject()));
+
+		connect(nested.getProject());
+
+		result = ResourceUtil.getFileForLocation(location, false);
+		assertThat(result, notNullValue());
+		assertTrue("Returned IFile should exist", result.exists());
+		assertThat(result.getProject(), is(project.getProject()));
+
+		result = ResourceUtil.getFileForLocation(location, true);
+		assertThat(result, notNullValue());
+		assertTrue("Returned IFile should exist", result.exists());
+		assertThat(result.getProject(), is(nested.getProject()));
 	}
 
 	private void connect(IProject p) throws CoreException {

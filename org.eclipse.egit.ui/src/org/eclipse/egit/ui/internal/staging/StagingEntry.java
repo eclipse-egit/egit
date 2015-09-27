@@ -121,7 +121,7 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 		this.repository = repository;
 		this.state = state;
 		this.path = path;
-		this.file = ResourceUtil.getFileForLocation(repository, path);
+		this.file = ResourceUtil.getFileForLocation(repository, path, false);
 	}
 
 	/**

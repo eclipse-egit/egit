@@ -82,7 +82,7 @@ public class DeletePathsOperation implements IEGitOperation {
 		List<IPath> refreshCachePaths = new ArrayList<IPath>();
 
 		for (IPath path : paths) {
-			IResource resource = ResourceUtil.getResourceForLocation(path);
+			IResource resource = ResourceUtil.getResourceForLocation(path, false);
 			if (resource != null && resource.exists())
 				resource.delete(false, new SubProgressMonitor(monitor, 1));
 			else {

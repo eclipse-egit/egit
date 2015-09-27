@@ -21,6 +21,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RemoteNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.ISelection;
@@ -78,11 +79,12 @@ public class RepositoriesViewActionProvider extends CommonActionProvider {
 	 * @param selection
 	 * @return single selected file, or {@code null} if none
 	 */
+	@Nullable
 	private static IFile getSelectedFile(IStructuredSelection selection) {
 		if (selection.size() == 1
 				&& selection.getFirstElement() instanceof FileNode) {
 			FileNode fileNode = (FileNode) selection.getFirstElement();
-			return ResourceUtil.getFileForLocation(fileNode.getPath());
+			return ResourceUtil.getFileForLocation(fileNode.getPath(), false);
 		}
 		return null;
 	}
