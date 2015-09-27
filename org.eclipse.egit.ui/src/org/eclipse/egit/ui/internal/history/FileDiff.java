@@ -287,7 +287,7 @@ public class FileDiff extends WorkbenchAdapter {
 	}
 
 	private String getProjectRelativePath(Repository db, String repoPath) {
-		IResource resource = ResourceUtil.getFileForLocation(db, repoPath);
+		IResource resource = ResourceUtil.getFileForLocation(db, repoPath, false);
 		if (resource == null)
 			return null;
 		return resource.getProjectRelativePath().toString();

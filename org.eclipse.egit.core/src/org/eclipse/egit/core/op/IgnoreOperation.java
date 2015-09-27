@@ -125,7 +125,7 @@ public class IgnoreOperation implements IEGitOperation {
 	private void addIgnore(IProgressMonitor monitor, IPath path)
 			throws UnsupportedEncodingException, CoreException, IOException {
 		IPath parent = path.removeLastSegments(1);
-		IResource resource = ResourceUtil.getResourceForLocation(path);
+		IResource resource = ResourceUtil.getResourceForLocation(path, false);
 		IContainer container = null;
 		boolean isDirectory = false;
 		if (resource != null) {

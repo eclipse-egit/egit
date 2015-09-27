@@ -355,7 +355,7 @@ public class GitMergeEditorInput extends CompareEditorInput {
 						.getAbsolutePath());
 				IPath location = repositoryPath
 						.append(fit.getEntryPathString());
-				IFile file = ResourceUtil.getFileForLocation(location);
+				IFile file = ResourceUtil.getFileForLocation(location, false);
 				if (!conflicting || useWorkspace) {
 					if (file != null)
 						rev = new LocalFileRevision(file);

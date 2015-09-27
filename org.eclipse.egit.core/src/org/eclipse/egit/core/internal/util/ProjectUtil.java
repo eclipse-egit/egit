@@ -256,7 +256,7 @@ public class ProjectUtil {
 		for (String relativePath : relativePaths) {
 			IPath location = repositoryPath.append(relativePath);
 			IResource resource = ResourceUtil
-					.getResourceForLocation(location);
+					.getResourceForLocation(location, false);
 			if (resource != null) {
 				// Resource exists for path, refresh it
 				resources.add(resource);

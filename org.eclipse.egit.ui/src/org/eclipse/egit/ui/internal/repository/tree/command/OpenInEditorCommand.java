@@ -34,7 +34,7 @@ public class OpenInEditorCommand extends
 		FileNode node = getSelectedNodes(event).get(0);
 		IPath path = new Path(node.getObject().getAbsolutePath());
 
-		IFile file = ResourceUtil.getFileForLocation(path);
+		IFile file = ResourceUtil.getFileForLocation(path, true);
 		if (file == null) {
 			IFileStore store = EFS.getLocalFileSystem().getStore(path);
 			try {
