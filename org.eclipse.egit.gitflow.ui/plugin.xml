@@ -239,10 +239,10 @@
                   operator="and">
 					<and>
 						<adapt type="org.eclipse.jgit.lib.Repository">
-							<test
-                        forcePluginActivation="true"
-                        property="GitFlowRepository.isDevelop">
-							</test>
+         <test
+               forcePluginActivation="true"
+               property="GitFlowRepository.isInitialized">
+         </test>
 						</adapt>
 					</and>
 				</iterate>
@@ -301,10 +301,10 @@
                   operator="and">
 					<and>
 						<adapt type="org.eclipse.jgit.lib.Repository">
-							<test
-                        forcePluginActivation="true"
-                        property="GitFlowRepository.isDevelop">
-							</test>
+         <test
+               forcePluginActivation="true"
+               property="GitFlowRepository.isInitialized">
+         </test>
 						</adapt>
 					</and>
 				</iterate>
@@ -548,10 +548,10 @@
                   operator="and">
 					<adapt type="org.eclipse.jgit.lib.Repository">
 						<and>
-							<test
-                        forcePluginActivation="true"
-                        property="GitFlowRepository.isDevelop">
-							</test>
+         <test
+               forcePluginActivation="true"
+               property="GitFlowRepository.isInitialized">
+         </test>
 						</and>
 					</adapt>
 				</iterate>
