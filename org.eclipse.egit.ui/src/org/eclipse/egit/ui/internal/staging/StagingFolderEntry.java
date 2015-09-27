@@ -40,7 +40,8 @@ public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
 		this.repoLocation = repoLocation;
 		this.repoRelativePath = repoRelativePath;
 		this.nodePath = nodePath;
-		this.container = ResourceUtil.getContainerForLocation(getLocation());
+		this.container = ResourceUtil.getContainerForLocation(getLocation(),
+				false);
 	}
 
 	/**

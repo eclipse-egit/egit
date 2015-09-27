@@ -83,7 +83,7 @@ public class GitAdapterFactory implements IAdapterFactory {
 
 			if (obj instanceof GitModelBlob) {
 				IResource res = ResourceUtil.getFileForLocation(obj
-						.getLocation());
+						.getLocation(), false);
 				if (res == null)
 					res = root.getFile(obj.getLocation());
 

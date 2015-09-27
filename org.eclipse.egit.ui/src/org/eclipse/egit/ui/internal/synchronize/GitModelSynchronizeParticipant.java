@@ -425,7 +425,7 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 				for (IMemento path : pathNode) {
 					String includedPath = path.getString(INCLUDED_PATH_KEY);
 					IResource resource = ResourceUtil
-							.getResourceForLocation(new Path(includedPath));
+							.getResourceForLocation(new Path(includedPath), false);
 					if (resource != null)
 						result.add(resource);
 				}

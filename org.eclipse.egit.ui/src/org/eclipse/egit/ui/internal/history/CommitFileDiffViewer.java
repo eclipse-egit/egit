@@ -472,7 +472,7 @@ public class CommitFileDiffViewer extends TableViewer {
 		for (Object selectedElement : selection.toList()) {
 			FileDiff fileDiff = (FileDiff) selectedElement;
 			IPath path = workTreePath.append(fileDiff.getPath());
-			IFile file = ResourceUtil.getFileForLocation(path);
+			IFile file = ResourceUtil.getFileForLocation(path, false);
 			if (file != null)
 				elements.add(file);
 			else
@@ -599,7 +599,7 @@ public class CommitFileDiffViewer extends TableViewer {
 
 		IWorkbenchPage page = site.getWorkbenchWindow().getActivePage();
 		if (oldCommit != null && newCommit != null) {
-			IFile file = ResourceUtil.getFileForLocation(getRepository(), np);
+			IFile file = ResourceUtil.getFileForLocation(getRepository(), np, false);
 			try {
 				if (file != null) {
 					IResource[] resources = new IResource[] { file, };
@@ -648,7 +648,7 @@ public class CommitFileDiffViewer extends TableViewer {
 		}
 
 		IWorkbenchPage activePage = site.getWorkbenchWindow().getActivePage();
-		IFile file = ResourceUtil.getFileForLocation(getRepository(), p);
+		IFile file = ResourceUtil.getFileForLocation(getRepository(), p, false);
 		try {
 			if (file != null) {
 				final IResource[] resources = new IResource[] { file, };
