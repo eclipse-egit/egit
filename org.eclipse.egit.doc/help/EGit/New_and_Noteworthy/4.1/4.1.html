@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 4.1 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 4.1 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bug-Fixes.html" title="Bug Fixes">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bug Fixes</td>
+			</tr>
+		</table><hr/>
+		<h1 id="EGit">EGit</h1>
+		<h2 id="Merge_Strategy_Extension_Point">Merge Strategy Extension Point</h2>
+		<p>Introduce a merge strategy extension point which allows to plugin custom merge strategies. This will be used by EMF Compare to add support for merging models.</p>
+		<h2 id="Staging_View_and_Commit_Dialog">Staging View and Commit Dialog</h2>
+		<ul>
+			<li>Add check for build warnings and errors before commit. Optionally block commit if there are any problems reported</li>
+			<li>Make warning for non-empty second line of commit message optional</li>
+			<li>Consider initial selection in Staging View</li>
+			<li>Improve Staging View to remember position of its components</li>
+			<li>Introduce compare mode for Git Staging View similar to History View</li>
+		</ul>
+		<h2 id="History_View">History View</h2>
+		<ul>
+			<li>Rewrite CommitMessageViewer to use JFace</li>
+			<li>Simplify hyperlink syntax coloring</li>
+			<li>Use standard hyperlink link colors</li>
+		</ul>
+		<h2 id="Repositories_View">Repositories View</h2>
+		<ul>
+			<li>Decorate repository in Repositories View if working tree is dirty</li>
+			<li>Use decoration color to render dirty decorator in repositories view</li>
+			<li>Improve sorting of nodes in Repositories View</li>
+		</ul>
+		<h2 id="Other_Enhancements">Other Enhancements</h2>
+		<ul>
+			<li>Auto-configure Gerrit after ssh clone</li>
+			<li>Add "Compare with/Replace with" actions to ResourceMappings</li>
+			<li>Use the default repository folder when importing Team project sets</li>
+			<li>Consider initial selection in Interactive Rebase view</li>
+		</ul>
+		<h2 id="Gitflow_Support">Gitflow Support</h2>
+		<ul>
+			<li>Allow changing branch names when initializing a Gitflow repository</li>
+			<li>Add icon decorations to identify gitflow repositories</li>
+			<li>Allow changing the commit message during feature finish with squash option</li>
+			<li>Implement squash and keep branch options for feature finish</li>
+		</ul>
+		<h2 id="Performance_Improvements">Performance Improvements</h2>
+		<ul>
+			<li>Do not iterate over all staged view entries if not needed</li>
+			<li>Add default limit for number of shown diff lines in history</li>
+		</ul>
+		<h2 id="Release_Engineering_and_Build">Release Engineering and Build</h2>
+		<ul>
+			<li>Update swtbot to 2.3.0</li>
+			<li>Update org.apache.httpcomponents used by JGit to 4.3</li>
+			<li>Stabilize unstable UI tests</li>
+			<li>Add Gitflow UI tests</li>
+			<li>Enable NPE analysis in EGit</li>
+		</ul><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bug-Fixes.html" title="Bug Fixes">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bug Fixes</td>
+			</tr>
+		</table>
+	</body>
+</html>

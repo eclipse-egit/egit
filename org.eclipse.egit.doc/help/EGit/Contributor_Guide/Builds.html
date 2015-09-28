@@ -136,11 +136,10 @@
 		<h2 id="Checking_for_JGit_API_Changes_using_API_Baseline">Checking for JGit API Changes using API Baseline</h2>
 		<p>The JGit projects have API tooling enabled. In order to use PDE API tools to get assistance with maintaining API changes and additions you need to set an API baseline:</p>
 		<ul>
-			<li>download the p2 repository for the latest EGit release (which includes the JGit artifacts) to a local folder, e.g. <code>~/egit-releases/updates-3.0</code>, find the p2 repository URLs 
-				<a href="http://wiki.eclipse.org/EGit/FAQ#Where_can_I_find_older_releases_of_EGit.3F" target="egit_external">here</a> and see 
-				<a href="http://wiki.eclipse.org/Equinox_p2_Repository_Mirroring#Mirroring_Artifacts" target="egit_external">mirroring artifacts</a> for a way to download the repository
+			<li>download the p2 repository for the latest EGit release (which includes the JGit artifacts) to a local folder, e.g. <code>~/egit-releases/updates-4.0</code>, find the p2 repository URLs 
+				<a href="http://wiki.eclipse.org/EGit/FAQ#Where_can_I_find_older_releases_of_EGit.3F" target="egit_external">here</a> and download the p2 repository of the latest minor release (service releases don't change API) using the corresponding link in the last column of that table
 			</li>
-			<li>in Eclipse click "Preferences &gt; Plug-In Development &gt; API Baselines", click "Add Baseline..." and define a new baseline (e.g. egit-3.0) and point it to the local copy of the corresponding EGit p2 repository.</li>
+			<li>in Eclipse click "Preferences &gt; Plug-In Development &gt; API Baselines", click "Add Baseline..." and define a new baseline (e.g. egit-4.0) and point it to the local copy of the corresponding EGit p2 repository.</li>
 			<li>the API tools will then raise warning/errors for all detected problems and provide quick fixes helping to resolve these problems</li>
 			<li>see the 
 				<a href="http://wiki.eclipse.org/PDE/API_Tools/User_Guide" target="egit_external">PDE API Tools User Guide</a> for more details.

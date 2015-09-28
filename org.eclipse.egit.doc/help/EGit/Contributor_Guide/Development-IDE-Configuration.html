@@ -30,7 +30,7 @@
 			</tr>
 		</table><hr/>
 		<h1 id="Development_IDE_Configuration">Development IDE Configuration</h1>
-		<p>Download and install "Eclipse for RCP and RAP Developers" from here, if you don't already have it:</p>
+		<p>Download and install the Eclipse package "Eclipse IDE for Eclipse Committers" or "Eclipse for RCP and RAP Developers" from here, if you don't already have it:</p>
 		<p>
 			<a href="http://www.eclipse.org/downloads/" target="egit_external">http://www.eclipse.org/downloads/</a>
 		</p>
@@ -71,7 +71,7 @@
 		</p>
 		<h2 id="Dependencies">Dependencies</h2>
 		<p>After importing the EGit and JGit projects in Eclipse, they will not compile due to missing dependencies. There are a few ways to install these.</p>
-		<h3 id="Option_1:_Use_a_Target_Platform">Option 1: Use a Target Platform</h3>
+		<h3 id="Option_1_.28recommended.29:_Use_a_Target_Platform">Option 1 (recommended): Use a Target Platform</h3>
 		<p>
 			<img align="right" title="EGit target platforms in org.eclipse.egit.target" alt="EGit target platforms in org.eclipse.egit.target" border="0" src="images/EGit-Target-Platforms.png‎"/>
 		</p>
@@ -81,10 +81,10 @@
 				<i>org.eclipse.egit.target</i> project
 			</li>
 			<li>Choose the 
-				<i>egit-&lt;version&gt;.target</i> file matching the version of your Eclipse platform (e.g. 4.2 for Juno) and open it (this may take a while as it downloads the indexes of the p2 repositories the target platform refers to)
+				<i>egit-&lt;version&gt;.target</i> file matching the version of your Eclipse platform (e.g. 4.5 for Mars) and open it (this may take a while as it downloads the indexes of the p2 repositories the target platform refers to)
 			</li>
 			<li>In the resulting editor, click on the 
-				<i>Set as Target Platform</i> link at the top right (this may also take a while)
+				<i>Set as Target Platform</i> link at the top right (this may also take a while since it downloads the dependencies)
 			</li>
 		</ul>
 		<p>After that, the workspace should build cleanly. If not, try Project &gt; Clean... &gt; All. If this also doesn't help open Preferences &gt; Plug-In Development &gt; Target Platform,
