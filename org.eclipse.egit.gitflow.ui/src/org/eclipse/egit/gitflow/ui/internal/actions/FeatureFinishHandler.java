@@ -17,8 +17,8 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.jobs.IJobManager;
-import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.gitflow.GitFlowRepository;
@@ -37,6 +37,7 @@ import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.MergeResult.MergeStatus;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -50,7 +51,7 @@ public class FeatureFinishHandler extends AbstractGitFlowHandler {
 		if (gfRepo == null) {
 			return error(UIText.Handlers_noGitflowRepositoryFound);
 		}
-		String featureBranch;
+		final String featureBranch;
 		Repository repo = gfRepo.getRepository();
 		try {
 			featureBranch = repo.getBranch();
@@ -64,7 +65,7 @@ public class FeatureFinishHandler extends AbstractGitFlowHandler {
 		if (dialog.open() != Window.OK) {
 			return null;
 		}
-		boolean squash = dialog.isSquash();
+		final boolean squash = dialog.isSquash();
 		boolean keepBranch = dialog.isKeepBranch();
 
 		try {
@@ -76,35 +77,60 @@ public class FeatureFinishHandler extends AbstractGitFlowHandler {
 				return null;
 			}
 
-			FeatureFinishOperation operation = new FeatureFinishOperation(
+			final FeatureFinishOperation operation = new FeatureFinishOperation(
 					gfRepo);
 			operation.setSquash(squash);
 			operation.setKeepBranch(keepBranch);
-			String develop = gfRepo.getConfig().getDevelop();
 
 			JobUtil.scheduleUserWorkspaceJob(operation,
 					UIText.FeatureFinishHandler_finishingFeature,
-					JobFamilies.GITFLOW_FAMILY);
-			IJobManager jobMan = Job.getJobManager();
-			jobMan.join(JobFamilies.GITFLOW_FAMILY, null);
-
-			MergeResult mergeResult = operation.getMergeResult();
-
-			if (squash && mergeResult.getMergedCommits().length > 1) {
-				rewordCommitMessage(activeShell, gfRepo);
-			}
-
-			MergeStatus mergeStatus = mergeResult.getMergeStatus();
-			if (MergeStatus.CONFLICTING.equals(mergeStatus)) {
-				MultiStatus status = createMergeConflictInfo(develop, featureBranch, mergeResult);
-				ErrorDialog.openError(null, UIText.FeatureFinishHandler_Conflicts, null, status);
-			}
+					JobFamilies.GITFLOW_FAMILY, new JobChangeAdapter() {
+						@Override
+						public void done(IJobChangeEvent jobChangeEvent) {
+							if (jobChangeEvent.getResult().isOK()) {
+								postMerge(gfRepo, featureBranch, squash,
+										operation.getMergeResult());
+							}
+						}
+					});
 		} catch (WrongGitFlowStateException | CoreException | IOException
-				| OperationCanceledException | InterruptedException e) {
+				| OperationCanceledException e) {
 			return error(e.getMessage(), e);
 		}
 
+
 		return null;
+	}
+
+	private void postMerge(final GitFlowRepository gfRepo,
+			final String featureBranch, final boolean squash,
+			final MergeResult mergeResult) {
+		Display display = Display.getDefault();
+
+		display.asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				Shell activeShell = Display.getDefault().getActiveShell();
+
+				if (squash && mergeResult.getMergedCommits().length > 1) {
+					try {
+						rewordCommitMessage(activeShell, gfRepo);
+					} catch (CoreException | IOException e) {
+						throw new RuntimeException(e);
+					}
+				}
+
+				MergeStatus mergeStatus = mergeResult.getMergeStatus();
+				if (MergeStatus.CONFLICTING.equals(mergeStatus)) {
+					String develop = gfRepo.getConfig().getDevelop();
+					MultiStatus status = createMergeConflictInfo(develop,
+							featureBranch, mergeResult);
+					ErrorDialog.openError(null, UIText.FeatureFinishHandler_Conflicts,
+							null, status);
+				}
+			}
+		});
+
 	}
 
 	private void rewordCommitMessage(Shell activeShell,
