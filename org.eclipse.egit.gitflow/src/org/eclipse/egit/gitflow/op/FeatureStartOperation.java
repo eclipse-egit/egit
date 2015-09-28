@@ -13,7 +13,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.gitflow.GitFlowConfig;
 import org.eclipse.egit.gitflow.GitFlowRepository;
+import org.eclipse.egit.gitflow.internal.CoreText;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * git flow feature start
@@ -33,6 +35,9 @@ public final class FeatureStartOperation extends AbstractFeatureOperation {
 		GitFlowConfig config = repository.getConfig();
 		String branchName = config.getFeatureBranchName(featureName);
 		RevCommit head = repository.findHead(config.getDevelop());
+		if (head == null) {
+			throw new IllegalStateException(NLS.bind(CoreText.StartOperation_unableToFindCommitFor, config.getDevelop()));
+		}
 		start(monitor, branchName, head);
 	}
 
