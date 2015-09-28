@@ -98,6 +98,6 @@ public class CoreText extends NLS {
 	public static String ReleaseStartOperation_releaseNameAlreadyExists;
 
 	/** */
-	public static String ReleaseStartOperation_unableToFindCommit;
+	public static String StartOperation_unableToFindCommitFor;
 
 }
