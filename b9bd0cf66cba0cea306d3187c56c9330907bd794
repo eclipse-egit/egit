@@ -16,6 +16,24 @@
       "revId": "b9bd0cf66cba0cea306d3187c56c9330907bd794",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_76ed8783",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1013
+      },
+      "writtenOn": "2015-09-30T13:31:16Z",
+      "side": 1,
+      "message": "input.getLeft can\u0027t be null at this location. If input.getLeft() was null, an NPE would have been raised at line 238 (final IResource resource  \u003d ((ResourceNode) input.getLeft()).getResource();)",
+      "parentUuid": "0724e3f1_f0b4f669",
+      "revId": "b9bd0cf66cba0cea306d3187c56c9330907bd794",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
