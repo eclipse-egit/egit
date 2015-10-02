@@ -11,7 +11,11 @@ package org.eclipse.egit.gitflow.op;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.egit.gitflow.GitFlowConfig;
 import org.eclipse.egit.gitflow.GitFlowRepository;
+import org.eclipse.egit.gitflow.internal.CoreText;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * git flow hotfix start
@@ -27,9 +31,13 @@ public final class HotfixStartOperation extends AbstractHotfixOperation {
 
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
-		String branchName = repository.getConfig().getHotfixBranchName(versionName);
-
-		start(monitor, branchName, repository.findHead(repository.getConfig().getMaster()));
+		GitFlowConfig config = repository.getConfig();
+		String branchName = config.getHotfixBranchName(versionName);
+		RevCommit head = repository.findHead(config.getMaster());
+		if (head == null) {
+			throw new IllegalStateException(NLS.bind(CoreText.StartOperation_unableToFindCommitFor, config.getDevelop()));
+		}
+		start(monitor, branchName, head);
 	}
 
 	@Override

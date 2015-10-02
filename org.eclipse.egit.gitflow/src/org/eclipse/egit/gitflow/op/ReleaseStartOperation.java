@@ -23,7 +23,6 @@ import org.eclipse.egit.gitflow.GitFlowConfig;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.WrongGitFlowStateException;
 import org.eclipse.egit.gitflow.internal.CoreText;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jgit.errors.AmbiguousObjectException;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.RevisionSyntaxException;
@@ -85,7 +84,7 @@ public final class ReleaseStartOperation extends AbstractReleaseOperation {
 
 		RevCommit commit = repository.findCommit(startCommitSha1);
 		if (commit == null) {
-			throw new IllegalStateException(NLS.bind(CoreText.ReleaseStartOperation_unableToFindCommit, startCommitSha1));
+			throw new IllegalStateException(NLS.bind(CoreText.StartOperation_unableToFindCommitFor, startCommitSha1));
 		}
 		start(monitor, branchName, commit);
 	}
@@ -122,10 +121,12 @@ public final class ReleaseStartOperation extends AbstractReleaseOperation {
 		}
 	}
 
-	@Nullable
 	private static String findHead(GitFlowRepository repository) {
 		GitFlowConfig config = repository.getConfig();
 		RevCommit head = repository.findHead(config.getDevelop());
-		return head == null ? null : head.getName();
+		if (head == null) {
+			throw new IllegalStateException(NLS.bind(CoreText.StartOperation_unableToFindCommitFor, config.getDevelop()));
+		}
+		return head.getName();
 	}
 }
