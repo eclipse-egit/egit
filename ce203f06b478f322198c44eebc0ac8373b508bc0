@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0724e3f1_18354d90",
+        "filename": "org.eclipse.egit.gitflow.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-02T22:06:51Z",
+      "side": 1,
+      "message": "could you fix formatting without reordering lines, this change is pretty hard to review due to this reordering",
+      "revId": "ce203f06b478f322198c44eebc0ac8373b508bc0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
