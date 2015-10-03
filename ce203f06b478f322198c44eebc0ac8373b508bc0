@@ -34,6 +34,24 @@
       "revId": "ce203f06b478f322198c44eebc0ac8373b508bc0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_2c3456e1",
+        "filename": "org.eclipse.egit.gitflow.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-03T21:06:40Z",
+      "side": 1,
+      "message": "yeah, you are right",
+      "parentUuid": "0724e3f1_acf96690",
+      "revId": "ce203f06b478f322198c44eebc0ac8373b508bc0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
