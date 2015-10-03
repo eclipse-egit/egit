@@ -16,6 +16,24 @@
       "revId": "ce203f06b478f322198c44eebc0ac8373b508bc0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_acf96690",
+        "filename": "org.eclipse.egit.gitflow.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-10-03T20:04:37Z",
+      "side": 1,
+      "message": "Are you sure there are reordered lines? When I tell Gerrit to ignore all whitespace changes, I get an empty diff.\n\nI used Notepad++ XML Tools to \"Pretty print (Text indent)\"\nIf there are issues with that I can simply use a different formatter.",
+      "parentUuid": "0724e3f1_18354d90",
+      "revId": "ce203f06b478f322198c44eebc0ac8373b508bc0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
