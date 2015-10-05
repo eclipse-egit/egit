@@ -25,6 +25,12 @@
   <packaging>eclipse-repository</packaging>
 
   <name>EGit P2 Repository</name>
+  <properties>
+    <p2MirrorsURL>http://www.eclipse.org/downloads/download.php?file=${PUBLISH_FOLDER}&amp;format=xml</p2MirrorsURL>
+    <p2StatsURL>http://download.eclipse.org/stats/egit/${project.artifactId}</p2StatsURL>
+    <!-- At the moment, this list of features needs to be maintained manually. -->
+    <statsTrackedArtifacts>org.eclipse.jgit.feature,org.eclipse.jgit.source.feature,org.eclipse.jgit.pgm.feature,org.eclipse.jgit.pgm.source.feature,org.eclipse.jgit.http.apache.feature,org.eclipse.egit.feature,org.eclipse.egit.gitflow.feature,org.eclipse.egit.mylyn.feature,org.eclipse.egit.source.feature</statsTrackedArtifacts>
+  </properties>
 
   <profiles>
     <profile>
@@ -92,13 +98,49 @@
                 <update.site.version>${project.version}</update.site.version>
                 <target.eclipse.version>3.8.2 / 4.2.2 (Juno) or newer</target.eclipse.version>
               </symbols>
-              <p2StatsUrl>http://download.eclipse.org/stats/egit/${project.artifactId}/${project.version}</p2StatsUrl>
               <associateSites>
                 <site>http://download.eclipse.org/e4/snapshots/org.eclipse.e4.ui</site>
               </associateSites>
             </configuration>
           </execution>
         </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.eclipse.tycho.extras</groupId>
+        <artifactId>tycho-eclipserun-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <executions>
+         <execution>
+          <id>add-repo-properties</id>
+          <goals>
+           <goal>eclipse-run</goal>
+          </goals>
+          <phase>package</phase>
+          <configuration>
+          <appArgLine>-application org.eclipse.wtp.releng.tools.addRepoProperties</appArgLine>
+          <!-- See <http://wiki.eclipse.org/Equinox/p2/p2.mirrorsURL>. -->
+          <!-- See <http://wiki.eclipse.org/Equinox_p2_download_stats>. -->
+          <argLine>-DartifactRepoDirectory=${project.build.directory}/repository -Dp2MirrorsURL=${p2MirrorsURL} -Dp2StatsURI=${p2StatsURL} -DstatsTrackedArtifacts=${statsTrackedArtifacts} -DstatsArtifactsSuffix=-${project.version}</argLine>
+          <dependencies>
+           <dependency>
+            <artifactId>org.eclipse.wtp.releng.tools.feature</artifactId>
+            <type>eclipse-feature</type>
+           </dependency>
+          </dependencies>
+          <repositories>
+           <repository>
+            <url>http://download.eclipse.org/webtools/releng/repository</url>
+            <layout>p2</layout>
+           </repository>
+           <repository>
+            <url>http://download.eclipse.org/releases/mars</url>
+            <layout>p2</layout>
+           </repository>
+          </repositories>
+         </configuration>
+        </execution>
+       </executions>
       </plugin>
     </plugins>
   </build>
