@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0724e3f1_9200e275",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-10-11T19:32:55Z",
+      "side": 1,
+      "message": "Not needed, delete.",
+      "range": {
+        "startLine": 228,
+        "startChar": 4,
+        "endLine": 228,
+        "endChar": 23
+      },
+      "revId": "172391b081f82736ef2cf58c6a636089337d8163",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_12c7d2aa",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-10-11T19:32:55Z",
+      "side": 1,
+      "message": "??",
+      "revId": "172391b081f82736ef2cf58c6a636089337d8163",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_b2b88631",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-10-11T19:32:55Z",
+      "side": 1,
+      "message": "Why * 100? Wouldn\u0027t simply projects.size() and then newChild(1) below be clearer?",
+      "revId": "172391b081f82736ef2cf58c6a636089337d8163",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_d2bc1a24",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-10-11T19:32:55Z",
+      "side": 1,
+      "message": "subMon.newChild(10)",
+      "range": {
+        "startLine": 162,
+        "startChar": 38,
+        "endLine": 162,
+        "endChar": 44
+      },
+      "revId": "172391b081f82736ef2cf58c6a636089337d8163",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_32cc96ce",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-10-11T19:32:55Z",
+      "side": 1,
+      "message": "Why this? Just pass through \u0027monitor\u0027.",
+      "range": {
+        "startLine": 181,
+        "startChar": 37,
+        "endLine": 181,
+        "endChar": 55
+      },
+      "revId": "172391b081f82736ef2cf58c6a636089337d8163",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_52982acd",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/IgnoreOperation.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-10-11T19:32:55Z",
+      "side": 1,
+      "message": "Needs to be in an else-clause, otherwise you\u0027ll count twice (newChild() and worked()) and thus reach 100% before the last path.",
+      "revId": "172391b081f82736ef2cf58c6a636089337d8163",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_b28fe686",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/IgnoreOperation.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-10-11T19:32:55Z",
+      "side": 1,
+      "message": "Remove...",
+      "revId": "172391b081f82736ef2cf58c6a636089337d8163",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_9292a2a9",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/IgnoreOperation.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-10-11T19:32:55Z",
+      "side": 1,
+      "message": "... and just pass through \u0027monitor\u0027 here and below.",
+      "revId": "172391b081f82736ef2cf58c6a636089337d8163",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
