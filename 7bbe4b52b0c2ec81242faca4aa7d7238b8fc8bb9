@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0724e3f1_5e3e7177",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-12T20:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0724e3f1_e640bb0a",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "7bbe4b52b0c2ec81242faca4aa7d7238b8fc8bb9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0724e3f1_86e29f90",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitJob.java",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2015-09-24T22:02:47Z",
       "side": 1,
       "message": "- unnecessary braces\n- bad indentation",
+      "revId": "7bbe4b52b0c2ec81242faca4aa7d7238b8fc8bb9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_7e3b7587",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-12T20:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0724e3f1_86e29f90",
       "revId": "7bbe4b52b0c2ec81242faca4aa7d7238b8fc8bb9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "0724e3f1_1e0d19f2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-12T20:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0724e3f1_6655ebca",
+      "range": {
+        "startLine": 198,
+        "startChar": 29,
+        "endLine": 198,
+        "endChar": 61
+      },
+      "revId": "7bbe4b52b0c2ec81242faca4aa7d7238b8fc8bb9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0724e3f1_066d0fa7",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
         "patchSetId": 1
@@ -76,6 +142,24 @@
       "writtenOn": "2015-09-24T22:02:47Z",
       "side": 1,
       "message": "commented out code ?",
+      "revId": "7bbe4b52b0c2ec81242faca4aa7d7238b8fc8bb9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_3e129d10",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-12T20:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0724e3f1_066d0fa7",
       "revId": "7bbe4b52b0c2ec81242faca4aa7d7238b8fc8bb9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -110,6 +194,30 @@
       "writtenOn": "2015-09-24T22:02:47Z",
       "side": 1,
       "message": "use ResourcePropertyTester.hasGerritConfiguration(Repository repository) instead",
+      "range": {
+        "startLine": 2856,
+        "startChar": 29,
+        "endLine": 2856,
+        "endChar": 58
+      },
+      "revId": "7bbe4b52b0c2ec81242faca4aa7d7238b8fc8bb9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_de0261c2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2856,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-12T20:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0724e3f1_0644ef1c",
       "range": {
         "startLine": 2856,
         "startChar": 29,
