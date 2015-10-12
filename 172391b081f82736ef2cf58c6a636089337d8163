@@ -153,6 +153,75 @@
       "revId": "172391b081f82736ef2cf58c6a636089337d8163",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_18db71e5",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryFinder.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-10-12T11:34:29Z",
+      "side": 1,
+      "message": "progress.setWorkRemaining(children.length);",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 155,
+        "endChar": 44
+      },
+      "revId": "172391b081f82736ef2cf58c6a636089337d8163",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_78e9cd77",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryFinder.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-10-12T11:34:29Z",
+      "side": 1,
+      "message": "1",
+      "range": {
+        "startLine": 160,
+        "startChar": 29,
+        "endLine": 160,
+        "endChar": 34
+      },
+      "revId": "172391b081f82736ef2cf58c6a636089337d8163",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_58ecc987",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryFinder.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-10-12T11:34:29Z",
+      "side": 1,
+      "message": "1",
+      "range": {
+        "startLine": 163,
+        "startChar": 22,
+        "endLine": 163,
+        "endChar": 27
+      },
+      "revId": "172391b081f82736ef2cf58c6a636089337d8163",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
