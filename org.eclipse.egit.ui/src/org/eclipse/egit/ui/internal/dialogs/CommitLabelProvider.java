@@ -13,8 +13,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
-import java.util.concurrent.atomic.AtomicReference;
-
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
@@ -34,7 +32,7 @@ import org.eclipse.swt.graphics.Image;
  */
 public class CommitLabelProvider extends BaseLabelProvider implements
 		ITableLabelProvider {
-	private AtomicReference<GitDateFormatter> dateFormatter = new AtomicReference<>();
+	private GitDateFormatter dateFormatter;
 
 	private boolean showEmail;
 
@@ -72,8 +70,7 @@ public class CommitLabelProvider extends BaseLabelProvider implements
 				String property = event.getProperty();
 				if ((UIPreferences.DATE_FORMAT.equals(property)
 						|| UIPreferences.DATE_FORMAT_CHOICE.equals(property))
-						&& (dateFormatter
-								.get() instanceof PreferenceBasedDateFormatter)) {
+						&& (dateFormatter instanceof PreferenceBasedDateFormatter)) {
 					setDateFormatter(PreferenceBasedDateFormatter.create());
 				} else if (UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE
 						.equals(property)) {
@@ -90,8 +87,8 @@ public class CommitLabelProvider extends BaseLabelProvider implements
 		};
 		if (store
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE)) {
-			dateFormatter.set(
-					new GitDateFormatter(GitDateFormatter.Format.RELATIVE));
+			dateFormatter = new GitDateFormatter(
+					GitDateFormatter.Format.RELATIVE);
 		}
 		showEmail = canShowEmailAddresses && store
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_EMAIL_ADDRESSES);
@@ -144,12 +141,10 @@ public class CommitLabelProvider extends BaseLabelProvider implements
 	}
 
 	private GitDateFormatter getDateFormatter() {
-		GitDateFormatter result = dateFormatter.get();
-		if (result == null) {
-			result = PreferenceBasedDateFormatter.create();
-			dateFormatter.set(result);
+		if (dateFormatter == null) {
+			dateFormatter = PreferenceBasedDateFormatter.create();
 		}
-		return result;
+		return dateFormatter;
 	}
 
 	private PersonIdent authorOf(final RevCommit c) {
@@ -179,7 +174,7 @@ public class CommitLabelProvider extends BaseLabelProvider implements
 	 * @param relative {@code true} if the date column should show relative dates
 	 */
 	private void setRelativeDate(boolean relative) {
-		if (dateFormatter.get() instanceof PreferenceBasedDateFormatter) {
+		if (dateFormatter instanceof PreferenceBasedDateFormatter) {
 			if (relative) {
 				setDateFormatter(
 						new GitDateFormatter(GitDateFormatter.Format.RELATIVE));
@@ -200,7 +195,7 @@ public class CommitLabelProvider extends BaseLabelProvider implements
 	}
 
 	private void setDateFormatter(GitDateFormatter formatter) {
-		dateFormatter.set(formatter);
+		dateFormatter = formatter;
 		fireLabelProviderChanged(new LabelProviderChangedEvent(this));
 	}
 }
