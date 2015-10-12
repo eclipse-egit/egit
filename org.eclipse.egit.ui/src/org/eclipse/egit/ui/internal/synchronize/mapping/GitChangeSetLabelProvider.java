@@ -13,7 +13,6 @@ package org.eclipse.egit.ui.internal.synchronize.mapping;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Commit;
@@ -62,20 +61,20 @@ public class GitChangeSetLabelProvider extends SynchronizationLabelProvider impl
 
 	private final IPropertyChangeListener uiPrefsListener;
 
-	private final AtomicReference<PreferenceBasedDateFormatter> dateFormatter = new AtomicReference<>();
+	private PreferenceBasedDateFormatter dateFormatter;
 
 	/**
 	 * Creates a new {@link GitChangeSetLabelProvider}.
 	 */
 	public GitChangeSetLabelProvider() {
-		dateFormatter.set(PreferenceBasedDateFormatter.create());
+		dateFormatter = PreferenceBasedDateFormatter.create();
 		uiPrefsListener = new IPropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent event) {
 				String property = event.getProperty();
 				if (UIPreferences.DATE_FORMAT.equals(property)
 						|| UIPreferences.DATE_FORMAT_CHOICE.equals(property)) {
-					dateFormatter.set(PreferenceBasedDateFormatter.create());
+					dateFormatter = PreferenceBasedDateFormatter.create();
 					fireLabelProviderChanged(new LabelProviderChangedEvent(
 							GitChangeSetLabelProvider.this));
 				}
@@ -117,7 +116,7 @@ public class GitChangeSetLabelProvider extends SynchronizationLabelProvider impl
 		Commit commit = commitModel.getCachedCommitObj();
 		Map<String, String> bindings = new HashMap<String, String>();
 		bindings.put(BINDING_CHANGESET_DATE,
-				dateFormatter.get().formatDate(commit.getCommitDate()));
+				dateFormatter.formatDate(commit.getCommitDate()));
 		bindings.put(BINDING_CHANGESET_AUTHOR, commit.getAuthorName());
 		bindings.put(BINDING_CHANGESET_COMMITTER, commit.getCommitterName());
 		bindings.put(BINDING_CHANGESET_SHORT_MESSAGE, commit.getShortMessage());
