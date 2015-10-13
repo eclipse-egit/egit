@@ -42,6 +42,7 @@ import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.jgit.lib.BranchConfig;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -202,8 +203,20 @@ class PushToGerritPage extends WizardPage {
 
 	private void setLastUsedBranch() {
 		String lastBranch = settings.get(lastBranchKey);
-		if (lastBranch != null)
+		try {
+			// use upstream if the current branch is tracking a branch
+			final BranchConfig branchConfig = new BranchConfig(
+					repository.getConfig(), repository.getBranch());
+			final String trackedBranch = branchConfig.getMerge();
+			if (trackedBranch != null) {
+				lastBranch = trackedBranch.replace(Constants.R_HEADS, ""); //$NON-NLS-1$
+			}
+		} catch (final IOException e) {
+			throw new RuntimeException(e);
+		}
+		if (lastBranch != null) {
 			branchText.setText(lastBranch);
+		}
 	}
 
 	private void checkPage() {

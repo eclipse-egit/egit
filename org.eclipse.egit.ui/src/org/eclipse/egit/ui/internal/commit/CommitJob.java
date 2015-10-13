@@ -28,8 +28,11 @@ import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentStateManager;
 import org.eclipse.egit.ui.internal.push.PushBranchWizard;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
+import org.eclipse.egit.ui.internal.push.PushToGerritWizard;
+import org.eclipse.egit.ui.internal.push.PushWizard;
 import org.eclipse.egit.ui.internal.push.SimpleConfigurePushDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.api.errors.AbortedByHookException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
@@ -54,7 +57,17 @@ public class CommitJob extends Job {
 
 	private boolean openCommitEditor;
 
-	private boolean pushUpstream;
+	private PushMode pushMode;
+
+	/**
+	 * where to push changes
+	 */
+	public enum PushMode {
+		/** use {@link PushWizard} */
+		UPSTREAM,
+		/** use {@link PushToGerritWizard} */
+		GERRIT;
+	}
 
 	/**
 	 * @param repository
@@ -83,11 +96,12 @@ public class CommitJob extends Job {
 
 	/**
 	 * Sets this job to push the changes upstream after successfully committing.
-	 * @param pushUpstream
+	 *
+	 * @param pushMode
 	 * @return this commit job instance
 	 */
-	public CommitJob setPushUpstream(boolean pushUpstream) {
-		this.pushUpstream = pushUpstream;
+	public CommitJob setPushUpstream(final PushMode pushMode) {
+		this.pushMode = pushMode;
 		return this;
 	}
 
@@ -119,10 +133,12 @@ public class CommitJob extends Job {
 		}
 
 		if (commit != null) {
-			if (openCommitEditor)
+			if (openCommitEditor) {
 				openCommitEditor(commit);
-			if (pushUpstream)
-				pushUpstream(commit);
+			}
+			if (pushMode != null) {
+				pushUpstream(commit, pushMode);
+			}
 		}
 		return Status.OK_STATUS;
 	}
@@ -151,43 +167,50 @@ public class CommitJob extends Job {
 		});
 	}
 
-	private void pushUpstream(final RevCommit commit) {
+	private void pushUpstream(final RevCommit commit, final PushMode pushTo) {
 		RemoteConfig config = SimpleConfigurePushDialog
 				.getConfiguredRemote(repository);
-		if (config == null) {
-			final Display display = Display.getDefault();
-			display.asyncExec(new Runnable() {
 
-				@Override
-				public void run() {
-					try {
-						PushBranchWizard pushWizard = null;
-						String fullBranch = repository.getFullBranch();
-						if (fullBranch != null
-								&& fullBranch.startsWith(Constants.R_HEADS)) {
-							Ref ref = repository.getRef(fullBranch);
-							pushWizard = new PushBranchWizard(repository, ref);
-						} else {
-							pushWizard = new PushBranchWizard(repository,
-									commit.getId());
-						}
-						WizardDialog wizardDialog = new WizardDialog(display
-								.getActiveShell(), pushWizard);
-						wizardDialog.setHelpAvailable(true);
-						wizardDialog.open();
-					} catch (IOException e) {
-						Activator.handleError(
-								NLS.bind(UIText.CommitUI_pushFailedMessage, e),
-								e, true);
-					}
+		if (pushTo == PushMode.GERRIT) {
+			final Wizard pushWizard = new PushToGerritWizard(repository);
+			openPushWizard(pushWizard);
+		} else if (config == null) {
+			try {
+				Wizard pushWizard = null;
+				String fullBranch = repository.getFullBranch();
+				if (fullBranch != null
+						&& fullBranch.startsWith(Constants.R_HEADS)) {
+					Ref ref = repository.getRef(fullBranch);
+					pushWizard = new PushBranchWizard(repository, ref);
+				} else {
+					pushWizard = new PushBranchWizard(repository,
+							commit.getId());
 				}
-			});
+				openPushWizard(pushWizard);
+			} catch (IOException e) {
+				Activator.handleError(
+						NLS.bind(UIText.CommitUI_pushFailedMessage, e), e,
+						true);
+			}
 		} else {
 			PushOperationUI op = new PushOperationUI(repository,
 					config.getName(), false);
 			op.start();
 		}
+	}
 
+	private void openPushWizard(final Wizard pushWizard) {
+		final Display display = Display.getDefault();
+		display.asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				WizardDialog wizardDialog = new WizardDialog(display
+				.getActiveShell(), pushWizard);
+				wizardDialog.setHelpAvailable(true);
+				wizardDialog.open();
+			}
+		});
 	}
 
 	@Override
