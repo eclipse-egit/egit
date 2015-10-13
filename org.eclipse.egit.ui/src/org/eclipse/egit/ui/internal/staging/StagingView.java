@@ -76,6 +76,7 @@ import org.eclipse.egit.ui.internal.commit.CommitHelper;
 import org.eclipse.egit.ui.internal.commit.CommitJob;
 import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
+import org.eclipse.egit.ui.internal.commit.CommitJob.PushMode;
 import org.eclipse.egit.ui.internal.components.ToggleableWarningLabel;
 import org.eclipse.egit.ui.internal.decorators.IProblemDecoratable;
 import org.eclipse.egit.ui.internal.decorators.ProblemLabelDecorator;
@@ -1059,6 +1060,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 			@Override
 			public void updateChangeIdToggleSelection(boolean selection) {
 				addChangeIdAction.setChecked(selection);
+				commitAndPushButton
+						.setImage(selection ? getImage(UIIcons.GERRIT) : null);
 			}
 
 			@Override
@@ -3206,10 +3209,16 @@ public class StagingView extends ViewPart implements IShowInSource {
 		}
 		if (amendPreviousCommitAction.isChecked())
 			commitOperation.setAmending(true);
-		commitOperation.setComputeChangeId(addChangeIdAction.isChecked());
+		final boolean gerritMode = addChangeIdAction.isChecked();
+		commitOperation.setComputeChangeId(gerritMode);
+
+		PushMode pushMode = null;
+		if (pushUpstream) {
+			pushMode = gerritMode ? PushMode.GERRIT : PushMode.UPSTREAM;
+		}
 		final Job commitJob = new CommitJob(currentRepository, commitOperation)
-			.setOpenCommitEditor(openNewCommitsAction.isChecked())
-			.setPushUpstream(pushUpstream);
+				.setOpenCommitEditor(openNewCommitsAction.isChecked())
+				.setPushUpstream(pushMode);
 
 		// don't allow to do anything as long as commit is in progress
 		enableAllWidgets(false);
