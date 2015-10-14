@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0724e3f1_872419b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-10-14T18:09:24Z",
+      "side": 1,
+      "message": "Done: turns out it isn\u0027t needed at all.",
+      "parentUuid": "0724e3f1_4eda3e92",
+      "revId": "2b84114cf7dd180b5f3150753bd100658109a9a4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0724e3f1_aee93a2f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveView.java",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "0724e3f1_e71b5577",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-10-14T18:09:24Z",
+      "side": 1,
+      "message": "Done: turns out this listener isn\u0027t needed at all.",
+      "parentUuid": "0724e3f1_aee93a2f",
+      "range": {
+        "startLine": 493,
+        "startChar": 2,
+        "endLine": 493,
+        "endChar": 10
+      },
+      "revId": "2b84114cf7dd180b5f3150753bd100658109a9a4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0724e3f1_2e3a6a4c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveView.java",
         "patchSetId": 1
@@ -53,6 +95,30 @@
       "writtenOn": "2015-10-14T07:09:11Z",
       "side": 1,
       "message": "This needs to be factored out into a separate method so that the resize listener can refresh only the planTreeViewer\u0027s column layout.",
+      "range": {
+        "startLine": 975,
+        "startChar": 3,
+        "endLine": 989,
+        "endChar": 65
+      },
+      "revId": "2b84114cf7dd180b5f3150753bd100658109a9a4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_c71e1168",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseInteractiveView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-10-14T18:09:24Z",
+      "side": 1,
+      "message": "Nope. Not necessary since the resize listener isn\u0027t needed at all.",
+      "parentUuid": "0724e3f1_2e3a6a4c",
       "range": {
         "startLine": 975,
         "startChar": 3,
