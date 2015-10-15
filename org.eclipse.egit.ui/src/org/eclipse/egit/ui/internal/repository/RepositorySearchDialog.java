@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2015 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 479108
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
@@ -217,13 +218,15 @@ public class RepositorySearchDialog extends WizardPage {
 		Group searchGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		searchGroup.setText(UIText.RepositorySearchDialog_SearchCriteriaGroup);
 		searchGroup.setLayout(new GridLayout(4, false));
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(searchGroup);
+		GridDataFactory.fillDefaults().grab(true, false)
+				.minSize(SWT.DEFAULT, SWT.DEFAULT).applyTo(searchGroup);
 
 		Label dirLabel = new Label(searchGroup, SWT.NONE);
 		dirLabel.setText(UIText.RepositorySearchDialog_directory);
 		dir = new Text(searchGroup, SWT.BORDER);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true,
-				false).hint(300, SWT.DEFAULT).applyTo(dir);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
+				.grab(true, false).hint(300, SWT.DEFAULT)
+				.minSize(100, SWT.DEFAULT).applyTo(dir);
 		dir.setToolTipText(UIText.RepositorySearchDialog_EnterDirectoryToolTip);
 
 		String defaultRepoPath = RepositoryUtil.getDefaultRepositoryDir();
@@ -299,7 +302,8 @@ public class RepositorySearchDialog extends WizardPage {
 		searchResultGroup
 				.setText(UIText.RepositorySearchDialog_SearchResultGroup);
 		searchResultGroup.setLayout(new GridLayout(2, false));
-		GridDataFactory.fillDefaults().applyTo(searchResultGroup);
+		GridDataFactory.fillDefaults().grab(true, true).minSize(SWT.DEFAULT, 0)
+				.applyTo(searchResultGroup);
 
 		PatternFilter filter = new PatternFilter() {
 
@@ -323,6 +327,8 @@ public class RepositorySearchDialog extends WizardPage {
 			}
 		});
 
+		// Set a reasonable minimum height here; otherwise the dialog comes up
+		// with a tree that has only a few rows visible.
 		GridDataFactory.fillDefaults().grab(true, true).minSize(0, 300)
 				.applyTo(fTree);
 
@@ -508,6 +514,9 @@ public class RepositorySearchDialog extends WizardPage {
 		checkAllItem.setEnabled(!validDirs.isEmpty());
 		uncheckAllItem.setEnabled(!validDirs.isEmpty());
 		fTree.clearFilter();
+		// Remove the minimum height that was set initially so that we get a
+		// scrollbar when the dialog is resized.
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(fTree);
 		fTreeViewer.setInput(validDirs);
 		enableOk();
 	}
