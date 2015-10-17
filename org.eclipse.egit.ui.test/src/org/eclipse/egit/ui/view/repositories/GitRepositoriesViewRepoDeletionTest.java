@@ -10,6 +10,7 @@ package org.eclipse.egit.ui.view.repositories;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
@@ -22,6 +23,7 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.SubmoduleAddCommand;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotCheckBox;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.junit.Before;
@@ -76,6 +78,45 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		assertEmpty();
 		assertProjectExistence(PROJ1, false);
 		assertFalse(repositoryFile.exists());
+	}
+
+	@Test
+	public void testDeleteRepositoryKeepProjectsBug479964() throws Exception {
+		deleteAllProjects();
+		assertProjectExistence(PROJ1, false);
+		clearView();
+		Activator.getDefault().getRepositoryUtil()
+				.addConfiguredRepository(repositoryFile);
+		shareProjects(repositoryFile);
+		assertProjectExistence(PROJ1, true);
+		refreshAndWait();
+		assertHasRepo(repositoryFile);
+		SWTBotTree tree = getOrOpenView().bot().tree();
+		tree.getAllItems()[0].select();
+		ContextMenuHelper.clickContextMenu(tree, myUtil
+				.getPluginLocalizedValue(DELETE_REPOSITORY_CONTEXT_MENU_LABEL));
+		SWTBotShell shell = bot.shell(
+				UIText.DeleteRepositoryConfirmDialog_DeleteRepositoryWindowTitle);
+		shell.activate();
+		shell.bot()
+				.checkBox(
+						UIText.DeleteRepositoryConfirmDialog_DeleteGitDirCheckbox)
+				.select();
+		SWTBotCheckBox checkbox = shell.bot().checkBox(
+				UIText.DeleteRepositoryConfirmDialog_DeleteWorkingDirectoryCheckbox);
+		checkbox.select();
+		checkbox.deselect();
+		// Now "Remove project from workspace" is selected, but "Delete working
+		// tree" is not.
+		shell.bot().button(IDialogConstants.OK_LABEL).click();
+		TestUtil.joinJobs(JobFamilies.REPOSITORY_DELETE);
+
+		refreshAndWait();
+		assertEmpty();
+		assertProjectExistence(PROJ1, false);
+		assertFalse(repositoryFile.exists());
+		assertTrue(
+				new File(repositoryFile.getParentFile(), PROJ1).isDirectory());
 	}
 
 	@Test
