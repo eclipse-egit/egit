@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 SAP AG and others.
+ * Copyright (c) 2010, 2013, 2015 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,7 +8,8 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Daniel Megert <daniel_megert@ch.ibm.com> - Delete empty working directory
- *    Laurent Goubet <laurent.goubet@obeo.fr - 404121
+ *    Laurent Goubet <laurent.goubet@obeo.fr> - Bug 404121
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 479964
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
@@ -155,7 +156,7 @@ public class RemoveCommand extends
 
 				if (removeProj) {
 					// confirmed deletion
-					deleteProjects(delete, projectsToDelete,
+					deleteProjects(deleteWorkDir, projectsToDelete,
 							monitor);
 				}
 				for (RepositoryNode node : selectedNodes) {
