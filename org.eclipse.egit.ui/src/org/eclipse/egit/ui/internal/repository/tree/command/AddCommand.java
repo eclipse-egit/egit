@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 SAP AG and others.
+ * Copyright (c) 2010, 2013, 2015 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bugs 477281, 478877
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
@@ -34,6 +35,7 @@ import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.project.RepositoryFinder;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.internal.FileUtils;
 import org.eclipse.egit.ui.internal.repository.RepositorySearchWizard;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.window.Window;
@@ -52,7 +54,7 @@ public class AddCommand extends
 		WizardDialog dialog = new WizardDialog(getShell(event), wizard);
 		if (dialog.open() == Window.OK) {
 			for (String dir : wizard.getDirectories()) {
-				File repositoryDir = new File(dir);
+				File repositoryDir = FileUtils.canonical(new File(dir));
 				addRepository(repositoryDir);
 			}
 		}
