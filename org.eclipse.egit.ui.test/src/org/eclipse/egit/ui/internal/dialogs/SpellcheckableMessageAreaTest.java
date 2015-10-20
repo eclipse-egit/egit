@@ -2,6 +2,7 @@
  * Copyright (C) 2010, Robin Stocker
  * Copyright (C) 2011, Matthias Sohn <matthias.sohn@sap.com>
  * Copyright (C) 2012, IBM Corporation (Markus Keller <markus_keller@ch.ibm.com>)
+ * Copyright (C) 2015, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -187,5 +188,34 @@ public class SpellcheckableMessageAreaTest {
 	private static String wrap(String text, String lineDelimiter) {
 		String wrapped = SpellcheckableMessageArea.hardWrap(Utils.normalizeLineEndings(text));
 		return wrapped.replaceAll("\n", lineDelimiter);
+	}
+
+	@Test
+	public void dontWrapShortMessage() {
+		String input = "short";
+		assertEquals(input, SpellcheckableMessageArea.wrapCommitMessage(input));
+	}
+
+	@Test
+	public void dontWrapLongCommitMessageFooter() {
+		String input = "short\n\nfoo\n\n"
+				+ "Change-Id: I0000000000000000000000000000000000000000\n"
+				+ "Signed-off-by: Some-Arguablylong Name <jsomearguablylong.name@somecompany.com>";
+		assertEquals(input, SpellcheckableMessageArea.wrapCommitMessage(input));
+	}
+
+	@Test
+	public void wrapOnlyCommitMessageBody() {
+		String input = "short\n\n"
+				+ "123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789\n\n"
+				+ "Change-Id: I0000000000000000000000000000000000000000\n"
+				+ "Signed-off-by: Some-Arguablylong Name <somearguablylong.name@somecompany.com>";
+		String expected = "short\n\n"
+				+ "123456789 123456789 123456789 123456789 123456789 123456789 123456789\n"
+				+ "123456789\n\n"
+				+ "Change-Id: I0000000000000000000000000000000000000000\n"
+				+ "Signed-off-by: Some-Arguablylong Name <somearguablylong.name@somecompany.com>";
+		assertEquals(expected,
+				SpellcheckableMessageArea.wrapCommitMessage(input));
 	}
 }
