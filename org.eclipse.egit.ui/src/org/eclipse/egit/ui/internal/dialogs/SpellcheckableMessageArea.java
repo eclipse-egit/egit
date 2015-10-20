@@ -425,6 +425,14 @@ public class SpellcheckableMessageArea extends Composite {
 				hardWrapSegmentListener = new BidiSegmentListener() {
 					@Override
 					public void lineGetSegments(BidiSegmentEvent e) {
+						if (e.widget == textWidget) {
+							int footerOffset = CommonUtils
+									.getFooterOffset(textWidget.getText());
+							if (footerOffset >= 0
+									&& e.lineOffset >= footerOffset) {
+								return;
+							}
+						}
 						int[] segments = calculateWrapOffsets(e.lineText, MAX_LINE_WIDTH);
 						if (segments != null) {
 							char[] segmentsChars = new char[segments.length];
@@ -921,18 +929,43 @@ public class SpellcheckableMessageArea extends Composite {
 	public String getCommitMessage() {
 		String text = getText();
 		text = Utils.normalizeLineEndings(text);
-		if (shouldHardWrap())
-			text = hardWrap(text);
+		if (shouldHardWrap()) {
+			text = wrapCommitMessage(text);
+		}
 		return text;
+	}
+
+	/**
+	 * Wraps a commit message, leaving the footer as defined by
+	 * {@link CommonUtils#getFooterOffset(String)} unwrapped.
+	 *
+	 * @param text
+	 *            of the whole commit message, including footer, using '\n' as
+	 *            line delimiter
+	 * @return the wrapped text
+	 */
+	protected static String wrapCommitMessage(String text) {
+		// protected in order to be easily testable
+		int footerStart = CommonUtils.getFooterOffset(text);
+		if (footerStart < 0) {
+			return hardWrap(text);
+		} else {
+			// Do not wrap footer lines.
+			String footer = text.substring(footerStart);
+			text = hardWrap(text.substring(0, footerStart));
+			return text + footer;
+		}
 	}
 
 	/**
 	 * Hard-wraps the given text.
 	 *
-	 * @param text the text to wrap, must use '\n' as line delimiter
+	 * @param text
+	 *            the text to wrap, must use '\n' as line delimiter
 	 * @return the wrapped text
 	 */
-	public static String hardWrap(String text) {
+	protected static String hardWrap(String text) {
+		// protected for testing
 		int[] wrapOffsets = calculateWrapOffsets(text, MAX_LINE_WIDTH);
 		if (wrapOffsets != null) {
 			StringBuilder builder = new StringBuilder(text.length() + wrapOffsets.length);
