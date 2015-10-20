@@ -21,13 +21,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.history.FormatJob.FormatResult;
@@ -55,9 +54,6 @@ public class CommitInfoBuilder {
 	private static final String LF = "\n"; //$NON-NLS-1$
 
 	private static final int MAXBRANCHES = 20;
-
-	private static final Pattern FOOTER_PATTERN = Pattern
-			.compile("(?:\n(?:[A-Z](?:[A-Za-z]+-)*[A-Za-z]+:[^\n]*))+$"); //$NON-NLS-1$
 
 	private PlotCommit<?> commit;
 
@@ -180,17 +176,16 @@ public class CommitInfoBuilder {
 		int headerEnd = d.length();
 		String msg = commit.getFullMessage().trim();
 		// Find start of footer:
-		Matcher spm = FOOTER_PATTERN.matcher(msg);
-		int footerStart = -1;
-		if (spm.find()) {
+		int footerStart = CommonUtils.getFooterOffset(msg);
+		if (footerStart >= 0) {
 			if (fill) {
-				String footer = msg.substring(spm.start());
-				msg = msg.substring(0, spm.start());
+				String footer = msg.substring(footerStart);
+				msg = msg.substring(0, footerStart);
 				msg = msg.replaceAll("([\\w.,; \t])\n(\\w)", "$1 $2") //$NON-NLS-1$ //$NON-NLS-2$
 						+ footer;
 				footerStart = headerEnd + msg.length() - footer.length();
 			} else {
-				footerStart = headerEnd + spm.start();
+				footerStart = headerEnd + footerStart;
 			}
 		} else if (fill) {
 			msg = msg.replaceAll("([\\w.,; \t])\n(\\w)", "$1 $2"); //$NON-NLS-1$ //$NON-NLS-2$
