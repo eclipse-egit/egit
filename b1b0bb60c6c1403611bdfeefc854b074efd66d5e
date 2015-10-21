@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "0724e3f1_8b99b150",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/CompareActionsTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1013
+      },
+      "writtenOn": "2015-10-21T07:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0724e3f1_14234766",
+      "revId": "b1b0bb60c6c1403611bdfeefc854b074efd66d5e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0724e3f1_742e0347",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/CompareActionsTest.java",
         "patchSetId": 6
@@ -93,6 +111,24 @@
       "writtenOn": "2015-10-08T16:03:02Z",
       "side": 1,
       "message": "Please update copyright",
+      "revId": "b1b0bb60c6c1403611bdfeefc854b074efd66d5e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_ab8e3504",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronize.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1013
+      },
+      "writtenOn": "2015-10-21T07:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0724e3f1_542bff33",
       "revId": "b1b0bb60c6c1403611bdfeefc854b074efd66d5e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
