@@ -1,10 +1,13 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2013 Matthias Sohn <matthias.sohn@sap.com> and others.
+ * Copyright (c) 2012, 2013, 2015 Matthias Sohn <matthias.sohn@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 479964
  *******************************************************************************/
 package org.eclipse.egit.ui.view.repositories;
 
@@ -78,6 +81,8 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		assertEmpty();
 		assertProjectExistence(PROJ1, false);
 		assertFalse(repositoryFile.exists());
+		assertFalse(new File(repositoryFile.getParentFile(), PROJ1).exists());
+		assertFalse(repositoryFile.getParentFile().exists());
 	}
 
 	@Test
