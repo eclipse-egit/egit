@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0724e3f1_d4ece189",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/FileUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-10-22T05:30:51Z",
+      "side": 1,
+      "message": "I would prefer to see this method in jgit FileUtils class, to avoid explosion of FileUtil* classes in j/egit.\nIf you create a separated patch for this change, we can merge it upfront and then apply the rest from the patch in egit.\nWDYT?",
+      "revId": "d8342ef4d8a5f1204f0f529149d619a25de3c7b5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
