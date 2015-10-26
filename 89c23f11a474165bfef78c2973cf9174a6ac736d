@@ -34,6 +34,24 @@
       "revId": "89c23f11a474165bfef78c2973cf9174a6ac736d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_5761067a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-10-26T06:59:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0724e3f1_f773da58",
+      "revId": "89c23f11a474165bfef78c2973cf9174a6ac736d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
