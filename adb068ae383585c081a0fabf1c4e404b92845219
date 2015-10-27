@@ -1,0 +1,413 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0724e3f1_89da428f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "avoid unrelated formatting changes",
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_69d54e5e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "revert unrelated formatting change",
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_c9039a82",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "avoid sysout, use log instead which can be configured",
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_a9062691",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "we try to avoid comments and instead try to make the code as readable as possible so that comments aren\u0027t needed (there are exceptions but in many cases this works)",
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_09fe52dd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "log instead of sysout ?",
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_e9001e76",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "avoid dead commented out code",
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_89f1a209",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "externalize texts and use MessageFormat to format text with parameters, do this for all texts shown to users (UI, log, error messages), trace output doesn\u0027t need to be translatable",
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_69ec2e32",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeToolActionHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "use logging instead",
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_a9b1064e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/externaltools/Attribute.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "we don\u0027t use author tags, instead add javadoc for public classes/methods",
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_09b93234",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/externaltools/DiffConteinerJob.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "s/Conteiner/Container/",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
+        "endLine": 25,
+        "endChar": 26
+      },
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_49c20a9d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/externaltools/DiffToolManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "what\u0027s the purpose of this comment ?",
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_e9bbfe29",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/externaltools/DiffToolManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "this is a pretty ancient git version, latest is 2.6.2 ...",
+      "range": {
+        "startLine": 34,
+        "startChar": 33,
+        "endLine": 34,
+        "endChar": 38
+      },
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_89cc02d0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/externaltools/DiffToolManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "you didn\u0027t copy any code from msysgit, right ?",
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_29bd161e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/externaltools/DiffToolManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "what\u0027s this ?",
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_69c70eaa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/externaltools/ToolsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "weird method name",
+      "range": {
+        "startLine": 41,
+        "startChar": 20,
+        "endLine": 41,
+        "endChar": 47
+      },
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_c9955a97",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/externaltools/ToolsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "why does this need to be wrapped ?",
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_49a96adb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/externaltools/ToolsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "why don\u0027t you use Files.createDirectory() ?",
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_e992dea9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/externaltools/ToolsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "why is this wrapper needed ?",
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_099012a2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/externaltools/ToolsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "use FileUtils.delete() instead",
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_699eeeb5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/externaltools/ToolsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "?",
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_a983c659",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/externaltools/ToolsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "error handling in this method looks fishy\n\nwhy do we need so many try catch blocks ?\ndon\u0027t use sysout instead use log for logging (in JGit we use slf4j, in EGit the Eclipse log API)",
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_c980ba51",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/externaltools/ToolsUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "are you copying code here ?",
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0724e3f1_9cdc3e5b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/revision/FileRevisionTypedElement.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-10-27T08:36:43Z",
+      "side": 1,
+      "message": "revert this unrelated formatting change",
+      "revId": "adb068ae383585c081a0fabf1c4e404b92845219",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
