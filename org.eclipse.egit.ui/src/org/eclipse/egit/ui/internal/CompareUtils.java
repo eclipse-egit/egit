@@ -67,7 +67,7 @@ import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheEditor;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.CoreConfig.AutoCRLF;
+import org.eclipse.jgit.lib.CoreConfig.StreamType;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectInserter;
@@ -76,12 +76,12 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.WorkingTreeOptions;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.io.EolCanonicalizingInputStream;
+import org.eclipse.jgit.util.io.AutoLFInputStream;
+import org.eclipse.jgit.util.io.StreamConversionFactory;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.team.core.history.IFileRevision;
@@ -1032,26 +1032,23 @@ public class CompareUtils {
 			} else {
 				int length;
 				byte[] content;
-				WorkingTreeOptions workingTreeOptions = repository.getConfig()
-						.get(WorkingTreeOptions.KEY);
-				AutoCRLF autoCRLF = workingTreeOptions.getAutoCRLF();
-				switch (autoCRLF) {
-				case FALSE:
+
+				StreamType streamType = StreamConversionFactory
+						.checkInStreamType(repository, gitPath,
+						FileMode.REGULAR_FILE);
+				switch (streamType) {
+				case DIRECT:
 					content = newContent;
 					length = newContent.length;
 					break;
-				case INPUT:
-				case TRUE:
-					EolCanonicalizingInputStream in = new EolCanonicalizingInputStream(
+				default:
+					AutoLFInputStream in = new AutoLFInputStream(
 							new ByteArrayInputStream(newContent), true);
 					// Canonicalization should lead to same or shorter length
 					// (CRLF to LF), so we don't have to expand the byte[].
 					content = new byte[newContent.length];
 					length = IO.readFully(in, content, 0);
 					break;
-				default:
-					throw new IllegalArgumentException(
-							"Unknown autocrlf option " + autoCRLF); //$NON-NLS-1$
 				}
 
 				editor.add(new DirCacheEntryEditor(gitPath, repository,

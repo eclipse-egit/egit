@@ -27,10 +27,11 @@ import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.treewalk.WorkingTreeOptions;
-import org.eclipse.jgit.util.io.AutoCRLFInputStream;
+import org.eclipse.jgit.lib.CoreConfig.StreamType;
+import org.eclipse.jgit.util.io.StreamConversionFactory;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -85,19 +86,11 @@ public class GitBlobStorage implements IEncodedStorage {
 			return new ByteArrayInputStream(new byte[0]);
 
 		try {
-			WorkingTreeOptions workingTreeOptions = db.getConfig().get(WorkingTreeOptions.KEY);
-			final InputStream objectInputStream = db.open(blobId,
-					Constants.OBJ_BLOB).openStream();
-			switch (workingTreeOptions.getAutoCRLF()) {
-			case INPUT:
-				// When autocrlf == input the working tree could be either CRLF or LF, i.e. the comparison
-				// itself should ignore line endings.
-			case FALSE:
-				return objectInputStream;
-			case TRUE:
-			default:
-				return new AutoCRLFInputStream(objectInputStream, true);
-			}
+			StreamType streamType = StreamConversionFactory
+					.checkInStreamType(db, path, FileMode.REGULAR_FILE);
+			return StreamConversionFactory.checkInStream(
+					db.open(blobId, Constants.OBJ_BLOB).openStream(),
+					streamType);
 		} catch (MissingObjectException notFound) {
 			throw new CoreException(Activator.error(NLS.bind(
 					CoreText.BlobStorage_blobNotFound, blobId.name(), path),
