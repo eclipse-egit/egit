@@ -124,8 +124,6 @@ public class InitDialog extends TitleAreaDialog {
 
 	private static final String DUMMY_POSTFIX = "dummy"; //$NON-NLS-1$
 
-	private static final int TEXT_HEIGHT = 15;
-
 	private static final int TEXT_WIDTH = 100;
 
 	private GitFlowRepository gfRepo;
@@ -198,7 +196,7 @@ public class InitDialog extends TitleAreaDialog {
 	private Text createLabeledText(Composite container, String label) {
 		new Label(container, SWT.NONE).setText(label);
 		Text result = new Text(container, SWT.BORDER);
-		GridDataFactory.swtDefaults().hint(TEXT_WIDTH, TEXT_HEIGHT).applyTo(result);
+		GridDataFactory.swtDefaults().hint(TEXT_WIDTH, SWT.DEFAULT).applyTo(result);
 		return result;
 	}
 
