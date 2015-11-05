@@ -45,6 +45,7 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.RepositoryCache.FileKey;
 import org.eclipse.jgit.util.FS;
+import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -401,7 +402,7 @@ public class RepositorySearchDialog extends WizardPage {
 			});
 	}
 
-	private void findGitDirsRecursive(File root, Set<String> strings,
+	private void findGitDirsRecursive(File root, Set<File> strings,
 			IProgressMonitor monitor, boolean lookForNestedRepositories) {
 
 		if (!root.exists() || !root.isDirectory()) {
@@ -419,14 +420,14 @@ public class RepositorySearchDialog extends WizardPage {
 				continue;
 
 			if (FileKey.isGitRepository(child, FS.DETECTED)) {
-				strings.add(child.getAbsolutePath());
+				strings.add(child.getAbsoluteFile());
 				monitor.setTaskName(NLS
 						.bind(UIText.RepositorySearchDialog_RepositoriesFound_message,
 								Integer.valueOf(strings.size())));
 			} else if (FileKey.isGitRepository(new File(child,
 					Constants.DOT_GIT), FS.DETECTED)) {
-				strings.add(new File(child, Constants.DOT_GIT)
-						.getAbsolutePath());
+				strings.add(
+						new File(child, Constants.DOT_GIT).getAbsoluteFile());
 				monitor.setTaskName(NLS
 						.bind(UIText.RepositorySearchDialog_RepositoriesFound_message,
 								Integer.valueOf(strings.size())));
@@ -449,7 +450,7 @@ public class RepositorySearchDialog extends WizardPage {
 		setMessage(UIText.RepositorySearchDialog_searchRepositoriesMessage);
 		setErrorMessage(null);
 		// perform the search...
-		final Set<String> directories = new HashSet<String>();
+		final Set<File> directories = new HashSet<>();
 		final File file = new File(dir.getText());
 		final boolean lookForNested = lookForNestedButton.getSelection();
 		if(!file.exists())
@@ -495,9 +496,12 @@ public class RepositorySearchDialog extends WizardPage {
 
 		int foundOld = 0;
 
-		for (String foundDir : directories) {
-			if (!fExistingDirectories.contains(foundDir)) {
-				validDirs.add(foundDir);
+		for (File foundDir : directories) {
+			String absolutePath = foundDir.getAbsolutePath();
+			if (!fExistingDirectories.contains(absolutePath)
+					&& !fExistingDirectories.contains(FileUtils
+							.canonicalize(foundDir).getAbsolutePath())) {
+				validDirs.add(absolutePath);
 			} else {
 				foundOld++;
 			}
