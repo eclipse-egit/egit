@@ -1905,6 +1905,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				|| !(selection.getFirstElement() instanceof StagingEntry))
 			return;
 		StagingEntry stagingEntry = (StagingEntry) selection.getFirstElement();
+		askToOpenProject(stagingEntry);
 		if (stagingEntry.isSubmodule())
 			return;
 		switch (stagingEntry.getState()) {
@@ -1933,6 +1934,28 @@ public class StagingView extends ViewPart implements IShowInSource {
 				openSelectionInEditor(selection);
 			}
 
+		}
+	}
+
+	private void askToOpenProject(StagingEntry stagingEntry) {
+		IResource resource = CommonUtils.getAdapterForObject(stagingEntry,
+				IResource.class);
+		if (resource != null) {
+			IProject project = resource.getProject();
+			if (!project.isOpen()) {
+				if (MessageDialog.openQuestion(getSite().getShell(),
+						UIText.StagingView_ProjectIsClosed,
+						MessageFormat.format(UIText.StagingView_OpenProject,
+								project.getName()))) {
+					try {
+						resource.getProject().open(null);
+					} catch (CoreException e) {
+						Activator.handleError(
+								UIText.StagingView_openingProjectFailed, e,
+								true);
+					}
+				}
+			}
 		}
 	}
 
