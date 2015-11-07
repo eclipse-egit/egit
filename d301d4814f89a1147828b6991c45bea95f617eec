@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_98a78292",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1908,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-07T11:26:57Z",
+      "side": 1,
+      "message": "Perhaps ask after the following if? Makes no sense to ask the user if we\u0027re not going to open the comparison anyway.",
+      "revId": "d301d4814f89a1147828b6991c45bea95f617eec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_78a2be84",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1951,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-07T11:26:57Z",
+      "side": 1,
+      "message": "project",
+      "range": {
+        "startLine": 1951,
+        "startChar": 6,
+        "endLine": 1951,
+        "endChar": 27
+      },
+      "revId": "d301d4814f89a1147828b6991c45bea95f617eec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_589dfa45",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1834,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-07T11:26:57Z",
+      "side": 1,
+      "message": "Should use Headline capitalization. See http://wiki.eclipse.org/User_Interface_Guidelines#Capitalization .",
+      "revId": "d301d4814f89a1147828b6991c45bea95f617eec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
