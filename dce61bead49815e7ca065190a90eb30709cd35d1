@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_5856dadb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1945,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-07T13:42:35Z",
+      "side": 1,
+      "message": "Needs to check first whether the project exists at all. Otherwise, if the project is not closed but has been removed from the workspace altogether, you get an exception and an ugly error dialog.",
+      "revId": "dce61bead49815e7ca065190a90eb30709cd35d1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
