@@ -56,6 +56,29 @@
       "revId": "d301d4814f89a1147828b6991c45bea95f617eec",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_38b836ab",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1835,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-07T11:30:16Z",
+      "side": 1,
+      "message": "This is redundant with the message box title. Why not simply\n\"Would you like to open project {0}?\"",
+      "range": {
+        "startLine": 1835,
+        "startChar": 24,
+        "endLine": 1835,
+        "endChar": 46
+      },
+      "revId": "d301d4814f89a1147828b6991c45bea95f617eec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
