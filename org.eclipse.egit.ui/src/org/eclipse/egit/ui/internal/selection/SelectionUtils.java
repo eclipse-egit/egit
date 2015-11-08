@@ -211,9 +211,9 @@ public class SelectionUtils {
 	 *            must be provided if warn = true
 	 * @return repository for current project, or null
 	 */
+	@Nullable
 	private static Repository getRepository(boolean warn,
-			IStructuredSelection selection, Shell shell) {
-		RepositoryMapping mapping = null;
+			@NonNull IStructuredSelection selection, Shell shell) {
 
 		IPath[] locations = getSelectedLocations(selection);
 		if (GitTraceLocation.SELECTION.isActive())
@@ -221,32 +221,39 @@ public class SelectionUtils {
 					GitTraceLocation.SELECTION.getLocation(), "selection=" //$NON-NLS-1$
 							+ selection + ", locations=" //$NON-NLS-1$
 							+ Arrays.toString(locations));
-
+		boolean hadNull = false;
+		Repository result = null;
 		for (IPath location : locations) {
-			RepositoryMapping repositoryMapping = RepositoryMapping
-					.getMapping(location);
-			if (repositoryMapping == null) {
-				Repository repository = org.eclipse.egit.core.Activator
-						.getDefault().getRepositoryCache()
-						.getRepository(location);
-				return repository;
+			RepositoryMapping mapping = RepositoryMapping.getMapping(location);
+			Repository repo;
+			if (mapping != null) {
+				repo = mapping.getRepository();
+			} else {
+				// location is outside workspace
+				repo = org.eclipse.egit.core.Activator.getDefault()
+						.getRepositoryCache().getRepository(location);
 			}
-			if (mapping == null)
-				mapping = repositoryMapping;
-			if (mapping.getRepository() != repositoryMapping.getRepository()) {
-				if (warn)
+			if (repo == null) {
+				hadNull = true;
+			}
+			if (result == null) {
+				result = repo;
+			}
+			boolean mismatch = hadNull && result != null;
+			if (mismatch || result != repo) {
+				if (warn) {
 					MessageDialog.openError(shell,
 							UIText.RepositoryAction_multiRepoSelectionTitle,
 							UIText.RepositoryAction_multiRepoSelection);
+				}
 				return null;
 			}
 		}
-		Repository result = null;
-		if (mapping == null)
+
+		if (result == null) {
 			for (Object o : selection.toArray()) {
 				Repository nextRepo = AdapterUtils.adapt(o, Repository.class);
-				if (nextRepo != null && result != null
-						&& !result.equals(nextRepo)) {
+				if (nextRepo != null && result != null && result != nextRepo) {
 					if (warn)
 						MessageDialog
 								.openError(
@@ -257,8 +264,8 @@ public class SelectionUtils {
 				}
 				result = nextRepo;
 			}
-		else
-			result = mapping.getRepository();
+		}
+
 		if (result == null) {
 			if (warn)
 				MessageDialog.openError(shell,

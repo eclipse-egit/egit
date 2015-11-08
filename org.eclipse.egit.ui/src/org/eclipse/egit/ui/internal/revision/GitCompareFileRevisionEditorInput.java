@@ -684,6 +684,19 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		public void handleDocumentSaved() {
 			// Ignore
 		}
+
+		@Override
+		public void doSave(IProgressMonitor monitor) throws CoreException {
+			// SaveableComparison unconditionally resets the dirty flag to
+			// false, but LocalResourceSaveableComparison's performSave may not
+			// actually save: if the file has been changed outside the compare
+			// editor, it displays a dialog that the user may cancel.
+			if (isDirty()) {
+				performSave(monitor);
+				// LocalResourecSaveableComparison does already reset the dirty
+				// flag if it did save.
+			}
+		}
 	}
 
 }
