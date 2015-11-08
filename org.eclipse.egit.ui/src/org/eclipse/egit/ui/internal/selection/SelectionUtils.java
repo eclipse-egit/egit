@@ -222,23 +222,34 @@ public class SelectionUtils {
 					GitTraceLocation.SELECTION.getLocation(), "selection=" //$NON-NLS-1$
 							+ selection + ", locations=" //$NON-NLS-1$
 							+ Arrays.toString(locations));
-
+		boolean hadNull = false;
 		for (IPath location : locations) {
 			RepositoryMapping repositoryMapping = RepositoryMapping
 					.getMapping(location);
 			if (repositoryMapping == null) {
-				Repository repository = org.eclipse.egit.core.Activator
-						.getDefault().getRepositoryCache()
-						.getRepository(location);
-				return repository;
+				hadNull = true;
 			}
-			if (mapping == null)
+			if (mapping == null) {
 				mapping = repositoryMapping;
-			if (mapping.getRepository() != repositoryMapping.getRepository()) {
-				if (warn)
+			}
+			boolean mismatch = false;
+			if (hadNull) {
+				mismatch = mapping != null;
+			} else {
+				if (repositoryMapping == null) {
+					mismatch = true;
+				} else {
+					mismatch = mapping == null
+							|| mapping.getRepository() != repositoryMapping
+									.getRepository();
+				}
+			}
+			if (mismatch) {
+				if (warn) {
 					MessageDialog.openError(shell,
 							UIText.RepositoryAction_multiRepoSelectionTitle,
 							UIText.RepositoryAction_multiRepoSelection);
+				}
 				return null;
 			}
 		}
