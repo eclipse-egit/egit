@@ -10,6 +10,7 @@
  *
  * Contributors:
  *    Tobias Baumann <tobbaumann@gmail.com> - Bug 373969, 473544
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 481683
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.staging;
 
@@ -2145,10 +2146,59 @@ public class StagingView extends ViewPart implements IShowInSource {
 		IStructuredSelection selection;
 		private final boolean headRevision;
 
-		ReplaceAction(String text, IStructuredSelection selection, boolean headRevision) {
+		ReplaceAction(String text, @NonNull IStructuredSelection selection,
+				boolean headRevision) {
 			super(text);
 			this.selection = selection;
 			this.headRevision = headRevision;
+		}
+
+		private void getSelectedFiles(@NonNull List<String> files,
+				@NonNull List<String> inaccessibleFiles) {
+			Iterator iterator = selection.iterator();
+			while (iterator.hasNext()) {
+				Object selectedItem = iterator.next();
+				if (selectedItem instanceof StagingEntry) {
+					StagingEntry stagingEntry = (StagingEntry) selectedItem;
+					String path = stagingEntry.getPath();
+					files.add(path);
+					IFile resource = stagingEntry.getFile();
+					if (resource == null || !resource.isAccessible()) {
+						inaccessibleFiles.add(path);
+					}
+				}
+			}
+		}
+
+		private void replaceWith(@NonNull List<String> files,
+				@NonNull List<String> inaccessibleFiles) {
+			Repository repository = currentRepository;
+			if (files.isEmpty() || repository == null) {
+				return;
+			}
+			CheckoutCommand checkoutCommand = new Git(repository)
+					.checkout();
+			if (headRevision) {
+				checkoutCommand.setStartPoint(Constants.HEAD);
+			}
+			for (String path : files) {
+				checkoutCommand.addPath(path);
+			}
+			try {
+				checkoutCommand.call();
+				if (!inaccessibleFiles.isEmpty()) {
+					IndexDiffCacheEntry indexDiffCacheForRepository = org.eclipse.egit.core.Activator
+							.getDefault().getIndexDiffCache()
+							.getIndexDiffCacheEntry(repository);
+					if (indexDiffCacheForRepository != null) {
+						indexDiffCacheForRepository
+								.refreshFiles(inaccessibleFiles);
+					}
+				}
+			} catch (Exception e) {
+				Activator.handleError(UIText.StagingView_checkoutFailed, e,
+						true);
+			}
 		}
 
 		@Override
@@ -2156,10 +2206,13 @@ public class StagingView extends ViewPart implements IShowInSource {
 			boolean performAction = MessageDialog.openConfirm(form.getShell(),
 					UIText.DiscardChangesAction_confirmActionTitle,
 					UIText.DiscardChangesAction_confirmActionMessage);
-			if (!performAction)
-				return ;
-			String[] files = getSelectedFiles(selection);
-			replaceWith(files, headRevision);
+			if (!performAction) {
+				return;
+			}
+			List<String> files = new ArrayList<>();
+			List<String> inaccessibleFiles = new ArrayList<>();
+			getSelectedFiles(files, inaccessibleFiles);
+			replaceWith(files, inaccessibleFiles);
 		}
 	}
 
@@ -2231,34 +2284,6 @@ public class StagingView extends ViewPart implements IShowInSource {
 		}
 	}
 
-	private void replaceWith(String[] files, boolean headRevision) {
-		if (files == null || files.length == 0)
-			return;
-		CheckoutCommand checkoutCommand = new Git(currentRepository).checkout();
-		if (headRevision)
-			checkoutCommand.setStartPoint(Constants.HEAD);
-		for (String path : files)
-			checkoutCommand.addPath(path);
-		try {
-			checkoutCommand.call();
-		} catch (Exception e) {
-			Activator.handleError(UIText.StagingView_checkoutFailed, e, true);
-		}
-	}
-
-	private String[] getSelectedFiles(IStructuredSelection selection) {
-		List<String> result = new ArrayList<String>();
-		Iterator iterator = selection.iterator();
-		while (iterator.hasNext()) {
-			Object selectedItem = iterator.next();
-			if (selectedItem instanceof StagingEntry) {
-				StagingEntry stagingEntry = (StagingEntry) selectedItem;
-				result.add(stagingEntry.getPath());
-			}
-		}
-		return result.toArray(new String[result.size()]);
-	}
-
 	private static List<IPath> getSelectedPaths(IStructuredSelection selection) {
 		List<IPath> paths = new ArrayList<IPath>();
 		Iterator iterator = selection.iterator();
@@ -2284,8 +2309,9 @@ public class StagingView extends ViewPart implements IShowInSource {
 				return false;
 			StagingEntry stagingEntry = (StagingEntry) selectedObject;
 			IFile file = stagingEntry.getFile();
-			if (file == null)
+			if (file == null || !file.isAccessible()) {
 				return true;
+			}
 		}
 		return false;
 	}
