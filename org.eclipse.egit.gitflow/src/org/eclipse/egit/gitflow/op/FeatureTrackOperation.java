@@ -42,16 +42,37 @@ public final class FeatureTrackOperation extends AbstractFeatureOperation {
 
 	private FetchResult operationResult;
 
+	private int timeout;
+
 	/**
 	 * Track given ref, referencing a feature branch.
 	 *
 	 * @param repository
 	 * @param ref
+	 * @deprecated Use
+	 *             {@link FeatureTrackOperation#FeatureTrackOperation(GitFlowRepository, Ref, int)}
+	 *             instead.
 	 */
+	@Deprecated
 	public FeatureTrackOperation(GitFlowRepository repository, Ref ref) {
+		this(repository, ref, 0);
+	}
+
+	/**
+	 * Track given ref, referencing a feature branch.
+	 *
+	 * @param repository
+	 * @param ref
+	 * @param timeout
+	 *            timeout in seconds for remote operations
+	 * @since 4.2
+	 */
+	public FeatureTrackOperation(GitFlowRepository repository, Ref ref,
+			int timeout) {
 		this(repository, ref, ref.getName().substring(
 				(REMOTE_ORIGIN_FEATURE_PREFIX + repository.getConfig()
 						.getFeaturePrefix()).length()));
+		this.timeout = timeout;
 	}
 
 	/**
@@ -72,7 +93,7 @@ public final class FeatureTrackOperation extends AbstractFeatureOperation {
 		try {
 			String newLocalBranch = repository
 					.getConfig().getFeatureBranchName(featureName);
-			operationResult = fetch(monitor);
+			operationResult = fetch(monitor, timeout);
 
 			if (repository.hasBranch(newLocalBranch)) {
 				String errorMessage = String.format(
