@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_1f8351a7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2164,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-10T17:57:34Z",
+      "side": 1,
+      "message": "replaceWith() currently doesn\u0027t report if it did something at all. We should make it \"return boolean\" and do only something if it returns OK.\n\nBetter, the entire code would go there after checkoutCommand.call();",
+      "revId": "dcc982e0762cc1e9062d358257dc3f84e516e965",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
