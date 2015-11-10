@@ -10,6 +10,7 @@
  *
  * Contributors:
  *    Tobias Baumann <tobbaumann@gmail.com> - Bug 373969, 473544
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 481683
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.staging;
 
@@ -18,6 +19,7 @@ import static org.eclipse.egit.ui.internal.CommonUtils.runCommand;
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.EnumSet;
@@ -2160,6 +2162,16 @@ public class StagingView extends ViewPart implements IShowInSource {
 				return ;
 			String[] files = getSelectedFiles(selection);
 			replaceWith(files, headRevision);
+			Repository repository = currentRepository;
+			if (repository != null) {
+				IndexDiffCacheEntry indexDiffCacheForRepository = org.eclipse.egit.core.Activator
+						.getDefault().getIndexDiffCache()
+						.getIndexDiffCacheEntry(repository);
+				if (indexDiffCacheForRepository != null) {
+					indexDiffCacheForRepository
+							.refreshFiles(Arrays.asList(files));
+				}
+			}
 		}
 	}
 
