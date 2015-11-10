@@ -21,6 +21,8 @@ import org.eclipse.jgit.transport.FetchResult;
 import org.junit.Test;
 
 public class FeatureTrackOperationTest extends AbstractDualRepositoryTestCase {
+	private static final int IRRELEVANT_TIMEOUT = 0;
+
 	@Test
 	public void testFeatureTrack() throws Exception {
 		GitFlowRepository gfRepo1 = new GitFlowRepository(
@@ -32,7 +34,7 @@ public class FeatureTrackOperationTest extends AbstractDualRepositoryTestCase {
 				.createInitialCommit("testFeatureTrack");
 
 		FeatureTrackOperation featureTrackOperation = new FeatureTrackOperation(
-				gfRepo2, getFirstRemoteFeatureRef(gfRepo2));
+				gfRepo2, getFirstRemoteFeatureRef(gfRepo2), IRRELEVANT_TIMEOUT);
 		featureTrackOperation.execute(null);
 		FetchResult operationResult = featureTrackOperation
 				.getOperationResult();
