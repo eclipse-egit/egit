@@ -296,6 +296,13 @@
             class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
          <adapter type="org.eclipse.ui.part.IShowInSource"/>
       </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.staging.StagingEntry"
+            class="org.eclipse.egit.ui.internal.staging.StagingEntryAdapterFactory">
+         <adapter type="org.eclipse.core.resources.IResource"/>
+         <adapter type="org.eclipse.core.runtime.IPath"/>
+         <adapter type="org.eclipse.jgit.lib.Repository"/>
+      </factory>
    </extension>
 
    <extension
@@ -5830,16 +5837,6 @@
             id="org.eclipse.egit.ui.internal.commit.CommitEditorInputFactory">
       </factory>
    </extension>
-   <extension
-		point="org.eclipse.core.runtime.adapters">
-	      <factory
-	            adaptableType="org.eclipse.egit.ui.internal.staging.StagingEntry"
-				            class="org.eclipse.egit.ui.internal.staging.StagingEntryAdapterFactory">
-	         <adapter
-	               type="org.eclipse.core.resources.IResource">
-	         </adapter>
-	      </factory>
-	</extension>
     <extension point="org.eclipse.search.searchPages">
       <page
             class="org.eclipse.egit.ui.internal.search.CommitSearchPage"
