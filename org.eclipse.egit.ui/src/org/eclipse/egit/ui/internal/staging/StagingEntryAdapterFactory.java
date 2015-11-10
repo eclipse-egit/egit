@@ -10,7 +10,8 @@ package org.eclipse.egit.ui.internal.staging;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdapterFactory;
-import org.eclipse.egit.ui.internal.CommonUtils;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.jgit.lib.Repository;
 
 /**
  * An adapter factory for <code>StagingEntry</code>s so that the property page
@@ -20,12 +21,22 @@ public class StagingEntryAdapterFactory implements IAdapterFactory {
 
 	@Override
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
-		return CommonUtils.getAdapter(((StagingEntry)adaptableObject), IResource.class);
+		if (adaptableObject != null) {
+			StagingEntry entry = (StagingEntry) adaptableObject;
+			if (adapterType == IResource.class) {
+				return entry.getFile();
+			} else if (adapterType == IPath.class) {
+				return entry.getLocation();
+			} else if (adapterType == Repository.class) {
+				return entry.getRepository();
+			}
+		}
+		return null;
 	}
 
 	@Override
 	public Class[] getAdapterList() {
-		return new Class[] { IResource.class };
+		return new Class[] { IResource.class, IPath.class, Repository.class };
 	}
 
 }
