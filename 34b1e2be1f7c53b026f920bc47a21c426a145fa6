@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_d68396df",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2174,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-10T06:43:30Z",
+      "side": 1,
+      "message": "A completely different question is why this StagingView re-implements its own variant of DiscardChangesAction instead of using that. But I don\u0027t want to change that now.",
+      "revId": "34b1e2be1f7c53b026f920bc47a21c426a145fa6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
