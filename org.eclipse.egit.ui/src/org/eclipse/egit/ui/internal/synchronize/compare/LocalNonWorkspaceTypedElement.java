@@ -49,6 +49,8 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 
 	private boolean fDirty = false;
 
+	private long timestamp = 0L;
+
 	private boolean useSharedDocument = true;
 
 	private EditableSharedDocumentAdapter sharedDocumentAdapter;
@@ -64,14 +66,20 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 		super(ROOT.getFile(path));
 		this.path = path;
 
-		exists = path.toFile().exists();
+		File file = path.toFile();
+		exists = file.exists();
+		if (exists) {
+			timestamp = file.lastModified();
+		}
 	}
 
 	@Override
 	public InputStream getContents() throws CoreException {
 		if (exists) {
 			try {
-				return new FileInputStream(path.toFile());
+				File file = path.toFile();
+				timestamp = file.lastModified();
+				return new FileInputStream(file);
 			} catch (FileNotFoundException e) {
 				Activator.error(e.getMessage(), e);
 			}
@@ -84,6 +92,22 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 	public boolean isEditable() {
 		IResource resource = getResource();
 		return resource.getType() == IResource.FILE && exists;
+	}
+
+	@Override
+	public long getModificationDate() {
+		if (getResource().isAccessible()) {
+			return super.getModificationDate();
+		}
+		return timestamp;
+	}
+
+	@Override
+	public boolean isSynchronized() {
+		if (getResource().isAccessible()) {
+			return super.isSynchronized();
+		}
+		return path.toFile().lastModified() == timestamp;
 	}
 
 	/** {@inheritDoc} */
@@ -115,6 +139,10 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 	public void setContent(byte[] contents) {
 		fDirty = true;
 		super.setContent(contents);
+	}
+
+	private void refreshTimestamp() {
+		timestamp = path.toFile().lastModified();
 	}
 
 	/** {@inheritDoc} */
@@ -152,6 +180,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 						}
 				}
 			}
+			refreshTimestamp();
 		}
 	}
 
@@ -212,6 +241,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 			sharedDocumentAdapter = new EditableSharedDocumentAdapter(new EditableSharedDocumentAdapter.ISharedDocumentAdapterListener() {
 				@Override
 				public void handleDocumentConnected() {
+							refreshTimestamp();
 					if (sharedDocumentListener != null)
 						sharedDocumentListener.handleDocumentConnected();
 				}
@@ -229,6 +259,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 				}
 				@Override
 				public void handleDocumentSaved() {
+							refreshTimestamp();
 					if (sharedDocumentListener != null)
 						sharedDocumentListener.handleDocumentSaved();
 				}
