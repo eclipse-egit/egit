@@ -49,6 +49,8 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 
 	private boolean fDirty = false;
 
+	private long timestamp;
+
 	private boolean useSharedDocument = true;
 
 	private EditableSharedDocumentAdapter sharedDocumentAdapter;
@@ -64,14 +66,20 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 		super(ROOT.getFile(path));
 		this.path = path;
 
-		exists = path.toFile().exists();
+		File file = path.toFile();
+		exists = file.exists();
+		if (exists) {
+			timestamp = file.lastModified();
+		}
 	}
 
 	@Override
 	public InputStream getContents() throws CoreException {
 		if (exists) {
 			try {
-				return new FileInputStream(path.toFile());
+				File file = path.toFile();
+				timestamp = file.lastModified();
+				return new FileInputStream(file);
 			} catch (FileNotFoundException e) {
 				Activator.error(e.getMessage(), e);
 			}
@@ -84,6 +92,16 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 	public boolean isEditable() {
 		IResource resource = getResource();
 		return resource.getType() == IResource.FILE && exists;
+	}
+
+	@Override
+	public long getModificationDate() {
+		return timestamp;
+	}
+
+	@Override
+	public boolean isSynchronized() {
+		return path.toFile().lastModified() == timestamp;
 	}
 
 	/** {@inheritDoc} */
@@ -117,6 +135,10 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 		super.setContent(contents);
 	}
 
+	private void refreshTimestamp() {
+		timestamp = path.toFile().lastModified();
+	}
+
 	/** {@inheritDoc} */
 	@Override
 	public void commit(IProgressMonitor monitor) throws CoreException {
@@ -124,13 +146,14 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 			if (isConnected()) {
 				super.commit(monitor);
 			} else {
-				FileOutputStream out = null;
 				File file = path.toFile();
 				try {
-					if (!file.exists())
+					if (!file.exists()) {
 						FileUtils.createNewFile(file);
-					out = new FileOutputStream(file);
-					out.write(getContent());
+					}
+					try (FileOutputStream out = new FileOutputStream(file)) {
+						out.write(getContent());
+					}
 					fDirty = false;
 				} catch (IOException e) {
 					throw new CoreException(
@@ -144,14 +167,9 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 					RepositoryMapping mapping = RepositoryMapping.getMapping(path);
 					if (mapping != null)
 						mapping.getRepository().fireEvent(new IndexChangedEvent());
-					if (out != null)
-						try {
-							out.close();
-						} catch (IOException ex) {
-							// ignore
-						}
 				}
 			}
+			refreshTimestamp();
 		}
 	}
 
@@ -212,6 +230,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 			sharedDocumentAdapter = new EditableSharedDocumentAdapter(new EditableSharedDocumentAdapter.ISharedDocumentAdapterListener() {
 				@Override
 				public void handleDocumentConnected() {
+							refreshTimestamp();
 					if (sharedDocumentListener != null)
 						sharedDocumentListener.handleDocumentConnected();
 				}
@@ -229,6 +248,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 				}
 				@Override
 				public void handleDocumentSaved() {
+							refreshTimestamp();
 					if (sharedDocumentListener != null)
 						sharedDocumentListener.handleDocumentSaved();
 				}
