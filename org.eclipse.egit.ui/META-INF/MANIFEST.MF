@@ -110,7 +110,7 @@ Export-Package: org.eclipse.egit.ui;version="4.2.0";x-friends:="org.eclipse.egit
  org.eclipse.egit.ui.internal.resources;version="4.2.0";x-internal:=true,
  org.eclipse.egit.ui.internal.revision;version="4.2.0";x-internal:=true,
  org.eclipse.egit.ui.internal.search;version="4.2.0";x-internal:=true,
- org.eclipse.egit.ui.internal.selection;version="4.2.0";x-internal:=true,
+ org.eclipse.egit.ui.internal.selection;version="4.2.0";x-friends:="org.eclipse.egit.gitflow.ui",
  org.eclipse.egit.ui.internal.sharing;version="4.2.0";x-internal:=true,
  org.eclipse.egit.ui.internal.staging;version="4.2.0";x-internal:=true,
  org.eclipse.egit.ui.internal.stash;version="4.2.0";x-internal:=true,

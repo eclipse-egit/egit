@@ -11,10 +11,16 @@ package org.eclipse.egit.gitflow.ui.internal.selection;
 import static org.eclipse.egit.gitflow.ui.Activator.error;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.egit.gitflow.Activator;
 import org.eclipse.egit.gitflow.GitFlowRepository;
+import org.eclipse.egit.ui.internal.selection.SelectionUtils;
+import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -38,11 +44,13 @@ public class SelectionPropertyTester extends PropertyTester {
 	@Override
 	public boolean test(Object receiver, String property, Object[] args,
 			Object expectedValue) {
-		if (receiver == null || !(receiver instanceof Repository)) {
+		if (receiver == null) {
 			return false;
 		}
-		Repository repository = (Repository) receiver;
-
+		Repository repository = getRepository((Collection<?>) receiver);
+		if (repository == null || repository.isBare()) {
+			return false;
+		}
 		GitFlowRepository gitFlowRepository = new GitFlowRepository(repository);
 		try {
 			if (IS_INITIALIZED.equals(property)) {
@@ -64,5 +72,21 @@ public class SelectionPropertyTester extends PropertyTester {
 			Activator.getDefault().getLog().log(error(e.getMessage(), e));
 		}
 		return false;
+	}
+
+	private Repository getRepository(Collection<?> collection) {
+		if (collection.isEmpty()) {
+			return null;
+		}
+		IStructuredSelection selection = null;
+		Object first = collection.iterator().next();
+		if (collection.size() == 1 && first instanceof ITextSelection) {
+			selection = SelectionUtils
+					.getStructuredSelection((ITextSelection) first);
+		} else {
+			selection = new StructuredSelection(new ArrayList<>(collection));
+		}
+		return SelectionUtils.getRepository(selection);
+
 	}
 }
