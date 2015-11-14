@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_0d1eb921",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewRepoDeletionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-11-14T10:16:02Z",
+      "side": 0,
+      "message": "removing duplicate test",
+      "revId": "d337e1cdacda69bf3e47b31eb2cb96979b6935ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
