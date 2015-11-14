@@ -16,6 +16,63 @@
       "revId": "6a771388ad501b8f4d366657fc2856fe5d1cd525",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_2dc7fdde",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-11-14T13:48:45Z",
+      "side": 1,
+      "message": "unnecessary assignment as this is the default for long variables.",
+      "range": {
+        "startLine": 52,
+        "startChar": 23,
+        "endLine": 52,
+        "endChar": 29
+      },
+      "revId": "6a771388ad501b8f4d366657fc2856fe5d1cd525",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_4dab610d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-11-14T13:48:45Z",
+      "side": 1,
+      "message": "why do we need this ? The type says it\u0027s a non-workspace typed element ... I\u0027d assume that instances which are resources are rather of the super-class type",
+      "revId": "6a771388ad501b8f4d366657fc2856fe5d1cd525",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_6da82510",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-11-14T13:48:45Z",
+      "side": 1,
+      "message": "why do we need this ? The type says it\u0027s a non-workspace typed element ... I\u0027d assume that instances which are resources are rather of the super-class type",
+      "revId": "6a771388ad501b8f4d366657fc2856fe5d1cd525",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
