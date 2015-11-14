@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_8d280938",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-14T11:22:36Z",
+      "side": 1,
+      "message": "To clarify: this doesn\u0027t solve bug 481682 yet. But it\u0027s a prerequisite for the fix.",
+      "revId": "6a771388ad501b8f4d366657fc2856fe5d1cd525",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
