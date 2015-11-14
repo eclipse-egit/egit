@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
-import org.eclipse.egit.ui.internal.CommonUtils;
+import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.action.IToolBarManager;
@@ -132,7 +132,7 @@ public class RepositoryPropertySourceProvider implements
 			Ref ref = (Ref) node.getObject();
 			if (ref.getName().startsWith(Constants.R_HEADS) || ref.getName().startsWith(Constants.R_REMOTES)){
 				checkChangeType(SourceType.BRANCH);
-				Repository repository = CommonUtils.getAdapter(node, Repository.class);
+				Repository repository = AdapterUtils.adapt(node, Repository.class);
 				lastRepositorySource =  new BranchPropertySource(repository, ref.getName(), myPage);
 				return lastRepositorySource;
 			}

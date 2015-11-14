@@ -29,7 +29,6 @@ import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -43,7 +42,6 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
@@ -1419,10 +1417,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					showHead = true;
 					break;
 				}
-			} else if (o instanceof HistoryPageInput)
+			} else if (o instanceof HistoryPageInput) {
 				input = (HistoryPageInput) o;
-			else if (o instanceof IAdaptable) {
-				IResource resource = CommonUtils.getAdapter(((IAdaptable) o), IResource.class);
+			} else {
+				IResource resource = AdapterUtils.adapt(o, IResource.class);
 				if (resource != null) {
 					RepositoryMapping mapping = RepositoryMapping
 							.getMapping(resource);
@@ -2281,7 +2279,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		IWorkbenchPartSite site = getPartSite();
 		if (site != null) {
 			final IWorkbenchSiteProgressService p;
-			p = CommonUtils.getAdapter(site, IWorkbenchSiteProgressService.class);
+			p = AdapterUtils.adapt(site, IWorkbenchSiteProgressService.class);
 			if (p != null) {
 				p.schedule(j, 0, true /* use half-busy cursor */);
 				return;

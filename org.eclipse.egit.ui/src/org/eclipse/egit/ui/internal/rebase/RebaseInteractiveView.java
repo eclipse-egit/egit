@@ -19,7 +19,6 @@ import java.util.List;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -210,23 +209,24 @@ public class RebaseInteractiveView extends ViewPart implements
 			o = ((StructuredSelection) o).getFirstElement();
 		}
 		Repository repo = null;
-		if (o instanceof RepositoryTreeNode<?>)
+		if (o instanceof RepositoryTreeNode<?>) {
 			repo = ((RepositoryTreeNode) o).getRepository();
-		else if (o instanceof Repository)
+		} else if (o instanceof Repository) {
 			repo = (Repository) o;
-		else if (o instanceof IAdaptable) {
-			IResource resource = CommonUtils.getAdapter(((IAdaptable) o), IResource.class);
+		} else {
+			IResource resource = AdapterUtils.adapt(o, IResource.class);
 			if (resource != null) {
 				RepositoryMapping mapping = RepositoryMapping
 						.getMapping(resource);
-				if (mapping == null)
+				if (mapping == null) {
 					return;
-
+				}
 				repo = mapping.getRepository();
 			}
 		}
-		if (repo == null)
+		if (repo == null) {
 			repo = AdapterUtils.adapt(o, Repository.class);
+		}
 
 		currentRepository = repo;
 		showRepository(repo);

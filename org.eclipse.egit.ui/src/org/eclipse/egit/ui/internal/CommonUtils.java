@@ -25,9 +25,6 @@ import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.commands.common.CommandException;
 import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.egit.core.AdapterUtils;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.util.Policy;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Ref;
@@ -186,37 +183,6 @@ public class CommonUtils {
 		Object service = locator.getService(api);
 		return (T) service;
 	}
-
-	/**
-	 * @param element
-	 * @param adapterType
-	 * @return the adapted element, or null
-	 */
-	@Nullable
-	public static <T> T getAdapterForObject(Object element, Class<T> adapterType) {
-		return AdapterUtils.adapt(element, adapterType);
-	}
-
-	/**
-	 * Returns the adapter corresponding to the given adapter class.
-	 * <p>
-	 * Workaround for "Unnecessary cast" errors, see bug 460685. Can be removed
-	 * when EGit depends on Eclipse 4.5 or higher.
-	 *
-	 * @param adaptable
-	 *            the adaptable
-	 * @param adapterClass
-	 *            the adapter class to look up
-	 * @return a object of the given class, or <code>null</code> if this object
-	 *         does not have an adapter for the given class
-	 */
-	/* TODO @Nullable */
-	public static <T> T getAdapter(IAdaptable adaptable,
-			Class<T> adapterClass) {
-		Object adapter = adaptable.getAdapter(adapterClass);
-		return adapterClass.cast(adapter);
-	}
-
 
 	private static LinkedList<String> splitIntoDigitAndNonDigitParts(
 			String input) {

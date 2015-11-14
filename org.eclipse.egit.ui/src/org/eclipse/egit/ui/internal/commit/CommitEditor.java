@@ -17,6 +17,7 @@ import java.text.MessageFormat;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
@@ -332,8 +333,9 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	 */
 	@Override
 	public Object getAdapter(Class adapter) {
-		if (RepositoryCommit.class == adapter)
-			return CommonUtils.getAdapter(getEditorInput(), adapter);
+		if (RepositoryCommit.class == adapter) {
+			return AdapterUtils.adapt(getEditorInput(), adapter);
+		}
 
 		return super.getAdapter(adapter);
 	}
@@ -345,7 +347,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	@Override
 	public void init(IEditorSite site, IEditorInput input)
 			throws PartInitException {
-		if (CommonUtils.getAdapter(input, RepositoryCommit.class) == null)
+		if (AdapterUtils.adapt(input, RepositoryCommit.class) == null)
 			throw new PartInitException(
 					"Input could not be adapted to commit object"); //$NON-NLS-1$
 		super.init(site, input);

@@ -28,9 +28,9 @@ import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
@@ -465,7 +465,7 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 	}
 
 	RepositoryCommit getCommit() {
-		return CommonUtils.getAdapter(getEditor(), RepositoryCommit.class);
+		return AdapterUtils.adapt(getEditor(), RepositoryCommit.class);
 	}
 
 	/**

@@ -1302,7 +1302,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		if (input instanceof IFileEditorInput) {
 			return ((IFileEditorInput) input).getFile();
 		} else {
-			return CommonUtils.getAdapter(input, IResource.class);
+			return AdapterUtils.adapt(input, IResource.class);
 		}
 	}
 
@@ -1766,7 +1766,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		// For the normal resource undo/redo actions to be active, so that files
 		// deleted via the "Delete" action in the staging view can be restored.
-		IUndoContext workspaceContext = CommonUtils.getAdapter(ResourcesPlugin.getWorkspace(), IUndoContext.class);
+		IUndoContext workspaceContext = AdapterUtils.adapt(ResourcesPlugin.getWorkspace(), IUndoContext.class);
 		undoRedoActionGroup = new UndoRedoActionGroup(getViewSite(), workspaceContext, true);
 		undoRedoActionGroup.fillActionBars(actionBars);
 
@@ -2403,7 +2403,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				reload(repo);
 			}
 		} else {
-			IResource resource = CommonUtils.getAdapterForObject(firstElement,
+			IResource resource = AdapterUtils.adapt(firstElement,
 					IResource.class);
 			showResource(resource);
 		}

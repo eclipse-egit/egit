@@ -17,7 +17,7 @@ package org.eclipse.egit.ui.internal.reflog;
 import java.io.IOException;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
@@ -401,50 +401,47 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 	}
 
 	private void reactOnSelection(ISelection selection) {
-		if (!(selection instanceof IStructuredSelection))
+		if (!(selection instanceof IStructuredSelection)) {
 			return;
+		}
 		IStructuredSelection ssel = (IStructuredSelection) selection;
-		if (ssel.size() != 1)
+		if (ssel.size() != 1) {
 			return;
+		}
 		Repository selectedRepo = null;
 		Object first = ssel.getFirstElement();
 		if (first instanceof IResource) {
-			IResource resource = (IResource) ssel.getFirstElement();
-			RepositoryMapping mapping = RepositoryMapping.getMapping(resource
-					.getProject());
-			if (mapping != null)
+			IResource resource = (IResource) first;
+			RepositoryMapping mapping = RepositoryMapping
+					.getMapping(resource.getProject());
+			if (mapping != null) {
 				selectedRepo = mapping.getRepository();
+			}
 		}
-		if (selectedRepo == null && first instanceof IAdaptable) {
-			IResource adapted = CommonUtils.getAdapter(((IAdaptable) ssel
-					.getFirstElement()), IResource.class);
+		if (selectedRepo == null) {
+			IResource adapted = AdapterUtils.adapt(first, IResource.class);
 			if (adapted != null) {
 				RepositoryMapping mapping = RepositoryMapping
 						.getMapping(adapted);
-				if (mapping != null)
+				if (mapping != null) {
 					selectedRepo = mapping.getRepository();
-			}
-			if (selectedRepo == null) {
-				selectedRepo = CommonUtils.getAdapter(
-						((IAdaptable) ssel.getFirstElement()),
-						Repository.class);
+				}
 			}
 		}
-
-		if (selectedRepo == null && first instanceof RepositoryTreeNode) {
-			RepositoryTreeNode repoNode = (RepositoryTreeNode) ssel
-					.getFirstElement();
-			selectedRepo = repoNode.getRepository();
+		if (selectedRepo == null) {
+			selectedRepo = AdapterUtils.adapt(first, Repository.class);
 		}
-		if (selectedRepo == null)
+		if (selectedRepo == null) {
 			return;
+		}
 
 		// Only update when different repository is selected
 		Repository currentRepo = getRepository();
 		if (currentRepo == null
 				|| !selectedRepo.getDirectory().equals(
-						currentRepo.getDirectory()))
+						currentRepo.getDirectory())) {
 			showReflogFor(selectedRepo);
+		}
 	}
 
 	private void updateRefLink(final String name) {
