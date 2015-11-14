@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_7866251d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-14T23:59:09Z",
+      "side": 1,
+      "message": "After a move, is this the old or the new location? Probably doesn\u0027t matter much, because we are notified of moves only for IFiles from open projects (if I understand this right), and for those, the index updates on IResourceChangeEvents anyway.",
+      "revId": "8671fb05df9731e3b66c3421ad18205e91f56bc8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_9873e9d7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-14T23:59:09Z",
+      "side": 1,
+      "message": "This event is sent only for IFile. So for editing files from closed projects, this won\u0027t be called.",
+      "revId": "8671fb05df9731e3b66c3421ad18205e91f56bc8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
