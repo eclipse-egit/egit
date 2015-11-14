@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "67ccbf7d_adb22d79",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-14T14:19:03Z",
+      "side": 1,
+      "message": "Right. I thought it might be safer in case the closed project was re-opened while the compare editor was still open, but it turns out it\u0027s not needed.",
+      "parentUuid": "67ccbf7d_4dab610d",
+      "revId": "6a771388ad501b8f4d366657fc2856fe5d1cd525",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67ccbf7d_6da82510",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
         "patchSetId": 1
@@ -70,6 +88,24 @@
       "writtenOn": "2015-11-14T13:48:45Z",
       "side": 1,
       "message": "why do we need this ? The type says it\u0027s a non-workspace typed element ... I\u0027d assume that instances which are resources are rather of the super-class type",
+      "revId": "6a771388ad501b8f4d366657fc2856fe5d1cd525",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_cd9e91eb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-14T14:19:03Z",
+      "side": 1,
+      "message": "Ditto. I\u0027ll remove these two.",
+      "parentUuid": "67ccbf7d_6da82510",
       "revId": "6a771388ad501b8f4d366657fc2856fe5d1cd525",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
