@@ -17,9 +17,11 @@ package org.eclipse.egit.ui.internal.staging;
 import static org.eclipse.egit.ui.internal.CommonUtils.runCommand;
 
 import java.io.File;
+import java.net.URI;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -29,11 +31,16 @@ import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.IUndoContext;
+import org.eclipse.core.filebuffers.FileBuffers;
+import org.eclipse.core.filebuffers.IFileBuffer;
+import org.eclipse.core.filebuffers.IFileBufferListener;
+import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -454,6 +461,143 @@ public class StagingView extends ViewPart implements IShowInSource {
 		}
 	}
 
+	/**
+	 * Listener on buffer changes related to the workspace external files.
+	 */
+	final static class ExternalFileBufferListener
+			implements IFileBufferListener {
+
+		void updateRepoState(IFileBuffer buffer) {
+			IFile file = getResource(buffer);
+			if (file != null) {
+				return;
+			}
+			Repository repo = getRepository(buffer);
+			if (repo == null || repo.isBare()) {
+				return;
+			}
+			IPath relativePath = getRelativePath(repo, buffer);
+			if (relativePath == null) {
+				return;
+			}
+			IndexDiffCacheEntry diffEntry = org.eclipse.egit.core.Activator
+					.getDefault().getIndexDiffCache()
+					.getIndexDiffCacheEntry(repo);
+			if (diffEntry != null) {
+				diffEntry.refreshFiles(
+						Collections.singleton(relativePath.toString()));
+			}
+		}
+
+		@Nullable
+		private IPath getRelativePath(Repository repo, IFileBuffer buffer) {
+			IPath path = getPath(buffer);
+			if (path == null) {
+				return null;
+			}
+			IPath repositoryRoot = new Path(repo.getWorkTree().getPath());
+			return path.makeRelativeTo(repositoryRoot);
+		}
+
+		@Nullable
+		private IFile getResource(IFileBuffer buffer) {
+			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+			IPath location = buffer.getLocation();
+			if (location == null) {
+				return null;
+			}
+			IFile file = root.getFile(location);
+			if (!file.isAccessible()) {
+				return null;
+			}
+			return file;
+		}
+
+		@Nullable
+		private Repository getRepository(IFileBuffer buffer) {
+			IPath location = getPath(buffer);
+			if (location != null) {
+				return org.eclipse.egit.core.Activator.getDefault()
+						.getRepositoryCache().getRepository(location);
+			}
+			return null;
+		}
+
+		@Nullable
+		private IPath getPath(IFileBuffer buffer) {
+			IPath location = buffer.getLocation();
+			if (location != null) {
+				return location;
+			}
+			IFileStore store = buffer.getFileStore();
+			if (store != null) {
+				URI uri = store.toURI();
+				if (uri != null) {
+					try {
+						File file = new File(uri);
+						return new Path(file.getAbsolutePath());
+					} catch (IllegalArgumentException e) {
+						// ignore
+					}
+				}
+			}
+			return null;
+		}
+
+		@Override
+		public void underlyingFileMoved(IFileBuffer buffer, IPath path) {
+			updateRepoState(buffer);
+		}
+
+		@Override
+		public void underlyingFileDeleted(IFileBuffer buffer) {
+			updateRepoState(buffer);
+		}
+
+		@Override
+		public void dirtyStateChanged(IFileBuffer buffer, boolean isDirty) {
+			if (!isDirty) {
+				updateRepoState(buffer);
+			}
+		}
+
+		@Override
+		public void stateValidationChanged(IFileBuffer buffer,
+				boolean isStateValidated) {
+			// nop
+		}
+
+		@Override
+		public void stateChanging(IFileBuffer buffer) {
+			// nop
+		}
+
+		@Override
+		public void stateChangeFailed(IFileBuffer buffer) {
+			// nop
+		}
+
+		@Override
+		public void bufferDisposed(IFileBuffer buffer) {
+			// nop
+		}
+
+		@Override
+		public void bufferCreated(IFileBuffer buffer) {
+			// nop
+		}
+
+		@Override
+		public void bufferContentReplaced(IFileBuffer buffer) {
+			// nop
+		}
+
+		@Override
+		public void bufferContentAboutToBeReplaced(IFileBuffer buffer) {
+			// nop
+		}
+	}
+
 	static class TreeDecoratingLabelProvider extends DecoratingLabelProvider {
 
 		ILabelProvider provider;
@@ -562,6 +706,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 	private Action sortAction;
 
 	private SashForm stagingSashForm;
+
+	private ExternalFileBufferListener bufferListener = new ExternalFileBufferListener();
 
 	private IndexDiffChangedListener myIndexDiffListener = new IndexDiffChangedListener() {
 		@Override
@@ -1131,11 +1277,14 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		IWorkbenchSiteProgressService service = CommonUtils.getService(
 				getSite(), IWorkbenchSiteProgressService.class);
-		if (service != null && reactOnSelection)
+		if (service != null && reactOnSelection) {
 			// If we are linked, each time IndexDiffUpdateJob starts, indicate
 			// that the view is busy (e.g. reload() will trigger this job in
 			// background!).
 			service.showBusyForFamily(org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		}
+		FileBuffers.getTextFileBufferManager()
+				.addFileBufferListener(bufferListener);
 	}
 
 	private boolean commitAndPushEnabled(boolean commitEnabled) {
@@ -3282,6 +3431,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		getPreferenceStore().removePropertyChangeListener(uiPrefsListener);
 
+		FileBuffers.getTextFileBufferManager().removeFileBufferListener(bufferListener);
 
 		getDialogSettings().put(STORE_SORT_STATE, sortAction.isChecked());
 
