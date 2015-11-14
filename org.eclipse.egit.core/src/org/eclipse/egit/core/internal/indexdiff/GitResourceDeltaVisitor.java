@@ -33,8 +33,6 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 
-	private static final String GITIGNORE_NAME = ".gitignore"; //$NON-NLS-1$
-
 	/**
 	 * Bit-mask describing interesting changes for IResourceChangeListener
 	 * events
@@ -118,7 +116,7 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 			return false;
 		}
 
-		if (resource.getName().equals(GITIGNORE_NAME)) {
+		if (resource.getName().equals(IndexDiffCache.GITIGNORE_NAME)) {
 			gitIgnoreChanged = true;
 			return false;
 		}
