@@ -226,8 +226,12 @@ public class SelectionUtils {
 		for (IPath location : locations) {
 			RepositoryMapping repositoryMapping = RepositoryMapping
 					.getMapping(location);
-			if (repositoryMapping == null)
-				return null;
+			if (repositoryMapping == null) {
+				Repository repository = org.eclipse.egit.core.Activator
+						.getDefault().getRepositoryCache()
+						.getRepository(location);
+				return repository;
+			}
 			if (mapping == null)
 				mapping = repositoryMapping;
 			if (mapping.getRepository() != repositoryMapping.getRepository()) {
