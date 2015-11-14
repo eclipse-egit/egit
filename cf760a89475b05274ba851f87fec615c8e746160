@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67ccbf7d_382addb2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-14T23:27:11Z",
+      "side": 1,
+      "message": "I didn\u0027t mean to say we shouldn\u0027t use the RepositoryCache. I think it makes sense. I just didn\u0027t like the early exit, because the operation clearly tries to make sure that all items in the selection belong to the same repository. Your later change is good; like it very much.",
+      "parentUuid": "67ccbf7d_d803b14a",
+      "revId": "cf760a89475b05274ba851f87fec615c8e746160",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67ccbf7d_78e9c5f2",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2015-11-14T21:24:04Z",
       "side": 1,
       "message": "Looking at the code here I wonder why do we do this at all? I mean, we should *always* use the else branch, because it will make sure the *dedicated* change event will be sent for a single path and not for the entire repository.\n\nThis is of course not caused by your change, but I wonder if we should better always use the \"else\" branch.",
+      "revId": "cf760a89475b05274ba851f87fec615c8e746160",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_581ec198",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-14T23:27:11Z",
+      "side": 1,
+      "message": "I was wondering about that, too, but I wasn\u0027t bold enough to change that.",
+      "parentUuid": "67ccbf7d_78e9c5f2",
       "revId": "cf760a89475b05274ba851f87fec615c8e746160",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
