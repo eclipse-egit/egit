@@ -12,10 +12,13 @@
  *******************************************************************************/
 package org.eclipse.egit.ui;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.Authenticator;
 import java.net.ProxySelector;
+import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -23,27 +26,38 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.filebuffers.FileBuffers;
+import org.eclipse.core.filebuffers.IFileBuffer;
+import org.eclipse.core.filebuffers.IFileBufferListener;
+import org.eclipse.core.filebuffers.ITextFileBufferManager;
+import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.net.proxy.IProxyService;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.ConfigurationChecker;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.egit.ui.internal.variables.GitTemplateVariableResolver;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jdt.internal.ui.JavaPlugin;
 import org.eclipse.jface.text.templates.ContextTypeRegistry;
 import org.eclipse.jface.text.templates.TemplateContextType;
@@ -199,6 +213,8 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 
 	private RepositoryChangeScanner rcs;
 	private ResourceRefreshJob refreshJob;
+
+	private ExternalFileBufferListener bufferListener;
 	private ListenerHandle refreshHandle;
 	private DebugOptions debugOptions;
 
@@ -349,6 +365,12 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		refreshJob = new ResourceRefreshJob();
 		refreshHandle = Repository.getGlobalListenerList()
 				.addIndexChangedListener(refreshJob);
+		bufferListener = new ExternalFileBufferListener();
+		ITextFileBufferManager bufferManager = FileBuffers
+				.getTextFileBufferManager();
+		if (bufferManager != null) {
+			bufferManager.addFileBufferListener(bufferListener);
+		}
 	}
 
 	/**
@@ -491,9 +513,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 			synchronized (repositoriesChanged) {
 				repositoriesChanged.add(e.getRepository());
 			}
-			if (!Activator.getDefault().getPreferenceStore()
-					.getBoolean(UIPreferences.REFESH_ONLY_WHEN_ACTIVE)
-					|| isActive()) {
+			if (!isRefreshOnlyWhenActive() || isActive()) {
 				triggerRefresh();
 			}
 		}
@@ -547,8 +567,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 			// may happen. Don't scan when inactive depending on the user's
 			// choice.
 
-			if (Activator.getDefault().getPreferenceStore()
-					.getBoolean(UIPreferences.REFESH_ONLY_WHEN_ACTIVE)) {
+			if (isRefreshOnlyWhenActive()) {
 				if (!isActive()) {
 					monitor.done();
 					if (doReschedule)
@@ -592,6 +611,145 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		}
 	}
 
+	/**
+	 * Listener on buffer changes related to the workspace external files.
+	 */
+	static class ExternalFileBufferListener implements IFileBufferListener {
+
+		private void updateRepoState(IFileBuffer buffer) {
+			if (isRefreshOnlyWhenActive() && !isActive()) {
+				return;
+			}
+			IFile file = getResource(buffer);
+			if (file != null) {
+				return;
+			}
+			Repository repo = getRepository(buffer);
+			if (repo == null || repo.isBare()) {
+				return;
+			}
+			IPath relativePath = getRelativePath(repo, buffer);
+			if (relativePath == null) {
+				return;
+			}
+			IndexDiffCacheEntry diffEntry = org.eclipse.egit.core.Activator
+					.getDefault().getIndexDiffCache()
+					.getIndexDiffCacheEntry(repo);
+			if (diffEntry != null) {
+				diffEntry.refreshFiles(
+						Collections.singleton(relativePath.toString()));
+			}
+		}
+
+		@Nullable
+		private IPath getRelativePath(Repository repo, IFileBuffer buffer) {
+			IPath path = getPath(buffer);
+			if (path == null) {
+				return null;
+			}
+			IPath repositoryRoot = new Path(repo.getWorkTree().getPath());
+			return path.makeRelativeTo(repositoryRoot);
+		}
+
+		@Nullable
+		private IFile getResource(IFileBuffer buffer) {
+			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+			IPath location = buffer.getLocation();
+			if (location == null) {
+				return null;
+			}
+			IFile file = root.getFile(location);
+			if (!file.isAccessible()) {
+				return null;
+			}
+			return file;
+		}
+
+		@Nullable
+		private Repository getRepository(IFileBuffer buffer) {
+			IPath location = getPath(buffer);
+			if (location != null) {
+				return org.eclipse.egit.core.Activator.getDefault()
+						.getRepositoryCache().getRepository(location);
+			}
+			return null;
+		}
+
+		@Nullable
+		private IPath getPath(IFileBuffer buffer) {
+			IPath location = buffer.getLocation();
+			if (location != null) {
+				return location;
+			}
+			IFileStore store = buffer.getFileStore();
+			if (store != null) {
+				URI uri = store.toURI();
+				if (uri != null) {
+					try {
+						File file = new File(uri);
+						return new Path(file.getAbsolutePath());
+					} catch (IllegalArgumentException e) {
+						// ignore
+					}
+				}
+			}
+			return null;
+		}
+
+		@Override
+		public void underlyingFileDeleted(IFileBuffer buffer) {
+			updateRepoState(buffer);
+		}
+
+		@Override
+		public void dirtyStateChanged(IFileBuffer buffer, boolean isDirty) {
+			if (!isDirty) {
+				updateRepoState(buffer);
+			}
+		}
+
+		@Override
+		public void underlyingFileMoved(IFileBuffer buffer, IPath path) {
+			// nop
+		}
+
+		@Override
+		public void stateValidationChanged(IFileBuffer buffer,
+				boolean isStateValidated) {
+			// nop
+		}
+
+		@Override
+		public void stateChanging(IFileBuffer buffer) {
+			// nop
+		}
+
+		@Override
+		public void stateChangeFailed(IFileBuffer buffer) {
+			// nop
+		}
+
+		@Override
+		public void bufferDisposed(IFileBuffer buffer) {
+			// nop
+		}
+
+		@Override
+		public void bufferCreated(IFileBuffer buffer) {
+			// nop
+		}
+
+		@Override
+		public void bufferContentReplaced(IFileBuffer buffer) {
+			// nop
+		}
+
+		@Override
+		public void bufferContentAboutToBeReplaced(IFileBuffer buffer) {
+			// nop
+		}
+	}
+
 	private void setupRepoChangeScanner() {
 		rcs = new RepositoryChangeScanner();
 		rcs.setSystem(true);
@@ -632,6 +790,15 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 			if (PlatformUI.isWorkbenchRunning())
 				PlatformUI.getWorkbench().removeWindowListener(focusListener);
 			focusListener = null;
+		}
+
+		if (bufferListener != null) {
+			ITextFileBufferManager bufferManager = FileBuffers
+					.getTextFileBufferManager();
+			if (bufferManager != null) {
+				bufferManager.removeFileBufferListener(bufferListener);
+				bufferListener = null;
+			}
 		}
 
 		if (GitTraceLocation.REPOSITORYCHANGESCANNER.isActive())
@@ -715,5 +882,10 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		} catch (ClassNotFoundException e) {
 			return false;
 		}
+	}
+
+	static boolean isRefreshOnlyWhenActive() {
+		return getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.REFESH_ONLY_WHEN_ACTIVE);
 	}
 }
