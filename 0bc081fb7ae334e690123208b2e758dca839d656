@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_4d1d21f2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-14T15:50:47Z",
+      "side": 1,
+      "message": "Ok... didn\u0027t know about the RepositoryCache. In my (not yet pushed) fix for 481682 I had changed this loop to continue if _all_ mappings were null, so that it would then consider the adapters below, which was the reason for making StagingEntry a PlatformObject adaptable to Repository in Ib7127800.",
+      "revId": "0bc081fb7ae334e690123208b2e758dca839d656",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
