@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_6dbe651c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-14T17:45:45Z",
+      "side": 1,
+      "message": "Check that either both are null, or both are non-null and refer to the same repo.",
+      "revId": "3a0a83203e5d55607401dc098b279a28ec73087e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_8dcba9b6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-14T17:45:45Z",
+      "side": 1,
+      "message": "That\u0027s why I made StagingEntry a PlatformObject adaptable to Repository.",
+      "revId": "3a0a83203e5d55607401dc098b279a28ec73087e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_4dc1a196",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingEntryAdapterFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-14T17:45:45Z",
+      "side": 1,
+      "message": "Don\u0027t adapt to non-accessible resources, RepositoryMapping will always return null, which leads to problems later on.",
+      "revId": "3a0a83203e5d55607401dc098b279a28ec73087e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_2dbd3d20",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-14T17:45:45Z",
+      "side": 1,
+      "message": "This makes the staging view update on save from the compare editor.",
+      "revId": "3a0a83203e5d55607401dc098b279a28ec73087e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
