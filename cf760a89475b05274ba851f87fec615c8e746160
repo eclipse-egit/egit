@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_d803b14a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-14T21:24:04Z",
+      "side": 1,
+      "message": "I must confess I still trying to understand what is the desired outcome of this method and why shouldn\u0027t we use RepositoryCache in case we don\u0027t find a resource mapping.",
+      "revId": "cf760a89475b05274ba851f87fec615c8e746160",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_78e9c5f2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-14T21:24:04Z",
+      "side": 1,
+      "message": "Looking at the code here I wonder why do we do this at all? I mean, we should *always* use the else branch, because it will make sure the *dedicated* change event will be sent for a single path and not for the entire repository.\n\nThis is of course not caused by your change, but I wonder if we should better always use the \"else\" branch.",
+      "revId": "cf760a89475b05274ba851f87fec615c8e746160",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
