@@ -25,6 +25,7 @@ import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -32,8 +33,6 @@ import org.eclipse.jgit.lib.Repository;
  * interesting resources. Also collects list of paths and resources to update
  */
 public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
-
-	private static final String GITIGNORE_NAME = ".gitignore"; //$NON-NLS-1$
 
 	/**
 	 * Bit-mask describing interesting changes for IResourceChangeListener
@@ -118,7 +117,7 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 			return false;
 		}
 
-		if (resource.getName().equals(GITIGNORE_NAME)) {
+		if (resource.getName().equals(Constants.DOT_GIT_IGNORE)) {
 			gitIgnoreChanged = true;
 			return false;
 		}
