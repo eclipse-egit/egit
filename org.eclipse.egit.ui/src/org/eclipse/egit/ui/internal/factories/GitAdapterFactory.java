@@ -13,12 +13,17 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.factories;
 
+import java.io.File;
+import java.net.URI;
+
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.runtime.IAdapterFactory;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.egit.ui.internal.history.GitHistoryPageSource;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
@@ -28,11 +33,14 @@ import org.eclipse.egit.ui.internal.synchronize.mapping.GitObjectMapping;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelTree;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.ui.history.IHistoryPage;
 import org.eclipse.team.ui.history.IHistoryPageSource;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.team.ui.mapping.ISynchronizationCompareAdapter;
+import org.eclipse.ui.IURIEditorInput;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 import org.eclipse.ui.model.WorkbenchAdapter;
 import org.eclipse.ui.part.IShowInSource;
@@ -57,11 +65,13 @@ public class GitAdapterFactory implements IAdapterFactory {
 		}
 
 		if (IWorkbenchAdapter.class == adapterType) {
-			if (adaptableObject instanceof RepositoryNode)
+			if (adaptableObject instanceof RepositoryNode) {
 				return getRepsitoryNodeWorkbenchAdapter((RepositoryNode)adaptableObject);
+			}
 
-			if (gitModelWorkbenchAdapter == null)
+			if (gitModelWorkbenchAdapter == null) {
 				gitModelWorkbenchAdapter = new GitModelWorkbenchAdapter();
+			}
 			return gitModelWorkbenchAdapter;
 		}
 
@@ -69,13 +79,25 @@ public class GitAdapterFactory implements IAdapterFactory {
 				&& IShowInSource.class == adapterType) {
 			IHistoryView historyView = (IHistoryView) adaptableObject;
 			IHistoryPage historyPage = historyView.getHistoryPage();
-			if (historyPage instanceof GitHistoryPage)
+			if (historyPage instanceof GitHistoryPage) {
 				return historyPage;
+			}
+		}
+
+		if (adaptableObject instanceof IURIEditorInput
+				&& adapterType == Repository.class) {
+			return getRepository((IURIEditorInput) adaptableObject);
+		}
+
+		if (adaptableObject instanceof IURIEditorInput
+				&& adapterType == File.class) {
+			return getFile((IURIEditorInput) adaptableObject);
 		}
 
 		if (adaptableObject instanceof GitModelObject
-				&& adapterType == ResourceMapping.class)
+				&& adapterType == ResourceMapping.class) {
 			return GitObjectMapping.create((GitModelObject) adaptableObject);
+		}
 
 		if (adaptableObject instanceof GitModelObject
 				&& adapterType == IResource.class) {
@@ -84,16 +106,18 @@ public class GitAdapterFactory implements IAdapterFactory {
 			if (obj instanceof GitModelBlob) {
 				IResource res = ResourceUtil.getFileForLocation(obj
 						.getLocation(), false);
-				if (res == null)
+				if (res == null) {
 					res = root.getFile(obj.getLocation());
+				}
 
 				return res;
 			}
 
 			if (obj instanceof GitModelTree) {
 				IResource res = root.getContainerForLocation(obj.getLocation());
-				if (res == null)
+				if (res == null) {
 					res = root.getFolder(obj.getLocation());
+				}
 
 				return res;
 			}
@@ -102,11 +126,41 @@ public class GitAdapterFactory implements IAdapterFactory {
 		return null;
 	}
 
+	@Nullable
+	private static Repository getRepository(IURIEditorInput uriInput) {
+		File file = getFile(uriInput);
+		if (file == null) {
+			return null;
+		}
+		Path path = new Path(file.getAbsolutePath());
+		RepositoryMapping mapping = RepositoryMapping.getMapping(path);
+		if (mapping != null) {
+			return mapping.getRepository();
+		}
+		Repository repository = org.eclipse.egit.core.Activator.getDefault()
+				.getRepositoryCache().getRepository(path);
+		return repository;
+	}
+
+	@Nullable
+	private static File getFile(IURIEditorInput uriInput) {
+		URI uri = uriInput.getURI();
+		if (uri == null) {
+			return null;
+		}
+		try {
+			return new File(uri);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+	}
+
 	@Override
 	public Class[] getAdapterList() {
 		return new Class[] { IHistoryPageSource.class,
 				ISynchronizationCompareAdapter.class, ResourceMapping.class,
-				IResource.class, IWorkbenchAdapter.class, IShowInSource.class };
+				IResource.class, IWorkbenchAdapter.class, IShowInSource.class,
+				Repository.class, File.class, IHistoryPageSource.class};
 	}
 
 	private static IWorkbenchAdapter getRepsitoryNodeWorkbenchAdapter(final RepositoryNode node) {

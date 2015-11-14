@@ -188,6 +188,7 @@ import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
+import org.eclipse.ui.IURIEditorInput;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -1272,6 +1273,11 @@ public class StagingView extends ViewPart implements IShowInSource {
 			IResource resource = getResource((IEditorPart) part);
 			if (resource != null) {
 				sel = new StructuredSelection(resource);
+			} else {
+				Repository repository = getRepository((IEditorPart) part);
+				if (repository != null) {
+					sel = new StructuredSelection(repository);
+				}
 			}
 		} else {
 			ISelection selection = part.getSite().getPage().getSelection();
@@ -1280,6 +1286,15 @@ public class StagingView extends ViewPart implements IShowInSource {
 			}
 		}
 		return sel;
+	}
+
+	@Nullable
+	private static Repository getRepository(IEditorPart part) {
+		IEditorInput input = part.getEditorInput();
+		if (!(input instanceof IURIEditorInput)) {
+			return null;
+		}
+		return AdapterUtils.adapt(input, Repository.class);
 	}
 
 	private static IResource getResource(IEditorPart part) {
@@ -2381,6 +2396,11 @@ public class StagingView extends ViewPart implements IShowInSource {
 			RepositoryTreeNode repoNode = (RepositoryTreeNode) firstElement;
 			if (currentRepository != repoNode.getRepository()) {
 				reload(repoNode.getRepository());
+			}
+		} else if (firstElement instanceof Repository) {
+			Repository repo = (Repository) firstElement;
+			if (currentRepository != repo) {
+				reload(repo);
 			}
 		} else {
 			IResource resource = CommonUtils.getAdapterForObject(firstElement,

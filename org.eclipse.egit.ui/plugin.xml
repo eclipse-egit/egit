@@ -172,6 +172,13 @@
    <extension
          point="org.eclipse.core.runtime.adapters">
          <factory
+               adaptableType="org.eclipse.ui.IURIEditorInput"
+               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+            <adapter type="java.io.File" />
+            <adapter type="org.eclipse.jgit.lib.Repository" />
+            <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+         </factory>
+         <factory
                adaptableType="org.eclipse.egit.core.internal.storage.GitFileHistoryProvider"
                class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
             <adapter

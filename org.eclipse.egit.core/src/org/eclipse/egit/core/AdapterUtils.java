@@ -11,6 +11,7 @@
 package org.eclipse.egit.core;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.internal.Utils;
 
 /**
@@ -30,14 +31,18 @@ public class AdapterUtils {
 	 * @param <V> type of target
 	 * @return adapted
 	 */
-	@SuppressWarnings("unchecked")
+	/* TODO @Nullable */
 	public static <V> V adapt(Object object, Class<V> target) {
-		if (object == null)
+		if (object == null) {
 			return null;
-		if (target.isInstance(object))
-			return (V) object;
-		if (object instanceof IAdaptable)
+		}
+		if (target.isInstance(object)) {
+			return target.cast(object);
+		}
+		if (object instanceof IAdaptable) {
 			return Utils.getAdapter(((IAdaptable) object), target);
-		return null;
+		}
+		Object adapted = Platform.getAdapterManager().getAdapter(object, target);
+		return target.cast(adapted);
 	}
 }
