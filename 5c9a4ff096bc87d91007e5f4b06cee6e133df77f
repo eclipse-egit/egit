@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "67ccbf7d_78470524",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-15T15:33:48Z",
+      "side": 1,
+      "message": "Done: bug 482218.",
+      "parentUuid": "67ccbf7d_f85b1500",
+      "revId": "5c9a4ff096bc87d91007e5f4b06cee6e133df77f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67ccbf7d_18a8b961",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
         "patchSetId": 3
