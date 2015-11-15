@@ -21,6 +21,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.AdapterUtils;
@@ -166,11 +167,15 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 		if (location == null || location.toFile().isDirectory()) {
 			return false;
 		}
+		String resRelPath = null;
 		RepositoryMapping mapping = RepositoryMapping.getMapping(location);
-		if (mapping == null) {
-			return false;
+		if (mapping != null) {
+			resRelPath = mapping.getRepoRelativePath(location);
+		} else {
+			IPath workDir = new Path(
+					repository.getWorkTree().getAbsolutePath());
+			resRelPath = location.makeRelativeTo(workDir).toString();
 		}
-		String resRelPath = mapping.getRepoRelativePath(location);
 
 		// This action at the moment only works for files anyway
 		if (resRelPath == null || resRelPath.length() == 0) {
