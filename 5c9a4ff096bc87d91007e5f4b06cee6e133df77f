@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "67ccbf7d_f85b1500",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-15T15:12:09Z",
+      "side": 1,
+      "message": "You should report bug for JGit, this affects more than .gitignore.\n\norg.eclipse.jgit.treewalk.WorkingTreeIterator.init(Entry[]) should use different code is FS.DETECTED.isCaseSensitive() returns false to detect .git, .gitignore and .gitattributes.",
+      "parentUuid": "67ccbf7d_b88fcd01",
+      "revId": "5c9a4ff096bc87d91007e5f4b06cee6e133df77f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67ccbf7d_18a8b961",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
         "patchSetId": 3
