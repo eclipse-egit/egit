@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_78e385c3",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-15T13:25:28Z",
+      "side": 1,
+      "message": "Why package visibility? Why not just private and non-static?",
+      "revId": "5c9a4ff096bc87d91007e5f4b06cee6e133df77f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_98e049b7",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-15T13:25:28Z",
+      "side": 1,
+      "message": "If non-static, you could just do\n\n  getIndexDiffCacheEntry(repo)\n\nhere.",
+      "revId": "5c9a4ff096bc87d91007e5f4b06cee6e133df77f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_d89d7148",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-15T13:25:28Z",
+      "side": 1,
+      "message": "Ok for now (I realize we do similar tests elsewhere), but what about case-sensitivity? What do cgit and JGit do? Would a .Gitignore also be recognized by cgit as an ignore file on a case-insentive file system? (Only tangentially related to this change. Leave it for now as is, but we should check this some time.)",
+      "revId": "5c9a4ff096bc87d91007e5f4b06cee6e133df77f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_18a8b961",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-15T13:25:28Z",
+      "side": 1,
+      "message": "Nit: package can be removed; Activator is already imported.",
+      "range": {
+        "startLine": 120,
+        "startChar": 11,
+        "endLine": 120,
+        "endChar": 33
+      },
+      "revId": "5c9a4ff096bc87d91007e5f4b06cee6e133df77f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
