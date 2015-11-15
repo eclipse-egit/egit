@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_f3089669",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/IgnoreOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-15T23:32:11Z",
+      "side": 1,
+      "message": "Frankly said, I\u0027m starting to wonder if RepositoryCache.getRepository() should be favoured in general over RepositoryMapping.getMapping().",
+      "revId": "333a9de088ac7868092487bbc21e785783756288",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
