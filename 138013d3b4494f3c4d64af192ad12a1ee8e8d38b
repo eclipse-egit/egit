@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_782b8534",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareIndexWithHeadActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-15T18:01:37Z",
+      "side": 1,
+      "message": "I do wonder why we bother with the mapping at all here, but again, I\u0027m not feeling bold enough to remove this completely.",
+      "revId": "138013d3b4494f3c4d64af192ad12a1ee8e8d38b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
