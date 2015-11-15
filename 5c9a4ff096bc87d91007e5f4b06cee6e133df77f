@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67ccbf7d_78ae256e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-15T14:11:33Z",
+      "side": 1,
+      "message": "\"private\" is not needed (no one inside package will ever use this class) and generates extra bytecode needed to access the constructor.\n\nI will remove static modifier.",
+      "parentUuid": "67ccbf7d_78e385c3",
+      "revId": "5c9a4ff096bc87d91007e5f4b06cee6e133df77f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67ccbf7d_98e049b7",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2015-11-15T13:25:28Z",
       "side": 1,
       "message": "If non-static, you could just do\n\n  getIndexDiffCacheEntry(repo)\n\nhere.",
+      "revId": "5c9a4ff096bc87d91007e5f4b06cee6e133df77f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_98bbe9a8",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-15T14:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67ccbf7d_98e049b7",
       "revId": "5c9a4ff096bc87d91007e5f4b06cee6e133df77f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "67ccbf7d_b8b8adac",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-15T14:11:33Z",
+      "side": 1,
+      "message": "I don\u0027t think .Gitignore is valid.",
+      "parentUuid": "67ccbf7d_d89d7148",
+      "revId": "5c9a4ff096bc87d91007e5f4b06cee6e133df77f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67ccbf7d_18a8b961",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
         "patchSetId": 3
@@ -64,6 +118,30 @@
       "writtenOn": "2015-11-15T13:25:28Z",
       "side": 1,
       "message": "Nit: package can be removed; Activator is already imported.",
+      "range": {
+        "startLine": 120,
+        "startChar": 11,
+        "endLine": 120,
+        "endChar": 33
+      },
+      "revId": "5c9a4ff096bc87d91007e5f4b06cee6e133df77f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_d88491ee",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-15T14:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67ccbf7d_18a8b961",
       "range": {
         "startLine": 120,
         "startChar": 11,
