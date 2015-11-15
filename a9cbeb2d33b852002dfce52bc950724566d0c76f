@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "67ccbf7d_7831c5ef",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-15T12:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67ccbf7d_d82011a6",
+      "revId": "a9cbeb2d33b852002dfce52bc950724566d0c76f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67ccbf7d_b8142d4c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
         "patchSetId": 2
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "67ccbf7d_18d6f9f0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-15T12:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67ccbf7d_b8142d4c",
+      "revId": "a9cbeb2d33b852002dfce52bc950724566d0c76f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67ccbf7d_982e8992",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
         "patchSetId": 2
@@ -64,6 +100,24 @@
       "writtenOn": "2015-11-15T12:32:11Z",
       "side": 1,
       "message": "Looks like this also needs extra logic to deal with the file being a .gitignore file... (compare with the resourcechange listener in IndexDiffCacheEntry).\n\nTry the following: create a top-level .gitignore in the repo. May be empty. Open project. Create a file \"ignored.txt\". Staging view will show the unstaged change (both, the .gitignore and ignored.txt). Now close the project. Open editor for .gitignore from git repositories view, add the line ignored.txt, and save. Now the staging view should remove the unstaged change for \"ignored.txt\", but it doesn\u0027t. Open the project again: only now the staging view will remove the \"ignored.txt\".",
+      "revId": "a9cbeb2d33b852002dfce52bc950724566d0c76f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_f8d075f6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-15T12:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67ccbf7d_982e8992",
       "revId": "a9cbeb2d33b852002dfce52bc950724566d0c76f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
