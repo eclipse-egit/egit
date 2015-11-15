@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2014 SAP AG and others.
+ * Copyright (c) 2010, 2015 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -28,6 +28,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -585,18 +586,21 @@ public class RepositoryUtil {
 	 * @since 4.1.0
 	 */
 	public static boolean canBeAutoIgnored(IPath path) throws IOException {
-		RepositoryMapping mapping = RepositoryMapping.getMapping(path);
-		if (mapping == null) {
-			return false; // Linked resources may not be mapped
+		Repository repository = Activator.getDefault().getRepositoryCache()
+				.getRepository(path);
+		if (repository == null || repository.isBare()) {
+			return false;
 		}
-		Repository repository = mapping.getRepository();
 		WorkingTreeIterator treeIterator = IteratorService
 				.createInitialIterator(repository);
 		if (treeIterator == null) {
 			return false;
 		}
-		String repoRelativePath = mapping.getRepoRelativePath(path);
-		if (repoRelativePath == null || repoRelativePath.isEmpty()) {
+		String repoRelativePath = path
+				.makeRelativeTo(
+						new Path(repository.getWorkTree().getAbsolutePath()))
+				.toString();
+		if (repoRelativePath.length() == 0 || repoRelativePath.equals(path)) {
 			return false;
 		}
 		try (TreeWalk walk = new TreeWalk(repository)) {
