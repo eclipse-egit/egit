@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "67ccbf7d_d86f31a4",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-15T14:43:18Z",
+      "side": 1,
+      "message": "Ok... though \"extra bytecode...\" sounds like premature optimization for something that is created exactly once when the plugin starts.",
+      "parentUuid": "67ccbf7d_78ae256e",
+      "revId": "5c9a4ff096bc87d91007e5f4b06cee6e133df77f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67ccbf7d_98e049b7",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
         "patchSetId": 3
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "I don\u0027t think .Gitignore is valid.",
       "parentUuid": "67ccbf7d_d89d7148",
+      "revId": "5c9a4ff096bc87d91007e5f4b06cee6e133df77f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_b88fcd01",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-15T14:43:18Z",
+      "side": 1,
+      "message": "Actually, I think it is :-( Witness the following on a case-insensitive HFS+ partition:\n\n  $ ls -al\n  total 24\n  drwxr-xr-x   6 thomas  staff   204 Nov 15 14:41 .\n  drwxr-xr-x  32 thomas  staff  1088 Oct 25 19:00 ..\n  -rw-r--r--@  1 thomas  staff  6148 Nov 15 13:23 .DS_Store\n  drwxr-xr-x  12 thomas  staff   408 Nov 15 00:22 .git\n  -rw-r--r--@  1 thomas  staff    21 Nov 15 14:43 .gitignore\n  drwxr-xr-x  13 thomas  staff   442 Nov 15 13:25 testproject\n  $ git status\n  # On branch master\n  # Your branch is ahead of \u0027origin/master\u0027 by 1 commit.\n  #\n  # Changes not staged for commit:\n  #   (use \"git add \u003cfile\u003e...\" to update what will be committed)\n  #   (use \"git checkout -- \u003cfile\u003e...\" to discard changes in working directory)\n  #\n  #\tmodified:   testproject/File with blanks.txt\n  #\n  # Untracked files:\n  #   (use \"git add \u003cfile\u003e...\" to include in what will be committed)\n  #\n  #\t.gitignore\n  no changes added to commit (use \"git add\" and/or \"git commit -a\")\n  $ mv .gitignore .Gitignore\n  arcturus:testproject_b thomas$ ls -al\n  total 24\n  drwxr-xr-x   6 thomas  staff   204 Nov 15 15:28 .\n  drwxr-xr-x  32 thomas  staff  1088 Oct 25 19:00 ..\n  -rw-r--r--@  1 thomas  staff  6148 Nov 15 13:23 .DS_Store\n  -rw-r--r--@  1 thomas  staff    21 Nov 15 14:43 .Gitignore\n  drwxr-xr-x  12 thomas  staff   408 Nov 15 15:27 .git\n  drwxr-xr-x  13 thomas  staff   442 Nov 15 13:25 testproject\n  $ git status\n  # On branch master\n  # Your branch is ahead of \u0027origin/master\u0027 by 1 commit.\n  #\n  # Changes not staged for commit:\n  #   (use \"git add \u003cfile\u003e...\" to update what will be committed)\n  #   (use \"git checkout -- \u003cfile\u003e...\" to discard changes in working directory)\n  #\n  #\tmodified:   testproject/File with blanks.txt\n  #\n  # Untracked files:\n  #   (use \"git add \u003cfile\u003e...\" to include in what will be committed)\n  #\n  #\t.Gitignore\n  no changes added to commit (use \"git add\" and/or \"git commit -a\")\n  $ more .Gitignore \n  .DS_Store\n  ignored.txt\n  $ ls -al testproject/i*\n  -rw-r--r--  1 thomas  staff  28 Nov 15 13:25 testproject/ignored.txt\n  $ \n\ntestproject/ignored.txt is a newly added file, and is ignored. EGit/JGit shows me three unstaged changes, .Gitignore, testproject/File with blanks.txt, and testproject/ignored.txt :-(",
+      "parentUuid": "67ccbf7d_b8b8adac",
       "revId": "5c9a4ff096bc87d91007e5f4b06cee6e133df77f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
