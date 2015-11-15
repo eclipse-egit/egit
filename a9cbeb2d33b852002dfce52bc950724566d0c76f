@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_580de143",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-15T12:08:58Z",
+      "side": 1,
+      "message": "Nit: this is actually a completely unrelated change that might have been done in a separate commit.",
+      "revId": "a9cbeb2d33b852002dfce52bc950724566d0c76f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_d82011a6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-15T12:08:58Z",
+      "side": 1,
+      "message": "Why this? Isn\u0027t it the RepositoryChangeScanner\u0027s responsibility to know about this? Updating the index diff cache should not have anything to do with this, should it?",
+      "revId": "a9cbeb2d33b852002dfce52bc950724566d0c76f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_b8142d4c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-15T12:08:58Z",
+      "side": 1,
+      "message": "I do think this merits a comment: if we do get a file here, we know it\u0027s in an open project, and the IndexDiffCache will thus update via the IResourceChangeEvent, and therefore this listener doesn\u0027t have to do anything.\n\nIn fact, this kind of interplay with the resource change event listener over in IndexDiffCacheEntry is an indication to me that this should be moved there.",
+      "revId": "a9cbeb2d33b852002dfce52bc950724566d0c76f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
