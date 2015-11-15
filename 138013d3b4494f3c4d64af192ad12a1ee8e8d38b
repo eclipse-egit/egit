@@ -16,6 +16,24 @@
       "revId": "138013d3b4494f3c4d64af192ad12a1ee8e8d38b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_b8b26d79",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareIndexWithHeadActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-15T21:11:32Z",
+      "side": 1,
+      "message": "Why not? I did it.",
+      "parentUuid": "67ccbf7d_782b8534",
+      "revId": "138013d3b4494f3c4d64af192ad12a1ee8e8d38b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
