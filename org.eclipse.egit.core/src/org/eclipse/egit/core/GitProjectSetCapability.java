@@ -28,7 +28,7 @@ import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.GitURI;
 import org.eclipse.egit.core.internal.ProjectReferenceImporter;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.osgi.util.NLS;

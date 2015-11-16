@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.IndexDiff;
 
