@@ -38,11 +38,11 @@ abstract public class AbstractReleaseOperation extends
 	 */
 	protected static String getReleaseName(GitFlowRepository repository)
 			throws WrongGitFlowStateException, CoreException, IOException {
-		if (!repository.isRelease()) {
+		String currentBranch = repository.getRepository().getBranch();
+		if (currentBranch == null || !repository.isRelease()) {
 			throw new WrongGitFlowStateException(
 					CoreText.AbstractReleaseOperation_notOnAReleaseBranch);
 		}
-		String currentBranch = repository.getRepository().getBranch();
 		return currentBranch.substring(repository.getConfig().getReleasePrefix().length());
 	}
 }

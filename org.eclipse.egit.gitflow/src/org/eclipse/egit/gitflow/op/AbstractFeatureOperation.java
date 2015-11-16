@@ -41,11 +41,11 @@ abstract public class AbstractFeatureOperation extends GitFlowOperation {
 	 */
 	protected static String getFeatureName(GitFlowRepository repository)
 			throws WrongGitFlowStateException, CoreException, IOException {
-		if (!repository.isFeature()) {
+		String currentBranch = repository.getRepository().getBranch();
+		if (currentBranch == null || !repository.isFeature()) {
 			throw new WrongGitFlowStateException(
 					CoreText.AbstractFeatureOperation_notOnAFeautreBranch);
 		}
-		String currentBranch = repository.getRepository().getBranch();
 		return currentBranch.substring(repository.getConfig()
 				.getFeaturePrefix().length());
 	}
