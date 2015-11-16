@@ -192,7 +192,7 @@ public class BranchSelectionAndEditDialog extends
 					try {
 						branchTree.refresh();
 						markRef(Constants.R_HEADS + newRefName);
-						if (repo.getBranch().equals(newRefName))
+						if (newRefName.equals(repo.getBranch()))
 							// close branch selection dialog when new branch was
 							// already checked out from new branch wizard
 							BranchSelectionAndEditDialog.this.okPressed();

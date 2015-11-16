@@ -46,6 +46,7 @@ import org.eclipse.jgit.diff.DiffConfig;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectReader;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.FollowFilter;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -444,7 +445,9 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 
 	protected boolean isLocalBranchCheckedout(Repository repository) {
 		try {
-			return repository.getFullBranch().startsWith(Constants.R_HEADS);
+			String fullBranch = repository.getFullBranch();
+			return fullBranch != null
+					&& fullBranch.startsWith(Constants.R_HEADS);
 		} catch (Exception e) {
 			// do nothing
 		}
@@ -485,8 +488,11 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 				rw.setTreeFilter(filter);
 			}
 
-			RevCommit headCommit = rw.parseCommit(repository.getRef(
-					Constants.HEAD).getObjectId());
+			Ref head = repository.getRef(Constants.HEAD);
+			if (head == null) {
+				return result;
+			}
+			RevCommit headCommit = rw.parseCommit(head.getObjectId());
 			rw.markStart(headCommit);
 			headCommit = rw.next();
 
