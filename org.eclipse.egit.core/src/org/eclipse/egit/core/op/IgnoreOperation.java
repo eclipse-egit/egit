@@ -209,15 +209,16 @@ public class IgnoreOperation implements IEGitOperation {
 			throws CoreException {
 		try {
 			String ignoreLine = entry;
-			if (!gitIgnore.exists())
+			if (!gitIgnore.exists()) {
 				if (!gitIgnore.createNewFile()) {
 					String error = NLS.bind(
 							CoreText.IgnoreOperation_creatingFailed,
 							gitIgnore.getAbsolutePath());
 					throw new CoreException(Activator.error(error, null));
 				}
-			else
+			} else {
 				ignoreLine = getEntry(gitIgnore, ignoreLine);
+			}
 
 			FileOutputStream os = new FileOutputStream(gitIgnore, true);
 			try {
