@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "67ccbf7d_dbf39d5d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-11-18T23:56:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67ccbf7d_1bc7c510",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 33
+      },
+      "revId": "e31a44d5d0ac81d18005632c84d106d558d3942b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67ccbf7d_5bd14dc5",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RepositoriesViewCommandHandler.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2015-11-18T23:44:33Z",
       "side": 1,
       "message": "s/2010, 2013, 2015/2010, 2015/\n\nthis is a range",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 33
+      },
+      "revId": "e31a44d5d0ac81d18005632c84d106d558d3942b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_fb130118",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RepositoriesViewCommandHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-11-18T23:56:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67ccbf7d_5bd14dc5",
       "range": {
         "startLine": 2,
         "startChar": 17,
