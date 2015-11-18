@@ -90,10 +90,6 @@ public class GitTemplateVariableResolver extends TemplateVariableResolver {
 		}
 
 		StoredConfig config = repository.getConfig();
-		if (config == null) {
-			variable.setValue(""); //$NON-NLS-1$
-			return;
-		}
 
 		// Get the value of the key
 		final String[] splits = gitKey.split("\\."); //$NON-NLS-1$
