@@ -45,6 +45,7 @@ import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheIterator;
+import org.eclipse.jgit.errors.IndexReadException;
 import org.eclipse.jgit.events.IndexChangedEvent;
 import org.eclipse.jgit.events.IndexChangedListener;
 import org.eclipse.jgit.events.ListenerHandle;
@@ -305,6 +306,8 @@ public class IndexDiffCacheEntry {
 					}
 					notifyListeners();
 					return Status.OK_STATUS;
+				} catch (IndexReadException e) {
+					return Activator.error(CoreText.IndexDiffCacheEntry_cannotReadIndex, e);
 				} catch (IOException e) {
 					if (GitTraceLocation.INDEXDIFFCACHE.isActive())
 						GitTraceLocation.getTrace().trace(
