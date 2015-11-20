@@ -1143,16 +1143,9 @@
                class="org.eclipse.egit.ui.internal.actions.SimpleFetchActionHandler">
          </class>
          <activeWhen>
-            <and>
-               <count
-                     value="1">
-               </count>
-               <iterate>
-                  <adapt
-                        type="org.eclipse.core.resources.IResource">
-                  </adapt>
-               </iterate>
-            </and>
+            <test
+                  property="GitSelection.resourcesSingleRepository">
+            </test>
          </activeWhen>
       </handler>
       <handler
@@ -1189,16 +1182,9 @@
                class="org.eclipse.egit.ui.internal.actions.SimplePushActionHandler">
          </class>
          <activeWhen>
-            <and>
-               <count
-                     value="1">
-               </count>
-               <iterate>
-                  <adapt
-                        type="org.eclipse.core.resources.IResource">
-                  </adapt>
-               </iterate>
-            </and>
+            <test
+                  property="GitSelection.resourcesSingleRepository">
+            </test>
          </activeWhen>
       </handler>
       <handler
@@ -1207,16 +1193,16 @@
                class="org.eclipse.egit.ui.internal.actions.PullFromUpstreamActionHandler">
          </class>
          <activeWhen>
-            <iterate>
-               <or>
-                  <adapt
-                        type="org.eclipse.core.resources.IProject">
-                  </adapt>
+            <or>
+               <test
+                     property="GitSelection.resourcesSingleRepository">
+               </test>
+               <iterate>
                   <instanceof
                         value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
                   </instanceof>
-               </or>
-            </iterate>
+               </iterate>
+            </or>
          </activeWhen>
       </handler>
       <handler
@@ -1246,7 +1232,7 @@
          </class>
          <activeWhen>
             <test
-                  property="GitSelection.projectSingleRepository">
+                  property="GitSelection.projectsSingleRepository">
             </test>
          </activeWhen>
       </handler>
@@ -1292,7 +1278,7 @@
          </class>
          <activeWhen>
             <test
-                  property="GitSelection.projectSingleRepository">
+                  property="GitSelection.projectsSingleRepository">
             </test>
          </activeWhen>
       </handler>
@@ -1327,7 +1313,7 @@
          <activeWhen>
             <or>
                <test
-                     property="GitSelection.projectSingleRepository">
+                     property="GitSelection.projectsSingleRepository">
                </test>
                <and>
                   <count
@@ -1563,16 +1549,9 @@
                class="org.eclipse.egit.ui.internal.actions.MergeActionHandler">
          </class>
          <activeWhen>
-            <and>
-               <count
-                     value="1">
-               </count>
-               <iterate>
-                  <adapt
-                        type="org.eclipse.core.resources.IProject">
-                  </adapt>
-               </iterate>
-            </and>
+            <test
+                  property="GitSelection.projectsSingleRepository">
+            </test>
          </activeWhen>
       </handler>
       <handler
@@ -1602,7 +1581,7 @@
          </class>
          <activeWhen>
             <test
-                  property="GitSelection.projectSingleRepository">
+                  property="GitSelection.projectsSingleRepository">
             </test>
          </activeWhen>
       </handler>
@@ -1682,16 +1661,9 @@
                class="org.eclipse.egit.ui.internal.actions.ResetActionHandler">
          </class>
          <activeWhen>
-            <and>
-               <count
-                     value="1">
-               </count>
-               <iterate>
-                  <adapt
-                        type="org.eclipse.core.resources.IProject">
-                  </adapt>
-               </iterate>
-            </and>
+            <test
+                  property="GitSelection.projectsSingleRepository">
+            </test>
          </activeWhen>
       </handler>
       <handler
@@ -3863,7 +3835,7 @@
                <visibleWhen
                      checkEnabled="false">
                   <test
-                        property="GitSelection.projectSingleRepository">
+                        property="GitSelection.projectsSingleRepository">
                   </test>
                </visibleWhen>
             </menu>
@@ -3874,7 +3846,7 @@
                <visibleWhen
                      checkEnabled="false">
                   <test
-                        property="GitSelection.projectSingleRepository">
+                        property="GitSelection.projectsSingleRepository">
                   </test>
                </visibleWhen>
             </command>
@@ -3886,7 +3858,7 @@
                <visibleWhen
                      checkEnabled="false">
                   <test
-                        property="GitSelection.projectSingleRepository">
+                        property="GitSelection.projectsSingleRepository">
                   </test>
                </visibleWhen>
             </command>
@@ -3896,7 +3868,7 @@
                <visibleWhen
                      checkEnabled="false">
                   <test
-                        property="GitSelection.projectSingleRepository">
+                        property="GitSelection.projectsSingleRepository">
                   </test>
                </visibleWhen>
             </dynamic>
@@ -3939,7 +3911,7 @@
                   <visibleWhen
                         checkEnabled="false">
                      <test
-                           property="GitSelection.projectSingleRepository"
+                           property="GitSelection.projectsSingleRepository"
                            args="hasGerritConfiguration">
                      </test>
                   </visibleWhen>
@@ -3951,7 +3923,7 @@
                   <visibleWhen
                         checkEnabled="false">
                      <test
-                           property="GitSelection.projectSingleRepository"
+                           property="GitSelection.projectssSingleRepository"
                            args="hasGerritConfiguration">
                      </test>
                   </visibleWhen>
@@ -3973,7 +3945,7 @@
                <visibleWhen
                      checkEnabled="false">
                   <test
-                        property="GitSelection.projectSingleRepository">
+                        property="GitSelection.projectsSingleRepository">
                   </test>
                </visibleWhen>
             </menu>
@@ -3990,7 +3962,7 @@
                <visibleWhen
                      checkEnabled="false">
                   <test
-                        property="GitSelection.projectSingleRepository">
+                        property="GitSelection.projectsSingleRepository">
                   </test>
                </visibleWhen>
             </menu>
@@ -4083,7 +4055,7 @@
                   <visibleWhen
                         checkEnabled="false">
                      <test
-                           property="GitSelection.projectSingleRepository">
+                           property="GitSelection.projectsSingleRepository">
                      </test>
                   </visibleWhen>
                </command>
@@ -4124,7 +4096,7 @@
                   <visibleWhen
                         checkEnabled="false">
                      <test
-                           property="GitSelection.projectSingleRepository">
+                           property="GitSelection.projectsSingleRepository">
                      </test>
                   </visibleWhen>
                </command>
@@ -4139,7 +4111,7 @@
                   <visibleWhen
                         checkEnabled="false">
                      <test
-                           property="GitSelection.projectSingleRepository">
+                           property="GitSelection.projectsSingleRepository">
                      </test>
                   </visibleWhen>
                </command>
@@ -4201,7 +4173,7 @@
                <visibleWhen
                      checkEnabled="false">
                   <test
-                        property="GitSelection.projectSingleRepository">
+                        property="GitSelection.projectsSingleRepository">
                   </test>
                </visibleWhen>
             </command>
@@ -4214,7 +4186,7 @@
                   label="%RebaseWithDialog_label">
                <visibleWhen checkEnabled="false">
                   <test
-                        property="GitSelection.projectSingleRepository"
+                        property="GitSelection.projectsSingleRepository"
                         args="isSafe">
                   </test>
                </visibleWhen>
@@ -4228,7 +4200,7 @@
                   <visibleWhen
                         checkEnabled="false">
                      <test
-                           property="GitSelection.projectSingleRepository"
+                           property="GitSelection.projectsSingleRepository"
                            args="canAbortRebase">
                      </test>
                   </visibleWhen>
@@ -4239,7 +4211,7 @@
                   <visibleWhen
                         checkEnabled="false">
                      <test
-                           property="GitSelection.projectSingleRepository"
+                           property="GitSelection.projectsSingleRepository"
                            args="canAbortRebase">
                      </test>
                   </visibleWhen>
@@ -4250,7 +4222,7 @@
                   <visibleWhen
                         checkEnabled="false">
                      <test
-                           property="GitSelection.projectSingleRepository"
+                           property="GitSelection.projectsSingleRepository"
                            args="canContinueRebase">
                      </test>
                   </visibleWhen>
@@ -4263,7 +4235,7 @@
                <visibleWhen
                      checkEnabled="false">
                   <test
-                        property="GitSelection.projectSingleRepository">
+                        property="GitSelection.projectsSingleRepository">
                   </test>
                </visibleWhen>
             </command>
@@ -5253,7 +5225,7 @@
             class="org.eclipse.egit.ui.internal.selection.SelectionPropertyTester"
             id="org.eclipse.egit.ui.SelectionTester"
             namespace="GitSelection"
-            properties="projectSingleRepository,projectsWithRepositories,resourcesSingleRepository,fileOrFolderInRepository,resourcesAllInRepository"
+            properties="projectsSingleRepository,projectsWithRepositories,resourcesSingleRepository,fileOrFolderInRepository,resourcesAllInRepository"
             type="java.util.Collection">
       </propertyTester>
    </extension>
