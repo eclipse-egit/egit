@@ -413,32 +413,32 @@ class TestDecoratableResource extends DecoratableResource {
 	}
 
 	public TestDecoratableResource tracked() {
-		this.tracked = true;
+		setTracked(true);
 		return this;
 	}
 
 	public TestDecoratableResource ignored() {
-		this.ignored = true;
+		setIgnored(true);
 		return this;
 	}
 
 	public TestDecoratableResource dirty() {
-		this.dirty = true;
+		setDirty(true);
 		return this;
 	}
 
 	public TestDecoratableResource conflicts() {
-		this.conflicts = true;
+		setConflicts(true);
 		return this;
 	}
 
 	public TestDecoratableResource added() {
-		this.staged = Staged.ADDED;
+		setStaged(Staged.ADDED);
 		return this;
 	}
 
 	public IDecoratableResource modified() {
-		this.staged = Staged.MODIFIED;
+		setStaged(Staged.MODIFIED);
 		return this;
 	}
 
