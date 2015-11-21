@@ -1,21 +1,26 @@
 /*******************************************************************************
- * Copyright (C) 2011, Philipp Thun <philipp.thun@sap.com>
+ * Copyright (C) 2011, 2015 Philipp Thun <philipp.thun@sap.com> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Factored out ResourceState
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.decorators;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.ui.internal.resources.ResourceState;
 
 /**
  * Basic implementation of <code>IDecoratableResource</code>
  *
  * @see IDecoratableResource
  */
-public class DecoratableResource implements IDecoratableResource {
+public class DecoratableResource extends ResourceState
+		implements IDecoratableResource {
 
 	/**
 	 * Resource to be decorated
@@ -37,36 +42,6 @@ public class DecoratableResource implements IDecoratableResource {
 	 */
 	protected String branchStatus = null;
 
-	/**
-	 * Flag indicating whether or not the resource is tracked
-	 */
-	protected boolean tracked = false;
-
-	/**
-	 * Flag indicating whether or not the resource is ignored
-	 */
-	protected boolean ignored = false;
-
-	/**
-	 * Flag indicating whether or not the resource has changes that are not
-	 * staged
-	 */
-	protected boolean dirty = false;
-
-	/**
-	 * Staged state of the resource
-	 */
-	protected Staged staged = Staged.NOT_STAGED;
-
-	/**
-	 * Flag indicating whether or not the resource has merge conflicts
-	 */
-	protected boolean conflicts = false;
-
-	/**
-	 * Flag indicating whether or not the resource is assumed valid
-	 */
-	protected boolean assumeValid = false;
 
 	/**
 	 * Constructs a new decoratable resource
@@ -106,33 +81,4 @@ public class DecoratableResource implements IDecoratableResource {
 		return branchStatus;
 	}
 
-	@Override
-	public boolean isTracked() {
-		return tracked;
-	}
-
-	@Override
-	public boolean isIgnored() {
-		return ignored;
-	}
-
-	@Override
-	public boolean isDirty() {
-		return dirty;
-	}
-
-	@Override
-	public Staged staged() {
-		return staged;
-	}
-
-	@Override
-	public boolean hasConflicts() {
-		return conflicts;
-	}
-
-	@Override
-	public boolean isAssumeValid() {
-		return assumeValid;
-	}
 }
