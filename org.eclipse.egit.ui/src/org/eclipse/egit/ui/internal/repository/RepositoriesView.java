@@ -231,7 +231,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			@Override
 			public void selectionChanged(IWorkbenchPart part,
 					ISelection selection) {
-				if (!reactOnSelection) {
+				if (!reactOnSelection || part == RepositoriesView.this) {
 					return;
 				}
 
