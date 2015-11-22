@@ -8,6 +8,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.staging;
 
+import java.io.File;
+
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.core.runtime.IPath;
@@ -32,6 +34,8 @@ public class StagingEntryAdapterFactory implements IAdapterFactory {
 				return entry.getLocation();
 			} else if (adapterType == Repository.class) {
 				return entry.getRepository();
+			} else if (adapterType == File.class) {
+				return entry.getLocation().toFile();
 			}
 		}
 		return null;
@@ -39,7 +43,8 @@ public class StagingEntryAdapterFactory implements IAdapterFactory {
 
 	@Override
 	public Class[] getAdapterList() {
-		return new Class[] { IResource.class, IPath.class, Repository.class };
+		return new Class[] { IResource.class, IPath.class, Repository.class,
+				File.class };
 	}
 
 }
