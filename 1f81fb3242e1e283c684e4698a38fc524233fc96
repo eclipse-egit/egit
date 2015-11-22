@@ -39,6 +39,24 @@
       "revId": "1f81fb3242e1e283c684e4698a38fc524233fc96",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_f8513cb1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-11-22T22:42:47Z",
+      "side": 1,
+      "message": "copy the copyright statements if you move larger blocks of code, git blame can help to find out who were the authors of the moved code, but don\u0027t spend a lot of time on that",
+      "parentUuid": "67ccbf7d_f86a1c63",
+      "revId": "1f81fb3242e1e283c684e4698a38fc524233fc96",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
