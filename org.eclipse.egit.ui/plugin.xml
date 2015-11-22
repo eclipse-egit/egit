@@ -309,6 +309,7 @@
          <adapter type="org.eclipse.core.resources.IResource"/>
          <adapter type="org.eclipse.core.runtime.IPath"/>
          <adapter type="org.eclipse.jgit.lib.Repository"/>
+         <adapter type="java.util.File"/>
       </factory>
    </extension>
 
