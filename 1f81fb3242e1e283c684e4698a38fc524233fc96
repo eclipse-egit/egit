@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_d8655895",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/IResourceState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-22T21:50:50Z",
+      "side": 1,
+      "message": "I didn\u0027t write \"resource\" on purpose. In a future change, I plan to make the ResourceStateFactory also work for IPath inputs, and then use this in GitActionContributor to fix the appearance of menu items in the context menu of the synchronize view.",
+      "range": {
+        "startLine": 14,
+        "startChar": 57,
+        "endLine": 14,
+        "endChar": 62
+      },
+      "revId": "1f81fb3242e1e283c684e4698a38fc524233fc96",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_f86a1c63",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-22T21:50:50Z",
+      "side": 1,
+      "message": "Code basically moved from DecoratableResourceAdapter. BTW, what\u0027s your policy on such code moves? I feel kinda bad since it now has only my name in the header comment...",
+      "revId": "1f81fb3242e1e283c684e4698a38fc524233fc96",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

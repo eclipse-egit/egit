@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_3875643f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-22T21:50:50Z",
+      "side": 0,
+      "message": "Inherited newly from ResourceState.",
+      "revId": "25cfe1c0b4d3fca62594b13777898bdf871e6e3f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_1870a04e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-22T21:50:50Z",
+      "side": 0,
+      "message": "Code moved to ResourceStateFactory.",
+      "revId": "25cfe1c0b4d3fca62594b13777898bdf871e6e3f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
