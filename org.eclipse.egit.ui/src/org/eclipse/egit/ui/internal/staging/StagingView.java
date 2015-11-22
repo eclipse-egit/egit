@@ -191,6 +191,7 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IURIEditorInput;
 import org.eclipse.ui.IViewSite;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
@@ -2084,9 +2085,11 @@ public class StagingView extends ViewPart implements IShowInSource {
 				}
 				menuMgr.add(new Separator());
 				menuMgr.add(createShowInMenu());
+				menuMgr.add(
+						new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 			}
 		});
-
+		getSite().registerContextMenu(menuMgr, treeViewer);
 	}
 
 	private boolean anyElementIsExistingFile(IStructuredSelection s) {
