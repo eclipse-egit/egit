@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_b8809499",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/factories/GitAdapterFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-11-22T22:25:49Z",
+      "side": 1,
+      "message": "what\u0027s the advantage to use IFileStore to get the file ?",
+      "revId": "bac8c9b927eb15b5b11c1dc490c7bbdbb8a1a3d4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
