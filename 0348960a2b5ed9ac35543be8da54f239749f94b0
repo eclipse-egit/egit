@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_f8fe9c75",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/AdapterUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-22T13:44:55Z",
+      "side": 1,
+      "message": "Not good. Should be\n\n  if (adapter !\u003d null || object instanceof PlatformObject) {\n\nCompare org.eclipse.core.runtime.Adapters (since 3.8 only, unfortunately).",
+      "revId": "0348960a2b5ed9ac35543be8da54f239749f94b0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
