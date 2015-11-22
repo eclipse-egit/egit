@@ -16,11 +16,15 @@ package org.eclipse.egit.ui.internal.factories;
 import java.io.File;
 import java.net.URI;
 
+import org.eclipse.core.filesystem.EFS;
+import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.mapping.ResourceMapping;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdapterFactory;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -149,10 +153,14 @@ public class GitAdapterFactory implements IAdapterFactory {
 			return null;
 		}
 		try {
-			return new File(uri);
-		} catch (IllegalArgumentException e) {
-			return null;
+			IFileStore store = EFS.getStore(uri);
+			if (store != null) {
+				return store.toLocalFile(EFS.NONE, new NullProgressMonitor());
+			}
+		} catch (CoreException ce) {
+			// ignore
 		}
+		return null;
 	}
 
 	@Override
