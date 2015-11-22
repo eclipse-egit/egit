@@ -41,7 +41,10 @@ public class AdapterUtils {
 			return target.cast(object);
 		}
 		if (object instanceof IAdaptable) {
-			return Utils.getAdapter(((IAdaptable) object), target);
+			V adapter = Utils.getAdapter(((IAdaptable) object), target);
+			if (adapter != null) {
+				return adapter;
+			}
 		}
 		Object adapted = Platform.getAdapterManager().getAdapter(object, target);
 		return target.cast(adapted);
