@@ -16,6 +16,24 @@
       "revId": "0348960a2b5ed9ac35543be8da54f239749f94b0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_98175050",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/AdapterUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-22T15:31:04Z",
+      "side": 1,
+      "message": "A-ha!. Thanks, fixed.",
+      "parentUuid": "67ccbf7d_f8fe9c75",
+      "revId": "0348960a2b5ed9ac35543be8da54f239749f94b0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
