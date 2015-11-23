@@ -413,32 +413,32 @@ class TestDecoratableResource extends DecoratableResource {
 	}
 
 	public TestDecoratableResource tracked() {
-		this.tracked = true;
+		setTracked(true);
 		return this;
 	}
 
 	public TestDecoratableResource ignored() {
-		this.ignored = true;
+		setIgnored(true);
 		return this;
 	}
 
 	public TestDecoratableResource dirty() {
-		this.dirty = true;
+		setDirty(true);
 		return this;
 	}
 
 	public TestDecoratableResource conflicts() {
-		this.conflicts = true;
+		setConflicts(true);
 		return this;
 	}
 
 	public TestDecoratableResource added() {
-		this.staged = Staged.ADDED;
+		setStagingState(StagingState.ADDED);
 		return this;
 	}
 
 	public IDecoratableResource modified() {
-		this.staged = Staged.MODIFIED;
+		setStagingState(StagingState.MODIFIED);
 		return this;
 	}
 
@@ -460,7 +460,7 @@ class TestDecoratableResource extends DecoratableResource {
 			return false;
 		if (!(decoratableResource.hasConflicts() == hasConflicts()))
 			return false;
-		if (!decoratableResource.staged().equals(staged()))
+		if (!decoratableResource.getStagingState().equals(getStagingState()))
 			return false;
 
 		return true;
@@ -474,6 +474,6 @@ class TestDecoratableResource extends DecoratableResource {
 
 	@Override
 	public String toString() {
-		return "TestDecoratableResourceAdapter[" + getName() + (isTracked() ? ", tracked" : "") + (isIgnored() ? ", ignored" : "") + (isDirty() ? ", dirty" : "") + (hasConflicts() ? ",conflicts" : "") + ", staged=" + staged() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$//$NON-NLS-7$//$NON-NLS-8$//$NON-NLS-9$//$NON-NLS-10$//$NON-NLS-11$
+		return "TestDecoratableResourceAdapter[" + getName() + (isTracked() ? ", tracked" : "") + (isIgnored() ? ", ignored" : "") + (isDirty() ? ", dirty" : "") + (hasConflicts() ? ",conflicts" : "") + ", staged=" + getStagingState() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$//$NON-NLS-7$//$NON-NLS-8$//$NON-NLS-9$//$NON-NLS-10$//$NON-NLS-11$
 	}
 }
