@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_785d2cc1",
+        "filename": "org.eclipse.egit.gitflow.test/src/org/eclipse/egit/gitflow/op/FeatureTrackOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-11-23T00:02:16Z",
+      "side": 1,
+      "message": "NO_TIMEOUT",
+      "range": {
+        "startLine": 24,
+        "startChar": 26,
+        "endLine": 24,
+        "endChar": 44
+      },
+      "revId": "a2bf8680f0a7dd0a6bb80de8010c38f884b41479",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_58606877",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/FeatureTrackOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-11-23T00:02:16Z",
+      "side": 1,
+      "message": "missing @since 4.2 for new api",
+      "revId": "a2bf8680f0a7dd0a6bb80de8010c38f884b41479",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_985af0c7",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-11-23T00:02:16Z",
+      "side": 1,
+      "message": "- missing @\n- should be at the end of the javadoc",
+      "revId": "a2bf8680f0a7dd0a6bb80de8010c38f884b41479",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
