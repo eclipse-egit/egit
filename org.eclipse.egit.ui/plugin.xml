@@ -5228,6 +5228,13 @@
             properties="projectsSingleRepository,projectsWithRepositories,resourcesSingleRepository,fileOrFolderInRepository,resourcesAllInRepository"
             type="java.util.Collection">
       </propertyTester>
+      <propertyTester
+            class="org.eclipse.egit.ui.internal.resources.ResourceStatePropertyTester"
+            id="org.eclipse.egit.ui.ResourceStateTester"
+            namespace="org.eclipse.egit.ui.resources.ResourceState"
+            properties="hasStagedChanges,hasUnstagedChanges,hasNotIgnoredResources"
+            type="java.util.Collection">
+      </propertyTester>
    </extension>
    <extension
          point="org.eclipse.ui.navigator.linkHelper">
