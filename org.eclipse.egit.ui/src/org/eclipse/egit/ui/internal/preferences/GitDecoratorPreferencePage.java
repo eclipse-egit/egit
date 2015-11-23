@@ -31,7 +31,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.DecorationHelper;
 import org.eclipse.egit.ui.internal.decorators.DecorationResult;
 import org.eclipse.egit.ui.internal.decorators.IDecoratableResource;
-import org.eclipse.egit.ui.internal.decorators.IDecoratableResource.Staged;
+import org.eclipse.egit.ui.internal.resources.IResourceState.Staged;
 import org.eclipse.egit.ui.internal.synchronize.mapping.GitChangeSetLabelProvider;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
