@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2013 SAP AG and others.
+ * Copyright (c) 2011, 2015 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Dariusz Luksza <dariusz@luksza.org> - add 'isSafe' implementation
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - isIgnored, isStaged, hasUnstagedChanges
  *******************************************************************************/
 package org.eclipse.egit.ui.internal;
 
@@ -17,8 +18,12 @@ import java.util.List;
 
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.internal.resources.IResourceState;
+import org.eclipse.egit.ui.internal.resources.IResourceState.Staged;
+import org.eclipse.egit.ui.internal.resources.ResourceStateFactory;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.Constants;
@@ -32,10 +37,17 @@ import org.eclipse.jgit.transport.RemoteConfig;
  * <p>
  * Supported properties:
  * <ul>
+ * <li>hasUnstagedChanges <code>true</code> if the resource is mapped to EGit
+ * and has unstaged changes</li>
+ * <li>isIgnored <code>true</code> if the resource is mapped to EGit and is
+ * ignored
  * <li>isShared <code>true</code> if the resource is mapped to EGit. EGit may
  * still affect a resource if it belongs to the workspace of some shared
  * project.</li>
- * <li>isContainer <code>true</code> if the resource is a project or a folder</li>
+ * <li>isContainer <code>true</code> if the resource is a project or a folder
+ * </li>
+ * <li>isStaged <code>true</code>if the resource is mapped to EGit and is in the
+ * index of its repository</li>
  * <li>is<em>repository state</em>
  * <ul>
  * <li>isSafe - see {@link RepositoryState#SAFE}</li>
@@ -49,15 +61,17 @@ import org.eclipse.jgit.transport.RemoteConfig;
  * <li>isRebasing - see {@link RepositoryState#REBASING}</li>
  * <li>isRebasingRebasing - see {@link RepositoryState#REBASING_REBASING}</li>
  * <li>isRebasingMerge - see {@link RepositoryState#REBASING_MERGE}</li>
- * <li>isRebasingInteractive - see {@link RepositoryState#REBASING_INTERACTIVE}</li>
+ * <li>isRebasingInteractive - see {@link RepositoryState#REBASING_INTERACTIVE}
+ * </li>
  * <li>isApply - see {@link RepositoryState#APPLY}</li>
  * <li>isBisecting - see {@link RepositoryState#BISECTING}</li>
  * </ul>
- * <li>Capabilities/properties of the current state:<ul>
- * <li>canCheckout  - see {@link RepositoryState#canCheckout()}</li>
- * <li>canAmend  - see {@link RepositoryState#canAmend()}</li>
- * <li>canCommit  - see {@link RepositoryState#canCommit()}</li>
- * <li>canResetHead  - see {@link RepositoryState#canResetHead()}</li>
+ * <li>Capabilities/properties of the current state:
+ * <ul>
+ * <li>canCheckout - see {@link RepositoryState#canCheckout()}</li>
+ * <li>canAmend - see {@link RepositoryState#canAmend()}</li>
+ * <li>canCommit - see {@link RepositoryState#canCommit()}</li>
+ * <li>canResetHead - see {@link RepositoryState#canResetHead()}</li>
  * </ul>
  * </ul>
  */
@@ -66,7 +80,8 @@ public class ResourcePropertyTester extends PropertyTester {
 	@Override
 	public boolean test(Object receiver, String property, Object[] args,
 			Object expectedValue) {
-		boolean value = internalTest(receiver, property);
+		boolean value = internalTest(
+				AdapterUtils.adapt(receiver, IResource.class), property);
 		boolean trace = GitTraceLocation.PROPERTIESTESTER.isActive();
 		if (trace)
 			GitTraceLocation
@@ -89,7 +104,18 @@ public class ResourcePropertyTester extends PropertyTester {
 				.getProject());
 		if (mapping != null) {
 			Repository repository = mapping.getRepository();
-			return testRepositoryState(repository, property);
+			if ("isStaged".equals(property)) { //$NON-NLS-1$
+				return ResourceStateFactory.getInstance().get(res)
+						.staged() != Staged.NOT_STAGED;
+			} else if ("isIgnored".equals(property)) { //$NON-NLS-1$
+				return ResourceStateFactory.getInstance().get(res).isIgnored();
+			} else if ("hasUnstagedChanges".equals(property)) { //$NON-NLS-1$
+				IResourceState state = ResourceStateFactory.getInstance()
+						.get(res);
+				return !state.isTracked() || state.isDirty();
+			} else {
+				return testRepositoryState(repository, property);
+			}
 		}
 		return false;
 	}
