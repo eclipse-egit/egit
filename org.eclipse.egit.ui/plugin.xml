@@ -84,27 +84,6 @@
                menubarPath="compareWithMenu/gitCompareWithGroup2">
          </action>
          <action
-               class="org.eclipse.egit.ui.internal.actions.IgnoreAction"
-               definitionId="org.eclipse.egit.ui.team.Ignore"
-               icon="$nl$/icons/obj16/ignore.gif"
-               id="org.eclipse.egit.ui.internal.actions.IgnoreAction"
-               label="%IgnoreAction_label"
-               menubarPath="team.main/group8"/>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.RemoveFromIndexAction"
-               definitionId="org.eclipse.egit.ui.team.RemoveFromIndex"
-               icon="$nl$/icons/obj16/unstage.gif"
-               id="org.eclipse.egit.ui.internal.actions.RemoveFromIndexAction"
-               label="%RemoveFromIndexAction_label"
-               menubarPath="team.main/group8"/>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.AddToIndexAction"
-               definitionId="org.eclipse.egit.ui.team.AddToIndex"
-               icon="$nl$/icons/obj16/add.gif"
-               id="org.eclipse.egit.ui.internal.actions.AddToIndexAction"
-               label="%AddToIndexAction_label"
-               menubarPath="team.main/group8"/>
-         <action
                class="org.eclipse.egit.ui.internal.actions.ReplaceWithPreviousAction"
                enablesFor="1"
                id="org.eclipse.egit.ui.internal.actions.ReplaceWithPreviousAction"
@@ -1388,6 +1367,77 @@
                            value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode">
                      </instanceof>
                   </or>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.eclipse.egit.ui.internal.actions.AddToIndexActionHandler"
+            commandId="org.eclipse.egit.ui.team.AddToIndex">
+         <activeWhen>
+            <and>
+               <test
+                     property="GitSelection.resourcesSingleRepository">
+               </test>
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <and>
+                     <instanceof
+                           value="org.eclipse.core.resources.IResource">
+                     </instanceof>
+                     <test
+                           property="GitResource.hasUnstagedChanges">
+                     </test>
+                  </and>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.eclipse.egit.ui.internal.actions.RemoveFromIndexActionHandler"
+            commandId="org.eclipse.egit.ui.team.RemoveFromIndex">
+         <activeWhen>
+            <and>
+               <test
+                     property="GitSelection.resourcesSingleRepository">
+               </test>
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <and>
+                     <instanceof
+                           value="org.eclipse.core.resources.IResource">
+                     </instanceof>
+                     <test
+                           property="GitResource.isStaged">
+                     </test>
+                  </and>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.eclipse.egit.ui.internal.actions.IgnoreActionHandler"
+            commandId="org.eclipse.egit.ui.team.Ignore">
+         <activeWhen>
+            <and>
+               <test
+                     property="GitSelection.resourcesSingleRepository">
+               </test>
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <and>
+                     <instanceof
+                           value="org.eclipse.core.resources.IResource">
+                     </instanceof>
+                     <not>
+                        <test
+                              property="GitResource.isIgnored">
+                        </test>
+                     </not>
+                  </and>
                </iterate>
             </and>
          </activeWhen>
@@ -4393,6 +4443,87 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
+            locationURI="popup:team.main?after=group8">
+         <command
+               commandId="org.eclipse.egit.ui.team.AddToIndex"
+               label="%AddToIndexAction_label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <test
+                        property="GitSelection.resourcesSingleRepository">
+                  </test>
+                  <iterate
+                        ifEmpty="false"
+                        operator="or">
+                     <and>
+                        <instanceof
+                              value="org.eclipse.core.resources.IResource">
+                        </instanceof>
+                        <test
+                              property="GitResource.hasUnstagedChanges">
+                        </test>
+                     </and>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.team.RemoveFromIndex"
+               label="%RemoveFromIndexAction_label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <test
+                        property="GitSelection.resourcesSingleRepository">
+                  </test>
+                  <iterate
+                        ifEmpty="false"
+                        operator="or">
+                     <and>
+                        <instanceof
+                              value="org.eclipse.core.resources.IResource">
+                        </instanceof>
+                        <test
+                              property="GitResource.isStaged">
+                        </test>
+                     </and>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.team.Ignore"
+               label="%IgnoreAction_label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <test
+                        property="GitSelection.resourcesSingleRepository">
+                  </test>
+                  <iterate
+                        ifEmpty="false"
+                        operator="or">
+                     <and>
+                        <instanceof
+                              value="org.eclipse.core.resources.IResource">
+                        </instanceof>
+                        <not>
+                           <test
+                                 property="GitResource.isIgnored">
+                           </test>
+                        </not>
+                     </and>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
             locationURI="popup:compareWithMenu?after=gitCompareWithGroup">
          <command
                commandId="org.eclipse.egit.ui.team.CompareIndexWithHead"
@@ -5071,6 +5202,10 @@
       <image
             commandId="org.eclipse.egit.ui.team.AddToIndex"
             icon="icons/obj16/add.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.RemoveFromIndex"
+            icon="icons/obj16/unstage.gif">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Branch"
