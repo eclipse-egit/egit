@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_8fa29d29",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4451,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-24T21:54:01Z",
+      "side": 1,
+      "message": "handlers above and commands here are repeating same conditions if I\u0027ve got it right.\n\nWhy do we need extra handler definitions at all? We can just specify default handlers for command and keep only conditions on commands.",
+      "revId": "828e2cfe3e015e482f010c099bf98141ac7d33c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_0f8e8db8",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4459,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-24T21:54:01Z",
+      "side": 1,
+      "message": "Honestly speaking I don\u0027t know if this \"or\" must be specified  here at all?",
+      "range": {
+        "startLine": 4459,
+        "startChar": 23,
+        "endLine": 4459,
+        "endChar": 37
+      },
+      "revId": "828e2cfe3e015e482f010c099bf98141ac7d33c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_ef9249d9",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4461,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-24T21:54:01Z",
+      "side": 1,
+      "message": "why do we want restrict the command to IResource elements only? What about external files in the repo view?\nI would assume that the call to hasUnstagedChanges could decide if the given object is of supported type?",
+      "range": {
+        "startLine": 4461,
+        "startChar": 25,
+        "endLine": 4461,
+        "endChar": 35
+      },
+      "revId": "828e2cfe3e015e482f010c099bf98141ac7d33c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
