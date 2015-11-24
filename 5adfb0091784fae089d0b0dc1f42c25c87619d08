@@ -22,6 +22,30 @@
       "revId": "5adfb0091784fae089d0b0dc1f42c25c87619d08",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_cfcf4525",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-24T21:08:18Z",
+      "side": 1,
+      "message": "Ha. Don\u0027t ask me what I smoked please.",
+      "parentUuid": "67ccbf7d_cfd90521",
+      "range": {
+        "startLine": 312,
+        "startChar": 29,
+        "endLine": 312,
+        "endChar": 33
+      },
+      "revId": "5adfb0091784fae089d0b0dc1f42c25c87619d08",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
