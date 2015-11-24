@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_8f50ddad",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-24T21:42:02Z",
+      "side": 1,
+      "message": "Looking at the next changeset I\u0027m wondering why we don\u0027t introduce \n@NonNull\npublic static IResourceState get(IResource)\nand later \n@NonNull\npublic static IResourceState get(File)",
+      "revId": "3f74772d13501e40d90d530841049e34f3b94de9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_af704150",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-24T21:42:02Z",
+      "side": 1,
+      "message": "@NonNull\n\nAlso I\u0027m wondering if we want to return IResourceState.UNKNOWN constant (to be created) in case we don\u0027t get any data from extract* methods.",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 22
+      },
+      "revId": "3f74772d13501e40d90d530841049e34f3b94de9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
