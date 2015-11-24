@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_0f5ccdc4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ResourcePropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-24T21:47:36Z",
+      "side": 1,
+      "message": "This 3 if\u0027s could look nicer if we would write something like IResourceState state \u003d ResourceStateFactory.get(res);\nif(state !\u003d IResourceState.UNDEFINED){\n return state.isStaged();\n}\nor even \nif ...\nreturn ResourceStateFactory.get(res).isStaged();\nelse if ...\nreturn ResourceStateFactory.get(res).isIgnored();\nelse if ...\nreturn ResourceStateFactory.get(res).hasUnstaged();\nassuming we always get @NonNull values from the factory.",
+      "revId": "fe4003c8f55946e7347f11bc5384f3e7eb5499d3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
