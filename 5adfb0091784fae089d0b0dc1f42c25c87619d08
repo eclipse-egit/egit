@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_cfd90521",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-24T20:30:08Z",
+      "side": 1,
+      "message": "io, methinks.",
+      "range": {
+        "startLine": 312,
+        "startChar": 29,
+        "endLine": 312,
+        "endChar": 33
+      },
+      "revId": "5adfb0091784fae089d0b0dc1f42c25c87619d08",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
