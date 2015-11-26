@@ -16,6 +16,24 @@
       "revId": "fe4003c8f55946e7347f11bc5384f3e7eb5499d3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_8b67ea43",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ResourcePropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-26T06:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67ccbf7d_0f5ccdc4",
+      "revId": "fe4003c8f55946e7347f11bc5384f3e7eb5499d3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
