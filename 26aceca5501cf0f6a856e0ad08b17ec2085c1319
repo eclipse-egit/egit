@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ccbf7d_5c376708",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ResourcePropertyTester.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-11-26T21:40:09Z",
+      "side": 1,
+      "message": "s/is in/modifications have been added to/\n\na non-modified file tracked by git is also in the index but it\u0027s not staged",
+      "range": {
+        "startLine": 49,
+        "startChar": 71,
+        "endLine": 49,
+        "endChar": 76
+      },
+      "revId": "26aceca5501cf0f6a856e0ad08b17ec2085c1319",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
