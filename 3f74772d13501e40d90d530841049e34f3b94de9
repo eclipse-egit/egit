@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67ccbf7d_cb8ad26e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-26T06:00:12Z",
+      "side": 1,
+      "message": "Yes, static factory methods would be an alternative.\n\nI think ultimately it comes down to a question of programming style. I\u0027d rather not get into that discussion; we could argue for ages about the pros and cons. In other projects, I use an injection framework extensively and would inject this factory, thus this style comes naturally to me. I wouldn\u0027t even need to have that static getInstance(), just (maybe) an @singleton annotation.\n \nAlso, if we used static factory methods, we could move those over to ResourceState itself and do away with this factory class altogether. But I\u0027d like to avoid that; it lumps too many things together.\n\nAs for get(File): that\u0027s for a follow-up change. I\u0027d first like to get this done for IResource, before I start extending this to File.\n\nI\u0027ve added the get(IResource) operation in the next change; since I\u0027ve split this commit, I\u0027d like to keep this one here restricted basically to moving around code.",
+      "parentUuid": "67ccbf7d_8f50ddad",
+      "revId": "3f74772d13501e40d90d530841049e34f3b94de9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67ccbf7d_af704150",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2015-11-24T21:42:02Z",
       "side": 1,
       "message": "@NonNull\n\nAlso I\u0027m wondering if we want to return IResourceState.UNKNOWN constant (to be created) in case we don\u0027t get any data from extract* methods.",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 22
+      },
+      "revId": "3f74772d13501e40d90d530841049e34f3b94de9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_2b6fbe21",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-26T06:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67ccbf7d_af704150",
       "range": {
         "startLine": 118,
         "startChar": 8,
