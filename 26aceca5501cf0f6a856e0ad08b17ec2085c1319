@@ -22,6 +22,23 @@
       "revId": "26aceca5501cf0f6a856e0ad08b17ec2085c1319",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_f7685497",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ResourcePropertyTester.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-27T07:14:06Z",
+      "side": 1,
+      "message": "That won\u0027t work. The core framework only checks the type hierarchy but not for adaptations. Since this tester is registered only for IResource, it will never be called for other contributed elements in a navigator (for instance, the package explorer). Hence adapting here doesn\u0027t help.\n\nThe new properties must go elsewhere; probably into the SelectionPropertyTester.",
+      "revId": "26aceca5501cf0f6a856e0ad08b17ec2085c1319",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
