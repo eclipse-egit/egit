@@ -270,15 +270,19 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 		List<RefNode> nodes = new ArrayList<RefNode>();
 		try {
 			Map<String, Ref> branches = new HashMap<String, Ref>();
-			for (String refPrefix : refPrefixes)
+			for (String refPrefix : refPrefixes) {
 				branches.putAll(repo.getRefDatabase().getRefs(refPrefix));
+			}
 			for (Ref branch : branches.values()) {
-				if (branch.getLeaf().getObjectId().equals(commit))
+				ObjectId objectId = branch.getLeaf().getObjectId();
+				if (objectId != null && objectId.equals(commit)) {
 					availableBranches.add(branch);
+				}
 			}
 			RepositoryNode repoNode = new RepositoryNode(null, repo);
-			for (Ref ref : availableBranches)
+			for (Ref ref : availableBranches) {
 				nodes.add(new RefNode(repoNode, repo, ref));
+			}
 
 		} catch (IOException e) {
 			// ignore here

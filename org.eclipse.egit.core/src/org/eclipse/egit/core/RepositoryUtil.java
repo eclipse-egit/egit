@@ -191,15 +191,18 @@ public class RepositoryUtil {
 							if (checkoutEntry != null) {
 								Ref ref = repository.getRef(checkoutEntry.getToBranch());
 								if (ref != null) {
-									if (ref.getObjectId().getName()
-											.equals(commitId))
+									ObjectId objectId = ref.getObjectId();
+									if (objectId != null && objectId.getName()
+											.equals(commitId)) {
 										return checkoutEntry.getToBranch();
+									}
 									ref = repository.peel(ref);
 								}
 								if (ref != null) {
 									ObjectId id = ref.getPeeledObjectId();
-									if (id != null && id.getName().equals(commitId))
+									if (id != null && id.getName().equals(commitId)) {
 										return checkoutEntry.getToBranch();
+									}
 								}
 							}
 						}
@@ -289,7 +292,9 @@ public class RepositoryUtil {
 					Map<String, Ref> remoteBranches = repository
 							.getRefDatabase().getRefs(Constants.R_HEADS);
 					for (Ref branch : remoteBranches.values()) {
-						if (branch.getObjectId().name().equals(commitId)) {
+						ObjectId objectId = branch.getObjectId();
+						if (objectId != null
+								&& objectId.name().equals(commitId)) {
 							branchNames.add(branch.getName());
 						}
 					}
@@ -311,7 +316,9 @@ public class RepositoryUtil {
 					Map<String, Ref> remoteBranches = repository
 							.getRefDatabase().getRefs(Constants.R_REMOTES);
 					for (Ref branch : remoteBranches.values()) {
-						if (branch.getObjectId().name().equals(commitId)) {
+						ObjectId objectId = branch.getObjectId();
+						if (objectId != null
+								&& objectId.name().equals(commitId)) {
 							branchNames.add(branch.getName());
 						}
 					}
@@ -489,18 +496,25 @@ public class RepositoryUtil {
 	 */
 	public String getShortBranch(Repository repository) throws IOException {
 		Ref head = repository.getRef(Constants.HEAD);
-		if (head == null || head.getObjectId() == null)
+		if (head == null) {
 			return CoreText.RepositoryUtil_noHead;
+		}
+		ObjectId objectId = head.getObjectId();
+		if (objectId == null) {
+			return CoreText.RepositoryUtil_noHead;
+		}
 
-		if (head.isSymbolic())
+		if (head.isSymbolic()) {
 			return repository.getBranch();
+		}
 
-		String id = head.getObjectId().name();
+		String id = objectId.name();
 		String ref = mapCommitToRef(repository, id, false);
-		if (ref != null)
+		if (ref != null) {
 			return Repository.shortenRefName(ref) + ' ' + id.substring(0, 7);
-		else
+		} else {
 			return id.substring(0, 7);
+		}
 	}
 
 	/**

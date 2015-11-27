@@ -23,6 +23,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -255,11 +256,14 @@ class RefUpdateElement extends WorkbenchAdapter {
 								StyledString.DECORATIONS_STYLER);
 				} else {
 					String separator = update.isFastForward() ? ".." : "..."; //$NON-NLS-1$ //$NON-NLS-2$
+					ObjectId objectId = oldRef.getObjectId();
+					Object oldName = objectId != null
+							? objectId.abbreviate(7).name() : "?"; //$NON-NLS-1$
 					styled.append(MessageFormat.format(
 							UIText.RefUpdateElement_CommitRangeDecoration,
 							update.getNewObjectId().abbreviate(7).name(),
-							separator, oldRef.getObjectId().abbreviate(7)
-									.name()), StyledString.DECORATIONS_STYLER);
+									separator, oldName),
+							StyledString.DECORATIONS_STYLER);
 					styled.append(' ');
 					styled.append(MessageFormat.format(
 							UIText.RefUpdateElement_CommitCountDecoration,

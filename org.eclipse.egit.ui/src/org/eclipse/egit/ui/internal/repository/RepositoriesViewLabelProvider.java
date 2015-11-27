@@ -183,17 +183,20 @@ public class RepositoriesViewLabelProvider extends ColumnLabelProvider
 						RevCommit commit = rw.parseCommit(id);
 						compareString = commit.getId().name();
 					}
-				} else if (refName.equals(Constants.HEAD))
+				} else if (refName.equals(Constants.HEAD)) {
 					return getDecoratedImage(image);
-				else {
+				} else {
 					String leafname = leaf.getName();
 					if (leafname.startsWith(Constants.R_REFS)
 							&& leafname.equals(node.getRepository()
-									.getFullBranch()))
+									.getFullBranch())) {
 						return getDecoratedImage(image);
-					else if (leaf.getObjectId().equals(
-							node.getRepository().resolve(Constants.HEAD)))
+					}
+					ObjectId objectId = leaf.getObjectId();
+					if (objectId != null && objectId.equals(
+							node.getRepository().resolve(Constants.HEAD))) {
 						return getDecoratedImage(image);
+					}
 					// some other symbolic reference
 					return image;
 				}
