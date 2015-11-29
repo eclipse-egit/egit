@@ -156,9 +156,9 @@ public class GitAdapterFactory implements IAdapterFactory {
 				return root.getFile(rootRelativePath);
 			}
 		} catch (CoreException e) {
-			// Ignore and return null below
+			// Ignore and fall through
 		}
-		return null;
+		return root.getFile(gitPath);
 	}
 
 	@Nullable
