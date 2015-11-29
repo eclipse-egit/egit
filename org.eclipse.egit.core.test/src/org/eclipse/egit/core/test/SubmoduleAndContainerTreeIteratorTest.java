@@ -26,6 +26,7 @@ import org.eclipse.jgit.junit.RepositoryTestCase;
 import org.eclipse.jgit.lib.Constants;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class SubmoduleAndContainerTreeIteratorTest {
@@ -93,8 +94,10 @@ public class SubmoduleAndContainerTreeIteratorTest {
 		testUtils.deleteTempDirs();
 	}
 
+	@Ignore("See last comments on https://git.eclipse.org/r/50372/")
 	@Test
-	public void testCleanStateAfterInit() throws NoWorkTreeException,
+	public void testCleanStateAfterInit()
+			throws NoWorkTreeException,
 			GitAPIException {
 		Git parentGit = Git.wrap(parentRepository.getRepository());
 
@@ -102,6 +105,7 @@ public class SubmoduleAndContainerTreeIteratorTest {
 		assertTrue(status.isClean());
 	}
 
+	@Ignore("See last comments on https://git.eclipse.org/r/50372/")
 	@Test
 	public void testCleanStateFirstCommit() throws NoWorkTreeException,
 			GitAPIException, IOException, CoreException, InterruptedException {
