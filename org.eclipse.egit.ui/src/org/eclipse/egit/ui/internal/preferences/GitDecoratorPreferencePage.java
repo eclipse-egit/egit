@@ -1107,6 +1107,11 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		}
 
 		@Override
+		public boolean isMissing() {
+			return false;
+		}
+
+		@Override
 		public StagingState getStagingState() {
 			return staged;
 		}
