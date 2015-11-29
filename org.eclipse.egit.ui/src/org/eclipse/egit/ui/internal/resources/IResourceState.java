@@ -58,6 +58,14 @@ public interface IResourceState {
 	boolean isDirty();
 
 	/**
+	 * Returns whether or not the resource has been deleted locally (unstaged
+	 * deletion).
+	 *
+	 * @return whether or not the resource is missing
+	 */
+	boolean isMissing();
+
+	/**
 	 * Returns the {@link StagingState} of the resource.
 	 *
 	 * @return the state of the resource

@@ -20,9 +20,14 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.resources;
 
-import static org.eclipse.jgit.lib.Repository.stripWorkDir;
-
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,19 +35,29 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
-import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.resources.IResourceState.StagingState;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 
 /**
  * Factory for creating {@link IResourceState}s.
  */
 public class ResourceStateFactory {
+
+	/**
+	 * {@link IResourceState} returned when no information can be retrieved. All
+	 * boolean getters return {@code false}, and the
+	 * {@link IResourceState.StagingState StagingState} is
+	 * {@link IResourceState.StagingState#NOT_STAGED NOT_STAGED}.
+	 */
+	@NonNull
+	public static final IResourceState UNKNOWN_STATE = new ResourceState();
 
 	@NonNull
 	private static final ResourceStateFactory INSTANCE = new ResourceStateFactory();
@@ -59,8 +74,7 @@ public class ResourceStateFactory {
 
 	/**
 	 * Returns the {@link IndexDiffData} for a given {@link IResource}, provided
-	 * the resource is not a phantom resource and belongs to a git-racked
-	 * project.
+	 * the resource exists and belongs to a git-tracked project.
 	 *
 	 * @param resource
 	 *            context to get the repository to get the index diff data from
@@ -71,41 +85,75 @@ public class ResourceStateFactory {
 		if (resource == null || resource.getType() == IResource.ROOT) {
 			return null;
 		}
-
-		// Don't decorate non-existing resources
-		if (!resource.exists() && !resource.isPhantom()) {
+		IPath path = resource.getLocation();
+		if (path == null) {
 			return null;
 		}
+		return getIndexDiffDataOrNull(path.toFile());
+	}
 
-		// Make sure we're dealing with a project under Git revision control
-		final RepositoryMapping mapping = RepositoryMapping
-				.getMapping(resource);
-		if (mapping == null) {
+	/**
+	 * Returns the {@link IndexDiffData} for a given {@link File}, provided the
+	 * file is in a git repository working tree.
+	 *
+	 * @param file
+	 *            context to get the repository to get the index diff data from
+	 * @return the IndexDiffData, or {@code null} if none.
+	 */
+	@Nullable
+	public IndexDiffData getIndexDiffDataOrNull(@Nullable File file) {
+		if (file == null) {
 			return null;
 		}
-
-		Repository repo = mapping.getRepository();
-		if (repo == null) {
+		File absoluteFile = file.getAbsoluteFile();
+		Repository repository = Activator.getDefault().getRepositoryCache()
+				.getRepository(new org.eclipse.core.runtime.Path(
+						absoluteFile.getPath()));
+		if (repository == null) {
 			return null;
-		}
-
-		// For bare repository just return empty data
-		if (repo.isBare()) {
+		} else if (repository.isBare()) {
+			// For bare repository just return empty data
 			return new IndexDiffData();
 		}
-
-		// Cannot decorate linked resources
-		if (mapping.getRepoRelativePath(resource) == null) {
-			return null;
-		}
-
-		IndexDiffCacheEntry diffCacheEntry = org.eclipse.egit.core.Activator
-				.getDefault().getIndexDiffCache().getIndexDiffCacheEntry(repo);
+		IndexDiffCacheEntry diffCacheEntry = Activator.getDefault()
+				.getIndexDiffCache().getIndexDiffCacheEntry(repository);
 		if (diffCacheEntry == null) {
 			return null;
 		}
 		return diffCacheEntry.getIndexDiff();
 
+	}
+
+	/**
+	 * Determines the repository state of the given {@link IResource}.
+	 *
+	 * @param resource
+	 *            to get the state for
+	 * @return the state, {@link #UNKNOWN_STATE} if none can be determined.
+	 */
+	@NonNull
+	public IResourceState get(@Nullable IResource resource) {
+		IndexDiffData indexDiffData = getIndexDiffDataOrNull(resource);
+		if (indexDiffData == null || resource == null) {
+			return UNKNOWN_STATE;
+		}
+		return get(indexDiffData, resource);
+	}
+
+	/**
+	 * Determines the repository state of the given {@link File}.
+	 *
+	 * @param file
+	 *            to get the state for
+	 * @return the state, {@link #UNKNOWN_STATE} if none can be determined.
+	 */
+	@NonNull
+	public IResourceState get(@Nullable File file) {
+		IndexDiffData indexDiffData = getIndexDiffDataOrNull(file);
+		if (indexDiffData == null || file == null) {
+			return UNKNOWN_STATE;
+		}
+		return get(indexDiffData, file);
 	}
 
 	/**
@@ -121,34 +169,81 @@ public class ResourceStateFactory {
 	@NonNull
 	public IResourceState get(@NonNull IndexDiffData indexDiffData,
 			@NonNull IResource resource) {
+		IPath path = resource.getLocation();
+		if (path != null) {
+			return get(indexDiffData, new ResourceItem(resource));
+		}
+		return UNKNOWN_STATE;
+	}
+
+	/**
+	 * Computes an {@link IResourceState} for the given {@link File} from the
+	 * given {@link IndexDiffData}.
+	 *
+	 * @param indexDiffData
+	 *            to compute the state from
+	 * @param file
+	 *            to get the state of
+	 * @return the state
+	 */
+	@NonNull
+	public IResourceState get(@NonNull IndexDiffData indexDiffData,
+			@NonNull File file) {
+		return get(indexDiffData, new FileItem(file));
+	}
+
+	/**
+	 * Computes an {@link IResourceState} for the given {@link FileSystemItem}
+	 * from the given {@link IndexDiffData}.
+	 *
+	 * @param indexDiffData
+	 *            to compute the state from
+	 * @param file
+	 *            to get the state of
+	 * @return the state
+	 */
+	@NonNull
+	private IResourceState get(@NonNull IndexDiffData indexDiffData,
+			@NonNull FileSystemItem file) {
+		IPath path = file.getAbsolutePath();
+		if (path == null) {
+			return UNKNOWN_STATE;
+		}
+		Repository repository = Activator.getDefault().getRepositoryCache()
+				.getRepository(path);
+		if (repository == null || repository.isBare()) {
+			return UNKNOWN_STATE;
+		}
+		File workTree = repository.getWorkTree();
+		String repoRelativePath = path.makeRelativeTo(
+				new org.eclipse.core.runtime.Path(workTree.getAbsolutePath()))
+				.toString();
+		if (repoRelativePath.equals(path.toString())) {
+			// Could not be made relative.
+			return UNKNOWN_STATE;
+		}
 		ResourceState result = new ResourceState();
-		switch (resource.getType()) {
-		case IResource.FILE:
-			extractResourceProperties(indexDiffData, resource, result);
-			break;
-		case IResource.PROJECT:
-			//$FALL-THROUGH$
-		case IResource.FOLDER:
-			extractContainerProperties(indexDiffData, resource, result);
-			break;
-		default:
-			// Nothing.
+		if (file.isContainer()) {
+			if (!repoRelativePath.endsWith("/")) { //$NON-NLS-1$
+				repoRelativePath += '/';
+			}
+			if (ResourceUtil.isSymbolicLink(repository, repoRelativePath)) {
+				// The Eclipse resource model handles a symlink to a folder like
+				// the container it refers to but git status handles the symlink
+				// source like a special file.
+				extractFileProperties(indexDiffData, repoRelativePath, result);
+			} else {
+				extractContainerProperties(indexDiffData, repoRelativePath,
+						file, result);
+			}
+		} else {
+			extractFileProperties(indexDiffData, repoRelativePath, result);
 		}
 		return result;
 	}
 
-	private void extractResourceProperties(@NonNull IndexDiffData indexDiffData,
-			@NonNull IResource resource, @NonNull ResourceState state) {
-		final RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
-		if (mapping == null) {
-			return;
-		}
-		Repository repository = mapping.getRepository();
-		String repoRelativePath = makeRepositoryRelative(repository, resource);
-		if (repoRelativePath == null) {
-			return;
-		}
-		// ignored
+	private void extractFileProperties(@NonNull IndexDiffData indexDiffData,
+			@NonNull String repoRelativePath, @NonNull ResourceState state) {
 		Set<String> ignoredFiles = indexDiffData.getIgnoredNotInIndex();
 		boolean ignored = ignoredFiles.contains(repoRelativePath)
 				|| containsPrefixPath(ignoredFiles, repoRelativePath);
@@ -176,35 +271,20 @@ public class ResourceStateFactory {
 		// locally modified
 		Set<String> modified = indexDiffData.getModified();
 		state.setDirty(modified.contains(repoRelativePath));
+
+		// locally deleted
+		Set<String> missing = indexDiffData.getMissing();
+		state.setMissing(missing.contains(repoRelativePath));
 	}
 
 	private void extractContainerProperties(
-			@NonNull IndexDiffData indexDiffData, @NonNull IResource resource,
+			@NonNull IndexDiffData indexDiffData,
+			@NonNull String repoRelativePath, @NonNull FileSystemItem directory,
 			@NonNull ResourceState state) {
-		final RepositoryMapping mapping = RepositoryMapping
-				.getMapping(resource);
-		if (mapping == null) {
-			return;
-		}
-		Repository repository = mapping.getRepository();
-		if (repository == null) {
-			return;
-		}
-		String repoRelative = makeRepositoryRelative(repository, resource);
-		if (repoRelative == null) {
-			return;
-		}
-		String repoRelativePath = repoRelative + "/"; //$NON-NLS-1$
-
-		if (ResourceUtil.isSymbolicLink(repository, repoRelativePath)) {
-			extractResourceProperties(indexDiffData, resource, state);
-			return;
-		}
-
 		Set<String> ignoredFiles = indexDiffData.getIgnoredNotInIndex();
 		Set<String> untrackedFolders = indexDiffData.getUntrackedFolders();
 		boolean ignored = containsPrefixPath(ignoredFiles, repoRelativePath)
-				|| !hasContainerAnyFiles(resource);
+				|| !directory.hasContainerAnyFiles();
 		state.setIgnored(ignored);
 		state.setTracked(!ignored
 				&& !containsPrefixPath(untrackedFolders, repoRelativePath));
@@ -232,20 +312,6 @@ public class ResourceStateFactory {
 				|| containsPrefix(missing, repoRelativePath));
 	}
 
-	@Nullable
-	private String makeRepositoryRelative(Repository repository,
-			IResource res) {
-		IPath location = res.getLocation();
-		if (location == null) {
-			return null;
-		}
-		if (repository.isBare()) {
-			return null;
-		}
-		File workTree = repository.getWorkTree();
-		return stripWorkDir(workTree, location.toFile());
-	}
-
 	private boolean containsPrefix(Set<String> collection, String prefix) {
 		// when prefix is empty we are handling repository root, therefore we
 		// should return true whenever collection isn't empty
@@ -271,28 +337,137 @@ public class ResourceStateFactory {
 		return false;
 	}
 
-	private boolean hasContainerAnyFiles(IResource resource) {
-		if (resource instanceof IContainer) {
-			IContainer container = (IContainer) resource;
+	private interface FileSystemItem {
+		boolean hasContainerAnyFiles();
+
+		boolean isContainer();
+
+		@Nullable
+		IPath getAbsolutePath();
+	}
+
+	private static class FileItem implements FileSystemItem {
+
+		@NonNull
+		private final File file;
+
+		public FileItem(@NonNull File file) {
+			this.file = file;
+		}
+
+		@Override
+		@NonNull
+		public IPath getAbsolutePath() {
+			return new org.eclipse.core.runtime.Path(file.getAbsolutePath());
+		}
+
+		@Override
+		public boolean isContainer() {
+			return file.isDirectory();
+		}
+
+		@Override
+		public boolean hasContainerAnyFiles() {
+			if (!isContainer()) {
+				throw new IllegalArgumentException("Container expected"); //$NON-NLS-1$
+			}
 			try {
-				return anyFile(container.members());
-			} catch (CoreException e) {
+				final boolean[] result = new boolean[] { false };
+				final Path dotGit = Paths.get(Constants.DOT_GIT);
+				Files.walkFileTree(file.toPath(), new FileVisitor<Path>() {
+					@Override
+					public FileVisitResult preVisitDirectory(Path dir,
+							BasicFileAttributes attrs) throws IOException {
+						if (dotGit.equals(dir.getFileName())) {
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+						return FileVisitResult.CONTINUE;
+					}
+
+					@Override
+					public FileVisitResult visitFile(Path path,
+							BasicFileAttributes attrs) throws IOException {
+						if (!attrs.isDirectory()) {
+							result[0] = true;
+							return FileVisitResult.TERMINATE;
+						}
+						return FileVisitResult.CONTINUE;
+					}
+
+					@Override
+					public FileVisitResult visitFileFailed(Path path,
+							IOException exc) throws IOException {
+						return FileVisitResult.CONTINUE;
+					}
+
+					@Override
+					public FileVisitResult postVisitDirectory(Path dir,
+							IOException exc) throws IOException {
+						return FileVisitResult.CONTINUE;
+					}
+				});
+				return result[0];
+			} catch (IOException e) {
 				// if can't get any info, treat as with file
 				return true;
 			}
 		}
-		throw new IllegalArgumentException("Expected a container resource."); //$NON-NLS-1$
 	}
 
-	private boolean anyFile(IResource[] members) {
-		for (IResource member : members) {
-			if (member.getType() == IResource.FILE)
-				return true;
-			else if (member.getType() == IResource.FOLDER)
-				if (hasContainerAnyFiles(member))
-					return true;
+	private static class ResourceItem implements FileSystemItem {
+
+		@NonNull
+		private final IResource resource;
+
+		public ResourceItem(@NonNull IResource resource) {
+			this.resource = resource;
 		}
-		return false;
-	}
 
+		@Override
+		@Nullable
+		public IPath getAbsolutePath() {
+			return resource.getLocation();
+		}
+
+		@Override
+		public boolean isContainer() {
+			return isContainer(resource);
+		}
+
+		@Override
+		public boolean hasContainerAnyFiles() {
+			return containsFiles(resource);
+		}
+
+		private boolean isContainer(IResource rsc) {
+			int type = rsc.getType();
+			return type == IResource.FOLDER || type == IResource.PROJECT
+					|| type == IResource.ROOT;
+		}
+
+		private boolean containsFiles(IResource rsc) {
+			if (rsc instanceof IContainer) {
+				IContainer container = (IContainer) rsc;
+				try {
+					return anyFile(container.members());
+				} catch (CoreException e) {
+					// if can't get any info, treat as with file
+					return true;
+				}
+			}
+			throw new IllegalArgumentException(
+					"Expected a container resource."); //$NON-NLS-1$
+		}
+
+		private boolean anyFile(IResource[] members) {
+			for (IResource member : members) {
+				if (member.getType() == IResource.FILE) {
+					return true;
+				} else if (isContainer(member) && containsFiles(member)) {
+					return true;
+				}
+			}
+			return false;
+		}
+	}
 }
