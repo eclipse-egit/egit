@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "67ccbf7d_5e40345e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/IResourceState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-30T07:46:21Z",
+      "side": 1,
+      "message": "OK.",
+      "parentUuid": "67ccbf7d_bef780c5",
+      "revId": "357cef4989ccec7525b05e7b0e9e164b700b637f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67ccbf7d_1c3ddfea",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/IResourceState.java",
         "patchSetId": 5
@@ -120,6 +138,30 @@
       "side": 1,
       "message": "Just \"State\" is too general IMO. Probably simply renaming this method to \"getStaged\" is good enough. Or rename the enum to \"StagingState\" and then \"getStagingState\", but that is a bit cumbersome.",
       "parentUuid": "67ccbf7d_43e93b77",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 14
+      },
+      "revId": "357cef4989ccec7525b05e7b0e9e164b700b637f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_3e3d30eb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/IResourceState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-11-30T07:46:21Z",
+      "side": 1,
+      "message": "StagingState sounds OK. getStagingState() is also OK.\nI do not like \"Staged\" and getStaged() because it implies that the result is \"staged\" but it is not, or not always :-)\n\nReading code like: if (staged() !\u003d NOT_STAGED) makes me crazy.",
+      "parentUuid": "67ccbf7d_def284d4",
       "range": {
         "startLine": 67,
         "startChar": 8,
