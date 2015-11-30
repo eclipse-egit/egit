@@ -174,6 +174,30 @@
     },
     {
       "key": {
+        "uuid": "47cfbb72_c1e842f2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/IResourceState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-30T18:35:16Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "67ccbf7d_3e3d30eb",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 14
+      },
+      "revId": "357cef4989ccec7525b05e7b0e9e164b700b637f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67ccbf7d_c3fc6b35",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceState.java",
         "patchSetId": 5
