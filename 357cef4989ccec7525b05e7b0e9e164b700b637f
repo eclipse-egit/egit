@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67ccbf7d_bef780c5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/IResourceState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-30T06:08:30Z",
+      "side": 1,
+      "message": "Not sure. This represents the staging state of a resource. How can that be unknown? Either it _is_ staged, and then it is one of modified, added, removed, or renamed, and otherwise is not staged. UNKNOWN might be the initial state, but in what way would it differ from NOT_STAGED?",
+      "parentUuid": "67ccbf7d_63ec7f88",
+      "revId": "357cef4989ccec7525b05e7b0e9e164b700b637f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67ccbf7d_1c3ddfea",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/IResourceState.java",
         "patchSetId": 5
@@ -78,6 +96,30 @@
       "side": 1,
       "message": "I would rename Staged enum to State and this method to getState().",
       "parentUuid": "67ccbf7d_683e1e78",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 14
+      },
+      "revId": "357cef4989ccec7525b05e7b0e9e164b700b637f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67ccbf7d_def284d4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/IResourceState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-11-30T06:08:30Z",
+      "side": 1,
+      "message": "Just \"State\" is too general IMO. Probably simply renaming this method to \"getStaged\" is good enough. Or rename the enum to \"StagingState\" and then \"getStagingState\", but that is a bit cumbersome.",
+      "parentUuid": "67ccbf7d_43e93b77",
       "range": {
         "startLine": 67,
         "startChar": 8,
