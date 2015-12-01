@@ -24,7 +24,9 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.SWTBotTestCase;
+import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.waits.ICondition;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotMenu;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
@@ -42,13 +44,27 @@ public class EasymportWizardTest extends SWTBotTestCase {
 		Set<IProject> initialProjects = new HashSet<>(Arrays.asList(ResourcesPlugin.getWorkspace().getRoot().getProjects()));
 		Set<IProject> newProjects = null;
 
-		bot.menu("File").menu("Import...").click();
+		final SWTBotMenu fileMenu = waitForMenu(new MenuFinder() {
+			@Override
+			public SWTBotMenu menu(String label)
+					throws WidgetNotFoundException {
+				return bot.menu(label);
+			}
+		}, "File", 30);
+		waitForMenu(new MenuFinder() {
+			@Override
+			public SWTBotMenu menu(String label)
+					throws WidgetNotFoundException {
+				return fileMenu.menu(label);
+			}
+		}, "Import...", 30).click();
 		bot.tree().expandNode("Git").select("Projects from Git (with smart import)");
 		bot.button("Next >").click();
 		bot.tree().select("Clone URI");
 		bot.button("Next >").click();
 		bot.text().setText("https://git.eclipse.org/r/jgit/jgit");
 		bot.button("Next >").click();
+		waitForNextEnabled(30); // Time to fetch branch info, up to 30sec
 		bot.button("Deselect All").click();
 		bot.tree().getTreeItem("master").check();
 		bot.button("Next >").click();
@@ -56,25 +72,12 @@ public class EasymportWizardTest extends SWTBotTestCase {
 		try {
 			bot.text().setText(tmpDir.toString());
 			bot.button("Next >").click();
-			bot.waitWhile(new ICondition() {
-
-				@Override
-				public boolean test() throws Exception {
-					return !bot.button("Next >").isEnabled();
-				}
-
-				@Override
-				public void init(SWTBot bot) {
-				}
-				@Override
-				public String getFailureMessage() {
-					return null;
-				}
-			}, 180000); // Time to clone repo, up to 3 minutes
+			waitForNextEnabled(180); // Time to clone repo, up to 3 minutes
 			bot.button("Next >").click();
 			bot.button("Finish").click();
 
 			bot.shell("Nested Projects");
+			waitForLabel("Completed", 30);
 			bot.button("OK").click();
 
 			newProjects = new HashSet<>(Arrays.asList(ResourcesPlugin.getWorkspace().getRoot().getProjects()));
@@ -97,4 +100,80 @@ public class EasymportWizardTest extends SWTBotTestCase {
 		}
 	}
 
+	private void waitForNextEnabled(final long timeoutInSec) {
+		bot.waitWhile(new ICondition() {
+			@Override
+			public boolean test() throws Exception {
+				return !bot.button("Next >").isEnabled();
+			}
+
+			@Override
+			public void init(SWTBot swtBot) {
+				// Nothing
+			}
+
+			@Override
+			public String getFailureMessage() {
+				return "Next > button not enabled within " + timeoutInSec
+						+ "sec";
+			}
+		}, timeoutInSec * 1000L);
+	}
+
+	private SWTBotMenu waitForMenu(final MenuFinder finder, final String label,
+			final long timeoutInSec) {
+		final SWTBotMenu[] menuEntry = new SWTBotMenu[] { null };
+		bot.waitUntil(new ICondition() {
+			@Override
+			public boolean test() throws Exception {
+				try {
+					menuEntry[0] = finder.menu(label);
+					return true;
+				} catch (WidgetNotFoundException e) {
+					return false;
+				}
+			}
+
+			@Override
+			public void init(SWTBot swtBot) {
+				// Nothing
+			}
+
+			@Override
+			public String getFailureMessage() {
+				return "Menu '" + label + "' not found in " + timeoutInSec
+						+ "sec";
+			}
+		}, timeoutInSec * 1000L);
+		return menuEntry[0];
+	}
+
+	private void waitForLabel(final String label, final long timeoutInSec) {
+		bot.waitUntil(new ICondition() {
+			@Override
+			public boolean test() throws Exception {
+				try {
+					bot.label(label);
+					return true;
+				} catch (WidgetNotFoundException e) {
+					return false;
+				}
+			}
+
+			@Override
+			public void init(SWTBot swtBot) {
+				// Nothing
+			}
+
+			@Override
+			public String getFailureMessage() {
+				return "Label '" + label + "' not found in " + timeoutInSec
+						+ "sec";
+			}
+		}, timeoutInSec * 1000L);
+	}
+
+	private interface MenuFinder {
+		SWTBotMenu menu(String label) throws WidgetNotFoundException;
+	}
 }
