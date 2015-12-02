@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "47cfbb72_3b5677db",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-02T09:26:09Z",
+      "side": 1,
+      "message": "No. That one didn\u0027t happen locally, so I\u0027ve got no idea why it occurs from time to time on Hudson. My \"fix\" is just to wait a little until that menu entry is there, but I agree that this isn\u0027t quite so nice. Maybe you\u0027re right about the shell activation...",
+      "parentUuid": "47cfbb72_db94ab17",
+      "revId": "7dd9b4de9e29cbd30be3f98f9ce3d28786d65863",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47cfbb72_7b79df6b",
         "filename": "org.eclipse.egit.ui.importer.tests/src/org/eclipse/egit/ui/importer/tests/EasymportWizardTest.java",
         "patchSetId": 1
