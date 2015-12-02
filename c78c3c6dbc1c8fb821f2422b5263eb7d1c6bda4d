@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47cfbb72_1bdd3300",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-02T09:09:33Z",
+      "side": 1,
+      "message": "Wrong. Old code did handle work tree root.",
+      "range": {
+        "startLine": 198,
+        "startChar": 6,
+        "endLine": 198,
+        "endChar": 32
+      },
+      "revId": "c78c3c6dbc1c8fb821f2422b5263eb7d1c6bda4d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47cfbb72_9bace377",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-02T09:09:33Z",
+      "side": 1,
+      "message": "Append slash here: old code also did this before calling isSymbolicLink.",
+      "revId": "c78c3c6dbc1c8fb821f2422b5263eb7d1c6bda4d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47cfbb72_1b15336f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-02T09:09:33Z",
+      "side": 1,
+      "message": "Note to self: should be\n\n  Paths.get(Constants.DOT_GIT).equals(dir.getFileName())\n\nand constructing the Path from DOT_GIT should be factored out of the visitor.",
+      "revId": "c78c3c6dbc1c8fb821f2422b5263eb7d1c6bda4d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47cfbb72_7b5f1f46",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-02T09:09:33Z",
+      "side": 1,
+      "message": "Strange Eclipse formatting...",
+      "revId": "c78c3c6dbc1c8fb821f2422b5263eb7d1c6bda4d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47cfbb72_fbba4fa4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-02T09:09:33Z",
+      "side": 1,
+      "message": "Old code (see line 280 left) returned true in this case.",
+      "revId": "c78c3c6dbc1c8fb821f2422b5263eb7d1c6bda4d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
