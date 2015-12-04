@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27d6470d_6aa2e884",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/factories/GitAdapterFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-04T21:09:02Z",
+      "side": 1,
+      "message": "This is the former behavior. It doesn\u0027t make much sense, but at least files in the working tree that are not in the workspace do get an icon in the Staging View. If we return null here, they are listed, but don\u0027t get an icon.\n\nAnyway, as I wrote in the commit message, the Staging View appears to be pretty much broken for non-workspace files.",
+      "revId": "8da6eaf8cb7737e66071aaa29c60920f65f02eba",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
