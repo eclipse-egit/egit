@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27d6470d_3da748c6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/factories/GitAdapterFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-05T19:30:35Z",
+      "side": 1,
+      "message": "I don\u0027t think we\u0027ll need such a construction anywhere else. For existing resources, there\u0027s already resourceUtil.getFileForLocation(). This operation here handles the case of deleted resources, and apart from the Synchronize View (and thus GitModelObjects), where else would we expect that? The staging view doesn\u0027t need it; it already can deal with deletions fine.",
+      "parentUuid": "27d6470d_fd7240d3",
+      "revId": "e379469f5063e705e9e8fa273fd2a5b84923b380",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27d6470d_3d3ca8ee",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/factories/GitAdapterFactory.java",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2015-12-05T19:01:24Z",
       "side": 1,
       "message": "project*s*",
+      "range": {
+        "startLine": 149,
+        "startChar": 14,
+        "endLine": 149,
+        "endChar": 21
+      },
+      "revId": "e379469f5063e705e9e8fa273fd2a5b84923b380",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_5dac0ca8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/factories/GitAdapterFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-05T19:30:35Z",
+      "side": 1,
+      "message": "I know it could be several. The first one will be the closest, and we\u0027re only interested in that.\n\nBut I\u0027ll rename.",
+      "parentUuid": "27d6470d_3d3ca8ee",
       "range": {
         "startLine": 149,
         "startChar": 14,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "27d6470d_1d47e472",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/factories/GitAdapterFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-05T19:30:35Z",
+      "side": 1,
+      "message": "In either case we just need to turn a single string into a collection of one string here. Personally, I prefer the Collections.singleton* operations for that, and reserve Arrays.asList for cases where I really want to convert an array into a list.",
+      "parentUuid": "27d6470d_7d36300e",
+      "range": {
+        "startLine": 150,
+        "startChar": 5,
+        "endLine": 150,
+        "endChar": 26
+      },
+      "revId": "e379469f5063e705e9e8fa273fd2a5b84923b380",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27d6470d_1d70c4c9",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/factories/GitAdapterFactory.java",
         "patchSetId": 3
@@ -76,6 +142,30 @@
       "writtenOn": "2015-12-05T19:01:24Z",
       "side": 1,
       "message": "never null (we should annotate it in the ProjectUtil)",
+      "range": {
+        "startLine": 151,
+        "startChar": 7,
+        "endLine": 151,
+        "endChar": 22
+      },
+      "revId": "e379469f5063e705e9e8fa273fd2a5b84923b380",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_7db1d0fa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/factories/GitAdapterFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-05T19:30:35Z",
+      "side": 1,
+      "message": "Ok.",
+      "parentUuid": "27d6470d_1d70c4c9",
       "range": {
         "startLine": 151,
         "startChar": 7,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "27d6470d_fd496087",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/factories/GitAdapterFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-05T19:30:35Z",
+      "side": 1,
+      "message": "Not here, I think. ProjectUtil wouldn\u0027t have returned it.",
+      "parentUuid": "27d6470d_9d3bf4f3",
+      "range": {
+        "startLine": 153,
+        "startChar": 22,
+        "endLine": 153,
+        "endChar": 46
+      },
+      "revId": "e379469f5063e705e9e8fa273fd2a5b84923b380",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27d6470d_bd4fd88c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/factories/GitAdapterFactory.java",
         "patchSetId": 3
@@ -122,6 +236,30 @@
       "writtenOn": "2015-12-05T19:01:24Z",
       "side": 1,
       "message": "this is not needed, since one can ask project directly with the project relative path.\nreturn project.getFile(projectRelativePath);",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 42
+      },
+      "revId": "e379469f5063e705e9e8fa273fd2a5b84923b380",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_9db694f2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/factories/GitAdapterFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-05T19:30:35Z",
+      "side": 1,
+      "message": "Ok.",
+      "parentUuid": "27d6470d_bd4fd88c",
       "range": {
         "startLine": 154,
         "startChar": 4,
