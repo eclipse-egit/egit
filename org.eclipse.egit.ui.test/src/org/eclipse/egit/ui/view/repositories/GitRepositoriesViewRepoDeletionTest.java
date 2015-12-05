@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2013, 2015 Matthias Sohn <matthias.sohn@sap.com> and others.
+ * Copyright (c) 2012, 2016 Matthias Sohn <matthias.sohn@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 479964
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bugs 479964, 483664
  *******************************************************************************/
 package org.eclipse.egit.ui.view.repositories;
 
@@ -16,11 +16,15 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.SubmoduleAddCommand;
@@ -41,6 +45,8 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		GitRepositoriesViewTestBase {
 
 	private static final String DELETE_REPOSITORY_CONTEXT_MENU_LABEL = "RepoViewDeleteRepository.label";
+
+	private static final String REMOVE_REPOSITORY_FROM_VIEW_CONTEXT_MENU_LABEL = "RepoViewRemove.label";
 
 	private File repositoryFile;
 
@@ -125,6 +131,44 @@ public class GitRepositoriesViewRepoDeletionTest extends
 	}
 
 	@Test
+	public void testRemoveRepositoryRemoveFromCachesBug483664()
+			throws Exception {
+		deleteAllProjects();
+		assertProjectExistence(PROJ1, false);
+		clearView();
+		refreshAndWait();
+
+		Activator.getDefault().getRepositoryUtil()
+				.addConfiguredRepository(repositoryFile);
+		refreshAndWait();
+		assertHasRepo(repositoryFile);
+		SWTBotTree tree = getOrOpenView().bot().tree();
+		tree.getAllItems()[0].select();
+		JobJoiner joiner = JobJoiner.startListening(
+				JobFamilies.REPOSITORY_DELETE, 10, TimeUnit.SECONDS);
+		ContextMenuHelper.clickContextMenu(tree, myUtil.getPluginLocalizedValue(
+				REMOVE_REPOSITORY_FROM_VIEW_CONTEXT_MENU_LABEL));
+		refreshAndWait();
+		joiner.join();
+		assertEmpty();
+		assertTrue(repositoryFile.exists());
+		assertTrue(
+				new File(repositoryFile.getParentFile(), PROJ1).isDirectory());
+		List<String> configuredRepos = org.eclipse.egit.core.Activator
+				.getDefault().getRepositoryUtil().getConfiguredRepositories();
+		assertTrue("Expected no configured repositories",
+				configuredRepos.isEmpty());
+		Repository[] repositories = org.eclipse.egit.core.Activator.getDefault()
+				.getRepositoryCache().getAllRepositories();
+		assertTrue("Expected no cached repositories", repositories.length == 0);
+		// A pity we can't mock the cache.
+		IndexDiffCache indexDiffCache = org.eclipse.egit.core.Activator
+				.getDefault().getIndexDiffCache();
+		assertTrue("Expected no IndexDiffCache entries",
+				indexDiffCache.currentCacheEntries().isEmpty());
+	}
+
+	@Test
 	public void testDeleteSubmoduleRepository() throws Exception {
 		deleteAllProjects();
 		assertProjectExistence(PROJ1, false);
@@ -174,4 +218,5 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		assertFalse(subRepo.getDirectory().exists());
 		assertFalse(subRepo.getWorkTree().exists());
 	}
+
 }
