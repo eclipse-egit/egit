@@ -597,13 +597,24 @@ public class IndexDiffCacheEntry {
 	}
 
 	/**
-	 * Dispose cache entry by removing listeners.
+	 * Dispose cache entry by removing listeners. Pending update or reload jobs
+	 * are canceled.
 	 */
 	public void dispose() {
 		indexChangedListenerHandle.remove();
 		refsChangedListenerHandle.remove();
-		if (resourceChangeListener != null)
+		if (resourceChangeListener != null) {
 			ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
+		}
+		listeners.clear();
+		if (reloadJob != null) {
+			reloadJob.cancel();
+			reloadJob = null;
+		}
+		if (updateJob != null) {
+			updateJob.cleanupAndCancel();
+			updateJob = null;
+		}
 	}
 
 }
