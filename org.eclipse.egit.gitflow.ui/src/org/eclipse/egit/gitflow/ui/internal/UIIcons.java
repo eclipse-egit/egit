@@ -22,12 +22,16 @@ public class UIIcons {
 	/** Decoration for initialized Gitflow repository. */
 	public final static ImageDescriptor OVR_GITFLOW;
 
+	/** Menu item icon */
+	public final static ImageDescriptor GITFLOW;
+
 	/** base URL */
 	public final static URL base;
 
 	static {
 		base = init();
 		OVR_GITFLOW = map("ovr/git-flow.png"); //$NON-NLS-1$
+		GITFLOW = map("obj16/git-flow_16x10.png"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {

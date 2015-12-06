@@ -116,6 +116,14 @@
 				</command>
 			</menu>
 		</menuContribution>
+		<menuContribution
+				allPopups="false"
+				locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=group.gitflow">
+			<dynamic
+					class="org.eclipse.egit.gitflow.ui.internal.menu.DynamicInitMenu"
+					id="org.eclipse.egit.gitflow.ui.dynamic.init">
+			</dynamic>
+		</menuContribution>
 	</extension>
 	<extension
 			point="org.eclipse.ui.commands">
@@ -561,25 +569,12 @@
 			</menu>
 		</menuContribution>
 		<menuContribution
+				allPopups="false"
 				locationURI="popup:team.main?after=group11">
-			<command
-					commandId="org.eclipse.egit.gitflow.ui.command.init"
-					icon="icons/obj16/git-flow_16x10.png"
-					label="%TeamGitFlowInit.name"
-					style="push">
-				<visibleWhen
-						checkEnabled="false">
-					<and>
-						<reference definitionId="org.eclipse.egit.ui.resourcesSingleRepository" />
-						<not>
-							<test
-									forcePluginActivation="true"
-									property="GitFlowRepository.isInitialized">
-							</test>
-						</not>
-					</and>
-				</visibleWhen>
-			</command>
+			<dynamic
+					class="org.eclipse.egit.gitflow.ui.internal.menu.DynamicInitMenu"
+					id="org.eclipse.egit.gitflow.ui.dynamic.init">
+			</dynamic>
 		</menuContribution>
 	</extension>
 	<extension
