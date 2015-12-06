@@ -283,9 +283,17 @@ public class DateFormatPreferencePage extends FieldEditorPreferencePage
 
 	private static TimeZone getDifferentTimeZone() {
 		TimeZone localTimeZone = TimeZone.getDefault();
-		int offset = (localTimeZone.getRawOffset() / 3600 / 1000 - 6) * 3600
-				* 1000; // 6h to the West, full hour
-		return TimeZone.getTimeZone(TimeZone.getAvailableIDs(offset)[0]);
+		int offset = (localTimeZone.getRawOffset() / 3600 / 1000 - 6);
+		// 6h to the West, full hour. Now get back to a sane range:
+		if (offset < -12) {
+			offset += 24;
+		}
+		String[] zoneIds = TimeZone.getAvailableIDs(offset * 3600 * 1000);
+		if (zoneIds.length == 0) {
+			// Huh?
+			return localTimeZone;
+		}
+		return TimeZone.getTimeZone(zoneIds[0]);
 	}
 
 	private static final class FormatInfo {
