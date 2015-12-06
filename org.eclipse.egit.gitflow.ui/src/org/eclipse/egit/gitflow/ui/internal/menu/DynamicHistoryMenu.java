@@ -35,14 +35,9 @@ public class DynamicHistoryMenu extends ContributionItem {
 	@Override
 	public void fill(Menu menu, int index) {
 		GitFlowRepository gfRepo = getRepository();
-		try {
-			if (gfRepo == null || !gfRepo.isDevelop()) {
+		if (gfRepo == null) {
 				return;
 			}
-		} catch (IOException e) {
-			Activator.getDefault().getLog().log(Activator.error(e.getMessage()));
-			return;
-		}
 
 		RevCommit selectedCommit = getSelectedCommit();
 		if (selectedCommit == null) {
@@ -58,6 +53,14 @@ public class DynamicHistoryMenu extends ContributionItem {
 				UIText.DynamicHistoryMenu_startGitflowReleaseFrom,
 				abbreviate(selectedCommit)));
 		menuItem.addSelectionListener(listener);
+
+		try {
+			menuItem.setEnabled(!gfRepo.isDevelop());
+		} catch (IOException e) {
+			Activator.getDefault().getLog()
+					.log(Activator.error(e.getMessage()));
+			return;
+		}
 	}
 
 	private String abbreviate(RevCommit selectedCommit) {
