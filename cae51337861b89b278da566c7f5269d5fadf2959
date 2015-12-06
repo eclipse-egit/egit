@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27d6470d_9d1f7464",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/IResourceState.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-12-06T20:23:05Z",
+      "side": 1,
+      "message": "missing",
+      "range": {
+        "startLine": 64,
+        "startChar": 43,
+        "endLine": 64,
+        "endChar": 48
+      },
+      "revId": "cae51337861b89b278da566c7f5269d5fadf2959",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_409d0346",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-12-06T20:23:05Z",
+      "side": 1,
+      "message": "should it be public? In case at the caller site we want know if the returned state is not known?\nAlso I think this should be immutable.",
+      "range": {
+        "startLine": 57,
+        "startChar": 1,
+        "endLine": 57,
+        "endChar": 8
+      },
+      "revId": "cae51337861b89b278da566c7f5269d5fadf2959",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_20dd5f00",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-12-06T20:23:05Z",
+      "side": 1,
+      "message": "Here and below we should mention we return UNKNOWN_STATE if there is no index diff data available.",
+      "range": {
+        "startLine": 126,
+        "startChar": 16,
+        "endLine": 126,
+        "endChar": 21
+      },
+      "revId": "cae51337861b89b278da566c7f5269d5fadf2959",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_60892703",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-12-06T20:23:05Z",
+      "side": 1,
+      "message": "wrong type",
+      "range": {
+        "startLine": 190,
+        "startChar": 60,
+        "endLine": 190,
+        "endChar": 64
+      },
+      "revId": "cae51337861b89b278da566c7f5269d5fadf2959",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_00bbfba9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-12-06T20:23:05Z",
+      "side": 1,
+      "message": "can be moved after line 217",
+      "range": {
+        "startLine": 202,
+        "startChar": 25,
+        "endLine": 202,
+        "endChar": 42
+      },
+      "revId": "cae51337861b89b278da566c7f5269d5fadf2959",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_e0ad3771",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-12-06T20:23:05Z",
+      "side": 1,
+      "message": "UNKNOWN_STATE",
+      "range": {
+        "startLine": 207,
+        "startChar": 10,
+        "endLine": 207,
+        "endChar": 16
+      },
+      "revId": "cae51337861b89b278da566c7f5269d5fadf2959",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_20b8ffaa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-12-06T20:23:05Z",
+      "side": 1,
+      "message": "UNKNOWN_STATE",
+      "range": {
+        "startLine": 215,
+        "startChar": 10,
+        "endLine": 215,
+        "endChar": 16
+      },
+      "revId": "cae51337861b89b278da566c7f5269d5fadf2959",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_408423ec",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-12-06T20:23:05Z",
+      "side": 1,
+      "message": "why this? this deserves at least a comment",
+      "range": {
+        "startLine": 222,
+        "startChar": 4,
+        "endLine": 222,
+        "endChar": 25
+      },
+      "revId": "cae51337861b89b278da566c7f5269d5fadf2959",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_a0832fe0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-12-06T20:23:05Z",
+      "side": 1,
+      "message": "private interface is used in public method signatures. Either of two should be changed.",
+      "range": {
+        "startLine": 328,
+        "startChar": 1,
+        "endLine": 328,
+        "endChar": 8
+      },
+      "revId": "cae51337861b89b278da566c7f5269d5fadf2959",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_406fc3a5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-12-06T20:23:05Z",
+      "side": 1,
+      "message": "since resourceitem uses getLocation(), this method should be annotated as nullable and the caller code must check for null.",
+      "range": {
+        "startLine": 333,
+        "startChar": 2,
+        "endLine": 333,
+        "endChar": 7
+      },
+      "revId": "cae51337861b89b278da566c7f5269d5fadf2959",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_6074c775",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStateFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-12-06T20:23:05Z",
+      "side": 1,
+      "message": "in theory we could replace this with the code which uses getFullPath() and tries to resolve it against workspace location even if the resource does not exist (anymore).\nIf not, this is @nullable and parent interface method too.",
+      "range": {
+        "startLine": 414,
+        "startChar": 19,
+        "endLine": 414,
+        "endChar": 30
+      },
+      "revId": "cae51337861b89b278da566c7f5269d5fadf2959",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_7d1ab076",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitActionContributor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-12-06T20:23:05Z",
+      "side": 1,
+      "message": "this is never null",
+      "range": {
+        "startLine": 124,
+        "startChar": 8,
+        "endLine": 124,
+        "endChar": 20
+      },
+      "revId": "cae51337861b89b278da566c7f5269d5fadf2959",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
