@@ -214,8 +214,26 @@ public class IndexDiffCache {
 	}
 
 	/**
+	 * Removes the possibly existing {@link IndexDiffCacheEntry} entry for given
+	 * repository from cache.
+	 *
 	 * @param repository
-	 * @return cache entry
+	 */
+	public void forget(@NonNull Repository repository) {
+		synchronized (entries) {
+			IndexDiffCacheEntry cacheEntry = entries.remove(repository);
+			if (cacheEntry != null) {
+				cacheEntry.dispose();
+			}
+		}
+	}
+
+	/**
+	 * Creates and returns an entry for the index diff access if the repository
+	 * is not bare.
+	 *
+	 * @param repository
+	 * @return cache entry or null if repository is bare
 	 */
 	@Nullable
 	public IndexDiffCacheEntry getIndexDiffCacheEntry(@NonNull Repository repository) {

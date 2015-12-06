@@ -26,6 +26,7 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -169,6 +170,13 @@ public class RemoveCommand extends
 					} catch (IOException e) {
 						return Activator.createErrorStatus(e.getMessage(), e);
 					}
+				}
+				for (RepositoryNode node : selectedNodes) {
+					Repository repository = node.getRepository();
+					Assert.isNotNull(repository);
+					org.eclipse.egit.core.Activator.getDefault()
+							.getIndexDiffCache().forget(repository);
+					repository.close();
 				}
 				return Status.OK_STATUS;
 			}
