@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "27d6470d_605a0758",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/factories/GitAdapterFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-06T13:52:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27d6470d_5dac0ca8",
+      "range": {
+        "startLine": 149,
+        "startChar": 14,
+        "endLine": 149,
+        "endChar": 21
+      },
+      "revId": "e379469f5063e705e9e8fa273fd2a5b84923b380",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27d6470d_7d36300e",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/factories/GitAdapterFactory.java",
         "patchSetId": 3
@@ -178,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "27d6470d_805f0b45",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/factories/GitAdapterFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-06T13:52:13Z",
+      "side": 1,
+      "message": "Done. Annotations in ProjectUtil not done; left for a later change.",
+      "parentUuid": "27d6470d_7db1d0fa",
+      "range": {
+        "startLine": 151,
+        "startChar": 7,
+        "endLine": 151,
+        "endChar": 22
+      },
+      "revId": "e379469f5063e705e9e8fa273fd2a5b84923b380",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27d6470d_9d3bf4f3",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/factories/GitAdapterFactory.java",
         "patchSetId": 3
@@ -260,6 +308,30 @@
       "side": 1,
       "message": "Ok.",
       "parentUuid": "27d6470d_bd4fd88c",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 42
+      },
+      "revId": "e379469f5063e705e9e8fa273fd2a5b84923b380",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_a0640f16",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/factories/GitAdapterFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-06T13:52:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27d6470d_9db694f2",
       "range": {
         "startLine": 154,
         "startChar": 4,
