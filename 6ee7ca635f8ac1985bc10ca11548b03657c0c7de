@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27d6470d_fbbde81e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-07T13:09:11Z",
+      "side": 1,
+      "message": "Yepp. Those two are missing in I8c20d4e8.",
+      "revId": "6ee7ca635f8ac1985bc10ca11548b03657c0c7de",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_bbea8020",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-07T13:09:11Z",
+      "side": 1,
+      "message": "Why that? If any were null here, we\u0027d already have gotten an exception in line 164 above. In fact, even much earlier in line 98. And I don\u0027t see deleteRepositoryContent changing the nodes.",
+      "revId": "6ee7ca635f8ac1985bc10ca11548b03657c0c7de",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_fb4088bc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-07T13:09:11Z",
+      "side": 1,
+      "message": "I kind of prefer my listening solution -- our \"model\" here is RepositoryUtil, plus RepositoryCache, plus IndexDiffCache. Once we tell that model to remove a repo, the two caches should just update themselves.\n\nHowever, what I like here is the repository.close() -- that is indeed needed. Except that now repositories are closed twice if delete \u003d\u003d true. And we know (change I66aadc9) that can be problematic.",
+      "revId": "6ee7ca635f8ac1985bc10ca11548b03657c0c7de",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
