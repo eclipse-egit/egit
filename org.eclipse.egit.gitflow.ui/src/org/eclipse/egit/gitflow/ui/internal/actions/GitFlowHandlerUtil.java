@@ -9,7 +9,8 @@
 package org.eclipse.egit.gitflow.ui.internal.actions;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.runtime.PlatformObject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.jdt.annotation.Nullable;
@@ -28,10 +29,19 @@ public class GitFlowHandlerUtil {
 	public static @Nullable GitFlowRepository getRepository(ExecutionEvent event) {
 		IStructuredSelection selection = (IStructuredSelection) HandlerUtil
 				.getCurrentSelection(event);
-		PlatformObject firstElement = (PlatformObject) selection
-				.getFirstElement();
-		Repository repository = Utils.getAdapter(firstElement,
+		Object firstElement = selection.getFirstElement();
+		if (!(firstElement instanceof IAdaptable)) {
+			return null;
+		}
+		Repository repository = Utils.getAdapter((IAdaptable) firstElement,
 				Repository.class);
+		if (repository == null) {
+			IResource resource = Utils.getAdapter((IAdaptable) firstElement,
+					IResource.class);
+			if (resource != null) {
+				repository = Utils.getAdapter(resource, Repository.class);
+			}
+		}
 		if (repository == null) {
 			return null;
 		}

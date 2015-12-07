@@ -52,6 +52,6 @@ public class GitFlowAdapterFactory implements IAdapterFactory {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Class[] getAdapterList() {
-		return new Class[] { IResource.class, IHistoryView.class };
+		return new Class[] { Repository.class };
 	}
 }
