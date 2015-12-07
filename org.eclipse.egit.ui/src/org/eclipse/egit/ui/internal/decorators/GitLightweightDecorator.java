@@ -198,10 +198,13 @@ public class GitLightweightDecorator extends LabelProvider implements
 	 */
 	private void decorateResource(@NonNull IResource resource,
 			IDecoration decoration) throws CoreException {
+		if (resource.getType() == IResource.ROOT || !resource.isAccessible()) {
+			return;
+		}
 		IndexDiffData indexDiffData = ResourceStateFactory.getInstance()
 				.getIndexDiffDataOrNull(resource);
 
-		if(indexDiffData == null) {
+		if (indexDiffData == null) {
 			return;
 		}
 		IDecoratableResource decoratableResource = null;
