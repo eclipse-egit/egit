@@ -101,7 +101,7 @@ public class ResourceStatePropertyTester extends PropertyTester {
 		while (iterator.hasNext()) {
 			IResource resource = AdapterUtils.adapt(iterator.next(),
 					IResource.class);
-			if (resource == null || !resource.exists()) {
+			if (resource == null || !resource.isAccessible()) {
 				continue;
 			}
 			IResourceState state = ResourceStateFactory.getInstance()
