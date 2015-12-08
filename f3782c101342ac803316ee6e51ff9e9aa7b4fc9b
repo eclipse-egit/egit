@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27d6470d_f8eb27eb",
+        "filename": "org.eclipse.egit.gitflow.ui/plugin.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-08T08:54:53Z",
+      "side": 1,
+      "message": "Oops? Matthias, I\u0027m away from my computer now, so I can\u0027t check myself: does the \"Init Git Flow\" command not just display correctly but also actually _work_ on a Java project? Occurred to me just now... and I\u0027m not sure anymore.\n\nI changed this so that the menu entry would display correctly also for IJavaProject elements in the project explorer, but I suspect this needs a change in GitFlowHandlerUtil. Something like\n\n  Repository repository \u003d AdapterUtils.adapt(firstElement,\n\t\t\t\tRepository.class);\n  if (repository \u003d\u003d null) {\n    // Try harder :-)\n    IResource resource \u003d AdapterUtils.adapt(firstElement, IResource.class);\n    if (resource !\u003d null) {\n       repository \u003d AdapterUtils.adapt(resource, Repository.class);\n    }\n  }\n\nThe point is that the GitFlowAdapterFactory won\u0027t adapt an IJavaProject. Could you check, please? If not, I\u0027ll re-check tonight and if necessary post a follow-up change.",
+      "revId": "f3782c101342ac803316ee6e51ff9e9aa7b4fc9b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
