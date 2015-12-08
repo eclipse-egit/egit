@@ -34,6 +34,24 @@
       "revId": "f3782c101342ac803316ee6e51ff9e9aa7b4fc9b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_cc3b05f3",
+        "filename": "org.eclipse.egit.gitflow.ui/plugin.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-08T19:57:29Z",
+      "side": 1,
+      "message": "Ok, I\u0027ll leave it alone now. Looking forward to your patches. Stumbled over this in another context and had seen it was assigned to you since September, but still unresolved...\n\nI just couldn\u0027t leave this particular fix in a buggy state, so I did the change I had outlined above. Works nicely, and should be safe, since all GitFlow handlers (and only those) call this GitFlowHandlerUtil.\n\nJust a minor additional point (not fixed): \"Init Git Flow\" opens a dialog; the menu entry should thus IMO be \"Init Git Flow...\", and likewise for any other menu entries that result in dialogs requiring further user input.",
+      "parentUuid": "27d6470d_b87eff5b",
+      "revId": "f3782c101342ac803316ee6e51ff9e9aa7b4fc9b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
