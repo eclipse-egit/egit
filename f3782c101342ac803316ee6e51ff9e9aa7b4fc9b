@@ -16,6 +16,24 @@
       "revId": "f3782c101342ac803316ee6e51ff9e9aa7b4fc9b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_b87eff5b",
+        "filename": "org.eclipse.egit.gitflow.ui/plugin.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-12-08T10:12:08Z",
+      "side": 1,
+      "message": "@Thomas, thanks for your patch!\nPlease don\u0027t put too much effort into this particular issue, though. I currently have 5 outgoing commits which will fix this and several other issues regarding command enablement.\nI yet have to test it thouroughly though.\nI\u0027ll push until the end of the week.",
+      "parentUuid": "27d6470d_f8eb27eb",
+      "revId": "f3782c101342ac803316ee6e51ff9e9aa7b4fc9b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
