@@ -39,6 +39,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.resources.IResourceState.StagingState;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
@@ -106,9 +107,15 @@ public class ResourceStateFactory {
 			return null;
 		}
 		File absoluteFile = file.getAbsoluteFile();
-		Repository repository = Activator.getDefault().getRepositoryCache()
-				.getRepository(new org.eclipse.core.runtime.Path(
-						absoluteFile.getPath()));
+		IPath path = new org.eclipse.core.runtime.Path(absoluteFile.getPath());
+		Repository repository = null;
+		RepositoryMapping mapping = RepositoryMapping.getMapping(path);
+		if (mapping != null) {
+			repository = mapping.getRepository();
+		} else {
+			repository = Activator.getDefault().getRepositoryCache()
+					.getRepository(path);
+		}
 		if (repository == null) {
 			return null;
 		} else if (repository.isBare()) {
@@ -209,8 +216,14 @@ public class ResourceStateFactory {
 		if (path == null) {
 			return UNKNOWN_STATE;
 		}
-		Repository repository = Activator.getDefault().getRepositoryCache()
-				.getRepository(path);
+		Repository repository = null;
+		RepositoryMapping mapping = RepositoryMapping.getMapping(path);
+		if (mapping != null) {
+			repository = mapping.getRepository();
+		} else {
+			repository = Activator.getDefault().getRepositoryCache()
+					.getRepository(path);
+		}
 		if (repository == null || repository.isBare()) {
 			return UNKNOWN_STATE;
 		}
