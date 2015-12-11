@@ -12,7 +12,6 @@ import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellIsActive;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.op.BranchOperation;
-import org.eclipse.egit.gitflow.op.InitOperation;
 import org.eclipse.egit.gitflow.ui.Activator;
 import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
@@ -55,10 +54,6 @@ public abstract class AbstractFeatureFinishHandlerTest extends AbstractGitflowHa
 	}
 
 	abstract protected void selectOptions();
-
-	protected void init() throws CoreException {
-		new InitOperation(repository).execute(null);
-	}
 
 	@Override
 	protected void createFeature(String featureName) {
