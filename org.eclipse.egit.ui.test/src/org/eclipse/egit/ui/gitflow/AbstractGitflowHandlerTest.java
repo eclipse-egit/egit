@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.op.FeatureCheckoutOperation;
 import org.eclipse.egit.gitflow.op.FeatureStartOperation;
+import org.eclipse.egit.gitflow.op.InitOperation;
 import org.eclipse.egit.gitflow.ui.Activator;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.test.TestUtil;
@@ -48,10 +49,11 @@ public abstract class AbstractGitflowHandlerTest extends LocalRepositoryTestCase
 	protected static final String FEATURE_NAME = "myFeature";
 
 	protected Repository repository;
+	protected File repositoryFile;
 
 	@Before
 	public void setup() throws Exception {
-		File repositoryFile = createProjectAndCommitToRepository();
+		repositoryFile = createProjectAndCommitToRepository();
 		repository = lookupRepository(repositoryFile);
 
 		resetPreferences();
@@ -89,5 +91,9 @@ public abstract class AbstractGitflowHandlerTest extends LocalRepositoryTestCase
 
 	protected Ref findBranch(String branchName) throws IOException {
 		return repository.getRef(R_HEADS + branchName);
+	}
+
+	protected void init() throws CoreException {
+		new InitOperation(repository).execute(null);
 	}
 }
