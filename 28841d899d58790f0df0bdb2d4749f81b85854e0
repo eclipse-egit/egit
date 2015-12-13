@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27d6470d_25663846",
+        "filename": "org.eclipse.egit.gitflow.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-12-13T20:33:22Z",
+      "side": 1,
+      "message": "You are right, the duplication is awful. I intended to either refactor this, or find a better solution once it works completely (I have a few other outstanding commits on similar issues), and as soon as test coverage is up (see review 62455).\n\nYour suggestion does not seem to work on CompilationUnit selections in the JDT package explorer, but I might be doing something wrong. If you can get it to work, I\u0027d be glad to review it and abandon this one!",
+      "parentUuid": "27d6470d_dc2f29c3",
+      "revId": "28841d899d58790f0df0bdb2d4749f81b85854e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27d6470d_fc0dcd77",
         "filename": "org.eclipse.egit.gitflow.ui/plugin.xml",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-12-11T19:02:53Z",
       "side": 1,
       "message": "This could be combined into one:\n\n  \u003cextension point\u003d\"org.eclipse.core.runtime.adapters\"\u003e\n     \u003cfactory ...\u003e...\u003c/factory\u003e\n     \u003cfactory ...\u003e...\u003c/factory\u003e\n     \u003cfactory ...\u003e...\u003c/factory\u003e\n  \u003c/extension\u003e",
+      "revId": "28841d899d58790f0df0bdb2d4749f81b85854e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_455a5c7c",
+        "filename": "org.eclipse.egit.gitflow.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-12-13T20:33:22Z",
+      "side": 1,
+      "message": "If this commit is merged, I\u0027ll do a follow-up refactoring for this.",
+      "parentUuid": "27d6470d_fc0dcd77",
       "revId": "28841d899d58790f0df0bdb2d4749f81b85854e0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "27d6470d_65576052",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/factories/GitFlowAdapterFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-12-13T20:33:22Z",
+      "side": 1,
+      "message": "See comment in plugin.xml",
+      "parentUuid": "27d6470d_fcd22d43",
+      "revId": "28841d899d58790f0df0bdb2d4749f81b85854e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27d6470d_fe594487",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/factories/GitFlowAdapterFactory.java",
         "patchSetId": 1
@@ -64,6 +118,30 @@
       "writtenOn": "2015-12-11T19:02:53Z",
       "side": 1,
       "message": "This should be Repository.class. The method is supposed to return the list of adapterTypes, i.e., the types to which this adapter can adapt objects to.",
+      "range": {
+        "startLine": 62,
+        "startChar": 23,
+        "endLine": 62,
+        "endChar": 58
+      },
+      "revId": "28841d899d58790f0df0bdb2d4749f81b85854e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_d0b1c82e",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/factories/GitFlowAdapterFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2015-12-13T20:33:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27d6470d_fe594487",
       "range": {
         "startLine": 62,
         "startChar": 23,
