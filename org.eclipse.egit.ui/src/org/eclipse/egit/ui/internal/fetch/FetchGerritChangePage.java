@@ -80,6 +80,8 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -214,6 +216,12 @@ public class FetchGerritChangePage extends WizardPage {
 			refText.setText(defaultChange);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(refText);
 		addRefContentProposalToText(refText);
+		refText.addVerifyListener(new VerifyListener() {
+			@Override
+			public void verifyText(VerifyEvent event) {
+				event.text = event.text.trim();
+			}
+		});
 
 		final Group checkoutGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		checkoutGroup.setLayout(new GridLayout(3, false));
