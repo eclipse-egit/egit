@@ -33,6 +33,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.storage.IndexFileRevision;
 import org.eclipse.egit.core.internal.storage.OpenWorkspaceVersionEnabled;
 import org.eclipse.egit.ui.internal.CommonUtils;
@@ -402,10 +403,10 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 			if (fileObject instanceof LocalFileRevision){
 				try {
 					IStorage storage = ((LocalFileRevision) fileObject).getStorage(new NullProgressMonitor());
-					if (CompareUtils.getAdapter(storage, IFileState.class) != null){
+					if (AdapterUtils.adapt(storage, IFileState.class) != null) {
 						//local revision
 						return UIText.GitCompareFileRevisionEditorInput_LocalRevision;
-					} else if (CompareUtils.getAdapter(storage, IFile.class) != null) {
+					} else if (AdapterUtils.adapt(storage, IFile.class) != null) {
 						//current revision
 						return UIText.GitCompareFileRevisionEditorInput_CurrentRevision;
 					}
@@ -682,6 +683,19 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		@Override
 		public void handleDocumentSaved() {
 			// Ignore
+		}
+
+		@Override
+		public void doSave(IProgressMonitor monitor) throws CoreException {
+			// SaveableComparison unconditionally resets the dirty flag to
+			// false, but LocalResourceSaveableComparison's performSave may not
+			// actually save: if the file has been changed outside the compare
+			// editor, it displays a dialog that the user may cancel.
+			if (isDirty()) {
+				performSave(monitor);
+				// LocalResourecSaveableComparison does already reset the dirty
+				// flag if it did save.
+			}
 		}
 	}
 

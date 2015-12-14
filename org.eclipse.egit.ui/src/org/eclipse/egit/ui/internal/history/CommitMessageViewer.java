@@ -23,10 +23,10 @@ import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.BooleanPrefAction;
 import org.eclipse.egit.ui.internal.dialogs.HyperlinkSourceViewer;
@@ -377,7 +377,7 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 	}
 
 	private void scheduleFormatJob() {
-		IWorkbenchSiteProgressService siteService = CommonUtils.getAdapter(partSite, IWorkbenchSiteProgressService.class);
+		IWorkbenchSiteProgressService siteService = AdapterUtils.adapt(partSite, IWorkbenchSiteProgressService.class);
 		if (siteService == null)
 			return;
 		FormatJob.FormatRequest formatRequest = new FormatJob.FormatRequest(

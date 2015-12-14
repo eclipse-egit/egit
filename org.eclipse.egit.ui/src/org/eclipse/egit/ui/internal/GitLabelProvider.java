@@ -11,7 +11,7 @@
 package org.eclipse.egit.ui.internal;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.ui.internal.clone.ProjectRecord;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
@@ -54,17 +54,20 @@ public class GitLabelProvider extends LabelProvider implements
 
 	@Override
 	public Image getImage(Object element) {
-		if (element instanceof Repository)
+		if (element instanceof Repository) {
 			return RepositoryTreeNodeType.REPO.getIcon();
+		}
 
-		if (element instanceof RefNode)
+		if (element instanceof RefNode) {
 			return getRefIcon(((RefNode) element).getObject());
+		}
 
-		if (element instanceof Ref)
+		if (element instanceof Ref) {
 			return getRefIcon((Ref) element);
+		}
 
 		if (element instanceof GitModelBlob || element instanceof GitModelTree) {
-			Object adapter = CommonUtils.getAdapter(((IAdaptable) element), IResource.class);
+			Object adapter = AdapterUtils.adapt(element, IResource.class);
 			return getWorkbenchLabelProvider().getImage(adapter);
 		}
 

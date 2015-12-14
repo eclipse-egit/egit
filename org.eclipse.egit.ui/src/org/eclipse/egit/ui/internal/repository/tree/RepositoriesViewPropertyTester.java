@@ -17,6 +17,7 @@ import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.egit.ui.internal.ResourcePropertyTester;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
@@ -64,17 +65,19 @@ public class RepositoriesViewPropertyTester extends PropertyTester {
 				if (ref.getName().startsWith(Constants.R_REFS)) {
 					return ref.getName().equals(
 							node.getRepository().getFullBranch());
-				} else if (ref.getName().equals(Constants.HEAD))
+				} else if (ref.getName().equals(Constants.HEAD)) {
 					return true;
-				else {
+				} else {
 					String leafname = ref.getLeaf().getName();
 					if (leafname.startsWith(Constants.R_REFS)
 							&& leafname.equals(node.getRepository()
-									.getFullBranch()))
+									.getFullBranch())) {
 						return true;
-					else
-						ref.getLeaf().getObjectId().equals(
+					} else {
+						ObjectId objectId = ref.getLeaf().getObjectId();
+						return objectId != null && objectId.equals(
 								node.getRepository().resolve(Constants.HEAD));
+					}
 				}
 			} catch (IOException e) {
 				return false;

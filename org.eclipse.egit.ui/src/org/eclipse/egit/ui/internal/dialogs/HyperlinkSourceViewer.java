@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.IRegion;

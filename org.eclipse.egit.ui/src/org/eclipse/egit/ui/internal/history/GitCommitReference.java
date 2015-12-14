@@ -8,7 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
-import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jgit.revwalk.RevCommit;
 

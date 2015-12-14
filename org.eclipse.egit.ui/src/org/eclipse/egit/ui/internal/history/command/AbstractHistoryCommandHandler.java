@@ -24,13 +24,11 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
@@ -75,38 +73,41 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 	protected Repository getRepository(ExecutionEvent event)
 			throws ExecutionException {
 		Object input = getInput(event);
-		if (input == null)
+		if (input == null) {
 			return null;
-		if (input instanceof HistoryPageInput)
+		}
+		if (input instanceof HistoryPageInput) {
 			return ((HistoryPageInput) input).getRepository();
-		if (input instanceof RepositoryTreeNode)
+		}
+		if (input instanceof RepositoryTreeNode) {
 			return ((RepositoryTreeNode) input).getRepository();
+		}
 		if (input instanceof IResource) {
 			IResource resource = (IResource) input;
 			RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
-			if (mapping != null)
+			if (mapping != null) {
 				return mapping.getRepository();
+			}
 			// for closed projects team framework doesn't allow to get mapping
 			// so try again using a path based approach
 			Repository repository = Activator.getDefault().getRepositoryCache()
 					.getRepository(resource);
-			if (repository != null)
+			if (repository != null) {
 				return repository;
-		}
-		if (input instanceof IAdaptable) {
-			IResource resource = CommonUtils.getAdapter(((IAdaptable) input), IResource.class);
-			if (resource != null) {
-				RepositoryMapping mapping = RepositoryMapping
-						.getMapping(resource);
-				if (mapping != null)
-					return mapping.getRepository();
 			}
-
+		}
+		IResource resource = AdapterUtils.adapt(input, IResource.class);
+		if (resource != null) {
+			RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
+			if (mapping != null) {
+				return mapping.getRepository();
+			}
 		}
 
 		Repository repo = AdapterUtils.adapt(input, Repository.class);
-		if (repo != null)
+		if (repo != null) {
 			return repo;
+		}
 
 		throw new ExecutionException(
 				UIText.AbstractHistoryCommanndHandler_CouldNotGetRepositoryMessage);
@@ -269,15 +270,19 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 		List<RefNode> nodes = new ArrayList<RefNode>();
 		try {
 			Map<String, Ref> branches = new HashMap<String, Ref>();
-			for (String refPrefix : refPrefixes)
+			for (String refPrefix : refPrefixes) {
 				branches.putAll(repo.getRefDatabase().getRefs(refPrefix));
+			}
 			for (Ref branch : branches.values()) {
-				if (branch.getLeaf().getObjectId().equals(commit))
+				ObjectId objectId = branch.getLeaf().getObjectId();
+				if (objectId != null && objectId.equals(commit)) {
 					availableBranches.add(branch);
+				}
 			}
 			RepositoryNode repoNode = new RepositoryNode(null, repo);
-			for (Ref ref : availableBranches)
+			for (Ref ref : availableBranches) {
 				nodes.add(new RefNode(repoNode, repo, ref));
+			}
 
 		} catch (IOException e) {
 			// ignore here

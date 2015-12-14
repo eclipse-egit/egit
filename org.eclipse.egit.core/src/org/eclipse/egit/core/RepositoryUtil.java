@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2014 SAP AG and others.
+ * Copyright (c) 2010, 2015 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -28,6 +28,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -35,8 +36,8 @@ import org.eclipse.core.variables.IStringVariableManager;
 import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.CheckoutEntry;
 import org.eclipse.jgit.lib.Constants;
@@ -190,15 +191,18 @@ public class RepositoryUtil {
 							if (checkoutEntry != null) {
 								Ref ref = repository.getRef(checkoutEntry.getToBranch());
 								if (ref != null) {
-									if (ref.getObjectId().getName()
-											.equals(commitId))
+									ObjectId objectId = ref.getObjectId();
+									if (objectId != null && objectId.getName()
+											.equals(commitId)) {
 										return checkoutEntry.getToBranch();
+									}
 									ref = repository.peel(ref);
 								}
 								if (ref != null) {
 									ObjectId id = ref.getPeeledObjectId();
-									if (id != null && id.getName().equals(commitId))
+									if (id != null && id.getName().equals(commitId)) {
 										return checkoutEntry.getToBranch();
+									}
 								}
 							}
 						}
@@ -288,7 +292,9 @@ public class RepositoryUtil {
 					Map<String, Ref> remoteBranches = repository
 							.getRefDatabase().getRefs(Constants.R_HEADS);
 					for (Ref branch : remoteBranches.values()) {
-						if (branch.getObjectId().name().equals(commitId)) {
+						ObjectId objectId = branch.getObjectId();
+						if (objectId != null
+								&& objectId.name().equals(commitId)) {
 							branchNames.add(branch.getName());
 						}
 					}
@@ -310,7 +316,9 @@ public class RepositoryUtil {
 					Map<String, Ref> remoteBranches = repository
 							.getRefDatabase().getRefs(Constants.R_REMOTES);
 					for (Ref branch : remoteBranches.values()) {
-						if (branch.getObjectId().name().equals(commitId)) {
+						ObjectId objectId = branch.getObjectId();
+						if (objectId != null
+								&& objectId.name().equals(commitId)) {
 							branchNames.add(branch.getName());
 						}
 					}
@@ -488,18 +496,25 @@ public class RepositoryUtil {
 	 */
 	public String getShortBranch(Repository repository) throws IOException {
 		Ref head = repository.getRef(Constants.HEAD);
-		if (head == null || head.getObjectId() == null)
+		if (head == null) {
 			return CoreText.RepositoryUtil_noHead;
+		}
+		ObjectId objectId = head.getObjectId();
+		if (objectId == null) {
+			return CoreText.RepositoryUtil_noHead;
+		}
 
-		if (head.isSymbolic())
+		if (head.isSymbolic()) {
 			return repository.getBranch();
+		}
 
-		String id = head.getObjectId().name();
+		String id = objectId.name();
 		String ref = mapCommitToRef(repository, id, false);
-		if (ref != null)
+		if (ref != null) {
 			return Repository.shortenRefName(ref) + ' ' + id.substring(0, 7);
-		else
+		} else {
 			return id.substring(0, 7);
+		}
 	}
 
 	/**
@@ -585,18 +600,22 @@ public class RepositoryUtil {
 	 * @since 4.1.0
 	 */
 	public static boolean canBeAutoIgnored(IPath path) throws IOException {
-		RepositoryMapping mapping = RepositoryMapping.getMapping(path);
-		if (mapping == null) {
-			return false; // Linked resources may not be mapped
+		Repository repository = Activator.getDefault().getRepositoryCache()
+				.getRepository(path);
+		if (repository == null || repository.isBare()) {
+			return false;
 		}
-		Repository repository = mapping.getRepository();
 		WorkingTreeIterator treeIterator = IteratorService
 				.createInitialIterator(repository);
 		if (treeIterator == null) {
 			return false;
 		}
-		String repoRelativePath = mapping.getRepoRelativePath(path);
-		if (repoRelativePath == null || repoRelativePath.isEmpty()) {
+		String repoRelativePath = path
+				.makeRelativeTo(
+						new Path(repository.getWorkTree().getAbsolutePath()))
+				.toString();
+		if (repoRelativePath.length() == 0
+				|| repoRelativePath.equals(path.toString())) {
 			return false;
 		}
 		try (TreeWalk walk = new TreeWalk(repository)) {

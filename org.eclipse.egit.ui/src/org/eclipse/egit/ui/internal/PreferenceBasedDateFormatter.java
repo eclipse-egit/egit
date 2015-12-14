@@ -15,7 +15,7 @@ import java.util.TimeZone;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.util.GitDateFormatter;
 

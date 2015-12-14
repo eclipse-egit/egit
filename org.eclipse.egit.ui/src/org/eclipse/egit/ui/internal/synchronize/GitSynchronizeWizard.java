@@ -22,12 +22,11 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.viewers.ISelection;
@@ -100,12 +99,14 @@ public class GitSynchronizeWizard extends Wizard {
 
 			File workTree = repo.getWorkTree();
 			for (Object o : sel.toArray()) {
-				if (!(o instanceof IAdaptable))
+				if (o == null) {
 					continue;
+				}
 
-				IResource res = CommonUtils.getAdapter(((IAdaptable) o), IResource.class);
-				if (res == null)
+				IResource res = AdapterUtils.adapt(o, IResource.class);
+				if (res == null) {
 					continue;
+				}
 
 				int type = res.getType();
 				if (type == IResource.FOLDER) {

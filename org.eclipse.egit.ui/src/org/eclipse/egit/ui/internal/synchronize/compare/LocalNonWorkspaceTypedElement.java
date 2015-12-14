@@ -8,7 +8,7 @@
  *
  * Contributors:
  *     IBM Corporation - initial implementation of some methods
- *     Thomas Wolf <thomas.wolf@paranor.ch> - Bug 474981
+ *     Thomas Wolf <thomas.wolf@paranor.ch> - Bugs 474981, 481682
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.compare;
 
@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 
 import org.eclipse.compare.ISharedDocumentAdapter;
 import org.eclipse.core.resources.IResource;
@@ -27,12 +28,16 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.events.IndexChangedEvent;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.team.internal.ui.synchronize.EditableSharedDocumentAdapter;
 import org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement;
@@ -45,9 +50,13 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 
 	private final IPath path;
 
+	private final Repository repository;
+
 	private boolean exists;
 
 	private boolean fDirty = false;
+
+	private long timestamp;
 
 	private boolean useSharedDocument = true;
 
@@ -58,20 +67,30 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 	private static final IWorkspaceRoot ROOT = ResourcesPlugin.getWorkspace().getRoot();
 
 	/**
-	 * @param path absolute path to non-workspace file
+	 * @param repository
+	 *            the file belongs to
+	 * @param path
+	 *            absolute path to non-workspace file
 	 */
-	public LocalNonWorkspaceTypedElement(IPath path) {
+	public LocalNonWorkspaceTypedElement(Repository repository, IPath path) {
 		super(ROOT.getFile(path));
 		this.path = path;
+		this.repository = repository;
 
-		exists = path.toFile().exists();
+		File file = path.toFile();
+		exists = file.exists();
+		if (exists) {
+			timestamp = file.lastModified();
+		}
 	}
 
 	@Override
 	public InputStream getContents() throws CoreException {
 		if (exists) {
 			try {
-				return new FileInputStream(path.toFile());
+				File file = path.toFile();
+				timestamp = file.lastModified();
+				return new FileInputStream(file);
 			} catch (FileNotFoundException e) {
 				Activator.error(e.getMessage(), e);
 			}
@@ -84,6 +103,16 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 	public boolean isEditable() {
 		IResource resource = getResource();
 		return resource.getType() == IResource.FILE && exists;
+	}
+
+	@Override
+	public long getModificationDate() {
+		return timestamp;
+	}
+
+	@Override
+	public boolean isSynchronized() {
+		return path.toFile().lastModified() == timestamp;
 	}
 
 	/** {@inheritDoc} */
@@ -117,6 +146,10 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 		super.setContent(contents);
 	}
 
+	private void refreshTimestamp() {
+		timestamp = path.toFile().lastModified();
+	}
+
 	/** {@inheritDoc} */
 	@Override
 	public void commit(IProgressMonitor monitor) throws CoreException {
@@ -124,13 +157,14 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 			if (isConnected()) {
 				super.commit(monitor);
 			} else {
-				FileOutputStream out = null;
 				File file = path.toFile();
 				try {
-					if (!file.exists())
+					if (!file.exists()) {
 						FileUtils.createNewFile(file);
-					out = new FileOutputStream(file);
-					out.write(getContent());
+					}
+					try (FileOutputStream out = new FileOutputStream(file)) {
+						out.write(getContent());
+					}
 					fDirty = false;
 				} catch (IOException e) {
 					throw new CoreException(
@@ -140,19 +174,40 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 									UIText.LocalNonWorkspaceTypedElement_errorWritingContents,
 									e));
 				} finally {
-					fireContentChanged();
-					RepositoryMapping mapping = RepositoryMapping.getMapping(path);
-					if (mapping != null)
-						mapping.getRepository().fireEvent(new IndexChangedEvent());
-					if (out != null)
-						try {
-							out.close();
-						} catch (IOException ex) {
-							// ignore
-						}
+					fireChanges();
 				}
 			}
+			refreshTimestamp();
 		}
+	}
+
+	private void fireChanges() {
+		fireContentChanged();
+		// external file change must be reported explicitly, see bug 481682
+		Repository myRepository = repository;
+		boolean updated = false;
+		if (myRepository != null && !myRepository.isBare()) {
+			updated = refreshRepositoryState(myRepository);
+		}
+		if (!updated) {
+			RepositoryMapping mapping = RepositoryMapping.getMapping(path);
+			if (mapping != null) {
+				mapping.getRepository().fireEvent(new IndexChangedEvent());
+			}
+		}
+	}
+
+	private boolean refreshRepositoryState(@NonNull Repository repo) {
+		IPath repositoryRoot = new Path(repo.getWorkTree().getPath());
+		IPath relativePath = path.makeRelativeTo(repositoryRoot);
+		IndexDiffCacheEntry indexDiffCacheForRepository = org.eclipse.egit.core.Activator
+				.getDefault().getIndexDiffCache().getIndexDiffCacheEntry(repo);
+		if (indexDiffCacheForRepository != null) {
+			indexDiffCacheForRepository.refreshFiles(
+					Collections.singleton(relativePath.toString()));
+			return true;
+		}
+		return false;
 	}
 
 	/** {@inheritDoc} */
@@ -212,6 +267,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 			sharedDocumentAdapter = new EditableSharedDocumentAdapter(new EditableSharedDocumentAdapter.ISharedDocumentAdapterListener() {
 				@Override
 				public void handleDocumentConnected() {
+							refreshTimestamp();
 					if (sharedDocumentListener != null)
 						sharedDocumentListener.handleDocumentConnected();
 				}
@@ -229,6 +285,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 				}
 				@Override
 				public void handleDocumentSaved() {
+							refreshTimestamp();
 					if (sharedDocumentListener != null)
 						sharedDocumentListener.handleDocumentSaved();
 				}

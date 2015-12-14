@@ -19,6 +19,7 @@ import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
@@ -26,6 +27,7 @@ import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.revision.FileRevisionEditorInput;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.history.IFileRevision;
@@ -36,7 +38,6 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.EditorsUI;
-import org.eclipse.ui.ide.FileStoreEditorInput;
 import org.eclipse.ui.ide.IDE;
 
 /**
@@ -84,7 +85,7 @@ public class EgitUiEditorUtils {
 			throws CoreException {
 		FileRevisionEditorInput fileRevEditorInput = FileRevisionEditorInput
 				.createEditorInputFor(revision, monitor);
-		openEditor(page, fileRevEditorInput, "org.eclipse.ui.DefaultTextEditor"); //$NON-NLS-1$
+		openEditor(page, fileRevEditorInput, EditorsUI.DEFAULT_TEXT_EDITOR_ID);
 	}
 
 	/**
@@ -118,11 +119,11 @@ public class EgitUiEditorUtils {
 			}
 			return part;
 		} catch (PartInitException e) {
-			if (editorId.equals("org.eclipse.ui.DefaultTextEditor")) { //$NON-NLS-1$
+			if (editorId.equals(EditorsUI.DEFAULT_TEXT_EDITOR_ID)) {
 				throw e;
 			} else {
 				return page.openEditor(editorInput,
-						"org.eclipse.ui.DefaultTextEditor"); //$NON-NLS-1$
+						EditorsUI.DEFAULT_TEXT_EDITOR_ID);
 			}
 		}
 	}
@@ -136,29 +137,23 @@ public class EgitUiEditorUtils {
 	 * @param page
 	 * @return the created editor or null in case of an error
 	 */
+	@Nullable
 	public static IEditorPart openEditor(File file, IWorkbenchPage page) {
-		if (!file.exists())
+		if (!file.exists()) {
 			return null;
-		IFile fileResource = ResourceUtil
-				.getFileForLocation(new Path(file.getAbsolutePath()), true);
-		if (fileResource != null) {
-			try {
-				return IDE.openEditor(page, fileResource,
+		}
+		IPath path = new Path(file.getAbsolutePath());
+		IFile ifile = ResourceUtil.getFileForLocation(path, true);
+		try {
+			if (ifile != null) {
+				return IDE.openEditor(page, ifile,
 						OpenStrategy.activateOnOpen());
-			} catch (PartInitException e) {
-				Activator.handleError(UIText.EgitUiEditorUtils_openFailed, e,
-						true);
+			} else {
+				IFileStore store = EFS.getLocalFileSystem().getStore(path);
+				return IDE.openEditorOnFileStore(page, store);
 			}
-		} else {
-			IFileStore store = EFS.getLocalFileSystem().getStore(
-					new Path(file.getAbsolutePath()));
-			try {
-				return IDE.openEditor(page, new FileStoreEditorInput(store),
-						EditorsUI.DEFAULT_TEXT_EDITOR_ID);
-			} catch (PartInitException e) {
-				Activator.handleError(UIText.EgitUiEditorUtils_openFailed, e,
-						true);
-			}
+		} catch (PartInitException e) {
+			Activator.handleError(UIText.EgitUiEditorUtils_openFailed, e, true);
 		}
 		return null;
 	}
@@ -176,7 +171,7 @@ public class EgitUiEditorUtils {
 				.getDefaultEditor(fileName, type);
 		String id;
 		if (descriptor == null || descriptor.isOpenExternal()) {
-			id = "org.eclipse.ui.DefaultTextEditor"; //$NON-NLS-1$
+			id = EditorsUI.DEFAULT_TEXT_EDITOR_ID;
 		} else {
 			id = descriptor.getId();
 		}

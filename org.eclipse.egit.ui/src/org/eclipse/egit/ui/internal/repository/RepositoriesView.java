@@ -30,7 +30,6 @@ import java.util.Set;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -111,6 +110,7 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
+import org.eclipse.ui.IURIEditorInput;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -231,18 +231,23 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			@Override
 			public void selectionChanged(IWorkbenchPart part,
 					ISelection selection) {
-				if (!reactOnSelection)
+				if (!reactOnSelection || part == RepositoriesView.this) {
 					return;
+				}
 
 				// this may happen if we switch between editors
 				if (part instanceof IEditorPart) {
 					IEditorInput input = ((IEditorPart) part).getEditorInput();
-					if (input instanceof IFileEditorInput)
+					if (input instanceof IFileEditorInput) {
 						reactOnSelection(new StructuredSelection(
 								((IFileEditorInput) input).getFile()));
+					} else if (input instanceof IURIEditorInput) {
+						reactOnSelection(new StructuredSelection(input));
+					}
 
-				} else
+				} else {
 					reactOnSelection(selection);
+				}
 			}
 		};
 	}
@@ -855,15 +860,24 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	private void reactOnSelection(ISelection selection) {
 		if (selection instanceof StructuredSelection) {
 			StructuredSelection ssel = (StructuredSelection) selection;
-			if (ssel.size() != 1)
+			if (ssel.size() != 1) {
 				return;
-			if (ssel.getFirstElement() instanceof IResource)
+			}
+			if (ssel.getFirstElement() instanceof IResource) {
 				showResource((IResource) ssel.getFirstElement());
-			if (ssel.getFirstElement() instanceof IAdaptable) {
-				IResource adapted = CommonUtils.getAdapter(((IAdaptable) ssel
-						.getFirstElement()), IResource.class);
-				if (adapted != null)
-					showResource(adapted);
+				return;
+			}
+			IResource adapted = AdapterUtils.adapt(ssel.getFirstElement(),
+					IResource.class);
+			if (adapted != null) {
+				showResource(adapted);
+				return;
+			}
+			File file = AdapterUtils.adapt(ssel.getFirstElement(), File.class);
+			if (file != null) {
+				IPath path = new Path(file.getAbsolutePath());
+				showPaths(Arrays.asList(path));
+				return;
 			}
 		}
 	}

@@ -10,19 +10,12 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
+import java.io.File;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.filesystem.EFS;
-import org.eclipse.core.filesystem.IFileStore;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.internal.util.ResourceUtil;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
 import org.eclipse.egit.ui.internal.repository.tree.FileNode;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.ide.IDE;
 
 /**
  * Implements "Open in Editor"
@@ -32,25 +25,8 @@ public class OpenInEditorCommand extends
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		FileNode node = getSelectedNodes(event).get(0);
-		IPath path = new Path(node.getObject().getAbsolutePath());
-
-		IFile file = ResourceUtil.getFileForLocation(path, true);
-		if (file == null) {
-			IFileStore store = EFS.getLocalFileSystem().getStore(path);
-			try {
-				IDE.openEditorOnFileStore(getView(event).getSite().getPage(),
-						store);
-			} catch (PartInitException e) {
-				Activator.handleError(
-						UIText.RepositoriesView_Error_WindowTitle, e, true);
-			}
-		} else
-			try {
-				IDE.openEditor(getView(event).getSite().getPage(), file);
-			} catch (PartInitException e) {
-				Activator.handleError(
-						UIText.RepositoriesView_Error_WindowTitle, e, true);
-			}
+		File file = node.getObject();
+		EgitUiEditorUtils.openEditor(file, getView(event).getSite().getPage());
 		return null;
 	}
 }

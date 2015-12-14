@@ -35,7 +35,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
-import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.MergeCommand;
 import org.eclipse.jgit.api.MergeCommand.FastForwardMode;

@@ -21,8 +21,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.ui.UIUtils;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.action.Action;
@@ -138,7 +138,11 @@ public class DiffEditorPage extends FormPage {
 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				RepositoryCommit commit = CommonUtils.getAdapter(getEditor(), RepositoryCommit.class);
+				RepositoryCommit commit = AdapterUtils.adapt(getEditor(),
+						RepositoryCommit.class);
+				if (commit == null) {
+					return Status.CANCEL_STATUS;
+				}
 				FileDiff diffs[] = getDiffs(commit);
 				monitor.beginTask("", diffs.length); //$NON-NLS-1$
 				Repository repository = commit.getRepository();

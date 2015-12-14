@@ -373,8 +373,14 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 
 	@Override
 	public Object getAdapter(Class adapter) {
-		if (Repository.class == adapter && myRepository != null)
+		if (Repository.class == adapter && myRepository != null) {
 			return myRepository;
+		}
+		if (myObject != null) {
+			if (adapter.isInstance(myObject)) {
+				return myObject;
+			}
+		}
 		return super.getAdapter(adapter);
 	}
 

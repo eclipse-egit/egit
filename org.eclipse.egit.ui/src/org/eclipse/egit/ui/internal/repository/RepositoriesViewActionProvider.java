@@ -21,7 +21,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RemoteNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
-import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.ISelection;

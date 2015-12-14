@@ -22,11 +22,11 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.variables.IDynamicVariable;
 import org.eclipse.core.variables.IDynamicVariableResolver;
+import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -176,7 +176,7 @@ public class GitVariableResolver implements IDynamicVariableResolver {
 				IWorkbenchPart part = page.getActivePart();
 				if(part instanceof IEditorPart) {
 					IEditorPart epart = (IEditorPart) part;
-					resource = CommonUtils.getAdapter(epart.getEditorInput(), IResource.class);
+					resource = AdapterUtils.adapt(epart.getEditorInput(), IResource.class);
 				}
 				else if(part != null) {
 					IWorkbenchPartSite site = part.getSite();

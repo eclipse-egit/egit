@@ -15,8 +15,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.JFaceColors;
 import org.eclipse.jface.text.BadLocationException;

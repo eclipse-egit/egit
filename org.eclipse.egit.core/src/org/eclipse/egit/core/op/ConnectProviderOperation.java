@@ -40,7 +40,7 @@ import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryFinder;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.RepositoryProvider;

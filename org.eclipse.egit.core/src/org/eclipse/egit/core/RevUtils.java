@@ -103,6 +103,7 @@ public class RevUtils {
 				}
 			} else if (state == RepositoryState.MERGING) {
 				List<ObjectId> mergeHeads = repository.readMergeHeads();
+				Assert.isNotNull(mergeHeads);
 				if (mergeHeads.size() == 1) {
 					ObjectId mergeHead = mergeHeads.get(0);
 					RevCommit mergeCommit = walk.parseCommit(mergeHead);

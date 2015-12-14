@@ -38,11 +38,11 @@ abstract public class AbstractHotfixOperation extends
 	 */
 	protected static String getHotfixName(GitFlowRepository repository)
 			throws WrongGitFlowStateException, CoreException, IOException {
-		if (!repository.isHotfix()) {
+		String currentBranch = repository.getRepository().getBranch();
+		if (currentBranch == null || !repository.isHotfix()) {
 			throw new WrongGitFlowStateException(
 					CoreText.AbstractHotfixOperation_notOnAHotfixBranch);
 		}
-		String currentBranch = repository.getRepository().getBranch();
 		return currentBranch.substring(repository.getConfig().getHotfixPrefix().length());
 	}
 }

@@ -21,7 +21,8 @@ import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.egit.ui.internal.resources.ResourceStateFactory;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.IWorkingSet;
 
@@ -72,12 +73,13 @@ public class DecoratableResourceMapping extends DecoratableResource {
 			if(repoMapping == null)
 				continue;
 
-			IndexDiffData diffData = GitLightweightDecorator.getIndexDiffDataOrNull(prj);
+			IndexDiffData diffData = ResourceStateFactory.getInstance()
+					.getIndexDiffDataOrNull(prj);
 			if(diffData == null)
 				continue;
 
 			// at least one contained resource is tracked for sure here.
-			tracked = true;
+			setTracked(true);
 
 			Repository repository = repoMapping.getRepository();
 			String repoRelative = makeRepoRelative(repository, prj);
@@ -91,10 +93,10 @@ public class DecoratableResourceMapping extends DecoratableResource {
 
 			// attention - never reset these to false (so don't use the return value of the methods!)
 			if(containsPrefix(modified, repoRelative))
-				dirty = true;
+				setDirty(true);
 
 			if(containsPrefix(conflicting, repoRelative))
-				conflicts = true;
+				setConflicts(true);
 
 			// collect repository
 			repositories.add(repository);

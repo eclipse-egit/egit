@@ -38,7 +38,6 @@ import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
-import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
@@ -144,16 +143,15 @@ public class IgnoreOperation implements IEGitOperation {
 		String entry = b.toString();
 
 		if (container == null || container instanceof IWorkspaceRoot) {
-			RepositoryMapping mapping = RepositoryMapping.getMapping(
-					path);
-			if (mapping == null) {
+			Repository repository = Activator.getDefault().getRepositoryCache()
+					.getRepository(path);
+			if (repository == null || repository.isBare()) {
 				String message = NLS.bind(
 						CoreText.IgnoreOperation_parentOutsideRepo,
 						path.toOSString(), null);
 				IStatus status = Activator.error(message, null);
 				throw new CoreException(status);
 			}
-			Repository repository = mapping.getRepository();
 			// .gitignore is not accessible as resource
 			IPath gitIgnorePath = parent.append(Constants.GITIGNORE_FILENAME);
 			IPath repoPath = new Path(repository.getWorkTree()
@@ -211,15 +209,16 @@ public class IgnoreOperation implements IEGitOperation {
 			throws CoreException {
 		try {
 			String ignoreLine = entry;
-			if (!gitIgnore.exists())
+			if (!gitIgnore.exists()) {
 				if (!gitIgnore.createNewFile()) {
 					String error = NLS.bind(
 							CoreText.IgnoreOperation_creatingFailed,
 							gitIgnore.getAbsolutePath());
 					throw new CoreException(Activator.error(error, null));
 				}
-			else
+			} else {
 				ignoreLine = getEntry(gitIgnore, ignoreLine);
+			}
 
 			FileOutputStream os = new FileOutputStream(gitIgnore, true);
 			try {

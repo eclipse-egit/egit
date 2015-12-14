@@ -21,11 +21,11 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
-import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIText;
@@ -163,17 +163,15 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 
 	private boolean isStaged(Repository repository, IPath location,
 			boolean checkIndex) {
-		if (location == null || location.toFile().isDirectory()) {
+		if (location == null || location.toFile().isDirectory()
+				|| repository.isBare()) {
 			return false;
 		}
-		RepositoryMapping mapping = RepositoryMapping.getMapping(location);
-		if (mapping == null) {
-			return false;
-		}
-		String resRelPath = mapping.getRepoRelativePath(location);
-
+		IPath workDir = new Path(repository.getWorkTree().getAbsolutePath());
+		String resRelPath = location.makeRelativeTo(workDir).toString();
 		// This action at the moment only works for files anyway
-		if (resRelPath == null || resRelPath.length() == 0) {
+		if (resRelPath.length() == 0
+				|| resRelPath.equals(location.toString())) {
 			return false;
 		}
 
