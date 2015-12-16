@@ -25,10 +25,10 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.ContainerTreeIterator;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.IteratorService;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.team.core.RepositoryProvider;
 import org.junit.After;
@@ -176,7 +176,7 @@ public class LinkedResourcesTest {
 		// Test iterator
 		WorkingTreeIterator iterator = IteratorService
 				.createInitialIterator(repository1.repository);
-		assertTrue(iterator instanceof ContainerTreeIterator);
+		assertTrue(iterator instanceof FileTreeIterator);
 		while (!iterator.eof()) {
 			assertFalse(iterator.getEntryPathString().startsWith("link2"));
 			iterator.next(1);
