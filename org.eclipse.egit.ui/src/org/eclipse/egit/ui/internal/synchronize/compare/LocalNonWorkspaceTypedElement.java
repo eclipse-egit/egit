@@ -12,18 +12,21 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.compare;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.Collections;
 
 import org.eclipse.compare.ISharedDocumentAdapter;
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -32,11 +35,13 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.events.IndexChangedEvent;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.team.internal.ui.synchronize.EditableSharedDocumentAdapter;
@@ -78,7 +83,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 		this.repository = repository;
 
 		File file = path.toFile();
-		exists = file.exists();
+		exists = file.exists() || Files.isSymbolicLink(file.toPath());
 		if (exists) {
 			timestamp = file.lastModified();
 		}
@@ -90,8 +95,12 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 			try {
 				File file = path.toFile();
 				timestamp = file.lastModified();
+				if (Files.isSymbolicLink(file.toPath())) {
+					String symLink = FileUtils.readSymLink(file);
+					return new ByteArrayInputStream(Constants.encode(symLink));
+				}
 				return new FileInputStream(file);
-			} catch (FileNotFoundException e) {
+			} catch (IOException | UnsupportedOperationException e) {
 				Activator.error(e.getMessage(), e);
 			}
 		}
@@ -159,11 +168,29 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 			} else {
 				File file = path.toFile();
 				try {
-					if (!file.exists()) {
-						FileUtils.createNewFile(file);
-					}
-					try (FileOutputStream out = new FileOutputStream(file)) {
-						out.write(getContent());
+					java.nio.file.Path fp = file.toPath();
+					if (Files.isSymbolicLink(fp)) {
+						String sp = new String(getContent(), Constants.CHARSET)
+								.trim();
+						if (sp.indexOf('\n') > 0) {
+							sp = sp.substring(0, sp.indexOf('\n')).trim();
+						}
+						if (!sp.isEmpty()) {
+							boolean wasBrokenLink = !file.exists();
+							java.nio.file.Path link = FileUtils
+									.createSymLink(file, sp);
+							// If link state changes, Eclipse can't realize this
+							// https://bugs.eclipse.org/bugs/show_bug.cgi?id=290318
+							updateLinkResource(wasBrokenLink, link);
+						}
+					} else {
+						if (!file.exists()) {
+							FileUtils.createNewFile(file);
+						}
+						try (FileOutputStream out = new FileOutputStream(
+								file)) {
+							out.write(getContent());
+						}
 					}
 					fDirty = false;
 				} catch (IOException e) {
@@ -178,6 +205,36 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 				}
 			}
 			refreshTimestamp();
+		}
+	}
+
+	private void updateLinkResource(boolean wasBroken,
+			java.nio.file.Path link) {
+		boolean brokenNow = !Files.exists(link);
+		if (brokenNow == wasBroken) {
+			// If the state doesn't change, we don't care, either Eclipse
+			// doesn's see broken link and we can't do anything or it is not
+			// broken and Eclipse handles the change
+			return;
+		}
+		// refresh the parent if either the link was broken before or broken
+		// just now
+		IPath parentPath = path.removeLastSegments(1);
+		@SuppressWarnings("null")
+		final IContainer parent = ResourceUtil
+				.getContainerForLocation(parentPath, true);
+		if (parent != null) {
+			WorkspaceJob job = new WorkspaceJob("Refreshing " + parentPath) { //$NON-NLS-1$
+				@Override
+				public IStatus runInWorkspace(IProgressMonitor m)
+						throws CoreException {
+					parent.refreshLocal(IResource.DEPTH_ONE, m);
+					return Status.OK_STATUS;
+				}
+			};
+			job.setRule(parent);
+			job.setSystem(true);
+			job.schedule();
 		}
 	}
 
