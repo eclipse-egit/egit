@@ -19,6 +19,7 @@ package org.eclipse.egit.ui.internal;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.CompareUI;
@@ -31,6 +32,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.resources.mapping.ResourceMappingContext;
 import org.eclipse.core.resources.mapping.ResourceTraversal;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -436,10 +438,19 @@ public class CompareUtils {
 							NLS.bind(UIText.GitHistoryPage_errorLookingUpPath,
 									file.getLocation(), repository));
 				}
-				final String gitPath = mapping.getRepoRelativePath(file);
-				final ITypedElement base = SaveableCompareEditorInput
-						.createFileElement(file);
+				Assert.isNotNull(file);
+				IPath location = file.getLocation();
+				Assert.isNotNull(location);
 
+				final ITypedElement base;
+				if (Files.isSymbolicLink(location.toFile().toPath())) {
+					base = new LocalNonWorkspaceTypedElement(repository,
+							location);
+				} else {
+					base = SaveableCompareEditorInput.createFileElement(file);
+				}
+
+				final String gitPath = mapping.getRepoRelativePath(file);
 				CompareEditorInput in;
 				try {
 					in = prepareCompareInput(repository, gitPath, base, refName);
