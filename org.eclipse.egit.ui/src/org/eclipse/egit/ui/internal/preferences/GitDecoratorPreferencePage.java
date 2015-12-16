@@ -153,7 +153,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 						"conflict.txt", IResource.FILE, "repository", null, null, true, false, true, StagingState.NOT_STAGED, true, false)); //$NON-NLS-1$ //$NON-NLS-2$
 		children
 				.add(new PreviewResource(
-						"assume-valid.txt", IResource.FILE, "repository", null, null, true, false, false, StagingState.NOT_STAGED, false, true)); //$NON-NLS-1$ //$NON-NLS-2$
+						"assume-unchanged.txt", IResource.FILE, "repository", null, null, true, false, false, StagingState.NOT_STAGED, false, true)); //$NON-NLS-1$ //$NON-NLS-2$
 		project.children = children;
 		PREVIEW_FILESYSTEM_ROOT = Collections.singleton(project);
 
@@ -564,7 +564,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 		private Button showConflicts;
 
-		private Button showAssumeValid;
+		private Button showAssumeUnchanged;
 
 		private Button showDirty;
 
@@ -580,8 +580,8 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 					UIText.DecoratorPreferencesPage_iconsShowStaged);
 			showConflicts = SWTUtils.createCheckBox(composite,
 					UIText.DecoratorPreferencesPage_iconsShowConflicts);
-			showAssumeValid = SWTUtils.createCheckBox(composite,
-					UIText.DecoratorPreferencesPage_iconsShowAssumeValid);
+			showAssumeUnchanged = SWTUtils.createCheckBox(composite,
+					UIText.DecoratorPreferencesPage_iconsShowAssumeUnchanged);
 			showDirty = SWTUtils.createCheckBox(composite,
 					UIText.GitDecoratorPreferencePage_iconsShowDirty);
 
@@ -589,7 +589,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 			showUntracked.addSelectionListener(this);
 			showStaged.addSelectionListener(this);
 			showConflicts.addSelectionListener(this);
-			showAssumeValid.addSelectionListener(this);
+			showAssumeUnchanged.addSelectionListener(this);
 			showDirty.addSelectionListener(this);
 
 			final TabItem tabItem = new TabItem(parent, SWT.NONE);
@@ -607,9 +607,9 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 					.getBoolean(UIPreferences.DECORATOR_SHOW_STAGED_ICON));
 			showConflicts.setSelection(store
 					.getBoolean(UIPreferences.DECORATOR_SHOW_CONFLICTS_ICON));
-			showAssumeValid
+			showAssumeUnchanged
 					.setSelection(store
-							.getBoolean(UIPreferences.DECORATOR_SHOW_ASSUME_VALID_ICON));
+							.getBoolean(UIPreferences.DECORATOR_SHOW_ASSUME_UNCHANGED_ICON));
 			showDirty.setSelection(store
 					.getBoolean(UIPreferences.DECORATOR_SHOW_DIRTY_ICON));
 		}
@@ -628,9 +628,9 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 			showConflicts
 					.setSelection(store
 							.getDefaultBoolean(UIPreferences.DECORATOR_SHOW_CONFLICTS_ICON));
-			showAssumeValid
+			showAssumeUnchanged
 					.setSelection(store
-							.getDefaultBoolean(UIPreferences.DECORATOR_SHOW_ASSUME_VALID_ICON));
+							.getDefaultBoolean(UIPreferences.DECORATOR_SHOW_ASSUME_UNCHANGED_ICON));
 			showDirty
 					.setSelection(store
 							.getDefaultBoolean(UIPreferences.DECORATOR_SHOW_DIRTY_ICON));
@@ -646,8 +646,8 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 					.getSelection());
 			store.setValue(UIPreferences.DECORATOR_SHOW_CONFLICTS_ICON,
 					showConflicts.getSelection());
-			store.setValue(UIPreferences.DECORATOR_SHOW_ASSUME_VALID_ICON,
-					showAssumeValid.getSelection());
+			store.setValue(UIPreferences.DECORATOR_SHOW_ASSUME_UNCHANGED_ICON,
+					showAssumeUnchanged.getSelection());
 			store.setValue(UIPreferences.DECORATOR_SHOW_DIRTY_ICON,
 					showDirty.getSelection());
 		}
@@ -1045,12 +1045,12 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		@NonNull
 		private StagingState staged;
 
-		private boolean assumeValid;
+		private boolean assumeUnchanged;
 
 		public PreviewResource(String name, int type, String repositoryName,
 				String branch, String branchStatus, boolean tracked,
 				boolean ignored, boolean dirty, @NonNull StagingState staged,
-				boolean conflicts, boolean assumeValid) {
+				boolean conflicts, boolean assumeUnchanged) {
 
 			this.name = name;
 			this.repositoryName = repositoryName;
@@ -1063,7 +1063,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 			this.dirty = dirty;
 			this.staged = staged;
 			this.conflicts = conflicts;
-			this.assumeValid = assumeValid;
+			this.assumeUnchanged = assumeUnchanged;
 		}
 
 		@Override
@@ -1127,8 +1127,8 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		}
 
 		@Override
-		public boolean isAssumeValid() {
-			return assumeValid;
+		public boolean isAssumeUnchanged() {
+			return assumeUnchanged;
 		}
 	}
 }

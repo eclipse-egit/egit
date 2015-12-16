@@ -308,7 +308,7 @@ public class StagingEntry extends PlatformObject
 	}
 
 	@Override
-	public boolean isAssumeValid() {
+	public boolean isAssumeUnchanged() {
 		return false;
 	}
 

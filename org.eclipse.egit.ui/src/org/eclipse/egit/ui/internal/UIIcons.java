@@ -47,7 +47,7 @@ public class UIIcons {
 	public final static ImageDescriptor OVR_CONFLICT;
 
 	/** Decoration for tracked resources that we want to ignore changes in. */
-	public final static ImageDescriptor OVR_ASSUMEVALID;
+	public final static ImageDescriptor OVR_ASSUMEUNCHANGED;
 
 	/** Decoration for tracked resources that are dirty. */
 	public final static ImageDescriptor OVR_DIRTY;
@@ -322,7 +322,7 @@ public class UIIcons {
 		OVR_STAGED_RENAME = map("ovr/staged_renamed.gif"); //$NON-NLS-1$
 		OVR_UNTRACKED = map("ovr/untracked.gif"); //$NON-NLS-1$
 		OVR_CONFLICT = map("ovr/conflict.gif"); //$NON-NLS-1$
-		OVR_ASSUMEVALID = map("ovr/assume_valid.gif"); //$NON-NLS-1$
+		OVR_ASSUMEUNCHANGED = map("ovr/assume_unchanged.gif"); //$NON-NLS-1$
 		OVR_DIRTY = map("ovr/dirty.gif"); //$NON-NLS-1$
 		OVR_SYMLINK = map("ovr/symlink_ovr.gif"); //$NON-NLS-1$
 		ELCL16_FIND = map("elcl16/find.gif"); //$NON-NLS-1$
