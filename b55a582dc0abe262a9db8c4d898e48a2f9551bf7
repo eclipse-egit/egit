@@ -22,6 +22,30 @@
       "revId": "b55a582dc0abe262a9db8c4d898e48a2f9551bf7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_e836dc0b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitDecoratorPreferencePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-12-16T14:41:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27d6470d_6873acd8",
+      "range": {
+        "startLine": 1131,
+        "startChar": 10,
+        "endLine": 1131,
+        "endChar": 21
+      },
+      "revId": "b55a582dc0abe262a9db8c4d898e48a2f9551bf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
