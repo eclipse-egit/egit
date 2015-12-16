@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27d6470d_ce8cc1c1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-12-16T20:22:06Z",
+      "side": 1,
+      "message": "oops",
+      "parentUuid": "27d6470d_8824703a",
+      "revId": "34d51cbc0fbb9810da4baf3f0838b437ac71839f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27d6470d_284444cf",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2015-12-16T16:10:52Z",
       "side": 1,
       "message": "Maybe replacing this with stripGitCloneCommand(text) is better.",
+      "range": {
+        "startLine": 333,
+        "startChar": 12,
+        "endLine": 333,
+        "endChar": 23
+      },
+      "revId": "34d51cbc0fbb9810da4baf3f0838b437ac71839f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_ee8985ae",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-12-16T20:22:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27d6470d_284444cf",
       "range": {
         "startLine": 333,
         "startChar": 12,
