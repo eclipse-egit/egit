@@ -12,7 +12,6 @@ package org.eclipse.egit.core;
 import java.io.File;
 import java.io.IOException;
 
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.ObjectReader;
@@ -79,9 +78,10 @@ public class AdaptableFileTreeIterator extends FileTreeIterator {
 	public AbstractTreeIterator createSubtreeIterator(ObjectReader repo)
 			throws IncorrectObjectTypeException, IOException {
 		final File currentFile = ((FileEntry) current()).getFile();
-		IContainer container = IteratorService.findContainer(root, currentFile);
-		if (container != null)
-			return new ContainerTreeIterator(this, container);
+		// IContainer container = IteratorService.findContainer(root,
+		// currentFile);
+		// if (container != null)
+		// return new ContainerTreeIterator(this, container);
 		return new AdaptableFileTreeIterator(this, currentFile, root);
 	}
 
