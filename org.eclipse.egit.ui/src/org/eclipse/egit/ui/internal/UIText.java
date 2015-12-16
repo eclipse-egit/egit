@@ -3407,7 +3407,7 @@ public class UIText extends NLS {
 	public static String DecoratorPreferencesPage_iconsShowConflicts;
 
 	/** */
-	public static String DecoratorPreferencesPage_iconsShowAssumeValid;
+	public static String DecoratorPreferencesPage_iconsShowAssumeUnchanged;
 
 	/** */
 	public static String DeleteBranchCommand_CannotDeleteCheckedOutBranch;

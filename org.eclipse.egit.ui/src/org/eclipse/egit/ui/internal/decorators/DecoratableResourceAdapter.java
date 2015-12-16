@@ -58,7 +58,7 @@ class DecoratableResourceAdapter extends DecoratableResource {
 			setIgnored(baseState.isIgnored());
 			setDirty(baseState.isDirty());
 			setConflicts(baseState.hasConflicts());
-			setAssumeValid(baseState.isAssumeValid());
+			setAssumeUnchanged(baseState.isAssumeUnchanged());
 			setStagingState(baseState.getStagingState());
 			if (resource.getType() == IResource.PROJECT) {
 				// We only need this very expensive info for project decoration

@@ -73,7 +73,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.DECORATOR_SHOW_UNTRACKED_ICON, true);
 		store.setDefault(UIPreferences.DECORATOR_SHOW_STAGED_ICON, true);
 		store.setDefault(UIPreferences.DECORATOR_SHOW_CONFLICTS_ICON, true);
-		store.setDefault(UIPreferences.DECORATOR_SHOW_ASSUME_VALID_ICON, true);
+		store.setDefault(UIPreferences.DECORATOR_SHOW_ASSUME_UNCHANGED_ICON, true);
 		store.setDefault(UIPreferences.DECORATOR_SHOW_DIRTY_ICON, false);
 		store.setDefault(UIPreferences.WARN_BEFORE_COMMITTING, false);
 		store.setDefault(UIPreferences.WARN_BEFORE_COMMITTING_LEVEL,
