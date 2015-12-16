@@ -326,8 +326,8 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 		String preset = presetUri;
 		if (presetUri == null) {
 			Clipboard clippy = new Clipboard(Display.getCurrent());
-			String text = (String) clippy.getContents(TextTransfer
-					.getInstance());
+			String text = stripGitCloneCommand((String) clippy // NPE here!
+					.getContents(TextTransfer.getInstance()));
 			try {
 				if (text != null) {
 					text = text.trim();
