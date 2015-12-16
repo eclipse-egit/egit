@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27d6470d_113de8ea",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-16T22:08:04Z",
+      "side": 1,
+      "message": "Do we have to care about UnsupportedOperationException here, or can we be sure that since isSymbolicLink() \u003d\u003d true, the operation is supported? Same question also below.",
+      "revId": "48bf81642abe508d8e99b6b91b5a01d8ff3489f1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_d118e0aa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-16T22:08:04Z",
+      "side": 1,
+      "message": "What about encoding?",
+      "revId": "48bf81642abe508d8e99b6b91b5a01d8ff3489f1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_b14d1c96",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-16T22:08:04Z",
+      "side": 1,
+      "message": "Again: what about encoding?",
+      "revId": "48bf81642abe508d8e99b6b91b5a01d8ff3489f1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
