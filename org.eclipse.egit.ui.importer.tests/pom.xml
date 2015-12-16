@@ -29,6 +29,18 @@
 				<ui.test.vmargs>${uitest.vmparams} -XstartOnFirstThread</ui.test.vmargs>
 			</properties>
 		</profile>
+		<profile>
+			<id>other-os</id>
+			<activation>
+				<os>
+					<name>not-mac</name>
+					<family>!mac</family>
+				</os>
+			</activation>
+			<properties>
+				<ui.test.vmargs>${test.vmparams} ${uitest.vmparams}</ui.test.vmargs>
+			</properties>
+		</profile>
 	</profiles>
 
 	<build>
@@ -59,10 +71,15 @@
 					<useUIHarness>true</useUIHarness>
 					<useUIThread>false</useUIThread>
 					<argLine>${ui.test.vmargs}</argLine>
-					<dependencies>
+					<application>org.eclipse.ui.ide.workbench</application>
+ 					<dependencies>
 						<dependency>
 							<type>eclipse-plugin</type>
 							<artifactId>org.eclipse.egit.ui.importer</artifactId>
+						</dependency>
+						<dependency>
+							<type>eclipse-plugin</type>
+							<artifactId>org.eclipse.equinox.event</artifactId>
 						</dependency>
 					</dependencies>
 				</configuration>
