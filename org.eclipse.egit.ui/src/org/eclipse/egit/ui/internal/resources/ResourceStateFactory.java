@@ -288,6 +288,9 @@ public class ResourceStateFactory {
 		// locally deleted
 		Set<String> missing = indexDiffData.getMissing();
 		state.setMissing(missing.contains(repoRelativePath));
+
+		Set<String> assumeUnchanged = indexDiffData.getAssumeUnchanged();
+		state.setAssumeUnchanged(assumeUnchanged.contains(repoRelativePath));
 	}
 
 	private void extractContainerProperties(

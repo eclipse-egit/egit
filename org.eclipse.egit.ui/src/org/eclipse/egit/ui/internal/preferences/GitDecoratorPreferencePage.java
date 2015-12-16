@@ -153,7 +153,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 						"conflict.txt", IResource.FILE, "repository", null, null, true, false, true, StagingState.NOT_STAGED, true, false)); //$NON-NLS-1$ //$NON-NLS-2$
 		children
 				.add(new PreviewResource(
-						"assume-valid.txt", IResource.FILE, "repository", null, null, true, false, false, StagingState.NOT_STAGED, false, true)); //$NON-NLS-1$ //$NON-NLS-2$
+						"assume-unchanged.txt", IResource.FILE, "repository", null, null, true, false, false, StagingState.NOT_STAGED, false, true)); //$NON-NLS-1$ //$NON-NLS-2$
 		project.children = children;
 		PREVIEW_FILESYSTEM_ROOT = Collections.singleton(project);
 
@@ -1127,7 +1127,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		}
 
 		@Override
-		public boolean isAssumeValid() {
+		public boolean isAssumeUnchanged() {
 			return assumeValid;
 		}
 	}
