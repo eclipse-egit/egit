@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27d6470d_91a818da",
+        "filename": "org.eclipse.egit-feature/feature.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2015-12-17T08:28:10Z",
+      "side": 1,
+      "message": "* in which p2 repository can this feature be found ?\n* It needs to be available in the egit target platform otherwise the build can\u0027t resolve it",
+      "revId": "b450cef80387707907f1255921dcba94cb6f872d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
