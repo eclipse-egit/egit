@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27d6470d_149eb643",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-12-17T09:51:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27d6470d_113de8ea",
+      "revId": "48bf81642abe508d8e99b6b91b5a01d8ff3489f1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27d6470d_d118e0aa",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "27d6470d_d4e0ceb7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-12-17T09:51:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27d6470d_d118e0aa",
+      "revId": "48bf81642abe508d8e99b6b91b5a01d8ff3489f1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27d6470d_b14d1c96",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2015-12-16T22:08:04Z",
       "side": 1,
       "message": "Again: what about encoding?",
+      "revId": "48bf81642abe508d8e99b6b91b5a01d8ff3489f1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_34a3ba88",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2015-12-17T09:51:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27d6470d_b14d1c96",
       "revId": "48bf81642abe508d8e99b6b91b5a01d8ff3489f1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
