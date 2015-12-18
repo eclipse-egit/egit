@@ -352,6 +352,11 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		});
 		GridDataFactory.swtDefaults().align(SWT.FILL, SWT.FILL)
 				.grab(true, false).applyTo(createLink);
+		if (SWT.getPlatform().equals("gtk")) { //$NON-NLS-1$
+			addLink.setBackground(null);
+			cloneLink.setBackground(null);
+			createLink.setBackground(null);
+		}
 	}
 
 	@SuppressWarnings("boxing")
