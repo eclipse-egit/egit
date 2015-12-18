@@ -297,7 +297,6 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		});
 		final Color linkColor = JFaceColors.getHyperlinkText(emptyArea
 				.getDisplay());
-
 		Label addLabel = new Label(optionsArea, SWT.NONE);
 		Image addImage = UIIcons.NEW_REPOSITORY.createImage();
 		UIUtils.hookDisposal(addLabel, addImage);
@@ -305,6 +304,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		Hyperlink addLink = toolkit.createHyperlink(optionsArea,
 				UIText.RepositoriesView_linkAdd, SWT.WRAP);
 		addLink.setForeground(linkColor);
+		addLink.setBackground(null);
+		System.out.println("test"); //$NON-NLS-1$
 		addLink.addHyperlinkListener(new HyperlinkAdapter() {
 			@Override
 			public void linkActivated(HyperlinkEvent e) {
@@ -352,6 +353,11 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		});
 		GridDataFactory.swtDefaults().align(SWT.FILL, SWT.FILL)
 				.grab(true, false).applyTo(createLink);
+		if (SWT.getPlatform().equals("gtk")) { //$NON-NLS-1$
+			addLink.setBackground(null);
+			cloneLink.setBackground(null);
+			createLink.setBackground(null);
+		}
 	}
 
 	@SuppressWarnings("boxing")
@@ -442,8 +448,10 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				configurationListener);
 		initRepositoriesAndListeners();
 		activateContextService();
-
 		emptyArea.setBackground(viewer.getControl().getBackground());
+		for (int i = 0; i < emptyArea.getChildren().length; i++) {
+			System.out.println(emptyArea.getChildren()[i].handle);
+		}
 		if (!repositories.isEmpty())
 			layout.topControl = viewer.getControl();
 		else
