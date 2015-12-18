@@ -297,7 +297,6 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		});
 		final Color linkColor = JFaceColors.getHyperlinkText(emptyArea
 				.getDisplay());
-
 		Label addLabel = new Label(optionsArea, SWT.NONE);
 		Image addImage = UIIcons.NEW_REPOSITORY.createImage();
 		UIUtils.hookDisposal(addLabel, addImage);
@@ -352,6 +351,11 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		});
 		GridDataFactory.swtDefaults().align(SWT.FILL, SWT.FILL)
 				.grab(true, false).applyTo(createLink);
+		if (SWT.getPlatform().equals("gtk")) { //$NON-NLS-1$
+			addLink.setBackground(null);
+			cloneLink.setBackground(null);
+			createLink.setBackground(null);
+		}
 	}
 
 	@SuppressWarnings("boxing")
@@ -442,7 +446,6 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				configurationListener);
 		initRepositoriesAndListeners();
 		activateContextService();
-
 		emptyArea.setBackground(viewer.getControl().getBackground());
 		if (!repositories.isEmpty())
 			layout.topControl = viewer.getControl();
