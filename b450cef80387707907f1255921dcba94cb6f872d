@@ -16,6 +16,24 @@
       "revId": "b450cef80387707907f1255921dcba94cb6f872d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_d8d63c6b",
+        "filename": "org.eclipse.egit-feature/feature.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2015-12-20T11:59:47Z",
+      "side": 1,
+      "message": "* Seems to be https://repo.eclipse.org/content/repositories/cbi/ according to bug 394793.\n* In the target platform? It should be a build/packaging time dependency only.",
+      "parentUuid": "27d6470d_91a818da",
+      "revId": "b450cef80387707907f1255921dcba94cb6f872d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
