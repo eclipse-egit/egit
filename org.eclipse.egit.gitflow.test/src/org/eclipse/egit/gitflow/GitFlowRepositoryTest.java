@@ -134,7 +134,7 @@ public class GitFlowRepositoryTest extends AbstractDualRepositoryTestCase {
 
 		new FeatureStartOperation(gfRepo, MY_FEATURE).execute(null);
 
-		Ref actualFeatureRef = repository.getRef(R_HEADS
+		Ref actualFeatureRef = repository.exactRef(R_HEADS
 				+ gfRepo.getConfig().getFeaturePrefix() + MY_FEATURE);
 		assertEquals(MY_FEATURE, gfRepo.getFeatureBranchName(actualFeatureRef));
 	}
