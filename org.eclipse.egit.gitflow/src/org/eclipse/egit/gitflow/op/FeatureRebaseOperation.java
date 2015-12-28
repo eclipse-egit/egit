@@ -45,7 +45,7 @@ public final class FeatureRebaseOperation extends GitFlowOperation {
 			}
 
 			Repository jgitRepo = repository.getRepository();
-			Ref develop = jgitRepo.getRef(repository.getConfig().getDevelopFull());
+			Ref develop = jgitRepo.exactRef(repository.getConfig().getDevelopFull());
 			RebaseOperation op = new RebaseOperation(jgitRepo, develop);
 			op.execute(null);
 

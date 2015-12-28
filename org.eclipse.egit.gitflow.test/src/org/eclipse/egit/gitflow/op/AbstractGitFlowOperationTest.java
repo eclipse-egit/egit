@@ -60,7 +60,7 @@ abstract public class AbstractGitFlowOperationTest extends GitTestCase {
 
 	protected Ref findBranch(Repository repository, String branchName)
 			throws IOException {
-		return repository.getRef(R_HEADS + branchName);
+		return repository.exactRef(R_HEADS + branchName);
 	}
 
 	protected RevCommit parseCommit(Repository repo, AnyObjectId id)
