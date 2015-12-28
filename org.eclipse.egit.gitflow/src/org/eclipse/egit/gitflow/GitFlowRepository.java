@@ -85,7 +85,7 @@ public class GitFlowRepository {
 	 * @throws IOException
 	 */
 	public Ref findBranch(String branchName) throws IOException {
-		return repository.getRef(R_HEADS + branchName);
+		return repository.exactRef(R_HEADS + branchName);
 	}
 
 	/**
@@ -257,7 +257,7 @@ public class GitFlowRepository {
 			throws MissingObjectException, IncorrectObjectTypeException,
 			IOException {
 		try (RevWalk revWalk = new RevWalk(repository)) {
-			Ref tagRef = repository.getRef(R_TAGS + tagName);
+			Ref tagRef = repository.exactRef(R_TAGS + tagName);
 			if (tagRef == null) {
 				return null;
 			}

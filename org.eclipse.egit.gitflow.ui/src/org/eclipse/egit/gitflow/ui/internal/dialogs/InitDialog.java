@@ -287,7 +287,7 @@ public class InitDialog extends TitleAreaDialog {
 
 	private boolean isMasterBranchAvailable(String master, Repository repository) {
 		try {
-			return repository.getRef(R_HEADS + master) != null;
+			return repository.exactRef(R_HEADS + master) != null;
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
