@@ -50,5 +50,5 @@ Export-Package: org.eclipse.egit.gitflow.ui;version="4.2.0";x-friends:="org.ecli
  org.eclipse.egit.gitflow.ui.internal.dialogs;version="4.2.0";x-internal:=true,
  org.eclipse.egit.gitflow.ui.internal.factories;version="4.2.0";x-internal:=true,
  org.eclipse.egit.gitflow.ui.internal.menu;version="4.2.0";x-internal:=true,
- org.eclipse.egit.gitflow.ui.internal.selection;version="4.2.0";x-internal:=true,
+ org.eclipse.egit.gitflow.ui.internal.properties;version="4.2.0";x-internal:=true,
  org.eclipse.egit.gitflow.ui.internal.validation;version="4.2.0";x-internal:=true

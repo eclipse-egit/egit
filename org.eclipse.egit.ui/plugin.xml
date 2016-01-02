@@ -6056,4 +6056,14 @@
         </with>
      </definition>
   </extension>
+  <extension
+        point="org.eclipse.ui.services">
+     <sourceProvider
+           provider="org.eclipse.egit.ui.internal.selection.RepositorySourceProvider">
+        <variable
+              name="org.eclipse.egit.ui.currentRepository"
+              priorityLevel="activeWorkbenchWindow">
+        </variable>
+     </sourceProvider>
+  </extension>
 </plugin>
