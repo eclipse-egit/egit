@@ -1,0 +1,371 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_822f1c12",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-03T22:13:51Z",
+      "side": 1,
+      "message": "this formatting change seems unrelated",
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_023b0c51",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-03T22:13:51Z",
+      "side": 1,
+      "message": "unchangedFileName ?",
+      "range": {
+        "startLine": 237,
+        "startChar": 9,
+        "endLine": 237,
+        "endChar": 20
+      },
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_6b981182",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-03T22:13:51Z",
+      "side": 1,
+      "message": "missing @ ?\n\n//@formatter:on",
+      "range": {
+        "startLine": 274,
+        "startChar": 4,
+        "endLine": 274,
+        "endChar": 13
+      },
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_62e5b851",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-03T22:13:51Z",
+      "side": 1,
+      "message": "s/Gets the impacted/Get the affected/",
+      "range": {
+        "startLine": 283,
+        "startChar": 5,
+        "endLine": 283,
+        "endChar": 22
+      },
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_82eabc20",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-03T22:13:51Z",
+      "side": 1,
+      "message": "style nit: remove extra blank line",
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_62fcd8e5",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-03T22:13:51Z",
+      "side": 1,
+      "message": "move these assertions up to line 318",
+      "range": {
+        "startLine": 343,
+        "startChar": 0,
+        "endLine": 344,
+        "endChar": 42
+      },
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_4207d48f",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-03T22:13:51Z",
+      "side": 1,
+      "message": "style nit: missing braces",
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_0b894532",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/TestRepository.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-03T22:13:51Z",
+      "side": 1,
+      "message": "s/Removes/Remove/",
+      "range": {
+        "startLine": 366,
+        "startChar": 4,
+        "endLine": 366,
+        "endChar": 11
+      },
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d6470d_2b8e093b",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/TestRepository.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-03T22:13:51Z",
+      "side": 1,
+      "message": "I would call this removeFromIndex to distinguish git rm from git rm --cached",
+      "range": {
+        "startLine": 372,
+        "startChar": 13,
+        "endLine": 372,
+        "endChar": 15
+      },
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_a2f500f8",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncCache.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-03T22:13:51Z",
+      "side": 1,
+      "message": "strange method name, why ToCache ? The method name should express what the method does/returns not how it is used.",
+      "range": {
+        "startLine": 167,
+        "startChar": 43,
+        "endLine": 167,
+        "endChar": 50
+      },
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_c2f2040d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncCache.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-03T22:13:51Z",
+      "side": 1,
+      "message": "could you use shorter variable names for local variables, I think these long names make the code harder to read\n\ne.g. \n- resources instead of resourceToInclude\n- paths instead of pathsToCache",
+      "range": {
+        "startLine": 168,
+        "startChar": 17,
+        "endLine": 168,
+        "endChar": 35
+      },
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_22ad70f5",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncCache.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-03T22:13:51Z",
+      "side": 1,
+      "message": "isn\u0027t this path constant for all resources of the same synchronisation ? Then it shouldn\u0027t be recomputed for each resource",
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_62b77841",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/ThreeWayDiffEntry.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-03T22:13:51Z",
+      "side": 1,
+      "message": "s/Converts/Convert/",
+      "range": {
+        "startLine": 87,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 12
+      },
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_02c86cb8",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/ThreeWayDiffEntry.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-03T22:13:51Z",
+      "side": 1,
+      "message": "why headers ?",
+      "range": {
+        "startLine": 87,
+        "startChar": 48,
+        "endLine": 87,
+        "endChar": 55
+      },
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_42b27452",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/ThreeWayDiffEntry.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-03T22:13:51Z",
+      "side": 1,
+      "message": "did you mean ThreeWay ?",
+      "range": {
+        "startLine": 87,
+        "startChar": 31,
+        "endLine": 87,
+        "endChar": 38
+      },
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_a2c0a094",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/ThreeWayDiffEntry.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-03T22:13:51Z",
+      "side": 1,
+      "message": "s/path/paths/\n\nwhy is this side effect needed ?",
+      "range": {
+        "startLine": 93,
+        "startChar": 23,
+        "endLine": 93,
+        "endChar": 27
+      },
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_e2caa8b2",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/ThreeWayDiffEntry.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-03T22:13:51Z",
+      "side": 1,
+      "message": "why headers ?",
+      "range": {
+        "startLine": 95,
+        "startChar": 12,
+        "endLine": 95,
+        "endChar": 19
+      },
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
