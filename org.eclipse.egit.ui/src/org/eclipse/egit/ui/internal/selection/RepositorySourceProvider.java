@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2016 Thomas Wolf <thomas.wofl@paranor.ch>
+ * Copyright (C) 2016 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -33,7 +33,7 @@ public class RepositorySourceProvider extends AbstractSourceProvider
 	/**
 	 * Key for the new variable in the
 	 * {@link org.eclipse.core.expressions.IEvaluationContext}; may be used in a
-	 * <with> element in plugin.xml to reference the variable.
+	 * &lt;with> element in plugin.xml to reference the variable.
 	 */
 	public static final String REPOSITORY_PROPERTY = "org.eclipse.egit.ui.currentRepository"; //$NON-NLS-1$
 
