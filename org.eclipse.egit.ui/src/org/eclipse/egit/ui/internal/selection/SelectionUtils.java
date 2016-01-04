@@ -279,6 +279,9 @@ public class SelectionUtils {
 
 	private static IStructuredSelection getSelectionFromEditorInput(
 			IEvaluationContext context) {
+		if (context == null) {
+			return StructuredSelection.EMPTY;
+		}
 		Object object = context.getVariable(ISources.ACTIVE_EDITOR_INPUT_NAME);
 		if (!(object instanceof IEditorInput)) {
 			Object editor = context.getVariable(ISources.ACTIVE_EDITOR_NAME);

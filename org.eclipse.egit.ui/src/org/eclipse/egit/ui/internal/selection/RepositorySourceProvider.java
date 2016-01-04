@@ -11,6 +11,11 @@ package org.eclipse.egit.ui.internal.selection;
 import java.util.Collections;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.AbstractSourceProvider;
@@ -39,6 +44,8 @@ public class RepositorySourceProvider extends AbstractSourceProvider
 
 	private Repository repository;
 
+	private Job updateSelectionJob;
+
 	@Override
 	public void initialize(IServiceLocator locator) {
 		super.initialize(locator);
@@ -49,6 +56,11 @@ public class RepositorySourceProvider extends AbstractSourceProvider
 	public void dispose() {
 		PlatformUI.getWorkbench().removeWindowListener(this);
 		repository = null;
+		if (updateSelectionJob != null) {
+			updateSelectionJob.cancel();
+			updateSelectionJob = null;
+		}
+
 	}
 
 	@Override
@@ -63,19 +75,39 @@ public class RepositorySourceProvider extends AbstractSourceProvider
 
 	@Override
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-		Repository newRepository;
-		if (selection == null) {
-			newRepository = null;
-		} else {
-			newRepository = SelectionUtils.getRepository(
-					SelectionUtils.getStructuredSelection(selection));
+		if (updateSelectionJob != null) {
+			updateSelectionJob.cancel();
 		}
-		if (repository != newRepository) {
-			repository = newRepository;
-			fireSourceChanged(ISources.ACTIVE_WORKBENCH_WINDOW,
-					REPOSITORY_PROPERTY,
-					repository);
-		}
+		final ISelection sel = selection;
+		updateSelectionJob = new Job(
+				UIText.RepositorySourceProvider_updateRepoSelection) {
+
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				if (monitor.isCanceled()) {
+					return Status.CANCEL_STATUS;
+				}
+				Repository newRepository;
+				if (sel == null) {
+					newRepository = null;
+				} else {
+					newRepository = SelectionUtils.getRepository(
+							SelectionUtils.getStructuredSelection(sel));
+				}
+				if (monitor.isCanceled()) {
+					return Status.CANCEL_STATUS;
+				}
+				if (repository != newRepository) {
+					repository = newRepository;
+					fireSourceChanged(ISources.ACTIVE_WORKBENCH_WINDOW,
+							REPOSITORY_PROPERTY, repository);
+				}
+				return Status.OK_STATUS;
+			}
+
+		};
+		updateSelectionJob.setSystem(true);
+		updateSelectionJob.schedule();
 	}
 
 	@Override
@@ -86,6 +118,10 @@ public class RepositorySourceProvider extends AbstractSourceProvider
 	@Override
 	public void windowDeactivated(IWorkbenchWindow window) {
 		window.getSelectionService().removeSelectionListener(this);
+		if (updateSelectionJob != null) {
+			updateSelectionJob.cancel();
+			updateSelectionJob = null;
+		}
 	}
 
 	@Override
