@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_48ac53a8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/RepositorySourceProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-04T12:27:34Z",
+      "side": 1,
+      "message": "The problem now is that for those who never installed gitflow plugins (me) the default UI starts to report UI freezes on selections where I previously never seen them :-(.\n\nQuestion: can we do the selection update asynchronously in background job? Or will this change break gitflow? If the later the case, can we move this RepositorySourceProvider to the gitflow, so that at least the \"standard\" egit installation is not affected?\n\njava.lang.Exception: Stack Trace\n\tat org.eclipse.core.internal.properties.PropertyManager2.getProperty(PropertyManager2.java:139)\n\tat org.eclipse.core.internal.resources.Resource.getPersistentProperty(Resource.java:1152)\n\tat org.eclipse.egit.core.internal.util.ResourceUtil.getGitProvider(ResourceUtil.java:245)\n\tat org.eclipse.egit.core.project.RepositoryMapping.getMapping(RepositoryMapping.java:364)\n\tat org.eclipse.egit.core.project.RepositoryMapping.getMapping(RepositoryMapping.java:400)\n\tat org.eclipse.egit.ui.internal.selection.SelectionUtils.getRepository(SelectionUtils.java:227)\n\tat org.eclipse.egit.ui.internal.selection.SelectionUtils.getRepository(SelectionUtils.java:61)\n\tat org.eclipse.egit.ui.internal.selection.RepositorySourceProvider.selectionChanged(RepositorySourceProvider.java:70)",
+      "revId": "ea6a95e265898e17a71586d06de75eee3277aef3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
