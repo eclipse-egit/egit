@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_8e3bc3f3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/RepositorySourceProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-04T21:52:44Z",
+      "side": 1,
+      "message": "Before scheduling:\n\nThe job should be made system (why users should care what we are doing in background) and not user, because it is not started by user:\n\nsetSystem(true);\nsetUser(false);\n\nThe job must not allow to run multiple times and in parallel to itself: so ideally it should be a field, so that we can cancel() it before we schedule it next time. This will avoid multiple calls to clients and also avoid unpredictable order of calls (where the last reported repository is not actually the one selected last).\n\nAlso we should check for monitor.isCancelled() at the begin and between getRepository()/fireSourceChanged(), because at this time it might be next selection job already waiting to be run. After monitor.isCancelled() we should return Status.CANCEl_STATUS.\n\nOn dispose()/windowDeactivated() we should cancel() and null the job field to avoid memory leaks.",
+      "revId": "4d5f2a8c5537e6677974599d740e6ea37074ac43",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
