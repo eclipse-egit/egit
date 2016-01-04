@@ -1454,6 +1454,9 @@ public class UIText extends NLS {
 	public static String RepositorySelectionPage_UriMustNotHaveTrailingSpacesMessage;
 
 	/** */
+	public static String RepositorySourceProvider_updateRepoSelection;
+
+	/** */
 	public static String SoftResetToRevisionAction_softReset;
 
 	/** */
