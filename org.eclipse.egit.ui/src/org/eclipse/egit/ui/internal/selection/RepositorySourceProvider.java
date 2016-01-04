@@ -11,6 +11,11 @@ package org.eclipse.egit.ui.internal.selection;
 import java.util.Collections;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.AbstractSourceProvider;
@@ -63,19 +68,28 @@ public class RepositorySourceProvider extends AbstractSourceProvider
 
 	@Override
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-		Repository newRepository;
-		if (selection == null) {
-			newRepository = null;
-		} else {
-			newRepository = SelectionUtils.getRepository(
-					SelectionUtils.getStructuredSelection(selection));
-		}
-		if (repository != newRepository) {
-			repository = newRepository;
-			fireSourceChanged(ISources.ACTIVE_WORKBENCH_WINDOW,
-					REPOSITORY_PROPERTY,
-					repository);
-		}
+		final ISelection sel = selection;
+		Job job = new Job(UIText.RepositorySourceProvider_updateRepoSelection) {
+
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				Repository newRepository;
+				if (sel == null) {
+					newRepository = null;
+				} else {
+					newRepository = SelectionUtils.getRepository(
+							SelectionUtils.getStructuredSelection(sel));
+				}
+				if (repository != newRepository) {
+					repository = newRepository;
+					fireSourceChanged(ISources.ACTIVE_WORKBENCH_WINDOW,
+							REPOSITORY_PROPERTY, repository);
+				}
+				return Status.OK_STATUS;
+			}
+
+		};
+		job.schedule();
 	}
 
 	@Override
