@@ -67,17 +67,19 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 			IStructuredSelection selection = (IStructuredSelection) currentSelection;
 			Object selected = selection.getFirstElement();
 			ref = getRef(selected);
-		} else
+		} else {
 			ref = null;
+		}
 
 		Object context = event.getApplicationContext();
-		if (!(context instanceof IEvaluationContext))
+		if (!(context instanceof IEvaluationContext)) {
 			return;
+		}
 
-		final Repository repository = SelectionUtils
-				.getRepository((IEvaluationContext) context);
-		if (repository == null)
+		final Repository repository = SelectionUtils.getCurrentRepository();
+		if (repository == null) {
 			return;
+		}
 
 		BasicConfigurationDialog.show(repository);
 
@@ -109,8 +111,7 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 	@Override
 	public void setEnabled(Object evaluationContext) {
 		if (evaluationContext instanceof IEvaluationContext) {
-			IEvaluationContext ctx = (IEvaluationContext) evaluationContext;
-			Repository repo = SelectionUtils.getRepository(ctx);
+			Repository repo = SelectionUtils.getCurrentRepository();
 			if (repo != null) {
 				boolean enabled = isEnabledForState(repo,
 						repo.getRepositoryState());

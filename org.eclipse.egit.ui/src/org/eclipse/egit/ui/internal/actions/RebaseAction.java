@@ -17,9 +17,9 @@ import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commands.shared.AbortRebaseCommand;
 import org.eclipse.egit.ui.internal.commands.shared.AbstractRebaseCommandHandler;
-import org.eclipse.egit.ui.internal.commands.shared.AbstractSharedCommandHandler;
 import org.eclipse.egit.ui.internal.commands.shared.ContinueRebaseCommand;
 import org.eclipse.egit.ui.internal.commands.shared.SkipRebaseCommand;
+import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.swt.SWT;
@@ -101,8 +101,7 @@ public class RebaseAction extends RepositoryAction implements
 	}
 
 	private Repository getRepository() {
-		ExecutionEvent event = createExecutionEvent();
-		return AbstractSharedCommandHandler.getRepository(event);
+		return SelectionUtils.getCurrentRepository();
 	}
 
 	private boolean isInRebasingState(Repository repo) {
