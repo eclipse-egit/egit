@@ -14,9 +14,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
@@ -33,7 +31,6 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.CompoundContributionItem;
-import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.menus.IWorkbenchContribution;
 import org.eclipse.ui.services.IServiceLocator;
 
@@ -43,11 +40,9 @@ import org.eclipse.ui.services.IServiceLocator;
 public class StashesMenu extends CompoundContributionItem implements
 		IWorkbenchContribution {
 
-	private IServiceLocator serviceLocator;
-
 	@Override
 	public void initialize(IServiceLocator locator) {
-		this.serviceLocator = locator;
+		//
 	}
 
 	@Override
@@ -122,15 +117,7 @@ public class StashesMenu extends CompoundContributionItem implements
 	}
 
 	private Repository getRepository() {
-		if (serviceLocator == null)
-			return null;
-
-		IHandlerService handlerService = CommonUtils.getService(serviceLocator, IHandlerService.class);
-		if (handlerService == null)
-			return null;
-
-		IEvaluationContext evaluationContext = handlerService.getCurrentState();
-		return SelectionUtils.getRepository(evaluationContext);
+		return SelectionUtils.getCurrentRepository();
 	}
 
 	private static ActionContributionItem createStashItem(
