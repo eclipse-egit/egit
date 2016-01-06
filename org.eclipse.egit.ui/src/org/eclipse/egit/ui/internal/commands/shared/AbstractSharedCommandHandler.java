@@ -13,13 +13,10 @@ package org.eclipse.egit.ui.internal.commands.shared;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
-import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -27,20 +24,6 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * Abstract super class for commands shared between different components in EGit
  */
 public abstract class AbstractSharedCommandHandler extends AbstractHandler {
-
-
-	/**
-	 * @param event
-	 *            the {@link ExecutionEvent}
-	 * @return a {@link Repository} if all elements in the current selection map
-	 *         to the same {@link Repository}, otherwise null
-	 */
-	public static Repository getRepository(ExecutionEvent event) {
-		Object ctx = event.getApplicationContext();
-		if (ctx instanceof IEvaluationContext)
-			return SelectionUtils.getRepository((IEvaluationContext) ctx);
-		return null;
-	}
 
 	/**
 	 *

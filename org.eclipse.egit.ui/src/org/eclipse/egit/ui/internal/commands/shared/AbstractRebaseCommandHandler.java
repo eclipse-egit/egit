@@ -28,6 +28,7 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.branch.CleanupUncomittedChangesDialog;
 import org.eclipse.egit.ui.internal.rebase.RebaseResultDialog;
+import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.api.RebaseCommand;
@@ -215,7 +216,10 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		Repository repository = getRepository(event);
+		Repository repository = SelectionUtils.getCurrentRepository();
+		if (repository == null) {
+			return null;
+		}
 		execute(repository);
 		return null;
 	}

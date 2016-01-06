@@ -36,7 +36,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.menus.IWorkbenchContribution;
 import org.eclipse.ui.services.IServiceLocator;
 
@@ -47,8 +46,6 @@ public class SwitchToMenu extends ContributionItem implements
 		IWorkbenchContribution {
 	/** the maximum number of branches to show in the sub-menu */
 	static final int MAX_NUM_MENU_ENTRIES = 20;
-
-	private IHandlerService handlerService;
 
 	private final Image branchImage;
 
@@ -76,13 +73,10 @@ public class SwitchToMenu extends ContributionItem implements
 
 	@Override
 	public void fill(Menu menu, int index) {
-		if (handlerService == null)
-			return;
-
-		Repository repository = SelectionUtils
-				.getRepository(handlerService.getCurrentState());
-		if (repository != null)
+		Repository repository = SelectionUtils.getCurrentRepository();
+		if (repository != null) {
 			createDynamicMenu(menu, repository);
+		}
 	}
 
 	private void createDynamicMenu(Menu menu, final Repository repository) {
@@ -215,7 +209,7 @@ public class SwitchToMenu extends ContributionItem implements
 
 	@Override
 	public void initialize(IServiceLocator serviceLocator) {
-		handlerService = CommonUtils.getService(serviceLocator, IHandlerService.class);
+		//
 	}
 
 	@Override
