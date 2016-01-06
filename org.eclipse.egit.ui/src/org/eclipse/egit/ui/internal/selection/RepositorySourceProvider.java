@@ -9,21 +9,26 @@
 package org.eclipse.egit.ui.internal.selection;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Display;
@@ -100,7 +105,7 @@ public class RepositorySourceProvider extends AbstractSourceProvider
 			// we should not try to compute anything while user selects text:
 			// this may show disturbing dialogs in case user just continuously
 			// selects in the editor
-			job.schedule(StructuredSelection.EMPTY);
+			job.schedule(SelectionUtils.getStructuredSelection(selection));
 		} else {
 			job.schedule((IStructuredSelection) selection);
 		}
@@ -232,7 +237,7 @@ public class RepositorySourceProvider extends AbstractSourceProvider
 			if (s == null || monitor.isCanceled()) {
 				return cancelled();
 			}
-			Repository newRepository = SelectionUtils.getRepository(s);
+			Repository newRepository = getRepository(s);
 			boolean needUpdate;
 			synchronized (this) {
 				needUpdate = repository != newRepository;
@@ -252,5 +257,57 @@ public class RepositorySourceProvider extends AbstractSourceProvider
 			}
 			return Status.CANCEL_STATUS;
 		}
+	}
+
+	/**
+	 * Figure out which repository to use. All selected resources must map to
+	 * the same Git repository.
+	 *
+	 * @param selection
+	 * @return repository for current project, or null
+	 */
+	@Nullable
+	static Repository getRepository(@NonNull IStructuredSelection selection) {
+
+		IPath[] locations = SelectionUtils.getSelectedLocations(selection);
+		if (GitTraceLocation.SELECTION.isActive())
+			GitTraceLocation.getTrace().trace(
+					GitTraceLocation.SELECTION.getLocation(), "selection=" //$NON-NLS-1$
+					+ selection + ", locations=" //$NON-NLS-1$
+					+ Arrays.toString(locations));
+		boolean hadNull = false;
+		Repository result = null;
+		for (IPath location : locations) {
+			RepositoryMapping mapping = RepositoryMapping.getMapping(location);
+			Repository repo;
+			if (mapping != null) {
+				repo = mapping.getRepository();
+			} else {
+				// location is outside workspace
+				repo = org.eclipse.egit.core.Activator.getDefault()
+						.getRepositoryCache().getRepository(location);
+			}
+			if (repo == null) {
+				hadNull = true;
+			}
+			if (result == null) {
+				result = repo;
+			}
+			boolean mismatch = hadNull && result != null;
+			if (mismatch || result != repo) {
+				return null;
+			}
+		}
+
+		if (result == null) {
+			for (Object o : selection.toArray()) {
+				Repository nextRepo = AdapterUtils.adapt(o, Repository.class);
+				if (nextRepo != null && result != null && result != nextRepo) {
+					return null;
+				}
+				result = nextRepo;
+			}
+		}
+		return result;
 	}
 }
