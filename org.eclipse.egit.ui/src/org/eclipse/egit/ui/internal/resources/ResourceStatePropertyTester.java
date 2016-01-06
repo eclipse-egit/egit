@@ -75,6 +75,7 @@ public class ResourceStatePropertyTester extends PropertyTester {
 		if (collection.isEmpty()) {
 			return false;
 		}
+		Repository repository;
 		IStructuredSelection selection = null;
 		Object first = collection.iterator().next();
 		if (collection.size() == 1 && first instanceof ITextSelection) {
@@ -83,7 +84,7 @@ public class ResourceStatePropertyTester extends PropertyTester {
 		} else {
 			selection = new StructuredSelection(new ArrayList<>(collection));
 		}
-		Repository repository = SelectionUtils.getRepository(selection);
+		repository = SelectionUtils.getCurrentRepository();
 		if (repository == null || repository.isBare()) {
 			return false;
 		}
