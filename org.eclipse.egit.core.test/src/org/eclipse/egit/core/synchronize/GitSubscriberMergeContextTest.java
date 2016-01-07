@@ -9,11 +9,11 @@
  *******************************************************************************/
 package org.eclipse.egit.core.synchronize;
 
-import static org.junit.Assert.assertTrue;
 import static org.eclipse.jgit.lib.Constants.HEAD;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.LinkedHashSet;
@@ -370,10 +370,17 @@ public class GitSubscriberMergeContextTest extends ModelTestCase {
 		setContentsAndCommit(testRepo, iFile1, branchChanges + initialContent1,
 				"branch commit");
 		iFile2.delete(true, new NullProgressMonitor());
+		testUtils.waitForJobs(500, 5000, null);
+		assertFalse(iFile2.exists());
+
 		testRepo.addAndCommit(iProject, file2, "branch commit - deleted file2."
 				+ SAMPLE_FILE_EXTENSION);
 
 		testRepo.checkoutBranch(MASTER);
+		iProject.refreshLocal(IResource.DEPTH_INFINITE,
+				new NullProgressMonitor());
+		testUtils.waitForJobs(500, 5000, null);
+		assertTrue(iFile2.exists());
 
 		final String masterChanges = "some changes\n";
 		setContentsAndCommit(testRepo, iFile1, initialContent1 + masterChanges,
@@ -381,7 +388,7 @@ public class GitSubscriberMergeContextTest extends ModelTestCase {
 		iProject.refreshLocal(IResource.DEPTH_INFINITE,
 				new NullProgressMonitor());
 		// end setup
-
+		testUtils.waitForJobs(500, 5000, null);
 		IMergeContext mergeContext = prepareModelContext(repo, iFile1, MASTER,
 				BRANCH);
 		IDiff node = mergeContext.getDiffTree().getDiff(iFile1);
