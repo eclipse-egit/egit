@@ -313,9 +313,9 @@ public class TestUtils {
 	 * @param family
 	 * @throws InterruptedException
 	 */
-	public void waitForJobs(long maxWaitTime, Object family)
+	public static void waitForJobs(long maxWaitTime, Object family)
 			throws InterruptedException {
-		waitForJobs(50, maxWaitTime, family);
+		waitForJobs(100, maxWaitTime, family);
 	}
 
 	/**
@@ -328,20 +328,30 @@ public class TestUtils {
 	 *            can be null which means all job families
 	 * @throws InterruptedException
 	 */
-	public void waitForJobs(long minWaitTime, long maxWaitTime, Object family)
+	public static void waitForJobs(long minWaitTime, long maxWaitTime,
+			Object family)
 			throws InterruptedException {
-		Thread.sleep(minWaitTime);
 		long start = System.currentTimeMillis();
+		Thread.sleep(minWaitTime);
 		IJobManager jobManager = Job.getJobManager();
-
 		Job[] jobs = jobManager.find(family);
-		while (jobs.length > 0) {
-			Thread.sleep(100);
+		while (busy(jobs)) {
+			Thread.sleep(50);
 			jobs = jobManager.find(family);
 			if (System.currentTimeMillis() - start > maxWaitTime) {
 				return;
 			}
 		}
+	}
+
+	private static boolean busy(Job[] jobs) {
+		for (Job job : jobs) {
+			int state = job.getState();
+			if (state == Job.RUNNING || state == Job.WAITING) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static HashMap<String, String> mkmap(String... args) {

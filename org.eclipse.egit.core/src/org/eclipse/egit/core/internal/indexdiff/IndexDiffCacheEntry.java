@@ -44,6 +44,7 @@ import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.errors.IndexReadException;
@@ -96,9 +97,16 @@ public class IndexDiffCacheEntry {
 
 	/**
 	 * @param repository
+	 * @param listener
+	 *            can be null
 	 */
-	public IndexDiffCacheEntry(Repository repository) {
+	public IndexDiffCacheEntry(Repository repository,
+			@Nullable IndexDiffChangedListener listener) {
 		this.repository = repository;
+		if (listener != null) {
+			addIndexDiffChangedListener(listener);
+		}
+
 		indexChangedListenerHandle = repository.getListenerList().addIndexChangedListener(
 				new IndexChangedListener() {
 					@Override
@@ -113,6 +121,7 @@ public class IndexDiffCacheEntry {
 						scheduleReloadJob("RefsChanged"); //$NON-NLS-1$
 					}
 				});
+
 		scheduleReloadJob("IndexDiffCacheEntry construction"); //$NON-NLS-1$
 		createResourceChangeListener();
 		if (!repository.isBare()) {

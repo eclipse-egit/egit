@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.test.TestRepository;
+import org.eclipse.egit.core.test.TestUtils;
 import org.eclipse.egit.core.test.models.ModelTestCase;
 import org.eclipse.egit.core.test.models.SampleResourceMapping;
 import org.eclipse.jgit.api.Git;
@@ -370,7 +371,7 @@ public class GitSubscriberMergeContextTest extends ModelTestCase {
 		setContentsAndCommit(testRepo, iFile1, branchChanges + initialContent1,
 				"branch commit");
 		iFile2.delete(true, new NullProgressMonitor());
-		testUtils.waitForJobs(500, 5000, null);
+		TestUtils.waitForJobs(500, 5000, null);
 		assertFalse(iFile2.exists());
 
 		testRepo.addAndCommit(iProject, file2, "branch commit - deleted file2."
@@ -379,7 +380,7 @@ public class GitSubscriberMergeContextTest extends ModelTestCase {
 		testRepo.checkoutBranch(MASTER);
 		iProject.refreshLocal(IResource.DEPTH_INFINITE,
 				new NullProgressMonitor());
-		testUtils.waitForJobs(500, 5000, null);
+		TestUtils.waitForJobs(500, 5000, null);
 		assertTrue(iFile2.exists());
 
 		final String masterChanges = "some changes\n";
@@ -388,7 +389,7 @@ public class GitSubscriberMergeContextTest extends ModelTestCase {
 		iProject.refreshLocal(IResource.DEPTH_INFINITE,
 				new NullProgressMonitor());
 		// end setup
-		testUtils.waitForJobs(500, 5000, null);
+		TestUtils.waitForJobs(500, 5000, null);
 		IMergeContext mergeContext = prepareModelContext(repo, iFile1, MASTER,
 				BRANCH);
 		IDiff node = mergeContext.getDiffTree().getDiff(iFile1);
