@@ -126,7 +126,8 @@ public class PushBranchWizard extends Wizard {
 
 	@Override
 	public boolean canFinish() {
-		return getContainer().getCurrentPage() == confirmationPage;
+		return getContainer().getCurrentPage() == confirmationPage
+				&& getContainer().getCurrentPage().getErrorMessage() == null;
 	}
 
 	@Override
