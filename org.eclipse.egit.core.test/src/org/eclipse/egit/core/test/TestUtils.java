@@ -315,7 +315,7 @@ public class TestUtils {
 	 */
 	public void waitForJobs(long maxWaitTime, Object family)
 			throws InterruptedException {
-		waitForJobs(maxWaitTime, 50, family);
+		waitForJobs(50, maxWaitTime, family);
 	}
 
 	/**
@@ -325,9 +325,10 @@ public class TestUtils {
 	 * @param maxWaitTime
 	 * @param minWaitTime
 	 * @param family
+	 *            can be null which means all job families
 	 * @throws InterruptedException
 	 */
-	public void waitForJobs(long maxWaitTime, long minWaitTime, Object family)
+	public void waitForJobs(long minWaitTime, long maxWaitTime, Object family)
 			throws InterruptedException {
 		Thread.sleep(minWaitTime);
 		long start = System.currentTimeMillis();

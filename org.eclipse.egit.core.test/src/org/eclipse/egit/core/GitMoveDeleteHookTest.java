@@ -160,11 +160,11 @@ public class GitMoveDeleteHookTest {
 		assertNotNull(dirCache.getEntry("file2.txt"));
 		// Modify the content before the move
 		testUtils.changeContentOfFile(project.getProject(), file, "other text");
-		testUtils.waitForJobs(10000, 1000, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		testUtils.waitForJobs(1000, 10000, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		file.delete(true, null);
 
-		testUtils.waitForJobs(10000, 1000, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		testUtils.waitForJobs(1000, 10000, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		// Check index for the deleted file
 		dirCache.read();
