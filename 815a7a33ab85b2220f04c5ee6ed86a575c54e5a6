@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_05bea41a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/RepositorySourceProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-08T12:44:39Z",
+      "side": 1,
+      "message": "Not sure I understand this right. You want the \u003cwith\u003e to not return early but actually call the property test(s), which then do a waitFor? What exactly do we gain by that compared to waiting here?\n\nAlso, can\u0027t we have a\n\n  private static Object IN_PROGRESS_PLACEHOLDER \u003d new Object();\n\nand then use that here instead of allocating a new object every time?",
+      "revId": "815a7a33ab85b2220f04c5ee6ed86a575c54e5a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
