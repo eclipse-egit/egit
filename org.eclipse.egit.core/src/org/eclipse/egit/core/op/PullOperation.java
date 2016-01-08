@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2015 SAP AG and others.
+ * Copyright (c) 2010, 2016 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,10 +9,12 @@
  *    Mathias Kinzler <mathias.kinzler@sap.com> - initial implementation
  *    Laurent Delaigue (Obeo) - use of preferred merge strategy
  *    Stephan Hackstedt - bug 477695
+ *    Mickael Istria (Red Hat Inc.) - [485124] Introduce PullReferenceConfig
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -32,6 +34,9 @@ import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
+import org.eclipse.egit.core.op.CreateLocalBranchOperation.UpstreamConfig;
+import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.MergeResult.MergeStatus;
@@ -51,7 +56,64 @@ import org.eclipse.osgi.util.NLS;
  * Wraps the JGit API {@link PullCommand} into an operation
  */
 public class PullOperation implements IEGitOperation {
+
+	/**
+	 * This describe a specification of a Pull command
+	 * @since 4.2
+	 */
+	public static class PullReferenceConfig {
+		private String remote;
+
+		private String reference;
+
+		private UpstreamConfig upstreamConfig;
+
+		/**
+		 * @param remote
+		 * @param reference
+		 * @param upstreamConfig
+		 */
+		public PullReferenceConfig(@Nullable String remote,
+				@Nullable String reference,
+				@Nullable UpstreamConfig upstreamConfig) {
+			this.remote = remote;
+			this.reference = reference;
+			this.upstreamConfig = upstreamConfig;
+		}
+
+		/**
+		 * @return the remote to pull from. Can be null (in which case client is
+		 *         free to either ignore the pull, send an error, use default
+		 *         configuration for the current branch...)
+		 */
+		@Nullable
+		public String getRemote() {
+			return this.remote;
+		}
+
+		/**
+		 * @return the reference (commit, tag, id...) to pull from. Can be null
+		 *         (in which case client is free to either ignore the pull, send
+		 *         an error, use default configuration for the current
+		 *         branch...)
+		 */
+		@Nullable
+		public String getReference() {
+			return this.reference;
+		}
+
+		/**
+		 * @return the upstream config strategy to use for the specified pull
+		 */
+		@Nullable
+		public UpstreamConfig getUpstreamConfig() {
+			return this.upstreamConfig;
+		}
+	}
+
 	private final Repository[] repositories;
+
+	private Map<Repository, PullReferenceConfig> configs;
 
 	private final Map<Repository, Object> results = new LinkedHashMap<Repository, Object>();
 
@@ -61,7 +123,7 @@ public class PullOperation implements IEGitOperation {
 
 	/**
 	 * @param repositories
-	 *            the repository
+	 *            the repositories
 	 * @param timeout
 	 *            in seconds
 	 */
@@ -69,6 +131,21 @@ public class PullOperation implements IEGitOperation {
 		this.timeout = timeout;
 		this.repositories = repositories.toArray(new Repository[repositories
 				.size()]);
+		this.configs = Collections.emptyMap();
+	}
+
+	/**
+	 * @param repositories
+	 *            Repositories to pull, with specific configuration
+	 * @param timeout
+	 *            in seconds
+	 * @since 4.2
+	 */
+	public PullOperation(
+			@NonNull Map<Repository, PullReferenceConfig> repositories,
+			int timeout) {
+		this(repositories.keySet(), timeout);
+		this.configs = repositories;
 	}
 
 	@Override
@@ -97,6 +174,17 @@ public class PullOperation implements IEGitOperation {
 										progress.newChild(1)));
 						pull.setTimeout(timeout);
 						pull.setCredentialsProvider(credentialsProvider);
+						PullReferenceConfig config = configs.get(repository);
+						if (config != null) {
+							if (config.getRemote() != null) {
+								pull.setRemote(config.getRemote());
+							}
+							if (config.getReference() != null) {
+								pull.setRemoteBranchName(config.getReference());
+							}
+							pull.setRebase(config
+									.getUpstreamConfig() == UpstreamConfig.REBASE);
+						}
 						MergeStrategy strategy = Activator.getDefault()
 								.getPreferredMergeStrategy();
 						if (strategy != null) {
@@ -138,7 +226,7 @@ public class PullOperation implements IEGitOperation {
 				IWorkspace.AVOID_UPDATE, progress);
 	}
 
-	private boolean refreshNeeded(PullResult pullResult) {
+	boolean refreshNeeded(PullResult pullResult) {
 		if (pullResult == null)
 			return true;
 		MergeResult mergeResult = pullResult.getMergeResult();
