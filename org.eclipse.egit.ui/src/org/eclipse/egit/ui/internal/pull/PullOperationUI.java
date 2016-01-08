@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.op.PullOperation;
+import org.eclipse.egit.core.op.PullOperation.PullReferenceConfig;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
@@ -82,6 +83,21 @@ public class PullOperationUI extends JobChangeAdapter {
 		pullOperation.setCredentialsProvider(new EGitCredentialsProvider());
 		for (Repository repository : repositories)
 			results.put(repository, NOT_TRIED_STATUS);
+	}
+
+	/**
+	 * @param pulls
+	 */
+	public PullOperationUI(Map<Repository, PullReferenceConfig> pulls) {
+		this.repositories = pulls.keySet()
+				.toArray(new Repository[pulls.size()]);
+		int timeout = Activator.getDefault().getPreferenceStore()
+				.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
+		pullOperation = new PullOperation(pulls, timeout);
+		pullOperation.setCredentialsProvider(new EGitCredentialsProvider());
+		for (Repository repository : repositories) {
+			results.put(repository, NOT_TRIED_STATUS);
+		}
 	}
 
 	/**
