@@ -621,6 +621,15 @@
 				<dynamic
 						class="org.eclipse.egit.gitflow.ui.internal.menu.DynamicHistoryMenu"
 						id="org.eclipse.egit.gitflow.menu.history">
+					<visibleWhen
+							checkEnabled="false">
+						<with variable="org.eclipse.egit.ui.currentRepository">
+							<test
+									forcePluginActivation="true"
+									property="GitFlowRepository.isInitialized">
+							</test>
+						</with>
+					</visibleWhen>
 				</dynamic>
 			</menu>
 		</menuContribution>

@@ -36,8 +36,8 @@ public class DynamicHistoryMenu extends ContributionItem {
 	public void fill(Menu menu, int index) {
 		GitFlowRepository gfRepo = getRepository();
 		if (gfRepo == null) {
-				return;
-			}
+			return;
+		}
 
 		RevCommit selectedCommit = getSelectedCommit();
 		if (selectedCommit == null) {
@@ -55,7 +55,7 @@ public class DynamicHistoryMenu extends ContributionItem {
 		menuItem.addSelectionListener(listener);
 
 		try {
-			menuItem.setEnabled(!gfRepo.isDevelop());
+			menuItem.setEnabled(gfRepo.isDevelop());
 		} catch (IOException e) {
 			Activator.getDefault().getLog()
 					.log(Activator.error(e.getMessage()));
