@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_25b56864",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/RepositorySourceProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-08T12:26:00Z",
+      "side": 1,
+      "message": "Why this duplication? Why not just call SelectionUtils.getRepository(selection)?",
+      "revId": "f3c57e36170e68f3faf86a3ce6d1811951eff9ca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_258c88be",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-08T12:26:00Z",
+      "side": 1,
+      "message": "Order of modifiers is usually \"private static\".",
+      "revId": "f3c57e36170e68f3faf86a3ce6d1811951eff9ca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
