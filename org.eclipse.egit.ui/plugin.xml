@@ -165,11 +165,22 @@
             </adapter>
          </factory>
          <factory
-	       adaptableType="org.eclipse.core.resources.IResource"
+               adaptableType="org.eclipse.core.resources.IResource"
                class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
             <adapter
                   type="org.eclipse.team.ui.history.IHistoryPageSource">
             </adapter>
+         </factory>
+         <factory
+               adaptableType="org.eclipse.ui.IWorkingSet"
+               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+            <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />
+            <adapter type="org.eclipse.jgit.lib.Repository" />
+         </factory>
+         <factory
+               adaptableType="org.eclipse.resources.mapping.ResourceMapping"
+               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+            <adapter type="org.eclipse.jgit.lib.Repository" />
          </factory>
          <factory
                adaptableType="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode"
