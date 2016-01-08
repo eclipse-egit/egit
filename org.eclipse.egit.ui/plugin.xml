@@ -779,6 +779,17 @@
            toolbarPath="org.eclipse.egit.ui"
            tooltip="%PullIntoCurrentBranch.tooltip">
          </action>
+         <action
+           class="org.eclipse.egit.ui.internal.actions.PullWithOptionsAction"
+           definitionId="org.eclipse.egit.ui.team.PullWithOptions"
+           icon="icons/obj16/pull.png"
+           id="org.eclipse.egit.ui.actionpullwithoptions"
+           label="%PullWithOptions.name"
+           menubarPath="org.eclipse.egit.ui.gitmenu/repo"
+           style="push"
+           toolbarPath="org.eclipse.egit.ui"
+           tooltip="%PullWithOptions.tooltip">
+         </action>
 		 <action
            class="org.eclipse.egit.ui.internal.actions.SimpleFetchAction"
            definitionId="org.eclipse.egit.ui.team.SimpleFetch"
@@ -928,6 +939,11 @@
             categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.team.Pull"
             name="%TeamPullCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.team.PullWithOptions"
+            name="%PullWithOptions.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
@@ -1181,6 +1197,36 @@
                         value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
                   </instanceof>
                </iterate>
+            </or>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.PullWithOptions">
+         <class
+               class="org.eclipse.egit.ui.internal.actions.PullWithOptionsActionHandler">
+         </class>
+        <activeWhen>
+            <or>
+               <reference
+                     definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
+               </reference>
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <and>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
+                        </instanceof>
+                        <not>
+                           <test
+                                 property="GitRepository.isBare">
+                           </test>
+                        </not>
+                     </and>
+                  </iterate>
+               </and>
             </or>
          </activeWhen>
       </handler>
@@ -3136,6 +3182,30 @@
                </and>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.egit.ui.team.PullWithOptions"
+               icon="icons/obj16/pull.png"
+               label="%PullWithOptions.name"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <and>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                        </instanceof>
+                        <test
+                              property="GitRepository.canMerge">
+                        </test>
+                     </and>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
          <menu
                label="%RemoteSubMenu.label">
             <command
@@ -3859,6 +3929,17 @@
                      checkEnabled="false">
                   <test
                         property="GitSelection.projectsWithRepositories">
+                  </test>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="org.eclipse.egit.ui.team.PullWithOptions"
+                  label="%PullWithOptions.name"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <test
+                        property="GitSelection.projectsSingleRepository">
                   </test>
                </visibleWhen>
             </command>
@@ -5126,6 +5207,10 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Pull"
+            icon="icons/obj16/pull.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.PullWithOptions"
             icon="icons/obj16/pull.png">
       </image>
       <image
