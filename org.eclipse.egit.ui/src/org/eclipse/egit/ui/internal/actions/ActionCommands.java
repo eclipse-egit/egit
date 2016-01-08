@@ -128,6 +128,9 @@ public class ActionCommands {
 	/** "Pull from upstream configuration" action command id */
 	public static final String PULL_FROM_UPSTREAM_CONFIG = "org.eclipse.egit.ui.team.PullFromUpstreamConfig"; //$NON-NLS-1$
 
+	/** "Pull with a config dialog" action command id */
+	public static final String PULL_WITH_OPTIONS = "org.eclipse.egit.ui.team.PullWithOptions"; //$NON-NLS-1$
+
 	/** "Merge Tool" action command id */
 	public static final String MERGE_TOOL_ACTION = "org.eclipse.egit.ui.team.MergeTool"; //$NON-NLS-1$
 
