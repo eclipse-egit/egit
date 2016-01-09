@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_fae7969f",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/menu/DynamicHistoryMenu.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-09T12:27:47Z",
+      "side": 1,
+      "message": "Wrong indentation.",
+      "revId": "dd1543befe748afdf4fa7e7763e69fb80fc202e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_dae2d291",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/menu/DynamicHistoryMenu.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-09T12:27:47Z",
+      "side": 1,
+      "message": "I thought \"release branches\" were always created from the development branch in git flow?[1][2] If so, that \"!\" is wrong.\n\n[1] http://nvie.com/posts/a-successful-git-branching-model/#release-branches\n[2] http://danielkummer.github.io/git-flow-cheatsheet/",
+      "range": {
+        "startLine": 58,
+        "startChar": 23,
+        "endLine": 58,
+        "endChar": 42
+      },
+      "revId": "dd1543befe748afdf4fa7e7763e69fb80fc202e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
