@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_7a7aa6dd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2016-01-09T22:50:51Z",
+      "side": 1,
+      "message": "The checkbox is only visible and the configuureUostream\u003d\u003dtrue in the case of a branch. See the condition before creation of checkbox on PullWizardPage",
+      "parentUuid": "07d9433e_5adfa2d1",
+      "revId": "2a5ed3e412d0bba032beca718d9c09bbe1d7479a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_1ad51ab2",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullWizard.java",
         "patchSetId": 1
@@ -320,6 +338,30 @@
       "writtenOn": "2016-01-09T22:09:37Z",
       "side": 1,
       "message": "why three dots ?",
+      "range": {
+        "startLine": 720,
+        "startChar": 77,
+        "endLine": 720,
+        "endChar": 80
+      },
+      "revId": "2a5ed3e412d0bba032beca718d9c09bbe1d7479a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_5a7de2d3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2016-01-09T22:50:51Z",
+      "side": 1,
+      "message": "For things such are not named branches on GitHub, such as pull/51/head",
+      "parentUuid": "07d9433e_9a7f6ad3",
       "range": {
         "startLine": 720,
         "startChar": 77,
