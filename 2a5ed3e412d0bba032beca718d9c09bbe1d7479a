@@ -1,0 +1,334 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_5a7c0291",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-09T22:09:37Z",
+      "side": 1,
+      "message": "missing @since tag",
+      "revId": "2a5ed3e412d0bba032beca718d9c09bbe1d7479a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_7a79c69e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-09T22:09:37Z",
+      "side": 1,
+      "message": "missing @since tag",
+      "revId": "2a5ed3e412d0bba032beca718d9c09bbe1d7479a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_1a827a0c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullWithOptionsAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-09T22:09:37Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "2a5ed3e412d0bba032beca718d9c09bbe1d7479a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_3a7f3e88",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullWithOptionsAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-09T22:09:37Z",
+      "side": 1,
+      "message": "remove unused import",
+      "revId": "2a5ed3e412d0bba032beca718d9c09bbe1d7479a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_da881231",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullWithOptionsAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-09T22:09:37Z",
+      "side": 1,
+      "message": "missing javadoc",
+      "revId": "2a5ed3e412d0bba032beca718d9c09bbe1d7479a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_fa8dd63e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullWithOptionsAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-09T22:09:37Z",
+      "side": 1,
+      "message": "missing javadoc",
+      "revId": "2a5ed3e412d0bba032beca718d9c09bbe1d7479a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_da03b218",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullWithOptionsActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-09T22:09:37Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "2a5ed3e412d0bba032beca718d9c09bbe1d7479a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_fa087637",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullWithOptionsActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-09T22:09:37Z",
+      "side": 1,
+      "message": "missing javadoc",
+      "revId": "2a5ed3e412d0bba032beca718d9c09bbe1d7479a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_fad076c4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-09T22:09:37Z",
+      "side": 1,
+      "message": "in PullOperation you named this \"configs\"",
+      "range": {
+        "startLine": 91,
+        "startChar": 61,
+        "endLine": 91,
+        "endChar": 66
+      },
+      "revId": "2a5ed3e412d0bba032beca718d9c09bbe1d7479a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_5adfa2d1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-09T22:09:37Z",
+      "side": 1,
+      "message": "the meaning of this checkbox isn\u0027t completely obvious if upstream is already configured when opening the wizard.\n\nAlso configuring upstream only makes sense if the given reference is a branch, I think you can\u0027t track a commit or tag since they are immutable, see https://git-scm.com/docs/git-branch for option --track",
+      "revId": "2a5ed3e412d0bba032beca718d9c09bbe1d7479a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_1ad51ab2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-09T22:09:37Z",
+      "side": 1,
+      "message": "fix TODOs",
+      "revId": "2a5ed3e412d0bba032beca718d9c09bbe1d7479a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_fa9316ad",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-09T22:09:37Z",
+      "side": 1,
+      "message": "style nit: missing braces",
+      "revId": "2a5ed3e412d0bba032beca718d9c09bbe1d7479a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_1aa8bad7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullWizardPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-09T22:09:37Z",
+      "side": 1,
+      "message": "handle exception",
+      "revId": "2a5ed3e412d0bba032beca718d9c09bbe1d7479a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_3aa57eff",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullWizardPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-09T22:09:37Z",
+      "side": 1,
+      "message": "\"Choose to which branch in remote \u0027origin\u0027 you want to push.\" isn\u0027t appropriate here",
+      "range": {
+        "startLine": 301,
+        "startChar": 6,
+        "endLine": 301,
+        "endChar": 49
+      },
+      "revId": "2a5ed3e412d0bba032beca718d9c09bbe1d7479a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_5aa242f7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullWizardPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-09T22:09:37Z",
+      "side": 1,
+      "message": "if the current branch already tracks a branch and I change reference to another branch existing in the remote repository and then check the checkbox \"Configure upstream for push and pull\" I would expect that this warning is displayed. But it is not displayed.\n\nIf I first check the checkbox and then change the reference the warning is shown.",
+      "revId": "2a5ed3e412d0bba032beca718d9c09bbe1d7479a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_7a9f06b1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullWizardPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-09T22:09:37Z",
+      "side": 1,
+      "message": "handle exception",
+      "revId": "2a5ed3e412d0bba032beca718d9c09bbe1d7479a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_9ac12afe",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-09T22:09:37Z",
+      "side": 1,
+      "message": "s/PullWizardPAge/PullWizardPage/",
+      "range": {
+        "startLine": 716,
+        "startChar": 24,
+        "endLine": 716,
+        "endChar": 38
+      },
+      "revId": "2a5ed3e412d0bba032beca718d9c09bbe1d7479a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_9a7f6ad3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-09T22:09:37Z",
+      "side": 1,
+      "message": "why three dots ?",
+      "range": {
+        "startLine": 720,
+        "startChar": 77,
+        "endLine": 720,
+        "endChar": 80
+      },
+      "revId": "2a5ed3e412d0bba032beca718d9c09bbe1d7479a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
