@@ -24,10 +24,6 @@
 
   <name>EGit Core Test Plug-in</name>
 
-  <properties>
-    <coretest.vmparams></coretest.vmparams>
-  </properties>
-
   <build>
     <plugins>
       <plugin>
