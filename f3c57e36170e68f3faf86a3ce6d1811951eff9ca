@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "07d9433e_70e3a711",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/resources/ResourceStatePropertyTester.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-11T08:31:01Z",
+      "side": 1,
+      "message": "I do wonder... the RepositorySourceProvider gets triggered by a selectionChangeEvent. So is the re-evaluation of tests based on the current selection, such as this one. We can be sure to get the correct repository here only if we can be sure that the RepositorySourceProvider gets triggered first. How do we guarantee that? Would we have to change the RepositorySourceProvider to provide a combined result (current selection plus current repo derived from it) and use that consistently throughout? Or am I missing something?",
+      "revId": "f3c57e36170e68f3faf86a3ce6d1811951eff9ca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_25b56864",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/RepositorySourceProvider.java",
         "patchSetId": 9
