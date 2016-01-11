@@ -12,37 +12,6 @@
 
 	<name>Git Team Provider (experimental auto-import wizard, incubation)</name>
 
-	<properties>
-		<uitest.vmparams>-Dorg.eclipse.swtbot.search.timeout=30000 -Xmx1024m -XX:MaxPermSize=384m</uitest.vmparams>
-	</properties>
-
-	<profiles>
-		<profile>
-			<id>macosx</id>
-			<activation>
-				<os>
-					<name>mac os x</name>
-					<family>mac</family>
-				</os>
-			</activation>
-			<properties>
-				<ui.test.vmargs>${uitest.vmparams} -XstartOnFirstThread</ui.test.vmargs>
-			</properties>
-		</profile>
-		<profile>
-			<id>other-os</id>
-			<activation>
-				<os>
-					<name>not-mac</name>
-					<family>!mac</family>
-				</os>
-			</activation>
-			<properties>
-				<ui.test.vmargs>${test.vmparams} ${uitest.vmparams}</ui.test.vmargs>
-			</properties>
-		</profile>
-	</profiles>
-
 	<build>
 		<plugins>
 			<plugin>
