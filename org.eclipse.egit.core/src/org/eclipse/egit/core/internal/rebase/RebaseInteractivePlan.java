@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013 SAP AG.
+ * Copyright (c) 2013, 2016 SAP AG and others
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Tobias Pfeifer (SAP AG) - initial implementation
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 485511
  *******************************************************************************/
 package org.eclipse.egit.core.internal.rebase;
 
@@ -20,6 +21,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.egit.core.Activator;
@@ -102,7 +104,7 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 		public void planWasUpdatedFromRepository(RebaseInteractivePlan plan);
 	}
 
-	private ArrayList<RebaseInteractivePlanChangeListener> planChangeListeners = new ArrayList<RebaseInteractivePlanChangeListener>();
+	private CopyOnWriteArrayList<RebaseInteractivePlanChangeListener> planChangeListeners = new CopyOnWriteArrayList<RebaseInteractivePlanChangeListener>();
 
 	private List<PlanElement> todoList;
 
@@ -233,9 +235,7 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 	 */
 	public boolean addRebaseInteractivePlanChangeListener(
 			RebaseInteractivePlanChangeListener listener) {
-		if (planChangeListeners.contains(listener))
-			return false;
-		return planChangeListeners.add(listener);
+		return planChangeListeners.addIfAbsent(listener);
 	}
 
 	/**
