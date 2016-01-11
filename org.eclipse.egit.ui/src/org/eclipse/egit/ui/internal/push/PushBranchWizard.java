@@ -22,6 +22,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -31,7 +32,6 @@ import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
-
 /**
  * A wizard dedicated to pushing a commit.
  */
@@ -65,7 +65,8 @@ public class PushBranchWizard extends Wizard {
 	 *            the repository commit belongs to
 	 * @param commitToPush
 	 */
-	public PushBranchWizard(final Repository repository, ObjectId commitToPush) {
+	public PushBranchWizard(final @NonNull Repository repository,
+			@NonNull ObjectId commitToPush) {
 		this(repository, commitToPush, null);
 	}
 

@@ -2099,6 +2099,12 @@ public class UIText extends NLS {
 	public static String PushAction_wrongURITitle;
 
 	/** */
+	public static String PushBranchActionHandler_EmptyRepository;
+
+	/** */
+	public static String PushBranchActionHandler_NoHead;
+
+	/** */
 	public static String PushBranchPage_RemoteBranchNameLabel;
 
 	/** */
