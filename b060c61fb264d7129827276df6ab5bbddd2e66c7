@@ -139,6 +139,24 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_bfe5f853",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 5177,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-12T06:47:36Z",
+      "side": 1,
+      "message": "I\u0027m not an icon designer, so I don\u0027t know what would work. Maybe the pull icon with a question mark overlay (small, maybe top right corner)? (Question mark as in \"this pull operation will ask you questions\".)",
+      "parentUuid": "07d9433e_bf2a5801",
+      "revId": "b060c61fb264d7129827276df6ab5bbddd2e66c7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_6951025a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullWithOptionsAction.java",
         "patchSetId": 2
