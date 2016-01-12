@@ -229,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_9b25a75f",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 5177,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2016-01-12T11:20:20Z",
+      "side": 1,
+      "message": "Maybe we can already adopt your icon and replace it later if a better proposal is made by someone else?",
+      "parentUuid": "07d9433e_9b0e87ed",
+      "revId": "b060c61fb264d7129827276df6ab5bbddd2e66c7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_6951025a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullWithOptionsAction.java",
         "patchSetId": 2
