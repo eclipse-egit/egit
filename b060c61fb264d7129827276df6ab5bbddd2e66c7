@@ -211,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_9b0e87ed",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 5177,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-12T11:11:00Z",
+      "side": 1,
+      "message": "I do think we should have a different icon. Need not be perfect, and maybe we change it later. But if we don\u0027t do it now, I fear we never will, since it\u0027ll drop below the radar.\n\nI see you already asked Daniel Azarov for help; let\u0027s hope he can do something. Otherwise I have cobbled together a pull-with-question-mark 16x16 icon and have attached it to bug 485124 as https://bugs.eclipse.org/bugs/attachment.cgi?id\u003d259123 .",
+      "parentUuid": "07d9433e_1ff34412",
+      "revId": "b060c61fb264d7129827276df6ab5bbddd2e66c7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_6951025a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullWithOptionsAction.java",
         "patchSetId": 2
