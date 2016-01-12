@@ -175,6 +175,24 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_df01dc79",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 5177,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-12T07:12:26Z",
+      "side": 1,
+      "message": "Ah, isn\u0027t bikeshed painting fun :-) !\n\nA gun sight has the connotation of \"target\". But one actually specifies the source to pull from in the Wizard in the first place.\n\nNote that the image you proposed is not freely licensed.\n\nMaybe the solution is to change the icon for org.eclipse.egit.ui.team.Pull: make it have two clouds (same size, one behind the other, offset by a few pixels) since that operation can pull from several repositories? The downside of this is that we\u0027d change an icon users have become accustomed to already. So if at all possible, I\u0027d prefer to leave existing icons and come up with something new for the new operation.\n\nAs I said, I\u0027m not an icon designer. Can we look at other git tools for inspiration? For instance, does TortoiseGit have a \"pull with dialog\" and a \"pull without dialog\"? If so, do they use icons and if so, what do they look like? (I don\u0027t have Windows, so I can\u0027t check myself.)",
+      "parentUuid": "07d9433e_ffcea0d8",
+      "revId": "b060c61fb264d7129827276df6ab5bbddd2e66c7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_6951025a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullWithOptionsAction.java",
         "patchSetId": 2
