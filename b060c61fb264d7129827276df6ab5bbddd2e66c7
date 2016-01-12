@@ -247,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_7b8383a6",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 5177,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-12T11:24:25Z",
+      "side": 1,
+      "message": "Fine by me. The confusion about the icon is mostly in the toolbar (the actionSet above at line 782ff); in the menus, the different labels differentiate the two operations already. So maybe it\u0027s an option to use the new icon only for the actionSet...\n\nOr make that action in the actionSet have a drop-down menu like the rebase action, and not add a new toolbar button at all. That solution might not even need a new icon, just a drop-down menu with two entries \"Pull from Upstream\" and \"Pull...\"; a click on the button itself would always execute the \"Pull from Upstream\" (current behavior), but the user could invoke the \"Pull...\" via the drop-down.\n\nEither way is fine by me.",
+      "parentUuid": "07d9433e_9b25a75f",
+      "revId": "b060c61fb264d7129827276df6ab5bbddd2e66c7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_6951025a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullWithOptionsAction.java",
         "patchSetId": 2
