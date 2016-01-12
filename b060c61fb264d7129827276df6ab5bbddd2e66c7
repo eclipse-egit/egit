@@ -157,6 +157,24 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_ffcea0d8",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 5177,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2016-01-12T06:51:31Z",
+      "side": 1,
+      "message": "What would you think about trying to overlay a target like http://previews.123rf.com/images/speedfighter/speedfighter1002/speedfighter100200132/6520395-Red-gun-sight-cross-hairs-isolated-on-white-background--Stock-Photo.jpg on the top-right of the Pull icon?",
+      "parentUuid": "07d9433e_bfe5f853",
+      "revId": "b060c61fb264d7129827276df6ab5bbddd2e66c7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_6951025a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullWithOptionsAction.java",
         "patchSetId": 2
