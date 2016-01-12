@@ -193,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_1ff34412",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 5177,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2016-01-12T07:16:57Z",
+      "side": 1,
+      "message": "I don\u0027t have Windows neither. I\u0027ll send a note to our team to ask for help.\nDo you think this icon is a blocker for merging this patch?",
+      "parentUuid": "07d9433e_df01dc79",
+      "revId": "b060c61fb264d7129827276df6ab5bbddd2e66c7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_6951025a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullWithOptionsAction.java",
         "patchSetId": 2
