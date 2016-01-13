@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
@@ -158,7 +159,9 @@ public class MergeOperation implements IEGitOperation {
 						CoreText.MergeOperation_ProgressMerge, refName), 3);
 				Git git = new Git(repository);
 				progress.worked(1);
-				MergeCommand merge = git.merge();
+				MergeCommand merge = git.merge()
+						.setProgressMonitor(
+								new EclipseGitProgressTransformer(progress.newChild(1)));
 				try {
 					Ref ref = repository.getRef(refName);
 					if (ref != null)
@@ -181,7 +184,6 @@ public class MergeOperation implements IEGitOperation {
 					merge.setMessage(message);
 				try {
 					mergeResult = merge.call();
-					progress.worked(1);
 					if (MergeResult.MergeStatus.NOT_SUPPORTED.equals(mergeResult.getMergeStatus()))
 						throw new TeamException(new Status(IStatus.INFO, Activator.getPluginId(), mergeResult.toString()));
 				} catch (NoHeadException e) {
