@@ -396,6 +396,11 @@
             <encoding>UTF-8</encoding>
             <source>1.7</source>
             <target>1.7</target>
+            <useProjectSettings>true</useProjectSettings>
+            <compilerArgs>
+              <arg>-nowarn</arg>
+            </compilerArgs>
+            <verbose>true</verbose>
           </configuration>
         </plugin>
         <plugin>
