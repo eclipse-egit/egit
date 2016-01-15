@@ -396,6 +396,10 @@
             <encoding>UTF-8</encoding>
             <source>1.7</source>
             <target>1.7</target>
+            <!-- Do not use useProjectSettings; it'll always override -nowarn -->
+            <compilerArgs>
+              <arg>-properties ${project.basedir}/.settings/org.eclipse.jdt.core.prefs -nowarn</arg>
+            </compilerArgs>
           </configuration>
         </plugin>
         <plugin>
