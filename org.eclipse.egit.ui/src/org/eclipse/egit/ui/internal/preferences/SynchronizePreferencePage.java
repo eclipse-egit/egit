@@ -99,8 +99,14 @@ public class SynchronizePreferencePage extends FieldEditorPreferencePage
 		org.eclipse.egit.core.Activator coreActivator = org.eclipse.egit.core.Activator
 				.getDefault();
 		List<String[]> strategies = new ArrayList<>();
+
+		// We need to add a default name for EGit default strategy in order to
+		// be able to distinguish a state where users haven't chosen any
+		// preference (in this case, values defined in eclipse configuration
+		// files may apply) or if they have chosen the default merge strategy.
 		strategies.add(new String[] {
-				UIText.GitPreferenceRoot_defaultMergeStrategyLabel, "" }); //$NON-NLS-1$
+				UIText.GitPreferenceRoot_defaultMergeStrategyLabel,
+				GitCorePreferences.core_preferredMergeStrategy_Default });
 		for (MergeStrategyDescriptor strategy : coreActivator
 				.getRegisteredMergeStrategies()) {
 			strategies.add(new String[] { strategy.getLabel(),
