@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.List; // Just to make the Hudson build fail early if the pom compiler arguments work.
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
