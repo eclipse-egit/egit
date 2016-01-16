@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_3c2b9f08",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/pull/PullWizardTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-16T12:03:53Z",
+      "side": 1,
+      "message": "Could be static.",
+      "revId": "30c5e63d421f86bb62ba9da50085db698ab31e85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_7c3447e2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullWithOptionsActionHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-16T12:03:53Z",
+      "side": 1,
+      "message": "Unused import. Please remove.\n\nThere\u0027s a problem with our tycho setup. org.eclipse.egit.ui/.settings/org.eclipse.jdt.core.prefs specifies this should be an error, so the tycho build should fail. See https://git.eclipse.org/r/#/c/64507/",
+      "revId": "30c5e63d421f86bb62ba9da50085db698ab31e85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_9c310bf3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullWithOptionsActionHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-16T12:03:53Z",
+      "side": 1,
+      "message": "Ditto: unused import.",
+      "revId": "30c5e63d421f86bb62ba9da50085db698ab31e85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_fc305773",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullWizardPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-16T12:03:53Z",
+      "side": 1,
+      "message": "Dead store. Since you want to allow pulling from non-advertised refs, can\u0027t this whole if-branch be removed?",
+      "revId": "30c5e63d421f86bb62ba9da50085db698ab31e85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_1c36db6d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullWizardPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-16T12:03:53Z",
+      "side": 1,
+      "message": "fullBranch is known to be non-null here.",
+      "revId": "30c5e63d421f86bb62ba9da50085db698ab31e85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
