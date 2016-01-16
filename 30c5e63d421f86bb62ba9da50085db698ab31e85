@@ -19,6 +19,46 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_bc3ecf3f",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/pull/PullWizardTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-16T12:41:46Z",
+      "side": 1,
+      "message": "This fails on my machine with my DE_CH keyboard. Besides, why CR-LF?\n\nAnyway, you don\u0027t need to go through the UI to add a repository to the view in setup. Just doing\n\n  deleteAllProjects();\n  clearView();\n  repositoryFile \u003d createProjectAndCommitToRepository();\n  createRemoteRepository(repositoryFile);\n  Activator.getDefault().getRepositoryUtil().addConfiguredRepository(repositoryFile);\n  refreshAndWait();\n  assertHasRepo(repositoryFile);\n\nshould be good enough. Also, then you don\u0027t need to add new imported packages in the MANIFEST.MF.",
+      "revId": "30c5e63d421f86bb62ba9da50085db698ab31e85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_dc3b934e",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/pull/PullWizardTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-16T12:41:46Z",
+      "side": 1,
+      "message": "And then use getOrOpenView() here.",
+      "range": {
+        "startLine": 122,
+        "startChar": 32,
+        "endLine": 122,
+        "endChar": 40
+      },
+      "revId": "30c5e63d421f86bb62ba9da50085db698ab31e85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_7c3447e2",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullWithOptionsActionHandler.java",
         "patchSetId": 6
