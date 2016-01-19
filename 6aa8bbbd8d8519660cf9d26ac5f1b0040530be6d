@@ -16,6 +16,24 @@
       "revId": "6aa8bbbd8d8519660cf9d26ac5f1b0040530be6d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_2fe6fe5e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ResourceUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-19T07:18:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07d9433e_8f41cac0",
+      "revId": "6aa8bbbd8d8519660cf9d26ac5f1b0040530be6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
