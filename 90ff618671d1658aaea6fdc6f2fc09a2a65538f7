@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_80bef918",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-19T20:22:43Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be null? \n\nI think the problem is that RepositoryCache is still holding the reference to the repo. We can not delete it on GitProvider.deconfigure() (there can be more projects in same repo) but we can avoid returning the repo in ResourceStateFactorygetIndexDiffDataOrNull() if the project of that resource is not configured.",
+      "range": {
+        "startLine": 206,
+        "startChar": 32,
+        "endLine": 207,
+        "endChar": 37
+      },
+      "revId": "90ff618671d1658aaea6fdc6f2fc09a2a65538f7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
