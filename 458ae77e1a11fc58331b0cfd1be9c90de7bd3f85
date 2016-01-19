@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_7bf9a440",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/menu/DynamicHistoryMenu.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-01-19T23:01:46Z",
+      "side": 1,
+      "message": "See my comment here:\nhttps://git.eclipse.org/r/#/c/63312/3/org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/menu/DynamicHistoryMenu.java@58\n\nThis can both prevent legitimate use of this operation, as well as allow illegitimate use.\nI think we can remove this check (with your introduction of the test in plugin.xml), and should rather check if the commit is on develop.",
+      "revId": "458ae77e1a11fc58331b0cfd1be9c90de7bd3f85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
