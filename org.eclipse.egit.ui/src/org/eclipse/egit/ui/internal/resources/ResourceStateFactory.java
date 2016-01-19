@@ -83,7 +83,8 @@ public class ResourceStateFactory {
 	 */
 	@Nullable
 	public IndexDiffData getIndexDiffDataOrNull(@Nullable IResource resource) {
-		if (resource == null || resource.getType() == IResource.ROOT) {
+		if (resource == null || resource.getType() == IResource.ROOT
+				|| !ResourceUtil.isSharedWithGit(resource)) {
 			return null;
 		}
 		IPath path = resource.getLocation();
