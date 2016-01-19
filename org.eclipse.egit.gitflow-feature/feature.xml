@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.egit.gitflow.feature"
       label="%featureName"
-      version="4.2.0.201512141825-rc1"
+      version="4.2.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.egit.gitflow">
 
