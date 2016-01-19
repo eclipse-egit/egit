@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_6f79e639",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ResourceUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-19T06:23:02Z",
+      "side": 1,
+      "message": "Can this be extended even to record whether a project is shared, but not with a git provider? As is, we\u0027ll still repeatedly access the property for projects that are shared, but not with EGit.",
+      "revId": "8a64ba4ca12c4ef4714545990ba0bf007ec6ca71",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
