@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_ca7900a1",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ResourceUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-19T09:45:27Z",
+      "side": 1,
+      "message": "Comment is wrong. Should read\n\n  Sets the session property {@link #PROVIDER_ID} to the given\n  {@code providerId}.",
+      "revId": "e69f727593906befc11af1b689bd2a1191ec8984",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
