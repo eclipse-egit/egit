@@ -22,6 +22,30 @@
       "revId": "90ff618671d1658aaea6fdc6f2fc09a2a65538f7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_bb15ec70",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-19T21:07:43Z",
+      "side": 1,
+      "message": "So you propose to move this test over to IndexDiffData? Yes, that looks like a better place.\n\nDone.",
+      "parentUuid": "07d9433e_80bef918",
+      "range": {
+        "startLine": 206,
+        "startChar": 32,
+        "endLine": 207,
+        "endChar": 37
+      },
+      "revId": "90ff618671d1658aaea6fdc6f2fc09a2a65538f7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
