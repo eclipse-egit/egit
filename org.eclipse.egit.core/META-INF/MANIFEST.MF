@@ -59,5 +59,6 @@ Import-Package: org.eclipse.jgit.annotations;version="[4.2.0,4.3.0)",
  org.eclipse.jgit.treewalk;version="[4.2.0,4.3.0)",
  org.eclipse.jgit.treewalk.filter;version="[4.2.0,4.3.0)",
  org.eclipse.jgit.util;version="[4.2.0,4.3.0)",
- org.eclipse.jgit.util.io;version="[4.2.0,4.3.0)"
+ org.eclipse.jgit.util.io;version="[4.2.0,4.3.0)",
+ org.slf4j;version="[1.7.0,2.0.0)"
 Eclipse-ExtensibleAPI: true

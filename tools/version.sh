@@ -125,18 +125,6 @@ perl -pi~ -e '
 		$seen_version = 0;
 		$old_argv = $ARGV;
 	}
-	if ($seen_version < 2) {
-		$seen_version++ if (!/<\?xml/ &&
-		s/(version=")[^"]*(")/${1}'"$OSGI_V"'${2}/);
-	}
-	s/(plugin="org.eclipse.egit.core" version=")[^"]*(")/${1}'"$EGIT_V"'${2}/;
-	' org.eclipse.egit.psf-feature/feature.xml
-
-perl -pi~ -e '
-	if ($ARGV ne $old_argv) {
-		$seen_version = 0;
-		$old_argv = $ARGV;
-	}
 	if (!$seen_version) {
 		$seen_version = 1 if (!/<\?xml/ &&
 		s/(version=")[^"]*(")/${1}'"$OSGI_V"'${2}/);
