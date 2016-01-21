@@ -83,7 +83,8 @@ public class ResourceStateFactory {
 	 */
 	@Nullable
 	public IndexDiffData getIndexDiffDataOrNull(@Nullable IResource resource) {
-		if (resource == null || resource.getType() == IResource.ROOT) {
+		if (resource == null || resource.getType() == IResource.ROOT
+				|| !ResourceUtil.isSharedWithGit(resource)) {
 			return null;
 		}
 		IPath path = resource.getLocation();
@@ -288,6 +289,9 @@ public class ResourceStateFactory {
 		// locally deleted
 		Set<String> missing = indexDiffData.getMissing();
 		state.setMissing(missing.contains(repoRelativePath));
+
+		Set<String> assumeUnchanged = indexDiffData.getAssumeUnchanged();
+		state.setAssumeUnchanged(assumeUnchanged.contains(repoRelativePath));
 	}
 
 	private void extractContainerProperties(

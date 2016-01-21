@@ -4,7 +4,9 @@
       label="%featureName"
       version="4.2.0.qualifier"
       provider-name="%providerName"
-      plugin="org.eclipse.egit">
+      plugin="org.eclipse.egit"
+      license-feature="org.eclipse.license"
+      license-feature-version="0.0.0">
 
    <description url="http://www.eclipse.org/egit/">
       %description
@@ -44,4 +46,17 @@
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="org.eclipse.egit.gitflow.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.egit.gitflow.ui.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 </feature>

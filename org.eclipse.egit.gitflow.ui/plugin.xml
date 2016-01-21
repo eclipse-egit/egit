@@ -22,20 +22,17 @@
 					style="push">
 				<visibleWhen
 						checkEnabled="false">
-					<iterate
-							ifEmpty="false"
-							operator="and">
-						<and>
+					<and>
+						<reference definitionId="org.eclipse.egit.gitflow.ui.commandEnabled" />
+						<with variable="org.eclipse.egit.ui.currentRepository">
 							<not>
-								<adapt type="org.eclipse.jgit.lib.Repository">
-									<test
-											forcePluginActivation="true"
-											property="GitFlowRepository.isInitialized">
-									</test>
-								</adapt>
+								<test
+										forcePluginActivation="true"
+										property="GitFlowRepository.isInitialized">
+								</test>
 							</not>
-						</and>
-					</iterate>
+						</with>
+					</and>
 				</visibleWhen>
 			</command>
 		</menuContribution>
@@ -46,18 +43,12 @@
 					label="%TeamGitFlowMenu.name">
 				<visibleWhen
 						checkEnabled="false">
-					<iterate
-							ifEmpty="false"
-							operator="and">
-						<and>
-							<adapt type="org.eclipse.jgit.lib.Repository">
-								<test
-										forcePluginActivation="true"
-										property="GitFlowRepository.isInitialized">
-								</test>
-							</adapt>
-						</and>
-					</iterate>
+					<with variable="org.eclipse.egit.ui.currentRepository">
+						<test
+								forcePluginActivation="true"
+								property="GitFlowRepository.isInitialized">
+						</test>
+					</with>
 				</visibleWhen>
 				<command
 						commandId="org.eclipse.egit.gitflow.ui.command.featureStart"
@@ -194,30 +185,10 @@
 					class="org.eclipse.egit.gitflow.ui.internal.actions.InitHandler">
 			</class>
 			<activeWhen>
-				<iterate>
-					<or>
-						<reference
-								definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
-						</reference>
-					</or>
-				</iterate>
+				<reference
+						definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
+				</reference>
 			</activeWhen>
-			<enabledWhen>
-				<iterate
-						ifEmpty="false"
-						operator="and">
-					<and>
-						<not>
-							<adapt type="org.eclipse.jgit.lib.Repository">
-								<test
-										forcePluginActivation="true"
-										property="GitFlowRepository.isInitialized">
-								</test>
-							</adapt>
-						</not>
-					</and>
-				</iterate>
-			</enabledWhen>
 		</handler>
 		<handler
 				commandId="org.eclipse.egit.gitflow.ui.command.featureStart">
@@ -225,27 +196,17 @@
 					class="org.eclipse.egit.gitflow.ui.internal.actions.FeatureStartHandler">
 			</class>
 			<activeWhen>
-				<iterate>
-					<or>
-						<reference
-								definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
-						</reference>
-					</or>
-				</iterate>
+				<reference
+						definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
+				</reference>
 			</activeWhen>
 			<enabledWhen>
-				<iterate
-						ifEmpty="false"
-						operator="and">
-					<and>
-						<adapt type="org.eclipse.jgit.lib.Repository">
-							<test
-									forcePluginActivation="true"
-									property="GitFlowRepository.isInitialized">
-							</test>
-						</adapt>
-					</and>
-				</iterate>
+				<with variable="org.eclipse.egit.ui.currentRepository">
+					<test
+							forcePluginActivation="true"
+							property="GitFlowRepository.isInitialized">
+					</test>
+				</with>
 			</enabledWhen>
 		</handler>
 		<handler
@@ -254,28 +215,17 @@
 					class="org.eclipse.egit.gitflow.ui.internal.actions.FeatureFinishHandler">
 			</class>
 			<activeWhen>
-				<iterate>
-					<or>
-						<reference
-								definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
-						</reference>
-					</or>
-				</iterate>
+				<reference
+						definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
+				</reference>
 			</activeWhen>
 			<enabledWhen>
-				<iterate
-						ifEmpty="false"
-						operator="and">
-
-					<and>
-						<adapt type="org.eclipse.jgit.lib.Repository">
-							<test
-									forcePluginActivation="true"
-									property="GitFlowRepository.isFeature">
-							</test>
-						</adapt>
-					</and>
-				</iterate>
+				<with variable="org.eclipse.egit.ui.currentRepository">
+					<test
+							forcePluginActivation="true"
+							property="GitFlowRepository.isFeature">
+					</test>
+				</with>
 			</enabledWhen>
 		</handler>
 		<handler
@@ -284,30 +234,17 @@
 					class="org.eclipse.egit.gitflow.ui.internal.actions.ReleaseStartHandler">
 			</class>
 			<activeWhen>
-				<iterate>
-					<or>
-						<instanceof
-								value="org.eclipse.jgit.revwalk.RevCommit">
-						</instanceof>
-						<reference
-								definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
-						</reference>
-					</or>
-				</iterate>
+				<reference
+						definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
+				</reference>
 			</activeWhen>
 			<enabledWhen>
-				<iterate
-						ifEmpty="false"
-						operator="and">
-					<and>
-						<adapt type="org.eclipse.jgit.lib.Repository">
-							<test
-									forcePluginActivation="true"
-									property="GitFlowRepository.isInitialized">
-							</test>
-						</adapt>
-					</and>
-				</iterate>
+				<with variable="org.eclipse.egit.ui.currentRepository">
+					<test
+							forcePluginActivation="true"
+							property="GitFlowRepository.isInitialized">
+					</test>
+				</with>
 			</enabledWhen>
 		</handler>
 		<handler
@@ -316,27 +253,17 @@
 					class="org.eclipse.egit.gitflow.ui.internal.actions.ReleaseFinishHandler">
 			</class>
 			<activeWhen>
-				<iterate>
-					<or>
-						<reference
-								definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
-						</reference>
-					</or>
-				</iterate>
+				<reference
+						definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
+				</reference>
 			</activeWhen>
 			<enabledWhen>
-				<iterate
-						ifEmpty="false"
-						operator="and">
-					<and>
-						<adapt type="org.eclipse.jgit.lib.Repository">
-							<test
-									forcePluginActivation="true"
-									property="GitFlowRepository.isRelease">
-							</test>
-						</adapt>
-					</and>
-				</iterate>
+				<with variable="org.eclipse.egit.ui.currentRepository">
+					<test
+							forcePluginActivation="true"
+							property="GitFlowRepository.isRelease">
+					</test>
+				</with>
 			</enabledWhen>
 		</handler>
 		<handler
@@ -346,31 +273,23 @@
 			</class>
 
 			<enabledWhen>
-				<iterate
-						ifEmpty="false"
-						operator="and">
-					<adapt type="org.eclipse.jgit.lib.Repository">
-						<and>
-							<test
-									forcePluginActivation="true"
-									property="GitFlowRepository.isFeature">
-							</test>
-							<test
-									forcePluginActivation="true"
-									property="GitFlowRepository.hasDefaultRemote">
-							</test>
-						</and>
-					</adapt>
-				</iterate>
+				<with variable="org.eclipse.egit.ui.currentRepository">
+					<and>
+						<test
+								forcePluginActivation="true"
+								property="GitFlowRepository.isFeature">
+						</test>
+						<test
+								forcePluginActivation="true"
+								property="GitFlowRepository.hasDefaultRemote">
+						</test>
+					</and>
+				</with>
 			</enabledWhen>
 			<activeWhen>
-				<iterate>
-					<or>
-						<reference
-								definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
-						</reference>
-					</or>
-				</iterate>
+				<reference
+						definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
+				</reference>
 			</activeWhen>
 		</handler>
 		<handler
@@ -380,31 +299,21 @@
 			</class>
 
 			<enabledWhen>
-				<iterate
-						ifEmpty="false"
-						operator="and">
-					<adapt type="org.eclipse.jgit.lib.Repository">
-						<and>
-							<test
-									forcePluginActivation="true"
-									property="GitFlowRepository.isRelease">
-							</test>
-							<test
-									forcePluginActivation="true"
-									property="GitFlowRepository.hasDefaultRemote">
-							</test>
-						</and>
-					</adapt>
-				</iterate>
+				<with variable="org.eclipse.egit.ui.currentRepository">
+					<test
+							forcePluginActivation="true"
+							property="GitFlowRepository.isRelease">
+					</test>
+					<test
+							forcePluginActivation="true"
+							property="GitFlowRepository.hasDefaultRemote">
+					</test>
+				</with>
 			</enabledWhen>
 			<activeWhen>
-				<iterate>
-					<or>
-						<reference
-								definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
-						</reference>
-					</or>
-				</iterate>
+				<reference
+						definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
+				</reference>
 			</activeWhen>
 		</handler>
 		<handler
@@ -414,31 +323,21 @@
 			</class>
 
 			<enabledWhen>
-				<iterate
-						ifEmpty="false"
-						operator="and">
-					<adapt type="org.eclipse.jgit.lib.Repository">
-						<and>
-							<test
-									forcePluginActivation="true"
-									property="GitFlowRepository.isHotfix">
-							</test>
-							<test
-									forcePluginActivation="true"
-									property="GitFlowRepository.hasDefaultRemote">
-							</test>
-						</and>
-					</adapt>
-				</iterate>
+				<with variable="org.eclipse.egit.ui.currentRepository">
+					<test
+							forcePluginActivation="true"
+							property="GitFlowRepository.isHotfix">
+					</test>
+					<test
+							forcePluginActivation="true"
+							property="GitFlowRepository.hasDefaultRemote">
+					</test>
+				</with>
 			</enabledWhen>
 			<activeWhen>
-				<iterate>
-					<or>
-						<reference
-								definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
-						</reference>
-					</or>
-				</iterate>
+				<reference
+						definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
+				</reference>
 			</activeWhen>
 		</handler>
 		<handler
@@ -447,27 +346,17 @@
 					class="org.eclipse.egit.gitflow.ui.internal.actions.FeatureTrackHandler">
 			</class>
 			<activeWhen>
-				<iterate>
-					<or>
-						<reference
-								definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
-						</reference>
-					</or>
-				</iterate>
+				<reference
+						definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
+				</reference>
 			</activeWhen>
 			<enabledWhen>
-				<iterate
-						ifEmpty="false"
-						operator="and">
-					<adapt type="org.eclipse.jgit.lib.Repository">
-						<and>
-							<test
-									forcePluginActivation="true"
-									property="GitFlowRepository.hasDefaultRemote">
-							</test>
-						</and>
-					</adapt>
-				</iterate>
+				<with variable="org.eclipse.egit.ui.currentRepository">
+					<test
+							forcePluginActivation="true"
+							property="GitFlowRepository.hasDefaultRemote">
+					</test>
+				</with>
 			</enabledWhen>
 		</handler>
 		<handler
@@ -476,27 +365,17 @@
 					class="org.eclipse.egit.gitflow.ui.internal.actions.FeatureCheckoutHandler">
 			</class>
 			<activeWhen>
-				<iterate>
-					<or>
-						<reference
-								definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
-						</reference>
-					</or>
-				</iterate>
+				<reference
+						definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
+				</reference>
 			</activeWhen>
 			<enabledWhen>
-				<iterate
-						ifEmpty="false"
-						operator="and">
-					<and>
-						<adapt type="org.eclipse.jgit.lib.Repository">
-							<test
-									forcePluginActivation="true"
-									property="GitFlowRepository.isInitialized">
-							</test>
-						</adapt>
-					</and>
-				</iterate>
+				<with variable="org.eclipse.egit.ui.currentRepository">
+					<test
+							forcePluginActivation="true"
+							property="GitFlowRepository.isInitialized">
+					</test>
+				</with>
 			</enabledWhen>
 		</handler>
 		<handler
@@ -505,27 +384,17 @@
 					class="org.eclipse.egit.gitflow.ui.internal.actions.FeatureRebaseHandler">
 			</class>
 			<activeWhen>
-				<iterate>
-					<or>
-						<reference
-								definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
-						</reference>
-					</or>
-				</iterate>
+				<reference
+						definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
+				</reference>
 			</activeWhen>
 			<enabledWhen>
-				<iterate
-						ifEmpty="false"
-						operator="and">
-					<adapt type="org.eclipse.jgit.lib.Repository">
-						<and>
-							<test
-									forcePluginActivation="true"
-									property="GitFlowRepository.isFeature">
-							</test>
-						</and>
-					</adapt>
-				</iterate>
+				<with variable="org.eclipse.egit.ui.currentRepository">
+					<test
+							forcePluginActivation="true"
+							property="GitFlowRepository.isFeature">
+					</test>
+				</with>
 			</enabledWhen>
 		</handler>
 		<handler
@@ -534,27 +403,17 @@
 					class="org.eclipse.egit.gitflow.ui.internal.actions.HotfixStartHandler">
 			</class>
 			<activeWhen>
-				<iterate>
-					<or>
-						<reference
-								definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
-						</reference>
-					</or>
-				</iterate>
+				<reference
+						definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
+				</reference>
 			</activeWhen>
 			<enabledWhen>
-				<iterate
-						ifEmpty="false"
-						operator="and">
-					<adapt type="org.eclipse.jgit.lib.Repository">
-						<and>
-							<test
-									forcePluginActivation="true"
-									property="GitFlowRepository.isInitialized">
-							</test>
-						</and>
-					</adapt>
-				</iterate>
+				<with variable="org.eclipse.egit.ui.currentRepository">
+					<test
+							forcePluginActivation="true"
+							property="GitFlowRepository.isInitialized">
+					</test>
+				</with>
 			</enabledWhen>
 		</handler>
 		<handler
@@ -563,34 +422,24 @@
 					class="org.eclipse.egit.gitflow.ui.internal.actions.HotfixFinishHandler">
 			</class>
 			<activeWhen>
-				<iterate>
-					<or>
-						<reference
-								definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
-						</reference>
-					</or>
-				</iterate>
+				<reference
+						definitionId="org.eclipse.egit.gitflow.ui.commandEnabled">
+				</reference>
 			</activeWhen>
 			<enabledWhen>
-				<iterate
-						ifEmpty="false"
-						operator="and">
-					<adapt type="org.eclipse.jgit.lib.Repository">
-						<and>
-							<test
-									forcePluginActivation="true"
-									property="GitFlowRepository.isHotfix">
-							</test>
-						</and>
-					</adapt>
-				</iterate>
+				<with variable="org.eclipse.egit.ui.currentRepository">
+					<test
+							forcePluginActivation="true"
+							property="GitFlowRepository.isHotfix">
+					</test>
+				</with>
 			</enabledWhen>
 		</handler>
 	</extension>
 	<extension
 			point="org.eclipse.core.expressions.propertyTesters">
 		<propertyTester
-				class="org.eclipse.egit.gitflow.ui.internal.selection.SelectionPropertyTester"
+				class="org.eclipse.egit.gitflow.ui.internal.properties.RepositoryPropertyTester"
 				id="org.eclipse.egit.gitflow.ui.propertyTester"
 				namespace="GitFlowRepository"
 				properties="isFeature,isRelease,isHotfix,isDevelop,isMaster,isInitialized,hasDefaultRemote"
@@ -603,12 +452,26 @@
 		<definition
 				id="org.eclipse.egit.gitflow.ui.commandEnabled">
 			<or>
-				<instanceof
-						value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
-				</instanceof>
-				<instanceof
-						value="org.eclipse.core.resources.IResource">
-				</instanceof>
+				<reference
+						definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
+				</reference>
+				<and>
+					<count
+							value="1">
+					</count>
+					<iterate>
+						<and>
+							<instanceof
+									value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
+							</instanceof>
+							<not>
+								<test
+										property="GitRepository.isBare">
+								</test>
+							</not>
+						</and>
+					</iterate>
+				</and>
 			</or>
 		</definition>
 	</extension>
@@ -626,7 +489,13 @@
 			<adapter type="org.eclipse.jgit.lib.Repository"/>
 		</factory>
 	</extension>
-
+	<extension
+			point="org.eclipse.core.runtime.adapters">
+		<factory adaptableType="org.eclipse.jface.viewers.ISelection"
+				class="org.eclipse.egit.gitflow.ui.internal.factories.GitFlowAdapterFactory">
+			<adapter type="org.eclipse.jgit.lib.Repository"/>
+		</factory>
+	</extension>
 
 	<extension
 			point="org.eclipse.ui.menus">
@@ -637,21 +506,15 @@
 					label="%TeamGitFlowMenu.name">
 				<visibleWhen
 						checkEnabled="false">
-					<iterate
-							ifEmpty="false"
-							operator="and">
-						<and>
-							<instanceof
-									value="org.eclipse.core.resources.IProject">
-							</instanceof>
-							<adapt type="org.eclipse.jgit.lib.Repository">
-								<test
-										forcePluginActivation="true"
-										property="GitFlowRepository.isInitialized">
-								</test>
-							</adapt>
-						</and>
-					</iterate>
+					<and>
+						<reference definitionId="org.eclipse.egit.ui.resourcesSingleRepository" />
+						<with variable="org.eclipse.egit.ui.currentRepository">
+							<test
+									forcePluginActivation="true"
+									property="GitFlowRepository.isInitialized">
+							</test>
+						</with>
+					</and>
 				</visibleWhen>
 				<command
 						commandId="org.eclipse.egit.gitflow.ui.command.featureStart"
@@ -732,23 +595,17 @@
 					style="push">
 				<visibleWhen
 						checkEnabled="false">
-					<iterate
-							ifEmpty="false"
-							operator="and">
-						<and>
-							<instanceof
-									value="org.eclipse.core.resources.IProject">
-							</instanceof>
+					<and>
+						<reference definitionId="org.eclipse.egit.ui.resourcesSingleRepository" />
+						<with variable="org.eclipse.egit.ui.currentRepository">
 							<not>
-								<adapt type="org.eclipse.jgit.lib.Repository">
-									<test
-											forcePluginActivation="true"
-											property="GitFlowRepository.isInitialized">
-									</test>
-								</adapt>
+								<test
+										forcePluginActivation="true"
+										property="GitFlowRepository.isInitialized">
+								</test>
 							</not>
-						</and>
-					</iterate>
+						</with>
+					</and>
 				</visibleWhen>
 			</command>
 		</menuContribution>

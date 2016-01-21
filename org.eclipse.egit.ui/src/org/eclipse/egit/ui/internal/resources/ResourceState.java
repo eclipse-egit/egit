@@ -49,9 +49,9 @@ public class ResourceState implements IResourceState {
 	private boolean conflicts;
 
 	/**
-	 * Flag indicating whether or not the resource is assumed valid
+	 * Flag indicating whether or not the resource is assumed unchanged
 	 */
-	private boolean assumeValid;
+	private boolean assumeUnchanged;
 
 	@Override
 	public boolean isTracked() {
@@ -89,8 +89,8 @@ public class ResourceState implements IResourceState {
 	}
 
 	@Override
-	public boolean isAssumeValid() {
-		return assumeValid;
+	public boolean isAssumeUnchanged() {
+		return assumeUnchanged;
 	}
 
 	/**
@@ -154,13 +154,13 @@ public class ResourceState implements IResourceState {
 	}
 
 	/**
-	 * Sets the assumeValid property.
+	 * Sets the assumeUnchanged property.
 	 *
-	 * @param assumeValid
+	 * @param assumeUnchanged
 	 *            value to set.
 	 */
-	protected void setAssumeValid(boolean assumeValid) {
-		this.assumeValid = assumeValid;
+	protected void setAssumeUnchanged(boolean assumeUnchanged) {
+		this.assumeUnchanged = assumeUnchanged;
 	}
 
 }

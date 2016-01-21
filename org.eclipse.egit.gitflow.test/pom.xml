@@ -34,6 +34,7 @@
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<configuration>
 					<!--excludes> <exclude>**/Test*.class</exclude> </excludes -->
+					<argLine>${test.vmparams} ${coretest.vmparams}</argLine>
 					<useUIHarness>false</useUIHarness>
 					<useUIThread>false</useUIThread>
 				</configuration>

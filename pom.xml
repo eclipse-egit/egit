@@ -69,6 +69,7 @@
     <mockito-version>1.8.4</mockito-version>
     <junit-version>4.11</junit-version>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.repository/target/repository</jgit-site>
+    <license-site>http://download.eclipse.org/cbi/updates/license</license-site>
     <signer-input-directory>/home/data/httpd/download-staging.priv/egit</signer-input-directory>
     <download-publish-path>/home/data/httpd/download.eclipse.org/egit/updates-nightly</download-publish-path>
     <target-platform>egit-4.3</target-platform>
@@ -325,6 +326,11 @@
       <id>jgit</id>
       <layout>p2</layout>
       <url>${jgit-site}</url>
+    </repository>
+    <repository>
+      <id>eclipse.license</id>
+      <layout>p2</layout>
+      <url>${license-site}</url>
     </repository>
   </repositories>
 

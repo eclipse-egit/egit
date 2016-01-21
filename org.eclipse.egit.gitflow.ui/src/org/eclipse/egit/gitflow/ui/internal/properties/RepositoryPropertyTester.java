@@ -1,12 +1,15 @@
 /*******************************************************************************
- * Copyright (C) 2015, Max Hohenegger <eclipse@hohenegger.eu>
+ * Copyright (C) 2015, 2016 Max Hohenegger <eclipse@hohenegger.eu> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Thomas Wolf <thomas.wolf@paranor.ch> Bug 484795
  *******************************************************************************/
-package org.eclipse.egit.gitflow.ui.internal.selection;
+package org.eclipse.egit.gitflow.ui.internal.properties;
 
 import static org.eclipse.egit.gitflow.ui.Activator.error;
 
@@ -20,7 +23,7 @@ import org.eclipse.jgit.lib.Repository;
 /**
  * Testing Git Flow states.
  */
-public class SelectionPropertyTester extends PropertyTester {
+public class RepositoryPropertyTester extends PropertyTester {
 	private static final String IS_MASTER = "isMaster"; //$NON-NLS-1$
 
 	private static final String IS_DEVELOP = "isDevelop"; //$NON-NLS-1$
@@ -38,11 +41,13 @@ public class SelectionPropertyTester extends PropertyTester {
 	@Override
 	public boolean test(Object receiver, String property, Object[] args,
 			Object expectedValue) {
-		if (receiver == null || !(receiver instanceof Repository)) {
+		if (!(receiver instanceof Repository)) {
 			return false;
 		}
 		Repository repository = (Repository) receiver;
-
+		if (repository.isBare()) {
+			return false;
+		}
 		GitFlowRepository gitFlowRepository = new GitFlowRepository(repository);
 		try {
 			if (IS_INITIALIZED.equals(property)) {
@@ -65,4 +70,5 @@ public class SelectionPropertyTester extends PropertyTester {
 		}
 		return false;
 	}
+
 }

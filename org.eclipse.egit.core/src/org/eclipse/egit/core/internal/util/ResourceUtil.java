@@ -3,6 +3,7 @@
  * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, 2015 Laurent Goubet <laurent.goubet@obeo.fr>
  * Copyright (C) 2012, Gunnar Wagenknecht <gunnar@wagenknecht.org>
+ * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -67,6 +68,14 @@ public class ResourceUtil {
 	// TeamPlugin.PROVIDER_PROP_KEY
 	private final static QualifiedName PROVIDER_PROP_KEY = new QualifiedName(
 			"org.eclipse.team.core", "repository"); //$NON-NLS-1$ //$NON-NLS-2$
+
+	// Our own session property to cache the provider ID of the configured
+	// repository provider.
+	private final static QualifiedName PROVIDER_ID = new QualifiedName(
+			"org.eclipse.egit.core", "repositoryProviderID"); //$NON-NLS-1$ //$NON-NLS-2$
+
+	// Value for PROVIDER_ID to mark unshared projects.
+	private final static Object PROJECT_IS_UNSHARED = new Object();
 
 	/**
 	 * Return the corresponding resource if it exists and has the Git repository
@@ -151,12 +160,20 @@ public class ResourceUtil {
 		try {
 			// Look for an existing provider
 			GitProvider provider = lookupProviderProp(project);
-			if (provider != null) {
+			if (provider != null || MappingJob.isKnownGitProject(project)) {
+				// Is mapped or in the process of being mapped.
 				return true;
+			} else if (isMarkedAsNotSharedWithGit(project)) {
+				return false;
 			}
 			// There isn't one so check the persistent property
 			String existingID = project
 					.getPersistentProperty(PROVIDER_PROP_KEY);
+			if (existingID == null) {
+				markAsUnshared(project);
+			} else {
+				markAsShared(project, existingID);
+			}
 			boolean isGitProvider = GitProvider.ID.equals(existingID);
 			if (isGitProvider) {
 				MappingJob.initProviderAsynchronously(project);
@@ -172,15 +189,20 @@ public class ResourceUtil {
 
 		private final static MappingJob INSTANCE = new MappingJob();
 
-		private static void initProviderAsynchronously(
+		public static void initProviderAsynchronously(
 				@NonNull IProject project) {
 			synchronized (INSTANCE.projects) {
-				if (INSTANCE.projects.contains(project)) {
+				if (!INSTANCE.projects.add(project)) {
 					return;
 				}
-				INSTANCE.projects.add(project);
 			}
 			INSTANCE.schedule();
+		}
+
+		public static boolean isKnownGitProject(@NonNull IProject project) {
+			synchronized (INSTANCE.projects) {
+				return INSTANCE.projects.contains(project);
+			}
 		}
 
 		HashSet<IProject> projects = new LinkedHashSet<>();
@@ -241,13 +263,25 @@ public class ResourceUtil {
 			if (provider != null) {
 				return provider;
 			}
+			if (MappingJob.isKnownGitProject(project)
+					|| isMarkedAsNotSharedWithGit(project)) {
+				// Is in the process of being mapped, but isn't mapped yet, or
+				// isn't shared with us at all.
+				return null;
+			}
 			String existingID = project
 					.getPersistentProperty(PROVIDER_PROP_KEY);
-			boolean isGitProvider = GitProvider.ID.equals(existingID);
-			if (isGitProvider) {
-				MappingJob.initProviderAsynchronously(project);
+			if (existingID == null) {
+				markAsUnshared(project);
+			} else {
+				markAsShared(project, existingID);
+				boolean isGitProvider = GitProvider.ID.equals(existingID);
+				if (isGitProvider) {
+					MappingJob.initProviderAsynchronously(project);
+				}
 			}
 			// not loaded yet, but we can't load it because it will use locks
+			// or not a GitProvider
 			return null;
 		} catch (CoreException e) {
 			Activator.getDefault().getLog().log(e.getStatus());
@@ -262,10 +296,76 @@ public class ResourceUtil {
 	private static GitProvider lookupProviderProp(IProject project)
 			throws CoreException {
 		Object provider = project.getSessionProperty(PROVIDER_PROP_KEY);
-		if (provider instanceof GitProvider) {
-			return (GitProvider) provider;
+		if (provider != null) {
+			if (provider instanceof RepositoryProvider) {
+				markAsShared(project, ((RepositoryProvider) provider).getID());
+				if (provider instanceof GitProvider) {
+					return (GitProvider) provider;
+				}
+			} else {
+				// Must be the RepositoryProvider's NOT_MAPPED marker
+				markAsUnshared(project);
+			}
 		}
 		return null;
+	}
+
+	/**
+	 * Sets the session property {@link #PROVIDER_ID} to
+	 * {@link #PROJECT_IS_UNSHARED} to indicate that the project is not shared
+	 * at all.
+	 *
+	 * @param project
+	 *            to mark
+	 */
+	private static void markAsUnshared(@NonNull IProject project) {
+		try {
+			project.setSessionProperty(PROVIDER_ID, PROJECT_IS_UNSHARED);
+		} catch (CoreException e) {
+			// Ignore since this is "only" an optimization
+		}
+	}
+
+	/**
+	 * Sets the session property {@link #PROVIDER_ID} to the given
+	 * {@code providerId}, or removes the property if the id is {@code null}.
+	 *
+	 * @param project
+	 *            to mark
+	 * @param providerId
+	 *            Id of the {@link RepositoryProvider} associated with the
+	 *            project, if known, or {@code null} otherwise.
+	 */
+	private static void markAsShared(@NonNull IProject project,
+			@Nullable String providerId) {
+		try {
+			project.setSessionProperty(PROVIDER_ID, providerId);
+		} catch (CoreException e) {
+			// Ignore since this is "only" an optimization
+		}
+	}
+
+	/**
+	 * Tests the session property {@link #PROVIDER_ID}.
+	 *
+	 * @param project
+	 *            to test
+	 * @return {@code true} is the project is marked as known to be unshared
+	 */
+	private static boolean isMarkedAsNotSharedWithGit(
+			@NonNull IProject project) {
+		try {
+			Object property = project.getSessionProperty(PROVIDER_ID);
+			if (property == PROJECT_IS_UNSHARED) {
+				return true;
+			} else if (property instanceof String
+					&& !GitProvider.ID.equals(property)) {
+				return true;
+			}
+		} catch (CoreException e) {
+			// Ignore and fall through
+		}
+		return false;
 	}
 
 	/**
