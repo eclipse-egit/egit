@@ -22,6 +22,24 @@
       "revId": "c1df7c3bce721572736caf40a59ad59fc904f892",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_e0ab3b5c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-01-21T16:07:32Z",
+      "side": 1,
+      "message": "The problem here is that there is not ONE default JGit key.\nThe meaning here is to let JGit use its default strategy for the command being invoked. It is up to JGit to decide which is the right default strategy depending on what it\u0027s doing, it\u0027s not up to JGit to know that, and thus we cannot return one default here IMHO.\nWe would otherwise assume that JGit uses the same default for merge and rebase and cherry-pick and so on, plus we would also assume that EGit has to know what this default is.\nThe only way I found to let the JGit default take place is to return null here.",
+      "parentUuid": "07d9433e_602acb7f",
+      "revId": "c1df7c3bce721572736caf40a59ad59fc904f892",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
