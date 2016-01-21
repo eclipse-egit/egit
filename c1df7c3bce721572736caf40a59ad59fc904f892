@@ -40,6 +40,24 @@
       "revId": "c1df7c3bce721572736caf40a59ad59fc904f892",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_200363c8",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 7214
+      },
+      "writtenOn": "2016-01-21T16:43:24Z",
+      "side": 1,
+      "message": "Yes, I see. What I meant was that it would be more clear if the Activator returns a dedicated MergeStrategy indicating that JGit should decide and the EGit operations, such as RebaseOperation, understand this \"let JGit choose\" strategy and set the strategy to null.\n\nIdeally, this knowledge about the handling of the \"let JGit choose strategy\" would be encapsulated in a merge strategy provider so that the EGit operations just call command.setStrategy(mergeStrategyProvider.getStrategy()) and the merge strategy provider knows that it should ask Activator.getPreferredMergeStrategy and that it should return null if the \"let JGit choose strategy\" is in place.\n\nAnyway, this is just a nitpick. A comment would probably be sufficient around line 268 to explain this strange looking condition.",
+      "parentUuid": "07d9433e_e0ab3b5c",
+      "revId": "c1df7c3bce721572736caf40a59ad59fc904f892",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
