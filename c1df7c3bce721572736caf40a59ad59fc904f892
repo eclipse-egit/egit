@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_602acb7f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 7214
+      },
+      "writtenOn": "2016-01-21T16:02:57Z",
+      "side": 1,
+      "message": "It looks a bit strange to return rather null than the pereferredMergeStrategy_Default here, if this is actually what has also been stored in either DefaultScope or InstanceScope.\n\nI figure, this is to cause the callers (i.e., the git operations) to fall back to JGit\u0027s default operation. But wouldn\u0027t it be more clear, if this method would return the JGit default key instead and let the git operations than act accordingly, if this is returned rather than null?",
+      "range": {
+        "startLine": 267,
+        "startChar": 4,
+        "endLine": 268,
+        "endChar": 40
+      },
+      "revId": "c1df7c3bce721572736caf40a59ad59fc904f892",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
