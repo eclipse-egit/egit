@@ -24,7 +24,7 @@
 				<td style="width: 60%" align="center"></td>
 				<td style="width: 20%" align="right" valign="top">Concepts</td>
 			</tr>
-		</table><hr/>
+		</table><hr class="navigation-separator"/>
 		<h1 id="Getting_Started">Getting Started</h1>
 		<h2 id="Overview">Overview</h2>
 		<p>If you're new to Git or distributed version control systems generally, then you might want to read 
@@ -68,10 +68,11 @@
 		<ol>
 			<li>In Windows 7, type "environment" at the start menu.</li>
 			<li>Select "Edit environment variables for your account".</li>
-			<li>Click the "New" button.</li>
+			<li>Under "User Variables", click the "New" button.</li>
 			<li>Enter "HOME" in the name field.</li>
 			<li>Enter "%USERPROFILE%" or some other path in the value field.</li>
 			<li>Click OK, and OK again. You have just added the Home directory on Windows.&lt;br /&gt;</li>
+			<li>File &gt; Exit, then restart the application.</li>
 		</ol>
 		<p>Note that if you use 
 			<a href="http://www.cygwin.com/" target="egit_external">Cygwin</a>, you should already have <code>HOME</code> set. For example, if you installed Cygwin to <code>C:\cygwin</code> and your username is Fred, then Cygwin should have already set <code>HOME</code> to <code>C:\cygwin\home\Fred</code> (or something similar). You can verify this by entering <code>echo %HOME%</code> in the Windows command prompt, or <code>echo $HOME</code> in the Cygwin shell.
@@ -128,8 +129,7 @@
 			<li>Click 
 				<b>Finish</b> to close the wizard.
 			</li>
-			<li>The decorator text "
-				<a href="master">master</a>" behind the project shows that this project is tracked in a repository on the 
+			<li>The decorator text "[master]" behind the project shows that this project is tracked in a repository on the 
 				<i>master</i> branch and the question mark decorators show that the <code>.classpath</code> and <code>.project</code> and the <code>.settings</code> files are not yet under version control.
 			</li>
 		</ul>
@@ -353,7 +353,7 @@
 		</p>
 		<p>Follow the 
 			<a href="https://docs.google.com/document/d/1UCbNCvljiInc6-vwBsHHzOQ1ItC10f1bFAOi8T30DJ8/edit" target="egit_external">exercise #1</a> to prepare for the Git Tutorial.
-		</p><hr/>
+		</p><hr class="navigation-separator"/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
 				<td style="width: 20%" align="left"></td>

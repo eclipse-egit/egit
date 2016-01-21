@@ -28,7 +28,7 @@
 				<td style="width: 60%" align="center"></td>
 				<td style="width: 20%" align="right" valign="top">Reference</td>
 			</tr>
-		</table><hr/>
+		</table><hr class="navigation-separator"/>
 		<h1 id="Tasks">Tasks</h1>
 		<h2 id="Creating_Repositories">Creating Repositories</h2>
 		<h3 id="Considerations_for_Git_Repositories_to_be_used_in_Eclipse">Considerations for Git Repositories to be used in Eclipse</h3>
@@ -87,7 +87,7 @@
 			<a href="http://wiki.eclipse.org/EGit/User_Guide/Sharing#Adding_a_project_to_version_control" title="EGit/User Guide/Sharing#Adding_a_project_to_version_control" target="egit_external">Adding a project to version control</a>).
 		</p>
 		<p>You can also create a new empty Git Repository from the Git Repositories View (see 
-			<a href="Creating_a_Repository" title="EGit/User_Guide#Creating_a_Repository">Creating a Repository</a>).
+			<a href="#Creating_a_Repository" title="EGit/User_Guide#Creating_a_Repository">Creating a Repository</a>).
 		</p>
 		<h3 id="Creating_a_Git_Repository_for_multiple_Projects">Creating a Git Repository for multiple Projects</h3>
 		<p>You may create multiple projects under a common directory and then create a common repository for all projects in one go:</p>
@@ -129,7 +129,7 @@
 		<h4 id="Cloning_a_Repository">Cloning a Repository</h4>
 		<p>The first option is used if you start with a remote repository. The clone operation will copy that repository to your local file system. To start the Clone Wizard click 
 			<b>Clone...</b>. The Clone Wizard is described in more detail in 
-			<a href="Cloning_Remote_Repositories" title="EGit/User Guide#Cloning_Remote_Repositories">Cloning Remote Repositories</a>. Upon successful completion of the clone operation, the newly cloned repository appears in the list automatically.
+			<a href="#Cloning_Remote_Repositories" title="EGit/User Guide#Cloning_Remote_Repositories">Cloning Remote Repositories</a>. Upon successful completion of the clone operation, the newly cloned repository appears in the list automatically.
 		</p>
 		<h4 id="Adding_a_Repository">Adding a Repository</h4>
 		<p>The second option is useful if you already have a repository in your local file system, for example because you have cloned it earlier, you created it from scratch or you copied it from somewhere else. Click 
@@ -186,7 +186,7 @@
 			<b>File &gt; Import... &gt; Git &gt; Projects from Git &gt; Next &gt; Clone URI &gt; Next</b>
 		</p>
 		<p>or from the "Git Repositories View" (described in 
-			<a href="Managing_Repositories" title="EGit/User_Guide#Managing_Repositories">Managing Repositories</a>) using the 
+			<a href="#Managing_Repositories" title="EGit/User_Guide#Managing_Repositories">Managing Repositories</a>) using the 
 			<b>Clone a Git Repository</b> toolbar button or view menu.
 		</p>
 		<h4 id="Repository_Selection">Repository Selection</h4>
@@ -437,17 +437,11 @@
 				<b>adfdbfd2</b></tt> will be pushed.
 			</li>
 			<li>For refs which do not yet exist in the destination repository <tt>
-				<b>
-					<a href="new">branch</a>
-				</b></tt> or <tt>
-				<b>
-					<a href="new">tag</a>
-				</b></tt> is displayed.
+				<b>[new branch]</b></tt> or <tt>
+				<b>[new tag]</b></tt> is displayed.
 			</li>
 			<li>For refs which will be delete <tt>
-				<b>
-					<a href="deleted">deleted</a>
-				</b></tt> is shown.
+				<b>[deleted]</b></tt> is shown.
 			</li>
 		</ul>
 		<p>
@@ -603,17 +597,11 @@
 		<ul>
 			<li>For ref updates the list commits which have been fetched will be shown.</li>
 			<li>For refs which didn't exist before in the local repository <tt>
-				<b>
-					<a href="new">branch</a>
-				</b></tt> or <tt>
-				<b>
-					<a href="new">tag</a>
-				</b></tt> is displayed.
+				<b>[new branch]</b></tt> or <tt>
+				<b>[new tag]</b></tt> is displayed.
 			</li>
 			<li>For refs which have been deleted <tt>
-				<b>
-					<a href="deleted">deleted</a>
-				</b></tt> is shown.
+				<b>[deleted]</b></tt> is shown.
 			</li>
 		</ul>
 		<p>
@@ -2519,7 +2507,7 @@ Sein oder nicht sein
 		</ul>
 		<h3 id="Checking_out_a_commit">Checking out a commit</h3>
 		<p>This checks out the commit displayed in the commit viewer. The commit will be checked out and 
-			<a href="#&quot;Detached&quot;_HEAD">HEAD will become detached</a>.
+			<a href="#.22Detached.22_HEAD">HEAD will become detached</a>.
 		</p>
 		<h3 id="Cherry_picking_a_commit">Cherry picking a commit</h3>
 		<p>Applies the change introduced by the commit displayed in the commit viewer on top of the currently checked out commit or branch.</p>
@@ -2671,7 +2659,7 @@ Sein oder nicht sein
 			<li>Path to the project to import (folder which contains <tt>.project</tt>), relative to the repository</li>
 		</ol>
 		<p>Each project has one entry. So for multiple projects in the same repository, create such an entry for each project with the same repository URL. The import is smart enough to only clone each repository once.</p>
-		<p>If the repository contains a project at the root, use <tt>.</tt> as the project path.</p><hr/>
+		<p>If the repository contains a project at the root, use <tt>.</tt> as the project path.</p><hr class="navigation-separator"/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
 				<td style="width: 20%" align="left">
