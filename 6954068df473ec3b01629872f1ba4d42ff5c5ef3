@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_cae64e5e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-24T20:59:35Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "07d9433e_0ad676be",
+      "revId": "6954068df473ec3b01629872f1ba4d42ff5c5ef3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_2ad17ac4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -30,6 +48,75 @@
       "writtenOn": "2016-01-24T14:54:58Z",
       "side": 1,
       "message": "The point is that SWTBotJunit4ClassRunner takes screenshots after @Afters have run. We use those frequently to close left-over shells after tests, so we get rather meaningless screenshots such as e.g. https://hudson.eclipse.org/egit/job/egit.gerrit/ws/org.eclipse.egit.ui.test/screenshots/testAddSectionEntry%28org.eclipse.egit.ui.prefpages.configuration.GlobalConfigurationPageTest%29.jpeg .\n\nThe new runner takes screenshots *before* @Afters run, and thus (as can be seen on the failure in PS1, which I had added on purpose) we do get screenshots showing the state as closely as possible to when the exception occurred. See e.g. https://hudson.eclipse.org/egit/job/egit.gerrit/ws/org.eclipse.egit.ui.test/screenshots/testNodes%28org.eclipse.egit.ui.prefpages.configuration.GlobalConfigurationPageTest%29.jpeg , which *does* show the still open dialog.",
+      "revId": "6954068df473ec3b01629872f1ba4d42ff5c5ef3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_eae9522e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-24T20:59:35Z",
+      "side": 1,
+      "message": "+1, makes sense, looks like upstream should also fix this",
+      "parentUuid": "07d9433e_2ad17ac4",
+      "revId": "6954068df473ec3b01629872f1ba4d42ff5c5ef3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_eae6b2a4",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/gitflow/AbstractGitflowHandlerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-24T20:59:35Z",
+      "side": 1,
+      "message": "unrelated change",
+      "revId": "6954068df473ec3b01629872f1ba4d42ff5c5ef3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_2af89a3c",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/gitflow/InitHandlerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-24T20:59:35Z",
+      "side": 1,
+      "message": "unrelated change",
+      "revId": "6954068df473ec3b01629872f1ba4d42ff5c5ef3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_0afd962e",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/CapturingSWTBotJunit4Runner.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-01-24T20:59:35Z",
+      "side": 1,
+      "message": "add a TODO to remind us to replace this when we can update to JUnit 4.12",
       "revId": "6954068df473ec3b01629872f1ba4d42ff5c5ef3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
