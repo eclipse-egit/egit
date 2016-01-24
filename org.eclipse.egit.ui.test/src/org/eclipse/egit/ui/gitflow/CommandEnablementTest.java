@@ -18,10 +18,10 @@ import org.eclipse.core.commands.Command;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
+import org.eclipse.egit.ui.test.CapturingSWTBotJunit4Runner;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotCommand;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
-import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
@@ -31,7 +31,7 @@ import org.junit.runner.RunWith;
 /**
  * Tests for the Gitflow plugin.xml expressions, property testers, AdapterFactories, etc.
  */
-@RunWith(SWTBotJunit4ClassRunner.class)
+@RunWith(CapturingSWTBotJunit4Runner.class)
 public class CommandEnablementTest extends AbstractGitflowHandlerTest {
 
 	private static final String FEATURE_START_CMD = "org.eclipse.egit.gitflow.ui.command.featureStart";

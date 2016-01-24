@@ -18,12 +18,12 @@ import java.io.File;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.test.CapturingSWTBotJunit4Runner;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestBase;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
@@ -34,7 +34,7 @@ import org.junit.runner.RunWith;
 /**
  * Unit tests for adding submodules to a repository
  */
-@RunWith(SWTBotJunit4ClassRunner.class)
+@RunWith(CapturingSWTBotJunit4Runner.class)
 public class SubmoduleAddTest extends GitRepositoriesViewTestBase {
 
 	private static final String ADD_SUBMODULE_CONTEXT_MENU_LABEL = "SubmoduleAddCommand.label";

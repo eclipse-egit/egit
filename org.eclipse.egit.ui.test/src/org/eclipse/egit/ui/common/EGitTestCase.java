@@ -13,18 +13,18 @@ package org.eclipse.egit.ui.common;
 
 import static org.junit.Assert.fail;
 
+import org.eclipse.egit.ui.test.CapturingSWTBotJunit4Runner;
 import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
-import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
-@RunWith(SWTBotJunit4ClassRunner.class)
+@RunWith(CapturingSWTBotJunit4Runner.class)
 public abstract class EGitTestCase {
 
 	protected static final SWTWorkbenchBot bot = new SWTWorkbenchBot();

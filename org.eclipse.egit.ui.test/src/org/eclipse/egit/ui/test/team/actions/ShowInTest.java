@@ -15,10 +15,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
+import org.eclipse.egit.ui.test.CapturingSWTBotJunit4Runner;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
-import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.junit.Before;
@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
 /**
  * Tests for the Team->Show History and Team->Show in Repositories View actions
  */
-@RunWith(SWTBotJunit4ClassRunner.class)
+@RunWith(CapturingSWTBotJunit4Runner.class)
 public class ShowInTest extends LocalRepositoryTestCase {
 
 	@Before

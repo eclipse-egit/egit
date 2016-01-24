@@ -20,6 +20,7 @@ import java.util.Set;
 
 import org.eclipse.egit.ui.common.EGitTestCase;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.test.CapturingSWTBotJunit4Runner;
 import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -28,7 +29,6 @@ import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
-import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
@@ -39,7 +39,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-@RunWith(SWTBotJunit4ClassRunner.class)
+@RunWith(CapturingSWTBotJunit4Runner.class)
 public class GlobalConfigurationPageTest {
 
 	private static final String TESTSECTION = "testsection";
