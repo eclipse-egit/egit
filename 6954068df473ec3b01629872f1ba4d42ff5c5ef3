@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_aa066a91",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/gitflow/AbstractGitflowHandlerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-24T21:17:59Z",
+      "side": 1,
+      "message": "Done. (Actually undone. Will redo in a follow-up change.)",
+      "parentUuid": "07d9433e_eae6b2a4",
+      "revId": "6954068df473ec3b01629872f1ba4d42ff5c5ef3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_2af89a3c",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/gitflow/InitHandlerTest.java",
         "patchSetId": 2
@@ -106,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_cafd6ee2",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/gitflow/InitHandlerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-24T21:17:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07d9433e_2af89a3c",
+      "revId": "6954068df473ec3b01629872f1ba4d42ff5c5ef3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_0afd962e",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/CapturingSWTBotJunit4Runner.java",
         "patchSetId": 2
@@ -117,6 +153,24 @@
       "writtenOn": "2016-01-24T20:59:35Z",
       "side": 1,
       "message": "add a TODO to remind us to replace this when we can update to JUnit 4.12",
+      "revId": "6954068df473ec3b01629872f1ba4d42ff5c5ef3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_ea007276",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/CapturingSWTBotJunit4Runner.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-24T21:17:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07d9433e_0afd962e",
       "revId": "6954068df473ec3b01629872f1ba4d42ff5c5ef3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
