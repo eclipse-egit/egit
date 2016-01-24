@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_0ad676be",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-24T14:54:58Z",
+      "side": 1,
+      "message": "The work-around proposed in bug 475804 is no good for me. I have a mac-ch-de keyboard and would have to add such a keyboard layout to SWTBot in order to get these tests to run locally. So I prefer avoiding keyboard layout dependencies altogether.",
+      "revId": "6954068df473ec3b01629872f1ba4d42ff5c5ef3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_2ad17ac4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-24T14:54:58Z",
+      "side": 1,
+      "message": "The point is that SWTBotJunit4ClassRunner takes screenshots after @Afters have run. We use those frequently to close left-over shells after tests, so we get rather meaningless screenshots such as e.g. https://hudson.eclipse.org/egit/job/egit.gerrit/ws/org.eclipse.egit.ui.test/screenshots/testAddSectionEntry%28org.eclipse.egit.ui.prefpages.configuration.GlobalConfigurationPageTest%29.jpeg .\n\nThe new runner takes screenshots *before* @Afters run, and thus (as can be seen on the failure in PS1, which I had added on purpose) we do get screenshots showing the state as closely as possible to when the exception occurred. See e.g. https://hudson.eclipse.org/egit/job/egit.gerrit/ws/org.eclipse.egit.ui.test/screenshots/testNodes%28org.eclipse.egit.ui.prefpages.configuration.GlobalConfigurationPageTest%29.jpeg , which *does* show the still open dialog.",
+      "revId": "6954068df473ec3b01629872f1ba4d42ff5c5ef3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
