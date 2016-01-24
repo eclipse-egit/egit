@@ -22,6 +22,7 @@ import org.eclipse.egit.gitflow.op.FeatureStartOperation;
 import org.eclipse.egit.gitflow.op.InitOperation;
 import org.eclipse.egit.gitflow.ui.Activator;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.ui.test.CapturingSWTBotJunit4Runner;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.api.CommitCommand;
@@ -36,14 +37,13 @@ import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 
 /**
  * Tests for the Team->Gitflow
  */
-@RunWith(SWTBotJunit4ClassRunner.class)
+@RunWith(CapturingSWTBotJunit4Runner.class)
 public abstract class AbstractGitflowHandlerTest extends LocalRepositoryTestCase {
 	protected static final String DEVELOP = "develop";
 	protected static final String FEATURE_NAME = "myFeature";

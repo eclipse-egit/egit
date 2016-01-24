@@ -16,16 +16,16 @@ import static org.junit.Assert.assertNull;
 
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.ui.Activator;
+import org.eclipse.egit.ui.test.CapturingSWTBotJunit4Runner;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * Tests for the Team->Gitflow->Feature Start/Finish actions
  */
-@RunWith(SWTBotJunit4ClassRunner.class)
+@RunWith(CapturingSWTBotJunit4Runner.class)
 public class FeatureStartFinishHandlerTest extends AbstractFeatureFinishHandlerTest {
 
 	@Test
