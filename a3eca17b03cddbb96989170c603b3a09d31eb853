@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_0ac2f69b",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/gitflow/FeatureFinishSquashHandlerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-24T22:10:22Z",
+      "side": 1,
+      "message": "Darn; had missed this.",
+      "range": {
+        "startLine": 96,
+        "startChar": 19,
+        "endLine": 96,
+        "endChar": 27
+      },
+      "revId": "a3eca17b03cddbb96989170c603b3a09d31eb853",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
