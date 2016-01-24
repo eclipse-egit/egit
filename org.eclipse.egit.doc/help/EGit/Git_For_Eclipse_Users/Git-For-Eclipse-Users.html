@@ -24,7 +24,7 @@
 				<td style="width: 60%" align="center"></td>
 				<td style="width: 20%" align="right" valign="top">Updating This Document</td>
 			</tr>
-		</table><hr/>
+		</table><hr class="navigation-separator"/>
 		<p>This post is aimed at those who have been using Eclipse for a while, and probably have been using either the baked-in CVS or external SVN providers to store their source code. The content of the post is about Git: what it means to you, as an Eclipse user, and specifically, how it affects how you obtain or work with projects from Eclipse.org.</p>
 		<p>This post is not about the relative merits of Git over CVS/SVN, or of Git versus other distributed version control systems (DVCS) like Mercurial (Hg). Other sites can give those flavours if needed.</p>
 		<p>Once you understand the conceptual differences between CVS/SVN and Git, and then subsequently start to use Git, you may find it very difficult to go back. You should really start to experiment only if you think you're going to migrate in the near future, because using Git is like watching TV in colour: once you've discovered it, it's really difficult to go back to black &amp; white.</p>
@@ -335,7 +335,7 @@ nothing added to commit but untracked files present (use "git add" to track)
 $ git add README.txt # Similar to Team -&gt; Add to Version Control
 $ # git commit # Would prompt for message
 $ git commit -m "Added README.txt"
-<a href="master">(root-commit) 0dd1f35</a> Added README.txt
+[master (root-commit) 0dd1f35] Added README.txt
  1 files changed, 1 insertions(+), 0 deletions(-)
  create mode 100644 README.txt
 $ echo "Hello, solar system" &gt; README.txt
@@ -349,7 +349,7 @@ $ git commit
 #
 no changes added to commit (use "git add" and/or "git commit -a")
 $ git commit -a -m "Updated README.txt"
-<a href="master">9b1939a</a> Updated README.txt
+[master 9b1939a] Updated README.txt
  1 files changed, 1 insertions(+), 1 deletions(-)
 $ git log --graph --oneline # Shows graph nodes (not much here) and change info
 * 9b1939a Updated README.txt
@@ -361,7 +361,7 @@ Hello, world
 $ echo "Bonjour, tout le monde" &gt; README.txt
 $ git add README.txt # or commit -a
 $ git commit -m "Ajouté README.txt"
-<a href="french">66a644c</a> Ajouté README.txt
+[french 66a644c] Ajouté README.txt
  1 files changed, 1 insertions(+), 1 deletions(-)
 $ git log --graph --oneline
 * 66a644c Ajouté README.txt
@@ -370,7 +370,7 @@ $ git checkout -b web 0dd1f35 # Create and checkout a branch 'web' from initial 
 $ echo '&lt;a href="<a href="http://git.eclipse.org" target="egit_external">http://git.eclipse.org</a>"&gt;git.eclipse.org&lt;/a&gt;' &gt; index.html
 $ git add index.html
 $ git commit -m "Added homepage"
-<a href="web">d47e30c</a> Added homepage
+[web d47e30c] Added homepage
  1 files changed, 1 insertions(+), 0 deletions(-)
  create mode 100644 index.html
 $ git checkout master
@@ -417,7 +417,7 @@ Writing objects: 100% (11/11), 981 bytes, done.
 Total 11 (delta 1), reused 0 (delta 0)
 Unpacking objects: 100% (11/11), done.
 To /tmp/other
- * <a href="new">branch</a>      master -&gt; master
+ * [new branch]      master -&gt; master
 $ git push --all other # Push all branches to 'other'
 Counting objects: 8, done.
 Delta compression using up to 2 threads.
@@ -426,8 +426,8 @@ Writing objects: 100% (5/5), 567 bytes, done.
 Total 5 (delta 0), reused 0 (delta 0)
 Unpacking objects: 100% (5/5), done.
 To /tmp/other
- * <a href="new">branch</a>      french -&gt; french
- * <a href="new">branch</a>      web -&gt; web
+ * [new branch]      french -&gt; french
+ * [new branch]      web -&gt; web
 $ cd /tmp/other # Switch to 'other' repository. git commands now apply to this repository
 $ git config --bool core.bare false # need to allow this repository to have checked out files
 $ ls # Nothing to be seen, but it's there
@@ -440,7 +440,7 @@ $ ls
 README.txt index.html
 $ echo '&lt;h1&gt;Git rocks!&lt;/h1&gt;' &gt;&gt; index.html
 $ git commit -a -m "Added Git Rocks!"
-<a href="web">510621a</a> Added Git Rocks
+[web 510621a] Added Git Rocks
  1 files changed, 1 insertions(+), 0 deletions(-)
 $ cd /tmp/example # Back to first repo. git commands now apply to 'example' repository
 $ git pull other web # Pull changes from 'other' repo 'web' branch
@@ -500,7 +500,7 @@ $ git log --graph --oneline
 			<dd>☞ 
 				<b>Rebasing replants your tree; but do it on local branches only</b>
 			</dd>
-		</dl><hr/>
+		</dl><hr class="navigation-separator"/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
 				<td style="width: 20%" align="left"></td>

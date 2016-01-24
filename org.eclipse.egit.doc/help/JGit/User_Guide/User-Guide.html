@@ -24,7 +24,7 @@
 				<td style="width: 60%" align="center"></td>
 				<td style="width: 20%" align="right" valign="top">Concepts</td>
 			</tr>
-		</table><hr/>
+		</table><hr class="navigation-separator"/>
 		<h1 id="Getting_Started">Getting Started</h1>
 		<p>If you're new to Git or distributed version control systems generally, then you might want to read 
 			<a href="../../EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" title="EGit/Git For Eclipse Users">Git for Eclipse Users</a> first. If you need more details and background read the book 
@@ -55,7 +55,7 @@ jgit version 0.10.0-SNAPSHOT
 			<b>-h</b> flag, commands provide a helpful message listing what flags they support.
 		</p>
 		<pre>prompt$ ./jgit version -h
-jgit version <a href="--help">(-h)</a>
+jgit version [--help (-h)]
 </pre>
 		<pre> --help (-h) : display this help text
 </pre>
@@ -63,7 +63,7 @@ jgit version <a href="--help">(-h)</a>
 			<b>jgit</b> with no arguments lists the most commonly used commands.
 		</p>
 		<pre>prompt$ ./jgit
-jgit --git-dir GIT_DIR --help (-h) --show-stack-trace command <a href="ARG">...</a>
+jgit --git-dir GIT_DIR --help (-h) --show-stack-trace command [ARG ...]
 </pre>
 		<pre>The most commonly used commands are:
  branch   List, create, or delete branches
@@ -90,7 +90,7 @@ jgit --git-dir GIT_DIR --help (-h) --show-stack-trace command <a href="ARG">...<
 		<p>Before inspecting the most recent commits, you probably want to know which branches the repository contains and what branch is currently checked out. Using the branch commands -v flag, you get a small summary of branches, their revision, and the first line of the revision's commit message.</p>
 		<pre>prompt$ ./jgit branch -v
   master       4d4adfb Git Project import: don't hide but gray out existing projects
-* traceHistory 6b9fe04 <a href="historyView">historyView</a> Add trace instrumentation
+* traceHistory 6b9fe04 [historyView] Add trace instrumentation
 </pre>
 		<p>The log command, like 
 			<a href="http://www.kernel.org/pub/software/scm/git/docs/git-log.html" target="egit_external">git-log(1)</a>, shows the commit log. For example,
@@ -111,7 +111,7 @@ Date:   Fri Oct 08 10:58:52 2010 +0200
 		<p>This should give you a window with the revision graph plotted to the left and three columns containing the first line of the message, the author name, and the commit date.</p>
 		<p>
 			<img border="0" src="images/Jgit-glog.png"/>
-		</p><hr/>
+		</p><hr class="navigation-separator"/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
 				<td style="width: 20%" align="left"></td>

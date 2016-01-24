@@ -28,7 +28,7 @@
 				<td style="width: 60%" align="center"></td>
 				<td style="width: 20%" align="right" valign="top">Updating This Document</td>
 			</tr>
-		</table><hr/>
+		</table><hr class="navigation-separator"/>
 		<h1 id="Reference">Reference</h1>
 		<h2 id="Menus">Menus</h2>
 		<h3 id="Project_Context_Menu">Project Context Menu</h3>
@@ -499,7 +499,7 @@
 		<p>This action is only available if the current input is a file. It will open an editor for each selected commit displaying the content of the file for the given commit.</p>
 		<h5 id="Checkout">Checkout</h5>
 		<p>This checks out the currently selected commit. If a branch exists for this commit, the branch is checked out, if more than one branch exists for this commit, a dialog will be shown asking which branch should be checked out. If no branches exist for the commit, the commit will be checked out and 
-			<a href="#&quot;Detached&quot;_HEAD">HEAD will become detached</a>.
+			<a href="Tasks.html#.22Detached.22_HEAD">HEAD will become detached</a>.
 		</p>
 		<h5 id="Create_Branch...">Create Branch...</h5>
 		<p>Creates a branch on the currently selected commit. A dialog will be shown asking for a branch name and whether the newly created branch should be checked out.</p>
@@ -896,9 +896,7 @@
 			<b>org.eclipse.egit.fetchfactory</b> plug-in.
 		</p>
 		<p>The map file's file format: 
-			<b>type@id,
-				<a href="version">version</a>=GIT,args
-			</b>
+			<b>type@id,[version]=GIT,args</b>
 		</p>
 		<p>Where 
 			<b>args</b> is a comma-separated list of key-value pairs.
@@ -921,7 +919,7 @@
 			<li>The repository is cloned to local disc. If it already exists, it is assumed that it was previously cloned and just new commits will be fetched</li>
 			<li>The specified tag will be checked out in the local clone</li>
 			<li>The content of the path will be copied to the final build location</li>
-		</ul><hr/>
+		</ul><hr class="navigation-separator"/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
 				<td style="width: 20%" align="left">

@@ -28,7 +28,7 @@
 				<td style="width: 60%" align="center"></td>
 				<td style="width: 20%" align="right" valign="top">Documentation</td>
 			</tr>
-		</table><hr/>
+		</table><hr class="navigation-separator"/>
 		<h1 id="Builds">Builds</h1>
 		<p>The central EGit and JGit builds run on the 
 			<a href="https://hudson.eclipse.org/egit/" target="egit_external">JGit/EGit Hudson instance</a>
@@ -104,14 +104,14 @@
 		<p>The EGit build uses the JGit p2 repository to resolve jgit dependencies. For local builds the build assumes
 			that egit and jgit source trees are located under a common parent folder. If this is not the case the path
 			to the jgit p2 repository has to be injected via system property:</p>
-		<pre><a href="~/src/egit">~/src/egit</a> $ mvn clean install -Djgit-site=file:/path/to/org.eclipse.jgit.updatesite/target/site
+		<pre>[~/src/egit] $ mvn clean install -Djgit-site=file:/path/to/org.eclipse.jgit.updatesite/target/site
 </pre>
 		<p>The hudson build on build.eclipse.org uses (for SNAPSHOT builds):</p>
-		<pre><a href="~/src/egit">~/src/egit</a> $ mvn clean install -Djgit-site=<a href="https://repo.eclipse.org/content/unzip/snapshots.unzip/" target="egit_external">https://repo.eclipse.org/content/unzip/snapshots.unzip/</a>
+		<pre>[~/src/egit] $ mvn clean install -Djgit-site=<a href="https://repo.eclipse.org/content/unzip/snapshots.unzip/" target="egit_external">https://repo.eclipse.org/content/unzip/snapshots.unzip/</a>
                      org/eclipse/jgit/org.eclipse.jgit.repository/${JGIT_VERSION}/org.eclipse.jgit.repository-${JGIT_VERSION}.zip-unzip/
 </pre>
 		<p>If you wan to build EGit for the specific Juno platform, consider using the <code>platform-juno</code> maven profile:</p>
-		<pre><a href="~/src/egit">~/src/egit</a> $ mvn -P platform-juno clean install
+		<pre>[~/src/egit] $ mvn -P platform-juno clean install
 </pre>
 		<p>For EGit version 3.0, <code>platform-juno</code> (Eclipse 4.2) and <code>platform-kepler</code> (Eclipse 4.3) are available. In addition <code>platform-kepler-staging</code> refers to the Kepler staging repository.</p>
 		<p>Upon a successful build, a p2 update site should be generated inside 
@@ -171,9 +171,7 @@ latest stable branch:  /home/data/httpd/download.eclipse.org/egit/updates-stable
 		<p>The first step is to ensure you're in a place you can sign on build.eclipse.org</p>
 		<pre>cd /home/data/httpd/download-staging.priv/commonBuild
 </pre>
-		<p>Next you run the signing command (Usage: /usr/bin/sign &lt;file&gt; &lt;mail|nomail&gt; 
-			<a href="outputDir">outputDir</a>) on a zip of the EGit repo...
-		</p>
+		<p>Next you run the signing command (Usage: /usr/bin/sign &lt;file&gt; &lt;mail|nomail&gt; [outputDir]) on a zip of the EGit repo...</p>
 		<pre>sign egit-p2-repo.zip my@email.com /home/data/users/caniszczyk/egit-0.8
 </pre>
 		<p>After that, you can publish the zip that is generated with the signing information.</p>
@@ -189,7 +187,7 @@ latest stable branch:  /home/data/httpd/download.eclipse.org/egit/updates-stable
 		</p>
 		<p>
 			<br/>
-		</p><hr/>
+		</p><hr class="navigation-separator"/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
 				<td style="width: 20%" align="left">
