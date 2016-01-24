@@ -15,10 +15,10 @@ import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.gitflow.ui.Activator;
 import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
+import org.eclipse.egit.ui.test.CapturingSWTBotJunit4Runner;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.swtbot.eclipse.finder.waits.Conditions;
-import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.ui.PlatformUI;
 import org.junit.runner.RunWith;
@@ -26,7 +26,7 @@ import org.junit.runner.RunWith;
 /**
  * Tests for the Team->Gitflow->Feature Start/Finish actions
  */
-@RunWith(SWTBotJunit4ClassRunner.class)
+@RunWith(CapturingSWTBotJunit4Runner.class)
 public abstract class AbstractFeatureFinishHandlerTest extends AbstractGitflowHandlerTest {
 
 	protected void finishFeature() {
@@ -72,7 +72,7 @@ public abstract class AbstractFeatureFinishHandlerTest extends AbstractGitflowHa
 		});
 
 		bot.waitUntil(shellIsActive(UIText.FeatureStartHandler_provideFeatureName));
-		bot.text().typeText(featureName);
+		bot.text().setText(featureName);
 		bot.button("OK").click();
 		bot.waitUntil(Conditions.waitForJobs(JobFamilies.GITFLOW_FAMILY, "Git flow jobs"));
 	}

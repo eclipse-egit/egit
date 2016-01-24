@@ -21,19 +21,19 @@ import java.util.Iterator;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.ui.Activator;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
+import org.eclipse.egit.ui.test.CapturingSWTBotJunit4Runner;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * Tests for the Team->Gitflow->Feature Finish action with squash option
  */
-@RunWith(SWTBotJunit4ClassRunner.class)
+@RunWith(CapturingSWTBotJunit4Runner.class)
 public class FeatureFinishSquashHandlerTest extends
 		AbstractFeatureFinishHandlerTest {
 
@@ -91,9 +91,9 @@ public class FeatureFinishSquashHandlerTest extends
 
 	@Override
 	protected void preFinish() {
-		int firstLine = 0;
-		bot.styledText().selectLine(firstLine);
-		bot.styledText().typeText(SQUASHED_COMMENT_SUMMARY);
+		String text = bot.styledText().getText();
+		text = text.substring(text.indexOf('\n'));
+		bot.styledText().setText(SQUASHED_COMMENT_SUMMARY + text);
 		bot.button("OK").click();
 	}
 

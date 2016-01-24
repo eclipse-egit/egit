@@ -28,13 +28,13 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.common.CommitDialogTester;
 import org.eclipse.egit.ui.common.CommitDialogTester.NoFilesToCommitPopup;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.ui.test.CapturingSWTBotJunit4Runner;
 import org.eclipse.egit.ui.test.CommitMessageUtil;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,7 +42,7 @@ import org.junit.runner.RunWith;
 /**
  * Tests for the Team->Commit action
  */
-@RunWith(SWTBotJunit4ClassRunner.class)
+@RunWith(CapturingSWTBotJunit4Runner.class)
 public class CommitActionTest extends LocalRepositoryTestCase {
 	private File repositoryFile;
 

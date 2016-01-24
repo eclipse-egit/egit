@@ -32,12 +32,12 @@ import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.ui.Activator;
 import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
+import org.eclipse.egit.ui.test.CapturingSWTBotJunit4Runner;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swtbot.eclipse.finder.waits.Conditions;
-import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
@@ -48,7 +48,7 @@ import org.junit.runner.RunWith;
 /**
  * Tests for the Team->Gitflow init
  */
-@RunWith(SWTBotJunit4ClassRunner.class)
+@RunWith(CapturingSWTBotJunit4Runner.class)
 public class InitHandlerTest extends AbstractGitflowHandlerTest {
 	private static final String DEVELOP_BRANCH = "a";
 
@@ -141,9 +141,7 @@ public class InitHandlerTest extends AbstractGitflowHandlerTest {
 	}
 
 	private void fillDialog(String masterBranch) {
-		SWTBotText developText = bot.textWithLabel(InitDialog_developBranch);
-		developText.selectAll();
-		developText.typeText(ILLEGAL_BRANCH_NAME);
+		typeInto(InitDialog_developBranch, ILLEGAL_BRANCH_NAME);
 
 		SWTBotButton ok = bot.button("OK");
 		assertFalse(ok.isEnabled());
@@ -191,6 +189,6 @@ public class InitHandlerTest extends AbstractGitflowHandlerTest {
 	private void typeInto(String textLabel, String textInput) {
 		SWTBotText developText = bot.textWithLabel(textLabel);
 		developText.selectAll();
-		developText.typeText(textInput);
+		developText.setText(textInput);
 	}
 }
