@@ -84,7 +84,6 @@ public class AbstractDualRepositoryTestCase extends DualRepositoryTestCase {
 		Repository repo2 = Activator.getDefault().getRepositoryCache()
 				.lookupRepository(new File(workdir2, DOT_GIT));
 		repository2 = new TestRepository(repo2);
-		new InitOperation(repository).execute(null);
 	}
 
 	protected void assertCommitArrivedAtRemote(RevCommit branchCommit,
