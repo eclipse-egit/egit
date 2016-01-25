@@ -50,6 +50,8 @@ public class AbstractDualRepositoryTestCase extends DualRepositoryTestCase {
 
 	String projectName = "FeaturePublishTest";
 
+	protected RevCommit initialCommit;
+
 	@Override
 	@Before
 	public void beforeTestCase() throws Exception {
@@ -58,7 +60,7 @@ public class AbstractDualRepositoryTestCase extends DualRepositoryTestCase {
 
 		repository1 = new TestRepository(new File(workdir, DOT_GIT));
 
-		repository1.createInitialCommit("setUp");
+		initialCommit = repository1.createInitialCommit("setUp");
 
 		Repository repository = repository1.getRepository();
 		new InitOperation(repository).execute(null);
