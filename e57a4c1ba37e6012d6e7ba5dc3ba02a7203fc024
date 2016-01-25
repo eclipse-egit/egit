@@ -46,6 +46,30 @@
       "revId": "e57a4c1ba37e6012d6e7ba5dc3ba02a7203fc024",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_ccaca976",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/CapturingSWTBotJunit4Runner.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 67050
+      },
+      "writtenOn": "2016-01-25T18:12:39Z",
+      "side": 1,
+      "message": "True: it would signal the non-test exception at the expense of not being able to signal the test exception. That would reflect a priority that I find suitable: 1. the testing tools should work correctly or be fixed, 2. the software under test should work correctly or be fixed.\n\nLogging the non-test exception would also be better than ignoring it.",
+      "parentUuid": "07d9433e_e954ff4d",
+      "range": {
+        "startLine": 100,
+        "startChar": 5,
+        "endLine": 102,
+        "endChar": 4
+      },
+      "revId": "e57a4c1ba37e6012d6e7ba5dc3ba02a7203fc024",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
