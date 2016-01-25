@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_89cff325",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/CapturingSWTBotJunit4Runner.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 67050
+      },
+      "writtenOn": "2016-01-25T15:15:26Z",
+      "side": 1,
+      "message": "This might be changed to \n\ncatch (Exception e) {\n   throw new RuntimeException(\"Unexpected exception\", e);\n}\n\njust in case someone modifies the code of ScreenshotCaptureListener.testFailure(...) throws Exception { and actually makes it throw an exception.",
+      "range": {
+        "startLine": 100,
+        "startChar": 5,
+        "endLine": 102,
+        "endChar": 4
+      },
+      "revId": "e57a4c1ba37e6012d6e7ba5dc3ba02a7203fc024",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
