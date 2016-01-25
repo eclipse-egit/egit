@@ -22,6 +22,30 @@
       "revId": "e57a4c1ba37e6012d6e7ba5dc3ba02a7203fc024",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_e954ff4d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/CapturingSWTBotJunit4Runner.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-25T16:27:33Z",
+      "side": 1,
+      "message": "Wouldn\u0027t that hide an exception thrown by a test? If at all, we could log this.",
+      "parentUuid": "07d9433e_89cff325",
+      "range": {
+        "startLine": 100,
+        "startChar": 5,
+        "endLine": 102,
+        "endChar": 4
+      },
+      "revId": "e57a4c1ba37e6012d6e7ba5dc3ba02a7203fc024",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
