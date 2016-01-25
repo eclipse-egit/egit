@@ -37,7 +37,7 @@ public class RevUtils {
 	}
 
 	/**
-	 * Finds and returns instance of common ancestor commit for given to
+	 * Finds and returns instance of common ancestor commit for given two
 	 * commit's
 	 *
 	 * @param repo repository in which common ancestor should be searched, cannot be null
