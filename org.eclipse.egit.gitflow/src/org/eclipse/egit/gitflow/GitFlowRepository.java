@@ -297,4 +297,30 @@ public class GitFlowRepository {
 	public GitFlowConfig getConfig() {
 		return this.config;
 	}
+
+	/**
+	 * Check if the given commit is an ancestor of the current HEAD on the
+	 * develop branch.
+	 *
+	 * @param selectedCommit
+	 * @return Whether or not the selected commit is on the develop branch.
+	 * @throws IOException
+	 * @since 4.3
+	 */
+	public boolean isOnDevelop(@NonNull RevCommit selectedCommit) throws IOException {
+		String develop = config.getDevelopFull();
+		return isOnBranch(selectedCommit, develop);
+	}
+
+	private boolean isOnBranch(RevCommit commit, String fullBranch)
+			throws IOException {
+		Ref developRef = repository.exactRef(fullBranch);
+		try {
+			List<Ref> list = Git.wrap(repository).branchList().setContains(commit.name()).call();
+
+			return list.contains(developRef);
+		} catch (GitAPIException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

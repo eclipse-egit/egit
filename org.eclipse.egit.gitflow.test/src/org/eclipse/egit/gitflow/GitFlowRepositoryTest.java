@@ -30,6 +30,7 @@ import org.eclipse.egit.gitflow.op.ReleaseFinishOperation;
 import org.eclipse.egit.gitflow.op.ReleaseStartOperation;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.junit.Test;
 
 public class GitFlowRepositoryTest extends AbstractDualRepositoryTestCase {
@@ -139,4 +140,29 @@ public class GitFlowRepositoryTest extends AbstractDualRepositoryTestCase {
 		assertEquals(MY_FEATURE, gfRepo.getFeatureBranchName(actualFeatureRef));
 	}
 
+
+	@Test
+	public void testIsOnDevelop() throws Exception {
+		Repository repository = repository1.getRepository();
+		GitFlowRepository gfRepo = new GitFlowRepository(repository);
+
+		InitParameters initParameters = new InitParameters();
+		initParameters.setDevelop(DEVELOP);
+		initParameters.setMaster(GitFlowDefaults.MASTER);
+		initParameters.setFeature(FEATURE_PREFIX);
+		initParameters.setRelease(RELEASE_PREFIX);
+		initParameters.setHotfix(HOTFIX_PREFIX);
+		initParameters.setVersionTag(VERSION_TAG);
+		repository1.checkoutBranch(gfRepo.getConfig().getDevelop());
+
+		RevCommit developBranchCommit = repository1.commit("develop branch commit");
+		assertTrue(gfRepo.isOnDevelop(developBranchCommit));
+
+		new FeatureStartOperation(gfRepo, MY_FEATURE).execute(null);
+		RevCommit featureBranchCommit = repository1.commit("feature branch commit");
+		assertFalse(gfRepo.isOnDevelop(featureBranchCommit));
+
+		// the initial commit was made on master, but is also on develop
+		assertTrue(gfRepo.isOnDevelop(initialCommit));
+	}
 }

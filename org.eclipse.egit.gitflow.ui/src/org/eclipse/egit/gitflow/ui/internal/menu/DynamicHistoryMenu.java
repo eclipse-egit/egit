@@ -8,11 +8,13 @@
  *******************************************************************************/
 package org.eclipse.egit.gitflow.ui.internal.menu;
 
+import static org.eclipse.egit.gitflow.ui.Activator.error;
+
 import java.io.IOException;
 
 import org.eclipse.egit.core.internal.Utils;
+import org.eclipse.egit.gitflow.Activator;
 import org.eclipse.egit.gitflow.GitFlowRepository;
-import org.eclipse.egit.gitflow.ui.Activator;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.gitflow.ui.internal.actions.ReleaseStartFromCommitHandler;
 import org.eclipse.jface.action.ContributionItem;
@@ -54,13 +56,13 @@ public class DynamicHistoryMenu extends ContributionItem {
 				abbreviate(selectedCommit)));
 		menuItem.addSelectionListener(listener);
 
+		boolean isEnabled = false;
 		try {
-			menuItem.setEnabled(gfRepo.isDevelop());
+			isEnabled = gfRepo.isOnDevelop(selectedCommit);
 		} catch (IOException e) {
-			Activator.getDefault().getLog()
-					.log(Activator.error(e.getMessage()));
-			return;
+			Activator.getDefault().getLog().log(error(e.getMessage(), e));
 		}
+		menuItem.setEnabled(isEnabled);
 	}
 
 	private String abbreviate(RevCommit selectedCommit) {
