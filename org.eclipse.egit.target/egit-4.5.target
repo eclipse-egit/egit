@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="egit-4.5" sequenceNumber="1441320484">
+<target name="egit-4.5" sequenceNumber="1453828717">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.jetty.client" version="9.2.13.v20150730"/>
@@ -26,7 +26,7 @@
       <unit id="org.eclipse.swtbot.eclipse.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.swtbot.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.swtbot.eclipse.test.junit.feature.group" version="0.0.0"/>
-      <repository id="swtbot-2.3.0" location="http://download.eclipse.org/technology/swtbot/releases/2.3.0/"/>
+      <repository id="swtbot-snapshot" location="http://download.eclipse.org/technology/swtbot/snapshots/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.mylyn.commons.sdk.feature.group" version="0.0.0"/>
