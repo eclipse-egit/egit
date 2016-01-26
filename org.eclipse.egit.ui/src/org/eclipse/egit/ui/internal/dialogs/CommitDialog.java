@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.ICommitMessageEditor;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
@@ -347,7 +348,7 @@ public class CommitDialog extends TitleAreaDialog {
 
 	CommitMessageComponent commitMessageComponent;
 
-	SpellcheckableMessageArea commitText;
+	ICommitMessageEditor commitText;
 
 	Text authorText;
 
@@ -1005,22 +1006,20 @@ public class CommitDialog extends TitleAreaDialog {
 				return CommitMessageHistory.getCommitHistory();
 			}
 		};
-		commitText = new CommitMessageArea(messageArea, commitMessage, SWT.NONE) {
-			@Override
-			protected CommitProposalProcessor getCommitProposalProcessor() {
-				return commitProposalProcessor;
-			}
-		};
+
+		commitText = CommitEditorProvider.getCommitMessageProvider(messageArea,
+				commitMessage, SWT.NONE, commitProposalProcessor);
+
 		commitText
 				.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
 		messageSection.setClient(messageArea);
-		Point size = commitText.getTextWidget().getSize();
-		int minHeight = commitText.getTextWidget().getLineHeight() * 3;
+		Point size = commitText.getSize();
+		int minHeight = commitText.getMinHeight();
 		commitText.setLayoutData(GridDataFactory.fillDefaults()
 				.grab(true, true).hint(size).minSize(size.x, minHeight)
 				.align(SWT.FILL, SWT.FILL).create());
 
-		UIUtils.addBulbDecorator(commitText.getTextWidget(),
+		UIUtils.addBulbDecorator(commitText.getCommentWidget(),
 				UIText.CommitDialog_ContentAssist);
 
 		Composite personArea = toolkit.createComposite(messageAndPersonArea);

@@ -8,6 +8,13 @@
       </commitMessageProvider>
    </extension>
 
+   <extension
+         point="org.eclipse.egit.ui.commitMessageEditor">
+      <commitMessageEditor
+            class="org.eclipse.egit.internal.mylyn.ui.commit.MylynCommitEditorProvider">
+      </commitMessageEditor>
+   </extension>
+   
    <extension point="org.eclipse.core.runtime.adapters">
     <factory adaptableType="org.eclipse.egit.ui.internal.history.SWTCommit"
              class="org.eclipse.egit.internal.mylyn.ui.commit.TaskReferenceFactory">
@@ -33,5 +40,23 @@
       <branchNameProvider
             class="org.eclipse.egit.internal.mylyn.ui.commit.ActiveTaskBranchNameProvider">
       </branchNameProvider>
+   </extension> 
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.eclipse.egit.mylyn.ui.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.eclipse.egit.mylyn.ui.preferences.MylynWorkflowPreferencePage"
+            id="org.eclipse.egit.mylyn.ui.workflow"
+            name="Workflow"
+            category="org.eclipse.mylyn.team.ui.ui.preferences">
+      </page>
+      <keyword
+            label="mylyn team workflow"
+            id="org.eclipse.mylyn.team.ui.keywords"/>
    </extension>
 </plugin>
