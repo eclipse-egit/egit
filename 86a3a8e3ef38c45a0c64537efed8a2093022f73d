@@ -1,0 +1,740 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_f8b683be",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "We have conventions to put this on the extra line in the form:\n\nBug: \u003cnumber\u003e",
+      "range": {
+        "startLine": 7,
+        "startChar": 49,
+        "endLine": 7,
+        "endChar": 59
+      },
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_18708780",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "I don\u0027t see the externalized value added to the plugin.properties",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_38738b8e",
+        "filename": "org.eclipse.egit.ui/schema/commitMessage.exsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Here and above: could you please either remove the placeholder text or better to fill in something meaningful?",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_d86d3fa8",
+        "filename": "org.eclipse.egit.ui/schema/commitMessageEditor.exsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Seemst that this file is not referenced in plugin.xml but contains partly more data as another one? Which one from two schemes is the final one?",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_d8445f20",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitEditorProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "can it be null? Please document the contract. Similar for styles: what they can be etc.",
+      "range": {
+        "startLine": 28,
+        "startChar": 57,
+        "endLine": 28,
+        "endChar": 68
+      },
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_58cccf32",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageEditor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "This interface seem to be automatically extracted and needs some more love. Could you please properly format it and fill in missing javadocs etc?",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_f83f638a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageEditor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "?? Javadoc without a method?",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_18c24700",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageEditor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 113,
+        "startChar": 12,
+        "endLine": 113,
+        "endChar": 22
+      },
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_38c54b07",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageEditor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Opening brace goes behind the class name.",
+      "range": {
+        "startLine": 116,
+        "startChar": 45,
+        "endLine": 118,
+        "endChar": 2
+      },
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_d8bb7fa7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/PreferenceConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "mylyn? In egit constants?",
+      "range": {
+        "startLine": 24,
+        "startChar": 59,
+        "endLine": 24,
+        "endChar": 64
+      },
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_f8684397",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitEditorProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Missing asterisk?",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_385aabfe",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitEditorProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "trailing space",
+      "range": {
+        "startLine": 28,
+        "startChar": 80,
+        "endLine": 28,
+        "endChar": 81
+      },
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_d8dfffcf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageArea.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "What is the purpose to override it if it does the same?",
+      "range": {
+        "startLine": 96,
+        "startChar": 1,
+        "endLine": 96,
+        "endChar": 10
+      },
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_58476ff6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Please undo white space change",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_784a73ff",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Please undo white space change",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_98601779",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Please undo white space change",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_b85b1bcd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Please undo white space change",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_38bb8b5f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Please undo white space change",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_58c20fcf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Please undo white space change",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_78c513d4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Please undo white space change",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_98abb70c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Please undo white space change",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_b8a6bb41",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Please undo white space change",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_d8b53f65",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Please undo white space change",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_f8b04374",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Please undo white space change",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_189fa7e8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Please undo white space change",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_38a2ab2b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Please undo white space change",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_58992fff",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Please undo white space change",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_789c33f0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Please undo white space change",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_d827ff3c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageEditor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "The interface is added by mistake? There is another one in the different package added.",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_b88ddbbd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageEditor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "can it return null? Please document it.",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 14
+      },
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_d88c5fc1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageEditor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "can it return null? Please document it.",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 14
+      },
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_380d4bc8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageEditor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "can it receive null? Please document it.",
+      "range": {
+        "startLine": 40,
+        "startChar": 21,
+        "endLine": 40,
+        "endChar": 27
+      },
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_7817d3d3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageEditor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Zombie javadoc",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 13
+      },
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_b8187b02",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageEditor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 108,
+        "startChar": 12,
+        "endLine": 108,
+        "endChar": 22
+      },
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_18316775",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageWrapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Missing license header.\n\nBTW is this written by you or just copied from somewhere in egit? The code style \u0026 comments differ from other code you\u0027ve added.",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_f822032c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageWrapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 21
+      },
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_785433cf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/DefaultCommitEditorProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "Please remove this noise",
+      "range": {
+        "startLine": 23,
+        "startChar": 1,
+        "endLine": 25,
+        "endChar": 4
+      },
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_b845db1c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T18:33:53Z",
+      "side": 1,
+      "message": "The new line formatting is manual or by the formatter? Anyway, this looks ugly. Could you please reformat this piece?",
+      "revId": "86a3a8e3ef38c45a0c64537efed8a2093022f73d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
