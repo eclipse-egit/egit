@@ -1,0 +1,595 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_a30db046",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "Sorry, still not OK, see https://wiki.eclipse.org/EGit/Contributor_Guide\n\nThe title should not end wit a dot (and also not with a space).\nThe Bug: \u003cnumber\u003e should be on an extra line, after commit message.",
+      "range": {
+        "startLine": 7,
+        "startChar": 59,
+        "endLine": 7,
+        "endChar": 61
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_c308f435",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/PreferenceConstants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "I think this one goes to the next commit, it\u0027s absolutely unrelated to the rest.",
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_e317b84e",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "the file name differs from the added in the commit",
+      "range": {
+        "startLine": 7,
+        "startChar": 108,
+        "endLine": 7,
+        "endChar": 126
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_e3e098b7",
+        "filename": "org.eclipse.egit.ui/schema/commitMessageEditor.exsd",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "4.3",
+      "range": {
+        "startLine": 75,
+        "startChar": 11,
+        "endLine": 75,
+        "endChar": 12
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_c3ac7476",
+        "filename": "org.eclipse.egit.ui/schema/commitMessageEditor.exsd",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "? Today we have 2016 :-)",
+      "range": {
+        "startLine": 96,
+        "startChar": 25,
+        "endLine": 96,
+        "endChar": 27
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_4324e4b6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitEditorProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "All the headers are from 2012. Please change to the current year (and eventually update your PC\u0027s time :-)).",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 54
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_631ba879",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitEditorProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "? I can\u0027t get it, sorry.",
+      "range": {
+        "startLine": 38,
+        "startChar": 42,
+        "endLine": 38,
+        "endChar": 73
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_831eec66",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitEditorProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "A provider returns the state of something it is supposed to create? The purpose is not clear for me.",
+      "range": {
+        "startLine": 52,
+        "startChar": 17,
+        "endLine": 52,
+        "endChar": 26
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_a334d0e2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "view? You mean editor component?",
+      "range": {
+        "startLine": 17,
+        "startChar": 41,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_c32f148f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "can it return null?",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 14
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_e32ed892",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "can it return null?",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 14
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_032adc7d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "can it receive null?",
+      "range": {
+        "startLine": 43,
+        "startChar": 21,
+        "endLine": 43,
+        "endChar": 27
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_23cc4064",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "what is supposed to be enabled? All children of the editor or some of its children (I see above that there are different controls)?",
+      "range": {
+        "startLine": 96,
+        "startChar": 13,
+        "endLine": 96,
+        "endChar": 23
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_43cf8458",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 100,
+        "startChar": 28,
+        "endLine": 100,
+        "endChar": 59
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_63d648f2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "notified",
+      "range": {
+        "startLine": 104,
+        "startChar": 21,
+        "endLine": 104,
+        "endChar": 28
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_83d98c21",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "do you mean: \"listener will be notified when...\"?",
+      "range": {
+        "startLine": 109,
+        "startChar": 39,
+        "endLine": 109,
+        "endChar": 56
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_a3bf70a6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "notified",
+      "range": {
+        "startLine": 113,
+        "startChar": 21,
+        "endLine": 113,
+        "endChar": 28
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_23f36097",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "Usually interfaces in Eclipse related projects starts with \"I\"",
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_43f6a486",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "Notified",
+      "range": {
+        "startLine": 125,
+        "startChar": 5,
+        "endLine": 125,
+        "endChar": 12
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_83f0ac87",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/PreferenceConstants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "Do we need this class and the constant? I have no IDE right now but I\u0027m pretty sure egit ui plugin id probably exists already somewhere and does not require an extra class to be created.",
+      "range": {
+        "startLine": 24,
+        "startChar": 28,
+        "endLine": 24,
+        "endChar": 36
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_e3bb38a7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitEditorProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "I already mentioned this on the interface - it is not clear for me what is the purpose of this method. Why it should be contributed but not enabled?",
+      "range": {
+        "startLine": 56,
+        "startChar": 24,
+        "endLine": 56,
+        "endChar": 33
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_438864ff",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitEditorProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "I\u0027m not sure I saw changes in UIText and messages bundle.",
+      "range": {
+        "startLine": 69,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 57
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_a398504b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageArea.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "unrelated white space change",
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_637f285a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageArea.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 7
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_c393942b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "unrelated white space change",
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_837d0c5a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "All changes here are unrelated white space changes. Please revert to HEAD.",
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_c35e34f6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-26T22:45:25Z",
+      "side": 1,
+      "message": "There is no need to annotate constants, and the change also seem to be completely unrelated to the proposed feature. If needed I would add it later.",
+      "range": {
+        "startLine": 222,
+        "startChar": 2,
+        "endLine": 222,
+        "endChar": 9
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
