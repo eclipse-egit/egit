@@ -433,7 +433,8 @@ public class SpellcheckableMessageArea extends Composite {
 								return;
 							}
 						}
-						int[] segments = calculateWrapOffsets(e.lineText, MAX_LINE_WIDTH);
+						int[] segments = calculateWrapOffsets(e.lineText,
+								MAX_LINE_WIDTH);
 						if (segments != null) {
 							char[] segmentsChars = new char[segments.length];
 							Arrays.fill(segmentsChars, '\n');
@@ -968,11 +969,13 @@ public class SpellcheckableMessageArea extends Composite {
 		// protected for testing
 		int[] wrapOffsets = calculateWrapOffsets(text, MAX_LINE_WIDTH);
 		if (wrapOffsets != null) {
-			StringBuilder builder = new StringBuilder(text.length() + wrapOffsets.length);
+			StringBuilder builder = new StringBuilder(
+					text.length() + wrapOffsets.length);
 			int prev = 0;
 			for (int cur : wrapOffsets) {
 				builder.append(text.substring(prev, cur));
-				for (int j = cur; j > prev && builder.charAt(builder.length() - 1) == ' '; j--)
+				for (int j = cur; j > prev
+						&& builder.charAt(builder.length() - 1) == ' '; j--)
 					builder.deleteCharAt(builder.length() - 1);
 				builder.append('\n');
 				prev = cur;
@@ -1058,13 +1061,15 @@ public class SpellcheckableMessageArea extends Composite {
 	 * no longer than <code>maxLineLength</code> if possible.
 	 *
 	 * @param line
-	 *            the line to wrap (can contain '\n', but no other line delimiters)
+	 *            the line to wrap (can contain '\n', but no other line
+	 *            delimiters)
 	 * @param maxLineLength
 	 *            the maximum line length
 	 * @return an array of offsets where hard-wraps should be inserted, or
 	 *         <code>null</code> if the line does not need to be wrapped
 	 */
-	public static int[] calculateWrapOffsets(final String line, final int maxLineLength) {
+	public static int[] calculateWrapOffsets(final String line,
+			final int maxLineLength) {
 		if (line.length() == 0)
 			return null;
 
@@ -1085,14 +1090,16 @@ public class SpellcheckableMessageArea extends Composite {
 			} else { // a word character
 				if (lastWasSpace) {
 					lastWasSpace = false;
-					if (!onlySpaces) { // don't break line with <spaces><veryLongWord>
+					if (!onlySpaces) { // don't break line with
+										// <spaces><veryLongWord>
 						wordStart = i;
 					}
 				} else {
 					onlySpaces = false;
 				}
 				if (i >= lineStart + maxLineLength) {
-					if (wordStart != lineStart) { // don't break before a single long word
+					if (wordStart != lineStart) { // don't break before a single
+													// long word
 						wrapOffsets.add(wordStart);
 						lineStart = wordStart;
 						onlySpaces = true;

@@ -36,6 +36,8 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
+import org.eclipse.egit.ui.ICommitMessageEditor;
+import org.eclipse.egit.ui.ICommitMessageEditor.CommitMessageChangeListener;
 import org.eclipse.egit.ui.ICommitMessageProvider;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
@@ -47,9 +49,7 @@ import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
-import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -112,8 +112,7 @@ public class CommitMessageComponent {
 		}
 	}
 
-
-	private static final String EMPTY_STRING = "";  //$NON-NLS-1$
+	private static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
 	/**
 	 * Constant for the extension point for the commit message provider
@@ -126,7 +125,7 @@ public class CommitMessageComponent {
 
 	ICommitMessageComponentNotifications listener;
 
-	SpellcheckableMessageArea commitText;
+	ICommitMessageEditor commitText;
 
 	Text authorText;
 
@@ -515,15 +514,15 @@ public class CommitMessageComponent {
 	}
 
 	/**
-	 * @param commitText
-	 * @param authorText
-	 * @param committerText
+	 * @param commitTextComponent
+	 * @param authorTextComponent
+	 * @param committerTextComponent
 	 */
-	public void attachControls(SpellcheckableMessageArea commitText,
-			Text authorText, Text committerText) {
-		this.commitText = commitText;
-		this.authorText = authorText;
-		this.committerText = committerText;
+	public void attachControls(ICommitMessageEditor commitTextComponent,
+			Text authorTextComponent, Text committerTextComponent) {
+		this.commitText = commitTextComponent;
+		this.authorText = authorTextComponent;
+		this.committerText = committerTextComponent;
 		addListeners();
 	}
 
@@ -560,19 +559,17 @@ public class CommitMessageComponent {
 		});
 		committerHandler = UIUtils.addPreviousValuesContentProposalToText(
 				committerText, COMMITTER_VALUES_PREF);
-		commitText.getDocument().addDocumentListener(new IDocumentListener() {
+		commitText.addCommitMessageChangeListener(new CommitMessageChangeListener() {
+
 			@Override
-			public void documentChanged(DocumentEvent event) {
+			public void commitMessageChanged() {
 				if (!listenersEnabled || !commitText.isEnabled())
 					return;
 				updateSignedOffButton();
 				updateChangeIdButton();
 				listener.statusUpdated();
 			}
-			@Override
-			public void documentAboutToBeChanged(DocumentEvent event) {
-				// nothing to do
-			}
+
 		});
 	}
 
