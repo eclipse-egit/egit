@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_280df8f1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-27T20:44:08Z",
+      "side": 1,
+      "message": "This causes the dialog to auto-fill also if the URL is not git-related at all, for instance https://commons.wikimedia.org/wiki/File:Larus_occidentalis_in_flight_(Bodeda_Head).jpg .\n\nWhat was the intent here? HTTP(S) URLs ending in \".git\" are already handled by the line below. If you wanted to also allow HTTP(S) URLs without extension, then we should probably check for that explicitly. Otherwise, we should just remove this.",
+      "revId": "39f3c68d70a6812ecf0f95a2c8a1129026bfdea4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
