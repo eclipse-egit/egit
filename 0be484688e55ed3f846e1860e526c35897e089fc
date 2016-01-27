@@ -203,6 +203,23 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_a8abc85c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-27T20:01:00Z",
+      "side": 1,
+      "message": "Do I see this right? Any contributed editor would need to be re-written nearly from scratch -- SpellcheckableMessageArea is internal, so anyone who\u0027d like to have URL hyperlinking, auto-wrapping, or any of the other features would have to re-implement them? If we provide an extension point for pluggable commit message editors, we\u0027d might perhaps also want to refactor that to make such functionality available to implementors of contributed editors as building blocks...",
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_c32f148f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageEditor.java",
         "patchSetId": 2
@@ -444,6 +461,63 @@
         "endLine": 24,
         "endChar": 36
       },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_4885dce6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitEditorProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-27T20:01:00Z",
+      "side": 1,
+      "message": "Strange name. This is not providing a commit message, it\u0027s providing a commit message editor.",
+      "range": {
+        "startLine": 43,
+        "startChar": 36,
+        "endLine": 43,
+        "endChar": 60
+      },
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_88d604ef",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitEditorProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-27T20:01:00Z",
+      "side": 1,
+      "message": "What if there\u0027s more than one? This will need a strategy for dealing with this. Just silently taking the first one may be very confusing. Especially since you have no control over which one will be the first in this array.\n\nI can easily imagine different plugins contributing different editors to this extension point. Maybe one like described in the bugzilla entry, maybe another one that works differently--for instance, the github plugin might want to provide a wysiwyg markdown editor (or a markdown editor with preview). Also, when working with different repositories, I\u0027d probably want to specify per repository which editor to use.\n\nEven when there\u0027s only one contributed extension, I\u0027d still like to able to say for which repositories to use the contributed one, and for which ones the default editor should be taken. \n\nHaving such flexibility might get \"interesting\" (both from an implementation point of view and also from a UI design point of view) in the staging view, especially when set to follow the current selection.\n\nAt the very least a user should have the possibility to say \"no thanks\". Consider the scenario where some plugin in my Eclipse provides a commit message editor that unfortunately doesn\u0027t fit my or my company\u0027s workflow. Some toggle somewhere to switch off this extension point might be useful.",
+      "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_c8e64cd4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitEditorProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-27T20:01:00Z",
+      "side": 1,
+      "message": "How efficient or inefficient is it to create a new provider always?",
       "revId": "0be484688e55ed3f846e1860e526c35897e089fc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
