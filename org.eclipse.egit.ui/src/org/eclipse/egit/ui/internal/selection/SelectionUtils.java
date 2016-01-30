@@ -11,6 +11,7 @@ package org.eclipse.egit.ui.internal.selection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -200,6 +201,80 @@ public class SelectionUtils {
 	}
 
 	/**
+	 * Determines a set of either {@link IResource}s or {@link IPath}s from a
+	 * selection. For selection contents that adapt to {@link IResource} or
+	 * {@link ResourceMapping}, the containing {@link IResource}s are included
+	 * in the result set; otherwise for selection contents that adapt to
+	 * {@link IPath} these paths are included.
+	 *
+	 * @param selection
+	 *            to process
+	 * @return the set of {@link IResource} and {@link IPath} objects from the
+	 *         selection; not containing {@code null} values
+	 */
+	@NonNull
+	private static Set<Object> getSelectionContents(
+			@NonNull IStructuredSelection selection) {
+		Set<Object> result = new HashSet<>();
+		for (Object o : selection.toList()) {
+			IResource resource = AdapterUtils.adapt(o, IResource.class);
+			if (resource != null) {
+				result.add(resource);
+				continue;
+			}
+			ResourceMapping mapping = AdapterUtils.adapt(o,
+					ResourceMapping.class);
+			if (mapping != null) {
+				result.addAll(extractResourcesFromMapping(mapping));
+			} else {
+				IPath location = AdapterUtils.adapt(o, IPath.class);
+				if (location != null) {
+					result.add(location);
+				}
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Retrieves the {@link Repository}, if any, for a given location.
+	 *
+	 * @param location
+	 *            to find the repository for
+	 * @return the {@link Repository}, or {@code null} if none could be
+	 *         determined
+	 */
+	@Nullable
+	private static Repository getRepository(@NonNull IPath location) {
+		RepositoryMapping mapping = RepositoryMapping.getMapping(location);
+		if (mapping != null) {
+			return mapping.getRepository();
+		}
+		// location is outside workspace
+		return org.eclipse.egit.core.Activator.getDefault().getRepositoryCache()
+				.getRepository(location);
+	}
+
+	/**
+	 * Retrieves the {@link Repository}, if any, for a given {@link IResource}.
+	 *
+	 * @param resource
+	 *            to find the repository for
+	 * @return the {@link Repository}, or {@code null} if none could be
+	 *         determined
+	 */
+	@Nullable
+	private static Repository getRepository(@NonNull IResource resource) {
+		RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
+		if (mapping != null) {
+			return mapping.getRepository();
+		}
+		// Closed project?
+		return org.eclipse.egit.core.Activator.getDefault().getRepositoryCache()
+				.getRepository(resource);
+	}
+
+	/**
 	 * Figure out which repository to use. All selected resources must map to
 	 * the same Git repository.
 	 *
@@ -214,24 +289,20 @@ public class SelectionUtils {
 	@Nullable
 	private static Repository getRepository(boolean warn,
 			@NonNull IStructuredSelection selection, Shell shell) {
-
-		IPath[] locations = getSelectedLocations(selection);
+		Set<Object> elements = getSelectionContents(selection);
 		if (GitTraceLocation.SELECTION.isActive())
 			GitTraceLocation.getTrace().trace(
 					GitTraceLocation.SELECTION.getLocation(), "selection=" //$NON-NLS-1$
-							+ selection + ", locations=" //$NON-NLS-1$
-							+ Arrays.toString(locations));
+							+ selection + ", elements=" + elements.toString()); //$NON-NLS-1$
+
 		boolean hadNull = false;
 		Repository result = null;
-		for (IPath location : locations) {
-			RepositoryMapping mapping = RepositoryMapping.getMapping(location);
-			Repository repo;
-			if (mapping != null) {
-				repo = mapping.getRepository();
-			} else {
-				// location is outside workspace
-				repo = org.eclipse.egit.core.Activator.getDefault()
-						.getRepositoryCache().getRepository(location);
+		for (Object location : elements) {
+			Repository repo = null;
+			if (location instanceof IResource) {
+				repo = getRepository((IResource) location);
+			} else if (location instanceof IPath) {
+				repo = getRepository((IPath) location);
 			}
 			if (repo == null) {
 				hadNull = true;
