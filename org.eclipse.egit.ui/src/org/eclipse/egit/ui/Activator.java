@@ -41,6 +41,7 @@ import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.ConfigurationChecker;
+import org.eclipse.egit.ui.internal.KnownHosts;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
@@ -668,6 +669,12 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		}
 		super.stop(context);
 		plugin = null;
+	}
+
+	@Override
+	protected void saveDialogSettings() {
+		KnownHosts.store();
+		super.saveDialogSettings();
 	}
 
 	/**
