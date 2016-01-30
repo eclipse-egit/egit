@@ -11,11 +11,13 @@ package org.eclipse.egit.ui.internal.selection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.expressions.IEvaluationContext;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.resources.mapping.ResourceTraversal;
@@ -200,6 +202,113 @@ public class SelectionUtils {
 	}
 
 	/**
+	 * Adds either the resource's {@link IProject} or its location to the result
+	 * set. For linked resources, always adds the location.
+	 *
+	 * @param resource
+	 *            to add to result
+	 * @param result
+	 *            collecting the projects or paths
+	 * @return {@code true} if the resource's project or location was added to
+	 *         the set, {@code false} otherwise
+	 */
+	private static boolean addResource(@Nullable IResource resource,
+			@NonNull Set<Object> result) {
+		if (resource == null) {
+			return false;
+		}
+		IPath location = resource.getLocation();
+		if (location != null) {
+			if (!resource.isLinked(IResource.CHECK_ANCESTORS)) {
+				// Only use the project if the resource is not linked
+				IProject project = resource.getProject();
+				if (project != null) {
+					result.add(project);
+					return true;
+				}
+			}
+			result.add(location);
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Determines a set of either {@link IProject}s or {@link IPath}s from a
+	 * selection. For selection contents that adapt to {@link IResource} or
+	 * {@link ResourceMapping}, the containing {@link IProject}s are included in
+	 * the result set; otherwise for selection contents that adapt to
+	 * {@link IPath} these paths are included.
+	 *
+	 * @param selection
+	 *            to process
+	 * @return the set of {@link IProject} and {@link IPath} objects from the
+	 *         selection; not containing {@code null} values
+	 */
+	@NonNull
+	private static Set<Object> getSelectionContents(
+			@NonNull IStructuredSelection selection) {
+		Set<Object> result = new HashSet<>();
+		for (Object o : selection.toList()) {
+			IResource resource = AdapterUtils.adapt(o, IResource.class);
+			if (addResource(resource, result)) {
+				continue;
+			}
+			ResourceMapping mapping = AdapterUtils.adapt(o,
+					ResourceMapping.class);
+			if (mapping != null) {
+				for (IResource r : extractResourcesFromMapping(mapping)) {
+					addResource(r, result);
+				}
+			} else {
+				IPath location = AdapterUtils.adapt(o, IPath.class);
+				if (location != null) {
+					result.add(location);
+				}
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Retrieves the {@link Repository}, if any, for a given location.
+	 *
+	 * @param location
+	 *            to find the repository for
+	 * @return the {@link Repository}, or {@code null} if none could be
+	 *         determined
+	 */
+	@Nullable
+	private static Repository getRepository(@NonNull IPath location) {
+		RepositoryMapping mapping = RepositoryMapping.getMapping(location);
+		if (mapping != null) {
+			return mapping.getRepository();
+		}
+		// location is outside workspace
+		return org.eclipse.egit.core.Activator.getDefault().getRepositoryCache()
+				.getRepository(location);
+	}
+
+	/**
+	 * Retrieves the {@link Repository}, if any, for a given project.
+	 *
+	 * @param project
+	 *            to find the repository for
+	 * @return the {@link Repository}, or {@code null} if none could be
+	 *         determined
+	 */
+	@Nullable
+	private static Repository getRepository(@NonNull IProject project) {
+		RepositoryMapping mapping = RepositoryMapping.getMapping(project);
+		if (mapping != null) {
+			return mapping.getRepository();
+		}
+		// Closed project
+		return org.eclipse.egit.core.Activator.getDefault().getRepositoryCache()
+				.getRepository(project);
+	}
+
+	/**
 	 * Figure out which repository to use. All selected resources must map to
 	 * the same Git repository.
 	 *
@@ -214,24 +323,20 @@ public class SelectionUtils {
 	@Nullable
 	private static Repository getRepository(boolean warn,
 			@NonNull IStructuredSelection selection, Shell shell) {
-
-		IPath[] locations = getSelectedLocations(selection);
+		Set<Object> elements = getSelectionContents(selection);
 		if (GitTraceLocation.SELECTION.isActive())
 			GitTraceLocation.getTrace().trace(
 					GitTraceLocation.SELECTION.getLocation(), "selection=" //$NON-NLS-1$
-							+ selection + ", locations=" //$NON-NLS-1$
-							+ Arrays.toString(locations));
+							+ selection + ", elements=" + elements.toString()); //$NON-NLS-1$
+
 		boolean hadNull = false;
 		Repository result = null;
-		for (IPath location : locations) {
-			RepositoryMapping mapping = RepositoryMapping.getMapping(location);
-			Repository repo;
-			if (mapping != null) {
-				repo = mapping.getRepository();
-			} else {
-				// location is outside workspace
-				repo = org.eclipse.egit.core.Activator.getDefault()
-						.getRepositoryCache().getRepository(location);
+		for (Object location : elements) {
+			Repository repo = null;
+			if (location instanceof IProject) {
+				repo = getRepository((IProject) location);
+			} else if (location instanceof IPath) {
+				repo = getRepository((IPath) location);
 			}
 			if (repo == null) {
 				hadNull = true;
