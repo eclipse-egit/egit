@@ -331,16 +331,14 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 			try {
 				if (text != null) {
 					text = stripGitCloneCommand(text);
-					int index = text.indexOf(' ');
-					if (index > 0)
-						text = text.substring(0, index);
+					text = text.split("\\s|\\h", 2)[0]; //$NON-NLS-1$
 					URIish u = new URIish(text);
-					if (canHandleProtocol(u))
+					if (canHandleProtocol(u)) {
 						if (Protocol.GIT.handles(u) || Protocol.SSH.handles(u)
-								|| Protocol.HTTP.handles(u)
-								|| Protocol.HTTPS.handles(u)
-								|| text.endsWith(Constants.DOT_GIT_EXT))
+								|| text.endsWith(Constants.DOT_GIT_EXT)) {
 							preset = text;
+						}
+					}
 				}
 			} catch (URISyntaxException e) {
 				// ignore, preset is null
@@ -878,7 +876,7 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 		if (input.startsWith(GIT_CLONE_COMMAND_PREFIX)) {
 			return input.substring(GIT_CLONE_COMMAND_PREFIX.length()).trim();
 		}
-		return input.trim();
+		return input;
 	}
 
 	private boolean setSafePassword(String p) {
