@@ -6,6 +6,8 @@
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2010, Benjamin Muskalla <bmuskalla@eclipsesource.com>
  * Copyright (C) 2012, Stefan Lay <stefan.lay@sap.com>
+ * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -256,6 +258,7 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 		op.setCredentialsProvider(credentialsProvider);
 		op.setCloneSubmodules(cloneDestination.isCloneSubmodules());
 
+		rememberHttpHost(op, uri);
 		configureFetchSpec(op, gitRepositoryInfo, remoteName);
 		configurePush(op, gitRepositoryInfo, remoteName);
 		configureRepositoryConfig(op, gitRepositoryInfo);
@@ -321,6 +324,16 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 		} catch (Exception e) {
 			Activator.error(e.getMessage(), e);
 			return null;
+		}
+	}
+
+	private void rememberHttpHost(CloneOperation op, URIish uri) {
+		String scheme = uri.getScheme();
+		if (scheme != null && scheme.toLowerCase().startsWith("http")) { //$NON-NLS-1$
+			String host = uri.getHost();
+			if (host != null) {
+				op.addPostCloneTask(new RememberHostTask(host));
+			}
 		}
 	}
 
