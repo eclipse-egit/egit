@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_39fe23de",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-01-30T23:28:08Z",
+      "side": 1,
+      "message": "The reason for the last patch. We had here a new warning about \"unknown nullness\" on \"r\".",
+      "range": {
+        "startLine": 261,
+        "startChar": 17,
+        "endLine": 261,
+        "endChar": 18
+      },
+      "revId": "89a472bdfd448949d6eaeb858f9c98ecf01a639e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
