@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_190ebfc4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-30T18:04:11Z",
+      "side": 1,
+      "message": "\\h appears to exist only as of Java 8...",
+      "range": {
+        "startLine": 334,
+        "startChar": 28,
+        "endLine": 334,
+        "endChar": 31
+      },
+      "revId": "655cf491d9010d26065cc7cb10154d09f067b188",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
