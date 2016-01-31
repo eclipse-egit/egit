@@ -16,6 +16,24 @@
       "revId": "39f3c68d70a6812ecf0f95a2c8a1129026bfdea4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_bc7dc18e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-01-31T13:15:44Z",
+      "side": 1,
+      "message": "See https://git.eclipse.org/r/#/c/65512/ .",
+      "parentUuid": "07d9433e_280df8f1",
+      "revId": "39f3c68d70a6812ecf0f95a2c8a1129026bfdea4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
