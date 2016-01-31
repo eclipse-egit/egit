@@ -1,10 +1,13 @@
 /*******************************************************************************
- * Copyright (C) 2014, 2015 Robin Stocker <robin@nibor.org> and others.
+ * Copyright (C) 2014, 2016 Robin Stocker <robin@nibor.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 486857
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.selection;
 
@@ -23,7 +26,7 @@ import org.eclipse.core.resources.mapping.ResourceTraversal;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.AdapterUtils;
-import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
@@ -45,7 +48,6 @@ import org.eclipse.ui.ISources;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.IHandlerService;
-import org.eclipse.ui.ide.ResourceUtil;
 
 /**
  * Utilities for working with selections.
@@ -237,44 +239,6 @@ public class SelectionUtils {
 	}
 
 	/**
-	 * Retrieves the {@link Repository}, if any, for a given location.
-	 *
-	 * @param location
-	 *            to find the repository for
-	 * @return the {@link Repository}, or {@code null} if none could be
-	 *         determined
-	 */
-	@Nullable
-	private static Repository getRepository(@NonNull IPath location) {
-		RepositoryMapping mapping = RepositoryMapping.getMapping(location);
-		if (mapping != null) {
-			return mapping.getRepository();
-		}
-		// location is outside workspace
-		return org.eclipse.egit.core.Activator.getDefault().getRepositoryCache()
-				.getRepository(location);
-	}
-
-	/**
-	 * Retrieves the {@link Repository}, if any, for a given {@link IResource}.
-	 *
-	 * @param resource
-	 *            to find the repository for
-	 * @return the {@link Repository}, or {@code null} if none could be
-	 *         determined
-	 */
-	@Nullable
-	private static Repository getRepository(@NonNull IResource resource) {
-		RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
-		if (mapping != null) {
-			return mapping.getRepository();
-		}
-		// Closed project?
-		return org.eclipse.egit.core.Activator.getDefault().getRepositoryCache()
-				.getRepository(resource);
-	}
-
-	/**
 	 * Figure out which repository to use. All selected resources must map to
 	 * the same Git repository.
 	 *
@@ -300,9 +264,9 @@ public class SelectionUtils {
 		for (Object location : elements) {
 			Repository repo = null;
 			if (location instanceof IResource) {
-				repo = getRepository((IResource) location);
+				repo = ResourceUtil.getRepository((IResource) location);
 			} else if (location instanceof IPath) {
-				repo = getRepository((IPath) location);
+				repo = ResourceUtil.getRepository((IPath) location);
 			}
 			if (repo == null) {
 				hadNull = true;
@@ -362,7 +326,8 @@ public class SelectionUtils {
 			// Note that there is both a getResource(IEditorInput) as well as a
 			// getResource(Object), which don't do the same thing. We explicitly
 			// want the first here.
-			IResource resource = ResourceUtil.getResource(editorInput);
+			IResource resource = org.eclipse.ui.ide.ResourceUtil
+					.getResource(editorInput);
 			if (resource != null)
 				return new StructuredSelection(resource);
 			if (editorInput instanceof FileRevisionEditorInput) {

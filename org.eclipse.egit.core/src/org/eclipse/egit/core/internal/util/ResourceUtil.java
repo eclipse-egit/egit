@@ -689,4 +689,38 @@ public class ResourceUtil {
 				new ByteArrayInputStream(new byte[0]), IResource.KEEP_HISTORY,
 				null);
 	}
+
+	/**
+	 * Determines the repository containing the resource.
+	 *
+	 * @param resource
+	 *            to get the repository for
+	 * @return the {@link Repository}, or {@code null} if none found.
+	 */
+	@Nullable
+	public static Repository getRepository(@NonNull IResource resource) {
+		RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
+		if (mapping != null) {
+			return mapping.getRepository();
+		}
+		return Activator.getDefault().getRepositoryCache()
+				.getRepository(resource);
+	}
+
+	/**
+	 * Determines the repository containing the given {@link IPath}.
+	 *
+	 * @param path
+	 *            to get the repository for
+	 * @return the {@link Repository}, or {@code null} if none found.
+	 */
+	@Nullable
+	public static Repository getRepository(@NonNull IPath path) {
+		RepositoryMapping mapping = RepositoryMapping.getMapping(path);
+		if (mapping != null) {
+			return mapping.getRepository();
+		}
+		return Activator.getDefault().getRepositoryCache().getRepository(path);
+	}
+
 }
