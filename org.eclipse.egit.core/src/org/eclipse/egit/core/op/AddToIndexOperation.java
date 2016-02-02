@@ -14,7 +14,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -97,8 +96,7 @@ public class AddToIndexOperation implements IEGitOperation {
 	}
 
 	private void addToCommand(IResource resource, Map<RepositoryMapping, AddCommand> addCommands) {
-		IProject project = resource.getProject();
-		RepositoryMapping map = RepositoryMapping.getMapping(project);
+		RepositoryMapping map = RepositoryMapping.getMapping(resource);
 		if (map == null) {
 			return;
 		}
