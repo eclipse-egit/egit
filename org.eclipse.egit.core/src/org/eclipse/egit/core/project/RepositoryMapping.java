@@ -19,7 +19,6 @@ package org.eclipse.egit.core.project;
 import static org.eclipse.egit.core.internal.util.ResourceUtil.isNonWorkspace;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Properties;
 
 import org.eclipse.core.resources.IContainer;
@@ -28,15 +27,12 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.RepositoryCache;
-import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.submodule.SubmoduleWalk;
 
 /**
  * This class provides means to map resources, projects and repositories
@@ -61,9 +57,6 @@ public class RepositoryMapping {
 	private String workdirPrefix;
 
 	private IContainer container;
-
-	private final RepositoryCache repositoryCache = org.eclipse.egit.core.Activator
-			.getDefault().getRepositoryCache();
 
 	/**
 	 * Construct a {@link RepositoryMapping} for a previously connected
@@ -178,40 +171,18 @@ public class RepositoryMapping {
 	 *         instance will always be taken from the {@link RepositoryCache}
 	 *         and the caller should not call close() on it.
 	 *
-	 *         TODO add support for multiple nesting levels of submodules
+	 * @deprecated Since 4.3. Use {@link #getMapping(IResource)} and then
+	 *             {@link #getRepository()} on the returned mapping instead; it
+	 *             will return a submodule repository if the resource is in one.
 	 */
+	@Deprecated
 	@Nullable
 	public synchronized Repository getSubmoduleRepository(@NonNull IResource res) {
-		IPath projectRelativePath = res.getProjectRelativePath();
-		if (projectRelativePath == null)
+		RepositoryMapping mapping = getMapping(res);
+		if (mapping == null) {
 			return null;
-
-		String projectRelativePathStr = res.getProjectRelativePath().toString();
-		try {
-			if (!db.isBare() && SubmoduleWalk.containsGitModulesFile(db)) {
-				SubmoduleWalk sw = SubmoduleWalk.forIndex(db);
-				while (sw.next()) {
-					if (projectRelativePathStr.startsWith(sw.getPath())) {
-						Repository subRepo = sw.getRepository();
-						if (subRepo == null)
-							return null;
-
-						Repository cachedRepo = null;
-						try {
-							cachedRepo = repositoryCache
-									.lookupRepository(subRepo.getDirectory());
-						} finally {
-							subRepo.close();
-						}
-						return cachedRepo;
-					}
-				}
-			}
-		} catch (IOException e) {
-			Activator.logWarning(
-					CoreText.RepositoryMapping_ExceptionSubmoduleWalk, e);
 		}
-		return db;
+		return mapping.getRepository();
 	}
 
 	synchronized void setRepository(final Repository r) {
@@ -327,6 +298,7 @@ public class RepositoryMapping {
 	 * determine a repository mapping.
 	 *
 	 * @param resource
+	 *            to find the mapping for
 	 * @return the RepositoryMapping for this resource, or null for non
 	 *         GitProvider.
 	 */
@@ -342,18 +314,37 @@ public class RepositoryMapping {
 			}
 			return getMapping(location);
 		}
-		return getMapping(resource.getProject());
+		return findMapping(resource);
 	}
 
 	/**
 	 * Get the repository mapping for a project.
 	 *
 	 * @param project
+	 *            to find the mapping for
 	 * @return the RepositoryMapping for this project, or null for non
 	 *         GitProvider.
 	 */
 	@Nullable
 	public static RepositoryMapping getMapping(@Nullable final IProject project) {
+		if (project == null) {
+			return null;
+		}
+		return findMapping(project);
+	}
+
+	/**
+	 * Get the repository mapping for a project.
+	 *
+	 * @param resource
+	 *            to find the mapping for
+	 * @return the RepositoryMapping for this project, or null for non
+	 *         GitProvider.
+	 */
+	@Nullable
+	private static RepositoryMapping findMapping(@NonNull
+	final IResource resource) {
+		final IProject project = resource.getProject();
 		if (project == null || isNonWorkspace(project)) {
 			return null;
 		}
@@ -372,7 +363,7 @@ public class RepositoryMapping {
 		if (data == null) {
 			return null;
 		}
-		return data.getRepositoryMapping(project);
+		return data.getRepositoryMapping(resource);
 	}
 
 	/**
