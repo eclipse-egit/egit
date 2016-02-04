@@ -51,10 +51,15 @@ public class PushBranchActionHandler extends RepositoryActionHandler {
 		if (repository == null) {
 			return false;
 		}
-		if (getBranchRef(repository) == null) {
-			return false;
+		try {
+			Ref head = repository.exactRef(Constants.HEAD);
+			if (head != null && head.getObjectId() != null) {
+				return true;
+			}
+		} catch (IOException e) {
+			Activator.logError(e.getMessage(), e);
 		}
-		return true;
+		return false;
 	}
 
 	private Ref getBranchRef(Repository repository) {
