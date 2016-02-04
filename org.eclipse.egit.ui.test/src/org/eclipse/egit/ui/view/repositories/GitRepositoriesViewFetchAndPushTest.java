@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.view.repositories;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -172,6 +173,22 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		}
 		confirmed.close();
 		assertTrue("New branch expected", newBranch);
+	}
+
+	@Test
+	public void testNoHeadSimplePushDisabled() throws Exception {
+		Repository emptyRepo = createLocalTestRepository("empty");
+		File gitDir = emptyRepo.getDirectory();
+		Activator.getDefault().getRepositoryUtil()
+				.addConfiguredRepository(gitDir);
+		GitRepositoriesViewTestUtils viewUtil = new GitRepositoriesViewTestUtils();
+		SWTBotTree tree = getOrOpenView().bot().tree();
+		SWTBotTreeItem repoItem = viewUtil.getRootItem(tree, gitDir);
+		repoItem.select();
+		boolean enabled = ContextMenuHelper.isContextMenuItemEnabled(tree,
+				NLS.bind(UIText.PushMenu_PushBranch, "master"));
+		assertFalse("Push should be disabled if there is no HEAD",
+				enabled);
 	}
 
 	@Test
