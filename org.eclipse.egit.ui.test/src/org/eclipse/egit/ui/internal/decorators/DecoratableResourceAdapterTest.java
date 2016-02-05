@@ -78,6 +78,13 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 	}
 
+	private void assertHasUnstagedChanges(boolean expected,
+			IDecoratableResource... decoratableResources) {
+		for (IDecoratableResource d : decoratableResources) {
+			assertTrue(d.hasUnstagedChanges() == expected);
+		}
+	}
+
 	@Test
 	public void testDecorationEmptyProject() throws Exception {
 		IDecoratableResource[] expectedDRs = new IDecoratableResource[] { new TestDecoratableResource(
@@ -272,6 +279,7 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 				new DecoratableResourceAdapter(indexDiffData, file) };
 
 		assertArrayEquals(expectedDRs, actualDRs);
+		assertHasUnstagedChanges(false, actualDRs);
 	}
 
 	@Test
@@ -299,6 +307,7 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 				new DecoratableResourceAdapter(indexDiffData, file) };
 
 		assertArrayEquals(expectedDRs, actualDRs);
+		assertHasUnstagedChanges(true, actualDRs);
 	}
 
 	@Test
@@ -346,6 +355,7 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 				new DecoratableResourceAdapter(indexDiffData, file) };
 
 		assertArrayEquals(expectedDRs, actualDRs);
+		assertHasUnstagedChanges(true, actualDRs);
 	}
 
 	@Test
@@ -370,6 +380,7 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 				indexDiffData, project);
 
 		assertEquals(expectedDR, actualDR);
+		assertHasUnstagedChanges(true, actualDR);
 	}
 
 	@Test
