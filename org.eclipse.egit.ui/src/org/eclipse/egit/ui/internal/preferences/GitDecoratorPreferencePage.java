@@ -29,8 +29,8 @@ import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.SWTUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.DecorationHelper;
+import org.eclipse.egit.ui.internal.decorators.DecoratableResource;
 import org.eclipse.egit.ui.internal.decorators.DecorationResult;
-import org.eclipse.egit.ui.internal.decorators.IDecoratableResource;
 import org.eclipse.egit.ui.internal.resources.IResourceState.StagingState;
 import org.eclipse.egit.ui.internal.synchronize.mapping.GitChangeSetLabelProvider;
 import org.eclipse.jface.dialogs.Dialog;
@@ -1021,49 +1021,31 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		}
 	}
 
-	private static class PreviewResource implements IDecoratableResource {
+	private static class PreviewResource extends DecoratableResource {
 		private final String name;
-
-		private final String repositoryName;
-
-		private final String branch;
-
-		private final String branchStatus;
 
 		private final int type;
 
 		private Collection children;
-
-		private boolean tracked;
-
-		private boolean ignored;
-
-		private boolean dirty;
-
-		private boolean conflicts;
-
-		@NonNull
-		private StagingState staged;
-
-		private boolean assumeUnchanged;
 
 		public PreviewResource(String name, int type, String repositoryName,
 				String branch, String branchStatus, boolean tracked,
 				boolean ignored, boolean dirty, @NonNull StagingState staged,
 				boolean conflicts, boolean assumeUnchanged) {
 
+			super(null);
 			this.name = name;
 			this.repositoryName = repositoryName;
 			this.branch = branch;
 			this.branchStatus = branchStatus;
 			this.type = type;
 			this.children = Collections.EMPTY_LIST;
-			this.tracked = tracked;
-			this.ignored = ignored;
-			this.dirty = dirty;
-			this.staged = staged;
-			this.conflicts = conflicts;
-			this.assumeUnchanged = assumeUnchanged;
+			setTracked(tracked);
+			setIgnored(ignored);
+			setDirty(dirty);
+			setStagingState(staged);
+			setConflicts(conflicts);
+			setAssumeUnchanged(assumeUnchanged);
 		}
 
 		@Override
@@ -1072,63 +1054,9 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		}
 
 		@Override
-		public String getRepositoryName() {
-			return repositoryName;
-		}
-
-		@Override
 		public int getType() {
 			return type;
 		}
 
-		@Override
-		public String getBranch() {
-			return branch;
-		}
-
-		@Override
-		public String getBranchStatus() {
-			return branchStatus;
-		}
-
-		@Override
-		public boolean isTracked() {
-			return tracked;
-		}
-
-		@Override
-		public boolean isIgnored() {
-			return ignored;
-		}
-
-		@Override
-		public boolean isDirty() {
-			return dirty;
-		}
-
-		@Override
-		public boolean isMissing() {
-			return false;
-		}
-
-		@Override
-		public StagingState getStagingState() {
-			return staged;
-		}
-
-		@Override
-		public boolean isStaged() {
-			return staged != StagingState.NOT_STAGED;
-		}
-
-		@Override
-		public boolean hasConflicts() {
-			return conflicts;
-		}
-
-		@Override
-		public boolean isAssumeUnchanged() {
-			return assumeUnchanged;
-		}
 	}
 }

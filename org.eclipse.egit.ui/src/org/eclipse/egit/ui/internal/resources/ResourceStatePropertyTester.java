@@ -113,8 +113,7 @@ public class ResourceStatePropertyTester extends PropertyTester {
 				}
 				break;
 			case HAS_UNSTAGED_CHANGES:
-				if (!state.isTracked() || state.isDirty()
-						|| state.isMissing()) {
+				if (state.hasUnstagedChanges()) {
 					return true;
 				}
 				break;
