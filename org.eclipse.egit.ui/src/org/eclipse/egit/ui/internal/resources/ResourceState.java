@@ -93,6 +93,11 @@ public class ResourceState implements IResourceState {
 		return assumeUnchanged;
 	}
 
+	@Override
+	public final boolean hasUnstagedChanges() {
+		return !isTracked() || isDirty() || isMissing() || hasConflicts();
+	}
+
 	/**
 	 * Sets the staged property.
 	 *

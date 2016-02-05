@@ -100,4 +100,11 @@ public interface IResourceState {
 	 */
 	boolean isAssumeUnchanged();
 
+	/**
+	 * Returns whether or not the resource has any changes that are unstaged.
+	 * 
+	 * @return whether or not the resource has any changes that are unstaged
+	 */
+	boolean hasUnstagedChanges();
+
 }

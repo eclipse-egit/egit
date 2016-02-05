@@ -281,6 +281,11 @@ public class StagingEntry extends PlatformObject
 	}
 
 	@Override
+	public boolean hasUnstagedChanges() {
+		return !isTracked() || isDirty() || isMissing() || hasConflicts();
+	}
+
+	@Override
 	public StagingState getStagingState() {
 		switch (state) {
 		case ADDED:
