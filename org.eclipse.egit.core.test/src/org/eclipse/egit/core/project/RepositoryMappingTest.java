@@ -13,6 +13,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.io.File;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -105,6 +107,15 @@ public class RepositoryMappingTest extends GitTestCase {
 
 		assertNotNull(mapping);
 		assertEquals(repository, mapping.getRepository());
+	}
+
+	@Test
+	public void shouldResolveRelativePathRelativeToContainer() {
+		IPath projectPath = project.getProject().getLocation();
+		RepositoryMapping mapping = RepositoryMapping
+				.create(project.getProject(), new File(".git"));
+		assertEquals(projectPath.append(".git"),
+				mapping.getGitDirAbsolutePath());
 	}
 
 	private IPath getWorkTreePath() {
