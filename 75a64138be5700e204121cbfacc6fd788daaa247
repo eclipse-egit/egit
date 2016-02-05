@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d9433e_5a1ae3a2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PushBranchActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2016-02-05T06:26:21Z",
+      "side": 1,
+      "message": "This seems to only check whether there is a HEAD to push, but this same handler is also expected to work for a branch.\n\nSo shouldn\u0027t the check be\n  return getBranchRef(repository) !\u003d null || (head !\u003d null \u0026\u0026 head.getObjectId() !\u003d null)\n?\n\nOr does the fact of having a branch active implies that there is a HEAD available?",
+      "revId": "75a64138be5700e204121cbfacc6fd788daaa247",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
