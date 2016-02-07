@@ -66,10 +66,14 @@ public class RepositoryMapping {
 			.getDefault().getRepositoryCache();
 
 	/**
-	 * Construct a {@link RepositoryMapping} for a previously connected project.
+	 * Construct a {@link RepositoryMapping} for a previously connected
+	 * container.
 	 *
-	 * @param p TODO
-	 * @param initialKey TODO
+	 * @param p
+	 *            {@link Properties} to read the git directory from. See also
+	 *            {@link GitProjectData}.
+	 * @param initialKey
+	 *            property key to use to read the git directory
 	 */
 	public RepositoryMapping(@NonNull final Properties p,
 			@NonNull final String initialKey) {
@@ -80,12 +84,14 @@ public class RepositoryMapping {
 	}
 
 	/**
-	 * Construct a {@link RepositoryMapping} for previously unknown project.
+	 * Construct a {@link RepositoryMapping} for previously unmapped container.
 	 *
 	 * @param mappedContainer
+	 *            to create the mapping for
 	 * @param gitDir
-	 * @return a new RepositoryMapping for given container. Returns <code>null
-	 *         <code> if container does not exists.
+	 *            for the new mapping
+	 * @return a new RepositoryMapping for given container. Returns {@code null}
+	 *         if container does not exist or is not local.
 	 */
 	@Nullable
 	public static RepositoryMapping create(@NonNull IContainer mappedContainer,
@@ -97,42 +103,27 @@ public class RepositoryMapping {
 		return new RepositoryMapping(mappedContainer, location, gitDir);
 	}
 
-	private RepositoryMapping(@NonNull
-	final IContainer mappedContainer, final @NonNull IPath location,
-			@NonNull final File gitDir) {
+	private RepositoryMapping(final @NonNull IContainer mappedContainer,
+			final @NonNull IPath location, final @NonNull File gitDir) {
 		container = mappedContainer;
 		containerPathString = container.getProjectRelativePath()
 				.toPortableString();
-		final IPath gLoc = Path.fromOSString(gitDir.getPath())
-				.removeTrailingSeparator();
 		if (!gitDir.isAbsolute()) {
 			// It is relative to location, so we can set it right away.
-			gitDirPathString = gLoc.toPortableString();
+			gitDirPathString = Path.fromOSString(gitDir.getPath())
+					.removeTrailingSeparator().toPortableString();
 			return;
 		}
-		final IPath cLoc = location.removeTrailingSeparator();
-		final IPath gLocParent = gLoc.removeLastSegments(1);
-
-		if (cLoc.isPrefixOf(gLoc)) {
-			int matchingSegments = gLoc.matchingFirstSegments(cLoc);
-			IPath remainder = gLoc.removeFirstSegments(matchingSegments);
-			String device = remainder.getDevice();
-			if (device == null)
-				gitDirPathString = remainder.toPortableString();
-			else
-				gitDirPathString = remainder.toPortableString().substring(
-						device.length());
-		} else if (gLocParent.isPrefixOf(cLoc)) {
-			int cnt = cLoc.segmentCount() - cLoc.matchingFirstSegments(gLocParent);
-			StringBuilder p = new StringBuilder("");  //$NON-NLS-1$
-			while (cnt-- > 0) {
-				p.append("../");  //$NON-NLS-1$
-			}
-			p.append(gLoc.segment(gLoc.segmentCount() - 1));
-			gitDirPathString = p.toString();
-		} else {
-			gitDirPathString = gLoc.toPortableString();
+		java.nio.file.Path gPath = gitDir.toPath();
+		java.nio.file.Path lPath = location.toFile().toPath();
+		// Require at least one common component for using a relative path
+		if (lPath.getNameCount() > 0 && gPath.getNameCount() > 0
+				&& gPath.getRoot().equals(lPath.getRoot())
+				&& gPath.getName(0).equals(lPath.getName(0))) {
+			gPath = lPath.relativize(gPath);
 		}
+		gitDirPathString = Path.fromOSString(gPath.toString())
+				.removeTrailingSeparator().toPortableString();
 	}
 
 	/**
