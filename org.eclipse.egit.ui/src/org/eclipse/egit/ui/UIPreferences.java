@@ -125,6 +125,8 @@ public class UIPreferences {
 	/** */
 	public final static String DECORATOR_PROJECTTEXT_DECORATION = "decorator_projecttext_decoration"; //$NON-NLS-1$
 	/** */
+	public final static String DECORATOR_SUBMODULETEXT_DECORATION = "decorator_submoduletext_decoration"; //$NON-NLS-1$
+	/** */
 	public final static String DECORATOR_SHOW_TRACKED_ICON = "decorator_show_tracked_icon"; //$NON-NLS-1$
 	/** */
 	public final static String DECORATOR_SHOW_UNTRACKED_ICON = "decorator_show_untracked_icon"; //$NON-NLS-1$

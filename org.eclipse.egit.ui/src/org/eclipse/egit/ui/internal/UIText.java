@@ -3324,6 +3324,9 @@ public class UIText extends NLS {
 	public static String DecoratorPreferencesPage_projectFormatLabel;
 
 	/** */
+	public static String DecoratorPreferencesPage_submoduleFormatLabel;
+
+	/** */
 	public static String DecoratorPreferencesPage_generalTabFolder;
 
 	/** */
