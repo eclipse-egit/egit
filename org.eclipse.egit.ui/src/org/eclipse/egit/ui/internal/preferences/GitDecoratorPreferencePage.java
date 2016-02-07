@@ -2,7 +2,7 @@
  * Copyright (c) 2000, 2012 IBM Corporation and others.
  * Copyright (C) 2009, Tor Arne Vestbø <torarnv@gmail.com>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
- * Copyright (C) 2015, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2015, 2016 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -100,6 +100,8 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 	private boolean tabsInitialized;
 
+	private final static String SAMPLE_COMMIT_MESSAGE = "Commit message text"; //$NON-NLS-1$
+
 	private static final Collection PREVIEW_FILESYSTEM_ROOT;
 
 	private static final Map<String, String> FILE_AND_FOLDER_BINDINGS;
@@ -124,6 +126,9 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		children
 				.add(new PreviewResource(
 						"folder", IResource.FOLDER, "repository", null, null, true, false, true, StagingState.NOT_STAGED, false, false)); //$NON-NLS-1$ //$NON-NLS-2$
+		children
+				.add(new PreviewResource(
+						"submodule", IResource.FOLDER, "submodule", "master 5bef90d", null, true, false, true, StagingState.NOT_STAGED, false, false));  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		children
 				.add(new PreviewResource(
 						"tracked.txt", IResource.FILE, "repository", null, null, true, false, false, StagingState.NOT_STAGED, false, false)); //$NON-NLS-1$ //$NON-NLS-2$
@@ -178,6 +183,8 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 				UIText.DecoratorPreferencesPage_bindingBranchName);
 		PROJECT_BINDINGS.put(DecorationHelper.BINDING_BRANCH_STATUS,
 				UIText.DecoratorPreferencesPage_bindingBranchStatus);
+		PROJECT_BINDINGS.put(DecorationHelper.BINDING_SHORT_MESSAGE,
+				UIText.DecoratorPreferencesPage_bindingCommitMessage);
 
 
 		CHANGESET_LABEL_BINDINGS = new HashMap<String, String>();
@@ -375,6 +382,8 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 		private final FormatEditor projectTextFormat;
 
+		private final FormatEditor submoduleTextFormat;
+
 		public TextDecorationTab(TabFolder parent) {
 			Composite composite = SWTUtils.createHVFillComposite(parent,
 					SWTUtils.MARGINS_DEFAULT, 3);
@@ -394,10 +403,16 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 					UIText.DecoratorPreferencesPage_addVariablesAction3,
 					PROJECT_BINDINGS,
 					UIPreferences.DECORATOR_PROJECTTEXT_DECORATION);
+			submoduleTextFormat = new FormatEditor(composite,
+					UIText.DecoratorPreferencesPage_submoduleFormatLabel,
+					UIText.DecoratorPreferencesPage_addVariablesAction3,
+					PROJECT_BINDINGS,
+					UIPreferences.DECORATOR_SUBMODULETEXT_DECORATION);
 
 			fileTextFormat.addModifyListener(this);
 			folderTextFormat.addModifyListener(this);
 			projectTextFormat.addModifyListener(this);
+			submoduleTextFormat.addModifyListener(this);
 
 			final TabItem tabItem = new TabItem(parent, SWT.NONE);
 			tabItem.setText(UIText.DecoratorPreferencesPage_textLabel);
@@ -409,6 +424,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 			fileTextFormat.initializeValue(store);
 			folderTextFormat.initializeValue(store);
 			projectTextFormat.initializeValue(store);
+			submoduleTextFormat.initializeValue(store);
 		}
 
 		@Override
@@ -416,6 +432,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 			fileTextFormat.performDefaults(store);
 			folderTextFormat.performDefaults(store);
 			projectTextFormat.performDefaults(store);
+			submoduleTextFormat.performDefaults(store);
 		}
 
 		@Override
@@ -423,6 +440,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 			fileTextFormat.performOk(store);
 			folderTextFormat.performOk(store);
 			projectTextFormat.performOk(store);
+			submoduleTextFormat.performOk(store);
 		}
 
 		@Override
@@ -1001,7 +1019,6 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 	private static class GitModelCommitMockup {
 
-		private static final String message = "Commit message text"; //$NON-NLS-1$
 		private static final String author = "Author Name"; //$NON-NLS-1$
 		private static final Date date = new Date();
 		private static final String committer = "Committer Name";  //$NON-NLS-1$
@@ -1015,13 +1032,16 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 					formatter.formatDate(date));
 			bindings.put(GitChangeSetLabelProvider.BINDING_CHANGESET_AUTHOR, author);
 			bindings.put(GitChangeSetLabelProvider.BINDING_CHANGESET_COMMITTER, committer);
-			bindings.put(GitChangeSetLabelProvider.BINDING_CHANGESET_SHORT_MESSAGE, message);
+			bindings.put(
+					GitChangeSetLabelProvider.BINDING_CHANGESET_SHORT_MESSAGE,
+					SAMPLE_COMMIT_MESSAGE);
 
 			return GitChangeSetLabelProvider.formatName(format, bindings);
 		}
 	}
 
 	private static class PreviewResource extends DecoratableResource {
+
 		private final String name;
 
 		private final int type;
@@ -1036,6 +1056,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 			super(null);
 			this.name = name;
 			this.repositoryName = repositoryName;
+			this.commitMessage = SAMPLE_COMMIT_MESSAGE;
 			this.branch = branch;
 			this.branchStatus = branchStatus;
 			this.type = type;

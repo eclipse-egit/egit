@@ -8,6 +8,7 @@
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2011, Christian Halstrick <christian.halstrick@sap.com>
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
+ * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -276,6 +277,9 @@ public class GitLightweightDecorator extends LabelProvider implements
 		public static final String BINDING_REPOSITORY_NAME = "repository"; //$NON-NLS-1$
 
 		/** */
+		public static final String BINDING_SHORT_MESSAGE = "short_message"; //$NON-NLS-1$
+
+		/** */
 		public static final String BINDING_DIRTY_FLAG = "dirty"; //$NON-NLS-1$
 
 		/** */
@@ -288,7 +292,10 @@ public class GitLightweightDecorator extends LabelProvider implements
 		public static final String FOLDER_FORMAT_DEFAULT = "{dirty:>} {name}"; //$NON-NLS-1$
 
 		/** */
-		public static final String PROJECT_FORMAT_DEFAULT = "{dirty:>} {name}  [{repository} {branch}{ branch_status}]"; //$NON-NLS-1$
+		public static final String PROJECT_FORMAT_DEFAULT = "{dirty:>} {name} [{repository }{branch}{ branch_status}]"; //$NON-NLS-1$
+
+		/** */
+		public static final String SUBMODULE_FORMAT_DEFAULT = "{dirty:>} {name} [{branch}{ branch_status}]{ short_message}"; //$NON-NLS-1$
 
 		private IPreferenceStore store;
 
@@ -427,8 +434,14 @@ public class GitLightweightDecorator extends LabelProvider implements
 				break;
 			case IResource.FOLDER:
 			case DecoratableResourceMapping.RESOURCE_MAPPING:
-				format = store
-						.getString(UIPreferences.DECORATOR_FOLDERTEXT_DECORATION);
+				// Use the submodule formatting if it's a submodule root
+				if (resource.getBranch() != null) {
+					format = store.getString(
+							UIPreferences.DECORATOR_SUBMODULETEXT_DECORATION);
+				} else {
+					format = store.getString(
+							UIPreferences.DECORATOR_FOLDERTEXT_DECORATION);
+				}
 				break;
 			case DecoratableResourceMapping.WORKING_SET:
 				// working sets will use the project formatting but only if the
@@ -454,7 +467,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 			bindings.put(BINDING_BRANCH_STATUS, resource.getBranchStatus());
 			bindings.put(BINDING_DIRTY_FLAG, resource.isDirty() ? ">" : null); //$NON-NLS-1$
 			bindings.put(BINDING_STAGED_FLAG, resource.isStaged() ? "*" : null); //$NON-NLS-1$
-
+			bindings.put(BINDING_SHORT_MESSAGE, resource.getCommitMessage());
 			decorate(decoration, format, bindings);
 		}
 

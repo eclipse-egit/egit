@@ -260,6 +260,11 @@ public class StagingEntry extends PlatformObject
 	}
 
 	@Override
+	public String getCommitMessage() {
+		return null;
+	}
+
+	@Override
 	public boolean isTracked() {
 		return state != State.UNTRACKED;
 	}

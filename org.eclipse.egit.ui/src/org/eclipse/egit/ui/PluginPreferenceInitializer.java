@@ -69,6 +69,8 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 				GitLightweightDecorator.DecorationHelper.FOLDER_FORMAT_DEFAULT);
 		store.setDefault(UIPreferences.DECORATOR_PROJECTTEXT_DECORATION,
 				GitLightweightDecorator.DecorationHelper.PROJECT_FORMAT_DEFAULT);
+		store.setDefault(UIPreferences.DECORATOR_SUBMODULETEXT_DECORATION,
+				GitLightweightDecorator.DecorationHelper.SUBMODULE_FORMAT_DEFAULT);
 		store.setDefault(UIPreferences.DECORATOR_SHOW_TRACKED_ICON, true);
 		store.setDefault(UIPreferences.DECORATOR_SHOW_UNTRACKED_ICON, true);
 		store.setDefault(UIPreferences.DECORATOR_SHOW_STAGED_ICON, true);

@@ -21,6 +21,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.synchronize.GitChangeSetModelProvider;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -40,7 +41,9 @@ import org.eclipse.team.ui.mapping.SynchronizationLabelProvider;
 public class GitChangeSetLabelProvider extends SynchronizationLabelProvider implements IStyledLabelProvider {
 
 	/** */
-	public static final String BINDING_CHANGESET_SHORT_MESSAGE = "{short_message}"; //$NON-NLS-1$
+	public static final String BINDING_CHANGESET_SHORT_MESSAGE = '{'
+			+ GitLightweightDecorator.DecorationHelper.BINDING_SHORT_MESSAGE
+			+ '}';
 
 	/** */
 	public static final String BINDING_CHANGESET_COMMITTER = "{committer}"; //$NON-NLS-1$

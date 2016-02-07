@@ -33,6 +33,11 @@ public class DecoratableResource extends ResourceState
 	protected String repositoryName = null;
 
 	/**
+	 * Head commit of the repository of the resource
+	 */
+	protected String commitMessage = null;
+
+	/**
 	 * Current branch of the resource
 	 */
 	protected String branch = null;
@@ -41,7 +46,6 @@ public class DecoratableResource extends ResourceState
 	 * Branch status relative to remote tracking branch
 	 */
 	protected String branchStatus = null;
-
 
 	/**
 	 * Constructs a new decoratable resource
@@ -69,6 +73,11 @@ public class DecoratableResource extends ResourceState
 	@Override
 	public String getRepositoryName() {
 		return repositoryName;
+	}
+
+	@Override
+	public String getCommitMessage() {
+		return commitMessage;
 	}
 
 	@Override

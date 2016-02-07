@@ -43,6 +43,15 @@ public interface IDecoratableResource extends IResourceState {
 	String getRepositoryName();
 
 	/**
+	 * Gets the short message of the head commit of the repository of the
+	 * resource.
+	 *
+	 * @return the head commit's short message, or <code>null</code> if not
+	 *         applicable
+	 */
+	String getCommitMessage();
+
+	/**
 	 * Gets the current branch of the resource if applicable
 	 *
 	 * @return the name of the current branch, or <code>null</code> if not
