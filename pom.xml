@@ -76,7 +76,7 @@
     <tycho.scmUrl>scm:git:https://git.eclipse.org/r/egit/egit.git</tycho.scmUrl>
     <test.vmparams></test.vmparams>
     <coretest.vmparams></coretest.vmparams>
-    <uitest.vmparams>-Dorg.eclipse.swtbot.search.timeout=30000 -Xmx1024m -XX:MaxPermSize=150m</uitest.vmparams>
+    <uitest.vmparams>-Dorg.eclipse.swtbot.search.timeout=30000 -Dorg.eclipse.swtbot.screenshots.dir=target/screenshots -Xmx1024m -XX:MaxPermSize=150m</uitest.vmparams>
   </properties>
 
   <profiles>
