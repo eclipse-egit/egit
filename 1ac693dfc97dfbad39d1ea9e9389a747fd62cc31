@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_7d787c9b",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/GitFlowRepository.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-02-08T18:47:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07d9433e_677d4f8c",
+      "revId": "1ac693dfc97dfbad39d1ea9e9389a747fd62cc31",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_477e8b8b",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/GitFlowRepository.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-02-08T06:05:14Z",
       "side": 1,
       "message": "Wrap as IOException, not RuntimeException.",
+      "revId": "1ac693dfc97dfbad39d1ea9e9389a747fd62cc31",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_9dfaa081",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/GitFlowRepository.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-02-08T18:47:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07d9433e_477e8b8b",
       "revId": "1ac693dfc97dfbad39d1ea9e9389a747fd62cc31",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
