@@ -31,7 +31,6 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.AdapterUtils;
@@ -173,39 +172,28 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	}
 
 	/**
-	 * List the projects with selected resources, if all projects are connected
-	 * to a Git repository.
+	 * Determines whether the selection contains only resources that are in some
+	 * git repository.
 	 *
-	 * @return the tracked projects affected by the current resource selection
+	 * @return {@code true} if all resources in the selection belong to a git
+	 *         repository known to EGit.
 	 */
-	protected IProject[] getProjectsInRepositoryOfSelectedResources() {
+	protected boolean haveSelectedResourcesWithRepository() {
 		IStructuredSelection selection = getSelection();
-		return getProjectsInRepositoryOfSelectedResources(selection);
-	}
-
-	/**
-	 * List the projects with selected resources, if all projects are connected
-	 * to a Git repository.
-	 *
-	 * @param selection
-	 *
-	 * @return the tracked projects affected by the current resource selection
-	 */
-	private IProject[] getProjectsInRepositoryOfSelectedResources(
-			IStructuredSelection selection) {
-		Set<IProject> ret = new LinkedHashSet<IProject>();
-		Repository[] repositories = getRepositoriesFor(getProjectsForSelectedResources(selection));
-		final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
-				.getProjects();
-		for (IProject project : projects) {
-			RepositoryMapping mapping = RepositoryMapping.getMapping(project);
-			for (Repository repository : repositories)
-				if (mapping != null && mapping.getRepository() == repository) {
-					ret.add(project);
-					break;
+		if (selection != null) {
+			IResource[] resources = SelectionUtils
+					.getSelectedResources(selection);
+			if (resources.length > 0) {
+				for (IResource resource : resources) {
+					if (resource == null
+							|| RepositoryMapping.getMapping(resource) == null) {
+						return false;
+					}
 				}
+				return true;
+			}
 		}
-		return ret.toArray(new IProject[ret.size()]);
+		return false;
 	}
 
 	/**
