@@ -16,6 +16,24 @@
       "revId": "75a64138be5700e204121cbfacc6fd788daaa247",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_d2d1f4c5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PushBranchActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-02-10T00:26:44Z",
+      "side": 1,
+      "message": "HEAD is a symbolic ref pointing to the currently checked out branch or to the currently checked out commit (detached HEAD) or to nowhere if the repository is completely empty (no commit existing yet)",
+      "parentUuid": "07d9433e_5a1ae3a2",
+      "revId": "75a64138be5700e204121cbfacc6fd788daaa247",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
