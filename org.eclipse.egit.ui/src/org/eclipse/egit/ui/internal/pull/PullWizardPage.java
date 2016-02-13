@@ -296,7 +296,7 @@ public class PullWizardPage extends WizardPage {
 		if (config != null && config.getURIs().size() > 0) {
 			this.assist = new RefContentAssistProvider(
 					PullWizardPage.this.repository, config.getURIs().get(0),
-					getShell());
+					getContainer());
 		}
 	}
 
