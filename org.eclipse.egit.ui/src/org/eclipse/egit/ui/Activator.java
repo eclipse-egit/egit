@@ -4,6 +4,7 @@
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2012, Matthias Sohn <matthias.sohn@sap.com>
  * Copyright (C) 2015, Philipp Bumann <bumannp@gmail.com>
+ * Copyright (C) 2016, Dani Megert <daniel_megert@ch.ibm.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -537,6 +538,9 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 
 		@Override
 		protected IStatus run(IProgressMonitor monitor) {
+			if (!doReschedule)
+				return Status.OK_STATUS;
+
 			// The core plugin might have been stopped before we could cancel
 			// this job.
 			RepositoryCache repositoryCache = org.eclipse.egit.core.Activator
