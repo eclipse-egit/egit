@@ -505,7 +505,8 @@ public class GitProjectData {
 			return;
 		}
 		git = absolutePath.toFile();
-		if (!git.isDirectory() || !new File(git, "config").isFile()) { //$NON-NLS-1$
+
+		if (!git.isDirectory()) { // $NON-NLS-1$
 			logAndUnmapGoneMappedResource(m);
 			return;
 		}
