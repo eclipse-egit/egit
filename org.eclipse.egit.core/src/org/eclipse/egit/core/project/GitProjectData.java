@@ -612,7 +612,11 @@ public class GitProjectData {
 			return;
 		}
 		git = absolutePath.toFile();
-		if (!git.isDirectory() || !new File(git, "config").isFile()) { //$NON-NLS-1$
+
+		// just check if GIT_DIR folder is available
+		// TODO: add verification of GIT_DIR data (files etc.) with JGit API if
+		// needed
+		if (!git.isDirectory()) {
 			logAndUnmapGoneMappedResource(m);
 			return;
 		}
