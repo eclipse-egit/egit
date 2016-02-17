@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_22f46dc0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-02-17T23:10:51Z",
+      "side": 1,
+      "message": "Gerrit does not advertise http URLs ending with .git, see e.g.\nhttps://git.eclipse.org/r/#/admin/projects/egit/egit\n\nWe could check if a repository was already cloned from the same host. Then for the first repository cloned from a given host auto-fill wouldn\u0027t be triggered but for all subsequent repositories cloned from the same host auto-fill would be used. This way we could reduce chances for false-positives and still provide auto-fill for the very common case that a given git server typically hosts many repositories and users often clone multiple repos from the same server.",
+      "revId": "3277d76bf4dbf451aff1d39a84963658c6fd8933",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
