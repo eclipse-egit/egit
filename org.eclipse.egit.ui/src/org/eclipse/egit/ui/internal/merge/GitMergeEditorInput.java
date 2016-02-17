@@ -128,6 +128,17 @@ public class GitMergeEditorInput extends CompareEditorInput {
 		return Display.getCurrent() != null;
 	}
 
+	/**
+	 * @param monitor
+	 * @return return the diff container
+	 * @throws InterruptedException
+	 * @throws InvocationTargetException
+	 */
+	public IDiffContainer getDiffContainer(IProgressMonitor monitor)
+			throws InvocationTargetException, InterruptedException {
+		return (IDiffContainer) prepareInput(monitor);
+	}
+
 	@Override
 	protected Object prepareInput(IProgressMonitor monitor)
 			throws InvocationTargetException, InterruptedException {

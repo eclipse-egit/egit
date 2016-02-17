@@ -861,7 +861,7 @@ public class DiffViewer extends HyperlinkSourceViewer {
 				oldCommit, oldObjectId);
 		final ITypedElement newSide = createTypedElement(repository, np,
 				newCommit, newObjectId);
-		CompareUtils.openInCompare(page,
+		CompareUtils.openInCompare(page, repository,
 				new GitCompareFileRevisionEditorInput(newSide, oldSide, null));
 	}
 
