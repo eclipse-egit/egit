@@ -104,14 +104,20 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		this.ancestor = ancestor;
 	}
 
-	FileRevisionTypedElement getRightRevision() {
+	/**
+	 * @return the revision
+	 */
+	public FileRevisionTypedElement getRightRevision() {
 		if (right instanceof FileRevisionTypedElement) {
 			return (FileRevisionTypedElement) right;
 		}
 		return null;
 	}
 
-	FileRevisionTypedElement getLeftRevision() {
+	/**
+	 * @return the revision
+	 */
+	public FileRevisionTypedElement getLeftRevision() {
 		if (left instanceof FileRevisionTypedElement) {
 			return (FileRevisionTypedElement) left;
 		}
@@ -384,7 +390,11 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		return element.getName();
 	}
 
-	private String getLongName(ITypedElement element) {
+	/**
+	 * @param element
+	 * @return the long name / e.g. path
+	 */
+	public String getLongName(ITypedElement element) {
 		if (element instanceof FileRevisionTypedElement){
 			FileRevisionTypedElement fileRevisionElement = (FileRevisionTypedElement) element;
 			return fileRevisionElement.getPath();
