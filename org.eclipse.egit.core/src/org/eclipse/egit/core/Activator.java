@@ -419,7 +419,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 			if (resource.getType() != IResource.PROJECT) {
 				return false;
 			}
-			if (!resource.isAccessible()) {
+			if (!resource.isAccessible() || resource.getLocation() == null) {
 				return false;
 			}
 			projects.add((IProject) resource);

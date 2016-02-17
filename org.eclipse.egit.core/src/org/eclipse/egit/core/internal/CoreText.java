@@ -191,9 +191,6 @@ public class CoreText extends NLS {
 	public static String RepositoryFinder_finding;
 
 	/** */
-	public static String RepositoryFinder_ResourceDoesNotExist;
-
-	/** */
 	public static String RepositoryMapping_ExceptionSubmoduleWalk;
 
 	/** */

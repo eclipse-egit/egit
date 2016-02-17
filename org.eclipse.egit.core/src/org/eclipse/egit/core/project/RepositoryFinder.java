@@ -5,6 +5,7 @@
  * Copyright (C) 2012, François Rey <eclipse.org_@_francois_._rey_._name>
  * Copyright (C) 2013, Carsten Pfeiffer <carsten.pfeiffer@gebit.de>
  * Copyright (C) 2015, Stephan Hackstedt <stephan.hackstedt@googlemail.com>
+ * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -26,13 +27,11 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.util.SystemReader;
-import org.eclipse.osgi.util.NLS;
 
 /**
  * Searches for existing Git repositories associated with a project's files.
@@ -129,17 +128,16 @@ public class RepositoryFinder {
 	private void find(final IProgressMonitor m, final IContainer c,
 			boolean searchLinkedFolders)
 				throws CoreException {
-		if (!searchLinkedFolders && c.isLinked())
+		if (!searchLinkedFolders && c.isLinked()) {
 			return; // Ignore linked folders
+		}
 		final IPath loc = c.getLocation();
-
+		if (loc == null) {
+			return; // Either gone, or provided by an EFS
+		}
 		SubMonitor progress = SubMonitor.convert(m, 101);
 		progress.subTask(CoreText.RepositoryFinder_finding);
-		if (loc == null) {
-			throw new CoreException(Activator.error(
-					NLS.bind(CoreText.RepositoryFinder_ResourceDoesNotExist, c),
-					null));
-		}
+
 		final File fsLoc = loc.toFile();
 		assert fsLoc.isAbsolute();
 
