@@ -2,6 +2,7 @@
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2012, Gunnar Wagenknecht <gunnar@wagenknecht.org>
  * Copyright (C) 2013, Laurent Goubet <laurent.goubet@obeo.fr>
+ * Copyright (C) 2018, Andre Bossert <anb0s@anbos.de>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -59,7 +60,8 @@ public class CompareWithWorkingTreeHandler extends
 				final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
 						SaveableCompareEditorInput.createFileElement(file),
 						right, null);
-				CompareUtils.openInCompare(workBenchPage, in);
+				CompareUtils.openInCompare(workBenchPage,
+						mapping.getRepository(), in);
 			}
 		} else if (input instanceof File) {
 			File file = (File) input;
