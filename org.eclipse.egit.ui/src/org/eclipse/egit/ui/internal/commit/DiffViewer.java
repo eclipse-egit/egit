@@ -11,6 +11,7 @@
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
  *    Tobias Pfeifer (SAP AG) - customizable font and color for the first header line - https://bugs.eclipse.org/397723
  *    Thomas Wolf <thomas.wolf@paranor.ch> - add hyperlinks, and use JFace syntax coloring
+ *    Andre Bossert <anb0s@anbos.de> - external merge and diff tools
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commit;
 
@@ -861,7 +862,7 @@ public class DiffViewer extends HyperlinkSourceViewer {
 				oldCommit, oldObjectId);
 		final ITypedElement newSide = createTypedElement(repository, np,
 				newCommit, newObjectId);
-		CompareUtils.openInCompare(page,
+		CompareUtils.openInCompare(page, repository,
 				new GitCompareFileRevisionEditorInput(newSide, oldSide, null));
 	}
 
