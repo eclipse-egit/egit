@@ -83,7 +83,7 @@ public class InitHandler extends AbstractHandler {
 					UIText.InitHandler_initialCommit);
 			commitOperation.execute(null);
 		} catch (CoreException e) {
-			throw new ExecutionException(e.getMessage());
+			throw new ExecutionException(e.getMessage(), e);
 		}
 	}
 
@@ -92,7 +92,7 @@ public class InitHandler extends AbstractHandler {
 		try {
 			branchList = Git.wrap(repository).branchList().call();
 		} catch (GitAPIException e) {
-			throw new ExecutionException(e.getMessage());
+			throw new ExecutionException(e.getMessage(), e);
 		}
 		return branchList;
 	}
