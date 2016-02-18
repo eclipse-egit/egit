@@ -16,6 +16,24 @@
       "revId": "3277d76bf4dbf451aff1d39a84963658c6fd8933",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_e5dd2c57",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-02-18T19:23:29Z",
+      "side": 1,
+      "message": "OK, valid use case. I wonder if going through all repositories\u0027 configs and reading their remotes (and submodules) is feasible -- yes, the config is cached, but (a) it might not yet be, and (b) bug 484795 has shown that even getting the last-modified time may be expensive. So that approach might lead to a noticeable delay until the dialog comes up.",
+      "parentUuid": "e7dfcf21_22f46dc0",
+      "revId": "3277d76bf4dbf451aff1d39a84963658c6fd8933",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
