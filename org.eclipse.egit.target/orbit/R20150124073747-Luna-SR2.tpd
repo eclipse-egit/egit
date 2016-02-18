@@ -2,6 +2,8 @@ target "R20150124073747" with source configurePhase
 // see http://download.eclipse.org/tools/orbit/downloads/
 
 location "http://download.eclipse.org/tools/orbit/downloads/drops/R20150124073747/repository/" {
+	com.google.gson [2.2.4.v201311231704,2.2.4.v201311231704]
+	com.google.gson.source [2.2.4.v201311231704,2.2.4.v201311231704]
 	com.jcraft.jsch [0.1.51.v201410302000,0.1.51.v201410302000]
 	com.jcraft.jsch.source [0.1.51.v201410302000,0.1.51.v201410302000]
 	javaewah [0.7.9.v201401101600,0.7.9.v201401101600]
