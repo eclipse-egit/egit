@@ -93,8 +93,19 @@ public class AddCommand extends
 			try {
 				Collection<RepositoryMapping> mappings = f
 						.find(new NullProgressMonitor());
-				if (mappings.size() == 1)
-					connections.put(project, repositoryDir);
+				// If there is a mapping matching the repositoryDir, add
+				// the first mapping (which might belong to a submodule)
+				for (RepositoryMapping m : mappings) {
+					IPath gitDir = m.getGitDirAbsolutePath();
+					if (gitDir != null
+							&& repositoryDir.equals(gitDir.toFile())) {
+						gitDir = mappings.iterator().next()
+								.getGitDirAbsolutePath();
+						if (gitDir != null) {
+							connections.put(project, gitDir.toFile());
+						}
+					}
+				}
 			} catch (CoreException e) {
 				// Ignore this project in that case
 				continue;
