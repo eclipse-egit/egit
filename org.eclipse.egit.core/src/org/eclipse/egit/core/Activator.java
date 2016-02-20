@@ -500,10 +500,9 @@ public class Activator extends Plugin implements DebugOptionsListener {
 			RepositoryFinder f = new RepositoryFinder(project);
 			f.setFindInChildren(false);
 			Collection<RepositoryMapping> mappings = f.find(new NullProgressMonitor());
-			if (mappings.size() != 1) {
+			if (mappings.isEmpty()) {
 				return;
 			}
-
 			RepositoryMapping m = mappings.iterator().next();
 			IPath gitDirPath = m.getGitDirAbsolutePath();
 			if (gitDirPath == null || gitDirPath.segmentCount() == 0) {
@@ -526,9 +525,22 @@ public class Activator extends Plugin implements DebugOptionsListener {
 			}
 
 			// connect
-			final File repositoryDir = gitDirPath.toFile();
+			File repositoryDir = gitDirPath.toFile();
 			projects.put(project, repositoryDir);
 
+			// If we had more than one mapping: add the last one as
+			// 'configured' repository. We don't want to add submodules,
+			// that would only lead to problems when a configured repository
+			// is deleted.
+			if (mappings.size() > 1) {
+				IPath lastPath = null;
+				for (RepositoryMapping mapping : mappings) {
+					lastPath = mapping.getGitDirAbsolutePath();
+				}
+				if (lastPath != null) {
+					repositoryDir = lastPath.toFile();
+				}
+			}
 			try {
 				Activator.getDefault().getRepositoryUtil()
 						.addConfiguredRepository(repositoryDir);
