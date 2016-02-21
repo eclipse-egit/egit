@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_37f2e68f",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewTestBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-02-21T13:08:06Z",
+      "side": 1,
+      "message": "Not quite correct yet. There\u0027s still a small window between lines 119 and 120 where the asynchronous index diff update might schedule a refresh.",
+      "revId": "bdfa89f3ff0c031cf24e59f02ec204f0b6e75ec3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
