@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_5798524a",
+        "filename": "org.eclipse.egit.target/egit-4.6.tpd",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-02-21T14:26:34Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be 4.6??",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "fcb2078e913e53f5a2b8200f27d3b70764597f76",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
