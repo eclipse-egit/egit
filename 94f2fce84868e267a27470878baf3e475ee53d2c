@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_97cf3aa3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitJob.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-02-21T01:07:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7dfcf21_5c2eb946",
+      "range": {
+        "startLine": 176,
+        "startChar": 7,
+        "endLine": 176,
+        "endChar": 8
+      },
+      "revId": "94f2fce84868e267a27470878baf3e475ee53d2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_7c2b7534",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitJob.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2016-02-21T01:07:00Z",
       "side": 1,
       "message": "unnecessary braces",
+      "range": {
+        "startLine": 200,
+        "startChar": 2,
+        "endLine": 200,
+        "endChar": 3
+      },
+      "revId": "94f2fce84868e267a27470878baf3e475ee53d2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_b7cc36af",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitJob.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-02-21T01:07:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7dfcf21_7c2b7534",
       "range": {
         "startLine": 200,
         "startChar": 2,
