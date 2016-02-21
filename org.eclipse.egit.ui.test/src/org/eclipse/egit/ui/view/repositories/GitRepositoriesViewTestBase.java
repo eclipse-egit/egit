@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 import org.eclipse.core.commands.State;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryUtil;
@@ -115,6 +116,7 @@ public abstract class GitRepositoriesViewTestBase extends
 	protected void refreshAndWait() throws Exception {
 		RepositoriesView view = (RepositoriesView) getOrOpenView()
 				.getReference().getPart(true);
+		Job.getJobManager().join(JobFamilies.REPO_VIEW_REFRESH, null);
 		JobJoiner jobJoiner = JobJoiner.startListening(JobFamilies.REPO_VIEW_REFRESH, 60, TimeUnit.SECONDS);
 		view.refresh();
 		jobJoiner.join();
