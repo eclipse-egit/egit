@@ -12,6 +12,7 @@ package org.eclipse.egit.ui.view.repositories;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +21,9 @@ import java.util.concurrent.TimeUnit;
 import org.eclipse.core.commands.State;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryUtil;
@@ -29,7 +33,6 @@ import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchCommitCommand;
-import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -115,9 +118,13 @@ public abstract class GitRepositoriesViewTestBase extends
 	protected void refreshAndWait() throws Exception {
 		RepositoriesView view = (RepositoriesView) getOrOpenView()
 				.getReference().getPart(true);
-		JobJoiner jobJoiner = JobJoiner.startListening(JobFamilies.REPO_VIEW_REFRESH, 60, TimeUnit.SECONDS);
 		view.refresh();
-		jobJoiner.join();
+		try {
+			Job.getJobManager().join(JobFamilies.REPO_VIEW_REFRESH,
+					new TimeoutProgressMonitor(60, TimeUnit.SECONDS));
+		} catch (OperationCanceledException e) {
+			fail("Refresh took longer 60 seconds");
+		}
 		TestUtil.processUIEvents();
 	}
 
@@ -128,5 +135,25 @@ public abstract class GitRepositoriesViewTestBase extends
 				projectName);
 		assertEquals("Project existence " + projectName, prj.exists(),
 				existence);
+	}
+
+	private static class TimeoutProgressMonitor extends NullProgressMonitor {
+
+		private final long stopTime;
+
+		public TimeoutProgressMonitor(long timeUnits, TimeUnit timeUnit) {
+			stopTime = System.currentTimeMillis()
+					+ timeUnit.toMillis(timeUnits);
+		}
+
+		@Override
+		public boolean isCanceled() {
+			boolean canceled = super.isCanceled();
+			if (canceled) {
+				return true;
+			}
+			setCanceled(System.currentTimeMillis() > stopTime);
+			return super.isCanceled();
+		}
 	}
 }
