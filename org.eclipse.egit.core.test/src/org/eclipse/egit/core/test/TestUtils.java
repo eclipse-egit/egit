@@ -19,6 +19,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.management.LockInfo;
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadInfo;
+import java.lang.management.ThreadMXBean;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -362,6 +366,36 @@ public class TestUtils {
 			map.put(args[i], args[i+1]);
 		}
 		return map;
+	}
+
+	public static String dumpThreads() {
+		final StringBuilder dump = new StringBuilder();
+		final ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
+		final ThreadInfo[] threadInfos = threadMXBean.dumpAllThreads(
+				threadMXBean.isObjectMonitorUsageSupported(),
+				threadMXBean.isSynchronizerUsageSupported());
+		for (ThreadInfo threadInfo : threadInfos) {
+			dump.append("Thread ").append(threadInfo.getThreadId()).append(' ')
+					.append(threadInfo.getThreadName()).append(' ')
+					.append(threadInfo.getThreadState()).append('\n');
+			LockInfo blocked = threadInfo.getLockInfo();
+			if (blocked != null) {
+				dump.append("  Waiting for ").append(blocked);
+				String lockOwner = threadInfo.getLockOwnerName();
+				if (lockOwner != null && !lockOwner.isEmpty()) {
+					dump.append(" held by ").append(lockOwner).append("(id=")
+							.append(threadInfo.getLockOwnerId()).append(')');
+				}
+				dump.append('\n');
+			}
+			for (LockInfo lock : threadInfo.getLockedSynchronizers()) {
+				dump.append("  Holding ").append(lock).append('\n');
+			}
+			for (StackTraceElement s : threadInfo.getStackTrace()) {
+				dump.append("  at ").append(s).append('\n');
+			}
+		}
+		return dump.toString();
 	}
 
 }
