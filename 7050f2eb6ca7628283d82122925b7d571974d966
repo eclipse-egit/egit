@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_62bbc7a9",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FeatureBranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-02-22T21:09:43Z",
+      "side": 1,
+      "message": "If this is solved with the quick selection mode I use here, the same is possible with the FilteredCheckboxTree used in the \"Add Git Repositories\" dialog. However, I don\u0027t think it is necessary there because that viewer also needs the checkboxes to be checked anyway. Adding a  repository can be done by \u003ctype filter\u003e-\u003etab-\u003espace-\u003eenter.",
+      "parentUuid": "e7dfcf21_e92422e8",
+      "revId": "7050f2eb6ca7628283d82122925b7d571974d966",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_092a2eb2",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FeatureBranchSelectionDialog.java",
         "patchSetId": 1
