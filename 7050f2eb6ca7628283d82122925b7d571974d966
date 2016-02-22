@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_c2ac9baa",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FeatureBranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-02-22T20:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7dfcf21_a92a1ab3",
+      "revId": "7050f2eb6ca7628283d82122925b7d571974d966",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_c92f66c3",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FeatureBranchSelectionDialog.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_e2b197fc",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FeatureBranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-02-22T20:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7dfcf21_c92f66c3",
+      "revId": "7050f2eb6ca7628283d82122925b7d571974d966",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_e92422e8",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FeatureBranchSelectionDialog.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2016-02-21T22:01:04Z",
       "side": 1,
       "message": "it should be possible to select an entry using the keyboard only without using the mouse. Other filtered dialogs (e.g. Import... wizard in the package explorer) enable that by selecting the first list entry as soon as a filter string has been entered which yields at least one entry in the filtered list. Then focus can be moved to the list by clicking \"tab\" and an entry can be selected using the arrow keys. We should fix this also in other filter dialogs we already have, e.g. \"Add Git Repositories\" dialog in repositories view.\n\nCurrently this dialog only checks for matches starting from the left. This means if I have 2 branches \"featureX\" and \"featureZ\" I have to type the complete string until its differentiating.\nI think we better check the entered filter string for matches anywhere in the branch name, in this example I could then pick the branch \"featureX\" by typing \"x\"",
+      "revId": "7050f2eb6ca7628283d82122925b7d571974d966",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_02b763f0",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FeatureBranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-02-22T20:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7dfcf21_e92422e8",
       "revId": "7050f2eb6ca7628283d82122925b7d571974d966",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_229b7f80",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FeatureBranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-02-22T20:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7dfcf21_092a2eb2",
+      "range": {
+        "startLine": 44,
+        "startChar": 13,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "7050f2eb6ca7628283d82122925b7d571974d966",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_291e0a98",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FeatureBranchSelectionDialog.java",
         "patchSetId": 1
@@ -87,6 +165,24 @@
       "writtenOn": "2016-02-21T22:01:04Z",
       "side": 1,
       "message": "we put an empty line as the first line of an anonymous class to make the fact this is an anonymous class more visible:\n\n new ISelectionChangedListener() {\n\n\n    @Override\n    public void selectionChanged(SelectionChangedEvent event) {\n       ...\n    }\n }",
+      "revId": "7050f2eb6ca7628283d82122925b7d571974d966",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_42988b81",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FeatureBranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-02-22T20:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7dfcf21_291e0a98",
       "revId": "7050f2eb6ca7628283d82122925b7d571974d966",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_62a587b5",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FeatureBranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-02-22T20:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7dfcf21_691812a9",
+      "revId": "7050f2eb6ca7628283d82122925b7d571974d966",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_89155e71",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FilteredBranchesWidget.java",
         "patchSetId": 1
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_82a293ab",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FilteredBranchesWidget.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-02-22T20:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7dfcf21_89155e71",
+      "revId": "7050f2eb6ca7628283d82122925b7d571974d966",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_a955ba27",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FinishFeatureDialog.java",
         "patchSetId": 1
@@ -138,6 +270,24 @@
       "writtenOn": "2016-02-21T22:01:04Z",
       "side": 1,
       "message": "you didn\u0027t touch this file in 2016, why do you change the year ?",
+      "revId": "7050f2eb6ca7628283d82122925b7d571974d966",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_a28eaf3b",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FinishFeatureDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-02-22T20:44:31Z",
+      "side": 1,
+      "message": "I guess I accidentally switched to the wrong tab (and did not check my commit properly before pushing).\n\nDone",
+      "parentUuid": "e7dfcf21_a955ba27",
       "revId": "7050f2eb6ca7628283d82122925b7d571974d966",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -167,6 +317,30 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_c293bb5f",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FlatBranchesListContentProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-02-22T20:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7dfcf21_89fe3e9f",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 37
+      },
+      "revId": "7050f2eb6ca7628283d82122925b7d571974d966",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_6901f23c",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/gitflow/AbstractFeatureFinishHandlerTest.java",
         "patchSetId": 1
@@ -178,6 +352,30 @@
       "writtenOn": "2016-02-21T22:01:04Z",
       "side": 1,
       "message": "5 minutes is a long time to wait for a test in case this fails",
+      "range": {
+        "startLine": 99,
+        "startChar": 12,
+        "endLine": 99,
+        "endChar": 15
+      },
+      "revId": "7050f2eb6ca7628283d82122925b7d571974d966",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_220d3f45",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/gitflow/AbstractFeatureFinishHandlerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-02-22T20:44:31Z",
+      "side": 1,
+      "message": "Not sure I understand. This should be 300ms. That\u0027s what seems to be the delay for the filter in the FilteredTree to hit.",
+      "parentUuid": "e7dfcf21_6901f23c",
       "range": {
         "startLine": 99,
         "startChar": 12,
