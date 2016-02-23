@@ -1,4 +1,4 @@
-target "egit-4.5" with source configurePhase
+target "egit-4.6" with source configurePhase
 
 include "projects/jetty-9.2.13.tpd"
 include "projects/swtbot-snapshot.tpd"
