@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_5294f599",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-02-23T14:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07d9433e_822f1c12",
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_023b0c51",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
         "patchSetId": 7
@@ -36,6 +54,24 @@
         "endLine": 237,
         "endChar": 20
       },
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_928e7d8a",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-02-23T14:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07d9433e_023b0c51",
       "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -65,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_b29381ae",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-02-23T14:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27d6470d_6b981182",
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_62e5b851",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
         "patchSetId": 7
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_d2a72507",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-02-23T14:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07d9433e_62e5b851",
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_82eabc20",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
         "patchSetId": 7
@@ -99,6 +171,24 @@
       "writtenOn": "2016-01-03T22:13:51Z",
       "side": 1,
       "message": "style nit: remove extra blank line",
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_f2a42905",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-02-23T14:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07d9433e_82eabc20",
       "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -128,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_12a26df6",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-02-23T14:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07d9433e_62fcd8e5",
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_4207d48f",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
         "patchSetId": 7
@@ -139,6 +247,24 @@
       "writtenOn": "2016-01-03T22:13:51Z",
       "side": 1,
       "message": "style nit: missing braces",
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_329f71b2",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-02-23T14:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07d9433e_4207d48f",
       "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -168,6 +294,24 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_3224d138",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/TestRepository.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-02-23T14:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27d6470d_0b894532",
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27d6470d_2b8e093b",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/TestRepository.java",
         "patchSetId": 7
@@ -185,6 +329,24 @@
         "endLine": 372,
         "endChar": 15
       },
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_52307571",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/TestRepository.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-02-23T14:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27d6470d_2b8e093b",
       "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -214,6 +376,24 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_f240a9bc",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncCache.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-02-23T14:16:02Z",
+      "side": 1,
+      "message": "You\u0027re right, this name is not good. What about getIncludedPaths?\nI\u0027ll try that.",
+      "parentUuid": "07d9433e_a2f500f8",
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_c2f2040d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncCache.java",
         "patchSetId": 7
@@ -237,6 +417,24 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_5284f5eb",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncCache.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-02-23T14:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07d9433e_c2f2040d",
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_22ad70f5",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncCache.java",
         "patchSetId": 7
@@ -248,6 +446,24 @@
       "writtenOn": "2016-01-03T22:13:51Z",
       "side": 1,
       "message": "isn\u0027t this path constant for all resources of the same synchronisation ? Then it shouldn\u0027t be recomputed for each resource",
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_92e59d54",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncCache.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-02-23T14:16:02Z",
+      "side": 1,
+      "message": "And it isn\u0027t, unless I\u0027m mistaken?\nThe for loop is just after this computation, so the repository path will only be computed once.",
+      "parentUuid": "07d9433e_22ad70f5",
       "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -323,6 +539,60 @@
     },
     {
       "key": {
+        "uuid": "07d9433e_927e7d5c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/ThreeWayDiffEntry.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-02-23T14:16:02Z",
+      "side": 1,
+      "message": "It was copied from the javadoc on the pre-existing method scan(TreeWalk).\nI\u0027ll use \"instances\" instead of \"headers\"",
+      "parentUuid": "07d9433e_02c86cb8",
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_d2972519",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/ThreeWayDiffEntry.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-02-23T14:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07d9433e_62b77841",
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_b28381e0",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/ThreeWayDiffEntry.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-02-23T14:16:02Z",
+      "side": 1,
+      "message": "Yes. Ill fix it on the pre-existing method too.",
+      "parentUuid": "07d9433e_42b27452",
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_a2c0a094",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/ThreeWayDiffEntry.java",
         "patchSetId": 7
@@ -346,6 +616,24 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_987926a2",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/ThreeWayDiffEntry.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-02-23T14:16:02Z",
+      "side": 1,
+      "message": "We need a way to influence ThreeWayDiffEntry.scan to build a list of entries that includes entries for unchanged files, otherwise we are unable to distinguish unchanged from deleted files.\nThat\u0027s what the added test verifies, and it fails without this modification.\n\nTo make it more \"clean\", I change the parameter to directly pass the GitSynchronizeData instead of a list of strings. Please tell me if it\u0027s better from your point of view.",
+      "parentUuid": "07d9433e_a2c0a094",
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d9433e_e2caa8b2",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/ThreeWayDiffEntry.java",
         "patchSetId": 7
@@ -363,6 +651,24 @@
         "endLine": 95,
         "endChar": 19
       },
+      "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d9433e_12cb4db8",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/ThreeWayDiffEntry.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-02-23T14:16:02Z",
+      "side": 1,
+      "message": "Copied from former method. I\u0027ll propose something better (hopefully).",
+      "parentUuid": "07d9433e_e2caa8b2",
       "revId": "7fefe62619fea27fb2841cd4090ff11fd252fd91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
