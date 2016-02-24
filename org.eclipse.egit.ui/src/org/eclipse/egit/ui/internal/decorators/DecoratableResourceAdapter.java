@@ -13,6 +13,9 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Andre Bossert <anb0s@anbos.de> - Extended support for nested repositories in project.
  *******************************************************************************/
 
 package org.eclipse.egit.ui.internal.decorators;
@@ -40,7 +43,7 @@ class DecoratableResourceAdapter extends DecoratableResource {
 		if (trace) {
 			GitTraceLocation.getTrace().trace(
 					GitTraceLocation.DECORATION.getLocation(),
-					"Decorate " + resource.getFullPath()); //$NON-NLS-1$
+					"Decorate " + resourceToWrap.getFullPath()); //$NON-NLS-1$
 			start = System.currentTimeMillis();
 		}
 		try {
@@ -53,6 +56,7 @@ class DecoratableResourceAdapter extends DecoratableResource {
 			if (repository == null) {
 				return;
 			}
+			setIsRepositoryContainer(resourceToWrap.equals(mapping.getContainer()));
 			IResourceState baseState = ResourceStateFactory.getInstance()
 					.get(indexDiffData, resourceToWrap);
 			setTracked(baseState.isTracked());
@@ -61,10 +65,9 @@ class DecoratableResourceAdapter extends DecoratableResource {
 			setConflicts(baseState.hasConflicts());
 			setAssumeUnchanged(baseState.isAssumeUnchanged());
 			setStagingState(baseState.getStagingState());
-			if (resource.getType() == IResource.PROJECT
-					|| resource.equals(mapping.getContainer())) {
-				// We only need this very expensive info for project decoration,
-				// and for decorating folders that are submodule roots.
+			if (isRepositoryContainer()) {
+				// We only need this very expensive info for decorating
+				// folders that are submodule or nested repository roots.
 				repositoryName = DecoratableResourceHelper
 						.getRepositoryName(repository);
 				branch = DecoratableResourceHelper.getShortBranch(repository);
