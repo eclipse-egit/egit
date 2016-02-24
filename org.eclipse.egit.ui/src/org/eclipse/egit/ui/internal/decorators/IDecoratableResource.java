@@ -8,6 +8,7 @@
  *
  * Contributors:
  *    Thomas Wolf <thomas.wolf@paranor.ch> - Factored out IResourceState
+ *    Andre Bossert <anb0s@anbos.de> - Extended support for nested repositories in project.
  *******************************************************************************/
 
 package org.eclipse.egit.ui.internal.decorators;
@@ -64,5 +65,10 @@ public interface IDecoratableResource extends IResourceState {
 	 *         tracking branch, or <code>null</code> if not applicable
 	 */
 	String getBranchStatus();
+
+	/**
+	 * @return is the resource a repository root ?
+	 */
+	boolean isWorkingTreeRoot();
 
 }

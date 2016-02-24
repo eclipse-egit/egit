@@ -8,6 +8,9 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Andre Bossert <anb0s@anbos.de> - Extended support for nested repositories in project.
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.staging;
 
@@ -353,5 +356,10 @@ public class StagingEntry extends PlatformObject
 		if (state != other.state)
 			return false;
 		return true;
+	}
+
+	@Override
+	public boolean isWorkingTreeRoot() {
+		return false;
 	}
 }

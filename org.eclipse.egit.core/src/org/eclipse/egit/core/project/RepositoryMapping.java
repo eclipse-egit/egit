@@ -13,12 +13,17 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Andre Bossert <anb0s@anbos.de> - Extended support for nested repositories in project.
  *******************************************************************************/
 package org.eclipse.egit.core.project;
 
 import static org.eclipse.egit.core.internal.util.ResourceUtil.isNonWorkspace;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.Map;
 import java.util.Properties;
 
 import org.eclipse.core.resources.IContainer;
@@ -319,33 +324,16 @@ public class RepositoryMapping {
 	}
 
 	/**
-	 * Get the repository mapping for a project.
+	 * Get the git project data for a project.
 	 *
 	 * @param project
 	 *            to find the mapping for
-	 * @return the RepositoryMapping for this project, or null for non
+	 * @return the git project data for this project, or null for non
 	 *         GitProvider.
 	 */
 	@Nullable
-	public static RepositoryMapping getMapping(@Nullable final IProject project) {
-		if (project == null) {
-			return null;
-		}
-		return findMapping(project);
-	}
-
-	/**
-	 * Get the repository mapping for a project.
-	 *
-	 * @param resource
-	 *            to find the mapping for
-	 * @return the RepositoryMapping for this project, or null for non
-	 *         GitProvider.
-	 */
-	@Nullable
-	private static RepositoryMapping findMapping(@NonNull
-	final IResource resource) {
-		final IProject project = resource.getProject();
+	private static GitProjectData getProjectData(@Nullable
+	final IProject project) {
 		if (project == null || isNonWorkspace(project)) {
 			return null;
 		}
@@ -361,10 +349,58 @@ public class RepositoryMapping {
 		} else {
 			data = rp.getData();
 		}
+		return data;
+	}
+
+	/**
+	 * Get the repository mapping for a project.
+	 *
+	 * @param resource
+	 *            to find the mapping for
+	 * @return the RepositoryMapping for this project, or null for non
+	 *         GitProvider.
+	 */
+	@Nullable
+	private static RepositoryMapping findMapping(@NonNull
+	final IResource resource) {
+		GitProjectData data = getProjectData(resource.getProject());
 		if (data == null) {
 			return null;
 		}
 		return data.getRepositoryMapping(resource);
+	}
+
+	/**
+	 * Get the repository mapping for a project.
+	 *
+	 * @param project
+	 * @return the RepositoryMapping for this project, or null for non
+	 *         GitProvider.
+	 */
+	@Nullable
+	public static RepositoryMapping getMapping(@Nullable final IProject project) {
+		GitProjectData data = getProjectData(project);
+		if (data == null) {
+			return null;
+		}
+		return data.getRepositoryMapping(project);
+	}
+
+	/**
+	 * Get all repository mappings for a project.
+	 *
+	 * @param project
+	 * @return all RepositoryMappings for this project, can be empty list for
+	 *         non GitProvider.
+	 */
+	@NonNull
+	public static Map<IPath, RepositoryMapping> getMappings(@Nullable
+	final IProject project) {
+		GitProjectData data = getProjectData(project);
+		if (data == null) {
+			return Collections.emptyMap();
+		}
+		return data.getRepositoryMappings();
 	}
 
 	/**
@@ -377,34 +413,27 @@ public class RepositoryMapping {
 	public static RepositoryMapping getMapping(@NonNull IPath path) {
 		IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects();
-
 		IPath bestWorkingTree = null;
 		RepositoryMapping bestMapping = null;
-
 		for (IProject project : projects) {
 			if (isNonWorkspace(project)) {
 				continue;
 			}
-			RepositoryMapping mapping = getMapping(project);
-			if (mapping == null) {
-				continue;
-			}
-
-			File workTree = mapping.getWorkTree();
-			if (workTree == null) {
-				continue;
-			}
-			IPath workingTree = new Path(workTree.toString());
-			if (workingTree.isPrefixOf(path)) {
-				if (bestWorkingTree == null
-						|| workingTree.segmentCount() > bestWorkingTree
-								.segmentCount()) {
-					bestWorkingTree = workingTree;
-					bestMapping = mapping;
+			for (RepositoryMapping mapping : getMappings(project).values()) {
+				File workTree = mapping.getWorkTree();
+				if (workTree == null) {
+					continue;
+				}
+				IPath workingTree = new Path(workTree.toString());
+				if (workingTree.isPrefixOf(path)) {
+					if (bestWorkingTree == null || workingTree
+							.segmentCount() > bestWorkingTree.segmentCount()) {
+						bestWorkingTree = workingTree;
+						bestMapping = mapping;
+					}
 				}
 			}
 		}
-
 		return bestMapping;
 	}
 
