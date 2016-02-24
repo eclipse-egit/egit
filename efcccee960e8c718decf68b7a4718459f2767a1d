@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_f39fa8ae",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-02-24T13:59:09Z",
+      "side": 1,
+      "message": "I had tried that, too, but it didn\u0027t work reliably for me with submodules in subfolders. The reason is that that ProjectUtil does an asynchronous refresh on a newly imported project, and that may at this time not yet have run (or not progressed deep enough), and thus the RepositoryFinder will not find all repos in all folders.\n\nDoing a synchronous refresh in ProjectUtil is probably not a good idea; I\u0027m afraid it might lead to an unresponsive UI when a large project or many projects are imported.\n\nIn change 67186, submodules are picked up by in GitProjectData through the resource change events triggered by the refresh here on line 143.",
+      "range": {
+        "startLine": 118,
+        "startChar": 27,
+        "endLine": 118,
+        "endChar": 31
+      },
+      "revId": "efcccee960e8c718decf68b7a4718459f2767a1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_93f66401",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-02-24T13:59:09Z",
+      "side": 1,
+      "message": "This iterates over all projects in the workspace. This already was found to be very expensive (cf. bug 486857). Moreover, in this change it iterates over all projects and all their mappings. We can\u0027t do that for any IResource; that\u0027ll kill performance and UI responsiveness if you have a substantial number of projects.\n\nImproving the performance of getMapping(IPath) is a separate issue, but we should avoid using it whenever possible.\n\nThat\u0027s the nice thing about the way GitProjectData was prepared: finding a RepositoryMapping from a (non-linked) IResource just requires a short traversal up the logical container hierarchy.\n\nMaybe we should instead investigate ways to remove the isLinked() restriction (like you did), but still be able to use the container hierarchy traversal.",
+      "range": {
+        "startLine": 362,
+        "startChar": 9,
+        "endLine": 362,
+        "endChar": 29
+      },
+      "revId": "efcccee960e8c718decf68b7a4718459f2767a1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_d3f0ec05",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-02-24T13:59:09Z",
+      "side": 1,
+      "message": "Heh :-) I have exactly this as a yet unpublished change, too.",
+      "revId": "efcccee960e8c718decf68b7a4718459f2767a1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
