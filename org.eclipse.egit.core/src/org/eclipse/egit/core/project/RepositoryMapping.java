@@ -8,6 +8,7 @@
  * Copyright (C) 2013, François Rey <eclipse.org_@_francois_._rey_._name>
  * Copyright (C) 2013, Gunnar Wagenknecht <gunnar@wagenknecht.org>
  * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, Andre Bossert <anb0s@anbos.de>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,6 +21,8 @@ import static org.eclipse.egit.core.internal.util.ResourceUtil.isNonWorkspace;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Properties;
 
 import org.eclipse.core.resources.IContainer;
@@ -34,6 +37,7 @@ import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
+import org.eclipse.jgit.errors.NoWorkTreeException;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.submodule.SubmoduleWalk;
@@ -149,11 +153,11 @@ public class RepositoryMapping {
 	 */
 	@Nullable
 	public File getWorkTree() {
-		Repository repo = getRepository();
-		if (repo.isBare()) {
+		try {
+			return getRepository().getWorkTree();
+		} catch (NoWorkTreeException ex) {
 			return null;
 		}
-		return repo.getWorkTree();
 	}
 
 	synchronized void clear() {
@@ -171,7 +175,7 @@ public class RepositoryMapping {
 	}
 
 	/**
-	 * @param res
+	 * @param resource
 	 *            a resource
 	 * @return the submodule repository if the resource is contained in a git
 	 *         submodule otherwise return {@code null}. The returned repository
@@ -181,14 +185,30 @@ public class RepositoryMapping {
 	 *         TODO add support for multiple nesting levels of submodules
 	 */
 	@Nullable
-	public synchronized Repository getSubmoduleRepository(@NonNull IResource res) {
-		IPath projectRelativePath = res.getProjectRelativePath();
+	public synchronized Repository getSubmoduleRepository(
+			@NonNull IResource resource) {
+		return getSubmoduleRepository(resource.getProjectRelativePath());
+	}
+
+	/**
+	 * @param projectRelativePath
+	 *            a project relative path
+	 *
+	 * @return the submodule repository if the path is contained in a git
+	 *         submodule otherwise return {@code null}. The returned repository
+	 *         instance will always be taken from the {@link RepositoryCache}
+	 *         and the caller should not call close() on it.
+	 *
+	 *         TODO add support for multiple nesting levels of submodules
+	 */
+	@Nullable
+	public synchronized Repository getSubmoduleRepository(
+			IPath projectRelativePath) {
 		if (projectRelativePath == null)
 			return null;
-
-		String projectRelativePathStr = res.getProjectRelativePath().toString();
+		String projectRelativePathStr = projectRelativePath.toString();
 		try {
-			if (!db.isBare() && SubmoduleWalk.containsGitModulesFile(db)) {
+			if (SubmoduleWalk.containsGitModulesFile(db)) {
 				SubmoduleWalk sw = SubmoduleWalk.forIndex(db);
 				while (sw.next()) {
 					if (projectRelativePathStr.startsWith(sw.getPath())) {
@@ -211,7 +231,7 @@ public class RepositoryMapping {
 			Activator.logWarning(
 					CoreText.RepositoryMapping_ExceptionSubmoduleWalk, e);
 		}
-		return db;
+		return null;
 	}
 
 	synchronized void setRepository(final Repository r) {
@@ -335,25 +355,23 @@ public class RepositoryMapping {
 		if (isNonWorkspace(resource)) {
 			return null;
 		}
-		if (resource.isLinked(IResource.CHECK_ANCESTORS)) {
-			IPath location = resource.getLocation();
-			if (location == null) {
-				return null;
-			}
-			return getMapping(location);
+		IPath location = resource.getLocation();
+		if (location == null) {
+			return null;
 		}
-		return getMapping(resource.getProject());
+		return getMapping(location);
 	}
 
 	/**
-	 * Get the repository mapping for a project.
+	 * Get the git project data for a project.
 	 *
 	 * @param project
-	 * @return the RepositoryMapping for this project, or null for non
+	 * @return the git project data for this project, or null for non
 	 *         GitProvider.
 	 */
 	@Nullable
-	public static RepositoryMapping getMapping(@Nullable final IProject project) {
+	private static GitProjectData getProjectData(@Nullable
+	final IProject project) {
 		if (project == null || isNonWorkspace(project)) {
 			return null;
 		}
@@ -369,10 +387,40 @@ public class RepositoryMapping {
 		} else {
 			data = rp.getData();
 		}
+		return data;
+	}
+
+	/**
+	 * Get the repository mapping for a project.
+	 *
+	 * @param project
+	 * @return the RepositoryMapping for this project, or null for non
+	 *         GitProvider.
+	 */
+	@Nullable
+	public static RepositoryMapping getMapping(@Nullable final IProject project) {
+		GitProjectData data = getProjectData(project);
 		if (data == null) {
 			return null;
 		}
 		return data.getRepositoryMapping(project);
+	}
+
+	/**
+	 * Get all repository mappings for a project.
+	 *
+	 * @param project
+	 * @return all RepositoryMappings for this project, can be empty list for
+	 *         non GitProvider.
+	 */
+	@NonNull
+	public static Collection<RepositoryMapping> getMappings(@Nullable
+	final IProject project) {
+		GitProjectData data = getProjectData(project);
+		if (data == null) {
+			return new ArrayList<RepositoryMapping>();
+		}
+		return data.getRepositoryMappings();
 	}
 
 	/**
@@ -385,34 +433,28 @@ public class RepositoryMapping {
 	public static RepositoryMapping getMapping(@NonNull IPath path) {
 		IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects();
-
 		IPath bestWorkingTree = null;
 		RepositoryMapping bestMapping = null;
-
 		for (IProject project : projects) {
 			if (isNonWorkspace(project)) {
 				continue;
 			}
-			RepositoryMapping mapping = getMapping(project);
-			if (mapping == null) {
-				continue;
-			}
-
-			File workTree = mapping.getWorkTree();
-			if (workTree == null) {
-				continue;
-			}
-			IPath workingTree = new Path(workTree.toString());
-			if (workingTree.isPrefixOf(path)) {
-				if (bestWorkingTree == null
-						|| workingTree.segmentCount() > bestWorkingTree
-								.segmentCount()) {
-					bestWorkingTree = workingTree;
-					bestMapping = mapping;
+			Collection<RepositoryMapping> mappings = getMappings(project);
+			for (RepositoryMapping mapping : mappings) {
+				File workTree = mapping.getWorkTree();
+				if (workTree == null) {
+					continue;
+				}
+				IPath workingTree = new Path(workTree.toString());
+				if (workingTree.isPrefixOf(path)) {
+					if (bestWorkingTree == null || workingTree
+							.segmentCount() > bestWorkingTree.segmentCount()) {
+						bestWorkingTree = workingTree;
+						bestMapping = mapping;
+					}
 				}
 			}
 		}
-
 		return bestMapping;
 	}
 
@@ -429,9 +471,11 @@ public class RepositoryMapping {
 		final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects();
 		for (IProject project : projects) {
-			RepositoryMapping mapping = RepositoryMapping.getMapping(project);
-			if (mapping != null && mapping.getRepository() == repository)
-				return mapping;
+			Collection<RepositoryMapping> mappings = getMappings(project);
+			for (RepositoryMapping mapping : mappings) {
+				if (mapping.getRepository() == repository)
+					return mapping;
+			}
 		}
 		return null;
 	}
@@ -441,6 +485,34 @@ public class RepositoryMapping {
 	 */
 	public String getGitDir() {
 		return gitDirPathString;
+	}
+
+	/**
+	 * @param resource
+	 *            the resource to check
+	 * @param subRepo
+	 *            the sub repository to check instead of the main one from,
+	 *            optional mapping
+	 * @return check if the given resource is the work tree root location
+	 *
+	 */
+	public boolean isWorkTreeRoot(@NonNull
+	final IResource resource, @Nullable Repository subRepo) {
+		if (isNonWorkspace(resource)) {
+			return false;
+		}
+		IPath resourceLocation = resource.getLocation();
+		if (resourceLocation == null) {
+			return false;
+		}
+		// get the working tree path
+		File workTree = subRepo != null ? subRepo.getWorkTree() : getWorkTree();
+		if (workTree == null) {
+			return false;
+		}
+		IPath workTreeLocation = new Path(workTree.toString());
+		// check if same
+		return workTreeLocation.equals(resourceLocation);
 	}
 
 	/**

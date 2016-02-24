@@ -3,6 +3,7 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Google Inc.
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
+ * Copyright (C) 2016, Andre Bossert <anb0s@anbos.de>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -322,6 +323,15 @@ public class GitProjectData {
 	}
 
 	/**
+	 * Get repository mappings
+	 *
+	 * @return the repository mappings for a project
+	 */
+	public Collection<RepositoryMapping> getRepositoryMappings() {
+		return mappings;
+	}
+
+	/**
 	 * Hide our private parts from the navigators other browsers.
 	 *
 	 * @throws CoreException
@@ -505,6 +515,7 @@ public class GitProjectData {
 			return;
 		}
 		git = absolutePath.toFile();
+
 		if (!git.isDirectory() || !new File(git, "config").isFile()) { //$NON-NLS-1$
 			logAndUnmapGoneMappedResource(m);
 			return;
@@ -559,7 +570,8 @@ public class GitProjectData {
 						c.getFullPath()),
 						e);
 			}
-			c = c.getParent();
+			// c = c.getParent();
+			c = null;
 		}
 	}
 

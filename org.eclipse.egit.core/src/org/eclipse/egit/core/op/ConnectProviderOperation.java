@@ -3,6 +3,7 @@
  * Copyright (C) 2008, Google Inc.
  * Copyright (C) 2009, Mykola Nikishov <mn@mn.com.ua>
  * Copyright (C) 2013, Matthias Sohn <matthias.sohn@sap.com>
+ * Copyright (C) 2016, Andre Bossert <anb0s@anbos.de>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,7 +15,6 @@ package org.eclipse.egit.core.op;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -29,7 +29,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.MultiStatus;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.MultiRule;
@@ -40,7 +39,6 @@ import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryFinder;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.RepositoryProvider;
@@ -117,7 +115,7 @@ public class ConnectProviderOperation implements IEGitOperation {
 		}
 
 		RepositoryFinder finder = new RepositoryFinder(project);
-		finder.setFindInChildren(false);
+		finder.setFindInChildren(true);
 		Collection<RepositoryMapping> repos = finder.find(subMon.newChild(50));
 		if (repos.isEmpty()) {
 			ms.add(Activator.error(NLS.bind(
@@ -125,19 +123,9 @@ public class ConnectProviderOperation implements IEGitOperation {
 					project.getName()), null));
 			return;
 		}
-		RepositoryMapping actualMapping = findActualRepository(repos,
-				entry.getValue());
-		if (actualMapping == null) {
-			ms.add(Activator.error(NLS.bind(
-					CoreText.ConnectProviderOperation_UnexpectedRepositoryError,
-					new Object[] { project.getName(),
-							entry.getValue().toString(), repos.toString() }),
-					null));
-			return;
-		}
 		GitProjectData projectData = new GitProjectData(project);
 		try {
-			projectData.setRepositoryMappings(Arrays.asList(actualMapping));
+			projectData.setRepositoryMappings(repos);
 			projectData.store();
 			GitProjectData.add(project, projectData);
 		} catch (CoreException ce) {
@@ -197,30 +185,6 @@ public class ConnectProviderOperation implements IEGitOperation {
 	public ISchedulingRule getSchedulingRule() {
 		Set<IProject> projectSet = projects.keySet();
 		return new MultiRule(projectSet.toArray(new IProject[projectSet.size()]));
-	}
-
-	/**
-	 * @param repos
-	 *         available repositories
-	 * @param suggestedRepo
-	 *         relative path to git repository
-	 * @return a repository mapping which corresponds to a suggested repository
-	 *         location, <code>null</code> otherwise
-	 */
-	@Nullable
-	private RepositoryMapping findActualRepository(
-			Collection<RepositoryMapping> repos, File suggestedRepo) {
-		File path = Path.fromOSString(suggestedRepo.getPath()).toFile();
-		for (RepositoryMapping rm : repos) {
-			IPath other = rm.getGitDirAbsolutePath();
-			if (other == null) {
-				continue;
-			}
-			if (path.equals(other.toFile())) {
-				return rm;
-			}
-		}
-		return null;
 	}
 
 	/**

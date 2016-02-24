@@ -2,6 +2,7 @@
  * Copyright (C) 2011, 2015 Bernard Leach <leachbj@bouncycastle.org> and others.
  * Copyright (C) 2015 SAP SE (Christian Georgi <christian.georgi@sap.com>)
  * Copyright (C) 2015 Denis Zygann <d.zygann@web.de>
+ * Copyright (C) 2016, Andre Bossert <anb0s@anbos.de>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,6 +12,7 @@
  * Contributors:
  *    Tobias Baumann <tobbaumann@gmail.com> - Bug 373969, 473544
  *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 481683
+ *    Andre Bossert <anb0s@anbos.de> - Bug 446344, 401556, 411742
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.staging;
 
@@ -32,7 +34,6 @@ import org.eclipse.core.commands.operations.IUndoContext;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -2461,9 +2462,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 	}
 
 	private static Repository getRepositoryOrNestedSubmoduleRepository(
-			IResource resource) {
-		IProject project = resource.getProject();
-		RepositoryMapping mapping = RepositoryMapping.getMapping(project);
+			@NonNull IResource resource) {
+		RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
 		if (mapping == null) {
 			return null;
 		}

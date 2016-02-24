@@ -8,6 +8,7 @@
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2011, Christian Halstrick <christian.halstrick@sap.com>
  * Copyright (C) 2015, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, Andre Bossert <anb0s@anbos.de>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -48,10 +49,15 @@ class DecoratableResourceAdapter extends DecoratableResource {
 			if (mapping == null) {
 				return;
 			}
-			Repository repository = mapping.getRepository();
+			Repository repository = mapping.getSubmoduleRepository(resource);
+			if (repository == null) {
+				repository = mapping.getRepository();
+			}
 			if (repository == null) {
 				return;
 			}
+			setIsWorkingTreeRoot(
+					mapping.isWorkTreeRoot(resourceToWrap, repository));
 			IResourceState baseState = ResourceStateFactory.getInstance()
 					.get(indexDiffData, resourceToWrap);
 			setTracked(baseState.isTracked());
@@ -60,8 +66,10 @@ class DecoratableResourceAdapter extends DecoratableResource {
 			setConflicts(baseState.hasConflicts());
 			setAssumeUnchanged(baseState.isAssumeUnchanged());
 			setStagingState(baseState.getStagingState());
-			if (resource.getType() == IResource.PROJECT) {
-				// We only need this very expensive info for project decoration
+			if (resource.getType() == IResource.PROJECT
+					|| isWorkingTreeRoot()) {
+				// We only need this very expensive info for project and other "repository root"
+				// container decoration
 				repositoryName = DecoratableResourceHelper
 						.getRepositoryName(repository);
 				branch = DecoratableResourceHelper.getShortBranch(repository);
