@@ -8,6 +8,9 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Andre Bossert <anb0s@anbos.de> - Extended support for nested repositories in project.
  *******************************************************************************/
 package org.eclipse.egit.core.project;
 
@@ -413,6 +416,15 @@ public class GitProjectData {
 			mappings.put(mapping.getContainerPath(), mapping);
 		}
 		remapAll();
+	}
+
+	/**
+	 * Get repository mappings
+	 *
+	 * @return the repository mappings for a project
+	 */
+	public final Map<IPath, RepositoryMapping> getRepositoryMappings() {
+		return mappings;
 	}
 
 	/**
