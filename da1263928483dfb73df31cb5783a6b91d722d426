@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_eec180ca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-02-24T07:50:37Z",
+      "side": 1,
+      "message": "s/RepositoryMApping/RepositoryMapping/",
+      "range": {
+        "startLine": 11,
+        "startChar": 37,
+        "endLine": 11,
+        "endChar": 54
+      },
+      "revId": "da1263928483dfb73df31cb5783a6b91d722d426",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_4e1a74fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-02-24T07:50:37Z",
+      "side": 1,
+      "message": "s/This might lead to us having/This may yield/",
+      "range": {
+        "startLine": 32,
+        "startChar": 18,
+        "endLine": 32,
+        "endChar": 46
+      },
+      "revId": "da1263928483dfb73df31cb5783a6b91d722d426",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_6e27303f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-02-24T07:50:37Z",
+      "side": 1,
+      "message": "Added new tests ?",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 16
+      },
+      "revId": "da1263928483dfb73df31cb5783a6b91d722d426",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_6e5ad0ca",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/submodules/SubmoduleFolderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-02-24T07:50:37Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "da1263928483dfb73df31cb5783a6b91d722d426",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
