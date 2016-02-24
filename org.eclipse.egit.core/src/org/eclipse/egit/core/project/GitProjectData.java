@@ -3,14 +3,13 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Google Inc.
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
+ * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, Andre Bossert <anb0s@anbos.de>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Andre Bossert <anb0s@anbos.de> - Cleaning up the DecoratableResourceAdapter
  *******************************************************************************/
 package org.eclipse.egit.core.project;
 
@@ -453,6 +452,15 @@ public class GitProjectData {
 			mappings.put(mapping.getContainerPath(), mapping);
 		}
 		remapAll();
+	}
+
+	/**
+	 * Get repository mappings
+	 *
+	 * @return the repository mappings for a project
+	 */
+	public final Map<IPath, RepositoryMapping> getRepositoryMappings() {
+		return mappings;
 	}
 
 	/**
