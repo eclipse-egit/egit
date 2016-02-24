@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e7dfcf21_1f5b355b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-02-24T23:37:19Z",
+      "side": 1,
+      "message": "mark such changes by prefixing the commit message header with WIP or RFC so that this can be seen already on the list of changes in review, e.g. https://git.eclipse.org/r/#/c/66199/\n\ntry to keep your changes small and focused, it\u0027s better to have 10 changes fixing 10 problems than having one large change fixing 10 issues in a single change",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 39
+      },
+      "revId": "efcccee960e8c718decf68b7a4718459f2767a1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_f39fa8ae",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
         "patchSetId": 1
@@ -19,6 +42,23 @@
         "endLine": 118,
         "endChar": 31
       },
+      "revId": "efcccee960e8c718decf68b7a4718459f2767a1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_b3be0019",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-02-24T23:37:19Z",
+      "side": 1,
+      "message": "We don\u0027t like dead code",
       "revId": "efcccee960e8c718decf68b7a4718459f2767a1d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -48,6 +88,23 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_93a824da",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-02-24T23:37:19Z",
+      "side": 1,
+      "message": "style nit: this can be inlined",
+      "revId": "efcccee960e8c718decf68b7a4718459f2767a1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_d3f0ec05",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
         "patchSetId": 1
@@ -59,6 +116,23 @@
       "writtenOn": "2016-02-24T13:59:09Z",
       "side": 1,
       "message": "Heh :-) I have exactly this as a yet unpublished change, too.",
+      "revId": "efcccee960e8c718decf68b7a4718459f2767a1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_1380944e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingEntry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-02-24T23:37:19Z",
+      "side": 1,
+      "message": "?",
       "revId": "efcccee960e8c718decf68b7a4718459f2767a1d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
