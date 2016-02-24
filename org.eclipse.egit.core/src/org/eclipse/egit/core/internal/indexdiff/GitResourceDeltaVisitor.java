@@ -7,8 +7,9 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *  * Jens Baumgart <jens.baumgart@sap.com> - initial implementation in IndexDifCacheEntry
- *  * Dariusz Luksza - extraction to separate class
+ *   Jens Baumgart <jens.baumgart@sap.com> - initial implementation in IndexDifCacheEntry
+ *   Dariusz Luksza - extraction to separate class
+ *   Andre Bossert <anb0s@anbos.de> - Cleaning up the DecoratableResourceAdapter
  *******************************************************************************/
 package org.eclipse.egit.core.internal.indexdiff;
 
@@ -86,7 +87,7 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 				return false;
 			}
 			RepositoryMapping mapping = gitData.getRepositoryMapping(resource);
-			if (mapping == null || !gitData.hasSubmodules()
+			if (mapping == null || !gitData.hasInnerRepositories()
 					&& mapping.getRepository() != repository) {
 				return false;
 			}
