@@ -86,7 +86,7 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 				return false;
 			}
 			RepositoryMapping mapping = gitData.getRepositoryMapping(resource);
-			if (mapping == null || !gitData.hasSubmodules()
+			if (mapping == null || !gitData.hasInnerRepositories()
 					&& mapping.getRepository() != repository) {
 				return false;
 			}
