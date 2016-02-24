@@ -3,6 +3,7 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Google Inc.
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
+ * Copyright (C) 2016, Andre Bossert <anb0s@anbos.de>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -282,8 +283,7 @@ public class GitProjectData {
 					}
 					// Files & folders
 					if ((delta.getKind() & (IResourceDelta.ADDED
-							| IResourceDelta.CHANGED)) == 0
-							|| resource.isLinked()) {
+							| IResourceDelta.CHANGED)) == 0) {
 						return false;
 					}
 					IPath location = resource.getLocation();
@@ -381,7 +381,7 @@ public class GitProjectData {
 
 	private final Map<IPath, RepositoryMapping> mappings = new HashMap<>();
 
-	private final Set<IResource> protectedResources = new HashSet<IResource>();
+	private final Set<IResource> protectedInnerResources = new HashSet<IResource>();
 
 	/**
 	 * Construct a {@link GitProjectData} for the mapping
@@ -411,6 +411,15 @@ public class GitProjectData {
 			mappings.put(mapping.getContainerPath(), mapping);
 		}
 		remapAll();
+	}
+
+	/**
+	 * Get repository mappings
+	 *
+	 * @return the repository mappings for a project
+	 */
+	public final Map<IPath, RepositoryMapping> getRepositoryMappings() {
+		return mappings;
 	}
 
 	/**
@@ -445,14 +454,14 @@ public class GitProjectData {
 	}
 
 	/**
-	 * Determines whether the project this instance belongs to has any
-	 * submodules.
+	 * Determines whether the project this instance belongs to has any inner
+	 * repositories like submodules or nested.
 	 *
-	 * @return {@code true} if the project has submodules; {@code false}
+	 * @return {@code true} if the project has inner repositories; {@code false}
 	 *         otherwise.
 	 */
-	public boolean hasSubmodules() {
-		return !protectedResources.isEmpty();
+	public boolean hasInnerRepositories() {
+		return !protectedInnerResources.isEmpty();
 	}
 
 	/**
@@ -460,7 +469,7 @@ public class GitProjectData {
 	 * @return true if a resource is protected in this repository
 	 */
 	public boolean isProtected(final IResource f) {
-		return protectedResources.contains(f);
+		return protectedInnerResources.contains(f);
 	}
 
 	/**
@@ -580,7 +589,7 @@ public class GitProjectData {
 	}
 
 	private void remapAll() {
-		protectedResources.clear();
+		protectedInnerResources.clear();
 		for (final RepositoryMapping repoMapping : mappings.values()) {
 			map(repoMapping);
 		}
@@ -664,7 +673,7 @@ public class GitProjectData {
 		}
 		while (c != null && !c.equals(getProject())) {
 			trace("protect " + c);  //$NON-NLS-1$
-			protectedResources.add(c);
+			protectedInnerResources.add(c);
 			c = c.getParent();
 		}
 	}

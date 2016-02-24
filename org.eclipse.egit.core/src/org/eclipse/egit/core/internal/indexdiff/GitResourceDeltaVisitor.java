@@ -86,17 +86,12 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 				return false;
 			}
 			RepositoryMapping mapping = gitData.getRepositoryMapping(resource);
-			if (mapping == null || !gitData.hasSubmodules()
+			if (mapping == null || !gitData.hasInnerRepositories()
 					&& mapping.getRepository() != repository) {
 				return false;
 			}
 			// continue with children
 			return true;
-		}
-
-		if (resource.isLinked()) {
-			// Ignore linked files, folders and their children
-			return false;
 		}
 
 		if (resource.getType() == IResource.FOLDER) {

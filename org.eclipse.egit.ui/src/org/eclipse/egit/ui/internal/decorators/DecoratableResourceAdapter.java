@@ -8,6 +8,7 @@
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2011, Christian Halstrick <christian.halstrick@sap.com>
  * Copyright (C) 2015, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, Andre Bossert <anb0s@anbos.de>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -40,7 +41,7 @@ class DecoratableResourceAdapter extends DecoratableResource {
 		if (trace) {
 			GitTraceLocation.getTrace().trace(
 					GitTraceLocation.DECORATION.getLocation(),
-					"Decorate " + resource.getFullPath()); //$NON-NLS-1$
+					"Decorate " + resourceToWrap.getFullPath()); //$NON-NLS-1$
 			start = System.currentTimeMillis();
 		}
 		try {
@@ -53,6 +54,7 @@ class DecoratableResourceAdapter extends DecoratableResource {
 			if (repository == null) {
 				return;
 			}
+			setIsWorkingTreeRoot(mapping.isWorkTreeRoot(resourceToWrap));
 			IResourceState baseState = ResourceStateFactory.getInstance()
 					.get(indexDiffData, resourceToWrap);
 			setTracked(baseState.isTracked());
@@ -61,10 +63,9 @@ class DecoratableResourceAdapter extends DecoratableResource {
 			setConflicts(baseState.hasConflicts());
 			setAssumeUnchanged(baseState.isAssumeUnchanged());
 			setStagingState(baseState.getStagingState());
-			if (resource.getType() == IResource.PROJECT
-					|| resource.equals(mapping.getContainer())) {
+			if (isWorkingTreeRoot()) {
 				// We only need this very expensive info for project decoration,
-				// and for decorating folders that are submodule roots.
+				// and for decorating folders that are submodule or nested linked repository roots.
 				repositoryName = DecoratableResourceHelper
 						.getRepositoryName(repository);
 				branch = DecoratableResourceHelper.getShortBranch(repository);
