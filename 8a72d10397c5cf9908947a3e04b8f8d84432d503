@@ -16,6 +16,24 @@
       "revId": "8a72d10397c5cf9908947a3e04b8f8d84432d503",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_bf7c0192",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/submodules/SubmoduleFolderTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-02-25T00:39:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7dfcf21_dfa2adac",
+      "revId": "8a72d10397c5cf9908947a3e04b8f8d84432d503",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
