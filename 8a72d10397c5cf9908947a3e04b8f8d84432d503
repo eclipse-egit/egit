@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_dfa2adac",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/submodules/SubmoduleFolderTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-02-25T00:36:18Z",
+      "side": 1,
+      "message": "we start anonymous classes with a blank line to make it easier to spot them",
+      "revId": "8a72d10397c5cf9908947a3e04b8f8d84432d503",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
