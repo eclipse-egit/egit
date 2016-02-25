@@ -349,6 +349,21 @@ public class IndexDiffData {
 	}
 
 	/**
+	 * Determines whether this {@link IndexDiffData} does contain any
+	 * uncommitted changes.
+	 *
+	 * @return {@code true} if there are changes; {@code false} otherwise
+	 */
+	public boolean hasChanges() {
+		return !(getAdded().isEmpty() //
+				&& getChanged().isEmpty() //
+				&& getRemoved().isEmpty() //
+				&& getUntracked().isEmpty() //
+				&& getModified().isEmpty() //
+				&& getMissing().isEmpty());
+	}
+
+	/**
 	 * @return the changed files
 	 */
 	@NonNull
