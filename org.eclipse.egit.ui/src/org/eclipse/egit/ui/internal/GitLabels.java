@@ -13,14 +13,13 @@ package org.eclipse.egit.ui.internal;
 import java.io.IOException;
 
 import org.eclipse.egit.core.RepositoryUtil;
-import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
-import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.clone.ProjectRecord;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelRepository;
 import org.eclipse.jface.viewers.StyledString;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.BranchTrackingStatus;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
@@ -84,6 +83,24 @@ public class GitLabels {
 	}
 
 	/**
+	 * Returns a {@link StyledString} that is initialized with "> " if the
+	 * repository has any changes, empty otherwise.
+	 *
+	 * @param repository
+	 *            to get the string for
+	 * @return the {@link StyledString}
+	 */
+	public static @NonNull StyledString getChangedPrefix(
+			@NonNull Repository repository) {
+		StyledString string = new StyledString();
+		if (RepositoryUtil.hasChanges(repository)) {
+			string.append('>', StyledString.DECORATIONS_STYLER);
+			string.append(' ');
+		}
+		return string;
+	}
+
+	/**
 	 * Computes detailed repository label that consists of repository name,
 	 * state, checked-out branch and it's status (returned by
 	 * {@linkplain #formatBranchTrackingStatus(BranchTrackingStatus)})
@@ -92,29 +109,13 @@ public class GitLabels {
 	 * @return a styled string for the repository
 	 * @throws IOException
 	 */
-	public static StyledString getStyledLabel(Repository repository)
+	public static @NonNull StyledString getStyledLabel(
+			@NonNull Repository repository)
 			throws IOException {
 		RepositoryUtil repositoryUtil = Activator.getDefault()
 				.getRepositoryUtil();
 
-		StyledString string = new StyledString();
-
-		IndexDiffCacheEntry entry = org.eclipse.egit.core.Activator
-				.getDefault().getIndexDiffCache()
-				.getIndexDiffCacheEntry(repository);
-		if (entry != null) {
-			IndexDiffData indexDiffData = entry.getIndexDiff();
-			if (indexDiffData != null
-					&& (!indexDiffData.getAdded().isEmpty()
-							|| !indexDiffData.getChanged().isEmpty()
-							|| !indexDiffData.getRemoved().isEmpty()
-							|| !indexDiffData.getUntracked().isEmpty()
-							|| !indexDiffData.getModified().isEmpty() || !indexDiffData
-							.getMissing().isEmpty())) {
-				string.append('>', StyledString.DECORATIONS_STYLER);
-				string.append(' ');
-			}
-		}
+		StyledString string = getChangedPrefix(repository);
 
 		string.append(repositoryUtil.getRepositoryName(repository));
 
@@ -158,7 +159,8 @@ public class GitLabels {
 	 * @param repository
 	 * @return repository label
 	 */
-	public static StyledString getStyledLabelSafe(Repository repository) {
+	public static @NonNull StyledString getStyledLabelSafe(
+			@NonNull Repository repository) {
 		try {
 			return getStyledLabel(repository);
 		} catch (IOException e) {
@@ -184,7 +186,8 @@ public class GitLabels {
 	 * @param element
 	 * @return element's label
 	 */
-	public static StyledString getStyledLabelExtendedSafe(Object element) {
+	public static @NonNull StyledString getStyledLabelExtendedSafe(
+			Object element) {
 		Repository repo = asRepository(element);
 
 		if (repo != null) {
