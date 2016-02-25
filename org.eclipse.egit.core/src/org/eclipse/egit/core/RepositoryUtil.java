@@ -35,6 +35,8 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.core.variables.IStringVariableManager;
 import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
@@ -661,5 +663,21 @@ public class RepositoryUtil {
 			Activator.logError(e.getMessage(), e);
 		}
 		return false;
+	}
+
+	/**
+	 * Determines whether the given {@link Repository} has any changes by
+	 * checking the {@link IndexDiffCacheEntry} of the repository.
+	 *
+	 * @param repository
+	 *            to check
+	 * @return {@code true} if the repository has any changes, {@code false}
+	 *         otherwise
+	 */
+	public static boolean hasChanges(@NonNull Repository repository) {
+		IndexDiffCacheEntry entry = Activator.getDefault().getIndexDiffCache()
+				.getIndexDiffCacheEntry(repository);
+		IndexDiffData data = entry != null ? entry.getIndexDiff() : null;
+		return data != null && data.hasChanges();
 	}
 }
