@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_26a8e161",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1688,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-02-26T19:38:57Z",
+      "side": 1,
+      "message": "I also wonder if that really needs to be a syncExec... but that\u0027s another thing.",
+      "revId": "c22cead3752a68a791a56e0c87e3af89d1d4b93c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
