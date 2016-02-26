@@ -181,7 +181,7 @@ public class CreatePatchOperation implements IEGitOperation {
 				// for "workspace patches" add project header each time project changes
 				if (DiffHeaderFormat.WORKSPACE == headerFormat) {
 					IProject p = getProject(ent);
-					if (!p.equals(project)) {
+					if (p != null && !p.equals(project)) {
 						project = p;
 						getOutputStream().write(
 								encodeASCII("#P " + project.getName() + "\n")); //$NON-NLS-1$ //$NON-NLS-2$

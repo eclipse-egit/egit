@@ -120,12 +120,17 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 
 	private void assumeValid(final IResource resource) throws CoreException {
 		final IProject proj = resource.getProject();
+		if (proj == null) {
+			return;
+		}
 		final GitProjectData pd = GitProjectData.get(proj);
-		if (pd == null)
+		if (pd == null) {
 			return;
+		}
 		final RepositoryMapping rm = pd.getRepositoryMapping(resource);
-		if (rm == null)
+		if (rm == null) {
 			return;
+		}
 		final Repository db = rm.getRepository();
 
 		DirCache cache = caches.get(db);
@@ -141,12 +146,14 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 
 		final String path = rm.getRepoRelativePath(resource);
 		if (resource instanceof IContainer) {
-			for (final DirCacheEntry ent : cache.getEntriesWithin(path))
+			for (final DirCacheEntry ent : cache.getEntriesWithin(path)) {
 				ent.setAssumeValid(assumeUnchanged);
+			}
 		} else {
 			final DirCacheEntry ent = cache.getEntry(path);
-			if (ent != null)
+			if (ent != null) {
 				ent.setAssumeValid(assumeUnchanged);
+			}
 		}
 	}
 }
