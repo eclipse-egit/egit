@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_d057f79d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-02-26T15:07:06Z",
+      "side": 1,
+      "message": "Right, we can skip it here. I\u0027ve just went over all occurencies and added NP checks.",
+      "parentUuid": "e7dfcf21_4d66f046",
+      "revId": "a82d8acce5ab002e66591491e5dec9a76e085769",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_10b79f22",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-02-26T11:53:12Z",
       "side": 1,
       "message": "Same question: how can we arrive in a resource delta traversal at a folder for which resource.getProject() returns null?",
+      "revId": "a82d8acce5ab002e66591491e5dec9a76e085769",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_d024573b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-02-26T15:07:06Z",
+      "side": 1,
+      "message": "Same as before.",
+      "parentUuid": "e7dfcf21_10b79f22",
       "revId": "a82d8acce5ab002e66591491e5dec9a76e085769",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
