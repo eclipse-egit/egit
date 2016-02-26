@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_46db2d18",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1688,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-02-26T19:27:29Z",
+      "side": 1,
+      "message": "This needs to be done *before* calling refreshViewersPreservingExpandedElements(). Otherwise the new setting for the comparator is not yet effective during the refresh, which gives very strange behavior.",
+      "range": {
+        "startLine": 1684,
+        "startChar": 4,
+        "endLine": 1688,
+        "endChar": 56
+      },
+      "revId": "7413cfa5dde4a1b4b41dc61fc111b49c7e6c3d56",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
