@@ -304,7 +304,11 @@ public class GitProjectData {
 						return false;
 					}
 					// Yes, indeed a valid git directory.
-					GitProjectData data = get(resource.getProject());
+					IProject project = resource.getProject();
+					if (project == null) {
+						return false;
+					}
+					GitProjectData data = get(project);
 					if (data == null) {
 						return false;
 					}

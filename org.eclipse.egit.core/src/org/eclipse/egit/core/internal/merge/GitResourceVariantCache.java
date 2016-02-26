@@ -40,6 +40,9 @@ class GitResourceVariantCache {
 		cache.put(resource, variant);
 
 		IProject project = resource.getProject();
+		if (project == null) {
+			return;
+		}
 		roots.add(project);
 
 		members.put(resource, new LinkedHashSet<IResource>());

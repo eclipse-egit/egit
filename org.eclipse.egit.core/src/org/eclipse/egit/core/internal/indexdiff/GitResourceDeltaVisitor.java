@@ -100,7 +100,11 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 		}
 
 		if (resource.getType() == IResource.FOLDER) {
-			GitProjectData gitData = GitProjectData.get(resource.getProject());
+			IProject project = resource.getProject();
+			if (project == null) {
+				return false;
+			}
+			GitProjectData gitData = GitProjectData.get(project);
 			if (gitData == null) {
 				return false;
 			}

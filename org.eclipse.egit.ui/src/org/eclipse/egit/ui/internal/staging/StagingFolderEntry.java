@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.internal.decorators.IProblemDecoratable;
+import org.eclipse.jgit.annotations.NonNull;
 
 /**
  * A staged/unstaged folder entry in the tree
@@ -84,6 +85,8 @@ public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
 	/**
 	 * @return the absolute path corresponding to the folder entry
 	 */
+	@SuppressWarnings("null")
+	@NonNull
 	public IPath getLocation() {
 		return repoLocation.append(repoRelativePath);
 	}

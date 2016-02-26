@@ -66,7 +66,7 @@ public class DirCacheResourceVariantTreeProvider implements
 					.getResourceHandleForLocation(path);
 			// Resource variants only make sense for IResources. Do not consider
 			// files outside of the workspace or otherwise non accessible.
-			if (resource == null || resource.getProject() == null
+			if (resource.getProject() == null
 					|| !resource.getProject().isAccessible()) {
 				continue;
 			}

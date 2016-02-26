@@ -154,7 +154,7 @@ public class ResourceUtil {
 	 */
 	public static boolean isSharedWithGit(@NonNull IResource resource) {
 		IProject project = resource.getProject();
-		if (!project.isAccessible()) {
+		if (project == null || !project.isAccessible()) {
 			return false;
 		}
 		try {
