@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_dac8f8bb",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-02-26T06:12:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7dfcf21_7a9b647f",
+      "range": {
+        "startLine": 669,
+        "startChar": 59,
+        "endLine": 669,
+        "endChar": 60
+      },
+      "revId": "93497d458aa01ed68639bb299fcc5381ada9d47e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_9ae3d0c2",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabels.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_1ab34056",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabels.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-02-26T06:12:38Z",
+      "side": 1,
+      "message": "I had noticed that, too. But it wasn\u0027t configurable before, and it isn\u0027t configurable now. Making it configurable is a separate issue.\n\nIt\u0027s a bit of work. I have not found a way to configure the dirty decorator separately. What can be configured is a whole format for various kinds of nodes visible in different viewers, and as part of such a format I can say {dirty:+} to override the default \u0027\u003e\u0027. So one would need either to make the default for these variables be configurable separately, or add a new label format for repo nodes in the repositories view.\n\nI suggest we open a bug for this and handle it separately.",
+      "parentUuid": "e7dfcf21_9ae3d0c2",
+      "range": {
+        "startLine": 97,
+        "startChar": 17,
+        "endLine": 97,
+        "endChar": 20
+      },
+      "revId": "93497d458aa01ed68639bb299fcc5381ada9d47e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_fa9db447",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewLabelProvider.java",
         "patchSetId": 3
@@ -59,6 +107,24 @@
       "writtenOn": "2016-02-26T00:10:32Z",
       "side": 1,
       "message": "should the text decoration be configurable ?",
+      "revId": "93497d458aa01ed68639bb299fcc5381ada9d47e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_3ab8fc2f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewLabelProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-02-26T06:12:38Z",
+      "side": 1,
+      "message": "Yes, but IMO that\u0027s a separate issue.",
+      "parentUuid": "e7dfcf21_fa9db447",
       "revId": "93497d458aa01ed68639bb299fcc5381ada9d47e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
