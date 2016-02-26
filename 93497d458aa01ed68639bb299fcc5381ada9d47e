@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_7a9b647f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-02-26T00:10:32Z",
+      "side": 1,
+      "message": "changes",
+      "range": {
+        "startLine": 669,
+        "startChar": 59,
+        "endLine": 669,
+        "endChar": 60
+      },
+      "revId": "93497d458aa01ed68639bb299fcc5381ada9d47e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_9ae3d0c2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabels.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-02-26T00:10:32Z",
+      "side": 1,
+      "message": "for dirty decorator in package explorer the text decoration can be configured in Preference \u003e Team \u003e Git \u003e Label Decorations \u003e Text Decorations, maybe the repository/submodule level dirty decorator should then also be configurable ?",
+      "range": {
+        "startLine": 97,
+        "startChar": 17,
+        "endLine": 97,
+        "endChar": 20
+      },
+      "revId": "93497d458aa01ed68639bb299fcc5381ada9d47e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_fa9db447",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewLabelProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-02-26T00:10:32Z",
+      "side": 1,
+      "message": "should the text decoration be configurable ?",
+      "revId": "93497d458aa01ed68639bb299fcc5381ada9d47e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
