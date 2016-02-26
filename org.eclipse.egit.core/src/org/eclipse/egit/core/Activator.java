@@ -182,7 +182,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		} catch (RuntimeException e) {
 			logError(CoreText.Activator_ReconfigureWindowCacheError, e);
 		}
-		GitProjectData.attachToWorkspace(true);
+		GitProjectData.attachToWorkspace();
 
 		repositoryUtil = new RepositoryUtil();
 
