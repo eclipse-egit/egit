@@ -1,7 +1,7 @@
-target "R20150821153341-Mars" with source configurePhase
+target "R20160221192158-Mars" with source configurePhase
 // see http://download.eclipse.org/tools/orbit/downloads/
 
-location "http://download.eclipse.org/tools/orbit/downloads/drops/R20150821153341/repository/" {
+location "http://download.eclipse.org/tools/orbit/downloads/drops/R20160221192158/repository/" {
 	com.google.gson [2.2.4.v201311231704,2.2.4.v201311231704]
 	com.google.gson.source [2.2.4.v201311231704,2.2.4.v201311231704]
 	com.jcraft.jsch [0.1.53.v201508180515,0.1.53.v201508180515]
@@ -18,8 +18,8 @@ location "http://download.eclipse.org/tools/orbit/downloads/drops/R2015082115334
 	org.apache.commons.logging.source [1.1.1.v201101211721,1.1.1.v201101211721]
 	org.apache.httpcomponents.httpcore [4.3.3.v201411290715,4.3.3.v201411290715]
 	org.apache.httpcomponents.httpcore.source [4.3.3.v201411290715,4.3.3.v201411290715]
-	org.apache.httpcomponents.httpclient [4.3.6.v201411290715,4.3.6.v201411290715]
-	org.apache.httpcomponents.httpclient.source [4.3.6.v201411290715,4.3.6.v201411290715]
+	org.apache.httpcomponents.httpclient [4.3.6.v201411290715B,4.3.6.v201411290715B]
+	org.apache.httpcomponents.httpclient.source [4.3.6.v201411290715B,4.3.6.v201411290715B]
 	org.apache.log4j [1.2.15.v201012070815,1.2.15.v201012070815]
 	org.apache.log4j.source [1.2.15.v201012070815,1.2.15.v201012070815]
 	org.kohsuke.args4j [2.0.21.v201301150030,2.0.21.v201301150030]
