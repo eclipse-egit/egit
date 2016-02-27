@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_dcf9d08f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-02-27T22:59:30Z",
+      "side": 1,
+      "message": "The root folder of a submodule alway has the same name as the submodule, so this decoration shows the submodule name always twice:\n\n \u003csubmodule\u003e [\u003csubmodule\u003e \u003cbranch\u003e \u003ccommitId\u003e]\n\nI think it would make more sense to show (similar to how submodules are decorated in the repositories view):\n\n \u003csubmodule\u003e [\u003cref\u003e \u003ccommitId\u003e] \u003ccommit msg header\u003e",
+      "revId": "b6b4268720dee41c8c1d0920015d9dbfbfc1777c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
