@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_c151e75b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/KnownHosts.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-02-27T15:19:00Z",
+      "side": 1,
+      "message": "Incomplete comment. Fixed in PS 6.",
+      "revId": "fd4ed541807ac1c8e5f7d4f52f2bf66036b46fc6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
