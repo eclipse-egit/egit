@@ -255,14 +255,29 @@ public class UIPreferences {
 	 *            the String value
 	 * @param cnt
 	 *            number of entries in the returned array
-	 * @return the preference values for the array.
+	 * @return the preference values for the array, or null if the string cannot
+	 *         be parsed or doesn't have {@code cnt} elements, or any value is
+	 *         <= 0.
 	 */
 	public static int[] stringToIntArray(final String value, final int cnt) {
+		if (value == null) {
+			return null;
+		}
+		final String[] values = value.split(","); //$NON-NLS-1$
+		if (values.length != cnt) {
+			return null;
+		}
 		final int[] r = new int[cnt];
-		if (value != null) {
-			final String[] e = value.split(","); //$NON-NLS-1$
-			for (int i = 0; i < Math.min(e.length, r.length); i++)
-				r[i] = Integer.parseInt(e[i].trim());
+		for (int i = 0; i < values.length; i++) {
+			try {
+				int val = Integer.parseInt(values[i].trim());
+				if (val <= 0) {
+					return null;
+				}
+				r[i] = val;
+			} catch (NumberFormatException e) {
+				return null;
+			}
 		}
 		return r;
 	}
