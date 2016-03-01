@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_6b0aa9b2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-01T22:58:40Z",
+      "side": 1,
+      "message": "Also suddenly having submodules appear as top-level repositories in the Repositories view would be... kind of strange.",
+      "revId": "2708864167b2fdf0fc37533577dc32d39ebae15b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_cb173dd2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-01T22:58:40Z",
+      "side": 1,
+      "message": "TODO: we should also remove our \"team private member\" markings?",
+      "revId": "2708864167b2fdf0fc37533577dc32d39ebae15b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_ab14b1d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-01T22:58:40Z",
+      "side": 1,
+      "message": "Note that current master has a refresh problem in this case (disconnect an EGit-managed project, then reconnect via Team-\u003eShare; choose Git,click Finish), too. Even without submodules. Try it with any EGit project. It\u0027ll reconnect fine, but it won\u0027t update decorations.",
+      "revId": "2708864167b2fdf0fc37533577dc32d39ebae15b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_cb2e5d16",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-01T22:58:40Z",
+      "side": 1,
+      "message": "So *that\u0027s* what that RepositoryChangeListener is for! Badly named, though.\n\nTODO: examine all uses of RepositoryMapping.fireRepositoryChanged(). Are they really called because a RepositoryMapping has changed, or are they an attempt to notify about a change in a repository? The latter would be wrong, and most probably the call can be removed; especially since until now ther was absolutely no single use of RepositoryChangeListener.\n\nTODO: rename the class to RepositoryMappingChangedListener.",
+      "range": {
+        "startLine": 30,
+        "startChar": 68,
+        "endLine": 31,
+        "endChar": 54
+      },
+      "revId": "2708864167b2fdf0fc37533577dc32d39ebae15b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_eb44f9d1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-01T22:58:40Z",
+      "side": 1,
+      "message": "See above: probably not wise to enter submodules or nested repos as top-level \"configured repositories\".",
+      "revId": "2708864167b2fdf0fc37533577dc32d39ebae15b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
