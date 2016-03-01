@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_eaf797c4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-01T09:20:56Z",
+      "side": 1,
+      "message": "How is the branch information only related to submodule?\nExpected something like isSubmodule()",
+      "range": {
+        "startLine": 438,
+        "startChar": 17,
+        "endLine": 438,
+        "endChar": 26
+      },
+      "revId": "04b5ae86a4dacfecdd86d7d92c697695fcedfe7b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_0af3e3d9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-01T09:20:56Z",
+      "side": 1,
+      "message": "For submodules we have new decoration now. Should we add for other nested repos a new decoration too? Why not reuse or extend the project decoration in all cases?",
+      "range": {
+        "startLine": 440,
+        "startChar": 7,
+        "endLine": 440,
+        "endChar": 20
+      },
+      "revId": "04b5ae86a4dacfecdd86d7d92c697695fcedfe7b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
