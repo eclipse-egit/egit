@@ -93,8 +93,14 @@ public class AddCommand extends
 			try {
 				Collection<RepositoryMapping> mappings = f
 						.find(new NullProgressMonitor());
-				if (mappings.size() == 1)
-					connections.put(project, repositoryDir);
+				if (!mappings.isEmpty()) {
+					// Connect to the first one; it's the innermost.
+					IPath gitDir = mappings.iterator().next()
+							.getGitDirAbsolutePath();
+					if (gitDir != null) {
+						connections.put(project, gitDir.toFile());
+					}
+				}
 			} catch (CoreException e) {
 				// Ignore this project in that case
 				continue;
@@ -103,7 +109,7 @@ public class AddCommand extends
 		if (!connections.isEmpty()) {
 			ConnectProviderOperation operation = new ConnectProviderOperation(
 					connections);
-			operation.setRefreshResources(false);
+			operation.setRefreshResources(true);
 			JobUtil.scheduleUserJob(operation,
 					CoreText.Activator_AutoShareJobName, JobFamilies.AUTO_SHARE);
 		}

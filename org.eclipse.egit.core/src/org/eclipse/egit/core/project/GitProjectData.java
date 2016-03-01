@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
@@ -66,7 +67,7 @@ import org.eclipse.team.core.TeamException;
  */
 public class GitProjectData {
 
-	private static final Map<IProject, GitProjectData> projectDataCache = new HashMap<IProject, GitProjectData>();
+	private static final Map<IProject, GitProjectData> projectDataCache = new ConcurrentHashMap<>();
 
 	private static Set<RepositoryChangeListener> repositoryChangeListeners = new HashSet<RepositoryChangeListener>();
 
@@ -206,7 +207,7 @@ public class GitProjectData {
 	 *         occurred
 	 */
 	@Nullable
-	public synchronized static GitProjectData get(final @NonNull IProject p) {
+	public static GitProjectData get(final @NonNull IProject p) {
 		try {
 			GitProjectData d = lookup(p);
 			if (d == null && ResourceUtil.isSharedWithGit(p)) {
@@ -286,43 +287,7 @@ public class GitProjectData {
 							|| resource.isLinked()) {
 						return false;
 					}
-					IPath location = resource.getLocation();
-					if (location == null) {
-						return false;
-					}
-					if (!Constants.DOT_GIT.equals(resource.getName())) {
-						return type == IResource.FOLDER;
-					}
-					// A file or folder named .git
-					File gitCandidate = location.toFile().getParentFile();
-					File git = new FileRepositoryBuilder()
-							.addCeilingDirectory(gitCandidate)
-							.findGitDir(gitCandidate).getGitDir();
-					if (git == null) {
-						return false;
-					}
-					// Yes, indeed a valid git directory.
-					GitProjectData data = get(resource.getProject());
-					if (data == null) {
-						return false;
-					}
-					RepositoryMapping m = RepositoryMapping
-							.create(resource.getParent(), git);
-					// Is its working directory really here? If not,
-					// a submodule folder may have been copied.
-					try {
-						Repository r = Activator.getDefault()
-								.getRepositoryCache().lookupRepository(git);
-						if (m != null && r != null
-								&& gitCandidate.equals(r.getWorkTree())) {
-							data.mappings.put(m.getContainerPath(), m);
-							data.map(m);
-							modified.add(data);
-						}
-					} catch (IOException e) {
-						Activator.logError(e.getMessage(), e);
-					}
-					return false;
+					return tryToMap(resource, modified);
 				}
 			});
 		} catch (CoreException e) {
@@ -338,6 +303,58 @@ public class GitProjectData {
 		}
 	}
 
+	/**
+	 * If the resource is a file of folder named ".git" and indeed is a valid
+	 * git repository (reference), tries to create a RepositoryMapping.
+	 *
+	 * @param resource
+	 *            to examine
+	 * @param modified
+	 *            if a RepositoryMapping was created, its GitProjectData is
+	 *            added to this set
+	 * @return {@code true} if children of this resource shall also be examined,
+	 *         {@code false} otherwise.
+	 */
+	private static boolean tryToMap(IResource resource,
+			Set<GitProjectData> modified) {
+		IPath location = resource.getLocation();
+		if (location == null) {
+			return false;
+		}
+		if (!Constants.DOT_GIT.equals(resource.getName())) {
+			return resource.getType() == IResource.FOLDER;
+		}
+		// A file or folder named .git
+		File gitCandidate = location.toFile().getParentFile();
+		File git = new FileRepositoryBuilder().addCeilingDirectory(gitCandidate)
+				.findGitDir(gitCandidate).getGitDir();
+		if (git == null) {
+			return false;
+		}
+		// Yes, indeed a valid git directory.
+		GitProjectData data = get(resource.getProject());
+		if (data == null) {
+			return false;
+		}
+		RepositoryMapping m = RepositoryMapping.create(resource.getParent(),
+				git);
+		// Is its working directory really here? If not,
+		// a submodule folder may have been copied.
+		try {
+			Repository r = Activator.getDefault().getRepositoryCache()
+					.lookupRepository(git);
+			if (m != null && r != null
+					&& gitCandidate.equals(r.getWorkTree())) {
+				data.mappings.put(m.getContainerPath(), m);
+				data.map(m);
+				modified.add(data);
+			}
+		} catch (IOException e) {
+			Activator.logError(e.getMessage(), e);
+		}
+		return false;
+	}
+
 	static void trace(final String m) {
 		// TODO is this the right location?
 		if (GitTraceLocation.CORE.isActive())
@@ -346,19 +363,33 @@ public class GitProjectData {
 					"(GitProjectData) " + m); //$NON-NLS-1$
 	}
 
-	private synchronized static void cache(final IProject p,
-			final GitProjectData d) {
+	private static void cache(final IProject p, final GitProjectData d) {
 		projectDataCache.put(p, d);
 	}
 
-	private synchronized static void uncache(final IProject p) {
-		if (projectDataCache.remove(p) != null) {
+	private static void uncache(final IProject p) {
+		GitProjectData d = projectDataCache.remove(p);
+		if (d != null) {
 			trace("uncacheDataFor(" //$NON-NLS-1$
 				+ p.getName() + ")"); //$NON-NLS-1$
+			for (RepositoryMapping m : d.mappings.values()) {
+				IContainer c = m.getContainer();
+				if (c != null && c.isAccessible()) {
+					try {
+						c.setSessionProperty(MAPPING_KEY, null);
+					} catch (CoreException e) {
+						Activator.logWarning(MessageFormat.format(
+								CoreText.GitProjectData_failedToUnmapRepoMapping,
+								c.getFullPath()), e);
+					}
+				}
+			}
+			trace("uncacheDataFor(" //$NON-NLS-1$
+					+ p.getName() + ") done"); //$NON-NLS-1$
 		}
 	}
 
-	private synchronized static GitProjectData lookup(final IProject p) {
+	private static GitProjectData lookup(final IProject p) {
 		return projectDataCache.get(p);
 	}
 
