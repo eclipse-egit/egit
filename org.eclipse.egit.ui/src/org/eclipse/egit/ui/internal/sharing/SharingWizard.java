@@ -128,7 +128,7 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 		} else {
 			final ConnectProviderOperation op = new ConnectProviderOperation(
 					existingPage.getProjects(true));
-			op.setRefreshResources(false);
+			op.setRefreshResources(true);
 			try {
 				getContainer().run(true, false, new IRunnableWithProgress() {
 					@Override
@@ -148,6 +148,8 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 												filesToAdd.add(entry.getValue());
 											// add the files to the repository
 											// view
+									// TODO: unless it's a submodule or nested
+									// repository!
 											for (File file : filesToAdd)
 												Activator
 														.getDefault()

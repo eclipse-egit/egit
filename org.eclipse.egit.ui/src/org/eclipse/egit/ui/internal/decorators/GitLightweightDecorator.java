@@ -36,6 +36,9 @@ import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.util.ExceptionCollector;
+import org.eclipse.egit.core.project.GitProjectData;
+import org.eclipse.egit.core.project.RepositoryChangeListener;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -104,6 +107,15 @@ public class GitLightweightDecorator extends LabelProvider implements
 
 	private static RGB defaultBackgroundRgb;
 
+	private RepositoryChangeListener mappingChangeListener = new RepositoryChangeListener() {
+
+		@Override
+		public void repositoryChanged(RepositoryMapping which) {
+			fireLabelEvent();
+		}
+
+	};
+
 	/**
 	 * Constructs a new Git resource decorator
 	 */
@@ -117,6 +129,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 				.addPropertyChangeListener(this);
 
 		org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache().addIndexDiffChangedListener(this);
+		GitProjectData.addRepositoryChangeListener(mappingChangeListener);
 	}
 
 	/**
@@ -155,6 +168,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 		TeamUI.removePropertyChangeListener(this);
 		Activator.removePropertyChangeListener(this);
 		org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache().removeIndexDiffChangedListener(this);
+		GitProjectData.removeRepositoryChangeListener(mappingChangeListener);
+		mappingChangeListener = null;
 	}
 
 	/**
