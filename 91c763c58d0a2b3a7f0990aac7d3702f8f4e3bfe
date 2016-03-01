@@ -16,6 +16,24 @@
       "revId": "91c763c58d0a2b3a7f0990aac7d3702f8f4e3bfe",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_1f55e747",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-01T08:54:19Z",
+      "side": 1,
+      "message": "Yes. I had intended these test strings to be platform independent (all use /), and I even had taken care to convert to platform-specific format in assertRepoMappingPath(). I\u0027m sure this test would have failed on Windows, even though I don\u0027t have a Windows machine to verify.",
+      "parentUuid": "e7dfcf21_bf64f33d",
+      "revId": "91c763c58d0a2b3a7f0990aac7d3702f8f4e3bfe",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
