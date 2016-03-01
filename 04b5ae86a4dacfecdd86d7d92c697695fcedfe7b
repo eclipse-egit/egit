@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_aa14afd0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-01T11:44:19Z",
+      "side": 1,
+      "message": "I see, Thanks :) I have now my version rebased and running with linked ressources. The name \"isWorkingDirectoryRoot()\" may be is not good, but to be changed later.\n--\u003e https://git.eclipse.org/r/#/c/67233/2",
+      "parentUuid": "e7dfcf21_6a8f073a",
+      "range": {
+        "startLine": 438,
+        "startChar": 17,
+        "endLine": 438,
+        "endChar": 26
+      },
+      "revId": "04b5ae86a4dacfecdd86d7d92c697695fcedfe7b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_0af3e3d9",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
         "patchSetId": 5
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "It *is* used also for nested repositories. All this submodule stuff so far does not distinguish between submodules and nested repositories. (I had intended to deal with submodules, but in the end the code doesn\u0027t make any assumptions and thus also works for nested repositories.)",
       "parentUuid": "e7dfcf21_0af3e3d9",
+      "range": {
+        "startLine": 440,
+        "startChar": 7,
+        "endLine": 440,
+        "endChar": 20
+      },
+      "revId": "04b5ae86a4dacfecdd86d7d92c697695fcedfe7b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_0a192305",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-01T11:44:19Z",
+      "side": 1,
+      "message": "Thanks again. So i\u0027m using the same decoration for other nested repos too.\n--\u003e https://git.eclipse.org/r/#/c/67233/2",
+      "parentUuid": "e7dfcf21_0a4cc396",
       "range": {
         "startLine": 440,
         "startChar": 7,
