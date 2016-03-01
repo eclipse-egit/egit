@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_6a8f073a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-01T09:36:36Z",
+      "side": 1,
+      "message": "Agreed. However, isSubmodule() is perhaps not the best name yet, since this also applies to nested repositories.\n\nBut one can sure come up with a better name, and add an appropriate getter to IDecoratableResource. Perhaps isWorkingDirectoryRoot().",
+      "parentUuid": "e7dfcf21_eaf797c4",
+      "range": {
+        "startLine": 438,
+        "startChar": 17,
+        "endLine": 438,
+        "endChar": 26
+      },
+      "revId": "04b5ae86a4dacfecdd86d7d92c697695fcedfe7b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_0af3e3d9",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2016-03-01T09:20:56Z",
       "side": 1,
       "message": "For submodules we have new decoration now. Should we add for other nested repos a new decoration too? Why not reuse or extend the project decoration in all cases?",
+      "range": {
+        "startLine": 440,
+        "startChar": 7,
+        "endLine": 440,
+        "endChar": 20
+      },
+      "revId": "04b5ae86a4dacfecdd86d7d92c697695fcedfe7b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_0a4cc396",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-01T09:36:36Z",
+      "side": 1,
+      "message": "It *is* used also for nested repositories. All this submodule stuff so far does not distinguish between submodules and nested repositories. (I had intended to deal with submodules, but in the end the code doesn\u0027t make any assumptions and thus also works for nested repositories.)",
+      "parentUuid": "e7dfcf21_0af3e3d9",
       "range": {
         "startLine": 440,
         "startChar": 7,
