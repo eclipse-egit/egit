@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e7dfcf21_bd8f9886",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-02T11:09:21Z",
+      "side": 1,
+      "message": "Or perhaps have nested repositories appear as top repos. (But leave submodules as is.) That\u0027s actually something I\u0027m considering for my other change at https://git.eclipse.org/r/#/c/67638/ .",
+      "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_ddc544d6",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
         "patchSetId": 2
