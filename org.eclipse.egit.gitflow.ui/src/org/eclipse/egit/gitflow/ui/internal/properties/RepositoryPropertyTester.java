@@ -13,6 +13,7 @@ package org.eclipse.egit.gitflow.ui.internal.properties;
 
 import static org.eclipse.egit.gitflow.ui.Activator.error;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.eclipse.core.expressions.PropertyTester;
@@ -41,11 +42,18 @@ public class RepositoryPropertyTester extends PropertyTester {
 	@Override
 	public boolean test(Object receiver, String property, Object[] args,
 			Object expectedValue) {
-		if (!(receiver instanceof Repository)) {
+		if (receiver == null) {
 			return false;
 		}
-		Repository repository = (Repository) receiver;
-		if (repository.isBare()) {
+		Repository repository = null;
+		if (receiver instanceof String) {
+			String gitDir = (String) receiver;
+			repository = org.eclipse.egit.core.Activator.getDefault()
+					.getRepositoryCache().getRepository(new File(gitDir));
+		} else if (receiver instanceof Repository) {
+			repository = (Repository) receiver;
+		}
+		if (repository == null || repository.isBare()) {
 			return false;
 		}
 		GitFlowRepository gitFlowRepository = new GitFlowRepository(repository);

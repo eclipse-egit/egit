@@ -170,6 +170,9 @@ public class RemoveCommand extends
 						return Activator.createErrorStatus(e.getMessage(), e);
 					}
 				}
+				for (RepositoryNode node : selectedNodes) {
+					node.clear();
+				}
 				return Status.OK_STATUS;
 			}
 

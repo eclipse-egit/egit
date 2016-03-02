@@ -889,32 +889,50 @@ public class SpellcheckableMessageArea extends Composite {
 		return sourceViewer.getTextWidget();
 	}
 
+	private static class QuickfixAction extends Action {
+
+		private final ITextOperationTarget textOperationTarget;
+
+		public QuickfixAction(ITextOperationTarget target) {
+			textOperationTarget = target;
+		}
+
+		@Override
+		public void run() {
+			textOperationTarget.doOperation(ISourceViewer.QUICK_ASSIST);
+		}
+
+	}
+
 	private ActionHandler createQuickFixActionHandler(
 			final ITextOperationTarget textOperationTarget) {
-		Action quickFixAction = new Action() {
-
-			@Override
-			public void run() {
-				textOperationTarget.doOperation(ISourceViewer.QUICK_ASSIST);
-			}
-		};
-		quickFixAction
-		.setActionDefinitionId(ITextEditorActionDefinitionIds.QUICK_ASSIST);
+		Action quickFixAction = new QuickfixAction(textOperationTarget);
+		quickFixAction.setActionDefinitionId(
+				ITextEditorActionDefinitionIds.QUICK_ASSIST);
 		return new ActionHandler(quickFixAction);
 	}
 
-	private ActionHandler createContentAssistActionHandler(
-			final ITextOperationTarget textOperationTarget) {
-		Action proposalAction = new Action() {
-			@Override
-			public void run() {
-				if (textOperationTarget
-						.canDoOperation(ISourceViewer.CONTENTASSIST_PROPOSALS)
-						&& getTextWidget().isFocusControl())
-					textOperationTarget
-							.doOperation(ISourceViewer.CONTENTASSIST_PROPOSALS);
+	private static class ContentAssistAction extends Action {
+
+		private final SourceViewer viewer;
+
+		public ContentAssistAction(SourceViewer viewer) {
+			this.viewer = viewer;
+		}
+
+		@Override
+		public void run() {
+			if (viewer.canDoOperation(ISourceViewer.CONTENTASSIST_PROPOSALS)
+					&& viewer.getTextWidget().isFocusControl()) {
+				viewer.doOperation(ISourceViewer.CONTENTASSIST_PROPOSALS);
 			}
-		};
+		}
+
+	}
+
+	private ActionHandler createContentAssistActionHandler(
+			final SourceViewer viewer) {
+		Action proposalAction = new ContentAssistAction(viewer);
 		proposalAction
 				.setActionDefinitionId(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS);
 		return new ActionHandler(proposalAction);
