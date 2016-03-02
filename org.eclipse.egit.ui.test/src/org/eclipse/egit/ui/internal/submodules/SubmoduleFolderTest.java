@@ -50,6 +50,7 @@ import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IViewPart;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -86,6 +87,8 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 		parentRepositoryGitDir = createProjectAndCommitToRepository();
 		childRepositoryGitDir = createProjectAndCommitToRepository(CHILDREPO,
 				CHILDPROJECT);
+		Activator.getDefault().getRepositoryUtil()
+				.addConfiguredRepository(parentRepositoryGitDir);
 		parentRepository = lookupRepository(parentRepositoryGitDir);
 		childRepository = lookupRepository(childRepositoryGitDir);
 		parentProject = ResourcesPlugin.getWorkspace().getRoot()
@@ -137,6 +140,14 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 		assertNotNull(subRepository);
 	}
 
+	@After
+	public void removeConfiguredRepositories() {
+		Activator.getDefault().getRepositoryUtil()
+				.removeDir(parentRepositoryGitDir);
+		Activator.getDefault().getRepositoryUtil()
+				.removeDir(childRepositoryGitDir);
+	}
+
 	@Test
 	public void testChildProjectMapsToSubRepo() {
 		RepositoryMapping mapping = RepositoryMapping.getMapping(childProject);
@@ -185,6 +196,7 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 		IndexDiffCacheEntry cache = Activator.getDefault().getIndexDiffCache()
 				.getIndexDiffCacheEntry(subRepository);
+		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 		IResourceState state = ResourceStateFactory.getInstance()
 				.get(cache.getIndexDiff(), file);
 		assertTrue("File should be staged", state.isStaged());
@@ -261,6 +273,24 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 				node.getText().contains("[child"));
 	}
 
+	/**
+	 * Tests that unrelated changes to the configured repositories do not
+	 * prematurely remove submodules from the cache.
+	 */
+	@Test
+	public void testRepoRemoval() {
+		Activator.getDefault().getRepositoryUtil()
+				.addConfiguredRepository(childRepositoryGitDir);
+		assertTrue("Should still have the subrepo in the cache",
+				containsRepo(Activator.getDefault().getRepositoryCache()
+						.getAllRepositories(), subRepository));
+		assertTrue("Should have changed the preference", Activator.getDefault()
+				.getRepositoryUtil().removeDir(childRepositoryGitDir));
+		assertTrue("Should still have the subrepo in the cache",
+				containsRepo(Activator.getDefault().getRepositoryCache()
+						.getAllRepositories(), subRepository));
+	}
+
 	@SuppressWarnings("restriction")
 	@Test
 	public void testHistoryFromProjectExplorerIsFromSubRepository()
@@ -281,6 +311,15 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 				childFolder.getFullPath().segments()).select();
 		assertRowCountInHistory(childFolder.getFullPath() + " from submodule",
 				2);
+	}
+
+	private boolean containsRepo(Repository[] repositories, Repository needle) {
+		for (Repository repo : repositories) {
+			if (needle.equals(repo)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void assertRowCountInHistory(String msg, int expected)

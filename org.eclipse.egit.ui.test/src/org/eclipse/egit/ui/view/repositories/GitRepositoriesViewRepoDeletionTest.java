@@ -162,8 +162,8 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		// A pity we can't mock the cache.
 		IndexDiffCache indexDiffCache = org.eclipse.egit.core.Activator
 				.getDefault().getIndexDiffCache();
-		assertTrue("Expected no IndexDiffCache entries",
-				indexDiffCache.currentCacheEntries().isEmpty());
+		assertEquals("Expected no IndexDiffCache entries", "[]",
+				indexDiffCache.currentCacheEntries().toString());
 	}
 
 	@Test
