@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_f6077dd2",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/submodules/SubmoduleFolderTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-02T22:13:29Z",
+      "side": 1,
+      "message": "This is expected to fail in PS 1; just to illustrate the problem. Here we add a completely unrelated repository, but the submodule from parentRepository get evicted from the cache.",
+      "revId": "ff87e739706b8c6b96450622dfd2682a5cdb2c51",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
