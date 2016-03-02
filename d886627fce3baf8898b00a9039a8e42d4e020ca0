@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_13031bc8",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-03-02T17:51:36Z",
+      "side": 1,
+      "message": "this condition, negated, can be added to the if above:\n\nif(!p.isOpen || projectLocation \u003d\u003d null || !repositoryPath.isPrefixOf(projectLocation))\n\nthis saves us the more expensive IO check for the file.exists()",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 50
+      },
+      "revId": "d886627fce3baf8898b00a9039a8e42d4e020ca0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
