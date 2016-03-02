@@ -42,6 +42,7 @@ import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.ConfigurationChecker;
 import org.eclipse.egit.ui.internal.KnownHosts;
+import org.eclipse.egit.ui.internal.RepositoryCacheRule;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
@@ -526,6 +527,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	static class RepositoryChangeScanner extends Job {
 		RepositoryChangeScanner() {
 			super(UIText.Activator_repoScanJobName);
+			setRule(new RepositoryCacheRule());
 		}
 
 		// FIXME, need to be more intelligent about this to avoid too much work
