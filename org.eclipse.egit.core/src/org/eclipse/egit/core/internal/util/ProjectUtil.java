@@ -70,19 +70,18 @@ public class ProjectUtil {
 		final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects();
 		List<IProject> result = new ArrayList<IProject>();
-		final File parentFile = repository.getWorkTree();
+		final Path repositoryPath = new Path(
+				repository.getWorkTree().getAbsolutePath());
 		for (IProject p : projects) {
 			IPath projectLocation = p.getLocation();
 			if (!p.isOpen() || projectLocation == null)
 				continue;
-			String projectFilePath = projectLocation.append(
-					IProjectDescription.DESCRIPTION_FILE_NAME).toOSString();
-			File projectFile = new File(projectFilePath);
-			if (projectFile.exists()) {
-				final File file = p.getLocation().toFile();
-				if (file.getAbsolutePath().startsWith(
-						parentFile.getAbsolutePath()))
+			IPath projectFilePath = projectLocation
+					.append(IProjectDescription.DESCRIPTION_FILE_NAME);
+			if (projectFilePath.toFile().exists()) {
+				if (repositoryPath.isPrefixOf(projectLocation)) {
 					result.add(p);
+				}
 			}
 		}
 		return result.toArray(new IProject[result.size()]);
