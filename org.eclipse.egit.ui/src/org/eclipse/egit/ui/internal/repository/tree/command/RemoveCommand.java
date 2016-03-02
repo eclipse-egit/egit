@@ -56,8 +56,8 @@ import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchSite;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
@@ -126,7 +126,7 @@ public class RemoveCommand extends
 			if (!projectsToDelete.isEmpty()) {
 				final boolean[] confirmedCanceled = new boolean[] { false,
 						false };
-				Display.getDefault().syncExec(new Runnable() {
+				PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
 					@Override
 					public void run() {
@@ -170,6 +170,16 @@ public class RemoveCommand extends
 						return Activator.createErrorStatus(e.getMessage(), e);
 					}
 				}
+				PlatformUI.getWorkbench().getDisplay()
+						.asyncExec(new Runnable() {
+
+					@Override
+					public void run() {
+						for (RepositoryNode node : selectedNodes) {
+							node.clear();
+						}
+					}
+				});
 				return Status.OK_STATUS;
 			}
 

@@ -16,7 +16,6 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,12 +30,8 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.JobFamilies;
-import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Constants;
@@ -49,25 +44,13 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class IndexDiffCache {
 
-	private Map<Repository, IndexDiffCacheEntry> entries = new HashMap<Repository, IndexDiffCacheEntry>();
+	private Map<File, IndexDiffCacheEntry> entries = new HashMap<File, IndexDiffCacheEntry>();
 
 	private Set<IndexDiffChangedListener> listeners = new HashSet<IndexDiffChangedListener>();
 
 	private IndexDiffChangedListener globalListener;
 
 	private ExternalFileBufferListener bufferListener;
-
-	private final IPreferenceChangeListener configuredRepositoriesListener = new IPreferenceChangeListener() {
-
-		@Override
-		public void preferenceChange(PreferenceChangeEvent event) {
-			if (!RepositoryUtil.PREFS_DIRECTORIES.equals(event.getKey())) {
-				return;
-			}
-			prune(Activator.getDefault().getRepositoryUtil().getRepositories());
-		}
-
-	};
 
 	/**
 	 * Listener on buffer changes related to the workspace external files.
@@ -222,12 +205,6 @@ public class IndexDiffCache {
 	public IndexDiffCache() {
 		createGlobalListener();
 		registerBufferListener();
-		registerConfiguredRepositoriesListener();
-	}
-
-	private void registerConfiguredRepositoriesListener() {
-		InstanceScope.INSTANCE.getNode(Activator.getPluginId())
-				.addPreferenceChangeListener(configuredRepositoriesListener);
 	}
 
 	private void registerBufferListener() {
@@ -247,7 +224,9 @@ public class IndexDiffCache {
 	public IndexDiffCacheEntry getIndexDiffCacheEntry(@NonNull Repository repository) {
 		IndexDiffCacheEntry entry;
 		synchronized (entries) {
-			entry = entries.get(repository);
+			File gitDir = new Path(repository.getDirectory().getAbsolutePath())
+					.toFile();
+			entry = entries.get(gitDir);
 			if (entry != null) {
 				return entry;
 			}
@@ -255,7 +234,7 @@ public class IndexDiffCache {
 				return null;
 			}
 			entry = new IndexDiffCacheEntry(repository, globalListener);
-			entries.put(repository, entry);
+			entries.put(gitDir, entry);
 		}
 		return entry;
 	}
@@ -321,8 +300,6 @@ public class IndexDiffCache {
 				bufferListener = null;
 			}
 		}
-		InstanceScope.INSTANCE.getNode(Activator.getPluginId())
-				.removePreferenceChangeListener(configuredRepositoriesListener);
 		for (IndexDiffCacheEntry entry : entries.values()) {
 			entry.dispose();
 		}
@@ -334,34 +311,31 @@ public class IndexDiffCache {
 		}
 	}
 
-	private void prune(Set<String> configuredRepositories) {
+	/**
+	 * Removes the {@link IndexDiffCacheEntry} for the given repository.
+	 *
+	 * @param gitDir
+	 *            of the {@link Repository} to remove the cache entry of
+	 */
+	public void remove(@NonNull File gitDir) {
 		synchronized (entries) {
-			Iterator<Map.Entry<Repository, IndexDiffCacheEntry>> iterator = entries
-					.entrySet().iterator();
-			while (iterator.hasNext()) {
-				Map.Entry<Repository, IndexDiffCacheEntry> cached = iterator
-						.next();
-				if (configuredRepositories.contains(
-						cached.getKey().getDirectory().getAbsolutePath())) {
-					continue;
-				}
-				// Repository has vanished: remove cache entry.
-				IndexDiffCacheEntry cachedEntry = cached.getValue();
+			IndexDiffCacheEntry cachedEntry = entries.remove(gitDir);
+			if (cachedEntry != null) {
 				cachedEntry.dispose();
-				iterator.remove();
 			}
 		}
 	}
 
 	/**
-	 * Retrieves the set of repositories for which there are currently entries
-	 * in the cache; primarily intended for use in tests.
+	 * Retrieves the set of git directories of repositories for which there are
+	 * currently entries in the cache; primarily intended for use in tests.
 	 *
-	 * @return the set of repositories for which the cache currently has entries
+	 * @return the set of git directories of repositories for which the cache
+	 *         currently has entries
 	 */
 	@NonNull
-	public Set<Repository> currentCacheEntries() {
-		Set<Repository> result = null;
+	public Set<File> currentCacheEntries() {
+		Set<File> result = null;
 		synchronized (entries) {
 			result = new HashSet<>(entries.keySet());
 		}
