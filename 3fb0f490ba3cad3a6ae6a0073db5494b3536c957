@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_80cc2f66",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-02T12:55:10Z",
+      "side": 1,
+      "message": "Yes, but this set does not include protected .git folder or file located in project root directly. So i thought this can be understanded in that way.\r\n\r\nOK, i thought submodules are nested, but yes \"inner\" is better. I will rename again.",
+      "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_dd4aa4fd",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
         "patchSetId": 2
@@ -64,6 +81,23 @@
       "writtenOn": "2016-03-02T10:01:39Z",
       "side": 1,
       "message": "Presumably you\u0027d want to return here a read-only view of mappings.",
+      "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_602ac37f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-02T12:55:10Z",
+      "side": 1,
+      "message": "Done",
       "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +121,23 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_00357fdd",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-02T12:55:10Z",
+      "side": 1,
+      "message": "May be i don\u0027t understand this: the .git file itself is protected and the redirected gitdir will be protected anyway if it where visible in other eclipse project. I will add the comments, because not changed anythink by ma patch related to this, sorry.",
+      "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_3d29c83a",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
         "patchSetId": 2
@@ -98,6 +149,23 @@
       "writtenOn": "2016-03-02T10:01:39Z",
       "side": 1,
       "message": "Unnecessary rename, and the comment was not updated anyway. It\u0027s not quite correct either way -- we have protected resources when we have submodules or nested repositories.\n\nEither leave as it was, or find a term that describes both. Maybe hasInnerRepositories(), \"inner\" meaning either submodule or nested repository?",
+      "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_402f878f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-02T12:55:10Z",
+      "side": 1,
+      "message": "OK, i thought submodules are nested, but yes \"inner\" is better.",
       "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -127,6 +195,23 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_e0f09388",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-02T12:55:10Z",
+      "side": 1,
+      "message": "Done",
+      "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_1d5c0cc5",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
         "patchSetId": 2
@@ -144,6 +229,23 @@
         "endLine": 420,
         "endChar": 64
       },
+      "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_a0a12b80",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-02T12:55:10Z",
+      "side": 1,
+      "message": "Done",
       "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -184,6 +286,23 @@
       "writtenOn": "2016-03-02T10:01:39Z",
       "side": 1,
       "message": "Missing blank line.",
+      "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_c0ed57b4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-02T12:55:10Z",
+      "side": 1,
+      "message": "Done",
       "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
