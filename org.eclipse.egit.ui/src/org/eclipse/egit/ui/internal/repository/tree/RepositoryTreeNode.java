@@ -27,9 +27,9 @@ import org.eclipse.jgit.lib.Repository;
  */
 public abstract class RepositoryTreeNode<T> extends PlatformObject implements Comparable<RepositoryTreeNode> {
 
-	private final Repository myRepository;
+	private Repository myRepository;
 
-	private final T myObject;
+	private T myObject;
 
 	private final RepositoryTreeNodeType myType;
 
@@ -80,7 +80,29 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 	 * @return the path of the file, folder or repository
 	 */
 	public IPath getPath() {
+		Repository repository = getRepository();
+		if (repository == null) {
+			return null;
+		}
 		return new Path(getRepository().getWorkTree().getAbsolutePath());
+	}
+
+	/**
+	 * Removes the references to the repository and to the object. <strong>Call
+	 * only after this node has been removed from the view!</strong>
+	 * <p>
+	 * The CommonViewer framework keeps on to a hard reference to the last
+	 * selection, even if that no longer will appear in the view. Moreover, the
+	 * WorkbenchSourceProvider may also hold such a reference to the
+	 * RepositoryNode(s). This will preclude for some time the garbage
+	 * collection and eventual removal of the Repository instance
+	 * (RepositoryCache relies on WeakReference semantics). Therefore, this
+	 * operation provides a means to clear the reference to the Repository in a
+	 * now otherwise unreferenced RepositoryNode.
+	 */
+	public void clear() {
+		myRepository = null;
+		myObject = null;
 	}
 
 	/**
@@ -220,16 +242,30 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 		} else if (!myParent.equals(other.myParent))
 			return false;
 		if (myRepository == null) {
-			if (other.myRepository != null)
+			if (other.myRepository != null) {
 				return false;
-		} else if (!myRepository.getDirectory().equals(
-				other.myRepository.getDirectory()))
-			return false;
+			}
+		} else {
+			if (other.myRepository == null) {
+				return false;
+			}
+			if (!myRepository.getDirectory()
+					.equals(other.myRepository.getDirectory())) {
+				return false;
+			}
+		}
 		if (myObject == null) {
-			if (other.myObject != null)
+			if (other.myObject != null) {
 				return false;
-		} else if (!checkObjectsEqual(other.myObject))
-			return false;
+			}
+		} else {
+			if (other.myObject == null) {
+				return false;
+			}
+			if (!checkObjectsEqual(other.myObject)) {
+				return false;
+			}
+		}
 
 		return true;
 	}
