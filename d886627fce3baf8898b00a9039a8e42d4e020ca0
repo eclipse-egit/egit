@@ -22,6 +22,30 @@
       "revId": "d886627fce3baf8898b00a9039a8e42d4e020ca0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_13407bb9",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 339
+      },
+      "writtenOn": "2016-03-02T19:07:10Z",
+      "side": 1,
+      "message": "Done. The \"projectFilePath.toFile().exists()\" should actually not be required at all. But maybe it\u0027s a required workaround because EGit still circumvents the workspace model and directly fiddles with the file system.",
+      "parentUuid": "e7dfcf21_13031bc8",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 50
+      },
+      "revId": "d886627fce3baf8898b00a9039a8e42d4e020ca0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
