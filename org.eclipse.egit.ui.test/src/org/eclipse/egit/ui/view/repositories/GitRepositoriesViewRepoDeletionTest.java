@@ -18,14 +18,12 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
-import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.SubmoduleAddCommand;
@@ -145,12 +143,11 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		assertHasRepo(repositoryFile);
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		tree.getAllItems()[0].select();
-		JobJoiner joiner = JobJoiner.startListening(
-				JobFamilies.REPOSITORY_DELETE, 10, TimeUnit.SECONDS);
-		ContextMenuHelper.clickContextMenu(tree, myUtil.getPluginLocalizedValue(
+		ContextMenuHelper.clickContextMenuSync(tree,
+				myUtil.getPluginLocalizedValue(
 				REMOVE_REPOSITORY_FROM_VIEW_CONTEXT_MENU_LABEL));
+		TestUtil.joinJobs(JobFamilies.REPOSITORY_DELETE);
 		refreshAndWait();
-		joiner.join();
 		assertEmpty();
 		assertTrue(repositoryFile.exists());
 		assertTrue(
