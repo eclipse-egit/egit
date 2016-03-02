@@ -37,6 +37,7 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 
@@ -57,6 +58,11 @@ public abstract class AbstractGitflowHandlerTest extends LocalRepositoryTestCase
 		repository = lookupRepository(repositoryFile);
 
 		resetPreferences();
+	}
+
+	@After
+	public void teardown() {
+		repository = null;
 	}
 
 	private void resetPreferences() {

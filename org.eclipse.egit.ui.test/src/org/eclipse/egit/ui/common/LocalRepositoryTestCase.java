@@ -36,6 +36,7 @@ import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.RepositoryCache;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.op.AddToIndexOperation;
@@ -47,7 +48,12 @@ import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.test.TestUtils;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.dialogs.CompareTreeView;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
+import org.eclipse.egit.ui.internal.rebase.RebaseInteractiveView;
+import org.eclipse.egit.ui.internal.reflog.ReflogView;
+import org.eclipse.egit.ui.internal.repository.RepositoriesView;
+import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.egit.ui.test.TestUtil;
@@ -69,10 +75,14 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.team.core.RepositoryProvider;
+import org.eclipse.team.ui.history.IHistoryView;
+import org.eclipse.team.ui.synchronize.ISynchronizeView;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.rules.TestName;
 
 /**
  * Base class for testing with local (file-system based) repositories
@@ -140,12 +150,31 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 	protected static final String FILE2 = "test2.txt";
 
-
-
 	protected final static TestUtils testUtils = new TestUtils();
+
+	private static final String[] VIEWS_TO_CLOSE = { //
+			RebaseInteractiveView.VIEW_ID, //
+			ISynchronizeView.VIEW_ID, //
+			IHistoryView.VIEW_ID, //
+			CompareTreeView.ID, //
+			ReflogView.VIEW_ID, //
+			StagingView.VIEW_ID, //
+			RepositoriesView.VIEW_ID, //
+			"org.eclipse.search.ui.views.SearchView", //
+			"org.eclipse.ui.views.PropertySheet"
+	};
+
+	@Rule
+	public TestName testName = new TestName();
 
 	public File getTestDirectory() {
 		return testDirectory;
+	}
+
+	protected static void closeGitViews() {
+		for (String viewId : VIEWS_TO_CLOSE) {
+			TestUtil.hideView(viewId);
+		}
 	}
 
 	@Before
@@ -153,7 +182,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		testMethodNumber++;
 		// create standalone temporary directory
 		testDirectory = testUtils.createTempDir("LocalRepositoriesTests"
-				+ testMethodNumber);
+				+ testMethodNumber + '_' + testName.getMethodName());
 		if (testDirectory.exists())
 			FileUtils.delete(testDirectory, FileUtils.RECURSIVE
 					| FileUtils.RETRY);
@@ -174,6 +203,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		TestUtil.processUIEvents();
 		// close all editors/dialogs
 		new Eclipse().reset();
+		closeGitViews();
 		TestUtil.processUIEvents();
 		// cleanup
 		for (IProject project : ResourcesPlugin.getWorkspace().getRoot()
@@ -201,6 +231,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 				.getPreferenceStore()
 				.setValue(UIPreferences.SHOW_DETACHED_HEAD_WARNING,
 						false);
+		closeGitViews();
 	}
 
 	@AfterClass
@@ -208,11 +239,17 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		testUtils.deleteTempDirs();
 	}
 
-	protected static void shutDownRepositories() {
+	protected static void shutDownRepositories() throws Exception {
 		RepositoryCache cache = Activator.getDefault().getRepositoryCache();
 		for(Repository repository:cache.getAllRepositories())
 			repository.close();
 		cache.clear();
+		IEclipsePreferences prefs = Activator.getDefault().getRepositoryUtil()
+				.getPreferences();
+		synchronized (prefs) {
+			prefs.put(RepositoryUtil.PREFS_DIRECTORIES, "");
+			prefs.flush();
+		}
 	}
 
 	protected static void deleteAllProjects() throws Exception {

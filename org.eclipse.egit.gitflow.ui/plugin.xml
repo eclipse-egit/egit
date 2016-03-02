@@ -477,7 +477,7 @@
 				id="org.eclipse.egit.gitflow.ui.propertyTester"
 				namespace="GitFlowRepository"
 				properties="isFeature,isRelease,isHotfix,isDevelop,isMaster,isInitialized,hasDefaultRemote"
-				type="org.eclipse.jgit.lib.Repository">
+				type="java.lang.String">
 		</propertyTester>
 	</extension>
 
