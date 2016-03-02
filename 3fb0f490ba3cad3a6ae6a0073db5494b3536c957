@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_ddc544d6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-02T10:01:39Z",
+      "side": 1,
+      "message": "This removal will need _extensive_ tests involving linked resources in general.",
+      "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_bd35d891",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-02T10:01:39Z",
+      "side": 1,
+      "message": "I find this rename unnecessary. This is the set of protected resources inside a project, so of course it\u0027s nested.",
+      "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_dd4aa4fd",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-02T10:01:39Z",
+      "side": 1,
+      "message": "Presumably you\u0027d want to return here a read-only view of mappings.",
+      "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_7d3b5087",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-02T10:01:39Z",
+      "side": 1,
+      "message": "Why remove the TODO here? I don\u0027t see gitdir redirects being handled?",
+      "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_3d29c83a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-02T10:01:39Z",
+      "side": 1,
+      "message": "Unnecessary rename, and the comment was not updated anyway. It\u0027s not quite correct either way -- we have protected resources when we have submodules or nested repositories.\n\nEither leave as it was, or find a term that describes both. Maybe hasInnerRepositories(), \"inner\" meaning either submodule or nested repository?",
+      "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_fd604079",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-02T10:01:39Z",
+      "side": 1,
+      "message": "Collections.emptyMap()",
+      "range": {
+        "startLine": 399,
+        "startChar": 10,
+        "endLine": 399,
+        "endChar": 25
+      },
+      "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_1d5c0cc5",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-02T10:01:39Z",
+      "side": 1,
+      "message": "Can be inlined:\n\n  for (RepositoryMapping mmapping : getMappings(project).values())",
+      "range": {
+        "startLine": 420,
+        "startChar": 44,
+        "endLine": 420,
+        "endChar": 64
+      },
+      "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_5d5694a4",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-02T10:01:39Z",
+      "side": 1,
+      "message": "Please use\n\n  final @NonNull IResource\n\nto make the Java code formatter produce nicer formatting. (Also in other places.)",
+      "range": {
+        "startLine": 471,
+        "startChar": 31,
+        "endLine": 472,
+        "endChar": 16
+      },
+      "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_7db8b062",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-02T10:01:39Z",
+      "side": 1,
+      "message": "Missing blank line.",
+      "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
