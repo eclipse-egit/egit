@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_eac5d784",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-02T08:47:57Z",
+      "side": 1,
+      "message": "I see, so for \"nested linked repositories\" i had the problem too, like i wrote\r\n\"the nested repos are detected during project import only, so during refresh etc. mapping is not updated\". Your collecting of repos during ressource refresh should work then. I will try that. --\u003e removed my chnages from this file, so only the root repo is found during this operation and then all other nested repos during resource fefresh.\r\n--\u003e PS2",
+      "revId": "efcccee960e8c718decf68b7a4718459f2767a1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_b3be0019",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
         "patchSetId": 1
@@ -59,6 +76,23 @@
       "writtenOn": "2016-02-24T23:37:19Z",
       "side": 1,
       "message": "We don\u0027t like dead code",
+      "revId": "efcccee960e8c718decf68b7a4718459f2767a1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_2ad09f3e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-02T08:47:57Z",
+      "side": 1,
+      "message": "OK --\u003e PS2",
       "revId": "efcccee960e8c718decf68b7a4718459f2767a1d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -122,6 +156,23 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_8adc535b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-02T08:47:57Z",
+      "side": 1,
+      "message": ":) after rebasing here we have some more decoration specific for submodule, may be need one for other nested repos?",
+      "revId": "efcccee960e8c718decf68b7a4718459f2767a1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_1380944e",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingEntry.java",
         "patchSetId": 1
@@ -133,6 +184,23 @@
       "writtenOn": "2016-02-24T23:37:19Z",
       "side": 1,
       "message": "?",
+      "revId": "efcccee960e8c718decf68b7a4718459f2767a1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_aad3cf46",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingEntry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-02T08:47:57Z",
+      "side": 1,
+      "message": "Interface was updated that is used here too, but no need or always falle, comment removed --\u003e PS2",
       "revId": "efcccee960e8c718decf68b7a4718459f2767a1d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
