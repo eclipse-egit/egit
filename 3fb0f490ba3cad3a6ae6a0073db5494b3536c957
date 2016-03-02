@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_205fdbf3",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-02T13:11:38Z",
+      "side": 1,
+      "message": "That the protected flag is set for .git resources that have been recognized as submodules or nested repos in some folder but not for a .git directly under the project is just a minor artifact of this implementation. We might just as well start the loop in protect() at the parent of the .git and thus not \"protect\" those inner .git resources.\n\nThis set is supposed to contain all the IFolders that contain somewhere inside a git repository. Those cannot be moved or deleted. The project itself must not be included; moving/deleting a whole project is always allowed.\n\nActually, I think we might relax this to submodules only (in some other change, if at all) -- for truly nested repositories, moving/deleting may actually be OK.",
+      "parentUuid": "e7dfcf21_80cc2f66",
+      "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_dd4aa4fd",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
         "patchSetId": 2
@@ -132,6 +150,24 @@
       "writtenOn": "2016-03-02T12:55:10Z",
       "side": 1,
       "message": "May be i don\u0027t understand this: the .git file itself is protected and the redirected gitdir will be protected anyway if it where visible in other eclipse project. I will add the comments, because not changed anythink by ma patch related to this, sorry.",
+      "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_c051d7e0",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-02T13:11:38Z",
+      "side": 1,
+      "message": "\"protected\" is a feature of EGit guarding against moving/deleting folders that contain submodules.\n\nMarking as \"team private\" is an Eclipse feature that will hide the .git from the navigator view.\n\nThe two are unrelated. The point of the TODO here was that this code only marks .git *directories* as \"team private\", but not .git *files*.",
+      "parentUuid": "e7dfcf21_00357fdd",
       "revId": "3fb0f490ba3cad3a6ae6a0073db5494b3536c957",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
