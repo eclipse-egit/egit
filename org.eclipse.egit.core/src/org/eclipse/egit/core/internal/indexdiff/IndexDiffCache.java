@@ -61,7 +61,7 @@ public class IndexDiffCache {
 
 		@Override
 		public void preferenceChange(PreferenceChangeEvent event) {
-			if (!RepositoryUtil.PREFS_DIRECTORIES.equals(event.getKey())) {
+			if (!RepositoryUtil.PREFS_DIRECTORIES_REL.equals(event.getKey())) {
 				return;
 			}
 			prune(Activator.getDefault().getRepositoryUtil().getRepositories());
