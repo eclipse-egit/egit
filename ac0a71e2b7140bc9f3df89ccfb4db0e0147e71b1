@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_8a73655a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-04T21:12:13Z",
+      "side": 1,
+      "message": "Commit message no longer applies. And this is no longer related to the bugs listed below.",
+      "revId": "ac0a71e2b7140bc9f3df89ccfb4db0e0147e71b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_4a695d6e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-04T21:12:13Z",
+      "side": 1,
+      "message": "I still think this renaming is superfluous...",
+      "range": {
+        "startLine": 385,
+        "startChar": 39,
+        "endLine": 385,
+        "endChar": 44
+      },
+      "revId": "ac0a71e2b7140bc9f3df89ccfb4db0e0147e71b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_2a66d1a0",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-04T21:12:13Z",
+      "side": 1,
+      "message": "nested repositories.",
+      "revId": "ac0a71e2b7140bc9f3df89ccfb4db0e0147e71b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_0a24b55f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-04T21:12:13Z",
+      "side": 1,
+      "message": "This function doesn\u0027t make much sense here. IProjects not necessarily are work tree roots; projects can be at any level in a repository working directory.",
+      "revId": "ac0a71e2b7140bc9f3df89ccfb4db0e0147e71b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
