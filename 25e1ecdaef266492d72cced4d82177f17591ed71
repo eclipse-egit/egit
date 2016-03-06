@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_180a4fb1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-06T22:04:42Z",
+      "side": 1,
+      "message": "More precisely: Referenced in the ProgressMonitorFocusJobDialog, which was still kept around through its fontChangeListener (an inner non-static class in the ultimate ancestor class Window), which apparently somehow was still registered.",
+      "range": {
+        "startLine": 97,
+        "startChar": 42,
+        "endLine": 98,
+        "endChar": 52
+      },
+      "revId": "25e1ecdaef266492d72cced4d82177f17591ed71",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
