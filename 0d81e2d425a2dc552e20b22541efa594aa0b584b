@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_b9f79d4c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-07T22:19:02Z",
+      "side": 1,
+      "message": "This apparently is not quite good yet. See the NPE in the (reported as successful!) build https://hudson.eclipse.org/egit/job/egit.gerrit/8264/console .\n\nLooks like we getting into trouble because removing the repositories from the preference causes display updates and we\u0027re running in a different job here. I guess this will need to be wrapped in a Display.asyncExec.",
+      "revId": "0d81e2d425a2dc552e20b22541efa594aa0b584b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
