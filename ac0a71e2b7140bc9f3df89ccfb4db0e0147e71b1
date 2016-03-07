@@ -124,6 +124,24 @@
       "revId": "ac0a71e2b7140bc9f3df89ccfb4db0e0147e71b1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_33072c59",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-07T06:52:03Z",
+      "side": 1,
+      "message": "Re: it does not look at nested repos if there is no one at root level\n\nAnd well it shouldn\u0027t. If the project is inside a git repo, that git repo will be found at import, and inner repositories will be found by the resource change event handling after the import. If the project is not inside a git repo, then we\u0027ll never pick up folders that happen to be in some git repository, but that\u0027s ok because the project will not be EGit-managed anyway. Or did you want to support git functionality in non-EGit-managed projects? Now that would be a vary major change.\n\ngetContainer() just means \"get the IContainer this RepositoryMapping is attached to\". For inner repositories, this container will be an IFolder, and it will be at the root of the inner git repository\u0027s working directory. However, if the container is an IProject, it\u0027s not necessarily at the containing git repository\u0027s working directory _root_: it can be anywhere inside that working directory.",
+      "parentUuid": "e7dfcf21_adabdb0b",
+      "revId": "ac0a71e2b7140bc9f3df89ccfb4db0e0147e71b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
