@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_592bf906",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-08T00:10:17Z",
+      "side": 1,
+      "message": "Could be final.",
+      "revId": "5502f1463ee27cdebca3d3de9bd53e04641498ff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_792ef517",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-08T00:10:17Z",
+      "side": 1,
+      "message": "While you\u0027re touching this, why not add the missing braces? And maybe use dirs.isEmpty()?",
+      "revId": "5502f1463ee27cdebca3d3de9bd53e04641498ff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
