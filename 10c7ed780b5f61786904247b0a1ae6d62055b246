@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_badbfae2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-03-14T09:18:46Z",
+      "side": 1,
+      "message": "*why is this a WIP ?\n* this line is too wide",
+      "revId": "10c7ed780b5f61786904247b0a1ae6d62055b246",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_5afd962d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-03-14T09:18:46Z",
+      "side": 1,
+      "message": "this change already makes sense without support for git worktree",
+      "revId": "10c7ed780b5f61786904247b0a1ae6d62055b246",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_9af71e4c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-03-14T09:18:46Z",
+      "side": 1,
+      "message": "this is true",
+      "revId": "10c7ed780b5f61786904247b0a1ae6d62055b246",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_da144604",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-03-14T09:18:46Z",
+      "side": 1,
+      "message": "you don\u0027t need to describe what can already be seen from the diff",
+      "revId": "10c7ed780b5f61786904247b0a1ae6d62055b246",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_faeca289",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-03-14T09:18:46Z",
+      "side": 1,
+      "message": "remove this comment, it doesn\u0027t add value",
+      "revId": "10c7ed780b5f61786904247b0a1ae6d62055b246",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
