@@ -418,7 +418,7 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 	 * persisted.
 	 *
 	 * @param repository
-	 *            the plan belong to
+	 *            the plan belongs to
 	 *
 	 * @return true if the todo file has been written successfully, otherwise
 	 *         false
