@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_9cc55333",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-15T23:20:56Z",
+      "side": 1,
+      "message": "True; done.",
+      "parentUuid": "e7dfcf21_dc927b5c",
+      "revId": "ec2aa8d4b6f772651d997843ea22aee03b574b8c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_bc8f6f38",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/AddCommand.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2016-03-15T23:05:26Z",
       "side": 1,
       "message": "it\u0027s strange that we use the Collection interface here which doesn\u0027t reveal it is ordered but here we rely on the ordering. I think we should better use the List interface, this would also allow to directly access the first entry",
+      "revId": "ec2aa8d4b6f772651d997843ea22aee03b574b8c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_bcf3ef94",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/AddCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-15T23:20:56Z",
+      "side": 1,
+      "message": "True; done.",
+      "parentUuid": "e7dfcf21_bc8f6f38",
       "revId": "ec2aa8d4b6f772651d997843ea22aee03b574b8c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
