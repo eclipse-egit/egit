@@ -22,6 +22,30 @@
       "revId": "e47bced605873c5e82705f9a8184f540d1dbb586",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_68f2850e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/rebase/RebaseInteractivePlan.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-15T06:43:50Z",
+      "side": 1,
+      "message": "Done in https://git.eclipse.org/r/#/c/68418/ .",
+      "parentUuid": "e7dfcf21_17ee87af",
+      "range": {
+        "startLine": 421,
+        "startChar": 24,
+        "endLine": 421,
+        "endChar": 30
+      },
+      "revId": "e47bced605873c5e82705f9a8184f540d1dbb586",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
