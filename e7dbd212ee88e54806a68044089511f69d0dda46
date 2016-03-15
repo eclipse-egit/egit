@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_e8069592",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-15T06:28:48Z",
+      "side": 1,
+      "message": "It apparently succeeds far more often than not. Anyway, if it turns out to be a nuisance in the long run, here\u0027s the change to ignore it.",
+      "range": {
+        "startLine": 9,
+        "startChar": 46,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "e7dbd212ee88e54806a68044089511f69d0dda46",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
