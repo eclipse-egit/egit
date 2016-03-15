@@ -212,9 +212,9 @@ public class RepositoryMapping {
 	}
 
 	/**
-	 * Notify registered {@link RepositoryChangeListener}s of a change.
+	 * Notify registered {@link RepositoryMappingChangeListener}s of a change.
 	 *
-	 * @see GitProjectData#addRepositoryChangeListener(RepositoryChangeListener)
+	 * @see GitProjectData#addRepositoryChangeListener(RepositoryMappingChangeListener)
 	 */
 	public void fireRepositoryChanged() {
 		GitProjectData.fireRepositoryChanged(this);

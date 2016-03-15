@@ -195,6 +195,12 @@ public class TestUtil {
 		TestUtil.processUIEvents();
 	}
 
+	@SuppressWarnings("restriction")
+	public static void waitForDecorations() throws InterruptedException {
+		TestUtil.joinJobs(
+				org.eclipse.ui.internal.decorators.DecoratorManager.FAMILY_DECORATE);
+	}
+
 	/**
 	 * Utility for waiting until the execution of jobs of any family has
 	 * finished or timeout is reached. If no jobs are running, the method waits

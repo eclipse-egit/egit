@@ -20,7 +20,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.CommitOperation;
-import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
@@ -112,10 +111,6 @@ public class CommitJob extends Job {
 			commitOperation.execute(monitor);
 			commit = commitOperation.getCommit();
 			CommitMessageComponentStateManager.deleteState(repository);
-			RepositoryMapping mapping = RepositoryMapping
-					.findRepositoryMapping(repository);
-			if (mapping != null)
-				mapping.fireRepositoryChanged();
 		} catch (CoreException e) {
 			if (e.getCause() instanceof JGitInternalException) {
 				return Activator.createErrorStatus(e.getLocalizedMessage(),

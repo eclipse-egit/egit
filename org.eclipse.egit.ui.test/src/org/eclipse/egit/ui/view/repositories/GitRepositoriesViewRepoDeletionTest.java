@@ -165,7 +165,7 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		assertTrue(repositoryFile.exists());
 		assertTrue(
 				new File(repositoryFile.getParentFile(), PROJ1).isDirectory());
-		waitForDecorations();
+		TestUtil.waitForDecorations();
 		closeGitViews();
 		TestUtil.waitForJobs(500, 5000);
 		// Session properties are stored in the Eclipse resource tree as part of
@@ -228,7 +228,7 @@ public class GitRepositoriesViewRepoDeletionTest extends
 							org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 					// Is this job doing something when the view is hidden?
 					TestUtil.joinJobs(JobFamilies.REPO_VIEW_REFRESH);
-					waitForDecorations();
+					TestUtil.waitForDecorations();
 				} catch (InterruptedException e) {
 					results[0] = "Interrupted";
 					Thread.currentThread().interrupt();
@@ -315,12 +315,6 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		refreshAndWait();
 		assertFalse(subRepo.getDirectory().exists());
 		assertFalse(subRepo.getWorkTree().exists());
-	}
-
-	@SuppressWarnings("restriction")
-	private void waitForDecorations() throws InterruptedException {
-		TestUtil.joinJobs(
-				org.eclipse.ui.internal.decorators.DecoratorManager.FAMILY_DECORATE);
 	}
 
 	/**
