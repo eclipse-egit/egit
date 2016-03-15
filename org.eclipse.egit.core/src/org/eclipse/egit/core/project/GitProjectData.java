@@ -70,7 +70,7 @@ public class GitProjectData {
 
 	private static final Map<IProject, GitProjectData> projectDataCache = new HashMap<IProject, GitProjectData>();
 
-	private static Set<RepositoryChangeListener> repositoryChangeListeners = new HashSet<RepositoryChangeListener>();
+	private static Set<RepositoryMappingChangeListener> repositoryChangeListeners = new HashSet<RepositoryMappingChangeListener>();
 
 	@SuppressWarnings("synthetic-access")
 	private static final IResourceChangeListener rcl = new RCL();
@@ -133,25 +133,25 @@ public class GitProjectData {
 	 *            the new listener to register. Must not be null.
 	 */
 	public static synchronized void addRepositoryChangeListener(
-			final RepositoryChangeListener objectThatCares) {
+			final RepositoryMappingChangeListener objectThatCares) {
 		if (objectThatCares == null)
 			throw new NullPointerException();
 		repositoryChangeListeners.add(objectThatCares);
 	}
 
 	/**
-	 * Remove a registered {@link RepositoryChangeListener}
+	 * Remove a registered {@link RepositoryMappingChangeListener}
 	 *
 	 * @param objectThatCares
 	 *            The listener to remove
 	 */
 	public static synchronized void removeRepositoryChangeListener(
-			final RepositoryChangeListener objectThatCares) {
+			final RepositoryMappingChangeListener objectThatCares) {
 		repositoryChangeListeners.remove(objectThatCares);
 	}
 
 	/**
-	 * Notify registered {@link RepositoryChangeListener}s of a change.
+	 * Notify registered {@link RepositoryMappingChangeListener}s of a change.
 	 *
 	 * @param which
 	 *            the repository which has had changes occur within it.
@@ -161,12 +161,12 @@ public class GitProjectData {
 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				RepositoryChangeListener[] listeners = getRepositoryChangeListeners();
+				RepositoryMappingChangeListener[] listeners = getRepositoryChangeListeners();
 				monitor.beginTask(
 						CoreText.GitProjectData_repositoryChangedTaskName,
 						listeners.length);
 
-				for (RepositoryChangeListener listener : listeners) {
+				for (RepositoryMappingChangeListener listener : listeners) {
 					listener.repositoryChanged(which);
 					monitor.worked(1);
 				}
@@ -195,9 +195,9 @@ public class GitProjectData {
 	 *
 	 * @return a copy of the current repository change listeners
 	 */
-	private static synchronized RepositoryChangeListener[] getRepositoryChangeListeners() {
+	private static synchronized RepositoryMappingChangeListener[] getRepositoryChangeListeners() {
 		return repositoryChangeListeners
-				.toArray(new RepositoryChangeListener[repositoryChangeListeners
+				.toArray(new RepositoryMappingChangeListener[repositoryChangeListeners
 						.size()]);
 	}
 
@@ -628,7 +628,7 @@ public class GitProjectData {
 			return;
 		}
 
-		m.fireRepositoryChanged();
+		fireRepositoryChanged(m);
 
 		trace("map "  //$NON-NLS-1$
 				+ c

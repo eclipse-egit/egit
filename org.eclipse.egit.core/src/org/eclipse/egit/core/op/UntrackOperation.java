@@ -95,8 +95,6 @@ public class UntrackOperation implements IEGitOperation {
 		} catch (IOException e) {
 			throw new CoreException(Activator.error(CoreText.UntrackOperation_failed, e));
 		} finally {
-			for (final RepositoryMapping rm : mappings.keySet())
-				rm.fireRepositoryChanged();
 			for (DirCacheEditor editor:edits.values())
 				if (editor.getDirCache() != null)
 					editor.getDirCache().unlock();

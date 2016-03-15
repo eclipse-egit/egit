@@ -211,15 +211,6 @@ public class RepositoryMapping {
 		container = c;
 	}
 
-	/**
-	 * Notify registered {@link RepositoryChangeListener}s of a change.
-	 *
-	 * @see GitProjectData#addRepositoryChangeListener(RepositoryChangeListener)
-	 */
-	public void fireRepositoryChanged() {
-		GitProjectData.fireRepositoryChanged(this);
-	}
-
 	synchronized void store(final Properties p) {
 		p.setProperty(containerPathString + ".gitdir", gitDirPathString); //$NON-NLS-1$
 	}
