@@ -513,8 +513,9 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 		@Override
 		public void preferenceChange(PreferenceChangeEvent event) {
-			if (!RepositoryUtil.PREFS_DIRECTORIES.equals(event.getKey()))
+			if (!RepositoryUtil.PREFS_DIRECTORIES_REL.equals(event.getKey())) {
 				return;
+			}
 
 			final Repository repo = currentRepository;
 			if (repo == null)
