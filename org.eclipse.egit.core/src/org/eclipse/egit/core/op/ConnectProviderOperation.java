@@ -25,6 +25,8 @@ import java.util.Set;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceProxy;
+import org.eclipse.core.resources.IResourceProxyVisitor;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -152,12 +154,45 @@ public class ConnectProviderOperation implements IEGitOperation {
 		RepositoryProvider.map(project, GitProvider.ID);
 
 		if (refreshResources) {
-			project.refreshLocal(IResource.DEPTH_INFINITE, subMon.newChild(40));
+			touchGitResources(project, subMon.newChild(10));
+			project.refreshLocal(IResource.DEPTH_INFINITE, subMon.newChild(30));
 		} else {
 			subMon.worked(40);
 		}
 
 		autoIgnoreDerivedResources(project, subMon.newChild(10));
+	}
+
+	/**
+	 * Touches all descendants named ".git" so that they'll be included in a
+	 * subsequent resource delta.
+	 *
+	 * @param project
+	 *            to process
+	 * @param monitor
+	 *            for progress reporting and cancellation, may be {@code null}
+	 *            if neither is desired
+	 */
+	private void touchGitResources(IProject project, IProgressMonitor monitor) {
+		final SubMonitor progress = SubMonitor.convert(monitor, 1);
+		try {
+			project.accept(new IResourceProxyVisitor() {
+				@Override
+				public boolean visit(IResourceProxy resource)
+						throws CoreException {
+					int type = resource.getType();
+					if ((type == IResource.FILE || type == IResource.FOLDER)
+							&& Constants.DOT_GIT.equals(resource.getName())) {
+						progress.setWorkRemaining(2);
+						resource.requestResource().touch(progress.newChild(1));
+						return false;
+					}
+					return true;
+				}
+			}, IResource.NONE);
+		} catch (CoreException e) {
+			Activator.error(e.getMessage(), e);
+		}
 	}
 
 	private void deleteGitProvider(MultiStatus ms, IProject project) {
