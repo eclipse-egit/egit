@@ -637,7 +637,7 @@ public class FetchGerritChangePage extends WizardPage {
 		return changeRefs;
 	}
 
-	boolean doFetch() {
+	boolean doFetch() throws Exception {
 
 		final RefSpec spec = new RefSpec().setSource(refText.getText())
 				.setDestination(Constants.FETCH_HEAD);
@@ -659,10 +659,18 @@ public class FetchGerritChangePage extends WizardPage {
 
 				@Override
 				public IStatus runInWorkspace(IProgressMonitor monitor) {
-					internalDoFetch(spec, uri, doCheckout, doCreateTag,
-							doCreateBranch, doCheckoutNewBranch,
-							doActivateAdditionalRefs,
-							textForTag, textForBranch, monitor);
+					try {
+						internalDoFetch(spec, uri, doCheckout, doCreateTag,
+								doCreateBranch, doCheckoutNewBranch,
+								doActivateAdditionalRefs, textForTag,
+								textForBranch, monitor);
+					} catch (Exception e) {
+						try {
+							throw e;
+						} catch (Exception e1) {
+							Activator.handleError(e.getMessage(), e1, true);
+						}
+					}
 					return org.eclipse.core.runtime.Status.OK_STATUS;
 				}
 
@@ -714,7 +722,8 @@ public class FetchGerritChangePage extends WizardPage {
 			boolean doCreateTag, boolean doCreateBranch,
 			boolean doCheckoutNewBranch,
 			boolean doActivateAdditionalRefs, String textForTag,
-			String textForBranch, IProgressMonitor monitor) {
+ String textForBranch, IProgressMonitor monitor)
+					throws Exception {
 
 		int totalWork = 1;
 		if (doCheckout)
@@ -745,6 +754,7 @@ public class FetchGerritChangePage extends WizardPage {
 
 		} catch (Exception e) {
 			Activator.handleError(e.getMessage(), e, true);
+			throw e;
 		} finally {
 			monitor.done();
 		}
