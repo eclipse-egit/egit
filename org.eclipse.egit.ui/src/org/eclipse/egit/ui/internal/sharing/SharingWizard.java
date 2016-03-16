@@ -128,7 +128,6 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 		} else {
 			final ConnectProviderOperation op = new ConnectProviderOperation(
 					existingPage.getProjects(true));
-			op.setRefreshResources(false);
 			try {
 				getContainer().run(true, false, new IRunnableWithProgress() {
 					@Override

@@ -41,8 +41,6 @@ import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.junit.MockSystemReader;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
@@ -89,7 +87,8 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 		SystemReader.setInstance(null);
 	}
 
-	private static String createProject(String projectName) {
+	private static String createProject(String projectName)
+			throws CoreException {
 		bot.menu("File").menu("New").menu("Project...").click();
 		SWTBotShell createProjectDialogShell = bot.shell("New Project");
 		bot.tree().getTreeItem("General").expand().getNode("Project").select();
@@ -100,6 +99,8 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 		String path = bot.textWithLabel("Location:").getText();
 		bot.button("Finish").click();
 		bot.waitUntil(Conditions.shellCloses(createProjectDialogShell), 10000);
+		ResourcesPlugin.getWorkspace().getRoot()
+				.refreshLocal(IResource.DEPTH_INFINITE, null);
 		return path;
 	}
 
@@ -193,8 +194,7 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 	}
 
 	@Test
-	public void shareProjectWithAlreadyCreatedRepos() throws IOException,
-			InterruptedException, JGitInternalException, GitAPIException {
+	public void shareProjectWithAlreadyCreatedRepos() throws Exception {
 		Repository repo1 = FileRepositoryBuilder.create(new File(
 				new File(createProject(projectName1)).getParent(), ".git"));
 		repo1.create();
