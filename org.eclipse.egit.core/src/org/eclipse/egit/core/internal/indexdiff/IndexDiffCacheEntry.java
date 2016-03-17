@@ -569,6 +569,12 @@ public class IndexDiffCacheEntry {
 		diffForChangedResources.setFilter(PathFilterGroup
 				.createFromStrings(treeFilterPaths));
 		diffForChangedResources.diff(jgitMonitor, 0, 0, jobName);
+		IndexDiffData previous = indexDiffData;
+		if (monitor.isCanceled() || previous == null) {
+			// Can happen when the index diff cache entry is already disposed,
+			// but the updateJob is still running (and about to cancel).
+			return null;
+		}
 		return new IndexDiffData(indexDiffData, filesToUpdate,
 				resourcesToUpdate, diffForChangedResources);
 	}
