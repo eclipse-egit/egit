@@ -12,8 +12,8 @@
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.io.File;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -91,10 +91,15 @@ public class AddCommand extends
 			RepositoryFinder f = new RepositoryFinder(project);
 			f.setFindInChildren(false);
 			try {
-				Collection<RepositoryMapping> mappings = f
+				List<RepositoryMapping> mappings = f
 						.find(new NullProgressMonitor());
-				if (mappings.size() == 1)
-					connections.put(project, repositoryDir);
+				if (!mappings.isEmpty()) {
+					// Connect to the first one; it's the innermost.
+					IPath gitDir = mappings.get(0).getGitDirAbsolutePath();
+					if (gitDir != null) {
+						connections.put(project, gitDir.toFile());
+					}
+				}
 			} catch (CoreException e) {
 				// Ignore this project in that case
 				continue;

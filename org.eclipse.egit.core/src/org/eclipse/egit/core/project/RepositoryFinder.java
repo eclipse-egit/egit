@@ -16,8 +16,8 @@ package org.eclipse.egit.core.project;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IContainer;
@@ -55,7 +55,7 @@ import org.eclipse.jgit.util.SystemReader;
 public class RepositoryFinder {
 	private final IProject proj;
 
-	private final Collection<RepositoryMapping> results = new ArrayList<RepositoryMapping>();
+	private final List<RepositoryMapping> results = new ArrayList<RepositoryMapping>();
 	private final Set<File> gitdirs = new HashSet<File>();
 
 	private final Set<File> ceilingDirectories = new HashSet<File>();
@@ -95,12 +95,13 @@ public class RepositoryFinder {
 	 * @param m
 	 *            a progress monitor to report feedback to; may be null.
 	 * @return all found {@link RepositoryMapping} instances associated with the
-	 *         project supplied to this instance's constructor.
+	 *         project supplied to this instance's constructor, in the order
+	 *         they were found.
 	 * @throws CoreException
 	 *             Eclipse was unable to access its workspace, and threw up on
 	 *             us. We're throwing it back at the caller.
 	 */
-	public Collection<RepositoryMapping> find(IProgressMonitor m)
+	public List<RepositoryMapping> find(IProgressMonitor m)
 			throws CoreException {
 		return find(m, false);
 	}
@@ -113,13 +114,15 @@ public class RepositoryFinder {
 	 * @param searchLinkedFolders
 	 *            specify if linked folders should be included in the search
 	 * @return all found {@link RepositoryMapping} instances associated with the
-	 *         project supplied to this instance's constructor.
+	 *         project supplied to this instance's constructor, in the order
+	 *         they were found.
 	 * @throws CoreException
 	 *             Eclipse was unable to access its workspace, and threw up on
 	 *             us. We're throwing it back at the caller.
 	 * @since 2.3
 	 */
-	public Collection<RepositoryMapping> find(IProgressMonitor m, boolean searchLinkedFolders)
+	public List<RepositoryMapping> find(IProgressMonitor m,
+			boolean searchLinkedFolders)
 			throws CoreException {
 		find(m, proj, searchLinkedFolders);
 		return results;
