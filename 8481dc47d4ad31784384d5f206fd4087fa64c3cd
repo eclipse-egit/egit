@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_28d6b2be",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-17T11:29:12Z",
+      "side": 1,
+      "message": "Use \"final @Nullable IProject project\" to make JDT format better. Also in other places.",
+      "revId": "8481dc47d4ad31784384d5f206fd4087fa64c3cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_48d13ec3",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-17T11:29:12Z",
+      "side": 1,
+      "message": "resource",
+      "range": {
+        "startLine": 347,
+        "startChar": 37,
+        "endLine": 347,
+        "endChar": 44
+      },
+      "revId": "8481dc47d4ad31784384d5f206fd4087fa64c3cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_68e0ba8d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-17T11:29:12Z",
+      "side": 1,
+      "message": "Needs to be rephrased.",
+      "revId": "8481dc47d4ad31784384d5f206fd4087fa64c3cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_08e736a2",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-17T11:29:12Z",
+      "side": 1,
+      "message": "Unless I overlooked something; the only call to this is line 413 below. So there\u0027s no need to make this public.\n\nIf a public version is needed in the future, it can be introduced then.",
+      "revId": "8481dc47d4ad31784384d5f206fd4087fa64c3cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_a8e9e279",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-17T11:29:12Z",
+      "side": 1,
+      "message": "\"for decorating projects and folders...\"",
+      "revId": "8481dc47d4ad31784384d5f206fd4087fa64c3cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
