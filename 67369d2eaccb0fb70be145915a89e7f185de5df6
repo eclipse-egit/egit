@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_6529c339",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/share/SharingWizardTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-17T07:13:13Z",
+      "side": 1,
+      "message": "Looks like this test doesn\u0027t wait quite long enough. Locally, I sometimes see \"TestProjectN is not open\", sometimes \"does not exist\". Something appears to be happening asynchronously here. Forcing a refresh seems to fix this.\n\nProbably creating the project not via the UI but directly would also fix it (and might make sense anyway, since we\u0027re not trying to test the BasicNewProjectResourceWizard).",
+      "revId": "67369d2eaccb0fb70be145915a89e7f185de5df6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
