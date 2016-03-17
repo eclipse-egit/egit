@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_a8700282",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-17T11:10:32Z",
+      "side": 1,
+      "message": "Commit message is lacking an explanation of why these changes are done.\n\nAlso, please see http://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines and make the commit message comply.",
+      "revId": "825d4ec005588939a2ab210922af35de33fa8e81",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_2899524e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-17T11:10:32Z",
+      "side": 1,
+      "message": "Why? Which checked exception is thrown here?\n\nIn test code \"throws Exception\" may be fine, but in production code this I\u0027d rather not have that.",
+      "revId": "825d4ec005588939a2ab210922af35de33fa8e81",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_a88562e9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-17T11:10:32Z",
+      "side": 1,
+      "message": "What is this trying to accomplish? Why not handle e directly, without this strange re-throw?",
+      "revId": "825d4ec005588939a2ab210922af35de33fa8e81",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_68935a2c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-17T11:10:32Z",
+      "side": 1,
+      "message": "See above; and strange formatting.",
+      "revId": "825d4ec005588939a2ab210922af35de33fa8e81",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_888ee604",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-17T11:10:32Z",
+      "side": 1,
+      "message": "And anyway: the exception is handled here, now re-thrown, then caught and again re-thrown and then handled above.\n\nSorry, but all this makes no sense to me.",
+      "revId": "825d4ec005588939a2ab210922af35de33fa8e81",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
