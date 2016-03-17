@@ -889,7 +889,7 @@ public class FetchGerritChangePage extends WizardPage {
 				try {
 					proposals = getRefsForContentAssist();
 				} catch (InvocationTargetException e) {
-					Activator.handleError(e.getMessage(), e, false);
+					Activator.handleError(e.getMessage(), e, true);
 					return null;
 				} catch (InterruptedException e) {
 					return null;
