@@ -178,6 +178,24 @@
       "revId": "ac0a71e2b7140bc9f3df89ccfb4db0e0147e71b1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_281f9294",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-17T09:24:32Z",
+      "side": 1,
+      "message": "renamed to isRepositoryContainer and tested with nested projects (repo is outside of eclipse project) too, so project root is decorated.",
+      "parentUuid": "e7dfcf21_738c5442",
+      "revId": "ac0a71e2b7140bc9f3df89ccfb4db0e0147e71b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
