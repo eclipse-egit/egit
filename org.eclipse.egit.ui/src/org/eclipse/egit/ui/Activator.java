@@ -112,7 +112,22 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		return getDefault().getBundle().getSymbolicName();
 	}
 
-	private static IStatus toStatus(int severity, String message,
+	/**
+	 * Creates an {@link IStatus} from the parameters. If the throwable is an
+	 * {@link InvocationTargetException}, the status is created from the first
+	 * exception that is either not an InvocationTargetException or that has a
+	 * message. If the message passed is empty, tries to supply a message from
+	 * that exception.
+	 *
+	 * @param severity
+	 *            of the {@link IStatus}
+	 * @param message
+	 *            for the status
+	 * @param throwable
+	 *            that caused the status, may be {@code null}
+	 * @return the status
+	 */
+	public static IStatus toStatus(int severity, String message,
 			Throwable throwable) {
 		Throwable exc = throwable;
 		while (exc instanceof InvocationTargetException) {
@@ -126,7 +141,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 			}
 			exc = cause;
 		}
-		if (message == null || message.isEmpty()) {
+		if (exc != null && (message == null || message.isEmpty())) {
 			message = exc.getLocalizedMessage();
 		}
 		return new Status(severity, getPluginId(), message, exc);
