@@ -98,6 +98,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.progress.IProgressConstants;
 
 /**
  * Fetch a change from Gerrit
@@ -659,10 +660,17 @@ public class FetchGerritChangePage extends WizardPage {
 
 				@Override
 				public IStatus runInWorkspace(IProgressMonitor monitor) {
-					internalDoFetch(spec, uri, doCheckout, doCreateTag,
-							doCreateBranch, doCheckoutNewBranch,
-							doActivateAdditionalRefs,
-							textForTag, textForBranch, monitor);
+					try {
+						internalDoFetch(spec, uri, doCheckout, doCreateTag,
+								doCreateBranch, doCheckoutNewBranch,
+								doActivateAdditionalRefs, textForTag,
+								textForBranch, monitor);
+					} catch (Exception e) {
+						setProperty(
+								IProgressConstants.NO_IMMEDIATE_ERROR_PROMPT_PROPERTY,
+								Boolean.TRUE);
+						return Activator.createErrorStatus(e.getLocalizedMessage(), e);
+					}
 					return org.eclipse.core.runtime.Status.OK_STATUS;
 				}
 
@@ -712,9 +720,10 @@ public class FetchGerritChangePage extends WizardPage {
 
 	private void internalDoFetch(RefSpec spec, String uri, boolean doCheckout,
 			boolean doCreateTag, boolean doCreateBranch,
-			boolean doCheckoutNewBranch,
-			boolean doActivateAdditionalRefs, String textForTag,
-			String textForBranch, IProgressMonitor monitor) {
+			boolean doCheckoutNewBranch, boolean doActivateAdditionalRefs,
+			String textForTag, String textForBranch, IProgressMonitor monitor)
+					throws IOException, CoreException, URISyntaxException,
+					GitAPIException {
 
 		int totalWork = 1;
 		if (doCheckout)
@@ -743,8 +752,6 @@ public class FetchGerritChangePage extends WizardPage {
 
 			storeLastUsedUri(uri);
 
-		} catch (Exception e) {
-			Activator.handleError(e.getMessage(), e, true);
 		} finally {
 			monitor.done();
 		}
