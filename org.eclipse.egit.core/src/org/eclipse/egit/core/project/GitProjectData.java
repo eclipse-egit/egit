@@ -240,6 +240,26 @@ public class GitProjectData {
 	}
 
 	/**
+	 * Drop the Eclipse project from our association of projects/repositories
+	 * and removes all RepositoryMappings.
+	 *
+	 * @param p
+	 *            to deconfigure
+	 * @throws IOException
+	 *             if the property file cannot be removed.
+	 */
+	public static void deconfigure(final IProject p) throws IOException {
+		trace("deconfigure(" + p.getName() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+		GitProjectData d = lookup(p);
+		if (d == null) {
+			deletePropertyFiles(p);
+		} else {
+			d.deletePropertyFilesAndUncache();
+			unmap(d);
+		}
+	}
+
+	/**
 	 * Add the Eclipse project to our association of projects/repositories
 	 *
 	 * @param p
@@ -357,6 +377,23 @@ public class GitProjectData {
 		if (projectDataCache.remove(p) != null) {
 			trace("uncacheDataFor(" //$NON-NLS-1$
 				+ p.getName() + ")"); //$NON-NLS-1$
+		}
+	}
+
+	private static void unmap(GitProjectData data) {
+		for (RepositoryMapping m : data.mappings.values()) {
+			IContainer c = m.getContainer();
+			if (c != null && c.isAccessible()) {
+				try {
+					c.setSessionProperty(MAPPING_KEY, null);
+					// Team private members are re-set in
+					// DisconnectProviderOperation
+				} catch (CoreException e) {
+					Activator.logWarning(MessageFormat.format(
+							CoreText.GitProjectData_failedToUnmapRepoMapping,
+							c.getFullPath()), e);
+				}
+			}
 		}
 	}
 
@@ -628,8 +665,6 @@ public class GitProjectData {
 			return;
 		}
 
-		fireRepositoryChanged(m);
-
 		trace("map "  //$NON-NLS-1$
 				+ c
 				+ " -> "  //$NON-NLS-1$
@@ -640,6 +675,8 @@ public class GitProjectData {
 			Activator.logError(
 					CoreText.GitProjectData_failedToCacheRepoMapping, err);
 		}
+
+		fireRepositoryChanged(m);
 
 		dotGit = c.findMember(Constants.DOT_GIT);
 		if (dotGit != null) {
