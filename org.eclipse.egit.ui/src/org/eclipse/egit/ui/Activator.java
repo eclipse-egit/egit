@@ -14,6 +14,7 @@
 package org.eclipse.egit.ui;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.Authenticator;
 import java.net.ProxySelector;
 import java.util.ArrayList;
@@ -112,10 +113,46 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	}
 
 	/**
+	 * Creates an {@link IStatus} from the parameters. If the throwable is an
+	 * {@link InvocationTargetException}, the status is created from the first
+	 * exception that is either not an InvocationTargetException or that has a
+	 * message. If the message passed is empty, tries to supply a message from
+	 * that exception.
+	 *
+	 * @param severity
+	 *            of the {@link IStatus}
+	 * @param message
+	 *            for the status
+	 * @param throwable
+	 *            that caused the status, may be {@code null}
+	 * @return the status
+	 */
+	private static IStatus toStatus(int severity, String message,
+			Throwable throwable) {
+		Throwable exc = throwable;
+		while (exc instanceof InvocationTargetException) {
+			String msg = exc.getLocalizedMessage();
+			if (msg != null && !msg.isEmpty()) {
+				break;
+			}
+			Throwable cause = exc.getCause();
+			if (cause == null) {
+				break;
+			}
+			exc = cause;
+		}
+		if (exc != null && (message == null || message.isEmpty())) {
+			message = exc.getLocalizedMessage();
+		}
+		return new Status(severity, getPluginId(), message, exc);
+	}
+
+	/**
 	 * Handle an error. The error is logged. If <code>show</code> is
 	 * <code>true</code> the error is shown to the user.
 	 *
-	 * @param message 		a localized message
+	 * @param message
+	 *            a localized message
 	 * @param throwable
 	 * @param show
 	 */
@@ -138,8 +175,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	 */
 	public static void handleIssue(int severity, String message, Throwable throwable,
 			boolean show) {
-		IStatus status = new Status(severity, getPluginId(), message,
-				throwable);
+		IStatus status = toStatus(severity, message, throwable);
 		int style = StatusManager.LOG;
 		if (show)
 			style |= StatusManager.SHOW;
@@ -154,8 +190,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	 * @param throwable
 	 */
 	public static void showError(String message, Throwable throwable) {
-		IStatus status = new Status(IStatus.ERROR, getPluginId(), message,
-				throwable);
+		IStatus status = toStatus(IStatus.ERROR, message, throwable);
 		StatusManager.getManager().handle(status, StatusManager.SHOW);
 	}
 
@@ -168,6 +203,46 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	 */
 	public static void showErrorStatus(String message, IStatus status) {
 		StatusManager.getManager().handle(status, StatusManager.SHOW);
+	}
+
+	/**
+	 * @param message
+	 * @param e
+	 */
+	public static void logError(String message, Throwable e) {
+		handleError(message, e, false);
+	}
+
+	/**
+	 * @param message
+	 * @param e
+	 */
+	public static void error(String message, Throwable e) {
+		handleError(message, e, false);
+	}
+
+	/**
+	 * Creates an error status
+	 *
+	 * @param message
+	 *            a localized message
+	 * @param throwable
+	 * @return a new Status object
+	 */
+	public static IStatus createErrorStatus(String message,
+			Throwable throwable) {
+		return toStatus(IStatus.ERROR, message, throwable);
+	}
+
+	/**
+	 * Creates an error status
+	 *
+	 * @param message
+	 *            a localized message
+	 * @return a new Status object
+	 */
+	public static IStatus createErrorStatus(String message) {
+		return toStatus(IStatus.ERROR, message, null);
 	}
 
 	/**
@@ -678,46 +753,6 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		KnownHosts.store();
 		super.saveDialogSettings();
 	}
-
-	/**
-	 * @param message
-	 * @param e
-	 */
-	public static void logError(String message, Throwable e) {
-		handleError(message, e, false);
-	}
-
-	/**
-	 * @param message
-	 * @param e
-	 */
-	public static void error(String message, Throwable e) {
-		handleError(message, e, false);
-	}
-
-	/**
-	 * Creates an error status
-	 *
-	 * @param message
-	 *            a localized message
-	 * @param throwable
-	 * @return a new Status object
-	 */
-	public static IStatus createErrorStatus(String message, Throwable throwable) {
-		return new Status(IStatus.ERROR, getPluginId(), message, throwable);
-	}
-
-	/**
-	 * Creates an error status
-	 *
-	 * @param message
-	 *            a localized message
-	 * @return a new Status object
-	 */
-	public static IStatus createErrorStatus(String message) {
-		return new Status(IStatus.ERROR, getPluginId(), message);
-	}
-
 	/**
 	 * @return the {@link RepositoryUtil} instance
 	 */
