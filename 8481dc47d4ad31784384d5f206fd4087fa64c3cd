@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_6e6efff3",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-18T10:00:17Z",
+      "side": 1,
+      "message": "Done, also in other places not related to my changes, it\u0027s trivial and i hope will be accepted :)",
+      "revId": "8481dc47d4ad31784384d5f206fd4087fa64c3cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_48d13ec3",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
         "patchSetId": 8
@@ -42,6 +59,23 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_ee104f8c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-18T10:00:17Z",
+      "side": 1,
+      "message": "Done",
+      "revId": "8481dc47d4ad31784384d5f206fd4087fa64c3cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_68e0ba8d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
         "patchSetId": 8
@@ -53,6 +87,23 @@
       "writtenOn": "2016-03-17T11:29:12Z",
       "side": 1,
       "message": "Needs to be rephrased.",
+      "revId": "8481dc47d4ad31784384d5f206fd4087fa64c3cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_0e6bbbe5",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-18T10:00:17Z",
+      "side": 1,
+      "message": "Done",
       "revId": "8481dc47d4ad31784384d5f206fd4087fa64c3cd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -76,6 +127,23 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_4e7143ce",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-18T10:00:17Z",
+      "side": 1,
+      "message": "Done",
+      "revId": "8481dc47d4ad31784384d5f206fd4087fa64c3cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_a8e9e279",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceAdapter.java",
         "patchSetId": 8
@@ -87,6 +155,23 @@
       "writtenOn": "2016-03-17T11:29:12Z",
       "side": 1,
       "message": "\"for decorating projects and folders...\"",
+      "revId": "8481dc47d4ad31784384d5f206fd4087fa64c3cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_ee392ffc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-18T10:00:17Z",
+      "side": 1,
+      "message": "Done",
       "revId": "8481dc47d4ad31784384d5f206fd4087fa64c3cd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
