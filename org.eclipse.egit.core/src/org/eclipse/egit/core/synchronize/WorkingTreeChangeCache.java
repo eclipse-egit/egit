@@ -58,7 +58,7 @@ public class WorkingTreeChangeCache {
 
 			return result;
 		} catch (IOException e) {
-			Activator.error(e.getMessage(), e);
+			Activator.logError(e.getMessage(), e);
 			return new HashMap<String, GitCommitsModelCache.Change>(0);
 		}
 	}

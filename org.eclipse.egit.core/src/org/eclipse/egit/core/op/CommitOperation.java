@@ -319,9 +319,9 @@ public class CommitOperation implements IEGitOperation {
 				authorIdent = rw.parseCommit(cherryPickHead)
 						.getAuthorIdent();
 			} catch (IOException e) {
-				Activator
-						.error(CoreText.CommitOperation_ParseCherryPickCommitFailed,
-								e);
+				Activator.logError(
+						CoreText.CommitOperation_ParseCherryPickCommitFailed,
+						e);
 				throw new IllegalStateException(e);
 			}
 		} else {
