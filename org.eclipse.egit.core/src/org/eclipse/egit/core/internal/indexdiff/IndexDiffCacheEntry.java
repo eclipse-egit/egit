@@ -58,6 +58,7 @@ import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.submodule.SubmoduleWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.jgit.treewalk.filter.InterIndexDiffFilter;
@@ -93,8 +94,29 @@ public class IndexDiffCacheEntry {
 
 	private Set<IndexDiffChangedListener> listeners = new HashSet<IndexDiffChangedListener>();
 
-	private final ListenerHandle indexChangedListenerHandle;
-	private final ListenerHandle refsChangedListenerHandle;
+	private final IndexChangedListener indexChangedListener = new IndexChangedListener() {
+		@Override
+		public void onIndexChanged(IndexChangedEvent event) {
+			refreshIndexDelta();
+		}
+	};
+
+	private final RefsChangedListener refsChangedListener = new RefsChangedListener() {
+		@Override
+		public void onRefsChanged(RefsChangedEvent event) {
+			scheduleReloadJob("RefsChanged"); //$NON-NLS-1$
+		}
+	};
+
+	private final Set<ListenerHandle> indexChangedListenerHandles = new HashSet<>();
+
+	private final Set<ListenerHandle> refsChangedListenerHandles = new HashSet<>();
+
+	/**
+	 * Keep hard references to submodules -- we need them in the cache at least
+	 * as long as the parent repository.
+	 */
+	private final Set<Repository> submodules = new HashSet<>();
 
 	private IResourceChangeListener resourceChangeListener;
 
@@ -114,21 +136,32 @@ public class IndexDiffCacheEntry {
 			addIndexDiffChangedListener(listener);
 		}
 
-		indexChangedListenerHandle = repository.getListenerList().addIndexChangedListener(
-				new IndexChangedListener() {
-					@Override
-					public void onIndexChanged(IndexChangedEvent event) {
-						refreshIndexDelta();
-					}
-				});
-		refsChangedListenerHandle = repository.getListenerList().addRefsChangedListener(
-				new RefsChangedListener() {
-					@Override
-					public void onRefsChanged(RefsChangedEvent event) {
-						scheduleReloadJob("RefsChanged"); //$NON-NLS-1$
-					}
-				});
-
+		indexChangedListenerHandles.add(repository.getListenerList()
+				.addIndexChangedListener(indexChangedListener));
+		refsChangedListenerHandles.add(repository.getListenerList()
+				.addRefsChangedListener(refsChangedListener));
+		// Add the listeners also to all submodules in order to be notified when
+		// a branch switch or so occurs in a submodule.
+		try (SubmoduleWalk walk = SubmoduleWalk.forIndex(repository)) {
+			while (walk.next()) {
+				Repository submodule = walk.getRepository();
+				if (submodule != null) {
+					Repository cached = org.eclipse.egit.core.Activator
+							.getDefault().getRepositoryCache().lookupRepository(
+									submodule.getDirectory().getAbsoluteFile());
+					indexChangedListenerHandles.add(cached.getListenerList()
+							.addIndexChangedListener(indexChangedListener));
+					refsChangedListenerHandles.add(cached.getListenerList()
+							.addRefsChangedListener(refsChangedListener));
+					submodules.add(cached);
+					submodule.close();
+				}
+			}
+		} catch (IOException ex) {
+			Activator.logError(MessageFormat.format(
+					CoreText.IndexDiffCacheEntry_errorCalculatingIndexDelta,
+					repository), ex);
+		}
 		scheduleReloadJob("IndexDiffCacheEntry construction"); //$NON-NLS-1$
 		createResourceChangeListener();
 		if (!repository.isBare()) {
@@ -136,10 +169,9 @@ public class IndexDiffCacheEntry {
 				lastIndex = DirCache.read(repository.getIndexFile(),
 						repository.getFS());
 			} catch (IOException ex) {
-				Activator
-						.error(MessageFormat
-								.format(CoreText.IndexDiffCacheEntry_errorCalculatingIndexDelta,
-										repository), ex);
+				Activator.logError(MessageFormat.format(
+						CoreText.IndexDiffCacheEntry_errorCalculatingIndexDelta,
+						repository), ex);
 			}
 		}
 	}
@@ -686,8 +718,15 @@ public class IndexDiffCacheEntry {
 	 * are canceled.
 	 */
 	public void dispose() {
-		indexChangedListenerHandle.remove();
-		refsChangedListenerHandle.remove();
+		for (ListenerHandle h : indexChangedListenerHandles) {
+			h.remove();
+		}
+		for (ListenerHandle h : refsChangedListenerHandles) {
+			h.remove();
+		}
+		indexChangedListenerHandles.clear();
+		refsChangedListenerHandles.clear();
+		submodules.clear();
 		if (resourceChangeListener != null) {
 			ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
 		}
