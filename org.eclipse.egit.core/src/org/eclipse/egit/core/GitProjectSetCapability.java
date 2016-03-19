@@ -137,7 +137,7 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 			return asReference(gitURI.getRepository().toString(),
 					gitURI.getTag(), gitURI.getPath().toString());
 		} catch (IllegalArgumentException e) {
-			Activator.error(e.getMessage(), e);
+			Activator.logError(e.getMessage(), e);
 			// we must not fail but return null on invalid or unknown URI's.
 			return null;
 		}

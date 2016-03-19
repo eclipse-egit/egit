@@ -340,7 +340,7 @@ public class IndexDiffCacheEntry {
 				refreshFiles(paths);
 
 		} catch (IOException ex) {
-			Activator.error(MessageFormat.format(
+			Activator.logError(MessageFormat.format(
 					CoreText.IndexDiffCacheEntry_errorCalculatingIndexDelta,
 					repository), ex);
 			scheduleReloadJob("Exception while calculating index delta, doing full reload instead"); //$NON-NLS-1$
