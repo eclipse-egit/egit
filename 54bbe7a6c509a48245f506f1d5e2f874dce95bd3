@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_03b54ce6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-20T10:45:31Z",
+      "side": 1,
+      "message": "Since you\u0027re touching this anyway, please add the missing braces.",
+      "revId": "54bbe7a6c509a48245f506f1d5e2f874dce95bd3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_239de872",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-20T10:45:31Z",
+      "side": 1,
+      "message": "Since you\u0027re touching this anyway, please add the missing braces.",
+      "revId": "54bbe7a6c509a48245f506f1d5e2f874dce95bd3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_c3ae04a0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-20T10:45:31Z",
+      "side": 1,
+      "message": "This could just be !Constants.DOT_GIT.equals(child.getName()).",
+      "revId": "54bbe7a6c509a48245f506f1d5e2f874dce95bd3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_e3af8099",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-20T10:45:31Z",
+      "side": 1,
+      "message": "I wonder... maybe the code gets simpler if we use a depth parameter instead of two booleans. Idea: instead of the two booleans, have a single int depth parameter. Pass here \"lookForNested ? -1 : 2\". -1 signifies \"infinite depth\". Replace the if at line 424 by\n\n  if (--depth !\u003d 0 \u0026\u0026 !root.equals(resolved)) {\n    ...\n\nand at line 439 just pass on \"depth\".",
+      "revId": "54bbe7a6c509a48245f506f1d5e2f874dce95bd3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
