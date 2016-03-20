@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_f50bb760",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-20T23:52:40Z",
+      "side": 1,
+      "message": "On re-testing, I now run into bug 438692 because of this. :-(",
+      "revId": "05e283e7cb146acf76638de7da3c0bde2939aafe",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_1511038e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-20T23:52:40Z",
+      "side": 1,
+      "message": "If we get a CoreException, we could just return that exception\u0027s status instead of creating a new status.",
+      "revId": "05e283e7cb146acf76638de7da3c0bde2939aafe",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
