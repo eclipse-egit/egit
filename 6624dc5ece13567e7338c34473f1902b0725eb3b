@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_c90b82b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-03-21T23:12:17Z",
+      "side": 1,
+      "message": "s/Fixed/Fix/",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 5
+      },
+      "revId": "6624dc5ece13567e7338c34473f1902b0725eb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_e9103ede",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-03-21T23:12:17Z",
+      "side": 1,
+      "message": "s/detected/detect/",
+      "range": {
+        "startLine": 9,
+        "startChar": 19,
+        "endLine": 9,
+        "endChar": 27
+      },
+      "revId": "6624dc5ece13567e7338c34473f1902b0725eb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_0912cae3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-03-21T23:12:17Z",
+      "side": 1,
+      "message": "s/Now it checks/Now it also checks/",
+      "range": {
+        "startLine": 11,
+        "startChar": 16,
+        "endLine": 11,
+        "endChar": 29
+      },
+      "revId": "6624dc5ece13567e7338c34473f1902b0725eb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_291786d4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-03-21T23:12:17Z",
+      "side": 1,
+      "message": "s/it\u0027s/its/",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 4
+      },
+      "revId": "6624dc5ece13567e7338c34473f1902b0725eb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_a939d658",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-03-21T23:12:17Z",
+      "side": 1,
+      "message": "I think this should better be named gitDirs",
+      "range": {
+        "startLine": 405,
+        "startChar": 56,
+        "endLine": 405,
+        "endChar": 63
+      },
+      "revId": "6624dc5ece13567e7338c34473f1902b0725eb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_a922b62a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-03-21T23:12:17Z",
+      "side": 1,
+      "message": "unnecessary null check, according to javadoc File.listFiles() only returns null if the File is not a directory, but if root is not a directory we return from this method already in line 409",
+      "revId": "6624dc5ece13567e7338c34473f1902b0725eb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_c9dd4290",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-03-21T23:12:17Z",
+      "side": 1,
+      "message": "s/of/in/",
+      "range": {
+        "startLine": 432,
+        "startChar": 38,
+        "endLine": 432,
+        "endChar": 40
+      },
+      "revId": "6624dc5ece13567e7338c34473f1902b0725eb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_e9e2fe49",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-03-21T23:12:17Z",
+      "side": 1,
+      "message": "this part of the comment seems unnecessary",
+      "range": {
+        "startLine": 433,
+        "startChar": 12,
+        "endLine": 433,
+        "endChar": 40
+      },
+      "revId": "6624dc5ece13567e7338c34473f1902b0725eb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
