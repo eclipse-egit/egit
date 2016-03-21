@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_f5349705",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-21T00:49:00Z",
+      "side": 1,
+      "message": "Removed this. Until that bug is fixed, we\u0027ll have to live with popping up a dialog from a background job.",
+      "parentUuid": "e7dfcf21_f50bb760",
+      "revId": "05e283e7cb146acf76638de7da3c0bde2939aafe",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_1511038e",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2016-03-20T23:52:40Z",
       "side": 1,
       "message": "If we get a CoreException, we could just return that exception\u0027s status instead of creating a new status.",
+      "revId": "05e283e7cb146acf76638de7da3c0bde2939aafe",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_153ae3ef",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-03-21T00:49:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7dfcf21_1511038e",
       "revId": "05e283e7cb146acf76638de7da3c0bde2939aafe",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
