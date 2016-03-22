@@ -33,6 +33,9 @@
    <bundle id="org.eclipse.egit.ui.importer" version="0.0.0">
       <category name="Eclipse Git Team Provider - experimental features (incubation)"/>
    </bundle>
+   <bundle id="org.eclipse.egit.ui.smartimport" version="0.0.0">
+      <category name="Eclipse Git Team Provider - experimental features (incubation)"/>
+   </bundle>
    <category-def name="Eclipse Git Team Provider" label="Eclipse Git Team Provider">
       <description>
          Eclipse Git Team Provider
