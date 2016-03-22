@@ -98,11 +98,7 @@
       <unit id="org.eclipse.mylyn.context_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.sdk_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.wikitext_feature.feature.group" version="0.0.0"/>
-      <repository location="http://download.eclipse.org/releases/mars/"/>
-    </location>
-    <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
-      <unit id="org.eclipse.e4.ui.importer" version="0.0.0"/>
-      <repository id="easymport" location="http://download.eclipse.org/e4/snapshots/org.eclipse.e4.ui"/>
+      <repository location="http://download.eclipse.org/releases/staging/"/>
     </location>
   </locations>
 </target>

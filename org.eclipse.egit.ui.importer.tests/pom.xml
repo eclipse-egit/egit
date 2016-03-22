@@ -26,7 +26,7 @@
 						<extraRequirements>
 							<requirement>
 								<type>eclipse-plugin</type>
-								<id>org.eclipse.egit.ui.importer</id>
+								<id>org.eclipse.egit.ui.smartimport</id>
 								<versionRange>0.0.0</versionRange>
 							</requirement>
 						</extraRequirements>
