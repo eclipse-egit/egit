@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>org.eclipse.egit.ui.importer</name>
+	<name>org.eclipse.egit.ui.smartimport</name>
 	<comment></comment>
 	<projects>
 	</projects>
