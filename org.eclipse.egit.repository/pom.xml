@@ -144,4 +144,12 @@
       </plugin>
     </plugins>
   </build>
+  
+  <repositories>
+		<repository>
+			<id>eclipse-with-smartimport</id>
+			<layout>p2</layout>
+			<url>${eclipse-with-smartimport}</url>
+		</repository>
+	</repositories>
 </project>
