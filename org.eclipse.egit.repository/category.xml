@@ -30,7 +30,7 @@
    <feature url="features/org.eclipse.egit.gitflow.feature_0.0.0.qualifier.jar" id="org.eclipse.egit.gitflow.feature" version="0.0.0">
       <category name="Eclipse Git Team Provider - experimental features (incubation)"/>
    </feature>
-   <bundle id="org.eclipse.egit.ui.importer" version="0.0.0">
+   <bundle id="org.eclipse.egit.ui.smartimport" version="0.0.0">
       <category name="Eclipse Git Team Provider - experimental features (incubation)"/>
    </bundle>
    <category-def name="Eclipse Git Team Provider" label="Eclipse Git Team Provider">
