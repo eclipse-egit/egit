@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_65c7ea8c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-03-22T23:09:58Z",
+      "side": 1,
+      "message": "what\u0027s the motivation to have importer and smartimporter ? What\u0027s the difference ?",
+      "revId": "6e4ffc7040192c5557ab5a34938d2af6b1b22e07",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_e5b3fa33",
+        "filename": "org.eclipse.egit.repository/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-03-22T23:09:58Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "6e4ffc7040192c5557ab5a34938d2af6b1b22e07",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_85c4f687",
+        "filename": "org.eclipse.egit.repository/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-03-22T23:09:58Z",
+      "side": 1,
+      "message": "why isn\u0027t that part of the 4.6 target platform ?",
+      "revId": "6e4ffc7040192c5557ab5a34938d2af6b1b22e07",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_45bf4ef8",
+        "filename": "org.eclipse.egit.ui.smartimport/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-03-22T23:09:58Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "6e4ffc7040192c5557ab5a34938d2af6b1b22e07",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
