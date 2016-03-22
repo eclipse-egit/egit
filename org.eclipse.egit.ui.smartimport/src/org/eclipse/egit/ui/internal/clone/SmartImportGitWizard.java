@@ -36,7 +36,7 @@ import org.eclipse.ui.internal.wizards.datatransfer.SmartImportWizard;
 /**
  * Alternative Git clone wizard using auto import framework incubating in e4
  */
-public class EasymportGitWizard extends AbstractGitCloneWizard
+public class SmartImportGitWizard extends AbstractGitCloneWizard
 		implements IImportWizard, IPageChangedListener {
 
 	private SmartImportWizard easymportWizard;
@@ -45,7 +45,7 @@ public class EasymportGitWizard extends AbstractGitCloneWizard
 	/**
 	 * Constructor
 	 */
-	public EasymportGitWizard() {
+	public SmartImportGitWizard() {
 		super();
 		IDialogSettings dialogSettings = super.getDialogSettings();
 		if (dialogSettings == null) {
@@ -117,7 +117,7 @@ public class EasymportGitWizard extends AbstractGitCloneWizard
 	}
 
 	private boolean needToCloneRepository() {
-		return EasymportGitWizard.this.cloneDestination.cloneSettingsChanged();
+		return SmartImportGitWizard.this.cloneDestination.cloneSettingsChanged();
 	}
 
 	private File doClone() {
