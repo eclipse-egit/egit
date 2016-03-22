@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="egit-4.6" sequenceNumber="1462141679">
+<target name="egit-4.6" sequenceNumber="1462292074">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.jetty.client" version="9.2.13.v20150730"/>
@@ -99,10 +99,6 @@
       <unit id="org.eclipse.mylyn.sdk_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.wikitext_feature.feature.group" version="0.0.0"/>
       <repository location="http://download.eclipse.org/releases/neon/"/>
-    </location>
-    <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
-      <unit id="org.eclipse.e4.ui.importer" version="0.0.0"/>
-      <repository id="easymport" location="http://download.eclipse.org/e4/snapshots/org.eclipse.e4.ui"/>
     </location>
   </locations>
 </target>
