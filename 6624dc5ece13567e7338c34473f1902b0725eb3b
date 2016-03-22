@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_e476a37c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-22T06:04:38Z",
+      "side": 1,
+      "message": "Done",
+      "revId": "6624dc5ece13567e7338c34473f1902b0725eb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_e9103ede",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -42,6 +59,23 @@
         "endLine": 9,
         "endChar": 27
       },
+      "revId": "6624dc5ece13567e7338c34473f1902b0725eb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_0478ef66",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-22T06:04:38Z",
+      "side": 1,
+      "message": "Done",
       "revId": "6624dc5ece13567e7338c34473f1902b0725eb3b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -71,6 +105,23 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_247deb57",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-22T06:04:38Z",
+      "side": 1,
+      "message": "Done",
+      "revId": "6624dc5ece13567e7338c34473f1902b0725eb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_291786d4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -88,6 +139,23 @@
         "endLine": 12,
         "endChar": 4
       },
+      "revId": "6624dc5ece13567e7338c34473f1902b0725eb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_446597be",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-22T06:04:38Z",
+      "side": 1,
+      "message": "Done",
       "revId": "6624dc5ece13567e7338c34473f1902b0725eb3b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -117,6 +185,23 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_646293b8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-22T06:04:38Z",
+      "side": 1,
+      "message": "Agreed, strings -\u003e gitDirs",
+      "revId": "6624dc5ece13567e7338c34473f1902b0725eb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_a922b62a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
         "patchSetId": 4
@@ -128,6 +213,23 @@
       "writtenOn": "2016-03-21T23:12:17Z",
       "side": 1,
       "message": "unnecessary null check, according to javadoc File.listFiles() only returns null if the File is not a directory, but if root is not a directory we return from this method already in line 409",
+      "revId": "6624dc5ece13567e7338c34473f1902b0725eb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_846b1f92",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-22T06:04:38Z",
+      "side": 1,
+      "message": "Yes, it returns empty list here and null check is not needed.",
       "revId": "6624dc5ece13567e7338c34473f1902b0725eb3b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -157,6 +259,23 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_a4681b96",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-22T06:04:38Z",
+      "side": 1,
+      "message": "Done",
+      "revId": "6624dc5ece13567e7338c34473f1902b0725eb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_e9e2fe49",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
         "patchSetId": 4
@@ -174,6 +293,23 @@
         "endLine": 433,
         "endChar": 40
       },
+      "revId": "6624dc5ece13567e7338c34473f1902b0725eb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_c458c708",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-03-22T06:04:38Z",
+      "side": 1,
+      "message": "Done",
       "revId": "6624dc5ece13567e7338c34473f1902b0725eb3b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
