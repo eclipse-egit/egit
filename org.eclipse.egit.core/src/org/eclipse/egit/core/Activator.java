@@ -60,12 +60,15 @@ import org.eclipse.egit.core.securestorage.EGitSecureStore;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.merge.MergeStrategy;
+import org.eclipse.jgit.transport.SshSessionFactory;
 import org.eclipse.jgit.util.FS;
+import org.eclipse.jsch.core.IJSchService;
 import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.osgi.service.debug.DebugOptionsListener;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.RepositoryProvider;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * The plugin class for the org.eclipse.egit.core plugin. This
@@ -176,6 +179,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		context.registerService(DebugOptionsListener.class.getName(), this,
 				props);
 
+		setupSSH(context);
 		repositoryCache = new RepositoryCache();
 		indexDiffCache = new IndexDiffCache();
 		try {
@@ -193,6 +197,17 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		registerAutoIgnoreDerivedResources();
 		registerPreDeleteResourceChangeListener();
 		registerMergeStrategyRegistryListener();
+	}
+
+	@SuppressWarnings("unchecked")
+	private void setupSSH(final BundleContext context) {
+		final ServiceReference ssh;
+
+		ssh = context.getServiceReference(IJSchService.class.getName());
+		if (ssh != null) {
+			SshSessionFactory.setInstance(new EclipseSshSessionFactory(
+					(IJSchService) context.getService(ssh)));
+		}
 	}
 
 	private void registerPreDeleteResourceChangeListener() {
