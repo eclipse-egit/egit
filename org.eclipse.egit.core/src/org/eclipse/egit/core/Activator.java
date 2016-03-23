@@ -9,6 +9,8 @@ package org.eclipse.egit.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.Authenticator;
+import java.net.ProxySelector;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Collections;
@@ -21,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.net.proxy.IProxyService;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
@@ -180,6 +183,8 @@ public class Activator extends Plugin implements DebugOptionsListener {
 				props);
 
 		setupSSH(context);
+		setupProxy(context);
+
 		repositoryCache = new RepositoryCache();
 		indexDiffCache = new IndexDiffCache();
 		try {
@@ -207,6 +212,19 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		if (ssh != null) {
 			SshSessionFactory.setInstance(new EclipseSshSessionFactory(
 					(IJSchService) context.getService(ssh)));
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private void setupProxy(final BundleContext context) {
+		final ServiceReference proxy;
+
+		proxy = context.getServiceReference(IProxyService.class.getName());
+		if (proxy != null) {
+			ProxySelector.setDefault(new EclipseProxySelector(
+					(IProxyService) context.getService(proxy)));
+			Authenticator.setDefault(new EclipseAuthenticator(
+					(IProxyService) context.getService(proxy)));
 		}
 	}
 
