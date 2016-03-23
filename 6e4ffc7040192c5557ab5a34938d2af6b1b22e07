@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_859156d6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-03-23T08:27:04Z",
+      "side": 1,
+      "message": "ok, please mention this consideration in the commit message",
+      "parentUuid": "e7dfcf21_65ad2a20",
+      "revId": "6e4ffc7040192c5557ab5a34938d2af6b1b22e07",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_e5b3fa33",
         "filename": "org.eclipse.egit.repository/pom.xml",
         "patchSetId": 2
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "4.6 TP already referencs Mars SimRel. I believe if main EGit bundles want to keep backward compatibility, then we should avoid polluting TP with newer artifacts that are only necessary for this extension.",
       "parentUuid": "e7dfcf21_85c4f687",
+      "revId": "6e4ffc7040192c5557ab5a34938d2af6b1b22e07",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_458d8e84",
+        "filename": "org.eclipse.egit.repository/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-03-23T08:27:04Z",
+      "side": 1,
+      "message": "I pushed a fix for the 4.6 target platform to now reference the Neon SimRel and the latest Neon orbit\nhttps://git.eclipse.org/r/#/c/69099/",
+      "parentUuid": "e7dfcf21_85aa3606",
       "revId": "6e4ffc7040192c5557ab5a34938d2af6b1b22e07",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
