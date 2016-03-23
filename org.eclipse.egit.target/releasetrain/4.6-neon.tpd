@@ -1,0 +1,14 @@
+target "4.6-neon" with source configurePhase
+
+location "http://download.eclipse.org/releases/neon/" {
+	org.eclipse.sdk.ide lazy
+	org.eclipse.emf.sdk.feature.group lazy
+	org.eclipse.mylyn.commons.sdk.feature.group lazy
+	org.eclipse.mylyn.ide_feature.feature.group lazy
+	org.eclipse.mylyn.team_feature.feature.group lazy
+	org.eclipse.mylyn.context.sdk.feature.group lazy
+	org.eclipse.mylyn_feature.feature.group lazy
+	org.eclipse.mylyn.context_feature.feature.group lazy
+	org.eclipse.mylyn.sdk_feature.feature.group lazy
+	org.eclipse.mylyn.wikitext_feature.feature.group lazy
+}
