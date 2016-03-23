@@ -62,8 +62,6 @@ import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.events.RepositoryEvent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
-import org.eclipse.jgit.transport.SshSessionFactory;
-import org.eclipse.jsch.core.IJSchService;
 import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.osgi.service.debug.DebugOptionsListener;
 import org.eclipse.swt.graphics.Font;
@@ -311,7 +309,6 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		context.registerService(DebugOptionsListener.class.getName(), this,
 				props);
 
-		setupSSH(context);
 		setupProxy(context);
 		setupRepoChangeScanner();
 		setupRepoIndexRefresh();
@@ -681,17 +678,6 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		rcs = new RepositoryChangeScanner();
 		rcs.setSystem(true);
 		rcs.schedule(RepositoryChangeScanner.REPO_SCAN_INTERVAL);
-	}
-
-	@SuppressWarnings("unchecked")
-	private void setupSSH(final BundleContext context) {
-		final ServiceReference ssh;
-
-		ssh = context.getServiceReference(IJSchService.class.getName());
-		if (ssh != null) {
-			SshSessionFactory.setInstance(new EclipseSshSessionFactory(
-					(IJSchService) context.getService(ssh)));
-		}
 	}
 
 	private void setupProxy(final BundleContext context) {
