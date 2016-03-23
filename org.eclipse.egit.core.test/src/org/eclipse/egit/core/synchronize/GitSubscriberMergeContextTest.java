@@ -41,8 +41,10 @@ import org.eclipse.team.core.mapping.IMergeStatus;
 import org.eclipse.team.core.mapping.IResourceMappingMerger;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class GitSubscriberMergeContextTest extends ModelTestCase {
 
 	private static final String MASTER = Constants.R_HEADS + Constants.MASTER;

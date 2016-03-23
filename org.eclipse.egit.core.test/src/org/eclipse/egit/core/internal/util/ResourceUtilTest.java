@@ -29,6 +29,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -73,6 +74,7 @@ public class ResourceUtilTest extends GitTestCase {
 		assertThat(resource, nullValue());
 	}
 
+	@Ignore
 	@Test
 	public void getFileForLocationShouldReturnExistingFileInCaseOfNestedProject()
 			throws Exception {
@@ -92,6 +94,7 @@ public class ResourceUtilTest extends GitTestCase {
 		assertThat(result.getProject(), is(nested.getProject()));
 	}
 
+	@Ignore
 	@Test
 	public void getFileForLocationShouldReturnExistingFileInCaseOfNestedNotClosedProject()
 			throws Exception {
@@ -114,6 +117,7 @@ public class ResourceUtilTest extends GitTestCase {
 		assertThat(result.getProject(), is(nested.getProject()));
 	}
 
+	@Ignore
 	@Test
 	public void getFileForLocationShouldNotUseFilesWithoutRepositoryMapping()
 			throws Exception {
