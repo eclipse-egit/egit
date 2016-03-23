@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_65ad2a20",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2016-03-23T07:11:22Z",
+      "side": 1,
+      "message": "There is no difference. The \"legacy\" one relies on the e4 bundle, whereas the new one relies on Platform 4.6.\nAs long as EGit doesn\u0027t depend on Platform 4.6, I thought it could be interesting to keep both versions, but if you prefer, I can simply \"migrate\" the existing one to Platform M6.",
+      "parentUuid": "e7dfcf21_65c7ea8c",
+      "revId": "6e4ffc7040192c5557ab5a34938d2af6b1b22e07",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_e5b3fa33",
         "filename": "org.eclipse.egit.repository/pom.xml",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2016-03-22T23:09:58Z",
       "side": 1,
       "message": "why isn\u0027t that part of the 4.6 target platform ?",
+      "revId": "6e4ffc7040192c5557ab5a34938d2af6b1b22e07",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_85aa3606",
+        "filename": "org.eclipse.egit.repository/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2016-03-23T07:11:22Z",
+      "side": 1,
+      "message": "4.6 TP already referencs Mars SimRel. I believe if main EGit bundles want to keep backward compatibility, then we should avoid polluting TP with newer artifacts that are only necessary for this extension.",
+      "parentUuid": "e7dfcf21_85c4f687",
       "revId": "6e4ffc7040192c5557ab5a34938d2af6b1b22e07",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
