@@ -3,6 +3,6 @@ target "egit-4.6" with source configurePhase
 include "projects/jetty-9.2.13.tpd"
 include "projects/swtbot-snapshot.tpd"
 include "projects/mylyn-latest.tpd"
-include "orbit/S20151204220443-Neon.tpd"
-include "releasetrain/4.5-mars.tpd"
+include "orbit/S20160421150943-Neon.tpd"
+include "releasetrain/4.6-neon.tpd"
 include "projects/easymport.tpd"
