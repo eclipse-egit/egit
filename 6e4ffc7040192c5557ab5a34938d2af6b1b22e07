@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_5020eece",
+        "filename": "org.eclipse.egit.repository/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-03-23T08:50:41Z",
+      "side": 1,
+      "message": "that\u0027s the purpose of the egit-4.6-staging.target, I\u0027ll upload another patchset setting this as the default target platform in pom.xml",
+      "parentUuid": "e7dfcf21_10bae608",
+      "revId": "6e4ffc7040192c5557ab5a34938d2af6b1b22e07",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_45bf4ef8",
         "filename": "org.eclipse.egit.ui.smartimport/pom.xml",
         "patchSetId": 2
