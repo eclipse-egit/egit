@@ -14,6 +14,7 @@ import static org.eclipse.jface.dialogs.IDialogConstants.OK_LABEL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -38,13 +39,14 @@ public class FeatureBranchSelectionDialog extends MessageDialog {
 	 * @param title
 	 * @param message
 	 * @param featurePrefix
+	 * @param gfRepo 
 	 */
 	public FeatureBranchSelectionDialog(Shell parentShell,
 			List<Ref> refs, String title, String message,
-			String featurePrefix) {
+			String featurePrefix, GitFlowRepository gfRepo) {
 		super(parentShell, title, null, message, MessageDialog.QUESTION,
 				new String[] { OK_LABEL, CANCEL_LABEL }, 0);
-		filteredFeatures = new FilteredBranchesWidget(refs, featurePrefix);
+		filteredFeatures = new FilteredBranchesWidget(refs, featurePrefix, gfRepo);
 	}
 
 	@Override

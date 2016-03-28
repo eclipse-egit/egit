@@ -12,14 +12,20 @@ import static org.eclipse.egit.ui.internal.CommonUtils.STRING_ASCENDING_COMPARAT
 
 import java.util.List;
 
+import org.eclipse.egit.gitflow.GitFlowRepository;
+import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
@@ -39,9 +45,12 @@ public class FilteredBranchesWidget {
 
 	private String prefix;
 
-	FilteredBranchesWidget(List<Ref> refs, String prefix) {
+	private GitFlowRepository gfRepo;
+
+	FilteredBranchesWidget(List<Ref> refs, String prefix, GitFlowRepository gfRepo) {
 		this.refs = refs;
 		this.prefix = prefix;
+		this.gfRepo = gfRepo;
 	}
 
 	Control create(Composite parent) {
@@ -71,22 +80,60 @@ public class FilteredBranchesWidget {
 				true);
 		tree.setQuickSelectionMode(true);
 		branchesViewer = tree.getViewer();
-
-		TreeColumn nameColumn = new TreeColumn(branchesViewer.getTree(), SWT.LEFT);
 		branchesViewer.getTree().setLinesVisible(false);
-		nameColumn.setAlignment(SWT.LEFT);
+		branchesViewer.getTree().setHeaderVisible(true);
+
+		TreeColumn nameColumn = createColumn(UIText.BranchSelectionTree_NameColumn, branchesViewer, createNameLabelProvider());
+		TreeColumn idColumn = createColumn(UIText.BranchSelectionTree_IdColumn, branchesViewer, new ColumnLabelProvider() {
+			
+			@Override
+			public String getText(Object element) {
+				if (element instanceof Ref) {
+					ObjectId objectId = ((Ref) element).getObjectId();
+					if (objectId == null) {
+						return ""; //$NON-NLS-1$
+					}
+					return objectId.abbreviate(7).name();
+				}
+				return super.getText(element);
+			}});
+		TreeColumn msgColumn = createColumn(UIText.BranchSelectionTree_MessageColumn, branchesViewer, new ColumnLabelProvider() {
+			
+			@Override
+			public String getText(Object element) {
+				if (element instanceof Ref) {
+					String name = ((Ref) element).getName().substring(Constants.R_HEADS.length());
+					RevCommit revCommit = gfRepo.findHead(name);
+					if (revCommit == null) {
+						return ""; //$NON-NLS-1$
+					}
+					return revCommit.getShortMessage();
+				}
+				return super.getText(element);
+			}});
 
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(branchesViewer.getControl());
 
 		branchesViewer.setContentProvider(new BranchListContentProvider());
-		branchesViewer.setLabelProvider(createLabelProvider());
 		branchesViewer.setComparator(new ViewerComparator(STRING_ASCENDING_COMPARATOR));
 		branchesViewer.setInput(refs);
 
 		nameColumn.pack();
+		idColumn.pack();
+		msgColumn.pack();
 
 		branchesViewer.addFilter(createFilter());
 		return area;
+	}
+
+	private TreeColumn createColumn(String name, TreeViewer treeViewer, ColumnLabelProvider labelProvider) {
+		TreeColumn column = new TreeColumn(treeViewer.getTree(), SWT.LEFT);
+		column.setAlignment(SWT.LEFT);
+		column.setText(name);
+
+		TreeViewerColumn treeViewerNameColumn = new TreeViewerColumn(treeViewer, column);
+		treeViewerNameColumn.setLabelProvider(labelProvider);
+		return column;
 	}
 
 	private ViewerFilter createFilter() {
@@ -98,7 +145,7 @@ public class FilteredBranchesWidget {
 		};
 	}
 
-	private ColumnLabelProvider createLabelProvider() {
+	private ColumnLabelProvider createNameLabelProvider() {
 		return new ColumnLabelProvider() {
 
 			@Override
