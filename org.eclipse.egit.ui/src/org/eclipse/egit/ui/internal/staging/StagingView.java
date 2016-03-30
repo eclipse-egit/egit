@@ -73,9 +73,9 @@ import org.eclipse.egit.ui.internal.commands.shared.ContinueRebaseCommand;
 import org.eclipse.egit.ui.internal.commands.shared.SkipRebaseCommand;
 import org.eclipse.egit.ui.internal.commit.CommitHelper;
 import org.eclipse.egit.ui.internal.commit.CommitJob;
+import org.eclipse.egit.ui.internal.commit.CommitJob.PushMode;
 import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
-import org.eclipse.egit.ui.internal.commit.CommitJob.PushMode;
 import org.eclipse.egit.ui.internal.components.ToggleableWarningLabel;
 import org.eclipse.egit.ui.internal.decorators.IProblemDecoratable;
 import org.eclipse.egit.ui.internal.decorators.ProblemLabelDecorator;
@@ -129,6 +129,8 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.Git;
@@ -137,8 +139,6 @@ import org.eclipse.jgit.api.RmCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
@@ -158,6 +158,8 @@ import org.eclipse.swt.dnd.DropTargetAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusEvent;
@@ -237,7 +239,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private Form form;
 
-	private SashForm horizontalSashForm;
+	private SashForm mainSashForm;
 
 	private Section stagedSection;
 
@@ -610,7 +612,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 	}
 
 	@Override
-	public void createPartControl(Composite parent) {
+	public void createPartControl(final Composite parent) {
 		GridLayoutFactory.fillDefaults().applyTo(parent);
 
 		toolkit = new FormToolkit(parent.getDisplay());
@@ -629,21 +631,44 @@ public class StagingView extends ViewPart implements IShowInSource {
 		});
 
 		form = toolkit.createForm(parent);
+		parent.addControlListener(new ControlListener() {
 
+			private int[] defaultWeights = { 1, 1 };
+
+			@Override
+			public void controlResized(ControlEvent e) {
+				org.eclipse.swt.graphics.Rectangle b = parent.getBounds();
+				int oldOrientation = mainSashForm.getOrientation();
+				if ((oldOrientation == SWT.HORIZONTAL)
+						&& (b.height > b.width)) {
+					mainSashForm.setOrientation(SWT.VERTICAL);
+					mainSashForm.setWeights(defaultWeights);
+				} else if ((oldOrientation == SWT.VERTICAL)
+						&& (b.height <= b.width)) {
+					mainSashForm.setOrientation(SWT.HORIZONTAL);
+					mainSashForm.setWeights(defaultWeights);
+				}
+			}
+
+			@Override
+			public void controlMoved(ControlEvent e) {
+				// ignore
+			}
+		});
 		form.setImage(getImage(UIIcons.REPOSITORY));
 		form.setText(UIText.StagingView_NoSelectionTitle);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(form);
 		toolkit.decorateFormHeading(form);
 		GridLayoutFactory.swtDefaults().applyTo(form.getBody());
 
-		horizontalSashForm = new SashForm(form.getBody(), SWT.NONE);
-		saveSashFormWeightsOnDisposal(horizontalSashForm,
+		mainSashForm = new SashForm(form.getBody(), SWT.HORIZONTAL);
+		saveSashFormWeightsOnDisposal(mainSashForm,
 				HORIZONTAL_SASH_FORM_WEIGHT);
-		toolkit.adapt(horizontalSashForm, true, true);
+		toolkit.adapt(mainSashForm, true, true);
 		GridDataFactory.fillDefaults().grab(true, true)
-				.applyTo(horizontalSashForm);
+				.applyTo(mainSashForm);
 
-		stagingSashForm = new SashForm(horizontalSashForm,
+		stagingSashForm = new SashForm(mainSashForm,
 				getStagingFormOrientation());
 		saveSashFormWeightsOnDisposal(stagingSashForm,
 				STAGING_SASH_FORM_WEIGHT);
@@ -710,7 +735,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		enableAutoExpand(unstagedViewer);
 		addListenerToDisableAutoExpandOnCollapse(unstagedViewer);
 
-		Composite rebaseAndCommitComposite = toolkit.createComposite(horizontalSashForm);
+		Composite rebaseAndCommitComposite = toolkit.createComposite(mainSashForm);
 		rebaseAndCommitComposite.setLayout(GridLayoutFactory.fillDefaults().create());
 
 		rebaseSection = toolkit.createSection(rebaseAndCommitComposite,
@@ -1230,7 +1255,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 	}
 
 	private void restoreSashFormWeights() {
-		restoreSashFormWeights(horizontalSashForm,
+		restoreSashFormWeights(mainSashForm,
 				HORIZONTAL_SASH_FORM_WEIGHT);
 		restoreSashFormWeights(stagingSashForm,
 				STAGING_SASH_FORM_WEIGHT);
