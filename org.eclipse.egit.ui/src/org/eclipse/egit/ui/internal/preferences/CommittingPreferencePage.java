@@ -64,6 +64,11 @@ public class CommittingPreferencePage extends FieldEditorPreferencePage
 	protected void createFieldEditors() {
 		Composite main = getFieldEditorParent();
 
+		BooleanFieldEditor useStagingView = new BooleanFieldEditor(
+				UIPreferences.ALWAYS_USE_STAGING_VIEW,
+				UIText.CommittingPreferencePage_AlwaysUseStagingView, main);
+		addField(useStagingView);
+
 		Group formattingGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		formattingGroup.setText(UIText.CommittingPreferencePage_formatting);
 		GridDataFactory.fillDefaults().grab(true, false).span(3, 1)

@@ -83,11 +83,15 @@ public abstract class AbstractSynchronizeViewTest extends
 
 	@Before
 	public void setupViews() {
+		Activator.getDefault().getPreferenceStore()
+				.setValue(UIPreferences.ALWAYS_USE_STAGING_VIEW, false);
 		TestUtil.showExplorerView();
 	}
 
 	@After
 	public void closeSynchronizeView() {
+		Activator.getDefault().getPreferenceStore()
+				.setValue(UIPreferences.ALWAYS_USE_STAGING_VIEW, true);
 		TestUtil.hideView(ISynchronizeView.VIEW_ID);
 	}
 

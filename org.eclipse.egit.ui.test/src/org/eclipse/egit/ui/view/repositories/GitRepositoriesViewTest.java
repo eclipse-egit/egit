@@ -32,6 +32,7 @@ import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
@@ -190,6 +191,8 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 	 */
 	@Test
 	public void testContextMenuRepository() throws Exception {
+		Activator.getDefault().getPreferenceStore()
+				.setValue(UIPreferences.ALWAYS_USE_STAGING_VIEW, false);
 		// We just check if the dialogs open, the actual commit and import projects
 		// is tested elsewhere
 		SWTBotTree tree = getOrOpenView().bot().tree();
@@ -202,6 +205,8 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 				myUtil.getPluginLocalizedValue("RepoViewImportProjects.label"),
 				NLS.bind(UIText.GitCreateProjectViaWizardWizard_WizardTitle,
 						repositoryFile));
+		Activator.getDefault().getPreferenceStore()
+				.setValue(UIPreferences.ALWAYS_USE_STAGING_VIEW, true);
 	}
 
 	/**
