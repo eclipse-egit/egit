@@ -19,11 +19,16 @@ package org.eclipse.egit.ui.internal.actions;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.commit.CommitUI;
 import org.eclipse.egit.ui.internal.operations.GitScopeUtil;
+import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * Scan for modified resources in the same project as the selected resources.
@@ -32,27 +37,48 @@ public class CommitActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
-		final Repository repo = getRepository(true, event);
-		if (repo == null)
-			return null;
-		final Shell shell = getShell(event);
-		IResource[] resourcesInScope;
-		try {
-			IResource[] selectedResources = getSelectedResources(event);
-			if (selectedResources.length > 0) {
-				IWorkbenchPart part = getPart(event);
-				resourcesInScope = GitScopeUtil.getRelatedChanges(part,
-						selectedResources);
-			} else
-				resourcesInScope = new IResource[0];
-		} catch (InterruptedException e) {
-			// ignore, we will not show the commit dialog in case the user
-			// cancels the scope operation
+
+		final Repository repository = getRepository(true, event);
+		if (repository == null) {
 			return null;
 		}
-		CommitUI commitUi = new CommitUI(shell, repo, resourcesInScope,
-				false);
-		commitUi.commit();
+		boolean useStagingView = Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.ALWAYS_USE_STAGING_VIEW);
+		if (useStagingView) {
+			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					try {
+						StagingView view = (StagingView) PlatformUI.getWorkbench()
+								.getActiveWorkbenchWindow().getActivePage()
+								.showView(StagingView.VIEW_ID);
+						view.setFocus();
+					} catch (PartInitException e) {
+						Activator.logError(e.getMessage(), e);
+					}
+				}
+			});
+		} else {
+			final Shell shell = getShell(event);
+			IResource[] resourcesInScope;
+			try {
+				IResource[] selectedResources = getSelectedResources(event);
+				if (selectedResources.length > 0) {
+					IWorkbenchPart part = getPart(event);
+					resourcesInScope = GitScopeUtil.getRelatedChanges(part,
+							selectedResources);
+				} else
+					resourcesInScope = new IResource[0];
+			} catch (InterruptedException e) {
+				// ignore, we will not show the commit dialog in case the user
+				// cancels the scope operation
+				return null;
+			}
+			CommitUI commitUi = new CommitUI(shell, repository,
+					resourcesInScope, false);
+			commitUi.commit();
+		}
 		return null;
 	}
 
