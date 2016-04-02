@@ -35,6 +35,8 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.common.CompareEditorTester;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
@@ -61,6 +63,8 @@ public class SynchronizeViewGitChangeSetModelTest extends
 
 	@Before
 	public void setUpEnabledModelProvider() {
+		Activator.getDefault().getPreferenceStore()
+				.setValue(UIPreferences.ALWAYS_USE_STAGING_VIEW, false);
 		setEnabledModelProvider(GitChangeSetModelProvider.ID);
 	}
 

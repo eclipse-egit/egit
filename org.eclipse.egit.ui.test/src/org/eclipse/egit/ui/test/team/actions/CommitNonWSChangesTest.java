@@ -17,6 +17,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
@@ -44,6 +45,8 @@ public class CommitNonWSChangesTest extends LocalRepositoryTestCase {
 
 	@Before
 	public void setup() throws Exception {
+		Activator.getDefault().getPreferenceStore()
+				.setValue(UIPreferences.ALWAYS_USE_STAGING_VIEW, false);
 		repositoryFile = createProjectAndCommitToRepository();
 		Activator.getDefault().getRepositoryUtil()
 				.addConfiguredRepository(repositoryFile);

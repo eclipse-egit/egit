@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.RepositoryCacheRule;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
@@ -144,6 +145,9 @@ public class GitRepositoriesViewRepoDeletionTest extends
 	@Test
 	public void testRemoveRepositoryRemoveFromCachesBug483664()
 			throws Exception {
+		Activator.getDefault().getPreferenceStore()
+				.setValue(UIPreferences.ALWAYS_USE_STAGING_VIEW, false);
+
 		deleteAllProjects();
 		assertProjectExistence(PROJ1, false);
 		clearView();
