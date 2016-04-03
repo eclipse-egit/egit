@@ -123,6 +123,30 @@
       "revId": "b4d9412fa65ecf11ce5482603f82709d1df63c4b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_f42f0e3f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseSshSessionFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-04-03T16:46:00Z",
+      "side": 1,
+      "message": "In that case there\u0027s another option: get rid of JGit\u0027s OpenSshConfig altogether and consistently use JSch\u0027s OpenSSHConfig instead. Looks like that one also handles per-host identity files nowadays, which appears to have been the purpose of the JGit implementation.\n\nThat in turn might simplify the whole factory business; looks to me that one then wouldn\u0027t need to create special-purpose per-host JSch instances at all but could work with the default instance throughout. Session.applyConfig() appears to account for host-specific identify files.\n\nThe JGit implementation checks for changes and reloads itself if the config file on disk has changed. JSch doesn\u0027t do so, so maybe we\u0027d need to build something for this aspect.",
+      "parentUuid": "e7dfcf21_34425612",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 3
+      },
+      "revId": "b4d9412fa65ecf11ce5482603f82709d1df63c4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
