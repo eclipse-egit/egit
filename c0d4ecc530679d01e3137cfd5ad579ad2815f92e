@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_54da82e0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CommitActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-04-03T13:01:20Z",
+      "side": 1,
+      "message": "PlatformUI.getWorkbench().getDisplay() seems to be the recommended way. See IWorkbench.getDisplay().\n\nAlternatively use getShell(event).getDisplay().",
+      "range": {
+        "startLine": 49,
+        "startChar": 3,
+        "endLine": 49,
+        "endChar": 23
+      },
+      "revId": "c0d4ecc530679d01e3137cfd5ad579ad2815f92e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
