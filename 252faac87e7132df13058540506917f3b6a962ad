@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_f4938edb",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/CommitActionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-04-03T21:18:41Z",
+      "side": 1,
+      "message": "This is global data: needs to be reset in @After, too. (In the other test classes, too.) Otherwise we may sooner or later have a surprise.",
+      "revId": "252faac87e7132df13058540506917f3b6a962ad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
