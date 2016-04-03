@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_d47cd25d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-04-03T10:00:32Z",
+      "side": 1,
+      "message": "How about renaming this? It can now also be vertical...",
+      "range": {
+        "startLine": 644,
+        "startChar": 5,
+        "endLine": 644,
+        "endChar": 23
+      },
+      "revId": "985723b0e5f49f7adca7f30880b370eb0013d683",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
