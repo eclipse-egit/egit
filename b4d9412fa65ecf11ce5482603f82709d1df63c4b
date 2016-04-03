@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_d4d8521d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseSshSessionFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-04-03T00:15:29Z",
+      "side": 1,
+      "message": "I don\u0027t understand this line.\n\nThis yields only the home directory if the current directory is the home directory.",
+      "revId": "b4d9412fa65ecf11ce5482603f82709d1df63c4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_34c7b63b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseSshSessionFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-04-03T00:15:29Z",
+      "side": 1,
+      "message": "how about implementing this in a new method of JschConfigSessionFactory so that this configuration can also be done in the base class\u0027s method JschConfigSessionFactory.createDefaultJSch(FS) for cases where this is used directly ?",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 3
+      },
+      "revId": "b4d9412fa65ecf11ce5482603f82709d1df63c4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
