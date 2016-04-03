@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_14971a1a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseSshSessionFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-04-03T08:59:20Z",
+      "side": 1,
+      "message": "I know. It\u0027s copied from JGit\u0027s OpenSshConfig.get(). I think at least Jsch should use the same ssh config file as JGit.",
+      "parentUuid": "e7dfcf21_d4d8521d",
+      "revId": "b4d9412fa65ecf11ce5482603f82709d1df63c4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_34c7b63b",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseSshSessionFactory.java",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2016-04-03T00:15:29Z",
       "side": 1,
       "message": "how about implementing this in a new method of JschConfigSessionFactory so that this configuration can also be done in the base class\u0027s method JschConfigSessionFactory.createDefaultJSch(FS) for cases where this is used directly ?",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 3
+      },
+      "revId": "b4d9412fa65ecf11ce5482603f82709d1df63c4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_3490961e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseSshSessionFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-04-03T08:59:20Z",
+      "side": 1,
+      "message": "If you look at the bug report, you\u0027ll see that I am unsure where exactly to do this.\n\nIf we do it in JGit, we have two possibilities:\n\n1. Your suggestion of doing this in JschConfigSessionFactory.\n\n2. Refactor JGit\u0027s ssh handling. Improve JGit\u0027s OpenSshConfig to handle all entries and to implement JSch\u0027s ConfigRepository interface, and then use that. Would amount, however, to re-implementing stuff that JSch should already get right.\n\nAnd finally, there\u0027s additionally also the issue that JSch doesn\u0027t handle a multi-valued UserKnownHostsFile entry correctly, and doesn\u0027t handle GlobalKnownHostsFile at all.\n\nOn a related note, there\u0027s also bug 353346. I wonder if that is not also related to JSch not knowing about the ssh config, and thus not knowing about the GSSAPIAuthentication setting...",
+      "parentUuid": "e7dfcf21_34c7b63b",
       "range": {
         "startLine": 45,
         "startChar": 0,
