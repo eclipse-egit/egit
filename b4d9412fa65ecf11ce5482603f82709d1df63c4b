@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e7dfcf21_543fe28b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseSshSessionFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-04-03T14:05:16Z",
+      "side": 1,
+      "message": "ok, I wasn\u0027t aware of that",
+      "parentUuid": "e7dfcf21_14971a1a",
+      "revId": "b4d9412fa65ecf11ce5482603f82709d1df63c4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dfcf21_34c7b63b",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseSshSessionFactory.java",
         "patchSetId": 1
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "If you look at the bug report, you\u0027ll see that I am unsure where exactly to do this.\n\nIf we do it in JGit, we have two possibilities:\n\n1. Your suggestion of doing this in JschConfigSessionFactory.\n\n2. Refactor JGit\u0027s ssh handling. Improve JGit\u0027s OpenSshConfig to handle all entries and to implement JSch\u0027s ConfigRepository interface, and then use that. Would amount, however, to re-implementing stuff that JSch should already get right.\n\nAnd finally, there\u0027s additionally also the issue that JSch doesn\u0027t handle a multi-valued UserKnownHostsFile entry correctly, and doesn\u0027t handle GlobalKnownHostsFile at all.\n\nOn a related note, there\u0027s also bug 353346. I wonder if that is not also related to JSch not knowing about the ssh config, and thus not knowing about the GSSAPIAuthentication setting...",
       "parentUuid": "e7dfcf21_34c7b63b",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 3
+      },
+      "revId": "b4d9412fa65ecf11ce5482603f82709d1df63c4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_34425612",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseSshSessionFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-04-03T14:05:16Z",
+      "side": 1,
+      "message": "OpenSshConfig was implemented before JGit moved to Eclipse (it\u0027s already in the initial contribution commit). Back then we used jsch 0.1.37 which didn\u0027t have any support for ssh_config, according to its javadoc this was the reason to implement OpenSshConfig. According to [1] jsch added support for ssh_config in 0.1.50 and we are currently using the latest release 0.1.53. So I think it would make sense to rely on the ssh_config support in jsch instead of reimplementing that in JGit.\n\nWe don\u0027t use kerberos so I have no idea what\u0027s required to test if jsch\u0027s config support would fix bug 353346\n\n[1] http://www.jcraft.com/jsch/ChangeLog",
+      "parentUuid": "e7dfcf21_3490961e",
       "range": {
         "startLine": 45,
         "startChar": 0,
