@@ -2,6 +2,7 @@
  * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Roger C. Soares <rogersoares@intelinet.com.br>
  * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2016, Daniel Megert <daniel_megert@ch.ibm.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -52,7 +53,6 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.team.core.history.IFileRevision;
-import org.eclipse.team.internal.ui.Utils;
 import org.eclipse.team.internal.ui.synchronize.EditableSharedDocumentAdapter.ISharedDocumentAdapterListener;
 import org.eclipse.team.internal.ui.synchronize.LocalResourceSaveableComparison;
 import org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement;
@@ -658,8 +658,8 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 
 		private ISaveablesLifecycleListener getSaveablesLifecycleListener(
 				IWorkbenchPart part) {
-			ISaveablesLifecycleListener listener = (ISaveablesLifecycleListener) Utils
-					.getAdapter(part, ISaveablesLifecycleListener.class);
+			ISaveablesLifecycleListener listener = AdapterUtils.adapt(part,
+					ISaveablesLifecycleListener.class);
 			if (listener == null)
 				listener = CommonUtils.getService(part.getSite(), ISaveablesLifecycleListener.class);
 			return listener;
