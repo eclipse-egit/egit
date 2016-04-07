@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>JGit 4.3 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">JGit 4.3 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bug-Fixes.html" title="Bug Fixes">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bug Fixes</td>
+			</tr>
+		</table><hr class="navigation-separator"/>
+		<h1 id="JGit">JGit</h1>
+		<h2 id="Git_attributes_support">Git attributes support</h2>
+		<p>Implement git attributes support for</p>
+		<ul>
+			<li>text attributes</li>
+			<li>eol attributes</li>
+			<li>macros</li>
+			<li>binary macro</li>
+		</ul>
+		<h2 id="Large_File_Storage_.28LFS.29_Extension">Large File Storage (LFS) Extension</h2>
+		<p>Git Large File Storage (LFS) is a Git extension for versioning large files</p>
+		<p>LFS replaces large files such as audio samples, videos, datasets, and graphics with text pointers inside Git, while storing the file contents on a remote LFS server.</p>
+		<p>In 4.3 the following features to support LFS in JGit were implemented</p>
+		<ul>
+			<li>SHA-256 abstraction</li>
+			<li>command line command debug-lfs-store to run LFS test server</li>
+			<li>LFS server: support LFS protocol and a file system based LFS storage (used in Gerrit lfs-storage-fs plugin)</li>
+			<li>LFS server: support Amazon S3 based storage for LFS (used in Gerrit lfs-storage-s3 plugin)</li>
+			<li>fix FileLfsRepository to make it thread safe</li>
+		</ul>
+		<h2 id="RefTree">RefTree</h2>
+		<p>RefTree enables JGit to version refs (branches, tags and symbolic refs) in a Git tree and enables atomic push which is a precondition to implement Git Ketch.</p>
+		<p>A group of updates can be applied by updating the tree in one step, writing out a new root tree, and storing its SHA-1. If references are stored in RefTrees, comparing two repositories is a matter of checking if two SHA-1s are identical. Without RefTrees comparing two repositories requires listing all references and comparing the sets.</p>
+		<p>Track the "refs/" directory as a root tree by storing references that point directly at an object as a GITLINK entry in the tree. For example "refs/heads/master" is written as "heads/master".</p>
+		<p>Annotated tags also store their peeled value with ^{} suffix, using "tags/v1.0" and "tags/v1.0^{}" GITLINK entries.</p>
+		<p>Symbolic references are written as SYMLINK entries with the blob of the symlink carrying the name of the symbolic reference target.</p>
+		<ul>
+			<li>HEAD is outside of "refs/" namespace so it is stored as a special "..HEAD" entry.</li>
+			<li>debug-rebuild-ref-tree command line command to migrate refs to RefTreeDatabase</li>
+			<li>copy HEAD into RefTree</li>
+			<li>RefTreeDatabase: Allow ORIG_HEAD, etc. on non-bare repositories</li>
+			<li>RefTreeDatabase: Expose bootstrap refs in getAdditionalRefs</li>
+		</ul>
+		<h2 id="Git_Ketch">Git Ketch</h2>
+		<p>Git Ketch is a multi-master Git repository management system.  Writes are successful only if a majority of participant servers agree. Acknowledged writes are durable against server failures as a majority of the participants store all required objects.</p>
+		<p>Git Ketch is modeled on the Raft Consensus Algorithm.  A ketch sailing vessel is faster and more nimble than a raft.  It can also carry more source codes. Git Ketch front-loads replication costs, which vaguely resembles a ketch sailing vessel's distinguishing feature of the main mast on the front of the ship.</p>
+		<p>In 4.3 the following Ketch features were implemented</p>
+		<ul>
+			<li>basic replication system</li>
+			<li>simple map of running leader instances</li>
+			<li>intercept push and route it through Ketch</li>
+			<li>daemon: Add --ketch=LEADER flag</li>
+		</ul>
+		<h2 id="Repo_command">Repo command</h2>
+		<ul>
+			<li>add ignoreRemoteFailures option to RepoCommand</li>
+			<li>support revision in remote tag</li>
+		</ul>
+		<h2 id="Miscellaneous">Miscellaneous</h2>
+		<ul>
+			<li>implement configuration option DIR_NO_GITLINKS</li>
+		</ul>
+		<h2 id="Build_and_Release_Engineering">Build and Release Engineering</h2>
+		<ul>
+			<li>Enable building JGit and Gerrit in the same Buck build to speed up build for features spanning JGit and Gerrit</li>
+		</ul><hr class="navigation-separator"/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bug-Fixes.html" title="Bug Fixes">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bug Fixes</td>
+			</tr>
+		</table>
+	</body>
+</html>
