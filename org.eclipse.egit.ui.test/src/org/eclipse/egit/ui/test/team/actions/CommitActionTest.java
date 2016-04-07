@@ -35,6 +35,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,6 +49,8 @@ public class CommitActionTest extends LocalRepositoryTestCase {
 
 	@Before
 	public void setup() throws Exception {
+		Activator.getDefault().getPreferenceStore()
+				.setValue(UIPreferences.ALWAYS_USE_STAGING_VIEW, false);
 		repositoryFile = createProjectAndCommitToRepository();
 		Repository repo = lookupRepository(repositoryFile);
 		TestUtil.configureTestCommitterAsUser(repo);
@@ -57,6 +60,12 @@ public class CommitActionTest extends LocalRepositoryTestCase {
 		File dotProject = new File(project.getLocation().toOSString(), ".project");
 		project.delete(false, false, null);
 		assertTrue(dotProject.delete());
+	}
+
+	@After
+	public void tearDown() {
+		Activator.getDefault().getPreferenceStore()
+				.setValue(UIPreferences.ALWAYS_USE_STAGING_VIEW, true);
 	}
 
 	@Test

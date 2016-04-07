@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2013 Dariusz Luksza <dariusz@luksza.org> and others.
+ * Copyright (C) 2011, 2015 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -152,8 +152,8 @@ class GitSyncCache {
 				tw.addTree(dci);
 				fti.setDirCacheIterator(tw, 3);
 			}
-			List<ThreeWayDiffEntry> diffEntrys = ThreeWayDiffEntry.scan(tw);
-
+			List<ThreeWayDiffEntry> diffEntrys = ThreeWayDiffEntry
+					.scan(tw, gsd);
 			for (ThreeWayDiffEntry diffEntry : diffEntrys)
 				repoCache.addMember(diffEntry);
 		} catch (Exception e) {
