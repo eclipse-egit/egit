@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %fragment_name
 Bundle-SymbolicName: org.eclipse.egit.ui.importer;singleton:=true
 Fragment-Host: org.eclipse.egit.ui
-Bundle-Version: 4.3.1.qualifier
+Bundle-Version: 4.4.0.qualifier
 Bundle-Vendor: %provider_name
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -12,5 +12,5 @@ Require-Bundle: org.eclipse.ui,
 Bundle-Localization: fragment
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.egit.ui.internal.clone;version="4.3.1";x-internal:=true;
+Export-Package: org.eclipse.egit.ui.internal.clone;version="4.4.0";x-internal:=true;
  uses:="org.eclipse.ui,org.eclipse.jface.wizard,org.eclipse.jface.viewers"
