@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 4.3 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 4.3 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bug-Fixes.html" title="Bug Fixes">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bug Fixes</td>
+			</tr>
+		</table><hr class="navigation-separator"/>
+		<h1 id="EGit">EGit</h1>
+		<h2 id="Improve_support_for_submodules_and_nested_repositories">Improve support for submodules and nested repositories</h2>
+		<ul>
+			<li>Update index diff of parent repository when submodule changes</li>
+			<li>Extended support for nested repositories in project.</li>
+			<li>Fix refresh after re-connecting a project with submodules inside</li>
+			<li>Handle submodules in auto-sharing</li>
+			<li>Delegate detection of git repositories to JGit</li>
+			<li>RepositoryCache: do not prematurely remove submodules</li>
+			<li>RepositoriesViewLabelProvider: mark dirty submodules</li>
+			<li>Fix recognition of submodules in folders.</li>
+		</ul>
+		<h2 id="Staging_View">Staging View</h2>
+		<ul>
+			<li>When running "Commit" action open staging view instead of commit dialog</li>
+			<li>Auto-switch between horizontal and vertical StagingView layout</li>
+		</ul>
+		<h2 id="GitFlow">GitFlow</h2>
+		<ul>
+			<li>Allow filtering of Gitflow feature branches in checkout and track dialog</li>
+			<li>Added Gitflow convenience command for checking out develop branch</li>
+		</ul>
+		<h2 id="Gerrit_support">Gerrit support</h2>
+		<ul>
+			<li>Staging View: Treat "Commit and Push" as Gerrit push for the currently checked out branch when the repository has a gerrit configuration.</li>
+			<li>Auto-fill "Fetch from Gerrit" wizard for more clipboard contents</li>
+		</ul>
+		<h2 id="Miscellaneous_enhancements">Miscellaneous enhancements</h2>
+		<ul>
+			<li>Wizard to configure pull operation</li>
+			<li>Use default preferences for preferred MergeStrategy</li>
+			<li>Support copy/move of workspace if Git repository is under workspace</li>
+			<li>Distinguish unchanged/deleted files in logical models</li>
+			<li>In order to allow headless reuse move EclipseSshSessionFactory, EclipseAuthenticator and EclipseProxySelector to org.eclipse.egit.core</li>
+		</ul>
+		<h2 id="EGit_Github_Client">EGit Github Client</h2>
+		<ul>
+			<li>Add the assigner attribute to IssueEvent</li>
+		</ul>
+		<h2 id="Build_and_release_engineering">Build and release engineering</h2>
+		<ul>
+			<li>Update to latest SWTBot to get more meaningful screenshots on test errors</li>
+		</ul><hr class="navigation-separator"/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bug-Fixes.html" title="Bug Fixes">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bug Fixes</td>
+			</tr>
+		</table>
+	</body>
+</html>

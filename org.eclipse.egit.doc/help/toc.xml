@@ -442,31 +442,33 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/4.2/4.2.html" label="EGit 4.2 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/4.2/4.2.html" label="EGit">
-			<topic href="help/EGit/New_and_Noteworthy/4.2/4.2.html#Features" label="Features"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/4.2/4.2.html#GitHub_Client" label="GitHub Client"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/4.2/4.2.html#Performance_improvements" label="Performance improvements"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/4.2/4.2.html#Release_engineering_and_build" label="Release engineering and build"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/4.3/4.3.html" label="EGit 4.3 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/4.3/4.3.html" label="EGit">
+			<topic href="help/EGit/New_and_Noteworthy/4.3/4.3.html#Improve_support_for_submodules_and_nested_repositories" label="Improve support for submodules and nested repositories"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/4.3/4.3.html#Staging_View" label="Staging View"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/4.3/4.3.html#GitFlow" label="GitFlow"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/4.3/4.3.html#Gerrit_support" label="Gerrit support"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/4.3/4.3.html#Miscellaneous_enhancements" label="Miscellaneous enhancements"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/4.3/4.3.html#EGit_Github_Client" label="EGit Github Client"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/4.3/4.3.html#Build_and_release_engineering" label="Build and release engineering"></topic>
 		</topic>
-		<topic href="help/EGit/New_and_Noteworthy/4.2/Bug-Fixes.html" label="Bug Fixes"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/4.2/Contributors.html" label="Contributors"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/4.2/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/4.3/Bug-Fixes.html" label="Bug Fixes"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/4.3/Contributors.html" label="Contributors"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/4.3/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/4.2/4.2.html" label="JGit 4.2 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/4.2/4.2.html" label="JGit">
-			<topic href="help/JGit/New_and_Noteworthy/4.2/4.2.html#API" label="API"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/4.2/4.2.html#Configuration" label="Configuration"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/4.2/4.2.html#JGit_command_line" label="JGit command line"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/4.2/4.2.html#Transport" label="Transport"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/4.2/4.2.html#Git_attribute_support" label="Git attribute support"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/4.2/4.2.html#Support_git-lfs_extension" label="Support git-lfs extension"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/4.2/4.2.html#Performance_Improvements" label="Performance Improvements"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/4.2/4.2.html#Release_Engineering_and_Build" label="Release Engineering and Build"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/4.3/4.3.html" label="JGit 4.3 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/4.3/4.3.html" label="JGit">
+			<topic href="help/JGit/New_and_Noteworthy/4.3/4.3.html#Git_attributes_support" label="Git attributes support"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/4.3/4.3.html#Large_File_Storage_.28LFS.29_Extension" label="Large File Storage (LFS) Extension"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/4.3/4.3.html#RefTree" label="RefTree"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/4.3/4.3.html#Git_Ketch" label="Git Ketch"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/4.3/4.3.html#Repo_command" label="Repo command"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/4.3/4.3.html#Miscellaneous" label="Miscellaneous"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/4.3/4.3.html#Build_and_Release_Engineering" label="Build and Release Engineering"></topic>
 		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/4.2/Bug-Fixes.html" label="Bug Fixes"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/4.2/Contributors.html" label="Contributors"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/4.2/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/4.3/Bug-Fixes.html" label="Bug Fixes"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/4.3/Contributors.html" label="Contributors"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/4.3/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>
