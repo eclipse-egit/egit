@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_130b8230",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-04-14T15:29:03Z",
+      "side": 1,
+      "message": "only the staging view was enhanced with the new logic so the \"Commit \u0026 Push\" button in the commit dialog doesn\u0027t show another dialog",
+      "revId": "60819922fb6e2d3693d6e44d3e9c100d26ce7a03",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
