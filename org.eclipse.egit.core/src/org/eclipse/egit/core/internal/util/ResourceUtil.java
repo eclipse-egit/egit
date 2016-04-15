@@ -629,6 +629,9 @@ public class ResourceUtil {
 
 		final Set<ResourceMapping> mappings = new LinkedHashSet<ResourceMapping>();
 		for (IModelProviderDescriptor candidate : modelDescriptors) {
+			if (candidate.getId().startsWith("org.eclipse.egit")) { //$NON-NLS-1$
+				continue;
+			}
 			try {
 				final IResource[] resources = candidate
 						.getMatchingResources(new IResource[] { resource, });
