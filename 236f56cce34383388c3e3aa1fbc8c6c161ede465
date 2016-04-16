@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_2a9c78ba",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3307,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-04-16T11:31:49Z",
+      "side": 1,
+      "message": "This causes bug 491309.",
+      "range": {
+        "startLine": 3307,
+        "startChar": 3,
+        "endLine": 3307,
+        "endChar": 20
+      },
+      "revId": "236f56cce34383388c3e3aa1fbc8c6c161ede465",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
