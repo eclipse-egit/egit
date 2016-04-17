@@ -155,23 +155,27 @@ class PushToGerritPage extends WizardPage {
 		});
 		addRefContentProposalToText(branchText);
 
-		// get all available URIs from the repository
+		// get all available Gerrit URIs from the repository
 		SortedSet<String> uris = new TreeSet<>();
 		try {
 			for (RemoteConfig rc : RemoteConfig.getAllRemoteConfigs(repository
 					.getConfig())) {
-				if (rc.getURIs().size() > 0)
-					uris.add(rc.getURIs().get(0).toPrivateString());
-				for (URIish u : rc.getPushURIs())
-					uris.add(u.toPrivateString());
-
+				if (GerritUtil.isGerritRemote(rc)) {
+					if (rc.getURIs().size() > 0) {
+						uris.add(rc.getURIs().get(0).toPrivateString());
+					}
+					for (URIish u : rc.getPushURIs()) {
+						uris.add(u.toPrivateString());
+					}
+				}
 			}
 		} catch (URISyntaxException e) {
 			Activator.handleError(e.getMessage(), e, false);
 			setErrorMessage(e.getMessage());
 		}
-		for (String aUri : uris)
+		for (String aUri : uris) {
 			uriCombo.add(aUri);
+		}
 		selectLastUsedUri();
 		setLastUsedBranch();
 		branchText.setFocus();
