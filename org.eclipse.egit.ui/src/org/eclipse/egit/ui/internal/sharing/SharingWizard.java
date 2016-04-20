@@ -78,7 +78,7 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 				final Map<IProject, File> projectsToMove = existingPage
 						.getProjects(true);
 				final Repository selectedRepository = existingPage
-						.getSelectedRepsoitory();
+						.getSelectedRepository();
 				getContainer().run(true, false, new IRunnableWithProgress() {
 					@Override
 					public void run(IProgressMonitor monitor)
