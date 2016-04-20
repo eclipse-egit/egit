@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_38de8452",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-04-20T21:29:53Z",
+      "side": 1,
+      "message": "this is a problem if he doesn\u0027t choose to create the repository in the parent folder of the current project location",
+      "revId": "a6692d20ba558c89a37bf870b70166b43f10b49e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_58d1903d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-04-20T21:29:53Z",
+      "side": 1,
+      "message": "editor",
+      "range": {
+        "startLine": 14,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "a6692d20ba558c89a37bf870b70166b43f10b49e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_1806285c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/sharing/SharingWizard.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-04-20T21:29:53Z",
+      "side": 1,
+      "message": "why adding redundant type information ?",
+      "revId": "a6692d20ba558c89a37bf870b70166b43f10b49e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_78d48c2e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/sharing/SharingWizard.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-04-20T21:29:53Z",
+      "side": 1,
+      "message": "style nit: unnecessary empty lines and bad formatting below",
+      "revId": "a6692d20ba558c89a37bf870b70166b43f10b49e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_98eeb8fb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/sharing/SharingWizard.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-04-20T21:29:53Z",
+      "side": 1,
+      "message": "in order to reduce the deep indentation below we can remove one level of indentation by inverting this condition\n\n if (editorsToBeClosed.isEmpty()) {\n     return:\n }",
+      "revId": "a6692d20ba558c89a37bf870b70166b43f10b49e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
