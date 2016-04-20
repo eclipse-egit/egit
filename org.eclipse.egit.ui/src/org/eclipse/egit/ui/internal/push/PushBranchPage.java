@@ -100,7 +100,7 @@ public class PushBranchPage extends WizardPage {
 	/** Only set if user selected "New Remote" */
 	private AddRemotePage addRemotePage;
 
-	private Set<Resource> disposables = new HashSet<Resource>();
+	private Set<Resource> disposables = new HashSet<>();
 
 	/**
 	 * Create the page.

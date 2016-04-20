@@ -277,7 +277,7 @@ public class MultiPullResultDialog extends Dialog {
 			int yOffset = 0;
 			int yDelta = -trim.y - 3;
 
-			final LinkedList<PullResultDialog> dialogs= new LinkedList<PullResultDialog>();
+			final LinkedList<PullResultDialog> dialogs= new LinkedList<>();
 			IStructuredSelection sel = (IStructuredSelection) tv.getSelection();
 			for (Object obj : sel.toList()) {
 				@SuppressWarnings("unchecked")

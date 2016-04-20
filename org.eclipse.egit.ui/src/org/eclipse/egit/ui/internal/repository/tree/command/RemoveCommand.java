@@ -307,7 +307,7 @@ public class RemoveCommand extends
 	}
 
 	private List<IProject> findProjectsToDelete(final List<RepositoryNode> selectedNodes) {
-		final List<IProject> projectsToDelete = new ArrayList<IProject>();
+		final List<IProject> projectsToDelete = new ArrayList<>();
 		for (RepositoryNode node : selectedNodes) {
 			if (node.getRepository().isBare())
 				continue;

@@ -65,9 +65,9 @@ public class GitCompareEditorInput extends CompareEditorInput {
 
 	private final IResource[] resources;
 
-	private final List<String> filterPathStrings = new ArrayList<String>();
+	private final List<String> filterPathStrings = new ArrayList<>();
 
-	private final Map<IPath, IDiffContainer> diffRoots = new HashMap<IPath, IDiffContainer>();
+	private final Map<IPath, IDiffContainer> diffRoots = new HashMap<>();
 
 	private Repository repository;
 
@@ -450,9 +450,9 @@ public class GitCompareEditorInput extends CompareEditorInput {
 	private IResource[] convertResourceInput(final IResource[] input) {
 		if (input.length > 0) {
 			// we must make sure to only show the topmost resources as roots
-			List<IResource> resourceList = new ArrayList<IResource>(
+			List<IResource> resourceList = new ArrayList<>(
 					input.length);
-			List<IPath> allPaths = new ArrayList<IPath>(input.length);
+			List<IPath> allPaths = new ArrayList<>(input.length);
 			for (IResource originalInput : input) {
 				allPaths.add(originalInput.getFullPath());
 			}

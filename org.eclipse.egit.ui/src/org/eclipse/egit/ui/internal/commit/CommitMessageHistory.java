@@ -50,7 +50,7 @@ public class CommitMessageHistory {
 					"Error reading commit message history", e); //$NON-NLS-1$
 			return Collections.emptySet();
 		}
-		Set<String> messages = new LinkedHashSet<String>();
+		Set<String> messages = new LinkedHashSet<>();
 		for (IMemento child : memento.getChildren(KEY_MESSAGE)) {
 			messages.add(child.getTextData());
 			if (messages.size() == max)

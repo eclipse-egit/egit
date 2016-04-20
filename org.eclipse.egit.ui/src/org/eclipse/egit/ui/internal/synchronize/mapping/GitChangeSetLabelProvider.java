@@ -117,7 +117,7 @@ public class GitChangeSetLabelProvider extends SynchronizationLabelProvider impl
 		String format = store.getString(UIPreferences.SYNC_VIEW_CHANGESET_LABEL_FORMAT);
 
 		Commit commit = commitModel.getCachedCommitObj();
-		Map<String, String> bindings = new HashMap<String, String>();
+		Map<String, String> bindings = new HashMap<>();
 		bindings.put(BINDING_CHANGESET_DATE,
 				dateFormatter.formatDate(commit.getCommitDate()));
 		bindings.put(BINDING_CHANGESET_AUTHOR, commit.getAuthorName());

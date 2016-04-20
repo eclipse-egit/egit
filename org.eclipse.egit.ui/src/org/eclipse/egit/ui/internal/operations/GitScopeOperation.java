@@ -57,7 +57,7 @@ public class GitScopeOperation extends ModelOperation {
 	 * @return list of {@link IResource}s
 	 */
 	List<IResource> getRelevantResources() {
-		List<IResource> resourcesInScope = new ArrayList<IResource>();
+		List<IResource> resourcesInScope = new ArrayList<>();
 		ResourceTraversal[] traversals = getScope().getTraversals();
 		for (ResourceTraversal resourceTraversal : traversals)
 			resourcesInScope.addAll(Arrays.asList(resourceTraversal

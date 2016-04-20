@@ -46,7 +46,7 @@ public class UpstreamConfigComponent {
 
 	private Button rebaseRadio;
 
-	private List<UpstreamConfigSelectionListener> listeners = new ArrayList<UpstreamConfigSelectionListener>();
+	private List<UpstreamConfigSelectionListener> listeners = new ArrayList<>();
 
 	private Group upstreamConfigGroup;
 

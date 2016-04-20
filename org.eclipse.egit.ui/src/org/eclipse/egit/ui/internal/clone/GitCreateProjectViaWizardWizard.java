@@ -149,8 +149,8 @@ public class GitCreateProjectViaWizardWizard extends Wizard {
 			throws InvocationTargetException, InterruptedException {
 		switch (mySelectionPage.getWizardSelection()) {
 		case GitSelectWizardPage.EXISTING_PROJECTS_WIZARD: {
-			final Set<ProjectRecord> projectsToCreate = new HashSet<ProjectRecord>();
-			final List<IWorkingSet> workingSets = new ArrayList<IWorkingSet>();
+			final Set<ProjectRecord> projectsToCreate = new HashSet<>();
+			final List<IWorkingSet> workingSets = new ArrayList<>();
 			// get the data from the page in the UI thread
 			PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 				@Override

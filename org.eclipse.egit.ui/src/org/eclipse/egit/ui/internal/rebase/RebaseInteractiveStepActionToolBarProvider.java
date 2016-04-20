@@ -258,7 +258,7 @@ public class RebaseInteractiveStepActionToolBarProvider {
 	protected List<RebaseInteractivePlan.PlanElement> getSelectedRebaseTodoLines() {
 		IStructuredSelection selection = (IStructuredSelection) view.planTreeViewer
 				.getSelection();
-		List<RebaseInteractivePlan.PlanElement> planEntries = new ArrayList<RebaseInteractivePlan.PlanElement>(
+		List<RebaseInteractivePlan.PlanElement> planEntries = new ArrayList<>(
 				selection.size());
 		@SuppressWarnings("unchecked")
 		List<RebaseInteractivePlan.PlanElement> candidates = selection.toList();
@@ -321,7 +321,7 @@ public class RebaseInteractiveStepActionToolBarProvider {
 	private void enableMoveButtons(
 			PlanElement firstSelectedEntry, PlanElement lastSelectedEntry) {
 		List<PlanElement> list = view.getCurrentPlan().getList();
-		List<PlanElement> stepList = new ArrayList<PlanElement>();
+		List<PlanElement> stepList = new ArrayList<>();
 		for (PlanElement planElement : list) {
 			if (!planElement.isComment())
 				stepList.add(planElement);

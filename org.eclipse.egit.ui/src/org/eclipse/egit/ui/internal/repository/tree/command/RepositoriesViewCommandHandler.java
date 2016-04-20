@@ -191,7 +191,7 @@ abstract class RepositoriesViewCommandHandler<T extends RepositoryTreeNode<?>>
 	}
 
 	protected Collection<IPath> getSelectedFileAndFolderPaths(ExecutionEvent event) throws ExecutionException {
-		Collection<IPath> paths = new ArrayList<IPath>();
+		Collection<IPath> paths = new ArrayList<>();
 		for (Object selectedNode : getSelectedNodes(event)) {
 			RepositoryTreeNode treeNode = (RepositoryTreeNode) selectedNode;
 			IPath path = treeNode.getPath();

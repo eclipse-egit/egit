@@ -148,7 +148,7 @@ public class SynchronizeWithMenu extends ContributionItem implements
 					try {
 						data = new GitSynchronizeData(repo, HEAD, name, true);
 						if (!(selectedResource instanceof IProject)) {
-							HashSet<IResource> resources = new HashSet<IResource>();
+							HashSet<IResource> resources = new HashSet<>();
 							resources.add(selectedResource);
 							data.setIncludedResources(resources);
 						}

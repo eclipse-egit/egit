@@ -559,7 +559,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	 *            the paths to show
 	 */
 	private void showPaths(final List<IPath> paths) {
-		final List<RepositoryTreeNode> nodesToShow = new ArrayList<RepositoryTreeNode>();
+		final List<RepositoryTreeNode> nodesToShow = new ArrayList<>();
 
 		Map<Repository, Collection<String>> pathsByRepo = ResourceUtil.splitPathsByRepository(paths);
 		for (Map.Entry<Repository, Collection<String>> entry : pathsByRepo.entrySet()) {
@@ -742,7 +742,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		ISelection selection = context.getSelection();
 		if (selection instanceof IStructuredSelection) {
 			IStructuredSelection ss = (IStructuredSelection) selection;
-			List<IPath> paths = new ArrayList<IPath>();
+			List<IPath> paths = new ArrayList<>();
 			for (Iterator it = ss.iterator(); it.hasNext();) {
 				Object element = it.next();
 				IResource resource = AdapterUtils.adapt(element, IResource.class);
@@ -798,7 +798,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	}
 
 	private static List<Object> getShowInElements(IStructuredSelection selection) {
-		List<Object> elements = new ArrayList<Object>();
+		List<Object> elements = new ArrayList<>();
 		for (Object element : selection.toList()) {
 			if (element instanceof FileNode || element instanceof FolderNode
 					|| element instanceof WorkingDirNode) {
@@ -829,7 +829,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	 * @return the HistoryPageInput corresponding to the selection, or null
 	 */
 	private static HistoryPageInput getHistoryPageInput(IStructuredSelection selection) {
-		List<File> files = new ArrayList<File>();
+		List<File> files = new ArrayList<>();
 		Repository repo = null;
 		for (Object element : selection.toList()) {
 			Repository nodeRepository;

@@ -103,7 +103,7 @@ public class CompareWithPreviousActionHandler extends RepositoryActionHandler {
 
 		final List<PreviousCommit> previousList = findPreviousCommits();
 
-		final AtomicReference<PreviousCommit> previous = new AtomicReference<PreviousCommit>();
+		final AtomicReference<PreviousCommit> previous = new AtomicReference<>();
 		if (previousList.size() == 0)
 			showNotFoundDialog(event, resource);
 		else if (previousList.size() == 1)

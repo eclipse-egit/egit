@@ -113,7 +113,7 @@ public class DecoratableResourceMapping extends DecoratableResource {
 					.getBranchStatus(repository);
 		} else if(repositories.size() > 1) {
 			// collect branch names but skip branch status (doesn't make sense)
-			Set<String> branches = new HashSet<String>(2);
+			Set<String> branches = new HashSet<>(2);
 			for (Repository repository : repositories) {
 				branches.add(DecoratableResourceHelper
 						.getShortBranch(repository));

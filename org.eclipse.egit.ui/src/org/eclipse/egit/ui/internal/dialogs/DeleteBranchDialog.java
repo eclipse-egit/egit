@@ -70,7 +70,7 @@ public class DeleteBranchDialog extends AbstractBranchSelectionDialog {
 	@Override
 	protected String refNameFromDialog() {
 		selectedRefs.clear();
-		Set<String> selected = new HashSet<String>();
+		Set<String> selected = new HashSet<>();
 		IStructuredSelection selection = (IStructuredSelection) branchTree.getSelection();
 		for (Object sel : selection.toArray()) {
 			if (!(sel instanceof RefNode))
@@ -102,7 +102,7 @@ public class DeleteBranchDialog extends AbstractBranchSelectionDialog {
 				if (result == DeleteBranchOperation.REJECTED_UNMERGED) {
 					List<RefNode> nodes = extractSelectedRefNodes();
 
-					MessageDialog messageDialog = new UnmergedBranchDialog<RefNode>(
+					MessageDialog messageDialog = new UnmergedBranchDialog<>(
 							getShell(), nodes);
 
 					if (messageDialog.open() == Window.OK)
@@ -129,7 +129,7 @@ public class DeleteBranchDialog extends AbstractBranchSelectionDialog {
 	}
 
 	private List<RefNode> extractSelectedRefNodes() {
-		List<RefNode> nodes = new ArrayList<RefNode>();
+		List<RefNode> nodes = new ArrayList<>();
 		Object[] array = ((IStructuredSelection) super.branchTree
 				.getSelection()).toArray();
 

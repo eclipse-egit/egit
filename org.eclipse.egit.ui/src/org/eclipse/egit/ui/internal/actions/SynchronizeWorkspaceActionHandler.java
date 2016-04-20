@@ -91,7 +91,7 @@ public class SynchronizeWorkspaceActionHandler extends RepositoryActionHandler {
 			else if (resource instanceof IContainer) {
 				Set<IResource> containers = result.get(rm.getRepository());
 				if (containers == null) {
-					containers = new HashSet<IResource>();
+					containers = new HashSet<>();
 					result.put(rm.getRepository(), containers);
 					containers.add(resource);
 				} else if (containers.size() > 0)

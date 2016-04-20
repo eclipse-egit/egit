@@ -158,7 +158,7 @@ class PushToGerritPage extends WizardPage {
 		addRefContentProposalToText(branchText);
 
 		// get all available URIs from the repository
-		SortedSet<String> uris = new TreeSet<String>();
+		SortedSet<String> uris = new TreeSet<>();
 		try {
 			for (RemoteConfig rc : RemoteConfig.getAllRemoteConfigs(repository
 					.getConfig())) {
@@ -298,7 +298,7 @@ class PushToGerritPage extends WizardPage {
 		IContentProposalProvider cp = new IContentProposalProvider() {
 			@Override
 			public IContentProposal[] getProposals(String contents, int position) {
-				List<IContentProposal> resultList = new ArrayList<IContentProposal>();
+				List<IContentProposal> resultList = new ArrayList<>();
 
 				// make the simplest possible pattern check: allow "*"
 				// for multiple characters
@@ -328,7 +328,7 @@ class PushToGerritPage extends WizardPage {
 					pattern = null;
 				}
 
-				Set<String> proposals = new TreeSet<String>(
+				Set<String> proposals = new TreeSet<>(
 						String.CASE_INSENSITIVE_ORDER);
 
 				try {

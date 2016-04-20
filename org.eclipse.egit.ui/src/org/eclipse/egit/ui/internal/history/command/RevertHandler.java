@@ -69,7 +69,7 @@ public class RevertHandler extends AbstractHistoryCommandHandler {
 
 		BasicConfigurationDialog.show(repo);
 
-		List<RepositoryCommit> repositoryCommits = new ArrayList<RepositoryCommit>();
+		List<RepositoryCommit> repositoryCommits = new ArrayList<>();
 		for (RevCommit commit : commits)
 			repositoryCommits.add(new RepositoryCommit(repo, commit));
 		final IStructuredSelection selected = new StructuredSelection(

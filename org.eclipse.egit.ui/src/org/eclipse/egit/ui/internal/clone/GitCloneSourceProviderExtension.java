@@ -38,7 +38,7 @@ public class GitCloneSourceProviderExtension {
 	 *         point registry
 	 */
 	public static List<CloneSourceProvider> getCloneSourceProvider() {
-		List<CloneSourceProvider> cloneSourceProvider = new ArrayList<CloneSourceProvider>();
+		List<CloneSourceProvider> cloneSourceProvider = new ArrayList<>();
 
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
 		IConfigurationElement[] config = registry

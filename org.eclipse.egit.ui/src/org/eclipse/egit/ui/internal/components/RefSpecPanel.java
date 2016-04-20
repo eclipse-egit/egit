@@ -194,7 +194,7 @@ public class RefSpecPanel {
 
 	private static List<RefContentProposal> createProposalsFilteredRemote(
 			final List<RefContentProposal> proposals) {
-		final List<RefContentProposal> result = new ArrayList<RefContentProposal>();
+		final List<RefContentProposal> result = new ArrayList<>();
 		for (final RefContentProposal p : proposals) {
 			final String content = p.getContent();
 			if (content.equals(Constants.HEAD)
@@ -284,7 +284,7 @@ public class RefSpecPanel {
 
 	private final boolean pushSpecs;
 
-	private final List<SelectionChangeListener> listeners = new LinkedList<SelectionChangeListener>();
+	private final List<SelectionChangeListener> listeners = new LinkedList<>();
 
 	private final ImageRegistry imageRegistry;
 
@@ -371,7 +371,7 @@ public class RefSpecPanel {
 		final List<RefContentProposal> remoteProposals = createContentProposals(
 				remoteRefs, null);
 		remoteProposalProvider.setProposals(remoteProposals);
-		remoteRefNames = new HashSet<String>();
+		remoteRefNames = new HashSet<>();
 		for (final RefContentProposal p : remoteProposals)
 			remoteRefNames.add(p.getContent());
 
@@ -384,7 +384,7 @@ public class RefSpecPanel {
 		final List<RefContentProposal> localProposals = createContentProposals(
 				localDb.getAllRefs().values(), HEAD);
 		localProposalProvider.setProposals(localProposals);
-		localRefNames = new HashSet<String>();
+		localRefNames = new HashSet<>();
 		for (final RefContentProposal ref : localProposals)
 			localRefNames.add(ref.getContent());
 
@@ -1748,7 +1748,7 @@ public class RefSpecPanel {
 
 	private List<RefContentProposal> createProposalsFilteredLocal(
 			final List<RefContentProposal> proposals) {
-		final List<RefContentProposal> result = new ArrayList<RefContentProposal>();
+		final List<RefContentProposal> result = new ArrayList<>();
 		for (final RefContentProposal p : proposals) {
 			final String content = p.getContent();
 			if (pushSpecs) {
@@ -1811,7 +1811,7 @@ public class RefSpecPanel {
 		@Override
 		public IContentProposal[] getProposals(final String contents,
 				int position) {
-			final List<RefContentProposal> result = new ArrayList<RefContentProposal>();
+			final List<RefContentProposal> result = new ArrayList<>();
 
 			if (contents.indexOf('*') != -1 || contents.indexOf('?') != -1) {
 				// contents contains wildcards

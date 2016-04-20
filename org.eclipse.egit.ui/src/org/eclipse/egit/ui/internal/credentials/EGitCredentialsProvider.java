@@ -219,7 +219,7 @@ public class EGitCredentialsProvider extends CredentialsProvider {
 	}
 
 	private UserPasswordCredentials getCredentialsFromUser(final URIish uri) {
-		final AtomicReference<UserPasswordCredentials> aRef = new AtomicReference<UserPasswordCredentials>(
+		final AtomicReference<UserPasswordCredentials> aRef = new AtomicReference<>(
 				null);
 		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 			@Override

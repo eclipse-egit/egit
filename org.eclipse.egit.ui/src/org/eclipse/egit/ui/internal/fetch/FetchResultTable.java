@@ -155,7 +155,7 @@ class FetchResultTable {
 					walk.markStart(walk.parseCommit(update.getNewObjectId()));
 					walk.markUninteresting(walk.parseCommit(update
 							.getOldObjectId()));
-					List<RepositoryCommit> commits = new ArrayList<RepositoryCommit>();
+					List<RepositoryCommit> commits = new ArrayList<>();
 					for (RevCommit commit : walk)
 						commits.add(new RepositoryCommit(repo, commit));
 					children = commits.toArray();

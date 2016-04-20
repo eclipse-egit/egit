@@ -318,7 +318,7 @@ class GerritConfigurationPage extends WizardPage {
 		IContentProposalProvider cp = new IContentProposalProvider() {
 			@Override
 			public IContentProposal[] getProposals(String contents, int position) {
-				List<IContentProposal> resultList = new ArrayList<IContentProposal>();
+				List<IContentProposal> resultList = new ArrayList<>();
 
 				// make the simplest possible pattern check: allow "*"
 				// for multiple characters
@@ -348,7 +348,7 @@ class GerritConfigurationPage extends WizardPage {
 					pattern = null;
 				}
 
-				Set<String> proposals = new TreeSet<String>();
+				Set<String> proposals = new TreeSet<>();
 
 				try {
 					// propose the names of the remote tracking

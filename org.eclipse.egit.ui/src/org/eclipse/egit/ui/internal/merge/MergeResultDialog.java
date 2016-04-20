@@ -297,7 +297,7 @@ public class MergeResultDialog extends Dialog {
 	}
 
 	private RepositoryCommit[] getCommits(final ObjectId[] merges) {
-		final List<RepositoryCommit> commits = new ArrayList<RepositoryCommit>();
+		final List<RepositoryCommit> commits = new ArrayList<>();
 		try (final RevWalk walk = new RevWalk(objectReader)) {
 			walk.setRetainBody(true);
 			for (ObjectId merge : merges)

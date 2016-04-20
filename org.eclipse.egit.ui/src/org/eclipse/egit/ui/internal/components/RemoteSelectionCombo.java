@@ -64,7 +64,7 @@ public class RemoteSelectionCombo extends Composite {
 
 	private final Combo remoteCombo;
 
-	private List<IRemoteSelectionListener> selectionListeners = new ArrayList<RemoteSelectionCombo.IRemoteSelectionListener>();
+	private List<IRemoteSelectionListener> selectionListeners = new ArrayList<>();
 
 	private List<RemoteConfig> remoteConfigs;
 

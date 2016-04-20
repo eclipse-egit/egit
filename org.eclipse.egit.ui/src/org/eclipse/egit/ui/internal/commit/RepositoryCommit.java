@@ -193,7 +193,7 @@ public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
 	 */
 	public RepositoryCommitNote[] getNotes() {
 		if (notes == null) {
-			List<RepositoryCommitNote> noteList = new ArrayList<RepositoryCommitNote>();
+			List<RepositoryCommitNote> noteList = new ArrayList<>();
 			try {
 				Repository repo = getRepository();
 				Git git = Git.wrap(repo);

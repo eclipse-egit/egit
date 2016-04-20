@@ -270,7 +270,7 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 	}
 
 	private String[] getRepositoryComboItems() {
-		List<String> items = new ArrayList<String>();
+		List<String> items = new ArrayList<>();
 		for (Repository repository : repositories) {
 			String repoName = getName(repository);
 			if (repoName.length() > 0)

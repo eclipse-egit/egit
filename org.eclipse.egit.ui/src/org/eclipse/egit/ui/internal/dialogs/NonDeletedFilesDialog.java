@@ -85,7 +85,7 @@ public class NonDeletedFilesDialog extends MessageDialog {
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == RETRY) {
 			boolean refresh = false;
-			List<String> newPaths = new ArrayList<String>();
+			List<String> newPaths = new ArrayList<>();
 			for (String filePath : filePaths) {
 				File file = new File(repository.getWorkTree(), filePath);
 				try {

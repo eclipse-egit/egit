@@ -65,7 +65,7 @@ public class SyncRepoEntity {
 	 */
 	public SyncRepoEntity(String name) {
 		this.name = name;
-		refs = new ArrayList<SyncRefEntity>();
+		refs = new ArrayList<>();
 	}
 
 	/**

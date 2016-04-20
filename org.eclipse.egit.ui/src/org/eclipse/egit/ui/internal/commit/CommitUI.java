@@ -214,7 +214,7 @@ public class CommitUI  {
 	}
 
 	private IProject[] getProjectsOfRepositories() {
-		Set<IProject> ret = new HashSet<IProject>();
+		Set<IProject> ret = new HashSet<>();
 		final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects();
 		for (IProject project : projects) {
@@ -226,10 +226,10 @@ public class CommitUI  {
 	}
 
 	private void resetState() {
-		files = new LinkedHashSet<String>();
-		notIndexed = new LinkedHashSet<String>();
-		indexChanges = new LinkedHashSet<String>();
-		notTracked = new LinkedHashSet<String>();
+		files = new LinkedHashSet<>();
+		notIndexed = new LinkedHashSet<>();
+		indexChanges = new LinkedHashSet<>();
+		notTracked = new LinkedHashSet<>();
 		amending = false;
 		indexDiff = null;
 	}
@@ -244,7 +244,7 @@ public class CommitUI  {
 	 *         the user's selection
 	 */
 	private Set<String> getSelectedFiles() {
-		Set<String> preselectionCandidates = new LinkedHashSet<String>();
+		Set<String> preselectionCandidates = new LinkedHashSet<>();
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		// iterate through all the files that may be committed
 		for (String fileName : files) {

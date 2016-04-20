@@ -89,7 +89,7 @@ public class ProjectUtils {
 					actMonitor.beginTask("", projectsToCreate.size() * 2 + 1); //$NON-NLS-1$
 					if (actMonitor.isCanceled())
 						throw new OperationCanceledException();
-					Map<IProject, File> projectsToConnect = new HashMap<IProject, File>();
+					Map<IProject, File> projectsToConnect = new HashMap<>();
 					for (ProjectRecord projectRecord : projectsToCreate) {
 						if (actMonitor.isCanceled())
 							throw new OperationCanceledException();

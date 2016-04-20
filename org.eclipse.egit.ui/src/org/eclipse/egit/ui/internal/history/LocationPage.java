@@ -111,7 +111,7 @@ public class LocationPage extends WizardPage {
 				if (showClosedProjects)
 					return allProjects;
 
-				ArrayList<IProject> accessibleProjects = new ArrayList<IProject>();
+				ArrayList<IProject> accessibleProjects = new ArrayList<>();
 				for (IProject project : allProjects)
 					if (project.isOpen())
 						accessibleProjects.add(project);

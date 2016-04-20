@@ -27,9 +27,9 @@ import org.eclipse.swt.graphics.Font;
  */
 public class DecorationResult implements IDecoration {
 
-	private List<String> prefixes = new ArrayList<String>();
+	private List<String> prefixes = new ArrayList<>();
 
-	private List<String> suffixes = new ArrayList<String>();
+	private List<String> suffixes = new ArrayList<>();
 
 	private ImageDescriptor overlay = null;
 

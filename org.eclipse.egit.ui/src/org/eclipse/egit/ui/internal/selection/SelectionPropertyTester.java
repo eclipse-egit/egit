@@ -92,7 +92,7 @@ public class SelectionPropertyTester extends PropertyTester {
 			return SelectionUtils
 					.getStructuredSelection((ITextSelection) firstElement);
 		else
-			return new StructuredSelection(new ArrayList<Object>(collection));
+			return new StructuredSelection(new ArrayList<>(collection));
 	}
 
 	private static boolean testRepositoryProperties(Repository repository,

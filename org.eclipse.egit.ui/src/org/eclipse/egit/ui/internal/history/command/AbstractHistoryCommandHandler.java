@@ -267,7 +267,7 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 	protected List<RefNode> getRefNodes(ObjectId commit, Repository repo,
 			String... refPrefixes) {
 		List<Ref> availableBranches = new ArrayList<Ref>();
-		List<RefNode> nodes = new ArrayList<RefNode>();
+		List<RefNode> nodes = new ArrayList<>();
 		try {
 			Map<String, Ref> branches = new HashMap<String, Ref>();
 			for (String refPrefix : refPrefixes) {

@@ -48,7 +48,7 @@ public abstract class SubmoduleCommand<V extends RepositoryTreeNode<?>> extends
 						node.getRepository().getWorkTree());
 				List<String> paths = repoPaths.get(parent);
 				if (paths == null) {
-					paths = new ArrayList<String>();
+					paths = new ArrayList<>();
 					repoPaths.put(parent, paths);
 				}
 				paths.add(path);

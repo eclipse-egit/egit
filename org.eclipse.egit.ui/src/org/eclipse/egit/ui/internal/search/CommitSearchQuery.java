@@ -121,7 +121,7 @@ public class CommitSearchQuery implements ISearchQuery {
 
 	private CommitSearchSettings settings;
 
-	private List<SearchMatcher> matchers = new LinkedList<SearchMatcher>();
+	private List<SearchMatcher> matchers = new LinkedList<>();
 
 	/**
 	 * Create git search query

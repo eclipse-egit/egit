@@ -64,7 +64,7 @@ public class ReplaceWithOursTheirsMenu extends CompoundContributionItem
 
 	@Override
 	protected IContributionItem[] getContributionItems() {
-		List<IContributionItem> items = new ArrayList<IContributionItem>();
+		List<IContributionItem> items = new ArrayList<>();
 
 		IHandlerService handlerService = CommonUtils.getService(serviceLocator,
 				IHandlerService.class);
@@ -98,7 +98,7 @@ public class ReplaceWithOursTheirsMenu extends CompoundContributionItem
 
 		Collection<IPath> paths = Collections.<IPath> singleton(new Path(
 				new File(repository.getWorkTree(), path).getAbsolutePath()));
-		List<IContributionItem> result = new ArrayList<IContributionItem>();
+		List<IContributionItem> result = new ArrayList<>();
 
 		try {
 			ConflictCommits conflictCommits = RevUtils.getConflictCommits(
@@ -134,7 +134,7 @@ public class ReplaceWithOursTheirsMenu extends CompoundContributionItem
 
 	private static Collection<IContributionItem> createUnspecificOursTheirsItems(
 			Collection<IPath> paths) {
-		List<IContributionItem> result = new ArrayList<IContributionItem>();
+		List<IContributionItem> result = new ArrayList<>();
 		result.add(createOursItem(
 				UIText.ReplaceWithOursTheirsMenu_OursWithoutCommitLabel, paths));
 		result.add(createTheirsItem(

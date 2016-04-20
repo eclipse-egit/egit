@@ -632,7 +632,7 @@ public class SimpleConfigureFetchDialog extends TitleAreaDialog {
 	private void addDefaultOriginWarningIfNeeded(Composite parent) {
 		if (!showBranchInfo)
 			return;
-		List<String> otherBranches = new ArrayList<String>();
+		List<String> otherBranches = new ArrayList<>();
 		String currentBranch;
 		try {
 			currentBranch = repository.getBranch();

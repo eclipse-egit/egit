@@ -467,8 +467,8 @@ public class CommitFileDiffViewer extends TableViewer {
 			return null;
 		IPath workTreePath = new Path(db.getWorkTree().getAbsolutePath());
 		IStructuredSelection selection = (IStructuredSelection) getSelection();
-		List<Object> elements = new ArrayList<Object>();
-		List<File> files = new ArrayList<File>();
+		List<Object> elements = new ArrayList<>();
+		List<File> files = new ArrayList<>();
 		for (Object selectedElement : selection.toList()) {
 			FileDiff fileDiff = (FileDiff) selectedElement;
 			IPath path = workTreePath.append(fileDiff.getPath());

@@ -302,7 +302,7 @@ public class ResourceStateFactory {
 
 		// containers are marked as staged whenever file was added, removed or
 		// changed
-		Set<String> changed = new HashSet<String>(indexDiffData.getChanged());
+		Set<String> changed = new HashSet<>(indexDiffData.getChanged());
 		changed.addAll(indexDiffData.getAdded());
 		changed.addAll(indexDiffData.getRemoved());
 		if (containsPrefix(changed, repoRelativePath)) {

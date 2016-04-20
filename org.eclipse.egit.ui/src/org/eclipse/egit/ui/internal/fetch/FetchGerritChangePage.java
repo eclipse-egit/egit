@@ -384,7 +384,7 @@ public class FetchGerritChangePage extends WizardPage {
 		runInBackgroud.setText(UIText.FetchGerritChangePage_RunInBackground);
 
 		// get all available URIs from the repository
-		SortedSet<String> uris = new TreeSet<String>();
+		SortedSet<String> uris = new TreeSet<>();
 		try {
 			for (RemoteConfig rc : RemoteConfig.getAllRemoteConfigs(repository
 					.getConfig())) {
@@ -609,7 +609,7 @@ public class FetchGerritChangePage extends WizardPage {
 							}
 
 							listOp.run(monitor);
-							changeRefs = new ArrayList<Change>();
+							changeRefs = new ArrayList<>();
 							for (Ref ref : listOp.getRemoteRefs()) {
 								Change change = Change.fromRef(ref.getName());
 								if (change != null)
@@ -861,7 +861,7 @@ public class FetchGerritChangePage extends WizardPage {
 		IContentProposalProvider cp = new IContentProposalProvider() {
 			@Override
 			public IContentProposal[] getProposals(String contents, int position) {
-				List<IContentProposal> resultList = new ArrayList<IContentProposal>();
+				List<IContentProposal> resultList = new ArrayList<>();
 
 				// make the simplest possible pattern check: allow "*"
 				// for multiple characters
