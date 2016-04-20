@@ -37,7 +37,7 @@ public class GitQuickDiffProvider implements IQuickDiffReferenceProvider {
 
 	private IResource resource;
 
-	static Map<Repository,String> baseline = new WeakHashMap<Repository,String>();
+	static Map<Repository,String> baseline = new WeakHashMap<>();
 
 	/**
 	 * Create the GitQuickDiffProvider instance

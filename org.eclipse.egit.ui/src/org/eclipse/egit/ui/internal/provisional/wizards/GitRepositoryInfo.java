@@ -31,7 +31,7 @@ public class GitRepositoryInfo {
 	private UserPasswordCredentials credentials;
 	private boolean shouldSaveCredentialsInSecureStore;
 	private String repositoryName;
-	private final List<String> fetchRefSpecs = new ArrayList<String>();
+	private final List<String> fetchRefSpecs = new ArrayList<>();
 
 	/**
 	 * Describes settings for git push
@@ -65,7 +65,7 @@ public class GitRepositoryInfo {
 		}
 	}
 
-	private List<PushInfo> pushInfos = new ArrayList<PushInfo>();
+	private List<PushInfo> pushInfos = new ArrayList<>();
 
 	/** */
 	public static class RepositoryConfigProperty {
@@ -117,7 +117,7 @@ public class GitRepositoryInfo {
 		}
 	}
 
-	private final List<RepositoryConfigProperty> repositoryConfigProperties = new ArrayList<RepositoryConfigProperty>();
+	private final List<RepositoryConfigProperty> repositoryConfigProperties = new ArrayList<>();
 
 
 	/**

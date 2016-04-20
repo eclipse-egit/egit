@@ -138,7 +138,7 @@ public class SelectionUtils {
 	@NonNull
 	public static IPath[] getSelectedLocations(
 			@NonNull IStructuredSelection selection) {
-		Set<IPath> result = new LinkedHashSet<IPath>();
+		Set<IPath> result = new LinkedHashSet<>();
 		for (Object o : selection.toList()) {
 			IResource resource = AdapterUtils.adapt(o, IResource.class);
 			if (resource != null) {
@@ -167,7 +167,7 @@ public class SelectionUtils {
 	@NonNull
 	public static IResource[] getSelectedResources(
 			@NonNull IStructuredSelection selection) {
-		Set<IResource> result = new LinkedHashSet<IResource>();
+		Set<IResource> result = new LinkedHashSet<>();
 		for (Object o : selection.toList()) {
 			IResource resource = AdapterUtils.adapt(o, IResource.class);
 			if (resource != null)
@@ -194,7 +194,7 @@ public class SelectionUtils {
 		if (traversals.length == 0)
 			return Collections.emptyList();
 
-		List<IResource> result = new ArrayList<IResource>();
+		List<IResource> result = new ArrayList<>();
 		for (ResourceTraversal traversal : traversals) {
 			IResource[] resources = traversal.getResources();
 			result.addAll(Arrays.asList(resources));

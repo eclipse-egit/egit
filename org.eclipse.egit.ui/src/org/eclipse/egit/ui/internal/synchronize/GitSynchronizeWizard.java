@@ -92,7 +92,7 @@ public class GitSynchronizeWizard extends Wizard {
 				.getActiveWorkbenchWindow().getSelectionService();
 		ISelection selection = selectionService.getSelection();
 		if (selection instanceof IStructuredSelection) {
-			Set<IResource> result = new HashSet<IResource>();
+			Set<IResource> result = new HashSet<>();
 			IStructuredSelection sel = (IStructuredSelection) selection;
 			if (sel.size() == 0)
 				return null;

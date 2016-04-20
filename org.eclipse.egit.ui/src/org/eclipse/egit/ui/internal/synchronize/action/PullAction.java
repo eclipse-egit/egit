@@ -51,7 +51,7 @@ public class PullAction extends SynchronizeModelAction {
 				GitSynchronizeDataSet gsds = (GitSynchronizeDataSet) getConfiguration()
 						.getProperty(SYNCHRONIZATION_DATA);
 
-				Set<Repository> repositories = new HashSet<Repository>();
+				Set<Repository> repositories = new HashSet<>();
 				for (GitSynchronizeData gsd : gsds)
 					repositories.add(gsd.getRepository());
 

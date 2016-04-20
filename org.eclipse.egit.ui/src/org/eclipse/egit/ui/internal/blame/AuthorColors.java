@@ -54,7 +54,7 @@ public class AuthorColors {
 	private int count;
 
 	private AuthorColors() {
-		colors = new HashMap<String, RGB>();
+		colors = new HashMap<>();
 	}
 
 	/**

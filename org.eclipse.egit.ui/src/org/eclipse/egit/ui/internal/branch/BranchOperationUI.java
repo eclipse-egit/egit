@@ -255,7 +255,7 @@ public class BranchOperationUI {
 					if (restore) {
 						final BranchProjectTracker tracker = new BranchProjectTracker(
 								repository);
-						final AtomicReference<IMemento> memento = new AtomicReference<IMemento>();
+						final AtomicReference<IMemento> memento = new AtomicReference<>();
 						bop.addPreExecuteTask(new PreExecuteTask() {
 
 							@Override
@@ -601,7 +601,7 @@ public class BranchOperationUI {
 				public void run(IProgressMonitor m)
 						throws InvocationTargetException, InterruptedException {
 
-					Set<IProject> projects = new HashSet<IProject>(Arrays
+					Set<IProject> projects = new HashSet<>(Arrays
 							.asList(ProjectUtil.getProjects(repository)));
 
 					ILaunchManager launchManager = DebugPlugin.getDefault()

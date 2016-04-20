@@ -509,7 +509,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 				// fill the Combo lazily to improve UI responsiveness
 				if (((Boolean) e.data).booleanValue()
 						&& commitCombo.getItemCount() == 0) {
-					final Collection<RevCommit> commits = new ArrayList<RevCommit>();
+					final Collection<RevCommit> commits = new ArrayList<>();
 					try {
 						PlatformUI.getWorkbench().getProgressService()
 								.busyCursorWhile(new IRunnableWithProgress() {
@@ -706,7 +706,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 	 * @throws IOException
 	 */
 	private List<Object> getRevTags() throws IOException {
-		List<Object> result = new ArrayList<Object>();
+		List<Object> result = new ArrayList<>();
 		Collection<Ref> refs = repo.getRefDatabase().getRefs(Constants.R_TAGS)
 				.values();
 		for (Ref ref : refs) {

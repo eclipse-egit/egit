@@ -350,7 +350,7 @@ public class RepositoryPropertySource implements IPropertySource {
 			showExceptionMessage(e);
 		}
 
-		List<IPropertyDescriptor> resultList = new ArrayList<IPropertyDescriptor>();
+		List<IPropertyDescriptor> resultList = new ArrayList<>();
 
 		StoredConfig config;
 		String category;

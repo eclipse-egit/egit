@@ -68,7 +68,7 @@ class RenameTracker {
 
 	private String currentPath;
 
-	private Map<RevCommit, String> renames = new LinkedHashMap<RevCommit, String>();
+	private Map<RevCommit, String> renames = new LinkedHashMap<>();
 
 	/**
 	 * @return filter

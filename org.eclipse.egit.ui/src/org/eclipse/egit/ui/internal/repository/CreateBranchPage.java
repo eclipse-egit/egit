@@ -445,7 +445,7 @@ class CreateBranchPage extends WizardPage {
 	}
 
 	private String getBranchNameSuggestionFromProvider() {
-		final AtomicReference<String> ref = new AtomicReference<String>();
+		final AtomicReference<String> ref = new AtomicReference<>();
 		final IBranchNameProvider branchNameProvider = getBranchNameProvider();
 		if (branchNameProvider != null)
 			SafeRunner.run(new SafeRunnable() {

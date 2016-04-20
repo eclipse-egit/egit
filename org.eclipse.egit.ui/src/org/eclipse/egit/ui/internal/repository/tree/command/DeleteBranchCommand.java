@@ -42,7 +42,7 @@ public class DeleteBranchCommand extends
 	@Override
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		final List<RefNode> nodes = getSelectedNodes(event);
-		final AtomicReference<List<RefNode>> unmergedNodesRef = new AtomicReference<List<RefNode>>();
+		final AtomicReference<List<RefNode>> unmergedNodesRef = new AtomicReference<>();
 		final Shell shell = getShell(event);
 
 		try {
@@ -65,7 +65,7 @@ public class DeleteBranchCommand extends
 		}
 		if (unmergedNodesRef.get().isEmpty())
 			return null;
-		MessageDialog messageDialog = new UnmergedBranchDialog<RefNode>(
+		MessageDialog messageDialog = new UnmergedBranchDialog<>(
 					shell, unmergedNodesRef.get());
 		if (messageDialog.open() != Window.OK)
 			return null;
@@ -93,7 +93,7 @@ public class DeleteBranchCommand extends
 	private List<RefNode> deleteBranches(final List<RefNode> nodes,
 			final boolean forceDeletionOfUnmergedBranches,
 			IProgressMonitor progressMonitor) throws InvocationTargetException {
-		final List<RefNode> unmergedNodes = new ArrayList<RefNode>();
+		final List<RefNode> unmergedNodes = new ArrayList<>();
 		try {
 			ResourcesPlugin.getWorkspace().run(new IWorkspaceRunnable() {
 

@@ -83,7 +83,7 @@ public class MergeHandler extends AbstractHistoryCommandHandler {
 		} else if (nodes.size() == 1) {
 			refName = nodes.get(0).getName();
 		} else {
-			BranchSelectionDialog<Ref> dlg = new BranchSelectionDialog<Ref>(
+			BranchSelectionDialog<Ref> dlg = new BranchSelectionDialog<>(
 					HandlerUtil.getActiveShellChecked(event), nodes,
 					UIText.MergeHandler_SelectBranchTitle,
 					UIText.MergeHandler_SelectBranchMessage, SWT.SINGLE);

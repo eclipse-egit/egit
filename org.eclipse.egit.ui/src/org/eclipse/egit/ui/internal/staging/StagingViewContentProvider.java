@@ -130,11 +130,11 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		if (content == null || content.length == 0)
 			return new Object[0];
 
-		List<Object> roots = new ArrayList<Object>();
-		Map<IPath, List<Object>> childrenForPath = new HashMap<IPath, List<Object>>();
+		List<Object> roots = new ArrayList<>();
+		Map<IPath, List<Object>> childrenForPath = new HashMap<>();
 
-		Set<IPath> folderPaths = new HashSet<IPath>();
-		Map<IPath, String> childSegments = new HashMap<IPath, String>();
+		Set<IPath> folderPaths = new HashSet<>();
+		Map<IPath, String> childSegments = new HashMap<>();
 
 		for (StagingEntry file : content) {
 			IPath folderPath = file.getParentPath();
@@ -167,7 +167,7 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		IPath workingDirectory = new Path(repository.getWorkTree()
 				.getAbsolutePath());
 
-		List<StagingFolderEntry> folderEntries = new ArrayList<StagingFolderEntry>();
+		List<StagingFolderEntry> folderEntries = new ArrayList<>();
 		for (IPath folderPath : folderPaths) {
 			IPath parent = folderPath.removeLastSegments(1);
 			// Find first existing parent node, but stop at root
@@ -211,7 +211,7 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 			IPath path, Object child) {
 		List<Object> children = childrenForPath.get(path);
 		if (children == null) {
-			children = new ArrayList<Object>();
+			children = new ArrayList<>();
 			childrenForPath.put(path, children);
 		}
 		children.add(child);
@@ -232,7 +232,7 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 	}
 
 	List<StagingEntry> getStagingEntriesFiltered(StagingFolderEntry folder) {
-		List<StagingEntry> stagingEntries = new ArrayList<StagingEntry>();
+		List<StagingEntry> stagingEntries = new ArrayList<>();
 		for (StagingEntry stagingEntry : content) {
 			if (folder.getLocation().isPrefixOf(stagingEntry.getLocation())) {
 				if (isInFilter(stagingEntry))
@@ -285,7 +285,7 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 
 		repository = update.repository;
 
-		Set<StagingEntry> nodes = new TreeSet<StagingEntry>(
+		Set<StagingEntry> nodes = new TreeSet<>(
 				new Comparator<StagingEntry>() {
 					@Override
 					public int compare(StagingEntry o1, StagingEntry o2) {

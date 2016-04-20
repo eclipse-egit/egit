@@ -153,11 +153,11 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 
 	private IWorkbenchAction compareModeAction;
 
-	private Map<IPath, FileNode> fileNodes = new HashMap<IPath, FileNode>();
+	private Map<IPath, FileNode> fileNodes = new HashMap<>();
 
-	private Map<IPath, ContainerNode> containerNodes = new HashMap<IPath, ContainerNode>();
+	private Map<IPath, ContainerNode> containerNodes = new HashMap<>();
 
-	private List<IWorkbenchAction> actionsToDispose = new ArrayList<IWorkbenchAction>();
+	private List<IWorkbenchAction> actionsToDispose = new ArrayList<>();
 
 	private Object input;
 
@@ -340,8 +340,8 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 	private void setResourceInput(final IResource[] input) {
 		if (input.length > 0) {
 			// we must make sure to only show the topmost resources as roots
-			List<IResource> resources = new ArrayList<IResource>(input.length);
-			List<IPath> allPaths = new ArrayList<IPath>(input.length);
+			List<IResource> resources = new ArrayList<>(input.length);
+			List<IPath> allPaths = new ArrayList<>(input.length);
 			for (IResource originalInput : input) {
 				allPaths.add(originalInput.getFullPath());
 			}
@@ -546,7 +546,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 
 			if (input instanceof IResource[]) {
 				IResource[] resources = (IResource[]) input;
-				List<TreeFilter> orFilters = new ArrayList<TreeFilter>(
+				List<TreeFilter> orFilters = new ArrayList<>(
 						resources.length);
 
 				for (IResource resource : resources) {
@@ -810,7 +810,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 	 */
 	static class ContainerNode extends PathNode {
 
-		private final List<PathNode> children = new ArrayList<PathNode>();
+		private final List<PathNode> children = new ArrayList<>();
 		private final IContainer resource;
 		private boolean onlyEqualContent = false;
 
@@ -1083,7 +1083,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 	public ShowInContext getShowInContext() {
 		IPath repoPath = getRepositoryPath();
 		ITreeSelection selection = (ITreeSelection) tree.getSelection();
-		List<IResource> resources = new ArrayList<IResource>();
+		List<IResource> resources = new ArrayList<>();
 		for (Iterator it = selection.iterator(); it.hasNext();) {
 			Object obj = it.next();
 			if (obj instanceof IResource)
@@ -1139,7 +1139,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 
 	private List<String> getSelectedPaths(ITreeSelection selection) {
 		IPath repoPath = getRepositoryPath();
-		List<String> pathsToOpen = new ArrayList<String>();
+		List<String> pathsToOpen = new ArrayList<>();
 		for (Iterator it = selection.iterator(); it.hasNext();) {
 			Object obj = it.next();
 			if (obj instanceof IFile) {

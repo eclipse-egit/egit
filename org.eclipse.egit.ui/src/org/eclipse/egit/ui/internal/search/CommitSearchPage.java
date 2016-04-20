@@ -102,7 +102,7 @@ public class CommitSearchPage extends DialogPage implements ISearchPage {
 
 	private static final String STORE_HISTORY_SIZE = "HISTORY_SIZE"; //$NON-NLS-1$
 
-	private List<CommitSearchSettings> fPreviousSearchPatterns = new ArrayList<CommitSearchSettings>(
+	private List<CommitSearchSettings> fPreviousSearchPatterns = new ArrayList<>(
 			HISTORY_SIZE);
 
 	private boolean firstTime = true;
@@ -474,7 +474,7 @@ public class CommitSearchPage extends DialogPage implements ISearchPage {
 		searchTreeButton.setSelection(settings.isMatchTree());
 		searchAllBranchesButton.setSelection(settings.isAllBranches());
 
-		List<RepositoryNode> repositories = new LinkedList<RepositoryNode>();
+		List<RepositoryNode> repositories = new LinkedList<>();
 		for (String path : settings.getRepositories()) {
 			File file = new File(path);
 			if (file.exists())

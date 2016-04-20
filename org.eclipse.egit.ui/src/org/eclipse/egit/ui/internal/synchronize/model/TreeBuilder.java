@@ -82,9 +82,9 @@ class TreeBuilder {
 
 		final IPath rootPath = new Path(repo.getWorkTree()
 				.getAbsolutePath());
-		final List<GitModelObject> rootChildren = new ArrayList<GitModelObject>();
+		final List<GitModelObject> rootChildren = new ArrayList<>();
 
-		final Map<IPath, Node> nodes = new HashMap<IPath, Node>();
+		final Map<IPath, Node> nodes = new HashMap<>();
 
 		for (Map.Entry<String, Change> entry : changes.entrySet()) {
 			String repoRelativePath = entry.getKey();
@@ -131,7 +131,7 @@ class TreeBuilder {
 	private static class Node {
 		private final GitModelTree tree;
 
-		private final List<GitModelObject> children = new ArrayList<GitModelObject>();
+		private final List<GitModelObject> children = new ArrayList<>();
 
 		public Node(GitModelTree tree) {
 			this.tree = tree;

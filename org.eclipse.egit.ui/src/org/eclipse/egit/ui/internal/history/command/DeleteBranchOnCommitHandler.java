@@ -60,7 +60,7 @@ public class DeleteBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 		if (branchesOfCommit.isEmpty())
 			return null;
 
-		final List<Ref> unmergedBranches = new ArrayList<Ref>();
+		final List<Ref> unmergedBranches = new ArrayList<>();
 		final Shell shell = getPart(event).getSite().getShell();
 
 		final List<Ref> branchesToDelete;
@@ -70,7 +70,7 @@ public class DeleteBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 		// delete instead of quietly deleting an unexpected one, for example a remote
 		// tracking branch
 		if (totalBranchCount > 1) {
-			BranchSelectionDialog<Ref> dlg = new BranchSelectionDialog<Ref>(
+			BranchSelectionDialog<Ref> dlg = new BranchSelectionDialog<>(
 					shell,
 					branchesOfCommit,
 					UIText.DeleteBranchOnCommitHandler_SelectBranchDialogTitle,
@@ -123,7 +123,7 @@ public class DeleteBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 		}
 
 		if (!unmergedBranches.isEmpty()) {
-			MessageDialog messageDialog = new UnmergedBranchDialog<Ref>(shell,
+			MessageDialog messageDialog = new UnmergedBranchDialog<>(shell,
 					unmergedBranches);
 			if (messageDialog.open() == Window.OK) {
 				try {

@@ -72,9 +72,9 @@ class GitSynchronizeWizardPage extends WizardPage {
 
 	private TreeViewer treeViewer;
 
-	private final Map<Repository, Set<IProject>> resources = new HashMap<Repository, Set<IProject>>();
+	private final Map<Repository, Set<IProject>> resources = new HashMap<>();
 
-	private final Map<Repository, String> selectedBranches = new HashMap<Repository, String>();
+	private final Map<Repository, String> selectedBranches = new HashMap<>();
 
 	private final Image branchImage = UIIcons.BRANCH.createImage();
 
@@ -102,7 +102,7 @@ class GitSynchronizeWizardPage extends WizardPage {
 			Repository repo = repositoryMapping.getRepository();
 			Set<IProject> projects = resources.get(repo);
 			if (projects == null) {
-				projects = new HashSet<IProject>();
+				projects = new HashSet<>();
 				resources.put(repo, projects);
 			}
 			projects.add(project);
@@ -205,7 +205,7 @@ class GitSynchronizeWizardPage extends WizardPage {
 			@Override
 			protected CellEditor getCellEditor(Object element) {
 				Repository repo = (Repository) element;
-				List<String> refs = new LinkedList<String>(repo.getAllRefs()
+				List<String> refs = new LinkedList<>(repo.getAllRefs()
 						.keySet());
 
 				List<Ref> additionalRefs;
@@ -271,7 +271,7 @@ class GitSynchronizeWizardPage extends WizardPage {
 			}
 		});
 
-		List<Repository> repositoriesList = new ArrayList<Repository>(
+		List<Repository> repositoriesList = new ArrayList<>(
 				resources.keySet());
 		Collections.sort(repositoriesList, new Comparator<Repository>() {
 			@Override
@@ -347,7 +347,7 @@ class GitSynchronizeWizardPage extends WizardPage {
 	}
 
 	Set<IProject> getSelectedProjects() {
-		Set<IProject> projects = new HashSet<IProject>();
+		Set<IProject> projects = new HashSet<>();
 		for (Repository repo : selectedBranches.keySet())
 			projects.addAll(resources.get(repo));
 

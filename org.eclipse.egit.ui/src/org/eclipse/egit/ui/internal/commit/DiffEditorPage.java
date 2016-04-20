@@ -115,7 +115,7 @@ public class DiffEditorPage extends FormPage {
 	 * @return diffs for changes of of a commit
 	 */
 	protected FileDiff[] getDiffs(RepositoryCommit commit) {
-		List<FileDiff> diffResult = new ArrayList<FileDiff>();
+		List<FileDiff> diffResult = new ArrayList<>();
 
 		diffResult.addAll(asList(commit.getDiffs()));
 

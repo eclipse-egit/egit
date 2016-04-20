@@ -39,7 +39,7 @@ import org.eclipse.ui.dialogs.ContainerCheckedTreeViewer;
  */
 public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 
-	private final Set<Object> checkState = new HashSet<Object>();
+	private final Set<Object> checkState = new HashSet<>();
 
 	/**
 	 * Constructor for ContainerCheckedTreeViewer.
@@ -200,7 +200,7 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 					checkState.add(element);
 				}
 			} else {
-				Set<Object> toCheck = new HashSet<Object>();
+				Set<Object> toCheck = new HashSet<>();
 				for (Object element : visible) {
 					addFilteredChildren(element, contentProvider, toCheck);
 				}

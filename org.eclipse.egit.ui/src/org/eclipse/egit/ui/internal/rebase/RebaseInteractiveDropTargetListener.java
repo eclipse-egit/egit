@@ -45,7 +45,7 @@ final class RebaseInteractiveDropTargetListener extends ViewerDropAdapter {
 		if (selectionList.contains(getCurrentTarget()))
 			return false;
 
-		List<RebaseInteractivePlan.PlanElement> sourceElements = new ArrayList<RebaseInteractivePlan.PlanElement>();
+		List<RebaseInteractivePlan.PlanElement> sourceElements = new ArrayList<>();
 		for (Object obj : selectionList) {
 			if (obj instanceof RebaseInteractivePlan.PlanElement)
 				sourceElements.add((RebaseInteractivePlan.PlanElement) obj);

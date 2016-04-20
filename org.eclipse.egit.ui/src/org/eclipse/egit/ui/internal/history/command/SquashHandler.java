@@ -51,7 +51,7 @@ public class SquashHandler extends AbstractHistoryCommandHandler {
 					UIText.SquashHandler_ErrorCheckingIfCommitsAreOnCurrentBranch, e);
 		}
 
-		List<RepositoryCommit> repositoryCommits = new ArrayList<RepositoryCommit>();
+		List<RepositoryCommit> repositoryCommits = new ArrayList<>();
 		for (RevCommit commit : commits)
 			repositoryCommits.add(new RepositoryCommit(repository, commit));
 

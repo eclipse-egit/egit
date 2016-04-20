@@ -530,7 +530,7 @@ public class ConfigurationEditorComponent {
 		public Object[] getChildren(Object o) {
 			if (children == null)
 				if (config != null) {
-					List<Section> sections = new ArrayList<Section>();
+					List<Section> sections = new ArrayList<>();
 					Set<String> sectionNames = config.getSections();
 					for (String sectionName : sectionNames)
 						sections.add(new Section(this, sectionName));
@@ -600,7 +600,7 @@ public class ConfigurationEditorComponent {
 		@Override
 		public Object[] getChildren(Object o) {
 			if (children == null) {
-				List<Object> allChildren = new ArrayList<Object>();
+				List<Object> allChildren = new ArrayList<>();
 				Set<String> subSectionNames = parent.config
 						.getSubsections(name);
 				for (String subSectionName : subSectionNames)
@@ -690,7 +690,7 @@ public class ConfigurationEditorComponent {
 		@Override
 		public Object[] getChildren(Object o) {
 			if (children == null) {
-				List<Entry> entries = new ArrayList<Entry>();
+				List<Entry> entries = new ArrayList<>();
 				Set<String> entryNames = config.getNames(parent.name, name);
 				for (String entryName : entryNames) {
 					String[] values = config.getStringList(parent.name, name,
@@ -757,14 +757,14 @@ public class ConfigurationEditorComponent {
 			if (sectionparent != null) {
 				// Arrays.asList returns a fixed-size list, so we need to copy
 				// over to a mutable list
-				entries = new ArrayList<String>(Arrays.asList(config
+				entries = new ArrayList<>(Arrays.asList(config
 						.getStringList(sectionparent.name, null, name)));
 				entries.add(Math.max(index, 0), newValue);
 				config.setStringList(sectionparent.name, null, name, entries);
 			} else {
 				// Arrays.asList returns a fixed-size list, so we need to copy
 				// over to a mutable list
-				entries = new ArrayList<String>(Arrays.asList(config
+				entries = new ArrayList<>(Arrays.asList(config
 						.getStringList(subsectionparent.parent.name,
 								subsectionparent.name, name)));
 				entries.add(Math.max(index, 0), newValue);
@@ -837,7 +837,7 @@ public class ConfigurationEditorComponent {
 				if (sectionparent != null) {
 					// Arrays.asList returns a fixed-size list, so we need to
 					// copy over to a mutable list
-					entries = new ArrayList<String>(Arrays.asList(config
+					entries = new ArrayList<>(Arrays.asList(config
 							.getStringList(sectionparent.name, null, name)));
 
 					entries.remove(index);
@@ -846,7 +846,7 @@ public class ConfigurationEditorComponent {
 				} else {
 					// Arrays.asList returns a fixed-size list, so we need to
 					// copy over to a mutable list
-					entries = new ArrayList<String>(Arrays.asList(config
+					entries = new ArrayList<>(Arrays.asList(config
 							.getStringList(subsectionparent.parent.name,
 									subsectionparent.name, name)));
 					// the list is fixed-size, so we have to copy over

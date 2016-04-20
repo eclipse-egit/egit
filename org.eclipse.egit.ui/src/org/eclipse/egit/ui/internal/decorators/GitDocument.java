@@ -63,7 +63,7 @@ class GitDocument extends Document implements RefsChangedListener {
 
 	private boolean disposed;
 
-	static Map<GitDocument, Repository> doc2repo = new WeakHashMap<GitDocument, Repository>();
+	static Map<GitDocument, Repository> doc2repo = new WeakHashMap<>();
 
 	static GitDocument create(final IResource resource) throws IOException {
 		if (GitTraceLocation.QUICKDIFF.isActive())

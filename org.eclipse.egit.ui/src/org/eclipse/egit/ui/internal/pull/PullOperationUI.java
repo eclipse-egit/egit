@@ -169,7 +169,7 @@ public class PullOperationUI extends JobChangeAdapter {
 
 			@Override
 			public void run() {
-				Map<Repository, Object> res = new LinkedHashMap<Repository, Object>(
+				Map<Repository, Object> res = new LinkedHashMap<>(
 						PullOperationUI.this.results);
 				Shell shell = PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getShell();

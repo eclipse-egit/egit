@@ -332,7 +332,7 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		// be enabled.
 		setOkButtonEnabled(false);
 
-		List<RepositoryTreeNode> roots = new ArrayList<RepositoryTreeNode>();
+		List<RepositoryTreeNode> roots = new ArrayList<>();
 		if ((settings & SHOW_LOCAL_BRANCHES) != 0)
 			roots.add(localBranches);
 		if ((settings & SHOW_REMOTE_BRANCHES) != 0)

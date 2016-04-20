@@ -64,7 +64,7 @@ public class DecoratableResourceMapping extends DecoratableResource {
 			return;
 
 		// collect repositories to allow decoration of mappings (bug 369969)
-		Set<Repository> repositories = new HashSet<Repository>(projects.length);
+		Set<Repository> repositories = new HashSet<>(projects.length);
 
 		// we could use DecoratableResourceAdapter for each project, but that would be too much overhead,
 		// as we need only very little information at all...
@@ -113,7 +113,7 @@ public class DecoratableResourceMapping extends DecoratableResource {
 					.getBranchStatus(repository);
 		} else if(repositories.size() > 1) {
 			// collect branch names but skip branch status (doesn't make sense)
-			Set<String> branches = new HashSet<String>(2);
+			Set<String> branches = new HashSet<>(2);
 			for (Repository repository : repositories) {
 				branches.add(DecoratableResourceHelper
 						.getShortBranch(repository));

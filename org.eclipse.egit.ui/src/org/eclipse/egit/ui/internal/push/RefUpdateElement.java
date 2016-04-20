@@ -172,7 +172,7 @@ class RefUpdateElement extends WorkbenchAdapter {
 			walk.setRetainBody(true);
 			walk.markStart(walk.parseCommit(update.getNewObjectId()));
 			walk.markUninteresting(walk.parseCommit(end.getObjectId()));
-			List<RepositoryCommit> commits = new ArrayList<RepositoryCommit>();
+			List<RepositoryCommit> commits = new ArrayList<>();
 			for (RevCommit commit : walk)
 				commits.add(new RepositoryCommit(repo, commit));
 			return commits.toArray(new RepositoryCommit[commits.size()]);

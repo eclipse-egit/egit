@@ -139,7 +139,7 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 									.syncExec(new Runnable() {
 										@Override
 										public void run() {
-											Set<File> filesToAdd = new HashSet<File>();
+											Set<File> filesToAdd = new HashSet<>();
 											// collect all files first
 											for (Entry<IProject, File> entry : existingPage
 													.getProjects(true)

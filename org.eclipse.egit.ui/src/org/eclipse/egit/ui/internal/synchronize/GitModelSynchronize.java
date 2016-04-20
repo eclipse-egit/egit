@@ -83,15 +83,15 @@ public class GitModelSynchronize {
 	public static final void synchronize(IResource[] resources,
 			Repository repository, String srcRev, String dstRev,
 			boolean includeLocal) throws IOException {
-		final Set<IResource> includedResources = new HashSet<IResource>(
+		final Set<IResource> includedResources = new HashSet<>(
 				Arrays.asList(resources));
-		final Set<ResourceMapping> allMappings = new HashSet<ResourceMapping>();
+		final Set<ResourceMapping> allMappings = new HashSet<>();
 
-		Set<IResource> newResources = new HashSet<IResource>(
+		Set<IResource> newResources = new HashSet<>(
 				includedResources);
 		do {
 			final Set<IResource> copy = newResources;
-			newResources = new HashSet<IResource>();
+			newResources = new HashSet<>();
 			for (IResource resource : copy) {
 				ResourceMapping[] mappings = ResourceUtil.getResourceMappings(
 						resource, ResourceMappingContext.LOCAL_CONTEXT);
@@ -123,7 +123,7 @@ public class GitModelSynchronize {
 	}
 
 	private static Set<IResource> collectResources(ResourceMapping[] mappings) {
-		final Set<IResource> resources = new HashSet<IResource>();
+		final Set<IResource> resources = new HashSet<>();
 		ResourceMappingContext context = ResourceMappingContext.LOCAL_CONTEXT;
 		for (ResourceMapping mapping : mappings) {
 			try {
@@ -202,7 +202,7 @@ public class GitModelSynchronize {
 	 */
 	private static ResourceMapping[] getGitResourceMappings(
 			IResource[] elements) {
-		List<ResourceMapping> gitMappings = new ArrayList<ResourceMapping>();
+		List<ResourceMapping> gitMappings = new ArrayList<>();
 
 		for (IResource element : elements) {
 			ResourceMapping mapping = AdapterUtils.adapt(element,

@@ -38,7 +38,7 @@ import org.eclipse.swt.widgets.TableColumn;
  * commits are shown in the order in which they are passed.
  */
 public class CommitSelectDialog extends TitleAreaDialog {
-	private final List<RevCommit> commits = new ArrayList<RevCommit>();
+	private final List<RevCommit> commits = new ArrayList<>();
 
 	private RevCommit selected;
 

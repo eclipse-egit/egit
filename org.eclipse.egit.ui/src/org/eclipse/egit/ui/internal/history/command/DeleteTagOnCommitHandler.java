@@ -57,7 +57,7 @@ public class DeleteTagOnCommitHandler extends AbstractHistoryCommandHandler {
 		// show a dialog in case there are multiple tags on the selected commit
 		final List<Ref> tagsToDelete;
 		if (tags.size() > 1) {
-			BranchSelectionDialog<Ref> dialog = new BranchSelectionDialog<Ref>(
+			BranchSelectionDialog<Ref> dialog = new BranchSelectionDialog<>(
 					shell,
 					tags,
 					UIText.DeleteTagOnCommitHandler_SelectTagDialogTitle,
@@ -132,7 +132,7 @@ public class DeleteTagOnCommitHandler extends AbstractHistoryCommandHandler {
 	}
 
 	private List<Ref> getTagsOfCommit(IStructuredSelection selection) {
-		final List<Ref> tagsOfCommit = new ArrayList<Ref>();
+		final List<Ref> tagsOfCommit = new ArrayList<>();
 		if (selection.isEmpty())
 			return tagsOfCommit;
 		PlotCommit commit = (PlotCommit) selection.getFirstElement();

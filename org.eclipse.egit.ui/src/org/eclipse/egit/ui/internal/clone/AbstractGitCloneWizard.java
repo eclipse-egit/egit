@@ -385,13 +385,13 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 
 			@Override
 			public IStatus runInWorkspace(IProgressMonitor monitor) {
-				List<File> files = new ArrayList<File>();
+				List<File> files = new ArrayList<>();
 				ProjectUtil.findProjectFiles(files, repository.getWorkTree(),
 						true, monitor);
 				if (files.isEmpty())
 					return Status.OK_STATUS;
 
-				Set<ProjectRecord> records = new LinkedHashSet<ProjectRecord>();
+				Set<ProjectRecord> records = new LinkedHashSet<>();
 				for (File file : files)
 					records.add(new ProjectRecord(file));
 				try {
