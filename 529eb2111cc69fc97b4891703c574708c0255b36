@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_f5efc573",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/sharing/SharingWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-04-20T19:22:09Z",
+      "side": 1,
+      "message": "I have big concern regarding the algorithm.\n\nWe know for sure people have \u003c 100 editors open (Eclipse is simply unusable with higher number of editors), however there are projects with \u003e 100000 files. There can be HUGE projects. Why should we collect lists with so many files?\n\nAll what we need is to iterate over the opened editor files and ask if the file.getProject() equals given project.",
+      "range": {
+        "startLine": 200,
+        "startChar": 30,
+        "endLine": 200,
+        "endChar": 49
+      },
+      "revId": "529eb2111cc69fc97b4891703c574708c0255b36",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
