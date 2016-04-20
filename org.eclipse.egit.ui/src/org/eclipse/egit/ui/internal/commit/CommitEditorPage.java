@@ -292,7 +292,7 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 
 	private List<Ref> getTags() {
 		Repository repository = getCommit().getRepository();
-		List<Ref> tags = new ArrayList<Ref>(repository.getTags().values());
+		List<Ref> tags = new ArrayList<>(repository.getTags().values());
 		Collections.sort(tags, new Comparator<Ref>() {
 
 			@Override
@@ -507,7 +507,7 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 		RepositoryCommit repoCommit = getCommit();
 		RevCommit commit = repoCommit.getRevCommit();
 		Repository repository = repoCommit.getRepository();
-		List<Ref> tags = new ArrayList<Ref>();
+		List<Ref> tags = new ArrayList<>();
 		for (Ref tag : getTags()) {
 			tag = repository.peel(tag);
 			ObjectId id = tag.getPeeledObjectId();
@@ -524,7 +524,7 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 		Repository repository = getCommit().getRepository();
 		RevCommit commit = getCommit().getRevCommit();
 		try (RevWalk revWalk = new RevWalk(repository)) {
-			Map<String, Ref> refsMap = new HashMap<String, Ref>();
+			Map<String, Ref> refsMap = new HashMap<>();
 			refsMap.putAll(repository.getRefDatabase().getRefs(
 					Constants.R_HEADS));
 			refsMap.putAll(repository.getRefDatabase().getRefs(

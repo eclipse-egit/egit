@@ -117,7 +117,7 @@ public class SwitchToMenu extends ContributionItem implements
 			String currentBranch = repository.getFullBranch();
 			Map<String, Ref> localBranches = repository.getRefDatabase().getRefs(
 					Constants.R_HEADS);
-			TreeMap<String, Ref> sortedRefs = new TreeMap<String, Ref>(
+			TreeMap<String, Ref> sortedRefs = new TreeMap<>(
 					CommonUtils.STRING_ASCENDING_COMPARATOR);
 
 			// Add the MAX_NUM_MENU_ENTRIES most recently used branches first

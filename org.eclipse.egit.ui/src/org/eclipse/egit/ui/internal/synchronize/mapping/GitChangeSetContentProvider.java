@@ -47,7 +47,7 @@ public class GitChangeSetContentProvider extends SynchronizationContentProvider 
 
 	private GitModelRoot modelRoot;
 
-	private Map<Object, ResourceTraversal[]> traversalCache = new HashMap<Object, ResourceTraversal[]>();
+	private Map<Object, ResourceTraversal[]> traversalCache = new HashMap<>();
 
 	@Override
 	public boolean hasChildren(Object element) {

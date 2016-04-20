@@ -144,7 +144,7 @@ public class FetchDestinationPage extends WizardPage {
 
 	private List<Ref> getRemoteRefs() {
 		if (this.trackingBranches == null) {
-			List<Ref> proposals = new ArrayList<Ref>();
+			List<Ref> proposals = new ArrayList<>();
 			try {
 				for (Ref ref : repository.getRefDatabase().getRefs(
 						Constants.R_REMOTES).values()) {

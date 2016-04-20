@@ -123,7 +123,7 @@ public class PullWizardPage extends WizardPage {
 			});
 			setDefaultUpstreamConfig();
 		} catch (URISyntaxException e) {
-			this.remoteConfigs = new ArrayList<RemoteConfig>();
+			this.remoteConfigs = new ArrayList<>();
 			handleError(e);
 		}
 

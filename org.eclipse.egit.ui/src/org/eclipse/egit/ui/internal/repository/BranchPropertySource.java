@@ -122,7 +122,7 @@ public class BranchPropertySource implements IPropertySource {
 
 	@Override
 	public IPropertyDescriptor[] getPropertyDescriptors() {
-		List<IPropertyDescriptor> resultList = new ArrayList<IPropertyDescriptor>();
+		List<IPropertyDescriptor> resultList = new ArrayList<>();
 
 		PropertyDescriptor desc = new PropertyDescriptor(
 				ConfigConstants.CONFIG_KEY_MERGE, UIText.BranchPropertySource_UpstreamBranchDescriptor);

@@ -155,7 +155,7 @@ class FetchResultTable {
 					walk.markStart(walk.parseCommit(update.getNewObjectId()));
 					walk.markUninteresting(walk.parseCommit(update
 							.getOldObjectId()));
-					List<RepositoryCommit> commits = new ArrayList<RepositoryCommit>();
+					List<RepositoryCommit> commits = new ArrayList<>();
 					for (RevCommit commit : walk)
 						commits.add(new RepositoryCommit(repo, commit));
 					children = commits.toArray();
@@ -410,7 +410,7 @@ class FetchResultTable {
 		treeViewer.setInput(null);
 		repo = db;
 		reader = db.newObjectReader();
-		abbrevations = new HashMap<ObjectId, String>();
+		abbrevations = new HashMap<>();
 		treeViewer.setInput(fetchResult);
 	}
 

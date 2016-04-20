@@ -118,7 +118,7 @@ public class GitSelectWizardPage extends WizardPage {
 	 * @param repo
 	 */
 	public void setRepository(Repository repo) {
-		List<WorkingDirNode> input = new ArrayList<WorkingDirNode>();
+		List<WorkingDirNode> input = new ArrayList<>();
 		if (repo != null)
 			input.add(new WorkingDirNode(null, repo));
 		tv.setInput(input);
@@ -205,7 +205,7 @@ public class GitSelectWizardPage extends WizardPage {
 		});
 
 		if (initialRepository != null) {
-			List<WorkingDirNode> input = new ArrayList<WorkingDirNode>();
+			List<WorkingDirNode> input = new ArrayList<>();
 			WorkingDirNode node = new WorkingDirNode(null, initialRepository);
 			input.add(node);
 			tv.setInput(input);

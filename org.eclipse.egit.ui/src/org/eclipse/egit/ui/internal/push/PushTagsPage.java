@@ -52,11 +52,11 @@ public class PushTagsPage extends WizardPage {
 
 	private final Repository repository;
 
-	private final Set<String> tagRefNamesToSelect = new HashSet<String>();
+	private final Set<String> tagRefNamesToSelect = new HashSet<>();
 
 	private RemoteConfig selectedRemoteConfig = null;
 
-	private List<TagNode> selectedTags = new ArrayList<TagNode>();
+	private List<TagNode> selectedTags = new ArrayList<>();
 
 	private boolean forceUpdateSelected = false;
 
@@ -170,7 +170,7 @@ public class PushTagsPage extends WizardPage {
 
 	private void initiallySelectTags(Object[] tagNodes,
 			CheckboxTreeViewer viewer) {
-		List<TagNode> checkedTags = new ArrayList<TagNode>();
+		List<TagNode> checkedTags = new ArrayList<>();
 		for (Object node : tagNodes) {
 			if (node instanceof TagNode) {
 				TagNode tagNode = (TagNode) node;

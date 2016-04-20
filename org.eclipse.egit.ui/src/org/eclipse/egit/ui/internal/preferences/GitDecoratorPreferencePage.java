@@ -121,7 +121,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 	static {
 		final PreviewResource project = new PreviewResource(
 				"Project", IResource.PROJECT, "repository" + '|' + RepositoryState.MERGING.getDescription(), "master", "↑2 ↓1", true, false, true, StagingState.NOT_STAGED, false, false); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-		final ArrayList<PreviewResource> children = new ArrayList<PreviewResource>();
+		final ArrayList<PreviewResource> children = new ArrayList<>();
 
 		children
 				.add(new PreviewResource(
@@ -162,7 +162,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		project.children = children;
 		PREVIEW_FILESYSTEM_ROOT = Collections.singleton(project);
 
-		FILE_AND_FOLDER_BINDINGS = new HashMap<String, String>();
+		FILE_AND_FOLDER_BINDINGS = new HashMap<>();
 		FILE_AND_FOLDER_BINDINGS.put(DecorationHelper.BINDING_RESOURCE_NAME,
 				UIText.DecoratorPreferencesPage_bindingResourceName);
 		FILE_AND_FOLDER_BINDINGS.put(DecorationHelper.BINDING_DIRTY_FLAG,
@@ -170,7 +170,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		FILE_AND_FOLDER_BINDINGS.put(DecorationHelper.BINDING_STAGED_FLAG,
 				UIText.DecoratorPreferencesPage_bindingStagedFlag);
 
-		PROJECT_BINDINGS = new HashMap<String, String>();
+		PROJECT_BINDINGS = new HashMap<>();
 		PROJECT_BINDINGS.put(DecorationHelper.BINDING_RESOURCE_NAME,
 				UIText.DecoratorPreferencesPage_bindingResourceName);
 		PROJECT_BINDINGS.put(DecorationHelper.BINDING_DIRTY_FLAG,
@@ -187,7 +187,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 				UIText.DecoratorPreferencesPage_bindingCommitMessage);
 
 
-		CHANGESET_LABEL_BINDINGS = new HashMap<String, String>();
+		CHANGESET_LABEL_BINDINGS = new HashMap<>();
 		CHANGESET_LABEL_BINDINGS.put(removeBraces(GitChangeSetLabelProvider.BINDING_CHANGESET_AUTHOR),
 				UIText.DecoratorPreferencesPage_bindingChangeSetAuthor);
 		CHANGESET_LABEL_BINDINGS.put(removeBraces(GitChangeSetLabelProvider.BINDING_CHANGESET_DATE),
@@ -1027,7 +1027,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 			PreferenceBasedDateFormatter formatter = PreferenceBasedDateFormatter
 					.create();
 
-			Map<String, String> bindings = new HashMap<String, String>();
+			Map<String, String> bindings = new HashMap<>();
 			bindings.put(GitChangeSetLabelProvider.BINDING_CHANGESET_DATE,
 					formatter.formatDate(date));
 			bindings.put(GitChangeSetLabelProvider.BINDING_CHANGESET_AUTHOR, author);

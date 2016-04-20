@@ -166,7 +166,7 @@ public class CommitMessageComponent {
 
 	private Repository repository;
 
-	private Collection<String> filesToCommit = new ArrayList<String>();
+	private Collection<String> filesToCommit = new ArrayList<>();
 
 	private ObjectId headCommitId;
 
@@ -204,7 +204,7 @@ public class CommitMessageComponent {
 		amending = false;
 		amendAllowed = false;
 		createChangeId = false;
-		filesToCommit = new ArrayList<String>();
+		filesToCommit = new ArrayList<>();
 		headCommitId = null;
 		listenersEnabled = false;
 	}
@@ -672,7 +672,7 @@ public class CommitMessageComponent {
 			return previousCommitMessage;
 		String calculatedCommitMessage = null;
 
-		Set<IResource> resources = new HashSet<IResource>();
+		Set<IResource> resources = new HashSet<>();
 		for (String path : paths) {
 			IFile file = findFile(path);
 			if (file != null)

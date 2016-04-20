@@ -122,7 +122,7 @@ public class PushTagsWizard extends Wizard {
 	}
 
 	private List<RefSpec> getRefSpecs() {
-		List<RefSpec> specs = new ArrayList<RefSpec>();
+		List<RefSpec> specs = new ArrayList<>();
 		String prefix;
 		if (pushTagsPage.isForceUpdateSelected())
 			prefix = "+"; //$NON-NLS-1$

@@ -211,7 +211,7 @@ class BranchProjectTracker {
 		IMemento[] children = memento.getChildren(KEY_PROJECT);
 		if (children.length == 0)
 			return new String[0];
-		List<String> projects = new ArrayList<String>(children.length);
+		List<String> projects = new ArrayList<>(children.length);
 		for (int i = 0; i < children.length; i++) {
 			String path = children[i].getTextData();
 			if (path != null && path.length() > 0)
@@ -243,7 +243,7 @@ class BranchProjectTracker {
 		if (paths.length == 0)
 			return;
 
-		Set<ProjectRecord> records = new LinkedHashSet<ProjectRecord>();
+		Set<ProjectRecord> records = new LinkedHashSet<>();
 		File parent = repository.getWorkTree();
 		for (String path : paths) {
 			File root;

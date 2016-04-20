@@ -41,7 +41,7 @@ class GitContainerMapping extends GitObjectMapping {
 			IProgressMonitor monitor) throws CoreException {
 		GitModelObject[] children = ((GitModelObjectContainer) getModelObject())
 				.getChildren();
-		Set<ResourceTraversal> result = new LinkedHashSet<ResourceTraversal>();
+		Set<ResourceTraversal> result = new LinkedHashSet<>();
 
 		final GitSynchronizeDataSet dataSet;
 		if (context instanceof GitSubscriberResourceMappingContext)
@@ -63,7 +63,7 @@ class GitContainerMapping extends GitObjectMapping {
 	private Set<ResourceTraversal> createTraversalForContainer(
 			GitModelObject child, GitSynchronizeDataSet dataSet) {
 		GitModelObject[] containerChildren = child.getChildren();
-		Set<ResourceTraversal> result = new LinkedHashSet<ResourceTraversal>();
+		Set<ResourceTraversal> result = new LinkedHashSet<>();
 		for (GitModelObject aChild : containerChildren) {
 			if(aChild.isContainer())
 				result.addAll(createTraversalForContainer(aChild, dataSet));

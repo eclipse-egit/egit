@@ -76,7 +76,7 @@ public class CommitSearchResultsPage extends AbstractTextSearchViewPage {
 			@Override
 			public Object[] getElements(Object element) {
 				if (getLayout() == FLAG_LAYOUT_TREE) {
-					Map<Repository, RepositoryMatch> repos = new HashMap<Repository, RepositoryMatch>();
+					Map<Repository, RepositoryMatch> repos = new HashMap<>();
 					for (Object inputElement : getInput().getElements()) {
 						RepositoryCommit commit = (RepositoryCommit) inputElement;
 						RepositoryMatch match = repos.get(commit

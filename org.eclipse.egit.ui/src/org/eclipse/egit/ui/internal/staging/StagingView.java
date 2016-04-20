@@ -296,9 +296,9 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private Presentation presentation = Presentation.LIST;
 
-	private Set<IPath> pathsToExpandInStaged = new HashSet<IPath>();
+	private Set<IPath> pathsToExpandInStaged = new HashSet<>();
 
-	private Set<IPath> pathsToExpandInUnstaged = new HashSet<IPath>();
+	private Set<IPath> pathsToExpandInUnstaged = new HashSet<>();
 
 	/**
 	 * Presentation mode of the staged/unstaged files.
@@ -362,7 +362,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			}
 
 			if (FileTransfer.getInstance().isSupportedType(event.dataType)) {
-				List<String> files = new ArrayList<String>();
+				List<String> files = new ArrayList<>();
 				for (Object selected : selection.toList())
 					if (selected instanceof StagingEntry) {
 						StagingEntry entry = (StagingEntry) selected;
@@ -1517,7 +1517,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private ShowInContext getShowInContext(TreeViewer treeViewer) {
 		IStructuredSelection selection = (IStructuredSelection) treeViewer.getSelection();
-		List<Object> elements = new ArrayList<Object>();
+		List<Object> elements = new ArrayList<>();
 		for (Object selectedElement : selection.toList()) {
 			if (selectedElement instanceof StagingEntry) {
 				StagingEntry entry = (StagingEntry) selectedElement;
@@ -2006,7 +2006,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				if (selection.isEmpty())
 					return;
 
-				List<StagingEntry> stagingEntryList = new ArrayList<StagingEntry>();
+				List<StagingEntry> stagingEntryList = new ArrayList<>();
 
 				boolean submoduleSelected = false;
 				boolean folderSelected = false;
@@ -2345,7 +2345,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 	}
 
 	private static List<IPath> getSelectedPaths(IStructuredSelection selection) {
-		List<IPath> paths = new ArrayList<IPath>();
+		List<IPath> paths = new ArrayList<>();
 		Iterator iterator = selection.iterator();
 		while (iterator.hasNext()) {
 			StagingEntry stagingEntry = (StagingEntry) iterator.next();
@@ -2505,8 +2505,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 		StagingViewContentProvider contentProvider = getContentProvider(unstagedViewer);
 		final Git git = new Git(currentRepository);
 		Iterator iterator = selection.iterator();
-		final List<String> addPaths = new ArrayList<String>();
-		final List<String> rmPaths = new ArrayList<String>();
+		final List<String> addPaths = new ArrayList<>();
+		final List<String> rmPaths = new ArrayList<>();
 		resetPathsToExpand();
 		while (iterator.hasNext()) {
 			Object element = iterator.next();
@@ -2655,7 +2655,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 	}
 
 	private List<String> processUnstageSelection(IStructuredSelection selection) {
-		List<String> paths = new ArrayList<String>();
+		List<String> paths = new ArrayList<>();
 		resetPathsToExpand();
 		for (Object element : selection.toList()) {
 			if (element instanceof StagingEntry) {
@@ -2688,8 +2688,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 	}
 
 	private void resetPathsToExpand() {
-		pathsToExpandInStaged = new HashSet<IPath>();
-		pathsToExpandInUnstaged = new HashSet<IPath>();
+		pathsToExpandInStaged = new HashSet<>();
+		pathsToExpandInUnstaged = new HashSet<>();
 	}
 
 	private static void addExpandedPathsBelowFolder(StagingFolderEntry folder,
@@ -3015,14 +3015,14 @@ public class StagingView extends ViewPart implements IShowInSource {
 		if (getPresentation() == Presentation.LIST)
 			return;
 
-		Set<IPath> paths = new HashSet<IPath>(additionalPaths);
+		Set<IPath> paths = new HashSet<>(additionalPaths);
 		// Instead of just expanding the previous elements directly, also expand
 		// all parent paths. This makes it work in case of "re-folding" of
 		// compact tree.
 		for (Object element : previous)
 			if (element instanceof StagingFolderEntry)
 				addPathAndParentPaths(((StagingFolderEntry) element).getPath(), paths);
-		List<StagingFolderEntry> expand = new ArrayList<StagingFolderEntry>();
+		List<StagingFolderEntry> expand = new ArrayList<>();
 
 		calculateNodesToExpand(paths, stagedContentProvider.getElements(null),
 				expand);
@@ -3203,7 +3203,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 	private Collection<String> getStagedFileNames() {
 		StagingViewContentProvider stagedContentProvider = getContentProvider(stagedViewer);
 		StagingEntry[] entries = stagedContentProvider.getStagingEntries();
-		List<String> files = new ArrayList<String>();
+		List<String> files = new ArrayList<>();
 		for (StagingEntry entry : entries)
 			files.add(entry.getPath());
 		return files;

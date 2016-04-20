@@ -724,7 +724,7 @@ class ExistingOrNewPage extends WizardPage {
 				elements = new Object[0];
 		}
 
-		Map<IProject, File> ret = new HashMap<IProject, File>(elements.length);
+		Map<IProject, File> ret = new HashMap<>(elements.length);
 		for (Object ti : elements) {
 			if (!internalMode) {
 				File workdir = selectedRepository.getWorkTree();

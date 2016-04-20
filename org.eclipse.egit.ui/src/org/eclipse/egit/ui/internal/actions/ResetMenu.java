@@ -48,17 +48,17 @@ public class ResetMenu {
 				UIText.GitHistoryPage_ResetMenuLabel, UIIcons.RESET,
 				"Reset"); //$NON-NLS-1$
 
-		Map<String, String> parameters = new HashMap<String, String>();
+		Map<String, String> parameters = new HashMap<>();
 		parameters.put(RESET_MODE, ResetType.SOFT.name());
 		resetManager.add(getCommandContributionItem(RESET,
 				UIText.GitHistoryPage_ResetSoftMenuLabel, parameters, site));
 
-		parameters = new HashMap<String, String>();
+		parameters = new HashMap<>();
 		parameters.put(RESET_MODE, ResetType.MIXED.name());
 		resetManager.add(getCommandContributionItem(RESET,
 				UIText.GitHistoryPage_ResetMixedMenuLabel, parameters, site));
 
-		parameters = new HashMap<String, String>();
+		parameters = new HashMap<>();
 		parameters.put(RESET_MODE, ResetType.HARD.name());
 		resetManager.add(getCommandContributionItem(RESET,
 				UIText.GitHistoryPage_ResetHardMenuLabel, parameters, site));

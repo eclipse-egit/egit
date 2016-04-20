@@ -116,7 +116,7 @@ public class NewRepositoryWizard extends Wizard implements INewWizard {
 	 * @param projects
 	 */
 	private void autoShareProjects(Repository repoToCreate, IProject[] projects) {
-		final Map<IProject, File> projectsMap = new HashMap<IProject, File>();
+		final Map<IProject, File> projectsMap = new HashMap<>();
 		for (IProject project : projects)
 			projectsMap.put(project, repoToCreate.getDirectory());
 		ConnectProviderOperation op = new ConnectProviderOperation(projectsMap);

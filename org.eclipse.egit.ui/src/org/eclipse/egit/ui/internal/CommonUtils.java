@@ -186,7 +186,7 @@ public class CommonUtils {
 
 	private static LinkedList<String> splitIntoDigitAndNonDigitParts(
 			String input) {
-		LinkedList<String> parts = new LinkedList<String>();
+		LinkedList<String> parts = new LinkedList<>();
 		int partStart = 0;
 		boolean previousWasDigit = Character.isDigit(input.charAt(0));
 		for (int i = 1; i < input.length(); i++) {

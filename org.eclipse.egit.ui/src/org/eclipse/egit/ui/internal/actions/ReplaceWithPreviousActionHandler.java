@@ -39,7 +39,7 @@ public class ReplaceWithPreviousActionHandler extends
 					"Unexpected number of selected Resources"); //$NON-NLS-1$
 		try {
 			List<PreviousCommit> pcs = findPreviousCommits();
-			List<RevCommit> previousCommits = new ArrayList<RevCommit>();
+			List<RevCommit> previousCommits = new ArrayList<>();
 			for (PreviousCommit pc: pcs)
 				previousCommits.add(pc.commit);
 			int parentCount = previousCommits.size();

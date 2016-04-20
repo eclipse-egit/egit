@@ -68,9 +68,9 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 
 	private List<Repository> repositories;
 
-	private Map<Repository, ConfigurationEditorComponent> repoConfigEditors = new HashMap<Repository, ConfigurationEditorComponent>();
+	private Map<Repository, ConfigurationEditorComponent> repoConfigEditors = new HashMap<>();
 
-	private Set<Repository> dirtyRepositories = new HashSet<Repository>();
+	private Set<Repository> dirtyRepositories = new HashSet<>();
 
 	private boolean userIsDirty;
 
@@ -237,7 +237,7 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 		if (userConfig == null)
 			userConfig = SystemReader.getInstance().openUserConfig(null, FS.DETECTED); // no inherit here!
 		if (repositories == null) {
-			repositories = new ArrayList<Repository>();
+			repositories = new ArrayList<>();
 			List<String> repoPaths = Activator.getDefault().getRepositoryUtil().getConfiguredRepositories();
 			RepositoryCache repositoryCache = org.eclipse.egit.core.Activator.getDefault().getRepositoryCache();
 			for (String repoPath : repoPaths) {
@@ -270,7 +270,7 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 	}
 
 	private String[] getRepositoryComboItems() {
-		List<String> items = new ArrayList<String>();
+		List<String> items = new ArrayList<>();
 		for (Repository repository : repositories) {
 			String repoName = getName(repository);
 			if (repoName.length() > 0)

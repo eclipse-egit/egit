@@ -349,7 +349,7 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 	}
 
 	private static List<Ref> getBranches(Repository repo)  {
-		List<Ref> ref = new ArrayList<Ref>();
+		List<Ref> ref = new ArrayList<>();
 		try {
 			RefDatabase refDb = repo.getRefDatabase();
 			ref.addAll(refDb.getRefs(Constants.R_HEADS).values());

@@ -136,7 +136,7 @@ public abstract class CommitProposalProcessor implements IContentAssistProcessor
 		Collection<String> messages = computeMessageProposals();
 		Set<CommitFile> files = computeFileProposals();
 
-		List<ICompletionProposal> proposals = new ArrayList<ICompletionProposal>();
+		List<ICompletionProposal> proposals = new ArrayList<>();
 		if (prefix != null && prefix.length() > 0) {
 			int replacementLength = prefix.length();
 			int replacementOffset = offset - replacementLength;
@@ -176,7 +176,7 @@ public abstract class CommitProposalProcessor implements IContentAssistProcessor
 
 	private Set<CommitFile> computeFileProposals() {
 		Collection<String> paths = computeFileNameProposals();
-		Set<CommitFile> files = new TreeSet<CommitFile>();
+		Set<CommitFile> files = new TreeSet<>();
 		for (String path : paths) {
 			String name = new Path(path).lastSegment();
 			if (name == null)

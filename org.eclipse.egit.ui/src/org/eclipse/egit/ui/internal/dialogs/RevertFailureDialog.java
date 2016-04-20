@@ -121,7 +121,7 @@ public class RevertFailureDialog extends MessageDialog {
 
 		private RevertFailure(MergeFailureReason reason) {
 			this.reason = reason;
-			this.paths = new ArrayList<Path>();
+			this.paths = new ArrayList<>();
 		}
 
 		private RevertFailure add(String path) {
@@ -214,7 +214,7 @@ public class RevertFailureDialog extends MessageDialog {
 				styleProvider));
 		viewer.setSorter(new ViewerSorter());
 
-		Map<MergeFailureReason, RevertFailure> failures = new HashMap<MergeFailureReason, RevertFailure>();
+		Map<MergeFailureReason, RevertFailure> failures = new HashMap<>();
 		for (Entry<String, MergeFailureReason> reason : reasons.entrySet()) {
 			RevertFailure failure = failures.get(reason.getValue());
 			if (failure == null) {

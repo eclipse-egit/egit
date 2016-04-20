@@ -75,7 +75,7 @@ public class MultiPullResultDialog extends Dialog {
 	private static final int DETAIL_BUTTON = 99;
 
 	// the value is either a PullResult or an IStatus
-	private final Map<Repository, Object> results = new LinkedHashMap<Repository, Object>();
+	private final Map<Repository, Object> results = new LinkedHashMap<>();
 
 	private TableViewer tv;
 
@@ -277,7 +277,7 @@ public class MultiPullResultDialog extends Dialog {
 			int yOffset = 0;
 			int yDelta = -trim.y - 3;
 
-			final LinkedList<PullResultDialog> dialogs= new LinkedList<PullResultDialog>();
+			final LinkedList<PullResultDialog> dialogs= new LinkedList<>();
 			IStructuredSelection sel = (IStructuredSelection) tv.getSelection();
 			for (Object obj : sel.toList()) {
 				@SuppressWarnings("unchecked")

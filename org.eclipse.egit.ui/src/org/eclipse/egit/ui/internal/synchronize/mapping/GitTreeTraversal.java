@@ -29,7 +29,7 @@ class GitTreeTraversal extends ResourceTraversal {
 	}
 
 	private static IResource[] getResourcesImpl(GitModelObject[] children) {
-		List<IResource> result = new ArrayList<IResource>(children.length);
+		List<IResource> result = new ArrayList<>(children.length);
 
 		for (GitModelObject object : children) {
 			IPath location = object.getLocation();

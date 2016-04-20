@@ -1041,7 +1041,7 @@ public class RebaseInteractiveView extends ViewPart implements
 	}
 
 	private void createContextMenuItems(final TreeViewer planViewer) {
-		contextMenuItems = new ArrayList<PlanContextMenuAction>();
+		contextMenuItems = new ArrayList<>();
 
 		contextMenuItems.add(new PlanContextMenuAction(
 				UIText.RebaseInteractiveStepActionToolBarProvider_PickText,

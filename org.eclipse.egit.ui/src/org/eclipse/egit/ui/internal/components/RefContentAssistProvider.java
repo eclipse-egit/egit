@@ -79,7 +79,7 @@ public class RefContentAssistProvider {
 		} else if (destinationRefs != null)
 			return destinationRefs;
 
-		List<Ref> result = new ArrayList<Ref>();
+		List<Ref> result = new ArrayList<>();
 		try {
 			boolean local = pushMode == source;
 			if (!local) {

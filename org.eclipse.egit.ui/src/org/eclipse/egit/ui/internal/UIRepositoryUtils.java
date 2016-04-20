@@ -48,7 +48,7 @@ public final class UIRepositoryUtils {
 			throws GitAPIException {
 		Status status = new Git(repo).status().call();
 		if (status.hasUncommittedChanges()) {
-			List<String> files = new ArrayList<String>(status.getModified());
+			List<String> files = new ArrayList<>(status.getModified());
 			Collections.sort(files);
 			String repoName = Activator.getDefault().getRepositoryUtil()
 					.getRepositoryName(repo);

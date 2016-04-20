@@ -43,7 +43,7 @@ public class RepoComboContentProvider implements IStructuredContentProvider {
 
 	@Override
 	public Object[] getElements(Object inputElement) {
-		List<Repository> nonBareRepos = new ArrayList<Repository>();
+		List<Repository> nonBareRepos = new ArrayList<>();
 		for (String dir : util.getConfiguredRepositories()) {
 			Repository repo;
 			try {

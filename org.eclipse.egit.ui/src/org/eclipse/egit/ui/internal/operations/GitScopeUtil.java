@@ -130,7 +130,7 @@ public class GitScopeUtil {
 	 * @return ResourceMappings
 	 */
 	private static ResourceMapping[] getResourceMappings(IResource[] resources) {
-		List<ResourceMapping> result = new ArrayList<ResourceMapping>();
+		List<ResourceMapping> result = new ArrayList<>();
 		for (IResource resource : resources)
 			result.add(getResourceMapping(resource));
 		return result.toArray(new ResourceMapping[result.size()]);
@@ -140,7 +140,7 @@ public class GitScopeUtil {
 			final IResource[] selectedResources)
 			throws InvocationTargetException, InterruptedException {
 
-		final List<IResource> relatedChanges = new ArrayList<IResource>();
+		final List<IResource> relatedChanges = new ArrayList<>();
 		IRunnableWithProgress runnable = new IRunnableWithProgress() {
 			@Override
 			public void run(IProgressMonitor monitor)

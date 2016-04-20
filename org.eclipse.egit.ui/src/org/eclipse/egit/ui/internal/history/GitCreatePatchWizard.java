@@ -221,7 +221,7 @@ public class GitCreatePatchWizard extends Wizard {
 	private TreeFilter createPathFilter(final Collection<? extends IResource> rs) {
 		if (rs == null || rs.isEmpty())
 			return null;
-		final List<PathFilter> filters = new ArrayList<PathFilter>();
+		final List<PathFilter> filters = new ArrayList<>();
 		for (IResource r : rs) {
 			RepositoryMapping rm = RepositoryMapping.getMapping(r);
 			if (rm != null) {

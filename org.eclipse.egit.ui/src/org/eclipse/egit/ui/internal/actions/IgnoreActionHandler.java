@@ -27,7 +27,7 @@ public class IgnoreActionHandler extends RepositoryActionHandler {
 		final IResource[] resources = getSelectedResources(event);
 		if (resources.length == 0)
 			return null;
-		List<IPath> paths = new ArrayList<IPath>();
+		List<IPath> paths = new ArrayList<>();
 		for (IResource resource : resources)
 			paths.add(resource.getLocation());
 

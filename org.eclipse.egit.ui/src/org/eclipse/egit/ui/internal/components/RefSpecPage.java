@@ -159,7 +159,7 @@ public class RefSpecPage extends WizardPage {
 		if (specsPanel == null)
 			return Collections.emptyList();
 		else
-			return new ArrayList<RefSpec>(specsPanel.getRefSpecs());
+			return new ArrayList<>(specsPanel.getRefSpecs());
 	}
 
 	/**

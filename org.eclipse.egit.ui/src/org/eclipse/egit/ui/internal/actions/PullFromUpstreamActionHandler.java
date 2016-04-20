@@ -32,7 +32,7 @@ public class PullFromUpstreamActionHandler extends RepositoryActionHandler {
 		Repository[] repos = getRepositories(event);
 		if (repos.length == 0)
 			return null;
-		Set<Repository> repositories = new LinkedHashSet<Repository>(
+		Set<Repository> repositories = new LinkedHashSet<>(
 				Arrays.asList(repos));
 		new PullOperationUI(repositories).start();
 		return null;

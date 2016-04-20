@@ -129,7 +129,7 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 			throws ExecutionException {
 		Repository repo = getRepository(event);
 		Collection<Ref> revTags = repo.getTags().values();
-		List<RevTag> tags = new ArrayList<RevTag>();
+		List<RevTag> tags = new ArrayList<>();
 		try (RevWalk walk = new RevWalk(repo)) {
 			for (Ref ref : revTags) {
 				try {
@@ -240,7 +240,7 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 		IStructuredSelection selection = getSelection(event);
 		if (selection.isEmpty())
 			return Collections.emptyList();
-		List<RevCommit> commits = new ArrayList<RevCommit>();
+		List<RevCommit> commits = new ArrayList<>();
 		try (RevWalk walk = new RevWalk(repository)) {
 			for (Object element : selection.toList()) {
 				RevCommit commit = (RevCommit) element;
@@ -266,10 +266,10 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 	 */
 	protected List<RefNode> getRefNodes(ObjectId commit, Repository repo,
 			String... refPrefixes) {
-		List<Ref> availableBranches = new ArrayList<Ref>();
-		List<RefNode> nodes = new ArrayList<RefNode>();
+		List<Ref> availableBranches = new ArrayList<>();
+		List<RefNode> nodes = new ArrayList<>();
 		try {
-			Map<String, Ref> branches = new HashMap<String, Ref>();
+			Map<String, Ref> branches = new HashMap<>();
 			for (String refPrefix : refPrefixes) {
 				branches.putAll(repo.getRefDatabase().getRefs(refPrefix));
 			}
@@ -304,7 +304,7 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 	private List<Ref> getBranchesOfCommit(IStructuredSelection selection,
 			String head,
 			boolean hideCurrentBranch) {
-		final List<Ref> branchesOfCommit = new ArrayList<Ref>();
+		final List<Ref> branchesOfCommit = new ArrayList<>();
 		if (selection.isEmpty())
 			return branchesOfCommit;
 		PlotCommit commit = (PlotCommit) selection.getFirstElement();

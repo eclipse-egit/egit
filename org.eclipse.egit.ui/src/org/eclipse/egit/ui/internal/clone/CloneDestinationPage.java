@@ -60,7 +60,7 @@ import org.eclipse.ui.dialogs.WorkingSetGroup;
  */
 public class CloneDestinationPage extends WizardPage {
 
-	private final List<Ref> availableRefs = new ArrayList<Ref>();
+	private final List<Ref> availableRefs = new ArrayList<>();
 
 	private RepositorySelection validatedRepoSelection;
 

@@ -47,7 +47,7 @@ public class ImportChangedProjectsCommand
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repository = getRepository(event);
-		Set<File> changedFiles = new HashSet<File>();
+		Set<File> changedFiles = new HashSet<>();
 
 		List<RevCommit> commits = getSelectedCommits(event);
 		for (RevCommit commit : commits) {
@@ -63,7 +63,7 @@ public class ImportChangedProjectsCommand
 
 	private Set<File> determineChangedFilesOfCommit(
 			RepositoryCommit repoCommit) {
-		Set<File> changedFilesOfCommit = new HashSet<File>();
+		Set<File> changedFilesOfCommit = new HashSet<>();
 		File rootOfWorkingDirectory = repoCommit.getRepository().getWorkTree();
 
 		FileDiff[] fileDiffs = repoCommit.getDiffs();
@@ -88,7 +88,7 @@ public class ImportChangedProjectsCommand
 
 	private Set<File> findDotProjectFiles(Set<File> changedFiles,
 			Repository repository) {
-		Set<File> result = new HashSet<File>();
+		Set<File> result = new HashSet<>();
 		String workingTreeRootPath = repository.getWorkTree().toString();
 		for (File changedFile : changedFiles) {
 			File projectFile = searchEnclosingProjectInWorkDir(

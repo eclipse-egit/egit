@@ -70,7 +70,7 @@ public class AddCommand extends
 	private void autoShareProjects(File repositoryDir) {
 		IPath workingDirPath = new Path(repositoryDir.getAbsolutePath())
 				.removeLastSegments(1);
-		Map<IProject, File> connections = new HashMap<IProject, File>();
+		Map<IProject, File> connections = new HashMap<>();
 		IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects();
 		for (IProject project : projects) {

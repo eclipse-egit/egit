@@ -409,7 +409,7 @@ public class GitProjectsImportPage extends WizardPage {
 							UIText.WizardProjectsImportPage_SearchingMessage,
 							100);
 					selectedProjects = new ProjectRecord[0];
-					Collection<File> files = new ArrayList<File>();
+					Collection<File> files = new ArrayList<>();
 					monitor.worked(10);
 					if (directory.isDirectory()) {
 						boolean searchNested = nestedProjects;
@@ -507,7 +507,7 @@ public class GitProjectsImportPage extends WizardPage {
 	 *         workspace
 	 */
 	public ProjectRecord[] getValidProjects() {
-		List<ProjectRecord> validProjects = new ArrayList<ProjectRecord>();
+		List<ProjectRecord> validProjects = new ArrayList<>();
 		for (int i = 0; i < selectedProjects.length; i++) {
 			if (!isProjectInWorkspace(selectedProjects[i].getProjectName())) {
 				validProjects.add(selectedProjects[i]);
@@ -541,7 +541,7 @@ public class GitProjectsImportPage extends WizardPage {
 	 * @return All the currently checked projects in the projectsList tree
 	 */
 	public Set<ProjectRecord> getCheckedProjects() {
-		HashSet<ProjectRecord> ret = new HashSet<ProjectRecord>();
+		HashSet<ProjectRecord> ret = new HashSet<>();
 		for (Object selected : projectsList.getCheckedElements())
 			ret.add((ProjectRecord) selected);
 

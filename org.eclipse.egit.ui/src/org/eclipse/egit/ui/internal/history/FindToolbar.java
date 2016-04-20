@@ -85,7 +85,7 @@ public class FindToolbar extends Composite {
 
 	private IPersistentPreferenceStore store = (IPersistentPreferenceStore) Activator.getDefault().getPreferenceStore();
 
-	private List<Listener> eventList = new ArrayList<Listener>();
+	private List<Listener> eventList = new ArrayList<>();
 
 	private Table historyTable;
 

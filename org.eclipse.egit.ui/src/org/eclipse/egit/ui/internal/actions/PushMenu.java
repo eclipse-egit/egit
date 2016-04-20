@@ -66,7 +66,7 @@ public class PushMenu extends CompoundContributionItem implements
 
 	@Override
 	protected IContributionItem[] getContributionItems() {
-		List<IContributionItem> res = new ArrayList<IContributionItem>();
+		List<IContributionItem> res = new ArrayList<>();
 
 		if (this.handlerService != null) {
 			Repository repository = SelectionUtils.getRepository(handlerService

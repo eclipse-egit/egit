@@ -60,7 +60,7 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 		IWorkbenchPage workBenchPage = HandlerUtil
 				.getActiveWorkbenchWindowChecked(event).getActivePage();
 		boolean errorOccurred = false;
-		List<ObjectId> ids = new ArrayList<ObjectId>();
+		List<ObjectId> ids = new ArrayList<>();
 		String gitPath = null;
 		if (input instanceof IFile) {
 			IFile resource = (IFile) input;

@@ -49,7 +49,7 @@ public enum RebaseInteractivePlanContentProvider implements ITreeContentProvider
 	public Object[] getChildren(Object parentElement) {
 		if (parentElement instanceof RebaseInteractivePlan) {
 			RebaseInteractivePlan plan = (RebaseInteractivePlan) parentElement;
-			List<RebaseInteractivePlan.PlanElement> linesToDisplay = new LinkedList<RebaseInteractivePlan.PlanElement>();
+			List<RebaseInteractivePlan.PlanElement> linesToDisplay = new LinkedList<>();
 			for (RebaseInteractivePlan.PlanElement line : plan.getList()) {
 				if (line.isComment())
 					continue;

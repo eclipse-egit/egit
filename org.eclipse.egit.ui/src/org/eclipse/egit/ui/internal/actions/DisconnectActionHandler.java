@@ -32,7 +32,7 @@ public class DisconnectActionHandler extends RepositoryActionHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IProject[] selectedProjects = getProjectsForSelectedResources();
-		List<IProject> projects = new ArrayList<IProject>(selectedProjects.length);
+		List<IProject> projects = new ArrayList<>(selectedProjects.length);
 		for (IProject project : selectedProjects) {
 			if (project.isOpen() && ResourceUtil.isSharedWithGit(project)) {
 				projects.add(project);

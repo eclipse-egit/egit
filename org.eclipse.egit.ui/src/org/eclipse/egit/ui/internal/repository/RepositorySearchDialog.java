@@ -77,7 +77,7 @@ public class RepositorySearchDialog extends WizardPage {
 
 	private static final String PREF_PATH = "RepositorySearchDialogSearchPath"; //$NON-NLS-1$
 
-	private final Set<String> fExistingDirectories = new HashSet<String>();
+	private final Set<String> fExistingDirectories = new HashSet<>();
 
 	private final boolean fillSearch;
 
@@ -436,7 +436,7 @@ public class RepositorySearchDialog extends WizardPage {
 	}
 
 	private HashSet<String> getCheckedItems() {
-		HashSet<String> ret = new HashSet<String>();
+		HashSet<String> ret = new HashSet<>();
 		for (Object item : fTreeViewer.getCheckedLeafElements())
 			ret.add((String) item);
 		return ret;
@@ -459,7 +459,7 @@ public class RepositorySearchDialog extends WizardPage {
 			// ignore here
 		}
 
-		final TreeSet<String> validDirs = new TreeSet<String>(getCheckedItems());
+		final TreeSet<String> validDirs = new TreeSet<>(getCheckedItems());
 
 		IRunnableWithProgress action = new IRunnableWithProgress() {
 
