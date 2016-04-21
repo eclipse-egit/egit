@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_a40a6929",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/DecoratedBranchLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-04-21T19:02:35Z",
+      "side": 1,
+      "message": "I would leave the caching to the LocalResourceManager.",
+      "revId": "dcc28b55c8a2e843f1f320dc2a866aedb12a3618",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_c415b548",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/DecoratedBranchLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-04-21T19:02:35Z",
+      "side": 1,
+      "message": "Why not use the resource manager of the egit UI plugin?\n\n  Activator.getDefault().getResourceManager()\n\nYes, it\u0027ll cache things a little too long, but the branch icons are cached there anyway (see SwitchToMenu).",
+      "revId": "dcc28b55c8a2e843f1f320dc2a866aedb12a3618",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_24d1f9f7",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/DecoratedBranchLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-04-21T19:02:35Z",
+      "side": 1,
+      "message": "Since this label provider always returns either the branch icon or the \"checked-out branch icon\", a general-purpose image decoration functions is probably overkill. Just use\nUIIcons.getImage(resourceManager, UIIcons.BRANCH) or UIIcons.getImage(resourceManager, UIIcons.CHECKED_OUT_BRANCH), respectively.\n\nAlso has the advantage that you don\u0027t have to worry about disposing images.",
+      "revId": "dcc28b55c8a2e843f1f320dc2a866aedb12a3618",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
