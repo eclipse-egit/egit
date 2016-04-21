@@ -1185,7 +1185,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				.getBoolean(UIPreferences.WARN_BEFORE_COMMITTING)
 				&& getPreferenceStore().getBoolean(UIPreferences.BLOCK_COMMIT);
 		showControl(ignoreErrors, visible);
-		ignoreErrors.getParent().layout(true);
+		mainSashForm.layout();
 	}
 
 	private int getProblemsSeverity() {
