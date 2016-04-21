@@ -34,7 +34,6 @@ import org.eclipse.egit.ui.internal.components.RefSpecPage;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
@@ -46,8 +45,6 @@ import org.eclipse.jgit.transport.RemoteRefUpdate;
 import org.eclipse.jgit.transport.Transport;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * Wizard allowing user to specify all needed data to push to another repository
@@ -308,18 +305,8 @@ public class PushWizard extends Wizard {
 			}
 
 			if (resultToCompare == null || !result.equals(resultToCompare)) {
-				PlatformUI.getWorkbench().getDisplay().asyncExec(
-						new Runnable() {
-							@Override
-							public void run() {
-								final Shell shell = PlatformUI.getWorkbench()
-										.getActiveWorkbenchWindow().getShell();
-								final Dialog dialog = new PushResultDialog(
-										shell, localDb, result,
-										destinationString, false);
-								dialog.open();
-							}
-						});
+				PushResultDialog.show(localDb, result, destinationString, true,
+						false);
 			}
 			return Status.OK_STATUS;
 		}
