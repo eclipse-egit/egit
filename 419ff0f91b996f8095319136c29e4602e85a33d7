@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_13db6963",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-04-21T05:53:20Z",
+      "side": 1,
+      "message": "s/used/use/",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 4
+      },
+      "revId": "419ff0f91b996f8095319136c29e4602e85a33d7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_33dea552",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-04-21T05:53:20Z",
+      "side": 1,
+      "message": "s/Stagging Area/Staging Area/",
+      "range": {
+        "startLine": 10,
+        "startChar": 15,
+        "endLine": 10,
+        "endChar": 28
+      },
+      "revId": "419ff0f91b996f8095319136c29e4602e85a33d7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_53d1713d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-04-21T05:53:20Z",
+      "side": 1,
+      "message": "I think we should also reference the corresponding discussion on the git mailing list",
+      "revId": "419ff0f91b996f8095319136c29e4602e85a33d7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_d3cd81ab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-04-21T05:53:20Z",
+      "side": 1,
+      "message": "I think we should change this consistently in a single change in order to avoid confusion for the many users using the nightly build.\n\nTODOs:  also change command names in \n* team menu \n* and repositories view\n* adapt user guide https://wiki.eclipse.org/EGit/User_Guide",
+      "revId": "419ff0f91b996f8095319136c29e4602e85a33d7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_53ba5109",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-04-21T05:53:20Z",
+      "side": 1,
+      "message": "This seems inconsistent. I think we should either use \"Stage\" and \"Unstage\" or \"Add to Staging Area\" and \"Remove from Staging Area\".\n\nThe former is shorter, the latter is closer to the command names many git users know from the native git command line.\n\nMaybe we should send an email to the egit mailing list to gather  feedback from more users on this change.",
+      "revId": "419ff0f91b996f8095319136c29e4602e85a33d7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
