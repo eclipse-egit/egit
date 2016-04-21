@@ -59,10 +59,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchCommandConstants;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * Push the current HEAD to Gerrit
@@ -261,18 +259,8 @@ class PushToGerritPage extends WizardPage {
 					}
 				}
 			});
-			getShell().getDisplay().asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					Shell shell = PlatformUI.getWorkbench()
-							.getActiveWorkbenchWindow().getShell();
-					PushResultDialog dlg = new PushResultDialog(shell,
-							repository, result[0], op.getDestinationString(),
-							false);
-					dlg.showConfigureButton(false);
-					dlg.open();
-				}
-			});
+			PushResultDialog.show(repository, result[0],
+					op.getDestinationString(), false, false);
 			storeLastUsedUri(uriCombo.getText());
 			storeLastUsedBranch(branchText.getText());
 		} catch (URISyntaxException e) {
