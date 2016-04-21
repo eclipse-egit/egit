@@ -22,6 +22,7 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -339,9 +340,10 @@ public class GitProjectData {
 								.getRepositoryCache().lookupRepository(git);
 						if (m != null && r != null
 								&& gitCandidate.equals(r.getWorkTree())) {
-							data.mappings.put(m.getContainerPath(), m);
-							data.map(m);
-							modified.add(data);
+							if (data.map(m)) {
+								data.mappings.put(m.getContainerPath(), m);
+								modified.add(data);
+							}
 						}
 					} catch (IOException e) {
 						Activator.logError(e.getMessage(), e);
@@ -625,18 +627,32 @@ public class GitProjectData {
 			o.close();
 		}
 
-		remapAll();
+		if (!remapAll()) {
+			try {
+				store();
+			} catch (CoreException e) {
+				IStatus status = e.getStatus();
+				Activator.logError(status.getMessage(), status.getException());
+			}
+		}
 		return this;
 	}
 
-	private void remapAll() {
+	private boolean remapAll() {
 		protectedResources.clear();
-		for (final RepositoryMapping repoMapping : mappings.values()) {
-			map(repoMapping);
+		boolean allMapped = true;
+		Iterator<RepositoryMapping> iterator = mappings.values().iterator();
+		while (iterator.hasNext()) {
+			RepositoryMapping m = iterator.next();
+			if (!map(m)) {
+				iterator.remove();
+				allMapped = false;
+			}
 		}
+		return allMapped;
 	}
 
-	private void map(final RepositoryMapping m) {
+	private boolean map(final RepositoryMapping m) {
 		final IResource r;
 		final File git;
 		final IResource dotGit;
@@ -651,29 +667,29 @@ public class GitProjectData {
 		}
 
 		if (c == null) {
-			logAndUnmapGoneMappedResource(m);
-			return;
+			logAndUnmapGoneMappedResource(m, null);
+			return false;
 		}
 		m.setContainer(c);
 
 		IPath absolutePath = m.getGitDirAbsolutePath();
 		if (absolutePath == null) {
-			logAndUnmapGoneMappedResource(m);
-			return;
+			logAndUnmapGoneMappedResource(m, c);
+			return false;
 		}
 		git = absolutePath.toFile();
 
 		if (!RepositoryCache.FileKey.isGitRepository(git, FS.DETECTED)) {
-			logAndUnmapGoneMappedResource(m);
-			return;
+			logAndUnmapGoneMappedResource(m, c);
+			return false;
 		}
 
 		try {
 			m.setRepository(Activator.getDefault().getRepositoryCache()
 					.lookupRepository(git));
 		} catch (IOException ioe) {
-			logAndUnmapGoneMappedResource(m);
-			return;
+			logAndUnmapGoneMappedResource(m, c);
+			return false;
 		}
 
 		trace("map "  //$NON-NLS-1$
@@ -687,21 +703,34 @@ public class GitProjectData {
 					CoreText.GitProjectData_failedToCacheRepoMapping, err);
 		}
 
-		fireRepositoryChanged(m);
-
 		dotGit = c.findMember(Constants.DOT_GIT);
 		if (dotGit != null) {
 			protect(dotGit);
 		}
+
+		fireRepositoryChanged(m);
+
+		return true;
 	}
 
-	private void logAndUnmapGoneMappedResource(final RepositoryMapping m) {
+	private void logAndUnmapGoneMappedResource(final RepositoryMapping m,
+			final IContainer c) {
 		Activator.logError(MessageFormat.format(
 				CoreText.GitProjectData_mappedResourceGone, m.toString()),
 				new FileNotFoundException(m.getContainerPath().toString()));
 		m.clear();
-		UnmapJob unmapJob = new UnmapJob(getProject());
-		unmapJob.schedule();
+		if (c instanceof IProject) {
+			UnmapJob unmapJob = new UnmapJob((IProject) c);
+			unmapJob.schedule();
+		} else if (c != null) {
+			try {
+				c.setSessionProperty(MAPPING_KEY, null);
+			} catch (CoreException e) {
+				Activator.logWarning(MessageFormat.format(
+						CoreText.GitProjectData_failedToUnmapRepoMapping,
+						c.getFullPath()), e);
+			}
+		}
 	}
 
 	private void protect(IResource resource) {
