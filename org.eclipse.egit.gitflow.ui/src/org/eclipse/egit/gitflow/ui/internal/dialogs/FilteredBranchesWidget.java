@@ -8,8 +8,6 @@
  *******************************************************************************/
 package org.eclipse.egit.gitflow.ui.internal.dialogs;
 
-import static org.eclipse.egit.ui.internal.CommonUtils.STRING_ASCENDING_COMPARATOR;
-
 import java.util.List;
 
 import org.eclipse.egit.gitflow.GitFlowRepository;
@@ -20,13 +18,14 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -45,6 +44,8 @@ public class FilteredBranchesWidget {
 	private String prefix;
 
 	private GitFlowRepository gfRepo;
+
+	private BranchComparator comparator;
 
 	FilteredBranchesWidget(List<Ref> refs, String prefix, GitFlowRepository gfRepo) {
 		this.refs = refs;
@@ -82,9 +83,14 @@ public class FilteredBranchesWidget {
 		branchesViewer.getTree().setLinesVisible(false);
 		branchesViewer.getTree().setHeaderVisible(true);
 
+		comparator = new BranchComparator();
+		branchesViewer.setComparator(comparator);
+
 		TreeColumn nameColumn = createColumn(
 				UIText.BranchSelectionTree_NameColumn, branchesViewer,
 				new DecoratedBranchLabelProvider(gfRepo.getRepository(), prefix));
+		setSortedColumn(nameColumn);
+
 		TreeColumn idColumn = createColumn(UIText.BranchSelectionTree_IdColumn, branchesViewer, new ColumnLabelProvider() {
 
 			@Override
@@ -116,7 +122,6 @@ public class FilteredBranchesWidget {
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(branchesViewer.getControl());
 
 		branchesViewer.setContentProvider(new BranchListContentProvider());
-		branchesViewer.setComparator(new ViewerComparator(STRING_ASCENDING_COMPARATOR));
 		branchesViewer.setInput(refs);
 
 		nameColumn.pack();
@@ -127,14 +132,28 @@ public class FilteredBranchesWidget {
 		return area;
 	}
 
-	private TreeColumn createColumn(String name, TreeViewer treeViewer, ColumnLabelProvider labelProvider) {
-		TreeColumn column = new TreeColumn(treeViewer.getTree(), SWT.LEFT);
+	private TreeColumn createColumn(final String name, TreeViewer treeViewer, ColumnLabelProvider labelProvider) {
+		final TreeColumn column = new TreeColumn(treeViewer.getTree(), SWT.LEFT);
 		column.setAlignment(SWT.LEFT);
 		column.setText(name);
+		column.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				setSortedColumn(column);
+			}
+		});
 
 		TreeViewerColumn treeViewerNameColumn = new TreeViewerColumn(treeViewer, column);
 		treeViewerNameColumn.setLabelProvider(labelProvider);
 		return column;
+	}
+
+	private void setSortedColumn(final TreeColumn column) {
+		comparator.setColumn(column);
+		int dir = comparator.getDirection();
+		branchesViewer.getTree().setSortDirection(dir);
+		branchesViewer.getTree().setSortColumn(column);
+		branchesViewer.refresh();
 	}
 
 	private ViewerFilter createFilter() {
