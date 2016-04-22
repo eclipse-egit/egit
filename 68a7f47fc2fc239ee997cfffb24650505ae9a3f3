@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_01506c55",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-04-22T12:00:16Z",
+      "side": 1,
+      "message": "Seems to me that the changes in this class are the only ones that correspond to the commit message, while all the other changes are about an unrelated issue about finding the previous commit. Or am I missing something?\n\nWould be better if this could be split in two commits, one per feature.",
+      "revId": "68a7f47fc2fc239ee997cfffb24650505ae9a3f3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_c16e8424",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-04-22T12:00:16Z",
+      "side": 1,
+      "message": "Shouldn\u0027t ResourceMapping be preferred over IResource here, too? If not, why not?",
+      "revId": "68a7f47fc2fc239ee997cfffb24650505ae9a3f3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
