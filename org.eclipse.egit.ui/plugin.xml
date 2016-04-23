@@ -1487,6 +1487,9 @@
                            <instanceof
                                  value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
                            </instanceof>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.BranchHierarchyNode">
+                           </instanceof>
                            <test
                                  property="GitRepository.isLocalBranch">
                            </test>
@@ -2393,6 +2396,9 @@
                         <or>
                            <instanceof
                                  value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.BranchHierarchyNode">
                            </instanceof>
                            <test
                                  property="GitRepository.isLocalBranch">

@@ -116,6 +116,10 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 	 * <td>{@link String}</td>
 	 * </tr>
 	 * <tr>
+	 * <td>{@link RepositoryTreeNodeType#BRANCHHIERARCHY}</td>
+	 * <td>{@link IPath}</td>
+	 * </tr>
+	 * <tr>
 	 * <td>{@link RepositoryTreeNodeType#LOCAL}</td>
 	 * <td>{@link String}</td>
 	 * </tr>
