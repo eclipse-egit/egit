@@ -22,6 +22,30 @@
       "revId": "e1c2ad4c30bfa9de23418b020d536fa0fe29149c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_8dc58dd7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/BranchHierarchyNode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-04-23T22:21:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7dfcf21_0d56dda3",
+      "range": {
+        "startLine": 92,
+        "startChar": 30,
+        "endLine": 92,
+        "endChar": 36
+      },
+      "revId": "e1c2ad4c30bfa9de23418b020d536fa0fe29149c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
