@@ -46,6 +46,30 @@
       "revId": "e1c2ad4c30bfa9de23418b020d536fa0fe29149c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_6d5f616e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/BranchHierarchyNode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2016-04-24T13:17:28Z",
+      "side": 1,
+      "message": "Thanks. Since I wasn\u0027t sure how your policy is for cleaning of deprecations (and when), I did this code exactly like in the method above.",
+      "parentUuid": "e7dfcf21_8dc58dd7",
+      "range": {
+        "startLine": 92,
+        "startChar": 30,
+        "endLine": 92,
+        "endChar": 36
+      },
+      "revId": "e1c2ad4c30bfa9de23418b020d536fa0fe29149c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
