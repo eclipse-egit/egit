@@ -733,7 +733,13 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 			eventDepth++;
 			if (eventDepth == 1) {
 				uri = u;
-				uriText.setText(uri.toString());
+				String oldUriText = uriText.getText();
+				String newUriText = uri.toString();
+				// avoid moving the cursor to the first position if there are no
+				// changes by this automatic update
+				if (!oldUriText.equals(newUriText)) {
+					uriText.setText(newUriText);
+				}
 				checkPage();
 			}
 		} finally {
