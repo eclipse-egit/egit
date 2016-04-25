@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_d802f5c2",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-04-25T05:53:53Z",
+      "side": 1,
+      "message": "So this is for Team-\u003eAdvanced-\u003eDelete Branch in the project explorer?\n\nSeems to me that DeleteBranchCommand.name and RenameBranchCommand.name have no effect whatsoever. They are used as default command names, overriden in plugin.xml by explicit label directives on the menu commands that then use DeleteBranchMenu.label and RenameBranchMenu.label.\n\nThe only place the default would perhaps be used might have been the legacy DeleteBranchAction and RenameBranchAction, but those appear to be unused?\n\nThe repository view uses a different command ID (org.eclipse.ui.edit.delete), a different label (RepoViewDeleteBranch.label), and a different handler (org.eclipse.egit.ui.internal.repository.tree.command.DeleteBranchCommand) and should not have the \"...\" anyway since it doesn\u0027t always ask for confirmation.",
+      "revId": "671c079f96e330ff371b5e5c5b317f0b6926f2d9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_b80529ce",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1514,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-04-25T05:53:53Z",
+      "side": 1,
+      "message": "And this is for Delete Branch in the context menu of the history view.\n\nDeleteBranchOnCommitHandler will ask for confirmation only if there are several branches on the commit, or if the commit is unmerged. To me \"...\" is an indication that I can click the item safely, and that I will get a chance to back out no matter what. That\u0027s not the case here.",
+      "revId": "671c079f96e330ff371b5e5c5b317f0b6926f2d9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
