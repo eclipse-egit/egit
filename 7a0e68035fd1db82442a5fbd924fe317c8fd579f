@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_34dcbd03",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/ShowHistoryActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-04-26T14:37:13Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we check first if there are resources at all and do return in case there is nothing?",
+      "revId": "7a0e68035fd1db82442a5fbd924fe317c8fd579f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
