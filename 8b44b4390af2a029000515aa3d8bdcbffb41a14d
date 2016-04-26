@@ -16,6 +16,24 @@
       "revId": "8b44b4390af2a029000515aa3d8bdcbffb41a14d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_aa73045a",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/DecoratedBranchLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-04-26T21:45:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7dfcf21_4a39a08d",
+      "revId": "8b44b4390af2a029000515aa3d8bdcbffb41a14d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
