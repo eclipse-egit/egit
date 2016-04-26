@@ -16,6 +16,24 @@
       "revId": "7a0e68035fd1db82442a5fbd924fe317c8fd579f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_f45ed5f5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/ShowHistoryActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-04-26T14:56:30Z",
+      "side": 1,
+      "message": "We do check above that all selected resources map to a single repo. If there were no resources at all, we\u0027d never get here.",
+      "parentUuid": "e7dfcf21_34dcbd03",
+      "revId": "7a0e68035fd1db82442a5fbd924fe317c8fd579f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
