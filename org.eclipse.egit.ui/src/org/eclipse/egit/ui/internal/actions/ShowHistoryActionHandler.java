@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2012 Mathias Kinzler <mathias.kinzler@sap.com> and others.
+ * Copyright (C) 2010, 2016 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,6 +9,7 @@
  * Contributors:
  *   Mathias Kinzler - initial version
  *   François Rey - refactoring as part of gracefully ignoring linked resources
+ *   Thomas Wolf <thomas.wolf@paranor.ch> - Bug 492336
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
@@ -34,15 +35,15 @@ public class ShowHistoryActionHandler extends RepositoryActionHandler {
 		if (repo == null) {
 			return null;
 		}
-		IHistoryView view;
 		try {
 			IWorkbenchWindow activeWorkbenchWindow = HandlerUtil
 					.getActiveWorkbenchWindow(event);
 			if (activeWorkbenchWindow != null) {
 				IWorkbenchPage page = activeWorkbenchWindow.getActivePage();
 				if (page != null) {
-					view = (IHistoryView) page.showView(IHistoryView.VIEW_ID);
 					IResource[] resources = getSelectedResources(event);
+					IHistoryView view = (IHistoryView) page
+							.showView(IHistoryView.VIEW_ID);
 					if (resources.length == 1) {
 						view.showHistoryFor(resources[0]);
 						return null;
