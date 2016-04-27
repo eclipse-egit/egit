@@ -277,13 +277,16 @@ public class GitRepositoriesViewFetchAndPushTest extends
 
 	private void selectNode(SWTBotTree tree, boolean useRemote, boolean fetchMode)
 			throws Exception {
-		if (useRemote)
-			myRepoViewUtil.getRemotesItem(tree, clonedRepositoryFile).expand()
-					.getNode("origin").select();
-		else
-			myRepoViewUtil.getRemotesItem(tree, clonedRepositoryFile).expand()
-					.getNode("origin").expand().getNode(fetchMode ? 0 : 1)
+		SWTBotTreeItem remotesNode = myRepoViewUtil.getRemotesItem(tree,
+				clonedRepositoryFile);
+		SWTBotTreeItem originNode = TestUtil.expandAndWait(remotesNode)
+				.getNode("origin");
+		if (useRemote) {
+			originNode.select();
+		} else {
+			TestUtil.expandAndWait(originNode).getNode(fetchMode ? 0 : 1)
 					.select();
+		}
 	}
 
 	private void runPush(SWTBotTree tree) {

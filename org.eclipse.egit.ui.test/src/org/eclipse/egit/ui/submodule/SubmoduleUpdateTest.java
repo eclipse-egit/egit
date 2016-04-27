@@ -32,6 +32,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -84,10 +85,9 @@ public class SubmoduleUpdateTest extends GitRepositoriesViewTestBase {
 
 		refreshAndWait();
 		SWTBotTree tree = getOrOpenView().bot().tree();
-		tree.getAllItems()[0]
-				.expand()
-				.expandNode(
-						UIText.RepositoriesViewLabelProvider_SubmodulesNodeText)
+		SWTBotTreeItem item = TestUtil.expandAndWait(tree.getAllItems()[0]);
+		TestUtil.expandAndWait(item.getNode(
+				UIText.RepositoriesViewLabelProvider_SubmodulesNodeText))
 				.select();
 		ContextMenuHelper.clickContextMenuSync(tree, myUtil
 				.getPluginLocalizedValue(UPDATE_SUBMODULE_CONTEXT_MENU_LABEL));
