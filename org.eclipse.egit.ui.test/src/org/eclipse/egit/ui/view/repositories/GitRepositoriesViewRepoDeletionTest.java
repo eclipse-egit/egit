@@ -298,11 +298,10 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		refreshAndWait();
 
 		SWTBotTree tree = getOrOpenView().bot().tree();
-		tree.getAllItems()[0]
-				.expand()
-				.expandNode(
-						UIText.RepositoriesViewLabelProvider_SubmodulesNodeText)
-				.getItems()[0].select();
+		SWTBotTreeItem item = TestUtil.expandAndWait(tree.getAllItems()[0]);
+		item = TestUtil.expandAndWait(item.getNode(
+				UIText.RepositoriesViewLabelProvider_SubmodulesNodeText));
+		item.getItems()[0].select();
 		ContextMenuHelper.clickContextMenu(tree, myUtil
 				.getPluginLocalizedValue(DELETE_REPOSITORY_CONTEXT_MENU_LABEL));
 		SWTBotShell shell = bot

@@ -290,7 +290,8 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 		TestUtil.waitForDecorations();
 		assertTrue("Folder should have repo/branch decoration",
 				node.getText().contains("[master"));
-		node = TestUtil.getChildNode(node.expand(), CHILDPROJECT);
+		TestUtil.expandAndWait(node);
+		node = TestUtil.getChildNode(node, CHILDPROJECT);
 		TestUtil.waitForDecorations();
 		assertFalse("Folder should not have repo/branch decoration",
 				node.getText().contains("["));

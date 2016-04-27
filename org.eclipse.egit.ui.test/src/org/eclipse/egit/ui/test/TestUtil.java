@@ -57,6 +57,7 @@ import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
+import org.eclipse.swtbot.swt.finder.waits.DefaultCondition;
 import org.eclipse.swtbot.swt.finder.waits.ICondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
@@ -569,6 +570,32 @@ public class TestUtil {
 	}
 
 	/**
+	 * Expand a node and wait until it is expanded. Use only if the node is
+	 * expected to have children.
+	 *
+	 * @param treeItem
+	 *            to expand
+	 * @return the {@code treeItem}
+	 */
+	public static SWTBotTreeItem expandAndWait(final SWTBotTreeItem treeItem) {
+		treeItem.expand();
+		new SWTBot().waitUntil(new DefaultCondition() {
+
+			@Override
+			public boolean test() {
+				SWTBotTreeItem[] children = treeItem.getItems();
+				return children != null && children.length > 0;
+			}
+
+			@Override
+			public String getFailureMessage() {
+				return "No children found for " + treeItem.getText();
+			}
+		});
+		return treeItem;
+	}
+
+	/**
 	 * Navigates in the given tree to the node denoted by the labels in the
 	 * path, using {@link #getNode(SWTBotTreeItem[], String)} to find children.
 	 *
@@ -587,7 +614,7 @@ public class TestUtil {
 		new SWTBot().waitUntil(widgetIsEnabled(tree));
 		SWTBotTreeItem item = getNode(tree.getAllItems(), path[0]);
 		for (int i = 1; item != null && i < path.length; i++) {
-			item.expand();
+			item = expandAndWait(item);
 			item = getChildNode(item, path[i]);
 		}
 		return item;

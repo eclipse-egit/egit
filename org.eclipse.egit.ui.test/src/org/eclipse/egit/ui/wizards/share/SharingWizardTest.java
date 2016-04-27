@@ -51,6 +51,7 @@ import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotCombo;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -91,7 +92,8 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 			throws CoreException {
 		bot.menu("File").menu("New").menu("Project...").click();
 		SWTBotShell createProjectDialogShell = bot.shell("New Project");
-		bot.tree().getTreeItem("General").expand().getNode("Project").select();
+		SWTBotTreeItem item = bot.tree().getTreeItem("General");
+		TestUtil.expandAndWait(item).getNode("Project").select();
 		bot.button("Next >").click();
 
 		bot.textWithLabel("Project name:").setText(projectName);
