@@ -19,6 +19,7 @@ import java.util.List;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
@@ -63,8 +64,8 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 		removeRemotesConfig(repositoryFile);
 		refreshAndWait();
 		SWTBotTree tree = getOrOpenView().bot().tree();
-		SWTBotTreeItem remotesItem = myRepoViewUtil.getRemotesItem(tree,
-				repositoryFile).expand();
+		SWTBotTreeItem remotesItem = myRepoViewUtil
+				.getRemotesItem(tree, repositoryFile).expand();
 		assertEquals("Wrong number of remotes", 0, remotesItem.getNodes()
 				.size());
 		StoredConfig cfg = lookupRepository(repositoryFile).getConfig();
@@ -81,22 +82,20 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 		cfg.save();
 		cfg.load();
 		refreshAndWait();
-		remotesItem = myRepoViewUtil.getRemotesItem(tree, repositoryFile)
-				.expand();
+		remotesItem = TestUtil.expandAndWait(
+				myRepoViewUtil.getRemotesItem(tree, repositoryFile));
 		assertEquals("Wrong number of remotes", 3, remotesItem.getNodes()
 				.size());
 
-		remotesItem = myRepoViewUtil.getRemotesItem(tree, repositoryFile)
-				.expand();
-		List<String> testnodes = remotesItem.getNode("test").expand()
-				.getNodes();
+		List<String> testnodes = TestUtil
+				.expandAndWait(remotesItem.getNode("test")).getNodes();
 		assertEquals(2, testnodes.size());
-		List<String> test2nodes = remotesItem.getNode("test2").expand()
-				.getNodes();
+		List<String> test2nodes = TestUtil
+				.expandAndWait(remotesItem.getNode("test2")).getNodes();
 		assertEquals(2, test2nodes.size());
 		// error node should be shown
-		remotesItem.getNode("test3").expand().getNodes();
-		assertEquals(1, remotesItem.getNode("test3").expand().getNodes().size());
+		assertEquals(1, TestUtil.expandAndWait(remotesItem.getNode("test3"))
+				.getNodes().size());
 
 		// test the properties view on remote
 		remotesItem.getNode("test").select();
@@ -126,10 +125,8 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 		refreshAndWait();
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		SWTBotTreeItem remotesItem = myRepoViewUtil.getRemotesItem(tree,
-				repositoryFile).expand();
+				repositoryFile);
 
-		remotesItem = myRepoViewUtil.getRemotesItem(tree, repositoryFile)
-				.expand();
 		remotesItem.select();
 		ContextMenuHelper.clickContextMenu(tree, myUtil
 				.getPluginLocalizedValue("NewRemoteCommand"));
@@ -167,9 +164,10 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 				.click();
 
 		refreshAndWait();
-		// assert 1 children
-		SWTBotTreeItem item = myRepoViewUtil.getRemotesItem(tree,
-				repositoryFile).expand().getNode("testRemote").expand();
+		// assert children (push is shown also if there's only a fetch URI)
+		SWTBotTreeItem item = TestUtil.expandAndWait(
+				myRepoViewUtil.getRemotesItem(tree, repositoryFile));
+		item = TestUtil.expandAndWait(item.getNode("testRemote"));
 		List<String> children = item.getNodes();
 		assertEquals(2, children.size());
 		item.select();
@@ -205,8 +203,9 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 
 		refreshAndWait();
 		// assert 2 children
-		item = myRepoViewUtil.getRemotesItem(tree, repositoryFile).expand()
-				.getNode("testRemote").expand();
+		item = TestUtil.expandAndWait(
+				myRepoViewUtil.getRemotesItem(tree, repositoryFile));
+		item = TestUtil.expandAndWait(item.getNode("testRemote"));
 		children = item.getNodes();
 		assertEquals(2, children.size());
 		item.getNode(0).select();
@@ -215,8 +214,9 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 				.getPluginLocalizedValue("RemoveFetchCommand"));
 		refreshAndWait();
 		// assert 1 children
-		item = myRepoViewUtil.getRemotesItem(tree, repositoryFile).expand()
-				.getNode("testRemote").expand();
+		item = TestUtil.expandAndWait(
+				myRepoViewUtil.getRemotesItem(tree, repositoryFile));
+		item = TestUtil.expandAndWait(item.getNode("testRemote"));
 		children = item.getNodes();
 		assertEquals(1, children.size());
 		item.getNode(0).select();
@@ -225,13 +225,13 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 				.getPluginLocalizedValue("RemovePushCommand"));
 		refreshAndWait();
 		// assert 0 children
-		item = myRepoViewUtil.getRemotesItem(tree, repositoryFile).expand()
+		item = TestUtil.expandAndWait(
+						myRepoViewUtil.getRemotesItem(tree, repositoryFile))
 				.getNode("testRemote").expand();
 		children = item.getNodes();
 		assertEquals(0, children.size());
 
-		myRepoViewUtil.getRemotesItem(tree, repositoryFile).expand().getNode(
-				"testRemote").select();
+		item.select();
 
 		ContextMenuHelper.clickContextMenu(tree, myUtil
 				.getPluginLocalizedValue("ConfigureFetchCommand"));
@@ -263,14 +263,16 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 				.click();
 		refreshAndWait();
 		// assert 1 children
-		item = myRepoViewUtil.getRemotesItem(tree, repositoryFile).expand()
-				.getNode("testRemote").expand();
+		item = TestUtil.expandAndWait(
+				myRepoViewUtil.getRemotesItem(tree, repositoryFile));
+		item = TestUtil.expandAndWait(item.getNode("testRemote"));
 		children = item.getNodes();
 		assertEquals(2, children.size());
 
 		// we remove the fetch again
-		item = myRepoViewUtil.getRemotesItem(tree, repositoryFile).expand()
-				.getNode("testRemote").expand();
+		item = TestUtil.expandAndWait(
+				myRepoViewUtil.getRemotesItem(tree, repositoryFile));
+		item = TestUtil.expandAndWait(item.getNode("testRemote"));
 		children = item.getNodes();
 		assertEquals(2, children.size());
 		item.getNode(0).select();
@@ -278,8 +280,9 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 				.getPluginLocalizedValue("RemoveFetchCommand"));
 		refreshAndWait();
 
-		myRepoViewUtil.getRemotesItem(tree, repositoryFile).expand().getNode(
-				"testRemote").select();
+		TestUtil.expandAndWait(
+				myRepoViewUtil.getRemotesItem(tree, repositoryFile))
+				.getNode("testRemote").select();
 
 		ContextMenuHelper.clickContextMenu(tree, myUtil
 				.getPluginLocalizedValue("ConfigurePushCommand"));
@@ -325,8 +328,9 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 		shell.bot().button(UIText.SimpleConfigurePushDialog_SaveButton).click();
 		refreshAndWait();
 		// assert 2 children
-		item = myRepoViewUtil.getRemotesItem(tree, repositoryFile).expand()
-				.getNode("testRemote").expand();
+		item = TestUtil.expandAndWait(
+				myRepoViewUtil.getRemotesItem(tree, repositoryFile));
+		item = TestUtil.expandAndWait(item.getNode("testRemote"));
 		children = item.getNodes();
 		assertEquals(1, children.size());
 		item.select();
@@ -338,8 +342,9 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 
 		refreshAndWait();
 		// assert 2 children
-		item = myRepoViewUtil.getRemotesItem(tree, repositoryFile).expand()
-				.getNode("testRemote").expand();
+		item = TestUtil.expandAndWait(
+				myRepoViewUtil.getRemotesItem(tree, repositoryFile));
+		item = TestUtil.expandAndWait(item.getNode("testRemote"));
 		children = item.getNodes();
 		assertEquals(1, children.size());
 

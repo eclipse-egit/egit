@@ -111,8 +111,8 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 
 		SWTBotShell mergeDialog = openMergeDialog();
 
-		SWTBotTreeItem remoteBranches = mergeDialog.bot().tree()
-				.getTreeItem(REMOTE_BRANCHES).expand();
+		SWTBotTreeItem remoteBranches = TestUtil.expandAndWait(
+				mergeDialog.bot().tree().getTreeItem(REMOTE_BRANCHES));
 		TestUtil.getChildNode(remoteBranches, "origin/master").select();
 		mergeDialog.bot().button(UIText.MergeTargetSelectionDialog_ButtonMerge)
 				.click();
@@ -148,9 +148,8 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 
 	private void mergeBranch(String branchToMerge, boolean squash) throws Exception {
 		SWTBotShell mergeDialog = openMergeDialog();
-		SWTBotTreeItem localBranches = mergeDialog.bot().tree()
-				.getTreeItem(LOCAL_BRANCHES).expand();
-		TestUtil.getChildNode(localBranches, branchToMerge).select();
+		TestUtil.navigateTo(mergeDialog.bot().tree(),
+				new String[] { LOCAL_BRANCHES, branchToMerge }).select();
 		if (squash)
 			mergeDialog.bot().radio(UIText.MergeTargetSelectionDialog_MergeTypeSquashButton).click();
 		mergeDialog.bot().button(UIText.MergeTargetSelectionDialog_ButtonMerge).click();

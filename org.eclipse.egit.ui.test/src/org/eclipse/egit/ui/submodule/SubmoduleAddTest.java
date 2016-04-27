@@ -79,13 +79,11 @@ public class SubmoduleAddTest extends GitRepositoriesViewTestBase {
 		refreshAndWait();
 
 		tree = getOrOpenView().bot().tree();
-		SWTBotTreeItem submodules = tree.getAllItems()[0]
-				.select()
-				.expand()
-				.getNode(
-						UIText.RepositoriesViewLabelProvider_SubmodulesNodeText);
+		SWTBotTreeItem submodules = tree.getAllItems()[0].select();
+		submodules = TestUtil.expandAndWait(submodules).getNode(
+				UIText.RepositoriesViewLabelProvider_SubmodulesNodeText);
 		assertNotNull(submodules);
-		submodules.expand();
+		TestUtil.expandAndWait(submodules);
 		assertEquals(1, submodules.rowCount());
 	}
 }

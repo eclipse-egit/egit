@@ -270,8 +270,8 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		String master = getTestFileContent();
 		assertFalse(stable.equals(master));
 		SWTBotShell resetDialog = openResetDialog();
-		SWTBotTreeItem localBranches = resetDialog.bot().tree()
-				.getTreeItem(LOCAL_BRANCHES).expand();
+		SWTBotTreeItem localBranches = TestUtil.expandAndWait(
+				resetDialog.bot().tree().getTreeItem(LOCAL_BRANCHES));
 		TestUtil.getChildNode(localBranches, "stable").select();
 		resetDialog.bot().radio(
 				UIText.ResetTargetSelectionDialog_ResetTypeHardButton).click();
@@ -300,8 +300,8 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		assertNotNull(lookupRepository(repositoryFile).resolve("newBranch"));
 
 		SWTBotShell deleteBranchDialog = openDeleteBranchDialog();
-		SWTBotTreeItem localBranches = deleteBranchDialog.bot().tree()
-				.getTreeItem(LOCAL_BRANCHES).expand();
+		SWTBotTreeItem localBranches = TestUtil.expandAndWait(
+				deleteBranchDialog.bot().tree().getTreeItem(LOCAL_BRANCHES));
 		TestUtil.getChildNode(localBranches, "newBranch").select();
 		deleteBranchDialog.bot().button(IDialogConstants.OK_LABEL).click();
 
@@ -407,8 +407,8 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 	public void testRenameBranch() throws Exception {
 		SWTBotShell dialog = openRenameBranchDialog();
 
-		SWTBotTreeItem localBranches = dialog.bot().tree()
-				.getTreeItem(LOCAL_BRANCHES).expand();
+		SWTBotTreeItem localBranches = TestUtil
+				.expandAndWait(dialog.bot().tree().getTreeItem(LOCAL_BRANCHES));
 		TestUtil.getChildNode(localBranches, "stable").select();
 		dialog.bot().button(UIText.RenameBranchDialog_RenameButtonLabel)
 				.click();
@@ -425,7 +425,8 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 
 		dialog = openRenameBranchDialog();
-		SWTBotTreeItem localBranches2 = dialog.bot().tree().getTreeItem(LOCAL_BRANCHES).expand();
+		SWTBotTreeItem localBranches2 = TestUtil
+				.expandAndWait(dialog.bot().tree().getTreeItem(LOCAL_BRANCHES));
 		TestUtil.getChildNode(localBranches2, "renamed").select();
 		dialog.bot().button(UIText.RenameBranchDialog_RenameButtonLabel)
 				.click();
@@ -438,8 +439,8 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 
 		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 		dialog = openRenameBranchDialog();
-		SWTBotTreeItem localBranches3 = dialog.bot().tree()
-				.getTreeItem(LOCAL_BRANCHES).expand();
+		SWTBotTreeItem localBranches3 = TestUtil
+				.expandAndWait(dialog.bot().tree().getTreeItem(LOCAL_BRANCHES));
 		TestUtil.getChildNode(localBranches3, "stable").select();
 		dialog.close();
 	}
@@ -455,9 +456,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		TableCollection tc = dialog.bot().tree().selection();
 		assertEquals("Wrong selection count", 0, tc.rowCount());
 
-		SWTBotTreeItem parentNode = dialog.bot().tree()
-				.getTreeItem(nodeTexts[0]).expand();
-		TestUtil.getChildNode(parentNode, nodeTexts[1]).select();
+		TestUtil.navigateTo(dialog.bot().tree(), nodeTexts).select();
 		tc = dialog.bot().tree().selection();
 		assertEquals("Wrong selection count", 1, tc.rowCount());
 		assertTrue("Wrong item selected", tc.get(0, 0).startsWith(nodeTexts[1]));
@@ -478,9 +477,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 
 	private void checkout(String[] nodeTexts) throws Exception {
 		SWTBotShell dialog = openCheckoutBranchDialog();
-		SWTBotTreeItem parentNode = dialog.bot().tree()
-				.getTreeItem(nodeTexts[0]).expand();
-		TestUtil.getChildNode(parentNode, nodeTexts[1]).select();
+		TestUtil.navigateTo(dialog.bot().tree(), nodeTexts).select();
 		TableCollection tc = dialog.bot().tree().selection();
 		assertEquals("Wrong selection count", 1, tc.rowCount());
 		assertTrue("Wrong item selected", tc.get(0, 0).startsWith(nodeTexts[1]));

@@ -33,8 +33,10 @@ import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.results.BoolResult;
+import org.eclipse.swtbot.swt.finder.waits.DefaultCondition;
 import org.eclipse.swtbot.swt.finder.waits.ICondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.ui.PlatformUI;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -133,7 +135,8 @@ public class EasymportWizardTest {
 		Set<IProject> newProjects = null;
 
 		bot.menu("File").menu("Import...").click();
-		bot.tree().expandNode("Git").select("Projects from Git (with smart import)");
+		expandAndWait(bot.tree().getTreeItem("Git"))
+				.select("Projects from Git (with smart import)");
 		bot.button("Next >").click();
 		bot.tree().select("Clone URI");
 		bot.button("Next >").click();
@@ -218,6 +221,24 @@ public class EasymportWizardTest {
 						+ "sec";
 			}
 		}, timeoutInSec * 1000L);
+	}
+
+	private SWTBotTreeItem expandAndWait(final SWTBotTreeItem treeItem) {
+		treeItem.expand();
+		new SWTBot().waitUntil(new DefaultCondition() {
+
+			@Override
+			public boolean test() {
+				SWTBotTreeItem[] children = treeItem.getItems();
+				return children != null && children.length > 0;
+			}
+
+			@Override
+			public String getFailureMessage() {
+				return "No children found for " + treeItem.getText();
+			}
+		});
+		return treeItem;
 	}
 
 }
