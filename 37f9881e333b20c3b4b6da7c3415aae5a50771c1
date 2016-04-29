@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_6809f336",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-04-29T21:59:21Z",
+      "side": 1,
+      "message": "See screenshot at https://hudson.eclipse.org/egit/job/egit.gerrit/8454/artifact/org.eclipse.egit.ui.test/target/screenshots/testClonedRepository%28org.eclipse.egit.ui.view.repositories.GitRepositoriesViewBranchHandlingTest%29.jpeg",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "37f9881e333b20c3b4b6da7c3415aae5a50771c1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
