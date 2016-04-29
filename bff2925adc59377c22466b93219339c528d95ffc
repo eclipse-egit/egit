@@ -22,6 +22,30 @@
       "revId": "bff2925adc59377c22466b93219339c528d95ffc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_c8ca0749",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-04-29T22:21:11Z",
+      "side": 1,
+      "message": "And build 8455 for PS 1 failed with exactly this problem (different dialog, though) in the one place I had missed. See https://hudson.eclipse.org/egit/job/egit.gerrit/8455/artifact/org.eclipse.egit.ui.importer.tests/target/screenshots/test%28org.eclipse.egit.ui.importer.tests.EasymportWizardTest%29.jpeg\n\nShould be fixed in PS 2.",
+      "parentUuid": "e7dfcf21_c81f6766",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 59
+      },
+      "revId": "bff2925adc59377c22466b93219339c528d95ffc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
