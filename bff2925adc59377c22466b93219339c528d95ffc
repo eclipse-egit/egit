@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_c81f6766",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-04-29T22:03:53Z",
+      "side": 1,
+      "message": "Build 8444 failed in that way. Unfortunately, the screenshot is no longer available. It showed the create project wizard, \"General\" expanded, followed by an empty line. The test then failed because it didn\u0027t find the child named \"Project\".",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 59
+      },
+      "revId": "bff2925adc59377c22466b93219339c528d95ffc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
