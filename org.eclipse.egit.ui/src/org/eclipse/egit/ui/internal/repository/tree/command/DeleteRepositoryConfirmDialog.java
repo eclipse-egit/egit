@@ -118,6 +118,8 @@ public class DeleteRepositoryConfirmDialog extends TitleAreaDialog {
 		} else
 			removeProjects.setVisible(false);
 		deleteGitDir.setFocus();
+		main.setTabList(
+				new Control[] { deleteGitDir, deleteWorkDir, removeProjects });
 		return main;
 	}
 
