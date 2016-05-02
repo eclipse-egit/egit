@@ -64,7 +64,6 @@ import org.eclipse.ui.part.IShowInSource;
  */
 public class GitAdapterFactory implements IAdapterFactory {
 
-	private Object historyPageSource = new GitHistoryPageSource();
 	private GitModelWorkbenchAdapter gitModelWorkbenchAdapter;
 
 	private static final IWorkspaceRoot root = ResourcesPlugin.getWorkspace()
@@ -73,7 +72,7 @@ public class GitAdapterFactory implements IAdapterFactory {
 	@Override
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
 		if (adapterType.isAssignableFrom(IHistoryPageSource.class)) {
-			return historyPageSource;
+			return GitHistoryPageSource.INSTANCE;
 		}
 
 		if (IWorkbenchAdapter.class == adapterType) {
