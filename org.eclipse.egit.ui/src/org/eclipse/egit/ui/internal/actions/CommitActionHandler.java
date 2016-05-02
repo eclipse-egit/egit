@@ -8,6 +8,7 @@
  * Copyright (C) 2011, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2011, Benjamin Muskalla <benjamin.muskalla@tasktop.com>
  * Copyright (C) 2012, François Rey <eclipse.org_@_francois_._rey_._name>
+ * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -53,6 +54,9 @@ public class CommitActionHandler extends RepositoryActionHandler {
 						StagingView view = (StagingView) PlatformUI.getWorkbench()
 								.getActiveWorkbenchWindow().getActivePage()
 								.showView(StagingView.VIEW_ID);
+						if (view.getCurrentRepository() != repository) {
+							view.reload(repository);
+						}
 						view.setFocus();
 					} catch (PartInitException e) {
 						Activator.logError(e.getMessage(), e);
