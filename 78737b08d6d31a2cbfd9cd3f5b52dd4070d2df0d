@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_1dda6814",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPageSource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-03T19:51:28Z",
+      "side": 1,
+      "message": "Convention is to have static final fields in all caps.",
+      "range": {
+        "startLine": 24,
+        "startChar": 42,
+        "endLine": 24,
+        "endChar": 50
+      },
+      "revId": "78737b08d6d31a2cbfd9cd3f5b52dd4070d2df0d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_bdb0942a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPageSource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-03T19:51:28Z",
+      "side": 1,
+      "message": "Why public? Could be private and without javadoc. Empty javadoc is useless anyway.\n\nMoreover you then don\u0027t need to override equals and hashCode.",
+      "range": {
+        "startLine": 29,
+        "startChar": 1,
+        "endLine": 29,
+        "endChar": 7
+      },
+      "revId": "78737b08d6d31a2cbfd9cd3f5b52dd4070d2df0d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_ddb5601a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPageSource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-03T19:51:28Z",
+      "side": 1,
+      "message": ":-)",
+      "revId": "78737b08d6d31a2cbfd9cd3f5b52dd4070d2df0d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
