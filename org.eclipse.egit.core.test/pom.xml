@@ -16,7 +16,7 @@
   <parent>
     <groupId>org.eclipse.egit</groupId>
     <artifactId>egit-parent</artifactId>
-    <version>4.4.0-SNAPSHOT</version>
+    <version>4.4.0.201605041135-m1</version>
   </parent>
 
   <artifactId>org.eclipse.egit.core.test</artifactId>
