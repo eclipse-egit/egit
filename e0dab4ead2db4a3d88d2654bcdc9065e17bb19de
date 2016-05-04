@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_d03d4246",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-04T13:09:30Z",
+      "side": 1,
+      "message": "I don\u0027t see this. It\u0027s been renamed, so it\u0027s gone.",
+      "range": {
+        "startLine": 10,
+        "startChar": 29,
+        "endLine": 11,
+        "endChar": 68
+      },
+      "revId": "e0dab4ead2db4a3d88d2654bcdc9065e17bb19de",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
