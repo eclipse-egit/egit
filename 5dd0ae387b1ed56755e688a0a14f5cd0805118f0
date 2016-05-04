@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_930d87f4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-04T06:06:37Z",
+      "side": 1,
+      "message": "Unless we\u0027re in \"detached HEAD\".\n\nIt\u0027s stored in the git config as opposed to the dialog settings because that way it\u0027ll vanish automatically when a branch is deleted. Otherwise we\u0027d have to introduce some garbage collection on entries in dialog settings, and when a branch is deleted and later a new branch with the same name is created, we might even pick up the last used topic for the former branch.",
+      "range": {
+        "startLine": 17,
+        "startChar": 45,
+        "endLine": 17,
+        "endChar": 69
+      },
+      "revId": "5dd0ae387b1ed56755e688a0a14f5cd0805118f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
