@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_f63a364b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-04T18:29:35Z",
+      "side": 1,
+      "message": "Should fix this spurious test failure: https://hudson.eclipse.org/egit/job/egit.gerrit/8515/testReport/junit/org.eclipse.egit.ui.view.repositories/GitRepositoriesViewBranchHandlingTest/testBranchConfiguration/",
+      "revId": "4c3873610278ae979de39e1daa856702d329a280",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
