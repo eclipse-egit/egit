@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_16c162fb",
+        "filename": "org.eclipse.egit.ui.importer.tests/src/org/eclipse/egit/ui/importer/tests/EasyImportWizardTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-04T17:45:49Z",
+      "side": 1,
+      "message": "The new wizard this class tests is named neither EasymportWizard nor EasyImportWizard, but SmartImportWizard.\n\nI would therefore prefer SmartImportWizardTest.",
+      "range": {
+        "startLine": 53,
+        "startChar": 13,
+        "endLine": 53,
+        "endChar": 33
+      },
+      "revId": "53d12318920a2025bd184bc50aae9b9fa1947527",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
