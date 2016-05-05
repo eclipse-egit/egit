@@ -3138,12 +3138,6 @@ public class UIText extends NLS {
 	public static String BranchSelectionAndEditDialog_ErrorCouldNotRenameRef;
 
 	/** */
-	public static String BranchSelectionAndEditDialog_QuestionNewBranchTitle;
-
-	/** */
-	public static String BranchSelectionAndEditDialog_QuestionNewBranchNameMessage;
-
-	/** */
 	public static String BranchSelectionAndEditDialog_NewBranch;
 
 	/** */
