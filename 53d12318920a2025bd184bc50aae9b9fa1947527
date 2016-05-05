@@ -22,6 +22,30 @@
       "revId": "53d12318920a2025bd184bc50aae9b9fa1947527",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_c4a100f3",
+        "filename": "org.eclipse.egit.ui.importer.tests/src/org/eclipse/egit/ui/importer/tests/EasyImportWizardTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2016-05-05T05:20:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7dfcf21_16c162fb",
+      "range": {
+        "startLine": 53,
+        "startChar": 13,
+        "endLine": 53,
+        "endChar": 33
+      },
+      "revId": "53d12318920a2025bd184bc50aae9b9fa1947527",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
