@@ -248,6 +248,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 				.getPreferences();
 		synchronized (prefs) {
 			prefs.put(RepositoryUtil.PREFS_DIRECTORIES, "");
+			prefs.put(RepositoryUtil.PREFS_DIRECTORIES_REL, "");
 			prefs.flush();
 		}
 	}
