@@ -264,6 +264,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 				.getText(), wizardNode);
 		shell.close();
 		// start wizard from .git
+		tree = getOrOpenView().bot().tree();
 		TestUtil.expandAndWait(
 				myRepoViewUtil.getWorkdirItem(tree, repositoryFile))
 				.getNode(Constants.DOT_GIT).select();
