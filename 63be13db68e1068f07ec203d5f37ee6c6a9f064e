@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfcf21_ad169452",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/gitflow/FeatureFinishSquashHandlerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-07T09:43:22Z",
+      "side": 1,
+      "message": "This should fix https://hudson.eclipse.org/egit/job/egit.gerrit/8528/testReport/junit/org.eclipse.egit.ui.gitflow/FeatureFinishSquashHandlerTest/testFeatureFinishSquash/",
+      "revId": "63be13db68e1068f07ec203d5f37ee6c6a9f064e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
