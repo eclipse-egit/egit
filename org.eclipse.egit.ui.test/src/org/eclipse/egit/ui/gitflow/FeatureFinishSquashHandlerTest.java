@@ -10,6 +10,7 @@ package org.eclipse.egit.ui.gitflow;
 
 import static org.eclipse.egit.gitflow.ui.internal.UIPreferences.FEATURE_FINISH_KEEP_BRANCH;
 import static org.eclipse.egit.gitflow.ui.internal.UIPreferences.FEATURE_FINISH_SQUASH;
+import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellIsActive;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -91,6 +92,8 @@ public class FeatureFinishSquashHandlerTest extends
 
 	@Override
 	protected void preFinish() {
+		bot.waitUntil(shellIsActive(
+				UIText.FeatureFinishHandler_rewordSquashedCommitMessage));
 		String text = bot.styledText().getText();
 		text = text.substring(text.indexOf('\n'));
 		bot.styledText().setText(SQUASHED_COMMENT_SUMMARY + text);

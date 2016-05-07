@@ -578,20 +578,27 @@ public class TestUtil {
 	 * @return the {@code treeItem}
 	 */
 	public static SWTBotTreeItem expandAndWait(final SWTBotTreeItem treeItem) {
+		final String text = treeItem.getText();
 		treeItem.expand();
 		new SWTBot().waitUntil(new DefaultCondition() {
 
 			@Override
 			public boolean test() {
+				if (treeItem.widget.isDisposed()) {
+					return true; // Stop waiting and report failure below.
+				}
 				SWTBotTreeItem[] children = treeItem.getItems();
 				return children != null && children.length > 0;
 			}
 
 			@Override
 			public String getFailureMessage() {
-				return "No children found for " + treeItem.getText();
+				return "No children found for " + text;
 			}
 		});
+		if (treeItem.widget.isDisposed()) {
+			fail("Widget disposed while waiting for expansion of node " + text);
+		}
 		return treeItem;
 	}
 
