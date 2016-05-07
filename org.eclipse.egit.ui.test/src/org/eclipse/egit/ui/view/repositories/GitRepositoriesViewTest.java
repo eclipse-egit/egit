@@ -263,6 +263,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		assertEquals(myRepoViewUtil.getWorkdirItem(tree, repositoryFile)
 				.getText(), wizardNode);
 		shell.close();
+		tree = getOrOpenView().bot().tree();
 		// start wizard from .git
 		TestUtil.expandAndWait(
 				myRepoViewUtil.getWorkdirItem(tree, repositoryFile))
