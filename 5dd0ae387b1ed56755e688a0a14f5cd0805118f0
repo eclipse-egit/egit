@@ -39,6 +39,24 @@
       "revId": "5dd0ae387b1ed56755e688a0a14f5cd0805118f0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dfcf21_6a02a781",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-10T18:11:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7dfcf21_b0726bd2",
+      "revId": "5dd0ae387b1ed56755e688a0a14f5cd0805118f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
