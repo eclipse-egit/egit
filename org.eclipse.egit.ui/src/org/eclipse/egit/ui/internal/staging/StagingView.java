@@ -1553,6 +1553,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		if (isDisposed())
 			return;
 		enableCommitWidgets(enabled);
+		commitMessageText.setEnabled(enabled);
 		enableStagingWidgets(enabled);
 	}
 
@@ -1564,10 +1565,9 @@ public class StagingView extends ViewPart implements IShowInSource {
 	}
 
 	private void enableCommitWidgets(boolean enabled) {
-		if (isDisposed())
+		if (isDisposed()) {
 			return;
-
-		commitMessageText.setEnabled(enabled);
+		}
 		committerText.setEnabled(enabled);
 		enableAuthorText(enabled);
 		amendPreviousCommitAction.setEnabled(enabled);
