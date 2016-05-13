@@ -22,6 +22,30 @@
       "revId": "1044971834a5c2a7ad00f6c0f0b7d9136c56b470",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7e957d1_5fe5ef50",
+        "filename": "org.eclipse.egit.ui.importer/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-05-13T09:13:28Z",
+      "side": 1,
+      "message": "we don\u0027t care about micro versions since they should not break or add API",
+      "parentUuid": "a7e957d1_3f6ae364",
+      "range": {
+        "startLine": 11,
+        "startChar": 35,
+        "endLine": 11,
+        "endChar": 40
+      },
+      "revId": "1044971834a5c2a7ad00f6c0f0b7d9136c56b470",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
