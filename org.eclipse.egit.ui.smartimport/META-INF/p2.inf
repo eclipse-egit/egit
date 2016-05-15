@@ -1,0 +1,2 @@
+update.matchExp=select(x | (x.id == 'org.eclipse.egit.ui.smartimport' && x.version < '$version$') || x.id == 'org.eclipse.egit.ui.importer')
+update.severity=0
