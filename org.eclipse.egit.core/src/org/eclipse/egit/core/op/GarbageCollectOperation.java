@@ -39,11 +39,9 @@ public class GarbageCollectOperation implements IEGitOperation {
 	 */
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
-		Git git = new Git(repository);
-		EclipseGitProgressTransformer pm = new EclipseGitProgressTransformer(
-				monitor);
-		try {
-			git.gc().setProgressMonitor(pm).call();
+		try (Git git = new Git(repository)) {
+			git.gc().setProgressMonitor(
+					new EclipseGitProgressTransformer(monitor)).call();
 		} catch (GitAPIException e) {
 			throw new CoreException(new Status(IStatus.ERROR,
 					Activator.getPluginId(), e.getMessage(), e));

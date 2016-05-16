@@ -92,8 +92,7 @@ public class RewordCommitOperation implements IEGitOperation {
 						return newMessage;
 					}
 				};
-				try {
-					Git git = new Git(repository);
+				try (Git git = new Git(repository)) {
 					git.rebase().setUpstream(commit.getParent(0))
 							.runInteractively(handler)
 							.setOperation(RebaseCommand.Operation.BEGIN).call();

@@ -210,21 +210,23 @@ public class CommitOperation implements IEGitOperation {
 	}
 
 	private void addUntracked() throws CoreException {
-		if (notTracked == null || notTracked.size() == 0)
+		if (notTracked == null || notTracked.size() == 0) {
 			return;
-		AddCommand addCommand = new Git(repo).add();
-		boolean fileAdded = false;
-		for (String path : notTracked)
-			if (commitFileList.contains(path)) {
-				addCommand.addFilepattern(path);
-				fileAdded = true;
-			}
-		if (fileAdded)
-			try {
+		}
+		try (Git git = new Git(repo)) {
+			AddCommand addCommand = git.add();
+			boolean fileAdded = false;
+			for (String path : notTracked)
+				if (commitFileList.contains(path)) {
+					addCommand.addFilepattern(path);
+					fileAdded = true;
+				}
+			if (fileAdded) {
 				addCommand.call();
-			} catch (Exception e) {
-				throw new CoreException(Activator.error(e.getMessage(), e));
 			}
+		} catch (GitAPIException e) {
+			throw new CoreException(Activator.error(e.getMessage(), e));
+		}
 	}
 
 	@Override
@@ -233,8 +235,7 @@ public class CommitOperation implements IEGitOperation {
 	}
 
 	private void commit() throws TeamException {
-		Git git = new Git(repo);
-		try {
+		try (Git git = new Git(repo)) {
 			CommitCommand commitCommand = git.commit();
 			setAuthorAndCommitter(commitCommand);
 			commitCommand.setAmend(amending)
@@ -283,9 +284,7 @@ public class CommitOperation implements IEGitOperation {
 
 	// TODO: can the commit message be change by the user in case of a merge commit?
 	private void commitAll() throws TeamException {
-
-		Git git = new Git(repo);
-		try {
+		try (Git git = new Git(repo)) {
 			CommitCommand commitCommand = git.commit();
 			setAuthorAndCommitter(commitCommand);
 			commit = commitCommand.setAll(true).setMessage(message)

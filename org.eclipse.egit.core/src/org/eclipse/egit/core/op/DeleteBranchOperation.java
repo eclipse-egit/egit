@@ -122,8 +122,8 @@ public class DeleteBranchOperation implements IEGitOperation {
 				}
 				actMonitor.beginTask(taskName, branches.size());
 				for (Ref branch : branches) {
-					try {
-						new Git(repository).branchDelete().setBranchNames(
+					try (Git git = new Git(repository)) {
+						git.branchDelete().setBranchNames(
 								branch.getName()).setForce(force).call();
 						status = OK;
 					} catch (NotMergedException e) {

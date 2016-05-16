@@ -167,9 +167,9 @@ public class PullOperation implements IEGitOperation {
 				for (int i = 0; i < repositories.length; i++) {
 					Repository repository = repositories[i];
 					IProject[] validProjects = ProjectUtil.getValidOpenProjects(repository);
-					PullCommand pull = new Git(repository).pull();
 					PullResult pullResult = null;
-					try {
+					try (Git git = new Git(repository)) {
+						PullCommand pull = git.pull();
 						pull.setProgressMonitor(new EclipseGitProgressTransformer(
 										progress.newChild(1)));
 						pull.setTimeout(timeout);

@@ -45,9 +45,10 @@ public class ListRemoteOperation {
 	 */
 	public ListRemoteOperation(final Repository localDb, final URIish uri,
 			int timeout) {
-		Git git = new Git(localDb);
-		rc = git.lsRemote();
-		rc.setRemote(uri.toString()).setTimeout(timeout);
+		try (Git git = new Git(localDb)) {
+			rc = git.lsRemote();
+			rc.setRemote(uri.toString()).setTimeout(timeout);
+		}
 	}
 
 	/**
