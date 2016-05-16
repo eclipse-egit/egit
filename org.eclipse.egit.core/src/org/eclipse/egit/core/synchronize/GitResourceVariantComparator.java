@@ -39,7 +39,6 @@ class GitResourceVariantComparator implements IResourceVariantComparator {
 	}
 
 	@Override
-	@SuppressWarnings("resource")
 	public boolean compare(IResource local, IResourceVariant remote) {
 		if (!local.exists() || remote == null) {
 			return false;
