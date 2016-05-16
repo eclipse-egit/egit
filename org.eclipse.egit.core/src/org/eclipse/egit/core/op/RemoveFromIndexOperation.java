@@ -115,7 +115,7 @@ public class RemoveFromIndexOperation implements IEGitOperation {
 
 	private static boolean hasHead(Repository repository) {
 		try {
-			Ref head = repository.getRef(HEAD);
+			Ref head = repository.exactRef(HEAD);
 			return head != null && head.getObjectId() != null;
 		} catch (IOException e) {
 			return false;

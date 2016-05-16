@@ -162,7 +162,7 @@ public class MergeOperation implements IEGitOperation {
 					MergeCommand merge = git.merge().setProgressMonitor(
 							new EclipseGitProgressTransformer(
 									progress.newChild(1)));
-					Ref ref = repository.getRef(refName);
+					Ref ref = repository.findRef(refName);
 					if (ref != null) {
 						merge.include(ref);
 					} else {

@@ -208,7 +208,8 @@ public class RepositoryUtil {
 						if (entry.getNewId().name().equals(commitId)) {
 							CheckoutEntry checkoutEntry = entry.parseCheckout();
 							if (checkoutEntry != null) {
-								Ref ref = repository.getRef(checkoutEntry.getToBranch());
+								Ref ref = repository
+										.findRef(checkoutEntry.getToBranch());
 								if (ref != null) {
 									ObjectId objectId = ref.getObjectId();
 									if (objectId != null && objectId.getName()
@@ -582,7 +583,7 @@ public class RepositoryUtil {
 	 * @throws IOException
 	 */
 	public String getShortBranch(Repository repository) throws IOException {
-		Ref head = repository.getRef(Constants.HEAD);
+		Ref head = repository.exactRef(Constants.HEAD);
 		if (head == null) {
 			return CoreText.RepositoryUtil_noHead;
 		}
@@ -616,7 +617,7 @@ public class RepositoryUtil {
 	 */
 	public RevCommit parseHeadCommit(Repository repository) {
 		try (RevWalk walk = new RevWalk(repository)) {
-			Ref head = repository.getRef(Constants.HEAD);
+			Ref head = repository.exactRef(Constants.HEAD);
 			if (head == null || head.getObjectId() == null)
 				return null;
 
