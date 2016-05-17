@@ -22,6 +22,30 @@
       "revId": "3091b5f2e844d5951124f29f7ec4d0760be33f98",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_6aeca7b7",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-05-17T09:18:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_0f8975ad",
+      "range": {
+        "startLine": 120,
+        "startChar": 4,
+        "endLine": 121,
+        "endChar": 46
+      },
+      "revId": "3091b5f2e844d5951124f29f7ec4d0760be33f98",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
