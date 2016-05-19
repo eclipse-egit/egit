@@ -25,9 +25,9 @@ import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.ui.IWorkbenchSite;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
+import org.eclipse.ui.services.IServiceLocator;
 
 /**
  * Command to run jgit garbage collector
@@ -80,9 +80,14 @@ public class GarbageCollectCommand extends
 				return Status.OK_STATUS;
 			}
 		};
-		IWorkbenchSite activeSite = HandlerUtil.getActiveSite(event);
-		IWorkbenchSiteProgressService service = CommonUtils.getService(activeSite, IWorkbenchSiteProgressService.class);
-		service.schedule(job);
+		IServiceLocator serviceLocator = HandlerUtil.getActiveSite(event);
+		if (serviceLocator != null) {
+			IWorkbenchSiteProgressService service = CommonUtils.getService(
+					serviceLocator, IWorkbenchSiteProgressService.class);
+			service.schedule(job);
+		} else {
+			job.schedule();
+		}
 
 		return null;
 	}
