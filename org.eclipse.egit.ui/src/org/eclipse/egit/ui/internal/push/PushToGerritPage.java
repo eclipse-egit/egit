@@ -470,7 +470,7 @@ class PushToGerritPage extends WizardPage {
 	void doPush() {
 		try {
 			URIish uri = new URIish(uriCombo.getText());
-			Ref currentHead = repository.getRef(Constants.HEAD);
+			Ref currentHead = repository.exactRef(Constants.HEAD);
 			String ref = prefixCombo.getItem(prefixCombo.getSelectionIndex())
 					+ branchText.getText().trim();
 			if (topicText.isEnabled()) {

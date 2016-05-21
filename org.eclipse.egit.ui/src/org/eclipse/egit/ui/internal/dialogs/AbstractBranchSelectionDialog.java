@@ -368,9 +368,9 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 	/**
 	 * Enables the OK button. No-op in case Dialog#createButtonsForButtonBar has
 	 * been overridden and the button has not been created.
-	 * 
+	 *
 	 * @param enabled
-	 * 
+	 *
 	 * @see org.eclipse.jface.dialogs.Dialog#createButtonsForButtonBar(Composite)
 	 */
 	protected void setOkButtonEnabled(boolean enabled) {
@@ -381,7 +381,7 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 	/**
 	 * Returns <code>true</code> if the OK button has been created and is
 	 * enabled.
-	 * 
+	 *
 	 * @return the OK button's enabled state or <code>false</code> if the button
 	 *         has not been created.
 	 */
@@ -405,17 +405,17 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		RepositoryTreeNode node;
 		try {
 			if (refName.startsWith(Constants.R_HEADS)) {
-				Ref ref = repo.getRef(refName);
+				Ref ref = repo.findRef(refName);
 				if (ref == null)
 					return false;
 				node = new RefNode(localBranches, repo, ref);
 			} else if (refName.startsWith(Constants.R_REMOTES)) {
-				Ref ref = repo.getRef(refName);
+				Ref ref = repo.findRef(refName);
 				if (ref == null)
 					return false;
 				node = new RefNode(remoteBranches, repo, ref);
 			} else if (Constants.HEAD.equals(refName)) {
-				Ref ref = repo.getRef(refName);
+				Ref ref = repo.findRef(refName);
 				if (ref == null)
 					return false;
 				node = new AdditionalRefNode(references, repo, ref);
@@ -424,13 +424,13 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 						.mapCommitToRef(repo, refName, false);
 				if (mappedRef != null
 						&& mappedRef.startsWith(Constants.R_REMOTES)) {
-					Ref ref = repo.getRef(mappedRef);
+					Ref ref = repo.findRef(mappedRef);
 					if (ref == null)
 						return false;
 					node = new RefNode(remoteBranches, repo, ref);
 				} else if (mappedRef != null
 						&& mappedRef.startsWith(Constants.R_TAGS)) {
-					Ref ref = repo.getRef(mappedRef);
+					Ref ref = repo.findRef(mappedRef);
 					if (ref == null)
 						return false;
 					node = new TagNode(tags, repo, ref);

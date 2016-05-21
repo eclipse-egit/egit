@@ -76,7 +76,7 @@ public class SubmoduleUpdateTest extends GitRepositoriesViewTestBase {
 		assertNotNull(subRepo);
 		subRepo.close();
 
-		Ref head = subRepo.getRef(Constants.HEAD);
+		Ref head = subRepo.exactRef(Constants.HEAD);
 		assertNotNull(head);
 		assertTrue(head.isSymbolic());
 		assertEquals(Constants.R_HEADS + Constants.MASTER, head.getLeaf()
@@ -94,7 +94,7 @@ public class SubmoduleUpdateTest extends GitRepositoriesViewTestBase {
 		TestUtil.joinJobs(JobFamilies.SUBMODULE_UPDATE);
 		refreshAndWait();
 
-		head = subRepo.getRef(Constants.HEAD);
+		head = subRepo.exactRef(Constants.HEAD);
 		assertNotNull(head);
 		assertFalse(head.isSymbolic());
 		assertEquals(repoHead, head.getObjectId());

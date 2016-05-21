@@ -104,7 +104,7 @@ public class InitHandlerTest extends AbstractGitflowHandlerTest {
 		assertEquals(HOTFIX_BRANCH_PREFIX, config.getHotfixPrefix());
 		assertEquals(VERSION_TAG_PREFIX, config.getVersionTagPrefix());
 
-		assertNotNull(repository.getRef(Constants.R_HEADS + DEVELOP_BRANCH));
+		assertNotNull(repository.findRef(Constants.R_HEADS + DEVELOP_BRANCH));
 	}
 
 	@Test
@@ -132,7 +132,8 @@ public class InitHandlerTest extends AbstractGitflowHandlerTest {
 		assertEquals(HOTFIX_BRANCH_PREFIX, config.getHotfixPrefix());
 		assertEquals(VERSION_TAG_PREFIX, config.getVersionTagPrefix());
 
-		assertNotNull(localRepository.getRef(Constants.R_HEADS + DEVELOP_BRANCH));
+		assertNotNull(
+				localRepository.findRef(Constants.R_HEADS + DEVELOP_BRANCH));
 	}
 
 	private void selectProject(String projectName) {

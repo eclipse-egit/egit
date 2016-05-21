@@ -91,7 +91,7 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 			if (rebaseTargetSelectionDialog.open() == IDialogConstants.OK_ID) {
 				String refName = rebaseTargetSelectionDialog.getRefName();
 				try {
-					ref = repository.getRef(refName);
+					ref = repository.findRef(refName);
 				} catch (IOException e) {
 					throw new ExecutionException(e.getMessage(), e);
 				}
@@ -135,7 +135,7 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 
 	private static boolean hasHead(Repository repo) {
 		try {
-			Ref headRef = repo.getRef(Constants.HEAD);
+			Ref headRef = repo.exactRef(Constants.HEAD);
 			return headRef != null && headRef.getObjectId() != null;
 		} catch (IOException e) {
 			return false;

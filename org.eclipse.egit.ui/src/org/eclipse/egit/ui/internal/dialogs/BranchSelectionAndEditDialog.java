@@ -175,7 +175,7 @@ public class BranchSelectionAndEditDialog extends
 							ConfigConstants.CONFIG_WORKFLOW_SECTION, null,
 							ConfigConstants.CONFIG_KEY_DEFBRANCHSTARTPOINT);
 					try {
-						Ref ref = repo.getRef(sourceRef);
+						Ref ref = repo.findRef(sourceRef);
 						if (ref != null) {
 							base = ref.getName();
 						}

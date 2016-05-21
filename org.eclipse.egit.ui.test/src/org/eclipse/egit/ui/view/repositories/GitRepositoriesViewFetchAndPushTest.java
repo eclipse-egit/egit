@@ -152,7 +152,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		confirmed.close();
 		assertTrue("Up to date expected", uptodate);
 		// touch and run again: expect new branch
-		String objectIdBefore = repository.getRef(repository.getFullBranch())
+		String objectIdBefore = repository.findRef(repository.getFullBranch())
 				.getLeaf().getObjectId().name();
 		objectIdBefore = objectIdBefore.substring(0, 7);
 		touchAndSubmit(null);
@@ -236,7 +236,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 
 		deleteAllProjects();
 		shareProjects(clonedRepositoryFile2);
-		String objid = repository.getRef("refs/heads/master").getTarget()
+		String objid = repository.findRef("refs/heads/master").getTarget()
 				.getObjectId().name();
 		objid = objid.substring(0, 7);
 		touchAndSubmit(null);

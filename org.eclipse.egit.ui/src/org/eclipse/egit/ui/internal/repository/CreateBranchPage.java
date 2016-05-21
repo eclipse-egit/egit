@@ -396,7 +396,7 @@ class CreateBranchPage extends WizardPage {
 					myBaseCommit);
 		else
 			cbop = new CreateLocalBranchOperation(myRepository, newRefName,
-					myRepository.getRef(this.sourceRefName),
+					myRepository.findRef(this.sourceRefName),
 					upstreamConfig);
 
 		cbop.execute(monitor);

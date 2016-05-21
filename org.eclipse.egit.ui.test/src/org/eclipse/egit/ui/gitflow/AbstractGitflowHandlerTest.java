@@ -96,7 +96,7 @@ public abstract class AbstractGitflowHandlerTest extends LocalRepositoryTestCase
 	}
 
 	protected Ref findBranch(String branchName) throws IOException {
-		return repository.getRef(R_HEADS + branchName);
+		return repository.findRef(R_HEADS + branchName);
 	}
 
 	protected void init() throws CoreException {
