@@ -810,8 +810,9 @@ public class FetchGerritChangePage extends WizardPage {
 		bop.execute(monitor);
 
 		if (doCheckout) {
-			CheckoutCommand co = new Git(repository).checkout();
-			try {
+			CheckoutCommand co = null;
+			try (Git git = new Git(repository)) {
+				co = git.checkout();
 				co.setName(textForBranch).call();
 			} catch (CheckoutConflictException e) {
 				final CheckoutResult result = co.getResult();

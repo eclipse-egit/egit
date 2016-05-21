@@ -2238,15 +2238,14 @@ public class StagingView extends ViewPart implements IShowInSource {
 			if (files.isEmpty() || repository == null) {
 				return;
 			}
-			CheckoutCommand checkoutCommand = new Git(repository)
-					.checkout();
-			if (headRevision) {
-				checkoutCommand.setStartPoint(Constants.HEAD);
-			}
-			for (String path : files) {
-				checkoutCommand.addPath(path);
-			}
-			try {
+			try (Git git = new Git(repository)) {
+				CheckoutCommand checkoutCommand = git.checkout();
+				if (headRevision) {
+					checkoutCommand.setStartPoint(Constants.HEAD);
+				}
+				for (String path : files) {
+					checkoutCommand.addPath(path);
+				}
 				checkoutCommand.call();
 				if (!inaccessibleFiles.isEmpty()) {
 					IndexDiffCacheEntry indexDiffCacheForRepository = org.eclipse.egit.core.Activator
@@ -2505,7 +2504,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private void stage(IStructuredSelection selection) {
 		StagingViewContentProvider contentProvider = getContentProvider(unstagedViewer);
-		final Git git = new Git(currentRepository);
+		final Repository repository = currentRepository;
 		Iterator iterator = selection.iterator();
 		final List<String> addPaths = new ArrayList<>();
 		final List<String> rmPaths = new ArrayList<>();
@@ -2547,7 +2546,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			Job addJob = new Job(UIText.StagingView_AddJob) {
 				@Override
 				protected IStatus run(IProgressMonitor monitor) {
-					try {
+					try (Git git = new Git(repository)) {
 						AddCommand add = git.add();
 						for (String addPath : addPaths)
 							add.addFilepattern(addPath);
@@ -2576,7 +2575,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			Job removeJob = new Job(UIText.StagingView_RemoveJob) {
 				@Override
 				protected IStatus run(IProgressMonitor monitor) {
-					try {
+					try (Git git = new Git(repository)) {
 						RmCommand rm = git.rm().setCached(true);
 						for (String rmPath : rmPaths)
 							rm.addFilepattern(rmPath);
@@ -2632,12 +2631,12 @@ public class StagingView extends ViewPart implements IShowInSource {
 		if (paths.isEmpty())
 			return;
 
-		final Git git = new Git(currentRepository);
+		final Repository repository = currentRepository;
 
 		Job resetJob = new Job(UIText.StagingView_ResetJob) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				try {
+				try (Git git = new Git(repository)) {
 					ResetCommand reset = git.reset();
 					for (String path : paths)
 						reset.addPath(path);

@@ -75,9 +75,9 @@ public class RenameBranchDialog extends AbstractBranchSelectionDialog {
 				refPrefix), refPrefix, branchName);
 		if (labelDialog.open() == Window.OK) {
 			String newRefName = refPrefix + labelDialog.getValue();
-			try {
-				new Git(repo).branchRename().setOldName(refName).setNewName(
-						labelDialog.getValue()).call();
+			try (Git git = new Git(repo)) {
+				git.branchRename().setOldName(refName)
+						.setNewName(labelDialog.getValue()).call();
 				branchTree.refresh();
 				markRef(newRefName);
 			} catch (Throwable e1) {

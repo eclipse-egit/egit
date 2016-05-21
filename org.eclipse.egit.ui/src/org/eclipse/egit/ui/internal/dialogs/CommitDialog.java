@@ -1266,15 +1266,18 @@ public class CommitDialog extends TitleAreaDialog {
 		return new Action(UIText.CommitDialog_AddFileOnDiskToIndex) {
 			@Override
 			public void run() {
-				AddCommand addCommand = new Git(repository).add();
-				for (Iterator<?> it = selection.iterator(); it.hasNext();) {
-					CommitItem commitItem = (CommitItem) it.next();
-					addCommand.addFilepattern(commitItem.path);
-				}
-				try {
-					addCommand.call();
-				} catch (Exception e) {
-					Activator.logError(UIText.CommitDialog_ErrorAddingFiles, e);
+				try (Git git = new Git(repository)) {
+					AddCommand addCommand = git.add();
+					for (Iterator<?> it = selection.iterator(); it.hasNext();) {
+						CommitItem commitItem = (CommitItem) it.next();
+						addCommand.addFilepattern(commitItem.path);
+					}
+					try {
+						addCommand.call();
+					} catch (Exception e) {
+						Activator.logError(UIText.CommitDialog_ErrorAddingFiles,
+								e);
+					}
 				}
 				for (Iterator<?> it = selection.iterator(); it.hasNext();) {
 					CommitItem commitItem = (CommitItem) it.next();

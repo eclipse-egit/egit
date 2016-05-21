@@ -136,15 +136,15 @@ public class RebaseOperation implements IEGitOperation {
 			@Override
 			public void run(IProgressMonitor actMonitor) throws CoreException {
 				SubMonitor progress = SubMonitor.convert(actMonitor, 2);
-				RebaseCommand cmd = new Git(repository).rebase()
-						.setProgressMonitor(
-								new EclipseGitProgressTransformer(progress.newChild(1)));
-				MergeStrategy strategy = Activator.getDefault()
-						.getPreferredMergeStrategy();
-				if (strategy != null) {
-					cmd.setStrategy(strategy);
-				}
-				try {
+				try (Git git = new Git(repository)) {
+					RebaseCommand cmd = git.rebase().setProgressMonitor(
+							new EclipseGitProgressTransformer(
+									progress.newChild(1)));
+					MergeStrategy strategy = Activator.getDefault()
+							.getPreferredMergeStrategy();
+					if (strategy != null) {
+						cmd.setStrategy(strategy);
+					}
 					if (handler != null)
 						cmd.runInteractively(handler, true);
 					if (operation == Operation.BEGIN) {
