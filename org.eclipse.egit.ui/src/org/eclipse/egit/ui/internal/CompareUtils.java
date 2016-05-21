@@ -934,7 +934,7 @@ public class CompareUtils {
 	 */
 	public static ITypedElement getHeadTypedElement(Repository repository, String repoRelativePath) {
 		try {
-			Ref head = repository.getRef(Constants.HEAD);
+			Ref head = repository.exactRef(Constants.HEAD);
 			if (head == null || head.getObjectId() == null)
 				// Initial import, not yet a HEAD commit
 				return new EmptyTypedElement(""); //$NON-NLS-1$

@@ -175,7 +175,7 @@ public class CommitJob extends Job {
 				String fullBranch = repository.getFullBranch();
 				if (fullBranch != null
 						&& fullBranch.startsWith(Constants.R_HEADS)) {
-					Ref ref = repository.getRef(fullBranch);
+					Ref ref = repository.exactRef(fullBranch);
 					pushWizard = new PushBranchWizard(repository, ref);
 				} else {
 					pushWizard = new PushBranchWizard(repository,

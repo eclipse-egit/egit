@@ -142,7 +142,7 @@ class GitDocument extends Document implements RefsChangedListener {
 				return;
 			}
 		} else {
-			if (repository.getRef(Constants.HEAD) == null) {
+			if (repository.exactRef(Constants.HEAD) == null) {
 				// Complain only if not an unborn branch
 				String msg = NLS.bind(UIText.GitDocument_errorResolveQuickdiff,
 						new Object[] { baseline, resource, repository });

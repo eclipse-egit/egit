@@ -377,7 +377,7 @@ public class RefSpecPanel {
 
 		Ref HEAD = null;
 		try {
-			HEAD = localDb.getRef(Constants.HEAD);
+			HEAD = localDb.exactRef(Constants.HEAD);
 		} catch (IOException e) {
 			Activator.logError("Couldn't read HEAD from local repository", e); //$NON-NLS-1$
 		}

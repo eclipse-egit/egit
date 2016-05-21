@@ -82,9 +82,8 @@ public class RebaseOperationTest extends GitTestCase {
 		assertEquals(first, topicCommit.getParent(0));
 
 		// rebase topic onto master
-		RebaseOperation op = new RebaseOperation(
-				testRepository.getRepository(), testRepository.getRepository()
-						.getRef(MASTER));
+		RebaseOperation op = new RebaseOperation(testRepository.getRepository(),
+				testRepository.getRepository().exactRef(MASTER));
 		op.execute(null);
 
 		RebaseResult res = op.getResult();
@@ -127,9 +126,8 @@ public class RebaseOperationTest extends GitTestCase {
 		assertEquals(first, topicCommit.getParent(0));
 
 		// rebase topic onto master
-		RebaseOperation op = new RebaseOperation(
-				testRepository.getRepository(), testRepository.getRepository()
-						.getRef(MASTER));
+		RebaseOperation op = new RebaseOperation(testRepository.getRepository(),
+				testRepository.getRepository().exactRef(MASTER));
 		op.execute(null);
 
 		RebaseResult res = op.getResult();
@@ -172,9 +170,8 @@ public class RebaseOperationTest extends GitTestCase {
 		assertEquals(first, topicCommit.getParent(0));
 
 		// rebase topic onto master
-		RebaseOperation op = new RebaseOperation(
-				testRepository.getRepository(), testRepository.getRepository()
-						.getRef(MASTER));
+		RebaseOperation op = new RebaseOperation(testRepository.getRepository(),
+				testRepository.getRepository().exactRef(MASTER));
 		op.execute(null);
 
 		RebaseResult res = op.getResult();
@@ -220,8 +217,8 @@ public class RebaseOperationTest extends GitTestCase {
 		assertEquals(first, topicCommit.getParent(0));
 
 		// rebase topic onto master
-		RebaseOperation op = new RebaseOperation(repository, repository
-				.getRef(MASTER));
+		RebaseOperation op = new RebaseOperation(repository,
+				repository.exactRef(MASTER));
 		op.execute(null);
 
 		RebaseResult res = op.getResult();
@@ -230,7 +227,7 @@ public class RebaseOperationTest extends GitTestCase {
 		try {
 			// let's try to start again, we should get a wrapped
 			// WrongRepositoryStateException
-			op = new RebaseOperation(repository, repository.getRef(MASTER));
+			op = new RebaseOperation(repository, repository.exactRef(MASTER));
 			op.execute(null);
 			fail("Expected Exception not thrown");
 		} catch (CoreException e) {

@@ -78,7 +78,7 @@ public class PushUpstreamOrBranchActionHandler extends RepositoryActionHandler {
 
 	private static Ref getHeadIfSymbolic(Repository repository) {
 		try {
-			Ref head = repository.getRef(Constants.HEAD);
+			Ref head = repository.exactRef(Constants.HEAD);
 			if (head != null && head.isSymbolic())
 				return head;
 			else

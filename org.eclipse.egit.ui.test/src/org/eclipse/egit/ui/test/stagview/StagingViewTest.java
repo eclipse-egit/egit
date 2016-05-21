@@ -115,7 +115,7 @@ public class StagingViewTest extends LocalRepositoryTestCase {
 		git.checkout().setName("master").call();
 		commitOneFileChange("on master");
 
-		git.merge().include(repository.getRef("side")).call();
+		git.merge().include(repository.findRef("side")).call();
 		assertEquals(RepositoryState.MERGING, repository.getRepositoryState());
 
 		StagingViewTester stagingView = StagingViewTester

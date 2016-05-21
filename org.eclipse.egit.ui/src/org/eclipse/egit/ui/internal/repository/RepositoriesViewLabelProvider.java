@@ -288,7 +288,7 @@ public class RepositoriesViewLabelProvider extends ColumnLabelProvider
 
 		Ref head;
 		try {
-			head = repository.getRef(Constants.HEAD);
+			head = repository.exactRef(Constants.HEAD);
 		} catch (IOException e) {
 			return string;
 		}

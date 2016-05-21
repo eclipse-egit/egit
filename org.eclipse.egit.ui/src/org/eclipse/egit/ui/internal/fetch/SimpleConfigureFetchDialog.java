@@ -596,7 +596,7 @@ public class SimpleConfigureFetchDialog extends TitleAreaDialog {
 				Ref source;
 				try {
 					// TODO better checks for wild-cards and such
-					source = repository.getRef(spec.getDestination());
+					source = repository.findRef(spec.getDestination());
 				} catch (IOException e1) {
 					source = null;
 				}

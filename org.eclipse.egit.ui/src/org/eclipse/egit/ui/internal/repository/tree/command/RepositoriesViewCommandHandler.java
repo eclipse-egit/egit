@@ -106,7 +106,7 @@ abstract class RepositoriesViewCommandHandler<T extends RepositoryTreeNode<?>>
 	private boolean repositoryHasHead(T treeNode) {
 		Repository repo = treeNode.getRepository();
 		try {
-			Ref ref = repo.getRef(Constants.HEAD);
+			Ref ref = repo.exactRef(Constants.HEAD);
 			return ref != null && ref.getObjectId() != null;
 		} catch (IOException e) {
 			// ignore and report false
