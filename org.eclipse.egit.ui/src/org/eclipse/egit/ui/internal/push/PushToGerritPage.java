@@ -236,7 +236,7 @@ class PushToGerritPage extends WizardPage {
 		try {
 			for (RemoteConfig rc : RemoteConfig.getAllRemoteConfigs(repository
 					.getConfig())) {
-				if (GerritUtil.isGerritRemote(rc)) {
+				if (GerritUtil.isGerritPush(rc)) {
 					if (rc.getURIs().size() > 0) {
 						uris.add(rc.getURIs().get(0).toPrivateString());
 					}

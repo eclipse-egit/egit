@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2013 SAP AG and others.
+ * Copyright (c) 2011, 2016 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Dariusz Luksza <dariusz@luksza.org> - add 'isSafe' implementation
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 493352
  *******************************************************************************/
 package org.eclipse.egit.ui.internal;
 
@@ -22,10 +23,8 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
-import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
 
 /**
@@ -104,9 +103,15 @@ public class ResourcePropertyTester extends PropertyTester {
 		if ("isShared".equals(property)) //$NON-NLS-1$
 			return repository != null;
 		if (repository != null) {
-			if ("hasGerritConfiguration".equals(property)) //$NON-NLS-1$
+			if ("hasGerritConfiguration".equals(property)) { //$NON-NLS-1$
 				return hasGerritConfiguration(repository);
-
+			}
+			if ("canFetchFromGerrit".equals(property)) { //$NON-NLS-1$
+				return canFetchFromGerrit(repository);
+			}
+			if ("canPushToGerrit".equals(property)) { //$NON-NLS-1$
+				return canPushToGerrit(repository);
+			}
 			RepositoryState state = repository.getRepositoryState();
 
 			if ("canAbortRebase".equals(property)) //$NON-NLS-1$
@@ -160,30 +165,61 @@ public class ResourcePropertyTester extends PropertyTester {
 	public static boolean hasGerritConfiguration(
 			@NonNull Repository repository) {
 		Config config = repository.getConfig();
-		if (GerritUtil.getCreateChangeId(config))
+		if (GerritUtil.getCreateChangeId(config)) {
 			return true;
+		}
 		try {
 			List<RemoteConfig> remoteConfigs = RemoteConfig.getAllRemoteConfigs(config);
 			for (RemoteConfig remoteConfig : remoteConfigs) {
-				for (RefSpec pushSpec : remoteConfig.getPushRefSpecs()) {
-					String destination = pushSpec.getDestination();
-					if (destination == null)
-						continue;
-					if (destination.startsWith(GerritUtil.REFS_FOR))
-						return true;
-				}
-				for (RefSpec fetchSpec : remoteConfig.getFetchRefSpecs()) {
-					String source = fetchSpec.getSource();
-					String destination = fetchSpec.getDestination();
-					if (source == null || destination == null)
-						continue;
-					if (source.startsWith(Constants.R_NOTES)
-							&& destination.startsWith(Constants.R_NOTES))
-						return true;
+				if (GerritUtil.isGerritPush(remoteConfig)
+						|| GerritUtil.isGerritFetch(remoteConfig)) {
+					return true;
 				}
 			}
 		} catch (URISyntaxException e) {
 			// Assume it doesn't contain Gerrit configuration
+			return false;
+		}
+		return false;
+	}
+
+	/**
+	 * @param repository
+	 * @return {@code true} if repository has been configured to fetch from
+	 *         Gerrit
+	 */
+	public static boolean canFetchFromGerrit(@NonNull Repository repository) {
+		Config config = repository.getConfig();
+		try {
+			List<RemoteConfig> remoteConfigs = RemoteConfig
+					.getAllRemoteConfigs(config);
+			for (RemoteConfig remoteConfig : remoteConfigs) {
+				if (GerritUtil.isGerritFetch(remoteConfig)) {
+					return true;
+				}
+			}
+		} catch (URISyntaxException e) {
+			return false;
+		}
+		return false;
+	}
+
+	/**
+	 * @param repository
+	 * @return {@code true} if repository has been configured for pushing to
+	 *         Gerrit
+	 */
+	public static boolean canPushToGerrit(@NonNull Repository repository) {
+		Config config = repository.getConfig();
+		try {
+			List<RemoteConfig> remoteConfigs = RemoteConfig
+					.getAllRemoteConfigs(config);
+			for (RemoteConfig remoteConfig : remoteConfigs) {
+				if (GerritUtil.isGerritPush(remoteConfig)) {
+					return true;
+				}
+			}
+		} catch (URISyntaxException e) {
 			return false;
 		}
 		return false;
