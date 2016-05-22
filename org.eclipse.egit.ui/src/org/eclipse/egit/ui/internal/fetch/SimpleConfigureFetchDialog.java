@@ -1,10 +1,13 @@
 /*******************************************************************************
- * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2011, 2016 Mathias Kinzler <mathias.kinzler@sap.com> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 493935
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.fetch;
 
@@ -20,6 +23,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.gerrit.GerritDialogSettings;
 import org.eclipse.egit.ui.internal.push.RefSpecDialog;
 import org.eclipse.egit.ui.internal.push.RefSpecWizard;
 import org.eclipse.egit.ui.internal.repository.SelectUriWizard;
@@ -551,6 +555,7 @@ public class SimpleConfigureFetchDialog extends TitleAreaDialog {
 			} catch (IOException e) {
 				Activator.handleError(e.getMessage(), e, true);
 			}
+			GerritDialogSettings.updateRemoteConfig(repository, config);
 			if (buttonId == OK)
 				try {
 					new ProgressMonitorDialog(getShell()).run(true, true,
