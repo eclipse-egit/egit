@@ -1,9 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2015 Robin Stocker <robin@nibor.org> and others.
+ * Copyright (c) 2013, 2016 Robin Stocker <robin@nibor.org> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 493352
  *******************************************************************************/
 package org.eclipse.egit.core.internal.gerrit;
 
@@ -140,9 +143,10 @@ public class GerritUtil {
 	/**
 	 * @param rc
 	 *            the remote configuration
-	 * @return {@code true} if the remote configuration is configured for Gerrit
+	 * @return {@code true} if the remote configuration is configured for
+	 *         pushing to Gerrit
 	 */
-	public static boolean isGerritRemote(RemoteConfig rc) {
+	public static boolean isGerritPush(RemoteConfig rc) {
 		for (RefSpec pushSpec : rc.getPushRefSpecs()) {
 			String destination = pushSpec.getDestination();
 			if (destination == null) {
@@ -151,6 +155,27 @@ public class GerritUtil {
 			if (destination.startsWith(GerritUtil.REFS_FOR)
 					|| destination.startsWith(GerritUtil.REFS_PUBLISH)
 					|| destination.startsWith(GerritUtil.REFS_DRAFTS)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * @param rc
+	 *            the remote configuration
+	 * @return {@code true} if the remote configuration is configured for
+	 *         fetching from Gerrit
+	 */
+	public static boolean isGerritFetch(RemoteConfig rc) {
+		for (RefSpec fetchSpec : rc.getFetchRefSpecs()) {
+			String source = fetchSpec.getSource();
+			String destination = fetchSpec.getDestination();
+			if (source == null || destination == null) {
+				continue;
+			}
+			if (source.startsWith(Constants.R_NOTES)
+					&& destination.startsWith(Constants.R_NOTES)) {
 				return true;
 			}
 		}
