@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "87e453f8_cffcd6e7",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/LocalRepositoryTestCase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-22T20:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_cf13f6e6",
+      "range": {
+        "startLine": 520,
+        "startChar": 34,
+        "endLine": 520,
+        "endChar": 41
+      },
+      "revId": "cca365fd3fafeb59266564182935ba5cb37bda95",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e453f8_0f1ddef2",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/gitflow/AbstractGitflowHandlerTest.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-05-22T20:29:19Z",
       "side": 1,
       "message": "looks like this could use exactRef",
+      "range": {
+        "startLine": 99,
+        "startChar": 20,
+        "endLine": 99,
+        "endChar": 27
+      },
+      "revId": "cca365fd3fafeb59266564182935ba5cb37bda95",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_ef019279",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/gitflow/AbstractGitflowHandlerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-22T20:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_0f1ddef2",
       "range": {
         "startLine": 99,
         "startChar": 20,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "87e453f8_0ff6be02",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/gitflow/InitHandlerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-22T20:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_2f1a9afa",
+      "range": {
+        "startLine": 107,
+        "startChar": 27,
+        "endLine": 107,
+        "endChar": 34
+      },
+      "revId": "cca365fd3fafeb59266564182935ba5cb37bda95",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e453f8_4f27e63e",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/gitflow/InitHandlerTest.java",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2016-05-22T20:29:19Z",
       "side": 1,
       "message": "exactRef",
+      "range": {
+        "startLine": 136,
+        "startChar": 20,
+        "endLine": 136,
+        "endChar": 27
+      },
+      "revId": "cca365fd3fafeb59266564182935ba5cb37bda95",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_2ff37a12",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/gitflow/InitHandlerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-22T20:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_4f27e63e",
       "range": {
         "startLine": 136,
         "startChar": 20,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "87e453f8_4ff0c603",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewFetchAndPushTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-22T20:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_6f24a239",
+      "range": {
+        "startLine": 155,
+        "startChar": 37,
+        "endLine": 155,
+        "endChar": 44
+      },
+      "revId": "cca365fd3fafeb59266564182935ba5cb37bda95",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e453f8_8f300e73",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewFetchAndPushTest.java",
         "patchSetId": 1
@@ -128,6 +248,30 @@
       "writtenOn": "2016-05-22T20:29:19Z",
       "side": 1,
       "message": "exactRef",
+      "range": {
+        "startLine": 239,
+        "startChar": 28,
+        "endLine": 239,
+        "endChar": 35
+      },
+      "revId": "cca365fd3fafeb59266564182935ba5cb37bda95",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_6fed822d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewFetchAndPushTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-22T20:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_8f300e73",
       "range": {
         "startLine": 239,
         "startChar": 28,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "87e453f8_8fad6ef7",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewTestBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-22T20:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_af35ca62",
+      "range": {
+        "startLine": 78,
+        "startChar": 34,
+        "endLine": 78,
+        "endChar": 41
+      },
+      "revId": "cca365fd3fafeb59266564182935ba5cb37bda95",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e453f8_cf2a1603",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitJob.java",
         "patchSetId": 1
@@ -174,6 +342,30 @@
       "writtenOn": "2016-05-22T20:29:19Z",
       "side": 1,
       "message": "exactRef",
+      "range": {
+        "startLine": 178,
+        "startChar": 26,
+        "endLine": 178,
+        "endChar": 33
+      },
+      "revId": "cca365fd3fafeb59266564182935ba5cb37bda95",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_afb22a4f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-22T20:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_cf2a1603",
       "range": {
         "startLine": 178,
         "startChar": 26,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "87e453f8_cfb7763f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/AbstractBranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-22T20:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_ef2fd210",
+      "range": {
+        "startLine": 408,
+        "startChar": 19,
+        "endLine": 408,
+        "endChar": 26
+      },
+      "revId": "cca365fd3fafeb59266564182935ba5cb37bda95",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e453f8_0f44fece",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/AbstractBranchSelectionDialog.java",
         "patchSetId": 1
@@ -220,6 +436,30 @@
       "writtenOn": "2016-05-22T20:29:19Z",
       "side": 1,
       "message": "exactRef",
+      "range": {
+        "startLine": 413,
+        "startChar": 19,
+        "endLine": 413,
+        "endChar": 26
+      },
+      "revId": "cca365fd3fafeb59266564182935ba5cb37bda95",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_efbc3226",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/AbstractBranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-22T20:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_0f44fece",
       "range": {
         "startLine": 413,
         "startChar": 19,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "87e453f8_0fc15e97",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/AbstractBranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-22T20:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_2f41babe",
+      "range": {
+        "startLine": 418,
+        "startChar": 19,
+        "endLine": 418,
+        "endChar": 26
+      },
+      "revId": "cca365fd3fafeb59266564182935ba5cb37bda95",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e453f8_4f3e0643",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/AbstractBranchSelectionDialog.java",
         "patchSetId": 1
@@ -266,6 +530,30 @@
       "writtenOn": "2016-05-22T20:29:19Z",
       "side": 1,
       "message": "exactRef",
+      "range": {
+        "startLine": 427,
+        "startChar": 20,
+        "endLine": 427,
+        "endChar": 27
+      },
+      "revId": "cca365fd3fafeb59266564182935ba5cb37bda95",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_2fbe1a1b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/AbstractBranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-22T20:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_4f3e0643",
       "range": {
         "startLine": 427,
         "startChar": 20,
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "87e453f8_4fcb66b7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/AbstractBranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-22T20:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_6f3bc250",
+      "range": {
+        "startLine": 433,
+        "startChar": 20,
+        "endLine": 433,
+        "endChar": 27
+      },
+      "revId": "cca365fd3fafeb59266564182935ba5cb37bda95",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e453f8_8fdbae9a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchWizard.java",
         "patchSetId": 1
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "87e453f8_6fc822ba",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-22T20:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_8fdbae9a",
+      "range": {
+        "startLine": 63,
+        "startChar": 36,
+        "endLine": 63,
+        "endChar": 43
+      },
+      "revId": "cca365fd3fafeb59266564182935ba5cb37bda95",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e453f8_afe06a43",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
         "patchSetId": 1
@@ -335,6 +671,30 @@
       "writtenOn": "2016-05-22T20:29:19Z",
       "side": 1,
       "message": "exactRef",
+      "range": {
+        "startLine": 648,
+        "startChar": 21,
+        "endLine": 648,
+        "endChar": 28
+      },
+      "revId": "cca365fd3fafeb59266564182935ba5cb37bda95",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_8f948e9b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-22T20:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_afe06a43",
       "range": {
         "startLine": 648,
         "startChar": 21,
