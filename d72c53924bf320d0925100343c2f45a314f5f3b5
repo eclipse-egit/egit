@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87e453f8_9bddac58",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-23T22:47:11Z",
+      "side": 1,
+      "message": "Why is there a GitProvider with a null project? That shouldn\u0027t happen.\n\nIs this because org.eclipse.team.core.RepositoryProvider.mapNewProvider() sets the session property before setting the project on the provider? If that\u0027s the root cause, shouldn\u0027t it be fixed there, too? (We\u0027d still have to fix it here, to cater to older Eclipses...)\n\nSomehow my Eclipse doesn\u0027t even show a null warning here, even though the argument is @NonNull and getProject() is not null-annotated.",
+      "revId": "d72c53924bf320d0925100343c2f45a314f5f3b5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
