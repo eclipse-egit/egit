@@ -290,7 +290,8 @@ class SourceBranchPage extends WizardPage {
 	}
 
 	private void revalidate(final RepositorySelection newRepoSelection) {
-		if (newRepoSelection.equals(validatedRepoSelection)) {
+		if (newRepoSelection == null
+				|| newRepoSelection.equals(validatedRepoSelection)) {
 			// URI hasn't changed, no need to refill the page with new data
 			checkPage();
 			return;
