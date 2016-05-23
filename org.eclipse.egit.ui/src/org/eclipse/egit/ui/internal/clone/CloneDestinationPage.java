@@ -146,10 +146,11 @@ public class CloneDestinationPage extends WizardPage {
 			List<Ref> branches, Ref head) {
 		if (!repositorySelection.equals(validatedRepoSelection)
 				|| !branches.equals(validatedSelectedBranches)
-				|| !head.equals(validatedHEAD))
+				|| (head != null && !head.equals(validatedHEAD))) {
 			setPageComplete(false);
-		else
+		} else {
 			checkPage();
+		}
 	}
 
 	private void createDestinationGroup(final Composite parent) {
@@ -442,7 +443,7 @@ public class CloneDestinationPage extends WizardPage {
 			List<Ref> branches, Ref head) {
 		if (repoSelection.equals(validatedRepoSelection)
 				&& branches.equals(validatedSelectedBranches)
-				&& head.equals(validatedHEAD)) {
+				&& head != null && head.equals(validatedHEAD)) {
 			checkPage();
 			return;
 		}
