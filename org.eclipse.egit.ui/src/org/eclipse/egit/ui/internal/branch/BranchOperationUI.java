@@ -474,6 +474,9 @@ public class BranchOperationUI {
 	 *            the result to show
 	 */
 	public void show(final CheckoutResult result) {
+		if (result == null) {
+			return;
+		}
 		if (result.getStatus() == CheckoutResult.Status.CONFLICTS) {
 			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 				@Override
