@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012-2014 Red Hat, Inc. Distributed under license by Red Hat, Inc.
+ * Copyright (c) 2012-2016 Red Hat, Inc, and others. Distributed under license by Red Hat, Inc.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -163,30 +163,24 @@ public class CommitJob extends Job {
 	}
 
 	private void pushUpstream(final RevCommit commit, final PushMode pushTo) {
-		RemoteConfig config = SimpleConfigurePushDialog
+		final RemoteConfig config = SimpleConfigurePushDialog
 				.getConfiguredRemote(repository);
 
-		if (pushTo == PushMode.GERRIT) {
-			final Wizard pushWizard = new PushToGerritWizard(repository);
-			openPushWizard(pushWizard);
-		} else if (config == null) {
-			try {
-				Wizard pushWizard = null;
-				String fullBranch = repository.getFullBranch();
-				if (fullBranch != null
-						&& fullBranch.startsWith(Constants.R_HEADS)) {
-					Ref ref = repository.exactRef(fullBranch);
-					pushWizard = new PushBranchWizard(repository, ref);
-				} else {
-					pushWizard = new PushBranchWizard(repository,
-							commit.getId());
+		if (pushTo == PushMode.GERRIT || config == null) {
+			final Display display = PlatformUI.getWorkbench().getDisplay();
+			display.asyncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					Wizard pushWizard = getPushWizard(commit, pushTo);
+					if (pushWizard != null) {
+						WizardDialog wizardDialog = new WizardDialog(
+								display.getActiveShell(), pushWizard);
+						wizardDialog.setHelpAvailable(true);
+						wizardDialog.open();
+					}
 				}
-				openPushWizard(pushWizard);
-			} catch (IOException e) {
-				Activator.handleError(
-						NLS.bind(UIText.CommitUI_pushFailedMessage, e), e,
-						true);
-			}
+			});
 		} else {
 			PushOperationUI op = new PushOperationUI(repository,
 					config.getName(), false);
@@ -194,18 +188,31 @@ public class CommitJob extends Job {
 		}
 	}
 
-	private void openPushWizard(final Wizard pushWizard) {
-		final Display display = Display.getDefault();
-		display.asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				WizardDialog wizardDialog = new WizardDialog(display
-				.getActiveShell(), pushWizard);
-				wizardDialog.setHelpAvailable(true);
-				wizardDialog.open();
+	private Wizard getPushWizard(final RevCommit commit,
+			final PushMode pushTo) {
+		switch (pushTo) {
+		case GERRIT:
+			return new PushToGerritWizard(repository);
+		case UPSTREAM:
+			try {
+				String fullBranch = repository.getFullBranch();
+				if (fullBranch != null
+						&& fullBranch.startsWith(Constants.R_HEADS)) {
+					Ref ref = repository.exactRef(fullBranch);
+					return new PushBranchWizard(repository, ref);
+				} else {
+					return new PushBranchWizard(repository,
+							commit.getId());
+				}
+			} catch (IOException e) {
+				Activator.handleError(
+						NLS.bind(UIText.CommitUI_pushFailedMessage, e), e,
+						true);
+				return null;
 			}
-		});
+		default:
+			return null;
+		}
 	}
 
 	@Override
