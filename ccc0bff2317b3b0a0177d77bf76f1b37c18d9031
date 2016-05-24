@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87e453f8_68ae536e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-24T19:45:51Z",
+      "side": 1,
+      "message": "How about instead in BranchOperation\n\n  private @NonNull CheckoutResult result \u003d CheckoutResult.NOT_TRIED_RESULT;\n\n  ...\n\n  @NonNull\n  public CheckoutResult getResult()\n\nand changing here to\n\n  private void show(final @NonNull CheckoutResult result)\n\n? It\u0027s used only within BranchOperationUI. As far as I see, we have no public packages, so we should be free to do such changes...",
+      "revId": "ccc0bff2317b3b0a0177d77bf76f1b37c18d9031",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
