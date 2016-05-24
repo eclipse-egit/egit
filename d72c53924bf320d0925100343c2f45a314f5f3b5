@@ -16,6 +16,24 @@
       "revId": "d72c53924bf320d0925100343c2f45a314f5f3b5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_3f1e4398",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-05-24T09:51:33Z",
+      "side": 1,
+      "message": "maybe that\u0027s fallout from https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d492048 ? Only users which are using nightly build have the fix for this problem.\n\nI think null analysis in Eclipse is still limited",
+      "parentUuid": "87e453f8_9bddac58",
+      "revId": "d72c53924bf320d0925100343c2f45a314f5f3b5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
