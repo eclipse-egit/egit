@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87e453f8_4898b74a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/CloneDestinationPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-24T19:52:05Z",
+      "side": 1,
+      "message": "Here, too?",
+      "revId": "151305511f83c10f363cdf219ca32bb3b5f37fe0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
