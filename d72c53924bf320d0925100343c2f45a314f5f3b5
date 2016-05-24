@@ -34,6 +34,24 @@
       "revId": "d72c53924bf320d0925100343c2f45a314f5f3b5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_a22b1c81",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-24T13:52:47Z",
+      "side": 1,
+      "message": "Somehow I doubt that. The large majority of reports for bug 494356 are from EGit 4.1.0 and 4.1.1. From 4.2.0 on, there are only isolated reports on that. The submodule changes that led to bug 492048 were all part of 4.3.0. Besides in bug 492048, the whole project was unmapped, so one shouldn\u0027t get any provider anymore.\n\nThe main change in 4.2.0 in this area was https://git.eclipse.org/r/#/c/64620/ which drastically reduced the number of accesses to the persistent property, which may explain the drop in the number of reports. Doesn\u0027t mean the underlying cause was fixed by that change, though.\n\nIn 4.3.0, we also had https://git.eclipse.org/r/#/c/68729/ .\n\nSo I see two possible causes of this:\n* perhaps we don\u0027t clean up properly our own session properties introduced in https://git.eclipse.org/r/#/c/64620/. Should probably add something to explicitly remove the session properties when a project is unmapped.\n* or the race condition in org.eclipse.team.core.RepositoryProvider.mapNewProvider(): it makes the provider accessible through the session property before setting the project on the provider, so unless I\u0027m missing something there\u0027s a small window during which one might get a RepositoryProvider without project.",
+      "parentUuid": "87e453f8_3f1e4398",
+      "revId": "d72c53924bf320d0925100343c2f45a314f5f3b5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
