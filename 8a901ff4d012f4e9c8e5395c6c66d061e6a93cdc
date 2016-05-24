@@ -16,6 +16,24 @@
       "revId": "8a901ff4d012f4e9c8e5395c6c66d061e6a93cdc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_1b7fdc87",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-24T04:49:05Z",
+      "side": 1,
+      "message": "Why? I did think about doing so and in the end decided against it. The ssh part below also doesn\u0027t do so.\n\nMy reasoning for not logging it is:\n* since we just cloned successfully, it shouldn\u0027t happen.\n* if it happens and the server is a Gerrit, it\u0027s most likely a transient thing (like the timeout in the bug report).\n* if it\u0027s not a Gerrit, the user will get a spurious warning.\n* the user can re-try later through the Gerrit Configuration wizard.\n\nWhat would be your reasons for logging here?",
+      "parentUuid": "87e453f8_fbf6b0c9",
+      "revId": "8a901ff4d012f4e9c8e5395c6c66d061e6a93cdc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
