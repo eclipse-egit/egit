@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87e453f8_0ee31797",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gerrit/GerritUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-25T11:26:24Z",
+      "side": 1,
+      "message": "Maybe. Let\u0027s do that in a later change, though. This is just what the ResourcePropertyTester did until now.",
+      "parentUuid": "87e453f8_6e981b82",
+      "revId": "d3fee1af481955ae8ab3caba0c375197cf4ab67b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e453f8_bb0d0879",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ResourcePropertyTester.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-05-25T11:16:48Z",
       "side": 1,
       "message": "else if ?",
+      "revId": "d3fee1af481955ae8ab3caba0c375197cf4ab67b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_ae0ea3ec",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ResourcePropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-25T11:26:24Z",
+      "side": 1,
+      "message": "If I had written this method originally: yes. Here, I just kept with the existing style (see all the if\u0027s below). It doesn\u0027t really matter since each \"if\" returns from the method. So I can just as well change it to \"else if\". Whatever you like better.",
+      "parentUuid": "87e453f8_bb0d0879",
       "revId": "d3fee1af481955ae8ab3caba0c375197cf4ab67b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
