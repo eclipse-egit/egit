@@ -117,6 +117,7 @@ public class CommitNonWSChangesTest extends LocalRepositoryTestCase {
 
 	private void clickOnCommit() throws Exception {
 		SWTBotView repoView = TestUtil.showView(RepositoriesView.VIEW_ID);
+		TestUtil.joinJobs(JobFamilies.REPO_VIEW_REFRESH);
 		SWTBotTree tree = repoView.bot().tree();
 		TestUtil.waitUntilTreeHasNodeContainsText(bot, tree, REPO1, 10000);
 		tree.getAllItems()[0].contextMenu("Commit...").click();

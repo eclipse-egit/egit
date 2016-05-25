@@ -449,6 +449,7 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		if (!changed.get())
 			fail("We should have received a config change event");
 
+		refreshAndWait(); // Repo view updates itself after config change.
 		rebase = repo.getConfig().getBoolean(
 				ConfigConstants.CONFIG_BRANCH_SECTION, "configTest",
 				ConfigConstants.CONFIG_KEY_REBASE, false);

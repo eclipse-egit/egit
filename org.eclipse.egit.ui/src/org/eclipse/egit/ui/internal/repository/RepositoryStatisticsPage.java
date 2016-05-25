@@ -63,11 +63,11 @@ public class RepositoryStatisticsPage extends PropertyPage {
 		}
 
 		Repository repo = AdapterUtils.adapt(getElement(), Repository.class);
-		if (repo == null)
+		if (repo == null) {
 			return table;
-		Git git = new Git(repo);
-		GarbageCollectCommand gc = git.gc();
-		try {
+		}
+		try (Git git = new Git(repo)) {
+			GarbageCollectCommand gc = git.gc();
 			Properties stats = gc.getStatistics();
 
 			table.setLinesVisible(true);

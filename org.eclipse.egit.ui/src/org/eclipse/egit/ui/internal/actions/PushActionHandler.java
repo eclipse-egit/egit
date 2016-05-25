@@ -60,7 +60,7 @@ public class PushActionHandler extends RepositoryActionHandler {
 			if (repository == null) {
 				return false;
 			}
-			Ref ref = repository.getRef(Constants.HEAD);
+			Ref ref = repository.exactRef(Constants.HEAD);
 			return ref != null && ref.getObjectId() != null;
 		} catch (IOException e) {
 			Activator.handleError(e.getMessage(), e, false);

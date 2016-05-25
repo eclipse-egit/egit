@@ -248,6 +248,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 				.getPreferences();
 		synchronized (prefs) {
 			prefs.put(RepositoryUtil.PREFS_DIRECTORIES, "");
+			prefs.put(RepositoryUtil.PREFS_DIRECTORIES_REL, "");
 			prefs.flush();
 		}
 	}
@@ -516,7 +517,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 	protected static void createBranch(Repository myRepository,
 			String newRefName) throws IOException {
 		RefUpdate updateRef = myRepository.updateRef(newRefName);
-		Ref sourceBranch = myRepository.getRef("refs/heads/master");
+		Ref sourceBranch = myRepository.exactRef("refs/heads/master");
 		ObjectId startAt = sourceBranch.getObjectId();
 		String startBranch = Repository.shortenRefName(sourceBranch.getName());
 		updateRef.setNewObjectId(startAt);

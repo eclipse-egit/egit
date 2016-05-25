@@ -248,7 +248,7 @@ public class PushBranchWizardTest extends LocalRepositoryTestCase {
 	private void checkoutNewLocalBranch(String branchName)
 			throws Exception {
 		CreateLocalBranchOperation createBranch = new CreateLocalBranchOperation(
-				repository, branchName, repository.getRef("master"),
+				repository, branchName, repository.findRef("master"),
 				UpstreamConfig.NONE);
 		createBranch.execute(null);
 		BranchOperation checkout = new BranchOperation(repository, branchName);

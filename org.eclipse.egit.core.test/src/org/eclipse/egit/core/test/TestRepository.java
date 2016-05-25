@@ -310,7 +310,7 @@ public class TestRepository {
 			throws IOException {
 		RefUpdate updateRef;
 		updateRef = repository.updateRef(newRefName);
-		Ref startRef = repository.getRef(refName);
+		Ref startRef = repository.findRef(refName);
 		ObjectId startAt = repository.resolve(refName);
 		String startBranch;
 		if (startRef != null)
@@ -462,7 +462,7 @@ public class TestRepository {
 		if (dc == null)
 			return true;
 
-		Ref ref = repository.getRef(Constants.HEAD);
+		Ref ref = repository.exactRef(Constants.HEAD);
 		try (RevWalk rw = new RevWalk(repository)) {
 			RevCommit c = rw.parseCommit(ref.getObjectId());
 

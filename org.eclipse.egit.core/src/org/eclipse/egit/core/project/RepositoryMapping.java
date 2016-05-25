@@ -117,7 +117,9 @@ public class RepositoryMapping {
 		java.nio.file.Path lPath = location.toFile().toPath();
 		// Require at least one common component for using a relative path
 		if (lPath.getNameCount() > 0 && gPath.getNameCount() > 0
-				&& gPath.getRoot().equals(lPath.getRoot())
+				&& (gPath.getRoot() == lPath.getRoot()
+						|| gPath.getRoot() != null
+								&& gPath.getRoot().equals(lPath.getRoot()))
 				&& gPath.getName(0).equals(lPath.getName(0))) {
 			gPath = lPath.relativize(gPath);
 		}

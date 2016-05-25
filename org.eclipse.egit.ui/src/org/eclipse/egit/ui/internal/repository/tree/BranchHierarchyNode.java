@@ -73,7 +73,8 @@ public class BranchHierarchyNode extends RepositoryTreeNode<IPath> {
 				int segmentDiff = myPath.segmentCount()
 						- getObject().segmentCount();
 				if (segmentDiff == 1) {
-					Ref ref = getRepository().getRef(myPath.toPortableString());
+					Ref ref = getRepository()
+							.findRef(myPath.toPortableString());
 					childRefs.add(ref);
 				}
 			}

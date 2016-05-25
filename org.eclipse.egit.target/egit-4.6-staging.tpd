@@ -3,5 +3,5 @@ target "egit-4.6-staging" with source configurePhase
 include "projects/jetty-9.2.13.tpd"
 include "projects/swtbot-snapshot.tpd"
 include "projects/mylyn-latest.tpd"
-include "orbit/S20160501200945-Neon.tpd"
+include "orbit/S20160518051658-Neon.tpd"
 include "releasetrain/staging.tpd"

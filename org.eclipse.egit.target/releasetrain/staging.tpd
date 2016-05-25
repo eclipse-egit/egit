@@ -1,6 +1,6 @@
 target "staging" with source configurePhase
 
-location "http://download.eclipse.org/releases/staging/" {
+location "http://download.eclipse.org/staging/neon/" {
 	org.eclipse.sdk.ide lazy
 	org.eclipse.emf.sdk.feature.group lazy
 	org.eclipse.mylyn.commons.sdk.feature.group lazy

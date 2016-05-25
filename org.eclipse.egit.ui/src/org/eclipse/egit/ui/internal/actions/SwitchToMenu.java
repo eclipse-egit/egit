@@ -101,7 +101,7 @@ public class SwitchToMenu extends ContributionItem implements
 						ConfigConstants.CONFIG_WORKFLOW_SECTION, null,
 						ConfigConstants.CONFIG_KEY_DEFBRANCHSTARTPOINT);
 				try {
-					Ref ref = repository.getRef(sourceRef);
+					Ref ref = repository.findRef(sourceRef);
 					if (ref != null)
 						BranchOperationUI.createWithRef(repository,
 								ref.getName()).start();

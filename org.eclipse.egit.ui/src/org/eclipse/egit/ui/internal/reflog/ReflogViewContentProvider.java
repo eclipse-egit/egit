@@ -69,9 +69,9 @@ public class ReflogViewContentProvider implements ITreeContentProvider {
 	public Object[] getElements(Object inputElement) {
 		if (inputElement instanceof ReflogInput) {
 			ReflogInput input = (ReflogInput) inputElement;
-			ReflogCommand command = new Git(input.repository).reflog();
-			command.setRef(input.ref);
-			try {
+			try (Git git = new Git(input.repository)) {
+				ReflogCommand command = git.reflog();
+				command.setRef(input.ref);
 				return command.call().toArray();
 			} catch (Exception e) {
 				Activator.logError("Error running reflog command", e); //$NON-NLS-1$

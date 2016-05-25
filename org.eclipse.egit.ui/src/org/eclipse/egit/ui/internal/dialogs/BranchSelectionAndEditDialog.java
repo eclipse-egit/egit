@@ -19,17 +19,14 @@ import java.util.Iterator;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.ValidationUtils;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
-import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
@@ -178,7 +175,7 @@ public class BranchSelectionAndEditDialog extends
 							ConfigConstants.CONFIG_WORKFLOW_SECTION, null,
 							ConfigConstants.CONFIG_KEY_DEFBRANCHSTARTPOINT);
 					try {
-						Ref ref = repo.getRef(sourceRef);
+						Ref ref = repo.findRef(sourceRef);
 						if (ref != null) {
 							base = ref.getName();
 						}
@@ -223,40 +220,17 @@ public class BranchSelectionAndEditDialog extends
 		renameButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				Ref selectedRef = refFromDialog();
 
-				String refName = refNameFromDialog();
-				String refPrefix;
+				String namePrefix = selectedRef.getName()
+						.startsWith(Constants.R_REMOTES) ? Constants.R_REMOTES
+								: Constants.R_HEADS;
 
-				if (refName.startsWith(Constants.R_HEADS))
-					refPrefix = Constants.R_HEADS;
-				else if (refName.startsWith(Constants.R_REMOTES))
-					refPrefix = Constants.R_REMOTES;
-				else if (refName.startsWith(Constants.R_TAGS))
-					refPrefix = Constants.R_TAGS;
-				else {
-					// the button should be disabled anyway, but we check again
-					return;
-				}
-
-				String branchName = refName.substring(refPrefix.length());
-
-				InputDialog labelDialog = getRefNameInputDialog(
-						NLS.bind(
-								UIText.BranchSelectionAndEditDialog_QuestionNewBranchNameMessage,
-								branchName, refPrefix), refPrefix, branchName);
-				if (labelDialog.open() == Window.OK) {
-					String newRefName = refPrefix + labelDialog.getValue();
-					try {
-						new Git(repo).branchRename().setOldName(refName)
-								.setNewName(labelDialog.getValue()).call();
-						branchTree.refresh();
-						markRef(newRefName);
-					} catch (Throwable e1) {
-						reportError(
-								e1,
-								UIText.BranchSelectionAndEditDialog_ErrorCouldNotRenameRef,
-								refName, newRefName, e1.getMessage());
-					}
+				BranchRenameDialog dialog = new BranchRenameDialog(getShell(),
+						repo, selectedRef);
+				if (dialog.open() == Window.OK) {
+					branchTree.refresh();
+					markRef(namePrefix + dialog.getNewName());
 				}
 			}
 		});
@@ -295,17 +269,6 @@ public class BranchSelectionAndEditDialog extends
 		});
 		deleteButton.setEnabled(false);
 		return deleteButton;
-	}
-
-	private InputDialog getRefNameInputDialog(String prompt,
-			final String refPrefix, String initialValue) {
-		InputDialog labelDialog = new InputDialog(getShell(),
-				UIText.BranchSelectionAndEditDialog_QuestionNewBranchTitle,
-				prompt,
-				initialValue, ValidationUtils.getRefNameInputValidator(repo,
-						refPrefix, true));
-		labelDialog.setBlockOnOpen(true);
-		return labelDialog;
 	}
 
 	private void reportError(Throwable e, String message, Object... args) {

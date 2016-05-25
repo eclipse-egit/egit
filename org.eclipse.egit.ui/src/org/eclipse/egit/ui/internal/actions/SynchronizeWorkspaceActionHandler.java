@@ -124,7 +124,7 @@ public class SynchronizeWorkspaceActionHandler extends RepositoryActionHandler {
 		Ref ref;
 
 		try {
-			ref = repo.getRef(HEAD);
+			ref = repo.exactRef(HEAD);
 		} catch (IOException e) {
 			ref = null;
 		}

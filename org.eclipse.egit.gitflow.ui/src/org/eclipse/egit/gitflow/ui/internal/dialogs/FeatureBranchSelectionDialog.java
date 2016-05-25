@@ -11,10 +11,12 @@ package org.eclipse.egit.gitflow.ui.internal.dialogs;
 import static org.eclipse.jface.dialogs.IDialogConstants.CANCEL_LABEL;
 import static org.eclipse.jface.dialogs.IDialogConstants.OK_LABEL;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.egit.gitflow.GitFlowRepository;
+import org.eclipse.egit.gitflow.ui.Activator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -22,6 +24,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -32,6 +35,7 @@ import org.eclipse.swt.widgets.Shell;
 public class FeatureBranchSelectionDialog extends MessageDialog {
 	private List<Ref> selected = new ArrayList<>();
 	private FilteredBranchesWidget filteredFeatures;
+	private GitFlowRepository gfRepo;
 
 	/**
 	 * @param parentShell
@@ -46,6 +50,7 @@ public class FeatureBranchSelectionDialog extends MessageDialog {
 			String featurePrefix, GitFlowRepository gfRepo) {
 		super(parentShell, title, null, message, MessageDialog.QUESTION,
 				new String[] { OK_LABEL, CANCEL_LABEL }, 0);
+		this.gfRepo = gfRepo;
 		filteredFeatures = new FilteredBranchesWidget(refs, featurePrefix, gfRepo);
 	}
 
@@ -70,7 +75,9 @@ public class FeatureBranchSelectionDialog extends MessageDialog {
 
 			@Override
 			public void doubleClick(DoubleClickEvent event) {
-				buttonPressed(OK);
+				if (getButton(OK).isEnabled()) {
+					buttonPressed(OK);
+				}
 			}
 		});
 		return result;
@@ -101,6 +108,17 @@ public class FeatureBranchSelectionDialog extends MessageDialog {
 	}
 
 	private void checkPage() {
-		getButton(OK).setEnabled(!filteredFeatures.getSelection().isEmpty());
+		List<Ref> selection = filteredFeatures.getSelection();
+		if (selection.isEmpty() || selection.get(0) == null) {
+			getButton(OK).setEnabled(false);
+			return;
+		}
+		Repository repository = gfRepo.getRepository();
+		try {
+			Ref currentBranch = repository.exactRef(repository.getFullBranch());
+			getButton(OK).setEnabled(!selection.get(0).equals(currentBranch));
+		} catch (IOException e) {
+			Activator.logError("Unable to find current branch", e); //$NON-NLS-1$
+		}
 	}
 }

@@ -104,6 +104,37 @@ public class BranchOperation extends BaseOperation {
 				SubMonitor progress = SubMonitor.convert(pm, 4);
 				preExecute(progress.newChild(1));
 
+				closeProjectsMissingAfterCheckout(progress);
+
+				try (Git git = new Git(repository)) {
+					CheckoutCommand co = git.checkout();
+					co.setName(target);
+
+					try {
+						co.call();
+					} catch (CheckoutConflictException e) {
+						return;
+					} catch (JGitInternalException e) {
+						throw new CoreException(
+								Activator.error(e.getMessage(), e));
+					} catch (GitAPIException e) {
+						throw new CoreException(
+								Activator.error(e.getMessage(), e));
+					} finally {
+						result = co.getResult();
+					}
+					if (result.getStatus() == Status.NONDELETED) {
+						retryDelete(result.getUndeletedList());
+					}
+					progress.worked(1);
+					refreshAffectedProjects(progress);
+
+					postExecute(progress.newChild(1));
+				}
+			}
+
+			private void closeProjectsMissingAfterCheckout(SubMonitor progress)
+					throws CoreException {
 				IProject[] missing = getMissingProjects(target, ProjectUtil
 						.getValidOpenProjects(repository));
 
@@ -121,35 +152,18 @@ public class BranchOperation extends BaseOperation {
 						project.close(closeMonitor.newChild(1));
 					}
 				}
+			}
 
-				CheckoutCommand co = new Git(repository).checkout();
-				co.setName(target);
-
-				try {
-					co.call();
-				} catch (CheckoutConflictException e) {
-					return;
-				} catch (JGitInternalException e) {
-					throw new CoreException(Activator.error(e.getMessage(), e));
-				} catch (GitAPIException e) {
-					throw new CoreException(Activator.error(e.getMessage(), e));
-				} finally {
-					BranchOperation.this.result = co.getResult();
-				}
-				if (result.getStatus() == Status.NONDELETED)
-					retryDelete(result.getUndeletedList());
-				progress.worked(1);
-
+			private void refreshAffectedProjects(SubMonitor progress)
+					throws CoreException {
 				List<String> pathsToHandle = new ArrayList<String>();
-				pathsToHandle.addAll(co.getResult().getModifiedList());
-				pathsToHandle.addAll(co.getResult().getRemovedList());
-				pathsToHandle.addAll(co.getResult().getConflictList());
+				pathsToHandle.addAll(result.getModifiedList());
+				pathsToHandle.addAll(result.getRemovedList());
+				pathsToHandle.addAll(result.getConflictList());
 				IProject[] refreshProjects = ProjectUtil
 						.getProjectsContaining(repository, pathsToHandle);
 				ProjectUtil.refreshValidProjects(refreshProjects, delete,
 						progress.newChild(1));
-
-				postExecute(progress.newChild(1));
 			}
 		};
 		// lock workspace to protect working tree changes

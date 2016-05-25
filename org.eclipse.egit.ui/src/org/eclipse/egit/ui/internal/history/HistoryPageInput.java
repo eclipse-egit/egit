@@ -146,7 +146,7 @@ public class HistoryPageInput {
 	 */
 	public Ref getHead() {
 		try {
-			Ref h = repo.getRef(Constants.HEAD);
+			Ref h = repo.exactRef(Constants.HEAD);
 			if (h != null && h.isSymbolic())
 				return h;
 			return null;

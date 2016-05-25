@@ -40,6 +40,8 @@ public class BranchRenameDialog extends TitleAreaDialog {
 
 	private Text name;
 
+	private String newName;
+
 	/**
 	 * @param parentShell
 	 * @param repository
@@ -118,7 +120,7 @@ public class BranchRenameDialog extends TitleAreaDialog {
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == OK)
 			try {
-				String newName = name.getText();
+				newName = name.getText();
 				new RenameBranchOperation(repository, branchToRename, newName)
 						.execute(null);
 			} catch (CoreException e) {
@@ -128,5 +130,14 @@ public class BranchRenameDialog extends TitleAreaDialog {
 				return;
 			}
 		super.buttonPressed(buttonId);
+	}
+
+	/**
+	 * @return the name of the branch after the rename operation. This is only
+	 *         valid after the dialog has been opened and finished with the OK
+	 *         button.
+	 */
+	public String getNewName() {
+		return newName;
 	}
 }

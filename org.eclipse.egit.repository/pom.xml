@@ -134,7 +134,7 @@
             <layout>p2</layout>
            </repository>
            <repository>
-            <url>http://download.eclipse.org/releases/staging</url>
+            <url>http://download.eclipse.org/staging/neon/</url>
             <layout>p2</layout>
            </repository>
           </repositories>

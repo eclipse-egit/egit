@@ -87,27 +87,27 @@ public class RevertCommitOperation implements IEGitOperation {
 				progress.subTask(MessageFormat.format(
 						CoreText.RevertCommitOperation_reverting,
 						Integer.valueOf(commits.size())));
-				RevertCommand command = new Git(repo).revert();
-				MergeStrategy strategy = Activator.getDefault()
-						.getPreferredMergeStrategy();
-				if (strategy != null) {
-					command.setStrategy(strategy);
-				}
-				for (RevCommit commit : commits)
-					command.include(commit);
-				try {
+				try (Git git = new Git(repo)) {
+					RevertCommand command = git.revert();
+					MergeStrategy strategy = Activator.getDefault()
+							.getPreferredMergeStrategy();
+					if (strategy != null) {
+						command.setStrategy(strategy);
+					}
+					for (RevCommit commit : commits) {
+						command.include(commit);
+					}
 					newHead = command.call();
 					reverted = command.getRevertedRefs();
 					result = command.getFailingResult();
+					progress.worked(1);
+					ProjectUtil.refreshValidProjects(
+							ProjectUtil.getValidOpenProjects(repo),
+							progress.newChild(1));
 				} catch (GitAPIException e) {
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
 				}
-				progress.worked(1);
-
-				ProjectUtil.refreshValidProjects(
-						ProjectUtil.getValidOpenProjects(repo),
-						progress.newChild(1));
 			}
 		};
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),

@@ -1157,11 +1157,10 @@ public class CommitDialog extends TitleAreaDialog {
 
 		boolean ignoreErrorsValue = ignoreErrors == null ? true
 				: !ignoreErrors.getSelection();
-		@SuppressWarnings("boxing")
 		boolean hasErrorsOrWarnings = getPreferenceStore()
 				.getBoolean(UIPreferences.WARN_BEFORE_COMMITTING)
 						? (getProblemsSeverity() >= Integer
-								.valueOf(getPreferenceStore().getString(
+								.parseInt(getPreferenceStore().getString(
 										UIPreferences.WARN_BEFORE_COMMITTING_LEVEL))
 								&& ignoreErrorsValue)
 						: false;
@@ -1183,12 +1182,11 @@ public class CommitDialog extends TitleAreaDialog {
 			}
 		}
 		setMessage(message, type);
-		@SuppressWarnings("boxing")
 		boolean commitBlocked = getPreferenceStore()
 				.getBoolean(UIPreferences.WARN_BEFORE_COMMITTING)
 				&& getPreferenceStore().getBoolean(UIPreferences.BLOCK_COMMIT)
 						? (getProblemsSeverity() >= Integer
-								.valueOf(getPreferenceStore().getString(
+								.parseInt(getPreferenceStore().getString(
 										UIPreferences.BLOCK_COMMIT_LEVEL))
 								&& ignoreErrorsValue)
 						: false;
@@ -1268,15 +1266,18 @@ public class CommitDialog extends TitleAreaDialog {
 		return new Action(UIText.CommitDialog_AddFileOnDiskToIndex) {
 			@Override
 			public void run() {
-				AddCommand addCommand = new Git(repository).add();
-				for (Iterator<?> it = selection.iterator(); it.hasNext();) {
-					CommitItem commitItem = (CommitItem) it.next();
-					addCommand.addFilepattern(commitItem.path);
-				}
-				try {
-					addCommand.call();
-				} catch (Exception e) {
-					Activator.logError(UIText.CommitDialog_ErrorAddingFiles, e);
+				try (Git git = new Git(repository)) {
+					AddCommand addCommand = git.add();
+					for (Iterator<?> it = selection.iterator(); it.hasNext();) {
+						CommitItem commitItem = (CommitItem) it.next();
+						addCommand.addFilepattern(commitItem.path);
+					}
+					try {
+						addCommand.call();
+					} catch (Exception e) {
+						Activator.logError(UIText.CommitDialog_ErrorAddingFiles,
+								e);
+					}
 				}
 				for (Iterator<?> it = selection.iterator(); it.hasNext();) {
 					CommitItem commitItem = (CommitItem) it.next();

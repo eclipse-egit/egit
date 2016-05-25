@@ -217,7 +217,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 	private void refreshRepositoryList() {
 		List<String> dirsBefore = (List<String>) tv.getInput();
 		List<String> dirsAfter = util.getConfiguredRepositories();
-		if (!dirsBefore.containsAll(dirsAfter)) {
+		if (dirsBefore != null && !dirsBefore.containsAll(dirsAfter)) {
 			tv.setInput(dirsAfter);
 			for (String dir : dirsAfter)
 				if (!dirsBefore.contains(dir))

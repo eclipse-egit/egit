@@ -50,7 +50,7 @@ public class PullFromUpstreamActionHandler extends RepositoryActionHandler {
 						|| !fullBranch.startsWith(Constants.R_REFS)) {
 					return false;
 				}
-				Ref head = repo.getRef(Constants.HEAD);
+				Ref head = repo.exactRef(Constants.HEAD);
 				if (head == null || head.getObjectId() == null) {
 					return false;
 				}
