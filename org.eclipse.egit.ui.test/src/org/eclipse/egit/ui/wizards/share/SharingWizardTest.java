@@ -186,8 +186,11 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 		assertTrue((new File(repopath)).exists());
 
 		// share project
-		bot.button("Finish").click();
-		Thread.sleep(1000);
+		SWTBotShell shell = bot.activeShell();
+		bot.button(IDialogConstants.FINISH_LABEL).click();
+		bot.waitUntil(Conditions.shellCloses(shell));
+		ResourcesPlugin.getWorkspace().getRoot()
+				.refreshLocal(IResource.DEPTH_INFINITE, null);
 		assertEquals("org.eclipse.egit.core.GitProvider",
 				workspace.getRoot().getProject(projectName0)
 						.getPersistentProperty(
@@ -241,8 +244,11 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 
 		bot.tree().getAllItems()[1].getItems()[0].check();
 		existingOrNewPage.assertEnabling(false, false, true);
-		bot.button("Finish").click();
-		Thread.sleep(1000);
+		SWTBotShell shell = bot.activeShell();
+		bot.button(IDialogConstants.FINISH_LABEL).click();
+		bot.waitUntil(Conditions.shellCloses(shell));
+		ResourcesPlugin.getWorkspace().getRoot()
+				.refreshLocal(IResource.DEPTH_INFINITE, null);
 		assertEquals(repo1.getDirectory().getAbsolutePath(), RepositoryMapping
 				.getMapping(workspace.getRoot().getProject(projectName1))
 				.getRepository().getDirectory().toString());
@@ -303,8 +309,11 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 				.append("a/b").append(projectName2).toString();
 		existingOrNewPage.assertTableContents(contents);
 
+		SWTBotShell shell = bot.activeShell();
 		bot.button(IDialogConstants.FINISH_LABEL).click();
-		Thread.sleep(1000);
+		bot.waitUntil(Conditions.shellCloses(shell));
+		ResourcesPlugin.getWorkspace().getRoot()
+				.refreshLocal(IResource.DEPTH_INFINITE, null);
 		String location1Path = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(projectName1).getLocation().toString();
 		assertEquals(contents[0][2], location1Path);
