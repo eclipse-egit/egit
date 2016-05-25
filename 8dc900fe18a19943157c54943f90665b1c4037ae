@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87e453f8_cbfe7c76",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-25T22:11:37Z",
+      "side": 1,
+      "message": "Last observed in build 8644[1], compare screenshot[2].\n\n[1] https://hudson.eclipse.org/egit/job/egit.gerrit/8644/testReport/junit/org.eclipse.egit.ui.test.team.actions/StageUnstageActionTest/testBothProjects/\n[2] https://hudson.eclipse.org/egit/job/egit.gerrit/8644/artifact/org.eclipse.egit.ui.test/target/screenshots/testBothProjects%28org.eclipse.egit.ui.test.team.actions.StageUnstageActionTest%29.jpeg",
+      "range": {
+        "startLine": 12,
+        "startChar": 20,
+        "endLine": 12,
+        "endChar": 69
+      },
+      "revId": "8dc900fe18a19943157c54943f90665b1c4037ae",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
