@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87e453f8_6e981b82",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gerrit/GerritUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-05-25T11:16:48Z",
+      "side": 1,
+      "message": "I think if a user decides to not fetch git notes (e.g. by deleting the corresponding refspec from the git configuration) this shouldn\u0027t disable \"Fetch from Gerrit\". Maybe we need an explicit new git config option to remember which URLs are referring to a Gerrit server",
+      "revId": "d3fee1af481955ae8ab3caba0c375197cf4ab67b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_bb0d0879",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ResourcePropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-05-25T11:16:48Z",
+      "side": 1,
+      "message": "else if ?",
+      "revId": "d3fee1af481955ae8ab3caba0c375197cf4ab67b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
