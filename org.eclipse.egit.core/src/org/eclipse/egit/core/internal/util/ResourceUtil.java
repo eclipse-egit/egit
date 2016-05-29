@@ -318,7 +318,7 @@ public class ResourceUtil {
 	 * @param project
 	 *            to mark
 	 */
-	private static void markAsUnshared(@NonNull IProject project) {
+	public static void markAsUnshared(@NonNull IProject project) {
 		try {
 			project.setSessionProperty(PROVIDER_ID, PROJECT_IS_UNSHARED);
 		} catch (CoreException e) {
@@ -336,7 +336,7 @@ public class ResourceUtil {
 	 *            Id of the {@link RepositoryProvider} associated with the
 	 *            project, if known, or {@code null} otherwise.
 	 */
-	private static void markAsShared(@NonNull IProject project,
+	public static void markAsShared(@NonNull IProject project,
 			@Nullable String providerId) {
 		try {
 			project.setSessionProperty(PROVIDER_ID, providerId);

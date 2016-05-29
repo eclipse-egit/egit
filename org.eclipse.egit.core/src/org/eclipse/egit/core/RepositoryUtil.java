@@ -24,6 +24,7 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -37,6 +38,7 @@ import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
@@ -58,6 +60,7 @@ import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.jgit.util.FS;
+import org.eclipse.team.core.RepositoryProvider;
 import org.osgi.service.prefs.BackingStoreException;
 
 /**
@@ -89,6 +92,8 @@ public class RepositoryUtil {
 	private final IEclipsePreferences prefs = InstanceScope.INSTANCE
 			.getNode(Activator.getPluginId());
 
+	private final MappingListener mappingListener = new MappingListener();
+
 	private final java.nio.file.Path workspacePath;
 
 	/**
@@ -97,6 +102,7 @@ public class RepositoryUtil {
 	RepositoryUtil() {
 		workspacePath = ResourcesPlugin.getWorkspace().getRoot().getLocation()
 				.toFile().toPath();
+		mappingListener.register();
 	}
 
 	/**
@@ -105,6 +111,7 @@ public class RepositoryUtil {
 	void dispose() {
 		commitMappingCache.clear();
 		repositoryNameCache.clear();
+		mappingListener.dispose();
 	}
 
 	/**
@@ -757,5 +764,33 @@ public class RepositoryUtil {
 				.getIndexDiffCacheEntry(repository);
 		IndexDiffData data = entry != null ? entry.getIndexDiff() : null;
 		return data != null && data.hasChanges();
+	}
+
+	@SuppressWarnings("restriction")
+	private static class MappingListener implements
+			org.eclipse.team.internal.core.IRepositoryProviderListener {
+
+		@Override
+		public void providerMapped(RepositoryProvider provider) {
+			IProject project = provider.getProject();
+			if (project != null) {
+				ResourceUtil.markAsShared(project, provider.getID());
+			}
+		}
+
+		@Override
+		public void providerUnmapped(IProject project) {
+			ResourceUtil.markAsUnshared(project);
+		}
+
+		public void register() {
+			org.eclipse.team.internal.core.RepositoryProviderManager
+					.getInstance().addListener(this);
+		}
+
+		public void dispose() {
+			org.eclipse.team.internal.core.RepositoryProviderManager
+					.getInstance().removeListener(this);
+		}
 	}
 }
