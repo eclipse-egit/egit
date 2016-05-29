@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87e453f8_570e8674",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-29T11:03:08Z",
+      "side": 1,
+      "message": "Anybody knows how to listen to providers being mapped or unmapped without using team.core internals?",
+      "revId": "0f6bef123471b6f98830a9e9ab37e3a53a7fc435",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
