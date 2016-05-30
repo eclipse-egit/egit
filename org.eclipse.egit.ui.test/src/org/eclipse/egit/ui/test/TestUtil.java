@@ -603,6 +603,48 @@ public class TestUtil {
 	}
 
 	/**
+	 * Expand a node and wait until it is expanded and has a child node with the
+	 * given name. Use only if the node is expected to have children.
+	 *
+	 * @param treeItem
+	 *            to expand
+	 * @param childName
+	 *            to wait for
+	 * @return the child node
+	 */
+	public static SWTBotTreeItem expandAndWaitFor(final SWTBotTreeItem treeItem,
+			final String childName) {
+		final String text = treeItem.getText();
+		final SWTBotTreeItem[] result = { null };
+		treeItem.expand();
+		new SWTBot().waitUntil(new DefaultCondition() {
+
+			@Override
+			public boolean test() {
+				if (treeItem.widget.isDisposed()) {
+					return true; // Stop waiting and report failure below.
+				}
+				try {
+					result[0] = treeItem.getNode(childName);
+					return true;
+				} catch (WidgetNotFoundException e) {
+					return false;
+				}
+			}
+
+			@Override
+			public String getFailureMessage() {
+				return "Child " + childName + " not found under " + text;
+			}
+		});
+		if (treeItem.widget.isDisposed()) {
+			fail("Widget disposed while waiting for child node " + text + '.'
+					+ childName);
+		}
+		return result[0];
+	}
+
+	/**
 	 * Navigates in the given tree to the node denoted by the labels in the
 	 * path, using {@link #getNode(SWTBotTreeItem[], String)} to find children.
 	 *
