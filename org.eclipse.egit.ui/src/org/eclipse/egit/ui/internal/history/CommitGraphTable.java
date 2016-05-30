@@ -207,6 +207,9 @@ class CommitGraphTable {
 
 			@Override
 			protected void mapElement(final Object element, final Widget item) {
+				if (element == null) {
+					return;
+				}
 				((SWTCommit) element).widget = item;
 			}
 		};
