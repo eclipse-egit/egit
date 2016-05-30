@@ -201,14 +201,29 @@ public class RepositoryPropertySource implements IPropertySource {
 							public void run() {
 								changeModeAction.getAction().setText(
 										aMode.getText());
-								editAction.getAction().setEnabled(
-										aMode != DisplayMode.EFFECTIVE);
+								boolean enabled = true;
+								switch (aMode) {
+								case EFFECTIVE:
+									enabled = false;
+									break;
+								case SYSTEM:
+									enabled = systemConfig.getFile() != null
+											&& systemConfig.getFile()
+													.canWrite();
+									break;
+								default:
+									// Nothing; enabled is true
+								}
+								editAction.getAction().setEnabled(enabled);
 								myPage.refresh();
 							}
 
 							@Override
 							public boolean isEnabled() {
-								return aMode != getCurrentMode();
+								return aMode != getCurrentMode()
+										&& (aMode != DisplayMode.SYSTEM
+												|| systemConfig
+														.getFile() != null);
 							}
 
 							@Override
@@ -388,6 +403,9 @@ public class RepositoryPropertySource implements IPropertySource {
 		}
 		case SYSTEM: {
 			prefix = SYSTEM_ID_PREFIX;
+			if (systemConfig.getFile() == null) {
+				return new IPropertyDescriptor[0];
+			}
 			String location = systemConfig.getFile().getAbsolutePath();
 			category = NLS
 					.bind(UIText.RepositoryPropertySource_GlobalConfigurationCategory,
@@ -425,13 +443,17 @@ public class RepositoryPropertySource implements IPropertySource {
 		String actId = ((String) id);
 		Object value = null;
 		if (actId.startsWith(SYSTEM_ID_PREFIX)) {
-			value = getValueFromConfig(systemConfig, actId.substring(4));
+			value = getValueFromConfig(systemConfig,
+					actId.substring(SYSTEM_ID_PREFIX.length()));
 		} else if (actId.startsWith(USER_ID_PREFIX)) {
-			value = getValueFromConfig(userHomeConfig, actId.substring(4));
+			value = getValueFromConfig(userHomeConfig,
+					actId.substring(USER_ID_PREFIX.length()));
 		} else if (actId.startsWith(REPO_ID_PREFIX)) {
-			value = getValueFromConfig(repositoryConfig, actId.substring(4));
+			value = getValueFromConfig(repositoryConfig,
+					actId.substring(REPO_ID_PREFIX.length()));
 		} else if (actId.startsWith(EFFECTIVE_ID_PREFIX)) {
-			value = getValueFromConfig(effectiveConfig, actId.substring(4));
+			value = getValueFromConfig(effectiveConfig,
+					actId.substring(EFFECTIVE_ID_PREFIX.length()));
 		}
 		if (value == null)
 			// the text editor needs this to work
