@@ -16,6 +16,24 @@
       "revId": "151305511f83c10f363cdf219ca32bb3b5f37fe0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_c6282639",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/CloneDestinationPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-05-30T22:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_4898b74a",
+      "revId": "151305511f83c10f363cdf219ca32bb3b5f37fe0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
