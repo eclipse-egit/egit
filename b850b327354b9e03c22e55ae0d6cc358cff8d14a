@@ -16,6 +16,24 @@
       "revId": "b850b327354b9e03c22e55ae0d6cc358cff8d14a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_a6f95a43",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/SourceBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-05-31T06:48:49Z",
+      "side": 1,
+      "message": "AbstractGitCloneWizard.getRepositorySelection() can return null if an exception is caught in that method. I rewrote the change to make this clearer. You are right the same problem is in CloneDestinationPage.revalidate().",
+      "parentUuid": "87e453f8_281d26f3",
+      "revId": "b850b327354b9e03c22e55ae0d6cc358cff8d14a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
