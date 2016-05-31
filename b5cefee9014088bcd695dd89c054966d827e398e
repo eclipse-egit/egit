@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87e453f8_1a097e6b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-05-31T05:04:37Z",
+      "side": 1,
+      "message": "Why not private? Anybody using this outside of EGit is walking off-limits...",
+      "range": {
+        "startLine": 477,
+        "startChar": 1,
+        "endLine": 477,
+        "endChar": 7
+      },
+      "revId": "b5cefee9014088bcd695dd89c054966d827e398e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
