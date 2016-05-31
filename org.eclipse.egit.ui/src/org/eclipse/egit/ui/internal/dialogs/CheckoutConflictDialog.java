@@ -85,6 +85,8 @@ public class CheckoutConflictDialog extends MessageDialog {
 					new StructuredSelection(
 							new RepositoryNode(null, repository)));
 			break;
+		default:
+			break;
 		}
 		super.buttonPressed(buttonId);
 	}

@@ -446,6 +446,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 				IDecoratableResource resource) {
 			String format = ""; //$NON-NLS-1$
 			switch (resource.getType()) {
+			default:
 			case IResource.FILE:
 				format = store
 						.getString(UIPreferences.DECORATOR_FILETEXT_DECORATION);
