@@ -8,6 +8,8 @@
  *******************************************************************************/
 package org.eclipse.egit.core.internal.storage;
 
+import java.nio.charset.StandardCharsets;
+
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.core.variants.IResourceVariant;
@@ -75,7 +77,7 @@ public abstract class AbstractGitResourceVariant implements IResourceVariant {
 
 	@Override
 	public byte[] asBytes() {
-		return objectId.name().getBytes();
+		return objectId.name().getBytes(StandardCharsets.UTF_8);
 	}
 
 	/**
