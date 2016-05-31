@@ -149,6 +149,8 @@ public class DecorationOverlayDescriptor extends CompositeImageDescriptor {
 				drawImage(overlayData, size.x - overlayData.width, size.y
 						- overlayData.height);
 				break;
+			default:
+				break;
 			}
 		}
 	}

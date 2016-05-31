@@ -319,6 +319,9 @@ public class SWTUtils {
 		case MARGINS_DEFAULT:
 			layout.marginLeft = layout.marginRight = layout.marginWidth;
 			layout.marginTop = layout.marginBottom = layout.marginHeight;
+			break;
+		default:
+			break;
 		}
 		layout.marginWidth = layout.marginHeight = 0;
 		return layout;

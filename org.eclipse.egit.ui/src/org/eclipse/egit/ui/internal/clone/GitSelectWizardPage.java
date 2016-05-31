@@ -176,6 +176,7 @@ public class GitSelectWizardPage extends WizardPage {
 			wizardSelection = EXISTING_PROJECTS_WIZARD;
 		}
 		switch (wizardSelection) {
+		default:
 		case EXISTING_PROJECTS_WIZARD:
 			importExisting.setSelection(true);
 			break;
