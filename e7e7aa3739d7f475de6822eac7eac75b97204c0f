@@ -22,6 +22,30 @@
       "revId": "e7e7aa3739d7f475de6822eac7eac75b97204c0f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_1a425e67",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/CloneDestinationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-05-31T06:48:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_fa2a12b4",
+      "range": {
+        "startLine": 145,
+        "startChar": 3,
+        "endLine": 145,
+        "endChar": 22
+      },
+      "revId": "e7e7aa3739d7f475de6822eac7eac75b97204c0f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
