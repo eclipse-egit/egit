@@ -36,6 +36,7 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
+import org.eclipse.egit.ui.internal.gerrit.GerritDialogSettings;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -76,11 +77,7 @@ import org.eclipse.ui.IWorkbenchCommandConstants;
 /**
  * Push the current HEAD to Gerrit
  */
-class PushToGerritPage extends WizardPage {
-	private static final String PUSH_TO_GERRIT_PAGE_SECTION = "PushToGerritPage"; //$NON-NLS-1$
-
-	private static final String LAST_URI_POSTFIX = ".lastUri"; //$NON-NLS-1$
-
+public class PushToGerritPage extends WizardPage {
 	private static final String LAST_BRANCH_POSTFIX = ".lastBranch"; //$NON-NLS-1$
 
 	private static final String LAST_TOPICS_POSTFIX = ".lastTopics"; //$NON-NLS-1$
@@ -139,17 +136,14 @@ class PushToGerritPage extends WizardPage {
 				.getRepositoryUtil().getRepositoryName(repository)));
 		setMessage(UIText.PushToGerritPage_Message);
 		settings = getDialogSettings();
-		lastUriKey = repository + LAST_URI_POSTFIX;
+		lastUriKey = repository + GerritDialogSettings.LAST_URI_SUFFIX;
 		lastBranchKey = repository + LAST_BRANCH_POSTFIX;
 	}
 
 	@Override
 	protected IDialogSettings getDialogSettings() {
-		IDialogSettings s = Activator.getDefault().getDialogSettings();
-		IDialogSettings section = s.getSection(PUSH_TO_GERRIT_PAGE_SECTION);
-		if (section == null)
-			section = s.addNewSection(PUSH_TO_GERRIT_PAGE_SECTION);
-		return section;
+		return GerritDialogSettings
+				.getSection(GerritDialogSettings.PUSH_TO_GERRIT_SECTION);
 	}
 
 	@Override
@@ -236,7 +230,7 @@ class PushToGerritPage extends WizardPage {
 		try {
 			for (RemoteConfig rc : RemoteConfig.getAllRemoteConfigs(repository
 					.getConfig())) {
-				if (GerritUtil.isGerritRemote(rc)) {
+				if (GerritUtil.isGerritPush(rc)) {
 					if (rc.getURIs().size() > 0) {
 						uris.add(rc.getURIs().get(0).toPrivateString());
 					}

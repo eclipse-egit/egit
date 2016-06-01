@@ -59,8 +59,8 @@ import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.utils.TableCollection;
 import org.eclipse.swtbot.swt.finder.waits.ICondition;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotLabel;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotStyledText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarDropDownButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
@@ -326,7 +326,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		TestUtil.getChildNode(tags, "SomeTag").select();
 		sourceSelectionDialog.bot().button(IDialogConstants.OK_LABEL).click();
 
-		SWTBotLabel sourceLabel = createBranchDialog.bot().label(3);
+		SWTBotStyledText sourceLabel = createBranchDialog.bot().styledText(0);
 		assertEquals("SomeTag", sourceLabel.getText());
 
 		createBranchDialog.bot().textWithId("BranchName")
