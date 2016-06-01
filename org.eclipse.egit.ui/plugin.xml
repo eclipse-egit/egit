@@ -1775,6 +1775,31 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.team.RenameBranch"
+            class="org.eclipse.egit.ui.internal.actions.RenameBranchActionHandler">
+         <activeWhen>
+            <test property="GitSelection.projectsSingleRepository" />
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.ui.edit.rename"
+            class="org.eclipse.egit.ui.internal.history.command.RenameBranchOnCommitHandler">
+         <activeWhen>
+            <and>
+               <with
+                     variable="activePartId">
+                  <equals
+                        value="org.eclipse.team.ui.GenericHistoryView">
+                  </equals>
+               </with>
+               <count value="1" />
+               <iterate>
+                  <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.team.submodule.update">
          <class
                class="org.eclipse.egit.ui.internal.repository.tree.command.SubmoduleUpdateCommand">
@@ -4809,12 +4834,6 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.RenameBranchCommand"
-            id="org.eclipse.egit.ui.RepositoriesViewRenameBranch"
-            name="%RenameBranchCommand">
-      </command>
-      <command
-            categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.PasteCommand"
             id="org.eclipse.egit.ui.RepositoriesViewPaste"
             name="%PastePathCommand">
@@ -5325,10 +5344,6 @@
             icon="icons/obj16/stash-create.png">
       </image>
       <image
-            commandId="org.eclipse.egit.ui.history.RenameBranch"
-            icon="icons/obj16/editconfig.gif">
-      </image>
-      <image
             commandId="org.eclipse.egit.ui.history.ShowBlame"
             icon="icons/etool16/annotate.gif">
       </image>
@@ -5632,9 +5647,8 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.actions.RenameBranchActionHandler"
             id="org.eclipse.egit.ui.team.RenameBranch"
-            name="%RenameBranchCommand.name">
+            name="%RenameBranchCommand">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
@@ -5738,11 +5752,6 @@
             defaultHandler="org.eclipse.egit.ui.internal.history.command.DeleteBranchOnCommitHandler"
             id="org.eclipse.egit.ui.history.DeleteBranch"
             name="%DeleteBranchCommand">
-      </command>
-      <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.RenameBranchOnCommitHandler"
-            id="org.eclipse.egit.ui.history.RenameBranch"
-            name="%RenameBranchCommand">
       </command>
       <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.CreateTagOnCommitHandler"
