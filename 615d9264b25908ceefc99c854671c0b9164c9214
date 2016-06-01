@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87e453f8_47408608",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-01T21:58:16Z",
+      "side": 1,
+      "message": "Whether that\u0027s smart I\u0027m not sure. This command shows up in quick access as \"Rename the currently selected element\". Could be omitted from this change.",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 25
+      },
+      "revId": "615d9264b25908ceefc99c854671c0b9164c9214",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_c7cf3625",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-01T21:58:16Z",
+      "side": 1,
+      "message": "s/Unless/Except/",
+      "range": {
+        "startLine": 33,
+        "startChar": 25,
+        "endLine": 33,
+        "endChar": 31
+      },
+      "revId": "615d9264b25908ceefc99c854671c0b9164c9214",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_87c52e09",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-01T21:58:16Z",
+      "side": 1,
+      "message": "Alternative: make sure none of these default handlers throws exceptions when the selection/active part/whatever is something unexpected. But that would mean the commands would still show up in quick access, but not do anything when invoked. I prefer having them available in quick access only when applicable.",
+      "range": {
+        "startLine": 32,
+        "startChar": 40,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "615d9264b25908ceefc99c854671c0b9164c9214",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_27e0da8c",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1781,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-01T21:58:16Z",
+      "side": 1,
+      "message": "Perhaps add here a condition \"only when the selection is not an SWTCommit\".",
+      "revId": "615d9264b25908ceefc99c854671c0b9164c9214",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_47db26e4",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5651,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-01T21:58:16Z",
+      "side": 1,
+      "message": "This is with ellipsis...",
+      "revId": "615d9264b25908ceefc99c854671c0b9164c9214",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87e453f8_873e0e75",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4813,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-01T21:58:16Z",
+      "side": 0,
+      "message": "Is not used anywhere as far as I see.",
+      "revId": "690fc4102c668ebb85b78f1eac2828364f986a1b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_27129a10",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5745,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-01T21:58:16Z",
+      "side": 0,
+      "message": "Took me quite a while to figure out how these commands end up in the context menu of the CommitGraphTable. Is there any reason why this context menu is built programmatically instead of using regular \u003cmenuContribution\u003es here in plugin.xml?? I think it could work, with dynamic items also for the conditional labels, and we could drop quite a bit of Java code (CommitGraphTable.MenuListener)...",
+      "revId": "690fc4102c668ebb85b78f1eac2828364f986a1b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
