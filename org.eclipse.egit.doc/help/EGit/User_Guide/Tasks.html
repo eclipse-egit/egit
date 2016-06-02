@@ -292,7 +292,7 @@
 		<p>You can press 
 			<b>Finish</b> on this page or press 
 			<b>Next</b> if you are working with 
-			<a href="http://code.google.com/p/gerrit/" target="egit_external">Gerrit Code Review</a> and you want to configure your repository accordingly.
+			<a href="https://www.gerritcodereview.com/" target="egit_external">Gerrit Code Review</a> and you want to configure your repository accordingly.
 		</p>
 		<h4 id="Cloning_from_specific_locations">Cloning from specific locations</h4>
 		<p>The Clone wizard of EGit can be extended by other plugins in order to search for repositories on specific backends which host git repositories. Currently such an extension is available for Github and soon will be available for Gerrit. For both you need to install the respective Mylyn connectors. The Gerrit Mylyn connector extension then will also configure the remote repository for the work with Gerrit. This can also be done or changed later from the Git Repositories View, see 
@@ -633,11 +633,22 @@
 			<br/>
 		</p>
 		<h2 id="Working_with_Gerrit">Working with Gerrit</h2>
-		<p>If you are working with Gerrit (
-			<a href="http://code.google.com/p/gerrit/" target="egit_external">http://code.google.com/p/gerrit/</a>), EGit allows you to conveniently push and fetch changes to and from the Gerrit servers.
+		<p>If you are working with <a href="https://www.gerritcodereview.com/" target="egit_external">Gerrit Code Review</a>, EGit allows you to conveniently push and fetch changes to and from the Gerrit servers.
 		</p>
 		<h3 id="Enabling_Gerrit_for_a_repository">Enabling Gerrit for a repository</h3>
-		<p>Gerrit operation will not appear in any menus unless you configure your repository first. To do that, open the Git Repositories view and browse down to the 
+		<p>
+			When a repository is cloned in EGit from a Gerrit server using a <code>http</code>, <code>https</code>, or <code>ssh</code> URI,
+			EGit will automatically set up the clone for use with Gerrit. The repository clone is configured such that
+		</p>
+		<ul>
+			<li>fetching also fetches the review notes from Gerrit,</li>
+			<li>pushing by default pushes the commits for review, and</li>
+			<li>commit messages automatically get a Gerrit <code>Change-Id</code> unless they already have one.
+		</ul>
+		<p>
+			If a repository cloned from a Gerrit server outside of EGit is used in EGit, the clone may not be set up such that EGit
+			recognizes it as a Gerrit repository. Gerrit operations in EGit will not appear in any menus unless you configure your
+			repository first. To do that, open the Git Repositories view and browse down to the 
 			<b>Remote</b> that represents the Git repository server you want to use and select 
 			<b>Gerrit Configuration...</b>.
 		</p>
@@ -648,11 +659,12 @@
 		</p>
 		<p>A dialog will appear that lets you select or enter a URI and branch name:</p>
 		<p>
-			<img border="0" src="images/Egit-3.1-PushChangeToGerritDialog.png"/>
+			<img border="0" src="images/Egit-4.4-PushChangeToGerritDialog.png"/>
 		</p>
 		<ul>
-			<li>In the URI combo, select or enter the URI that points to your Gerrit instance; the combo will be pre-filled with all URIs defined in any remote of your current Repository; in addition you can type any URI into this field</li>
-			<li>In the Gerrit Branch field, enter the name of the branch to select the review queue your changes will be be pushed to</li>
+			<li>In the URI combo, select or enter the URI that points to your Gerrit instance; the combo will be pre-filled with all URIs defined in any remote of your current Repository; in addition you can type any URI into this field.</li>
+			<li>In the Gerrit Branch field, enter the name of the branch to select the review queue your changes will be be pushed to.</li>
+			<li>Optionally, enable the topic and enter a topic identifier. EGit proposes the last used topic for the local branch being pushed, or the local branch name.</li>
 		</ul>
 		<p>The dialog also offers a content assist for the Gerrit branch. Simply press "Ctrl+Space" to activate this (consult the tooltip that appears when hovering over the little bulb decorator near the Gerrit Branch field). The remote tracking branches for the current repository will be shown. Note that this content assist is filtered, so in order to see all proposals, you need to make sure to have the Gerrit Branch field empty before requesting the content assist.</p>
 		<p>Upon clicking 
@@ -1059,7 +1071,7 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<ul>
 			<li>If there is an entry in a bug tracking system for the change to be committed it is a good idea to add it here as a bug tag</li>
 			<li>
-				<a href="http://code.google.com/p/gerrit/" target="egit_external">Gerrit Code Review</a> uses the 
+				<a href="https://www.gerritcodereview.com/" target="egit_external">Gerrit Code Review</a> uses the 
 				<i>Change-Id:</i> footer to correlate different patchsets of a change evolving during the review process towards the finally accepted patch. To generate a Gerrit Change-Id click 
 				<b>Compute Change-Id for Gerrit Code Review</b>; the ID will be generated on commit, until then a null Change-Id is shown as a placeholder. With the EGit configuration parameter 
 				<b>gerrit.createchangeid</b> set to true the corresponding checkbox in the Commit Dialog is always preselected. This parameter can be set on repository level, on system level or on user level. See 
@@ -2304,7 +2316,7 @@ Sein oder nicht sein
 		<p>It is also possible to add, remove, or change Fetch/Push Specifications for an existing Remote configuration using the context menu.</p>
 		<h5 id="Gerrit_Configuration">Gerrit Configuration</h5>
 		<p>If you work with 
-			<a href="http://code.google.com/p/gerrit/" target="egit_external">Gerrit Code Review</a> as remote repository server you can
+			<a href="https://www.gerritcodereview.com/" target="egit_external">Gerrit Code Review</a> as remote repository server you can
 		</p>
 		<ul>
 			<li>specify the push configuration used to push changes to code review</li>
