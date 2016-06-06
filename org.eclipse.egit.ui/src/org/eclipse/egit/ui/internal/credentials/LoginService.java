@@ -54,7 +54,7 @@ public class LoginService {
 		LoginDialog dialog = new LoginDialog(parent, uri);
 		dialog.setChangeCredentials(true);
 		UserPasswordCredentials oldCredentials = SecureStoreUtils
-				.getCredentialsQuietly(uri);
+				.getCredentials(uri);
 		if (oldCredentials != null)
 			dialog.setOldUser(oldCredentials.getUser());
 		if (dialog.open() == Window.OK) {
