@@ -10,10 +10,12 @@
 package org.eclipse.egit.ui.internal;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.equinox.security.storage.StorageException;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.transport.URIish;
 
 /**
@@ -34,14 +36,14 @@ public class SecureStoreUtils {
 				org.eclipse.egit.core.Activator.getDefault().getSecureStore()
 						.putCredentials(uri, credentials);
 			} catch (StorageException e) {
-				Activator.handleError(
-						UIText.SecureStoreUtils_writingCredentialsFailed, e,
-						true);
+				Activator.handleError(MessageFormat.format(
+						UIText.SecureStoreUtils_writingCredentialsFailed, uri),
+						e, true);
 				return false;
 			} catch (IOException e) {
-				Activator.handleError(
-						UIText.SecureStoreUtils_writingCredentialsFailed, e,
-						true);
+				Activator.handleError(MessageFormat.format(
+						UIText.SecureStoreUtils_writingCredentialsFailed, uri),
+						e, true);
 				return false;
 			}
 		}
@@ -49,41 +51,39 @@ public class SecureStoreUtils {
 	}
 
 	/**
-	 * Gets credentials stored for the given uri. Logs but does not re-throw
-	 * {@code StorageException} if thrown by the secure store implementation
+	 * Gets credentials stored for the given uri. Logs {@code StorageException}
+	 * if thrown by the secure store implementation and removes credentials
+	 * which can't be read from secure store
 	 *
 	 * @param uri
 	 * @return credentials stored in secure store for given uri
 	 */
-	public static UserPasswordCredentials getCredentialsQuietly(
+	public static @Nullable UserPasswordCredentials getCredentials(
 			final URIish uri) {
 		try {
 			return org.eclipse.egit.core.Activator.getDefault()
 					.getSecureStore().getCredentials(uri);
 		} catch (StorageException e) {
-			Activator.logError(
-					UIText.EGitCredentialsProvider_errorReadingCredentials, e);
+			Activator.logError(MessageFormat.format(
+					UIText.SecureStoreUtils_errorReadingCredentials,
+					uri), e);
+			clearCredentials(uri);
+			return null;
 		}
-		return null;
 	}
 
 	/**
-	 * Gets credentials stored for the given uri. Logs and re-throws
-	 * {@code StorageException} if thrown by the secure store implementation
+	 * Clear credentials stored for the given uri if any exist
 	 *
 	 * @param uri
-	 * @return credentials stored in secure store for given uri
-	 * @throws StorageException
 	 */
-	public static UserPasswordCredentials getCredentials(
-			final URIish uri) throws StorageException {
+	public static void clearCredentials(final URIish uri) {
 		try {
-			return org.eclipse.egit.core.Activator.getDefault()
-					.getSecureStore().getCredentials(uri);
-		} catch (StorageException e) {
-			Activator.logError(
-					UIText.EGitCredentialsProvider_errorReadingCredentials, e);
-			throw e;
+			org.eclipse.egit.core.Activator.getDefault().getSecureStore()
+					.clearCredentials(uri);
+		} catch (IOException e) {
+			Activator.logError(MessageFormat.format(
+					UIText.SecureStoreUtils_errorClearingCredentials, uri), e);
 		}
 	}
 
