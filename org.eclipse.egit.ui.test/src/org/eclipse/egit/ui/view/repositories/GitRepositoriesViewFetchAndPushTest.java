@@ -31,6 +31,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
+import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
@@ -124,6 +125,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 				destinationString);
 
 		// first time: expect new branch
+		bot.waitUntil(Conditions.shellIsActive(dialogTitle));
 		SWTBotShell confirmed = bot.shell(dialogTitle);
 		SWTBotTreeItem[] treeItems = confirmed.bot().tree().getAllItems();
 		boolean newBranch = false;
@@ -140,6 +142,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 
 		runPush(tree);
 
+		bot.waitUntil(Conditions.shellIsActive(dialogTitle));
 		confirmed = bot.shell(dialogTitle);
 		treeItems = confirmed.bot().tree().getAllItems();
 		boolean uptodate = false;
@@ -163,6 +166,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 
 		runPush(updatedTree);
 
+		bot.waitUntil(Conditions.shellIsActive(dialogTitle));
 		confirmed = bot.shell(dialogTitle);
 		treeItems = confirmed.bot().tree().getAllItems();
 		newBranch = false;
@@ -229,6 +233,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		selectNode(tree, useRemote, true);
 		runFetch(tree);
 
+		bot.waitUntil(Conditions.shellIsActive(dialogTitle));
 		SWTBotShell confirm = bot.shell(dialogTitle);
 		assertEquals("Wrong result tree row count", 0, confirm.bot().tree()
 				.rowCount());
@@ -256,6 +261,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		selectNode(tree, useRemote, true);
 		runFetch(tree);
 
+		bot.waitUntil(Conditions.shellIsActive(dialogTitle));
 		confirm = bot.shell(dialogTitle);
 		SWTBotTreeItem[] treeItems = confirm.bot().tree().getAllItems();
 		boolean found = false;
