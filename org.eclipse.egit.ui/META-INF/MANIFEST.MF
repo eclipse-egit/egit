@@ -90,6 +90,7 @@ Export-Package: org.eclipse.egit.ui;version="4.5.0";x-friends:="org.eclipse.egit
  org.eclipse.egit.ui.internal.history;version="4.5.0";x-internal:=true,
  org.eclipse.egit.ui.internal.history.command;version="4.5.0";x-internal:=true,
  org.eclipse.egit.ui.internal.importing;version="4.5.0";x-internal:=true,
+ org.eclipse.egit.ui.internal.jobs;version="4.5.0";x-internal:=true,
  org.eclipse.egit.ui.internal.merge;version="4.5.0";x-internal:=true,
  org.eclipse.egit.ui.internal.operations;version="4.5.0";x-friends:="org.eclipse.egit.gitflow.ui",
  org.eclipse.egit.ui.internal.patch;version="4.5.0";x-internal:=true,
