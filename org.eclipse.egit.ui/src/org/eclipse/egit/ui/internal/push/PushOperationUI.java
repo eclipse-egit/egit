@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2012 SAP AG and others.
+ * Copyright (c) 2011, 2016 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 495512
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.push;
 
@@ -20,9 +21,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.op.PushOperation;
 import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.core.op.PushOperationSpecification;
@@ -31,6 +30,8 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
+import org.eclipse.egit.ui.internal.jobs.RepositoryJob;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jgit.errors.NotSupportedException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
@@ -221,12 +222,19 @@ public class PushOperationUI {
 	 * completion
 	 */
 	public void start() {
-		Job job = new Job(NLS.bind(UIText.PushOperationUI_PushJobName,
+		final Repository repo = repository;
+		if (repo == null) {
+			return;
+		}
+		Job job = new RepositoryJob(NLS.bind(UIText.PushOperationUI_PushJobName,
 				destinationString)) {
+
+			private PushOperationResult result;
+
 			@Override
-			protected IStatus run(IProgressMonitor monitor) {
+			protected IStatus performJob(IProgressMonitor monitor) {
 				try {
-					execute(monitor);
+					result = execute(monitor);
 				} catch (CoreException e) {
 					return Activator.createErrorStatus(e.getStatus()
 							.getMessage(), e);
@@ -235,28 +243,24 @@ public class PushOperationUI {
 			}
 
 			@Override
+			protected Action getAction() {
+				if (expectedResult == null || !expectedResult.equals(result)) {
+					return new ShowPushResultAction(repo, result,
+							destinationString, showConfigureButton);
+				}
+				return null;
+			}
+
+			@Override
 			public boolean belongsTo(Object family) {
 				if (JobFamilies.PUSH.equals(family))
 					return true;
 				return super.belongsTo(family);
 			}
+
 		};
 		job.setUser(true);
 		job.schedule();
-		job.addJobChangeListener(new JobChangeAdapter() {
-			@Override
-			public void done(IJobChangeEvent event) {
-				PushOperationResult result = op.getOperationResult();
-				if (expectedResult == null || !expectedResult.equals(result)) {
-					if (event.getResult().isOK())
-						PushResultDialog.show(repository, result,
-								destinationString, showConfigureButton, false);
-					else
-						Activator.handleError(event.getResult().getMessage(),
-								event.getResult().getException(), true);
-				}
-			}
-		});
 	}
 
 	/**
@@ -270,4 +274,5 @@ public class PushOperationUI {
 		return Activator.getDefault().getPreferenceStore()
 				.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 	}
+
 }
