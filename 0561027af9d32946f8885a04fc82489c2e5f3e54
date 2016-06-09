@@ -22,6 +22,30 @@
       "revId": "0561027af9d32946f8885a04fc82489c2e5f3e54",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_9a464526",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/jobs/RepositoryJob.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-09T18:21:28Z",
+      "side": 1,
+      "message": "In theory. The Job framework explicitly deals with misbehaved jobs that do return null.\n\nI had at first @NonNull IStatus performJob(), but that led to warnings in implementations of performJob() because Status.OK_STATUS is not marked @NonNull...",
+      "parentUuid": "87e453f8_5a559dc9",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 20
+      },
+      "revId": "0561027af9d32946f8885a04fc82489c2e5f3e54",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
