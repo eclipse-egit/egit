@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87e453f8_5a559dc9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/jobs/RepositoryJob.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-06-09T18:16:41Z",
+      "side": 1,
+      "message": "The return value of run() must be non null. This can be here Status.CANCEl or something, but not null.",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 20
+      },
+      "revId": "0561027af9d32946f8885a04fc82489c2e5f3e54",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
