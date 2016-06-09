@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87e453f8_38953e96",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-09T05:11:00Z",
+      "side": 0,
+      "message": "I see no reason for this to be a WorkspaceJob. Fetching should affect only the repository and not change any workspace resources.\n\nThis was originally a plain Job; it got changed to a WorkspaceJob in a mass-mutation in commit 7866980.",
+      "range": {
+        "startLine": 116,
+        "startChar": 16,
+        "endLine": 116,
+        "endChar": 28
+      },
+      "revId": "b969c04c6ad48b202c9fc30cecd17ffb79cdc617",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

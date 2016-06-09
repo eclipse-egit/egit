@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87e453f8_78b8a630",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-09T05:11:00Z",
+      "side": 1,
+      "message": "There may be other places in EGit where we have such background jobs. PullOperationUI looks as if it does that, too, but has logic that is quite different.",
+      "range": {
+        "startLine": 7,
+        "startChar": 22,
+        "endLine": 7,
+        "endChar": 53
+      },
+      "revId": "d3530bbb7c6f230dcc69dcb23effe90e1bc84e08",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_98bbb22b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/jobs/RepositoryJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-09T05:11:00Z",
+      "side": 1,
+      "message": "An alternative might be KEEPONE_PROPERTY here (and adapting the belongsTo() method) to keep only the last job and result.",
+      "range": {
+        "startLine": 52,
+        "startChar": 35,
+        "endLine": 52,
+        "endChar": 48
+      },
+      "revId": "d3530bbb7c6f230dcc69dcb23effe90e1bc84e08",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_18c7a2aa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/jobs/RepositoryJob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-09T05:11:00Z",
+      "side": 1,
+      "message": "The text set on the status is taken as the link text in the job\u0027s entry in the progress view. With Status.OK_STATUS, we\u0027d get links reading \"OK\". Therefore construct our own OK status with a more meaningful text.",
+      "revId": "d3530bbb7c6f230dcc69dcb23effe90e1bc84e08",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
