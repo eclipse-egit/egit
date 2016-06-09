@@ -70,6 +70,30 @@
       "revId": "0561027af9d32946f8885a04fc82489c2e5f3e54",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_ba5b01cc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/jobs/RepositoryJob.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-09T19:13:03Z",
+      "side": 1,
+      "message": "Done. Handled in the same way as in org.eclipse.core.internal.jobs.Worker.run().",
+      "parentUuid": "87e453f8_7ad6d9bf",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 20
+      },
+      "revId": "0561027af9d32946f8885a04fc82489c2e5f3e54",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
