@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.internal.clone;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -43,7 +44,6 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -173,8 +173,10 @@ public class GitSelectRepositoryPage extends WizardPage {
 				display.asyncExec(new Runnable() {
 					@Override
 					public void run() {
-						refreshRepositoryList();
-						checkPage();
+						if (!tv.getControl().isDisposed()) {
+							refreshRepositoryList();
+							checkPage();
+						}
 					}
 				});
 			}
@@ -215,28 +217,37 @@ public class GitSelectRepositoryPage extends WizardPage {
 	}
 
 	private void refreshRepositoryList() {
-		List<String> dirsBefore = (List<String>) tv.getInput();
+		List<?> dirsBefore = (List<?>) tv.getInput();
 		List<String> dirsAfter = util.getConfiguredRepositories();
-		if (dirsBefore != null && !dirsBefore.containsAll(dirsAfter)) {
+		if (dirsBefore == null) {
+			dirsBefore = Collections.emptyList();
+		}
+		if (!dirsBefore.containsAll(dirsAfter)) {
 			tv.setInput(dirsAfter);
-			for (String dir : dirsAfter)
-				if (!dirsBefore.contains(dir))
+			for (String dir : dirsAfter) {
+				if (!dirsBefore.contains(dir)) {
 					try {
+						Repository newRepository = org.eclipse.egit.core.Activator
+								.getDefault().getRepositoryCache()
+								.lookupRepository(new File(dir));
 						RepositoryNode node = new RepositoryNode(null,
-								FileRepositoryBuilder.create(new File(dir)));
-						tv.setSelection(new StructuredSelection(
-								node));
+								newRepository);
+						tv.setSelection(new StructuredSelection(node));
+						break;
 					} catch (IOException e1) {
 						Activator.handleError(e1.getMessage(), e1,
 								false);
 					}
+				}
+			}
 		}
 	}
 
 	private void checkPage() {
 		setErrorMessage(null);
 		try {
-			if (((List) tv.getInput()).isEmpty()) {
+			List<?> currentInput = (List<?>) tv.getInput();
+			if (currentInput == null || currentInput.isEmpty()) {
 				setErrorMessage(UIText.GitSelectRepositoryPage_NoRepoFoundMessage);
 				return;
 			}
