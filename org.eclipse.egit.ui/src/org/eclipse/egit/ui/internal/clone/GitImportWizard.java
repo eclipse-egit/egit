@@ -56,7 +56,8 @@ import org.eclipse.ui.actions.NewProjectAction;
 public class GitImportWizard extends AbstractGitCloneWizard implements IImportWizard {
 	private static final String GIT_IMPORT_SECTION = "GitImportWizard"; //$NON-NLS-1$
 
-	private GitSelectRepositoryPage selectRepoPage = new GitSelectRepositoryPage();
+	private GitSelectRepositoryPage selectRepoPage = new GitSelectRepositoryPage(
+			false);
 
 	private GitSelectWizardPage importWithDirectoriesPage = new GitSelectWizardPage(){
 		@Override
