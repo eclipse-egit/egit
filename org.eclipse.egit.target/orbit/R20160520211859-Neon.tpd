@@ -1,7 +1,7 @@
-target "S20160518051658-Neon" with source configurePhase
+target "R20160520211859-Neon" with source configurePhase
 // see http://download.eclipse.org/tools/orbit/downloads/
 
-location "http://download.eclipse.org/tools/orbit/downloads/drops/S20160518051658/repository/" {
+location "http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository/" {
 	com.google.gson [2.2.4.v201311231704,2.2.4.v201311231704]
 	com.google.gson.source [2.2.4.v201311231704,2.2.4.v201311231704]
 	com.jcraft.jsch [0.1.53.v201508180515,0.1.53.v201508180515]
