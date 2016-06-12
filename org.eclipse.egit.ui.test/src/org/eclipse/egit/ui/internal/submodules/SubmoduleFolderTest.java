@@ -8,7 +8,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.submodules;
 
+import static org.eclipse.egit.ui.JobFamilies.ADD_TO_INDEX;
 import static org.eclipse.egit.ui.JobFamilies.GENERATE_HISTORY;
+import static org.eclipse.egit.ui.JobFamilies.REMOVE_FROM_INDEX;
 import static org.eclipse.swtbot.eclipse.finder.waits.Conditions.waitForEditor;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -203,10 +205,10 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 		node.select();
 		ContextMenuHelper.clickContextMenuSync(projectExplorerTree, "Team",
 				util.getPluginLocalizedValue("AddToIndexAction_label"));
+		TestUtil.joinJobs(ADD_TO_INDEX);
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 		IndexDiffCacheEntry cache = Activator.getDefault().getIndexDiffCache()
 				.getIndexDiffCacheEntry(subRepository);
-		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 		IResourceState state = ResourceStateFactory.getInstance()
 				.get(cache.getIndexDiff(), file);
 		assertTrue("File should be staged", state.isStaged());
@@ -214,6 +216,7 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 		assertFalse(node.getText().startsWith("> "));
 		ContextMenuHelper.clickContextMenuSync(projectExplorerTree, "Team",
 				util.getPluginLocalizedValue("RemoveFromIndexAction_label"));
+		TestUtil.joinJobs(REMOVE_FROM_INDEX);
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 		state = ResourceStateFactory.getInstance().get(cache.getIndexDiff(),
 				file);
@@ -273,6 +276,8 @@ public class SubmoduleFolderTest extends LocalRepositoryTestCase {
 				.getPluginLocalizedValue("DisconnectAction_label");
 		ContextMenuHelper.clickContextMenuSync(projectExplorerTree, "Team",
 				menuString);
+		TestUtil.waitForJobs(500, 5000);
+		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 		ResourcesPlugin.getWorkspace().getRoot()
 				.refreshLocal(IResource.DEPTH_INFINITE, null);
 		// Access the session property directly: RepositoryMapping.getMapping()
