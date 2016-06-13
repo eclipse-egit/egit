@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 SAP AG and others.
+ * Copyright (c) 2010, 2016 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,11 +7,11 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Refactor
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.branch;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -27,17 +27,11 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.debug.core.DebugPlugin;
-import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
-import org.eclipse.debug.core.ILaunchManager;
-import org.eclipse.debug.core.model.ISourceLocator;
-import org.eclipse.debug.core.sourcelookup.ISourceContainer;
-import org.eclipse.debug.core.sourcelookup.ISourceLookupDirector;
-import org.eclipse.debug.core.sourcelookup.containers.ProjectSourceContainer;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.core.op.BranchOperation;
@@ -48,11 +42,7 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
-import org.eclipse.egit.ui.internal.dialogs.AbstractBranchSelectionDialog;
-import org.eclipse.egit.ui.internal.dialogs.CheckoutDialog;
-import org.eclipse.egit.ui.internal.dialogs.DeleteBranchDialog;
 import org.eclipse.egit.ui.internal.dialogs.NonDeletedFilesDialog;
-import org.eclipse.egit.ui.internal.dialogs.RenameBranchDialog;
 import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -60,7 +50,6 @@ import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.operation.ModalContext;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.api.CheckoutResult;
@@ -69,7 +58,6 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.PlatformUI;
@@ -78,20 +66,10 @@ import org.eclipse.ui.PlatformUI;
  * The UI wrapper for {@link BranchOperation}
  */
 public class BranchOperationUI {
-	// create
-	private final static int MODE_CREATE = 1;
-
-	private final static int MODE_CHECKOUT = 2;
-
-	private final static int MODE_DELETE = 3;
-
-	private final static int MODE_RENAME = 4;
 
 	private final Repository repository;
 
 	private String target;
-
-	private String base;
 
 	/**
 	 * In the case of checkout conflicts, a dialog is shown to let the user
@@ -100,62 +78,6 @@ public class BranchOperationUI {
 	 * the first time, so this will be false then.
 	 */
 	private final boolean showQuestionsBeforeCheckout;
-
-	private final int mode;
-
-	/**
-	 * Create an operation for manipulating branches
-	 *
-	 * @param repository
-	 * @return the {@link BranchOperationUI}
-	 */
-	public static BranchOperationUI rename(Repository repository) {
-		return new BranchOperationUI(repository, MODE_RENAME);
-	}
-
-	/**
-	 * Create an operation for manipulating branches
-	 *
-	 * @param repository
-	 * @return the {@link BranchOperationUI}
-	 */
-	public static BranchOperationUI delete(Repository repository) {
-		return new BranchOperationUI(repository, MODE_DELETE);
-	}
-
-	/**
-	 * Create an operation for creating a local branch
-	 *
-	 * @param repository
-	 * @return the {@link BranchOperationUI}
-	 */
-	public static BranchOperationUI create(Repository repository) {
-		BranchOperationUI op = new BranchOperationUI(repository, MODE_CREATE);
-		return op;
-	}
-
-	/**
-	 * Create an operation for creating a local branch with a given base reference
-	 *
-	 * @param repository
-	 * @param baseRef
-	 * @return the {@link BranchOperationUI}
-	 */
-	public static BranchOperationUI createWithRef(Repository repository, String baseRef) {
-		BranchOperationUI op = new BranchOperationUI(repository, MODE_CREATE);
-		op.base = baseRef;
-		return op;
-	}
-
-	/**
-	 * Create an operation for checking out a local branch
-	 *
-	 * @param repository
-	 * @return the {@link BranchOperationUI}
-	 */
-	public static BranchOperationUI checkout(Repository repository) {
-		return new BranchOperationUI(repository, MODE_CHECKOUT);
-	}
 
 	/**
 	 * Create an operation for checking out a branch
@@ -168,20 +90,6 @@ public class BranchOperationUI {
 	public static BranchOperationUI checkout(Repository repository,
 			String target) {
 		return new BranchOperationUI(repository, target, true);
-	}
-
-	/**
-	 * Create an operation for checking out a branch without showing a question
-	 * dialog about the target.
-	 *
-	 * @param repository
-	 * @param target
-	 *            a valid {@link Ref} name or commit id
-	 * @return the {@link BranchOperationUI}
-	 */
-	public static BranchOperationUI checkoutWithoutQuestion(
-			Repository repository, String target) {
-		return new BranchOperationUI(repository, target, false);
 	}
 
 	/**
@@ -204,40 +112,76 @@ public class BranchOperationUI {
 		this.repository = repository;
 		this.target = target;
 		this.showQuestionsBeforeCheckout = showQuestionsBeforeCheckout;
-		this.mode = 0;
 	}
 
-	/**
-	 * Select and checkout a branch
-	 *
-	 * @param repository
-	 * @param mode
-	 */
-	private BranchOperationUI(Repository repository, int mode) {
-		this.repository = repository;
-		this.mode = mode;
-		this.showQuestionsBeforeCheckout = true;
+	private String confirmTarget(IProgressMonitor monitor) {
+		if (target != null) {
+			if (!repository.getRepositoryState().canCheckout()) {
+				PlatformUI.getWorkbench().getDisplay()
+						.asyncExec(new Runnable() {
+							@Override
+							public void run() {
+								MessageDialog.openError(getShell(),
+										UIText.BranchAction_cannotCheckout,
+										NLS.bind(
+												UIText.BranchAction_repositoryState,
+												repository.getRepositoryState()
+														.getDescription()));
+							}
+						});
+				return null;
+			}
+
+			if (shouldCancelBecauseOfRunningLaunches(monitor)) {
+				return null;
+			}
+
+			askForTargetIfNecessary();
+		}
+		return target;
+	}
+
+	private BranchOperation getOperation(boolean restore) {
+		BranchOperation bop = new BranchOperation(repository, target, !restore);
+		if (restore) {
+			final BranchProjectTracker tracker = new BranchProjectTracker(
+					repository);
+			final AtomicReference<IMemento> memento = new AtomicReference<>();
+			bop.addPreExecuteTask(new PreExecuteTask() {
+
+				@Override
+				public void preExecute(Repository pRepo,
+						IProgressMonitor pMonitor) throws CoreException {
+					// Snapshot current projects before checkout
+					// begins
+					memento.set(tracker.snapshot());
+				}
+			});
+			bop.addPostExecuteTask(new PostExecuteTask() {
+
+				@Override
+				public void postExecute(Repository pRepo,
+						IProgressMonitor pMonitor) throws CoreException {
+					IMemento snapshot = memento.get();
+					if (snapshot != null) {
+						// Save previous branch's projects and restore
+						// current branch's projects
+						tracker.save(snapshot).restore(pMonitor);
+					}
+				}
+			});
+		}
+		return bop;
 	}
 
 	/**
 	 * Starts the operation asynchronously
 	 */
 	public void start() {
-		if (!repository.getRepositoryState().canCheckout()) {
-			MessageDialog.openError(getShell(),
-					UIText.BranchAction_cannotCheckout, NLS.bind(
-							UIText.BranchAction_repositoryState, repository
-									.getRepositoryState().getDescription()));
+		target = confirmTarget(new NullProgressMonitor());
+		if (target == null) {
 			return;
 		}
-
-		if (shouldCancelBecauseOfRunningLaunches(new NullProgressMonitor()))
-			return;
-
-		askForTargetIfNecessary();
-		if (target == null)
-			return;
-
 		String repoName = Activator.getDefault().getRepositoryUtil()
 				.getRepositoryName(repository);
 		String jobname = NLS.bind(UIText.BranchAction_checkingOut, repoName,
@@ -245,45 +189,13 @@ public class BranchOperationUI {
 
 		final boolean restore = Activator.getDefault().getPreferenceStore()
 				.getBoolean(UIPreferences.CHECKOUT_PROJECT_RESTORE);
-		final BranchOperation bop = new BranchOperation(repository, target,
-				!restore);
+		final BranchOperation bop = getOperation(restore);
 
 		Job job = new WorkspaceJob(jobname) {
 
 			@Override
 			public IStatus runInWorkspace(IProgressMonitor monitor) {
 				try {
-					if (restore) {
-						final BranchProjectTracker tracker = new BranchProjectTracker(
-								repository);
-						final AtomicReference<IMemento> memento = new AtomicReference<>();
-						bop.addPreExecuteTask(new PreExecuteTask() {
-
-							@Override
-							public void preExecute(Repository pRepo,
-									IProgressMonitor pMonitor)
-									throws CoreException {
-								// Snapshot current projects before checkout
-								// begins
-								memento.set(tracker.snapshot());
-							}
-						});
-						bop.addPostExecuteTask(new PostExecuteTask() {
-
-							@Override
-							public void postExecute(Repository pRepo,
-									IProgressMonitor pMonitor)
-									throws CoreException {
-								IMemento snapshot = memento.get();
-								if (snapshot == null)
-									return;
-								// Save previous branch's projects and restore
-								// current branch's projects
-								tracker.save(snapshot).restore(pMonitor);
-							}
-						});
-					}
-
 					bop.execute(monitor);
 				} catch (CoreException e) {
 					switch (bop.getResult().getStatus()) {
@@ -310,8 +222,9 @@ public class BranchOperationUI {
 		job.setUser(true);
 		// Set scheduling rule to workspace because we may have to re-create
 		// projects using BranchProjectTracker.
-		if (restore)
+		if (restore) {
 			job.setRule(ResourcesPlugin.getWorkspace().getRoot());
+		}
 		job.addJobChangeListener(new JobChangeAdapter() {
 			@Override
 			public void done(IJobChangeEvent cevent) {
@@ -322,43 +235,26 @@ public class BranchOperationUI {
 	}
 
 	/**
-	 * Runs the operation synchronously
+	 * Runs the operation synchronously.
 	 *
 	 * @param monitor
 	 * @throws CoreException
 	 *
 	 */
 	public void run(IProgressMonitor monitor) throws CoreException {
-		if (!repository.getRepositoryState().canCheckout()) {
-			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					MessageDialog.openError(getShell(),
-							UIText.BranchAction_cannotCheckout, NLS.bind(
-									UIText.BranchAction_repositoryState,
-									repository.getRepositoryState()
-											.getDescription()));
-				}
-			});
+		SubMonitor progress = SubMonitor.convert(monitor, 100);
+		target = confirmTarget(progress.newChild(20));
+		if (target == null) {
 			return;
 		}
-
-		if (shouldCancelBecauseOfRunningLaunches(monitor))
-			return;
-
-		askForTargetIfNecessary();
-		if (target == null)
-			return;
-
-		BranchOperation bop = new BranchOperation(repository, target);
-		bop.execute(monitor);
-
+		final boolean restore = Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.CHECKOUT_PROJECT_RESTORE);
+		BranchOperation bop = getOperation(restore);
+		bop.execute(progress.newChild(80));
 		show(bop.getResult());
 	}
 
 	private void askForTargetIfNecessary() {
-		if (target == null)
-			target = getTargetWithDialog();
 		if (target != null && showQuestionsBeforeCheckout) {
 			if (shouldShowCheckoutRemoteTrackingDialog(target))
 				target = getTargetWithCheckoutRemoteTrackingDialog();
@@ -380,50 +276,6 @@ public class BranchOperationUI {
 		} else {
 			return false;
 		}
-	}
-
-	private String getTargetWithDialog() {
-		final String[] dialogResult = new String[1];
-		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				dialogResult[0] = getTargetWithDialogInUI();
-			}
-		});
-		return dialogResult[0];
-	}
-
-	private String getTargetWithDialogInUI() {
-		AbstractBranchSelectionDialog dialog;
-		switch (mode) {
-		case MODE_CHECKOUT:
-			dialog = new CheckoutDialog(getShell(), repository);
-			break;
-		case MODE_CREATE:
-			CreateBranchWizard wiz;
-			try {
-				if (base == null)
-					base = repository.getFullBranch();
-				wiz = new CreateBranchWizard(repository, base);
-			} catch (IOException e) {
-				wiz = new CreateBranchWizard(repository);
-			}
-			new WizardDialog(getShell(), wiz).open();
-			return null;
-		case MODE_DELETE:
-			new DeleteBranchDialog(getShell(), repository).open();
-			return null;
-		case MODE_RENAME:
-			new RenameBranchDialog(getShell(), repository).open();
-			return null;
-		default:
-			return null;
-		}
-
-		if (dialog.open() != Window.OK) {
-			return null;
-		}
-		return dialog.getRefName();
 	}
 
 	private String getTargetWithCheckoutRemoteTrackingDialog() {
@@ -490,8 +342,8 @@ public class BranchOperationUI {
 							repository, result.getConflictList());
 					cleanupUncomittedChangesDialog.open();
 					if (cleanupUncomittedChangesDialog.shouldContinue()) {
-						BranchOperationUI op = BranchOperationUI
-								.checkoutWithoutQuestion(repository, target);
+						BranchOperationUI op = new BranchOperationUI(repository,
+								target, false);
 						op.start();
 					}
 				}
@@ -545,15 +397,14 @@ public class BranchOperationUI {
 
 	private boolean shouldCancelBecauseOfRunningLaunches(
 			IProgressMonitor monitor) {
-		if (mode == MODE_CHECKOUT)
+		if (!showQuestionsBeforeCheckout) {
 			return false;
-		if (!showQuestionsBeforeCheckout)
-			return false;
+		}
 		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
-		if (!store
-				.getBoolean(UIPreferences.SHOW_RUNNING_LAUNCH_ON_CHECKOUT_WARNING))
+		if (!store.getBoolean(
+				UIPreferences.SHOW_RUNNING_LAUNCH_ON_CHECKOUT_WARNING)) {
 			return false;
-
+		}
 		final ILaunchConfiguration launchConfiguration = getRunningLaunchConfiguration(monitor);
 		if (launchConfiguration != null) {
 			final boolean[] dialogResult = new boolean[1];
@@ -594,67 +445,30 @@ public class BranchOperationUI {
 
 	private ILaunchConfiguration getRunningLaunchConfiguration(
 			IProgressMonitor monitor) {
-		final ILaunchConfiguration[] lc = new ILaunchConfiguration[1];
+		final ILaunchConfiguration[] result = { null };
+		IRunnableWithProgress operation = new IRunnableWithProgress() {
+
+			@Override
+			public void run(IProgressMonitor m)
+					throws InvocationTargetException, InterruptedException {
+				Set<IProject> projects = new HashSet<>(
+						Arrays.asList(ProjectUtil.getProjects(repository)));
+				result[0] = LaunchFinder.findLaunch(projects, m);
+			}
+		};
 		try {
-			ModalContext.run(new IRunnableWithProgress() {
-
-				@Override
-				public void run(IProgressMonitor m)
-						throws InvocationTargetException, InterruptedException {
-
-					Set<IProject> projects = new HashSet<>(Arrays
-							.asList(ProjectUtil.getProjects(repository)));
-
-					ILaunchManager launchManager = DebugPlugin.getDefault()
-							.getLaunchManager();
-					ILaunch[] launches = launchManager.getLaunches();
-					m.beginTask(
-							UIText.BranchOperationUI_SearchLaunchConfiguration,
-							launches.length);
-					for (ILaunch launch : launches) {
-						m.worked(1);
-						if (launch.isTerminated())
-							continue;
-						ISourceLocator locator = launch.getSourceLocator();
-						if (locator instanceof ISourceLookupDirector) {
-							ISourceLookupDirector director = (ISourceLookupDirector) locator;
-							ISourceContainer[] containers = director
-									.getSourceContainers();
-							if (isAnyProjectInSourceContainers(containers,
-									projects)) {
-								lc[0] = launch.getLaunchConfiguration();
-								return;
-							}
-						}
-					}
-				}
-			}, true, monitor, Display.getDefault());
+			if (ModalContext.isModalContextThread(Thread.currentThread())) {
+				operation.run(monitor);
+			} else {
+				ModalContext.run(operation, true, monitor,
+						PlatformUI.getWorkbench().getDisplay());
+			}
 		} catch (InvocationTargetException e) {
 			// ignore
 		} catch (InterruptedException e) {
 			// ignore
 		}
-		return lc[0];
-	}
-
-	private boolean isAnyProjectInSourceContainers(
-			ISourceContainer[] containers, Set<IProject> projects) {
-		for (ISourceContainer container : containers) {
-			if (container instanceof ProjectSourceContainer) {
-				ProjectSourceContainer projectContainer = (ProjectSourceContainer) container;
-				if (projects.contains(projectContainer.getProject()))
-					return true;
-			}
-			try {
-				boolean found = isAnyProjectInSourceContainers(
-						container.getSourceContainers(), projects);
-				if (found)
-					return true;
-			} catch (CoreException e) {
-				// Ignore the child source containers, continue search
-			}
-		}
-		return false;
+		return result[0];
 	}
 
 }
