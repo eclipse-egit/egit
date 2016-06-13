@@ -23,9 +23,13 @@ import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
+import org.eclipse.egit.ui.internal.dialogs.CheckoutDialog;
+import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.resource.ResourceManager;
+import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.lib.CheckoutEntry;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
@@ -100,16 +104,28 @@ public class SwitchToMenu extends ContributionItem implements
 				String sourceRef = repository.getConfig().getString(
 						ConfigConstants.CONFIG_WORKFLOW_SECTION, null,
 						ConfigConstants.CONFIG_KEY_DEFBRANCHSTARTPOINT);
+				CreateBranchWizard wiz = null;
 				try {
-					Ref ref = repository.findRef(sourceRef);
-					if (ref != null)
-						BranchOperationUI.createWithRef(repository,
-								ref.getName()).start();
-					else
-						BranchOperationUI.create(repository).start();
+					Ref ref = null;
+					if (sourceRef != null) {
+						ref = repository.findRef(sourceRef);
+					}
+					if (ref != null) {
+						wiz = new CreateBranchWizard(repository, ref.getName());
+					} else {
+						wiz = new CreateBranchWizard(repository,
+								repository.getFullBranch());
+					}
 				} catch (IOException e1) {
-					BranchOperationUI.create(repository).start();
+					// Ignore
 				}
+				if (wiz == null) {
+					wiz = new CreateBranchWizard(repository);
+				}
+				WizardDialog dlg = new WizardDialog(e.display.getActiveShell(),
+						wiz);
+				dlg.setHelpAvailable(false);
+				dlg.open();
 			}
 		});
 		createSeparator(menu);
@@ -182,7 +198,14 @@ public class SwitchToMenu extends ContributionItem implements
 			others.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					BranchOperationUI.checkout(repository).start();
+					CheckoutDialog dialog = new CheckoutDialog(
+							e.display.getActiveShell(), repository);
+					if (dialog.open() == Window.OK) {
+						BranchOperationUI
+								.checkout(repository, dialog.getRefName())
+								.start();
+					}
+
 				}
 			});
 		} catch (IOException e) {
