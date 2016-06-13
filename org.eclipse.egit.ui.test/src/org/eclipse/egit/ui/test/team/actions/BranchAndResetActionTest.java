@@ -413,8 +413,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		dialog.bot().button(UIText.RenameBranchDialog_RenameButtonLabel)
 				.click();
 		// rename stable to renamed
-		SWTBotShell newNameDialog = bot
-				.shell(UIText.RenameBranchDialog_RenameBranchDialogNewNameInputWindowTitle);
+		SWTBotShell newNameDialog = bot.shell(UIText.BranchRenameDialog_Title);
 		newNameDialog.bot().text().setText("master");
 		assertFalse(newNameDialog.bot().button(IDialogConstants.OK_LABEL)
 				.isEnabled());
@@ -431,8 +430,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		dialog.bot().button(UIText.RenameBranchDialog_RenameButtonLabel)
 				.click();
 		// rename renamed to stable
-		newNameDialog = bot
-				.shell(UIText.RenameBranchDialog_RenameBranchDialogNewNameInputWindowTitle);
+		newNameDialog = bot.shell(UIText.BranchRenameDialog_Title);
 
 		newNameDialog.bot().text().setText("stable");
 		newNameDialog.bot().button(IDialogConstants.OK_LABEL).click();
