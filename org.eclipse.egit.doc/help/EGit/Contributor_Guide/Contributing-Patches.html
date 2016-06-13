@@ -32,7 +32,7 @@
 		<h1 id="Contributing_Patches">Contributing Patches</h1>
 		<h2 id="Using_Gerrit_at_Eclipse">Using Gerrit at Eclipse</h2>
 		<p>EGit and JGit projects are using 
-			<a href="http://code.google.com/p/gerrit/" target="egit_external">Gerrit Code Review</a> for Git based patch submission and review. 
+			<a href="https://www.gerritcodereview.com/" target="egit_external">Gerrit Code Review</a> for Git based patch submission and review. 
 		</p>
 		<p>Parts of this chapter are also available in the 
 			<a href="http://wiki.eclipse.org/Gerrit#Doing_Code_Reviews_with_Gerrit" target="egit_external">Eclipse Gerrit wiki</a>.
@@ -315,7 +315,7 @@ git config remote.review.push HEAD:refs/for/master
 				<i>Gerrit</i> parse this meta data to provide additional functionality.
 				<ul>
 					<li>If there is an associated bug number in Bugzilla about it, it should come as a 
-						<i>Bug:</i> footer right before Gerrit's Change-Id entry (if available) or towards the end.
+						<i>Bug:</i> footer right before Gerrit's Change-Id entry (if available) or towards the end. Use exactly the capitalization "Bug", since the automatic linking mechanism to the bug database is case sensitive.
 					</li>
 					<li>If a 
 						<i>Contribution Questionnaire</i> has been issued to initiate and track the review of contributed changes by the Eclipse Foundation's IP team the IPZilla bug number should be added as  
