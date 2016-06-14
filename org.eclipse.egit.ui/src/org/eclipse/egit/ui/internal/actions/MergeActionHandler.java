@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2016 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Stefan Lay (SAP AG) - initial implementation
+ *    Laurent Delaigue (Obeo) - user-selected merge strategy
  *******************************************************************************/
 
 package org.eclipse.egit.ui.internal.actions;
@@ -65,6 +66,7 @@ public class MergeActionHandler extends RepositoryActionHandler {
 			op.setSquash(mergeTargetSelectionDialog.isMergeSquash());
 			op.setFastForwardMode(mergeTargetSelectionDialog.getFastForwardMode());
 			op.setCommit(mergeTargetSelectionDialog.isCommit());
+			op.setMergeStrategy(mergeTargetSelectionDialog.getMergeStrategy());
 			Job job = new WorkspaceJob(jobname) {
 				@Override
 				public IStatus runInWorkspace(IProgressMonitor monitor) {

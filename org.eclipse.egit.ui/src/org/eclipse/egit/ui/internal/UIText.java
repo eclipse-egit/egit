@@ -17,6 +17,7 @@
  * Copyright (C) 2015, Laurent Delaigue <laurent.delaigue@obeo.fr>
  * Copyright (C) 2015, Denis Zygann <d.zygann@web.de>
  * Copyright (C) 2016, Lars Vogel <Lars.Vogel@vogella.com>
+ * Copyright (C) 2016, Obeo <laurent.delaigue@obeo.fr>
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -679,12 +680,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitPreferenceRoot_useLogicalModel;
-
-	/** */
-	public static String GitPreferenceRoot_preferreMergeStrategy_group;
-
-	/** */
-	public static String GitPreferenceRoot_preferreMergeStrategy_label;
 
 	/** */
 	public static String GitPreferenceRoot_defaultMergeStrategyLabel;
@@ -3990,6 +3985,9 @@ public class UIText extends NLS {
 	public static String MergeTargetSelectionDialog_MergeTypeSquashButton;
 
 	/** */
+	public static String MergeTargetSelectionDialog_MergeStrategy;
+
+	/** */
 	public static String MixedResetToRevisionAction_mixedReset;
 
 	/** */
@@ -5481,6 +5479,60 @@ public class UIText extends NLS {
 
 	/** */
 	public static String StagingViewPreferencePage_maxLimitListMode;
+
+	/** */
+	public static String MergeDialog_cbStrategy_Text;
+
+	/** */
+	public static String MergeDialog_cbStrategy_Tooltip;
+
+	/** */
+	public static String MergeStrategyDialog_ShellTitle;
+
+	/** */
+	public static String MergeStrategyDialog_Title;
+
+	/** */
+	public static String MergeStrategyDialog_Message;
+
+	/** */
+	public static String MergeStrategyDialog_Explanation;
+
+	/** */
+	public static String MergeStrategyDialog_DontAskAgain;
+
+	/** */
+	public static String MergeStrategy_Ours_Label;
+
+	/** */
+	public static String MergeStrategy_Theirs_Label;
+
+	/** */
+	public static String MergeStrategy_SimpleTwoWayInCore_Label;
+
+	/** */
+	public static String MergeStrategy_Resolve_Label;
+
+	/** */
+	public static String MergeStrategy_Recursive_Label;
+
+	/** */
+	public static String MergeStrategyHelper_UseSpecificStrategy_Text;
+
+	/** */
+	public static String MergeStrategyHelper_UseSpecificStrategy_Tooltip;
+
+	/** */
+	public static String MergeStrategyHelper_StrategyShortNameHeader;
+
+	/** */
+	public static String MergeStrategyHelper_StrategyDescriptionHeader;
+
+	/** */
+	public static String MergeStrategyHelper_StrategyProviderHeader;
+
+	/** */
+	public static String MergeStrategyHelper_StrategyHelpHeader;
 
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 SAP AG and others.
+ * Copyright (c) 2010, 2016 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,6 +10,7 @@
  *    Mathias Kinzler (SAP AG) - move to command framework
  *    Dariusz Luksza (dariusz@luksza.org - set action disabled when HEAD cannot
  *    										be resolved
+ *    Laurent Delaigue (Obeo) - user-selected merge strategy
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
@@ -92,6 +93,7 @@ public class MergeCommand extends
 			op.setFastForwardMode(mergeTargetSelectionDialog
 					.getFastForwardMode());
 			op.setCommit(mergeTargetSelectionDialog.isCommit());
+			op.setMergeStrategy(mergeTargetSelectionDialog.getMergeStrategy());
 		}
 
 		String jobname = NLS.bind(UIText.MergeAction_JobNameMerge, refName);

@@ -2,7 +2,7 @@
  * Copyright (c) 2010, 2014 SAP AG and others.
  * Copyright (C) 2012, 2013 Tomasz Zarna <tzarna@gmail.com>
  * Copyright (C) 2014 Axel Richard <axel.richard@obeo.fr>
- * Copyright (C) 2015 Obeo
+ * Copyright (C) 2015, 2016 Obeo
  * Copyright (C) 2015, Stephan Hackstedt <stephan.hackstedt@googlemail.com>
  *
  * All rights reserved. This program and the accompanying materials
@@ -56,13 +56,11 @@ import org.eclipse.team.core.TeamException;
  * This class implements the merge of a ref with the current head
  *
  */
-public class MergeOperation implements IEGitOperation {
+public class MergeOperation extends AbstractMergingOperation {
 
 	private final Repository repository;
 
 	private final String refName;
-
-	private final MergeStrategy mergeStrategy;
 
 	private Boolean squash;
 
@@ -86,7 +84,6 @@ public class MergeOperation implements IEGitOperation {
 			@NonNull String refName) {
 		this.repository = repository;
 		this.refName = refName;
-		this.mergeStrategy = Activator.getDefault().getPreferredMergeStrategy();
 	}
 
 	/**
@@ -106,8 +103,7 @@ public class MergeOperation implements IEGitOperation {
 		this.refName = refName;
 		MergeStrategy strategy = null;
 		strategy = MergeStrategy.get(mergeStrategyName);
-		this.mergeStrategy = strategy != null ? strategy : Activator.getDefault()
-				.getPreferredMergeStrategy();
+		setMergeStrategy(strategy);
 	}
 
 	/**
@@ -177,8 +173,9 @@ public class MergeOperation implements IEGitOperation {
 					if (squash != null) {
 						merge.setSquash(squash.booleanValue());
 					}
-					if (mergeStrategy != null) {
-						merge.setStrategy(mergeStrategy);
+					MergeStrategy strategy = getApplicableMergeStrategy();
+					if (strategy != null) {
+						merge.setStrategy(strategy);
 					}
 					if (message != null) {
 						merge.setMessage(message);

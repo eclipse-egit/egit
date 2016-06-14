@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2015 SAP AG and others.
+ * Copyright (c) 2010, 2016 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -43,7 +43,7 @@ import org.eclipse.jgit.merge.MergeStrategy;
 /**
  * This class implements rebase.
  */
-public class RebaseOperation implements IEGitOperation {
+public class RebaseOperation extends AbstractMergingOperation {
 	private final Repository repository;
 
 	private final Ref ref;
@@ -140,8 +140,7 @@ public class RebaseOperation implements IEGitOperation {
 					RebaseCommand cmd = git.rebase().setProgressMonitor(
 							new EclipseGitProgressTransformer(
 									progress.newChild(1)));
-					MergeStrategy strategy = Activator.getDefault()
-							.getPreferredMergeStrategy();
+					MergeStrategy strategy = getApplicableMergeStrategy();
 					if (strategy != null) {
 						cmd.setStrategy(strategy);
 					}

@@ -24,6 +24,7 @@ import org.eclipse.jgit.api.MergeCommand.FastForwardMode;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.merge.MergeConfig;
+import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -45,6 +46,8 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 
 	private boolean mergeCommit;
 
+	private MergeStrategyDialogHelper helper;
+
 	/**
 	 * @param parentShell
 	 * @param repo
@@ -60,6 +63,7 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 			mergeCommit = false;
 		else
 			mergeCommit = config.isCommit();
+		helper = new MergeStrategyDialogHelper();
 	}
 
 	@Override
@@ -114,10 +118,7 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 
 	@Override
 	protected void createCustomArea(Composite parent) {
-		Composite main = new Composite(parent, SWT.NONE);
-		main.setLayout(new GridLayout(1, false));
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(main);
-		Group mergeTypeGroup = new Group(main, SWT.NONE);
+		Group mergeTypeGroup = new Group(parent, SWT.NONE);
 		mergeTypeGroup
 				.setText(UIText.MergeTargetSelectionDialog_MergeTypeGroup);
 		GridDataFactory.fillDefaults().grab(true, false)
@@ -166,7 +167,7 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 			}
 		});
 
-		Group fastForwardGroup = new Group(main, SWT.NONE);
+		Group fastForwardGroup = new Group(parent, SWT.NONE);
 		fastForwardGroup
 				.setText(UIText.MergeTargetSelectionDialog_FastForwardGroup);
 		GridDataFactory.fillDefaults().grab(true, false)
@@ -182,6 +183,8 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 		createFastForwardButton(fastForwardGroup,
 				UIText.MergeTargetSelectionDialog_OnlyFastForwardButton,
 				FastForwardMode.FF_ONLY);
+
+		helper.createMergeStrategyGroup(parent);
 	}
 
 	private void createFastForwardButton(Group grp, String text,
@@ -217,5 +220,13 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 	 */
 	public boolean isCommit() {
 		return mergeCommit;
+	}
+
+	/**
+	 * @return The selected merge strategy, can be <code>null</code>, which
+	 *         indicates that the default JGit strategy must be used.
+	 */
+	public MergeStrategy getMergeStrategy() {
+		return helper.getSelectedStrategy();
 	}
 }
