@@ -504,6 +504,15 @@
       </page>
       <page
             category="org.eclipse.egit.ui.GitPreferences"
+            class="org.eclipse.egit.ui.internal.preferences.MergePreferencePage"
+            id="org.eclipse.egit.ui.internal.preferences.MergePreferencePage"
+            name="%MergePreferencePage.name">
+         <keywordReference
+               id="org.eclipse.egit.ui.keyword.git">
+         </keywordReference>
+      </page>
+      <page
+            category="org.eclipse.egit.ui.GitPreferences"
             class="org.eclipse.egit.ui.internal.preferences.HistoryPreferencePage"
             id="org.eclipse.egit.ui.internal.preferences.HistoryPreferencePage"
             name="%HistoryPreferencePage.name">

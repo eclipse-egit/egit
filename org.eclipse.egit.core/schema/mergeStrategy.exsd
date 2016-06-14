@@ -83,6 +83,15 @@ The provided name must not be empty.
                </documentation>
             </annotation>
          </attribute>
+         <attribute name="helpContextId" type="string">
+            <annotation>
+               <documentation>
+                  This is optional:
+If present, it will be used to provide contextual help to users on the preference page.
+It should be the fully qualified context ID of the help context associated with the merge strategy.
+               </documentation>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 

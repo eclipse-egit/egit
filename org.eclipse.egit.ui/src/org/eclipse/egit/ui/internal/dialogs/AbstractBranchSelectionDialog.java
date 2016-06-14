@@ -7,6 +7,7 @@
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2011, Daniel Megert <daniel_megert@ch.ibm.com>
  * Copyright (C) 2012, Markus Keller <markus_keller@ch.ibm.com>
+ * Copyright (C) 2016, Obeo <laurent.delaigue@obeo.fr>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -274,8 +275,8 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		branchTree.setContentProvider(new RepositoriesViewContentProvider());
 		ColumnViewerToolTipSupport.enableFor(branchTree);
 
-		GridDataFactory.fillDefaults().grab(true, true).hint(500, 300).applyTo(
-				tree);
+		GridDataFactory.fillDefaults().grab(true, true).hint(500, 300)
+				.minSize(SWT.DEFAULT, 200).applyTo(tree);
 		branchTree.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			@Override
