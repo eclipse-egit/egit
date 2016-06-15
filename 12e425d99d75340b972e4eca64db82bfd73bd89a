@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "87e453f8_caf2b25a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-15T05:16:42Z",
+      "side": 1,
+      "message": "Only if a date column was shown in the UI, and the sorter sorted by selected column.",
+      "range": {
+        "startLine": 12,
+        "startChar": 46,
+        "endLine": 13,
+        "endChar": 59
+      },
+      "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e453f8_eae92e79",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/BranchComparator.java",
         "patchSetId": 1
