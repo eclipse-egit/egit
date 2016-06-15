@@ -53,13 +53,17 @@
      &lt;id&gt;jgit.website&lt;/id&gt;
      &lt;username&gt;username&lt;/username&gt;
      &lt;privateKey&gt;${user.home}/.ssh/id_rsa&lt;/privateKey&gt;
+     &lt;password&gt;{&lt;encrypted passphrase&gt;}&lt;/password&gt;
      &lt;filePermissions&gt;664&lt;/filePermission&gt;
      &lt;directoryPermissions&gt;775&lt;/directoryPermissions&gt;
      &lt;configuration&gt;&lt;/configuration&gt;
 &lt;/server&gt;
 </pre>
-		<p>To deploy the site from EGit HIPP (Hudson) at 
-			<a href="https://hudson.eclipse.org/egit/" target="egit_external">https://hudson.eclipse.org/egit/</a> enable the Maven profile 
+		<p>Password encryption for Maven is described in 
+			<a href="https://maven.apache.org/guides/mini/guide-encryption.html" target="egit_external">https://maven.apache.org/guides/mini/guide-encryption.html</a>
+		</p>
+		<p>To deploy the site from JGit HIPP (Hudson) at 
+			<a href="https://hudson.eclipse.org/jgit/" target="egit_external">https://hudson.eclipse.org/jgit/</a> enable the Maven profile 
 			<b>build-server</b> and add the Maven goals 
 			<b>site:site site:deploy</b>.
 		</p>
