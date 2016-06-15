@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87e453f8_eae92e79",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/BranchComparator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-15T05:13:31Z",
+      "side": 1,
+      "message": "Missing license header.",
+      "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_2ae4f69c",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/BranchComparator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-15T05:13:31Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of package visibility. Make public, and give it javadoc. Ditto for the default visibility methods below.",
+      "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_aae0068e",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/BranchComparator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-15T05:13:31Z",
+      "side": 1,
+      "message": "Why such a magic constant and the translation to SWT.UP/DOWN? Why not use the SWT constants directly?\n\n   private int direction \u003d SWT.DOWN;\n\n   getDirection() { return direction; }\n\n   flipDirection() {\n      if (direction \u003d\u003d SWT.DOWN) {\n         direction \u003d SWT.UP;\n      } else {\n         direction \u003d SWT.DOWN;\n      }\n   }",
+      "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_8af8aa3e",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/BranchComparator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-15T05:13:31Z",
+      "side": 1,
+      "message": "Unnecessary constructor; sets both fields to their default initialization values.",
+      "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_8ad18ac6",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/BranchComparator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-15T05:13:31Z",
+      "side": 1,
+      "message": "This always sorts by ref name, regardless of the column that is clicked and shown as sorted in the UI. This is confusing. Should sort based on the current column.",
+      "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_cadb92e2",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/BranchComparator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-15T05:13:31Z",
+      "side": 1,
+      "message": "New findbugs warning: https://hudson.eclipse.org/egit/job/egit.gerrit/8721/findbugsResult/new/\n\nPlease refactor to resolve the warning.",
+      "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_6afd1e2e",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FilteredBranchesWidget.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-15T05:13:31Z",
+      "side": 1,
+      "message": "If commit summaries are short, this gives a table with lots of unused white space to the right. msgColumn should use up whatever horizontal space is available; that would give a nicer UI.",
+      "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
