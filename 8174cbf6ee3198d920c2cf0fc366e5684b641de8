@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87e453f8_099027a2",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/MergingOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 7214
+      },
+      "writtenOn": "2016-06-15T15:38:41Z",
+      "side": 1,
+      "message": "I\u0027m not sure this interface adds any real value, as it isn\u0027t used anywhere.",
+      "revId": "8174cbf6ee3198d920c2cf0fc366e5684b641de8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_097bc765",
+        "filename": "org.eclipse.egit.doc/contexts.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7214
+      },
+      "writtenOn": "2016-06-15T15:38:41Z",
+      "side": 1,
+      "message": "2010, 2016",
+      "range": {
+        "startLine": 3,
+        "startChar": 20,
+        "endLine": 3,
+        "endChar": 21
+      },
+      "revId": "8174cbf6ee3198d920c2cf0fc366e5684b641de8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_494b0f31",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/AbstractBranchSelectionDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 7214
+      },
+      "writtenOn": "2016-06-15T15:38:41Z",
+      "side": 1,
+      "message": "Shouldn\u0027t that still fit in the previous line?",
+      "range": {
+        "startLine": 280,
+        "startChar": 4,
+        "endLine": 280,
+        "endChar": 10
+      },
+      "revId": "8174cbf6ee3198d920c2cf0fc366e5684b641de8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_09cd872e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/MergeTargetSelectionDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7214
+      },
+      "writtenOn": "2016-06-15T15:38:41Z",
+      "side": 1,
+      "message": "2010, 2016",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 27
+      },
+      "revId": "8174cbf6ee3198d920c2cf0fc366e5684b641de8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
