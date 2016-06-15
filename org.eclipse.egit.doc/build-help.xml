@@ -20,8 +20,8 @@
 		<pathelement path="${compile_classpath}"/>
 	</path>
         <echo message="compile classpath: ${compile_classpath}"/>
-	<taskdef classpathref="wikitext.tasks.classpath" resource="org/eclipse/mylyn/internal/wikitext/mediawiki/core/tasks/tasks.properties"/>
-	<taskdef classpathref="wikitext.tasks.classpath" resource="org/eclipse/mylyn/wikitext/core/util/anttask/tasks.properties"/>
+	<taskdef classpathref="wikitext.tasks.classpath" resource="org/eclipse/mylyn/wikitext/mediawiki/core/ant/tasks.properties"/>
+	<taskdef classpathref="wikitext.tasks.classpath" resource="org/eclipse/mylyn/wikitext/core/ant/tasks.properties"/>
 
 	<property name="egit.help.doc.url.base" value="http://wiki.eclipse.org" />
 
