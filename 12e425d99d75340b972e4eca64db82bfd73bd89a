@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "87e453f8_127bec65",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-06-16T22:05:12Z",
+      "side": 1,
+      "message": "That\u0027s right. I intend to add such a column and sort it by default. Would you feel better about merging this, if I push that change first?",
+      "parentUuid": "87e453f8_caf2b25a",
+      "range": {
+        "startLine": 12,
+        "startChar": 46,
+        "endLine": 13,
+        "endChar": 59
+      },
+      "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e453f8_eae92e79",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/BranchComparator.java",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2016-06-15T05:13:31Z",
       "side": 1,
       "message": "Missing license header.",
+      "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_f2692070",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/BranchComparator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-06-16T22:05:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_eae92e79",
       "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "87e453f8_d24d041a",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/BranchComparator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-06-16T22:05:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_2ae4f69c",
+      "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e453f8_aae0068e",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/BranchComparator.java",
         "patchSetId": 1
@@ -70,6 +130,24 @@
       "writtenOn": "2016-06-15T05:13:31Z",
       "side": 1,
       "message": "Why such a magic constant and the translation to SWT.UP/DOWN? Why not use the SWT constants directly?\n\n   private int direction \u003d SWT.DOWN;\n\n   getDirection() { return direction; }\n\n   flipDirection() {\n      if (direction \u003d\u003d SWT.DOWN) {\n         direction \u003d SWT.UP;\n      } else {\n         direction \u003d SWT.DOWN;\n      }\n   }",
+      "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_527ad42f",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/BranchComparator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-06-16T22:05:12Z",
+      "side": 1,
+      "message": "Personally, it always takes my mind a few seconds to translate down into descending and up into ascending. And the difference is important, for example for defining the default. So I would argue that using these constants makes the code more readable.\nBut if you think it\u0027s better to get rid of the constant, I\u0027m not insisting on it.",
+      "parentUuid": "87e453f8_aae0068e",
       "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "87e453f8_7275103c",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/BranchComparator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-06-16T22:05:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_8af8aa3e",
+      "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e453f8_8ad18ac6",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/BranchComparator.java",
         "patchSetId": 1
@@ -104,6 +200,24 @@
       "writtenOn": "2016-06-15T05:13:31Z",
       "side": 1,
       "message": "This always sorts by ref name, regardless of the column that is clicked and shown as sorted in the UI. This is confusing. Should sort based on the current column.",
+      "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_92845caf",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/BranchComparator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-06-16T22:05:12Z",
+      "side": 1,
+      "message": "Good point. Looks like I forgot to finish this up.\n\nDone",
+      "parentUuid": "87e453f8_8ad18ac6",
       "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "87e453f8_b27f981b",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/BranchComparator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-06-16T22:05:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_cadb92e2",
+      "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e453f8_6afd1e2e",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FilteredBranchesWidget.java",
         "patchSetId": 1
@@ -138,6 +270,24 @@
       "writtenOn": "2016-06-15T05:13:31Z",
       "side": 1,
       "message": "If commit summaries are short, this gives a table with lots of unused white space to the right. msgColumn should use up whatever horizontal space is available; that would give a nicer UI.",
+      "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_836ed0a1",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FilteredBranchesWidget.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-06-16T22:05:12Z",
+      "side": 1,
+      "message": "I could have a look at this in a separate change, though simply removing the line will remove the column (width\u003d0).",
+      "parentUuid": "87e453f8_6afd1e2e",
       "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
