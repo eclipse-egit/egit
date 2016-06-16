@@ -72,7 +72,8 @@ public class GitFlowHandlerUtil {
 				.exactRef(gfRepo.getConfig().getDevelopFull());
 		if (develop == null) {
 			throw new IllegalStateException(
-					"Gitflow command called on non-Gitflow repository"); //$NON-NLS-1$
+					"Gitflow command called on Gitflow repository with no develop branch. " //$NON-NLS-1$
+							+ "The Gitflow configuration is either corrupt or incomplete."); //$NON-NLS-1$
 		}
 		return develop.getName();
 	}
