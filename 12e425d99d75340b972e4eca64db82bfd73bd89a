@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "87e453f8_c8071056",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/BranchComparator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-18T11:14:02Z",
+      "side": 1,
+      "message": "I\u0027m not opposed to having a DESCENDING or ASCENDING constant at all. I just find it strange to use 1/-1 and then map later to SWT.UP/DOWN.\n\nI would have declared ASCENDING \u003d SWT.DOWN and DESCENDING \u003d SWT.UP.\n\nNote that you have it wrong anyway: DESCENDING sorts in ascending order.\n\nAlternatively, since descending can have only two states, a boolean would be a more appropriate approach.",
+      "parentUuid": "87e453f8_527ad42f",
+      "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e453f8_8af8aa3e",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/BranchComparator.java",
         "patchSetId": 1
@@ -288,6 +306,24 @@
       "side": 1,
       "message": "I could have a look at this in a separate change, though simply removing the line will remove the column (width\u003d0).",
       "parentUuid": "87e453f8_6afd1e2e",
+      "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_28f874b5",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FilteredBranchesWidget.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-18T11:14:02Z",
+      "side": 1,
+      "message": "For sure in a separate change. Not sure it can be done properly. Perhaps by using branchesViewer.getTree().getParent().setLayout() to set a TreeColumnLayout (needs to be set on the composite containing the tree) and then giving the columns appropriate layouts.",
+      "parentUuid": "87e453f8_836ed0a1",
       "revId": "12e425d99d75340b972e4eca64db82bfd73bd89a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
