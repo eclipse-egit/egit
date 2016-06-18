@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87e453f8_0812d892",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/BranchComparator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-18T11:14:16Z",
+      "side": 1,
+      "message": "I am surprised that this works. super.compare() tries to obtain a label again. I think this should be getComparator().compare(), or maybe even directly labelProvider.getText(e1).compareTo(labelProvider.getText(e2)).\n\nBTW, this gives an ascending sort order.",
+      "revId": "533689b4c61c50ef665b8cb9475eb10e5997bd53",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
