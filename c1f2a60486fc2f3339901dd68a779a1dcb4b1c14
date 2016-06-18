@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87e453f8_8846e873",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FilteredBranchesWidget.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-18T14:57:43Z",
+      "side": 1,
+      "message": "This causes an unnecessary horizontal scrollbar (cocoa).\n\nPack first, then use\n\n  layout.setColumnData(nameColumn, new ColumnWeightData(0, nameColumn.getWidth()));\n\nand likewise for idColumn. On my Mac, that gets rid of the horizontal scrollbar if it\u0027s not needed.",
+      "revId": "c1f2a60486fc2f3339901dd68a779a1dcb4b1c14",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
