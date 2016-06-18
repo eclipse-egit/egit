@@ -16,6 +16,24 @@
       "revId": "533689b4c61c50ef665b8cb9475eb10e5997bd53",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_e8604c03",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/BranchComparator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-06-18T14:33:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_0812d892",
+      "revId": "533689b4c61c50ef665b8cb9475eb10e5997bd53",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
