@@ -16,6 +16,24 @@
       "revId": "c1f2a60486fc2f3339901dd68a779a1dcb4b1c14",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_6818bc80",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FilteredBranchesWidget.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-06-19T11:23:42Z",
+      "side": 1,
+      "message": "I hope I got it right. Looks good on Win7.\nOtherwise, feel free to amend it.\n\nThanks for all the input!",
+      "parentUuid": "87e453f8_8846e873",
+      "revId": "c1f2a60486fc2f3339901dd68a779a1dcb4b1c14",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
