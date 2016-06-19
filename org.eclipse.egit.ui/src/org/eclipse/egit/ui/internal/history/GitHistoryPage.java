@@ -849,6 +849,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		});
 
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(historyControl);
+
+		findToolbar = new FindToolbar(historyControl);
+
 		graphDetailSplit = new SashForm(historyControl, SWT.VERTICAL);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(
 				graphDetailSplit);
@@ -989,8 +992,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				formatDiffs(diffs);
 			}
 		});
-
-		findToolbar = new FindToolbar(historyControl);
 
 		layoutSashForm(graphDetailSplit,
 				UIPreferences.RESOURCEHISTORY_GRAPH_SPLIT);
