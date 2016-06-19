@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.core.expressions.PropertyTester;
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -66,6 +67,21 @@ public class SelectionPropertyTester extends PropertyTester {
 				return false;
 
 			Object firstElement = selection.getFirstElement();
+
+			IContainer container = AdapterUtils.adapt(firstElement, IContainer.class);
+			RepositoryMapping mapping = null;
+			if (container != null) {
+				mapping = RepositoryMapping.getMapping(container);
+			}
+			if (container != null && mapping != null) {
+				if (container.equals(mapping.getContainer())) {
+					return false;
+				} else {
+					return testRepositoryProperties(mapping.getRepository(),
+							args);
+				}
+			}
+
 			IResource resource = AdapterUtils.adapt(firstElement,
 					IResource.class);
 			if ((resource != null) && (resource instanceof IFile
@@ -122,20 +138,38 @@ public class SelectionPropertyTester extends PropertyTester {
 			IProject project = AdapterUtils.adapt(element, IProject.class);
 			if (project != null) {
 				Repository r = getRepositoryOfMapping(project);
-				if (single && r != null && repo != null && r != repo)
+				if (single && r != null && repo != null && r != repo) {
 					return null;
-				else if (r != null)
+				} else if (r != null) {
 					repo = r;
+				}
 			} else {
-				IWorkingSet workingSet = AdapterUtils.adapt(element,
-						IWorkingSet.class);
-				if (workingSet != null) {
-					for (IAdaptable adaptable : workingSet.getElements()) {
-						Repository r = getRepositoryOfProject(adaptable);
-						if (single && r != null && repo != null && r != repo)
-							return null;
-						else if (r != null)
-							repo = r;
+				IContainer container = AdapterUtils.adapt(element, IContainer.class);
+				RepositoryMapping mapping = null;
+				if (container != null) {
+					mapping = RepositoryMapping.getMapping(container);
+				}
+				if (container != null && mapping != null
+						&& container.equals(mapping.getContainer())) {
+					Repository r = mapping.getRepository();
+					if (single && r != null && repo != null && r != repo) {
+						return null;
+					} else if (r != null) {
+						repo = r;
+					}
+				} else {
+					IWorkingSet workingSet = AdapterUtils.adapt(element,
+							IWorkingSet.class);
+					if (workingSet != null) {
+						for (IAdaptable adaptable : workingSet.getElements()) {
+							Repository r = getRepositoryOfProject(adaptable);
+							if (single && r != null && repo != null
+									&& r != repo) {
+								return null;
+							} else if (r != null) {
+								repo = r;
+							}
+						}
 					}
 				}
 			}
