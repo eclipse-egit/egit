@@ -13,7 +13,9 @@ import java.util.List;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.TreeColumnLayout;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
@@ -125,9 +127,14 @@ public class FilteredBranchesWidget {
 		branchesViewer.setContentProvider(new BranchListContentProvider());
 		branchesViewer.setInput(refs);
 
+		// Layout tree for maximum width of message column
+		TreeColumnLayout layout = new TreeColumnLayout();
 		nameColumn.pack();
+		layout.setColumnData(nameColumn, new ColumnWeightData(0, nameColumn.getWidth()));
 		idColumn.pack();
-		msgColumn.pack();
+		layout.setColumnData(idColumn, new ColumnWeightData(0, idColumn.getWidth()));
+		layout.setColumnData(msgColumn, new ColumnWeightData(100));
+		branchesViewer.getTree().getParent().setLayout(layout);
 
 		branchesViewer.addFilter(createFilter());
 		return area;
