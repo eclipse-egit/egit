@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "87e453f8_e1cce734",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-06-20T21:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "revId": "a18e30e44a69cf23e9b87a5b1eea16e64b97560c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e453f8_280874e3",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionPropertyTester.java",
         "patchSetId": 1
@@ -30,6 +47,23 @@
       "writtenOn": "2016-06-20T05:24:38Z",
       "side": 1,
       "message": "Please add missing braces, here and also above and below.",
+      "revId": "a18e30e44a69cf23e9b87a5b1eea16e64b97560c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_e1d30746",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionPropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5413
+      },
+      "writtenOn": "2016-06-20T21:05:23Z",
+      "side": 1,
+      "message": "Done",
       "revId": "a18e30e44a69cf23e9b87a5b1eea16e64b97560c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
