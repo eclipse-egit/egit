@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87e453f8_21640fc3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FindToolbarJob.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-20T20:49:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_01ac7374",
+      "revId": "01f6ffe598b1ca430312ce970df511f54c3965b2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e453f8_21b24fce",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FindToolbarJob.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2016-06-20T20:40:01Z",
       "side": 1,
       "message": "missing brackets around (find(..., committerName) || find(...,committerEmail)",
+      "revId": "01f6ffe598b1ca430312ce970df511f54c3965b2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_415f5bf2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FindToolbarJob.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-20T20:49:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_21b24fce",
       "revId": "01f6ffe598b1ca430312ce970df511f54c3965b2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
