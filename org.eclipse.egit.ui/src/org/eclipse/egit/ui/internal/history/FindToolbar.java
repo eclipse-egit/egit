@@ -24,6 +24,10 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ActionContributionItem;
+import org.eclipse.jface.action.IMenuCreator;
+import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jgit.revwalk.RevFlag;
@@ -44,8 +48,8 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
@@ -56,7 +60,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.swt.widgets.Widget;
 
 /**
  * A toolbar for the history page.
@@ -98,13 +101,11 @@ public class FindToolbar extends Composite {
 
 	private Text patternField;
 
-	private Button nextButton;
-
-	private Button previousButton;
-
 	private Label currentPositionLabel;
 
 	private String lastErrorPattern;
+
+	private FindDropDownAction findDropDown;
 
 	private ToolItem prefsDropDown;
 
@@ -123,10 +124,6 @@ public class FindToolbar extends Composite {
 	private MenuItem committerItem;
 
 	private MenuItem referenceItem;
-
-	private Image nextIcon;
-
-	private Image previousIcon;
 
 	private Image allIcon;
 
@@ -160,9 +157,6 @@ public class FindToolbar extends Composite {
 		errorBackgroundColor = new Color(getDisplay(), new RGB(255, 150, 150));
 		ResourceManager resourceManager = Activator.getDefault()
 				.getResourceManager();
-		nextIcon = UIIcons.getImage(resourceManager, UIIcons.ELCL16_NEXT);
-		previousIcon = UIIcons.getImage(resourceManager,
-				UIIcons.ELCL16_PREVIOUS);
 		allIcon = UIIcons.getImage(resourceManager, UIIcons.SEARCH_COMMIT);
 		commitIdIcon = UIIcons.getImage(resourceManager,
 				UIIcons.ELCL16_ID);
@@ -186,18 +180,11 @@ public class FindToolbar extends Composite {
 		patternField.setLayoutData(findTextData);
 		patternField.setTextLimit(100);
 
-		nextButton = new Button(this, SWT.PUSH);
-		nextButton.setImage(nextIcon);
-		nextButton.setText(UIText.HistoryPage_findbar_next);
-		nextButton.setToolTipText(UIText.FindToolbar_NextTooltip);
-
-		previousButton = new Button(this, SWT.PUSH);
-		previousButton.setImage(previousIcon);
-		previousButton.setText(UIText.HistoryPage_findbar_previous);
-		previousButton.setToolTipText(UIText.FindToolbar_PreviousTooltip);
-
-		final ToolBar toolBar = new ToolBar(this, SWT.FLAT);
-		new ToolItem(toolBar, SWT.SEPARATOR);
+		ToolBarManager manager = new ToolBarManager(SWT.HORIZONTAL);
+		findDropDown = new FindDropDownAction();
+		findDropDown.setEnabled(false);
+		manager.add(findDropDown);
+		final ToolBar toolBar = manager.createControl(this);
 
 		prefsDropDown = new ToolItem(toolBar, SWT.DROP_DOWN);
 		prefsMenu = new Menu(getShell(), SWT.POP_UP);
@@ -281,63 +268,14 @@ public class FindToolbar extends Composite {
 			}
 		});
 
-		final Listener findButtonsListener = new Listener() {
-			@Override
-			public void handleEvent(Event event) {
-				if (patternField.getText().length() > 0
-						&& findResults.size() == 0) {
-					// If the toolbar was cleared and has a pattern typed,
-					// then we redo the find with the new table data.
-					final FindToolbarJob finder = createFinder();
-					finder.setUser(true);
-					finder.schedule();
-					patternField.setSelection(0, 0);
-				} else {
-					int currentIx = historyTable.getSelectionIndex();
-					int newIx = -1;
-					if (event.widget == nextButton) {
-						newIx = findResults.getIndexAfter(currentIx);
-						if (newIx == -1) {
-							newIx = findResults.getFirstIndex();
-						}
-					} else {
-						newIx = findResults.getIndexBefore(currentIx);
-						if (newIx == -1) {
-							newIx = findResults.getLastIndex();
-						}
-					}
-					sendEvent(event.widget, newIx);
-
-					String current = null;
-					currentPosition = findResults.getMatchNumberFor(newIx);
-					if (currentPosition == -1) {
-						current = "-"; //$NON-NLS-1$
-					} else {
-						current = String.valueOf(currentPosition);
-					}
-					currentPositionLabel
-							.setText(current + '/' + findResults.size());
-				}
-			}
-		};
-		nextButton.addListener(SWT.Selection, findButtonsListener);
-		previousButton.addListener(SWT.Selection, findButtonsListener);
-
 		patternField.addKeyListener(new KeyAdapter() {
-			private Event event = new Event();
 
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.keyCode == SWT.ARROW_DOWN) {
-					if (nextButton.isEnabled()) {
-						event.widget = nextButton;
-						findButtonsListener.handleEvent(event);
-					}
+					findDropDown.findNext();
 				} else if (e.keyCode == SWT.ARROW_UP) {
-					if (previousButton.isEnabled()) {
-						event.widget = previousButton;
-						findButtonsListener.handleEvent(event);
-					}
+					findDropDown.findPrevious();
 				}
 			}
 		});
@@ -387,9 +325,45 @@ public class FindToolbar extends Composite {
 					job = null;
 				}
 				prefsMenu.dispose();
+				findDropDown.dispose();
 				errorBackgroundColor.dispose();
 			}
 		});
+	}
+
+	private void find(boolean next) {
+		if (patternField.getText().length() > 0 && findResults.size() == 0) {
+			// If the toolbar was cleared and has a pattern typed,
+			// then we redo the find with the new table data.
+			final FindToolbarJob finder = createFinder();
+			finder.setUser(true);
+			finder.schedule();
+			patternField.setSelection(0, 0);
+		} else {
+			int currentIx = historyTable.getSelectionIndex();
+			int newIx = -1;
+			if (next) {
+				newIx = findResults.getIndexAfter(currentIx);
+				if (newIx == -1) {
+					newIx = findResults.getFirstIndex();
+				}
+			} else {
+				newIx = findResults.getIndexBefore(currentIx);
+				if (newIx == -1) {
+					newIx = findResults.getLastIndex();
+				}
+			}
+			notifyListeners(newIx);
+
+			String current = null;
+			currentPosition = findResults.getMatchNumberFor(newIx);
+			if (currentPosition == -1) {
+				current = "-"; //$NON-NLS-1$
+			} else {
+				current = String.valueOf(currentPosition);
+			}
+			currentPositionLabel.setText(current + '/' + findResults.size());
+		}
 	}
 
 	private MenuItem createFindInMenuItem() {
@@ -534,11 +508,10 @@ public class FindToolbar extends Composite {
 			if (currentPosition < 0) {
 				currentPosition = 1;
 				int ix = findResults.getFirstIndex();
-				sendEvent(null, ix);
+				notifyListeners(ix);
 			}
 			patternField.setBackground(null);
-			nextButton.setEnabled(true);
-			previousButton.setEnabled(true);
+			findDropDown.setEnabled(true);
 			lastErrorPattern = null;
 		} else {
 			currentPosition = -1;
@@ -551,15 +524,13 @@ public class FindToolbar extends Composite {
 				if (lastErrorPattern == null
 						|| !lastErrorPattern.startsWith(pattern)) {
 					getDisplay().beep();
-					nextButton.setEnabled(false);
-					previousButton.setEnabled(false);
+					findDropDown.setEnabled(false);
 				}
 				lastErrorPattern = pattern;
 			} else {
 				patternField.setBackground(null);
 				currentPositionLabel.setText(""); //$NON-NLS-1$
-				nextButton.setEnabled(false);
-				previousButton.setEnabled(false);
+				findDropDown.setEnabled(false);
 				lastErrorPattern = null;
 			}
 		}
@@ -594,11 +565,11 @@ public class FindToolbar extends Composite {
 		}
 	}
 
-	private void sendEvent(Widget widget, int index) {
+	private void notifyListeners(int index) {
 		Event event = new Event();
 		event.type = SWT.Selection;
 		event.index = index;
-		event.widget = widget;
+		event.widget = this;
 		event.data = fileRevisions[index];
 		for (Listener listener : eventList) {
 			listener.handleEvent(event);
@@ -643,8 +614,7 @@ public class FindToolbar extends Composite {
 											Integer.toString(currentPosition)
 													+ '/' + total);
 								}
-								nextButton.setEnabled(true);
-								previousButton.setEnabled(true);
+								findDropDown.setEnabled(true);
 								patternField.setBackground(null);
 								if (firstUpdate) {
 									historyTable.clearAll();
@@ -676,12 +646,109 @@ public class FindToolbar extends Composite {
 			private void clear() {
 				currentPosition = -1;
 				currentPositionLabel.setText(""); //$NON-NLS-1$
-				nextButton.setEnabled(false);
-				previousButton.setEnabled(false);
+				findDropDown.setEnabled(false);
 				if (historyTable != null) {
 					historyTable.clearAll();
 				}
 			}
 		};
+	}
+
+	private class FindDropDownAction extends Action implements IMenuCreator {
+
+		private final Action findNextAction;
+
+		private final Action findPreviousAction;
+
+		private Action currentAction;
+
+		private Menu menu;
+
+		public FindDropDownAction() {
+			findNextAction = new Action() {
+				@Override
+				public void run() {
+					findNext();
+				}
+			};
+			findNextAction.setImageDescriptor(UIIcons.ELCL16_NEXT);
+			findNextAction.setText(UIText.HistoryPage_findbar_next);
+			findNextAction.setToolTipText(UIText.FindToolbar_NextTooltip);
+			findPreviousAction = new Action() {
+				@Override
+				public void run() {
+					findPrevious();
+				}
+			};
+			findPreviousAction.setImageDescriptor(UIIcons.ELCL16_PREVIOUS);
+			findPreviousAction.setText(UIText.HistoryPage_findbar_previous);
+			findPreviousAction
+					.setToolTipText(UIText.FindToolbar_PreviousTooltip);
+			setAction(findNextAction);
+			setMenuCreator(this);
+		}
+
+		@Override
+		public void setEnabled(boolean enabled) {
+			if (enabled && !isEnabled()) {
+				setAction(findNextAction);
+			}
+			super.setEnabled(enabled);
+		}
+
+		public void findNext() {
+			if (isEnabled()) {
+				setAction(findNextAction);
+				find(true);
+			}
+		}
+
+		public void findPrevious() {
+			if (isEnabled()) {
+				setAction(findPreviousAction);
+				find(false);
+			}
+		}
+
+		private void setAction(Action action) {
+			currentAction = action;
+			setImageDescriptor(action.getImageDescriptor());
+			setToolTipText(action.getToolTipText());
+		}
+
+		@Override
+		public void run() {
+			if (currentAction != null) {
+				currentAction.run();
+			}
+		}
+
+		@Override
+		public void dispose() {
+			if (menu != null) {
+				menu.dispose();
+				menu = null;
+			}
+		}
+
+		@Override
+		public Menu getMenu(Control parent) {
+			if (menu != null) {
+				return menu;
+			}
+			menu = new Menu(parent);
+			ActionContributionItem item = new ActionContributionItem(
+					findNextAction);
+			item.fill(menu, -1);
+			item = new ActionContributionItem(findPreviousAction);
+			item.fill(menu, -1);
+			return menu;
+		}
+
+		@Override
+		public Menu getMenu(Menu parent) {
+			return null;
+		}
+
 	}
 }
