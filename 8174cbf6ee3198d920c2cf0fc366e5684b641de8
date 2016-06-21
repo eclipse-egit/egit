@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87e453f8_9c2b86b8",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/MergingOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-06-21T07:18:13Z",
+      "side": 1,
+      "message": "You\u0027re right, it no longer brings any added value, it\u0027s a remainder of previous iterations. I remove it.",
+      "parentUuid": "87e453f8_099027a2",
+      "revId": "8174cbf6ee3198d920c2cf0fc366e5684b641de8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e453f8_097bc765",
         "filename": "org.eclipse.egit.doc/contexts.xml",
         "patchSetId": 3
@@ -36,6 +54,24 @@
         "endLine": 3,
         "endChar": 21
       },
+      "revId": "8174cbf6ee3198d920c2cf0fc366e5684b641de8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_bc2e82c6",
+        "filename": "org.eclipse.egit.doc/contexts.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-06-21T07:18:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_097bc765",
       "revId": "8174cbf6ee3198d920c2cf0fc366e5684b641de8",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -65,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "87e453f8_dc250ee3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/AbstractBranchSelectionDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-06-21T07:18:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_494b0f31",
+      "revId": "8174cbf6ee3198d920c2cf0fc366e5684b641de8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e453f8_09cd872e",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/MergeTargetSelectionDialog.java",
         "patchSetId": 3
@@ -82,6 +136,24 @@
         "endLine": 2,
         "endChar": 27
       },
+      "revId": "8174cbf6ee3198d920c2cf0fc366e5684b641de8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e453f8_fc280abb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/MergeTargetSelectionDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-06-21T07:18:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e453f8_09cd872e",
       "revId": "8174cbf6ee3198d920c2cf0fc366e5684b641de8",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
