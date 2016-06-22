@@ -145,7 +145,7 @@ public class GitSynchronizeData {
 			includedResourceIterable = includedResources;
 		for (IResource res : includedResourceIterable) {
 			IProject project = res.getProject();
-			RepositoryMapping mapping = RepositoryMapping.getMapping(project);
+			RepositoryMapping mapping = RepositoryMapping.getMapping(res);
 			if (mapping != null && mapping.getRepository() == repo)
 				projects.add(project);
 		}
@@ -270,6 +270,10 @@ public class GitSynchronizeData {
 		this.includedResources = includedResources;
 		Set<String> paths = new HashSet<String>();
 		RepositoryMapping rm = RepositoryMapping.findRepositoryMapping(repo);
+		if (rm == null) {
+			rm = RepositoryMapping
+					.getMapping(includedResources.iterator().next());
+		}
 		if (rm != null) {
 			for (IResource resource : includedResources) {
 				String repoRelativePath = rm.getRepoRelativePath(resource);
