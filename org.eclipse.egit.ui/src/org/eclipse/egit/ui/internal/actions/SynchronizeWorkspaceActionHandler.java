@@ -5,6 +5,9 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Andre Bossert <anb0s@anbos.de> - Bug 496399
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
@@ -63,11 +66,9 @@ public class SynchronizeWorkspaceActionHandler extends RepositoryActionHandler {
 			try {
 				Repository repo = entry.getKey();
 				String dstRef = getDstRef(repo, launchFetch);
-				GitSynchronizeData data = new GitSynchronizeData(repo, HEAD, dstRef, true);
 				Set<IResource> containers = entry.getValue();
-				if (!containers.isEmpty())
-					data.setIncludedResources(containers);
-
+				GitSynchronizeData data = new GitSynchronizeData(repo, HEAD,
+						dstRef, true, containers);
 				gsdSet.add(data);
 			} catch (IOException e) {
 				Activator.handleError(e.getMessage(), e, true);
@@ -84,11 +85,17 @@ public class SynchronizeWorkspaceActionHandler extends RepositoryActionHandler {
 
 		for (IResource resource : resources) {
 			RepositoryMapping rm = RepositoryMapping.getMapping(resource);
-			if (rm == null)
+			if (rm == null) {
 				continue; // Linked resources may not be in a repo
-			if (resource instanceof IProject)
+			}
+			if (resource instanceof IProject) {
 				result.put(rm.getRepository(), new HashSet<IResource>());
-			else if (resource instanceof IContainer) {
+			} else if (resource instanceof IContainer) {
+				/*
+				 * if (resource.equals(rm.getContainer())) {
+				 * result.put(rm.getRepository(), new HashSet<IResource>()); }
+				 * else {
+				 */
 				Set<IResource> containers = result.get(rm.getRepository());
 				if (containers == null) {
 					containers = new HashSet<>();
@@ -96,9 +103,9 @@ public class SynchronizeWorkspaceActionHandler extends RepositoryActionHandler {
 					containers.add(resource);
 				} else if (containers.size() > 0)
 					containers.add(resource);
+				// }
 			}
 		}
-
 		return result;
 	}
 
