@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
@@ -24,7 +25,10 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jgit.revwalk.RevFlag;
 import org.eclipse.jgit.revwalk.RevObject;
@@ -33,6 +37,7 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -44,7 +49,6 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -56,7 +60,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.swt.widgets.Widget;
 
 /**
  * A toolbar for the history page.
@@ -66,6 +69,24 @@ import org.eclipse.swt.widgets.Widget;
  * @see GitHistoryPage
  */
 public class FindToolbar extends Composite {
+
+	/**
+	 * Listener for changes of the toolbar's widgets.
+	 * <p>
+	 * Normally it won't be needed to listen for such changes as the toolbar
+	 * itself requests re-layouting when necessary. However, in some special
+	 * circumstances it is still useful to be notified of such changes.
+	 */
+	public interface LayoutListener {
+		/**
+		 * Invoked when there's a layout change in the toolbar.
+		 *
+		 * @param changed
+		 *            the toolbar itself
+		 */
+		void layoutChange(Composite changed);
+	}
+
 	/**
 	 * Preference value for searching all the fields
 	 */
@@ -88,6 +109,8 @@ public class FindToolbar extends Composite {
 	 */
 	private final FindResults findResults;
 
+	private IFindListener listener;
+
 	private IPersistentPreferenceStore store = (IPersistentPreferenceStore) Activator.getDefault().getPreferenceStore();
 
 	private List<Listener> eventList = new ArrayList<>();
@@ -98,9 +121,11 @@ public class FindToolbar extends Composite {
 
 	private Text patternField;
 
-	private Button nextButton;
+	private ModifyListener patternModifyListener;
 
-	private Button previousButton;
+	private Action findNextAction;
+
+	private Action findPreviousAction;
 
 	private Label currentPositionLabel;
 
@@ -124,10 +149,6 @@ public class FindToolbar extends Composite {
 
 	private MenuItem referenceItem;
 
-	private Image nextIcon;
-
-	private Image previousIcon;
-
 	private Image allIcon;
 
 	private Image commitIdIcon;
@@ -144,6 +165,8 @@ public class FindToolbar extends Composite {
 
 	private int currentPosition = -1;
 
+	private CopyOnWriteArrayList<LayoutListener> layoutListeners = new CopyOnWriteArrayList<>();
+
 	/**
 	 * Creates the toolbar.
 	 *
@@ -152,7 +175,9 @@ public class FindToolbar extends Composite {
 	 */
 	public FindToolbar(Composite parent) {
 		super(parent, SWT.NULL);
-		findResults = new FindResults(createFindListener());
+		findResults = new FindResults();
+		listener = createFindListener();
+		findResults.addFindListener(listener);
 		createToolbar();
 	}
 
@@ -160,9 +185,6 @@ public class FindToolbar extends Composite {
 		errorBackgroundColor = new Color(getDisplay(), new RGB(255, 150, 150));
 		ResourceManager resourceManager = Activator.getDefault()
 				.getResourceManager();
-		nextIcon = UIIcons.getImage(resourceManager, UIIcons.ELCL16_NEXT);
-		previousIcon = UIIcons.getImage(resourceManager,
-				UIIcons.ELCL16_PREVIOUS);
 		allIcon = UIIcons.getImage(resourceManager, UIIcons.SEARCH_COMMIT);
 		commitIdIcon = UIIcons.getImage(resourceManager,
 				UIIcons.ELCL16_ID);
@@ -173,8 +195,9 @@ public class FindToolbar extends Composite {
 				UIIcons.ELCL16_COMMITTER);
 		branchesIcon = UIIcons.getImage(resourceManager, UIIcons.BRANCHES);
 		GridLayout findLayout = new GridLayout();
-		findLayout.marginHeight = 2;
-		findLayout.marginWidth = 2;
+		findLayout.marginHeight = 0;
+		findLayout.marginBottom = 1;
+		findLayout.marginWidth = 0;
 		findLayout.numColumns = 5;
 		setLayout(findLayout);
 		setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -182,22 +205,35 @@ public class FindToolbar extends Composite {
 		patternField = new Text(this,
 				SWT.SEARCH | SWT.ICON_CANCEL | SWT.ICON_SEARCH);
 		GridData findTextData = new GridData(SWT.FILL, SWT.LEFT, true, false);
-		findTextData.minimumWidth = 50;
+		findTextData.minimumWidth = 150;
 		patternField.setLayoutData(findTextData);
 		patternField.setTextLimit(100);
+		patternField.setFont(JFaceResources.getDialogFont());
 
-		nextButton = new Button(this, SWT.PUSH);
-		nextButton.setImage(nextIcon);
-		nextButton.setText(UIText.HistoryPage_findbar_next);
-		nextButton.setToolTipText(UIText.FindToolbar_NextTooltip);
-
-		previousButton = new Button(this, SWT.PUSH);
-		previousButton.setImage(previousIcon);
-		previousButton.setText(UIText.HistoryPage_findbar_previous);
-		previousButton.setToolTipText(UIText.FindToolbar_PreviousTooltip);
-
-		final ToolBar toolBar = new ToolBar(this, SWT.FLAT);
-		new ToolItem(toolBar, SWT.SEPARATOR);
+		ToolBarManager manager = new ToolBarManager(SWT.HORIZONTAL);
+		findNextAction = new Action() {
+			@Override
+			public void run() {
+				findNext();
+			}
+		};
+		findNextAction.setImageDescriptor(UIIcons.ELCL16_NEXT);
+		findNextAction.setText(UIText.HistoryPage_findbar_next);
+		findNextAction.setToolTipText(UIText.FindToolbar_NextTooltip);
+		findNextAction.setEnabled(false);
+		manager.add(findNextAction);
+		findPreviousAction = new Action() {
+			@Override
+			public void run() {
+				findPrevious();
+			}
+		};
+		findPreviousAction.setImageDescriptor(UIIcons.ELCL16_PREVIOUS);
+		findPreviousAction.setText(UIText.HistoryPage_findbar_previous);
+		findPreviousAction.setToolTipText(UIText.FindToolbar_PreviousTooltip);
+		findPreviousAction.setEnabled(false);
+		manager.add(findPreviousAction);
+		final ToolBar toolBar = manager.createControl(this);
 
 		prefsDropDown = new ToolItem(toolBar, SWT.DROP_DOWN);
 		prefsMenu = new Menu(getShell(), SWT.POP_UP);
@@ -256,19 +292,21 @@ public class FindToolbar extends Composite {
 		totalLabelData.horizontalAlignment = SWT.FILL;
 		totalLabelData.grabExcessHorizontalSpace = true;
 		currentPositionLabel.setLayoutData(totalLabelData);
-		currentPositionLabel.setAlignment(SWT.RIGHT);
 		currentPositionLabel.setText(""); //$NON-NLS-1$
-
-		patternField.addModifyListener(new ModifyListener() {
+		currentPositionLabel.setFont(JFaceResources.getTextFont());
+		patternModifyListener = new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				final FindToolbarJob finder = createFinder();
 				finder.setUser(true);
 				finder.schedule(200);
 			}
-		});
+		};
+
+		patternField.addModifyListener(patternModifyListener);
 
 		patternField.addSelectionListener(new SelectionAdapter() {
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				if (e.detail != SWT.ICON_CANCEL
@@ -281,63 +319,14 @@ public class FindToolbar extends Composite {
 			}
 		});
 
-		final Listener findButtonsListener = new Listener() {
-			@Override
-			public void handleEvent(Event event) {
-				if (patternField.getText().length() > 0
-						&& findResults.size() == 0) {
-					// If the toolbar was cleared and has a pattern typed,
-					// then we redo the find with the new table data.
-					final FindToolbarJob finder = createFinder();
-					finder.setUser(true);
-					finder.schedule();
-					patternField.setSelection(0, 0);
-				} else {
-					int currentIx = historyTable.getSelectionIndex();
-					int newIx = -1;
-					if (event.widget == nextButton) {
-						newIx = findResults.getIndexAfter(currentIx);
-						if (newIx == -1) {
-							newIx = findResults.getFirstIndex();
-						}
-					} else {
-						newIx = findResults.getIndexBefore(currentIx);
-						if (newIx == -1) {
-							newIx = findResults.getLastIndex();
-						}
-					}
-					sendEvent(event.widget, newIx);
-
-					String current = null;
-					currentPosition = findResults.getMatchNumberFor(newIx);
-					if (currentPosition == -1) {
-						current = "-"; //$NON-NLS-1$
-					} else {
-						current = String.valueOf(currentPosition);
-					}
-					currentPositionLabel
-							.setText(current + '/' + findResults.size());
-				}
-			}
-		};
-		nextButton.addListener(SWT.Selection, findButtonsListener);
-		previousButton.addListener(SWT.Selection, findButtonsListener);
-
 		patternField.addKeyListener(new KeyAdapter() {
-			private Event event = new Event();
 
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.keyCode == SWT.ARROW_DOWN) {
-					if (nextButton.isEnabled()) {
-						event.widget = nextButton;
-						findButtonsListener.handleEvent(event);
-					}
+					findNext();
 				} else if (e.keyCode == SWT.ARROW_UP) {
-					if (previousButton.isEnabled()) {
-						event.widget = previousButton;
-						findButtonsListener.handleEvent(event);
-					}
+					findPrevious();
 				}
 			}
 		});
@@ -382,14 +371,144 @@ public class FindToolbar extends Composite {
 
 			@Override
 			public void widgetDisposed(DisposeEvent e) {
+				findResults.removeFindListener(listener);
+				listener = null;
 				if (job != null) {
 					job.cancel();
 					job = null;
 				}
 				prefsMenu.dispose();
 				errorBackgroundColor.dispose();
+				if (historyTable != null && !historyTable.isDisposed()) {
+					historyTable.clearAll();
+				}
 			}
 		});
+	}
+
+	@Override
+	public boolean setFocus() {
+		return patternField.setFocus();
+	}
+
+	/**
+	 * Sets the text of the widget's search text field, and optionally triggers
+	 * a search.
+	 *
+	 * @param text
+	 *            to set
+	 * @param search
+	 *            if {@code true}, triggers a search after having set the text
+	 */
+	public void setText(String text, boolean search) {
+		if (!search) {
+			patternField.removeModifyListener(patternModifyListener);
+		}
+		patternField.setText(text);
+		if (!search) {
+			patternField.addModifyListener(patternModifyListener);
+		}
+	}
+
+	/**
+	 * Sets the text of the widget's search text field without triggering a
+	 * search.
+	 *
+	 * @param text
+	 *            to set
+	 */
+	public void setText(String text) {
+		setText(text, false);
+	}
+
+	/**
+	 * Retrieves the current text in the widget's search text field.
+	 *
+	 * @return the text
+	 */
+	public String getText() {
+		return patternField.getText();
+	}
+
+	@Override
+	public void addKeyListener(KeyListener keyListener) {
+		patternField.addKeyListener(keyListener);
+	}
+
+	@Override
+	public void removeKeyListener(KeyListener keyListener) {
+		patternField.removeKeyListener(keyListener);
+	}
+
+	/**
+	 * Adds the given listener to the widget, if it hasn't been added yet.
+	 *
+	 * @param layoutListener
+	 *            to add
+	 */
+	public void addLayoutListener(LayoutListener layoutListener) {
+		layoutListeners.addIfAbsent(layoutListener);
+	}
+
+	/**
+	 * Removes the given listener if it had been added.
+	 *
+	 * @param layoutListener
+	 *            to remove
+	 */
+	public void removeLayoutListener(LayoutListener layoutListener) {
+		layoutListeners.remove(layoutListener);
+	}
+
+	private void notifyLayout() {
+		for (LayoutListener l : layoutListeners) {
+			l.layoutChange(this);
+		}
+	}
+
+	private void findNext() {
+		find(true);
+	}
+
+	private void findPrevious() {
+		find(false);
+	}
+
+	private void find(boolean next) {
+		if (patternField.getText().length() > 0 && findResults.size() == 0) {
+			// If the toolbar was cleared and has a pattern typed,
+			// then we redo the find with the new table data.
+			final FindToolbarJob finder = createFinder();
+			finder.setUser(true);
+			finder.schedule();
+			patternField.setSelection(0, 0);
+		} else {
+			int currentIx = historyTable.getSelectionIndex();
+			int newIx = -1;
+			if (next) {
+				newIx = findResults.getIndexAfter(currentIx);
+				if (newIx == -1) {
+					newIx = findResults.getFirstIndex();
+				}
+			} else {
+				newIx = findResults.getIndexBefore(currentIx);
+				if (newIx == -1) {
+					newIx = findResults.getLastIndex();
+				}
+			}
+			notifyListeners(newIx);
+
+			String current = null;
+			currentPosition = findResults.getMatchNumberFor(newIx);
+			if (currentPosition == -1) {
+				current = "-"; //$NON-NLS-1$
+			} else {
+				current = String.valueOf(currentPosition);
+			}
+			currentPositionLabel.setText(current + '/' + findResults.size());
+			currentPositionLabel.requestLayout();
+			notifyLayout();
+		}
 	}
 
 	private MenuItem createFindInMenuItem() {
@@ -534,11 +653,11 @@ public class FindToolbar extends Composite {
 			if (currentPosition < 0) {
 				currentPosition = 1;
 				int ix = findResults.getFirstIndex();
-				sendEvent(null, ix);
+				notifyListeners(ix);
 			}
 			patternField.setBackground(null);
-			nextButton.setEnabled(true);
-			previousButton.setEnabled(true);
+			findNextAction.setEnabled(total > 1);
+			findPreviousAction.setEnabled(total > 1);
 			lastErrorPattern = null;
 		} else {
 			currentPosition = -1;
@@ -551,15 +670,15 @@ public class FindToolbar extends Composite {
 				if (lastErrorPattern == null
 						|| !lastErrorPattern.startsWith(pattern)) {
 					getDisplay().beep();
-					nextButton.setEnabled(false);
-					previousButton.setEnabled(false);
+					findNextAction.setEnabled(false);
+					findPreviousAction.setEnabled(false);
 				}
 				lastErrorPattern = pattern;
 			} else {
 				patternField.setBackground(null);
 				currentPositionLabel.setText(""); //$NON-NLS-1$
-				nextButton.setEnabled(false);
-				previousButton.setEnabled(false);
+				findNextAction.setEnabled(false);
+				findPreviousAction.setEnabled(false);
 				lastErrorPattern = null;
 			}
 		}
@@ -573,13 +692,20 @@ public class FindToolbar extends Composite {
 		} else {
 			currentPositionLabel.setForeground(null);
 		}
+		currentPositionLabel.requestLayout();
+		notifyLayout();
 	}
 
 	/**
 	 * Clears the toolbar.
 	 */
 	void clear() {
-		patternField.setBackground(null);
+		if (!isDisposed()) {
+			patternField.setBackground(null);
+			if (patternField.getText().length() > 0) {
+				patternField.selectAll();
+			}
+		}
 		lastErrorPattern = null;
 
 		if (job != null) {
@@ -588,20 +714,16 @@ public class FindToolbar extends Composite {
 		}
 
 		findResults.clear();
-
-		if (patternField.getText().length() > 0) {
-			patternField.selectAll();
-		}
 	}
 
-	private void sendEvent(Widget widget, int index) {
+	private void notifyListeners(int index) {
 		Event event = new Event();
 		event.type = SWT.Selection;
 		event.index = index;
-		event.widget = widget;
+		event.widget = this;
 		event.data = fileRevisions[index];
-		for (Listener listener : eventList) {
-			listener.handleEvent(event);
+		for (Listener toNotify : eventList) {
+			toNotify.handleEvent(event);
 		}
 	}
 
@@ -609,11 +731,21 @@ public class FindToolbar extends Composite {
 	 * Adds a selection event listener. The toolbar generates events when it
 	 * selects an item in the history table
 	 *
-	 * @param listener
+	 * @param selectionListener
 	 *            the listener that will receive the event
 	 */
-	void addSelectionListener(Listener listener) {
-		eventList.add(listener);
+	public void addSelectionListener(Listener selectionListener) {
+		eventList.add(selectionListener);
+	}
+
+	/**
+	 * Removes a selection listener if it had been added.
+	 *
+	 * @param selectionListener
+	 *            to remove
+	 */
+	public void removeSelectionListener(Listener selectionListener) {
+		eventList.remove(selectionListener);
 	}
 
 	private IFindListener createFindListener() {
@@ -626,13 +758,16 @@ public class FindToolbar extends Composite {
 			@Override
 			public void itemAdded(int index, RevObject rev) {
 				long now = System.currentTimeMillis();
-				if (now - lastUpdate > UPDATE_INTERVAL) {
+				if (now - lastUpdate > UPDATE_INTERVAL && !isDisposed()) {
 					final boolean firstUpdate = lastUpdate == 0L;
 					lastUpdate = now;
 					getDisplay().asyncExec(new Runnable() {
 
 						@Override
 						public void run() {
+							if (isDisposed()) {
+								return;
+							}
 							int total = findResults.size();
 							currentPositionLabel.setForeground(null);
 							if (total > 0) {
@@ -643,12 +778,14 @@ public class FindToolbar extends Composite {
 											Integer.toString(currentPosition)
 													+ '/' + total);
 								}
-								nextButton.setEnabled(true);
-								previousButton.setEnabled(true);
+								findNextAction.setEnabled(total > 1);
+								findPreviousAction.setEnabled(total > 1);
 								patternField.setBackground(null);
 								if (firstUpdate) {
 									historyTable.clearAll();
 								}
+								currentPositionLabel.requestLayout();
+								notifyLayout();
 							} else {
 								clear();
 							}
@@ -675,13 +812,18 @@ public class FindToolbar extends Composite {
 
 			private void clear() {
 				currentPosition = -1;
-				currentPositionLabel.setText(""); //$NON-NLS-1$
-				nextButton.setEnabled(false);
-				previousButton.setEnabled(false);
-				if (historyTable != null) {
+				if (!isDisposed()) {
+					currentPositionLabel.setText(""); //$NON-NLS-1$
+					findNextAction.setEnabled(false);
+					findPreviousAction.setEnabled(false);
+					currentPositionLabel.requestLayout();
+					notifyLayout();
+				}
+				if (historyTable != null && !historyTable.isDisposed()) {
 					historyTable.clearAll();
 				}
 			}
 		};
 	}
+
 }

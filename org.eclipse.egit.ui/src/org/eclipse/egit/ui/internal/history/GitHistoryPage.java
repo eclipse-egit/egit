@@ -8,7 +8,7 @@
  * Copyright (C) 2012-2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, François Rey <eclipse.org_@_francois_._rey_._name>
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
- * Copyright (C) 2015, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2015, 2016 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -49,6 +49,7 @@ import org.eclipse.egit.ui.internal.commit.DiffStyleRangeFormatter;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
 import org.eclipse.egit.ui.internal.dialogs.HyperlinkSourceViewer;
 import org.eclipse.egit.ui.internal.dialogs.HyperlinkTokenScanner;
+import org.eclipse.egit.ui.internal.history.FindToolbar.LayoutListener;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
 import org.eclipse.egit.ui.internal.repository.tree.FileNode;
 import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
@@ -56,7 +57,6 @@ import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
-import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
@@ -64,6 +64,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.bindings.keys.SWTKeySupport;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
@@ -94,6 +95,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.diff.DiffConfig;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
@@ -132,9 +134,13 @@ import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -148,6 +154,7 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.editors.text.EditorsUI;
@@ -307,6 +314,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			createActions();
 		}
 
+		private static String formatAccelerator(int accelerator) {
+			return SWTKeySupport.getKeyFormatterForPlatform().format(
+					SWTKeySupport.convertAcceleratorToKeyStroke(accelerator));
+		}
+
 		private void createActions() {
 			createFindToolbarAction();
 			createRefreshAction();
@@ -333,24 +345,53 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		private void createFindToolbarAction() {
 			findAction = new Action(UIText.GitHistoryPage_FindMenuLabel,
 					UIIcons.ELCL16_FIND) {
+
 				@Override
 				public void run() {
 					historyPage.store.setValue(
 							UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR,
 							isChecked());
-					if (historyPage.store.needsSaving())
+					if (historyPage.store.needsSaving()) {
 						try {
 							historyPage.store.save();
 						} catch (IOException e) {
 							Activator.handleError(e.getMessage(), e, false);
 						}
-					historyPage.layout();
+					}
+					historyPage.searchBar.setVisible(isChecked());
+
+					if (isChecked()) {
+						historyPage.searchBar.setFocus();
+					}
 				}
+
+				@Override
+				public void setChecked(boolean checked) {
+					super.setChecked(checked);
+					int accelerator = getAccelerator();
+					if (checked) {
+						setToolTipText(
+								NLS.bind(UIText.GitHistoryPage_FindHideTooltip,
+										formatAccelerator(accelerator)));
+					} else {
+						setToolTipText(
+								NLS.bind(UIText.GitHistoryPage_FindShowTooltip,
+										formatAccelerator(accelerator)));
+					}
+				}
+
 			};
-			findAction
-					.setChecked(historyPage.store
-							.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR));
-			findAction.setToolTipText(UIText.GitHistoryPage_FindTooltip);
+			// TODO: how not to hard-wire this?
+			int accelerator = SWT.MOD1 | 'F';
+			findAction.setAccelerator(accelerator);
+			findAction.setEnabled(false);
+			// Gets enabled once we have commits
+			boolean isChecked = historyPage.store
+					.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR);
+			findAction.setChecked(isChecked);
+			historyPage.getSite().getActionBars().setGlobalActionHandler(
+					ActionFactory.FIND.getId(), findAction);
+			historyPage.getSite().getActionBars().updateActionBars();
 		}
 
 		private void createRefreshAction() {
@@ -698,9 +739,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	/** Viewer displaying file difference implied by {@link #graph}'s commit. */
 	private CommitFileDiffViewer fileViewer;
 
-	/** Toolbar to find commits in the history view. */
-	private FindToolbar findToolbar;
-
 	/** A label showing a warning icon */
 	private Composite warningComposite;
 
@@ -768,6 +806,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 	private final HistoryPageRule pageSchedulingRule;
 
+	/** Toolbar to find commits in the history view. */
+	private SearchBar searchBar;
+
 	/**
 	 * Determine if the input can be shown in this viewer.
 	 *
@@ -813,6 +854,115 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		if (trace) {
 			GitTraceLocation.getTrace().traceEntry(
 					GitTraceLocation.HISTORYVIEW.getLocation());
+		}
+	}
+
+	private interface ICommitsProvider {
+		SWTCommit[] getCommits();
+
+		RevFlag getHighlight();
+	}
+
+	private static class SearchBar extends ViewBar {
+
+		private FindToolbar toolbar;
+
+		private String lastText;
+
+		private ICommitsProvider provider;
+
+		private final CommitGraphTable graph;
+
+		private final IAction openCloseToggle;
+
+		private final Listener selectionListener = new Listener() {
+
+			@Override
+			public void handleEvent(Event evt) {
+				graph.selectCommit((RevCommit) evt.data);
+			}
+		};
+
+		private final LayoutListener layoutListener = new LayoutListener() {
+
+			@Override
+			public void layoutChange(Composite changed) {
+				resize();
+			}
+		};
+
+		private final KeyListener keyListener = new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int key = SWTKeySupport.convertEventToUnmodifiedAccelerator(e);
+				if (key == openCloseToggle.getAccelerator()) {
+					setVisible(false);
+					getParent().setFocus();
+					e.doit = false;
+				}
+			}
+		};
+
+		public SearchBar(Control control, CommitGraphTable graph,
+				IAction openCloseAction, IWorkbenchPart part) {
+			super(control, part);
+			this.graph = graph;
+			this.openCloseToggle = openCloseAction;
+			GridLayout layout = new GridLayout();
+			layout.marginHeight = 0;
+			layout.marginTop = 0;
+			layout.marginBottom = 0;
+			setLayout(layout);
+		}
+
+		@Override
+		protected Composite createContent(Composite parentControl) {
+			toolbar = new FindToolbar(parentControl);
+			return toolbar;
+		}
+
+		@Override
+		protected void aboutToShow(Rectangle bounds) {
+			super.aboutToShow(bounds);
+			toolbar.addKeyListener(keyListener);
+			toolbar.addLayoutListener(layoutListener);
+			toolbar.addSelectionListener(selectionListener);
+			openCloseToggle.setChecked(true);
+			if (provider != null) {
+				setInput(provider);
+			}
+		}
+
+		@Override
+		protected void show() {
+			super.show();
+			if (lastText != null) {
+				toolbar.setText(lastText, true);
+			}
+		}
+
+		@Override
+		protected void hide() {
+			if (toolbar != null) {
+				if (!toolbar.isDisposed()) {
+					lastText = toolbar.getText();
+					toolbar.removeKeyListener(keyListener);
+					toolbar.removeLayoutListener(layoutListener);
+					toolbar.removeSelectionListener(selectionListener);
+				}
+				toolbar.clear();
+			}
+			super.hide();
+			toolbar = null;
+			openCloseToggle.setChecked(false);
+		}
+
+		public void setInput(ICommitsProvider provider) {
+			this.provider = provider;
+			if (toolbar != null) {
+				toolbar.setInput(provider.getHighlight(),
+						graph.getTableView().getTable(), provider.getCommits());
+			}
 		}
 	}
 
@@ -990,8 +1140,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			}
 		});
 
-		findToolbar = new FindToolbar(historyControl);
-
 		layoutSashForm(graphDetailSplit,
 				UIPreferences.RESOURCEHISTORY_GRAPH_SPLIT);
 		layoutSashForm(revInfoSplit, UIPreferences.RESOURCEHISTORY_REV_SPLIT);
@@ -1008,6 +1156,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		myRefsChangedHandle = Repository.getGlobalListenerList()
 				.addRefsChangedListener(this);
 
+		searchBar = new SearchBar(parent, graph, actions.findAction,
+				getHistoryPageSite().getPart());
 		if (trace)
 			GitTraceLocation.getTrace().traceExit(
 					GitTraceLocation.HISTORYVIEW.getLocation());
@@ -1063,8 +1213,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_REV_COMMENT);
 		final boolean showFiles = store
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_REV_DETAIL);
-		final boolean showFindToolbar = store
-				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR);
 
 		if (showComment && showFiles) {
 			graphDetailSplit.setMaximizedControl(null);
@@ -1077,12 +1225,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			revInfoSplit.setMaximizedControl(fileViewer.getControl());
 		} else if (!showComment && !showFiles)
 			graphDetailSplit.setMaximizedControl(graph.getControl());
-		if (showFindToolbar)
-			((GridData) findToolbar.getLayoutData()).heightHint = SWT.DEFAULT;
-		else {
-			((GridData) findToolbar.getLayoutData()).heightHint = 0;
-			findToolbar.clear();
-		}
 		historyControl.layout();
 	}
 
@@ -1131,12 +1273,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 						graph.selectCommit(c);
 					}
 				});
-		findToolbar.addSelectionListener(new Listener() {
-			@Override
-			public void handleEvent(Event event) {
-				graph.selectCommit((RevCommit) event.data);
-			}
-		});
 	}
 
 	private void initActions() {
@@ -1739,8 +1875,23 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 						GitTraceLocation.getTrace().trace(
 								GitTraceLocation.HISTORYVIEW.getLocation(),
 								"Setting input to table"); //$NON-NLS-1$
-					findToolbar.setInput(highlightFlag, graph.getTableView()
-							.getTable(), asArray);
+					searchBar.setInput(new ICommitsProvider() {
+
+						@Override
+						public SWTCommit[] getCommits() {
+							return asArray;
+						}
+
+						@Override
+						public RevFlag getHighlight() {
+							return highlightFlag;
+						}
+					});
+					actions.findAction.setEnabled(true);
+					if (store.getBoolean(
+							UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR)) {
+						searchBar.setVisible(true);
+					}
 					if (incomplete)
 						setWarningText(UIText.GitHistoryPage_ListIncompleteWarningMessage);
 					else
