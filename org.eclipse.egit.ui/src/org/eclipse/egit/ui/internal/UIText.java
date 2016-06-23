@@ -1507,9 +1507,6 @@ public class UIText extends NLS {
 	public static String CloneDestinationPage_DefaultRepoFolderTooltip;
 
 	/** */
-	public static String CloneDestinationPage_errorDirectoryRequired;
-
-	/** */
 	public static String CloneDestinationPage_errorInitialBranchRequired;
 
 	/** */
@@ -2644,9 +2641,6 @@ public class UIText extends NLS {
 	public static String CreateRepositoryPage_DirectoryLabel;
 
 	/** */
-	public static String CreateRepositoryPage_NotADirectoryMessage;
-
-	/** */
 	public static String CreateRepositoryPage_NotEmptyMessage;
 
 	/** */
@@ -2657,9 +2651,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CreateRepositoryPage_PleaseSelectDirectoryMessage;
-
-	/** */
-	public static String CreateRepositoryPage_PleaseUseAbsolutePathMessage;
 
 	/** */
 	public static String PushResultDialog_ConfigureButton;

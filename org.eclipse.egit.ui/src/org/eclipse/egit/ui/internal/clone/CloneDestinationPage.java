@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.util.RepositoryPathChecker;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
@@ -357,13 +358,14 @@ public class CloneDestinationPage extends WizardPage {
 			return;
 		}
 		final String dstpath = directoryText.getText();
-		if (dstpath.length() == 0) {
-			setErrorMessage(UIText.CloneDestinationPage_errorDirectoryRequired);
+		RepositoryPathChecker checker = new RepositoryPathChecker();
+		if (!checker.check(dstpath)) {
+			setErrorMessage(checker.getErrorMessage());
 			setPageComplete(false);
 			return;
 		}
 		final File absoluteFile = new File(dstpath).getAbsoluteFile();
-		if (!isEmptyDir(absoluteFile)) {
+		if (checker.hasContent()) {
 			setErrorMessage(NLS.bind(
 					UIText.CloneDestinationPage_errorNotEmptyDir, absoluteFile
 							.getPath()));
@@ -418,14 +420,6 @@ public class CloneDestinationPage extends WizardPage {
 				clonedRemote == null || !clonedRemote.equals(getRemote()))
 			cloneSettingsChanged = true;
 		return cloneSettingsChanged;
-	}
-
-	private static boolean isEmptyDir(final File dir) {
-		if (!dir.exists())
-			return true;
-		if (!dir.isDirectory())
-			return false;
-		return dir.listFiles().length == 0;
 	}
 
 	// this is actually just an optimistic heuristic - should be named
