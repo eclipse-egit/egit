@@ -202,7 +202,7 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 						ActionFactory.SELECT_ALL.getId(), null);
 				site.getActionBars().setGlobalActionHandler(
 						ActionFactory.COPY.getId(), null);
-				site.getActionBars().updateActionBars();
+				site.getActionBars().getMenuManager().update(false);
 			}
 
 			@Override
@@ -211,7 +211,7 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 						ActionFactory.SELECT_ALL.getId(), selectAll);
 				site.getActionBars().setGlobalActionHandler(
 						ActionFactory.COPY.getId(), copy);
-				site.getActionBars().updateActionBars();
+				site.getActionBars().getMenuManager().update(false);
 			}
 		});
 
