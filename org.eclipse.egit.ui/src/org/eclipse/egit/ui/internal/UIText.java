@@ -507,7 +507,10 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_FindMenuLabel;
 
 	/** */
-	public static String GitHistoryPage_FindTooltip;
+	public static String GitHistoryPage_FindShowTooltip;
+
+	/** */
+	public static String GitHistoryPage_FindHideTooltip;
 
 	/** */
 	public static String GitHistoryPage_FolderType;
