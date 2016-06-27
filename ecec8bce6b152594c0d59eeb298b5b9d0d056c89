@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67b59fd9_49c60d15",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-06-27T22:33:54Z",
+      "side": 1,
+      "message": "this commit message is pretty cryptic\n\nthe commit message should describe what is done and why",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 26
+      },
+      "revId": "ecec8bce6b152594c0d59eeb298b5b9d0d056c89",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67b59fd9_69cbd11b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-06-27T22:33:54Z",
+      "side": 1,
+      "message": "how can I test this ?",
+      "revId": "ecec8bce6b152594c0d59eeb298b5b9d0d056c89",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67b59fd9_e9436114",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-06-27T22:33:54Z",
+      "side": 1,
+      "message": "unnecessary comment",
+      "revId": "ecec8bce6b152594c0d59eeb298b5b9d0d056c89",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67b59fd9_a949693a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-06-27T22:33:54Z",
+      "side": 1,
+      "message": "move explanations into the commit message, the essence of a change should be described in the commit message, the code should speak for itself",
+      "revId": "ecec8bce6b152594c0d59eeb298b5b9d0d056c89",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67b59fd9_c9469d27",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-06-27T22:33:54Z",
+      "side": 1,
+      "message": "this comment isn\u0027t necessary",
+      "revId": "ecec8bce6b152594c0d59eeb298b5b9d0d056c89",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
