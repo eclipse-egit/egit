@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47b89bd4_0ddd0100",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-28T22:03:53Z",
+      "side": 1,
+      "message": "IBindingService.getBestActiveBindingFor(ActionFactory.FIND.getCommandId()) sometimes worked and sometimes didn\u0027t...",
+      "revId": "fd5ac1f6d3f5014b63b68f793f54c98c630920b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47b89bd4_8dacb177",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-28T22:03:53Z",
+      "side": 1,
+      "message": "The label inside the FindToolbar does a proper requestLayout().I thought I could resize the shell by listening to resize events on the FindToolbar, but somehow I never got any, even though the toolbar was re-layouted and re-painted. Hence this work-around with my own LayoutListener explicitly invoked.\n\nWhat\u0027s the proper way to get a shell that auto-resizes when its contents change size?",
+      "revId": "fd5ac1f6d3f5014b63b68f793f54c98c630920b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47b89bd4_adb095c6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-28T22:03:53Z",
+      "side": 1,
+      "message": "Cmd/Ctrl-F opens the SearchBar, and closes it, too. This listener is here to handle Cmd/Ctrl-F when the SearchBar\u0027s shell has the focus and thus the binding in the GitHistoryPage has no effect.",
+      "revId": "fd5ac1f6d3f5014b63b68f793f54c98c630920b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47b89bd4_cdadc971",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1888,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-28T22:03:53Z",
+      "side": 1,
+      "message": "Shows the SearchBar only once we do have commits that could be searched.",
+      "revId": "fd5ac1f6d3f5014b63b68f793f54c98c630920b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
