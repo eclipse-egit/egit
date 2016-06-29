@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47b89bd4_ce5cdfc8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionPropertyTester.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-29T19:22:35Z",
+      "side": 1,
+      "message": "Just do here\n\n  if ((resource instanceof IFolder) \u0026\u0026 resource.equals(m.getContainer())) {\n    return false;\n  } else {\n    return testRepositoryProperties(m.getRepository(), args);\n  }\n\ninstead of the above new code. No need to adapt twice.",
+      "range": {
+        "startLine": 91,
+        "startChar": 5,
+        "endLine": 91,
+        "endChar": 62
+      },
+      "revId": "f69d4bf13596f086e687b46aa92565aedb684958",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47b89bd4_0e8977ad",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionPropertyTester.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-29T19:22:35Z",
+      "side": 1,
+      "message": "This branch can be deleted; the IContainer case will also handle IProjects.",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 11
+      },
+      "revId": "f69d4bf13596f086e687b46aa92565aedb684958",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
