@@ -67,6 +67,29 @@
       "revId": "fd5ac1f6d3f5014b63b68f793f54c98c630920b3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47b89bd4_ee17e376",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/ViewBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-06-29T17:01:37Z",
+      "side": 1,
+      "message": "Removed in PS 2: works indeed better on my Mac, but fails on GTK. Doesn\u0027t move the shell at all there. :-(",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 48
+      },
+      "revId": "fd5ac1f6d3f5014b63b68f793f54c98c630920b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
