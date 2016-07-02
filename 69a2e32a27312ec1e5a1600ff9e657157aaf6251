@@ -22,6 +22,30 @@
       "revId": "69a2e32a27312ec1e5a1600ff9e657157aaf6251",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47b89bd4_ed0c3f4b",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1707,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-07-02T16:25:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47b89bd4_8dfe6375",
+      "range": {
+        "startLine": 1707,
+        "startChar": 16,
+        "endLine": 1707,
+        "endChar": 21
+      },
+      "revId": "69a2e32a27312ec1e5a1600ff9e657157aaf6251",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
