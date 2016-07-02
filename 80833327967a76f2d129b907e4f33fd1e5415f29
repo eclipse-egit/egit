@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47b89bd4_6dcbcf4d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/LaunchFinder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-07-02T18:12:24Z",
+      "side": 1,
+      "message": "We should annotate this method with @Nullable",
+      "range": {
+        "startLine": 48,
+        "startChar": 15,
+        "endLine": 48,
+        "endChar": 35
+      },
+      "revId": "80833327967a76f2d129b907e4f33fd1e5415f29",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
