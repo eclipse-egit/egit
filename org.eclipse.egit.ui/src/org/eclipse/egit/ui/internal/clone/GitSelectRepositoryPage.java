@@ -174,7 +174,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 			public void widgetSelected(SelectionEvent e) {
 				List<String> configuredDirs = util.getConfiguredRepositories();
 				RepositorySearchWizard wizard = new RepositorySearchWizard(
-						configuredDirs);
+						configuredDirs, !allowBare);
 				WizardDialog dlg = new WizardDialog(getShell(), wizard);
 				if (dlg.open() == Window.OK
 						&& !wizard.getDirectories().isEmpty()) {
