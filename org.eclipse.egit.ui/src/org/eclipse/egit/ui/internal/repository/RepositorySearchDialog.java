@@ -13,7 +13,9 @@
 package org.eclipse.egit.ui.internal.repository;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -103,6 +105,8 @@ public class RepositorySearchDialog extends WizardPage {
 	private final IEclipsePreferences prefs = InstanceScope.INSTANCE
 			.getNode(Activator.getPluginId());
 
+	private boolean suppressBare;
+
 	private static final class ContentProvider implements ITreeContentProvider {
 
 		private final Object[] children = new Object[0];
@@ -180,19 +184,23 @@ public class RepositorySearchDialog extends WizardPage {
 	 * @param existingDirs
 	 */
 	public RepositorySearchDialog(Collection<String> existingDirs) {
-		this(existingDirs, false);
+		this(existingDirs, false, false);
 	}
 
 	/**
 	 * @param existingDirs
-	 * @param fillSearch true to fill search results when initially displayed
+	 * @param fillSearch
+	 *            true to fill search results when initially displayed
+	 * @param suppressBare
+	 *            if {@code true} suppress bare repositories
 	 */
 	public RepositorySearchDialog(Collection<String> existingDirs,
-			boolean fillSearch) {
-		super(
-				"searchPage", UIText.RepositorySearchDialog_SearchTitle, UIIcons.WIZBAN_IMPORT_REPO); //$NON-NLS-1$
+			boolean fillSearch, boolean suppressBare) {
+		super("searchPage", UIText.RepositorySearchDialog_SearchTitle, //$NON-NLS-1$
+				UIIcons.WIZBAN_IMPORT_REPO);
 		this.fExistingDirectories.addAll(existingDirs);
 		this.fillSearch = fillSearch;
+		this.suppressBare = suppressBare;
 	}
 
 	/**
@@ -411,7 +419,7 @@ public class RepositorySearchDialog extends WizardPage {
 
 		// check the root first
 		File resolved = FileKey.resolve(root, FS.DETECTED);
-		if (resolved != null) {
+		if ((resolved != null) && !suppressed(root, resolved)) {
 			gitDirs.add(resolved.getAbsoluteFile());
 			monitor.setTaskName(NLS.bind(
 					UIText.RepositorySearchDialog_RepositoriesFound_message,
@@ -432,6 +440,15 @@ public class RepositorySearchDialog extends WizardPage {
 					findGitDirsRecursive(child, gitDirs, monitor, depth - 1);
 				}
 			}
+		}
+	}
+
+	private boolean suppressed(File root, File resolved) {
+		try {
+			return suppressBare
+					&& Files.isSameFile(root.toPath(), resolved.toPath());
+		} catch (IOException e) {
+			return false;
 		}
 	}
 
