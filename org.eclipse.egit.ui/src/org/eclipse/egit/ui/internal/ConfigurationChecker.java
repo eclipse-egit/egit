@@ -20,6 +20,11 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jgit.lib.ConfigConstants;
+import org.eclipse.jgit.lib.StoredConfig;
+import org.eclipse.jgit.util.FS;
+import org.eclipse.jgit.util.LfsFactory;
+import org.eclipse.jgit.util.LfsFactory.LfsInstallCommand;
 import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PlatformUI;
@@ -31,8 +36,7 @@ import org.eclipse.ui.PlatformUI;
 public class ConfigurationChecker {
 
 	/**
-	 * Checks the system configuration. Currently only the HOME variable on
-	 * Windows is checked
+	 * Checks the system configuration.
 	 */
 	public static void checkConfiguration() {
 		// Schedule a job
@@ -61,6 +65,39 @@ public class ConfigurationChecker {
 
 	private static void check() {
 		checkHome();
+		checkLfs();
+	}
+
+	private static void checkLfs() {
+		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+		boolean auto = store.getBoolean(UIPreferences.LFS_AUTO_CONFIGURATION);
+		if (auto && !isLfsConfigured()) {
+			try {
+				LfsInstallCommand cmd = LfsFactory.getInstance()
+						.getInstallCommand();
+				if (cmd != null) {
+					cmd.call();
+				}
+			} catch (Exception e) {
+				Activator.handleIssue(IStatus.WARNING,
+						UIText.ConfigurationChecker_installLfsCannotInstall, e,
+						true);
+			}
+		}
+	}
+
+	private static boolean isLfsConfigured() {
+		try {
+			StoredConfig cfg = SystemReader.getInstance().openUserConfig(null,
+					FS.DETECTED);
+			cfg.load();
+			return cfg.getSubsections(ConfigConstants.CONFIG_FILTER_SECTION)
+					.contains("lfs"); //$NON-NLS-1$
+		} catch (Exception e) {
+			Activator.handleIssue(IStatus.WARNING,
+					UIText.ConfigurationChecker_installLfsCannotLoadConfig, e, false);
+		}
+		return false;
 	}
 
 	private static void checkHome() {
