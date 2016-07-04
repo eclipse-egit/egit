@@ -28,8 +28,10 @@ import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.WorkingTreeOptions;
+import org.eclipse.jgit.util.LfsFactory;
 import org.eclipse.jgit.util.io.AutoCRLFInputStream;
 import org.eclipse.osgi.util.NLS;
 
@@ -86,8 +88,19 @@ public class GitBlobStorage implements IEncodedStorage {
 
 		try {
 			WorkingTreeOptions workingTreeOptions = db.getConfig().get(WorkingTreeOptions.KEY);
-			final InputStream objectInputStream = db.open(blobId,
-					Constants.OBJ_BLOB).openStream();
+			ObjectLoader loader = db.open(blobId, Constants.OBJ_BLOB);
+
+			// TODO: replace this LFS specific smudging with mor generic code
+			// later (see: https://git.eclipse.org/r/#/c/102790/)
+
+			// would usually check the "diff" gitattribute for a path, but A LOT
+			// of unit tests use pseudo (non-existing) or wrong paths to test
+			// GitBlobStorage, so we simply look at the data if it is a LFS
+			// pointer always (pass null attributes).
+			final InputStream objectInputStream = LfsFactory.getInstance()
+					.applySmudgeFilter(db, loader,
+							null /* always try to load LFS blobs */)
+					.openStream();
 			switch (workingTreeOptions.getAutoCRLF()) {
 			case INPUT:
 				// When autocrlf == input the working tree could be either CRLF or LF, i.e. the comparison
