@@ -62,6 +62,7 @@ import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedEl
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.attributes.Attributes;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheEditor;
 import org.eclipse.jgit.dircache.DirCacheEntry;
@@ -80,6 +81,8 @@ import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.jgit.util.IO;
+import org.eclipse.jgit.util.LfsFactory;
+import org.eclipse.jgit.util.LfsFactory.LfsInputStream;
 import org.eclipse.jgit.util.io.AutoLFInputStream;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
@@ -1078,12 +1081,19 @@ public class CompareUtils {
 			if (ent.getFileMode() != FileMode.REGULAR_FILE)
 				ent.setFileMode(FileMode.REGULAR_FILE);
 
-			ent.setLength(contentLength);
 			ent.setLastModified(System.currentTimeMillis());
 			try {
-				ent.setObjectId(inserter.insert(Constants.OBJ_BLOB, content, 0,
-						contentLength));
-				inserter.flush();
+				Attributes attr = LfsFactory.getAttributesForPath(repo,
+						ent.getPathString());
+				try (LfsInputStream lfs = LfsFactory.getInstance()
+						.applyCleanFilter(repo,
+						new ByteArrayInputStream(content), contentLength,
+								attr.get(Constants.ATTR_MERGE))) {
+					ent.setLength(lfs.getLength());
+					ent.setObjectId(inserter.insert(Constants.OBJ_BLOB,
+							lfs.getLength(), lfs));
+					inserter.flush();
+				}
 			} catch (IOException ex) {
 				throw new RuntimeException(ex);
 			}
