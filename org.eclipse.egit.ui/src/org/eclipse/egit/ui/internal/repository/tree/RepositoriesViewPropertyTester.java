@@ -24,6 +24,7 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.transport.RemoteConfig;
+import org.eclipse.jgit.util.LfsFactory;
 
 /**
  * Property Tester used for enabling/disabling of context menus in the Git
@@ -145,6 +146,13 @@ public class RepositoriesViewPropertyTester extends PropertyTester {
 			return parent != null
 					&& parent.getType() == RepositoryTreeNodeType.SUBMODULES;
 		}
+
+		if ("canEnableLfs".equals(property)) { //$NON-NLS-1$
+			if (LfsFactory.getInstance().isAvailable()) {
+				return !LfsFactory.getInstance().isEnabled(repository);
+			}
+		}
+
 		return false;
 	}
 

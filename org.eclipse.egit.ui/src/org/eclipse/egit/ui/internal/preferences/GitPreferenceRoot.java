@@ -24,6 +24,7 @@ import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.BooleanFieldEditor;
@@ -33,6 +34,8 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.util.LfsFactory;
+import org.eclipse.jgit.util.LfsFactory.LfsInstallCommand;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -250,6 +253,40 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 		addField(new BooleanFieldEditor(UIPreferences.CLONE_WIZARD_STORE_SECURESTORE,
 				UIText.GitPreferenceRoot_SecureStoreUseByDefault, secureGroup));
 		updateMargins(secureGroup);
+
+		boolean lfsAvailable = LfsFactory.getInstance().isAvailable()
+				&& LfsFactory.getInstance().getInstallCommand() != null;
+		Group lfsGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
+		GridLayoutFactory.fillDefaults().applyTo(lfsGroup);
+		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
+				.applyTo(lfsGroup);
+		lfsGroup.setText(
+				lfsAvailable ? UIText.GitPreferenceRoot_lfsSupportCaption : UIText.GitPreferenceRoot_lfsSupportCaptionNotAvailable);
+		Button lfsEnable = new Button(lfsGroup, SWT.PUSH);
+		lfsEnable.setEnabled(lfsAvailable);
+		lfsEnable.setText(UIText.GitPreferenceRoot_lfsSupportInstall);
+		lfsEnable.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// enable LFS support for user.
+				LfsInstallCommand cmd = LfsFactory.getInstance()
+						.getInstallCommand();
+				try {
+					if (cmd != null) {
+						cmd.call();
+
+						MessageDialog.openInformation(getShell(),
+								UIText.GitPreferenceRoot_lfsSupportSuccessTitle,
+								UIText.GitPreferenceRoot_lfsSupportSuccessMessage);
+					}
+				} catch (Exception ex) {
+					Activator.handleError(
+							UIText.ConfigurationChecker_installLfsCannotInstall,
+							ex, true);
+				}
+			}
+		});
+		updateMargins(lfsGroup);
 	}
 
 	private void updateMargins(Group group) {

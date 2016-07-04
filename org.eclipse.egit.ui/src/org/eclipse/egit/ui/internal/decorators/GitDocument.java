@@ -47,6 +47,7 @@ import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.util.LfsFactory;
 import org.eclipse.osgi.util.NLS;
 
 class GitDocument extends Document implements RefsChangedListener {
@@ -220,7 +221,9 @@ class GitDocument extends Document implements RefsChangedListener {
 					GitTraceLocation.getTrace().trace(
 							GitTraceLocation.QUICKDIFF.getLocation(),
 							"(GitDocument) compareTo: " + baseline); //$NON-NLS-1$
-				ObjectLoader loader = repository.open(id, Constants.OBJ_BLOB);
+				ObjectLoader loader = LfsFactory.getInstance().applySmudgeFilter(
+						repository, repository.open(id, Constants.OBJ_BLOB),
+						tw.getAttributes().get(Constants.ATTR_DIFF));
 				byte[] bytes = loader.getBytes();
 				String charset;
 				charset = CompareCoreUtils.getResourceEncoding(resource);
