@@ -2411,6 +2411,27 @@ public class UIText extends NLS {
 	public static String ConfigurationChecker_homeNotSet;
 
 	/** */
+	public static String ConfigurationChecker_installLfsCannotInstall;
+
+	/** */
+	public static String ConfigurationChecker_installLfsCannotLoadConfig;
+
+	/** */
+	public static String ConfigurationChecker_installLfsDontAsk;
+
+	/** */
+	public static String ConfigurationChecker_installLfsMessage;
+
+	/** */
+	public static String ConfigurationChecker_installLfsNo;
+
+	/** */
+	public static String ConfigurationChecker_installLfsTitle;
+
+	/** */
+	public static String ConfigurationChecker_installLfsYes;
+
+	/** */
 	public static String ConfigurationEditorComponent_ConfigLocationLabel;
 
 	/** */
@@ -3644,6 +3665,9 @@ public class UIText extends NLS {
 	public static String RepositoriesViewLabelProvider_TagsNodeText;
 
 	/** */
+	public static String DialogsPreferencePage_autoConfigureLfs;
+
+	/** */
 	public static String DialogsPreferencePage_DetachedHeadCombo;
 
 	/** */
@@ -3666,6 +3690,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String DialogsPreferencePage_HomeDirWarning;
+
+	/** */
+	public static String DialogsPreferencePage_LfsConfigConfirmation;
 
 	/** */
 	public static String DialogsPreferencePage_RebaseCheckbox;

@@ -10,17 +10,24 @@
 package org.eclipse.egit.ui.internal;
 
 import java.io.File;
+import java.util.concurrent.Callable;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jgit.lib.ConfigConstants;
+import org.eclipse.jgit.lib.StoredConfig;
+import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PlatformUI;
+import org.osgi.service.prefs.BackingStoreException;
 
 /**
  * Checks the system configuration
@@ -59,6 +66,68 @@ public class ConfigurationChecker {
 
 	private static void check() {
 		checkHome();
+		checkLfs();
+	}
+
+	private static void checkLfs() {
+		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+		boolean hidden = !store.getBoolean(UIPreferences.SHOW_LFS_CONFIG_CONFIRMATION);
+		boolean auto = store.getBoolean(UIPreferences.LFS_AUTO_CONFIGURATION);
+		if ((auto || !hidden) && !isLfsConfigured()) {
+			Callable<?> installer;
+			try {
+				// optional dependency
+				installer = (Callable<?>) Class.forName("org.eclipse.jgit.lfs.InstallLfsCommand").newInstance(); //$NON-NLS-1$
+			} catch(Exception e) {
+				return; // not present
+			}
+			int index = (auto) ? 0
+					: confirmLfsInstall();
+			switch (index) {
+			case 0: // Yes
+				try {
+					installer.call();
+				} catch (Exception e) {
+					Activator.handleIssue(IStatus.WARNING,
+							UIText.ConfigurationChecker_installLfsCannotInstall, e, true);
+				}
+				break;
+			case 2: // No, don't ask
+				store.setValue(UIPreferences.SHOW_LFS_CONFIG_CONFIRMATION, false);
+				try {
+					InstanceScope.INSTANCE.getNode(Activator.getPluginId())
+							.flush();
+				} catch (BackingStoreException e) {
+					// best effort / don't care.
+				}
+				break;
+			}
+		}
+	}
+
+	private static int confirmLfsInstall() {
+		MessageDialog dialog = new MessageDialog(null,
+				UIText.ConfigurationChecker_installLfsTitle, null,
+				UIText.ConfigurationChecker_installLfsMessage,
+				MessageDialog.QUESTION, 0,
+				UIText.ConfigurationChecker_installLfsYes,
+				UIText.ConfigurationChecker_installLfsNo,
+				UIText.ConfigurationChecker_installLfsDontAsk);
+		return dialog.open();
+	}
+
+	private static boolean isLfsConfigured() {
+		try {
+			StoredConfig cfg = SystemReader.getInstance().openUserConfig(null,
+					FS.DETECTED);
+			cfg.load();
+			return cfg.getSubsections(ConfigConstants.CONFIG_FILTER_SECTION)
+					.contains("lfs"); //$NON-NLS-1$
+		} catch (Exception e) {
+			Activator.handleIssue(IStatus.WARNING,
+					UIText.ConfigurationChecker_installLfsCannotLoadConfig, e, false);
+		}
+		return false;
 	}
 
 	private static void checkHome() {
