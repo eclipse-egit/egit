@@ -9,6 +9,7 @@ package org.eclipse.egit.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.Authenticator;
 import java.net.ProxySelector;
 import java.text.MessageFormat;
@@ -202,6 +203,8 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		registerAutoIgnoreDerivedResources();
 		registerPreDeleteResourceChangeListener();
 		registerMergeStrategyRegistryListener();
+		registerBuiltinFilter("org.eclipse.jgit.lfs.CleanFilter"); //$NON-NLS-1$
+		registerBuiltinFilter("org.eclipse.jgit.lfs.SmudgeFilter"); //$NON-NLS-1$
 	}
 
 	@SuppressWarnings("unchecked")
@@ -262,6 +265,20 @@ public class Activator extends Plugin implements DebugOptionsListener {
 				}
 			};
 			ResourcesPlugin.getWorkspace().addResourceChangeListener(preDeleteProjectListener, IResourceChangeEvent.PRE_DELETE);
+		}
+	}
+
+	private void registerBuiltinFilter(String filterClassName) {
+		Class<?> filter;
+		try {
+			filter = Class.forName(filterClassName); // $NON-NLS-1$
+			if (filter != null) {
+				filter.getMethod("register").invoke(null); //$NON-NLS-1$
+			}
+		} catch (ClassNotFoundException | IllegalAccessException
+				| IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e1) {
+			// Ignore when registrations don't succeed
 		}
 	}
 
