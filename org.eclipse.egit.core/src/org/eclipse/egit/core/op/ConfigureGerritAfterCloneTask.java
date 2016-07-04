@@ -219,6 +219,9 @@ public class ConfigureGerritAfterCloneTask implements PostCloneTask {
 				String result = SshSupport.runSshCommand(sshUri,
 						credentialsProvider, repo.getFS(),
 						GERRIT_SSHD_VERSION_API, timeout);
+				if (result != null && result.contains("\n")) { //$NON-NLS-1$
+					result = result.substring(0, result.indexOf('\n'));
+				}
 				return result != null
 						&& GERRIT_SSHD_REPLY.matcher(result).matches();
 			} catch (IOException | CommandFailedException e) {
