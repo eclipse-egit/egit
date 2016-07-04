@@ -11,6 +11,7 @@ package org.eclipse.egit.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.Authenticator;
 import java.net.ProxySelector;
 import java.text.MessageFormat;
@@ -183,7 +184,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 
 		Config.setTypedConfigGetter(new ReportingTypedConfigGetter());
 		// we want to be notified about debug options changes
-		Dictionary<String, String> props = new Hashtable<String, String>(4);
+		Dictionary<String, String> props = new Hashtable<>(4);
 		props.put(DebugOptions.LISTENER_SYMBOLICNAME, pluginId);
 		context.registerService(DebugOptionsListener.class.getName(), this,
 				props);
@@ -208,6 +209,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		registerAutoIgnoreDerivedResources();
 		registerPreDeleteResourceChangeListener();
 		registerMergeStrategyRegistryListener();
+		registerBuiltinLFS();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -268,6 +270,20 @@ public class Activator extends Plugin implements DebugOptionsListener {
 				}
 			};
 			ResourcesPlugin.getWorkspace().addResourceChangeListener(preDeleteProjectListener, IResourceChangeEvent.PRE_DELETE);
+		}
+	}
+
+	private void registerBuiltinLFS() {
+		Class<?> lfs;
+		try {
+			lfs = Class.forName("org.eclipse.jgit.lfs.BuiltinLFS"); //$NON-NLS-1$
+			if (lfs != null) {
+				lfs.getMethod("register").invoke(null); //$NON-NLS-1$
+			}
+		} catch (ClassNotFoundException | IllegalAccessException
+				| IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e1) {
+			logWarning(CoreText.Activator_noBuiltinLfsSupportDetected, e1);
 		}
 	}
 
@@ -502,7 +518,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 
 		public CheckProjectsToShare() {
 			super(CoreText.Activator_AutoShareJobName);
-			this.projectCandidates = new LinkedHashSet<IProject>();
+			this.projectCandidates = new LinkedHashSet<>();
 			setUser(false);
 			setSystem(true);
 		}
@@ -527,7 +543,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 				return Status.OK_STATUS;
 			}
 
-			final Map<IProject, File> projects = new HashMap<IProject, File>();
+			final Map<IProject, File> projects = new HashMap<>();
 			for (IProject project : projectsToCheck) {
 				if (monitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
@@ -695,7 +711,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 					return;
 				}
 
-				final Set<IPath> toBeIgnored = new LinkedHashSet<IPath>();
+				final Set<IPath> toBeIgnored = new LinkedHashSet<>();
 
 				d.accept(new IResourceDeltaVisitor() {
 
