@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
@@ -108,7 +109,9 @@ public class BranchOperation extends BaseOperation {
 				closeProjectsMissingAfterCheckout(progress);
 
 				try (Git git = new Git(repository)) {
-					CheckoutCommand co = git.checkout();
+					CheckoutCommand co = git.checkout().setProgressMonitor(
+							new EclipseGitProgressTransformer(
+									progress.newChild(1)));
 					co.setName(target);
 
 					try {
@@ -157,7 +160,7 @@ public class BranchOperation extends BaseOperation {
 
 			private void refreshAffectedProjects(SubMonitor progress)
 					throws CoreException {
-				List<String> pathsToHandle = new ArrayList<String>();
+				List<String> pathsToHandle = new ArrayList<>();
 				pathsToHandle.addAll(result.getModifiedList());
 				pathsToHandle.addAll(result.getRemovedList());
 				pathsToHandle.addAll(result.getConflictList());
@@ -229,7 +232,7 @@ public class BranchOperation extends BaseOperation {
 		if (targetTreeId == null || currentTreeId == null)
 			return new IProject[0];
 
-		Map<File, IProject> locations = new HashMap<File, IProject>();
+		Map<File, IProject> locations = new HashMap<>();
 		for (IProject project : currentProjects) {
 			IPath location = project.getLocation();
 			if (location == null)
@@ -239,7 +242,7 @@ public class BranchOperation extends BaseOperation {
 			locations.put(location.toFile(), project);
 		}
 
-		List<IProject> toBeClosed = new ArrayList<IProject>();
+		List<IProject> toBeClosed = new ArrayList<>();
 		File root = repository.getWorkTree();
 		try (TreeWalk walk = new TreeWalk(repository)) {
 			walk.addTree(targetTreeId);
