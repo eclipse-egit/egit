@@ -31,6 +31,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
@@ -161,13 +162,12 @@ public class DiscardChangesOperation implements IEGitOperation {
 			Collection<String> paths = entry.getValue();
 
 			try {
-				discardChanges(repository, paths);
+				discardChanges(repository, paths, progress.newChild(1));
 			} catch (GitAPIException e) {
 				errorOccurred = true;
 				Activator.logError(
 						CoreText.DiscardChangesOperation_discardFailed, e);
 			}
-			progress.worked(1);
 
 			try {
 				ProjectUtil.refreshRepositoryResources(repository, paths,
@@ -186,11 +186,14 @@ public class DiscardChangesOperation implements IEGitOperation {
 		}
 	}
 
-	private void discardChanges(Repository repository, Collection<String> paths)
+	private void discardChanges(Repository repository, Collection<String> paths,
+			IProgressMonitor progress)
 			throws GitAPIException {
 		ResourceUtil.saveLocalHistory(repository);
 		try (Git git = new Git(repository)) {
-			CheckoutCommand checkoutCommand = git.checkout();
+			CheckoutCommand checkoutCommand = git.checkout().setProgressMonitor(
+					new EclipseGitProgressTransformer(progress));
+
 			if (revision != null) {
 				checkoutCommand.setStartPoint(revision);
 			}
