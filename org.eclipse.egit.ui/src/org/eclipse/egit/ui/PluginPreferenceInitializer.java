@@ -108,6 +108,9 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.SHOW_FETCH_POPUP_SUCCESS, true);
 		store.setDefault(UIPreferences.SHOW_PUSH_POPUP_SUCCESS, true);
 		store.setDefault(UIPreferences.SHOW_HOME_DIR_WARNING, true);
+		// TODO: change default for LFS?
+		store.setDefault(UIPreferences.SHOW_LFS_CONFIG_CONFIRMATION, false);
+		store.setDefault(UIPreferences.LFS_AUTO_CONFIGURATION, false);
 		store.setDefault(UIPreferences.SHOW_DETACHED_HEAD_WARNING, true);
 		store.setDefault(UIPreferences.SHOW_CHECKOUT_CONFIRMATION, true);
 		store.setDefault(UIPreferences.SHOW_RUNNING_LAUNCH_ON_CHECKOUT_WARNING,

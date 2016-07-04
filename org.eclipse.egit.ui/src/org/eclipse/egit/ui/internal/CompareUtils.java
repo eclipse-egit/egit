@@ -62,6 +62,7 @@ import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedEl
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.attributes.Attributes;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheEditor;
 import org.eclipse.jgit.dircache.DirCacheEntry;
@@ -80,6 +81,7 @@ import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.jgit.util.IO;
+import org.eclipse.jgit.util.LfsHelper;
 import org.eclipse.jgit.util.io.AutoLFInputStream;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
@@ -1080,9 +1082,12 @@ public class CompareUtils {
 
 			ent.setLength(contentLength);
 			ent.setLastModified(System.currentTimeMillis());
-			try {
-				ent.setObjectId(inserter.insert(Constants.OBJ_BLOB, content, 0,
-						contentLength));
+			try (ByteArrayInputStream bis = new ByteArrayInputStream(content)) {
+				Attributes attr = LfsHelper.getAttributesForPath(repo,
+						ent.getPathString());
+				ent.setObjectId(inserter.insert(Constants.OBJ_BLOB,
+						contentLength, LfsHelper.getCleanFiltered(repo, bis,
+								attr.get(Constants.ATTR_MERGE))));
 				inserter.flush();
 			} catch (IOException ex) {
 				throw new RuntimeException(ex);
