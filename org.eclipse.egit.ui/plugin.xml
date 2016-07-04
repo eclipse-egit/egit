@@ -1083,6 +1083,11 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.team.InstallLfsLocal"
+            name="%InstallLfsLocalCommand.label">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.team.Disconnect"
             name="%DisconnectCommand.name">
       </command>
@@ -2099,6 +2104,32 @@
                         </test>
                         <test
                               property="GitRepository.containsHead">
+                        </test>
+                     </and>
+                  </iterate>
+               </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.InstallLfsLocal">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.InstallLfsLocalCommand">
+         </class>
+         <activeWhen>
+             <and>
+                  <count
+                        value="+">
+                  </count>
+                  <iterate>
+                     <and>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                        </instanceof>
+                        <test
+                              property="GitRepository.isSafe">
+                        </test>
+                        <test
+                              property="GitRepository.canEnableLfs">
                         </test>
                      </and>
                   </iterate>
@@ -4653,6 +4684,12 @@
             </visibleWhen>
          </command>
          <command
+               commandId="org.eclipse.egit.ui.team.InstallLfsLocal"
+               label="%InstallLfsLocalCommand.label"
+               style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
                commandId="org.eclipse.egit.ui.RepositoriesViewRemove"
                label="%RepoViewRemove.label"
                style="push">
@@ -6255,7 +6292,7 @@
             class="org.eclipse.egit.ui.internal.repository.tree.RepositoriesViewPropertyTester"
             id="org.eclipse.egit.ui.RepositoryTester"
             namespace="GitRepository"
-            properties="isBare,isSafe,canCommit,canAmend,canResetHead,canStash,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase,canContinueRebase,isSubmodule,containsHead,hasGerritConfiguration,canFetchFromGerrit,canPushToGerrit"
+            properties="isBare,isSafe,canCommit,canAmend,canResetHead,canStash,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase,canContinueRebase,isSubmodule,containsHead,hasGerritConfiguration,canFetchFromGerrit,canPushToGerrit,canEnableLfs"
             type="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
       </propertyTester>
       <propertyTester
