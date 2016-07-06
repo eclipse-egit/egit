@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "47b89bd4_5f79489e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitSelectRepositoryPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-07-06T13:55:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47b89bd4_240489ce",
+      "range": {
+        "startLine": 177,
+        "startChar": 22,
+        "endLine": 177,
+        "endChar": 26
+      },
+      "revId": "13ec2a2ed07cbb5fa67d5da46b554c5f3afb36c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47b89bd4_e439b18c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "47b89bd4_df8d583f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-07-06T13:55:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47b89bd4_e439b18c",
+      "range": {
+        "startLine": 448,
+        "startChar": 27,
+        "endLine": 448,
+        "endChar": 71
+      },
+      "revId": "13ec2a2ed07cbb5fa67d5da46b554c5f3afb36c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47b89bd4_640e81f0",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2016-07-06T11:02:36Z",
       "side": 1,
       "message": "Needed? On line 430, it\u0027s just root.equals(resolved). Don\u0027t know which is better, but should use the same.",
+      "range": {
+        "startLine": 449,
+        "startChar": 8,
+        "endLine": 449,
+        "endChar": 24
+      },
+      "revId": "13ec2a2ed07cbb5fa67d5da46b554c5f3afb36c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47b89bd4_3f7c9490",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-07-06T13:55:27Z",
+      "side": 1,
+      "message": "I think it\u0027s more accurate, now also use it in line 430",
+      "parentUuid": "47b89bd4_640e81f0",
       "range": {
         "startLine": 449,
         "startChar": 8,
