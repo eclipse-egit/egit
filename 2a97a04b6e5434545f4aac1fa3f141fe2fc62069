@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47b89bd4_3f173452",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitSelectRepositoryPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-07-06T13:51:39Z",
+      "side": 1,
+      "message": "Since you switched the logic in the dialog, this should now be simply allowBare.",
+      "revId": "2a97a04b6e5434545f4aac1fa3f141fe2fc62069",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47b89bd4_9f25a0b5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-07-06T13:51:39Z",
+      "side": 1,
+      "message": "Since the logic switch, this should be true (former behavior).",
+      "range": {
+        "startLine": 187,
+        "startChar": 28,
+        "endLine": 187,
+        "endChar": 33
+      },
+      "revId": "2a97a04b6e5434545f4aac1fa3f141fe2fc62069",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47b89bd4_df1f1863",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchWizard.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-07-06T13:51:39Z",
+      "side": 1,
+      "message": "rename to allowBare, too.",
+      "revId": "2a97a04b6e5434545f4aac1fa3f141fe2fc62069",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47b89bd4_bf1a6473",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/AddCommand.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-07-06T13:51:39Z",
+      "side": 1,
+      "message": "True, now.",
+      "range": {
+        "startLine": 53,
+        "startChar": 38,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "2a97a04b6e5434545f4aac1fa3f141fe2fc62069",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
