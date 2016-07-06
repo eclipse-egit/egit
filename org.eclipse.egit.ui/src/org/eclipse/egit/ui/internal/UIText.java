@@ -3855,6 +3855,9 @@ public class UIText extends NLS {
 	public static String GitSelectRepositoryPage_PageMessage;
 
 	/** */
+	public static String GitSelectRepositoryPage_BareRepositoriesHidden;
+
+	/** */
 	public static String GitSelectRepositoryPage_PageTitle;
 
 	/** */
