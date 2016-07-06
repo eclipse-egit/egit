@@ -50,7 +50,7 @@ public class AddCommand extends
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RepositorySearchWizard wizard = new RepositorySearchWizard(
-				util.getConfiguredRepositories());
+				util.getConfiguredRepositories(), true);
 		WizardDialog dialog = new WizardDialog(getShell(event), wizard);
 		if (dialog.open() == Window.OK) {
 			for (String dir : wizard.getDirectories()) {
