@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47b89bd4_64c841ba",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-07-06T12:18:31Z",
+      "side": 1,
+      "message": "Doesn\u0027t\n\n  Platform.getPreferencesService()\n    .getString(Activator.getPluginId(), key, getDefaultDefaultRepositoryDir(), null);\n\ndo all this?",
+      "revId": "f0693c7f7e5a1686405bb469af6e7e7b6de06cce",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
