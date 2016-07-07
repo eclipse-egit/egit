@@ -24,6 +24,7 @@ import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -299,6 +300,9 @@ public class StagingView extends ViewPart implements IShowInSource {
 	private Set<IPath> pathsToExpandInStaged = new HashSet<>();
 
 	private Set<IPath> pathsToExpandInUnstaged = new HashSet<>();
+
+	@Nullable
+	private String overwrittenCommitMessage;
 
 	/**
 	 * Presentation mode of the staged/unstaged files.
@@ -866,7 +870,12 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 			@Override
 			protected Collection<String> computeMessageProposals() {
-				return CommitMessageHistory.getCommitHistory();
+				Set<String> commitHistory = new LinkedHashSet<>();
+				if (overwrittenCommitMessage != null) {
+					commitHistory.add(overwrittenCommitMessage);
+				}
+				commitHistory.addAll(CommitMessageHistory.getCommitHistory());
+				return commitHistory;
 			}
 		};
 		commitMessageText = new CommitMessageArea(commitMessageTextComposite,
@@ -3092,6 +3101,14 @@ public class StagingView extends ViewPart implements IShowInSource {
 		updateMessage();
 	}
 
+	/**
+	 * Resets the commit message component state
+	 */
+	public void resetCommitMessageComponent() {
+		overwrittenCommitMessage = commitMessageComponent.getCommitMessage();
+		loadInitialState(new CommitHelper(currentRepository));
+	}
+
 	private void loadExistingState(CommitHelper helper,
 			CommitMessageComponentState oldState) {
 		boolean headCommitChanged = !oldState.getHeadCommit().equals(
@@ -3162,7 +3179,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			if (message.trim().equals(chIdLine))
 				return false;
 
-			// change id was added automatically, but ther is more in the
+			// change id was added automatically, but there is more in the
 			// message; strip the id, and check for the signed-off-by tag
 			message = message.replace(chIdLine, ""); //$NON-NLS-1$
 		}
