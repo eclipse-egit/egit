@@ -34,4 +34,11 @@
             class="org.eclipse.egit.internal.mylyn.ui.commit.ActiveTaskBranchNameProvider">
       </branchNameProvider>
    </extension>
+   <extension
+         point="org.eclipse.mylyn.tasks.core.taskActivationListeners">
+      <listener
+            id="org.eclipse.egit.mylyn.ui.commit.CommitTextTaskActivationListener"
+            class="org.eclipse.egit.internal.mylyn.ui.commit.CommitTextTaskActivationListener">
+      </listener>
+   </extension>
 </plugin>
