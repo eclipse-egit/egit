@@ -56,6 +56,7 @@ import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.ICommitMessageProvider;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
@@ -3092,6 +3093,16 @@ public class StagingView extends ViewPart implements IShowInSource {
 		updateMessage();
 	}
 
+	/**
+	 * Replaces the commit message with the calculated commit message supplied
+	 * by the {@link ICommitMessageProvider}
+	 */
+	public void updateCommitMessageComponentCommitText() {
+		commitMessageComponent.updateUI();
+		commitMessageComponent.enableListeners(true);
+		saveCommitMessageComponentState();
+	}
+
 	private void loadExistingState(CommitHelper helper,
 			CommitMessageComponentState oldState) {
 		boolean headCommitChanged = !oldState.getHeadCommit().equals(
@@ -3162,7 +3173,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			if (message.trim().equals(chIdLine))
 				return false;
 
-			// change id was added automatically, but ther is more in the
+			// change id was added automatically, but there is more in the
 			// message; strip the id, and check for the signed-off-by tag
 			message = message.replace(chIdLine, ""); //$NON-NLS-1$
 		}
