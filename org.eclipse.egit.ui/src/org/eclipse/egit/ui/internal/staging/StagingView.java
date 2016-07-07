@@ -3092,6 +3092,13 @@ public class StagingView extends ViewPart implements IShowInSource {
 		updateMessage();
 	}
 
+	/**
+	 * Resets the commit message component state
+	 */
+	public void resetCommitMessageComponent() {
+		loadInitialState(new CommitHelper(currentRepository));
+	}
+
 	private void loadExistingState(CommitHelper helper,
 			CommitMessageComponentState oldState) {
 		boolean headCommitChanged = !oldState.getHeadCommit().equals(
@@ -3162,7 +3169,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			if (message.trim().equals(chIdLine))
 				return false;
 
-			// change id was added automatically, but ther is more in the
+			// change id was added automatically, but there is more in the
 			// message; strip the id, and check for the signed-off-by tag
 			message = message.replace(chIdLine, ""); //$NON-NLS-1$
 		}
