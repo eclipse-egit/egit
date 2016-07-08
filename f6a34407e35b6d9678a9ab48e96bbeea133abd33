@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27af2791_edca8db2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1028
+      },
+      "writtenOn": "2016-07-08T22:52:57Z",
+      "side": 1,
+      "message": "would it make more sense to out the overwritten message in the commit history?",
+      "revId": "f6a34407e35b6d9678a9ab48e96bbeea133abd33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_adc09594",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3108,
+      "author": {
+        "id": 1028
+      },
+      "writtenOn": "2016-07-08T22:52:57Z",
+      "side": 1,
+      "message": "could this end up being \"\" or something equally meaningless? then the history would end up with a unwanted entry when the overwritten commit message is put in the set.",
+      "revId": "f6a34407e35b6d9678a9ab48e96bbeea133abd33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
