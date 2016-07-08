@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27af2791_2c656b94",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-07-08T07:09:36Z",
+      "side": 1,
+      "message": "*style nit: trailing whitespace\n*this commit message describes what didn\u0027t work before this fix but not what you did to fix it\n* do you see a way to preserve the commit message if the user has modified the auto-created commit message before switching to another task ? Maybe we can cache it so that the user can restore it by clicking CTRL-Space",
+      "revId": "131b257d4cefff4eaf2216f3f41f0c1fbf85b862",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_8c5597cd",
+        "filename": "org.eclipse.egit.mylyn.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-07-08T07:09:36Z",
+      "side": 1,
+      "message": "s/4.5.0/[4.5.0,4.6.0)/",
+      "revId": "131b257d4cefff4eaf2216f3f41f0c1fbf85b862",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_6c5043dc",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/CommitTextTaskActivationListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-07-08T07:09:36Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "131b257d4cefff4eaf2216f3f41f0c1fbf85b862",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
