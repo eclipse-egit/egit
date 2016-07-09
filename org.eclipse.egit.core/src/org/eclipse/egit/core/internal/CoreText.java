@@ -152,6 +152,9 @@ public class CoreText extends NLS {
 	public static String UntrackOperation_writingIndex;
 
 	/** */
+	public static String GerritUtil_ConfigSaveError;
+
+	/** */
 	public static String GitFileHistory_errorParsingHistory;
 
 	/** */
