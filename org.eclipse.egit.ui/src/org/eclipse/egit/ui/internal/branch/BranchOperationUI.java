@@ -12,13 +12,8 @@
 package org.eclipse.egit.ui.internal.branch;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -31,9 +26,7 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.egit.core.RepositoryUtil;
-import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -45,8 +38,6 @@ import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
-import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jface.operation.ModalContext;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.annotations.NonNull;
@@ -55,7 +46,6 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.PlatformUI;
@@ -130,7 +120,8 @@ public class BranchOperationUI {
 				return null;
 			}
 
-			if (shouldCancelBecauseOfRunningLaunches(monitor)) {
+			if (LaunchFinder.shouldCancelBecauseOfRunningLaunches(repository,
+					monitor)) {
 				return null;
 			}
 
@@ -394,82 +385,6 @@ public class BranchOperationUI {
 				}
 			}
 		});
-	}
-
-	private boolean shouldCancelBecauseOfRunningLaunches(
-			IProgressMonitor monitor) {
-		if (!showQuestionsBeforeCheckout) {
-			return false;
-		}
-		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
-		if (!store.getBoolean(
-				UIPreferences.SHOW_RUNNING_LAUNCH_ON_CHECKOUT_WARNING)) {
-			return false;
-		}
-		final ILaunchConfiguration launchConfiguration = getRunningLaunchConfiguration(monitor);
-		if (launchConfiguration != null) {
-			final boolean[] dialogResult = new boolean[1];
-			PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-				@Override
-				public void run() {
-					dialogResult[0] = showContinueDialogInUI(store,
-							launchConfiguration);
-				}
-			});
-			return dialogResult[0];
-		}
-		return false;
-	}
-
-	private boolean showContinueDialogInUI(final IPreferenceStore store,
-			final ILaunchConfiguration launchConfiguration) {
-		String[] buttons = new String[] { UIText.BranchOperationUI_Continue,
-				IDialogConstants.CANCEL_LABEL };
-		String message = NLS.bind(
-				UIText.BranchOperationUI_RunningLaunchMessage,
-				launchConfiguration.getName());
-		MessageDialogWithToggle continueDialog = new MessageDialogWithToggle(
-				getShell(), UIText.BranchOperationUI_RunningLaunchTitle, null,
-				message, MessageDialog.NONE, buttons, 0,
-				UIText.BranchOperationUI_RunningLaunchDontShowAgain, false);
-		int result = continueDialog.open();
-		// cancel
-		if (result == IDialogConstants.CANCEL_ID || result == SWT.DEFAULT)
-			return true;
-		boolean dontWarnAgain = continueDialog.getToggleState();
-		if (dontWarnAgain)
-			store.setValue(
-					UIPreferences.SHOW_RUNNING_LAUNCH_ON_CHECKOUT_WARNING,
-					false);
-		return false;
-	}
-
-	private ILaunchConfiguration getRunningLaunchConfiguration(
-			IProgressMonitor monitor) {
-		final ILaunchConfiguration[] result = { null };
-		IRunnableWithProgress operation = new IRunnableWithProgress() {
-
-			@Override
-			public void run(IProgressMonitor m)
-					throws InvocationTargetException, InterruptedException {
-				Set<IProject> projects = new HashSet<>(
-						Arrays.asList(ProjectUtil.getProjects(repository)));
-				result[0] = LaunchFinder.findLaunch(projects, m);
-			}
-		};
-		try {
-			if (ModalContext.isModalContextThread(Thread.currentThread())) {
-				operation.run(monitor);
-			} else {
-				ModalContext.run(operation, true, monitor,
-						PlatformUI.getWorkbench().getDisplay());
-			}
-		} catch (InvocationTargetException e) {
-			// ignore
-		} catch (InterruptedException e) {
-			// ignore
-		}
-		return result[0];
 	}
 
 }
