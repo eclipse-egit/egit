@@ -23,6 +23,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
@@ -46,6 +47,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -179,8 +181,11 @@ public class GitSelectRepositoryPage extends WizardPage {
 				if (dlg.open() == Window.OK
 						&& !wizard.getDirectories().isEmpty()) {
 					Set<String> dirs = wizard.getDirectories();
-					for (String dir : dirs)
-						util.addConfiguredRepository(new File(dir));
+					for (String dir : dirs) {
+						File gitDir = FileUtils.canonicalize(new File(dir));
+						GerritUtil.tryToAutoConfigureForGerrit(gitDir);
+						util.addConfiguredRepository(gitDir);
+					}
 					checkPage();
 				}
 			}
