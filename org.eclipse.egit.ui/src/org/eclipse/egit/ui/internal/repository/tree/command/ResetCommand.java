@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2016 SAP AG and others
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,30 +7,24 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 495777
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.core.internal.job.JobUtil;
-import org.eclipse.egit.core.op.ResetOperation;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ResetActionHandler;
+import org.eclipse.egit.ui.internal.actions.ResetMenu;
 import org.eclipse.egit.ui.internal.repository.SelectResetTypePage;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.api.ResetCommand.ResetType;
 import org.eclipse.jgit.lib.Ref;
-import org.eclipse.osgi.util.NLS;
 
 /**
  * "Resets" a repository
@@ -53,15 +47,15 @@ public class ResetCommand extends
 		} catch (IOException e1) {
 			throw new ExecutionException(e1.getMessage(), e1);
 		}
-		final String targetBranch;
-		if (!(node.getObject() instanceof Ref))
+		if (!(node.getObject() instanceof Ref)) {
 			// Use same dialog as for project when a repository is selected
 			// allowing reset to any commit
 			return new ResetActionHandler().execute(event);
+		}
 
 		// If a ref is selected in the repository view, only reset to
 		// that ref will be possible.
-		targetBranch = ((Ref) node.getObject()).getName();
+		final Ref targetBranch = (Ref) node.getObject();
 
 		final String repoName = Activator.getDefault().getRepositoryUtil()
 				.getRepositoryName(node.getRepository());
@@ -71,7 +65,7 @@ public class ResetCommand extends
 			@Override
 			public void addPages() {
 				addPage(new SelectResetTypePage(repoName, node.getRepository(),
-						currentBranch, targetBranch));
+						currentBranch, targetBranch.getName()));
 				setWindowTitle(UIText.ResetCommand_WizardTitle);
 			}
 
@@ -79,40 +73,8 @@ public class ResetCommand extends
 			public boolean performFinish() {
 				final ResetType resetType = ((SelectResetTypePage) getPages()[0])
 						.getResetType();
-				if (resetType == ResetType.HARD)
-					if (!MessageDialog
-							.openQuestion(
-									getShell(),
-									UIText.ResetTargetSelectionDialog_ResetQuestion,
-									UIText.ResetTargetSelectionDialog_ResetConfirmQuestion))
-						return true;
-
-				try {
-					getContainer().run(true, true,
-							new IRunnableWithProgress() {
-								@Override
-								public void run(IProgressMonitor monitor)
-										throws InvocationTargetException,
-										InterruptedException {
-
-									String jobname = NLS.bind(
-											UIText.ResetAction_reset,
-											targetBranch);
-									final ResetOperation operation = new ResetOperation(
-											node.getRepository(), targetBranch,
-											resetType);
-									JobUtil.scheduleUserWorkspaceJob(operation,
-											jobname, JobFamilies.RESET);
-								}
-							});
-				} catch (InvocationTargetException ite) {
-					Activator.handleError(
-							UIText.ResetCommand_ResetFailureMessage, ite
-									.getCause(), true);
-					return false;
-				} catch (InterruptedException ie) {
-					// ignore here
-				}
+				ResetMenu.performReset(getShell(), node.getRepository(),
+						targetBranch.getObjectId(), resetType);
 				return true;
 			}
 		};

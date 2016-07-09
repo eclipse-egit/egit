@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2013 Roland Grunberg <rgrunber@redhat.com>
+ * Copyright (C) 2010, 2016 Roland Grunberg <rgrunber@redhat.com> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,8 +9,12 @@
  * Contributors:
  *   Benjamin Muskalla (Tasktop Technologies Inc.) - support for model scoping
  *   François Rey <eclipse.org_@_francois_._rey_._name> - handling of linked resources
+ *   Thomas Wolf <thomas.wolf@paranor.ch> - Bug 495777
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
+
+import java.text.MessageFormat;
+import java.util.Arrays;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -22,10 +26,12 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.egit.core.op.DiscardChangesOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.branch.LaunchFinder;
 import org.eclipse.egit.ui.internal.operations.GitScopeUtil;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.Repository;
@@ -41,9 +47,21 @@ public class DiscardChangesActionHandler extends RepositoryActionHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
 		IWorkbenchPart part = getPart(event);
+		String question = UIText.DiscardChangesAction_confirmActionMessage;
+		ILaunchConfiguration launch = LaunchFinder
+				.getRunningLaunchConfiguration(Arrays.asList(getRepositories()),
+						null);
+		if (launch != null) {
+			question = MessageFormat.format(question,
+					"\n\n" + MessageFormat.format( //$NON-NLS-1$
+							UIText.LaunchFinder_RunningLaunchMessage,
+							launch.getName()));
+		} else {
+			question = MessageFormat.format(question, ""); //$NON-NLS-1$
+		}
 		boolean performAction = MessageDialog.openConfirm(getShell(event),
 				UIText.DiscardChangesAction_confirmActionTitle,
-				UIText.DiscardChangesAction_confirmActionMessage);
+				question);
 		if (!performAction)
 			return null;
 		final DiscardChangesOperation operation = createOperation(part, event);

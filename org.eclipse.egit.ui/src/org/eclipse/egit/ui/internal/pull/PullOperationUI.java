@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 SAP AG.
+ * Copyright (c) 2011, 2016 SAP AG and others
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 495777
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.pull;
 
@@ -26,6 +27,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
@@ -38,6 +40,7 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.branch.CleanupUncomittedChangesDialog;
+import org.eclipse.egit.ui.internal.branch.LaunchFinder;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -70,6 +73,8 @@ public class PullOperationUI extends JobChangeAdapter {
 			.synchronizedMap(new LinkedHashMap<Repository, Object>());
 
 	private final PullOperation pullOperation;
+
+	private boolean checkForLaunches = true;
 
 	/**
 	 * @param repositories
@@ -108,6 +113,11 @@ public class PullOperationUI extends JobChangeAdapter {
 	}
 
 	private void start(IJobChangeListener jobChangeListener) {
+		if (checkForLaunches
+				&& LaunchFinder.shouldCancelBecauseOfRunningLaunches(
+						Arrays.asList(repositories), null)) {
+			return;
+		}
 		// figure out a job name
 		String jobName;
 		if (this.repositories.length == 1) {
@@ -128,7 +138,7 @@ public class PullOperationUI extends JobChangeAdapter {
 
 			@Override
 			public IStatus runInWorkspace(IProgressMonitor monitor) {
-				execute(monitor);
+				execute(monitor, false);
 				// we always return OK and handle display of errors on our own
 				return Status.OK_STATUS;
 			}
@@ -152,15 +162,27 @@ public class PullOperationUI extends JobChangeAdapter {
 	 * @param monitor
 	 */
 	public void execute(IProgressMonitor monitor) {
+		execute(monitor, true);
+	}
+
+	private void execute(IProgressMonitor monitor, boolean launchCheck) {
+		SubMonitor progress = SubMonitor.convert(monitor,
+				launchCheck ? 11 : 10);
+		if (launchCheck && LaunchFinder.shouldCancelBecauseOfRunningLaunches(
+				Arrays.asList(repositories), progress.newChild(1))) {
+			return;
+		}
 		try {
-			pullOperation.execute(monitor);
+			pullOperation.execute(progress.newChild(10));
 			results.putAll(pullOperation.getResults());
 		} catch (CoreException e) {
-			if (e.getStatus().getSeverity() == IStatus.CANCEL)
+			if (e.getStatus().getSeverity() == IStatus.CANCEL) {
 				results.putAll(pullOperation.getResults());
-			else
+			} else {
 				Activator.handleError(e.getMessage(), e, true);
+			}
 		}
+
 	}
 
 	@Override
@@ -227,6 +249,7 @@ public class PullOperationUI extends JobChangeAdapter {
 			final PullOperationUI parentOperation = this;
 			final PullOperationUI pullOperationUI = new PullOperationUI(
 					Collections.singleton(repository));
+			pullOperationUI.checkForLaunches = false;
 			tasksToWaitFor.incrementAndGet();
 			pullOperationUI.start(new JobChangeAdapter() {
 

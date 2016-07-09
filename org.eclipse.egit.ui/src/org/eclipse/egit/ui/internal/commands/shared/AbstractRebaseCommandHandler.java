@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2014 SAP AG and others.
+ * Copyright (c) 2010, 2016 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 495777
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commands.shared;
 
@@ -233,7 +234,9 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 	 */
 	public void execute(Repository repository) throws ExecutionException {
 		final RebaseOperation rebase = createRebaseOperation(repository);
-		execute(rebase);
+		if (rebase != null) {
+			execute(rebase);
+		}
 	}
 
 	private void handleBeginError(final Repository repository, IStatus result) {
