@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013 SAP AG.
+ * Copyright (c) 2013, 2016 SAP AG and others
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,12 +7,14 @@
  *
  * Contributors:
  *    Tobias Pfeifer (SAP AG) - initial implementation
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 495777
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commands.shared;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.branch.LaunchFinder;
 import org.eclipse.egit.ui.internal.rebase.RebaseInteractiveHandler;
 import org.eclipse.jgit.api.RebaseCommand.Operation;
 import org.eclipse.jgit.lib.Repository;
@@ -35,6 +37,10 @@ public class ProcessStepsRebaseCommand extends AbstractRebaseCommandHandler {
 	@Override
 	protected RebaseOperation createRebaseOperation(Repository repository)
 			throws ExecutionException {
+		if (LaunchFinder.shouldCancelBecauseOfRunningLaunches(repository,
+				null)) {
+			return null;
+		}
 		return new RebaseOperation(repository, Operation.PROCESS_STEPS,
 				RebaseInteractiveHandler.INSTANCE);
 	}
