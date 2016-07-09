@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2016 SAP AG and others
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Stefan Lay (SAP AG) - initial implementation
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 495777
  *******************************************************************************/
 
 package org.eclipse.egit.ui.internal.actions;
@@ -26,6 +27,7 @@ import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.op.MergeOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.branch.LaunchFinder;
 import org.eclipse.egit.ui.internal.dialogs.BasicConfigurationDialog;
 import org.eclipse.egit.ui.internal.dialogs.MergeTargetSelectionDialog;
 import org.eclipse.egit.ui.internal.merge.MergeResultDialog;
@@ -48,11 +50,12 @@ public class MergeActionHandler extends RepositoryActionHandler {
 	@Override
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		final Repository repository = getRepository(true, event);
-		if (repository == null)
+		if (repository == null
+				|| !checkMergeIsPossible(repository, getShell(event))
+				|| LaunchFinder.shouldCancelBecauseOfRunningLaunches(repository,
+						null)) {
 			return null;
-
-		if (!checkMergeIsPossible(repository, getShell(event)))
-			return null;
+		}
 		BasicConfigurationDialog.show(repository);
 		MergeTargetSelectionDialog mergeTargetSelectionDialog = new MergeTargetSelectionDialog(
 				getShell(event), repository);
