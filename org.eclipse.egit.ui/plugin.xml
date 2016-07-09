@@ -1067,7 +1067,7 @@
             </and>
          </activeWhen>
       </handler>
-            <handler
+      <handler
             commandId="org.eclipse.egit.ui.history.Reset">
          <class
                class="org.eclipse.egit.ui.internal.reflog.command.ResetHandler">
