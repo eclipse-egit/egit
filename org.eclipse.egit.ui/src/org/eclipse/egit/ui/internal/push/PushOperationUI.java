@@ -218,10 +218,21 @@ public class PushOperationUI {
 	}
 
 	/**
-	 * Starts the operation asynchronously showing a confirmation dialog after
-	 * completion
+	 * Starts the operation asynchronously as a user job showing a confirmation
+	 * dialog after completion.
 	 */
 	public void start() {
+		start(true);
+	}
+
+	/**
+	 * Starts the operation asynchronously showing a confirmation dialog after
+	 * completion.
+	 *
+	 * @param asUserJob
+	 *            whether to run the job as a user job
+	 */
+	public void start(boolean asUserJob) {
 		final Repository repo = repository;
 		if (repo == null) {
 			return;
@@ -260,7 +271,7 @@ public class PushOperationUI {
 			}
 
 		};
-		job.setUser(true);
+		job.setUser(asUserJob);
 		job.schedule();
 	}
 
