@@ -40,17 +40,20 @@ public final class GerritDialogSettings {
 	public static final String PUSH_TO_GERRIT_SECTION = PushToGerritPage.class
 			.getSimpleName();
 
-	/**
-	 * Repository suffix for storing the last used URI in a section.
-	 */
+	/** Repository suffix for storing the last used URI in a section. */
 	public static final String LAST_URI_SUFFIX = ".lastUri"; //$NON-NLS-1$
+
+	/** Key for storing the "run in background" setting. */
+	public static final String RUN_IN_BACKGROUND = "runInBackground"; //$NON-NLS-1$
 
 	private GerritDialogSettings() {
 		// Utility class shall not be instantiated.
 	}
 
 	/**
-	 * Updates dialog settings as appropriate. Called within the UI thread.
+	 * Updates dialog settings as appropriate. Called within the UI thread. Used
+	 * to initialize {@link IDialogSettings} after a fetch or push refspec has
+	 * been updated; does not overwrite existing entries in the settings.
 	 *
 	 * @param repository
 	 *            the {@code config} belongs to
@@ -93,27 +96,24 @@ public final class GerritDialogSettings {
 
 	private static void updateGerritFetch(@NonNull Repository repository,
 			@NonNull RemoteConfig config) {
-		IDialogSettings section = getSection(FETCH_FROM_GERRIT_SECTION);
-		String configured = section.get(repository + LAST_URI_SUFFIX);
-		if (configured == null || configured.isEmpty()) {
-			List<URIish> fetchUris = config.getURIs();
-			if (!fetchUris.isEmpty()) {
-				section.put(repository + LAST_URI_SUFFIX,
-						fetchUris.get(0).toPrivateString());
-			}
-		}
+		updateLastUri(repository, FETCH_FROM_GERRIT_SECTION, config.getURIs());
 	}
 
 	private static void updateGerritPush(@NonNull Repository repository,
 			@NonNull RemoteConfig config) {
-		IDialogSettings section = getSection(PUSH_TO_GERRIT_SECTION);
+		updateLastUri(repository, PUSH_TO_GERRIT_SECTION, config.getPushURIs());
+	}
+
+	private static void updateLastUri(@NonNull Repository repository,
+			String sectionName, List<URIish> uris) {
+		IDialogSettings section = getSection(sectionName);
 		String configured = section.get(repository + LAST_URI_SUFFIX);
 		if (configured == null || configured.isEmpty()) {
-			List<URIish> pushUris = config.getPushURIs();
-			if (!pushUris.isEmpty()) {
+			if (!uris.isEmpty()) {
 				section.put(repository + LAST_URI_SUFFIX,
-						pushUris.get(0).toPrivateString());
+						uris.get(0).toPrivateString());
 			}
 		}
 	}
+
 }

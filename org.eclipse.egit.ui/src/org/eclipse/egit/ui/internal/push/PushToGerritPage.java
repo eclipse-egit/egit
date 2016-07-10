@@ -35,7 +35,6 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.ui.internal.gerrit.GerritDialogSettings;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.dialogs.Dialog;
@@ -110,6 +109,8 @@ public class PushToGerritPage extends WizardPage {
 	private Label topicLabel;
 
 	private Text topicText;
+
+	private Button runInBackground;
 
 	private Set<String> knownRemoteRefs = new TreeSet<>(
 			String.CASE_INSENSITIVE_ORDER);
@@ -200,6 +201,11 @@ public class PushToGerritPage extends WizardPage {
 		topicText = new Text(main, SWT.SINGLE | SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
 				.applyTo(topicText);
+		runInBackground = new Button(main, SWT.CHECK);
+		GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
+				.applyTo(runInBackground);
+		runInBackground.setText(UIText.FetchGerritChangePage_RunInBackground);
+
 		topicText.addModifyListener(new ModifyListener() {
 
 			@Override
@@ -248,6 +254,7 @@ public class PushToGerritPage extends WizardPage {
 		}
 		selectLastUsedUri();
 		setLastUsedBranch();
+		setRunInBackgroundSelection();
 		initializeTopic(branchText.getText());
 		addTopicProposal(topicText);
 		branchText.setFocus();
@@ -271,12 +278,25 @@ public class PushToGerritPage extends WizardPage {
 		}
 	}
 
+	private void storeDialogState(String branch) {
+		storeRunInBackgroundSelection();
+		storeLastUsedUri(uriCombo.getText());
+		storeLastUsedBranch(branchText.getText());
+		storeLastUsedTopic(topicText.isEnabled(), topicText.getText().trim(),
+				branch);
+	}
+
 	private void storeLastUsedUri(String uri) {
 		settings.put(lastUriKey, uri.trim());
 	}
 
 	private void storeLastUsedBranch(String branch) {
 		settings.put(lastBranchKey, branch.trim());
+	}
+
+	private void storeRunInBackgroundSelection() {
+		settings.put(GerritDialogSettings.RUN_IN_BACKGROUND,
+				runInBackground.getSelection());
 	}
 
 	private void storeLastUsedTopic(boolean enabled, String topic,
@@ -329,6 +349,11 @@ public class PushToGerritPage extends WizardPage {
 			}
 		}
 		uriCombo.select(0);
+	}
+
+	private void setRunInBackgroundSelection() {
+		runInBackground.setSelection(
+				settings.getBoolean(GerritDialogSettings.RUN_IN_BACKGROUND));
 	}
 
 	private void setLastUsedBranch() {
@@ -461,44 +486,49 @@ public class PushToGerritPage extends WizardPage {
 		return baseRef;
 	}
 
+	private PushOperationUI getOperation()
+			throws IOException, URISyntaxException {
+		URIish uri = new URIish(uriCombo.getText());
+		Ref currentHead = repository.exactRef(Constants.HEAD);
+		String ref = prefixCombo.getItem(prefixCombo.getSelectionIndex())
+				+ branchText.getText().trim();
+		if (topicText.isEnabled()) {
+			ref = setTopicInRef(ref, topicText.getText().trim());
+		}
+		RemoteRefUpdate update = new RemoteRefUpdate(repository, currentHead,
+				ref, false, null, null);
+		PushOperationSpecification spec = new PushOperationSpecification();
+
+		spec.addURIRefUpdates(uri, Arrays.asList(update));
+		return new PushOperationUI(repository, spec, false);
+	}
+
 	void doPush() {
 		try {
-			URIish uri = new URIish(uriCombo.getText());
-			Ref currentHead = repository.exactRef(Constants.HEAD);
-			String ref = prefixCombo.getItem(prefixCombo.getSelectionIndex())
-					+ branchText.getText().trim();
-			if (topicText.isEnabled()) {
-				ref = setTopicInRef(ref, topicText.getText().trim());
-			}
-			RemoteRefUpdate update = new RemoteRefUpdate(repository,
-					currentHead, ref, false, null, null);
-			PushOperationSpecification spec = new PushOperationSpecification();
-
-			spec.addURIRefUpdates(uri, Arrays.asList(update));
-			final PushOperationUI op = new PushOperationUI(repository, spec,
-					false);
-			op.setCredentialsProvider(new EGitCredentialsProvider());
-			final PushOperationResult[] result = new PushOperationResult[1];
-			getContainer().run(true, true, new IRunnableWithProgress() {
-				@Override
-				public void run(IProgressMonitor monitor)
-						throws InvocationTargetException, InterruptedException {
-					try {
-						result[0] = op.execute(monitor);
-					} catch (CoreException e) {
-						throw new InvocationTargetException(e);
+			final PushOperationUI op = getOperation();
+			if (runInBackground.getSelection()) {
+				// Don't run as a user job; the user already told us to run in
+				// the background.
+				op.start(false);
+			} else {
+				final PushOperationResult[] result = new PushOperationResult[1];
+				getContainer().run(true, true, new IRunnableWithProgress() {
+					@Override
+					public void run(IProgressMonitor monitor)
+							throws InvocationTargetException,
+							InterruptedException {
+						try {
+							result[0] = op.execute(monitor);
+						} catch (CoreException e) {
+							throw new InvocationTargetException(e);
+						}
 					}
-				}
-			});
-			PushResultDialog.show(repository, result[0],
-					op.getDestinationString(), false, false);
-			storeLastUsedUri(uriCombo.getText());
-			storeLastUsedBranch(branchText.getText());
-			storeLastUsedTopic(topicText.isEnabled(),
-					topicText.getText().trim(), repository.getBranch());
-		} catch (URISyntaxException e) {
-			Activator.handleError(e.getMessage(), e, true);
-		} catch (IOException e) {
+				});
+				PushResultDialog.show(repository, result[0],
+						op.getDestinationString(), false, false);
+			}
+			storeDialogState(repository.getBranch());
+		} catch (IOException | URISyntaxException e) {
 			Activator.handleError(e.getMessage(), e, true);
 		} catch (InvocationTargetException e) {
 			Throwable cause = e.getCause();
