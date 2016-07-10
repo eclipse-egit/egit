@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2015 SAP AG and others.
+ * Copyright (c) 2013, 2016 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,7 +8,7 @@
  * Contributors:
  *    Tobias Pfeifer (SAP AG) - initial implementation
  *    Tobias Baumann (tobbaumann@gmail.com) - Bug 473950
- *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 477248
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 477248, 460595
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.rebase;
 
@@ -47,10 +47,12 @@ import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.bindings.keys.SWTKeySupport;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.layout.TreeColumnLayout;
@@ -88,6 +90,8 @@ import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
@@ -1038,6 +1042,7 @@ public class RebaseInteractiveView extends ViewPart implements
 
 		Menu menu = manager.createContextMenu(planViewer.getControl());
 		planViewer.getControl().setMenu(menu);
+		planViewer.getControl().addKeyListener(new ContextMenuKeyListener());
 	}
 
 	private void createContextMenuItems(final TreeViewer planViewer) {
@@ -1067,6 +1072,43 @@ public class RebaseInteractiveView extends ViewPart implements
 				UIText.RebaseInteractiveStepActionToolBarProvider_RewordText,
 				UIIcons.REWORD, RebaseInteractivePlan.ElementAction.REWORD,
 				planViewer, actionToolBarProvider));
+	}
+
+	private class ContextMenuKeyListener extends KeyAdapter {
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			int key = SWTKeySupport.convertEventToUnmodifiedAccelerator(e);
+			for (IAction item : contextMenuItems) {
+				if (key == item.getAccelerator()) {
+					e.doit = false;
+					item.run();
+					return;
+				}
+			}
+			int[] moveAccelerators = actionToolBarProvider
+					.getMoveAccelerators();
+			if (key == moveAccelerators[0]) {
+				actionToolBarProvider.moveUp();
+				e.doit = false;
+			} else if (key == moveAccelerators[1]) {
+				actionToolBarProvider.moveDown();
+				e.doit = false;
+			} else if ((e.stateMask & SWT.MODIFIER_MASK) == 0) {
+				switch (key) {
+				case SWT.ARROW_DOWN:
+				case SWT.ARROW_UP:
+				case SWT.PAGE_DOWN:
+				case SWT.PAGE_UP:
+				case SWT.HOME:
+				case SWT.END:
+					break;
+				default:
+					e.doit = false;
+					break;
+				}
+			}
+		}
 	}
 
 	private static GitDateFormatter getNewDateFormatter() {
