@@ -1,10 +1,12 @@
 /*******************************************************************************
- * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2010, 2016 Mathias Kinzler <mathias.kinzler@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Lars Vogel <Lars.Vogel@vogella.com> - Bug 497630
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
@@ -19,7 +21,8 @@ import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
@@ -94,12 +97,7 @@ public class DeleteBranchOperation implements IEGitOperation {
 
 	@Override
 	public void execute(IProgressMonitor m) throws CoreException {
-		IProgressMonitor monitor;
-		if (m == null)
-			monitor = new NullProgressMonitor();
-		else
-			monitor = m;
-
+		SubMonitor subMonitor = SubMonitor.convert(m);
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 			@Override
 			public void run(IProgressMonitor actMonitor) throws CoreException {
@@ -122,6 +120,10 @@ public class DeleteBranchOperation implements IEGitOperation {
 				}
 				actMonitor.beginTask(taskName, branches.size());
 				for (Ref branch : branches) {
+					if (actMonitor.isCanceled()) {
+						throw new OperationCanceledException(
+								CoreText.DeleteBranchOperation_Canceled);
+					}
 					try (Git git = new Git(repository)) {
 						git.branchDelete().setBranchNames(
 								branch.getName()).setForce(force).call();
@@ -144,7 +146,7 @@ public class DeleteBranchOperation implements IEGitOperation {
 		};
 		// lock workspace to protect working tree changes
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
-				IWorkspace.AVOID_UPDATE, monitor);
+				IWorkspace.AVOID_UPDATE, subMonitor);
 	}
 
 	@Override

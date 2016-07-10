@@ -95,6 +95,9 @@ public class CoreText extends NLS {
 	public static String ContainerTreeIterator_DeletedFile;
 
 	/** */
+	public static String DeleteBranchOperation_Canceled;
+
+	/** */
 	public static String DeleteBranchOperation_TaskName;
 
 	/** */
