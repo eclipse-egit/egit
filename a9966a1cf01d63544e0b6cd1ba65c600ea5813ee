@@ -22,6 +22,30 @@
       "revId": "a9966a1cf01d63544e0b6cd1ba65c600ea5813ee",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_f82de697",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gerrit/GerritUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-07-11T16:58:51Z",
+      "side": 1,
+      "message": "For Gerrit? That would be a new one to me. Try pushing something without change-ID to a refs/for/... refspec. I thought it was mandatory...\n\nEGit creates that setting when it auto-configures for Gerrit after a clone, so I included it here, too. But frankly said, I\u0027d have to check if EGit actually uses it. Maybe not... I know that Gerrit\u0027s commit-msg hook does use it, though. (Which in turn is not used by EGit AFAIK.)",
+      "parentUuid": "27af2791_75e55f51",
+      "range": {
+        "startLine": 232,
+        "startChar": 4,
+        "endLine": 232,
+        "endChar": 21
+      },
+      "revId": "a9966a1cf01d63544e0b6cd1ba65c600ea5813ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
