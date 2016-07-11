@@ -118,6 +118,30 @@
       "revId": "a9966a1cf01d63544e0b6cd1ba65c600ea5813ee",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_5303134c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gerrit/GerritUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-07-11T18:36:16Z",
+      "side": 1,
+      "message": "OK. Intrestingly the vast majority of commits in eclipse.platform.swt _has_ a change-ID. (I admit that I only spot-checked two dozen or so...)\n\nAnyway: I think I\u0027ll keep this. It\u0027s only added if not present yet, and setting it doesn\u0027t hurt. EGit uses the config setting to determine the default state of its \"Create Change-ID\" button in the commit dialog/staging view.\n\nAnd no, the logic to detect whether we are dealing with a likely Gerrit is based on push refspecs. If there is one that looks like a Gerrit refspec /refs/for, refs/publish, refs/drafts, then we consider the server to be a Gerrit.\n\nThe alternative (which would be much more expensive, though), would be go asking the servers (for all ssh or https refspecs) whether one of them was a Gerrit, but I think that\u0027s not necessary here, where we add an already existing git repo.",
+      "parentUuid": "27af2791_78ec76b7",
+      "range": {
+        "startLine": 232,
+        "startChar": 4,
+        "endLine": 232,
+        "endChar": 21
+      },
+      "revId": "a9966a1cf01d63544e0b6cd1ba65c600ea5813ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
