@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27af2791_2e41d80c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DeleteBranchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-07-11T21:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27af2791_4e560cdc",
+      "revId": "fae90e744d2aeb94b67d21a9c6ecfede0671e2a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27af2791_ce493c3a",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DeleteBranchOperation.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-07-11T21:56:36Z",
       "side": 1,
       "message": "externalize message",
+      "revId": "fae90e744d2aeb94b67d21a9c6ecfede0671e2a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_4ec1acfa",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DeleteBranchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-07-11T21:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27af2791_ce493c3a",
       "revId": "fae90e744d2aeb94b67d21a9c6ecfede0671e2a6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
