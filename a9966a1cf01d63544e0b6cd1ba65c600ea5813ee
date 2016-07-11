@@ -46,6 +46,30 @@
       "revId": "a9966a1cf01d63544e0b6cd1ba65c600ea5813ee",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_58d092f4",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gerrit/GerritUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 598
+      },
+      "writtenOn": "2016-07-11T17:02:58Z",
+      "side": 1,
+      "message": "It\u0027s configurable at the project level in Gerrit:\n\"Require Change-Id in commit message: FALSE/TRUE\"\n\nA lot of projects at Eclipse.org set it to TRUE though, but not everywhere.",
+      "parentUuid": "27af2791_f82de697",
+      "range": {
+        "startLine": 232,
+        "startChar": 4,
+        "endLine": 232,
+        "endChar": 21
+      },
+      "revId": "a9966a1cf01d63544e0b6cd1ba65c600ea5813ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
