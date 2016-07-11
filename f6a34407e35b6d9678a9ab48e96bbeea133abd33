@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "27af2791_ce1cdcf9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1028
+      },
+      "writtenOn": "2016-07-11T22:58:49Z",
+      "side": 1,
+      "message": "hm I see, but wouldn\u0027t this have the problem where if I wrote a custom message, then switched tasks twice the custom message would be lost? That could even happen if I wrote the custom message on Task A, then switched to B then back to A, wouldn\u0027t I lose my custom message I intended for Task A?",
+      "revId": "f6a34407e35b6d9678a9ab48e96bbeea133abd33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27af2791_adc09594",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 5
@@ -66,6 +83,23 @@
       "side": 1,
       "message": "I think that can only happen if the user manually deletes the commit message and then switches tasks.",
       "parentUuid": "27af2791_adc09594",
+      "revId": "f6a34407e35b6d9678a9ab48e96bbeea133abd33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_ee19a006",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3108,
+      "author": {
+        "id": 1028
+      },
+      "writtenOn": "2016-07-11T22:58:49Z",
+      "side": 1,
+      "message": "I think we should turn \"\" or pure whitespace to null.",
       "revId": "f6a34407e35b6d9678a9ab48e96bbeea133abd33",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
