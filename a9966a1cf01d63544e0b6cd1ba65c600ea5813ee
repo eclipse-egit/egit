@@ -70,6 +70,30 @@
       "revId": "a9966a1cf01d63544e0b6cd1ba65c600ea5813ee",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_b8be0eaa",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gerrit/GerritUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-07-11T17:12:18Z",
+      "side": 1,
+      "message": "I have never ever encountered a Gerrit (project) that did not require change-IDs. I believe it\u0027s a left-over from very early times, and as they point out themselves, working without change-IDs can be rather tedious: see https://git.eclipse.org/r/Documentation/user-upload.html#push_replace .\n\nBut I\u0027ll check whether EGit uses that at all, and if not, I can leave it out here. Auto-configure after clone will still add it, though.",
+      "parentUuid": "27af2791_58d092f4",
+      "range": {
+        "startLine": 232,
+        "startChar": 4,
+        "endLine": 232,
+        "endChar": 21
+      },
+      "revId": "a9966a1cf01d63544e0b6cd1ba65c600ea5813ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
