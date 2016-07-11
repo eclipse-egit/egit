@@ -166,6 +166,78 @@
       "revId": "a9966a1cf01d63544e0b6cd1ba65c600ea5813ee",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_aee7a8a0",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gerrit/GerritUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-07-11T23:08:24Z",
+      "side": 1,
+      "message": "AFAIK requiring a changeID is optional, but only for the first patchset, for all subsequent patchsets the changeID is required since otherwise Gerrit doesn\u0027t know for which change this should be a new patchset [1]. Hence I think it makes sense to always add the changeID if we know the remote is a Gerrit server.\n\nFor the same reason I think it would make sense to change the default on the Eclipse Gerrit server to always require changeID.\n\n[1] https://gerrit-review.googlesource.com/Documentation/user-changeid.html",
+      "parentUuid": "27af2791_539dd345",
+      "range": {
+        "startLine": 232,
+        "startChar": 4,
+        "endLine": 232,
+        "endChar": 21
+      },
+      "revId": "a9966a1cf01d63544e0b6cd1ba65c600ea5813ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_cefbfc39",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gerrit/GerritUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-07-11T23:08:24Z",
+      "side": 1,
+      "message": "if this option isn\u0027t set EGit will not automatically add a changeID",
+      "parentUuid": "27af2791_f82de697",
+      "range": {
+        "startLine": 232,
+        "startChar": 4,
+        "endLine": 232,
+        "endChar": 21
+      },
+      "revId": "a9966a1cf01d63544e0b6cd1ba65c600ea5813ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_0ef6d450",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gerrit/GerritUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-07-11T23:08:24Z",
+      "side": 1,
+      "message": "I think the default on the Eclipse Gerrit server should be changed to TRUE",
+      "parentUuid": "27af2791_78ec76b7",
+      "range": {
+        "startLine": 232,
+        "startChar": 4,
+        "endLine": 232,
+        "endChar": 21
+      },
+      "revId": "a9966a1cf01d63544e0b6cd1ba65c600ea5813ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
