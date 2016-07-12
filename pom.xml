@@ -77,6 +77,8 @@
     <coretest.vmparams></coretest.vmparams>
     <uitest.vmparams>-Dorg.eclipse.swtbot.search.timeout=30000 -Dorg.eclipse.swtbot.screenshots.dir=target/screenshots -Xmx1024m -XX:MaxPermSize=150m</uitest.vmparams>
     <eclipse-with-smartimport>http://download.eclipse.org/eclipse/updates/4.6milestones/S-4.6M6-201603170200</eclipse-with-smartimport>
+    <!-- set JDK_HOME to JAVA_HOME path of JDK7 installation in order to compile against JDK 7 class library -->
+    <JDK_HOME>${JAVA_HOME}</JDK_HOME>
   </properties>
 
   <profiles>
@@ -366,6 +368,8 @@
               <arg>-properties</arg>
               <arg>${project.basedir}/.settings/org.eclipse.jdt.core.prefs</arg>
               <arg>-nowarn</arg>
+              <arg>-bootclasspath</arg>
+              <arg>${JDK_HOME}${file.separator}jre${file.separator}lib${file.separator}rt.jar${path.separator}${JDK_HOME}${file.separator}jre${file.separator}lib${file.separator}jsse.jar${path.separator}${JDK_HOME}${file.separator}jre${file.separator}lib${file.separator}jce.jar</arg>
             </compilerArgs>
           </configuration>
         </plugin>

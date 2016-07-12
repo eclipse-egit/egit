@@ -20,8 +20,8 @@
 		<pathelement path="${compile_classpath}"/>
 	</path>
         <echo message="compile classpath: ${compile_classpath}"/>
-	<taskdef classpathref="wikitext.tasks.classpath" resource="org/eclipse/mylyn/internal/wikitext/mediawiki/core/tasks/tasks.properties"/>
-	<taskdef classpathref="wikitext.tasks.classpath" resource="org/eclipse/mylyn/wikitext/core/util/anttask/tasks.properties"/>
+	<taskdef classpathref="wikitext.tasks.classpath" resource="org/eclipse/mylyn/wikitext/mediawiki/core/ant/tasks.properties"/>
+	<taskdef classpathref="wikitext.tasks.classpath" resource="org/eclipse/mylyn/wikitext/core/ant/tasks.properties"/>
 
 	<property name="egit.help.doc.url.base" value="http://wiki.eclipse.org" />
 
@@ -47,8 +47,8 @@
 			>
 				<path name="EGit/User_Guide" title="EGit User Guide" />
 				<path name="JGit/User_Guide" title="JGit User Guide" />
-				<path name="EGit/New_and_Noteworthy/4.3" title="EGit 4.3 New and Noteworthy" />
-				<path name="JGit/New_and_Noteworthy/4.3" title="JGit 4.3 New and Noteworthy" />
+				<path name="EGit/New_and_Noteworthy/4.4" title="EGit 4.4 New and Noteworthy" />
+				<path name="JGit/New_and_Noteworthy/4.4" title="JGit 4.4 New and Noteworthy" />
 				<path name="EGit/Git_For_Eclipse_Users" title="Git for Eclipse Users" />
 				<path name="EGit/Contributor_Guide" title="EGit Contributor Guide" />
 				<stylesheet url="book.css" />
