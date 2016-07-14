@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 SAP AG and others.
+ * Copyright (c) 2010, 2016 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Lars Vogel <Lars.Vogel@vogella.com> - Bug 497820
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.rebase;
 
@@ -108,10 +109,17 @@ public class RebaseResultDialog extends MessageDialog {
 	 */
 	public static void show(final RebaseResult result,
 			final Repository repository) {
+
+		// do not show result dialog if user abort rebase operation
+		if (result.getStatus() == Status.ABORTED) {
+			return;
+		}
+
 		boolean shouldShow = result.getStatus() == Status.STOPPED
 				|| result.getStatus() == Status.STASH_APPLY_CONFLICTS
 				|| Activator.getDefault().getPreferenceStore().getBoolean(
 						UIPreferences.SHOW_REBASE_CONFIRM);
+
 
 		if(result.getStatus() == Status.CONFLICTS) {
 			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
