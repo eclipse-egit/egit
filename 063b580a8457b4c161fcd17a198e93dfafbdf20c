@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27af2791_df9abd7a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1198,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2016-07-14T16:01:34Z",
+      "side": 1,
+      "message": "What I don\u0027t like is that the Reflog for the branch gets polluted. When I amend a commit on branch test1 then the Reflog gets one extra entry:\n\n  chris@vblub14:~/git/delve$ git reflog test\n  cec2e97 test@{0}: commit (amend): test1\n  f37a26d test@{1}: HEAD~: updating HEAD\n  6aea04e test@{2}: commit: test1\n  f37a26d test@{3}: branch: Created from branch refs/remotes/origin/master\n\nMaybe you can prohibit the reflog entries.",
+      "revId": "063b580a8457b4c161fcd17a198e93dfafbdf20c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
