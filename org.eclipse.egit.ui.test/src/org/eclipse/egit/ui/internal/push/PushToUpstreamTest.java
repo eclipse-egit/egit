@@ -12,12 +12,15 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation.UpstreamConfig;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -104,9 +107,11 @@ public class PushToUpstreamTest extends LocalRepositoryTestCase {
 
 	private void pushToUpstream() {
 		SWTBotTree project = selectProject();
+		JobJoiner joiner = JobJoiner.startListening(JobFamilies.PUSH, 20,
+				TimeUnit.SECONDS);
 		ContextMenuHelper
 				.clickContextMenu(project, getPushToUpstreamMenuPath());
-
+		TestUtil.openJobResultDialog(joiner.join());
 		SWTBotShell resultDialog = TestUtil
 				.botForShellStartingWith("Push Results");
 		resultDialog.close();
