@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27af2791_25a567ff",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/PlanContextMenuAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-07-16T21:04:29Z",
+      "side": 1,
+      "message": "On Mac, this produces U+2326 (decimal 8998), which then gets set as accelerator instead of SWT.DEL (127). The accelerator is shown nicely in the menu.\n\nOn GTK, we get \"Delete\", which indeed results in 127 being set as accelerator. Another bug in SWT on GTK apparently prevents showing this accelerator in the menu. I notice that the global delete action also has no accelerator text shown in the menu on GTK.",
+      "revId": "cc4589e29c2c390977a9dcf3bebc3fb9458adb88",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
