@@ -17,11 +17,11 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -35,8 +35,6 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.core.op.BranchOperation;
-import org.eclipse.egit.core.op.IEGitOperation.PostExecuteTask;
-import org.eclipse.egit.core.op.IEGitOperation.PreExecuteTask;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
@@ -141,37 +139,30 @@ public class BranchOperationUI {
 		return target;
 	}
 
-	private BranchOperation getOperation(boolean restore) {
-		BranchOperation bop = new BranchOperation(repository, target, !restore);
-		if (restore) {
+	private void doCheckout(BranchOperation bop, boolean restore,
+			IProgressMonitor monitor)
+			throws CoreException {
+		SubMonitor progress = SubMonitor.convert(monitor, restore ? 10 : 1);
+		if (!restore) {
+			bop.execute(progress.newChild(1));
+		} else {
 			final BranchProjectTracker tracker = new BranchProjectTracker(
 					repository);
-			final AtomicReference<IMemento> memento = new AtomicReference<>();
-			bop.addPreExecuteTask(new PreExecuteTask() {
+			IMemento snapshot = tracker.snapshot();
+			bop.execute(progress.newChild(7));
+			tracker.save(snapshot);
+			IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
 				@Override
-				public void preExecute(Repository pRepo,
-						IProgressMonitor pMonitor) throws CoreException {
-					// Snapshot current projects before checkout
-					// begins
-					memento.set(tracker.snapshot());
+				public void run(IProgressMonitor innerMonitor)
+						throws CoreException {
+					tracker.restore(innerMonitor);
 				}
-			});
-			bop.addPostExecuteTask(new PostExecuteTask() {
-
-				@Override
-				public void postExecute(Repository pRepo,
-						IProgressMonitor pMonitor) throws CoreException {
-					IMemento snapshot = memento.get();
-					if (snapshot != null) {
-						// Save previous branch's projects and restore
-						// current branch's projects
-						tracker.save(snapshot).restore(pMonitor);
-					}
-				}
-			});
+			};
+			ResourcesPlugin.getWorkspace().run(action,
+					ResourcesPlugin.getWorkspace().getRoot(),
+					IWorkspace.AVOID_UPDATE, progress.newChild(3));
 		}
-		return bop;
 	}
 
 	/**
@@ -186,52 +177,62 @@ public class BranchOperationUI {
 				.getRepositoryName(repository);
 		String jobname = NLS.bind(UIText.BranchAction_checkingOut, repoName,
 				target);
-
-		final boolean restore = Activator.getDefault().getPreferenceStore()
+		boolean restore = Activator.getDefault().getPreferenceStore()
 				.getBoolean(UIPreferences.CHECKOUT_PROJECT_RESTORE);
-		final BranchOperation bop = getOperation(restore);
-
-		Job job = new WorkspaceJob(jobname) {
-
-			@Override
-			public IStatus runInWorkspace(IProgressMonitor monitor) {
-				try {
-					bop.execute(monitor);
-				} catch (CoreException e) {
-					switch (bop.getResult().getStatus()) {
-					case CONFLICTS:
-					case NONDELETED:
-						break;
-					default:
-						return Activator.createErrorStatus(
-								UIText.BranchAction_branchFailed, e);
-					}
-				} finally {
-					GitLightweightDecorator.refresh();
-				}
-				return Status.OK_STATUS;
-			}
-
-			@Override
-			public boolean belongsTo(Object family) {
-				if (JobFamilies.CHECKOUT.equals(family))
-					return true;
-				return super.belongsTo(family);
-			}
-		};
+		final CheckoutJob job = new CheckoutJob(jobname, restore);
 		job.setUser(true);
-		// Set scheduling rule to workspace because we may have to re-create
-		// projects using BranchProjectTracker.
-		if (restore) {
-			job.setRule(ResourcesPlugin.getWorkspace().getRoot());
-		}
 		job.addJobChangeListener(new JobChangeAdapter() {
 			@Override
 			public void done(IJobChangeEvent cevent) {
-				show(bop.getResult());
+				show(job.getCheckoutResult());
 			}
 		});
 		job.schedule();
+	}
+
+	private class CheckoutJob extends Job {
+
+		private BranchOperation bop;
+
+		private final boolean restore;
+
+		public CheckoutJob(String jobName, boolean restore) {
+			super(jobName);
+			this.restore = restore;
+		}
+
+		@Override
+		public IStatus run(IProgressMonitor monitor) {
+			bop = new BranchOperation(repository, target, !restore);
+			try {
+				doCheckout(bop, restore, monitor);
+			} catch (CoreException e) {
+				switch (bop.getResult().getStatus()) {
+				case CONFLICTS:
+				case NONDELETED:
+					break;
+				default:
+					return Activator.createErrorStatus(
+							UIText.BranchAction_branchFailed, e);
+				}
+			} finally {
+				GitLightweightDecorator.refresh();
+				monitor.done();
+			}
+			return Status.OK_STATUS;
+		}
+
+		@Override
+		public boolean belongsTo(Object family) {
+			if (JobFamilies.CHECKOUT.equals(family))
+				return true;
+			return super.belongsTo(family);
+		}
+
+		@NonNull
+		public CheckoutResult getCheckoutResult() {
+			return bop.getResult();
+		}
 	}
 
 	/**
@@ -249,8 +250,8 @@ public class BranchOperationUI {
 		}
 		final boolean restore = Activator.getDefault().getPreferenceStore()
 				.getBoolean(UIPreferences.CHECKOUT_PROJECT_RESTORE);
-		BranchOperation bop = getOperation(restore);
-		bop.execute(progress.newChild(80));
+		BranchOperation bop = new BranchOperation(repository, target, !restore);
+		doCheckout(bop, restore, progress.newChild(80));
 		show(bop.getResult());
 	}
 
