@@ -9,6 +9,7 @@
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Marc Khouzam (Ericsson)  - Add an option not to checkout the new branch
  *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 493935
+ *    Lars Vogel <Lars.Vogel@vogella.com> - Bug
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.fetch;
 
@@ -107,8 +108,6 @@ import org.eclipse.ui.PlatformUI;
  */
 public class FetchGerritChangePage extends WizardPage {
 
-	private static final String RUN_IN_BACKGROUND = "runInBackground"; //$NON-NLS-1$
-
 	private final Repository repository;
 
 	private final IDialogSettings settings;
@@ -142,8 +141,6 @@ public class FetchGerritChangePage extends WizardPage {
 	private Composite warningAdditionalRefNotActive;
 
 	private Button activateAdditionalRefs;
-
-	private Button runInBackgroud;
 
 	private IInputValidator branchValidator;
 	private IInputValidator tagValidator;
@@ -374,12 +371,6 @@ public class FetchGerritChangePage extends WizardPage {
 		} else if (candidateChange != null) {
 			refText.setText(candidateChange);
 		}
-		runInBackgroud = new Button(main, SWT.CHECK);
-		GridDataFactory.fillDefaults().span(2, 1).align(SWT.BEGINNING, SWT.END)
-				.grab(true, true)
-				.applyTo(runInBackgroud);
-		runInBackgroud.setText(UIText.FetchGerritChangePage_RunInBackground);
-
 		// get all available Gerrit URIs from the repository
 		SortedSet<String> uris = new TreeSet<>();
 		try {
@@ -407,7 +398,6 @@ public class FetchGerritChangePage extends WizardPage {
 		} else {
 			selectLastUsedUri();
 		}
-		restoreRunInBackgroundSelection();
 		refText.setFocus();
 		Dialog.applyDialogFont(main);
 		setControl(main);
@@ -509,14 +499,6 @@ public class FetchGerritChangePage extends WizardPage {
 			}
 		}
 		uriCombo.select(0);
-	}
-
-	private void storeRunInBackgroundSelection() {
-		settings.put(RUN_IN_BACKGROUND, runInBackgroud.getSelection());
-	}
-
-	private void restoreRunInBackgroundSelection() {
-		runInBackgroud.setSelection(settings.getBoolean(RUN_IN_BACKGROUND));
 	}
 
 	@Override
@@ -654,96 +636,61 @@ public class FetchGerritChangePage extends WizardPage {
 		final String textForTag = tagText.getText();
 		final String textForBranch = branchText.getText();
 
-		storeRunInBackgroundSelection();
+		Job job = new WorkspaceJob(
+				UIText.FetchGerritChangePage_GetChangeTaskName) {
 
-		if (runInBackgroud.getSelection()) {
-			Job job = new WorkspaceJob(
-					UIText.FetchGerritChangePage_GetChangeTaskName) {
-
-				@Override
-				public IStatus runInWorkspace(IProgressMonitor monitor) {
-					try {
-						internalDoFetch(spec, uri, doCheckout, doCreateTag,
-								doCreateBranch, doCheckoutNewBranch,
-								doActivateAdditionalRefs, textForTag,
-								textForBranch, monitor);
-					} catch (CoreException ce) {
-						return ce.getStatus();
-					} catch (Exception e) {
-						return Activator.createErrorStatus(e.getLocalizedMessage(), e);
-					}
-					return org.eclipse.core.runtime.Status.OK_STATUS;
+			@Override
+			public IStatus runInWorkspace(IProgressMonitor monitor) {
+				try {
+					internalDoFetch(spec, uri, doCheckout, doCreateTag,
+							doCreateBranch, doCheckoutNewBranch,
+							doActivateAdditionalRefs, textForTag, textForBranch,
+							monitor);
+				} catch (CoreException ce) {
+					return ce.getStatus();
+				} catch (Exception e) {
+					return Activator.createErrorStatus(e.getLocalizedMessage(),
+							e);
 				}
-
-				@Override
-				public boolean belongsTo(Object family) {
-					if (JobFamilies.FETCH.equals(family))
-						return true;
-					return super.belongsTo(family);
-				}
-			};
-			job.setUser(true);
-			job.schedule();
-			return true;
-		} else {
-			try {
-			getWizard().getContainer().run(true, true,
-					new IRunnableWithProgress() {
-						@Override
-						public void run(IProgressMonitor monitor)
-								throws InvocationTargetException,
-								InterruptedException {
-							try {
-								internalDoFetch(spec, uri, doCheckout,
-											doCreateTag, doCreateBranch,
-											doCheckoutNewBranch,
-										doActivateAdditionalRefs, textForTag,
-										textForBranch, monitor);
-							} catch (RuntimeException e) {
-								throw e;
-							} catch (Exception e) {
-								throw new InvocationTargetException(e);
-							} finally {
-								monitor.done();
-							}
-						}
-					});
-			} catch (InvocationTargetException e) {
-				Activator.handleError(e.getCause().getMessage(), e.getCause(),
-						true);
-				return false;
-			} catch (InterruptedException e) {
-				// just return
+				return org.eclipse.core.runtime.Status.OK_STATUS;
 			}
-			return true;
-		}
+
+			@Override
+			public boolean belongsTo(Object family) {
+				if (JobFamilies.FETCH.equals(family))
+					return true;
+				return super.belongsTo(family);
+			}
+		};
+		job.setUser(true);
+		job.schedule();
+		return true;
 	}
 
 	private void internalDoFetch(RefSpec spec, String uri, boolean doCheckout,
 			boolean doCreateTag, boolean doCreateBranch,
 			boolean doCheckoutNewBranch, boolean doActivateAdditionalRefs,
 			String textForTag, String textForBranch, IProgressMonitor monitor)
-					throws IOException, CoreException, URISyntaxException,
-					GitAPIException {
+			throws IOException, CoreException, URISyntaxException,
+			GitAPIException {
 
 		int totalWork = 1;
 		if (doCheckout)
 			totalWork++;
 		if (doCreateTag || doCreateBranch)
 			totalWork++;
-		monitor.beginTask(
-				UIText.FetchGerritChangePage_GetChangeTaskName,
+		monitor.beginTask(UIText.FetchGerritChangePage_GetChangeTaskName,
 				totalWork);
 
 		try {
-			RevCommit commit = fetchChange(uri, spec,
-					monitor);
+			RevCommit commit = fetchChange(uri, spec, monitor);
 
 			if (doCreateTag)
 				createTag(spec, textForTag, commit, monitor);
 
 			if (doCreateBranch)
-				createBranch(textForBranch, doCheckoutNewBranch, commit, monitor);
+				createBranch(textForBranch, doCheckoutNewBranch, commit,
+						monitor);
 
 			if (doCheckout || doCreateTag)
 				checkout(commit, monitor);
