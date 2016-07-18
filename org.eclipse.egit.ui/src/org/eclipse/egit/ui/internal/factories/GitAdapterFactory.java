@@ -161,7 +161,11 @@ public class GitAdapterFactory implements IAdapterFactory {
 			if (projects.length > 0) {
 				IPath projectRelativePath = gitPath
 						.makeRelativeTo(projects[0].getLocation());
-				return projects[0].getFile(projectRelativePath);
+				if (projectRelativePath.isEmpty()) {
+					return projects[0];
+				} else {
+					return projects[0].getFile(projectRelativePath);
+				}
 			}
 		} catch (CoreException e) {
 			// Ignore and fall through
