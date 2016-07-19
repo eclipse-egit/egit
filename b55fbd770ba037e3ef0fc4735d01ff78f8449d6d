@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27af2791_14f2508f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-07-19T05:40:19Z",
+      "side": 1,
+      "message": "I do wonder whether this might be related to http://dev.eclipse.org/mhonarc/lists/egit-dev/msg04120.html , where a submodule gets a file icon (see http://dev.eclipse.org/mhonarc/lists/egit-dev/pngmXaUcHJoD2.png ) ?",
+      "range": {
+        "startLine": 10,
+        "startChar": 50,
+        "endLine": 11,
+        "endChar": 24
+      },
+      "revId": "b55fbd770ba037e3ef0fc4735d01ff78f8449d6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
