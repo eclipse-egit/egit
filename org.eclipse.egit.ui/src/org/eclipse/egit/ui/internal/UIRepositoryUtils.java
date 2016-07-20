@@ -46,6 +46,32 @@ public final class UIRepositoryUtils {
 	 */
 	public static boolean handleUncommittedFiles(Repository repo, Shell shell)
 			throws GitAPIException {
+		String repoName = Activator.getDefault().getRepositoryUtil()
+				.getRepositoryName(repo);
+		return handleUncommittedFiles(repo, shell,
+				MessageFormat.format(
+						UIText.AbstractRebaseCommandHandler_cleanupDialog_title,
+						repoName));
+	}
+
+	/**
+	 * Checks the repository to see if there are uncommitted changes, and
+	 * prompts the user to clean them up.
+	 *
+	 * @param repo
+	 *            the repository
+	 * @param shell
+	 *            the parent shell for opening the dialog
+	 * @param dialogTitle
+	 *            the dialog title
+	 * @return true if the git status was clean or it was dirty and the user
+	 *         cleaned up the uncommitted changes and the previous action may
+	 *         continue
+	 * @throws GitAPIException
+	 *             if there was an error checking the repository
+	 */
+	public static boolean handleUncommittedFiles(Repository repo, Shell shell,
+			String dialogTitle) throws GitAPIException {
 		Status status = null;
 		try (Git git = new Git(repo)) {
 			status = git.status().call();
@@ -53,13 +79,9 @@ public final class UIRepositoryUtils {
 		if (status != null && status.hasUncommittedChanges()) {
 			List<String> files = new ArrayList<>(status.getModified());
 			Collections.sort(files);
-			String repoName = Activator.getDefault().getRepositoryUtil()
-					.getRepositoryName(repo);
 			CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
 					shell,
-					MessageFormat
-							.format(UIText.AbstractRebaseCommandHandler_cleanupDialog_title,
-									repoName),
+					dialogTitle,
 					UIText.AbstractRebaseCommandHandler_cleanupDialog_text,
 					repo, files);
 			cleanupUncomittedChangesDialog.open();
