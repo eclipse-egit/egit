@@ -5361,6 +5361,9 @@ public class UIText extends NLS {
 	public static String SubmoduleUpdateCommand_UpdateError;
 
 	/** */
+	public static String SubmoduleUpdateCommand_UncommittedChanges;
+
+	/** */
 	public static String SynchronizeWithMenu_custom;
 
 	/** */
