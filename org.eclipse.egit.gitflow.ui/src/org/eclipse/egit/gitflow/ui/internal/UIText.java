@@ -34,6 +34,9 @@ public class UIText extends NLS {
 	public static String FeatureFinishHandler_Conflicts;
 
 	/**	 */
+	public static String FilteredBranchesWidget_lastModified;
+
+	/**	 */
 	public static String FinishHandler_conflictsWhileMergingFromTo;
 
 	/**	 */
