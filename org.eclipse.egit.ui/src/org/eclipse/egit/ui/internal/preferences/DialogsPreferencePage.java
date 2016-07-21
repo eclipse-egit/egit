@@ -78,6 +78,10 @@ public class DialogsPreferencePage extends FieldEditorPreferencePage implements
 				UIPreferences.CLONE_WIZARD_SHOW_DETAILED_FAILURE_DIALOG,
 				UIText.DialogsPreferencePage_ShowCloneFailedDialog,
 				confirmDialogsGroup));
+		addField(new BooleanFieldEditor(
+				UIPreferences.SHOW_FETCH_POPUP_SUCCESS,
+				UIText.DialogsPreferencePage_ShowInitialConfigCheckbox,
+				confirmDialogsGroup));
 		updateMargins(confirmDialogsGroup);
 
 		Group infoGroup = new Group(main, SWT.SHADOW_ETCHED_IN);

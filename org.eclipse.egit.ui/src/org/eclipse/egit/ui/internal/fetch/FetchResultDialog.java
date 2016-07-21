@@ -10,6 +10,8 @@
 package org.eclipse.egit.ui.internal.fetch;
 
 import org.eclipse.egit.core.op.FetchOperationResult;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.Dialog;
@@ -21,6 +23,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -30,6 +33,7 @@ import org.eclipse.ui.PlatformUI;
  * Dialog displaying result of fetch operation.
  */
 public class FetchResultDialog extends TitleAreaDialog {
+
 	private static final int CONFIGURE = 99;
 
 	private final Repository localDb;
@@ -39,6 +43,8 @@ public class FetchResultDialog extends TitleAreaDialog {
 	private final String sourceString;
 
 	private boolean hideConfigure;
+
+	private Button hide_dialog; // ADDED
 
 	/**
 	 * @param parentShell
@@ -65,15 +71,19 @@ public class FetchResultDialog extends TitleAreaDialog {
 	 */
 	public static void show(final Repository repository,
 			final FetchResult result, final String sourceString) {
-		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				Shell shell = PlatformUI.getWorkbench()
-						.getModalDialogShellProvider().getShell();
-				new FetchResultDialog(shell, repository, result, sourceString)
-						.open();
-			}
-		});
+		if (Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.SHOW_FETCH_POPUP_SUCCESS)) {
+			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					Shell shell = PlatformUI.getWorkbench()
+							.getModalDialogShellProvider().getShell();
+					new FetchResultDialog(shell, repository, result,
+							sourceString).open();
+				}
+			});
+		}
+
 	}
 
 	/**
@@ -94,8 +104,8 @@ public class FetchResultDialog extends TitleAreaDialog {
 
 	@Override
 	protected void createButtonsForButtonBar(final Composite parent) {
-		if (!hideConfigure
-				&& SimpleConfigureFetchDialog.getConfiguredRemote(localDb) != null)
+		if (!hideConfigure && SimpleConfigureFetchDialog
+				.getConfiguredRemote(localDb) != null)
 			createButton(parent, CONFIGURE,
 					UIText.FetchResultDialog_ConfigureButton, false);
 		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
@@ -106,6 +116,9 @@ public class FetchResultDialog extends TitleAreaDialog {
 	protected void buttonPressed(int buttonId) {
 		super.buttonPressed(buttonId);
 		if (buttonId == CONFIGURE) {
+			if (hide_dialog.getSelection()) // ADDED
+				Activator.getDefault().getPreferenceStore().setValue(
+						UIPreferences.SHOW_FETCH_POPUP_SUCCESS, false);
 			super.buttonPressed(IDialogConstants.OK_ID);
 			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 				@Override
@@ -124,6 +137,7 @@ public class FetchResultDialog extends TitleAreaDialog {
 	public Control createDialogArea(final Composite parent) {
 		final Composite composite = (Composite) super.createDialogArea(parent);
 
+
 		setTitle(NLS.bind(UIText.FetchResultDialog_labelNonEmptyResult,
 				sourceString));
 
@@ -136,6 +150,11 @@ public class FetchResultDialog extends TitleAreaDialog {
 		}
 
 		createFetchResultTable(composite);
+
+		hide_dialog = new Button(composite, SWT.CHECK);
+		GridDataFactory.fillDefaults().span(1, 1).applyTo(hide_dialog);
+		hide_dialog.setText(UIText.FetchResultDialog_HideDialog);
+		hide_dialog.setSelection(false);
 
 		applyDialogFont(composite);
 		return composite;
@@ -160,8 +179,8 @@ public class FetchResultDialog extends TitleAreaDialog {
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-		newShell
-				.setText(NLS.bind(UIText.FetchResultDialog_title, sourceString));
+		newShell.setText(
+				NLS.bind(UIText.FetchResultDialog_title, sourceString));
 	}
 
 	/**
