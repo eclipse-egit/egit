@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "27af2791_7451c159",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportProjectsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-07-22T08:58:24Z",
+      "side": 1,
+      "message": "EGit is supposed to work with Eclipse 3.8. I don\u0027t that class exists there, and I would expect a class loader error there in that case.\n\nI also think we should not use org.eclipse.ui.internal packages/classes.\n\nThere is a fragment org.eclipse.egit.ui.smartimport; org.eclipse.egit.ui must not depend on it, but the wiring here should be general enough such that the smart import fragment can override it. Extension point, and turn that fragment into a bundle?",
+      "revId": "d6fd3a8dc9c1a0ccfeccc54f7e76c31d1239bb9d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27af2791_7425415c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportProjectsCommand.java",
         "patchSetId": 1
