@@ -12,13 +12,11 @@
 package org.eclipse.egit.ui.internal.push;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
@@ -27,7 +25,6 @@ import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.core.op.PushOperationSpecification;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.SecureStoreUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -36,8 +33,6 @@ import org.eclipse.egit.ui.internal.components.RefSpecPage;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
-import org.eclipse.egit.ui.internal.jobs.RepositoryJob;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
@@ -165,12 +160,16 @@ public class PushWizard extends Wizard {
 			operation.setCredentialsProvider(new EGitCredentialsProvider(
 					credentials.getUser(), credentials.getPassword()));
 		final PushOperationResult resultToCompare;
-		if (confirmPage.isShowOnlyIfChangedSelected())
+		if (confirmPage.isShowOnlyIfChangedSelected()) {
 			resultToCompare = confirmPage.getConfirmedResult();
-		else
+		} else {
 			resultToCompare = null;
-		final Job job = new PushJob(localDb, operation, resultToCompare,
-				getDestinationString(repoPage.getSelection()));
+		}
+		final Job job = new PushJob(
+				NLS.bind(UIText.PushWizard_jobName,
+						getURIsString(operation.getSpecification().getURIs())),
+				localDb, operation, resultToCompare,
+				getDestinationString(repoPage.getSelection()), true);
 
 		job.setUser(true);
 		job.schedule();
@@ -272,65 +271,4 @@ public class PushWizard extends Wizard {
 		return destination;
 	}
 
-	static class PushJob extends RepositoryJob {
-		private final PushOperation operation;
-
-		private final PushOperationResult resultToCompare;
-
-		private final String destinationString;
-
-		private Repository localDb;
-
-		private PushOperationResult operationResult;
-
-		public PushJob(final Repository localDb, final PushOperation operation,
-				final PushOperationResult resultToCompare,
-				final String destinationString) {
-			super(NLS.bind(UIText.PushWizard_jobName, getURIsString(operation
-					.getSpecification().getURIs())));
-			this.operation = operation;
-			this.resultToCompare = resultToCompare;
-			this.destinationString = destinationString;
-			this.localDb = localDb;
-		}
-
-		@Override
-		protected IStatus performJob(final IProgressMonitor monitor) {
-			try {
-				operation.run(monitor);
-			} catch (final InvocationTargetException e) {
-				return new Status(IStatus.ERROR, Activator.getPluginId(),
-						UIText.PushWizard_unexpectedError, e.getCause());
-			}
-
-			operationResult = operation.getOperationResult();
-			if (!operationResult.isSuccessfulConnectionForAnyURI()) {
-				return new Status(IStatus.ERROR, Activator.getPluginId(),
-						NLS.bind(UIText.PushWizard_cantConnectToAny,
-								operationResult.getErrorStringForAllURis()));
-			}
-
-			return Status.OK_STATUS;
-		}
-
-		@Override
-		protected IAction getAction() {
-			Repository repo = localDb;
-			if (repo != null && (resultToCompare == null
-					|| !resultToCompare.equals(operationResult))) {
-				return new ShowPushResultAction(repo, operationResult,
-						destinationString, true);
-			}
-			return null;
-		}
-
-		@Override
-		public boolean belongsTo(Object family) {
-			if (JobFamilies.PUSH.equals(family)) {
-				return true;
-			}
-			return super.belongsTo(family);
-		}
-
-	}
 }

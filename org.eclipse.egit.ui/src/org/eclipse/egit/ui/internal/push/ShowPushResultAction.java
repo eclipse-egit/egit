@@ -12,6 +12,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.jobs.RepositoryJobResultAction;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
@@ -49,12 +50,17 @@ public class ShowPushResultAction extends RepositoryJobResultAction {
 		this.showConfigure = showConfigureButton;
 	}
 
+	private boolean isModal(Shell shell) {
+		return (shell.getStyle() & (SWT.APPLICATION_MODAL | SWT.PRIMARY_MODAL
+				| SWT.SYSTEM_MODAL)) != 0;
+	}
+
 	@Override
-	protected void showResult(Repository repository) {
-		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+	protected void showResult(@NonNull Repository repository) {
+		Shell shell = PlatformUI.getWorkbench().getModalDialogShellProvider()
 				.getShell();
 		PushResultDialog dialog = new PushResultDialog(shell, repository,
-				operationResult, destination, false);
+				operationResult, destination, isModal(shell));
 		dialog.showConfigureButton(showConfigure);
 		dialog.open();
 	}

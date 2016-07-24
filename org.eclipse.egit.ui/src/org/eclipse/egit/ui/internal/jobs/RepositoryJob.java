@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.IProgressConstants;
@@ -59,8 +60,14 @@ public abstract class RepositoryJob extends Job {
 				} else {
 					setProperty(IProgressConstants.KEEP_PROPERTY, Boolean.TRUE);
 					setProperty(IProgressConstants.ACTION_PROPERTY, action);
-					return new Status(IStatus.OK, Activator.getPluginId(),
-							IStatus.OK, action.getText(), null);
+					IStatus finalStatus = getDeferredStatus();
+					String msg = finalStatus.getMessage();
+					if (msg == null || msg.isEmpty()) {
+						return new Status(finalStatus.getSeverity(),
+								finalStatus.getPlugin(), finalStatus.getCode(),
+								action.getText(), finalStatus.getException());
+					}
+					return finalStatus;
 				}
 			}
 			return status;
@@ -86,6 +93,18 @@ public abstract class RepositoryJob extends Job {
 	 * @return the action, or {@code null} if no action is to be taken
 	 */
 	abstract protected IAction getAction();
+
+	/**
+	 * Obtains an {@link IStatus} describing the final outcome of the operation.
+	 * This default implementation returns an {@link IStatus#OK OK} status.
+	 *
+	 * @return an {@link IStatus} describing the outcome of the job
+	 */
+	@NonNull
+	protected IStatus getDeferredStatus() {
+		return new Status(IStatus.OK, Activator.getPluginId(), IStatus.OK, "", //$NON-NLS-1$
+				null);
+	}
 
 	private boolean isModal() {
 		Boolean modal = (Boolean) getProperty(
