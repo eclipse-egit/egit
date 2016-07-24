@@ -1,0 +1,9 @@
+Verified+1: Hudson CI
+Code-Review+1: Mickael Istria <mistria@redhat.com>
+Code-Review+1: Lars Vogel <Lars.Vogel@vogella.com>
+Code-Review+2: Thomas Wolf <thomas.wolf@paranor.ch>
+Submitted-by: Thomas Wolf <thomas.wolf@paranor.ch>
+Submitted-at: Sun, 24 Jul 2016 17:29:54 -0400
+Reviewed-on: https://git.eclipse.org/r/77724
+Project: egit/egit
+Branch: refs/heads/master
