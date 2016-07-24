@@ -969,12 +969,15 @@ public class RebaseInteractiveView extends ViewPart implements
 				col.getColumn().pack();
 			}
 			// Re-distribute the space again, now that we know the true minimum
-			// widths.
+			// widths. First dynamic column is the commit message; give that one
+			// a somewhat larger minimum width.
+			int minimumWidth = 200;
 			for (TreeViewerColumn col : dynamicColumns) {
 				int width = col.getColumn().getWidth();
-				// Use width as weight, too.
+				// Use width as weight
 				planLayout.setColumnData(col.getColumn(),
-						new ColumnWeightData(width, width));
+						new ColumnWeightData(width, minimumWidth));
+				minimumWidth = 80;
 			}
 			planLayout.layout(planTreeViewer.getTree().getParent(), true);
 		}
