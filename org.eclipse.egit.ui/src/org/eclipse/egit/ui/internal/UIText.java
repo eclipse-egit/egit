@@ -2176,7 +2176,10 @@ public class UIText extends NLS {
 	public static String ShowPushResultAction_name;
 
 	/** */
-	public static String PushWizard_cantConnectToAny;
+	public static String PushJob_cantConnectToAny;
+
+	/** */
+	public static String PushJob_unexpectedError;
 
 	/** */
 	public static String PushWizard_cantPrepareUpdatesMessage;
@@ -2198,9 +2201,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String PushWizard_missingRefsTitle;
-
-	/** */
-	public static String PushWizard_unexpectedError;
 
 	/** */
 	public static String PushWizard_windowTitleDefault;

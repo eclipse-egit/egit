@@ -19,19 +19,14 @@ import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.PushOperation;
 import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.core.op.PushOperationSpecification;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
-import org.eclipse.egit.ui.internal.jobs.RepositoryJob;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jgit.errors.NotSupportedException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
@@ -218,48 +213,28 @@ public class PushOperationUI {
 	}
 
 	/**
-	 * Starts the operation asynchronously showing a confirmation dialog after
-	 * completion
+	 * Starts the operation asynchronously.
 	 */
 	public void start() {
 		final Repository repo = repository;
 		if (repo == null) {
 			return;
 		}
-		Job job = new RepositoryJob(NLS.bind(UIText.PushOperationUI_PushJobName,
-				destinationString)) {
-
-			private PushOperationResult result;
-
-			@Override
-			protected IStatus performJob(IProgressMonitor monitor) {
-				try {
-					result = execute(monitor);
-				} catch (CoreException e) {
-					return Activator.createErrorStatus(e.getStatus()
-							.getMessage(), e);
-				}
-				return Status.OK_STATUS;
-			}
-
-			@Override
-			protected IAction getAction() {
-				if (expectedResult == null || !expectedResult.equals(result)) {
-					return new ShowPushResultAction(repo, result,
-							destinationString, showConfigureButton);
-				}
-				return null;
-			}
-
-			@Override
-			public boolean belongsTo(Object family) {
-				if (JobFamilies.PUSH.equals(family)) {
-					return true;
-				}
-				return super.belongsTo(family);
-			}
-
-		};
+		try {
+			createPushOperation();
+		} catch (CoreException e) {
+			Activator.showErrorStatus(e.getLocalizedMessage(), e.getStatus());
+			return;
+		}
+		if (credentialsProvider != null) {
+			op.setCredentialsProvider(credentialsProvider);
+		} else {
+			op.setCredentialsProvider(new EGitCredentialsProvider());
+		}
+		Job job = new PushJob(
+				NLS.bind(UIText.PushOperationUI_PushJobName, destinationString),
+				repo, op, expectedResult, destinationString,
+				showConfigureButton);
 		job.setUser(true);
 		job.schedule();
 	}
