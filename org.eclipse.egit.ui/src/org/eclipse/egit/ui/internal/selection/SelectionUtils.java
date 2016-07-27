@@ -11,9 +11,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.selection;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -23,12 +20,9 @@ import java.util.Set;
 import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.ResourceMapping;
-import org.eclipse.core.resources.mapping.ResourceTraversal;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
@@ -203,26 +197,7 @@ public class SelectionUtils {
 
 	private static List<IResource> extractResourcesFromMapping(Object o) {
 		ResourceMapping mapping = AdapterUtils.adapt(o, ResourceMapping.class);
-		if (mapping == null)
-			return Collections.emptyList();
-
-		ResourceTraversal[] traversals;
-		try {
-			traversals = mapping.getTraversals(null, null);
-		} catch (CoreException e) {
-			Activator.logError(e.getMessage(), e);
-			return Collections.emptyList();
-		}
-
-		if (traversals.length == 0)
-			return Collections.emptyList();
-
-		List<IResource> result = new ArrayList<>();
-		for (ResourceTraversal traversal : traversals) {
-			IResource[] resources = traversal.getResources();
-			result.addAll(Arrays.asList(resources));
-		}
-		return result;
+		return ResourceUtil.extractResourcesFromMapping(mapping);
 	}
 
 	/**
