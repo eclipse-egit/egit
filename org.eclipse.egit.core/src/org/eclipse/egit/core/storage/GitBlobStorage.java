@@ -99,9 +99,15 @@ public class GitBlobStorage implements IEncodedStorage {
 				return new AutoCRLFInputStream(objectInputStream, true);
 			}
 		} catch (MissingObjectException notFound) {
-			throw new CoreException(Activator.error(NLS.bind(
-					CoreText.BlobStorage_blobNotFound, blobId.name(), path),
-					notFound));
+			// XXX for submodule we should just return the blob id
+			// should it be done in jgit core?
+			// How do we know if this is a submodule?
+			return new ByteArrayInputStream(blobId.getName().getBytes());
+
+			// XXX should
+			// throw new CoreException(Activator.error(NLS.bind(
+			// CoreText.BlobStorage_blobNotFound, blobId.name(), path),
+			// notFound));
 		}
 	}
 

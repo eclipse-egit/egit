@@ -239,6 +239,47 @@ public class SelectionUtils {
 	}
 
 	/**
+	 * Determines a set of either {@link IResource}s or {@link IPath}s from a
+	 * selection. For selection contents that adapt to {@link IResource} or
+	 * {@link ResourceMapping}, the containing {@link IResource}s are included
+	 * in the result set; otherwise for selection contents that adapt to
+	 * {@link IPath} these paths are included.
+	 *
+	 * @param selection
+	 *            to process
+	 * @return the set of {@link IResource} and {@link IPath} objects from the
+	 *         selection; not containing {@code null} values
+	 */
+	@NonNull
+	private static Set<Repository> getRepositoriesFromSelection(
+			@NonNull IStructuredSelection selection) {
+		Set<Repository> result = new HashSet<>();
+		for (Object o : selection.toList()) {
+			Repository repo = AdapterUtils.adapt(o, Repository.class);
+			if (repo != null) {
+				result.add(repo);
+				continue;
+			}
+			IResource resource = AdapterUtils.adapt(o, IResource.class);
+			if (resource != null) {
+				repo = ResourceUtil.getRepository(resource);
+				if (repo != null) {
+					result.add(repo);
+				}
+				continue;
+			}
+			IPath location = AdapterUtils.adapt(o, IPath.class);
+			if (location != null) {
+				repo = ResourceUtil.getRepository(location);
+				if (repo != null) {
+					result.add(repo);
+				}
+			}
+		}
+		return result;
+	}
+
+	/**
 	 * Figure out which repository to use. All selected resources must map to
 	 * the same Git repository.
 	 *
@@ -253,6 +294,13 @@ public class SelectionUtils {
 	@Nullable
 	private static Repository getRepository(boolean warn,
 			@NonNull IStructuredSelection selection, Shell shell) {
+		if (selection.isEmpty()) {
+			return null;
+		}
+		Set<Repository> set = getRepositoriesFromSelection(selection);
+		if (set.size() == 1) {
+			return set.iterator().next();
+		}
 		Set<Object> elements = getSelectionContents(selection);
 		if (GitTraceLocation.SELECTION.isActive())
 			GitTraceLocation.getTrace().trace(

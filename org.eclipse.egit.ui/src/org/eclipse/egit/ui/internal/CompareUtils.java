@@ -847,14 +847,18 @@ public class CompareUtils {
 
 	private static String getRepoRelativePath(IPath location,
 			Repository repository) {
-		RepositoryMapping mapping = RepositoryMapping.getMapping(location);
 		final String gitPath;
-		if (mapping != null)
-			gitPath = mapping.getRepoRelativePath(location);
-		else {
-			IPath repoRoot = new Path(repository.getWorkTree().getPath());
-			gitPath = location.makeRelativeTo(repoRoot).toString();
+		if (repository == null) {
+			RepositoryMapping mapping = RepositoryMapping.getMapping(location);
+			if (mapping != null) {
+				repository = mapping.getRepository();
+				if (repository == null) {
+					return mapping.getRepoRelativePath(location);
+				}
+			}
 		}
+		IPath repoRoot = new Path(repository.getWorkTree().getPath());
+		gitPath = location.makeRelativeTo(repoRoot).toString();
 		return gitPath;
 	}
 

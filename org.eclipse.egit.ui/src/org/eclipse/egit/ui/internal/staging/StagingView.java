@@ -1963,8 +1963,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 				|| !(selection.getFirstElement() instanceof StagingEntry))
 			return;
 		StagingEntry stagingEntry = (StagingEntry) selection.getFirstElement();
-		if (stagingEntry.isSubmodule())
-			return;
+		// if (stagingEntry.isSubmodule())
+		// return;
 		switch (stagingEntry.getState()) {
 		case ADDED:
 		case CHANGED:
