@@ -131,10 +131,15 @@ public class SelectionPropertyTester extends PropertyTester {
 		Repository repo = null;
 		for (Object element : collection) {
 			IContainer container = AdapterUtils.adapt(element,
-					IContainer.class);
+					IProject.class);
 			RepositoryMapping mapping = null;
 			if (container != null) {
 				mapping = RepositoryMapping.getMapping(container);
+			} else {
+				container = AdapterUtils.adapt(element, IContainer.class);
+				if (container != null) {
+					mapping = RepositoryMapping.getMapping(container);
+				}
 			}
 			if (container != null && mapping != null
 					&& container.equals(mapping.getContainer())) {
