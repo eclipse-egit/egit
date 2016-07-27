@@ -9,6 +9,7 @@
  * Copyright (C) 2011, Christian Halstrick <christian.halstrick@sap.com>
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
  * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, Stefan Dirix <sdirix@eclipsesource.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -71,6 +72,7 @@ import org.eclipse.team.ui.ISharedImages;
 import org.eclipse.team.ui.TeamImages;
 import org.eclipse.team.ui.TeamUI;
 import org.eclipse.ui.IContributorResourceAdapter;
+import org.eclipse.ui.IWorkingSet;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.themes.ITheme;
 
@@ -249,9 +251,15 @@ public class GitLightweightDecorator extends LabelProvider implements
 		@SuppressWarnings("restriction")
 		ResourceMapping mapping = Utils.getResourceMapping(element);
 
+		boolean isWorkingSet = mapping.getModelObject() instanceof IWorkingSet;
+
 		IDecoratableResource decoRes;
 		try {
-			decoRes = new DecoratableResourceMapping(mapping);
+			if (isWorkingSet) {
+				decoRes = new DecoratableWorkingSet(mapping);
+			} else {
+				decoRes = new DecoratableResourceMapping(mapping);
+			}
 		} catch (IOException e) {
 			throw new CoreException(Activator.createErrorStatus(
 					NLS.bind(UIText.Decorator_exceptionMessage, element), e));
@@ -263,7 +271,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 		 *   2) no indexDiff for the contained projects ready yet.
 		 *  in both cases, don't do anything to not pollute the display of the sets.
 		 */
-		if(!decoRes.isTracked())
+		if (!decoRes.isTracked() && isWorkingSet)
 			return;
 
 		final DecorationHelper helper = new DecorationHelper(
@@ -271,7 +279,6 @@ public class GitLightweightDecorator extends LabelProvider implements
 
 		helper.decorate(decoration, decoRes);
 	}
-
 
 	/**
 	 * Helper class for doing resource decoration, based on the given
@@ -463,7 +470,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 							UIPreferences.DECORATOR_FOLDERTEXT_DECORATION);
 				}
 				break;
-			case DecoratableResourceMapping.WORKING_SET:
+			case DecoratableWorkingSet.WORKING_SET:
 				// working sets will use the project formatting but only if the
 				// repo and branch is available
 				if (resource.getRepositoryName() != null
