@@ -53,13 +53,15 @@ import org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement;
 @SuppressWarnings("restriction")
 public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 
+	@NonNull
 	private final IPath path;
 
+	@NonNull
 	private final Repository repository;
 
 	private boolean exists;
 
-	private boolean fDirty = false;
+	private boolean fDirty;
 
 	private long timestamp;
 
@@ -77,7 +79,8 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 	 * @param path
 	 *            absolute path to non-workspace file
 	 */
-	public LocalNonWorkspaceTypedElement(Repository repository, IPath path) {
+	public LocalNonWorkspaceTypedElement(@NonNull Repository repository,
+			@NonNull IPath path) {
 		super(ROOT.getFile(path));
 		this.path = path;
 		this.repository = repository;
@@ -242,7 +245,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 		// external file change must be reported explicitly, see bug 481682
 		Repository myRepository = repository;
 		boolean updated = false;
-		if (myRepository != null && !myRepository.isBare()) {
+		if (!myRepository.isBare()) {
 			updated = refreshRepositoryState(myRepository);
 		}
 		if (!updated) {
@@ -272,9 +275,6 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 		return fDirty || (sharedDocumentAdapter != null && sharedDocumentAdapter.hasBufferedContents());
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
-	 */
 	@Override
 	public Object getAdapter(Class adapter) {
 		if (adapter == ISharedDocumentAdapter.class) {

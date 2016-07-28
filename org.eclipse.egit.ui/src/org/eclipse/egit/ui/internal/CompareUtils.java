@@ -63,6 +63,7 @@ import org.eclipse.egit.ui.internal.synchronize.GitModelSynchronize;
 import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.util.OpenStrategy;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheEditor;
 import org.eclipse.jgit.dircache.DirCacheEntry;
@@ -378,7 +379,7 @@ public class CompareUtils {
 	 * @param file
 	 */
 	public static void compareHeadWithWorkspace(Repository repository,
-			IFile file) {
+			@NonNull IFile file) {
 		RepositoryMapping mapping = RepositoryMapping.getMapping(file);
 		if (mapping == null) {
 			Activator.error(NLS.bind(UIText.GitHistoryPage_errorLookingUpPath,
@@ -422,7 +423,7 @@ public class CompareUtils {
 	 *            If not {@null} try to re-use a compare editor on this page if
 	 *            any is available. Otherwise open a new one.
 	 */
-	private static void compareWorkspaceWithRef(final Repository repository,
+	private static void compareWorkspaceWithRef(@NonNull final Repository repository,
 			final IResource file, final String refName, final IWorkbenchPage page) {
 		if (file == null) {
 			return;
@@ -528,8 +529,8 @@ public class CompareUtils {
 	 *            If not {@null} try to re-use a compare editor on this
 	 *            page if any is available. Otherwise open a new one.
 	 */
-	private static void compareLocalWithRef(final Repository repository,
-			final IPath location, final String refName,
+	private static void compareLocalWithRef(@NonNull final Repository repository,
+			@NonNull final IPath location, final String refName,
 			final IWorkbenchPage page) {
 
 		Job job = new Job(UIText.CompareUtils_jobName) {
@@ -637,7 +638,8 @@ public class CompareUtils {
 	 *            page if any is available. Otherwise open a new one.
 	 * @throws IOException
 	 */
-	public static void compare(IResource[] resources, Repository repository,
+	public static void compare(IResource[] resources,
+			@NonNull Repository repository,
 			String leftRev, String rightRev, boolean includeLocal,
 			IWorkbenchPage page) throws IOException {
 		boolean useTreeCompare = shouldUseTreeCompare(resources);
@@ -723,7 +725,8 @@ public class CompareUtils {
 	 *            page if any is available. Otherwise open a new one.
 	 * @throws IOException
 	 */
-	public static void compare(IResource[] resources, Repository repository,
+	public static void compare(IResource[] resources,
+			@NonNull Repository repository,
 			String leftPath, String rightPath, String leftRev, String rightRev,
 			boolean includeLocal, IWorkbenchPage page) throws IOException {
 		boolean useTreeCompare = shouldUseTreeCompare(resources);
@@ -761,9 +764,9 @@ public class CompareUtils {
 	 *            If not {@null} try to re-use a compare editor on this
 	 *            page if any is available. Otherwise open a new one.
 	 */
-	public static void compare(IPath location, Repository repository,
-			String leftRev, String rightRev, boolean includeLocal,
-			IWorkbenchPage page) {
+	public static void compare(@NonNull IPath location,
+			@NonNull Repository repository, String leftRev, String rightRev,
+			boolean includeLocal, IWorkbenchPage page) {
 		if (includeLocal)
 			compareLocalWithRef(repository, location, rightRev, page);
 		else {
@@ -845,7 +848,7 @@ public class CompareUtils {
 		job.schedule();
 	}
 
-	private static String getRepoRelativePath(IPath location,
+	private static String getRepoRelativePath(@NonNull IPath location,
 			Repository repository) {
 		RepositoryMapping mapping = RepositoryMapping.getMapping(location);
 		final String gitPath;
@@ -967,7 +970,8 @@ public class CompareUtils {
 	 * @return typed element
 	 * @throws IOException
 	 */
-	public static ITypedElement getIndexTypedElement(final IFile baseFile)
+	public static ITypedElement getIndexTypedElement(@NonNull
+	final IFile baseFile)
 			throws IOException {
 		final RepositoryMapping mapping = RepositoryMapping.getMapping(baseFile);
 		if (mapping == null) {
@@ -1123,7 +1127,7 @@ public class CompareUtils {
 	 *         editor, <code>false</code> if the synchronize view should be
 	 *         opened instead.
 	 */
-	public static boolean canDirectlyOpenInCompare(IFile file) {
+	public static boolean canDirectlyOpenInCompare(@NonNull IFile file) {
 		/*
 		 * Note : it would be better to use a remote context here in order to
 		 * give the model provider a chance to resolve the remote logical model

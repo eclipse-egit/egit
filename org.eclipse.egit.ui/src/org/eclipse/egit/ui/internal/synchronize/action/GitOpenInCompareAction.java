@@ -87,7 +87,11 @@ public class GitOpenInCompareAction extends Action {
 		ITypedElement left;
 		ITypedElement right;
 		if (obj instanceof GitModelWorkingFile) {
-			IFile file = ResourceUtil.getFileForLocation(obj.getLocation(), false);
+			IPath location = obj.getLocation();
+			if (location == null) {
+				return;
+			}
+			IFile file = ResourceUtil.getFileForLocation(location, false);
 			if (file == null) {
 				Repository repository = null;
 				GitModelObject modelObject = obj;
@@ -99,8 +103,10 @@ public class GitOpenInCompareAction extends Action {
 					}
 					modelObject = modelObject.getParent();
 				}
-				left = new LocalNonWorkspaceTypedElement(repository,
-						obj.getLocation());
+				if (repository == null) {
+					return;
+				}
+				left = new LocalNonWorkspaceTypedElement(repository, location);
 			} else {
 				left = SaveableCompareEditorInput.createFileElement(file);
 			}

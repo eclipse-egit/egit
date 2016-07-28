@@ -55,6 +55,7 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -674,10 +675,13 @@ public class CommitFileDiffViewer extends TableViewer {
 		return walker;
 	}
 
+	@NonNull
 	Repository getRepository() {
-		if (db == null)
+		Repository repo = db;
+		if (repo == null) {
 			throw new IllegalStateException("Repository has not been set"); //$NON-NLS-1$
-		return db;
+		}
+		return repo;
 	}
 
 	/**
