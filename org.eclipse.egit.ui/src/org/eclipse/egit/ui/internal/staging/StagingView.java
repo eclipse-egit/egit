@@ -1336,7 +1336,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		if (input instanceof IFileEditorInput) {
 			return ((IFileEditorInput) input).getFile();
 		} else {
-			return AdapterUtils.adapt(input, IResource.class);
+			return AdapterUtils.adaptToAnyResource(input);
 		}
 	}
 
@@ -2449,15 +2449,17 @@ public class StagingView extends ViewPart implements IShowInSource {
 				reload(repo);
 			}
 		} else {
-			IResource resource = AdapterUtils.adapt(firstElement,
-					IResource.class);
-			if (resource != null) {
-				showResource(resource);
-			} else {
-				Repository repo = AdapterUtils.adapt(firstElement,
-						Repository.class);
-				if (repo != null && currentRepository != repo) {
+			Repository repo = AdapterUtils.adapt(firstElement,
+					Repository.class);
+			if (repo != null) {
+				if (currentRepository != repo) {
 					reload(repo);
+				}
+			} else {
+				IResource resource = AdapterUtils
+						.adaptToAnyResource(firstElement);
+				if (resource != null) {
+					showResource(resource);
 				}
 			}
 		}
@@ -2524,7 +2526,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				addExpandedPathsBelowFolder(folder, unstagedViewer,
 						pathsToExpandInStaged);
 			} else {
-				IResource resource = AdapterUtils.adapt(element, IResource.class);
+				IResource resource = AdapterUtils.adaptToAnyResource(element);
 				if (resource != null) {
 					RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
 					// doesn't do anything if the current repository is a

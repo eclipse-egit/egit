@@ -10,6 +10,10 @@
  *****************************************************************************/
 package org.eclipse.egit.core;
 
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.PlatformObject;
@@ -49,5 +53,36 @@ public class AdapterUtils {
 		}
 		Object adapted = Platform.getAdapterManager().getAdapter(object, target);
 		return target.cast(adapted);
+	}
+
+	/**
+	 * Adapt object to one interface from list: {@link IResource},
+	 * {@link IContainer}, {@link IFile} or {@link IProject}.
+	 *
+	 * @param object
+	 * @return adapted resource
+	 */
+	@Nullable
+	public static IResource adaptToAnyResource(Object object) {
+		if (object == null) {
+			return null;
+		}
+		IResource resource = adapt(object, IResource.class);
+		if (resource != null) {
+			return resource;
+		}
+		resource = adapt(object, IFile.class);
+		if (resource != null) {
+			return resource;
+		}
+		resource = adapt(object, IProject.class);
+		if (resource != null) {
+			return resource;
+		}
+		resource = adapt(object, IContainer.class);
+		if (resource != null) {
+			return resource;
+		}
+		return null;
 	}
 }

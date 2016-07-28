@@ -787,7 +787,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		if (object instanceof RepositoryTreeNode)
 			return true;
 
-		IResource resource = AdapterUtils.adapt(object, IResource.class);
+		IResource resource = AdapterUtils.adaptToAnyResource(object);
 		if (resource != null && typeOk(resource))
 			return true;
 
@@ -1426,7 +1426,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			} else if (o instanceof HistoryPageInput) {
 				input = (HistoryPageInput) o;
 			} else {
-				IResource resource = AdapterUtils.adapt(o, IResource.class);
+				IResource resource = AdapterUtils.adaptToAnyResource(o);
 				if (resource != null) {
 					RepositoryMapping mapping = RepositoryMapping
 							.getMapping(resource);

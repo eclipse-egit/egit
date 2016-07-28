@@ -206,7 +206,7 @@ public class SynchronizeWithMenu extends ContributionItem implements
 		}
 
 		Object selected = ((IStructuredSelection) sel).getFirstElement();
-		return AdapterUtils.adapt(selected, IResource.class);
+		return AdapterUtils.adaptToAnyResource(selected);
 	}
 
 	private boolean excludeTag(Ref ref, Repository repo) {
