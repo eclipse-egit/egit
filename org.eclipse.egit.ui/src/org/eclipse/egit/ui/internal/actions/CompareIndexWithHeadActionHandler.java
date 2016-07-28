@@ -31,6 +31,7 @@ import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.Repository;
@@ -102,7 +103,7 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 		});
 	}
 
-	private void runCompare(ExecutionEvent event, final Repository repository)
+	private void runCompare(ExecutionEvent event, @NonNull final Repository repository)
 			throws Exception {
 		IWorkbenchPage workBenchPage = HandlerUtil
 				.getActiveWorkbenchWindowChecked(event).getActivePage();
@@ -113,10 +114,16 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 					Constants.HEAD, false, workBenchPage);
 		} else {
 			IPath[] locations = getSelectedLocations(event);
-			if (locations.length > 0)
-				CompareUtils.compare(locations[0], repository,
-						GitFileRevision.INDEX, Constants.HEAD, false,
-						workBenchPage);
+			if (locations.length == 0) {
+				return;
+			}
+			IPath location = locations[0];
+			if (location == null) {
+				return;
+			}
+			CompareUtils.compare(location, repository,
+					GitFileRevision.INDEX, Constants.HEAD, false,
+					workBenchPage);
 		}
 	}
 
