@@ -42,6 +42,8 @@ public class StageUnstageActionTest extends LocalRepositoryTestCase {
 
 	private static final String PROJ_B = "SecondProject";
 
+	private static final String UNSHARED = "UnsharedProject";
+
 	private String addToIndexLabel;
 
 	private String removeFromIndexLabel;
@@ -57,8 +59,12 @@ public class StageUnstageActionTest extends LocalRepositoryTestCase {
 	}
 
 	@Test
-	public void testActionsInitiallyNotPresent() {
+	public void testActionsInitiallyNotPresent() throws Exception {
 		// Verify that neither add to index nor remove from index are available.
+		IProject unshared = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(UNSHARED);
+		unshared.create(null);
+		unshared.open(null);
 		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
 		util.getProjectItems(projectExplorerTree, PROJ_A)[0].select();
 		assertFalse("Add To Index should not be present",
@@ -74,6 +80,22 @@ public class StageUnstageActionTest extends LocalRepositoryTestCase {
 		assertFalse("Remove From Index should not be present",
 				ContextMenuHelper.contextMenuItemExists(projectExplorerTree,
 						"Team", removeFromIndexLabel));
+		util.getProjectItems(projectExplorerTree, UNSHARED)[0].select();
+		assertFalse("Add To Index should not be present",
+				ContextMenuHelper.contextMenuItemExists(projectExplorerTree,
+						"Team", addToIndexLabel));
+		assertFalse("Remove From Index should not be present",
+				ContextMenuHelper.contextMenuItemExists(projectExplorerTree,
+						"Team", removeFromIndexLabel));
+		projectExplorerTree.select(projectExplorerTree.getAllItems());
+		assertFalse("Add To Index should not be present",
+				ContextMenuHelper.contextMenuItemExists(projectExplorerTree,
+						"Team", addToIndexLabel));
+		assertFalse("Remove From Index should not be present",
+				ContextMenuHelper.contextMenuItemExists(projectExplorerTree,
+						"Team", removeFromIndexLabel));
+		// And again, with only the two shared projects
+		unshared.delete(true, null);
 		projectExplorerTree.select(projectExplorerTree.getAllItems());
 		assertFalse("Add To Index should not be present",
 				ContextMenuHelper.contextMenuItemExists(projectExplorerTree,

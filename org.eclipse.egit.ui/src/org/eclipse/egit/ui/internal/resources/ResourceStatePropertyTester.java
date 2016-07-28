@@ -13,6 +13,7 @@ import java.util.Collection;
 
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -79,7 +80,8 @@ public class ResourceStatePropertyTester extends PropertyTester {
 		}
 		for (IResource resource : SelectionUtils
 				.getSelectedResources(selection)) {
-			if (resource == null || !resource.isAccessible()) {
+			if (resource == null || !resource.isAccessible()
+					|| RepositoryMapping.getMapping(resource) == null) {
 				continue;
 			}
 			IResourceState state = ResourceStateFactory.getInstance()
