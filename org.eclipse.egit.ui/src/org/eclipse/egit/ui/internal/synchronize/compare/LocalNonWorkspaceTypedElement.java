@@ -43,6 +43,7 @@ import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.events.IndexChangedEvent;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.team.internal.ui.synchronize.EditableSharedDocumentAdapter;
 import org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement;
@@ -101,6 +102,19 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 				if (Files.isSymbolicLink(file.toPath())) {
 					String symLink = FileUtils.readSymLink(file);
 					return new ByteArrayInputStream(Constants.encode(symLink));
+				}
+				if (file.isDirectory()) {
+					// submodule
+					Repository sub = ResourceUtil.getRepository(path);
+					if (sub != null && sub != repository) {
+						RevCommit headCommit = Activator.getDefault()
+								.getRepositoryUtil().parseHeadCommit(sub);
+						if (headCommit == null) {
+							return null;
+						}
+						return new ByteArrayInputStream(Constants
+								.encode(headCommit.name()));
+					}
 				}
 				return new FileInputStream(file);
 			} catch (IOException | UnsupportedOperationException e) {
