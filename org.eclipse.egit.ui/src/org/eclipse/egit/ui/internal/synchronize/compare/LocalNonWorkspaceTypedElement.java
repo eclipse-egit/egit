@@ -103,6 +103,19 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 					String symLink = FileUtils.readSymLink(file);
 					return new ByteArrayInputStream(Constants.encode(symLink));
 				}
+				if (file.isDirectory()) {
+					// submodule
+					Repository sub = ResourceUtil.getRepository(path);
+					if (sub != null && sub != repository) {
+						RevCommit headCommit = Activator.getDefault()
+								.getRepositoryUtil().parseHeadCommit(sub);
+						if (headCommit == null) {
+							return null;
+						}
+						return new ByteArrayInputStream(Constants
+								.encode(headCommit.name()));
+					}
+				}
 				return new FileInputStream(file);
 			} catch (IOException | UnsupportedOperationException e) {
 				Activator.error(e.getMessage(), e);
