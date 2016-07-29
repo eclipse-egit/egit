@@ -17,8 +17,10 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.Semaphore;
@@ -32,6 +34,7 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
@@ -46,6 +49,7 @@ import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheIterator;
@@ -620,9 +624,12 @@ public class IndexDiffCacheEntry {
 	private List<String> calcTreeFilterPaths(Collection<String> filesToUpdate) {
 		List<String> paths = new ArrayList<String>();
 		for (String fileToUpdate : filesToUpdate) {
-			for (String untrackedFolder : indexDiffData.getUntrackedFolders())
-				if (fileToUpdate.startsWith(untrackedFolder))
+			for (String untrackedFolder : indexDiffData.getUntrackedFolders()) {
+				if (fileToUpdate.startsWith(untrackedFolder)
+						&& !fileToUpdate.equals(untrackedFolder)) {
 					paths.add(untrackedFolder);
+				}
+			}
 			paths.add(fileToUpdate);
 		}
 		return paths;
@@ -672,6 +679,9 @@ public class IndexDiffCacheEntry {
 
 	private void createResourceChangeListener() {
 		resourceChangeListener = new IResourceChangeListener() {
+
+			private final Map<IProject, IPath> deletedProjects = new HashMap<>();
+
 			@Override
 			public void resourceChanged(IResourceChangeEvent event) {
 				Repository repository = getRepository();
@@ -681,27 +691,55 @@ public class IndexDiffCacheEntry {
 					resourceChangeListener = null;
 					return;
 				}
-				GitResourceDeltaVisitor visitor = new GitResourceDeltaVisitor(repository);
+				if (event.getType() == IResourceChangeEvent.PRE_DELETE) {
+					// Deletion of a project.
+					IResource resource = event.getResource();
+					if (resource.getType() == IResource.PROJECT) {
+						IPath projectPath = resource.getLocation();
+						if (projectPath != null) {
+							IPath repoPath = ResourceUtil
+									.getRepositoryRelativePath(projectPath,
+											repository);
+							if (repoPath != null) {
+								deletedProjects.put((IProject) resource,
+										projectPath);
+							}
+						}
+					}
+					// Recomputing the index diff on PRE_DELETE might still find
+					// the files/resources. We'll handle it in the POST_CHANGE
+					// event for the deletion.
+					return;
+				}
+				GitResourceDeltaVisitor visitor = new GitResourceDeltaVisitor(
+						repository, deletedProjects);
 				try {
 					event.getDelta().accept(visitor);
 				} catch (CoreException e) {
 					Activator.logError(e.getMessage(), e);
 					return;
 				}
-				Collection<String> filesToUpdate = visitor.getFilesToUpdate();
 				if (visitor.getGitIgnoreChanged()) {
 					scheduleReloadJob("A .gitignore changed"); //$NON-NLS-1$
+				} else if (visitor.isProjectDeleted()) {
+					scheduleReloadJob("A project was deleted"); //$NON-NLS-1$
 				} else if (indexDiffData == null) {
 					scheduleReloadJob("Resource changed, no diff available"); //$NON-NLS-1$
-				} else if (!filesToUpdate.isEmpty()) {
-					scheduleUpdateJob(filesToUpdate,
-							visitor.getResourcesToUpdate());
+				} else {
+					Collection<String> filesToUpdate = visitor
+							.getFilesToUpdate();
+					Collection<IResource> resourcesToUpdate = visitor
+							.getResourcesToUpdate();
+					if (!filesToUpdate.isEmpty()) {
+						scheduleUpdateJob(filesToUpdate, resourcesToUpdate);
+					}
 				}
 			}
 
 		};
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(
-				resourceChangeListener, IResourceChangeEvent.POST_CHANGE);
+				resourceChangeListener, IResourceChangeEvent.POST_CHANGE
+						| IResourceChangeEvent.PRE_DELETE);
 	}
 
 	/**

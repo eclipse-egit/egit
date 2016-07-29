@@ -84,6 +84,24 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 	}
 
 	@Test
+	public void testProjectDeletion() throws Exception {
+		prepareCacheEntry();
+
+		testRepository.connect(project.project);
+		waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+
+		// Should have something from the project
+		String projectName = project.project.getName();
+		assertTrue(containsItemsStartingWith(
+				entry.getIndexDiff().getUntracked(), projectName + '/'));
+
+		project.project.delete(true, null);
+		waitForJobs(MAX_WAIT_TIME, JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		assertFalse(containsItemsStartingWith(
+				entry.getIndexDiff().getUntracked(), projectName + '/'));
+	}
+
+	@Test
 	public void testReloadAndUpdate() throws Exception {
 		prepareCacheEntry();
 
@@ -196,6 +214,16 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 		assertFalse(entry.updateScheduled);
 		cleanEntryFlags();
 		return entry;
+	}
+
+	private boolean containsItemsStartingWith(Collection<String> values,
+			String prefix) {
+		for (String item : values) {
+			if (item.startsWith(prefix)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
