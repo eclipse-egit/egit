@@ -7,19 +7,24 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.test.team.actions;
 
+import static org.eclipse.egit.ui.JobFamilies.ADD_TO_INDEX;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.egit.ui.test.JobJoiner;
+import org.eclipse.egit.ui.test.StagingUtil;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
@@ -40,6 +45,8 @@ public class CommitActionStagingViewTest extends LocalRepositoryTestCase {
 
 	private boolean initialUseStagingView;
 
+	private boolean initialAutoStage;
+
 	@Before
 	public void setup() throws Exception {
 		TestUtil.hideView(StagingView.VIEW_ID);
@@ -47,6 +54,10 @@ public class CommitActionStagingViewTest extends LocalRepositoryTestCase {
 				.getBoolean(UIPreferences.ALWAYS_USE_STAGING_VIEW);
 		Activator.getDefault().getPreferenceStore()
 				.setValue(UIPreferences.ALWAYS_USE_STAGING_VIEW, true);
+		initialAutoStage = Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.AUTO_STAGE_ON_COMMIT);
+		Activator.getDefault().getPreferenceStore()
+				.setValue(UIPreferences.AUTO_STAGE_ON_COMMIT, false);
 		Activator.getDefault().getPreferenceStore()
 				.setDefault(UIPreferences.STAGING_VIEW_SYNC_SELECTION, false);
 		Activator.getDefault().getPreferenceStore()
@@ -67,6 +78,8 @@ public class CommitActionStagingViewTest extends LocalRepositoryTestCase {
 		Activator.getDefault().getPreferenceStore().setValue(
 				UIPreferences.ALWAYS_USE_STAGING_VIEW, initialUseStagingView);
 		Activator.getDefault().getPreferenceStore()
+				.setValue(UIPreferences.AUTO_STAGE_ON_COMMIT, initialAutoStage);
+		Activator.getDefault().getPreferenceStore()
 				.setDefault(UIPreferences.STAGING_VIEW_SYNC_SELECTION, true);
 		Activator.getDefault().getPreferenceStore()
 				.setValue(UIPreferences.STAGING_VIEW_SYNC_SELECTION, true);
@@ -80,6 +93,7 @@ public class CommitActionStagingViewTest extends LocalRepositoryTestCase {
 		String menuString = util.getPluginLocalizedValue("CommitAction_label");
 		ContextMenuHelper.clickContextMenu(projectExplorerTree, "Team",
 				menuString);
+		TestUtil.joinJobs(ADD_TO_INDEX);
 		TestUtil.waitUntilViewWithGivenIdShows(StagingView.VIEW_ID);
 		final Repository[] repo = { null };
 		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
@@ -100,6 +114,63 @@ public class CommitActionStagingViewTest extends LocalRepositoryTestCase {
 		Repository repository = lookupRepository(repositoryFile);
 		assertNotNull("No repository found", repository);
 		assertEquals("Repository mismatch", repository, repo[0]);
+	}
+
+	@Test
+	public void testCommitWithoutAutoStage() throws Exception {
+		setTestFileContent("I have changed this");
+		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
+		util.getProjectItems(projectExplorerTree, PROJ1)[0].select();
+		String menuString = util.getPluginLocalizedValue("CommitAction_label");
+		ContextMenuHelper.clickContextMenu(projectExplorerTree, "Team",
+				menuString);
+		TestUtil.joinJobs(ADD_TO_INDEX);
+		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		TestUtil.waitUntilViewWithGivenIdShows(StagingView.VIEW_ID);
+		StagingUtil.assertStaging(PROJ1, FOLDER + '/' + FILE1, false);
+	}
+
+	@Test
+	public void testCommitWithAutoStageNoUntracked() throws Exception {
+		assertCommitWithAutoStage(false);
+	}
+
+	@Test
+	public void testCommitWithAutoStageWithUntracked() throws Exception {
+		assertCommitWithAutoStage(true);
+	}
+
+	private void assertCommitWithAutoStage(boolean withUntracked)
+			throws Exception {
+		Activator.getDefault().getPreferenceStore()
+				.setValue(UIPreferences.AUTO_STAGE_ON_COMMIT, true);
+		boolean initialIncludeUntracked = Activator.getDefault()
+				.getPreferenceStore()
+				.getBoolean(UIPreferences.COMMIT_DIALOG_INCLUDE_UNTRACKED);
+		Activator.getDefault().getPreferenceStore().setValue(
+				UIPreferences.COMMIT_DIALOG_INCLUDE_UNTRACKED, withUntracked);
+		String newFile = "newFile.txt";
+		try {
+			setTestFileContent("I have changed this");
+			touch(PROJ1, newFile, "New file content");
+			SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
+			util.getProjectItems(projectExplorerTree, PROJ1)[0].select();
+			String menuString = util
+					.getPluginLocalizedValue("CommitAction_label");
+			JobJoiner joiner = JobJoiner.startListening(ADD_TO_INDEX, 10,
+					TimeUnit.SECONDS);
+			ContextMenuHelper.clickContextMenu(projectExplorerTree, "Team",
+					menuString);
+			joiner.join();
+			TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+			TestUtil.waitUntilViewWithGivenIdShows(StagingView.VIEW_ID);
+			StagingUtil.assertStaging(PROJ1, FOLDER + '/' + FILE1, true);
+			StagingUtil.assertStaging(PROJ1, newFile, withUntracked);
+		} finally {
+			Activator.getDefault().getPreferenceStore().setValue(
+					UIPreferences.COMMIT_DIALOG_INCLUDE_UNTRACKED,
+					initialIncludeUntracked);
+		}
 	}
 
 }

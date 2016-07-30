@@ -17,6 +17,7 @@
  * Copyright (C) 2015, Laurent Delaigue <laurent.delaigue@obeo.fr>
  * Copyright (C) 2015, Denis Zygann <d.zygann@web.de>
  * Copyright (C) 2016, Lars Vogel <Lars.Vogel@vogella.com>
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -3235,6 +3236,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommittingPreferencePage_AlwaysUseStagingView;
+
+	/** */
+	public static String CommittingPreferencePage_AutoStageOnCommit;
 
 	/** */
 	public static String DateFormatPreferencePage_title;
