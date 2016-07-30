@@ -7,6 +7,7 @@
  * Copyright (C) 2010, Stefan Lay <stefan.lay@sap.com>
  * Copyright (C) 2011, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -34,6 +35,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.IteratorService;
@@ -172,7 +174,8 @@ public class CommitUI  {
 		commitDialog.setAmending(amending);
 		commitDialog.setAmendAllowed(amendAllowed);
 		commitDialog.setFiles(repo, files, indexDiff);
-		commitDialog.setPreselectedFiles(getSelectedFiles());
+		commitDialog.setPreselectedFiles(
+				getSelectedFiles(repo, files, selectedResources));
 		commitDialog.setPreselectAll(preselectAll);
 		commitDialog.setAuthor(commitHelper.getAuthor());
 		commitDialog.setCommitter(commitHelper.getCommitter());
@@ -240,19 +243,28 @@ public class CommitUI  {
 	 * user only selected one folder when the action was performed, if the
 	 * folder contains any files that could be committed, they will be returned.
 	 *
+	 * @param repository
+	 *            being operated on
+	 * @param mayBeCommitted
+	 *            {@link Set} containing all files that may be committed
+	 * @param resourcesSelected
+	 *            the resources currently selected
+	 *
 	 * @return a collection of files that is eligible to be committed based on
 	 *         the user's selection
 	 */
-	private Set<String> getSelectedFiles() {
+	public static Set<String> getSelectedFiles(Repository repository,
+			Set<String> mayBeCommitted,
+			IResource[] resourcesSelected) {
 		Set<String> preselectionCandidates = new LinkedHashSet<>();
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		// iterate through all the files that may be committed
-		for (String fileName : files) {
-			URI uri = new File(repo.getWorkTree(), fileName).toURI();
+		for (String fileName : mayBeCommitted) {
+			URI uri = new File(repository.getWorkTree(), fileName).toURI();
 			IFile[] workspaceFiles = root.findFilesForLocationURI(uri);
 			if (workspaceFiles.length > 0) {
 				IFile file = workspaceFiles[0];
-				for (IResource resource : selectedResources) {
+				for (IResource resource : resourcesSelected) {
 					// if any selected resource contains the file, add it as a
 					// preselection candidate
 					if (resource.contains(file)) {
@@ -262,7 +274,7 @@ public class CommitUI  {
 				}
 			} else {
 				// could be file outside of workspace
-				for (IResource resource : selectedResources) {
+				for (IResource resource : resourcesSelected) {
 					IPath location = resource.getLocation();
 					if(location != null && location.toFile().equals(new File(uri))) {
 						preselectionCandidates.add(fileName);
@@ -273,13 +285,29 @@ public class CommitUI  {
 		return preselectionCandidates;
 	}
 
-	private void buildIndexHeadDiffList(IProject[] selectedProjects,
-			IProgressMonitor monitor) throws IOException,
-			OperationCanceledException {
-
-		monitor.beginTask(UIText.CommitActionHandler_calculatingChanges, 1000);
+	/**
+	 * Calculates a fresh {@link IndexDiff} for the given repository.
+	 *
+	 * @param repository
+	 *            to compute the {@link IndexDiff} for
+	 * @param selectedProjects
+	 *            of the repository; used to get an estimate for the progress
+	 *            monitor; may be empty
+	 * @param monitor
+	 *            for progress reporting and cancellation
+	 * @return the {@link IndexDiff}
+	 * @throws IOException
+	 *             if an error occurred
+	 * @throws OperationCanceledException
+	 *             if the operation was cancelled
+	 */
+	public static IndexDiff getIndexDiff(Repository repository,
+			IProject[] selectedProjects, IProgressMonitor monitor)
+			throws IOException, OperationCanceledException {
+		SubMonitor progress = SubMonitor.convert(monitor,
+				UIText.CommitActionHandler_calculatingChanges, 1000);
 		EclipseGitProgressTransformer jgitMonitor = new EclipseGitProgressTransformer(
-				monitor);
+				progress);
 		CountingVisitor counter = new CountingVisitor();
 		for (IProject p : selectedProjects) {
 			try {
@@ -288,22 +316,33 @@ public class CommitUI  {
 				// ignore
 			}
 		}
-		WorkingTreeIterator it = IteratorService.createInitialIterator(repo);
-		if (it == null)
-			throw new OperationCanceledException(); // workspace is closed
-		indexDiff = new IndexDiff(repo, Constants.HEAD, it);
-		indexDiff.diff(jgitMonitor, counter.count, 0, NLS.bind(
-				UIText.CommitActionHandler_repository, repo.getDirectory()
-						.getPath()));
+		WorkingTreeIterator it = IteratorService
+				.createInitialIterator(repository);
+		if (it == null) {
+			// Workspace is closed
+			throw new OperationCanceledException();
+		}
+		IndexDiff diff = new IndexDiff(repository, Constants.HEAD, it);
+		diff.diff(jgitMonitor, counter.count, 0,
+				NLS.bind(UIText.CommitActionHandler_repository,
+						repository.getDirectory().getPath()));
+		if (progress.isCanceled()) {
+			throw new OperationCanceledException();
+		}
+		return diff;
+	}
 
+	private void buildIndexHeadDiffList(IProject[] selectedProjects,
+			IProgressMonitor monitor) throws IOException,
+			OperationCanceledException {
+
+		indexDiff = getIndexDiff(repo, selectedProjects, monitor);
 		includeList(indexDiff.getAdded(), indexChanges);
 		includeList(indexDiff.getChanged(), indexChanges);
 		includeList(indexDiff.getRemoved(), indexChanges);
 		includeList(indexDiff.getMissing(), notIndexed);
 		includeList(indexDiff.getModified(), notIndexed);
 		includeList(indexDiff.getUntracked(), notTracked);
-		if (monitor.isCanceled())
-			throw new OperationCanceledException();
 		monitor.done();
 	}
 

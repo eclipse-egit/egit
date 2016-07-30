@@ -16,6 +16,7 @@ import java.io.File;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.staging.StagingView;
@@ -80,6 +81,7 @@ public class CommitActionStagingViewTest extends LocalRepositoryTestCase {
 		String menuString = util.getPluginLocalizedValue("CommitAction_label");
 		ContextMenuHelper.clickContextMenu(projectExplorerTree, "Team",
 				menuString);
+		TestUtil.joinJobs(JobFamilies.ADD_TO_INDEX);
 		TestUtil.waitUntilViewWithGivenIdShows(StagingView.VIEW_ID);
 		final Repository[] repo = { null };
 		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
