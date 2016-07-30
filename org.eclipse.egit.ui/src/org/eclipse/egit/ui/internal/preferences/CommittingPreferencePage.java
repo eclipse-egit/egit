@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2010, 2013 Robin Stocker <robin@nibor.org> and others.
  * Copyright (C) 2015 SAP SE (Christian Georgi <christian.georgi@sap.com>)
+ * Copyright (C) 2016 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,9 +17,12 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.ComboFieldEditor;
+import org.eclipse.jface.preference.FieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.IntegerFieldEditor;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -33,6 +37,10 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 /** Preferences for committing with commit dialog/staging view. */
 public class CommittingPreferencePage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {
+
+	private BooleanFieldEditor useStagingView;
+
+	private BooleanFieldEditor autoStage;
 
 	private Button warnCheckbox;
 
@@ -64,10 +72,22 @@ public class CommittingPreferencePage extends FieldEditorPreferencePage
 	protected void createFieldEditors() {
 		Composite main = getFieldEditorParent();
 
-		BooleanFieldEditor useStagingView = new BooleanFieldEditor(
+		useStagingView = new BooleanFieldEditor(
 				UIPreferences.ALWAYS_USE_STAGING_VIEW,
 				UIText.CommittingPreferencePage_AlwaysUseStagingView, main);
 		addField(useStagingView);
+
+		autoStage = new BooleanFieldEditor(UIPreferences.AUTO_STAGE_ON_COMMIT,
+				UIText.CommittingPreferencePage_AutoStageOnCommit, main);
+		// LayoutConstants.getIndent() is not available on Eclipse 3.8.
+		// IDialogConstants.INDENT is deprecated. C.f.
+		// https://bugs.eclipse.org/341604 and https://bugs.eclipse.org/400320
+		// So we hard-code it.
+		GridDataFactory.fillDefaults().indent(20, 0)
+				.applyTo(autoStage.getDescriptionControl(main));
+		addField(autoStage);
+		autoStage.setEnabled(getPreferenceStore()
+				.getBoolean(UIPreferences.ALWAYS_USE_STAGING_VIEW), main);
 
 		Group formattingGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		formattingGroup.setText(UIText.CommittingPreferencePage_formatting);
@@ -170,6 +190,32 @@ public class CommittingPreferencePage extends FieldEditorPreferencePage
 				UIPreferences.COMMIT_DIALOG_HISTORY_SIZE,
 				UIText.CommittingPreferencePage_commitMessageHistory, main);
 		addField(historySize);
+	}
+
+	@Override
+	protected void initialize() {
+		super.initialize();
+		useStagingView.setPropertyChangeListener(new IPropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent event) {
+				if (FieldEditor.VALUE.equals(event.getProperty())) {
+					autoStage.setEnabled(
+							((Boolean) event.getNewValue()).booleanValue(),
+							getFieldEditorParent());
+				}
+			}
+		});
+	}
+
+	@Override
+	protected void performDefaults() {
+		super.performDefaults();
+		// We don't get property changed events when the default values are
+		// restored...
+		autoStage.setEnabled(
+				getPreferenceStore().getDefaultBoolean(
+						UIPreferences.ALWAYS_USE_STAGING_VIEW),
+				getFieldEditorParent());
 	}
 
 	private void updateMargins(Group group) {

@@ -8,6 +8,7 @@
  * Copyright (C) 2014, Marc Khouzam <marc.khouzam@ericsson.com>
  * Copyright (C) 2015, Jan-Ove Weichel <ovi.weichel@gmail.com>
  * Copyright (C) 2015, SAP SE (Christian Georgi <christian.georgi@sap.com>)
+ * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -68,6 +69,8 @@ public class UIPreferences {
 	public final static String COMMIT_DIALOG_HARD_WRAP_MESSAGE = "commit_dialog_hard_wrap_message"; //$NON-NLS-1$
 	/** */
 	public final static String ALWAYS_USE_STAGING_VIEW = "always_use_staging_view"; //$NON-NLS-1$
+	/** */
+	public final static String AUTO_STAGE_ON_COMMIT = "auto_stage_on_commit"; //$NON-NLS-1$
 	/** */
 	public final static String COMMIT_DIALOG_WARN_ABOUT_MESSAGE_SECOND_LINE = "commit_dialog_warn_about_message_second_line"; //$NON-NLS-1$
 	/** */
