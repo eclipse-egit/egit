@@ -3,6 +3,7 @@
  * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  * Copyright (C) 2015, Stephan Hackstedt <stephan.hackstedt@googlemail.com>
+ * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -178,8 +179,7 @@ public class PushOperation {
 					final EclipseGitProgressTransformer gitSubMonitor = new EclipseGitProgressTransformer(
 							progress.newChild(WORK_UNITS_PER_TRANSPORT / 2));
 
-					try {
-						Transport transport = Transport.open(localDb, uri);
+					try (Transport transport = Transport.open(localDb, uri)) {
 						transport.setDryRun(dryRun);
 						transport.setTimeout(timeout);
 						if (credentialsProvider != null) {
