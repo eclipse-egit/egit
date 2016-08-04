@@ -96,7 +96,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
@@ -400,7 +399,8 @@ public class RebaseInteractiveView extends ViewPart implements
 	private void createCommandToolBar(Form theForm, FormToolkit toolkit) {
 		headComposite = new Composite(theForm.getHead(), SWT.NONE);
 		theForm.setHeadClient(headComposite);
-		headComposite.setLayout(new GridLayout(2, false));
+		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false)
+				.margins(0, 0).applyTo(headComposite);
 		ToolBar toolBar = new ToolBar(headComposite, SWT.FLAT);
 		GridDataFactory.fillDefaults().grab(false, false).applyTo(toolBar);
 		toolkit.adapt(toolBar);
