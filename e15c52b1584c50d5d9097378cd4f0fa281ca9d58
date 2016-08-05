@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27af2791_7bed09b2",
+        "filename": "org.eclipse.egit.doc/help/EGit/Contributor_Guide/Builds.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-08-05T07:01:08Z",
+      "side": 1,
+      "message": "This is generated from the wiki. Don\u0027t edit it here in git; instead edit it on the wiki at [1].\n\n[1] https://wiki.eclipse.org/EGit/Contributor_Guide",
+      "revId": "e15c52b1584c50d5d9097378cd4f0fa281ca9d58",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
