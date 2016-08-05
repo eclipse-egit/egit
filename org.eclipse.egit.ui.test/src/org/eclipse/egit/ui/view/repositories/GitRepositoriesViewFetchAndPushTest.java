@@ -246,8 +246,11 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		objid = objid.substring(0, 7);
 		touchAndSubmit(null);
 		// push from other repository
-		PushOperationUI op =new PushOperationUI(repository, "origin", false);
+		JobJoiner jobJoiner = JobJoiner.startListening(JobFamilies.PUSH, 60,
+				TimeUnit.SECONDS);
+		PushOperationUI op = new PushOperationUI(repository, "origin", false);
 		op.start();
+		TestUtil.openJobResultDialog(jobJoiner.join());
 
 		String pushdialogTitle = NLS.bind(UIText.PushResultDialog_title,
 				op.getDestinationString());
