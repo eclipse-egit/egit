@@ -112,11 +112,6 @@
         <repository location='http://download.eclipse.org/egit/updates-nightly'/>
       </repositories>
     </iu>
-    <iu id='org.eclipse.jgit.java7.feature.group' name='Eclipse JGit optional Java 7 bundle' version='0.0.0'>
-      <repositories size='1'>
-        <repository location='http://download.eclipse.org/egit/updates-nightly'/>
-      </repositories>
-    </iu>
     <iu id='org.eclipse.jgit.pgm.feature.group' name='Eclipse JGit Command Line Interface' version='0.0.0'>
       <repositories size='1'>
         <repository location='http://download.eclipse.org/egit/updates-nightly'/>
