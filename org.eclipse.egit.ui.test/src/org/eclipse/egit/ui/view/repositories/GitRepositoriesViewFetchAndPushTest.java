@@ -17,6 +17,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -30,6 +31,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
@@ -106,14 +108,17 @@ public class GitRepositoriesViewFetchAndPushTest extends
 
 		// make sure to have a "new" branch name so that the
 		// dialog will return with a corresponding message
+		SWTBotView repoView = getOrOpenView();
 		String currentBranch = repository.getBranch();
-		new Git(repository).branchRename().setOldName(currentBranch)
-				.setNewName("" + System.currentTimeMillis()).call();
+		try (Git git = new Git(repository)) {
+			git.branchRename().setOldName(currentBranch)
+					.setNewName("" + System.currentTimeMillis()).call();
+		}
 
-		SWTBotTree tree = getOrOpenView().bot().tree();
+		Job.getJobManager().join(JobFamilies.REPO_VIEW_REFRESH, null);
+		SWTBotTree tree = repoView.bot().tree();
 		tree.select(0);
 
-		TestUtil.waitForJobs(50, 5000);
 		selectNode(tree, useRemote, false);
 
 		runPush(tree);
