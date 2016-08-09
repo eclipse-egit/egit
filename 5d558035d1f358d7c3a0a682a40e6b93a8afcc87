@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27af2791_4cc5ed05",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-09T23:30:26Z",
+      "side": 1,
+      "message": "you didn\u0027t modify this test ...",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 39
+      },
+      "revId": "5d558035d1f358d7c3a0a682a40e6b93a8afcc87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_6ccc7133",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ResourceUtil.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-09T23:30:26Z",
+      "side": 1,
+      "message": "how is this related to this change ?",
+      "revId": "5d558035d1f358d7c3a0a682a40e6b93a8afcc87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
