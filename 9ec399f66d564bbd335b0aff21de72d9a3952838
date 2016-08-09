@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27af2791_489f92e7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CommitActionHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 17
+      },
+      "writtenOn": "2016-08-09T18:47:17Z",
+      "side": 1,
+      "message": "Should there be a test that the right files are staged?",
+      "revId": "9ec399f66d564bbd335b0aff21de72d9a3952838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_c892c2d9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 4
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 17
+      },
+      "writtenOn": "2016-08-09T18:47:17Z",
+      "side": 1,
+      "message": "Strictly following the implementation it should read: \"Automatically stage selected resources on commit when using Staging View\".",
+      "revId": "9ec399f66d564bbd335b0aff21de72d9a3952838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
