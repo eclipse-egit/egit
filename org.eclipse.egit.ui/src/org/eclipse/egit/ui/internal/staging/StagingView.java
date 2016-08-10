@@ -25,7 +25,10 @@ import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionException;
@@ -172,6 +175,7 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -228,6 +232,10 @@ public class StagingView extends ViewPart implements IShowInSource {
 	private static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
 	private static final String SORT_ITEM_TOOLBAR_ID = "sortItem"; //$NON-NLS-1$
+
+	private static final String EXPAND_ALL_ITEM_TOOLBAR_ID = "expandAllItem"; //$NON-NLS-1$
+
+	private static final String COLLAPSE_ALL_ITEM_TOOLBAR_ID = "collapseAllItem"; //$NON-NLS-1$
 
 	private static final String STORE_SORT_STATE = SORT_ITEM_TOOLBAR_ID
 			+ "State"; //$NON-NLS-1$
@@ -1394,6 +1402,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			}
 		};
 		unstagedExpandAllAction.setImageDescriptor(UIIcons.EXPAND_ALL);
+		unstagedExpandAllAction.setId(EXPAND_ALL_ITEM_TOOLBAR_ID);
 
 		unstagedCollapseAllAction = new Action(UIText.UIUtils_CollapseAll,
 				IAction.AS_PUSH_BUTTON) {
@@ -1404,6 +1413,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			}
 		};
 		unstagedCollapseAllAction.setImageDescriptor(UIIcons.COLLAPSEALL);
+		unstagedCollapseAllAction.setId(COLLAPSE_ALL_ITEM_TOOLBAR_ID);
 
 		sortAction = new Action(UIText.StagingView_UnstagedSort,
 				IAction.AS_CHECK_BOX) {
@@ -1449,6 +1459,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			}
 		};
 		stagedExpandAllAction.setImageDescriptor(UIIcons.EXPAND_ALL);
+		stagedExpandAllAction.setId(EXPAND_ALL_ITEM_TOOLBAR_ID);
 
 		stagedCollapseAllAction = new Action(UIText.UIUtils_CollapseAll,
 				IAction.AS_PUSH_BUTTON) {
@@ -1459,6 +1470,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			}
 		};
 		stagedCollapseAllAction.setImageDescriptor(UIIcons.COLLAPSEALL);
+		stagedCollapseAllAction.setId(COLLAPSE_ALL_ITEM_TOOLBAR_ID);
 
 		stagedToolBarManager = new ToolBarManager(SWT.FLAT | SWT.HORIZONTAL);
 
@@ -1758,7 +1770,10 @@ public class StagingView extends ViewPart implements IShowInSource {
 				setPresentation(presentation, false);
 				listPresentationAction.setChecked(false);
 				compactTreePresentationAction.setChecked(false);
-				setExpandCollapseActionsVisible(isExpandAllowed());
+				setExpandCollapseActionsVisible(false, isExpandAllowed(false),
+						true);
+				setExpandCollapseActionsVisible(true, isExpandAllowed(true),
+						true);
 				refreshViewers();
 			}
 		};
@@ -1785,7 +1800,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 		switch (presentation) {
 		case LIST:
 			listPresentationAction.setChecked(true);
-			setExpandCollapseActionsVisible(false);
+			setExpandCollapseActionsVisible(false, false, false);
+			setExpandCollapseActionsVisible(true, false, false);
 			break;
 		case TREE:
 			treePresentationAction.setChecked(true);
@@ -1840,37 +1856,30 @@ public class StagingView extends ViewPart implements IShowInSource {
 		}
 	}
 
-	private void setExpandCollapseActionsVisible(boolean visible) {
-		for (IContributionItem item : unstagedToolBarManager.getItems()) {
-			if (!SORT_ITEM_TOOLBAR_ID.equals(item.getId())) {
-				item.setVisible(visible);
+	private void setExpandCollapseActionsVisible(boolean staged,
+			boolean visibleExpandAll,
+			boolean visibleCollapseAll) {
+		ToolBarManager toolBarManager = staged ? stagedToolBarManager
+						: unstagedToolBarManager;
+		for (IContributionItem item : toolBarManager.getItems()) {
+			String id = item.getId();
+			if (EXPAND_ALL_ITEM_TOOLBAR_ID.equals(id)) {
+				item.setVisible(visibleExpandAll);
+			} else if (COLLAPSE_ALL_ITEM_TOOLBAR_ID.equals(id)) {
+				item.setVisible(visibleCollapseAll);
 			}
 		}
-		for (IContributionItem item : stagedToolBarManager.getItems()) {
-			if (!SORT_ITEM_TOOLBAR_ID.equals(item.getId())) {
-				item.setVisible(visible);
-			}
-		}
-		unstagedExpandAllAction.setEnabled(visible);
-		unstagedCollapseAllAction.setEnabled(visible);
-		stagedExpandAllAction.setEnabled(visible);
-		stagedCollapseAllAction.setEnabled(visible);
-		sortAction.setEnabled(true);
-		unstagedToolBarManager.update(true);
-		stagedToolBarManager.update(true);
+		(staged ? stagedExpandAllAction : unstagedExpandAllAction)
+				.setEnabled(visibleExpandAll);
+		(staged ? stagedCollapseAllAction : unstagedCollapseAllAction)
+				.setEnabled(visibleCollapseAll);
+		toolBarManager.update(true);
 	}
 
-	private boolean isExpandAllowed() {
+	private boolean isExpandAllowed(boolean staged) {
 		StagingViewContentProvider contentProvider = getContentProvider(
-				stagedViewer);
-		if (contentProvider.getCount() > getMaxLimitForListMode()) {
-			return false;
-		}
-		contentProvider = getContentProvider(unstagedViewer);
-		if (contentProvider.getCount() > getMaxLimitForListMode()) {
-			return false;
-		}
-		return true;
+				staged ? stagedViewer : unstagedViewer);
+		return contentProvider.getCount() <= getMaxLimitForListMode();
 	}
 
 	private TreeViewer createTree(Composite composite) {
@@ -1897,6 +1906,434 @@ public class StagingView extends ViewPart implements IShowInSource {
 		provider.setFileNameMode(getPreferenceStore().getBoolean(
 				UIPreferences.STAGING_VIEW_FILENAME_MODE));
 		return provider;
+	}
+
+	private void setStagingViewerInput(TreeViewer stagingViewer,
+			StagingViewUpdate newInput, Object[] previous,
+			Set<IPath> additionalPaths) {
+		// Disable painting and show a busy cursor for the tree during the
+		// entire update process.
+		final Tree tree = stagingViewer.getTree();
+		tree.setRedraw(false);
+		Cursor oldCursor = tree.getCursor();
+		tree.setCursor(tree.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
+
+		try {
+			// Remember the elements at or before the current top element of the
+			// viewer.
+			TreeItem topItem = tree.getTopItem();
+			final Set<Object> precedingObjects = new LinkedHashSet<>();
+			if (topItem != null) {
+				new TreeItemVisitor(tree.getItems()) {
+					@Override
+					public boolean visit(TreeItem treeItem) {
+						precedingObjects.add(treeItem.getData());
+						return true;
+					}
+				}.traverse(topItem);
+				precedingObjects.remove(null);
+			}
+
+			// Controls whether we'll try to preserve the top element in the
+			// view, i.e., the scroll position. We generally want that unless
+			// the update has added new objects to the view, in which case those
+			// are selected and revealed.
+			boolean preserveTop = true;
+			boolean keepSelectionVisible = false;
+			StagingViewUpdate oldInput = (StagingViewUpdate) stagingViewer
+					.getInput();
+			if (oldInput != null && oldInput.repository == newInput.repository
+					&& oldInput.indexDiff != null) {
+				// If the input has changed and wasn't empty before or wasn't
+				// for a different repository before, record the contents of the
+				// viewer before the input is changed.
+				StagingViewContentProvider contentProvider = getContentProvider(
+						stagingViewer);
+				ViewerComparator comparator = stagingViewer.getComparator();
+				Map<String, Object> oldPaths = buildElementMap(stagingViewer,
+						contentProvider, comparator);
+
+				// Update the input.
+				stagingViewer.setInput(newInput);
+				// Restore the previous expansion state, if there is one.
+				if (previous != null) {
+					expandPreviousExpandedAndPaths(previous, stagingViewer,
+							additionalPaths);
+				}
+
+				// Update the selection.
+				StagingViewerUpdate stagingViewerUpdate = updateSelection(
+						stagingViewer, contentProvider, oldPaths,
+						buildElementMap(stagingViewer, contentProvider,
+								comparator));
+
+				// If something has been removed, the element before the removed
+				// item has been selected, in which case we want to preserve the
+				// scroll state as much as possible, keeping the selection in
+				// view. If something has been added, those added things have
+				// been selected and revealed, so we don't want to preserve the
+				// top but rather leave the revealed selection alone. If nothing
+				// has changed, we want to preserve the top, regardless of where
+				// the current unmodified selection might be, which is what's
+				// done by default anyway.
+				if (stagingViewerUpdate == StagingViewerUpdate.REMOVED) {
+					keepSelectionVisible = true;
+				} else if (stagingViewerUpdate == StagingViewerUpdate.ADDED) {
+					preserveTop = false;
+				}
+			} else {
+				// The update is completely different so don't do any of the
+				// above analysis to see what's different.
+				stagingViewer.setInput(newInput);
+				// Restore the previous expansion state, if there is one.
+				if (previous != null) {
+					expandPreviousExpandedAndPaths(previous, stagingViewer,
+							additionalPaths);
+				}
+			}
+
+			if (preserveTop) {
+				// It's likely that the tree has scrolled to change the top
+				// item. So try to restore the current top item to be the one
+				// with the same data as was at the top before, either starting
+				// with the selection so that it generally stays in view, or at
+				// the bottom, if we're not trying to keep the selection
+				// visible.
+				TreeItem[] selection = tree.getSelection();
+				TreeItem initialItem = keepSelectionVisible
+						&& selection.length > 0 ? selection[0] : null;
+				new TreeItemVisitor(tree.getItems()) {
+					@Override
+					public boolean visit(TreeItem treeItem) {
+						if (precedingObjects.contains(treeItem.getData())) {
+							// If we reach an item that was at or before the
+							// original top item, make it the top item
+							// again, and stop the visitor.
+							tree.setTopItem(treeItem);
+							return false;
+						}
+						return true;
+					}
+				}.traverse(initialItem);
+			}
+		} finally {
+			// The viewer is fully updated now, so we can paint it.
+			tree.setRedraw(true);
+			tree.setCursor(oldCursor);
+		}
+	}
+
+	private static Map<String, Object> buildElementMap(TreeViewer stagingViewer,
+			StagingViewContentProvider contentProvider,
+			ViewerComparator comparator) {
+		// Builds a map from paths, represented as strings, to elements visible
+		// in the staging viewer.
+		Map<String, Object> result = new LinkedHashMap<>();
+		// Start visiting the root elements in the order in which they appear in
+		// the UI.
+		Object[] elements = contentProvider.getElements(null);
+		comparator.sort(stagingViewer, elements);
+		for (Object element : elements) {
+			visitElement(stagingViewer, contentProvider, comparator, element,
+					result);
+		}
+		return result;
+	}
+
+	private static boolean visitElement(TreeViewer stagingViewer,
+			StagingViewContentProvider contentProvider,
+			ViewerComparator comparator,
+			Object element, Map<String, Object> paths) {
+		if (element instanceof StagingEntry) {
+			StagingEntry stagingEntry = (StagingEntry) element;
+			if (contentProvider.isInFilter(stagingEntry)) {
+				// If the element is a staging entry, and it's included by the
+				// filter, add a mapping for it.
+				String path = stagingEntry.getPath();
+				paths.put(path, stagingEntry);
+				return true;
+			}
+
+			return false;
+		}
+
+		// If the element is a staging folder entry, visit all the children,
+		// checking that at least one visited descendant has been added to the
+		// map before adding a mapping for this staging folder entry.
+		if (element instanceof StagingFolderEntry) {
+			StagingFolderEntry stagingFolderEntry = (StagingFolderEntry) element;
+			// Visit the children in the order in which they appear in the UI.
+			Object[] children = contentProvider.getChildren(stagingFolderEntry);
+			comparator.sort(stagingViewer, children);
+
+			IPath path = stagingFolderEntry.getPath();
+			String pathString = path.toString();
+			paths.put(pathString, stagingFolderEntry);
+
+			boolean hasVisibleChildren = false;
+			for (Object child : children) {
+				if (visitElement(stagingViewer, contentProvider, comparator,
+						child, paths)) {
+					hasVisibleChildren = true;
+				}
+			}
+
+			if (hasVisibleChildren) {
+				return true;
+			}
+
+			// If there were no visible children, remove the path from the map.
+			paths.remove(pathString);
+			return false;
+		}
+
+		return false;
+	}
+
+	private enum StagingViewerUpdate {
+		ADDED, REMOVED, UNCHANGED
+	}
+
+	/**
+	 * Updates the selection depending on the type of change in the staging
+	 * viewer's state. If something has been removed, it returns
+	 * {@link StagingViewerUpdate#REMOVED} and the item before the removed
+	 * element is selected. If something has been added, it returns
+	 * {@link StagingViewerUpdate#ADDED} and those added elements are selected
+	 * and revealed. If nothing has changed, it returns
+	 * {@link StagingViewerUpdate#UNCHANGED} and the selection state is
+	 * unchanged.
+	 *
+	 * @param stagingViewer
+	 *            the staging viewer for which to update the selection.
+	 * @param contentProvider
+	 *            the content provider used by that staging viewer.
+	 * @param oldPaths
+	 *            the old content state of the staging viewer.
+	 * @param newPaths
+	 *            the new content state of the staging viewer.
+	 * @return the type of change to the selecting of the staging viewer
+	 */
+	private static StagingViewerUpdate updateSelection(TreeViewer stagingViewer,
+			StagingViewContentProvider contentProvider,
+			Map<String, Object> oldPaths, Map<String, Object> newPaths) {
+		// Update the staging viewer's selection by analyzing the change
+		// to the contents of the viewer.
+		Map<String, Object> addedPaths = new LinkedHashMap<>(newPaths);
+		addedPaths.keySet().removeAll(oldPaths.keySet());
+		if (!addedPaths.isEmpty()) {
+			// If anything has been added to the viewer, select those added
+			// things. But, to minimize the selection, select a parent node when
+			// all its children have been added. The general idea is that if you
+			// drag and drop between staged and unstaged, the new selection in
+			// the target view, when dragged back again to the source view, will
+			// undo the original drag-and-drop operation operation.
+			List<Object> newSelection = new ArrayList<>();
+			Set<Object> elements = new LinkedHashSet<>(addedPaths.values());
+			Set<Object> excludeChildren = new LinkedHashSet<>();
+			for (Object element : elements) {
+				if (element instanceof StagingEntry) {
+					StagingEntry stagingEntry = (StagingEntry) element;
+					if (!excludeChildren.contains(stagingEntry.getParent())) {
+						// If it's a leaf entry and its parent has not been
+						// excluded from the selection, include it in the
+						// selection.
+						newSelection.add(stagingEntry);
+					}
+				} else if (element instanceof StagingFolderEntry) {
+					StagingFolderEntry stagingFolderEntry = (StagingFolderEntry) element;
+					StagingFolderEntry parent = stagingFolderEntry.getParent();
+					if (excludeChildren.contains(parent)) {
+						// If its parent has been excluded from the selection,
+						// exclude this folder entry also.
+						excludeChildren.add(stagingFolderEntry);
+					} else if (elements.containsAll(contentProvider
+							.getStagingEntriesFiltered(stagingFolderEntry))) {
+						// If all of this folder's visible children are added,
+						// i.e., it had no existing children before, then
+						// include it in the selection, and exclude its
+						// children from the selection.
+						newSelection.add(stagingFolderEntry);
+						excludeChildren.add(stagingFolderEntry);
+					}
+				}
+			}
+
+			// Select and reveal the selection of the newly added elements.
+			stagingViewer.setSelection(new StructuredSelection(newSelection),
+					true);
+			return StagingViewerUpdate.ADDED;
+		} else {
+			Map<String, Object> removedPaths = new LinkedHashMap<>(oldPaths);
+			removedPaths.keySet().removeAll(newPaths.keySet());
+			if (!removedPaths.isEmpty()) {
+				// If anything has been removed from the viewer, try to select
+				// the closest following unremoved sibling of the first removed
+				// element, a parent if there isn't such a sibling, or the first
+				// element in the viewer failing those. The general idea is that
+				// it's really annoying to have the viewer scroll to the top
+				// element whenever you drag something out of a staging viewer.
+				Collection<Object> removedElements = removedPaths.values();
+				Object firstRemovedElement = removedElements.iterator()
+						.next();
+				Object parent = contentProvider.getParent(firstRemovedElement);
+				Object candidate = null;
+				boolean visitSubsequentSiblings = false;
+				for (Object oldElement : oldPaths.values()) {
+					if (oldElement == firstRemovedElement) {
+						// Once we reach the first removed element, siblings
+						// that follow are ideal candidates.
+						visitSubsequentSiblings = true;
+					}
+
+					if (visitSubsequentSiblings) {
+						if (!removedElements.contains(oldElement)) {
+							if (contentProvider
+									.getParent(oldElement) == parent) {
+								// If this is a subsequent sibling that's not
+								// itself removed, it's the best candidate.
+								candidate = oldElement;
+								break;
+							} else if (candidate != null) {
+								// If we already have a candidate, and we're
+								// looking for a subsequent sibling, but now
+								// we've hit an element with a different parent
+								// of the removed element, then we're never
+								// going to find a subsequent unremoved sibling,
+								// so just return the candidate.
+								break;
+							}
+						}
+					} else if (candidate == null || oldElement == parent
+							|| contentProvider
+									.getParent(oldElement) == parent) {
+						// If there is no candidate, or there is a better
+						// candidate, i.e., the parent or an element with the
+						// same parent, record the current entry.
+						candidate = oldElement;
+					}
+				}
+
+				if (candidate == null && !newPaths.isEmpty()) {
+					// If there is no selected object yet, just choose the first
+					// element in the viewer, if there is such an element.
+					candidate = newPaths.values().iterator().next();
+				}
+
+				if (candidate != null) {
+					// If we have a selection, which will always be the case
+					// unless the viewer is empty, set it. This selection is
+					// preserved during update of the viewer. Unfortunately the
+					// scroll position is generally quite poor. Fixing the
+					// scroll position is done after the viewer is updated.
+					stagingViewer.setSelection(
+							new StructuredSelection(candidate), true);
+					return StagingViewerUpdate.REMOVED;
+				}
+			}
+
+			return StagingViewerUpdate.UNCHANGED;
+		}
+	}
+
+	/**
+	 * This visitor is used to traverse all visible tree items of a tree viewer
+	 * starting at some specific item, visiting the items in the reverse order
+	 * in which they appear in the UI.
+	 */
+	private static abstract class TreeItemVisitor {
+		private final TreeItem[] roots;
+
+		public TreeItemVisitor(TreeItem[] roots) {
+			this.roots = roots;
+		}
+
+		public abstract boolean visit(TreeItem treeItem);
+
+		/**
+		 * The public entry point for invoking this visitor.
+		 *
+		 * @param treeItem
+		 *            the item at which to start, are null, to start at the
+		 *            bottom.
+		 */
+		public void traverse(TreeItem treeItem) {
+			if (treeItem == null) {
+				treeItem = getLastItem(roots);
+				if (treeItem == null) {
+					return;
+				}
+			}
+			if (treeItem.getData() != null && visit(treeItem)) {
+				traversePrecedingSiblings(treeItem);
+			}
+		}
+
+		private TreeItem getLastItem(TreeItem[] treeItems) {
+			if (treeItems.length == 0) {
+				return null;
+			}
+			TreeItem lastItem = treeItems[treeItems.length - 1];
+			if (lastItem.getExpanded()) {
+				TreeItem result = getLastItem(lastItem.getItems());
+				if (result != null) {
+					return result;
+				}
+			}
+			return lastItem;
+		}
+
+		private boolean traversePrecedingSiblings(TreeItem treeItem) {
+			TreeItem parent = treeItem.getParentItem();
+			if (parent == null) {
+				// If there is no parent, traverse based on the root items.
+				return traversePrecedingSiblings(roots, treeItem);
+			}
+			// Traverse based on the parent items, i.e., the siblings of the
+			// tree item.
+			if (!traversePrecedingSiblings(parent.getItems(), treeItem)) {
+				return false;
+			}
+			// Recursively traverse the parent.
+			return traversePrecedingSiblings(parent);
+		}
+
+		private boolean traversePrecedingSiblings(TreeItem[] siblings,
+				TreeItem treeItem) {
+			// Traverse the siblings in reverse order, skipping the ones that
+			// are at or before the tree item.
+			boolean start = false;
+			for (int i = siblings.length - 1; i >= 0; --i) {
+				TreeItem sibling = siblings[i];
+				if (start) {
+					// Traverse all the visible children of this preceding
+					// sibling.
+					if (!traverseChildren(sibling)) {
+						return false;
+					}
+				} else if (sibling == treeItem) {
+					start = true;
+				}
+			}
+
+			return true;
+		}
+
+		private boolean traverseChildren(TreeItem treeItem) {
+			if (treeItem.getExpanded()) {
+				// If the tree item is expanded, traverse all the children in
+				// reverse order.
+				TreeItem[] children = treeItem.getItems();
+				for (int i = children.length - 1; i >= 0; --i) {
+					// Recursively traverse the children of the children.
+					if (!traverseChildren(children[i])) {
+						return false;
+					}
+				}
+			}
+			// Call the visitor callback after the children have been visited.
+			return visit(treeItem);
+		}
 	}
 
 	private IPreferenceStore getPreferenceStore() {
@@ -2181,9 +2618,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 		syncExec(new Runnable() {
 			@Override
 			public void run() {
-				Object[] unstagedExpanded = unstagedViewer
-						.getExpandedElements();
-				Object[] stagedExpanded = stagedViewer.getExpandedElements();
+				Object[] unstagedExpanded = unstagedViewer.getVisibleExpandedElements();
+				Object[] stagedExpanded = stagedViewer.getVisibleExpandedElements();
 				refreshViewersInternal();
 				unstagedViewer.setExpandedElements(unstagedExpanded);
 				stagedViewer.setExpandedElements(stagedExpanded);
@@ -2708,7 +3144,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private static void addExpandedPathsBelowFolder(StagingFolderEntry folder,
 			TreeViewer treeViewer, Set<IPath> addToSet) {
-		Object[] expandedElements = treeViewer.getExpandedElements();
+		Object[] expandedElements = treeViewer.getVisibleExpandedElements();
 		for (Object expandedElement : expandedElements) {
 			if (expandedElement instanceof StagingFolderEntry) {
 				StagingFolderEntry expandedFolder = (StagingFolderEntry) expandedElement;
@@ -2742,8 +3178,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 		saveCommitMessageComponentState();
 		currentRepository = null;
 		StagingViewUpdate update = new StagingViewUpdate(null, null, null);
-		unstagedViewer.setInput(update);
-		stagedViewer.setInput(update);
+		setStagingViewerInput(unstagedViewer, update, null, null);
+		setStagingViewerInput(stagedViewer, update, null, null);
 		enableCommitWidgets(false);
 		refreshAction.setEnabled(false);
 		updateSectionText();
@@ -2861,15 +3297,14 @@ public class StagingView extends ViewPart implements IShowInSource {
 							});
 				}
 				final StagingViewUpdate update = new StagingViewUpdate(repository, indexDiff, null);
-				Object[] unstagedExpanded = unstagedViewer
-						.getExpandedElements();
-				Object[] stagedExpanded = stagedViewer
-						.getExpandedElements();
+				Object[] unstagedExpanded = unstagedViewer.getVisibleExpandedElements();
+				Object[] stagedExpanded = stagedViewer.getVisibleExpandedElements();
 
-				int elementsCount = updateAutoExpand(unstagedViewer,
+				int unstagedElementsCount = updateAutoExpand(unstagedViewer,
 						getUnstaged(indexDiff));
-				elementsCount += updateAutoExpand(stagedViewer,
+				int stagedElementsCount = updateAutoExpand(stagedViewer,
 						getStaged(indexDiff));
+				int elementsCount = unstagedElementsCount + stagedElementsCount;
 
 				if (elementsCount > getMaxLimitForListMode()) {
 					listPresentationAction.setEnabled(false);
@@ -2877,7 +3312,12 @@ public class StagingView extends ViewPart implements IShowInSource {
 						compactTreePresentationAction.setChecked(true);
 						switchToCompactModeInternal(true);
 					} else {
-						setExpandCollapseActionsVisible(false);
+						setExpandCollapseActionsVisible(false,
+								unstagedElementsCount <= getMaxLimitForListMode(),
+								true);
+						setExpandCollapseActionsVisible(true,
+								stagedElementsCount <= getMaxLimitForListMode(),
+								true);
 					}
 				} else {
 					listPresentationAction.setEnabled(true);
@@ -2887,16 +3327,16 @@ public class StagingView extends ViewPart implements IShowInSource {
 						listPresentationAction.setChecked(true);
 						switchToListMode();
 					} else if (presentation != Presentation.LIST) {
-						setExpandCollapseActionsVisible(true);
+						setExpandCollapseActionsVisible(false, true, true);
+						setExpandCollapseActionsVisible(true, true, true);
 					}
 				}
 
-				unstagedViewer.setInput(update);
-				stagedViewer.setInput(update);
-				expandPreviousExpandedAndPaths(unstagedExpanded, unstagedViewer,
+				setStagingViewerInput(unstagedViewer, update, unstagedExpanded,
 						pathsToExpandInUnstaged);
-				expandPreviousExpandedAndPaths(stagedExpanded, stagedViewer,
+				setStagingViewerInput(stagedViewer, update, stagedExpanded,
 						pathsToExpandInStaged);
+				resetPathsToExpand();
 				refreshAction.setEnabled(true);
 
 				updateRebaseButtonVisibility(repository.getRepositoryState()
@@ -2965,9 +3405,12 @@ public class StagingView extends ViewPart implements IShowInSource {
 		listPresentationAction.setChecked(false);
 		treePresentationAction.setChecked(false);
 		if (auto) {
-			setExpandCollapseActionsVisible(false);
+			setExpandCollapseActionsVisible(false, false, true);
+			setExpandCollapseActionsVisible(true, false, true);
 		} else {
-			setExpandCollapseActionsVisible(isExpandAllowed());
+			setExpandCollapseActionsVisible(false, isExpandAllowed(false),
+					true);
+			setExpandCollapseActionsVisible(true, isExpandAllowed(true), true);
 		}
 	}
 
@@ -2975,7 +3418,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 		setPresentation(Presentation.LIST, false);
 		treePresentationAction.setChecked(false);
 		compactTreePresentationAction.setChecked(false);
-		setExpandCollapseActionsVisible(false);
+		setExpandCollapseActionsVisible(false, false, false);
+		setExpandCollapseActionsVisible(true, false, false);
 	}
 
 	private static boolean noConflicts(IndexDiffData indexDiff) {
@@ -3040,9 +3484,20 @@ public class StagingView extends ViewPart implements IShowInSource {
 		// Instead of just expanding the previous elements directly, also expand
 		// all parent paths. This makes it work in case of "re-folding" of
 		// compact tree.
-		for (Object element : previous)
-			if (element instanceof StagingFolderEntry)
+		for (Object element : previous) {
+			if (element instanceof StagingFolderEntry) {
 				addPathAndParentPaths(((StagingFolderEntry) element).getPath(), paths);
+			}
+		}
+		// Also consider the currently expanded elements because auto selection
+		// could have expanded some elements.
+		for (Object element : viewer.getVisibleExpandedElements()) {
+			if (element instanceof StagingFolderEntry) {
+				addPathAndParentPaths(((StagingFolderEntry) element).getPath(),
+						paths);
+			}
+		}
+
 		List<StagingFolderEntry> expand = new ArrayList<>();
 
 		calculateNodesToExpand(paths, stagedContentProvider.getElements(null),
