@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "27af2791_bc930d2b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-08-10T14:52:00Z",
+      "side": 1,
+      "message": "You are right, this remains from a previous change set.\nI\u0027ll fix this in the next patch set.",
+      "parentUuid": "27af2791_4cc5ed05",
+      "revId": "5d558035d1f358d7c3a0a682a40e6b93a8afcc87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27af2791_6ccc7133",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ResourceUtil.java",
         "patchSetId": 16
@@ -36,6 +54,24 @@
       "writtenOn": "2016-08-09T23:30:26Z",
       "side": 1,
       "message": "how is this related to this change ?",
+      "revId": "5d558035d1f358d7c3a0a682a40e6b93a8afcc87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_9c948916",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ResourceUtil.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-08-10T14:52:00Z",
+      "side": 1,
+      "message": "I know, this looks weird.\n\nThe model descriptor provided in EGit UI will not behave as intended when it receives a remote mapping context.\nBasically, it would break the test case where you select a project and compare it with another version: If there are changes in other projects, these changes would now appear in the comparison, which is not what we want.\nBut on the other hand, we do need a RemoteMappingContext in EMFCompare for example to check whether certain files that are not locally present must be included in the logical model. If locally I have only model.uml whereas remotely I have model.uml + submodel.uml, I need a RemoteMappingContext to discover it.\n\nI couldn\u0027t find any simple way around that other than ignoring the EGit model provider here.\n\nThe only way around that I can think of would be to introduce in EGit an interface that ModelProviders could adapt to so that we could only provide a RemoteMappingContext to those ModelProviders that explicitely declare it. We could then make sure that the EMFModelProvider would adapt to this interface.\nDo you think it\u0027d be a better solution?",
+      "parentUuid": "27af2791_6ccc7133",
       "revId": "5d558035d1f358d7c3a0a682a40e6b93a8afcc87",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
