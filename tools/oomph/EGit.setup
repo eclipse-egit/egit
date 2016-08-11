@@ -34,6 +34,11 @@
       value="1g"
       vm="true"/>
   <setupTask
+      xsi:type="setup:EclipseIniTask"
+      option="-Doomph.redirection.egit="
+      value="https://git.eclipse.org/c/egit/egit.git/plain/tools/oomph/EGit.setup->${git.clone.egit.location|uri}/tools/oomph/EGit.setup"
+      vm="true"/>
+  <setupTask
       xsi:type="setup:ResourceCreationTask"
       excludedTriggers="STARTUP MANUAL"
       content="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;section name=&quot;Workbench&quot;>&#xD;&#xA;&#x9;&lt;section name=&quot;org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart&quot;>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;true&quot; key=&quot;group_libraries&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;false&quot; key=&quot;linkWithEditor&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;2&quot; key=&quot;layout&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;2&quot; key=&quot;rootMode&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;packageExplorer configured=&amp;quot;true&amp;quot; group_libraries=&amp;quot;1&amp;quot; layout=&amp;quot;2&amp;quot; linkWithEditor=&amp;quot;0&amp;quot; rootMode=&amp;quot;2&amp;quot; sortWorkingSets=&amp;quot;false&amp;quot; workingSetName=&amp;quot;&amp;quot;&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;localWorkingSetManager&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;workingSet editPageId=&amp;quot;org.eclipse.jdt.internal.ui.OthersWorkingSet&amp;quot; factoryID=&amp;quot;org.eclipse.ui.internal.WorkingSetFactory&amp;quot; id=&amp;quot;1382792884467_1&amp;quot; label=&amp;quot;Other Projects&amp;quot; name=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;/localWorkingSetManager&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;activeWorkingSet workingSetName=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;allWorkingSets workingSetName=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;/packageExplorer&amp;gt;&quot; key=&quot;memento&quot;/>&#xD;&#xA;&#x9;&lt;/section>&#xD;&#xA;&lt;/section>&#xD;&#xA;"
@@ -55,10 +60,15 @@
   <setupTask
       xsi:type="pde:APIBaselineTask"
       name="EGit"
-      version="4.0.1"
+      version="4.4.1"
       location="${workspace.location/../api.baseline}"
-      remoteURI="http://download.eclipse.org/egit/updates-4.0.1/org.eclipse.egit.repository-4.0.1.201506240215-r.zip"/>
+      remoteURI="http://download.eclipse.org/egit/updates-4.4.1/org.eclipse.egit.repository-4.4.1.201607150455-r.zip"/>
   <stream name="master">
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="eclipse.target.platform"
+        defaultValue="Neon"
+        storageURI="scope://Workspace"/>
     <setupTask
         xsi:type="git:GitCloneTask"
         id="git.clone.jgit"
@@ -115,46 +125,29 @@
         <requirement
             name="org.eclipse.pde.feature.group"/>
         <requirement
-            name="org.eclipse.jgit.ant"/>
+            name="org.eclipse.swtbot.eclipse.feature.group"/>
         <requirement
-            name="org.eclipse.jgit.ant.test"/>
+            name="org.eclipse.swtbot.feature.group"/>
         <requirement
-            name="org.eclipse.jgit.http.test"/>
+            name="org.eclipse.swtbot.eclipse.test.junit.feature.group"/>
         <requirement
-            name="org.eclipse.jgit.http.apache.feature.group"/>
-        <requirement
-            name="org.eclipse.jgit.junit.feature.group"/>
-        <requirement
-            name="org.eclipse.jgit.pgm.feature.group"/>
-        <requirement
-            name="org.eclipse.jgit.pgm.source.feature.group"/>
-        <requirement
-            name="org.eclipse.jgit.pgm.test"/>
-        <requirement
-            name="org.eclipse.jgit.target"/>
-        <requirement
-            name="org.eclipse.jgit.test"/>
-        <requirement
-            name="org.eclipse.egit.feature.group"/>
-        <requirement
-            name="org.eclipse.egit.core.test"/>
-        <requirement
-            name="org.eclipse.egit.mylyn.feature.group"/>
-        <requirement
-            name="org.eclipse.egit.mylyn.ui.test"/>
-        <requirement
-            name="org.eclipse.egit.target"/>
-        <requirement
-            name="org.eclipse.egit.ui.test"/>
-        <requirement
-            name="org.eclipse.egit.source.feature.group"/>
-        <requirement
-            name="org.eclipse.swtbot.eclipse.core"/>
+            name="*"/>
         <sourceLocator
             rootFolder="${git.clone.jgit.location}"
             locateNestedProjects="true"/>
         <sourceLocator
             rootFolder="${git.clone.egit.location}"/>
+        <repositoryList
+            name="Neon">
+          <repository
+              url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
+          <repository
+              url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.2.13.v20150730"/>
+          <repository
+              url="http://download.eclipse.org/technology/swtbot/snapshots"/>
+          <repository
+              url="http://download.eclipse.org/mylyn/releases/latest"/>
+        </repositoryList>
         <repositoryList
             name="Mars">
           <repository
@@ -190,7 +183,7 @@
               pattern="org\.eclipse\.egit.*"/>
           <operand
               xsi:type="workingsets:ExclusionPredicate"
-              excludedWorkingSet="//@streams[name='master']/@setupTasks.3/@workingSets.2 //@streams[name='master']/@setupTasks.3/@workingSets.3"/>
+              excludedWorkingSet="//@streams[name='master']/@setupTasks.4/@workingSets.2 //@streams[name='master']/@setupTasks.4/@workingSets.3"/>
         </predicate>
       </workingSet>
       <workingSet
@@ -202,7 +195,7 @@
               pattern="org\.eclipse\.jgit.*"/>
           <operand
               xsi:type="workingsets:ExclusionPredicate"
-              excludedWorkingSet="//@streams[name='master']/@setupTasks.3/@workingSets.2 //@streams[name='master']/@setupTasks.3/@workingSets.3"/>
+              excludedWorkingSet="//@streams[name='master']/@setupTasks.4/@workingSets.2 //@streams[name='master']/@setupTasks.4/@workingSets.3"/>
         </predicate>
       </workingSet>
       <workingSet
