@@ -128,6 +128,30 @@
     },
     {
       "key": {
+        "uuid": "27af2791_16fbf087",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2101,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-08-11T21:10:53Z",
+      "side": 1,
+      "message": "The \"return null\" below also causes a FindBugs warning.",
+      "parentUuid": "27af2791_0b04ad8a",
+      "range": {
+        "startLine": 2101,
+        "startChar": 9,
+        "endLine": 2101,
+        "endChar": 16
+      },
+      "revId": "c95626d47227c7c095256d90985ce090bc4b0d44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27af2791_4b9a25f6",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 2
