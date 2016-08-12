@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2016 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
  * Contributors:
  *    Stefan Lay (SAP AG) - initial implementation
  *    Mathias Kinzler (SAP AG) - use the abstract super class
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 499482
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
@@ -16,6 +17,9 @@ import java.text.MessageFormat;
 
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
+import org.eclipse.jgit.lib.Config;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
@@ -27,7 +31,6 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * Dialog for selecting a merge target.
- *
  */
 public class RebaseTargetSelectionDialog extends AbstractBranchSelectionDialog {
 
@@ -108,14 +111,14 @@ public class RebaseTargetSelectionDialog extends AbstractBranchSelectionDialog {
 
 	@Override
 	protected void createCustomArea(Composite parent) {
-		final Button interactivebutton = new Button(parent, SWT.CHECK);
-		interactivebutton
+		final Button interactiveButton = new Button(parent, SWT.CHECK);
+		interactiveButton
 				.setText(UIText.RebaseTargetSelectionDialog_InteractiveButton);
-		interactivebutton.addSelectionListener(new SelectionAdapter() {
+		interactiveButton.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				interactive = interactivebutton.getSelection();
+				interactive = interactiveButton.getSelection();
 			}
 		});
 		final Button preserveMergesButton = new Button(parent, SWT.CHECK);
@@ -128,6 +131,26 @@ public class RebaseTargetSelectionDialog extends AbstractBranchSelectionDialog {
 				preserveMerges = preserveMergesButton.getSelection();
 			}
 		});
+		String branchName = getCurrentBranch();
+		if (branchName == null) {
+			return;
+		}
+		Config cfg = repo.getConfig();
+		BranchRebaseMode rebase = cfg.getEnum(BranchRebaseMode.values(),
+				ConfigConstants.CONFIG_BRANCH_SECTION, branchName,
+				ConfigConstants.CONFIG_KEY_REBASE, BranchRebaseMode.NONE);
+		switch (rebase) {
+		case PRESERVE:
+			preserveMergesButton.setSelection(true);
+			preserveMerges = true;
+			break;
+		case INTERACTIVE:
+			interactiveButton.setSelection(true);
+			interactive = true;
+			break;
+		default:
+			break;
+		}
 	}
 
 	/**
