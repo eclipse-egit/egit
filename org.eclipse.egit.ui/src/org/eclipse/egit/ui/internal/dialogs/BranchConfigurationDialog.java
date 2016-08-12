@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2012, 2013 Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2012, 2016 Mathias Kinzler <mathias.kinzler@sap.com> and others
  * and other copyright owners as documented in the project's IP log.
  *
  * All rights reserved. This program and the accompanying materials
@@ -9,6 +9,7 @@
  *
  * Contributors:
  *    Mathias Kinzler - Initial implementation
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 499482
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
@@ -19,8 +20,11 @@ import java.util.List;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.components.BranchRebaseModeCombo;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jgit.api.PullCommand;
+import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
@@ -33,7 +37,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -56,7 +59,7 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 
 	private Combo branchText;
 
-	private Button rebase;
+	private BranchRebaseModeCombo rebase;
 
 	/**
 	 * @param shell
@@ -103,9 +106,14 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 			}
 		});
 
-		rebase = new Button(main, SWT.CHECK);
-		GridDataFactory.fillDefaults().span(2, 1).applyTo(rebase);
-		rebase.setText(UIText.BranchConfigurationDialog_RebaseLabel);
+
+		rebase = new BranchRebaseModeCombo(main);
+		BranchRebaseMode rebaseMode = PullCommand.getRebaseMode(myBranchName,
+				myConfig);
+		rebase.setRebaseMode(rebaseMode);
+		GridDataFactory.fillDefaults().grab(true, false)
+				.align(SWT.BEGINNING, SWT.CENTER)
+				.applyTo(rebase.getViewer().getCombo());
 
 		String branch = myConfig.getString(
 				ConfigConstants.CONFIG_BRANCH_SECTION, myBranchName,
@@ -122,13 +130,7 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 		remoteText.setText(remote);
 		updateBranchItems();
 
-		boolean rebaseFlag = myConfig.getBoolean(
-				ConfigConstants.CONFIG_BRANCH_SECTION, myBranchName,
-				ConfigConstants.CONFIG_KEY_REBASE, false);
-		rebase.setSelection(rebaseFlag);
-
 		applyDialogFont(main);
-		// return result;
 		return main;
 	}
 
@@ -206,32 +208,32 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 	@Override
 	protected void okPressed() {
 		try {
-				String merge = branchText.getText();
-				if (merge.length() > 0)
-					myConfig.setString(ConfigConstants.CONFIG_BRANCH_SECTION,
-							myBranchName, ConfigConstants.CONFIG_KEY_MERGE,
-							merge);
-				else
-					myConfig.unset(ConfigConstants.CONFIG_BRANCH_SECTION,
-							myBranchName, ConfigConstants.CONFIG_KEY_MERGE);
-
-				String remote = remoteText.getText();
-				if (remote.length() > 0)
-					myConfig.setString(ConfigConstants.CONFIG_BRANCH_SECTION,
-							myBranchName, ConfigConstants.CONFIG_KEY_REMOTE,
-							remote);
-				else
-					myConfig.unset(ConfigConstants.CONFIG_BRANCH_SECTION,
-							myBranchName, ConfigConstants.CONFIG_KEY_REMOTE);
-
-				boolean rebaseFlag = rebase.getSelection();
-				if (rebaseFlag)
-					myConfig.setBoolean(ConfigConstants.CONFIG_BRANCH_SECTION,
-							myBranchName, ConfigConstants.CONFIG_KEY_REBASE,
-							true);
-				else
-					myConfig.unset(ConfigConstants.CONFIG_BRANCH_SECTION,
-							myBranchName, ConfigConstants.CONFIG_KEY_REBASE);
+			String merge = branchText.getText();
+			if (merge.length() > 0) {
+				myConfig.setString(ConfigConstants.CONFIG_BRANCH_SECTION,
+						myBranchName, ConfigConstants.CONFIG_KEY_MERGE, merge);
+			} else {
+				myConfig.unset(ConfigConstants.CONFIG_BRANCH_SECTION,
+						myBranchName, ConfigConstants.CONFIG_KEY_MERGE);
+			}
+			String remote = remoteText.getText();
+			if (remote.length() > 0) {
+				myConfig.setString(ConfigConstants.CONFIG_BRANCH_SECTION,
+						myBranchName, ConfigConstants.CONFIG_KEY_REMOTE,
+						remote);
+			} else {
+				myConfig.unset(ConfigConstants.CONFIG_BRANCH_SECTION,
+						myBranchName, ConfigConstants.CONFIG_KEY_REMOTE);
+			}
+			BranchRebaseMode rebaseMode = rebase.getRebaseMode();
+			if (rebaseMode == null) {
+				myConfig.unset(ConfigConstants.CONFIG_BRANCH_SECTION,
+						myBranchName, ConfigConstants.CONFIG_KEY_REBASE);
+			} else {
+				myConfig.setEnum(ConfigConstants.CONFIG_BRANCH_SECTION,
+						myBranchName, ConfigConstants.CONFIG_KEY_REBASE,
+						rebaseMode);
+			}
 			try {
 				myConfig.save();
 				super.okPressed();
