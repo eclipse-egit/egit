@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014 Robin Stocker <robin@nibor.org> and others.
+ * Copyright (c) 2014, 2016 Robin Stocker <robin@nibor.org> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -16,7 +16,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
-import org.eclipse.egit.core.op.CreateLocalBranchOperation.UpstreamConfig;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
@@ -80,8 +79,7 @@ public class PushToUpstreamTest extends LocalRepositoryTestCase {
 	private void checkoutNewLocalBranch(String branchName)
 			throws Exception {
 		CreateLocalBranchOperation createBranch = new CreateLocalBranchOperation(
-				repository, branchName, repository.findRef("master"),
-				UpstreamConfig.NONE);
+				repository, branchName, repository.findRef("master"), null);
 		createBranch.execute(null);
 		BranchOperation checkout = new BranchOperation(repository, branchName);
 		checkout.execute(null);

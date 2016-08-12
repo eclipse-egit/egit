@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2015, Max Hohenegger <eclipse@hohenegger.eu>
+ * Copyright (C) 2015, 2016 Max Hohenegger <eclipse@hohenegger.eu> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,7 +19,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
-import org.eclipse.egit.core.op.CreateLocalBranchOperation.UpstreamConfig;
 
 import static org.eclipse.egit.gitflow.Activator.error;
 
@@ -28,6 +27,7 @@ import org.eclipse.egit.gitflow.internal.CoreText;
 import org.eclipse.jgit.api.CheckoutResult;
 import org.eclipse.jgit.api.CheckoutResult.Status;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.transport.FetchResult;
 
@@ -103,7 +103,7 @@ public final class FeatureTrackOperation extends AbstractFeatureOperation {
 			}
 			CreateLocalBranchOperation createLocalBranchOperation = new CreateLocalBranchOperation(
 					repository.getRepository(), newLocalBranch, remoteFeature,
-					UpstreamConfig.MERGE);
+					BranchRebaseMode.NONE);
 			createLocalBranchOperation.execute(monitor);
 
 			BranchOperation branchOperation = new BranchOperation(

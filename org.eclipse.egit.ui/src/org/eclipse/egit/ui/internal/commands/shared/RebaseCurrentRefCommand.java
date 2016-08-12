@@ -6,10 +6,10 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Mathias Kinzler (SAP AG) - initial implementation
- *    Dariusz Luksza (dariusz@luksza.org) - disable command when HEAD cannot be
- *    										resolved
- *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 495777
+ *    Mathias Kinzler (SAP AG)             - initial implementation
+ *    Dariusz Luksza (dariusz@luksza.org)  - disable command when HEAD cannot be
+ *                                           resolved
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 495777, 499482
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commands.shared;
 
@@ -31,6 +31,9 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.api.RebaseCommand.InteractiveHandler;
+import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
+import org.eclipse.jgit.lib.Config;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -99,8 +102,17 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 				}
 				interactive = rebaseTargetSelectionDialog.isInteractive();
 				preserveMerges = rebaseTargetSelectionDialog.isPreserveMerges();
-			} else
+			} else {
 				return;
+			}
+		} else {
+			String branchName = Repository.shortenRefName(currentFullBranch);
+			Config cfg = repository.getConfig();
+			BranchRebaseMode rebase = cfg.getEnum(BranchRebaseMode.values(),
+					ConfigConstants.CONFIG_BRANCH_SECTION, branchName,
+					ConfigConstants.CONFIG_KEY_REBASE, BranchRebaseMode.NONE);
+			preserveMerges = rebase == BranchRebaseMode.PRESERVE;
+			interactive = rebase == BranchRebaseMode.INTERACTIVE;
 		}
 
 		jobname = NLS.bind(
