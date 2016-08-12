@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2014 Robin Stocker <robin@nibor.org> and others.
+ * Copyright (c) 2013, 2016 Robin Stocker <robin@nibor.org> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.egit.core.internal.Utils;
-import org.eclipse.egit.core.op.CreateLocalBranchOperation.UpstreamConfig;
+import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.UIUtils.IRefListProvider;
@@ -38,7 +38,9 @@ import org.eclipse.jface.layout.RowLayoutFactory;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.jgit.api.PullCommand;
 import org.eclipse.jgit.lib.BranchConfig;
+import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -91,7 +93,7 @@ public class PushBranchPage extends WizardPage {
 
 	private RefContentAssistProvider assist;
 
-	private UpstreamConfig upstreamConfig = UpstreamConfig.NONE;
+	private BranchRebaseMode upstreamConfig;
 
 	private UpstreamConfigComponent upstreamConfigComponent;
 
@@ -149,12 +151,8 @@ public class PushBranchPage extends WizardPage {
 			return remoteBranchNameText.getText();
 	}
 
-	boolean isConfigureUpstreamSelected() {
-		return upstreamConfig != UpstreamConfig.NONE;
-	}
-
-	boolean isRebaseSelected() {
-		return upstreamConfig == UpstreamConfig.REBASE;
+	BranchRebaseMode getUpstreamConfig() {
+		return upstreamConfig;
 	}
 
 	boolean isForceUpdateSelected() {
@@ -313,7 +311,7 @@ public class PushBranchPage extends WizardPage {
 					.addUpstreamConfigSelectionListener(new UpstreamConfigSelectionListener() {
 						@Override
 						public void upstreamConfigSelected(
-								UpstreamConfig newUpstreamConfig) {
+										BranchRebaseMode newUpstreamConfig) {
 							upstreamConfig = newUpstreamConfig;
 							checkPage();
 						}
@@ -393,12 +391,13 @@ public class PushBranchPage extends WizardPage {
 			BranchConfig branchConfig = new BranchConfig(
 					repository.getConfig(), branchName);
 			boolean alreadyConfigured = branchConfig.getMerge() != null;
-			UpstreamConfig config;
+			BranchRebaseMode config;
 			if (alreadyConfigured) {
-				boolean rebase = branchConfig.isRebase();
-				config = rebase ? UpstreamConfig.REBASE : UpstreamConfig.MERGE;
+				config = PullCommand.getRebaseMode(branchName,
+						repository.getConfig());
 			} else {
-				config = UpstreamConfig.getDefault(repository, Constants.R_REMOTES
+				config = CreateLocalBranchOperation.getDefaultUpstreamConfig(
+						repository, Constants.R_REMOTES
 						+ Constants.DEFAULT_REMOTE_NAME + "/" + branchName); //$NON-NLS-1$
 			}
 			this.upstreamConfig = config;
@@ -435,7 +434,7 @@ public class PushBranchPage extends WizardPage {
 				setErrorMessage(UIText.PushBranchPage_InvalidBranchNameError);
 				return;
 			}
-			if (isConfigureUpstreamSelected()
+			if (getUpstreamConfig() != null
 					&& hasDifferentUpstreamConfiguration()) {
 				setMessage(
 						UIText.PushBranchPage_UpstreamConfigOverwriteWarning,
@@ -496,19 +495,19 @@ public class PushBranchPage extends WizardPage {
 
 		String remote = branchConfig.getRemote();
 		// No upstream config -> don't show warning
-		if (remote == null)
+		if (remote == null) {
 			return false;
-		if (!remote.equals(remoteConfig.getName()))
+		}
+		if (!remote.equals(remoteConfig.getName())) {
 			return true;
-
+		}
 		String merge = branchConfig.getMerge();
-		if (merge == null || !merge.equals(getFullRemoteReference()))
+		if (merge == null || !merge.equals(getFullRemoteReference())) {
 			return true;
-
-		boolean rebase = branchConfig.isRebase();
-		if (rebase != isRebaseSelected())
+		}
+		if (branchConfig.getRebaseMode() != upstreamConfig) {
 			return true;
-
+		}
 		return false;
 	}
 

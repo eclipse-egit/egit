@@ -19,6 +19,7 @@ import org.eclipse.egit.ui.internal.SecureStoreUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.push.AddRemotePage;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
@@ -120,13 +121,11 @@ public class PullWizard extends Wizard {
 				ConfigConstants.CONFIG_KEY_REMOTE, remoteName);
 		config.setString(ConfigConstants.CONFIG_BRANCH_SECTION, localBranchName,
 				ConfigConstants.CONFIG_KEY_MERGE, fullRemoteBranchName);
-		if (this.page.isRebaseSelected()) {
-			config.setBoolean(ConfigConstants.CONFIG_BRANCH_SECTION,
-					localBranchName, ConfigConstants.CONFIG_KEY_REBASE, true);
-		} else {
-			// Make sure we overwrite any previous configuration
-			config.unset(ConfigConstants.CONFIG_BRANCH_SECTION, localBranchName,
-					ConfigConstants.CONFIG_KEY_REBASE);
+		BranchRebaseMode rebaseMode = this.page.getUpstreamConfig();
+		if (rebaseMode != null) {
+			config.setEnum(ConfigConstants.CONFIG_BRANCH_SECTION,
+					localBranchName, ConfigConstants.CONFIG_KEY_REBASE,
+					rebaseMode);
 		}
 
 		config.save();

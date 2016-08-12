@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2014 Robin Stocker <robin@nibor.org> and others.
+ * Copyright (c) 2013, 2016 Robin Stocker <robin@nibor.org> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -22,6 +22,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -139,8 +140,9 @@ public class PushBranchWizard extends Wizard {
 				URIish uri = remotePage.getSelection().getURI();
 				configureNewRemote(uri);
 			}
-			if (pushBranchPage.isConfigureUpstreamSelected())
+			if (pushBranchPage.getUpstreamConfig() != null) {
 				configureUpstream();
+			}
 			startPush();
 		} catch (IOException e) {
 			confirmationPage.setErrorMessage(e.getMessage());
@@ -214,13 +216,11 @@ public class PushBranchWizard extends Wizard {
 				ConfigConstants.CONFIG_KEY_REMOTE, remoteName);
 		config.setString(ConfigConstants.CONFIG_BRANCH_SECTION, localBranchName,
 				ConfigConstants.CONFIG_KEY_MERGE, fullRemoteBranchName);
-		if (pushBranchPage.isRebaseSelected()) {
-			config.setBoolean(ConfigConstants.CONFIG_BRANCH_SECTION,
-					localBranchName, ConfigConstants.CONFIG_KEY_REBASE, true);
-		} else {
-			// Make sure we overwrite any previous configuration
-			config.unset(ConfigConstants.CONFIG_BRANCH_SECTION, localBranchName,
-					ConfigConstants.CONFIG_KEY_REBASE);
+		BranchRebaseMode rebaseMode = pushBranchPage.getUpstreamConfig();
+		if (rebaseMode != null) {
+			config.setEnum(ConfigConstants.CONFIG_BRANCH_SECTION,
+					localBranchName, ConfigConstants.CONFIG_KEY_REBASE,
+					rebaseMode);
 		}
 
 		config.save();
