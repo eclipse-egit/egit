@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "27af2791_b98eb404",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1947,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-08-13T13:55:23Z",
+      "side": 1,
+      "message": "What I meant is this:\n\n  oldInput.repository \u003d\u003d oldInput.repository\n\nis just a convoluted way of saying\n\n  true\n\nand I think you meant\n\n oldInput.repository \u003d\u003d newInput.repository\n\n;-)",
+      "parentUuid": "27af2791_51bd72ff",
+      "range": {
+        "startLine": 1947,
+        "startChar": 50,
+        "endLine": 1947,
+        "endChar": 58
+      },
+      "revId": "c95626d47227c7c095256d90985ce090bc4b0d44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27af2791_8b1efded",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 2
