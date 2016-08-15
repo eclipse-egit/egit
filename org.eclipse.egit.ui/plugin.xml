@@ -304,7 +304,7 @@
 
    <extension
          point="org.eclipse.core.expressions.definitions">
-     <definition
+      <definition
             id="org.eclipse.egit.ui.repositoryTreePathNode">
          <and>
             <count
@@ -335,6 +335,85 @@
             </iterate>
          </and>
       </definition>
+      <definition id="org.eclipse.egit.ui.repositoryTreePushFetchNode">
+         <and>
+            <count
+                  value="1">
+            </count>
+            <iterate
+                  ifEmpty="false"
+                  operator="and">
+               <or>
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.PushNode">
+                  </instanceof>
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.FetchNode">
+                  </instanceof>
+               </or>
+            </iterate>
+         </and>
+      </definition>      
+      <definition id="org.eclipse.egit.ui.repositoriesViewCanConfigureFetch">
+         <and>
+            <count
+                  value="1">
+            </count>
+            <iterate>
+               <or>
+                  <and>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RemoteNode">
+                     </instanceof>
+                     <not>
+                        <test
+                              property="GitRepository.fetchExists">
+                        </test>
+                     </not>
+                  </and>
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.FetchNode">
+                  </instanceof>
+               </or>
+            </iterate>
+         </and>
+      </definition>      
+      <definition id="org.eclipse.egit.ui.repositoriesViewCanConfigurePush">
+         <and>
+            <count
+                  value="1">
+            </count>
+            <iterate>
+               <or>
+                  <and>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RemoteNode">
+                     </instanceof>
+                     <not>
+                        <test
+                              property="GitRepository.pushExists">
+                        </test>
+                     </not>
+                  </and>
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.PushNode">
+                  </instanceof>
+               </or>
+            </iterate>
+         </and>
+      </definition>
+      <definition id="org.eclipse.egit.ui.singleRefNode">
+         <and>
+            <count
+                  value="1">
+            </count>
+            <iterate>
+               <instanceof
+                     value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+               </instanceof>
+            </iterate>
+         </and>
+      </definition>       
       <definition id="org.eclipse.egit.ui.resourcesSingleRepository">
          <or>
             <test
@@ -1590,6 +1669,61 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.RepositoriesViewConfigureBranch">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.ConfigureBranchCommand">
+         </class>
+         <activeWhen>
+            <reference
+                  definitionId="org.eclipse.egit.ui.singleRefNode">
+            </reference>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.RepositoriesViewConfigureFetch">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.ConfigureFetchCommand">
+         </class>
+         <activeWhen>
+            <reference
+                  definitionId="org.eclipse.egit.ui.repositoriesViewCanConfigureFetch">
+            </reference>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.RepositoriesViewConfigurePush">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.ConfigurePushCommand">
+         </class>
+         <activeWhen>
+            <reference
+                  definitionId="org.eclipse.egit.ui.repositoriesViewCanConfigurePush">
+            </reference>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.RepositoriesViewChangeCredentials">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.ChangeCredentialsCommand">
+         </class>
+         <activeWhen>
+            <reference
+                  definitionId="org.eclipse.egit.ui.repositoryTreePushFetchNode">
+            </reference>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.RepositoriesViewClearCredentials">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.ClearCredentialsCommand">
+         </class>
+         <activeWhen>
+            <reference
+                  definitionId="org.eclipse.egit.ui.repositoryTreePushFetchNode">
+            </reference>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.ui.edit.delete">
          <class
                class="org.eclipse.egit.ui.internal.repository.tree.command.DeleteTagCommand">
@@ -1800,17 +1934,10 @@
          <class
                class="org.eclipse.egit.ui.internal.repository.tree.command.RenameBranchCommand">
          </class>
-         <activeWhen>
-             <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <instanceof
-                           value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
-                     </instanceof>
-                  </iterate>
-               </and>
+          <activeWhen>
+            <reference
+                  definitionId="org.eclipse.egit.ui.singleRefNode">
+            </reference>
          </activeWhen>
       </handler>
       <handler
@@ -2431,19 +2558,7 @@
                commandId="org.eclipse.egit.ui.RepositoriesViewConfigureBranch"
                label="%ConfigurBranchCommand.label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <instanceof
-                           value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
-                     </instanceof>
-                  </iterate>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
          <command
                commandId="org.eclipse.ui.edit.delete"
@@ -2751,112 +2866,26 @@
                icon="icons/obj16/editconfig.gif"
                label="%RepoViewConfigureFetch.label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <or>
-                        <and>
-                           <instanceof
-                                 value="org.eclipse.egit.ui.internal.repository.tree.RemoteNode">
-                           </instanceof>
-                           <not>
-                              <test
-                                    property="GitRepository.fetchExists">
-                              </test>
-                           </not>
-                        </and>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.FetchNode">
-                        </instanceof>
-                     </or>
-                  </iterate>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewConfigurePush"
                icon="icons/obj16/editconfig.gif"
                label="%RepoViewConfigurePush.label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <or>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.PushNode">
-                        </instanceof>
-                        <and>
-                           <instanceof
-                                 value="org.eclipse.egit.ui.internal.repository.tree.RemoteNode">
-                           </instanceof>
-                           <not>
-                              <test
-                                    property="GitRepository.pushExists">
-                              </test>
-                           </not>
-                        </and>
-                     </or>
-                  </iterate>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewChangeCredentials"
                label="%RepoViewChangeCredentialsLabel"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate
-                        ifEmpty="false"
-                        operator="and">
-                     <or>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.PushNode">
-                        </instanceof>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.FetchNode">
-                        </instanceof>
-                     </or>
-                  </iterate>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true"/>
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewClearCredentials"
                label="%RepoViewClearCredentialsLabel"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate
-                        ifEmpty="false"
-                        operator="and">
-                     <or>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.PushNode">
-                        </instanceof>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.FetchNode">
-                        </instanceof>
-                     </or>
-                  </iterate>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
          <command
                commandId="org.eclipse.ui.edit.delete"
@@ -4914,13 +4943,11 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ConfigureFetchCommand"
             id="org.eclipse.egit.ui.RepositoriesViewConfigureFetch"
             name="%ConfigureFetchCommand">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ConfigurePushCommand"
             id="org.eclipse.egit.ui.RepositoriesViewConfigurePush"
             name="%ConfigurePushCommand">
       </command>
@@ -4936,13 +4963,11 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ChangeCredentialsCommand"
             id="org.eclipse.egit.ui.RepositoriesViewChangeCredentials"
             name="%ChangeCredentialsCommand">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ClearCredentialsCommand"
             id="org.eclipse.egit.ui.RepositoriesViewClearCredentials"
             name="%ClearCredentialsCommand">
       </command>
@@ -5063,7 +5088,6 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ConfigureBranchCommand"
             id="org.eclipse.egit.ui.RepositoriesViewConfigureBranch"
             name="%RepoViewConfigureBranchCommand.name">
       </command>
