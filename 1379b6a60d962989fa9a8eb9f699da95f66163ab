@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27af2791_3cc612e2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/CommittingPreferencePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-08-15T13:12:58Z",
+      "side": 1,
+      "message": "For the other groups, updateMargins() is called. Needed? If so, also for this group?",
+      "revId": "1379b6a60d962989fa9a8eb9f699da95f66163ab",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_1cc30ed3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/CommittingPreferencePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-08-15T13:12:58Z",
+      "side": 1,
+      "message": "Hadn\u0027t noticed we had tooltips here. Do we want tooltips on useStagingView and on autoStage, too?",
+      "revId": "1379b6a60d962989fa9a8eb9f699da95f66163ab",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_dcb8b664",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/CommittingPreferencePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-08-15T13:12:58Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be generalGroup now?",
+      "range": {
+        "startLine": 214,
+        "startChar": 7,
+        "endLine": 214,
+        "endChar": 29
+      },
+      "revId": "1379b6a60d962989fa9a8eb9f699da95f66163ab",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_fcbbba5b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/CommittingPreferencePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-08-15T13:12:58Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 228,
+        "startChar": 4,
+        "endLine": 228,
+        "endChar": 26
+      },
+      "revId": "1379b6a60d962989fa9a8eb9f699da95f66163ab",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
