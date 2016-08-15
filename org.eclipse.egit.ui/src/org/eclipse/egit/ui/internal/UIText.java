@@ -3241,6 +3241,9 @@ public class UIText extends NLS {
 	public static String CommittingPreferencePage_AutoStageOnCommit;
 
 	/** */
+	public static String CommittingPreferencePage_general;
+
+	/** */
 	public static String DateFormatPreferencePage_title;
 
 	/** */
