@@ -1,0 +1,330 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27af2791_11485005",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-16T22:53:18Z",
+      "side": 1,
+      "message": "This is a very short commit message for a large change. In order to facilitate reading and understanding the history I would appreciate if you could describe also in this commit message what this change improves (essentially https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d451216#c4). This will allow to understand the purpose of this change by looking at the git history without needing to open the linked bug which is only possible when being online.",
+      "revId": "6a8c1c5f617768f55348ee61deaaa57018df0430",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_916e20a2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1941,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-16T22:53:18Z",
+      "side": 1,
+      "message": "s/as/has/",
+      "range": {
+        "startLine": 1941,
+        "startChar": 17,
+        "endLine": 1941,
+        "endChar": 19
+      },
+      "revId": "6a8c1c5f617768f55348ee61deaaa57018df0430",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_71d18cc3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2053,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-16T22:53:18Z",
+      "side": 1,
+      "message": "s/an/a/",
+      "range": {
+        "startLine": 2053,
+        "startChar": 19,
+        "endLine": 2053,
+        "endChar": 21
+      },
+      "revId": "6a8c1c5f617768f55348ee61deaaa57018df0430",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_31e714a3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2062,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-16T22:53:18Z",
+      "side": 1,
+      "message": "we only need to visit all children if no child is visible or only the last one",
+      "range": {
+        "startLine": 2062,
+        "startChar": 53,
+        "endLine": 2062,
+        "endChar": 69
+      },
+      "revId": "6a8c1c5f617768f55348ee61deaaa57018df0430",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_91f7004c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2078,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-16T22:53:18Z",
+      "side": 1,
+      "message": "I think this comment isn\u0027t needed, you mentioned this already above and the code is pretty clear",
+      "range": {
+        "startLine": 2077,
+        "startChar": 0,
+        "endLine": 2078,
+        "endChar": 24
+      },
+      "revId": "6a8c1c5f617768f55348ee61deaaa57018df0430",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_11e4d09c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2081,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-16T22:53:18Z",
+      "side": 1,
+      "message": "break the loop as soon as the first visible child was found ?",
+      "revId": "6a8c1c5f617768f55348ee61deaaa57018df0430",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_b1f24459",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2105,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-16T22:53:18Z",
+      "side": 1,
+      "message": "s/ it,/, it/",
+      "range": {
+        "startLine": 2105,
+        "startChar": 52,
+        "endLine": 2105,
+        "endChar": 56
+      },
+      "revId": "6a8c1c5f617768f55348ee61deaaa57018df0430",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_d1141804",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2114,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-16T22:53:18Z",
+      "side": 1,
+      "message": "s/uses/used/",
+      "range": {
+        "startLine": 2114,
+        "startChar": 36,
+        "endLine": 2114,
+        "endChar": 40
+      },
+      "revId": "6a8c1c5f617768f55348ee61deaaa57018df0430",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_f1175c03",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2116,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-16T22:53:18Z",
+      "side": 1,
+      "message": "s/stated/state/",
+      "range": {
+        "startLine": 2116,
+        "startChar": 31,
+        "endLine": 2116,
+        "endChar": 37
+      },
+      "revId": "6a8c1c5f617768f55348ee61deaaa57018df0430",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_111f701e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2133,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-16T22:53:18Z",
+      "side": 1,
+      "message": "looks like something is missing here, not sure what this means",
+      "range": {
+        "startLine": 2132,
+        "startChar": 49,
+        "endLine": 2133,
+        "endChar": 12
+      },
+      "revId": "6a8c1c5f617768f55348ee61deaaa57018df0430",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_510808e4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2216,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-16T22:53:18Z",
+      "side": 1,
+      "message": "bad formatting, this could be moved up to the previous line",
+      "range": {
+        "startLine": 2216,
+        "startChar": 6,
+        "endLine": 2216,
+        "endChar": 34
+      },
+      "revId": "6a8c1c5f617768f55348ee61deaaa57018df0430",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_3139d48b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2269,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-16T22:53:18Z",
+      "side": 1,
+      "message": "unnecessary comment",
+      "revId": "6a8c1c5f617768f55348ee61deaaa57018df0430",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_512f2841",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2277,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-16T22:53:18Z",
+      "side": 1,
+      "message": "unnecessary comment",
+      "revId": "6a8c1c5f617768f55348ee61deaaa57018df0430",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_f13e7c75",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2285,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-16T22:53:18Z",
+      "side": 1,
+      "message": "unnecessary comment",
+      "revId": "6a8c1c5f617768f55348ee61deaaa57018df0430",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_1136909c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2290,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-16T22:53:18Z",
+      "side": 1,
+      "message": "unnecessary comment",
+      "revId": "6a8c1c5f617768f55348ee61deaaa57018df0430",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_712a6c31",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3521,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-16T22:53:18Z",
+      "side": 1,
+      "message": "style nit: missing braces",
+      "revId": "6a8c1c5f617768f55348ee61deaaa57018df0430",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
