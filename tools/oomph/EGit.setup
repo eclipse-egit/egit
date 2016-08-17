@@ -183,7 +183,20 @@
               pattern="org\.eclipse\.egit.*"/>
           <operand
               xsi:type="workingsets:ExclusionPredicate"
-              excludedWorkingSet="//@streams[name='master']/@setupTasks.4/@workingSets.2 //@streams[name='master']/@setupTasks.4/@workingSets.3"/>
+              excludedWorkingSet="//@streams[name='master']/@setupTasks.4/@workingSets.4 //@streams[name='master']/@setupTasks.4/@workingSets.1 //@streams[name='master']/@setupTasks.4/@workingSets.3"/>
+        </predicate>
+      </workingSet>
+      <workingSet
+          name="EGit Tests">
+        <predicate
+            xsi:type="predicates:AndPredicate">
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="org\.eclipse\.egit.*"/>
+          <operand
+              xsi:type="predicates:FilePredicate"
+              filePattern="META-INF/MANIFEST.MF"
+              contentPattern="org\.junit"/>
         </predicate>
       </workingSet>
       <workingSet
@@ -195,21 +208,42 @@
               pattern="org\.eclipse\.jgit.*"/>
           <operand
               xsi:type="workingsets:ExclusionPredicate"
-              excludedWorkingSet="//@streams[name='master']/@setupTasks.4/@workingSets.2 //@streams[name='master']/@setupTasks.4/@workingSets.3"/>
+              excludedWorkingSet="//@streams[name='master']/@setupTasks.4/@workingSets.4 //@streams[name='master']/@setupTasks.4/@workingSets.1 //@streams[name='master']/@setupTasks.4/@workingSets.3"/>
         </predicate>
       </workingSet>
       <workingSet
-          name="EGit/JGit Tests">
+          name="JGit Tests">
         <predicate
-            xsi:type="predicates:FilePredicate"
-            filePattern="META-INF/MANIFEST.MF"
-            contentPattern="org\.junit"/>
+            xsi:type="predicates:AndPredicate">
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="org\.eclipse\.jgit.*"/>
+          <operand
+              xsi:type="predicates:FilePredicate"
+              filePattern="META-INF/MANIFEST.MF"
+              contentPattern="org\.junit"/>
+        </predicate>
       </workingSet>
       <workingSet
-          name="EGit/JGit Features">
+          name="Releng">
         <predicate
-            xsi:type="predicates:NaturePredicate"
-            nature="org.eclipse.pde.FeatureNature"/>
+            xsi:type="predicates:OrPredicate">
+          <operand
+              xsi:type="predicates:NaturePredicate"
+              nature="org.eclipse.pde.FeatureNature"/>
+          <operand
+              xsi:type="predicates:NaturePredicate"
+              nature="org.eclipse.pde.UpdateSiteNature"/>
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="org\.eclipse\.jgit\.target"/>
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="org\.eclipse\.egit\.target"/>
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="org\.eclipse\.jgit\.packaging"/>
+        </predicate>
       </workingSet>
     </setupTask>
   </stream>
