@@ -13,6 +13,7 @@ package org.eclipse.egit.ui.prefpages.configuration;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +25,8 @@ import org.eclipse.egit.ui.internal.preferences.GlobalConfigurationPreferencePag
 import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jgit.junit.MockSystemReader;
+import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.SystemReader;
@@ -38,7 +41,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,6 +56,8 @@ public class GlobalConfigurationPageTest {
 
 	private static final SWTWorkbenchBot bot = new SWTWorkbenchBot();
 
+	private static File configFile;
+
 	private static FileBasedConfig config;
 
 	private SWTBotShell preferencePage;
@@ -61,12 +65,21 @@ public class GlobalConfigurationPageTest {
 	@BeforeClass
 	public static void beforeClass() throws Exception {
 		EGitTestCase.closeWelcomePage();
+		configFile = File.createTempFile("gitconfigtest", "config");
+		configFile.deleteOnExit();
+		SystemReader.setInstance(new MockSystemReader() {
+			@Override
+			public FileBasedConfig openUserConfig(Config parent, FS fs) {
+				return new FileBasedConfig(parent, configFile, fs);
+			}
+		});
 		config = SystemReader.getInstance().openUserConfig(null, FS.DETECTED);
 		config.load();
+		clean();
 	}
 
-	@Before
-	public void before() throws Exception {
+	private static void clean() throws Exception {
+		config.unsetSection(TESTSECTION, TESTSUBSECTION + '.' + TESTNAME);
 		config.unsetSection(TESTSECTION, TESTSUBSECTION);
 		config.unsetSection(TESTSECTION, null);
 		config.save();
@@ -100,10 +113,13 @@ public class GlobalConfigurationPageTest {
 			preferencePage = null;
 		}
 		TestUtil.processUIEvents();
+		clean();
 	}
 
 	@AfterClass
 	public static void afterTest() throws Exception {
+		configFile.delete();
+		SystemReader.setInstance(null);
 		// reset saved preferences state
 		SWTBotShell preferencePage = new Eclipse().openPreferencePage(null);
 		preferencePage.bot().tree(0).getTreeItem("General").select();
