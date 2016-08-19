@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27af2791_8940b009",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-19T20:53:13Z",
+      "side": 1,
+      "message": "I think when the user hides the toolbar this search result indicator should be also hidden and when the find toolbar is toggled to be visible again it should be restored to be visible again.\n\nWhen the user moved to e.g. the fifth search result of 20 (5/20), then hides the toolbar and later toggles it back to the visible state, focus jumps back to the first search result and the history view scrolls back to show this first search result. Maybe it would be more consistent to remember the index of the search result which had focus when hiding the find toolbar and resume focus on the same search result when unhiding the toolbar. I think that would give a smoother experience.",
+      "revId": "5e192f4ab6fa099205a2431b646e71bd8ab78202",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_296404c3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FindToolbar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-19T20:53:13Z",
+      "side": 1,
+      "message": "did you want to delete this code ?",
+      "revId": "5e192f4ab6fa099205a2431b646e71bd8ab78202",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_495f78f2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FindToolbar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-19T20:53:13Z",
+      "side": 1,
+      "message": "remove dead code ?",
+      "revId": "5e192f4ab6fa099205a2431b646e71bd8ab78202",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_a95734d5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-19T20:53:13Z",
+      "side": 1,
+      "message": "I think we add a blank line at the top of anonymous classes like below after new StatusListener() {",
+      "revId": "5e192f4ab6fa099205a2431b646e71bd8ab78202",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
