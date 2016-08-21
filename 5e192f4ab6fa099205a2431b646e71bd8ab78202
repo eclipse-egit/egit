@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27af2791_e47a3160",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-08-21T13:29:16Z",
+      "side": 1,
+      "message": "Both done, I think. Status message is cleared when the find  bar is hidden. And previously selected commit is revealed if the input didn\u0027t change in the meantime. Uses the commit id instead of the index, though. Consider: some search result is selected, user hides find toolbar, then commits a new commit, then re-opens the find toolbar: it\u0027ll come up with the previous text and re-do the search, but now the previously selected commit may have a different index.",
+      "parentUuid": "27af2791_8940b009",
+      "revId": "5e192f4ab6fa099205a2431b646e71bd8ab78202",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27af2791_296404c3",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FindToolbar.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2016-08-19T20:53:13Z",
       "side": 1,
       "message": "did you want to delete this code ?",
+      "revId": "5e192f4ab6fa099205a2431b646e71bd8ab78202",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_047e4554",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FindToolbar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-08-21T13:29:16Z",
+      "side": 1,
+      "message": "Indeed. Done.",
+      "parentUuid": "27af2791_296404c3",
       "revId": "5e192f4ab6fa099205a2431b646e71bd8ab78202",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "27af2791_246429c3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FindToolbar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-08-21T13:29:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27af2791_495f78f2",
+      "revId": "5e192f4ab6fa099205a2431b646e71bd8ab78202",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27af2791_a95734d5",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2016-08-19T20:53:13Z",
       "side": 1,
       "message": "I think we add a blank line at the top of anonymous classes like below after new StatusListener() {",
+      "revId": "5e192f4ab6fa099205a2431b646e71bd8ab78202",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_445f5df2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-08-21T13:29:16Z",
+      "side": 1,
+      "message": "Done. Usually the autoformatter does that, but sometimes it doesn\u0027t, and then I usually forget to do it manually...",
+      "parentUuid": "27af2791_a95734d5",
       "revId": "5e192f4ab6fa099205a2431b646e71bd8ab78202",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
