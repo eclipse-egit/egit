@@ -24,6 +24,9 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileBasedConfig;
+import org.eclipse.jgit.util.FS;
+import org.eclipse.jgit.util.SystemReader;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,6 +42,33 @@ public class RepositoryMappingTest extends GitTestCase {
 		TestRepository testRepo = new TestRepository(gitDir);
 		testRepo.connect(project.project);
 		repository = testRepo.getRepository();
+	}
+
+	@Test
+	public void testHippUserConfig() throws Exception {
+		SystemReader testReader = SystemReader.getInstance();
+		try {
+			SystemReader.setInstance(null);
+			FileBasedConfig config = SystemReader.getInstance()
+					.openUserConfig(null, FS.DETECTED);
+			config.load();
+			String[] values = config.getStringList("testsection",
+					"testsubsection.testname", "testname");
+			if (values == null) {
+				System.out.println("No entries found");
+			} else {
+				System.out.println("Found " + values.length + " entries");
+				if (values.length > 0) {
+					config.unsetSection("testsection",
+							"testsubsection.testname");
+					config.unsetSection("testsection", "testsubsection");
+					config.unsetSection("testsection", null);
+					config.save();
+				}
+			}
+		} finally {
+			SystemReader.setInstance(testReader);
+		}
 	}
 
 	@Test
