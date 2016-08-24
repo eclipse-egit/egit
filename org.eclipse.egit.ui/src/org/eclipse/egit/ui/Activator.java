@@ -43,6 +43,7 @@ import org.eclipse.egit.ui.internal.KnownHosts;
 import org.eclipse.egit.ui.internal.RepositoryCacheRule;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
+import org.eclipse.egit.ui.internal.selection.RepositorySourceProvider;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.egit.ui.internal.variables.GitTemplateVariableResolver;
 import org.eclipse.jdt.internal.ui.JavaPlugin;
@@ -67,6 +68,8 @@ import org.eclipse.ui.IWindowListener;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.ui.services.IEvaluationService;
+import org.eclipse.ui.services.IServiceLocator;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.ui.themes.ITheme;
 import org.osgi.framework.BundleContext;
@@ -296,8 +299,15 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	@Override
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
-		resourceManager = new LocalResourceManager(
-				JFaceResources.getResources());
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				resourceManager = new LocalResourceManager(
+						JFaceResources.getResources());
+			}
+
+		});
 		// we want to be notified about debug options changes
 		Dictionary<String, String> props = new Hashtable<>(4);
 		props.put(DebugOptions.LISTENER_SYMBOLICNAME, context.getBundle()
@@ -312,6 +322,18 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		ConfigurationChecker.checkConfiguration();
 
 		registerTemplateVariableResolvers();
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				RepositorySourceProvider provider = new RepositorySourceProvider();
+				IEvaluationService evaluationService = PlatformUI.getWorkbench()
+						.getService(IEvaluationService.class);
+				IServiceLocator serviceLocator = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow();
+				provider.initialize(serviceLocator);
+				evaluationService.addSourceProvider(provider);
+			}
+		});
 	}
 
 	private void setupCredentialsProvider() {
