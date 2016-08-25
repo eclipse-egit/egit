@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27af2791_541c59f5",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FilteredBranchesWidget.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-25T21:58:43Z",
+      "side": 1,
+      "message": "Not sure if this is the best choice, often the date from CommitterIdent is younger than the one from AuthorIdent since it\u0027s recording when the current commit has been created. If the current commit is the result of rewriting an earlier incarnation of the same change e.g. using commit -amend or cherry-pick or rebase than the Committed Date is younger than the Authored Date, the latter records the date of the first incarnation of the rewritten commit.\n\nSo if you want to display when the first version of a given commit has been created display date from AuthorIdent, if you want to display when the commit has been last updated then display the date from CommitterIdent.",
+      "revId": "44de07da129fdfb47789cdc877baaa0462609c39",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_d41069de",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-08-25T21:58:43Z",
+      "side": 1,
+      "message": "it\u0027s unclear if this is \"Committed Date\" or \"Author Date\" (see labels used in history view) so the label should match what you display",
+      "revId": "44de07da129fdfb47789cdc877baaa0462609c39",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
