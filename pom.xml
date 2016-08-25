@@ -361,8 +361,8 @@
           <version>${tycho-version}</version>
           <configuration>
             <encoding>UTF-8</encoding>
-            <source>1.7</source>
-            <target>1.7</target>
+            <source>1.8</source>
+            <target>1.8</target>
             <!-- Do not use useProjectSettings; it'll always override -nowarn -->
             <compilerArgs>
               <arg>-properties</arg>
@@ -475,7 +475,7 @@
           <configuration>
             <sourceEncoding>utf-8</sourceEncoding>
             <minimumTokens>100</minimumTokens>
-            <targetJdk>1.7</targetJdk>
+            <targetJdk>1.8</targetJdk>
             <format>xml</format>
             <failOnViolation>false</failOnViolation>
           </configuration>

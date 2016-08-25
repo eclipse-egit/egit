@@ -4,7 +4,7 @@ Bundle-Name: %plugin_name
 Bundle-SymbolicName: org.eclipse.egit.ui.importer.tests
 Bundle-Version: 4.6.0.qualifier
 Bundle-Vendor: %provider_name
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Localization: plugin
 Require-Bundle: org.junit,
  org.apache.log4j;bundle-version="[1.0.0,2.0.0)",
