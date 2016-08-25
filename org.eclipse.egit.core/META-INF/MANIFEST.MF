@@ -40,7 +40,7 @@ Export-Package: org.eclipse.egit.core;version="4.6.0";
  org.eclipse.egit.core.synchronize;version="4.6.0";x-friends:="org.eclipse.egit.ui,org.eclipse.egit.ui.test",
  org.eclipse.egit.core.synchronize.dto;version="4.6.0";x-friends:="org.eclipse.egit.ui"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: com.jcraft.jsch;bundle-version="[0.1.37,0.2.0)",
  org.eclipse.core.net.proxy;bundle-version="[1.1.0,2.0.0)",
  org.eclipse.jgit.annotations;version="[4.6.0,4.7.0)",

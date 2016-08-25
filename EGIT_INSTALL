@@ -8,7 +8,7 @@ things.
 
 - Eclipse version 3.8.2/4.2.2 or newer
 
-- Since 4.0 JGit and EGit require Java 7.
+- Since 4.6 JGit and EGit require Java 8.
 
 - A reasonably recent version of Git itself installed on your platform to
   take care of what the plugin does not yet do or do things that native
@@ -30,7 +30,7 @@ DEBUGGING INSTRUCTIONS
 
 - Select the org.eclipse.egit.ui project, and using the context menu select
   Run As(or Debug As) / Eclipse Application. Make sure the application runs
-  using JDK 1.7 or newer.
+  using JDK 1.8 or newer.
 
 REPORTING BUGS
 
