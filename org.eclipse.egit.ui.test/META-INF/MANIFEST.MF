@@ -6,7 +6,7 @@ Bundle-SymbolicName: org.eclipse.egit.ui.test;singleton:=true
 Fragment-Host: org.eclipse.egit.ui
 Bundle-Version: 4.5.0.qualifier
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.apache.log4j;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.filesystem;bundle-version="[1.1.0,2.0.0)",
@@ -56,4 +56,3 @@ Import-Package: org.eclipse.core.net.proxy;bundle-version="[1.1.0,2.0.0)",
  org.mockito;version="[1.8.0,1.10.0)",
  org.mockito.stubbing;version="[1.8.0,1.10.0)",
  org.osgi.framework;version="[1.4.0,2.0.0)"
-
