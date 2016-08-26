@@ -13,7 +13,6 @@
 package org.eclipse.egit.ui.internal.push;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,16 +25,12 @@ import java.util.TreeSet;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
-import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.core.op.PushOperationSpecification;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.ui.internal.gerrit.GerritDialogSettings;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.dialogs.Dialog;
@@ -46,7 +41,6 @@ import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jface.fieldassist.SimpleContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.BranchConfig;
 import org.eclipse.jgit.lib.ConfigConstants;
@@ -477,34 +471,13 @@ public class PushToGerritPage extends WizardPage {
 			spec.addURIRefUpdates(uri, Arrays.asList(update));
 			final PushOperationUI op = new PushOperationUI(repository, spec,
 					false);
-			op.setCredentialsProvider(new EGitCredentialsProvider());
-			final PushOperationResult[] result = new PushOperationResult[1];
-			getContainer().run(true, true, new IRunnableWithProgress() {
-				@Override
-				public void run(IProgressMonitor monitor)
-						throws InvocationTargetException, InterruptedException {
-					try {
-						result[0] = op.execute(monitor);
-					} catch (CoreException e) {
-						throw new InvocationTargetException(e);
-					}
-				}
-			});
-			PushResultDialog.show(repository, result[0],
-					op.getDestinationString(), false, false);
 			storeLastUsedUri(uriCombo.getText());
 			storeLastUsedBranch(branchText.getText());
 			storeLastUsedTopic(topicText.isEnabled(),
 					topicText.getText().trim(), repository.getBranch());
-		} catch (URISyntaxException e) {
+			op.start();
+		} catch (URISyntaxException | IOException e) {
 			Activator.handleError(e.getMessage(), e, true);
-		} catch (IOException e) {
-			Activator.handleError(e.getMessage(), e, true);
-		} catch (InvocationTargetException e) {
-			Throwable cause = e.getCause();
-			Activator.handleError(cause.getMessage(), cause, true);
-		} catch (InterruptedException e) {
-			// cancellation
 		}
 	}
 
