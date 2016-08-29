@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27af2791_a1ebafea",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/FilteredBranchesWidget.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-08-29T20:53:20Z",
+      "side": 1,
+      "message": "Basically I intended to give the user a notion of when the branch was last modified. It makes sense to include updates, such as amends or cherry-picks.",
+      "parentUuid": "27af2791_541c59f5",
+      "revId": "44de07da129fdfb47789cdc877baaa0462609c39",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27af2791_d41069de",
         "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/uitext.properties",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-08-25T21:58:43Z",
       "side": 1,
       "message": "it\u0027s unclear if this is \"Committed Date\" or \"Author Date\" (see labels used in history view) so the label should match what you display",
+      "revId": "44de07da129fdfb47789cdc877baaa0462609c39",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_0158db5c",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2016-08-29T20:53:20Z",
+      "side": 1,
+      "message": "I changed this to \"Last modified\" because I think \"Committed Date\" is more technical than necessary for this dialog. It is also the reason why I chose to only display the single date column, instead of the two we have in the history view.\n\nIf you think it is important to have it say \"Committed Date\" to be consistent with the rest of EGit, I could chage it, but in that case we probably should also add a \"Author Date\" column.",
+      "parentUuid": "27af2791_d41069de",
       "revId": "44de07da129fdfb47789cdc877baaa0462609c39",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
