@@ -55,7 +55,7 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="eclipse.target.platform"
-      defaultValue="Luna"
+      defaultValue="Neon"
       storageURI="scope://Workspace"/>
   <setupTask
       xsi:type="pde:APIBaselineTask"
@@ -136,7 +136,8 @@
             rootFolder="${git.clone.jgit.location}"
             locateNestedProjects="true"/>
         <sourceLocator
-            rootFolder="${git.clone.egit.location}"/>
+            rootFolder="${git.clone.egit.location}"
+            locateNestedProjects="true"/>
         <repositoryList
             name="Neon">
           <repository
@@ -155,20 +156,9 @@
           <repository
               url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
           <repository
-              url="http://download.eclipse.org/jetty/updates/jetty-bundles-7.x/7.6.14.v20131031"/>
+              url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.2.13.v20150730"/>
           <repository
-              url="http://download.eclipse.org/technology/swtbot/releases/2.1.1"/>
-        </repositoryList>
-        <repositoryList
-            name="Luna">
-          <repository
-              url="http://download.eclipse.org/releases/luna"/>
-          <repository
-              url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
-          <repository
-              url="http://download.eclipse.org/jetty/updates/jetty-bundles-7.x/7.6.14.v20131031"/>
-          <repository
-              url="http://download.eclipse.org/technology/swtbot/releases/2.1.1"/>
+              url="http://download.eclipse.org/technology/swtbot/snapshots"/>
         </repositoryList>
       </targlet>
     </setupTask>
