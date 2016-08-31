@@ -66,9 +66,14 @@
   <stream name="master">
     <setupTask
         xsi:type="setup:VariableTask"
+        id=""
         name="eclipse.target.platform"
+        value=""
         defaultValue="Neon"
-        storageURI="scope://Workspace"/>
+        storageURI="scope://Workspace"
+        label="">
+      <description></description>
+    </setupTask>
     <setupTask
         xsi:type="git:GitCloneTask"
         id="git.clone.jgit"
@@ -114,6 +119,28 @@
       <description>EGit</description>
     </setupTask>
     <setupTask
+        xsi:type="git:GitCloneTask"
+        id="git.clone.egit-github"
+        remoteURI="egit/egit-github"
+        checkoutBranch="master">
+      <annotation
+          source="http://www.eclipse.org/oomph/setup/InducedChoices">
+        <detail
+            key="inherit">
+          <value>eclipse.git.gerrit.remoteURIs</value>
+        </detail>
+        <detail
+            key="label">
+          <value>EGit Github Connector Gerrit Repository</value>
+        </detail>
+        <detail
+            key="target">
+          <value>remoteURI</value>
+        </detail>
+      </annotation>
+      <description>EGit Github Connector</description>
+    </setupTask>
+    <setupTask
         xsi:type="setup.targlets:TargletTask">
       <targlet
           name="EGit"
@@ -137,6 +164,9 @@
             locateNestedProjects="true"/>
         <sourceLocator
             rootFolder="${git.clone.egit.location}"
+            locateNestedProjects="true"/>
+        <sourceLocator
+            rootFolder="${git.clone.egit-github.location}"
             locateNestedProjects="true"/>
         <repositoryList
             name="Neon">
@@ -165,15 +195,40 @@
     <setupTask
         xsi:type="setup.workingsets:WorkingSetTask">
       <workingSet
+          name="EGit Github Connector">
+        <predicate
+            xsi:type="predicates:AndPredicate">
+          <operand
+              xsi:type="predicates:RepositoryPredicate"
+              project="org.eclipse.mylyn.github.core"/>
+          <operand
+              xsi:type="workingsets:ExclusionPredicate"
+              excludedWorkingSet="//@streams[name='master']/@setupTasks.5/@workingSets.6 //@streams[name='master']/@setupTasks.5/@workingSets.1"/>
+        </predicate>
+      </workingSet>
+      <workingSet
+          name="EGit Github Connector Tests">
+        <predicate
+            xsi:type="predicates:AndPredicate">
+          <operand
+              xsi:type="predicates:RepositoryPredicate"
+              project="org.eclipse.mylyn.github.core"/>
+          <operand
+              xsi:type="predicates:FilePredicate"
+              filePattern="META-INF/MANIFEST.MF"
+              contentPattern="org\.junit"/>
+        </predicate>
+      </workingSet>
+      <workingSet
           name="EGit">
         <predicate
             xsi:type="predicates:AndPredicate">
           <operand
-              xsi:type="predicates:NamePredicate"
-              pattern="org\.eclipse\.egit.*"/>
+              xsi:type="predicates:RepositoryPredicate"
+              project="org.eclipse.egit.core"/>
           <operand
               xsi:type="workingsets:ExclusionPredicate"
-              excludedWorkingSet="//@streams[name='master']/@setupTasks.4/@workingSets.4 //@streams[name='master']/@setupTasks.4/@workingSets.1 //@streams[name='master']/@setupTasks.4/@workingSets.3"/>
+              excludedWorkingSet="//@streams[name='master']/@setupTasks.5/@workingSets.6 //@streams[name='master']/@setupTasks.5/@workingSets.3"/>
         </predicate>
       </workingSet>
       <workingSet
@@ -181,8 +236,8 @@
         <predicate
             xsi:type="predicates:AndPredicate">
           <operand
-              xsi:type="predicates:NamePredicate"
-              pattern="org\.eclipse\.egit.*"/>
+              xsi:type="predicates:RepositoryPredicate"
+              project="org.eclipse.egit.core"/>
           <operand
               xsi:type="predicates:FilePredicate"
               filePattern="META-INF/MANIFEST.MF"
@@ -194,11 +249,11 @@
         <predicate
             xsi:type="predicates:AndPredicate">
           <operand
-              xsi:type="predicates:NamePredicate"
-              pattern="org\.eclipse\.jgit.*"/>
+              xsi:type="predicates:RepositoryPredicate"
+              project="org.eclipse.jgit"/>
           <operand
               xsi:type="workingsets:ExclusionPredicate"
-              excludedWorkingSet="//@streams[name='master']/@setupTasks.4/@workingSets.4 //@streams[name='master']/@setupTasks.4/@workingSets.1 //@streams[name='master']/@setupTasks.4/@workingSets.3"/>
+              excludedWorkingSet="//@streams[name='master']/@setupTasks.5/@workingSets.6 //@streams[name='master']/@setupTasks.5/@workingSets.5"/>
         </predicate>
       </workingSet>
       <workingSet
@@ -206,8 +261,8 @@
         <predicate
             xsi:type="predicates:AndPredicate">
           <operand
-              xsi:type="predicates:NamePredicate"
-              pattern="org\.eclipse\.jgit.*"/>
+              xsi:type="predicates:RepositoryPredicate"
+              project="org.eclipse.jgit"/>
           <operand
               xsi:type="predicates:FilePredicate"
               filePattern="META-INF/MANIFEST.MF"
