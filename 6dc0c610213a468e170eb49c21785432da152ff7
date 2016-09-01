@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27af2791_13fca2a6",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6223,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2016-09-01T20:26:56Z",
+      "side": 1,
+      "message": "I think the issue happens because the services ext. point isn\u0027t implemented properly. The ext. point starts its plugin in the UI thread during the initialization of the workbench.",
+      "parentUuid": "27af2791_f8e38d0f",
+      "revId": "6dc0c610213a468e170eb49c21785432da152ff7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27af2791_9810d18b",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-09-01T16:04:29Z",
       "side": 1,
       "message": "I believe introducing asynchronism here is a the right approach. However, are we sure it won\u0027t cause problem to EGit?\nAlso, rather than using untrackable asyncExec, it would be better to use a (non-UI) job so we can easily track it and bind it to a progress monitor if necessary.",
+      "revId": "6dc0c610213a468e170eb49c21785432da152ff7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_5331ba22",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2016-09-01T20:26:56Z",
+      "side": 1,
+      "message": "JFaceResources.getResources has to be run in the UI thread. The egit.ui plugin expects that it will be always started in the UI thread which is, probably, a bad assumption.",
+      "parentUuid": "27af2791_9810d18b",
       "revId": "6dc0c610213a468e170eb49c21785432da152ff7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
