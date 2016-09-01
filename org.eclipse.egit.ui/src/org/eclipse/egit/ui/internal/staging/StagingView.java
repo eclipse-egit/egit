@@ -1737,11 +1737,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				if (!isChecked()) {
 					return;
 				}
-				presentation = Presentation.LIST;
-				setPresentation(presentation, false);
-				treePresentationAction.setChecked(false);
-				compactTreePresentationAction.setChecked(false);
-				setExpandCollapseActionsVisible(false);
+				switchToListMode();
 				refreshViewers();
 			}
 		};
@@ -2874,7 +2870,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 							UIPreferences.STAGING_VIEW_PRESENTATION_CHANGED);
 					if (changed) {
 						listPresentationAction.setChecked(true);
-						listPresentationAction.run();
+						switchToListMode();
 					} else if (presentation != Presentation.LIST) {
 						setExpandCollapseActionsVisible(true);
 					}
@@ -2958,6 +2954,13 @@ public class StagingView extends ViewPart implements IShowInSource {
 		} else {
 			setExpandCollapseActionsVisible(isExpandAllowed());
 		}
+	}
+
+	private void switchToListMode() {
+		setPresentation(Presentation.LIST, false);
+		treePresentationAction.setChecked(false);
+		compactTreePresentationAction.setChecked(false);
+		setExpandCollapseActionsVisible(false);
 	}
 
 	private static boolean noConflicts(IndexDiffData indexDiff) {
