@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27af2791_f8e38d0f",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6223,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2016-09-01T16:04:29Z",
+      "side": 1,
+      "message": "I don\u0027t think the specific extensions should be changed. The Activator is IMO the only thing that requires change.",
+      "revId": "6dc0c610213a468e170eb49c21785432da152ff7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_9810d18b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2016-09-01T16:04:29Z",
+      "side": 1,
+      "message": "I believe introducing asynchronism here is a the right approach. However, are we sure it won\u0027t cause problem to EGit?\nAlso, rather than using untrackable asyncExec, it would be better to use a (non-UI) job so we can easily track it and bind it to a progress monitor if necessary.",
+      "revId": "6dc0c610213a468e170eb49c21785432da152ff7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
