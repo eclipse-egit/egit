@@ -2483,7 +2483,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 				if (selection.isEmpty())
 					return;
 
-				List<StagingEntry> stagingEntryList = new ArrayList<>();
+				Set<StagingEntry> stagingEntrySet = new LinkedHashSet<>();
 
 				boolean submoduleSelected = false;
 				boolean folderSelected = false;
@@ -2492,23 +2492,22 @@ public class StagingView extends ViewPart implements IShowInSource {
 						StagingFolderEntry folder = (StagingFolderEntry) element;
 						folderSelected = true;
 						StagingViewContentProvider contentProvider = getContentProvider(treeViewer);
-						List<StagingEntry> stagingEntries = contentProvider
-								.getStagingEntriesFiltered(folder);
-						for (StagingEntry stagingEntry : stagingEntries) {
-							if (!stagingEntryList.contains(stagingEntry))
-								stagingEntryList.add(stagingEntry);
-						}
+						stagingEntrySet.addAll(contentProvider
+								.getStagingEntriesFiltered(folder));
 					} else if (element instanceof StagingEntry) {
 						StagingEntry entry = (StagingEntry) element;
-						if (entry.isSubmodule())
+						if (entry.isSubmodule()) {
 							submoduleSelected = true;
-						if (!stagingEntryList.contains(entry))
-							stagingEntryList.add(entry);
+						}
+						stagingEntrySet.add(entry);
 					}
 				}
 
+				List<StagingEntry> stagingEntryList = new ArrayList<>(
+						stagingEntrySet);
 				final IStructuredSelection fileSelection = new StructuredSelection(
 						stagingEntryList);
+				stagingEntrySet = null;
 
 				if (!folderSelected) {
 					Action openWorkingTreeVersion = new Action(
