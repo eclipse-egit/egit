@@ -118,6 +118,7 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
+import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.ContentViewer;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
@@ -469,33 +470,60 @@ public class StagingView extends ViewPart implements IShowInSource {
 		}
 	}
 
-	static class TreeDecoratingLabelProvider extends DecoratingLabelProvider {
+	/**
+	 * A wrapped {@link DecoratingLabelProvider} to be used in the tree viewers
+	 * of the staging view. We wrap it instead of deriving directly because a
+	 * {@link DecoratingLabelProvider} is a
+	 * {@link org.eclipse.jface.viewers.ITreePathLabelProvider
+	 * ITreePathLabelProvider}, which makes the tree viewer compute a
+	 * {@link org.eclipse.jface.viewers.TreePath TreePath} for each element,
+	 * which is then ultimately unused because the
+	 * {@link StagingViewLabelProvider} is <em>not</em> a
+	 * {@link org.eclipse.jface.viewers.ITreePathLabelProvider
+	 * ITreePathLabelProvider}. Computing the
+	 * {@link org.eclipse.jface.viewers.TreePath TreePath} is a fairly expensive
+	 * operation on GTK, and avoiding to compute it speeds up label updates
+	 * significantly.
+	 */
+	private static class TreeDecoratingLabelProvider extends BaseLabelProvider
+			implements ILabelProvider {
 
-		ILabelProvider provider;
-
-		ILabelDecorator decorator;
+		private final DecoratingLabelProvider provider;
 
 		public TreeDecoratingLabelProvider(ILabelProvider provider,
 				ILabelDecorator decorator) {
-			super(provider, decorator);
-			this.provider = provider;
-			this.decorator = decorator;
+			this.provider = new DecoratingLabelProvider(provider, decorator);
 		}
 
-		public Image getColumnImage(Object element) {
-			Image image = provider.getImage(element);
-			if (image != null && decorator != null) {
-				Image decorated = decorator.decorateImage(image, element);
-				if (decorated != null)
-					return decorated;
-			}
-			return image;
+		@Override
+		public Image getImage(Object element) {
+			return provider.getImage(element);
 		}
 
 		@Override
 		public String getText(Object element) {
 			return provider.getText(element);
 		}
+
+		@Override
+		public void addListener(ILabelProviderListener listener) {
+			provider.addListener(listener);
+		}
+
+		@Override
+		public void removeListener(ILabelProviderListener listener) {
+			provider.removeListener(listener);
+		}
+
+		@Override
+		public void dispose() {
+			provider.dispose();
+		}
+
+		public ILabelProvider getLabelProvider() {
+			return provider.getLabelProvider();
+		}
+
 	}
 
 	static class StagingViewSearchThread extends Thread {
