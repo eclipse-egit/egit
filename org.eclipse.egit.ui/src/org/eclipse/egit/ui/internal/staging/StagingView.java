@@ -2484,17 +2484,26 @@ public class StagingView extends ViewPart implements IShowInSource {
 					return;
 
 				Set<StagingEntry> stagingEntrySet = new LinkedHashSet<>();
+				Set<StagingFolderEntry> stagingFolderSet = new LinkedHashSet<>();
 
 				boolean submoduleSelected = false;
 				boolean folderSelected = false;
+				boolean onlyFoldersSelected = true;
 				for (Object element : selection.toArray()) {
 					if (element instanceof StagingFolderEntry) {
 						StagingFolderEntry folder = (StagingFolderEntry) element;
 						folderSelected = true;
+						if (onlyFoldersSelected) {
+							stagingFolderSet.add(folder);
+						}
 						StagingViewContentProvider contentProvider = getContentProvider(treeViewer);
 						stagingEntrySet.addAll(contentProvider
 								.getStagingEntriesFiltered(folder));
 					} else if (element instanceof StagingEntry) {
+						if (onlyFoldersSelected) {
+							stagingFolderSet.clear();
+						}
+						onlyFoldersSelected = false;
 						StagingEntry entry = (StagingEntry) element;
 						if (entry.isSubmodule()) {
 							submoduleSelected = true;
@@ -2580,8 +2589,12 @@ public class StagingView extends ViewPart implements IShowInSource {
 								UIText.StagingView_replaceWithHeadRevision,
 								ActionCommands.REPLACE_WITH_HEAD_ACTION,
 								fileSelection));
-				if (addIgnore)
+				if (addIgnore) {
+					if (!stagingFolderSet.isEmpty()) {
+						menuMgr.add(new IgnoreFoldersAction(stagingFolderSet));
+					}
 					menuMgr.add(new IgnoreAction(fileSelection));
+				}
 				if (addDelete)
 					menuMgr.add(new DeleteAction(fileSelection));
 				if (addLaunchMergeTool)
@@ -2777,6 +2790,26 @@ public class StagingView extends ViewPart implements IShowInSource {
 					getSelectedPaths(selection));
 			operation.run();
 		}
+	}
+
+	private static class IgnoreFoldersAction extends Action {
+		private final Set<StagingFolderEntry> selection;
+
+		IgnoreFoldersAction(Set<StagingFolderEntry> selection) {
+			super(UIText.StagingView_IgnoreFolderMenuLabel);
+			this.selection = selection;
+		}
+
+		@Override
+		public void run() {
+			List<IPath> paths = new ArrayList<>();
+			for (StagingFolderEntry folder : selection) {
+				paths.add(folder.getLocation());
+			}
+			IgnoreOperationUI operation = new IgnoreOperationUI(paths);
+			operation.run();
+		}
+
 	}
 
 	private class DeleteAction extends Action {
