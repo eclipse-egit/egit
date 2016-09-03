@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27af2791_ab71be01",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1970,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-03T19:30:18Z",
+      "side": 1,
+      "message": "Nit: strange formatting. Please auto-format.",
+      "range": {
+        "startLine": 1968,
+        "startChar": 6,
+        "endLine": 1970,
+        "endChar": 53
+      },
+      "revId": "bcd69f29ce21a602b849647406ca97fdd81fd67b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_8b74faf2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1982,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-03T19:30:18Z",
+      "side": 1,
+      "message": "Nit: wrong indentation.",
+      "revId": "bcd69f29ce21a602b849647406ca97fdd81fd67b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_6b8c068a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2191,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-03T19:30:18Z",
+      "side": 1,
+      "message": "A suggestion: if the candidate is an expanded StagingFolderEntry, it should be selected only if there is no following sibling. Otherwise the following sibling is IMO the better choice, otherwise the viewer will jump.",
+      "revId": "bcd69f29ce21a602b849647406ca97fdd81fd67b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_4b874266",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2352,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-03T19:30:18Z",
+      "side": 1,
+      "message": "Why re-implement AbstractTreeViewer.getVisibleExpandedElements()?",
+      "revId": "bcd69f29ce21a602b849647406ca97fdd81fd67b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
