@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27af2791_ce2b6081",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-09-04T22:56:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27af2791_125bf502",
+      "revId": "48c81cd89acd10262b6636a2df476e530da44192",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27af2791_3252b9e4",
         "filename": "org.eclipse.egit.ui/plugin.xml",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "27af2791_ee282487",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-09-04T22:56:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27af2791_3252b9e4",
+      "revId": "48c81cd89acd10262b6636a2df476e530da44192",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27af2791_52556dc9",
         "filename": "org.eclipse.egit.ui/plugin.xml",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2016-09-04T22:55:16Z",
       "side": 1,
       "message": "style nit: trailing whitespace",
+      "revId": "48c81cd89acd10262b6636a2df476e530da44192",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27af2791_0ecd5860",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-09-04T22:56:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27af2791_52556dc9",
       "revId": "48c81cd89acd10262b6636a2df476e530da44192",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
