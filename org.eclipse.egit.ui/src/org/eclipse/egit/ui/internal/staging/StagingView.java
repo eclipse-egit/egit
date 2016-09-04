@@ -10,7 +10,7 @@
  *
  * Contributors:
  *    Tobias Baumann <tobbaumann@gmail.com> - Bug 373969, 473544
- *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 481683, 495777
+ *    Thomas Wolf <thomas.wolf@paranor.ch>
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.staging;
 
@@ -123,11 +123,13 @@ import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeViewerListener;
+import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeExpansionEvent;
@@ -1014,7 +1016,16 @@ public class StagingView extends ViewPart implements IShowInSource {
 				.applyTo(stagedViewer.getControl());
 		stagedViewer.getTree().setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TREE_BORDER);
-		stagedViewer.setLabelProvider(createLabelProvider(stagedViewer));
+		IBaseLabelProvider labelProvider = createLabelProvider(stagedViewer);
+		labelProvider.addListener(new ILabelProviderListener() {
+
+			@Override
+			public void labelProviderChanged(LabelProviderChangedEvent event) {
+				updateCommitButtons();
+			}
+		});
+		stagedViewer.setLabelProvider(labelProvider);
+
 		stagedViewer.setContentProvider(createStagingContentProvider(false));
 		stagedViewer.addDragSupport(
 				DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_LINK,
