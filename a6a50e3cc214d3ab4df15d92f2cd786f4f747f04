@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27af2791_2e769c7d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-09-05T06:35:27Z",
+      "side": 1,
+      "message": "what\u0027s the reason to switch from WorkspaceJob to Job ? We switched to use WorkspaceJob in https://git.eclipse.org/r/#/c/22013/ in order to ensure that resource update events are batched",
+      "revId": "a6a50e3cc214d3ab4df15d92f2cd786f4f747f04",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
