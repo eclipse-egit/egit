@@ -2516,6 +2516,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 	}
 
 	private void stage(IStructuredSelection selection) {
+		final long start = System.currentTimeMillis();
+		System.out.println("stage start: " + start); //$NON-NLS-1$
 		StagingViewContentProvider contentProvider = getContentProvider(unstagedViewer);
 		final Repository repository = currentRepository;
 		Iterator iterator = selection.iterator();
@@ -2564,6 +2566,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 						for (String addPath : addPaths)
 							add.addFilepattern(addPath);
 						add.call();
+						System.out.println("staging done after [ms]: " //$NON-NLS-1$
+								+ (System.currentTimeMillis() - start));
 					} catch (NoFilepatternException e1) {
 						// cannot happen
 					} catch (JGitInternalException e1) {
@@ -2640,6 +2644,9 @@ public class StagingView extends ViewPart implements IShowInSource {
 		if (selection.isEmpty())
 			return;
 
+		final long start = System.currentTimeMillis();
+		System.out.println("unstage start: " + start); //$NON-NLS-1$
+
 		final List<String> paths = processUnstageSelection(selection);
 		if (paths.isEmpty())
 			return;
@@ -2654,6 +2661,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 					for (String path : paths)
 						reset.addPath(path);
 					reset.call();
+					System.out.println("unstaging done after [ms]: " //$NON-NLS-1$
+							+ (System.currentTimeMillis() - start));
 				} catch (GitAPIException e) {
 					Activator.handleError(e.getMessage(), e, true);
 				}
@@ -2809,6 +2818,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 		if (isDisposed()) {
 			return;
 		}
+		final long start = System.currentTimeMillis();
+		System.out.println("reload start: " + start); //$NON-NLS-1$
 		if (repository == null) {
 			asyncExec(new Runnable() {
 				@Override
@@ -2915,6 +2926,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 				updateCommitButtons();
 				updateSectionText();
+				System.out.println("reload done after {ms]: " //$NON-NLS-1$
+						+ (System.currentTimeMillis() - start) + "\n"); //$NON-NLS-1$
 			}
 
 		});
