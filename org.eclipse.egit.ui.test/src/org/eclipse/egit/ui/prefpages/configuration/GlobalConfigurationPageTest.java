@@ -320,7 +320,9 @@ public class GlobalConfigurationPageTest {
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(
 				TESTNAME + "[0]").select();
 
-		bot.button(UIText.ConfigurationEditorComponent_RemoveButton).click();
+		preferencePage.bot()
+				.button(UIText.ConfigurationEditorComponent_RemoveButton)
+				.click();
 		// close the editor
 		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
 		config.load();
@@ -342,7 +344,9 @@ public class GlobalConfigurationPageTest {
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(
 				TESTSUBSECTION).select();
 
-		bot.button(UIText.ConfigurationEditorComponent_RemoveButton).click();
+		preferencePage.bot()
+				.button(UIText.ConfigurationEditorComponent_RemoveButton)
+				.click();
 		SWTBotShell confirm = bot
 				.shell(UIText.ConfigurationEditorComponent_RemoveSubsectionTitle);
 		confirm.activate();
@@ -365,7 +369,9 @@ public class GlobalConfigurationPageTest {
 		getGitConfigurationPreferencePage();
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).select();
 
-		bot.button(UIText.ConfigurationEditorComponent_RemoveButton).click();
+		preferencePage.bot()
+				.button(UIText.ConfigurationEditorComponent_RemoveButton)
+				.click();
 		SWTBotShell confirm = bot
 				.shell(UIText.ConfigurationEditorComponent_RemoveSectionTitle);
 		confirm.activate();
