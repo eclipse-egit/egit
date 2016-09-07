@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27af2791_1fc49985",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-07T11:31:23Z",
+      "side": 1,
+      "message": "\"Significantly\" meaning: for my (ridiculous) flat test directory with 50k unstaged files, the time to open it in the staging view comes down from 60-70s to about 40-45s.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 27
+      },
+      "revId": "c874cca93dcd42ab675469b20774595a5b75ace7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
