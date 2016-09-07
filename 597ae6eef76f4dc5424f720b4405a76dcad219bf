@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b223f6_d7e55c17",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-07T11:42:11Z",
+      "side": 1,
+      "message": "On my test directory with 50k files, I aborted the Eclipse after a few minutes. By then it had created a .gitignore with roughly 1000 lines.",
+      "range": {
+        "startLine": 9,
+        "startChar": 33,
+        "endLine": 9,
+        "endChar": 51
+      },
+      "revId": "597ae6eef76f4dc5424f720b4405a76dcad219bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
