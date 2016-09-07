@@ -1,0 +1,7 @@
+Code-Review+2: Matthias Sohn <matthias.sohn@sap.com>
+Verified+1: Hudson CI
+Submitted-by: Thomas Wolf <thomas.wolf@paranor.ch>
+Submitted-at: Wed, 07 Sep 2016 02:02:46 -0400
+Reviewed-on: https://git.eclipse.org/r/78751
+Project: egit/egit
+Branch: refs/heads/master
