@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b223f6_17d8b465",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-07T11:39:43Z",
+      "side": 1,
+      "message": "I aborted the Eclipse after some minutes.",
+      "range": {
+        "startLine": 9,
+        "startChar": 48,
+        "endLine": 9,
+        "endChar": 54
+      },
+      "revId": "390f38087528c785dc303c24bf7dd3332cad5b2b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_37ddb856",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-07T11:39:43Z",
+      "side": 1,
+      "message": "Fixed in follow-up change https://git.eclipse.org/r/#/c/80559/ .",
+      "range": {
+        "startLine": 23,
+        "startChar": 14,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "390f38087528c785dc303c24bf7dd3332cad5b2b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
