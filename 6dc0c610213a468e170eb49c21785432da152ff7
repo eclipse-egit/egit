@@ -69,6 +69,41 @@
       "revId": "6dc0c610213a468e170eb49c21785432da152ff7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_00706cc9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-07T22:16:01Z",
+      "side": 1,
+      "message": "I don\u0027t think using asyncExec is the right fix. Instead I\u0027d use code like\n\n  if (Display.getCurrent() !\u003d null) {\n    resourceManager \u003d new LocalResourceManager(JFaceResources.getResources(Display.getCurrent()));\n  } else {\n    resourceManager \u003d new LocalResourceManager(JFaceResources.getResources(PlatformUI.getWorkbench().getDisplay()));\n  }\n\nAnd maybe it\u0027s even best to create this lazily in getResourceManager() below instead of here.",
+      "parentUuid": "27af2791_5331ba22",
+      "revId": "6dc0c610213a468e170eb49c21785432da152ff7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_a09a6079",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-07T22:16:01Z",
+      "side": 1,
+      "message": "I\u0027m entirely unsure about this one. For me, it\u0027s still not proven that we\u0027re doing long-running operations here. Also, I\u0027m not sure this won\u0027t cause other problems, for instance bug 460018, bug 364569, bug 336689. All of which should be a non-issue for EGit currently as a side effect of registering the RepositorySourceProvider via plugin.xml. (Which admittedly was an unintended side-effect, but which -- as long this activator doesn\u0027t do long-running operations -- should not be a problem either.) And finally I\u0027m worried about not having any real control over when exactly this asyncExec runs.",
+      "revId": "6dc0c610213a468e170eb49c21785432da152ff7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
