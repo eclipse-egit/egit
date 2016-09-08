@@ -3,6 +3,7 @@
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2014, Axel Richard <axel.richard@obeo.fr>
+ * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -105,7 +106,10 @@ public class StagingEntry extends PlatformObject
 	private final Repository repository;
 	private final State state;
 	private final String path;
-	private final IFile file;
+
+	private boolean fileLoaded;
+
+	private IFile file;
 
 	private String name;
 
@@ -126,7 +130,6 @@ public class StagingEntry extends PlatformObject
 		this.repository = repository;
 		this.state = state;
 		this.path = path;
-		this.file = ResourceUtil.getFileForLocation(repository, path, false);
 	}
 
 	/**
@@ -194,6 +197,10 @@ public class StagingEntry extends PlatformObject
 	 *         workspace, null otherwise.
 	 */
 	public IFile getFile() {
+		if (!fileLoaded) {
+			fileLoaded = true;
+			file = ResourceUtil.getFileForLocation(repository, path, false);
+		}
 		return file;
 	}
 
@@ -223,11 +230,13 @@ public class StagingEntry extends PlatformObject
 
 	@Override
 	public int getProblemSeverity() {
-		if (file == null)
+		IFile f = getFile();
+		if (f == null)
 			return SEVERITY_NONE;
 
 		try {
-			return file.findMaxProblemSeverity(IMarker.PROBLEM, true, IResource.DEPTH_ONE);
+			return f.findMaxProblemSeverity(IMarker.PROBLEM, true,
+					IResource.DEPTH_ZERO);
 		} catch (CoreException e) {
 			return SEVERITY_NONE;
 		}
@@ -327,7 +336,7 @@ public class StagingEntry extends PlatformObject
 
 	@Override
 	public String toString() {
-		return "StagingEntry[" + state + " " + path + "]"; //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+		return "StagingEntry[" + state + ' ' + path + ']'; //$NON-NLS-1$
 	}
 
 	@Override
