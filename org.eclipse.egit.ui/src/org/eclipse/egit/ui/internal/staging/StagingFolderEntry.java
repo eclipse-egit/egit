@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2013, Stephen Elsemore <selsemore@collab.net> and others.
+ * Copyright (C) 2013, 2016 Stephen Elsemore <selsemore@collab.net> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -60,7 +60,7 @@ public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
 
 		try {
 			return container.findMaxProblemSeverity(IMarker.PROBLEM, true,
-					IResource.DEPTH_ONE);
+					IResource.DEPTH_INFINITE);
 		} catch (CoreException e) {
 			return SEVERITY_NONE;
 		}
