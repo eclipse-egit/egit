@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "07b223f6_ec78c538",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-12T17:12:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07b223f6_0501513d",
+      "range": {
+        "startLine": 738,
+        "startChar": 2,
+        "endLine": 738,
+        "endChar": 21
+      },
+      "revId": "d422cb1522e378c207dc78a56dab7e6a806981f7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b223f6_25fe55a1",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2016-09-12T07:29:23Z",
       "side": 1,
       "message": "how is this possible to init egit.ui without workbench running?",
+      "range": {
+        "startLine": 741,
+        "startChar": 27,
+        "endLine": 741,
+        "endChar": 58
+      },
+      "revId": "d422cb1522e378c207dc78a56dab7e6a806981f7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_0c76d949",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-12T17:12:58Z",
+      "side": 1,
+      "message": "Closing?",
+      "parentUuid": "07b223f6_25fe55a1",
       "range": {
         "startLine": 741,
         "startChar": 27,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "07b223f6_4c80d198",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-12T17:12:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07b223f6_452a69b6",
+      "range": {
+        "startLine": 742,
+        "startChar": 15,
+        "endLine": 742,
+        "endChar": 53
+      },
+      "revId": "d422cb1522e378c207dc78a56dab7e6a806981f7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b223f6_652f6dc5",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2016-09-12T07:29:23Z",
       "side": 1,
       "message": "I think we should leave SWT exceptions be thrown by SWT only. If display is null at this place, we should throw illegalstateexception.",
+      "range": {
+        "startLine": 745,
+        "startChar": 5,
+        "endLine": 745,
+        "endChar": 56
+      },
+      "revId": "d422cb1522e378c207dc78a56dab7e6a806981f7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_8c5109b3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-12T17:12:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07b223f6_652f6dc5",
       "range": {
         "startLine": 745,
         "startChar": 5,
