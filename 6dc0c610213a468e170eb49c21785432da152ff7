@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "07b223f6_45d8a966",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-12T06:00:43Z",
+      "side": 1,
+      "message": "See https://git.eclipse.org/r/#/c/80882/",
+      "parentUuid": "07b223f6_00706cc9",
+      "revId": "6dc0c610213a468e170eb49c21785432da152ff7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b223f6_a09a6079",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
         "patchSetId": 1
