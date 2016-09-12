@@ -31,6 +31,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
@@ -61,6 +62,8 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.osgi.service.debug.DebugOptionsListener;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTError;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWindowListener;
@@ -296,8 +299,6 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	@Override
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
-		resourceManager = new LocalResourceManager(
-				JFaceResources.getResources());
 		// we want to be notified about debug options changes
 		Dictionary<String, String> props = new Hashtable<>(4);
 		props.put(DebugOptions.LISTENER_SYMBOLICNAME, context.getBundle()
@@ -735,6 +736,19 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	 * @return the {@link ResourceManager} of this plugin
 	 */
 	public ResourceManager getResourceManager() {
+		synchronized (this) {
+			if (resourceManager == null) {
+				Display display = Display.getCurrent();
+				if (display == null && Platform.isRunning()) {
+					display = PlatformUI.getWorkbench().getDisplay();
+				}
+				if (display == null) {
+					throw new SWTError(SWT.ERROR_THREAD_INVALID_ACCESS);
+				}
+				resourceManager = new LocalResourceManager(
+						JFaceResources.getResources(display));
+			}
+		}
 		return resourceManager;
 	}
 
