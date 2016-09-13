@@ -16,6 +16,24 @@
       "revId": "5652cb7ba8ce14c25a21657c345336f383edc064",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_03a5c4fe",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-09-13T23:57:04Z",
+      "side": 1,
+      "message": "I think this problem is unavoidable if a repository contains more than one project since a git commit can span more than one project.\n\nDo you think it makes sense to define different templates for projects living in the same git repository ?",
+      "parentUuid": "07b223f6_a38ed889",
+      "revId": "5652cb7ba8ce14c25a21657c345336f383edc064",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
