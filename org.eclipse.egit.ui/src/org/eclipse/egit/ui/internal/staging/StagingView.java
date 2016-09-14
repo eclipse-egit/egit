@@ -2303,6 +2303,9 @@ public class StagingView extends ViewPart implements IShowInSource {
 					return;
 				}
 			}
+			if (treeItem.isDisposed()) {
+				return;
+			}
 			if (treeItem.getData() != null && visit(treeItem)) {
 				traversePrecedingSiblings(treeItem);
 			}
