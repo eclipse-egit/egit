@@ -5203,6 +5203,10 @@
             icon="icons/obj16/checkout.gif">
       </image>
       <image
+            commandId="org.eclipse.egit.ui.ImportChangedProjectsCommandId"
+            icon="icons/obj16/import_prj.gif">
+      </image>
+      <image
             commandId="org.eclipse.egit.ui.RepositoriesViewImportProjects"
             icon="icons/obj16/import_prj.gif">
       </image>
