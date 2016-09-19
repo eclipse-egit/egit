@@ -4513,6 +4513,15 @@
                   </test>
                </visibleWhen>
             </command>
+            <visibleWhen>
+               <with variable="activeMenu">
+                  <not>
+                     <iterate operator="or">
+                        <equals value="#AbstractTextEditorRulerContext" />
+                     </iterate>
+                  </not>
+               </with>
+            </visibleWhen>
          </menu>
       </menuContribution>
       <menuContribution
