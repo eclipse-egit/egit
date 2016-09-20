@@ -22,6 +22,30 @@
       "revId": "0f9a3d7cbb8375ce3a2dbd38f0f0d3a931908141",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_481d07f2",
+        "filename": "EGIT_INSTALL",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-09-20T13:26:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07b223f6_489267db",
+      "range": {
+        "startLine": 11,
+        "startChar": 8,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "0f9a3d7cbb8375ce3a2dbd38f0f0d3a931908141",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
