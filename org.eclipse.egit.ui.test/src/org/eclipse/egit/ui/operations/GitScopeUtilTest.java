@@ -33,6 +33,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.internal.Utils;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.operations.GitScopeOperation;
 import org.eclipse.egit.ui.internal.operations.GitScopeOperationFactory;
@@ -46,6 +47,7 @@ import org.eclipse.swtbot.swt.finder.results.VoidResult;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.team.core.subscribers.SubscriberScopeManager;
 import org.eclipse.ui.IWorkbenchPart;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -62,6 +64,9 @@ public class GitScopeUtilTest extends LocalRepositoryTestCase {
 
 	@Before
 	public void setup() throws Exception {
+		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
+				.setValue(UIPreferences.USE_LOGICAL_MODEL, true);
+
 		SWTBotView view = TestUtil.showExplorerView();
 		part = view.getViewReference().getPart(false);
 
@@ -82,6 +87,12 @@ public class GitScopeUtilTest extends LocalRepositoryTestCase {
 				};
 			}
 		});
+	}
+
+	@After
+	public void tearDown() {
+		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
+				.setToDefault(UIPreferences.USE_LOGICAL_MODEL);
 	}
 
 	@AfterClass
