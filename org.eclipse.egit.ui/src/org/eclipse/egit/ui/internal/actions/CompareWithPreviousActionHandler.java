@@ -21,10 +21,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIText;
@@ -57,36 +53,19 @@ public class CompareWithPreviousActionHandler extends RepositoryActionHandler {
 		if (resources.length != 1) {
 			return null;
 		}
-
-		Job job = new Job(UIText.CompareUtils_jobName) {
-
-			@Override
-			public IStatus run(IProgressMonitor monitor) {
-				if (monitor.isCanceled()) {
-					return Status.CANCEL_STATUS;
-				}
-				try {
-					IWorkbenchPage workBenchPage = HandlerUtil
-							.getActiveWorkbenchWindowChecked(event)
-							.getActivePage();
-					final PreviousCommit previous = getPreviousRevision(event,
-							resources[0]);
-					if (previous != null) {
-						CompareUtils.compare(resources, repository,
-								Constants.HEAD, previous.commit.getName(),
-								true, workBenchPage);
-					}
-				} catch (Exception e) {
-					Activator.handleError(
-							UIText.CompareWithRefAction_errorOnSynchronize, e,
-							true);
-				}
-				return Status.OK_STATUS;
+		try {
+			IWorkbenchPage workBenchPage = HandlerUtil
+					.getActiveWorkbenchWindowChecked(event).getActivePage();
+			final PreviousCommit previous = getPreviousRevision(event,
+					resources[0]);
+			if (previous != null) {
+				CompareUtils.compare(resources, repository, Constants.HEAD,
+						previous.commit.getName(), true, workBenchPage);
 			}
-
-		};
-		job.setUser(true);
-		job.schedule();
+		} catch (Exception e) {
+			Activator.handleError(
+					UIText.CompareWithRefAction_errorOnSynchronize, e, true);
+		}
 
 		return null;
 	}

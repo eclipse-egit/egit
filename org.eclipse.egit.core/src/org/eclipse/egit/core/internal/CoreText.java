@@ -380,6 +380,9 @@ public class CoreText extends NLS {
 	public static String GitBranchResourceVariantTreeSubscriber_gitRepository;
 
 	/** */
+	public static String GitLazyResourceVariantTreeSubscriber_name;
+
+	/** */
 	public static String OperationAlreadyExecuted;
 
 	/** */
