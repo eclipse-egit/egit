@@ -180,7 +180,7 @@ public class IndexDiffCacheEntry {
 		}
 	}
 
-	private @Nullable Repository getRepository() {
+	@Nullable Repository getRepository() {
 		if (Activator.getDefault() == null) {
 			return null;
 		}
@@ -684,19 +684,19 @@ public class IndexDiffCacheEntry {
 
 			@Override
 			public void resourceChanged(IResourceChangeEvent event) {
-				Repository repository = getRepository();
-				if (repository == null) {
-					ResourcesPlugin.getWorkspace()
-							.removeResourceChangeListener(this);
-					resourceChangeListener = null;
-					return;
-				}
 				if (event.getType() == IResourceChangeEvent.PRE_DELETE) {
 					// Deletion of a project.
 					IResource resource = event.getResource();
 					if (resource.getType() == IResource.PROJECT) {
 						IPath projectPath = resource.getLocation();
 						if (projectPath != null) {
+							Repository repository = getRepository();
+							if (repository == null) {
+								ResourcesPlugin.getWorkspace()
+										.removeResourceChangeListener(this);
+								resourceChangeListener = null;
+								return;
+							}
 							IPath repoPath = ResourceUtil
 									.getRepositoryRelativePath(projectPath,
 											repository);
@@ -711,12 +711,20 @@ public class IndexDiffCacheEntry {
 					// event for the deletion.
 					return;
 				}
+				RepositorySupplier repositorySupplier = new RepositorySupplier(
+						IndexDiffCacheEntry.this);
 				GitResourceDeltaVisitor visitor = new GitResourceDeltaVisitor(
-						repository, deletedProjects);
+						repositorySupplier, null, deletedProjects);
 				try {
 					event.getDelta().accept(visitor);
 				} catch (CoreException e) {
 					Activator.logError(e.getMessage(), e);
+					return;
+				}
+				if (repositorySupplier.get() == null) {
+					ResourcesPlugin.getWorkspace()
+							.removeResourceChangeListener(this);
+					resourceChangeListener = null;
 					return;
 				}
 				if (visitor.getGitIgnoreChanged()) {

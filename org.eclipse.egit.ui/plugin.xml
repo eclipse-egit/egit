@@ -4513,6 +4513,18 @@
                   </test>
                </visibleWhen>
             </command>
+            <visibleWhen>
+               <with variable="activeMenu">
+                  <not>
+                     <iterate operator="or">
+                        <or>
+                           <equals value="#AbstractTextEditorRulerContext" />
+                           <equals value="#OverviewRulerContext" />
+                        </or>
+                     </iterate>
+                  </not>
+               </with>
+            </visibleWhen>
          </menu>
       </menuContribution>
       <menuContribution
@@ -5201,6 +5213,10 @@
       <image
             commandId="org.eclipse.egit.ui.internal.reflog.CheckoutCommand"
             icon="icons/obj16/checkout.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.ImportChangedProjectsCommandId"
+            icon="icons/obj16/import_prj.gif">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewImportProjects"
@@ -6125,7 +6141,13 @@
   </extension>
   <extension
         point="org.eclipse.mylyn.tasks.bugs.support">
-        <product featureId="org.eclipse.egit" id="org.eclipse.egit" providerId="org.eclipse"/>
+        <product
+              description="%support.egit.description"
+              id="org.eclipse.egit"
+              name="%support.egit.name"
+              icon="icons/egit.png"
+              providerId="org.eclipse"
+              url="https://www.eclipse.org/egit"/>
 		<mapping namespace="org.eclipse.egit.ui" productId="org.eclipse.egit">
 			<property name="product" value="EGit"/>
 			<property name="component" value="UI"/>
@@ -6137,6 +6159,18 @@
 		<mapping namespace="org.eclipse.egit.mylyn" productId="org.eclipse.egit">
 			<property name="product" value="EGit"/>
 			<property name="component" value="Mylyn"/>
+		</mapping>
+		<mapping namespace="org.eclipse.egit.github" productId="org.eclipse.egit">
+			<property name="product" value="EGit"/>
+			<property name="component" value="GitHub"/>
+		</mapping>
+		<mapping namespace="org.eclipse.egit.mylyn.internal.github" productId="org.eclipse.egit">
+			<property name="product" value="EGit"/>
+			<property name="component" value="GitHub"/>
+		</mapping>
+		<mapping namespace="org.eclipse.egit.gitflow" productId="org.eclipse.egit">
+			<property name="product" value="EGit"/>
+			<property name="component" value="Gitflow"/>
 		</mapping>
   </extension>
   <extension

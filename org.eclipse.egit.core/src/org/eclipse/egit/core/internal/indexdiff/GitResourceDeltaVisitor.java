@@ -31,6 +31,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 
@@ -49,6 +50,8 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 			| IResourceDelta.OPEN | IResourceDelta.REPLACED
 			| IResourceDelta.TYPE;
 
+	private final RepositorySupplier supplier;
+
 	private final Repository repository;
 
 	private final Collection<String> filesToUpdate;
@@ -64,12 +67,12 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 	/**
 	 * Constructs {@link GitResourceDeltaVisitor}
 	 *
-	 * @param repository
+	 * @param supplier
 	 *            which should be considered during visiting
 	 *            {@link IResourceDelta}s
 	 */
-	public GitResourceDeltaVisitor(Repository repository) {
-		this(repository, Collections.<IProject, IPath> emptyMap());
+	public GitResourceDeltaVisitor(RepositorySupplier supplier) {
+		this(supplier, null, Collections.<IProject, IPath> emptyMap());
 	}
 
 	/**
@@ -78,13 +81,33 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 	 * @param repository
 	 *            which should be considered during visiting
 	 *            {@link IResourceDelta}s
+	 */
+	public GitResourceDeltaVisitor(Repository repository) {
+		this(null, repository, Collections.<IProject, IPath> emptyMap());
+	}
+
+	/**
+	 * Constructs {@link GitResourceDeltaVisitor}. Either specify repository or
+	 * supplier for lazy initializaation
+	 *
+	 * @param supplier
+	 *            - lazy init repository
+	 * @param repository
+	 *            which should be considered during visiting
+	 *            {@link IResourceDelta}s
 	 * @param deletedProjects
 	 *            possibly empty map of projects that were removed from the
 	 *            workspace, with their (former) locations
 	 */
-	public GitResourceDeltaVisitor(Repository repository,
+	public GitResourceDeltaVisitor(@Nullable RepositorySupplier supplier,
+			@Nullable Repository repository,
 			Map<IProject, IPath> deletedProjects) {
 		this.repository = repository;
+		this.supplier = supplier;
+		if (this.repository == null && this.supplier == null) {
+			throw new IllegalArgumentException(
+					"repository or supplier should be specified"); //$NON-NLS-1$
+		}
 
 		filesToUpdate = new HashSet<String>();
 		resourcesToUpdate = new HashSet<IResource>();
@@ -118,7 +141,7 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 			}
 			RepositoryMapping mapping = gitData.getRepositoryMapping(resource);
 			if (mapping == null || !gitData.hasInnerRepositories()
-					&& mapping.getRepository() != repository) {
+					&& mapping.getRepository() != getRepository()) {
 				return false;
 			}
 			// continue with children
@@ -134,7 +157,7 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 			repositoryOfResource = ResourceUtil.getRepository(location);
 			// Ignore linked files, folders and their children, if they're not
 			// in the same repository
-			if (repository != repositoryOfResource) {
+			if (getRepository() != repositoryOfResource) {
 				return false;
 			}
 		} else {
@@ -147,12 +170,12 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 				return false;
 			}
 			if (repositoryOfResource == null || !gitData.isProtected(resource)
-					&& repositoryOfResource != repository) {
+					&& repositoryOfResource != getRepository()) {
 				return false;
 			}
 			if (delta.getKind() == IResourceDelta.ADDED) {
 				IPath repoRelativePath = ResourceUtil.getRepositoryRelativePath(
-						resource.getLocation(), repository);
+						resource.getLocation(), getRepository());
 				if (repoRelativePath == null) {
 					return false;
 				}
@@ -170,15 +193,15 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 			return true;
 		}
 
-		if (repositoryOfResource != repository) {
-			return false;
-		}
-
 		// If the file has changed but not in a way that we
 		// care about (e.g. marker changes to files) then
 		// ignore
 		if (delta.getKind() == IResourceDelta.CHANGED
 				&& (delta.getFlags() & INTERESTING_CHANGES) == 0) {
+			return false;
+		}
+
+		if (repositoryOfResource != getRepository()) {
 			return false;
 		}
 
@@ -188,7 +211,8 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 		}
 
 		IPath repoRelativePath = ResourceUtil
-				.getRepositoryRelativePath(resource.getLocation(), repository);
+				.getRepositoryRelativePath(resource.getLocation(),
+						getRepository());
 		if (repoRelativePath == null) {
 			resourcesToUpdate.add(resource);
 			return true;
@@ -219,7 +243,7 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 		IndexDiffCacheEntry entry = null;
 		IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
 		if (cache != null) {
-			entry = cache.getIndexDiffCacheEntry(repository);
+			entry = cache.getIndexDiffCacheEntry(getRepository());
 		}
 		// fall back to processing all changes as long as there is no old index.
 		if (entry == null) {
@@ -290,5 +314,12 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 	 */
 	public boolean isProjectDeleted() {
 		return projectDeleted;
+	}
+
+	private Repository getRepository() {
+		if (repository != null) {
+			return repository;
+		}
+		return supplier.get();
 	}
 }

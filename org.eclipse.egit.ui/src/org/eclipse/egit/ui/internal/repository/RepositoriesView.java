@@ -200,8 +200,11 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		configurationListener = new IPreferenceChangeListener() {
 			@Override
 			public void preferenceChange(PreferenceChangeEvent event) {
-				lastInputChange = System.currentTimeMillis();
-				scheduleRefresh(DEFAULT_REFRESH_DELAY);
+				if (RepositoryUtil.PREFS_DIRECTORIES_REL
+						.equals(event.getKey())) {
+					lastInputChange = System.currentTimeMillis();
+					scheduleRefresh(DEFAULT_REFRESH_DELAY);
+				}
 			}
 		};
 
