@@ -40,15 +40,6 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 
-	/**
-	 * Bit-mask describing interesting changes for IResourceChangeListener
-	 * events
-	 */
-	private static int INTERESTING_CHANGES = IResourceDelta.CONTENT
-			| IResourceDelta.MOVED_FROM | IResourceDelta.MOVED_TO
-			| IResourceDelta.OPEN | IResourceDelta.REPLACED
-			| IResourceDelta.TYPE;
-
 	private final Repository repository;
 
 	private final Collection<String> filesToUpdate;
@@ -171,14 +162,6 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 		}
 
 		if (repositoryOfResource != repository) {
-			return false;
-		}
-
-		// If the file has changed but not in a way that we
-		// care about (e.g. marker changes to files) then
-		// ignore
-		if (delta.getKind() == IResourceDelta.CHANGED
-				&& (delta.getFlags() & INTERESTING_CHANGES) == 0) {
 			return false;
 		}
 
