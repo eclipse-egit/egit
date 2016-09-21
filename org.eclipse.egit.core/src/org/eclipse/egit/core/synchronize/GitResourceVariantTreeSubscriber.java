@@ -238,6 +238,24 @@ public class GitResourceVariantTreeSubscriber extends
 		gsds.dispose();
 	}
 
+	/**
+	 * Provide the synchronize data set.
+	 *
+	 * @return The {@link GitSynchronizeDataSet} used by this subscriber.
+	 */
+	protected GitSynchronizeDataSet getDataSet() {
+		return gsds;
+	}
+
+	/**
+	 * Provide the synchronization cache.
+	 *
+	 * @return The {@link GitSyncCache} used by this subscriber.
+	 */
+	protected GitSyncCache getCache() {
+		return cache;
+	}
+
 	@Override
 	public IDiff getDiff(IResource resource) throws CoreException {
 		final GitSynchronizeData syncData = gsds.getData(resource.getProject());
@@ -528,9 +546,25 @@ public class GitResourceVariantTreeSubscriber extends
 			IResourceVariant remote) throws TeamException {
 
 		Repository repo = gsds.getData(local.getProject()).getRepository();
+		return getSyncInfo(local, base, remote, repo);
+	}
+
+	/**
+	 * Provide a new and initialized {@link SyncInfo} for the given 'local'
+	 * resource from a known repository.
+	 *
+	 * @param local
+	 * @param base
+	 * @param remote
+	 * @param repo
+	 *            Repository to load data from
+	 * @return This implementation returns a new instance of {@link GitSyncInfo}
+	 * @throws TeamException
+	 */
+	protected SyncInfo getSyncInfo(IResource local, IResourceVariant base,
+			IResourceVariant remote, Repository repo) throws TeamException {
 		SyncInfo info = new GitSyncInfo(local, base, remote,
 				getResourceComparator(), cache.get(repo), repo);
-
 		info.init();
 		return info;
 	}
