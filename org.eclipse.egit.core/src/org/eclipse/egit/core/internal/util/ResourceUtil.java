@@ -53,7 +53,6 @@ import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.core.synchronize.IgnoreInGitSynchronizations;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Repository;
@@ -636,11 +635,6 @@ public class ResourceUtil {
 				if (resources.length > 0) {
 					// get mappings from model provider if there are matching resources
 					final ModelProvider model = candidate.getModelProvider();
-					IgnoreInGitSynchronizations adapter = model
-							.getAdapter(IgnoreInGitSynchronizations.class);
-					if (adapter != null) {
-						continue;
-					}
 					final ResourceMapping[] modelMappings = model.getMappings(
 							resource, context, new NullProgressMonitor());
 					for (ResourceMapping mapping : modelMappings)
