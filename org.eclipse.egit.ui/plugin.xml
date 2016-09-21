@@ -4513,6 +4513,18 @@
                   </test>
                </visibleWhen>
             </command>
+            <visibleWhen>
+               <with variable="activeMenu">
+                  <not>
+                     <iterate operator="or">
+                        <or>
+                           <equals value="#AbstractTextEditorRulerContext" />
+                           <equals value="#OverviewRulerContext" />
+                        </or>
+                     </iterate>
+                  </not>
+               </with>
+            </visibleWhen>
          </menu>
       </menuContribution>
       <menuContribution
@@ -5201,6 +5213,10 @@
       <image
             commandId="org.eclipse.egit.ui.internal.reflog.CheckoutCommand"
             icon="icons/obj16/checkout.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.ImportChangedProjectsCommandId"
+            icon="icons/obj16/import_prj.gif">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewImportProjects"

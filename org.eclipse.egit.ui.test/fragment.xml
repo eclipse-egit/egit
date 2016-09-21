@@ -46,25 +46,5 @@
             label="ServerWithoutPage2">
       </source>
    </extension>
-   <extension
-         id="org.eclipse.egit.ui.test.mockLogicalModelProvider"
-         name="Mock Logical Model Provider"
-         point="org.eclipse.core.resources.modelProviders">
-      <modelProvider
-            class="org.eclipse.egit.ui.view.synchronize.MockLogicalModelProvider">
-      </modelProvider>
-      <extends-model
-            id="org.eclipse.core.resources.modelProvider"/>
-      <enablement>
-         <and>
-            <adapt
-                  type="org.eclipse.core.resources.IFile"/>
-            <test
-                  forcePluginActivation="true"
-                  property="org.eclipse.core.resources.name"
-                  value="*.mocklogical"/>
-         </and>
-      </enablement>
-   </extension>
 
 </fragment>
