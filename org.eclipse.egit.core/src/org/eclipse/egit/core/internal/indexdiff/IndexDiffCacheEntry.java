@@ -705,9 +705,11 @@ public class IndexDiffCacheEntry {
 				// If the file has changed but not in a way that we
 				// care about (e.g. marker changes to files) then
 				// ignore
-				if ((delta.getKind() == IResourceDelta.CHANGED
+				if (!projectPreDelete
+						&& (delta != null
+								&& delta.getKind() == IResourceDelta.CHANGED
 						&& (delta.getFlags() & INTERESTING_CHANGES) == 0)
-						|| !projectPreDelete) {
+				) {
 					return;
 				}
 
@@ -735,6 +737,12 @@ public class IndexDiffCacheEntry {
 					// event for the deletion.
 					return;
 				}
+
+				// safe check
+				if (delta == null) {
+					return;
+				}
+
 				GitResourceDeltaVisitor visitor = new GitResourceDeltaVisitor(
 						repository, deletedProjects);
 				try {
