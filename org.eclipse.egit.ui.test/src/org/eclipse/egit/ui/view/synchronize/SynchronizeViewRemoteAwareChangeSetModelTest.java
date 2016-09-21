@@ -36,6 +36,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.team.ui.synchronize.ISynchronizeView;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class SynchronizeViewRemoteAwareChangeSetModelTest
@@ -51,6 +52,7 @@ public class SynchronizeViewRemoteAwareChangeSetModelTest
 	 *
 	 * @throws Exception
 	 */
+	@Ignore("See bug 501886")
 	@Test
 	public void shouldShowRemoteFilesInSynchronization() throws Exception {
 		// given
