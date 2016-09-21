@@ -112,7 +112,7 @@ class GitSyncCache {
 		return OrTreeFilter.create(filters);
 	}
 
-	private static void loadDataFromGit(GitSynchronizeData gsd,
+	static boolean loadDataFromGit(GitSynchronizeData gsd,
 			TreeFilter filter, GitSyncObjectCache repoCache) {
 		Repository repo = gsd.getRepository();
 
@@ -158,7 +158,9 @@ class GitSyncCache {
 				repoCache.addMember(diffEntry);
 		} catch (Exception e) {
 			Activator.logError(e.getMessage(), e);
+			return false;
 		}
+		return true;
 	}
 
 	private static ObjectId getTree(RevCommit commit) {
@@ -175,7 +177,7 @@ class GitSyncCache {
 
 	/**
 	 * @param repo
-	 *            instance of {@link Repository} for with mapping should be
+	 *            instance of {@link Repository} for which mapping should be
 	 *            obtained
 	 * @return instance of {@link GitSyncObjectCache} connected associated with
 	 *         given repository or {@code null} when such mapping wasn't found
