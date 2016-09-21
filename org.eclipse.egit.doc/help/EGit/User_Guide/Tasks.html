@@ -1011,6 +1011,31 @@
 			<img border="0" src="images/Egit-0.9-label-decorators.png"/>
 		</p>
 		<h3 id="Committing">Committing</h3>
+		<p>There are two ways to commit changes with EGit:</p>
+		<ul>
+			<li>using the 
+				<b>Staging View</b>, or
+			</li>
+			<li>using the 
+				<b>Commit Dialog</b>.
+			</li>
+		</ul>
+		<p>The Commit Dialog is considered deprecated and may be removed in future versions. Since EGit 4.4, the 
+			<b>Team &gt; Commit...</b> context menu action by default opens the staging view instead of the commit dialog.
+		</p>
+		<p>This behavior is, for the time being, configurable in the global 
+			<b>Preferences &gt; Team &gt; Git &gt; Committing</b> preferences. 
+		</p>
+		<p>
+			<img border="0" src="images/Egit-4.5-CommittingPreferences.png"/>
+		</p>
+		<p>If "Use Staging View to commit instead of Commit Dialog" is checked (the default setting), the 
+			<b>Team &gt; Commit...</b> action will open the staging view. If it's unchecked, the commit dialog will be opened.
+		</p>
+		<p>If the staging view is used an additional option "Automatically stage selected resources on commit" available since EGit 4.5 determines whether selected files should be automatically staged when 
+			<b>Team &gt; Commit...</b> is invoked. This will stage all changes contained in the selected resources. It makes the behavior a bit more consistent with the way the commit dialog works: in the commit dialog, individual files can be checked or unchecked for inclusion in the commit, and selected files are checked by default. In the staging view, you compose your commit by staging changes, and only staged changes will be committed. Auto-staging thus includes the selected files automatically in the commit when the staging view is used.
+		</p>
+		<p>The "Include selected untracked files" option determines whether selected files that are not yet in the git repository at all are included in the commit (checked in the commit dialog, or auto-staged in the staging view if auto-staging is on).</p>
 		<h4 id="Committing_with_the_Staging_View">Committing with the Staging View</h4>
 		<p>The preferred way to create commits with EGit is the 
 			<a href="Reference.html#Git_Staging_View">Staging View</a> since it always shows the current git status for the selected repository and allows to stage (add to git index) and unstage (remove from git index) modified files. Double click a file in the 
