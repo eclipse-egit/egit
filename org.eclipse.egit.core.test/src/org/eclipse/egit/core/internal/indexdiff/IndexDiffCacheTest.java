@@ -131,20 +131,12 @@ public class IndexDiffCacheTest extends GitTestCase {
 		testRepository.connect(project.project);
 		project.createFile(".gitignore", "ignore\n".getBytes("UTF-8"));
 		project.createFolder("ignore");
-		project.createFile("ignore/file.txt", new byte[] {});
 		project.createFolder("sub");
+		project.createFolder("sub/ignore");
+		project.createFile("ignore/file.txt", new byte[] {});
 		testRepository.addToIndex(project.project);
 		testRepository.createInitialCommit("testAddFileInIgnoredFolder\n\nfirst commit\n");
 		prepareCacheEntry();
-
-		IndexDiffData data1 = waitForListenerCalled();
-		assertThat(data1.getIgnoredNotInIndex(), hasItem("Project-1/ignore"));
-
-		project.createFolder("sub/ignore");
-
-		IndexDiffData data2 = waitForListenerCalled();
-		assertThat(data2.getIgnoredNotInIndex(), hasItem("Project-1/ignore"));
-		assertThat(data2.getIgnoredNotInIndex(), hasItem("Project-1/sub/ignore"));
 
 		// Must not change anything (ignored path starts with this string, but
 		// it's not a prefix path of it)
