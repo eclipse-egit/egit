@@ -4,13 +4,13 @@
       This is a pure Java implementation of the Git version control system and integrates it into Eclipse.
    </description>
    <feature url="features/org.eclipse.egit_0.0.0.qualifier.jar" id="org.eclipse.egit" version="0.0.0" patch="true">
-      <category name="Eclipse Git Team Provider"/>
+      <category name="EGit"/>
    </feature>
    <feature url="features/org.eclipse.egit.sources_0.0.0.qualifier.jar" id="org.eclipse.egit.source" version="0.0.0" patch="true">
-      <category name="Eclipse Git Team Provider"/>
+      <category name="EGit"/>
    </feature>
    <feature url="features/org.eclipse.egit.mylyn_0.0.0.qualifier.jar" id="org.eclipse.egit.mylyn" version="0.0.0">
-      <category name="Eclipse Git Team Provider"/>
+      <category name="EGit"/>
    </feature>
    <feature url="features/org.eclipse.jgit_0.0.0.qualifier.jar" id="org.eclipse.jgit" version="0.0.0" patch="true">
       <category name="JGit"/>
@@ -28,24 +28,24 @@
       <category name="JGit"/>
    </feature>
    <feature url="features/org.eclipse.egit.gitflow.feature_0.0.0.qualifier.jar" id="org.eclipse.egit.gitflow.feature" version="0.0.0">
-      <category name="Eclipse Git Team Provider - experimental features (incubation)"/>
+      <category name="EGit.experimental"/>
    </feature>
    <feature url="features/org.eclipse.jgit.lfs_0.0.0.qualifier.jar" id="org.eclipse.jgit.lfs" version="0.0.0">
       <category name="JGit"/>
    </feature>
    <bundle id="org.eclipse.egit.ui.smartimport" version="0.0.0">
-      <category name="Eclipse Git Team Provider - experimental features (incubation)"/>
+      <category name="EGit.experimental"/>
    </bundle>
-   <category-def name="Eclipse Git Team Provider" label="Eclipse Git Team Provider">
+   <category-def name="EGit" label="Git integration for Eclipse">
       <description>
-         Eclipse Git Team Provider
+         Versioning with Git, integration with Gerrit, GitHub, Gitflow and Task repositories
       </description>
    </category-def>
-   <category-def name="JGit" label="JGit">
+   <category-def name="JGit" label="Java implementation of Git">
       <description>
-         JGit
+         Java implementation of Git
       </description>
    </category-def>
-   <category-def name="Eclipse Git Team Provider - experimental features (incubation)" label="Eclipse Git Team Provider - experimental features  (incubation)"/>
+   <category-def name="EGit.experimental" label="Git integration for Eclipse - experimental features  (incubation)"/>
    <repository-reference location="http://download.eclipse.org/e4/snapshots/org.eclipse.e4.ui" enabled="true" />
 </site>
