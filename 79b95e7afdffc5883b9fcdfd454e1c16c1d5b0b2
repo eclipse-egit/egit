@@ -33,6 +33,24 @@
       "revId": "79b95e7afdffc5883b9fcdfd454e1c16c1d5b0b2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_013cc5ea",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 94502
+      },
+      "writtenOn": "2016-09-22T07:09:09Z",
+      "side": 1,
+      "message": "Yeah. Sorry for this review request. This is my first review in gerrit and eclipse.\n\nTests are failing because I misunderstood Delta/Resources.\n\nGeneral idea would be setup SkipNotInterestingVisitor and execute against delta",
+      "parentUuid": "07b223f6_a66fafa4",
+      "revId": "79b95e7afdffc5883b9fcdfd454e1c16c1d5b0b2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
