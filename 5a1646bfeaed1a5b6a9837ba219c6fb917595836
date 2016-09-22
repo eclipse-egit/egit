@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b223f6_cbd9079e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-22T20:28:10Z",
+      "side": 1,
+      "message": "This may or may not also have a beneficial effect on the UI tests for this view. Those tests produce _two_ updates to the preferences, one for the legacy key RepositoryUtil.PREFS_DIRECTORIES  and a second one for\nRepositoryUtil.PREFS_DIRECTORIES_REL. If those two updates resulted in two view refreshes, it might be possible that the tests waited only for the first, and the second one then would interfere with the test (re-setting the tree viewer\u0027s input while the test was operating to the tree nodes).\n\nI\u0027m not entirely sure that\u0027s the cause of the frequent failures in these UI tests, but it does seem not impossible. We\u0027ll see...",
+      "revId": "5a1646bfeaed1a5b6a9837ba219c6fb917595836",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
