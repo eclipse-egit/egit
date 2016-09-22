@@ -6141,7 +6141,13 @@
   </extension>
   <extension
         point="org.eclipse.mylyn.tasks.bugs.support">
-        <product featureId="org.eclipse.egit" id="org.eclipse.egit" providerId="org.eclipse"/>
+        <product
+              description="%support.egit.description"
+              featureId="org.eclipse.egit"
+              id="org.eclipse.egit"
+              name="%support.egit.name"
+              providerId="org.eclipse"
+              url="https://www.eclipse.org/egit"/>
 		<mapping namespace="org.eclipse.egit.ui" productId="org.eclipse.egit">
 			<property name="product" value="EGit"/>
 			<property name="component" value="UI"/>
@@ -6153,6 +6159,18 @@
 		<mapping namespace="org.eclipse.egit.mylyn" productId="org.eclipse.egit">
 			<property name="product" value="EGit"/>
 			<property name="component" value="Mylyn"/>
+		</mapping>
+		<mapping namespace="org.eclipse.egit.github" productId="org.eclipse.egit">
+			<property name="product" value="EGit"/>
+			<property name="component" value="GitHub"/>
+		</mapping>
+		<mapping namespace="org.eclipse.egit.mylyn.internal.github" productId="org.eclipse.egit">
+			<property name="product" value="EGit"/>
+			<property name="component" value="GitHub"/>
+		</mapping>
+		<mapping namespace="org.eclipse.egit.gitflow" productId="org.eclipse.egit">
+			<property name="product" value="EGit"/>
+			<property name="component" value="Gitflow"/>
 		</mapping>
   </extension>
   <extension
