@@ -16,6 +16,24 @@
       "revId": "57c2ec8efd96150d8b067926ef0889d899dbb334",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_a85db9c3",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6145,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-09-22T15:54:00Z",
+      "side": 1,
+      "message": "I added them to the feature.properties of the feature \"org.eclipse.egit\" referenced here. Is that wrong ?\n\nhttps://git.eclipse.org/r/#/c/81713/1/org.eclipse.egit-feature/feature.properties",
+      "parentUuid": "07b223f6_c883cda4",
+      "revId": "57c2ec8efd96150d8b067926ef0889d899dbb334",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
