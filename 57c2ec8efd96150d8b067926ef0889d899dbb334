@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b223f6_c883cda4",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6145,
+      "author": {
+        "id": 857
+      },
+      "writtenOn": "2016-09-22T15:49:46Z",
+      "side": 1,
+      "message": "Maybe I\u0027m missing something, but should this and the property below be defined in plugin.properties?",
+      "revId": "57c2ec8efd96150d8b067926ef0889d899dbb334",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
