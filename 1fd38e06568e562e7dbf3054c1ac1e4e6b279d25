@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b223f6_7aec3f05",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-23T18:43:24Z",
+      "side": 1,
+      "message": "Why this removal?",
+      "revId": "1fd38e06568e562e7dbf3054c1ac1e4e6b279d25",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_1adee352",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-23T18:43:24Z",
+      "side": 1,
+      "message": "This should be proper javadoc.",
+      "revId": "1fd38e06568e562e7dbf3054c1ac1e4e6b279d25",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_fad84f68",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-23T18:43:24Z",
+      "side": 1,
+      "message": "This approach will need careful performance tests on large workspaces. (On a machine with a hard disk in good working order :-)) I\u0027m especially worried about post-build events that may have many \"uninteresting changes\" (marker changes).",
+      "revId": "1fd38e06568e562e7dbf3054c1ac1e4e6b279d25",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_7ac51f83",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/SkipNotInterestingDeltaVisitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-23T18:43:24Z",
+      "side": 1,
+      "message": "Missing copyright header.",
+      "revId": "1fd38e06568e562e7dbf3054c1ac1e4e6b279d25",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_bacfb7a2",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/SkipNotInterestingDeltaVisitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-23T18:43:24Z",
+      "side": 1,
+      "message": "Capital \u0027W\u0027",
+      "range": {
+        "startLine": 9,
+        "startChar": 3,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "1fd38e06568e562e7dbf3054c1ac1e4e6b279d25",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_9ac2f379",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/SkipNotInterestingDeltaVisitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-23T18:43:24Z",
+      "side": 1,
+      "message": "We don\u0027t use @author tags.",
+      "revId": "1fd38e06568e562e7dbf3054c1ac1e4e6b279d25",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_bf54094d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/SkipNotInterestingDeltaVisitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-23T18:43:24Z",
+      "side": 1,
+      "message": "To really short-circuit do here\n\n  if (atLeastOneInterestingDelta) {\n    return false;\n  }",
+      "revId": "1fd38e06568e562e7dbf3054c1ac1e4e6b279d25",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_1ab7c322",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/SkipNotInterestingDeltaVisitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-23T18:43:24Z",
+      "side": 1,
+      "message": "Superfluous if-statement",
+      "revId": "1fd38e06568e562e7dbf3054c1ac1e4e6b279d25",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
