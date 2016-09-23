@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "07b223f6_bae6d720",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-23T18:47:58Z",
+      "side": 1,
+      "message": "See http://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines for the commit message format we use for EGit.\n\nBasically:\n\n  Ignore uninteresting changes up-front in IndexDiffCacheEntry\n\n  Description here: why \u0026 how\n\n  Bug: 501799\n  Change-Id: ...\n  Signed-off-by: ...",
+      "revId": "1fd38e06568e562e7dbf3054c1ac1e4e6b279d25",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b223f6_7aec3f05",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheTest.java",
         "patchSetId": 2
