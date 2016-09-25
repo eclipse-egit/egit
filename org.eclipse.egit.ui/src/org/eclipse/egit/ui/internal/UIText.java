@@ -931,9 +931,6 @@ public class UIText extends NLS {
 	public static String RebaseResultDialog_StatusFastForward;
 
 	/** */
-	public static String RebaseResultDialog_StatusLabel;
-
-	/** */
 	public static String RebaseResultDialog_StatusNothingToCommit;
 
 	/** */
