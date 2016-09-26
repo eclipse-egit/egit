@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07b223f6_44096138",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 94502
+      },
+      "writtenOn": "2016-09-26T12:16:13Z",
+      "side": 1,
+      "message": "ignored folders are part of \"not interesting\" notification.",
+      "parentUuid": "07b223f6_d151b15b",
+      "revId": "b0837d569aaf046a9bfab2273b612b713508f008",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b223f6_116c0927",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2016-09-26T10:20:04Z",
       "side": 1,
       "message": "The hierarchical delta will be\n\n  ROOT\n    PROJECT\n      (FOLDER)*\n         FILE\n\nPreviously, the repository was gotten up front before\nentering ROOT. Now it is gotten for most repositories\n(all those that don\u0027t have submodules) on the first\nPROJECT node.\n\nI fail to see what this buys us.",
+      "revId": "b0837d569aaf046a9bfab2273b612b713508f008",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_8460d9af",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 94502
+      },
+      "writtenOn": "2016-09-26T12:16:13Z",
+      "side": 1,
+      "message": "Yeah. Right. Will revert to SkipNotInterestingDeltaVisitor then. It will be pretty fast on big project - it just executes boolean checks against incoming delta structure.",
+      "parentUuid": "07b223f6_116c0927",
       "revId": "b0837d569aaf046a9bfab2273b612b713508f008",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -64,6 +100,30 @@
       "writtenOn": "2016-09-26T10:20:04Z",
       "side": 1,
       "message": "This would be Copyright (C) 2016, Andrey Rodionov.\n\nNeither Jens nor Markus nor Robin nor I have coded anything here :-)",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 59
+      },
+      "revId": "b0837d569aaf046a9bfab2273b612b713508f008",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_8431b9f2",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/RepositorySupplier.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 94502
+      },
+      "writtenOn": "2016-09-26T12:16:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07b223f6_91573951",
       "range": {
         "startLine": 2,
         "startChar": 0,
