@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b223f6_d151b15b",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-26T10:20:04Z",
+      "side": 1,
+      "message": "Please explain why you made this change.",
+      "revId": "b0837d569aaf046a9bfab2273b612b713508f008",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_116c0927",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/GitResourceDeltaVisitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-26T10:20:04Z",
+      "side": 1,
+      "message": "The hierarchical delta will be\n\n  ROOT\n    PROJECT\n      (FOLDER)*\n         FILE\n\nPreviously, the repository was gotten up front before\nentering ROOT. Now it is gotten for most repositories\n(all those that don\u0027t have submodules) on the first\nPROJECT node.\n\nI fail to see what this buys us.",
+      "revId": "b0837d569aaf046a9bfab2273b612b713508f008",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_715aa57c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-26T10:20:04Z",
+      "side": 1,
+      "message": "Doing this after visiting the delta means the delta visitor needs to be prepared to deal with getting null from the supplier. And the visitor should probably short-circuit if it ever detects this. Makes no sense to traverse a delta when there\u0027s no repository anymore.",
+      "revId": "b0837d569aaf046a9bfab2273b612b713508f008",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_91573951",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/RepositorySupplier.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-26T10:20:04Z",
+      "side": 1,
+      "message": "This would be Copyright (C) 2016, Andrey Rodionov.\n\nNeither Jens nor Markus nor Robin nor I have coded anything here :-)",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 59
+      },
+      "revId": "b0837d569aaf046a9bfab2273b612b713508f008",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
