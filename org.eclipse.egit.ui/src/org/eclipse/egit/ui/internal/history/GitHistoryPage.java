@@ -1021,6 +1021,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		}
 
 		@Override
+		public boolean isDynamic() {
+			// We toggle our own visibility
+			return true;
+		}
+
+		@Override
 		protected Control createControl(Composite parent) {
 			toolbar = new FindToolbar(parent);
 			toolbar.setBackground(null);
