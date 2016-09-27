@@ -13,6 +13,7 @@
 package org.eclipse.egit.ui.internal.dialogs;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
@@ -261,9 +262,11 @@ public class ResetTargetSelectionDialog extends AbstractBranchSelectionDialog {
 	@Override
 	protected void okPressed() {
 		if (resetType == ResetType.HARD) {
+			String question = MessageFormat.format(
+					UIText.ResetTargetSelectionDialog_ResetConfirmQuestion, "");//$NON-NLS-1$
 			if (!MessageDialog.openQuestion(getShell(),
 					UIText.ResetTargetSelectionDialog_ResetQuestion,
-					UIText.ResetTargetSelectionDialog_ResetConfirmQuestion)) {
+					question)) {
 				return;
 			}
 		}
