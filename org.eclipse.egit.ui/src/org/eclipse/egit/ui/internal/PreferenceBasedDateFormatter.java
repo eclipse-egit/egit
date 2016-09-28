@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.util.GitDateFormatter;
 
@@ -27,6 +28,8 @@ import org.eclipse.jgit.util.GitDateFormatter;
 public class PreferenceBasedDateFormatter extends GitDateFormatter {
 
 	private final SimpleDateFormat customFormat;
+
+	private final GitDateFormatter.Format gitFormat;
 
 	/**
 	 * Creates a new {@link PreferenceBasedDateFormatter} that will format dates
@@ -48,6 +51,7 @@ public class PreferenceBasedDateFormatter extends GitDateFormatter {
 
 	private PreferenceBasedDateFormatter(GitDateFormatter.Format gitFormat) {
 		super(gitFormat != null ? gitFormat : GitDateFormatter.Format.DEFAULT);
+		this.gitFormat = gitFormat;
 		SimpleDateFormat format = null;
 		if (gitFormat == null) {
 			String pattern = Activator.getDefault().getPreferenceStore()
@@ -119,4 +123,14 @@ public class PreferenceBasedDateFormatter extends GitDateFormatter {
 		return customFormat.format(ident.getWhen());
 	}
 
+	/**
+	 * Retrieves the {@link org.eclipse.jgit.util.GitDateFormatter.Format
+	 * GitDateFormatter.Format} this formatter uses.
+	 *
+	 * @return the format, or {@code null} if a user-defined date format pattern
+	 *         is used
+	 */
+	public @Nullable GitDateFormatter.Format getFormat() {
+		return gitFormat;
+	}
 }
