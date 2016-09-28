@@ -33,6 +33,46 @@
       "revId": "8d8486d49c95a7143b71472f3ac7039949a83c23",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_5f312374",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/ModelAwareSyncStrategy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-28T08:23:24Z",
+      "side": 1,
+      "message": "Too much code duplication with the super class here. Introduce canCompareDirectly(IFile) in SyncStrategy (returning true), call it in the super implementation of this method, then remove this override.\n\nWould it make sense to also introduce an ISynchronizationStrategy interface? Besides, can we rename \"SyncStrategy\" to \"SynchronizationStrategy\", please? We have auto-completion, so long names should not be a typing problem :-), and in general I think abbreviations in names are best avoided.",
+      "revId": "8d8486d49c95a7143b71472f3ac7039949a83c23",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_df4453d2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/ModelAwareSyncStrategy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-09-28T08:23:24Z",
+      "side": 1,
+      "message": "These can be long-running operations. If I look at the callers of CompareUtils.compare(), it looks as if this will be called from the UI thread. Maybe we would need to pass through a progress monitor so that the user has a chance to cancel? (And of course, run the CompareUtils.compare() in a busyCursorWhile or some such.)",
+      "range": {
+        "startLine": 212,
+        "startChar": 7,
+        "endLine": 212,
+        "endChar": 48
+      },
+      "revId": "8d8486d49c95a7143b71472f3ac7039949a83c23",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
