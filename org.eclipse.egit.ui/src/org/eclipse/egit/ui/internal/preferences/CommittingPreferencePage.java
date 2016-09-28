@@ -13,6 +13,7 @@ package org.eclipse.egit.ui.internal.preferences;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.PluginPreferenceInitializer;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.preference.BooleanFieldEditor;
@@ -88,11 +89,7 @@ public class CommittingPreferencePage extends FieldEditorPreferencePage
 		autoStage = new BooleanFieldEditor(UIPreferences.AUTO_STAGE_ON_COMMIT,
 				UIText.CommittingPreferencePage_AutoStageOnCommit,
 				generalGroup);
-		// LayoutConstants.getIndent() is not available on Eclipse 3.8.
-		// IDialogConstants.INDENT is deprecated. C.f.
-		// https://bugs.eclipse.org/341604 and https://bugs.eclipse.org/400320
-		// So we hard-code it.
-		GridDataFactory.fillDefaults().indent(20, 0)
+		GridDataFactory.fillDefaults().indent(UIUtils.getControlIndent(), 0)
 				.applyTo(autoStage.getDescriptionControl(generalGroup));
 		addField(autoStage);
 		autoStage.setEnabled(getPreferenceStore()
