@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011, 2015 GitHub Inc. and others.
+ *  Copyright (c) 2011, 2016 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - preference-based date formatting
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commit;
 
@@ -30,8 +31,10 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
+import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
@@ -42,6 +45,7 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
+import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
@@ -53,6 +57,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.RevWalkUtils;
+import org.eclipse.jgit.util.GitDateFormatter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.DisposeEvent;
@@ -177,6 +182,25 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 		return pattern.matcher(message).replaceAll(""); //$NON-NLS-1$
 	}
 
+	private void setPerson(Text text, PersonIdent person, boolean isAuthor) {
+		PreferenceBasedDateFormatter formatter = PreferenceBasedDateFormatter
+				.create();
+		boolean isRelative = formatter
+				.getFormat() == GitDateFormatter.Format.RELATIVE;
+		String textTemplate = null;
+		if (isAuthor) {
+			textTemplate = isRelative
+					? UIText.CommitEditorPage_LabelAuthorRelative
+					: UIText.CommitEditorPage_LabelAuthor;
+		} else {
+			textTemplate = isRelative
+					? UIText.CommitEditorPage_LabelCommitterRelative
+					: UIText.CommitEditorPage_LabelCommitter;
+		}
+		text.setText(MessageFormat.format(textTemplate, person.getName(),
+				person.getEmailAddress(), formatter.formatDate(person)));
+	}
+
 	private Composite createUserArea(Composite parent, FormToolkit toolkit,
 			PersonIdent person, boolean author) {
 		Composite userArea = toolkit.createComposite(parent);
@@ -193,14 +217,23 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 
 		boolean signedOff = isSignedOffBy(person);
 
-		Text userText = new Text(userArea, SWT.FLAT | SWT.READ_ONLY);
-		userText.setText(MessageFormat.format(
-				author ? UIText.CommitEditorPage_LabelAuthor
-						: UIText.CommitEditorPage_LabelCommitter, person
-						.getName(), person.getEmailAddress(), person.getWhen()));
+		final Text userText = new Text(userArea, SWT.FLAT | SWT.READ_ONLY);
+		setPerson(userText, person, author);
 		toolkit.adapt(userText, false, false);
 		userText.setData(FormToolkit.KEY_DRAW_BORDER, Boolean.FALSE);
-
+		IPropertyChangeListener uiPrefsListener = (event) -> {
+			String property = event.getProperty();
+			if (UIPreferences.DATE_FORMAT.equals(property)
+					|| UIPreferences.DATE_FORMAT_CHOICE.equals(property)) {
+				setPerson(userText, person, author);
+				userText.requestLayout();
+			}
+		};
+		Activator.getDefault().getPreferenceStore().addPropertyChangeListener(uiPrefsListener);
+		userText.addDisposeListener((e) -> {
+			Activator.getDefault().getPreferenceStore()
+					.removePropertyChangeListener(uiPrefsListener);
+		});
 		GridDataFactory.fillDefaults().span(signedOff ? 1 : 2, 1)
 				.applyTo(userText);
 		if (signedOff) {
