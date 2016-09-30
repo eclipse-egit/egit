@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b223f6_3ce2b0bf",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseAuthenticator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-09-30T21:08:09Z",
+      "side": 1,
+      "message": "How can adding another class delegating to the original base class fix the problem ?",
+      "revId": "c7ecb1162d0c3332a604be5ec19c12247bb4e811",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
