@@ -223,7 +223,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		if (proxy != null) {
 			ProxySelector.setDefault(new EclipseProxySelector(
 					(IProxyService) context.getService(proxy)));
-			Authenticator.setDefault(new EclipseAuthenticator(
+			Authenticator.setDefault(new EclipseAuthenticator.MPCWorkaround(
 					(IProxyService) context.getService(proxy)));
 		}
 	}
