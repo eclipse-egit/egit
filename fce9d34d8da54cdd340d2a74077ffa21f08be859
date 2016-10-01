@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b223f6_7c3a684d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/SkipNotInterestingDeltaVisitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-01T13:11:57Z",
+      "side": 1,
+      "message": "Please capitalize the first letter of a sentence; it makes reading easier. (And it\u0027s standard practice in English.)",
+      "revId": "fce9d34d8da54cdd340d2a74077ffa21f08be859",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_5c3f643d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/SkipNotInterestingDeltaVisitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-01T13:11:57Z",
+      "side": 1,
+      "message": "This would be set on the event. A PRE_DELETE event doesn\u0027t have a delta, so you\u0027ll never get here. Just remove this.",
+      "range": {
+        "startLine": 39,
+        "startChar": 53,
+        "endLine": 40,
+        "endChar": 51
+      },
+      "revId": "fce9d34d8da54cdd340d2a74077ffa21f08be859",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
