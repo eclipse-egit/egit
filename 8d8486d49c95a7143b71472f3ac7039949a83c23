@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "07b223f6_1cc24c9c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/ModelAwareSyncStrategy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-01T15:30:59Z",
+      "side": 1,
+      "message": "This is expensive; it\u0027ll consider the whole repository in the subscriber.init() call below. Can\u0027t we restrict this to a set of possible paths?",
+      "revId": "8d8486d49c95a7143b71472f3ac7039949a83c23",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b223f6_df4453d2",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/ModelAwareSyncStrategy.java",
         "patchSetId": 1
