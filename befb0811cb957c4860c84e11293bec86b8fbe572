@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07b223f6_fc2e7815",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-01T13:03:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07b223f6_e8387a89",
+      "revId": "befb0811cb957c4860c84e11293bec86b8fbe572",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b223f6_68246a61",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorPage.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2016-09-29T21:23:39Z",
       "side": 1,
       "message": "when choosing relative date this reads e.g.:\n\n John Doe \u003cjoe@doe\u003e on 2 years, 3 months ago\n\nlooks like we should remove \"on\"",
+      "revId": "befb0811cb957c4860c84e11293bec86b8fbe572",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_1c45eccb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-01T13:03:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07b223f6_68246a61",
       "revId": "befb0811cb957c4860c84e11293bec86b8fbe572",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
