@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b223f6_974d571b",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2169,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-02T21:15:18Z",
+      "side": 1,
+      "message": "Somehow the adaptation mechanism in an objectContribution works differently. Directly trying to adapt to IFile here does not work for a java file -- looks like Java compilation units and classes adapt to IResource only... With the objectContribution, it was possible to specify IFile directly. Hence we adapt here to IResource and then check that we got an IFile.",
+      "revId": "1776498f4845d092d58189b1af7aaaf19100d58a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_b7509bad",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2179,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-02T21:15:18Z",
+      "side": 1,
+      "message": "This adaptation, however, is fine.",
+      "revId": "1776498f4845d092d58189b1af7aaaf19100d58a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_d747cff4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/ShowBlameHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-02T21:15:18Z",
+      "side": 1,
+      "message": "This is the only real change; the rest is just missing braces.",
+      "revId": "1776498f4845d092d58189b1af7aaaf19100d58a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
