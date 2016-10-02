@@ -128,24 +128,6 @@
                menubarPath="team.main/group4">
          </action>
       </objectContribution>
-      <objectContribution
-            adaptable="true"
-            id="org.eclipse.egit.ui.gitFileContributions"
-            objectClass="org.eclipse.core.resources.IFile">
-         <filter
-               name="projectPersistentProperty"
-               value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
-         </filter>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.ShowBlameAction"
-               enablesFor="1"
-               id="org.eclipse.egit.ui.internal.actions.ShowBlameAction"
-               definitionId="org.eclipse.egit.ui.team.ShowBlame"
-               label="%ShowBlameAction_label"
-               icon="icons/etool16/annotate.gif"
-               menubarPath="team.main/showAnnotationsGroup">
-         </action>
-      </objectContribution>
    </extension>
 
    <extension
@@ -1113,8 +1095,7 @@
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.team.ShowBlame"
-            name="%ShowBlameCommand.name"
-            defaultHandler="org.eclipse.egit.ui.internal.actions.ShowBlameActionHandler">
+            name="%ShowBlameCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
@@ -2172,6 +2153,42 @@
             <test
                   property="GitSelection.projectsWithRepositories">
             </test>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.eclipse.egit.ui.internal.actions.ShowBlameActionHandler"
+            commandId="org.eclipse.egit.ui.team.ShowBlame">
+         <activeWhen>
+            <or>
+               <and>
+                  <count value="1" />
+                  <iterate>
+                     <adapt
+                        type="org.eclipse.core.resources.IResource">
+                        <and>
+                           <instanceof value="org.eclipse.core.resources.IFile" />
+                           <test property="GitResource.isShared" />
+                        </and>
+                     </adapt>
+                  </iterate>
+               </and>
+               <with
+                  variable="activeEditorInput">
+                  <or>
+                     <adapt
+                        type="org.eclipse.core.resources.IFile">
+                        <test
+                           property="GitResource.isShared" />
+                     </adapt>
+                     <adapt
+                        type="org.eclipse.team.core.history.IFileRevision">
+                        <instanceof
+                           value="org.eclipse.egit.core.internal.storage.CommitFileRevision">
+                        </instanceof>
+                     </adapt>
+                  </or>
+               </with>
+            </or>
          </activeWhen>
       </handler>
    </extension>
@@ -4486,6 +4503,27 @@
                   name="showAnnotationsGroup"
                   visible="false">
             </separator>
+            <command
+                  commandId="org.eclipse.egit.ui.team.ShowBlame"
+                  label="%ShowBlameAction_label"
+                  icon="icons/etool16/annotate.gif"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <and>
+                     <count value="1"/>
+                     <iterate>
+                        <adapt
+                           type="org.eclipse.core.resources.IResource">
+                           <and>
+                              <instanceof value="org.eclipse.core.resources.IFile" />
+                              <test property="GitResource.isShared" />
+                           </and>
+                        </adapt>
+                     </iterate>
+                  </and>
+               </visibleWhen>
+            </command>
             <separator
                   name="group10"
                   visible="true">

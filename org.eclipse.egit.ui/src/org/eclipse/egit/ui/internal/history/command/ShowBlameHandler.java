@@ -40,33 +40,37 @@ public class ShowBlameHandler extends AbstractHistoryCommandHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		GitHistoryPage page = getPage(event);
+		if (page == null) {
+			return null;
+		}
 		Object input = page.getInputInternal().getSingleItem();
-		if (input == null)
+		if (input == null) {
 			return null;
+		}
 		Repository repo = getRepository(event);
-		if (repo == null)
+		if (repo == null) {
 			return null;
+		}
 		String path = getPath(repo, page);
-		if (path == null)
+		if (path == null) {
 			return null;
+		}
 		RevCommit commit = getSelectedCommit(event);
-		if (commit == null)
+		if (commit == null) {
 			return null;
-
+		}
 		try {
 			IFileRevision revision = CompareUtils.getFileRevision(path, commit,
 					repo, null);
-			if (revision == null)
+			if (revision == null) {
 				return null;
-
+			}
 			IStorage storage = revision.getStorage(new NullProgressMonitor());
 			BlameOperation op = new BlameOperation(repo, storage, path, commit,
 					HandlerUtil.getActiveShell(event), page.getSite().getPage());
 			JobUtil.scheduleUserJob(op, UIText.ShowBlameHandler_JobName,
 					JobFamilies.BLAME);
-		} catch (IOException e) {
-			Activator.showError(UIText.ShowBlameHandler_errorMessage, e);
-		} catch (CoreException e) {
+		} catch (IOException | CoreException e) {
 			Activator.showError(UIText.ShowBlameHandler_errorMessage, e);
 		}
 		return null;
@@ -74,15 +78,18 @@ public class ShowBlameHandler extends AbstractHistoryCommandHandler {
 
 	private String getPath(Repository repo, GitHistoryPage page) {
 		Object input = page.getInputInternal().getSingleItem();
-		if (input == null)
+		if (input == null) {
 			return null;
+		}
 		if (input instanceof IFile) {
 			IFile file = (IFile) input;
 			RepositoryMapping mapping = RepositoryMapping.getMapping(file);
-			if (mapping != null)
+			if (mapping != null) {
 				return mapping.getRepoRelativePath(file);
-		} else if (input instanceof File)
+			}
+		} else if (input instanceof File) {
 			return getRepoRelativePath(repo, (File) input);
+		}
 		return null;
 	}
 }
