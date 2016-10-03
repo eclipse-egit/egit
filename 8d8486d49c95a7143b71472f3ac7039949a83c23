@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07b223f6_72db71e4",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/MockLogicalResourceMapping.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-10-03T08:55:24Z",
+      "side": 1,
+      "message": "Ok, will do.",
+      "parentUuid": "07b223f6_5f4da317",
+      "revId": "8d8486d49c95a7143b71472f3ac7039949a83c23",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b223f6_13b24900",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewRemoteAwareChangeSetModelTest.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-09-27T17:02:23Z",
       "side": 1,
       "message": "This test fails consistently in maven build on my Mac. See comment and screenshot on bug 501990; can\u0027t attach images here.",
+      "revId": "8d8486d49c95a7143b71472f3ac7039949a83c23",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_92e9e57a",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewRemoteAwareChangeSetModelTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-10-03T08:55:24Z",
+      "side": 1,
+      "message": "I reproduced your issue on the mac of a colleague of mine.\nI\u0027m waiting to have a more permanent access to a mac to see where this comes from. I\u0027m under windows and the test passes.\nDoes the test pass when you run it manually (is it only in maven that it fails)?",
+      "parentUuid": "07b223f6_13b24900",
       "revId": "8d8486d49c95a7143b71472f3ac7039949a83c23",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "07b223f6_32d1f9c4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/ModelAwareSyncStrategy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-10-03T08:55:24Z",
+      "side": 1,
+      "message": "Ok, I\u0027ll reduce code duplication and rename for non-abbreviated names (I used an abbreviation in the first place because I had the feeling that it was what was usually done in EGit/JGit. My mistake)",
+      "parentUuid": "07b223f6_5f312374",
+      "revId": "8d8486d49c95a7143b71472f3ac7039949a83c23",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b223f6_1cc24c9c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/ModelAwareSyncStrategy.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2016-10-01T15:30:59Z",
       "side": 1,
       "message": "This is expensive; it\u0027ll consider the whole repository in the subscriber.init() call below. Can\u0027t we restrict this to a set of possible paths?",
+      "revId": "8d8486d49c95a7143b71472f3ac7039949a83c23",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_f2cf8124",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/ModelAwareSyncStrategy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-10-03T08:55:24Z",
+      "side": 1,
+      "message": "Unfortunately, we can\u0027t.\nWe cannot know beforehand what other resources the model providers will need to be able to compute the logical model on the remote version.\nWe are dealing with logical models where the \u0027scope\u0027 of the logical model requires a full access to the content of the \u0027remote version\u0027. Of course, there are some model providers that won\u0027t need to access the whole repo but that\u0027s the case for EMFCompare at least in our use-cases.\nThe only way I see to improve that in cases where it\u0027s not needed would be to introduce yet another preference to state whether we want to support logical models made of variable sets of files (as described in http://www.eclipse.org/eclipse/platform-team/team3.2/logical-support.doc).\nI\u0027m not sure how much end-users would be able to understan this preference though...",
+      "parentUuid": "07b223f6_1cc24c9c",
       "revId": "8d8486d49c95a7143b71472f3ac7039949a83c23",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
         "endLine": 212,
         "endChar": 48
       },
+      "revId": "8d8486d49c95a7143b71472f3ac7039949a83c23",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_52e02d8d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/ModelAwareSyncStrategy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-10-03T08:55:24Z",
+      "side": 1,
+      "message": "Yes, I\u0027ll make sure that long running operations are managed so that UI doesn\u0027t freeze and users can see progress and cancel.",
+      "parentUuid": "07b223f6_df4453d2",
       "revId": "8d8486d49c95a7143b71472f3ac7039949a83c23",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
