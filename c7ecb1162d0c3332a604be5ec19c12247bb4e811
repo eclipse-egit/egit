@@ -16,6 +16,24 @@
       "revId": "c7ecb1162d0c3332a604be5ec19c12247bb4e811",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_3cad5070",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseAuthenticator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 458
+      },
+      "writtenOn": "2016-10-04T11:05:22Z",
+      "side": 1,
+      "message": "MPC checks the class name of the Authenticator to see if it needs to apply its workaround. This will make that check fail and restore the previous behavior.",
+      "parentUuid": "07b223f6_3ce2b0bf",
+      "revId": "c7ecb1162d0c3332a604be5ec19c12247bb4e811",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
