@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "07b223f6_003ada4b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/ModelAwareSyncStrategy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-04T21:19:33Z",
+      "side": 1,
+      "message": "I somehow can\u0027t believe that a logical model comparison would always need the whole remote tree. (Unless you had some crazy model that automagically included any resource with a particular file name or extension, for example.) And just because one doesn\u0027t know exactly yet which exact remote resources will be needed is no reason to pre-emptively load everything.\n\nI think what we need here is a RemoteResourceMappingContext that does not pull in the whole remote tree up front but that builds its cache incrementally.\n\nBuilding a full cache of the remote may be fine for a workspace synchronization, but is it the right approach for comparing a single element, even if that element can be a logical model comprising several (and possibly different local or remote) resources?",
+      "parentUuid": "07b223f6_f2cf8124",
+      "revId": "8d8486d49c95a7143b71472f3ac7039949a83c23",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b223f6_df4453d2",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/ModelAwareSyncStrategy.java",
         "patchSetId": 1
