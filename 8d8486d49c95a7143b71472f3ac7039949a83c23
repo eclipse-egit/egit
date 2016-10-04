@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "07b223f6_ba823b0a",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewRemoteAwareChangeSetModelTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-10-04T11:01:22Z",
+      "side": 1,
+      "message": "The problem was due to other tests that set up a specific team content provider, which has side effects on other tests.\nI fixed that by adding a relevant set-up to the failing test so that it always uses the expected team content provider.\n\nI\u0027m unable to properly build egit under windows, I confess I never succeeded to have all the tests passing. I had only ran the test in isolation before pushing it, sorry about that.",
+      "parentUuid": "07b223f6_92e9e57a",
+      "revId": "8d8486d49c95a7143b71472f3ac7039949a83c23",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b223f6_5f312374",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/ModelAwareSyncStrategy.java",
         "patchSetId": 1
