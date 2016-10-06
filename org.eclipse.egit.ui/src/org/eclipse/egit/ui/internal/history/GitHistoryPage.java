@@ -807,6 +807,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	/** Toolbar to find commits in the history view. */
 	private SearchBar searchBar;
 
+	private GlobalActionHandler globalActionHandler;
+
 	/**
 	 * Determine if the input can be shown in this viewer.
 	 *
@@ -900,14 +902,15 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		};
 
 		/**
-		 * Listener to close the search bar on Ctrl/Cmd-F or on ESC.
+		 * Listener to close the search bar on ESC. (Ctrl/Cmd-F is already
+		 * handled via global retarget action.)
 		 */
 		private final KeyListener keyListener = new KeyAdapter() {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int key = SWTKeySupport.convertEventToUnmodifiedAccelerator(e);
-				if (key == openCloseToggle.getAccelerator() || key == SWT.ESC) {
+				if (key == SWT.ESC) {
 					setVisible(false);
 					e.doit = false;
 				}
@@ -1261,6 +1264,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		myRefsChangedHandle = Repository.getGlobalListenerList()
 				.addRefsChangedListener(this);
 
+		Set<IGlobalActionProvider> actionProviders = new HashSet<>();
+		actionProviders.add(graph);
+		actionProviders.add(commentViewer);
+		actionProviders.add(fileViewer);
+		globalActionHandler = new GlobalActionHandler(getSite().getActionBars(),
+				actionProviders);
 		IToolBarManager manager = getSite().getActionBars().getToolBarManager();
 		searchBar = new SearchBar(GitHistoryPage.class.getName() + ".searchBar", //$NON-NLS-1$
 				graph, actions.findAction, getSite().getActionBars());
@@ -1472,6 +1481,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			action.dispose();
 		actions.actionsToDispose.clear();
 		releaseGenerateHistoryJob();
+		globalActionHandler.dispose();
 		if (popupMgr != null) {
 			for (final IContributionItem i : popupMgr.getItems())
 				if (i instanceof IWorkbenchAction)
