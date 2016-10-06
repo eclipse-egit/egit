@@ -4,6 +4,7 @@
  * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, Gunnar Wagenknecht <gunnar@wagenknecht.org>
  * Copyright (C) 2013, Laurent Goubet <laurent.goubet@obeo.fr>
+ * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -32,6 +33,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.ActionUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -70,8 +72,6 @@ import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
@@ -85,7 +85,6 @@ import org.eclipse.ui.IWorkbenchSite;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
-import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.part.IShowInSource;
 import org.eclipse.ui.part.IShowInTarget;
 import org.eclipse.ui.part.ShowInContext;
@@ -332,8 +331,15 @@ public class CommitFileDiffViewer extends TableViewer {
 		mgr.add(showInSubMenu);
 
 		mgr.add(new Separator());
-		mgr.add(selectAll = createStandardAction(ActionFactory.SELECT_ALL));
-		mgr.add(copy = createStandardAction(ActionFactory.COPY));
+		selectAll = ActionUtils.createGlobalAction(ActionFactory.SELECT_ALL,
+				() -> doSelectAll());
+		selectAll.setEnabled(true);
+		copy = ActionUtils.createGlobalAction(ActionFactory.COPY,
+				() -> doCopy());
+		copy.setEnabled(true);
+		ActionUtils.setGlobalActions(getControl(), copy, selectAll);
+		mgr.add(selectAll);
+		mgr.add(copy);
 
 		// See https://bugs.eclipse.org/bugs/show_bug.cgi?id=477510
 		mgr.addMenuListener(new IMenuListener() {
@@ -342,29 +348,6 @@ public class CommitFileDiffViewer extends TableViewer {
 				getControl().setFocus();
 			}
 		});
-		if (site instanceof IPageSite) {
-			final IPageSite pageSite = (IPageSite) site;
-			getControl().addFocusListener(new FocusListener() {
-				@Override
-				public void focusLost(FocusEvent e) {
-					pageSite.getActionBars().setGlobalActionHandler(
-							ActionFactory.SELECT_ALL.getId(), null);
-					pageSite.getActionBars().setGlobalActionHandler(
-							ActionFactory.COPY.getId(), null);
-					pageSite.getActionBars().getMenuManager().update(false);
-				}
-
-				@Override
-				public void focusGained(FocusEvent e) {
-					updateActionEnablement(getSelection());
-					pageSite.getActionBars().setGlobalActionHandler(
-							ActionFactory.SELECT_ALL.getId(), selectAll);
-					pageSite.getActionBars().setGlobalActionHandler(
-							ActionFactory.COPY.getId(), copy);
-					pageSite.getActionBars().getMenuManager().update(false);
-				}
-			});
-		}
 	}
 
 	private void updateActionEnablement(ISelection selection) {
@@ -417,38 +400,6 @@ public class CommitFileDiffViewer extends TableViewer {
 			blame.setEnabled(false);
 			compareWorkingTreeVersion.setEnabled(false);
 		}
-	}
-
-	private IAction createStandardAction(final ActionFactory af) {
-		final String text = af.create(
-				PlatformUI.getWorkbench().getActiveWorkbenchWindow()).getText();
-		IAction action = new Action() {
-
-			@Override
-			public String getActionDefinitionId() {
-				return af.getCommandId();
-			}
-
-			@Override
-			public String getId() {
-				return af.getId();
-			}
-
-			@Override
-			public String getText() {
-				return text;
-			}
-
-			@Override
-			public void run() {
-				if (af == ActionFactory.SELECT_ALL)
-					doSelectAll();
-				if (af == ActionFactory.COPY)
-					doCopy();
-			}
-		};
-		action.setEnabled(true);
-		return action;
 	}
 
 	@Override
@@ -719,7 +670,7 @@ public class CommitFileDiffViewer extends TableViewer {
 			final FileDiff d = itr.next();
 			if (r.length() > 0)
 				r.append(LINESEP);
-			r.append(d.getNewPath());
+			r.append(d.getPath());
 		}
 
 		clipboard.setContents(new Object[] { r.toString() },
