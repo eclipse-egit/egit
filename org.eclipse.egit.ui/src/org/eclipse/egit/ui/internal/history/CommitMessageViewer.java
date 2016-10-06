@@ -6,7 +6,7 @@
  * Copyright (C) 2011, Stefan Lay <stefan.lay@sap.com>
  * Copyright (C) 2014, Marc-Andre Laperle <marc-andre.laperle@ericsson.com>
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
- * Copyright (C) 2015, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2015, 2016 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,7 +17,10 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
@@ -27,11 +30,12 @@ import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.ActionUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.BooleanPrefAction;
 import org.eclipse.egit.ui.internal.dialogs.HyperlinkSourceViewer;
+import org.eclipse.egit.ui.internal.handler.IGlobalActionProvider;
 import org.eclipse.egit.ui.internal.history.FormatJob.FormatResult;
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
@@ -54,6 +58,7 @@ import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
@@ -64,8 +69,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchPartSite;
@@ -73,7 +76,8 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
-class CommitMessageViewer extends HyperlinkSourceViewer {
+class CommitMessageViewer extends HyperlinkSourceViewer
+		implements IGlobalActionProvider {
 
 	static final String HEADER_CONTENT_TYPE = "__egit_commit_msg_header"; //$NON-NLS-1$
 
@@ -112,6 +116,8 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 	private BooleanPrefAction wrapCommentsPrefAction;
 
 	private BooleanPrefAction fillParagraphsPrefAction;
+
+	private final Set<IAction> globalActions = new HashSet<>();
 
 	CommitMessageViewer(final Composite parent, final IPageSite site, IWorkbenchPartSite partSite) {
 		super(parent, null, SWT.READ_ONLY);
@@ -171,49 +177,15 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 				.addPropertyChangeListener(syntaxColoringListener);
 
 		// global action handlers for select all and copy
-		final IAction selectAll = new Action() {
-			@Override
-			public void run() {
-				doOperation(ITextOperationTarget.SELECT_ALL);
-			}
-
-			@Override
-			public boolean isEnabled() {
-				return canDoOperation(ITextOperationTarget.SELECT_ALL);
-			}
-		};
-
-		final IAction copy = new Action() {
-			@Override
-			public void run() {
-				doOperation(ITextOperationTarget.COPY);
-			}
-
-			@Override
-			public boolean isEnabled() {
-				return canDoOperation(ITextOperationTarget.COPY);
-			}
-		};
-		// register and unregister the global actions upon focus events
-		getControl().addFocusListener(new FocusListener() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				site.getActionBars().setGlobalActionHandler(
-						ActionFactory.SELECT_ALL.getId(), null);
-				site.getActionBars().setGlobalActionHandler(
-						ActionFactory.COPY.getId(), null);
-				site.getActionBars().getMenuManager().update(false);
-			}
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				site.getActionBars().setGlobalActionHandler(
-						ActionFactory.SELECT_ALL.getId(), selectAll);
-				site.getActionBars().setGlobalActionHandler(
-						ActionFactory.COPY.getId(), copy);
-				site.getActionBars().getMenuManager().update(false);
-			}
-		});
+		final IAction selectAll = ActionUtils.createGlobalAction(
+				ActionFactory.SELECT_ALL,
+				() -> doOperation(ITextOperationTarget.SELECT_ALL),
+				() -> canDoOperation(ITextOperationTarget.SELECT_ALL));
+		final IAction copy = ActionUtils.createGlobalAction(ActionFactory.COPY,
+				() -> doOperation(ITextOperationTarget.COPY),
+				() -> canDoOperation(ITextOperationTarget.COPY));
+		globalActions.add(selectAll);
+		globalActions.add(copy);
 
 		final MenuManager mgr = new MenuManager();
 		Control c = getControl();
@@ -260,7 +232,6 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 			}
 		};
 		mgr.add(fillParagraphsPrefAction);
-
 	}
 
 	void addDoneListenerToFormatJob() {
@@ -573,6 +544,16 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 	private void setFill(boolean fill) {
 		this.fill = fill;
 		format();
+	}
+
+	@Override
+	public Viewer getViewer() {
+		return this;
+	}
+
+	@Override
+	public Collection<IAction> getActions() {
+		return globalActions;
 	}
 
 }
