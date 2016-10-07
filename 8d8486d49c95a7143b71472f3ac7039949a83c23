@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "07b223f6_04fbc087",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/ModelAwareSyncStrategy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-07T16:16:21Z",
+      "side": 1,
+      "message": "I\u0027m afraid I can\u0027t help very much. This whole synchronization stuff is an area of EGit that I haven\u0027t really looked at yet, and it\u0027s been a while since I implemented that (model providers, resource variant trees, mapping contexts) in an different project myself (and not for git, either). Off-hand, it looks as if one needed a GitResourceVariantTreeSubscriber that doesn\u0027t pre-load its cache. (Or only a preferably small part of it. Not sure how this would perform if it does multiple tree walks.)",
+      "parentUuid": "07b223f6_3e8a9127",
+      "revId": "8d8486d49c95a7143b71472f3ac7039949a83c23",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b223f6_df4453d2",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/ModelAwareSyncStrategy.java",
         "patchSetId": 1
