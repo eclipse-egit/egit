@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2014, Andreas Hermann <a.v.hermann@gmail.com>
+ * Copyright (C) 2014, 2016 Andreas Hermann <a.v.hermann@gmail.com> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,8 +12,11 @@ import static java.util.Arrays.asList;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -21,6 +24,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.handler.IGlobalActionProvider;
 import org.eclipse.egit.ui.internal.history.CommitFileDiffViewer;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -60,6 +64,14 @@ public class StashEditorPage extends CommitEditorPage {
 	 */
 	public StashEditorPage(FormEditor editor) {
 		super(editor, "stashPage", UIText.CommitEditorPage_Title); //$NON-NLS-1$
+	}
+
+	@Override
+	protected Collection<IGlobalActionProvider> getGlobalActionProviders() {
+		Set<IGlobalActionProvider> result = new HashSet<>(
+				super.getGlobalActionProviders());
+		result.add(stagedDiffViewer);
+		return result;
 	}
 
 	@Override
