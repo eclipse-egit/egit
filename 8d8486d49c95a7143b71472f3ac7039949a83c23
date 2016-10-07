@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "07b223f6_3e8a9127",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/ModelAwareSyncStrategy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-10-07T09:12:30Z",
+      "side": 1,
+      "message": "Hello Thomas,\n\nI agree that having a RemoteResourceMappingContext that builds its cache in a lazy way would be the ideal solution.\nIt would allow addressing the different kinds of logical models and would not impact the performance of the simple cases.\nI\u0027ll try and have a look at that, however any help or suggestion would be very welcome.",
+      "parentUuid": "07b223f6_003ada4b",
+      "revId": "8d8486d49c95a7143b71472f3ac7039949a83c23",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b223f6_df4453d2",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/ModelAwareSyncStrategy.java",
         "patchSetId": 1
