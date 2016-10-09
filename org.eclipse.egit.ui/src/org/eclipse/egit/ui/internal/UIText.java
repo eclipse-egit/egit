@@ -2542,12 +2542,6 @@ public class UIText extends NLS {
 	public static String CompareWithPreviousActionHandler_TitleRevisionNotFound;
 
 	/** */
-	public static String CompareIndexWithHeadActionHandler_nothingToDoTitle;
-
-	/** */
-	public static String CompareIndexWithHeadActionHandler_fileNotStaged;
-
-	/** */
 	public static String CompareUtils_jobName;
 
 	/** */
