@@ -2,7 +2,8 @@
  * Copyright (C) 2011, Bernard Leach <leachbj@bouncycastle.org>
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
- * Copyright (C) 2013, laurent Goubet <laurent.goubet@obeo.fr>
+ * Copyright (C) 2013, Laurent Goubet <laurent.goubet@obeo.fr>
+ * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,9 +12,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
-import java.io.IOException;
-import java.util.Collections;
-
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
@@ -21,7 +19,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.AdapterUtils;
@@ -29,17 +26,12 @@ import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.egit.ui.internal.resources.ResourceStateFactory;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
-import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -67,12 +59,6 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 				if (monitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
 				}
-				IPath location = (IPath) (fileOrPath instanceof IPath ? fileOrPath
-						: ((IResource) fileOrPath).getLocation());
-				if (!isStaged(repository, location, true)) {
-					showNoStagedFileInfo(location);
-					return Status.CANCEL_STATUS;
-				}
 				try {
 					runCompare(event, repository);
 				} catch (Exception e) {
@@ -87,20 +73,6 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 		job.schedule();
 
 		return null;
-	}
-
-	private static void showNoStagedFileInfo(IPath location) {
-		final String title = UIText.CompareIndexWithHeadActionHandler_nothingToDoTitle;
-		final String message = NLS.bind(
-				UIText.CompareIndexWithHeadActionHandler_fileNotStaged,
-				location.toOSString());
-		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				MessageDialog.openInformation(null, title, message);
-
-			}
-		});
 	}
 
 	private void runCompare(ExecutionEvent event, @NonNull final Repository repository)
@@ -158,48 +130,20 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 		if (resource instanceof IFile) {
 			// action is only working on files. Avoid calculation
 			// of unnecessary expensive IndexDiff on a folder
-			return isStaged(repository, resource.getLocation(), false);
+			return ResourceStateFactory.getInstance().get(resource).isStaged();
 		} else if (resource == null) {
 			IPath location = AdapterUtils.adapt(selected, IPath.class);
-			return isStaged(repository, location, false);
+			if (location != null) {
+				return ResourceStateFactory.getInstance().get(location.toFile())
+						.isStaged();
+			}
 		}
 
 		return false;
 	}
 
-
-	private boolean isStaged(Repository repository, IPath location,
-			boolean checkIndex) {
-		if (location == null || location.toFile().isDirectory()
-				|| repository.isBare()) {
-			return false;
-		}
-		IPath workDir = new Path(repository.getWorkTree().getAbsolutePath());
-		String resRelPath = location.makeRelativeTo(workDir).toString();
-		// This action at the moment only works for files anyway
-		if (resRelPath.length() == 0
-				|| resRelPath.equals(location.toString())) {
-			return false;
-		}
-
-		if (!checkIndex) {
-			// assume there *is* something: otherwise we can hang UI thread due
-			// the diff computation, see bug 457698
-			return true;
-		}
-		try {
-			FileTreeIterator fileTreeIterator = new FileTreeIterator(repository);
-			IndexDiff indexDiff = new IndexDiff(repository, Constants.HEAD,
-					fileTreeIterator);
-			indexDiff.setFilter(PathFilterGroup.createFromStrings(Collections.singletonList(resRelPath)));
-			indexDiff.diff();
-
-			return indexDiff.getAdded().contains(resRelPath) || indexDiff.getChanged().contains(resRelPath)
-					|| indexDiff.getRemoved().contains(resRelPath);
-		} catch (IOException e) {
-			Activator.error(NLS.bind(UIText.GitHistoryPage_errorLookingUpPath,
-					location.toString()), e);
-			return false;
-		}
+	@Override
+	protected boolean alwaysCheckEnabled() {
+		return true;
 	}
 }

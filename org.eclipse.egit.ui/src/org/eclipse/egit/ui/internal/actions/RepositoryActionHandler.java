@@ -528,4 +528,17 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	public boolean isEnabled() {
 		return getProjectsForSelectedResources().length > 0;
 	}
+
+	/**
+	 * Determines whether the enablement state shall always be recomputed or
+	 * only when the selection changes. This default implementation returns
+	 * {@code false}.
+	 *
+	 * @return {@code false} if the enablement state depends solely on the
+	 *         selection, {@code true} if the enablement must be recomputed even
+	 *         if the selection did not change.
+	 */
+	protected boolean alwaysCheckEnabled() {
+		return false;
+	}
 }

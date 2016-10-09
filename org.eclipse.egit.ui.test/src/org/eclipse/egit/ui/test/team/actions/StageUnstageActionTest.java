@@ -10,6 +10,7 @@ package org.eclipse.egit.ui.test.team.actions;
 import static org.eclipse.egit.ui.JobFamilies.ADD_TO_INDEX;
 import static org.eclipse.egit.ui.JobFamilies.REMOVE_FROM_INDEX;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -20,6 +21,7 @@ import org.eclipse.egit.ui.test.StagingUtil;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -169,4 +171,47 @@ public class StageUnstageActionTest extends LocalRepositoryTestCase {
 		StagingUtil.assertStaging(PROJ_B, filePath, false);
 	}
 
+	@Test
+	public void testCompareIndexWithHeadEnablement() throws Exception {
+		String compareIndexWithHead = util.getPluginLocalizedValue("CompareIndexWithHeadAction_label");
+		// Change something in first project
+		String filePath = FOLDER + '/' + FILE1;
+		touch(PROJ_A, filePath, "Changed content");
+		// Add it to the index
+		SWTBotTree projectExplorerTree = TestUtil.getExplorerTree();
+		SWTBotTreeItem fileItem = TestUtil.navigateTo(projectExplorerTree,
+				PROJ_A, FOLDER, FILE1);
+		fileItem.select();
+		// Verify the menu entry
+		assertTrue("Compare With->Index with HEAD should be disabled or absent",
+				!ContextMenuHelper.contextMenuItemExists(projectExplorerTree,
+						"Compare With", compareIndexWithHead)
+						|| !ContextMenuHelper.isContextMenuItemEnabled(
+								projectExplorerTree, "Compare With",
+								compareIndexWithHead));
+		ContextMenuHelper.clickContextMenuSync(projectExplorerTree, "Team",
+				addToIndexLabel);
+		TestUtil.joinJobs(ADD_TO_INDEX);
+		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		// Verify file got staged
+		StagingUtil.assertStaging(PROJ_A, filePath, true);
+		assertTrue("Compare With->Index with HEAD should be enabled",
+				ContextMenuHelper.isContextMenuItemEnabled(projectExplorerTree,
+						"Compare With", compareIndexWithHead));
+		// Remove from index
+		ContextMenuHelper.clickContextMenuSync(projectExplorerTree, "Team",
+				removeFromIndexLabel);
+		TestUtil.joinJobs(REMOVE_FROM_INDEX);
+		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+		// Verify file is unstaged again
+		StagingUtil.assertStaging(PROJ_A, filePath, false);
+		// Verify the menu entry again
+		assertTrue(
+				"Compare With->Index with HEAD should be disabled or absent again",
+				!ContextMenuHelper.contextMenuItemExists(projectExplorerTree,
+						"Compare With", compareIndexWithHead)
+						|| !ContextMenuHelper.isContextMenuItemEnabled(
+								projectExplorerTree, "Compare With",
+								compareIndexWithHead));
+	}
 }
