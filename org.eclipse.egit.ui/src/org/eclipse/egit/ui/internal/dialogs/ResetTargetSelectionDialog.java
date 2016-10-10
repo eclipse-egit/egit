@@ -19,7 +19,6 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.IMessageProvider;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -261,9 +260,7 @@ public class ResetTargetSelectionDialog extends AbstractBranchSelectionDialog {
 	@Override
 	protected void okPressed() {
 		if (resetType == ResetType.HARD) {
-			if (!MessageDialog.openQuestion(getShell(),
-					UIText.ResetTargetSelectionDialog_ResetQuestion,
-					UIText.ResetTargetSelectionDialog_ResetConfirmQuestion)) {
+			if (!CommandConfirmation.confirmHardReset(getShell(), repo)) {
 				return;
 			}
 		}
