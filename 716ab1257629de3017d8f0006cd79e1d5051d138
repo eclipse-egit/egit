@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b223f6_27b36105",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/SkipNotInterestingDeltaVisitor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-10T20:48:01Z",
+      "side": 1,
+      "message": "Capital R and period at end of sentence.",
+      "range": {
+        "startLine": 28,
+        "startChar": 30,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "716ab1257629de3017d8f0006cd79e1d5051d138",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_679c7977",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/SkipNotInterestingDeltaVisitor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-10T20:48:01Z",
+      "side": 1,
+      "message": "I think all this can actually be removed, including the then unused import of org.eclipse.core.resources.IResource.\n\nAdditions and deletions are always interesting, and GitResourceDeltaVisitor.isInteresting(delta) does return true for them.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 3
+      },
+      "revId": "716ab1257629de3017d8f0006cd79e1d5051d138",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_47b695f4",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/SkipNotInterestingDeltaVisitor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-10T20:48:01Z",
+      "side": 1,
+      "message": "Capital C and period at end of sentence.",
+      "range": {
+        "startLine": 54,
+        "startChar": 35,
+        "endLine": 54,
+        "endChar": 36
+      },
+      "revId": "716ab1257629de3017d8f0006cd79e1d5051d138",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
