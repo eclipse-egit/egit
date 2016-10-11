@@ -130,13 +130,12 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		fileiItem.doubleClick();
 		assertTrue(bot.activeEditor().getTitle().equals(FILE1));
 		bot.activeEditor().close();
-		TestUtil.processUIEvents();
+		refreshAndWait();
 
 		// open a branch (checkout)
 		checkoutWithDoubleClick(tree, "master");
 		String contentMaster = getTestFileContent();
 		checkoutWithDoubleClick(tree, "stable");
-		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 		String contentStable = getTestFileContent();
 		assertNotEquals("Content of master and stable should differ",
 				contentMaster, contentStable);
@@ -150,8 +149,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		SWTBotShell shell = bot
 				.shell(UIText.RepositoriesView_CheckoutConfirmationTitle);
 		shell.bot().button(IDialogConstants.OK_LABEL).click();
-		TestUtil.processUIEvents();
-		TestUtil.waitForJobs(50, 5000);
+		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 		refreshAndWait();
 	}
 
