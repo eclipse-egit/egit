@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b223f6_fab57c19",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-11T06:01:09Z",
+      "side": 0,
+      "message": "Actually I think we should keep this. It works on 4.2+ without it, but frankly said I\u0027m not sure it should. That it does may also be unintended behavior of the e4 implementation of actionbars. Plus I find it kind of logical that an item that toggles its visibility is dynamic.",
+      "revId": "0c9aea0147a40fb2acbb41354791876414d07839",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
