@@ -132,8 +132,10 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		ContextMenuHelper.clickContextMenuSync(view.bot().tree(), myUtil
 				.getPluginLocalizedValue("CheckoutCommand"));
 		TestUtil.joinJobs(JobFamilies.CHECKOUT);
-		localItem.getNode(1).select();
 		refreshAndWait();
+		localItem = myRepoViewUtil.getLocalBranchesItem(view.bot().tree(),
+				repositoryFile);
+		localItem.getNode(1).select();
 		ContextMenuHelper.clickContextMenuSync(view.bot().tree(), myUtil
 				.getPluginLocalizedValue("RepoViewDeleteBranch.label"));
 		refreshAndWait();
@@ -187,8 +189,10 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		ContextMenuHelper.clickContextMenu(view.bot().tree(), myUtil
 				.getPluginLocalizedValue("CheckoutCommand"));
 		TestUtil.joinJobs(JobFamilies.CHECKOUT);
-		localItem.getNode(1).select();
 		refreshAndWait();
+		localItem = myRepoViewUtil.getLocalBranchesItem(view.bot().tree(),
+				repositoryFile);
+		localItem.getNode(1).select();
 		ContextMenuHelper.clickContextMenu(view.bot().tree(), myUtil
 				.getPluginLocalizedValue("RepoViewDeleteBranch.label"));
 		SWTBotShell confirmPopup = bot
