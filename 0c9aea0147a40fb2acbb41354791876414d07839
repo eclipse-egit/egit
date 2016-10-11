@@ -16,6 +16,24 @@
       "revId": "0c9aea0147a40fb2acbb41354791876414d07839",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_5a7ae82f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-10-11T09:29:38Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "07b223f6_fab57c19",
+      "revId": "0c9aea0147a40fb2acbb41354791876414d07839",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
