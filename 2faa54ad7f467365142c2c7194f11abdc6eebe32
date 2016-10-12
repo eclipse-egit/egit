@@ -81,6 +81,24 @@
       "revId": "2faa54ad7f467365142c2c7194f11abdc6eebe32",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_edece389",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-10-12T12:38:05Z",
+      "side": 1,
+      "message": "I think it would make sense to give focus to the commit message when auto-staging is on and there is at least one item in unstaged or staged changes",
+      "parentUuid": "07b223f6_4d994f4d",
+      "revId": "2faa54ad7f467365142c2c7194f11abdc6eebe32",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
