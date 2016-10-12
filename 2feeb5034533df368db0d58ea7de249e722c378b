@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b223f6_2d297bbd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareIndexWithHeadActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-10-12T11:22:08Z",
+      "side": 1,
+      "message": "I tried this and found that \"Compare with \u003e Index with Head\" is always greyed out also on a staged change. \n\nhttp://imgur.com/a/dpLhZ\n\nStrangely when debugging this method call returns true but still the menu entry is disabled.",
+      "revId": "2feeb5034533df368db0d58ea7de249e722c378b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
