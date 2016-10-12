@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "07b223f6_ed886301",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 17
+      },
+      "writtenOn": "2016-10-12T12:27:37Z",
+      "side": 1,
+      "message": "Will fix it. Sorry about that. My Mylyn was not properly applying the template.",
+      "parentUuid": "07b223f6_0d3837f7",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "2faa54ad7f467365142c2c7194f11abdc6eebe32",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b223f6_4d514f2c",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2016-10-12T11:35:42Z",
       "side": 1,
       "message": "Currently you evaluate the number of staged items before auto-staging happened so if there are no staged but some unstaged entries focus will go to staged changes after auto-staging the unstaged items.\n\nI think we should also give focus to the commit message if there is at least one unstaged item since, when auto-staging is on, this entry will be auto-staged ;-)",
+      "revId": "2faa54ad7f467365142c2c7194f11abdc6eebe32",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_4d994f4d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 17
+      },
+      "writtenOn": "2016-10-12T12:27:37Z",
+      "side": 1,
+      "message": "Shall I rework to *always* give focus to the commit message then when auto-staging is enabled?",
+      "parentUuid": "07b223f6_4d514f2c",
       "revId": "2faa54ad7f467365142c2c7194f11abdc6eebe32",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
