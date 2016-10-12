@@ -16,6 +16,24 @@
       "revId": "2feeb5034533df368db0d58ea7de249e722c378b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_138a1627",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareIndexWithHeadActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-12T19:17:48Z",
+      "side": 1,
+      "message": "Yuck. Hadn\u0027t noticed this in my tests.\n\nNot easy to find. And not easy to reproduce. I tried a few things until I was able to pin this: it happens when the selection hasn\u0027t changed since the last time the context menu was opened. Then the enablement is not updated.\n\nCaused by the code in RepositoryAction, and the fact that we contribute these actions via a deprecated extension point and \u003cobjectContribution\u003e.\n\nI\u0027ve added a quick fix for now; the proper fix would be to get rid of \u003cobjectContribution\u003e (see bug 423932 and bug 422909) and also of the defaultHandlers (still bug 495064, in progress, but it\u0027s slow going).",
+      "parentUuid": "07b223f6_2d297bbd",
+      "revId": "2feeb5034533df368db0d58ea7de249e722c378b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
