@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b223f6_0d3837f7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-10-12T11:35:42Z",
+      "side": 1,
+      "message": "style nit: we put bug links as a footer above the Change-Id like this:\n\n Bug: 505742\n Change-Id: I71a2e7536abde470e4f56053dcc3e7f98e0a3770\n Signed-off-by: Gunnar Wagenknecht \u003cgunnar@wagenknecht.org\u003e\n\nhttps://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "2faa54ad7f467365142c2c7194f11abdc6eebe32",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_4d514f2c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-10-12T11:35:42Z",
+      "side": 1,
+      "message": "Currently you evaluate the number of staged items before auto-staging happened so if there are no staged but some unstaged entries focus will go to staged changes after auto-staging the unstaged items.\n\nI think we should also give focus to the commit message if there is at least one unstaged item since, when auto-staging is on, this entry will be auto-staged ;-)",
+      "revId": "2faa54ad7f467365142c2c7194f11abdc6eebe32",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
