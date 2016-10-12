@@ -3869,11 +3869,17 @@ public class StagingView extends ViewPart implements IShowInSource {
 	@Override
 	public void setFocus() {
 		Tree tree = unstagedViewer.getTree();
-		if (tree.getItemCount() > 0) {
+		if (tree.getItemCount() > 0 && !isAutoStageOnCommitEnabled()) {
 			unstagedViewer.getControl().setFocus();
 			return;
 		}
 		commitMessageText.setFocus();
+	}
+
+	private boolean isAutoStageOnCommitEnabled() {
+		IPreferenceStore uiPreferences = Activator.getDefault()
+				.getPreferenceStore();
+		return uiPreferences.getBoolean(UIPreferences.AUTO_STAGE_ON_COMMIT);
 	}
 
 	@Override
