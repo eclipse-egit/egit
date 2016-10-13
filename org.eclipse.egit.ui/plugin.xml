@@ -50,28 +50,6 @@
                value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
          </filter>
          <action
-               class="org.eclipse.egit.ui.internal.actions.CompareWithPreviousAction"
-               definitionId="org.eclipse.egit.ui.team.CompareWithPrevious"
-               enablesFor="1"
-               id="org.eclipse.egit.ui.internal.actions.CompareWithPreviousAction"
-               label="%CompareWithPreviousAction.label"
-               menubarPath="compareWithMenu/gitCompareWithGroup"/>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.CompareIndexWithHeadAction"
-               id="org.eclipse.egit.ui.internal.actions.CompareIndexWithHeadAction"
-               label="%CompareIndexWithHeadAction_label"
-               menubarPath="compareWithMenu/gitCompareWithGroup"/>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.CompareWithIndexAction"
-               id="org.eclipse.egit.ui.internal.actions.CompareWithIndexAction"
-               label="%CompareWithIndexAction_label"
-               menubarPath="compareWithMenu/gitCompareWithGroup"/>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.CompareWithHeadAction"
-               id="org.eclipse.egit.ui.internal.actions.CompareWithHeadAction"
-               label="%CompareWithHeadAction_label"
-               menubarPath="compareWithMenu/gitCompareWithGroup"/>
-         <action
                class="org.eclipse.egit.ui.internal.actions.CompareWithCommitAction"
                id="org.eclipse.egit.ui.internal.actions.CompareWithCommitAction"
                label="%CompareWithCommitAction.label"
@@ -2182,6 +2160,48 @@
                   </with>
                </with>
             </or>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.CompareWithHead">
+         <class
+               class="org.eclipse.egit.ui.internal.actions.CompareWithHeadActionHandler">
+         </class>
+         <activeWhen>
+            <test property="org.eclipse.egit.ui.resources.ResourceState.hasNotIgnoredResources" />
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.CompareWithIndex">
+         <class
+               class="org.eclipse.egit.ui.internal.actions.CompareWithIndexActionHandler">
+         </class>
+         <activeWhen>
+            <test property="org.eclipse.egit.ui.resources.ResourceState.hasNotIgnoredResources" />
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.CompareIndexWithHead">
+         <class
+               class="org.eclipse.egit.ui.internal.actions.CompareIndexWithHeadActionHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <test property="org.eclipse.egit.ui.resources.ResourceState.hasStagedChanges" />
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.CompareWithPrevious">
+         <class
+               class="org.eclipse.egit.ui.internal.actions.CompareWithPreviousActionHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <test property="org.eclipse.egit.ui.resources.ResourceState.hasTrackedResources" />
+            </and>
          </activeWhen>
       </handler>
    </extension>
@@ -4651,80 +4671,32 @@
             allPopups="false"
             locationURI="popup:compareWithMenu?after=gitCompareWithGroup">
          <command
-               commandId="org.eclipse.egit.ui.team.CompareIndexWithHead"
-               label="%CompareIndexWithHeadAction_label"
+               commandId="org.eclipse.egit.ui.team.CompareWithHead"
+               label="%CompareWithHeadAction_label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
-                  </reference>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.egitOnlyResourceMapping">
-                  </reference>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.resourcesAllInRepository">
-                  </reference>
-               </and>
+            <visibleWhen checkEnabled="false">
+               <test property="org.eclipse.egit.ui.resources.ResourceState.hasNotIgnoredResources" />
             </visibleWhen>
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.CompareWithIndex"
                label="%CompareWithIndexAction_label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
-                  </reference>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.egitOnlyResourceMapping">
-                  </reference>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.resourcesAllInRepository">
-                  </reference>
-               </and>
+            <visibleWhen checkEnabled="false">
+               <test property="org.eclipse.egit.ui.resources.ResourceState.hasNotIgnoredResources" />
             </visibleWhen>
          </command>
          <command
-               commandId="org.eclipse.egit.ui.team.CompareWithHead"
-               label="%CompareWithHeadAction_label"
+               commandId="org.eclipse.egit.ui.team.CompareIndexWithHead"
+               label="%CompareIndexWithHeadAction_label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
-                  </reference>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.egitOnlyResourceMapping">
-                  </reference>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.resourcesAllInRepository">
-                  </reference>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.CompareWithPrevious"
                label="%CompareWithPreviousAction.label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
-                  </reference>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.egitOnlyResourceMapping">
-                  </reference>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.resourcesAllInRepository">
-                  </reference>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
       </menuContribution>
       <menuContribution
@@ -4889,6 +4861,18 @@
                   name="gitCompareWithGroup2"
                   visible="true">
             </separator>
+            <visibleWhen>
+               <with variable="activeMenu">
+                  <not>
+                     <iterate operator="or">
+                        <or>
+                           <equals value="#AbstractTextEditorRulerContext" />
+                           <equals value="#OverviewRulerContext" />
+                        </or>
+                     </iterate>
+                  </not>
+               </with>
+            </visibleWhen>
          </menu>
       </menuContribution>
       <menuContribution
@@ -5479,7 +5463,7 @@
             class="org.eclipse.egit.ui.internal.resources.ResourceStatePropertyTester"
             id="org.eclipse.egit.ui.ResourceStateTester"
             namespace="org.eclipse.egit.ui.resources.ResourceState"
-            properties="hasStagedChanges,hasUnstagedChanges,hasNotIgnoredResources"
+            properties="hasStagedChanges,hasUnstagedChanges,hasNotIgnoredResources,hasTrackedResources"
             type="java.util.Collection">
       </propertyTester>
    </extension>
@@ -5611,19 +5595,21 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.actions.CompareWithHeadActionHandler"
             id="org.eclipse.egit.ui.team.CompareWithHead"
             name="%CompareWithHeadCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.actions.CompareIndexWithHeadActionHandler"
+            id="org.eclipse.egit.ui.team.CompareWithIndex"
+            name="%CompareWithIndexCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.team.CompareIndexWithHead"
             name="%CompareIndexWithHeadCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.actions.CompareWithPreviousActionHandler"
             id="org.eclipse.egit.ui.team.CompareWithPrevious"
             name="%CompareWithPreviousCommand.name">
       </command>
@@ -5632,12 +5618,6 @@
             id="org.eclipse.egit.ui.team.CompareWithRevision"
             defaultHandler="org.eclipse.egit.ui.internal.actions.CompareWithRefActionHandler"
             name="%CompareWithHistoryCommand.name">
-      </command>
-      <command
-            categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.actions.CompareWithIndexActionHandler"
-            id="org.eclipse.egit.ui.team.CompareWithIndex"
-            name="%CompareWithIndexCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
