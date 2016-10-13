@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2014 SAP AG and others.
+ * Copyright (c) 2011, 2016 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,6 +12,7 @@
  *    Robin Stocker <robin@nibor.org> - Unify workbench and PathNode tree code
  *    Marc Khouzam <marc.khouzam@ericsson.com> - Add compare mode toggle
  *    Marc Khouzam <marc.khouzam@ericsson.com> - Skip expensive computations for equal content (bug 431610)
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Prevent NPE on empty content
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
@@ -911,6 +912,9 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 		@Override
 		public Object[] getElements(Object inputElement) {
 			ContainerNode rootContainer = containerNodes.get(new Path("")); //$NON-NLS-1$
+			if (rootContainer == null) {
+				return new PathNode[0];
+			}
 			if (rootContainer.isOnlyEqualContent() && !showEquals)
 				return new String[] { UIText.CompareTreeView_NoDifferencesFoundMessage };
 
