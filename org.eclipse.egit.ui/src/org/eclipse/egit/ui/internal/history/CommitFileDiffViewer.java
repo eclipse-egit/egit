@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.job.JobUtil;
+import org.eclipse.egit.core.internal.storage.CommitFileRevision;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -501,10 +502,9 @@ public class CommitFileDiffViewer extends TableViewer {
 					getRepository(),
 					d.getChange().equals(ChangeType.DELETE) ? d.getBlobs()[0]
 							: d.getBlobs()[d.getBlobs().length - 1]);
-			if (rev != null) {
-				BlameOperation op = new BlameOperation(getRepository(),
-						rev.getStorage(new NullProgressMonitor()), path,
-						commit, window.getShell(), page);
+			if (rev instanceof CommitFileRevision) {
+				BlameOperation op = new BlameOperation((CommitFileRevision) rev,
+						window.getShell(), page);
 				JobUtil.scheduleUserJob(op, UIText.ShowBlameHandler_JobName,
 						JobFamilies.BLAME);
 			} else {
@@ -514,9 +514,6 @@ public class CommitFileDiffViewer extends TableViewer {
 				Activator.showError(message, null);
 			}
 		} catch (IOException e) {
-			Activator.logError(UIText.GitHistoryPage_openFailed, e);
-			Activator.showError(UIText.GitHistoryPage_openFailed, null);
-		} catch (CoreException e) {
 			Activator.logError(UIText.GitHistoryPage_openFailed, e);
 			Activator.showError(UIText.GitHistoryPage_openFailed, null);
 		}

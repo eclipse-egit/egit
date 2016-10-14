@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2011, 2013 GitHub Inc and others.
+ *  Copyright (c) 2011, 2016 GitHub Inc and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - don't use RevisionAnnotationController
  *****************************************************************************/
 package org.eclipse.egit.ui.internal.blame;
 
@@ -22,11 +23,14 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.internal.storage.CommitFileRevision;
 import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
@@ -34,6 +38,7 @@ import org.eclipse.jface.text.revisions.IRevisionRulerColumn;
 import org.eclipse.jface.text.revisions.IRevisionRulerColumnExtension;
 import org.eclipse.jface.text.revisions.RevisionInformation;
 import org.eclipse.jface.text.source.IVerticalRulerInfo;
+import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -46,10 +51,10 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.team.ui.history.IHistoryView;
-import org.eclipse.team.ui.history.RevisionAnnotationController;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
 
 /**
@@ -164,6 +169,8 @@ public class BlameOperation implements IEGitOperation {
 
 	private Repository repository;
 
+	private CommitFileRevision fileRevision;
+
 	private IStorage storage;
 
 	private String path;
@@ -174,7 +181,7 @@ public class BlameOperation implements IEGitOperation {
 
 	private IWorkbenchPage page;
 
-	private int lineNumberToReveal;
+	private int lineNumberToReveal = -1;
 
 	/**
 	 * Create annotate operation
@@ -186,30 +193,39 @@ public class BlameOperation implements IEGitOperation {
 	 * @param shell
 	 * @param page
 	 */
-	public BlameOperation(Repository repository, IStorage storage, String path,
+	public BlameOperation(Repository repository, IFile storage, String path,
 			RevCommit startCommit, Shell shell, IWorkbenchPage page) {
-		this(repository, storage, path, startCommit, shell, page, -1);
-	}
-
-	/**
-	 * Create annotate operation
-	 *
-	 * @param repository
-	 * @param storage
-	 * @param path
-	 * @param startCommit
-	 * @param shell
-	 * @param page
-	 * @param lineNumberToReveal
-	 *            0-based line number to reveal, -1 for no reveal
-	 */
-	public BlameOperation(Repository repository, IStorage storage, String path,
-			RevCommit startCommit, Shell shell, IWorkbenchPage page,
-			int lineNumberToReveal) {
 		this.repository = repository;
 		this.storage = storage;
 		this.path = path;
 		this.startCommit = startCommit;
+		this.shell = shell;
+		this.page = page;
+		this.lineNumberToReveal = -1;
+	}
+
+	/**
+	 * @param revision
+	 * @param shell
+	 * @param page
+	 */
+	public BlameOperation(CommitFileRevision revision, Shell shell,
+			IWorkbenchPage page) {
+		this(revision, shell, page, -1);
+	}
+
+	/**
+	 * @param revision
+	 * @param shell
+	 * @param page
+	 * @param lineNumberToReveal
+	 */
+	public BlameOperation(CommitFileRevision revision, Shell shell,
+			IWorkbenchPage page, int lineNumberToReveal) {
+		this.fileRevision = revision;
+		this.repository = revision.getRepository();
+		this.path = revision.getGitPath();
+		this.startCommit = revision.getRevCommit();
 		this.shell = shell;
 		this.page = page;
 		this.lineNumberToReveal = lineNumberToReveal;
@@ -217,6 +233,7 @@ public class BlameOperation implements IEGitOperation {
 
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
+		SubMonitor progress = SubMonitor.convert(monitor, 3);
 		final RevisionInformation info = new RevisionInformation();
 
 		final BlameCommand command = new BlameCommand(repository)
@@ -243,6 +260,7 @@ public class BlameOperation implements IEGitOperation {
 			Activator.error(e1.getMessage(), e1);
 			return;
 		}
+		progress.worked(1);
 		if (result == null)
 			return;
 
@@ -283,10 +301,16 @@ public class BlameOperation implements IEGitOperation {
 		if (previous != null)
 			previous.register();
 
+		progress.worked(1);
 		if (shell.isDisposed()) {
 			return;
 		}
 
+		if (fileRevision != null) {
+			storage = fileRevision.getStorage(progress.newChild(1));
+		} else {
+			progress.worked(1);
+		}
 		shell.getDisplay().asyncExec(new Runnable() {
 			@Override
 			public void run() {
@@ -296,22 +320,24 @@ public class BlameOperation implements IEGitOperation {
 	}
 
 	private void openEditor(final RevisionInformation info) {
-		AbstractDecoratedTextEditor editor;
+		IEditorPart editorPart;
 		try {
-			if (storage instanceof IFile)
-				editor = RevisionAnnotationController.openEditor(page,
-						(IFile) storage);
-			else
-				editor = RevisionAnnotationController.openEditor(page, storage,
-						storage);
-		} catch (PartInitException e) {
+			if (fileRevision != null) {
+				editorPart = EgitUiEditorUtils.openEditor(page, fileRevision,
+						null);
+			} else {
+				editorPart = IDE.openEditor(page, (IFile) storage,
+						OpenStrategy.activateOnOpen());
+			}
+		} catch (CoreException e) {
 			Activator.handleError("Error displaying blame annotations", e, //$NON-NLS-1$
 					false);
 			return;
 		}
-		if (editor == null)
+		if (!(editorPart instanceof AbstractDecoratedTextEditor)) {
 			return;
-
+		}
+		AbstractDecoratedTextEditor editor = (AbstractDecoratedTextEditor) editorPart;
 		// IRevisionRulerColumn would also be possible but using
 		// IVerticalRulerInfo seems to work in more situations.
 		IVerticalRulerInfo rulerInfo = AdapterUtils.adapt(editor,

@@ -16,10 +16,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 
-import org.eclipse.core.resources.IStorage;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.internal.job.JobUtil;
+import org.eclipse.egit.core.internal.storage.CommitFileRevision;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
@@ -459,17 +457,16 @@ public class BlameInformationControl extends AbstractInformationControl
 			IFileRevision rev = CompareUtils.getFileRevision(path, parent,
 					revision.getRepository(), null);
 			int line = sourceLine == null ? -1 : sourceLine.intValue();
-			IStorage storage = rev.getStorage(new NullProgressMonitor());
-			IWorkbenchPage page = PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow().getActivePage();
-			BlameOperation operation = new BlameOperation(
-					revision.getRepository(), storage, path, parent,
-					getShell(), page, line);
-			JobUtil.scheduleUserJob(operation, UIText.ShowBlameHandler_JobName,
-					JobFamilies.BLAME);
+			if (rev instanceof CommitFileRevision) {
+				IWorkbenchPage page = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getActivePage();
+				BlameOperation operation = new BlameOperation(
+						(CommitFileRevision) rev, getShell(),
+						page, line);
+				JobUtil.scheduleUserJob(operation,
+						UIText.ShowBlameHandler_JobName, JobFamilies.BLAME);
+			}
 		} catch (IOException e) {
-			Activator.logError(UIText.ShowBlameHandler_errorMessage, e);
-		} catch (CoreException e) {
 			Activator.logError(UIText.ShowBlameHandler_errorMessage, e);
 		}
 	}

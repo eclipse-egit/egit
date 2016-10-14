@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2012 GitHub Inc.
+ *  Copyright (c) 2012, 2016 GitHub Inc. and others
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -16,10 +16,8 @@ import java.io.IOException;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IStorage;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.internal.job.JobUtil;
+import org.eclipse.egit.core.internal.storage.CommitFileRevision;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -62,15 +60,15 @@ public class ShowBlameHandler extends AbstractHistoryCommandHandler {
 		try {
 			IFileRevision revision = CompareUtils.getFileRevision(path, commit,
 					repo, null);
-			if (revision == null) {
-				return null;
+			if (revision instanceof CommitFileRevision) {
+				BlameOperation op = new BlameOperation(
+						(CommitFileRevision) revision,
+						HandlerUtil.getActiveShell(event),
+						page.getSite().getPage());
+				JobUtil.scheduleUserJob(op, UIText.ShowBlameHandler_JobName,
+						JobFamilies.BLAME);
 			}
-			IStorage storage = revision.getStorage(new NullProgressMonitor());
-			BlameOperation op = new BlameOperation(repo, storage, path, commit,
-					HandlerUtil.getActiveShell(event), page.getSite().getPage());
-			JobUtil.scheduleUserJob(op, UIText.ShowBlameHandler_JobName,
-					JobFamilies.BLAME);
-		} catch (IOException | CoreException e) {
+		} catch (IOException e) {
 			Activator.showError(UIText.ShowBlameHandler_errorMessage, e);
 		}
 		return null;

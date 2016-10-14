@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2000, 2013 IBM Corporation and others.
+ * Copyright (c) 2000, 2016 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
@@ -55,14 +56,15 @@ public class EgitUiEditorUtils {
 	public static IEditorPart openEditor(IWorkbenchPage page,
 			IFileRevision revision, IProgressMonitor monitor)
 			throws CoreException {
-		IStorage file = revision.getStorage(monitor);
+		SubMonitor progress = SubMonitor.convert(monitor, 2);
+		IStorage file = revision.getStorage(progress.newChild(1));
 		if (file instanceof IFile) {
 			// if this is the current workspace file, open it
 			return IDE.openEditor(page, (IFile) file, OpenStrategy
 					.activateOnOpen());
 		} else {
 			FileRevisionEditorInput fileRevEditorInput = FileRevisionEditorInput
-					.createEditorInputFor(revision, monitor);
+					.createEditorInputFor(revision, progress.newChild(1));
 			IEditorPart part = openEditor(page, fileRevEditorInput);
 			return part;
 		}
@@ -83,8 +85,9 @@ public class EgitUiEditorUtils {
 	public static void openTextEditor(IWorkbenchPage page,
 			IFileRevision revision, IProgressMonitor monitor)
 			throws CoreException {
+		SubMonitor progress = SubMonitor.convert(monitor, 1);
 		FileRevisionEditorInput fileRevEditorInput = FileRevisionEditorInput
-				.createEditorInputFor(revision, monitor);
+				.createEditorInputFor(revision, progress.newChild(1));
 		openEditor(page, fileRevEditorInput, EditorsUI.DEFAULT_TEXT_EDITOR_ID);
 	}
 
