@@ -195,6 +195,7 @@ public class StageUnstageActionTest extends LocalRepositoryTestCase {
 		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 		// Verify file got staged
 		StagingUtil.assertStaging(PROJ_A, filePath, true);
+		fileItem.select();
 		assertTrue("Compare With->Index with HEAD should be enabled",
 				ContextMenuHelper.isContextMenuItemEnabled(projectExplorerTree,
 						"Compare With", compareIndexWithHead));
@@ -206,6 +207,7 @@ public class StageUnstageActionTest extends LocalRepositoryTestCase {
 		// Verify file is unstaged again
 		StagingUtil.assertStaging(PROJ_A, filePath, false);
 		// Verify the menu entry again
+		fileItem.select();
 		assertTrue(
 				"Compare With->Index with HEAD should be disabled or absent again",
 				!ContextMenuHelper.contextMenuItemExists(projectExplorerTree,
