@@ -13,6 +13,10 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.function.BooleanSupplier;
 
+import org.eclipse.core.expressions.EvaluationResult;
+import org.eclipse.core.expressions.Expression;
+import org.eclipse.core.expressions.ExpressionInfo;
+import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.commands.ActionHandler;
@@ -106,6 +110,61 @@ public final class ActionUtils {
 	}
 
 	/**
+	 * An {@link Expression} that evaluates to {@link EvaluationResult#TRUE
+	 * TRUE} when the given control's shell is active and the control has the
+	 * focus.
+	 */
+	private static class FocusExpression extends Expression {
+
+		private final ActiveShellExpression shellExpression;
+
+		private final Control control;
+
+		private final int controlHash;
+
+		public FocusExpression(Control control) {
+			this.shellExpression = new ActiveShellExpression(
+					control.getShell());
+			this.control = control;
+			this.controlHash = control.hashCode();
+		}
+
+		@Override
+		public void collectExpressionInfo(final ExpressionInfo info) {
+			this.shellExpression.collectExpressionInfo(info);
+		}
+
+		@Override
+		public int hashCode() {
+			return this.shellExpression.hashCode() ^ controlHash;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj instanceof FocusExpression) {
+				FocusExpression other = (FocusExpression) obj;
+				return this.shellExpression.equals(other.shellExpression)
+						&& this.control == other.control;
+			}
+			return false;
+		}
+
+		@Override
+		public final EvaluationResult evaluate(
+				final IEvaluationContext context) {
+			EvaluationResult result = shellExpression.evaluate(context);
+			if (EvaluationResult.TRUE.equals(result)
+					&& !control.isDisposed() && control.isFocusControl()) {
+				return result;
+			}
+			return EvaluationResult.FALSE;
+		}
+	}
+
+	/**
 	 * Hooks up the {@link Control} such that the given {@link IAction}s are
 	 * registered with the given {@link IHandlerService} while the control has
 	 * the focus. Ensures that actions are properly de-registered when the
@@ -125,8 +184,7 @@ public final class ActionUtils {
 			service.deactivateHandlers(handlerActivations);
 			handlerActivations.clear();
 		});
-		final ActiveShellExpression expression = new ActiveShellExpression(
-				control.getShell());
+		final FocusExpression expression = new FocusExpression(control);
 		control.addFocusListener(new FocusListener() {
 
 			@Override
