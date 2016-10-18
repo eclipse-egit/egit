@@ -160,11 +160,6 @@
             <adapter type="org.eclipse.jgit.lib.Repository" />
          </factory>
          <factory
-               adaptableType="org.eclipse.core.resources.mapping.ResourceMapping"
-               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
-            <adapter type="org.eclipse.jgit.lib.Repository" />
-         </factory>
-         <factory
                adaptableType="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode"
                class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
             <adapter
