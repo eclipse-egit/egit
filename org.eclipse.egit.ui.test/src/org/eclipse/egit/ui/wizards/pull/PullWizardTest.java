@@ -17,6 +17,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestBase;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.annotations.NonNull;
@@ -92,6 +93,8 @@ public class PullWizardTest extends GitRepositoriesViewTestBase {
 		bot.shell("Pull").setFocus();
 		assertTrue("Remote combo misses items",
 				bot.comboBox().items().length > 1);
+		bot.textWithLabel(UIText.PullWizardPage_referenceLabel)
+				.setText("master");
 		bot.button(IDialogConstants.FINISH_LABEL).click();
 		ShellWithTextPrefixMatcher shellWithTextPrefixMatcher = new ShellWithTextPrefixMatcher(
 				"Pull Result");
