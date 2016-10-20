@@ -27,6 +27,7 @@ import org.eclipse.egit.ui.internal.ResourcePropertyTester;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.IWorkingSet;
 
@@ -49,6 +50,10 @@ public class SelectionPropertyTester extends PropertyTester {
 		} else if ("projectsWithRepositories".equals(property)) { //$NON-NLS-1$
 			Repository repository = getRepositoryOfProjects(collection, false);
 			return repository != null;
+
+		} else if ("selectionSingleRepository".equals(property)) { //$NON-NLS-1$
+			return SelectionUtils
+					.getRepository(getStructuredSelection(collection)) != null;
 
 		} else if ("resourcesSingleRepository".equals(property)) { //$NON-NLS-1$
 			IStructuredSelection selection = getStructuredSelection(collection);
@@ -95,7 +100,7 @@ public class SelectionPropertyTester extends PropertyTester {
 		return false;
 	}
 
-	private static IStructuredSelection getStructuredSelection(
+	private static @NonNull IStructuredSelection getStructuredSelection(
 			Collection<?> collection) {
 		Object firstElement = collection.iterator().next();
 		if (collection.size() == 1 && firstElement instanceof ITextSelection)

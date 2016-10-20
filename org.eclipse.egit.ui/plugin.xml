@@ -50,18 +50,6 @@
                value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
          </filter>
          <action
-               class="org.eclipse.egit.ui.internal.actions.CompareWithCommitAction"
-               id="org.eclipse.egit.ui.internal.actions.CompareWithCommitAction"
-               label="%CompareWithCommitAction.label"
-               menubarPath="compareWithMenu/gitCompareWithGroup2">
-         </action>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.CompareWithRefAction"
-               id="org.eclipse.egit.ui.internal.actions.CompareWithRefAction"
-               label="%CompareWithBranchOrTagAction.label"
-               menubarPath="compareWithMenu/gitCompareWithGroup2">
-         </action>
-         <action
                class="org.eclipse.egit.ui.internal.actions.ReplaceWithPreviousAction"
                enablesFor="1"
                id="org.eclipse.egit.ui.internal.actions.ReplaceWithPreviousAction"
@@ -2168,7 +2156,10 @@
                class="org.eclipse.egit.ui.internal.actions.CompareWithHeadActionHandler">
          </class>
          <activeWhen>
-            <test property="org.eclipse.egit.ui.resources.ResourceState.hasNotIgnoredResources" />
+            <and>
+               <test property="GitSelection.selectionSingleRepository" />
+               <test property="org.eclipse.egit.ui.resources.ResourceState.hasNotIgnoredResources" />
+            </and>
          </activeWhen>
       </handler>
       <handler
@@ -2177,7 +2168,10 @@
                class="org.eclipse.egit.ui.internal.actions.CompareWithIndexActionHandler">
          </class>
          <activeWhen>
-            <test property="org.eclipse.egit.ui.resources.ResourceState.hasNotIgnoredResources" />
+            <and>
+               <test property="GitSelection.selectionSingleRepository" />
+               <test property="org.eclipse.egit.ui.resources.ResourceState.hasNotIgnoredResources" />
+            </and>
          </activeWhen>
       </handler>
       <handler
@@ -2202,6 +2196,24 @@
                <count value="1" />
                <test property="org.eclipse.egit.ui.resources.ResourceState.hasTrackedResources" />
             </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.CompareWithCommit">
+         <class
+               class="org.eclipse.egit.ui.internal.actions.CompareWithCommitActionHandler">
+         </class>
+         <activeWhen>
+            <reference definitionId="org.eclipse.egit.ui.resourcesSingleRepository" />         	
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.CompareWithRef">
+         <class
+               class="org.eclipse.egit.ui.internal.actions.CompareWithRefActionHandler">
+         </class>
+         <activeWhen>
+            <reference definitionId="org.eclipse.egit.ui.resourcesSingleRepository" />         	
          </activeWhen>
       </handler>
    </extension>
@@ -4675,7 +4687,10 @@
                label="%CompareWithHeadAction_label"
                style="push">
             <visibleWhen checkEnabled="false">
-               <test property="org.eclipse.egit.ui.resources.ResourceState.hasNotIgnoredResources" />
+               <and>
+                  <test property="GitSelection.selectionSingleRepository" />
+                  <test property="org.eclipse.egit.ui.resources.ResourceState.hasNotIgnoredResources" />
+               </and>
             </visibleWhen>
          </command>
          <command
@@ -4683,7 +4698,10 @@
                label="%CompareWithIndexAction_label"
                style="push">
             <visibleWhen checkEnabled="false">
-               <test property="org.eclipse.egit.ui.resources.ResourceState.hasNotIgnoredResources" />
+               <and>
+                  <test property="GitSelection.selectionSingleRepository" />
+                  <test property="org.eclipse.egit.ui.resources.ResourceState.hasNotIgnoredResources" />
+               </and>
             </visibleWhen>
          </command>
          <command
@@ -4703,41 +4721,19 @@
             allPopups="false"
             locationURI="popup:compareWithMenu?after=gitCompareWithGroup2">
          <command
-               commandId="org.eclipse.egit.ui.team.CompareWithCommit"
-               label="%CompareWithCommitAction.label"
+               commandId="org.eclipse.egit.ui.team.CompareWithRef"
+               label="%CompareWithBranchOrTagAction.label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
-                  </reference>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.egitOnlyResourceMapping">
-                  </reference>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.resourcesAllInRepository">
-                  </reference>
-               </and>
+            <visibleWhen checkEnabled="false">
+               <reference definitionId="org.eclipse.egit.ui.resourcesSingleRepository" />         	
             </visibleWhen>
          </command>
          <command
-               commandId="org.eclipse.egit.ui.team.CompareWithRevision"
-               label="%CompareWithBranchOrTagAction.label"
+               commandId="org.eclipse.egit.ui.team.CompareWithCommit"
+               label="%CompareWithCommitAction.label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
-                  </reference>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.egitOnlyResourceMapping">
-                  </reference>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.resourcesAllInRepository">
-                  </reference>
-               </and>
+            <visibleWhen checkEnabled="false">
+               <reference definitionId="org.eclipse.egit.ui.resourcesSingleRepository" />         	
             </visibleWhen>
          </command>
       </menuContribution>
@@ -5456,7 +5452,7 @@
             class="org.eclipse.egit.ui.internal.selection.SelectionPropertyTester"
             id="org.eclipse.egit.ui.SelectionTester"
             namespace="GitSelection"
-            properties="projectsSingleRepository,projectsWithRepositories,resourcesSingleRepository,fileOrFolderInRepository,resourcesAllInRepository"
+            properties="projectsSingleRepository,projectsWithRepositories,resourcesSingleRepository,fileOrFolderInRepository,resourcesAllInRepository,selectionSingleRepository"
             type="java.util.Collection">
       </propertyTester>
       <propertyTester
@@ -5615,13 +5611,11 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            id="org.eclipse.egit.ui.team.CompareWithRevision"
-            defaultHandler="org.eclipse.egit.ui.internal.actions.CompareWithRefActionHandler"
+            id="org.eclipse.egit.ui.team.CompareWithRef"
             name="%CompareWithHistoryCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.actions.CompareWithCommitActionHandler"
             id="org.eclipse.egit.ui.team.CompareWithCommit"
             name="%CompareWithCommitCommand.name">
       </command>
