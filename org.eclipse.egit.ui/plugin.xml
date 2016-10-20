@@ -50,23 +50,6 @@
                value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
          </filter>
          <action
-               class="org.eclipse.egit.ui.internal.actions.ReplaceWithPreviousAction"
-               enablesFor="1"
-               id="org.eclipse.egit.ui.internal.actions.ReplaceWithPreviousAction"
-               label="%replaceWithPreviousVersionAction.label"
-               menubarPath="replaceWithMenu/gitReplaceWithGroup">
-         </action>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.DiscardChangesAction"
-               id="org.eclipse.egit.ui.internal.actions.DiscardChangesAction"
-               label="%DiscardChangesAction_label"
-               menubarPath="replaceWithMenu/gitReplaceWithGroup"/>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.ReplaceWithHeadAction"
-               id="org.eclipse.egit.ui.internal.actions.ReplaceWithHeadAction"
-               label="%ReplaceWithHeadAction_label"
-               menubarPath="replaceWithMenu/gitReplaceWithGroup"/>
-         <action
                class="org.eclipse.egit.ui.internal.actions.ReplaceWithCommitAction"
                id="org.eclipse.egit.ui.internal.actions.ReplaceWithCommitAction"
                label="%ReplaceWithCommitAction_label"
@@ -2214,6 +2197,37 @@
          </class>
          <activeWhen>
             <reference definitionId="org.eclipse.egit.ui.resourcesSingleRepository" />
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.ReplaceWithPrevious">
+         <class
+               class="org.eclipse.egit.ui.internal.actions.ReplaceWithPreviousActionHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <test property="GitSelection.resourcesSingleRepository" args="isSafe" />
+               <test property="org.eclipse.egit.ui.resources.ResourceState.hasTrackedResources" />
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.Discard">
+         <class
+               class="org.eclipse.egit.ui.internal.actions.DiscardChangesActionHandler">
+         </class>
+         <activeWhen>
+            <test property="GitSelection.resourcesAllInRepository" args="isSafe" />
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.ReplaceWithHead">
+         <class
+               class="org.eclipse.egit.ui.internal.actions.ReplaceWithHeadActionHandler">
+         </class>
+         <activeWhen>
+            <test property="GitSelection.resourcesAllInRepository" args="isSafe" />
          </activeWhen>
       </handler>
    </extension>
@@ -4741,59 +4755,26 @@
             allPopups="false"
             locationURI="popup:replaceWithMenu?after=gitReplaceWithGroup">
          <command
-               commandId="org.eclipse.egit.ui.team.ReplaceWithPrevious"
-               label="%replaceWithPreviousVersionAction.label"
+               commandId="org.eclipse.egit.ui.team.ReplaceWithHead"
+               label="%ReplaceWithHeadAction_label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
-                  </reference>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.egitOnlyResourceMapping">
-                  </reference>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.resourcesAllInRepository">
-                  </reference>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.Discard"
                label="%DiscardChangesAction_label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
-                  </reference>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.egitOnlyResourceMapping">
-                  </reference>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.resourcesAllInRepository">
-                  </reference>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
          <command
-               commandId="org.eclipse.egit.ui.team.ReplaceWithHead"
-               label="%ReplaceWithHeadAction_label"
+               commandId="org.eclipse.egit.ui.team.ReplaceWithPrevious"
+               label="%ReplaceWithPreviousVersionAction.label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
+            <visibleWhen checkEnabled="false">
                <and>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.resourcesSingleRepository">
-                  </reference>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.egitOnlyResourceMapping">
-                  </reference>
-                  <reference
-                        definitionId="org.eclipse.egit.ui.resourcesAllInRepository">
-                  </reference>
+                  <count value="1" />
+                  <test property="GitSelection.resourcesSingleRepository" args="isSafe" />
+                  <test property="org.eclipse.egit.ui.resources.ResourceState.hasTrackedResources" />
                </and>
             </visibleWhen>
          </command>
@@ -4888,6 +4869,18 @@
                   name="gitReplaceWithGroup2"
                   visible="true">
             </separator>
+            <visibleWhen>
+               <with variable="activeMenu">
+                  <not>
+                     <iterate operator="or">
+                        <or>
+                           <equals value="#AbstractTextEditorRulerContext" />
+                           <equals value="#OverviewRulerContext" />
+                        </or>
+                     </iterate>
+                  </not>
+               </with>
+            </visibleWhen>
          </menu>
       </menuContribution>
    </extension>
@@ -5621,13 +5614,11 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.actions.DiscardChangesActionHandler"
             id="org.eclipse.egit.ui.team.Discard"
             name="%ReplaceWithIndexCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.actions.ReplaceWithHeadActionHandler"
             id="org.eclipse.egit.ui.team.ReplaceWithHead"
             name="%ReplaceWithHeadCommand.name">
       </command>
@@ -5645,7 +5636,6 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.actions.ReplaceWithPreviousActionHandler"
             id="org.eclipse.egit.ui.team.ReplaceWithPrevious"
             name="%ReplaceWithPreviousCommand.name">
       </command>
