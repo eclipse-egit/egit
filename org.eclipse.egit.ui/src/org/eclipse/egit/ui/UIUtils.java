@@ -430,11 +430,11 @@ public class UIUtils {
 				.getKeystrokeOfBestActiveBindingFor(IWorkbenchCommandConstants.EDIT_CONTENT_ASSIST);
 		if (stroke == null)
 			addBulbDecorator(textField,
-					UIText.UIUtils_StartTypingForPreviousValuesMessage);
+					UIText.UIUtils_StartTypingForRemoteRefMessage);
 		else
 			addBulbDecorator(
 					textField,
-					NLS.bind(UIText.UIUtils_PressShortcutMessage,
+					NLS.bind(UIText.UIUtils_PressShortcutForRemoteRefMessage,
 							stroke.format()));
 
 		IContentProposalProvider cp = new IContentProposalProvider() {
