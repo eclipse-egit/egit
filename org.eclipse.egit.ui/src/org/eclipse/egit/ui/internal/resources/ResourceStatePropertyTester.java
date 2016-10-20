@@ -23,9 +23,8 @@ import org.eclipse.jgit.annotations.Nullable;
 
 /**
  * A property tester testing the {@IResourceState} of a file under EGit control.
- * Assumes a {@link Collection} of elements, typically a selection, and requires
- * for all properties that the selected elements belong to one single
- * repository.
+ * Assumes a {@link Collection} of elements, typically a selection. Skips any
+ * resources not in a repository.
  */
 public class ResourceStatePropertyTester extends PropertyTester {
 
