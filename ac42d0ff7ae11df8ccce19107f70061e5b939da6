@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b223f6_2e1ead68",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitLazyResourceVariantTreeSubscriber.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-24T20:46:22Z",
+      "side": 1,
+      "message": "I don\u0027t quite see what\u0027s lazy about this. Won\u0027t it still pre-load the whole cache in init(), which isn\u0027t overridden here?",
+      "revId": "ac42d0ff7ae11df8ccce19107f70061e5b939da6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_6ec42587",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-24T20:46:22Z",
+      "side": 1,
+      "message": "I wouldn\u0027t get the display here. It forces you to have a ModelAwareGitSynchronizer(Display) constructor even though that class itself doesn\u0027t need it.\n\nI\u0027d just go with parameterless constructors, and use PlatformUI.getWorkbench().getDisplay() in DefaultGitSynchronizer.openGitTreeCompare() instead.",
+      "revId": "ac42d0ff7ae11df8ccce19107f70061e5b939da6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_0e02c915",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/ModelAwareGitSynchronizer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-24T20:46:22Z",
+      "side": 1,
+      "message": "Somehow I find this control flow fragile. Creating the context here, then calling super.compare and relying on that calling canCompareDirectly(IFile) where the context then is used... plus also in synchronize below. \"Parameter passing\" through a local field...\n\nBut maybe resolving this is for a later follow-up change. Right now I only have a feeling that something isn\u0027t quite as it should be yet. Have to think more on this.",
+      "revId": "ac42d0ff7ae11df8ccce19107f70061e5b939da6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_ae29dd8a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/ModelAwareGitSynchronizer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-24T20:46:22Z",
+      "side": 1,
+      "message": "Doesn\u0027t this still pre-load the whole GitSyncCache from the repository? I don\u0027t see GitLazyResourceVariantTreeSubscriber override init()...",
+      "revId": "ac42d0ff7ae11df8ccce19107f70061e5b939da6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
