@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b223f6_e81aed2c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-24T13:32:44Z",
+      "side": 1,
+      "message": "This will dispose everything in the plugin\u0027s resource manager, even stuff put there in other places.\n\nThere is no resource leak here. With the current implementation, images should be loaded once the first time the SwitchToMenu opens, and should be disposed of when the EGit UI bundle is deactivated. They should be kept in memory and be re-used in successive SwitchToMenu instantiations.\n\nMoreover, when I did that, I discovered that dispose() wasn\u0027t even called. See bug 486594 and commit fb24d7f3.\n\nIf it should be called all the same: can a resource manager that has been disposed be re-used??",
+      "revId": "69c7a6e0d352535e402244e33c1e7ff78a1a3e07",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
