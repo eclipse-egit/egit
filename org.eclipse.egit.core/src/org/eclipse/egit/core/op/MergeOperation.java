@@ -37,6 +37,7 @@ import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.MergeCommand;
 import org.eclipse.jgit.api.MergeCommand.FastForwardMode;
@@ -220,7 +221,7 @@ public class MergeOperation implements IEGitOperation {
 	 * @return the merge result, or <code>null</code> if this has not been
 	 *         executed or if an exception occurred
 	 */
-	public MergeResult getResult() {
+	public @Nullable MergeResult getResult() {
 		return this.mergeResult;
 	}
 
