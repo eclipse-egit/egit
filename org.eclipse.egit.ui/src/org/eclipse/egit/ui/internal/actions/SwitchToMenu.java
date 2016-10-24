@@ -63,6 +63,8 @@ public class SwitchToMenu extends ContributionItem implements
 
 	private final Image checkedOutImage;
 
+	private ResourceManager pluginResources;
+
 	/**
 	 */
 	public SwitchToMenu() {
@@ -74,7 +76,7 @@ public class SwitchToMenu extends ContributionItem implements
 	 */
 	public SwitchToMenu(String id) {
 		super(id);
-		ResourceManager pluginResources = Activator.getDefault()
+		pluginResources = Activator.getDefault()
 				.getResourceManager();
 		branchImage = UIIcons.getImage(pluginResources, UIIcons.BRANCH);
 		newBranchImage = UIIcons.getImage(pluginResources,
@@ -246,4 +248,8 @@ public class SwitchToMenu extends ContributionItem implements
 		handlerService = CommonUtils.getService(serviceLocator, IHandlerService.class);
 	}
 
+	@Override
+	public void dispose() {
+		pluginResources.dispose();
+	}
 }
