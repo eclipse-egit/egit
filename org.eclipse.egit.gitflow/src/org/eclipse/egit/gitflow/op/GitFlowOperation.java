@@ -28,6 +28,7 @@ import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.core.op.MergeOperation;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.internal.CoreText;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.api.CheckoutResult;
 import org.eclipse.jgit.api.CheckoutResult.Status;
 import org.eclipse.jgit.api.MergeResult;
@@ -162,7 +163,7 @@ abstract public class GitFlowOperation implements IEGitOperation {
 	 * @throws CoreException
 	 * @since 4.1
 	 */
-	protected MergeResult mergeTo(IProgressMonitor monitor, String branchName,
+	protected @NonNull MergeResult mergeTo(IProgressMonitor monitor, String branchName,
 			String targetBranchName, boolean squash, boolean fastForwardSingleCommit) throws CoreException {
 		try {
 			if (!repository.hasBranch(targetBranchName)) {
@@ -192,7 +193,14 @@ abstract public class GitFlowOperation implements IEGitOperation {
 			}
 			mergeOperation.execute(monitor);
 
-			return mergeOperation.getResult();
+			MergeResult result = mergeOperation.getResult();
+			if (result == null) {
+				throw new CoreException(error(format(
+						CoreText.GitFlowOperation_unableToMerge, branchName,
+						targetBranchName)));
+			}
+
+			return result;
 		} catch (GitAPIException | IOException e) {
 			throw new RuntimeException(e);
 		}
