@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07b223f6_ceaff1eb",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitLazyResourceVariantTreeSubscriber.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-10-25T06:32:32Z",
+      "side": 1,
+      "message": "Probably the name of this class is not well chosen.\nThe idea is that it can be initialized with a restricted set of resources (those that are selected) but will anyway allow access to any other resource in the repo.\nIf necessary, I can also investigate an approach where absolutely nothing would be cached (and init() would not be necessary probably) and any resource would be loaded on-demand.",
+      "parentUuid": "07b223f6_2e1ead68",
+      "revId": "ac42d0ff7ae11df8ccce19107f70061e5b939da6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b223f6_6ec42587",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2016-10-24T20:46:22Z",
       "side": 1,
       "message": "I wouldn\u0027t get the display here. It forces you to have a ModelAwareGitSynchronizer(Display) constructor even though that class itself doesn\u0027t need it.\n\nI\u0027d just go with parameterless constructors, and use PlatformUI.getWorkbench().getDisplay() in DefaultGitSynchronizer.openGitTreeCompare() instead.",
+      "revId": "ac42d0ff7ae11df8ccce19107f70061e5b939da6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_aeeb9d18",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-10-25T06:32:32Z",
+      "side": 1,
+      "message": "Of course you\u0027re right. I had an issue with Display.getCurrent/getDefault an I forgot about PlatformUI.getWorkbench().getDisplay()!",
+      "parentUuid": "07b223f6_6ec42587",
       "revId": "ac42d0ff7ae11df8ccce19107f70061e5b939da6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "07b223f6_eeb4b53e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/ModelAwareGitSynchronizer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-10-25T06:32:32Z",
+      "side": 1,
+      "message": "Well, I see what you mean...\nThat is the simplest solution I could come up with to be able to display a progress bar while making a minimal amount of changes...\nIf you have any idea to improve that please tell me!",
+      "parentUuid": "07b223f6_0e02c915",
+      "revId": "ac42d0ff7ae11df8ccce19107f70061e5b939da6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b223f6_ae29dd8a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/ModelAwareGitSynchronizer.java",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2016-10-24T20:46:22Z",
       "side": 1,
       "message": "Doesn\u0027t this still pre-load the whole GitSyncCache from the repository? I don\u0027t see GitLazyResourceVariantTreeSubscriber override init()...",
+      "revId": "ac42d0ff7ae11df8ccce19107f70061e5b939da6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_6ef505f4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/ModelAwareGitSynchronizer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 6332
+      },
+      "writtenOn": "2016-10-25T06:32:32Z",
+      "side": 1,
+      "message": "Actually it will only load the resources provided in the given set of resources, which is constituted of the selected file or folder on which the comparison was triggered.\n\nBefore, we ignored the set of resources and called init() on a subscriber with gsd that described the synchronization of the whole repo.\n\nSo no, it does not pre-load the whole repo. In the most common case it will only cache one resource.\n\nAlos, a big difference with before is that the preference to support logical models will not be active by default, which means most users won\u0027t trigger that. Only those who check this preference will use this subscriber.",
+      "parentUuid": "07b223f6_ae29dd8a",
       "revId": "ac42d0ff7ae11df8ccce19107f70061e5b939da6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
