@@ -238,8 +238,8 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		SWTBotTree viewerTree = getOrOpenView().bot().tree();
 
 		TableCollection selection = viewerTree.selection();
-		assertTrue("Selection should contain one element",
-				selection.rowCount() == 1);
+		assertEquals("Selection should contain one element: " + selection, 1,
+				selection.rowCount());
 		String nodeText = selection.get(0).get(0);
 		assertTrue("Node text should contain project name", projectItem
 				.getText().startsWith(nodeText));

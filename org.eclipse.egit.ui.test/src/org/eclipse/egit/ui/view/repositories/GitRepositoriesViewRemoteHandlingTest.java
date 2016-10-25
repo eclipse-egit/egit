@@ -30,6 +30,7 @@ import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,6 +52,12 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 		remoteRepositoryFile = createRemoteRepository(repositoryFile);
 		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
 				repositoryFile);
+		TestUtil.processUIEvents();
+	}
+
+	@After
+	public void after() throws Exception {
+		TestUtil.processUIEvents();
 	}
 
 	/**

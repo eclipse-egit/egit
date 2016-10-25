@@ -339,6 +339,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		removeSmartImportWizardToForceGitImportWizardUsage();
 		deleteAllProjects();
 		assertProjectExistence(PROJ2, false);
+		TestUtil.processUIEvents();
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		String wizardTitle = NLS.bind(
 				UIText.GitCreateProjectViaWizardWizard_WizardTitle,
@@ -349,6 +350,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 				.getNode(PROJ2).select();
 		ContextMenuHelper.clickContextMenu(tree,
 				myUtil.getPluginLocalizedValue("ImportProjectsCommand"));
+		TestUtil.processUIEvents();
 		SWTBotShell shell = bot.shell(wizardTitle);
 		shell = bot.shell(wizardTitle);
 		// try import existing project first
