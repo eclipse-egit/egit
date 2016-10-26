@@ -13,6 +13,7 @@ import static org.eclipse.egit.gitflow.GitFlowDefaults.*;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.op.RenameBranchOperation;
+import org.eclipse.egit.core.test.TestUtils;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 
 import static org.eclipse.egit.gitflow.GitFlowConfig.*;
@@ -31,15 +32,31 @@ public class InitOperationTest extends AbstractGitFlowOperationTest {
 		Repository repository = testRepository.getRepository();
 		InitOperation initOperation = new InitOperation(repository);
 		initOperation.execute(null);
+
+		TestUtils.waitForJobs(500, 30000, null);
+
 		GitFlowRepository gfRepo = new GitFlowRepository(repository);
 		assertEquals(gfRepo.getConfig().getDevelopFull(), repository.getFullBranch());
 
-		assertEquals(FEATURE_PREFIX, getPrefix(repository, FEATURE_KEY));
-		assertEquals(RELEASE_PREFIX, getPrefix(repository, RELEASE_KEY));
-		assertEquals(HOTFIX_PREFIX, getPrefix(repository, HOTFIX_KEY));
-		assertEquals(VERSION_TAG, getPrefix(repository, VERSION_TAG_KEY));
-		assertEquals(DEVELOP, getBranch(repository, DEVELOP_KEY));
-		assertEquals(MASTER, getBranch(repository, MASTER_KEY));
+		assertPrefixEquals(FEATURE_PREFIX, FEATURE_KEY, repository);
+		assertPrefixEquals(RELEASE_PREFIX, RELEASE_KEY, repository);
+		assertPrefixEquals(HOTFIX_PREFIX, HOTFIX_KEY, repository);
+		assertPrefixEquals(VERSION_TAG, VERSION_TAG_KEY, repository);
+
+		assertBranchEquals(DEVELOP, DEVELOP_KEY, repository);
+		assertBranchEquals(MASTER, MASTER_KEY, repository);
+	}
+
+	private void assertPrefixEquals(String expected, String key,
+			Repository repo) {
+		assertEquals("Unexpected prefix in: " + repo.getConfig().toText(),
+				expected, getPrefix(repo, key));
+	}
+
+	private void assertBranchEquals(String expected, String key,
+			Repository repo) {
+		assertEquals("Unexpected branch in: " + repo.getConfig().toText(),
+				expected, getBranch(repo, key));
 	}
 
 	private String getPrefix(Repository repository, String prefixName) {
@@ -57,6 +74,9 @@ public class InitOperationTest extends AbstractGitFlowOperationTest {
 		Repository repository = testRepository.getRepository();
 		InitOperation initOperation = new InitOperation(repository);
 		initOperation.execute(null);
+
+		TestUtils.waitForJobs(500, 30000, null);
+
 		GitFlowRepository gfRepo = new GitFlowRepository(repository);
 		assertEquals(gfRepo.getConfig().getDevelopFull(), repository.getFullBranch());
 	}
