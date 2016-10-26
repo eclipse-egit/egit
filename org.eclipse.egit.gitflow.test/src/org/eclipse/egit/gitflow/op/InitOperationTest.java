@@ -13,6 +13,7 @@ import static org.eclipse.egit.gitflow.GitFlowDefaults.*;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.op.RenameBranchOperation;
+import org.eclipse.egit.core.test.TestUtils;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 
 import static org.eclipse.egit.gitflow.GitFlowConfig.*;
@@ -31,6 +32,9 @@ public class InitOperationTest extends AbstractGitFlowOperationTest {
 		Repository repository = testRepository.getRepository();
 		InitOperation initOperation = new InitOperation(repository);
 		initOperation.execute(null);
+
+		TestUtils.waitForJobs(500, 30000, null);
+
 		GitFlowRepository gfRepo = new GitFlowRepository(repository);
 		assertEquals(gfRepo.getConfig().getDevelopFull(), repository.getFullBranch());
 
@@ -57,6 +61,9 @@ public class InitOperationTest extends AbstractGitFlowOperationTest {
 		Repository repository = testRepository.getRepository();
 		InitOperation initOperation = new InitOperation(repository);
 		initOperation.execute(null);
+		
+		TestUtils.waitForJobs(500, 30000, null);
+
 		GitFlowRepository gfRepo = new GitFlowRepository(repository);
 		assertEquals(gfRepo.getConfig().getDevelopFull(), repository.getFullBranch());
 	}

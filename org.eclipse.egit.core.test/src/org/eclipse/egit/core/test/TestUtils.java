@@ -343,9 +343,22 @@ public class TestUtils {
 			Thread.sleep(50);
 			jobs = jobManager.find(family);
 			if (System.currentTimeMillis() - start > maxWaitTime) {
+				if (busy(jobs)) {
+					System.out.println("Following jobs were still running: "
+							+ getJobNames(jobs));
+				}
 				return;
 			}
 		}
+	}
+
+	private static String getJobNames(Job[] jobs) {
+		StringBuilder sb = new StringBuilder();
+		for (Job job : jobs) {
+			sb.append(job.getName()).append(" / ").append(job.toString())
+					.append(", ");
+		}
+		return sb.toString();
 	}
 
 	private static boolean busy(Job[] jobs) {
