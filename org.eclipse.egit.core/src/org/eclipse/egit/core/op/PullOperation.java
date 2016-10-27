@@ -13,6 +13,7 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -47,7 +48,10 @@ import org.eclipse.jgit.api.errors.InvalidConfigurationException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.errors.TransportException;
 import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
+import org.eclipse.jgit.lib.ConfigConstants;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.osgi.util.NLS;
@@ -153,7 +157,7 @@ public class PullOperation implements IEGitOperation {
 		if (!results.isEmpty())
 			throw new CoreException(new Status(IStatus.ERROR, Activator
 					.getPluginId(), CoreText.OperationAlreadyExecuted));
-		SubMonitor progress = SubMonitor.convert(m,
+		SubMonitor totalProgress = SubMonitor.convert(m,
 				NLS.bind(CoreText.PullOperation_TaskName,
 						Integer.valueOf(repositories.length)),
 				1);
@@ -170,11 +174,15 @@ public class PullOperation implements IEGitOperation {
 					PullResult pullResult = null;
 					try (Git git = new Git(repository)) {
 						PullCommand pull = git.pull();
+						SubMonitor newChild = progress.newChild(1,
+								SubMonitor.SUPPRESS_NONE);
 						pull.setProgressMonitor(new EclipseGitProgressTransformer(
-										progress.newChild(1)));
+										newChild));
 						pull.setTimeout(timeout);
 						pull.setCredentialsProvider(credentialsProvider);
 						PullReferenceConfig config = configs.get(repository);
+						newChild.setTaskName(
+								getPullTaskName(repository, config));
 						if (config != null) {
 							if (config.getRemote() != null) {
 								pull.setRemote(config.getRemote());
@@ -209,11 +217,11 @@ public class PullOperation implements IEGitOperation {
 						results.put(repository,
 								Activator.error(cause.getMessage(), cause));
 					} finally {
-						progress.worked(1);
 						if (refreshNeeded(pullResult)) {
-							progress.setWorkRemaining(2);
 							ProjectUtil.refreshValidProjects(validProjects,
-									progress.newChild(1));
+									progress.newChild(1,
+											SubMonitor.SUPPRESS_NONE));
+						} else {
 							progress.worked(1);
 						}
 					}
@@ -222,7 +230,46 @@ public class PullOperation implements IEGitOperation {
 		};
 		// lock workspace to protect working tree changes
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
-				IWorkspace.AVOID_UPDATE, progress);
+				IWorkspace.AVOID_UPDATE, totalProgress);
+	}
+
+	static String getPullTaskName(Repository repo,
+			PullReferenceConfig rc) {
+
+		StoredConfig config = repo.getConfig();
+		if (rc != null) {
+			String remoteUri = config.getString(
+					ConfigConstants.CONFIG_REMOTE_SECTION, rc.remote,
+					ConfigConstants.CONFIG_KEY_URL);
+			return "Pulling " + rc.remote + " from " + remoteUri; //$NON-NLS-1$ //$NON-NLS-2$
+		}
+
+		String branchName;
+		try {
+			String fullBranch = repo.getFullBranch();
+			branchName = fullBranch != null
+					? fullBranch.substring(Constants.R_HEADS.length())
+					: ""; //$NON-NLS-1$
+		} catch (IOException e) {
+			return "Pulling from " + repo.toString(); //$NON-NLS-1$
+		}
+
+		// get the configured remote for the currently checked out branch
+		// stored in configuration key branch.<branch name>.remote
+		String remote = config.getString(ConfigConstants.CONFIG_BRANCH_SECTION,
+				branchName, ConfigConstants.CONFIG_KEY_REMOTE);
+		if (remote == null) {
+			// fall back to default remote
+			remote = Constants.DEFAULT_REMOTE_NAME;
+		}
+
+		String remoteUri = config.getString(
+				ConfigConstants.CONFIG_REMOTE_SECTION, remote,
+				ConfigConstants.CONFIG_KEY_URL);
+		if (remoteUri != null) {
+			return "Pulling " + remote + " from " + remoteUri; //$NON-NLS-1$ //$NON-NLS-2$
+		}
+		return "Pulling from " + repo.getDirectory(); //$NON-NLS-1$
 	}
 
 	boolean refreshNeeded(PullResult pullResult) {
