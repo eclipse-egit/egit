@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b223f6_a99c6d77",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareWithPreviousActionHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-10-28T09:07:37Z",
+      "side": 1,
+      "message": "I think you\u0027ll have to lift this restriction. Note that the handler definition in plugin.xml also is restricted to single-element selections.",
+      "range": {
+        "startLine": 81,
+        "startChar": 30,
+        "endLine": 81,
+        "endChar": 59
+      },
+      "revId": "08524449bc23e4c4625259ce5274a6e205d30e99",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
