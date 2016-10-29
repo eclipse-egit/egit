@@ -125,7 +125,7 @@ public class AddConfigEntryDialog extends TitleAreaDialog {
 
 	@Override
 	protected void okPressed() {
-		key = keyText.getText();
+		key = keyText.getText().trim();
 		value = valueText.getText();
 		super.okPressed();
 	}
