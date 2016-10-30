@@ -345,9 +345,12 @@ class CreateBranchPage extends WizardPage {
 		try {
 			boolean basedOnLocalBranch = sourceRefName
 					.startsWith(Constants.R_HEADS);
-			if (basedOnLocalBranch && upstreamConfig != null)
+			if (basedOnLocalBranch && upstreamConfig != null) {
 				setMessage(UIText.CreateBranchPage_LocalBranchWarningMessage,
 						IMessageProvider.INFORMATION);
+			} else {
+				setMessage(UIText.CreateBranchPage_ChooseBranchAndNameMessage);
+			}
 
 			if (sourceRefName.length() == 0) {
 				setErrorMessage(UIText.CreateBranchPage_MissingSourceMessage);
