@@ -103,6 +103,12 @@
           <value>remoteURI</value>
         </detail>
       </annotation>
+      <configSections
+          name="gerrit">
+        <properties
+            key="createchangeid"
+            value="true"/>
+      </configSections>
       <description>JGit</description>
     </setupTask>
     <setupTask
@@ -125,6 +131,12 @@
           <value>remoteURI</value>
         </detail>
       </annotation>
+      <configSections
+          name="gerrit">
+        <properties
+            key="createchangeid"
+            value="true"/>
+      </configSections>
       <description>EGit</description>
     </setupTask>
     <setupTask
@@ -147,6 +159,12 @@
           <value>remoteURI</value>
         </detail>
       </annotation>
+      <configSections
+          name="gerrit">
+        <properties
+            key="createchangeid"
+            value="true"/>
+      </configSections>
       <description>EGit Github Connector</description>
     </setupTask>
     <setupTask
