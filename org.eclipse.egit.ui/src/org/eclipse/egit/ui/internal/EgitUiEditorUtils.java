@@ -97,7 +97,7 @@ public class EgitUiEditorUtils {
 	 * @return the part
 	 * @throws PartInitException
 	 */
-	private static IEditorPart openEditor(IWorkbenchPage page,
+	public static IEditorPart openEditor(IWorkbenchPage page,
 			FileRevisionEditorInput editorInput) throws PartInitException {
 		String id = getEditorId(editorInput);
 		return openEditor(page, editorInput, id);
