@@ -48,6 +48,7 @@ import org.eclipse.ui.ISources;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.IHandlerService;
+import org.eclipse.ui.part.MultiPageEditorPart;
 
 /**
  * Utilities for working with selections.
@@ -327,12 +328,18 @@ public class SelectionUtils {
 	private static IStructuredSelection getSelectionFromEditorInput(
 			IEvaluationContext context) {
 		Object object = context.getVariable(ISources.ACTIVE_EDITOR_INPUT_NAME);
-		if (!(object instanceof IEditorInput)) {
-			Object editor = context.getVariable(ISources.ACTIVE_EDITOR_NAME);
-			if (editor instanceof IEditorPart)
-				object = ((IEditorPart) editor).getEditorInput();
+		Object editor = context.getVariable(ISources.ACTIVE_EDITOR_NAME);
+		if (editor instanceof MultiPageEditorPart) {
+			Object nestedEditor = ((MultiPageEditorPart) editor)
+					.getSelectedPage();
+			if (nestedEditor instanceof IEditorPart) {
+				object = ((IEditorPart) nestedEditor).getEditorInput();
+			}
 		}
-
+		if (!(object instanceof IEditorInput)
+				&& (editor instanceof IEditorPart)) {
+			object = ((IEditorPart) editor).getEditorInput();
+		}
 		if (object instanceof IEditorInput) {
 			IEditorInput editorInput = (IEditorInput) object;
 			// Note that there is both a getResource(IEditorInput) as well as a
