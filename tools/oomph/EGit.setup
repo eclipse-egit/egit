@@ -15,6 +15,17 @@
     name="egit"
     label="EGit"
     setup:toolVersion="8">
+  <annotation
+      source="http://www.eclipse.org/oomph/setup/BrandingInfo">
+    <detail
+        key="imageURI">
+      <value>http://git.eclipse.org/c/egit/egit.git/plain/org.eclipse.egit/egit.png</value>
+    </detail>
+    <detail
+        key="siteURI">
+      <value>https://projects.eclipse.org/projects/technology.egit</value>
+    </detail>
+  </annotation>
   <setupTask
       xsi:type="setup:CompoundTask"
       name="User Preferences">
