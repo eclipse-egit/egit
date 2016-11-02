@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b223f6_a70f3bea",
+        "filename": "org.eclipse.egit.gitflow.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-11-02T23:00:00Z",
+      "side": 1,
+      "message": "[4.6.0,4.7.0)",
+      "range": {
+        "startLine": 47,
+        "startChar": 34,
+        "endLine": 47,
+        "endChar": 39
+      },
+      "revId": "9d57ae6a857f9811ce4298d58e6df2118584bc2a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_c70c2ff8",
+        "filename": "org.eclipse.egit.gitflow/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-11-02T23:00:00Z",
+      "side": 1,
+      "message": "[4.6.0,4.7.0)",
+      "range": {
+        "startLine": 13,
+        "startChar": 34,
+        "endLine": 13,
+        "endChar": 39
+      },
+      "revId": "9d57ae6a857f9811ce4298d58e6df2118584bc2a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
