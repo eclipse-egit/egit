@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b223f6_f6fb95ad",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1007
+      },
+      "writtenOn": "2016-11-02T08:20:37Z",
+      "side": 1,
+      "message": "not needed. You never create child or use any tick from the submonitor, so you don\u0027t need to affect an arbitrary number of ticks. If you really want to do this, you need to call the runnable like this:\n\nResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),\n\t\t\t\tIWorkspace.AVOID_UPDATE, totalProgress.newChild(100));",
+      "range": {
+        "startLine": 163,
+        "startChar": 4,
+        "endLine": 163,
+        "endChar": 7
+      },
+      "revId": "78980b631924bbffa8af9da6097c9b5eac3833bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b223f6_36318d24",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1007
+      },
+      "writtenOn": "2016-11-02T08:20:37Z",
+      "side": 1,
+      "message": "this will advance the progress bar while doing nothing. I would suggest to use #setWorkRemaining here to better use the remaining space in next loop iteration:\n\n progress.setWorkRemaining((repositories.length - i)*2)",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 26
+      },
+      "revId": "78980b631924bbffa8af9da6097c9b5eac3833bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
