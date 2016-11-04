@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_c8305fef",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1007
+      },
+      "writtenOn": "2016-11-04T18:46:25Z",
+      "side": 1,
+      "message": "Should be changed to totalProgress.newChild(1) -- or anything passed to SubMonitor.convert(). Sorry for my previous comment stating that giving a number of ticks was unnecessary; there is no static factory with taskName but no ticks argument... Thus, you shall call newChild here.",
+      "range": {
+        "startLine": 234,
+        "startChar": 29,
+        "endLine": 234,
+        "endChar": 42
+      },
+      "revId": "e43e9825ce4b8837bede4ac1b2c69265df1953c1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
