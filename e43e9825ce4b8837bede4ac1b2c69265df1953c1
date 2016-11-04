@@ -22,6 +22,30 @@
       "revId": "e43e9825ce4b8837bede4ac1b2c69265df1953c1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_48ed2f83",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-11-04T20:07:25Z",
+      "side": 1,
+      "message": "I didn\u0027t get it. We\u0027ve just created totalProgress monitor via convert() method, and this is the first place where we use it. Why do we need to create *another* child of it?",
+      "parentUuid": "a7c23755_c8305fef",
+      "range": {
+        "startLine": 234,
+        "startChar": 29,
+        "endLine": 234,
+        "endChar": 42
+      },
+      "revId": "e43e9825ce4b8837bede4ac1b2c69265df1953c1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
