@@ -30,6 +30,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.op.AddToIndexOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.test.TestProject;
@@ -51,11 +53,18 @@ import org.eclipse.jgit.util.SystemReader;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.theories.DataPoints;
+import org.junit.experimental.theories.Theories;
+import org.junit.experimental.theories.Theory;
+import org.junit.runner.RunWith;
 
 /**
  * All sorts of interesting cases
  */
+@RunWith(Theories.class)
 public class GitMoveDeleteHookTest {
+	@DataPoints
+	public static boolean[] autoStageDeletions = { true, false };
 
 	TestUtils testUtils = new TestUtils();
 
@@ -139,8 +148,13 @@ public class GitMoveDeleteHookTest {
 		return project;
 	}
 
-	@Test
-	public void testDeleteFile() throws Exception {
+	@Theory
+	public void testDeleteFile(boolean autoStageDelete) throws Exception {
+		IEclipsePreferences p = InstanceScope.INSTANCE
+				.getNode(Activator.getPluginId());
+		p.putBoolean(GitCorePreferences.core_autoStageDeletion,
+				autoStageDelete);
+
 		TestProject project = initRepoInsideProjectInsideWorkspace();
 		testUtils.addFileToProject(project.getProject(), "file.txt",
 				"some text");
@@ -168,8 +182,13 @@ public class GitMoveDeleteHookTest {
 
 		// Check index for the deleted file
 		dirCache.read();
-		assertEquals(1, dirCache.getEntryCount());
-		assertNull(dirCache.getEntry("file.txt"));
+		if (autoStageDelete) {
+			assertEquals(1, dirCache.getEntryCount());
+			assertNull(dirCache.getEntry("file.txt"));
+		} else {
+			assertEquals(2, dirCache.getEntryCount());
+			assertNotNull(dirCache.getEntry("file.txt"));
+		}
 		assertNotNull(dirCache.getEntry("file2.txt"));
 		// Actual file is deleted
 		assertFalse(file.exists());
