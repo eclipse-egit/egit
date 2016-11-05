@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_e3c8dc4c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-11-05T17:07:57Z",
+      "side": 1,
+      "message": "I\u0027ve reverted this change, \"1\" does the job fine.",
+      "parentUuid": "07b223f6_f6fb95ad",
+      "range": {
+        "startLine": 163,
+        "startChar": 4,
+        "endLine": 163,
+        "endChar": 7
+      },
+      "revId": "78980b631924bbffa8af9da6097c9b5eac3833bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b223f6_36318d24",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2016-11-02T08:20:37Z",
       "side": 1,
       "message": "this will advance the progress bar while doing nothing. I would suggest to use #setWorkRemaining here to better use the remaining space in next loop iteration:\n\n progress.setWorkRemaining((repositories.length - i)*2)",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 26
+      },
+      "revId": "78980b631924bbffa8af9da6097c9b5eac3833bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_c3bbe0b8",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2016-11-05T17:07:57Z",
+      "side": 1,
+      "message": "It turned out, that proposal causes the progress to show less work as it was done. So instead of shwing 50% it was 37% etc, and the reporting \"finished\" too early. So I\u0027ve reverted this to the worked(1) which just consumes the second from two planned ticks.",
+      "parentUuid": "07b223f6_36318d24",
       "range": {
         "startLine": 225,
         "startChar": 0,
