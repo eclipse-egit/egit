@@ -10,6 +10,12 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.preferences;
 
+import java.io.IOException;
+
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.PluginPreferenceInitializer;
 import org.eclipse.egit.ui.UIPreferences;
@@ -22,7 +28,9 @@ import org.eclipse.jface.preference.FieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.IntegerFieldEditor;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.Policy;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -34,6 +42,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 /** Preferences for committing with commit dialog/staging view. */
 public class CommittingPreferencePage extends FieldEditorPreferencePage
@@ -55,6 +64,8 @@ public class CommittingPreferencePage extends FieldEditorPreferencePage
 
 	private Group generalGroup;
 
+	private ScopedPreferenceStore corePreferences;
+
 	/** */
 	public CommittingPreferencePage() {
 		super(GRID);
@@ -63,7 +74,14 @@ public class CommittingPreferencePage extends FieldEditorPreferencePage
 
 	@Override
 	public void init(IWorkbench workbench) {
-		// Nothing to do
+		corePreferences = new ScopedPreferenceStore(InstanceScope.INSTANCE,
+				org.eclipse.egit.core.Activator.getPluginId());
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		corePreferences = null;
 	}
 
 	@Override
@@ -103,6 +121,18 @@ public class CommittingPreferencePage extends FieldEditorPreferencePage
 		includeUntracked.getDescriptionControl(generalGroup).setToolTipText(
 				UIText.CommittingPreferencePage_includeUntrackedFilesTooltip);
 		addField(includeUntracked);
+
+		BooleanFieldEditor autoStageDeletion = new BooleanFieldEditor(
+				GitCorePreferences.core_autoStageDeletion,
+				UIText.CommittingPreferencePage_autoStageDeletion,
+				generalGroup) {
+
+			@Override
+			public IPreferenceStore getPreferenceStore() {
+				return corePreferences;
+			}
+		};
+		addField(autoStageDeletion);
 
 		IntegerFieldEditor historySize = new IntegerFieldEditor(
 				UIPreferences.COMMIT_DIALOG_HISTORY_SIZE,
@@ -263,7 +293,21 @@ public class CommittingPreferencePage extends FieldEditorPreferencePage
 				warnCheckbox.getSelection());
 		doGetPreferenceStore().setValue(UIPreferences.BLOCK_COMMIT,
 				blockCheckbox.getSelection());
-		return super.performOk();
+		boolean isOk = super.performOk();
+		if (isOk && corePreferences.needsSaving()) {
+			try {
+				corePreferences.save();
+			} catch (IOException e) {
+				String message = JFaceResources.format(
+						"PreferenceDialog.saveErrorMessage", getTitle(), //$NON-NLS-1$
+						e.getMessage());
+				Policy.getStatusHandler().show(
+						new Status(IStatus.ERROR, Policy.JFACE, message, e),
+						JFaceResources
+								.getString("PreferenceDialog.saveErrorTitle")); //$NON-NLS-1$
+			}
+		}
+		return isOk;
 	}
 
 	private Group createGroup(Composite parent, int numColumns) {
