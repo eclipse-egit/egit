@@ -3247,6 +3247,12 @@ public class UIText extends NLS {
 	public static String CommittingPreferencePage_AlwaysUseStagingView;
 
 	/** */
+	public static String CommittingPreferencePage_autoStageDeletion;
+
+	/** */
+	public static String CommittingPreferencePage_autoStageDeletionTooltip;
+
+	/** */
 	public static String CommittingPreferencePage_AutoStageOnCommit;
 
 	/** */

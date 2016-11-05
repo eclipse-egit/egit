@@ -61,6 +61,10 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 	@Override
 	public boolean deleteFile(final IResourceTree tree, final IFile file,
 			final int updateFlags, final IProgressMonitor monitor) {
+		if (!org.eclipse.egit.core.Activator.autoStageDeletion()) {
+			return false;
+		}
+
 		// Linked resources are not files, hence not tracked by git
 		if (file.isLinked())
 			return false;
