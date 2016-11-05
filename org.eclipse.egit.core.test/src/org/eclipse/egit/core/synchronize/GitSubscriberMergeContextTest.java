@@ -26,6 +26,10 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.egit.core.test.TestUtils;
@@ -347,6 +351,9 @@ public class GitSubscriberMergeContextTest extends ModelTestCase {
 
 	@Test
 	public void mergeModelWithDeletedFileNoConflict() throws Exception {
+		IEclipsePreferences p = InstanceScope.INSTANCE
+				.getNode(Activator.getPluginId());
+		p.putBoolean(GitCorePreferences.core_autoStageDeletion, true);
 		File file1 = testRepo.createFile(iProject, "file1."
 				+ SAMPLE_FILE_EXTENSION);
 		File file2 = testRepo.createFile(iProject, "file2."
