@@ -30,6 +30,7 @@ public class GitCorePreferenceInitializer extends AbstractPreferenceInitializer 
 		p.putBoolean(GitCorePreferences.core_autoShareProjects, true);
 		p.putBoolean(GitCorePreferences.core_autoIgnoreDerivedResources, true);
 		p.putBoolean(GitCorePreferences.core_autoStageDeletion, false);
+		p.putBoolean(GitCorePreferences.core_autoStageMoves, false);
 
 		String defaultRepoDir = RepositoryUtil.getDefaultDefaultRepositoryDir();
 		p.put(GitCorePreferences.core_defaultRepositoryDir, defaultRepoDir);
