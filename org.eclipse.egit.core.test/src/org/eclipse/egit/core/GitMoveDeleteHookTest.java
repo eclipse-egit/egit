@@ -64,7 +64,7 @@ import org.junit.runner.RunWith;
 @RunWith(Theories.class)
 public class GitMoveDeleteHookTest {
 	@DataPoints
-	public static boolean[] autoStageDeletions = { true, false };
+	public static boolean[] autoStage = { true, false };
 
 	TestUtils testUtils = new TestUtils();
 
@@ -258,8 +258,16 @@ public class GitMoveDeleteHookTest {
 		db.close();
 	}
 
-	@Test
-	public void testMoveFile() throws Exception {
+	private void configureAutoStageMoves(boolean autoStageMoves) {
+		IEclipsePreferences p = InstanceScope.INSTANCE
+				.getNode(Activator.getPluginId());
+		p.putBoolean(GitCorePreferences.core_autoStageMoves, autoStageMoves);
+	}
+
+	@Theory
+	public void testMoveFile(boolean autoStageMoves) throws Exception {
+		configureAutoStageMoves(autoStageMoves);
+
 		TestProject project = initRepoInsideProjectInsideWorkspace();
 		testUtils.addFileToProject(project.getProject(), "file.txt",
 				"some text");
@@ -288,9 +296,14 @@ public class GitMoveDeleteHookTest {
 
 		dirCache.read();
 		assertTrue(project.getProject().getFile("data.txt").exists());
-		assertNotNull(dirCache.getEntry("data.txt"));
-		// Same content in index as before the move
-		assertEquals(oldContentId, dirCache.getEntry("data.txt").getObjectId());
+		if (autoStageMoves) {
+			assertNotNull(dirCache.getEntry("data.txt"));
+			// Same content in index as before the move
+			assertEquals(oldContentId,
+					dirCache.getEntry("data.txt").getObjectId());
+		} else {
+			assertNull(dirCache.getEntry("data.txt"));
+		}
 
 		// Not moved file still in its old place
 		assertNotNull(dirCache.getEntry("file2.txt"));
@@ -298,11 +311,13 @@ public class GitMoveDeleteHookTest {
 
 	/**
 	 * Rename "folder" to "dir".
-	 *
+	 * @param autoStageMoves
 	 * @throws Exception
 	 */
-	@Test
-	public void testMoveFolder() throws Exception {
+	@Theory
+	public void testMoveFolder(boolean autoStageMoves) throws Exception {
+		configureAutoStageMoves(autoStageMoves);
+
 		TestProject project = initRepoInsideProjectInsideWorkspace();
 		testUtils.addFileToProject(project.getProject(), "folder/file.txt",
 				"some text");
@@ -332,11 +347,16 @@ public class GitMoveDeleteHookTest {
 
 		dirCache.read();
 		assertTrue(project.getProject().getFile("dir/file.txt").exists());
-		assertNull(dirCache.getEntry("folder/file.txt"));
-		assertNotNull(dirCache.getEntry("dir/file.txt"));
-		// Same content in index as before the move
-		assertEquals(oldContentId, dirCache.getEntry("dir/file.txt")
-				.getObjectId());
+		if (autoStageMoves) {
+			assertNull(dirCache.getEntry("folder/file.txt"));
+			assertNotNull(dirCache.getEntry("dir/file.txt"));
+			// Same content in index as before the move
+			assertEquals(oldContentId,
+					dirCache.getEntry("dir/file.txt").getObjectId());
+		} else {
+			assertNotNull(dirCache.getEntry("folder/file.txt"));
+			assertNull(dirCache.getEntry("dir/file.txt"));
+		}
 		// Not moved file still there
 		assertNotNull(dirCache.getEntry("folder2/file.txt"));
 	}
@@ -454,76 +474,96 @@ public class GitMoveDeleteHookTest {
 	}
 
 
-	@Test
-	public void testMoveProjectWithinGitRepoMoveAtSameTopLevel()
+	@Theory
+	public void testMoveProjectWithinGitRepoMoveAtSameTopLevel(
+			boolean autoStageMoves)
 			throws Exception {
-		dotestMoveProjectWithinRepoWithinWorkspace("", "Project-1", "", "P2", "");
+		dotestMoveProjectWithinRepoWithinWorkspace("", "Project-1", "", "P2",
+				"", autoStageMoves);
 	}
 
-	@Test
-	public void testMoveProjectWithinGitRepoMoveFromTopOneLevelDown()
+	@Theory
+	public void testMoveProjectWithinGitRepoMoveFromTopOneLevelDown(
+			boolean autoStageMoves)
 			throws Exception {
-		dotestMoveProjectWithinRepoWithinWorkspace("", "Project-1", "X/", "P2", "");
+		dotestMoveProjectWithinRepoWithinWorkspace("", "Project-1", "X/", "P2",
+				"", autoStageMoves);
 	}
 
-	@Test
-	public void testMoveProjectWithinGitRepoMoveFromOneLevelDownToTop()
+	@Theory
+	public void testMoveProjectWithinGitRepoMoveFromOneLevelDownToTop(
+			boolean autoStageMoves)
 			throws Exception {
-		dotestMoveProjectWithinRepoWithinWorkspace("P/", "Project-1", "", "P2", "");
+		dotestMoveProjectWithinRepoWithinWorkspace("P/", "Project-1", "", "P2",
+				"", autoStageMoves);
 	}
 
-	@Test
-	public void testMoveProjectWithinGitRepoMoveFromOneLevelDownToSameDepth()
+	@Theory
+	public void testMoveProjectWithinGitRepoMoveFromOneLevelDownToSameDepth(
+			boolean autoStageMoves)
 			throws Exception {
-		dotestMoveProjectWithinRepoWithinWorkspace("P/", "Project-1", "X/", "P2", "");
+		dotestMoveProjectWithinRepoWithinWorkspace("P/", "Project-1", "X/",
+				"P2", "", autoStageMoves);
 	}
 
-	@Test
-	public void testMoveProjectWithinGitRepoMoveFromOneLevelDownOutsideTheRepo()
-			throws Exception {
-		dotestMoveProjectWithinRepoWithinWorkspace("P/", "Project-1", "P/", "P2", "P/");
+	@Theory
+	public void testMoveProjectWithinGitRepoMoveFromOneLevelDownOutsideTheRepo(
+			boolean autoStageMoves) throws Exception {
+		dotestMoveProjectWithinRepoWithinWorkspace("P/", "Project-1", "P/",
+				"P2", "P/", autoStageMoves);
 	}
 
-	@Test
-	public void testMoveProjectWithinGitOutsideWorkspaceRepoMoveAtSameTopLevel()
+	@Theory
+	public void testMoveProjectWithinGitOutsideWorkspaceRepoMoveAtSameTopLevel(
+			boolean autoStageMoves)
 			throws Exception {
-		dotestMoveProjectWithinRepoOutsideWorkspace("", "Project-1", "", "P2", "");
+		dotestMoveProjectWithinRepoOutsideWorkspace("", "Project-1", "", "P2",
+				"", autoStageMoves);
 	}
 
-	@Test
-	public void testMoveProjectWithinGitOutsideWorkspaceRepoMoveFromTopOneLevelDown()
+	@Theory
+	public void testMoveProjectWithinGitOutsideWorkspaceRepoMoveFromTopOneLevelDown(
+			boolean autoStageMoves)
 			throws Exception {
-		dotestMoveProjectWithinRepoOutsideWorkspace("", "Project-1", "X/", "P2", "");
+		dotestMoveProjectWithinRepoOutsideWorkspace("", "Project-1", "X/", "P2",
+				"", autoStageMoves);
 	}
 
-	@Test
-	public void testMoveProjectWithinGitOutsideWorkspaceRepoMoveFromOneLevelDownToTop()
+	@Theory
+	public void testMoveProjectWithinGitOutsideWorkspaceRepoMoveFromOneLevelDownToTop(
+			boolean autoStageMoves)
 			throws Exception {
-		dotestMoveProjectWithinRepoOutsideWorkspace("P/", "Project-1", "", "P2", "");
+		dotestMoveProjectWithinRepoOutsideWorkspace("P/", "Project-1", "", "P2",
+				"", autoStageMoves);
 	}
 
-	@Test
-	public void testMoveProjectWithinGitOutsideWorkspaceRepoMoveFromOneLevelDownToSameDepth()
+	@Theory
+	public void testMoveProjectWithinGitOutsideWorkspaceRepoMoveFromOneLevelDownToSameDepth(
+			boolean autoStageMoves)
 			throws Exception {
-		dotestMoveProjectWithinRepoOutsideWorkspace("P/", "Project-1", "X/", "P2", "");
+		dotestMoveProjectWithinRepoOutsideWorkspace("P/", "Project-1", "X/",
+				"P2", "", autoStageMoves);
 	}
 
-	@Test
-	public void testMoveProjectWithinGitOutsideWorkspaceRepoMoveFromOneLevelDownOutsideTheRepo()
+	@Theory
+	public void testMoveProjectWithinGitOutsideWorkspaceRepoMoveFromOneLevelDownOutsideTheRepo(
+			boolean autoStageMoves)
 			throws Exception {
-		dotestMoveProjectWithinRepoOutsideWorkspace("P/", "Project-1", "P/", "P2", "P/");
+		dotestMoveProjectWithinRepoOutsideWorkspace("P/", "Project-1", "P/",
+				"P2", "P/", autoStageMoves);
 	}
 
 
-	@Test
-	public void testMoveProjectWithinGitRepoMoveFromLevelZeroDownOne()
+	@Theory
+	public void testMoveProjectWithinGitRepoMoveFromLevelZeroDownOne(
+			boolean autoStageMoves)
 			throws Exception {
 		// In this case we'd expect the project to move, but not the repository
 		// TODO: Eclipse cannot do this even without the Git plugin either,
 		// TODO: See Bug 307140)
 		try {
 			dotestMoveProjectWithinRepoWithinWorkspace("P/", "Project-1",
-					"P/Project-1/", "P2", "P/Project-1/");
+					"P/Project-1/", "P2", "P/Project-1/", autoStageMoves);
 			if (!"true".equals(System.getProperty("egit.assume_307140_fixed")))
 				fail("ResourceException expected, core functionality dangerously broken and therefore forbidden");
 		} catch (CoreException e) {
@@ -532,8 +572,11 @@ public class GitMoveDeleteHookTest {
 		}
 	}
 
-	@Test
-	public void testMoveFileWithConflictsShouldBeCanceled() throws Exception {
+	@Theory
+	public void testMoveFileWithConflictsShouldBeCanceled(
+			boolean autoStageMoves) throws Exception {
+		configureAutoStageMoves(autoStageMoves);
+
 		TestProject project = initRepoInsideProjectInsideWorkspace();
 		String filePath = "file.txt";
 		IFile file = testUtils.addFileToProject(project.getProject(), filePath, "some text");
@@ -560,8 +603,11 @@ public class GitMoveDeleteHookTest {
 				DirCacheEntry.STAGE_1, entry.getStage());
 	}
 
-	@Test
-	public void testMoveFolderWithFileWithConflictsShouldBeCanceled() throws Exception {
+	@Theory
+	public void testMoveFolderWithFileWithConflictsShouldBeCanceled(
+			boolean autoStageMoves) throws Exception {
+		configureAutoStageMoves(autoStageMoves);
+
 		TestProject project = initRepoInsideProjectInsideWorkspace();
 		String filePath = "folder/file.txt";
 		IFile file = testUtils.addFileToProject(project.getProject(), filePath, "some text");
@@ -605,21 +651,27 @@ public class GitMoveDeleteHookTest {
 
 	private void dotestMoveProjectWithinRepoWithinWorkspace(String srcParent,
 			String srcProjectName, String dstParent, String dstProjecName,
-			String gitDir) throws CoreException, IOException, Exception,
+			String gitDir, boolean autoStageMoves) throws CoreException,
+			IOException, Exception,
 			CorruptObjectException {
-		dotestMoveProjectWithinRepo(srcParent, srcProjectName, dstParent, dstProjecName, gitDir, true);
+		dotestMoveProjectWithinRepo(srcParent, srcProjectName, dstParent,
+				dstProjecName, gitDir, true, autoStageMoves);
 	}
 
 	private void dotestMoveProjectWithinRepoOutsideWorkspace(String srcParent,
 			String srcProjectName, String dstParent, String dstProjecName,
-			String gitDir) throws CoreException, IOException, Exception,
+			String gitDir, boolean autoStageMoves) throws CoreException,
+			IOException, Exception,
 			CorruptObjectException {
-		dotestMoveProjectWithinRepo(srcParent, srcProjectName, dstParent, dstProjecName, gitDir, false);
+		dotestMoveProjectWithinRepo(srcParent, srcProjectName, dstParent,
+				dstProjecName, gitDir, false, autoStageMoves);
 	}
 
 	private void dotestMoveProjectWithinRepo(String srcParent,
 			String srcProjectName, String dstParent, String dstProjecName,
-			String gitDir, boolean sourceInsideWs) throws Exception {
+			String gitDir, boolean sourceInsideWs, boolean autoStageMoves)
+			throws Exception {
+		configureAutoStageMoves(autoStageMoves);
 		String gdRelativeSrcParent = srcParent + srcProjectName + "/";
 		if (gdRelativeSrcParent.startsWith(gitDir))
 			gdRelativeSrcParent = gdRelativeSrcParent
@@ -677,12 +729,15 @@ public class GitMoveDeleteHookTest {
 		// Check that our file exists on disk has a new location in the index
 		dirCache.read();
 		assertTrue(project2.getFile("file.txt").exists());
-		assertNotNull(dirCache.getEntry(gdRelativeDstParent + "file.txt"));
-
-		// Same content in index as before the move, i.e. not same as on disk
-		assertEquals(oldContentId,
-				dirCache.getEntry(gdRelativeDstParent + "file.txt")
-						.getObjectId());
+		if (autoStageMoves) {
+			assertNotNull(dirCache.getEntry(gdRelativeDstParent + "file.txt"));
+			// Same content in index as before the move, i.e. not same as on
+			// disk
+			assertEquals(oldContentId, dirCache
+					.getEntry(gdRelativeDstParent + "file.txt").getObjectId());
+		} else {
+			assertNull(dirCache.getEntry(gdRelativeDstParent + "file.txt"));
+		}
 	}
 
 
