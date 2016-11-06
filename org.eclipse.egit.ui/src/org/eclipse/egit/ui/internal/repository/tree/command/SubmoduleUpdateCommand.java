@@ -24,7 +24,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.SubmoduleUpdateOperation;
 import org.eclipse.egit.ui.Activator;
@@ -110,7 +110,7 @@ public class SubmoduleUpdateCommand extends
 							if (entry.getValue() != null)
 								for (String path : entry.getValue())
 									op.addPath(path);
-							op.execute(new SubProgressMonitor(monitor, 1));
+							op.execute(SubMonitor.convert(monitor, 1));
 						}
 					} catch (CoreException e) {
 						Activator.logError(
