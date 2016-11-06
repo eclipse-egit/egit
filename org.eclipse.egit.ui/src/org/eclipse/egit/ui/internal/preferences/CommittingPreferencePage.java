@@ -134,6 +134,17 @@ public class CommittingPreferencePage extends FieldEditorPreferencePage
 		};
 		addField(autoStageDeletion);
 
+		BooleanFieldEditor autoStageMoves = new BooleanFieldEditor(
+				GitCorePreferences.core_autoStageMoves,
+				UIText.CommittingPreferencePage_autoStageMoves, generalGroup) {
+
+			@Override
+			public IPreferenceStore getPreferenceStore() {
+				return corePreferences;
+			}
+		};
+		addField(autoStageMoves);
+
 		IntegerFieldEditor historySize = new IntegerFieldEditor(
 				UIPreferences.COMMIT_DIALOG_HISTORY_SIZE,
 				UIText.CommittingPreferencePage_commitMessageHistory,

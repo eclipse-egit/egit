@@ -193,22 +193,26 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 						CoreText.MoveDeleteHook_unmergedFileError));
 				return I_AM_DONE;
 			}
+			if (org.eclipse.egit.core.Activator.autoStageMoves()) {
+				final DirCacheEditor sEdit = sCache.editor();
+				sEdit.add(new DirCacheEditor.DeletePath(sEnt));
+				if (dstm != null
+						&& dstm.getRepository() == srcm.getRepository()) {
+					final String dPath = srcm.getRepoRelativePath(dstf);
+					sEdit.add(new DirCacheEditor.PathEdit(dPath) {
 
-			final DirCacheEditor sEdit = sCache.editor();
-			sEdit.add(new DirCacheEditor.DeletePath(sEnt));
-			if (dstm != null && dstm.getRepository() == srcm.getRepository()) {
-				final String dPath = srcm.getRepoRelativePath(dstf);
-				sEdit.add(new DirCacheEditor.PathEdit(dPath) {
-					@Override
-					public void apply(final DirCacheEntry dEnt) {
-						dEnt.copyMetaData(sEnt);
-					}
-				});
+						@Override
+						public void apply(final DirCacheEntry dEnt) {
+							dEnt.copyMetaData(sEnt);
+						}
+					});
+				}
+				if (!sEdit.commit()) {
+					tree.failed(new Status(IStatus.ERROR,
+							Activator.getPluginId(), 0,
+							CoreText.MoveDeleteHook_operationError, null));
+				}
 			}
-			if (!sEdit.commit())
-				tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(),
-						0, CoreText.MoveDeleteHook_operationError, null));
-
 			tree.standardMoveFile(srcf, dstf, updateFlags, monitor);
 		} catch (IOException e) {
 			tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(), 0,
@@ -236,9 +240,13 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 		try {
 			final String sPath = srcm.getRepoRelativePath(srcf);
 			if (dstm != null && dstm.getRepository() == srcm.getRepository()) {
-				final String dPath =
-					srcm.getRepoRelativePath(dstf) + "/"; //$NON-NLS-1$
-				MoveResult result = moveIndexContent(dPath, srcm, sPath);
+				MoveResult result = null;
+				if (org.eclipse.egit.core.Activator.autoStageMoves()) {
+					final String dPath = srcm.getRepoRelativePath(dstf) + "/"; //$NON-NLS-1$
+					result = moveIndexContent(dPath, srcm, sPath);
+				} else {
+					result = checkUnmergedPaths(srcm, sPath);
+				}
 				switch (result) {
 				case SUCCESS:
 					break;
@@ -361,8 +369,12 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 				return true;
 
 			monitor.worked(100);
-
-			MoveResult result = moveIndexContent(dPath, srcm, sPath);
+			MoveResult result = null;
+			if (org.eclipse.egit.core.Activator.autoStageMoves()) {
+				result = moveIndexContent(dPath, srcm, sPath);
+			} else {
+				result = checkUnmergedPaths(srcm, sPath);
+			}
 			switch (result) {
 			case SUCCESS:
 				break;
@@ -463,6 +475,28 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 		} finally {
 			if (sCache != null)
 				sCache.unlock();
+		}
+	}
+
+	private MoveResult checkUnmergedPaths(final RepositoryMapping srcm,
+			final String sPath) throws IOException {
+		final DirCache sCache = srcm.getRepository().lockDirCache();
+		try {
+			final DirCacheEntry[] sEnt = sCache.getEntriesWithin(sPath);
+			if (sEnt.length == 0) {
+				sCache.unlock();
+				return MoveResult.UNTRACKED;
+			}
+			for (final DirCacheEntry se : sEnt) {
+				if (!se.isMerged()) {
+					return MoveResult.UNMERGED;
+				}
+			}
+			return MoveResult.SUCCESS;
+		} finally {
+			if (sCache != null) {
+				sCache.unlock();
+			}
 		}
 	}
 
