@@ -24,7 +24,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.SubmoduleUpdateOperation;
 import org.eclipse.egit.ui.Activator;
@@ -101,16 +101,19 @@ public class SubmoduleUpdateCommand extends
 
 				@Override
 				public IStatus runInWorkspace(IProgressMonitor monitor) {
-					monitor.beginTask("", repoPaths.size()); //$NON-NLS-1$
+					SubMonitor progress = SubMonitor.convert(monitor,
+							repoPaths.size());
 					try {
 						for (Entry<Repository, List<String>> entry : repoPaths
 								.entrySet()) {
 							SubmoduleUpdateOperation op = new SubmoduleUpdateOperation(
 									entry.getKey());
-							if (entry.getValue() != null)
-								for (String path : entry.getValue())
+							if (entry.getValue() != null) {
+								for (String path : entry.getValue()) {
 									op.addPath(path);
-							op.execute(new SubProgressMonitor(monitor, 1));
+								}
+							}
+							op.execute(progress.newChild(1));
 						}
 					} catch (CoreException e) {
 						Activator.logError(
