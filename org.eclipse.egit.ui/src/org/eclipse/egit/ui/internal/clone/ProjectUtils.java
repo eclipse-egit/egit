@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.project.RepositoryFinder;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -76,57 +76,56 @@ public class ProjectUtils {
 	 * @throws InvocationTargetException
 	 * @throws InterruptedException
 	 */
-	public static void createProjects(
-			final Set<ProjectRecord> projectsToCreate, final boolean open,
-			final IWorkingSet[] selectedWorkingSets, IProgressMonitor monitor)
+	public static void createProjects(final Set<ProjectRecord> projectsToCreate,
+			final boolean open, final IWorkingSet[] selectedWorkingSets,
+			IProgressMonitor monitor)
 			throws InvocationTargetException, InterruptedException {
 		IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
 			@Override
 			public void run(IProgressMonitor actMonitor) throws CoreException {
-				IWorkingSetManager workingSetManager = PlatformUI
-						.getWorkbench().getWorkingSetManager();
-				try {
-					actMonitor.beginTask("", projectsToCreate.size() * 2 + 1); //$NON-NLS-1$
-					if (actMonitor.isCanceled())
+				IWorkingSetManager workingSetManager = PlatformUI.getWorkbench()
+						.getWorkingSetManager();
+				if (actMonitor.isCanceled()) {
+					throw new OperationCanceledException();
+				}
+				Map<IProject, File> projectsToConnect = new HashMap<>();
+				SubMonitor progress = SubMonitor.convert(actMonitor,
+						projectsToCreate.size() * 2 + 1);
+				for (ProjectRecord projectRecord : projectsToCreate) {
+					if (progress.isCanceled()) {
 						throw new OperationCanceledException();
-					Map<IProject, File> projectsToConnect = new HashMap<>();
-					for (ProjectRecord projectRecord : projectsToCreate) {
-						if (actMonitor.isCanceled())
-							throw new OperationCanceledException();
-						actMonitor.subTask(projectRecord.getProjectLabel());
-						IProject project = createExistingProject(projectRecord,
-								open, new SubProgressMonitor(actMonitor, 1));
-						if (project == null)
-							continue;
+					}
+					progress.setTaskName(projectRecord.getProjectLabel());
+					IProject project = createExistingProject(projectRecord,
+							open, progress.newChild(1));
+					if (project == null) {
+						continue;
+					}
 
-						RepositoryFinder finder = new RepositoryFinder(project);
-						finder.setFindInChildren(false);
-						Collection<RepositoryMapping> mappings = finder
-								.find(new SubProgressMonitor(actMonitor, 1));
-						if (!mappings.isEmpty()) {
-							RepositoryMapping mapping = mappings.iterator()
-									.next();
-							IPath absolutePath = mapping
-									.getGitDirAbsolutePath();
-							if (absolutePath != null) {
-								projectsToConnect.put(project,
-										absolutePath.toFile());
-							}
+					RepositoryFinder finder = new RepositoryFinder(project);
+					finder.setFindInChildren(false);
+					Collection<RepositoryMapping> mappings = finder
+							.find(progress.newChild(1));
+					if (!mappings.isEmpty()) {
+						RepositoryMapping mapping = mappings.iterator().next();
+						IPath absolutePath = mapping.getGitDirAbsolutePath();
+						if (absolutePath != null) {
+							projectsToConnect.put(project,
+									absolutePath.toFile());
 						}
-
-						if (selectedWorkingSets != null
-								&& selectedWorkingSets.length > 0)
-							workingSetManager.addToWorkingSets(project,
-									selectedWorkingSets);
 					}
 
-					if (!projectsToConnect.isEmpty()) {
-						ConnectProviderOperation connect = new ConnectProviderOperation(
-								projectsToConnect);
-						connect.execute(new SubProgressMonitor(actMonitor, 1));
+					if (selectedWorkingSets != null
+							&& selectedWorkingSets.length > 0) {
+						workingSetManager.addToWorkingSets(project,
+								selectedWorkingSets);
 					}
-				} finally {
-					actMonitor.done();
+				}
+
+				if (!projectsToConnect.isEmpty()) {
+					ConnectProviderOperation connect = new ConnectProviderOperation(
+							projectsToConnect);
+					connect.execute(progress.newChild(1));
 				}
 			}
 		};
@@ -146,14 +145,16 @@ public class ProjectUtils {
 		final IProject project = workspace.getRoot().getProject(projectName);
 		if (project.exists()) {
 			if (open && !project.isOpen()) {
+				SubMonitor progress = SubMonitor.convert(monitor, 2);
 				IPath location = project.getFile(
 						IProjectDescription.DESCRIPTION_FILE_NAME)
 						.getLocation();
 				if (location != null
 						&& location.toFile().equals(
 								record.getProjectSystemFile())) {
-					project.open(monitor);
-					project.refreshLocal(IResource.DEPTH_INFINITE, monitor);
+					project.open(progress.newChild(1));
+					project.refreshLocal(IResource.DEPTH_INFINITE,
+							progress.newChild(1));
 				}
 			}
 			return null;
@@ -170,19 +171,14 @@ public class ProjectUtils {
 				record.getProjectDescription().setLocation(null);
 			else
 				record.getProjectDescription().setLocation(locationPath);
-		} else
+		} else {
 			record.getProjectDescription().setName(projectName);
-
-		try {
-			monitor.beginTask(
-					UIText.WizardProjectsImportPage_CreateProjectsTask, 100);
-			project.create(record.getProjectDescription(),
-					new SubProgressMonitor(monitor, 30));
-			project.open(IResource.BACKGROUND_REFRESH, new SubProgressMonitor(
-					monitor, 50));
-			return project;
-		} finally {
-			monitor.done();
 		}
+
+		SubMonitor progress = SubMonitor.convert(monitor,
+				UIText.WizardProjectsImportPage_CreateProjectsTask, 8);
+		project.create(record.getProjectDescription(), progress.newChild(3));
+		project.open(IResource.BACKGROUND_REFRESH, progress.newChild(5));
+		return project;
 	}
 }

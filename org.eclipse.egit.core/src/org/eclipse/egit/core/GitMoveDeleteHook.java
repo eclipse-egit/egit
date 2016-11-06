@@ -31,7 +31,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
@@ -284,8 +283,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 			projectData.store();
 			GitProjectData.add(destination, projectData);
 			RepositoryProvider.map(destination, GitProvider.class.getName());
-			destination.refreshLocal(IResource.DEPTH_INFINITE,
-					new SubProgressMonitor(monitor, 50));
+			destination.refreshLocal(IResource.DEPTH_INFINITE, monitor);
 		}
 	}
 
