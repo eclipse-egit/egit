@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.project.RepositoryFinder;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -95,14 +95,14 @@ public class ProjectUtils {
 							throw new OperationCanceledException();
 						actMonitor.subTask(projectRecord.getProjectLabel());
 						IProject project = createExistingProject(projectRecord,
-								open, new SubProgressMonitor(actMonitor, 1));
+								open, SubMonitor.convert(actMonitor, 1));
 						if (project == null)
 							continue;
 
 						RepositoryFinder finder = new RepositoryFinder(project);
 						finder.setFindInChildren(false);
 						Collection<RepositoryMapping> mappings = finder
-								.find(new SubProgressMonitor(actMonitor, 1));
+								.find(SubMonitor.convert(actMonitor, 1));
 						if (!mappings.isEmpty()) {
 							RepositoryMapping mapping = mappings.iterator()
 									.next();
@@ -123,7 +123,7 @@ public class ProjectUtils {
 					if (!projectsToConnect.isEmpty()) {
 						ConnectProviderOperation connect = new ConnectProviderOperation(
 								projectsToConnect);
-						connect.execute(new SubProgressMonitor(actMonitor, 1));
+						connect.execute(SubMonitor.convert(actMonitor, 1));
 					}
 				} finally {
 					actMonitor.done();
@@ -177,9 +177,9 @@ public class ProjectUtils {
 			monitor.beginTask(
 					UIText.WizardProjectsImportPage_CreateProjectsTask, 100);
 			project.create(record.getProjectDescription(),
-					new SubProgressMonitor(monitor, 30));
-			project.open(IResource.BACKGROUND_REFRESH, new SubProgressMonitor(
-					monitor, 50));
+					SubMonitor.convert(monitor, 30));
+			project.open(IResource.BACKGROUND_REFRESH,
+					SubMonitor.convert(monitor, 50));
 			return project;
 		} finally {
 			monitor.done();

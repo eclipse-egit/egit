@@ -21,7 +21,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.synchronize.GitResourceVariantTreeSubscriber;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
@@ -29,8 +29,8 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.team.core.subscribers.SubscriberScopeManager;
 import org.eclipse.ui.IContributorResourceAdapter;
 import org.eclipse.ui.IWorkbenchPart;
@@ -170,11 +170,11 @@ public class GitScopeUtil {
 			InvocationTargetException {
 
 		SubscriberScopeManager manager = GitScopeUtil.createScopeManager(
-				selectedResources, new SubProgressMonitor(monitor, 50));
+				selectedResources, SubMonitor.convert(monitor, 50));
 		GitScopeOperation buildScopeOperation = GitScopeOperationFactory
 				.getFactory().createGitScopeOperation(part, manager);
 
-		buildScopeOperation.run(new SubProgressMonitor(monitor, 50));
+		buildScopeOperation.run(SubMonitor.convert(monitor, 50));
 
 		return buildScopeOperation.getRelevantResources();
 	}
