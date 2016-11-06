@@ -62,4 +62,9 @@ public class GitCorePreferences {
 	 * GitMoveDeleteHook
 	 */
 	public static final String core_autoStageDeletion = "core_auto_stage_deletion"; //$NON-NLS-1$
+
+	/**
+	 * if {@code true} file moves are automatically staged by GitMoveDeleteHook
+	 */
+	public static final String core_autoStageMoves = "core_auto_stage_moves"; //$NON-NLS-1$
 }
