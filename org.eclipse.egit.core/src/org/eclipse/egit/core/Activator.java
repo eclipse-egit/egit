@@ -41,6 +41,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IRegistryEventListener;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
@@ -316,6 +317,9 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	 * @since 4.1
 	 */
 	public Collection<MergeStrategyDescriptor> getRegisteredMergeStrategies() {
+		if (mergeStrategyRegistryListener == null) {
+			return Collections.emptyList();
+		}
 		return mergeStrategyRegistryListener.getStrategies();
 	}
 
@@ -357,16 +361,11 @@ public class Activator extends Plugin implements DebugOptionsListener {
 
 	@Override
 	public void stop(final BundleContext context) throws Exception {
-		GitProjectData.detachFromWorkspace();
-		repositoryCache.clear();
-		repositoryCache = null;
-		indexDiffCache.dispose();
-		indexDiffCache = null;
-		repositoryUtil.dispose();
-		repositoryUtil = null;
-		secureStore = null;
-		super.stop(context);
-		plugin = null;
+		if (mergeStrategyRegistryListener != null) {
+			Platform.getExtensionRegistry()
+					.removeListener(mergeStrategyRegistryListener);
+			mergeStrategyRegistryListener = null;
+		}
 		if (preDeleteProjectListener != null) {
 			ResourcesPlugin.getWorkspace().removeResourceChangeListener(preDeleteProjectListener);
 			preDeleteProjectListener = null;
@@ -374,13 +373,25 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		if (ignoreDerivedResourcesListener != null) {
 			ResourcesPlugin.getWorkspace().removeResourceChangeListener(
 					ignoreDerivedResourcesListener);
+			ignoreDerivedResourcesListener.stop();
 			ignoreDerivedResourcesListener = null;
 		}
 		if (shareGitProjectsJob != null) {
 			ResourcesPlugin.getWorkspace().removeResourceChangeListener(
 					shareGitProjectsJob);
+			shareGitProjectsJob.stop();
 			shareGitProjectsJob = null;
 		}
+		GitProjectData.detachFromWorkspace();
+		indexDiffCache.dispose();
+		indexDiffCache = null;
+		repositoryCache.clear();
+		repositoryCache = null;
+		repositoryUtil.dispose();
+		repositoryUtil = null;
+		secureStore = null;
+		super.stop(context);
+		plugin = null;
 	}
 
 	private void registerAutoShareProjects() {
@@ -408,6 +419,22 @@ public class Activator extends Plugin implements DebugOptionsListener {
 			return p.getBoolean(GitCorePreferences.core_autoShareProjects, d
 					.getBoolean(GitCorePreferences.core_autoShareProjects,
 							true));
+		}
+
+		public void stop() {
+			boolean isRunning = !checkProjectsJob.cancel();
+			Job.getJobManager().cancel(JobFamilies.AUTO_SHARE);
+			try {
+				if (isRunning) {
+					checkProjectsJob.join();
+				}
+				Job.getJobManager().join(JobFamilies.AUTO_SHARE,
+						new NullProgressMonitor());
+			} catch (OperationCanceledException e) {
+				// Ignore
+			} catch (InterruptedException e) {
+				logError(e.getLocalizedMessage(), e);
+			}
 		}
 
 		@Override
@@ -496,6 +523,9 @@ public class Activator extends Plugin implements DebugOptionsListener {
 
 			final Map<IProject, File> projects = new HashMap<IProject, File>();
 			for (IProject project : projectsToCheck) {
+				if (monitor.isCanceled()) {
+					return Status.CANCEL_STATUS;
+				}
 				if (project.isAccessible()) {
 					try {
 						visitConnect(project, projects);
@@ -608,6 +638,17 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	private static class IgnoreDerivedResources implements
 			IResourceChangeListener {
 
+		public void stop() {
+			Job.getJobManager().cancel(JobFamilies.AUTO_IGNORE);
+			try {
+				Job.getJobManager().join(JobFamilies.AUTO_IGNORE,
+						new NullProgressMonitor());
+			} catch (OperationCanceledException e) {
+				// Ignore
+			} catch (InterruptedException e) {
+				logError(e.getLocalizedMessage(), e);
+			}
+		}
 
 		@Override
 		public void resourceChanged(IResourceChangeEvent event) {
