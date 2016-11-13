@@ -327,6 +327,10 @@ public class SelectionUtils {
 
 	private static IStructuredSelection getSelectionFromEditorInput(
 			IEvaluationContext context) {
+		Object part = context.getVariable(ISources.ACTIVE_PART_NAME);
+		if (!(part instanceof IEditorPart)) {
+			return StructuredSelection.EMPTY;
+		}
 		Object object = context.getVariable(ISources.ACTIVE_EDITOR_INPUT_NAME);
 		Object editor = context.getVariable(ISources.ACTIVE_EDITOR_NAME);
 		if (editor instanceof MultiPageEditorPart) {
