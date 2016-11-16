@@ -1,9 +1,7 @@
-target "egit-4.5" with source configurePhase
+target "egit-4.6" with source configurePhase
 
 include "projects/jetty-9.2.13.tpd"
 include "projects/swtbot-snapshot.tpd"
 include "projects/mylyn-latest.tpd"
-include "orbit/R20160221192158-Mars.tpd"
 include "orbit/S20161021172207-Oxygen.tpd"
-include "releasetrain/4.5-mars.tpd"
-include "projects/easymport.tpd"
+include "releasetrain/4.7-oxygen.tpd"
