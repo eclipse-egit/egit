@@ -1,6 +1,6 @@
-target "4.2-juno" with source configurePhase
+target "4.7-oxygen" with source configurePhase
 
-location "http://download.eclipse.org/releases/juno" {
+location "http://download.eclipse.org/releases/oxygen/" {
 	org.eclipse.sdk.ide lazy
 	org.eclipse.emf.sdk.feature.group lazy
 	org.eclipse.mylyn.commons.sdk.feature.group lazy
