@@ -28,8 +28,10 @@ import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.revision.FileRevisionEditorInput;
-import org.eclipse.jgit.annotations.Nullable;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.util.OpenStrategy;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.IEditorDescriptor;
@@ -40,6 +42,8 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.ide.IDE;
+import org.eclipse.ui.part.MultiPageEditorPart;
+import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
  * Taken from the Team UI plug in Utils class
@@ -218,5 +222,47 @@ public class EgitUiEditorUtils {
 					.findContentTypeFor(fileName);
 		}
 		return type;
+	}
+
+	/**
+	 * Reveals the given {@code lineNo} if it is greater than zero and the
+	 * editor is an {@link ITextEditor}.
+	 *
+	 * @param editor
+	 *            to reveal the line in
+	 * @param lineNo
+	 *            to reveal
+	 */
+	public static void revealLine(IEditorPart editor, int lineNo) {
+		if (lineNo < 0) {
+			return;
+		}
+		ITextEditor textEditor = getTextEditor(editor);
+		if (textEditor == null) {
+			return;
+		}
+		IDocument document = textEditor.getDocumentProvider()
+				.getDocument(textEditor.getEditorInput());
+		if (document == null) {
+			return;
+		}
+		try {
+			textEditor.selectAndReveal(document.getLineOffset(lineNo), 0);
+		} catch (BadLocationException e) {
+			// Ignore
+		}
+	}
+
+	private static ITextEditor getTextEditor(IEditorPart editor) {
+		if (editor instanceof ITextEditor) {
+			return (ITextEditor) editor;
+		} else if (editor instanceof MultiPageEditorPart) {
+			Object nestedEditor = ((MultiPageEditorPart) editor)
+					.getSelectedPage();
+			if (nestedEditor instanceof ITextEditor) {
+				return (ITextEditor) nestedEditor;
+			}
+		}
+		return null;
 	}
 }

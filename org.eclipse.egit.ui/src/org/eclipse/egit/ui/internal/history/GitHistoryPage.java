@@ -8,7 +8,7 @@
  * Copyright (C) 2012-2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, François Rey <eclipse.org_@_francois_._rey_._name>
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
- * Copyright (C) 2015, 2016 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2015-2016 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -45,6 +45,7 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.commit.DiffDocument;
 import org.eclipse.egit.ui.internal.commit.DiffStyleRangeFormatter;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
 import org.eclipse.egit.ui.internal.dialogs.HyperlinkSourceViewer;
@@ -2297,7 +2298,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			if (UIUtils.isUsable(diffViewer)) {
 				IDocument document = new Document();
 				diffViewer.setDocument(document);
-				diffViewer.setFormatter(null);
 			}
 			return;
 		}
@@ -2311,7 +2311,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				}
 				int maxLines = Activator.getDefault().getPreferenceStore()
 						.getInt(UIPreferences.HISTORY_MAX_DIFF_LINES);
-				final IDocument document = new Document();
+				final DiffDocument document = new DiffDocument();
 				final DiffStyleRangeFormatter formatter = new DiffStyleRangeFormatter(
 						document, document.getLength(), maxLines);
 
@@ -2345,8 +2345,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 							return Status.CANCEL_STATUS;
 						}
 						if (UIUtils.isUsable(diffViewer)) {
+							document.connect(formatter);
 							diffViewer.setDocument(document);
-							diffViewer.setFormatter(formatter);
 							resizeCommentAndDiffScrolledComposite();
 						}
 						return Status.OK_STATUS;
