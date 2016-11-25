@@ -45,9 +45,6 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.osgi.util.NLS;
@@ -65,7 +62,6 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.Saveable;
 import org.eclipse.ui.SaveablesLifecycleEvent;
-import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
  * The input provider for the compare editor when working on resources
@@ -533,24 +529,7 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 			IWorkbenchPage page = window.getActivePage();
 			IEditorPart editor = EgitUiEditorUtils.openEditor(workspaceFile,
 					page);
-			selectLine(editor, selectedLine);
-		}
-
-		private void selectLine(IEditorPart editorPart, int selectedLine) {
-			if (editorPart instanceof ITextEditor) {
-				ITextEditor editor = (ITextEditor) editorPart;
-				IDocument document = editor.getDocumentProvider().getDocument(
-						editor.getEditorInput());
-				if (document != null)
-					try {
-						IRegion line = document
-								.getLineInformation(selectedLine);
-						editor.selectAndReveal(line.getOffset(), 0);
-					} catch (BadLocationException e) {
-						// line seems not to exist in
-						// workspace version
-					}
-			}
+			EgitUiEditorUtils.revealLine(editor, selectedLine);
 		}
 	}
 
