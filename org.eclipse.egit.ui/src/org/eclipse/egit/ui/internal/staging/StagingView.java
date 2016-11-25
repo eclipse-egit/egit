@@ -67,7 +67,6 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
-import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
 import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
@@ -84,6 +83,7 @@ import org.eclipse.egit.ui.internal.commit.CommitJob;
 import org.eclipse.egit.ui.internal.commit.CommitJob.PushMode;
 import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
+import org.eclipse.egit.ui.internal.commit.DiffViewer;
 import org.eclipse.egit.ui.internal.components.ToggleableWarningLabel;
 import org.eclipse.egit.ui.internal.decorators.IProblemDecoratable;
 import org.eclipse.egit.ui.internal.decorators.ProblemLabelDecorator;
@@ -156,7 +156,6 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.VerifyKeyListener;
@@ -202,7 +201,6 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IURIEditorInput;
 import org.eclipse.ui.IViewSite;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchPartSite;
@@ -2947,24 +2945,11 @@ public class StagingView extends ViewPart implements IShowInSource {
 			if (element instanceof StagingEntry) {
 				StagingEntry entry = (StagingEntry) element;
 				String relativePath = entry.getPath();
-				String path = new Path(repo.getWorkTree()
-						.getAbsolutePath()).append(relativePath)
-						.toOSString();
-				openFileInEditor(path);
+				File file = new Path(repo.getWorkTree().getAbsolutePath())
+						.append(relativePath).toFile();
+				DiffViewer.openFileInEditor(file, -1);
 			}
 		}
-	}
-
-	private void openFileInEditor(String filePath) {
-		IWorkbenchWindow window = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow();
-		File file = new File(filePath);
-		if (!file.exists()) {
-			String message = NLS.bind(UIText.CommitFileDiffViewer_FileDoesNotExist, filePath);
-			Activator.showError(message, null);
-		}
-		IWorkbenchPage page = window.getActivePage();
-		EgitUiEditorUtils.openEditor(file, page);
 	}
 
 	private static Set<StagingEntry.Action> getAvailableActions(IStructuredSelection selection) {

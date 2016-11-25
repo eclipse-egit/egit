@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011, 2013 GitHub Inc. and others.
+ *  Copyright (c) 2011, 2016 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -70,6 +70,11 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 			HEADLINE,
 
 			/**
+			 * Header (after HEADLINE)
+			 */
+			HEADER,
+
+			/**
 			 * Other line
 			 */
 			OTHER,
@@ -101,6 +106,77 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 			return super.similarTo(style) && style instanceof DiffStyleRange
 					&& diffType == ((DiffStyleRange) style).diffType;
 		}
+	}
+
+	/**
+	 * Range giving access to the {@link FileDiff} and its {@link Repository}
+	 * that generated the content.
+	 */
+	public static class FileDiffRange {
+		private final int startOffset;
+
+		private final int endOffset;
+
+		private final FileDiff diff;
+
+		private final Repository repository;
+
+		/**
+		 * Creates a new {@link FileDiffRange}
+		 *
+		 * @param repository
+		 *            the {@link FileDiff} belongs to
+		 * @param fileDiff
+		 *            the range belongs to
+		 * @param start
+		 *            of the range
+		 * @param end
+		 *            of the range
+		 */
+		public FileDiffRange(Repository repository, FileDiff fileDiff,
+				int start, int end) {
+			this.startOffset = start;
+			this.endOffset = end;
+			this.diff = fileDiff;
+			this.repository = repository;
+		}
+
+		/**
+		 * Retrieves the start offset.
+		 *
+		 * @return the offset
+		 */
+		public int getStartOffset() {
+			return startOffset;
+		}
+
+		/**
+		 * Retrieves the end offset.
+		 *
+		 * @return the offset
+		 */
+		public int getEndOffset() {
+			return endOffset;
+		}
+
+		/**
+		 * Retrieves the {@link FileDiff}.
+		 *
+		 * @return the {@link FileDiff}
+		 */
+		public FileDiff getDiff() {
+			return diff;
+		}
+
+		/**
+		 * Retrieves the {@link Repository}.
+		 *
+		 * @return the {@link Repository}
+		 */
+		public Repository getRepository() {
+			return repository;
+		}
+
 	}
 
 	private static class DocumentOutputStream extends OutputStream {
@@ -162,6 +238,8 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 
 	private List<DiffStyleRange> ranges = new ArrayList<>();
 
+	private List<FileDiffRange> fileRanges = new ArrayList<>();
+
 	private final int maxLines;
 
 	private int linesWritten;
@@ -205,18 +283,31 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 			throws IOException {
 		this.stream.charset = CompareCoreUtils.getResourceEncoding(repository,
 				diff.getPath());
+		int start = stream.offset;
 		diff.outputDiff(null, repository, this, true);
 		flush();
+		fileRanges
+				.add(new FileDiffRange(repository, diff, start, stream.offset));
 		return this;
 	}
 
 	/**
-	 * Get diff style ranges
+	 * Get diff style ranges, sorted by offset
 	 *
 	 * @return non-null but possibly empty array
 	 */
 	public DiffStyleRange[] getRanges() {
 		return this.ranges.toArray(new DiffStyleRange[this.ranges.size()]);
+	}
+
+	/**
+	 * Gets the file diff ranges, sorted by offset.
+	 *
+	 * @return the ranges
+	 */
+	public FileDiffRange[] getFileRanges() {
+		return this.fileRanges
+				.toArray(new FileDiffRange[this.fileRanges.size()]);
 	}
 
 	/**
@@ -247,6 +338,13 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 	protected void writeHunkHeader(int aStartLine, int aEndLine,
 			int bStartLine, int bEndLine) throws IOException {
 		int start = stream.offset;
+		if (!ranges.isEmpty()) {
+			DiffStyleRange last = ranges.get(ranges.size() - 1);
+			int lastEnd = last.start + last.length;
+			if (last.diffType == Type.HEADLINE && lastEnd < start) {
+				addRange(Type.HEADER, lastEnd, start);
+			}
+		}
 		super.writeHunkHeader(aStartLine, aEndLine, bStartLine, bEndLine);
 		stream.flushLine();
 		addRange(Type.HUNK, start, stream.offset);
