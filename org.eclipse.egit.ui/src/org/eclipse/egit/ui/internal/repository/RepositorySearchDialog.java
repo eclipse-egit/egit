@@ -15,18 +15,27 @@ package org.eclipse.egit.ui.internal.repository;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.FileVisitOption;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.CachedCheckboxTreeViewer;
@@ -78,6 +87,8 @@ public class RepositorySearchDialog extends WizardPage {
 
 	private static final String PREF_DEEP_SEARCH = "RepositorySearchDialogDeepSearch"; //$NON-NLS-1$
 
+	private static final String PREF_SKIP_HIDDEN = "RepositorySearchDialogSkipHidden"; //$NON-NLS-1$
+
 	private static final String PREF_PATH = "RepositorySearchDialogSearchPath"; //$NON-NLS-1$
 
 	private final Set<String> fExistingDirectories = new HashSet<>();
@@ -93,6 +104,8 @@ public class RepositorySearchDialog extends WizardPage {
 	private Text dir;
 
 	private Button lookForNestedButton;
+
+	private Button skipHiddenButton;
 
 	private Button searchButton;
 
@@ -309,6 +322,29 @@ public class RepositorySearchDialog extends WizardPage {
 
 		});
 
+		skipHiddenButton = new Button(searchGroup, SWT.CHECK);
+		skipHiddenButton.setLayoutData(
+				new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
+		skipHiddenButton
+				.setSelection(prefs.getBoolean(PREF_SKIP_HIDDEN, true));
+		skipHiddenButton.setText(UIText.RepositorySearchDialog_SkipHidden);
+		skipHiddenButton.setToolTipText(
+				UIText.RepositorySearchDialog_SkipHiddenTooltip);
+
+		skipHiddenButton.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				prefs.putBoolean(PREF_SKIP_HIDDEN, skipHiddenButton.getSelection());
+				try {
+					prefs.flush();
+				} catch (BackingStoreException e1) {
+					// ignore
+				}
+				setNeedsSearch();
+			}
+		});
+
 		Group searchResultGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		searchResultGroup
 				.setText(UIText.RepositorySearchDialog_SearchResultGroup);
@@ -411,52 +447,111 @@ public class RepositorySearchDialog extends WizardPage {
 			});
 	}
 
-	private void findGitDirsRecursive(File root, Set<File> gitDirs,
-			IProgressMonitor monitor, int depth) {
-
-		if (!root.exists() || !root.isDirectory()) {
-			return;
-		}
-
-		// check the root first
-		File resolved = FileKey.resolve(root, FS.DETECTED);
-		if ((resolved != null) && !suppressed(root, resolved)) {
-			gitDirs.add(resolved.getAbsoluteFile());
-			monitor.setTaskName(NLS.bind(
-					UIText.RepositorySearchDialog_RepositoriesFound_message,
-					Integer.valueOf(gitDirs.size())));
-		}
-
-		// check depth and if we are not in private git folder ".git" itself
-		if ((depth != 0) && !(resolved != null && isSameFile(root, resolved))) {
-			File[] children = root.listFiles();
-			if (children == null) {
-				return;
-			}
-			for (File child : children) {
-				if (monitor.isCanceled()) {
-					return;
-				}
-				// skip files and .git subfolders in root
-				if (child.isDirectory()
-						&& !Constants.DOT_GIT.equals(child.getName())) {
-					monitor.subTask(child.getPath());
-					findGitDirsRecursive(child, gitDirs, monitor, depth - 1);
-				}
-			}
-		}
-	}
-
-	private boolean suppressed(@NonNull File root, @NonNull File resolved) {
-			return !allowBare && !Constants.DOT_GIT.equals(resolved.getName())
-				&& isSameFile(root, resolved);
-	}
-
-	private boolean isSameFile(@NonNull File f1, @NonNull File f2) {
+	private void findGitDirsRecursive(Path root, final Set<Path> gitDirs,
+			IProgressMonitor monitor, final boolean lookForNested,
+			boolean skipHidden) {
 		try {
-			return Files.isSameFile(f1.toPath(), f2.toPath());
+			final SubMonitor m = SubMonitor.convert(monitor);
+			SimpleFileVisitor<Path> visitor = new SimpleFileVisitor<Path>() {
+
+				private long lastMonitorUpdate;
+
+				@Override
+				public FileVisitResult visitFileFailed(Path file,
+						IOException exc) throws IOException {
+					return FileVisitResult.SKIP_SUBTREE;
+				}
+
+				@Override
+				public FileVisitResult preVisitDirectory(Path d,
+						BasicFileAttributes attrs) throws IOException {
+					if (m.isCanceled()) {
+						return FileVisitResult.TERMINATE;
+					} else if (d == null) {
+						return FileVisitResult.CONTINUE;
+					} else if (skipHidden && Files.isHidden(d)
+							&& !isDotGit(d)) {
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+					updateMonitor(d);
+					Path resolved = resolve(d);
+					if (resolved == null) {
+						return FileVisitResult.CONTINUE;
+					}
+					if (!suppressed(resolved)) {
+						gitDirs.add(resolved.toAbsolutePath());
+						updateMonitor(resolved);
+						if (isDotGit(resolved)) { // non-bare
+							if (!lookForNested
+									|| (isSameFile(d, resolved)
+											&& !hasSubmodule(resolved))
+									|| isGitInternal(resolved)) {
+								return FileVisitResult.SKIP_SUBTREE;
+							}
+						} else { // bare
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+					}
+					return FileVisitResult.CONTINUE;
+				}
+
+				private Path resolve(@NonNull Path d) {
+					File f = FileKey.resolve(d.toFile(), FS.DETECTED);
+					if (f == null) {
+						return null;
+					}
+					return f.toPath();
+				}
+
+				private boolean suppressed(@NonNull Path d) {
+					return !allowBare && !isDotGit(d);
+				}
+
+				private boolean isDotGit(@NonNull Path d) {
+					return Constants.DOT_GIT.equals(d.getFileName().toString());
+				}
+
+				private boolean isSameFile(@NonNull Path f1, @NonNull Path f2) {
+					try {
+						return Files.isSameFile(f1, f2);
+					} catch (IOException e) {
+						return false;
+					}
+				}
+
+				private boolean hasSubmodule(@NonNull Path dotGit) {
+					Path gitmodules = dotGit.getParent()
+							.resolve(Constants.DOT_GIT_MODULES);
+					Path modules = dotGit.resolve(Constants.MODULES);
+					return Files.exists(gitmodules)
+							&& Files.exists(modules);
+				}
+
+				private boolean isGitInternal(@NonNull Path d) {
+					Path p = d.getParent();
+					String n = d.getFileName().toString();
+					return p != null && isDotGit(p) && "objects".equals(n) //$NON-NLS-1$
+							|| "logs".equals(n) //$NON-NLS-1$
+							|| "refs".equals(n); //$NON-NLS-1$
+				}
+
+				private void updateMonitor(@NonNull Path d) {
+					long now = System.currentTimeMillis();
+					if ((now - lastMonitorUpdate) > 100L) {
+						m.setWorkRemaining(100);
+						m.worked(1);
+						m.setTaskName(NLS.bind(
+								UIText.RepositorySearchDialog_RepositoriesFound_message,
+								Integer.valueOf(gitDirs.size()),
+								d.toAbsolutePath().toString()));
+						lastMonitorUpdate = now;
+					}
+				}
+			};
+			Files.walkFileTree(root, EnumSet.of(FileVisitOption.FOLLOW_LINKS),
+					Integer.MAX_VALUE, visitor);
 		} catch (IOException e) {
-			return false;
+			Activator.error(e.getMessage(), e);
 		}
 	}
 
@@ -471,13 +566,16 @@ public class RepositorySearchDialog extends WizardPage {
 		setMessage(UIText.RepositorySearchDialog_searchRepositoriesMessage);
 		setErrorMessage(null);
 		// perform the search...
-		final Set<File> directories = new HashSet<>();
-		final File file = new File(dir.getText());
+		final Set<Path> directories = new TreeSet<>(
+				CommonUtils.PATH_STRING_COMPARATOR);
+		final Path file = Paths.get(dir.getText());
 		final boolean lookForNested = lookForNestedButton.getSelection();
-		if(!file.exists())
+		final boolean skipHidden = skipHiddenButton.getSelection();
+		if (!Files.exists(file)) {
 			return;
+		}
 
-		prefs.put(PREF_PATH, file.getAbsolutePath());
+		prefs.put(PREF_PATH, file.toAbsolutePath().toString());
 		try {
 			prefs.flush();
 		} catch (BackingStoreException e1) {
@@ -496,7 +594,7 @@ public class RepositorySearchDialog extends WizardPage {
 						IProgressMonitor.UNKNOWN);
 				try {
 					findGitDirsRecursive(file, directories, monitor,
-							lookForNested ? -1 : 1);
+							lookForNested, skipHidden);
 				} catch (Exception ex) {
 					throw new InvocationTargetException(ex);
 				}
@@ -517,11 +615,12 @@ public class RepositorySearchDialog extends WizardPage {
 
 		int foundOld = 0;
 
-		for (File foundDir : directories) {
-			String absolutePath = foundDir.getAbsolutePath();
+		for (Path foundDir : directories) {
+			String absolutePath = foundDir.toAbsolutePath().toString();
 			if (!fExistingDirectories.contains(absolutePath)
 					&& !fExistingDirectories.contains(FileUtils
-							.canonicalize(foundDir).getAbsolutePath())) {
+							.canonicalize(foundDir.toFile())
+							.getAbsolutePath())) {
 				validDirs.add(absolutePath);
 			} else {
 				foundOld++;
