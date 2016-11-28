@@ -14,6 +14,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal;
 
+import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -120,6 +121,19 @@ public class CommonUtils {
 		@Override
 		public int compare(IResource r1, IResource r2) {
 			return Policy.getComparator().compare(r1.getName(), r2.getName());
+		}
+	};
+
+	/**
+	 * Comparator for comparing (@link Path} by the result of
+	 * {@link Path#toAbsolutePath()}
+	 */
+	public static final Comparator<Path> PATH_STRING_COMPARATOR = new Comparator<Path>() {
+		@Override
+		public int compare(Path p1, Path p2) {
+			return STRING_ASCENDING_COMPARATOR.compare(
+					p1.toAbsolutePath().toString(),
+					p2.toAbsolutePath().toString());
 		}
 	};
 
