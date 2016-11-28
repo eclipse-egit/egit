@@ -1108,6 +1108,9 @@ public class UIText extends NLS {
 	public static String RepositorySearchDialog_SearchRecursiveToolTip;
 
 	/** */
+	public static String RepositorySearchDialog_SearchResult;
+
+	/** */
 	public static String RepositorySearchDialog_SearchResultGroup;
 
 	/** */
@@ -1115,6 +1118,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RepositorySearchDialog_SearchTooltip;
+
+	/** */
+	public static String RepositorySearchDialog_SkipHidden;
+
+	/** */
+	public static String RepositorySearchDialog_SkipHiddenTooltip;
 
 	/** */
 	public static String RepositorySearchDialog_SomeDirectoriesHiddenMessage;
@@ -1334,9 +1343,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RepositorySearchDialog_NoSearchAvailableMessage;
-
-	/** */
-	public static String RepositorySearchDialog_NothingFoundMessage;
 
 	/** */
 	public static String RepositorySearchDialog_searchRepositoriesMessage;
