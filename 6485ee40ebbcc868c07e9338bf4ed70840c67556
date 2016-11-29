@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_2697ff52",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2207,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-11-29T22:17:58Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "6485ee40ebbcc868c07e9338bf4ed70840c67556",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
