@@ -1138,7 +1138,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				.create());
 
 		commentViewer = new CommitMessageViewer(commentAndDiffComposite,
-				getSite(), getPartSite());
+				getPartSite());
 		commentViewer.getControl().setLayoutData(
 				GridDataFactory.fillDefaults().grab(true, false).create());
 

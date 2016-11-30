@@ -68,7 +68,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.actions.ActionFactory;
-import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
 class CommitMessageViewer extends HyperlinkSourceViewer {
@@ -111,7 +110,7 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 
 	private BooleanPrefAction fillParagraphsPrefAction;
 
-	CommitMessageViewer(final Composite parent, final IPageSite site, IWorkbenchPartSite partSite) {
+	CommitMessageViewer(final Composite parent, IWorkbenchPartSite partSite) {
 		super(parent, null, SWT.READ_ONLY);
 		this.partSite = partSite;
 
