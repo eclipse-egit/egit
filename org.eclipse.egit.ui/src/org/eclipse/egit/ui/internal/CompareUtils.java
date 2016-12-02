@@ -82,7 +82,7 @@ import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.io.EolCanonicalizingInputStream;
+import org.eclipse.jgit.util.io.AutoLFInputStream;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.team.core.history.IFileRevision;
@@ -1041,7 +1041,7 @@ public class CompareUtils {
 					break;
 				case INPUT:
 				case TRUE:
-					EolCanonicalizingInputStream in = new EolCanonicalizingInputStream(
+					AutoLFInputStream in = new AutoLFInputStream(
 							new ByteArrayInputStream(newContent), true);
 					// Canonicalization should lead to same or shorter length
 					// (CRLF to LF), so we don't have to expand the byte[].
