@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011, 2015 GitHub Inc. and others.
+ *  Copyright (c) 2011, 2016 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -49,6 +49,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IEditorActionBarContributor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
@@ -67,6 +68,7 @@ import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.menus.IMenuService;
 import org.eclipse.ui.part.IShowInSource;
+import org.eclipse.ui.part.MultiPageEditorSite;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.progress.UIJob;
 
@@ -146,6 +148,31 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 
 	private ListenerHandle refListenerHandle;
 
+	private static class CommitEditorNestedSite extends MultiPageEditorSite {
+
+		public CommitEditorNestedSite(CommitEditor topLevelEditor,
+				IEditorPart nestedEditor) {
+			super(topLevelEditor, nestedEditor);
+		}
+
+		@Override
+		public IEditorActionBarContributor getActionBarContributor() {
+			IEditorActionBarContributor globalContributor = getMultiPageEditor()
+					.getEditorSite().getActionBarContributor();
+			if (globalContributor instanceof CommitEditorActionBarContributor) {
+				return ((CommitEditorActionBarContributor) globalContributor)
+						.getTextEditorActionContributor();
+			}
+			return super.getActionBarContributor();
+		}
+
+	}
+
+	@Override
+	protected IEditorSite createSite(IEditorPart editor) {
+		return new CommitEditorNestedSite(this, editor);
+	}
+
 	/**
 	 * @see org.eclipse.ui.forms.editor.FormEditor#addPages()
 	 */
@@ -158,7 +185,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 				commitPage = new CommitEditorPage(this);
 			addPage(commitPage);
 			diffPage = new DiffEditorPage(this);
-			addPage(diffPage);
+			addPage(diffPage, getEditorInput());
 			if (getCommit().getNotes().length > 0) {
 				notePage = new NotesEditorPage(this);
 				addPage(notePage);

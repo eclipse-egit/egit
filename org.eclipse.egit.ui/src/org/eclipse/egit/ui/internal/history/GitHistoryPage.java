@@ -1224,10 +1224,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 		commentViewer.configure(configuration);
 
-		diffViewer = new DiffViewer(commentAndDiffComposite, null, SWT.NONE, false);
+		diffViewer = new DiffViewer(commentAndDiffComposite, null, SWT.NONE);
+		diffViewer.configure(
+				new DiffViewer.Configuration(EditorsUI.getPreferenceStore()));
 		diffViewer.getControl().setLayoutData(
 				GridDataFactory.fillDefaults().grab(true, false).create());
-		diffViewer.setEditable(false);
 
 		setWrap(store
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP));
