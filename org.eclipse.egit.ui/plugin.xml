@@ -5981,6 +5981,7 @@
          point="org.eclipse.ui.editors">
       <editor
             class="org.eclipse.egit.ui.internal.commit.CommitEditor"
+            contributorClass="org.eclipse.egit.ui.internal.commit.CommitEditorActionBarContributor"
             default="false"
             icon="icons/obj16/changelog_obj.gif"
             id="org.eclipse.egit.ui.commitEditor"
