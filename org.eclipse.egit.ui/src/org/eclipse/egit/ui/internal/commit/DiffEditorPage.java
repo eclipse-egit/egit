@@ -7,6 +7,7 @@
  *
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - turn it into a real text editor
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commit;
 
@@ -15,8 +16,12 @@ import static java.util.Arrays.asList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -24,93 +29,273 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.commit.DiffStyleRangeFormatter.FileDiffRange;
 import org.eclipse.egit.ui.internal.history.FileDiff;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.text.ITextOperationTarget;
-import org.eclipse.jface.text.ITextViewer;
-import org.eclipse.jface.text.source.CompositeRuler;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.egit.ui.internal.repository.RepositoriesView;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.operation.IRunnableContext;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.Position;
+import org.eclipse.jface.text.reconciler.IReconciler;
+import org.eclipse.jface.text.source.Annotation;
+import org.eclipse.jface.text.source.AnnotationModel;
+import org.eclipse.jface.text.source.IAnnotationModel;
+import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.jface.text.source.IVerticalRuler;
+import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
+import org.eclipse.jface.text.source.projection.ProjectionSupport;
+import org.eclipse.jface.text.source.projection.ProjectionViewer;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.ui.IEditorSite;
-import org.eclipse.ui.IWorkbenchCommandConstants;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.team.ui.history.IHistoryView;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
-import org.eclipse.ui.forms.editor.FormPage;
+import org.eclipse.ui.forms.editor.IFormPage;
+import org.eclipse.ui.ide.IDE;
+import org.eclipse.ui.part.IShowInSource;
+import org.eclipse.ui.part.IShowInTargetList;
+import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.progress.UIJob;
-import org.eclipse.ui.texteditor.AbstractTextEditor;
-import org.eclipse.ui.texteditor.IUpdate;
+import org.eclipse.ui.texteditor.AbstractDocumentProvider;
+import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 
 /**
- * Diff editor page class for displaying a {@link DiffViewer}.
+ * A {@link TextEditor} wrapped as an {@link IFormPage} and specialized to
+ * showing a unified diff of a whole commit.
  */
-public class DiffEditorPage extends FormPage {
+public class DiffEditorPage extends TextEditor
+		implements IFormPage, IShowInSource, IShowInTargetList {
 
-	private static class TextViewerAction extends Action implements IUpdate {
+	private static final String[] SHOW_IN_TARGETS = {
+			IHistoryView.VIEW_ID, RepositoriesView.VIEW_ID };
 
-		private int code = -1;
+	private FormEditor formEditor;
 
-		private ITextOperationTarget target;
+	private String title;
 
-		public TextViewerAction(ITextViewer viewer, int operationCode) {
-			code = operationCode;
-			target = viewer.getTextOperationTarget();
-			update();
-		}
+	private String pageId;
 
-		@Override
-		public void update() {
-			if (code == ITextOperationTarget.REDO)
-				return;
+	private int pageIndex = -1;
 
-			boolean wasEnabled = isEnabled();
-			boolean isEnabled = target.canDoOperation(code);
-			setEnabled(isEnabled);
+	private Control textControl;
 
-			if (wasEnabled != isEnabled)
-				firePropertyChange(ENABLED, wasEnabled ? Boolean.TRUE
-						: Boolean.FALSE, isEnabled ? Boolean.TRUE
-						: Boolean.FALSE);
-		}
 
-		@Override
-		public void run() {
-			if (code != -1)
-				target.doOperation(code);
-		}
-	}
-
-	private DiffViewer viewer;
-
-	private DiffStyleRangeFormatter formatter;
+	private Annotation[] currentFoldingAnnotations;
 
 	/**
+	 * Creates a new {@link DiffEditorPage} with the given id and title, which
+	 * is shown on the page's tab.
+	 *
 	 * @param editor
+	 *            containing this page
 	 * @param id
+	 *            of the page
 	 * @param title
+	 *            of the page
 	 */
 	public DiffEditorPage(FormEditor editor, String id, String title) {
-		super(editor, id, title);
+		pageId = id;
+		this.title = title;
+		setPartName(title);
+		initialize(editor);
 	}
 
 	/**
+	 * Creates a new {@link DiffEditorPage} with default id and title.
+	 *
 	 * @param editor
+	 *            containing the page
 	 */
 	public DiffEditorPage(FormEditor editor) {
 		this(editor, "diffPage", UIText.DiffEditorPage_Title); //$NON-NLS-1$
 	}
 
+	// TextEditor specifics:
+
+	@Override
+	protected ISourceViewer createSourceViewer(Composite parent,
+			IVerticalRuler ruler, int styles) {
+		DiffViewer viewer = new DiffViewer(parent, ruler, getOverviewRuler(),
+				isOverviewRulerVisible(), styles);
+		getSourceViewerDecorationSupport(viewer);
+		ProjectionSupport projector = new ProjectionSupport(viewer,
+				getAnnotationAccess(), getSharedColors());
+		projector.install();
+		return viewer;
+	}
+
+	@Override
+	protected void initializeEditor() {
+		super.initializeEditor();
+		setDocumentProvider(new DiffDocumentProvider());
+		setSourceViewerConfiguration(
+				new DiffViewer.Configuration(getPreferenceStore()) {
+					@Override
+					public IReconciler getReconciler(
+							ISourceViewer sourceViewer) {
+						// Switch off spell-checking
+						return null;
+					}
+				});
+	}
+
+	@Override
+	protected void doSetInput(IEditorInput input) throws CoreException {
+		super.doSetInput(input);
+		if (input instanceof DiffEditorInput) {
+			setFolding();
+		} else if (input instanceof CommitEditorInput) {
+			formatDiff();
+		}
+	}
+
+	@Override
+	protected void editorContextMenuAboutToShow(IMenuManager menu) {
+		super.editorContextMenuAboutToShow(menu);
+		addAction(menu, ITextEditorActionConstants.GROUP_COPY,
+				ITextEditorActionConstants.SELECT_ALL);
+		// TextEditor always adds these, even if the document is not editable.
+		menu.remove(ITextEditorActionConstants.SHIFT_RIGHT);
+		menu.remove(ITextEditorActionConstants.SHIFT_LEFT);
+	}
+
+	// FormPage specifics:
+
+	@Override
+	public void initialize(FormEditor editor) {
+		formEditor = editor;
+	}
+
+	@Override
+	public FormEditor getEditor() {
+		return formEditor;
+	}
+
+	@Override
+	public IManagedForm getManagedForm() {
+		return null;
+	}
+
+	@Override
+	public void setActive(boolean active) {
+		// Nothing to do.
+	}
+
+	@Override
+	public boolean isActive() {
+		return this.equals(formEditor.getActivePageInstance());
+	}
+
+	@Override
+	public boolean canLeaveThePage() {
+		return true;
+	}
+
+	@Override
+	public Control getPartControl() {
+		return textControl;
+	}
+
+	@Override
+	public String getId() {
+		return pageId;
+	}
+
+	@Override
+	public int getIndex() {
+		return pageIndex;
+	}
+
+	@Override
+	public void setIndex(int index) {
+		pageIndex = index;
+	}
+
+	@Override
+	public boolean isEditor() {
+		return true;
+	}
+
+	@Override
+	public boolean selectReveal(Object object) {
+		if (object instanceof IMarker) {
+			IDE.gotoMarker(this, (IMarker) object);
+			return true;
+		}
+		return false;
+	}
+
+	// WorkbenchPart specifics:
+
+	@Override
+	public String getTitle() {
+		return title;
+	}
+
+	@Override
+	public void createPartControl(Composite parent) {
+		super.createPartControl(parent);
+		Control[] children = parent.getChildren();
+		textControl = children[children.length - 1];
+	}
+
+	// "Show In..." specifics:
+
+	@Override
+	public ShowInContext getShowInContext() {
+		RepositoryCommit commit = AdapterUtils.adapt(getEditorInput(),
+				RepositoryCommit.class);
+		if (commit != null) {
+			return new ShowInContext(getEditorInput(),
+					new StructuredSelection(commit));
+		}
+		return null;
+	}
+
+	@Override
+	public String[] getShowInTargetIds() {
+		return SHOW_IN_TARGETS;
+	}
+
+	// Diff specifics:
+
+	private void setFolding() {
+		ProjectionViewer viewer = (ProjectionViewer) getSourceViewer();
+		IDocument document = viewer.getDocument();
+		if (document instanceof DiffDocument) {
+			FileDiffRange[] ranges = ((DiffDocument) document).getFileRanges();
+			if (ranges == null || ranges.length <= 1) {
+				viewer.disableProjection();
+				return;
+			}
+			viewer.enableProjection();
+			Map<Annotation, Position> newAnnotations = new HashMap<>();
+			for (FileDiffRange range : ranges) {
+				newAnnotations.put(new ProjectionAnnotation(),
+						new Position(range.getStartOffset(),
+								range.getEndOffset() - range.getStartOffset()));
+			}
+			viewer.getProjectionAnnotationModel().modifyAnnotations(
+					currentFoldingAnnotations, newAnnotations, null);
+			currentFoldingAnnotations = newAnnotations.keySet()
+					.toArray(new Annotation[newAnnotations.size()]);
+		} else {
+			viewer.disableProjection();
+		}
+	}
+
 	/**
+	 * Gets the full unified diff of a {@link RepositoryCommit}.
+	 *
 	 * @param commit
-	 * @return diffs for changes of of a commit
+	 *            to get the diff
+	 * @return the diff as a sorted (by file path) array of {@link FileDiff}s
 	 */
 	protected FileDiff[] getDiffs(RepositoryCommit commit) {
 		List<FileDiff> diffResult = new ArrayList<>();
@@ -118,18 +303,26 @@ public class DiffEditorPage extends FormPage {
 		diffResult.addAll(asList(commit.getDiffs()));
 
 		if (commit.getRevCommit().getParentCount() > 2) {
-			RevCommit untrackedCommit = commit.getRevCommit().getParent(
-					StashEditorPage.PARENT_COMMIT_UNTRACKED);
-			diffResult.addAll(asList(new RepositoryCommit(commit
-					.getRepository(), untrackedCommit).getDiffs()));
+			RevCommit untrackedCommit = commit.getRevCommit()
+					.getParent(StashEditorPage.PARENT_COMMIT_UNTRACKED);
+			diffResult
+					.addAll(asList(new RepositoryCommit(commit.getRepository(),
+							untrackedCommit).getDiffs()));
 		}
 		Collections.sort(diffResult, FileDiff.PATH_COMPARATOR);
-		return diffResult.toArray(new FileDiff[0]);
+		return diffResult.toArray(new FileDiff[diffResult.size()]);
 	}
 
+	/**
+	 * Asynchronously gets the diff of the commit set on our
+	 * {@link CommitEditorInput}, formats it into a {@link DiffDocument}, and
+	 * then re-sets this editors's input to a {@link DiffEditorInput} which will
+	 * cause this document to be shown.
+	 */
 	private void formatDiff() {
 		final DiffDocument document = new DiffDocument();
-		formatter = new DiffStyleRangeFormatter(document);
+		final DiffStyleRangeFormatter formatter = new DiffStyleRangeFormatter(
+				document);
 
 		Job job = new Job(UIText.DiffEditorPage_TaskGeneratingDiff) {
 
@@ -159,9 +352,9 @@ public class DiffEditorPage extends FormPage {
 
 					@Override
 					public IStatus runInUIThread(IProgressMonitor uiMonitor) {
-						if (UIUtils.isUsable(viewer)) {
+						if (UIUtils.isUsable(getPartControl())) {
 							document.connect(formatter);
-							viewer.setDocument(document);
+							setInput(new DiffEditorInput(commit, document));
 						}
 						return Status.OK_STATUS;
 					}
@@ -173,63 +366,70 @@ public class DiffEditorPage extends FormPage {
 	}
 
 	/**
-	 * Add editor actions to menu manager
-	 *
-	 * @param manager
+	 * An editor input that gives access to the document created by the diff
+	 * formatter.
 	 */
-	protected void addEditorActions(MenuManager manager) {
-		final TextViewerAction copyAction = new TextViewerAction(viewer,
-				ITextOperationTarget.COPY);
-		copyAction.setText(UIText.SpellCheckingMessageArea_copy);
-		copyAction.setActionDefinitionId(IWorkbenchCommandConstants.EDIT_COPY);
+	private static class DiffEditorInput extends CommitEditorInput {
 
-		final TextViewerAction selectAllAction = new TextViewerAction(viewer,
-				ITextOperationTarget.SELECT_ALL);
-		selectAllAction.setText(UIText.SpellCheckingMessageArea_selectAll);
-		selectAllAction
-				.setActionDefinitionId(IWorkbenchCommandConstants.EDIT_SELECT_ALL);
+		private IDocument document;
 
-		manager.add(copyAction);
-		manager.add(selectAllAction);
-		manager.add(new Separator());
+		public DiffEditorInput(RepositoryCommit commit, DiffDocument diff) {
+			super(commit);
+			document = diff;
+		}
 
-		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+		public IDocument getDocument() {
+			return document;
+		}
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-				copyAction.update();
-				selectAllAction.update();
-			}
-		});
+		@Override
+		public String getName() {
+			return UIText.DiffEditorPage_Title;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			return super.equals(obj) && (obj instanceof DiffEditorInput)
+					&& document.equals(((DiffEditorInput) obj).document);
+		}
+
+		@Override
+		public int hashCode() {
+			return super.hashCode() ^ document.hashCode();
+		}
 	}
 
 	/**
-	 * @see org.eclipse.ui.forms.editor.FormPage#createFormContent(org.eclipse.ui.forms.IManagedForm)
+	 * A document provider that knows about {@link DiffEditorInput}.
 	 */
-	@Override
-	protected void createFormContent(IManagedForm managedForm) {
-		Composite body = managedForm.getForm().getBody();
-		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(body);
+	private static class DiffDocumentProvider extends AbstractDocumentProvider {
 
-		viewer = new DiffViewer(body, new CompositeRuler(), SWT.V_SCROLL
-				| SWT.H_SCROLL, true);
-		viewer.setEditable(false);
-		GridDataFactory.fillDefaults().grab(true, true)
-				.applyTo(viewer.getControl());
+		@Override
+		protected IDocument createDocument(Object element)
+				throws CoreException {
+			if (element instanceof DiffEditorInput) {
+				return ((DiffEditorInput) element).getDocument();
+			}
+			return new Document();
+		}
 
-		MenuManager manager = new MenuManager();
-		addEditorActions(manager);
-		Menu menu = manager.createContextMenu(viewer.getTextWidget());
-		IEditorSite site = getEditorSite();
-		site.setSelectionProvider(viewer);
-		site.registerContextMenu(
-				AbstractTextEditor.COMMON_EDITOR_CONTEXT_MENU_ID, manager,
-				viewer, true);
-		site.registerContextMenu(
-				AbstractTextEditor.DEFAULT_EDITOR_CONTEXT_MENU_ID, manager,
-				viewer, true);
-		viewer.getTextWidget().setMenu(menu);
+		@Override
+		protected IAnnotationModel createAnnotationModel(Object element)
+				throws CoreException {
+			return new AnnotationModel();
+		}
 
-		formatDiff();
+		@Override
+		protected void doSaveDocument(IProgressMonitor monitor, Object element,
+				IDocument document, boolean overwrite) throws CoreException {
+			// Cannot save
+		}
+
+		@Override
+		protected IRunnableContext getOperationRunner(
+				IProgressMonitor monitor) {
+			return null;
+		}
+
 	}
 }

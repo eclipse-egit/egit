@@ -29,11 +29,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -74,10 +76,10 @@ import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.ITokenScanner;
 import org.eclipse.jface.text.rules.Token;
-import org.eclipse.jface.text.source.CompositeRuler;
+import org.eclipse.jface.text.source.IOverviewRuler;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.IVerticalRuler;
-import org.eclipse.jface.text.source.LineNumberRulerColumn;
+import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jgit.diff.DiffEntry;
@@ -98,9 +100,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.EditorsUI;
-import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
-import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 import org.eclipse.ui.themes.IThemeManager;
 
 /**
@@ -116,8 +116,6 @@ public class DiffViewer extends HyperlinkSourceViewer {
 	private final Map<String, IToken> tokens = new HashMap<>();
 
 	private final Map<String, Color> backgroundColors = new HashMap<>();
-
-	private LineNumberRulerColumn lineNumberRuler;
 
 	private IPropertyChangeListener themeListener = new IPropertyChangeListener() {
 
@@ -149,12 +147,67 @@ public class DiffViewer extends HyperlinkSourceViewer {
 	};
 
 	/**
-	 * Creates a new {@link DiffViewer} and
-	 * {@link #configure(org.eclipse.jface.text.source.SourceViewerConfiguration)
-	 * configures} it with a {@link PresentationReconciler} and syntax coloring,
-	 * and an {@link IHyperlinkDetector} to provide hyperlinks to open the files
-	 * being diff'ed if the document used with the viewer is a
-	 * {@link DiffDocument}.
+	 * A configuration to use with a {@link DiffViewer}, setting up the syntax
+	 * coloring for a diff and adding the {@link IHyperlinkDetector} for the
+	 * links.
+	 */
+	public static class Configuration
+			extends HyperlinkSourceViewer.Configuration {
+
+		/**
+		 * Creates a new {@link Configuration} connected to the given
+		 * {@link IPreferenceStore}.
+		 *
+		 * @param preferenceStore
+		 *            to connect to
+		 */
+		public Configuration(IPreferenceStore preferenceStore) {
+			super(preferenceStore);
+		}
+
+		@Override
+		public int getHyperlinkStateMask(ISourceViewer sourceViewer) {
+			return SWT.NONE;
+		}
+
+		@Override
+		protected IHyperlinkDetector[] internalGetHyperlinkDetectors(
+				ISourceViewer sourceViewer) {
+			Assert.isTrue(sourceViewer instanceof DiffViewer);
+			IHyperlinkDetector[] result = { new HyperlinkDetector() };
+			return result;
+		}
+
+		@Override
+		public String[] getConfiguredContentTypes(ISourceViewer sourceViewer) {
+			Assert.isTrue(sourceViewer instanceof DiffViewer);
+			DiffViewer viewer = (DiffViewer) sourceViewer;
+			return viewer.tokens.keySet()
+					.toArray(new String[viewer.tokens.size()]);
+		}
+
+		@Override
+		public IPresentationReconciler getPresentationReconciler(
+				ISourceViewer sourceViewer) {
+			Assert.isTrue(sourceViewer instanceof DiffViewer);
+			DiffViewer viewer = (DiffViewer) sourceViewer;
+			PresentationReconciler reconciler = new PresentationReconciler();
+			reconciler.setDocumentPartitioning(
+					getConfiguredDocumentPartitioning(viewer));
+			for (String contentType : viewer.tokens.keySet()) {
+				DefaultDamagerRepairer damagerRepairer = new DefaultDamagerRepairer(
+						new SingleTokenScanner(
+								() -> viewer.tokens.get(contentType)));
+				reconciler.setDamager(damagerRepairer, contentType);
+				reconciler.setRepairer(damagerRepairer, contentType);
+			}
+			return reconciler;
+		}
+
+	}
+
+	/**
+	 * Creates a new {@link DiffViewer}.
 	 *
 	 * @param parent
 	 *            to contain the viewer
@@ -162,33 +215,39 @@ public class DiffViewer extends HyperlinkSourceViewer {
 	 *            for the viewer (left side)
 	 * @param styles
 	 *            for the viewer
-	 * @param showCursorLine
-	 *            if {@code true},the current line is highlighted
 	 */
-	public DiffViewer(Composite parent, IVerticalRuler ruler, int styles,
-			boolean showCursorLine) {
-		super(parent, ruler, styles);
-		setDocument(new Document());
-		SourceViewerDecorationSupport support = new SourceViewerDecorationSupport(
-				this, null, null, EditorsUI.getSharedTextColors());
-		if (showCursorLine) {
-			support.setCursorLinePainterPreferenceKeys(
-					AbstractDecoratedTextEditorPreferenceConstants.EDITOR_CURRENT_LINE,
-					AbstractDecoratedTextEditorPreferenceConstants.EDITOR_CURRENT_LINE_COLOR);
-		}
-		support.install(EditorsUI.getPreferenceStore());
-		if (ruler instanceof CompositeRuler) {
-			lineNumberRuler = new LineNumberRulerColumn();
-			((CompositeRuler) ruler).addDecorator(0, lineNumberRuler);
-		}
+	public DiffViewer(Composite parent, IVerticalRuler ruler, int styles) {
+		this(parent, ruler, null, false, styles);
+	}
+
+	/**
+	 * Creates a new {@link DiffViewer}.
+	 *
+	 * @param parent
+	 *            to contain the viewer
+	 * @param ruler
+	 *            for the viewer (left side)
+	 * @param overviewRuler
+	 *            ruler for overview annotations
+	 * @param showsAnnotationOverview
+	 *            whether to show overview annotations
+	 * @param styles
+	 *            for the viewer
+	 */
+	public DiffViewer(Composite parent, IVerticalRuler ruler,
+			IOverviewRuler overviewRuler, boolean showsAnnotationOverview,
+			int styles) {
+		super(parent, ruler, overviewRuler, showsAnnotationOverview, styles);
 		getTextWidget().setAlwaysShowScrollBars(false);
+		setEditable(false);
+		setDocument(new Document());
 		initListeners();
 		getControl().addDisposeListener(new DisposeListener() {
 
 			@Override
 			public void widgetDisposed(DisposeEvent e) {
-				EditorsUI.getPreferenceStore().removePropertyChangeListener(
-						editorPrefListener);
+				EditorsUI.getPreferenceStore()
+						.removePropertyChangeListener(editorPrefListener);
 				PlatformUI.getWorkbench().getThemeManager()
 						.removePropertyChangeListener(themeListener);
 				colors.dispose();
@@ -196,42 +255,12 @@ public class DiffViewer extends HyperlinkSourceViewer {
 		});
 		refreshDiffStyles();
 		styleViewer();
-		configure(new HyperlinkSourceViewer.Configuration(
-				EditorsUI.getPreferenceStore()) {
+	}
 
-			@Override
-			public int getHyperlinkStateMask(ISourceViewer sourceViewer) {
-				return SWT.NONE;
-			}
-
-			@Override
-			protected IHyperlinkDetector[] internalGetHyperlinkDetectors(
-					ISourceViewer sourceViewer) {
-				IHyperlinkDetector[] result = { new HyperlinkDetector() };
-				return result;
-			}
-
-			@Override
-			public String[] getConfiguredContentTypes(
-					ISourceViewer sourceViewer) {
-				return tokens.keySet().toArray(new String[tokens.size()]);
-			}
-
-			@Override
-			public IPresentationReconciler getPresentationReconciler(
-					ISourceViewer viewer) {
-				PresentationReconciler reconciler = new PresentationReconciler();
-				reconciler.setDocumentPartitioning(
-						getConfiguredDocumentPartitioning(viewer));
-				for (String contentType : tokens.keySet()) {
-					DefaultDamagerRepairer damagerRepairer = new DefaultDamagerRepairer(
-							new SingleTokenScanner(contentType));
-					reconciler.setDamager(damagerRepairer, contentType);
-					reconciler.setRepairer(damagerRepairer, contentType);
-				}
-				return reconciler;
-			}
-		});
+	@Override
+	public void configure(SourceViewerConfiguration config) {
+		Assert.isTrue(config instanceof Configuration);
+		super.configure(config);
 	}
 
 	private void refreshDiffStyles() {
@@ -276,8 +305,11 @@ public class DiffViewer extends HyperlinkSourceViewer {
 			IDocument document = getDocument();
 			if (document instanceof DiffDocument) {
 				try {
+					// We are in SWT land here: we get widget offsets.
+					int modelOffset = widgetOffset2ModelOffset(
+							event.lineOffset);
 					ITypedRegion partition = ((DiffDocument) document)
-							.getPartition(event.lineOffset);
+							.getPartition(modelOffset);
 					if (partition != null) {
 						Color color = backgroundColors.get(partition.getType());
 						if (color != null) {
@@ -328,16 +360,11 @@ public class DiffViewer extends HyperlinkSourceViewer {
 		text.setSelectionForeground(selectionForeground);
 		text.setSelectionBackground(selectionBackground);
 		text.setFont(JFaceResources.getFont(JFaceResources.TEXT_FONT));
-		if (lineNumberRuler != null) {
-			lineNumberRuler.setFont(text.getFont());
-			lineNumberRuler.setForeground(foreground);
-			lineNumberRuler.setBackground(background);
-		}
 	}
 
-	private class SingleTokenScanner implements ITokenScanner {
+	private static class SingleTokenScanner implements ITokenScanner {
 
-		private final String contentType;
+		private final Supplier<IToken> token;
 
 		private int currentOffset;
 
@@ -345,8 +372,8 @@ public class DiffViewer extends HyperlinkSourceViewer {
 
 		private int tokenStart;
 
-		public SingleTokenScanner(String contentType) {
-			this.contentType = contentType;
+		public SingleTokenScanner(Supplier<IToken> supplier) {
+			this.token = supplier;
 		}
 
 		@Override
@@ -361,7 +388,7 @@ public class DiffViewer extends HyperlinkSourceViewer {
 			tokenStart = currentOffset;
 			if (currentOffset < end) {
 				currentOffset = end;
-				return tokens.get(contentType);
+				return token.get();
 			}
 			return Token.EOF;
 		}
@@ -378,7 +405,7 @@ public class DiffViewer extends HyperlinkSourceViewer {
 
 	}
 
-	private class HyperlinkDetector extends AbstractHyperlinkDetector
+	private static class HyperlinkDetector extends AbstractHyperlinkDetector
 			implements IHyperlinkDetectorExtension2 {
 
 		private final Pattern HUNK_LINE_PATTERN = Pattern
@@ -388,8 +415,7 @@ public class DiffViewer extends HyperlinkSourceViewer {
 		public IHyperlink[] detectHyperlinks(ITextViewer textViewer,
 				IRegion region, boolean canShowMultipleHyperlinks) {
 			IDocument document = textViewer.getDocument();
-			if (textViewer != DiffViewer.this
-					|| !(document instanceof DiffDocument)
+			if (!(document instanceof DiffDocument)
 					|| document.getLength() == 0) {
 				return null;
 			}

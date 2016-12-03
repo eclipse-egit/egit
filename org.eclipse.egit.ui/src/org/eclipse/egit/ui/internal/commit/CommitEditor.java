@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011, 2015 GitHub Inc. and others.
+ *  Copyright (c) 2011, 2016 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -49,6 +49,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IEditorActionBarContributor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
@@ -56,6 +57,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
+import org.eclipse.ui.forms.editor.IFormPage;
 import org.eclipse.ui.forms.editor.SharedHeaderFormEditor;
 import org.eclipse.ui.forms.events.HyperlinkAdapter;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
@@ -67,6 +69,8 @@ import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.menus.IMenuService;
 import org.eclipse.ui.part.IShowInSource;
+import org.eclipse.ui.part.IShowInTargetList;
+import org.eclipse.ui.part.MultiPageEditorSite;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.progress.UIJob;
 
@@ -74,7 +78,7 @@ import org.eclipse.ui.progress.UIJob;
  * Editor class to view a commit in a form editor.
  */
 public class CommitEditor extends SharedHeaderFormEditor implements
-		RefsChangedListener, IShowInSource {
+		RefsChangedListener, IShowInSource, IShowInTargetList {
 
 	/**
 	 * ID - editor id
@@ -146,19 +150,45 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 
 	private ListenerHandle refListenerHandle;
 
+	private static class CommitEditorNestedSite extends MultiPageEditorSite {
+
+		public CommitEditorNestedSite(CommitEditor topLevelEditor,
+				IEditorPart nestedEditor) {
+			super(topLevelEditor, nestedEditor);
+		}
+
+		@Override
+		public IEditorActionBarContributor getActionBarContributor() {
+			IEditorActionBarContributor globalContributor = getMultiPageEditor()
+					.getEditorSite().getActionBarContributor();
+			if (globalContributor instanceof CommitEditorActionBarContributor) {
+				return ((CommitEditorActionBarContributor) globalContributor)
+						.getTextEditorActionContributor();
+			}
+			return super.getActionBarContributor();
+		}
+
+	}
+
+	@Override
+	protected IEditorSite createSite(IEditorPart editor) {
+		return new CommitEditorNestedSite(this, editor);
+	}
+
 	/**
 	 * @see org.eclipse.ui.forms.editor.FormEditor#addPages()
 	 */
 	@Override
 	protected void addPages() {
 		try {
-			if (getCommit().isStash())
+			if (getCommit().isStash()) {
 				commitPage = new StashEditorPage(this);
-			else
+			} else {
 				commitPage = new CommitEditorPage(this);
+			}
 			addPage(commitPage);
 			diffPage = new DiffEditorPage(this);
-			addPage(diffPage);
+			addPage(diffPage, getEditorInput());
 			if (getCommit().getNotes().length > 0) {
 				notePage = new NotesEditorPage(this);
 				addPage(notePage);
@@ -404,9 +434,23 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 
 	@Override
 	public ShowInContext getShowInContext() {
-		if (commitPage != null && commitPage.isActive())
-			return commitPage.getShowInContext();
-		else
-			return null;
+		IFormPage currentPage = getActivePageInstance();
+		IShowInSource showInSource = AdapterUtils.adapt(currentPage,
+				IShowInSource.class);
+		if (showInSource != null) {
+			return showInSource.getShowInContext();
+		}
+		return null;
+	}
+
+	@Override
+	public String[] getShowInTargetIds() {
+		IFormPage currentPage = getActivePageInstance();
+		IShowInTargetList targetList = AdapterUtils.adapt(currentPage,
+				IShowInTargetList.class);
+		if (targetList != null) {
+			return targetList.getShowInTargetIds();
+		}
+		return null;
 	}
 }

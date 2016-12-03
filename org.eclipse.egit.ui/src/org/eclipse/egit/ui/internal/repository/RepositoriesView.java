@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2015 SAP AG and others.
+ * Copyright (c) 2010, 2016 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -796,7 +796,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	@Override
 	public boolean show(ShowInContext context) {
 		ISelection selection = context.getSelection();
-		if (selection instanceof IStructuredSelection) {
+		if ((selection instanceof IStructuredSelection)
+				&& !selection.isEmpty()) {
 			IStructuredSelection ss = (IStructuredSelection) selection;
 			List<IPath> paths = new ArrayList<>();
 			for (Iterator it = ss.iterator(); it.hasNext();) {
@@ -823,6 +824,13 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		if(context.getInput() instanceof IFileEditorInput) {
 			IFileEditorInput input = (IFileEditorInput) context.getInput();
 			showResource(input.getFile());
+			return true;
+		}
+		Repository repository = AdapterUtils.adapt(context.getInput(),
+				Repository.class);
+		if (repository != null) {
+			showRepository(repository);
+			return true;
 		}
 		return false;
 	}

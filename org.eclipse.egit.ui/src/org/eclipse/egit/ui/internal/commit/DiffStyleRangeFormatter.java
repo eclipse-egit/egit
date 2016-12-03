@@ -23,14 +23,13 @@ import org.eclipse.egit.ui.internal.commit.DiffStyleRangeFormatter.DiffStyleRang
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.diff.EditList;
 import org.eclipse.jgit.diff.RawText;
-import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.custom.StyleRange;
-import org.eclipse.swt.graphics.Color;
 
 /**
  * Diff style range formatter class that builds up a list of
@@ -95,11 +94,6 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 		 * Diff type
 		 */
 		public Type diffType = Type.OTHER;
-
-		/**
-		 * Line background
-		 */
-		public Color lineBackground = null;
 
 		@Override
 		public boolean similarTo(StyleRange style) {
