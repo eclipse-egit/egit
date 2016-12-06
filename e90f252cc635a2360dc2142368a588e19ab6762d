@@ -16,6 +16,24 @@
       "revId": "e90f252cc635a2360dc2142368a588e19ab6762d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_c38464b0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/DefaultGitSynchronizer.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-06T17:22:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_401cca70",
+      "revId": "e90f252cc635a2360dc2142368a588e19ab6762d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
