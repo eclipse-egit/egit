@@ -73,6 +73,7 @@ import org.eclipse.ui.part.IShowInTargetList;
 import org.eclipse.ui.part.MultiPageEditorSite;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.progress.UIJob;
+import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 /**
  * Editor class to view a commit in a form editor.
@@ -141,6 +142,8 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	public static final IEditorPart openQuiet(RepositoryCommit commit) {
 		return openQuiet(commit, true);
 	}
+
+	private IContentOutlinePage outlinePage;
 
 	private CommitEditorPage commitPage;
 
@@ -364,9 +367,10 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	@Override
 	public Object getAdapter(Class adapter) {
 		if (RepositoryCommit.class == adapter) {
-			return AdapterUtils.adapt(getEditorInput(), adapter);
+			return AdapterUtils.adapt(getEditorInput(), RepositoryCommit.class);
+		} else if (IContentOutlinePage.class == adapter) {
+			return getOutlinePage();
 		}
-
 		return super.getAdapter(adapter);
 	}
 
@@ -430,6 +434,13 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 			};
 			job.schedule();
 		}
+	}
+
+	private IContentOutlinePage getOutlinePage() {
+		if (outlinePage == null) {
+			outlinePage = new MultiPageEditorContentOutlinePage(this);
+		}
+		return outlinePage;
 	}
 
 	@Override
