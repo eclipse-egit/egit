@@ -46,6 +46,7 @@ import org.eclipse.jface.text.source.IVerticalRuler;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
 import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -64,10 +65,12 @@ import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.texteditor.AbstractDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditorActionConstants;
+import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 /**
  * A {@link TextEditor} wrapped as an {@link IFormPage} and specialized to
- * showing a unified diff of a whole commit.
+ * showing a unified diff of a whole commit. The editor has an associated
+ * {@link DiffEditorOutlinePage}.
  */
 public class DiffEditorPage extends TextEditor
 		implements IFormPage, IShowInSource, IShowInTargetList {
@@ -85,8 +88,11 @@ public class DiffEditorPage extends TextEditor
 
 	private Control textControl;
 
+	private DiffEditorOutlinePage outlinePage;
 
 	private Annotation[] currentFoldingAnnotations;
+
+	private FileDiffRegion currentFileDiffRange;
 
 	/**
 	 * Creates a new {@link DiffEditorPage} with the given id and title, which
@@ -116,6 +122,50 @@ public class DiffEditorPage extends TextEditor
 		this(editor, "diffPage", UIText.DiffEditorPage_Title); //$NON-NLS-1$
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public Object getAdapter(Class adapter) {
+		// TODO Switch to generified signature once EGit's base dependency is
+		// Eclipse 4.6
+		if (IContentOutlinePage.class.equals(adapter)) {
+			if (outlinePage == null) {
+				outlinePage = createOutlinePage();
+				outlinePage.setInput(
+						getDocumentProvider().getDocument(getEditorInput()));
+				if (currentFileDiffRange != null) {
+					outlinePage.setSelection(
+							new StructuredSelection(currentFileDiffRange));
+				}
+			}
+			return outlinePage;
+		}
+		return super.getAdapter(adapter);
+	}
+
+	private DiffEditorOutlinePage createOutlinePage() {
+		DiffEditorOutlinePage page = new DiffEditorOutlinePage();
+		page.addSelectionChangedListener(
+				event -> doSetSelection(event.getSelection()));
+		page.addOpenListener(event -> {
+			FormEditor editor = getEditor();
+			editor.getSite().getPage().activate(editor);
+			editor.setActivePage(getId());
+			doSetSelection(event.getSelection());
+		});
+		return page;
+	}
+
+	@Override
+	public void dispose() {
+		// Nested editors are responsible for disposing their outline pages
+		// themselves.
+		if (outlinePage != null) {
+			outlinePage.dispose();
+			outlinePage = null;
+		}
+		super.dispose();
+	}
+
 	// TextEditor specifics:
 
 	@Override
@@ -127,6 +177,17 @@ public class DiffEditorPage extends TextEditor
 		ProjectionSupport projector = new ProjectionSupport(viewer,
 				getAnnotationAccess(), getSharedColors());
 		projector.install();
+		viewer.getTextWidget().addCaretListener((event) -> {
+			if (outlinePage != null) {
+				FileDiffRegion region = getFileDiffRange(event.caretOffset);
+				if (region != null && !region.equals(currentFileDiffRange)) {
+					currentFileDiffRange = region;
+					outlinePage.setSelection(new StructuredSelection(region));
+				} else {
+					currentFileDiffRange = region;
+				}
+			}
+		});
 		return viewer;
 	}
 
@@ -150,9 +211,36 @@ public class DiffEditorPage extends TextEditor
 		super.doSetInput(input);
 		if (input instanceof DiffEditorInput) {
 			setFolding();
+			FileDiffRegion region = getFileDiffRange(0);
+			currentFileDiffRange = region;
 		} else if (input instanceof CommitEditorInput) {
 			formatDiff();
+			currentFileDiffRange = null;
 		}
+		if (outlinePage != null) {
+			outlinePage.setInput(getDocumentProvider().getDocument(input));
+			if (currentFileDiffRange != null) {
+				outlinePage.setSelection(
+						new StructuredSelection(currentFileDiffRange));
+			}
+		}
+	}
+
+	@Override
+	protected void doSetSelection(ISelection selection) {
+		if (!selection.isEmpty() && selection instanceof StructuredSelection) {
+			Object selected = ((StructuredSelection) selection)
+					.getFirstElement();
+			if (selected instanceof FileDiffRegion) {
+				FileDiffRegion newRange = (FileDiffRegion) selected;
+				if (!newRange.equals(currentFileDiffRange)) {
+					currentFileDiffRange = newRange;
+					selectAndReveal(newRange.getOffset(), 0);
+				}
+				return;
+			}
+		}
+		super.doSetSelection(selection);
 	}
 
 	@Override
@@ -184,7 +272,9 @@ public class DiffEditorPage extends TextEditor
 
 	@Override
 	public void setActive(boolean active) {
-		// Nothing to do.
+		if (active) {
+			setFocus();
+		}
 	}
 
 	@Override
@@ -226,6 +316,9 @@ public class DiffEditorPage extends TextEditor
 	public boolean selectReveal(Object object) {
 		if (object instanceof IMarker) {
 			IDE.gotoMarker(this, (IMarker) object);
+			return true;
+		} else if (object instanceof ISelection) {
+			doSetSelection((ISelection) object);
 			return true;
 		}
 		return false;
@@ -288,6 +381,17 @@ public class DiffEditorPage extends TextEditor
 		} else {
 			viewer.disableProjection();
 		}
+	}
+
+	private FileDiffRegion getFileDiffRange(int widgetOffset) {
+		DiffViewer viewer = (DiffViewer) getSourceViewer();
+		int offset = viewer.widgetOffset2ModelOffset(widgetOffset);
+		IDocument document = getDocumentProvider()
+				.getDocument(getEditorInput());
+		if (document instanceof DiffDocument) {
+			return ((DiffDocument) document).findFileRegion(offset);
+		}
+		return null;
 	}
 
 	/**
@@ -432,4 +536,5 @@ public class DiffEditorPage extends TextEditor
 		}
 
 	}
+
 }

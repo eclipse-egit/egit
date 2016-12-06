@@ -4319,6 +4319,9 @@ public class UIText extends NLS {
 	public static String StashEditorPage_LabelParent2;
 
 	/** */
+	public static String MultiPageEditorContentOutlinePage_NoOutline;
+
+	/** */
 	public static String Header_contextMenu_copy;
 
 	/** */
