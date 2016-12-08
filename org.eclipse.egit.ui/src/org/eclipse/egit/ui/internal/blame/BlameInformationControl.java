@@ -30,7 +30,7 @@ import org.eclipse.egit.ui.internal.blame.BlameOperation.BlameHistoryPageInput;
 import org.eclipse.egit.ui.internal.blame.BlameRevision.Diff;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.DiffDocument;
-import org.eclipse.egit.ui.internal.commit.DiffStyleRangeFormatter;
+import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.internal.history.FileDiff;
@@ -375,7 +375,7 @@ public class BlameInformationControl extends AbstractInformationControl
 				GridDataFactory.fillDefaults().grab(true, true).create());
 
 		DiffDocument document = new DiffDocument();
-		DiffStyleRangeFormatter diffFormatter = new DiffStyleRangeFormatter(
+		DiffRegionFormatter diffFormatter = new DiffRegionFormatter(
 				document);
 		diffFormatter.setContext(1);
 		diffFormatter.setRepository(revision.getRepository());

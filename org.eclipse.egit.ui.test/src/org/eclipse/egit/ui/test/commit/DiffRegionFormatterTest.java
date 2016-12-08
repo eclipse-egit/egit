@@ -17,8 +17,8 @@ import java.io.File;
 
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
-import org.eclipse.egit.ui.internal.commit.DiffStyleRangeFormatter;
-import org.eclipse.egit.ui.internal.commit.DiffStyleRangeFormatter.DiffStyleRange;
+import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter;
+import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter.DiffRegion;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jgit.lib.Constants;
@@ -29,9 +29,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit tests for {@link DiffStyleRangeFormatter}
+ * Unit tests for {@link DiffRegionFormatter}.
  */
-public class DiffStyleRangeFormatterTest extends LocalRepositoryTestCase {
+public class DiffRegionFormatterTest extends LocalRepositoryTestCase {
 
 	private Repository repository;
 
@@ -55,20 +55,20 @@ public class DiffStyleRangeFormatterTest extends LocalRepositoryTestCase {
 	@Test
 	public void testRanges() throws Exception {
 		IDocument document = new Document();
-		DiffStyleRangeFormatter formatter = new DiffStyleRangeFormatter(
+		DiffRegionFormatter formatter = new DiffRegionFormatter(
 				document);
 		formatter.setRepository(repository);
 		formatter.format(commit.getTree(), commit.getParent(0).getTree());
 		assertTrue(document.getLength() > 0);
-		DiffStyleRange[] ranges = formatter.getRanges();
-		assertNotNull(ranges);
-		assertTrue(ranges.length > 0);
-		for (DiffStyleRange range : ranges) {
-			assertNotNull(range);
-			assertNotNull(range.diffType);
-			assertTrue(range.start >= 0);
-			assertTrue(range.length >= 0);
-			assertTrue(range.start < document.getLength());
+		DiffRegion[] regions = formatter.getRegions();
+		assertNotNull(regions);
+		assertTrue(regions.length > 0);
+		for (DiffRegion region : regions) {
+			assertNotNull(region);
+			assertNotNull(region.diffType);
+			assertTrue(region.getOffset() >= 0);
+			assertTrue(region.getLength() >= 0);
+			assertTrue(region.getOffset() < document.getLength());
 		}
 
 	}

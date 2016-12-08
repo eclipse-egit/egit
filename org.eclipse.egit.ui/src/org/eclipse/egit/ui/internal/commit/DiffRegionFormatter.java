@@ -19,29 +19,29 @@ import java.util.List;
 
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.commit.DiffStyleRangeFormatter.DiffStyleRange.Type;
+import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter.DiffRegion.Type;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.Region;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.diff.EditList;
 import org.eclipse.jgit.diff.RawText;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.custom.StyleRange;
 
 /**
- * Diff style range formatter class that builds up a list of
- * {@link DiffStyleRange} instances as each {@link FileDiff} is being written to
+ * Diff region formatter class that builds up a list of
+ * {@link DiffRegion} instances as each {@link FileDiff} is being written to
  * an {@link IDocument}.
  */
-public class DiffStyleRangeFormatter extends DiffFormatter {
+public class DiffRegionFormatter extends DiffFormatter {
 
 	/**
 	 * Diff style range
 	 */
-	public static class DiffStyleRange extends StyleRange {
+	public static class DiffRegion extends Region {
 
 		/**
 		 * Diff type
@@ -80,6 +80,29 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 
 		}
 
+		/**
+		 * Diff type
+		 */
+		public Type diffType = Type.OTHER;
+
+		/**
+		 * @param offset
+		 * @param length
+		 */
+		public DiffRegion(int offset, int length) {
+			super(offset, length);
+		}
+
+		/**
+		 * @param offset
+		 * @param length
+		 * @param type
+		 */
+		public DiffRegion(int offset, int length, Type type) {
+			super(offset, length);
+			this.diffType = type;
+		}
+
 		@Override
 		public boolean equals(Object object) {
 			return super.equals(object);
@@ -89,34 +112,20 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 		public int hashCode() {
 			return super.hashCode();
 		}
-
-		/**
-		 * Diff type
-		 */
-		public Type diffType = Type.OTHER;
-
-		@Override
-		public boolean similarTo(StyleRange style) {
-			return super.similarTo(style) && style instanceof DiffStyleRange
-					&& diffType == ((DiffStyleRange) style).diffType;
-		}
 	}
 
 	/**
-	 * Range giving access to the {@link FileDiff} and its {@link Repository}
+	 * Region giving access to the {@link FileDiff} and its {@link Repository}
 	 * that generated the content.
 	 */
-	public static class FileDiffRange {
-		private final int startOffset;
-
-		private final int endOffset;
+	public static class FileDiffRegion extends Region {
 
 		private final FileDiff diff;
 
 		private final Repository repository;
 
 		/**
-		 * Creates a new {@link FileDiffRange}
+		 * Creates a new {@link FileDiffRegion}.
 		 *
 		 * @param repository
 		 *            the {@link FileDiff} belongs to
@@ -124,33 +133,14 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 		 *            the range belongs to
 		 * @param start
 		 *            of the range
-		 * @param end
+		 * @param length
 		 *            of the range
 		 */
-		public FileDiffRange(Repository repository, FileDiff fileDiff,
-				int start, int end) {
-			this.startOffset = start;
-			this.endOffset = end;
+		public FileDiffRegion(Repository repository, FileDiff fileDiff,
+				int start, int length) {
+			super(start, length);
 			this.diff = fileDiff;
 			this.repository = repository;
-		}
-
-		/**
-		 * Retrieves the start offset.
-		 *
-		 * @return the offset
-		 */
-		public int getStartOffset() {
-			return startOffset;
-		}
-
-		/**
-		 * Retrieves the end offset.
-		 *
-		 * @return the offset
-		 */
-		public int getEndOffset() {
-			return endOffset;
 		}
 
 		/**
@@ -171,6 +161,21 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 			return repository;
 		}
 
+		@Override
+		public boolean equals(Object object) {
+			return super.equals(object);
+		}
+
+		@Override
+		public int hashCode() {
+			return super.hashCode();
+		}
+
+		@Override
+		public String toString() {
+			return "[FileDiffRange " + (diff == null ? "null" : diff.getPath()) //$NON-NLS-1$ //$NON-NLS-2$
+					+ ' ' + super.toString() + ']';
+		}
 	}
 
 	private static class DocumentOutputStream extends OutputStream {
@@ -230,9 +235,9 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 
 	private DocumentOutputStream stream;
 
-	private List<DiffStyleRange> ranges = new ArrayList<>();
+	private List<DiffRegion> regions = new ArrayList<>();
 
-	private List<FileDiffRange> fileRanges = new ArrayList<>();
+	private List<FileDiffRegion> fileRegions = new ArrayList<>();
 
 	private final int maxLines;
 
@@ -242,14 +247,14 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 	 * @param document
 	 * @param offset
 	 */
-	public DiffStyleRangeFormatter(IDocument document, int offset) {
+	public DiffRegionFormatter(IDocument document, int offset) {
 		this(document, offset, -1);
 	}
 
 	/**
 	 * @param document
 	 */
-	public DiffStyleRangeFormatter(IDocument document) {
+	public DiffRegionFormatter(IDocument document) {
 		this(document, document.getLength(), -1);
 	}
 
@@ -258,7 +263,7 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 	 * @param offset
 	 * @param maxLines
 	 */
-	public DiffStyleRangeFormatter(IDocument document, int offset,
+	public DiffRegionFormatter(IDocument document, int offset,
 			int maxLines) {
 		super(new DocumentOutputStream(document, offset));
 		this.stream = (DocumentOutputStream) getOutputStream();
@@ -273,35 +278,36 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 	 * @return this formatter
 	 * @throws IOException
 	 */
-	public DiffStyleRangeFormatter write(Repository repository, FileDiff diff)
+	public DiffRegionFormatter write(Repository repository, FileDiff diff)
 			throws IOException {
 		this.stream.charset = CompareCoreUtils.getResourceEncoding(repository,
 				diff.getPath());
 		int start = stream.offset;
 		diff.outputDiff(null, repository, this, true);
 		flush();
-		fileRanges
-				.add(new FileDiffRange(repository, diff, start, stream.offset));
+		fileRegions
+				.add(new FileDiffRegion(repository, diff, start,
+						stream.offset - start));
 		return this;
 	}
 
 	/**
-	 * Get diff style ranges, sorted by offset
+	 * Get diff regions, sorted by offset
 	 *
 	 * @return non-null but possibly empty array
 	 */
-	public DiffStyleRange[] getRanges() {
-		return this.ranges.toArray(new DiffStyleRange[this.ranges.size()]);
+	public DiffRegion[] getRegions() {
+		return this.regions.toArray(new DiffRegion[this.regions.size()]);
 	}
 
 	/**
-	 * Gets the file diff ranges, sorted by offset.
+	 * Gets the file diff regions, sorted by offset.
 	 *
-	 * @return the ranges
+	 * @return the regions; non-null but possibly empty
 	 */
-	public FileDiffRange[] getFileRanges() {
-		return this.fileRanges
-				.toArray(new FileDiffRange[this.fileRanges.size()]);
+	public FileDiffRegion[] getFileRegions() {
+		return this.fileRegions
+				.toArray(new FileDiffRegion[this.fileRegions.size()]);
 	}
 
 	/**
@@ -315,12 +321,9 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 	 *            end offset
 	 * @return added range
 	 */
-	protected DiffStyleRange addRange(Type type, int start, int end) {
-		DiffStyleRange range = new DiffStyleRange();
-		range.start = start;
-		range.diffType = type;
-		range.length = end - start;
-		ranges.add(range);
+	protected DiffRegion addRegion(Type type, int start, int end) {
+		DiffRegion range = new DiffRegion(start, end - start, type);
+		regions.add(range);
 		return range;
 	}
 
@@ -332,16 +335,16 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 	protected void writeHunkHeader(int aStartLine, int aEndLine,
 			int bStartLine, int bEndLine) throws IOException {
 		int start = stream.offset;
-		if (!ranges.isEmpty()) {
-			DiffStyleRange last = ranges.get(ranges.size() - 1);
-			int lastEnd = last.start + last.length;
+		if (!regions.isEmpty()) {
+			DiffRegion last = regions.get(regions.size() - 1);
+			int lastEnd = last.getOffset() + last.getLength();
 			if (last.diffType == Type.HEADLINE && lastEnd < start) {
-				addRange(Type.HEADER, lastEnd, start);
+				addRegion(Type.HEADER, lastEnd, start);
 			}
 		}
 		super.writeHunkHeader(aStartLine, aEndLine, bStartLine, bEndLine);
 		stream.flushLine();
-		addRange(Type.HUNK, start, stream.offset);
+		addRegion(Type.HUNK, start, stream.offset);
 	}
 
 	/**
@@ -359,7 +362,7 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 						NLS.bind(UIText.DiffStyleRangeFormatter_diffTruncated,
 								Integer.valueOf(maxLines)));
 				stream.write("\n"); //$NON-NLS-1$
-				addRange(Type.HEADLINE, start, stream.offset);
+				addRegion(Type.HEADLINE, start, stream.offset);
 				linesWritten++;
 			}
 			return;
@@ -372,7 +375,7 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 			int start = stream.offset;
 			super.writeLine(prefix, text, cur);
 			stream.flushLine();
-			addRange(type, start, stream.offset);
+			addRegion(type, start, stream.offset);
 		}
 		linesWritten++;
 	}
@@ -390,7 +393,7 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 		int start = o.size();
 		super.formatGitDiffFirstHeaderLine(o, type, oldPath, newPath);
 		int end = o.size();
-		addRange(Type.HEADLINE, offset + start, offset + end);
+		addRegion(Type.HEADLINE, offset + start, offset + end);
 	}
 
 	@Override
