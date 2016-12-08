@@ -46,7 +46,7 @@ import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.DiffDocument;
-import org.eclipse.egit.ui.internal.commit.DiffStyleRangeFormatter;
+import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
 import org.eclipse.egit.ui.internal.dialogs.HyperlinkSourceViewer;
 import org.eclipse.egit.ui.internal.dialogs.HyperlinkTokenScanner;
@@ -2313,7 +2313,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				int maxLines = Activator.getDefault().getPreferenceStore()
 						.getInt(UIPreferences.HISTORY_MAX_DIFF_LINES);
 				final DiffDocument document = new DiffDocument();
-				final DiffStyleRangeFormatter formatter = new DiffStyleRangeFormatter(
+				final DiffRegionFormatter formatter = new DiffRegionFormatter(
 						document, document.getLength(), maxLines);
 
 				monitor.beginTask("", diffs.size()); //$NON-NLS-1$
