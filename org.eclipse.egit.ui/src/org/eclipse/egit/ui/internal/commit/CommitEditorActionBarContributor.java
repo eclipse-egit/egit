@@ -8,6 +8,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commit;
 
+import java.util.Map;
+
+import org.eclipse.jface.action.IAction;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorActionBarContributor;
 import org.eclipse.ui.IEditorPart;
@@ -69,8 +72,21 @@ public class CommitEditorActionBarContributor
 	}
 
 	private void updateTextEditorContributions(boolean activate) {
+		IActionBars rootBars = getActionBars();
+		rootBars.clearGlobalActionHandlers();
 		if (activate) {
 			textEditorBars.activate();
+			Map<?, ?> handlers = textEditorBars.getGlobalActionHandlers();
+			if (handlers != null) {
+				for (Map.Entry<?, ?> entry : handlers.entrySet()) {
+					Object key = entry.getKey();
+					Object value = entry.getValue();
+					if (key instanceof String && value instanceof IAction) {
+						rootBars.setGlobalActionHandler((String) key,
+								(IAction) value);
+					}
+				}
+			}
 		} else {
 			textEditorBars.deactivate();
 		}
