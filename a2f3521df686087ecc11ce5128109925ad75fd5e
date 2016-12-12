@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_a713de61",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-12T22:58:47Z",
+      "side": 1,
+      "message": "unnecessary blank line",
+      "revId": "a2f3521df686087ecc11ce5128109925ad75fd5e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_c7cc5a67",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/MultiPageEditorContentOutlinePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-12T22:58:47Z",
+      "side": 1,
+      "message": "missing blank",
+      "range": {
+        "startLine": 74,
+        "startChar": 57,
+        "endLine": 74,
+        "endChar": 64
+      },
+      "revId": "a2f3521df686087ecc11ce5128109925ad75fd5e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
