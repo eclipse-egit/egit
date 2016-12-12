@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_8ccc49d0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryAction.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-12-12T21:01:51Z",
+      "side": 1,
+      "message": "Why is this necessary?",
+      "revId": "2954c8813403bfaa24ce5916c6cc5ed84a2094ff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
