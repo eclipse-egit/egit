@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_435cb7c5",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-14T17:26:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_2dd08c70",
+      "revId": "a0a409726d47f9cc8e0aabb0c1a390ea0cdab143",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_cd347867",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectUtils.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2016-12-14T08:04:01Z",
       "side": 1,
       "message": "I don\u0027t think one should convert the same monitor multiple times. Use\n\n  SubMonitor progress \u003d SubMonitor.convert(actMonitor, projectsToCreate.size() * 2 + 1);\n\nat the top and then use only progress, not actMonitor, and use progress.newChild(1) here and below.",
+      "revId": "a0a409726d47f9cc8e0aabb0c1a390ea0cdab143",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_23ac1b24",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-14T17:26:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_cd347867",
       "revId": "a0a409726d47f9cc8e0aabb0c1a390ea0cdab143",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_638d33ba",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-14T17:26:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_ed2bf404",
+      "revId": "a0a409726d47f9cc8e0aabb0c1a390ea0cdab143",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_0d2f5013",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectUtils.java",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2016-12-14T08:04:01Z",
       "side": 1,
       "message": "SubMonitor progress \u003d SubMonitor.convert(monitor,2);",
+      "revId": "a0a409726d47f9cc8e0aabb0c1a390ea0cdab143",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_83888faa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-14T17:26:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_0d2f5013",
       "revId": "a0a409726d47f9cc8e0aabb0c1a390ea0cdab143",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -93,6 +165,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_a30aebae",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-14T17:26:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_2d45eccb",
+      "revId": "a0a409726d47f9cc8e0aabb0c1a390ea0cdab143",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_4d4068ba",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectUtils.java",
         "patchSetId": 2
@@ -116,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_c30d27c9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-14T17:26:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_4d4068ba",
+      "revId": "a0a409726d47f9cc8e0aabb0c1a390ea0cdab143",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_6d3fe43d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectUtils.java",
         "patchSetId": 2
@@ -127,6 +235,24 @@
       "writtenOn": "2016-12-14T08:04:01Z",
       "side": 1,
       "message": "Same here. Convert to SubMonitor once, then use newChild().",
+      "revId": "a0a409726d47f9cc8e0aabb0c1a390ea0cdab143",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_0318ff01",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-14T17:26:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_6d3fe43d",
       "revId": "a0a409726d47f9cc8e0aabb0c1a390ea0cdab143",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -150,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_83232f30",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-14T17:26:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_ad03bc82",
+      "revId": "a0a409726d47f9cc8e0aabb0c1a390ea0cdab143",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_cd063893",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/SubmoduleSyncCommand.java",
         "patchSetId": 2
@@ -161,6 +305,24 @@
       "writtenOn": "2016-12-14T08:04:01Z",
       "side": 1,
       "message": "SubMonitor progress \u003d SubMonitor.convert(monitor,repoPaths.size());",
+      "revId": "a0a409726d47f9cc8e0aabb0c1a390ea0cdab143",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_e32b0305",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/SubmoduleSyncCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-14T17:26:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_cd063893",
       "revId": "a0a409726d47f9cc8e0aabb0c1a390ea0cdab143",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -184,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_032f1f13",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/SubmoduleSyncCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-14T17:26:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_edfdb4e1",
+      "revId": "a0a409726d47f9cc8e0aabb0c1a390ea0cdab143",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_0d011078",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/SubmoduleUpdateCommand.java",
         "patchSetId": 2
@@ -195,6 +375,24 @@
       "writtenOn": "2016-12-14T08:04:01Z",
       "side": 1,
       "message": "See comments on SubmoduleUpdateOperation.",
+      "revId": "a0a409726d47f9cc8e0aabb0c1a390ea0cdab143",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_03eabf21",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/SubmoduleUpdateCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-14T17:26:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_0d011078",
       "revId": "a0a409726d47f9cc8e0aabb0c1a390ea0cdab143",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
