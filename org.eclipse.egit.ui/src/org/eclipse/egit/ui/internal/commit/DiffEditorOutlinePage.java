@@ -37,6 +37,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
@@ -252,11 +253,24 @@ public class DiffEditorOutlinePage extends NestedContentOutlinePage {
 		private Map<FileDiffRegion, Folder> parents = new HashMap<>();
 
 		@Override
-		public Object[] getElements(Object inputElement) {
+		public void inputChanged(Viewer viewer, Object oldInput,
+				Object newInput) {
 			folders.clear();
 			parents.clear();
+			if (newInput instanceof DiffDocument) {
+				computeFolders(((DiffDocument) newInput).getFileRegions());
+			}
+		}
+
+		@Override
+		public void dispose() {
+			folders.clear();
+			parents.clear();
+		}
+
+		@Override
+		public Object[] getElements(Object inputElement) {
 			if (inputElement instanceof DiffDocument) {
-				computeFolders(((DiffDocument) inputElement).getFileRegions());
 				return folders.values().toArray();
 			}
 			return NOTHING;
