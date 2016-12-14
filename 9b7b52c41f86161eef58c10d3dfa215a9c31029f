@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_ed7a1460",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-14T00:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_cfcf1057",
+      "range": {
+        "startLine": 447,
+        "startChar": 11,
+        "endLine": 447,
+        "endChar": 20
+      },
+      "revId": "9b7b52c41f86161eef58c10d3dfa215a9c31029f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_2fc08422",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_cdc55808",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-14T00:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_2fc08422",
+      "range": {
+        "startLine": 478,
+        "startChar": 31,
+        "endLine": 478,
+        "endChar": 35
+      },
+      "revId": "9b7b52c41f86161eef58c10d3dfa215a9c31029f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_af9e5441",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2016-12-13T14:21:18Z",
       "side": 1,
       "message": "When was this introduced? I think it\u0027s pretty recent. Won\u0027t work on earlier Eclipses. Are we still supporting back to Juno (Eclipse 4.2)?",
+      "range": {
+        "startLine": 495,
+        "startChar": 31,
+        "endLine": 495,
+        "endChar": 40
+      },
+      "revId": "9b7b52c41f86161eef58c10d3dfa215a9c31029f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_edccd434",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-14T00:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_af9e5441",
       "range": {
         "startLine": 495,
         "startChar": 31,
