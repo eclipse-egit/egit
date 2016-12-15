@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_58b3bd7f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-12-15T21:47:23Z",
+      "side": 1,
+      "message": "Done. (Message rephrased)",
+      "parentUuid": "a7c23755_67c45c35",
+      "revId": "1c66dd5eb65e3b7ec0f1cb2a907970a93a2d55bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_87f4187f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
         "patchSetId": 4
@@ -47,6 +65,30 @@
       "writtenOn": "2016-12-15T21:46:28Z",
       "side": 1,
       "message": "Conflicts with \u0026Search",
+      "range": {
+        "startLine": 455,
+        "startChar": 34,
+        "endLine": 455,
+        "endChar": 36
+      },
+      "revId": "1c66dd5eb65e3b7ec0f1cb2a907970a93a2d55bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_78b07972",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-12-15T21:47:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_98b9d568",
       "range": {
         "startLine": 455,
         "startChar": 34,
