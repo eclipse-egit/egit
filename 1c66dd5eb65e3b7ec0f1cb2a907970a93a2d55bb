@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_67c45c35",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-12-15T08:06:13Z",
+      "side": 1,
+      "message": "What is a \"hidden directory\"? Point is, \"hidden\" is now overloaded. When one already has some repositories in the repositories view, the dialog will present an info \"N directories are hidden as they have already been added\". But that has nothing to do with this toggle.\n\nProbably the simplest fix is to change that message to \"N directories are not shown as they have already been added\".\n\nAlso note that on Linux .git itself is considered \"hidden\". So the combination of \"look for nested\" and \"skip hidden\" can be used to find all repos except submodule repos. On Windows, that most probably (can\u0027t test) will not have that effect since the Files.isHidden() definition is different. (Unless git/jgit on Windows would set the hidden bit, but I\u0027d be surprised if they did.)",
+      "revId": "1c66dd5eb65e3b7ec0f1cb2a907970a93a2d55bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_87f4187f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-12-15T08:06:13Z",
+      "side": 1,
+      "message": "Deep search could be speeded up significantly by not looking through .git/objects.",
+      "revId": "1c66dd5eb65e3b7ec0f1cb2a907970a93a2d55bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
