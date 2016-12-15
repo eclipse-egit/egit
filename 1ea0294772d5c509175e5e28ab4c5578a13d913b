@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_c7aff099",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-12-15T07:32:07Z",
+      "side": 1,
+      "message": "Delete this line.",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 62
+      },
+      "revId": "1ea0294772d5c509175e5e28ab4c5578a13d913b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_e7b4ecec",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-12-15T07:32:07Z",
+      "side": 1,
+      "message": "For isCanceled() is doesn\u0027t matter, but in general: once one has converted a monitor to a SubMonitor, one should use only the converted one. So replace by \"progress\".",
+      "range": {
+        "startLine": 96,
+        "startChar": 9,
+        "endLine": 96,
+        "endChar": 19
+      },
+      "revId": "1ea0294772d5c509175e5e28ab4c5578a13d913b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_a7959446",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-12-15T07:32:07Z",
+      "side": 1,
+      "message": "I think we can use simply\n\n  SubMonitor.convert(monitor, UIText.WizardProjectsImportPage_CreateProjectsTask, 8);\n\nhere.",
+      "revId": "1ea0294772d5c509175e5e28ab4c5578a13d913b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
