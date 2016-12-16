@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_93b37635",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-16T00:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_c7aff099",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 62
+      },
+      "revId": "1ea0294772d5c509175e5e28ab4c5578a13d913b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_e7b4ecec",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectUtils.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_f3be6afb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-16T00:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_e7b4ecec",
+      "range": {
+        "startLine": 96,
+        "startChar": 9,
+        "endLine": 96,
+        "endChar": 19
+      },
+      "revId": "1ea0294772d5c509175e5e28ab4c5578a13d913b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_a7959446",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectUtils.java",
         "patchSetId": 3
@@ -59,6 +107,24 @@
       "writtenOn": "2016-12-15T07:32:07Z",
       "side": 1,
       "message": "I think we can use simply\n\n  SubMonitor.convert(monitor, UIText.WizardProjectsImportPage_CreateProjectsTask, 8);\n\nhere.",
+      "revId": "1ea0294772d5c509175e5e28ab4c5578a13d913b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_13c7668d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-16T00:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_a7959446",
       "revId": "1ea0294772d5c509175e5e28ab4c5578a13d913b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
