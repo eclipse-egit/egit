@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_0b73ae5b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-16T22:53:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_6b26e26b",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "a458e509cdd5ade43685299e910e367b5a12ab97",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_4b2da646",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2016-12-16T22:52:37Z",
       "side": 1,
       "message": "Staging",
+      "range": {
+        "startLine": 14,
+        "startChar": 58,
+        "endLine": 14,
+        "endChar": 66
+      },
+      "revId": "a458e509cdd5ade43685299e910e367b5a12ab97",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_2b7b0a34",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-16T22:53:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_4b2da646",
       "range": {
         "startLine": 14,
         "startChar": 58,
