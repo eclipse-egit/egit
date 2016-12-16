@@ -16,6 +16,24 @@
       "revId": "06e99c691a8463f0bb03442c6585bd4ba0007894",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_0b380e86",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-16T22:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_be959946",
+      "revId": "06e99c691a8463f0bb03442c6585bd4ba0007894",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
