@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_ce5c6454",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-12-17T10:20:17Z",
+      "side": 1,
+      "message": "Good idea to use MessageFormat instead of NLS.bind(). Let\u0027s get rid of NLS altogether, and fix the messages such that they don\u0027t say \"1 repositories\" but \"One repository\".",
+      "revId": "a87577e39ce8cd188c6107a35e466d678c6ccdce",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
