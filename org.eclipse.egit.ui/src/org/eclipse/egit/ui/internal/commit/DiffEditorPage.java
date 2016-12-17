@@ -12,6 +12,8 @@
 package org.eclipse.egit.ui.internal.commit;
 
 import static java.util.Arrays.asList;
+import static org.eclipse.egit.ui.UIPreferences.THEME_DiffAddBackgroundColor;
+import static org.eclipse.egit.ui.UIPreferences.THEME_DiffRemoveBackgroundColor;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,11 +31,16 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter.DiffRegion;
 import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter.FileDiffRegion;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.operation.IRunnableContext;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.PreferenceStore;
+import org.eclipse.jface.resource.ColorRegistry;
+import org.eclipse.jface.resource.StringConverter;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.Position;
@@ -41,19 +48,24 @@ import org.eclipse.jface.text.reconciler.IReconciler;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.AnnotationModel;
 import org.eclipse.jface.text.source.IAnnotationModel;
+import org.eclipse.jface.text.source.IAnnotationModelExtension;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.IVerticalRuler;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
 import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
+import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
@@ -64,7 +76,10 @@ import org.eclipse.ui.part.IShowInTargetList;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.texteditor.AbstractDocumentProvider;
+import org.eclipse.ui.texteditor.ChainedPreferenceStore;
+import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditorActionConstants;
+import org.eclipse.ui.themes.IThemeManager;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 /**
@@ -75,8 +90,9 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 public class DiffEditorPage extends TextEditor
 		implements IFormPage, IShowInSource, IShowInTargetList {
 
-	private static final String[] SHOW_IN_TARGETS = {
-			IHistoryView.VIEW_ID, RepositoriesView.VIEW_ID };
+	private static final String ADD_ANNOTATION_TYPE = "org.eclipse.egit.ui.commitEditor.diffAdded"; //$NON-NLS-1$
+
+	private static final String REMOVE_ANNOTATION_TYPE = "org.eclipse.egit.ui.commitEditor.diffRemoved"; //$NON-NLS-1$
 
 	private FormEditor formEditor;
 
@@ -91,6 +107,11 @@ public class DiffEditorPage extends TextEditor
 	private DiffEditorOutlinePage outlinePage;
 
 	private Annotation[] currentFoldingAnnotations;
+
+	private Annotation[] currentOverviewAnnotations;
+
+	/** An {@link IPreferenceStore} for the annotation colors.*/
+	private ThemePreferenceStore overviewStore;
 
 	private FileDiffRegion currentFileDiffRange;
 
@@ -163,6 +184,10 @@ public class DiffEditorPage extends TextEditor
 			outlinePage.dispose();
 			outlinePage = null;
 		}
+		if (overviewStore != null) {
+			overviewStore.dispose();
+			overviewStore = null;
+		}
 		super.dispose();
 	}
 
@@ -194,6 +219,9 @@ public class DiffEditorPage extends TextEditor
 	@Override
 	protected void initializeEditor() {
 		super.initializeEditor();
+		overviewStore = new ThemePreferenceStore();
+		setPreferenceStore(new ChainedPreferenceStore(new IPreferenceStore[] {
+				overviewStore, EditorsUI.getPreferenceStore() }));
 		setDocumentProvider(new DiffDocumentProvider());
 		setSourceViewerConfiguration(
 				new DiffViewer.Configuration(getPreferenceStore()) {
@@ -213,6 +241,7 @@ public class DiffEditorPage extends TextEditor
 			setFolding();
 			FileDiffRegion region = getFileDiffRange(0);
 			currentFileDiffRange = region;
+			setOverviewAnnotations();
 		} else if (input instanceof CommitEditorInput) {
 			formatDiff();
 			currentFileDiffRange = null;
@@ -353,7 +382,7 @@ public class DiffEditorPage extends TextEditor
 
 	@Override
 	public String[] getShowInTargetIds() {
-		return SHOW_IN_TARGETS;
+		return new String[] { IHistoryView.VIEW_ID, RepositoriesView.VIEW_ID };
 	}
 
 	// Diff specifics:
@@ -380,7 +409,53 @@ public class DiffEditorPage extends TextEditor
 					.toArray(new Annotation[newAnnotations.size()]);
 		} else {
 			viewer.disableProjection();
+			currentFoldingAnnotations = null;
 		}
+	}
+
+	private void setOverviewAnnotations() {
+		IDocumentProvider documentProvider = getDocumentProvider();
+		IDocument document = documentProvider.getDocument(getEditorInput());
+		if (!(document instanceof DiffDocument)) {
+			return;
+		}
+		IAnnotationModel annotationModel = documentProvider
+				.getAnnotationModel(getEditorInput());
+		if (annotationModel == null) {
+			return;
+		}
+		DiffRegion[] diffs = ((DiffDocument) document).getRegions();
+		if (diffs == null || diffs.length == 0) {
+			return;
+		}
+		Map<Annotation, Position> newAnnotations = new HashMap<>();
+		for (DiffRegion region : diffs) {
+			if (DiffRegion.Type.ADD.equals(region.diffType)) {
+				newAnnotations.put(
+						new Annotation(ADD_ANNOTATION_TYPE, true, null),
+						new Position(region.getOffset(), region.getLength()));
+			} else if (DiffRegion.Type.REMOVE.equals(region.diffType)) {
+				newAnnotations.put(
+						new Annotation(REMOVE_ANNOTATION_TYPE, true, null),
+						new Position(region.getOffset(), region.getLength()));
+			}
+		}
+		if (annotationModel instanceof IAnnotationModelExtension) {
+			((IAnnotationModelExtension) annotationModel).replaceAnnotations(
+					currentOverviewAnnotations, newAnnotations);
+		} else {
+			if (currentOverviewAnnotations != null) {
+				for (Annotation existing : currentOverviewAnnotations) {
+					annotationModel.removeAnnotation(existing);
+				}
+			}
+			for (Map.Entry<Annotation, Position> entry : newAnnotations
+					.entrySet()) {
+				annotationModel.addAnnotation(entry.getKey(), entry.getValue());
+			}
+		}
+		currentOverviewAnnotations = newAnnotations.keySet()
+				.toArray(new Annotation[newAnnotations.size()]);
 	}
 
 	private FileDiffRegion getFileDiffRange(int widgetOffset) {
@@ -537,4 +612,95 @@ public class DiffEditorPage extends TextEditor
 
 	}
 
+	/**
+	 * An ephemeral {@link PreferenceStore} that sets the annotation colors
+	 * based on the theme-dependent colors defined for the line backgrounds in a
+	 * unified diff. This ensures that the annotation colors are always
+	 * consistent with the line backgrounds. Plus the user doesn't have to
+	 * configure several related colors, and the annotations update when the
+	 * theme changes.
+	 */
+	private static class ThemePreferenceStore extends PreferenceStore {
+
+		// The colors defined in plugin.xml for these annotations are not taken
+		// into account. We always use auto-computed colors based on the current
+		// settings for the line background colors.
+
+		private static final String ADD_ANNOTATION_COLOR_PREFERENCE = "org.eclipse.egit.ui.commitEditor.diffAddedColor"; //$NON-NLS-1$
+
+		private static final String REMOVE_ANNOTATION_COLOR_PREFERENCE = "org.eclipse.egit.ui.commitEditor.diffRemovedColor"; //$NON-NLS-1$
+
+		private final IPropertyChangeListener listener = event -> {
+			String property = event.getProperty();
+			if (IThemeManager.CHANGE_CURRENT_THEME.equals(property)) {
+				setColorRegistry();
+				initColors();
+			} else if (THEME_DiffAddBackgroundColor.equals(property)
+					|| THEME_DiffRemoveBackgroundColor.equals(property)) {
+				initColors();
+			}
+		};
+
+		private ColorRegistry currentColors;
+
+		public ThemePreferenceStore() {
+			super();
+			setColorRegistry();
+			initColors();
+			PlatformUI.getWorkbench().getThemeManager()
+					.addPropertyChangeListener(listener);
+		}
+
+		private void setColorRegistry() {
+			if (currentColors != null) {
+				currentColors.removeListener(listener);
+			}
+			currentColors = PlatformUI.getWorkbench().getThemeManager()
+					.getCurrentTheme().getColorRegistry();
+			currentColors.addListener(listener);
+		}
+
+		private void initColors() {
+			// The overview ruler tones down colors. Since our background colors
+			// usually are already rather pale, let's saturate them more and
+			// brighten them, otherwise the annotations will be barely visible.
+			RGB rgb = adjust(currentColors.getRGB(THEME_DiffAddBackgroundColor),
+					4.0);
+			setValue(ADD_ANNOTATION_COLOR_PREFERENCE,
+					StringConverter.asString(rgb));
+			rgb = adjust(currentColors.getRGB(THEME_DiffRemoveBackgroundColor),
+					4.0);
+			setValue(REMOVE_ANNOTATION_COLOR_PREFERENCE,
+					StringConverter.asString(rgb));
+		}
+
+		/**
+		 * Increases the saturation (simple multiplier), and brightens dark
+		 * colors.
+		 *
+		 * @param rgb
+		 *            to modify
+		 * @param saturation
+		 *            multiplier
+		 * @return A new {@link RGB} for the new saturated and possibly
+		 *         brightened color
+		 */
+		private RGB adjust(RGB rgb, double saturation) {
+			float[] hsb = rgb.getHSB();
+			// We also brighten the color because otherwise the color
+			// manipulations in OverviewRuler result in a fill color barely
+			// discernible from a dark background.
+			return new RGB(hsb[0], (float) Math.min(hsb[1] * saturation, 1.0),
+					hsb[2] < 0.5 ? hsb[2] * 2 : hsb[2]);
+		}
+
+		public void dispose() {
+			PlatformUI.getWorkbench().getThemeManager()
+					.removePropertyChangeListener(listener);
+			if (currentColors != null) {
+				currentColors.removeListener(listener);
+				currentColors = null;
+			}
+		}
+	}
 }
