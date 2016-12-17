@@ -5998,6 +5998,58 @@
       </actionSetPartAssociation>
    </extension>
    <extension
+         point="org.eclipse.ui.editors.annotationTypes">
+      <type name="org.eclipse.egit.ui.commitEditor.diffAdded" />
+      <type name="org.eclipse.egit.ui.commitEditor.diffRemoved" />
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors.markerAnnotationSpecification">
+      <specification
+            annotationType="org.eclipse.egit.ui.commitEditor.diffAdded"
+            overviewRulerPreferenceKey="org.eclipse.egit.ui.commitEditor.diffAddedInOverviewRuler"
+            overviewRulerPreferenceValue="true"
+            verticalRulerPreferenceKey="org.eclipse.egit.ui.commitEditor.diffAddedInVerticalRuler"
+            verticalRulerPreferenceValue="false"
+            textPreferenceKey="org.eclipse.egit.ui.commitEditor.diffAddedIndication"
+            textPreferenceValue="false"
+            highlightPreferenceKey="org.eclipse.egit.ui.commitEditor.diffAddedHighlighting"
+            highlightPreferenceValue="false"
+            showInNextPrevDropdownToolbarActionKey="org.eclipse.egit.ui.commitEditor.diffAddedInNextPrevDropdownToolbarAction"
+            showInNextPrevDropdownToolbarAction="false"
+            isGoToNextNavigationTargetKey="org.eclipse.egit.ui.commitEditor.diffAddedGoToNextNavigationTarget"
+            isGoToNextNavigationTarget="true"
+            isGoToPreviousNavigationTargetKey="org.eclipse.egit.ui.commitEditor.diffAddedGoToPreviousNavigationTarget"
+            isGoToPreviousNavigationTarget="true"
+            colorPreferenceKey="org.eclipse.egit.ui.commitEditor.diffAddedColor"
+            colorPreferenceValue="221,255,221"
+            contributesToHeader="false"
+            presentationLayer="5"
+            includeOnPreferencePage="false">
+      </specification>
+      <specification
+            annotationType="org.eclipse.egit.ui.commitEditor.diffRemoved"
+            overviewRulerPreferenceKey="org.eclipse.egit.ui.commitEditor.diffRemovedInOverviewRuler"
+            overviewRulerPreferenceValue="true"
+            verticalRulerPreferenceKey="org.eclipse.egit.ui.commitEditor.diffRemovedInVerticalRuler"
+            verticalRulerPreferenceValue="false"
+            textPreferenceKey="org.eclipse.egit.ui.commitEditor.diffRemovedIndication"
+            textPreferenceValue="false"
+            highlightPreferenceKey="org.eclipse.egit.ui.commitEditor.diffRemovedHighlighting"
+            highlightPreferenceValue="false"
+            showInNextPrevDropdownToolbarActionKey="org.eclipse.egit.ui.commitEditor.diffRemovedInNextPrevDropdownToolbarAction"
+            showInNextPrevDropdownToolbarAction="false"
+            isGoToNextNavigationTargetKey="org.eclipse.egit.ui.commitEditor.diffRemovedGoToNextNavigationTarget"
+            isGoToNextNavigationTarget="true"
+            isGoToPreviousNavigationTargetKey="org.eclipse.egit.ui.commitEditor.diffRemovedGoToPreviousNavigationTarget"
+            isGoToPreviousNavigationTarget="true"
+            colorPreferenceKey="org.eclipse.egit.ui.commitEditor.diffRemovedColor"
+            colorPreferenceValue="255,221,221"
+            contributesToHeader="false"
+            presentationLayer="5"
+            includeOnPreferencePage="false">
+      </specification>
+   </extension>
+   <extension
          point="org.eclipse.ui.editors.templates">
       <resolver
             class="org.eclipse.egit.ui.internal.variables.GitTemplateVariableResolver"
