@@ -322,6 +322,14 @@ public class DiffRegionFormatter extends DiffFormatter {
 	 * @return added range
 	 */
 	protected DiffRegion addRegion(Type type, int start, int end) {
+		if (!regions.isEmpty()) {
+			DiffRegion last = regions.get(regions.size() - 1);
+			if (last.diffType.equals(type)
+					&& start == last.getOffset() + last.getLength()) {
+				regions.remove(regions.size() - 1);
+				start = last.getOffset();
+			}
+		}
 		DiffRegion range = new DiffRegion(start, end - start, type);
 		regions.add(range);
 		return range;

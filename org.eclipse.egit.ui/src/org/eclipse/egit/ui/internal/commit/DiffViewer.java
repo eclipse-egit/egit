@@ -93,7 +93,9 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Layout;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
@@ -133,7 +135,7 @@ public class DiffViewer extends HyperlinkSourceViewer {
 					|| THEME_DiffRemoveBackgroundColor.equals(property)
 					|| THEME_DiffRemoveForegroundColor.equals(property)) {
 				refreshDiffStyles();
-				refresh();
+				invalidateTextPresentation();
 			}
 		}
 	};
@@ -261,6 +263,41 @@ public class DiffViewer extends HyperlinkSourceViewer {
 	public void configure(SourceViewerConfiguration config) {
 		Assert.isTrue(config instanceof Configuration);
 		super.configure(config);
+	}
+
+	@Override
+	public void refresh() {
+		// Don't lose the annotation model, if there is one!
+		// (The super implementation ignores it.)
+		setDocument(getDocument(), getAnnotationModel());
+	}
+
+	@Override
+	protected Layout createLayout() {
+		return new FixedRulerLayout(GAP_SIZE_1);
+	}
+
+	private class FixedRulerLayout extends RulerLayout {
+
+		public FixedRulerLayout(int gap) {
+			super(gap);
+		}
+
+		@Override
+		protected void layout(Composite composite, boolean flushCache) {
+			Rectangle bounds = composite.getBounds();
+			if (bounds.width == 0 || bounds.height == 0) {
+				// The overview ruler is laid out wrongly in the DiffEditorPage:
+				// it ends up with a negative y-coordinate. This seems to be
+				// caused by layout attempts while the page is not visible,
+				// which cache that bogus negative offset in RulerLayout, which
+				// will re-use it even when the viewer is laid out again when
+				// the page is visible. So don't layout if the containing
+				// composite has no extent.
+				return;
+			}
+			super.layout(composite, flushCache);
+		}
 	}
 
 	private void refreshDiffStyles() {
