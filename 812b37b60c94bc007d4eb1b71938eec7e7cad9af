@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_01d9cd1e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/AddConfigEntryDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-12-18T17:57:53Z",
+      "side": 1,
+      "message": "trim() only removes ASCII whitespace. But especially when copy-pasting from web pages, chances are that there may be Unicode whitespace included. So perhaps we should replace them all? \"p{javaWhitespace}\" would be a regular expression matching them all, or \"(\\h|\\v)\".\n\nMoreover, trimming here is not good enough. Embedded whitespace is just as bad. Try with a key \"foo bar.baz\"! Non-ASCII characters are just as bad. \n\nThe text field needs a validator that prevents any key components containing invalid characters (ignoring leading and trailing Unicode whitespace), and then leading and trailing Unicode whitespace need to be stripped here.\n\nCGit\u0027s iskeychar(int c) is implemented as isalnum(c) || c \u003d\u003d \u0027-\u0027. Any other character will cause trouble. (BTW, not only with JGit. Even \"git config --help\" doesn\u0027t produce any meaningful output anymore.)",
+      "revId": "812b37b60c94bc007d4eb1b71938eec7e7cad9af",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
