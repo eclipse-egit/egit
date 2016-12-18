@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_21524932",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/Change.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-18T13:09:13Z",
+      "side": 1,
+      "message": "if you want to extract the inner class do that in a separate refactoring change and base this change on the refactoring change",
+      "revId": "d8f6dabbba3d85e84edbf586e55fd54b718fec2f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_e134d105",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/Change.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-18T13:09:13Z",
+      "side": 1,
+      "message": "I hit an NPE when trying to fetch a change from Gerrit here:\n\n org.eclipse.e4.core.di.InjectionException: java.lang.NullPointerException\n\tat org.eclipse.e4.core.internal.di.MethodRequestor.execute(MethodRequestor.java:65)\n\tat org.eclipse.e4.core.internal.di.InjectorImpl.invokeUsingClass(InjectorImpl.java:282)\n\tat org.eclipse.e4.core.internal.di.InjectorImpl.invoke(InjectorImpl.java:264)\n\tat org.eclipse.e4.core.contexts.ContextInjectionFactory.invoke(ContextInjectionFactory.java:132)\n\tat org.eclipse.e4.core.commands.internal.HandlerServiceHandler.execute(HandlerServiceHandler.java:152)\n\tat org.eclipse.core.commands.Command.executeWithChecks(Command.java:494)\n\tat org.eclipse.core.commands.ParameterizedCommand.executeWithChecks(ParameterizedCommand.java:488)\n\tat org.eclipse.e4.core.commands.internal.HandlerServiceImpl.executeHandler(HandlerServiceImpl.java:210)\n\tat org.eclipse.e4.ui.workbench.renderers.swt.HandledContributionItem.executeItem(HandledContributionItem.java:433)\n\tat org.eclipse.e4.ui.workbench.renderers.swt.AbstractContributionItem.handleWidgetSelection(AbstractContributionItem.java:454)\n\tat org.eclipse.e4.ui.workbench.renderers.swt.AbstractContributionItem$3.handleEvent(AbstractContributionItem.java:482)\n\tat org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:84)\n\tat org.eclipse.swt.widgets.Display.sendEvent(Display.java:4248)\n\tat org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1501)\n\tat org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1524)\n\tat org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1509)\n\tat org.eclipse.swt.widgets.Widget.notifyListeners(Widget.java:1313)\n\tat org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:4072)\n\tat org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3698)\n\tat org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:1121)\n\tat org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)\n\tat org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1022)\n\tat org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:150)\n\tat org.eclipse.ui.internal.Workbench$5.run(Workbench.java:687)\n\tat org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)\n\tat org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:604)\n\tat org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:148)\n\tat org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:138)\n\tat org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)\n\tat org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:134)\n\tat org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)\n\tat org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:388)\n\tat org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:243)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.lang.reflect.Method.invoke(Method.java:498)\n\tat org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:673)\n\tat org.eclipse.equinox.launcher.Main.basicRun(Main.java:610)\n\tat org.eclipse.equinox.launcher.Main.run(Main.java:1519)\n\tat org.eclipse.equinox.launcher.Main.main(Main.java:1492)\nCaused by: java.lang.NullPointerException\n\tat org.eclipse.egit.ui.internal.fetch.Change.fromRef(Change.java:26)\n\tat org.eclipse.egit.ui.internal.fetch.FetchGerritChangePage.getLocalRef(FetchGerritChangePage.java:618)\n\tat org.eclipse.egit.ui.internal.fetch.FetchGerritChangePage.createControl(FetchGerritChangePage.java:354)\n\tat org.eclipse.jface.wizard.Wizard.createPageControls(Wizard.java:175)\n\tat org.eclipse.jface.wizard.WizardDialog.createPageControls(WizardDialog.java:696)\n\tat org.eclipse.jface.wizard.WizardDialog.createContents(WizardDialog.java:588)\n\tat org.eclipse.jface.window.Window.create(Window.java:426)\n\tat org.eclipse.jface.dialogs.Dialog.create(Dialog.java:1095)\n\tat org.eclipse.jface.window.Window.open(Window.java:783)\n\tat org.eclipse.egit.ui.internal.commands.shared.FetchChangeFromGerritCommand.execute(FetchChangeFromGerritCommand.java:45)\n\tat org.eclipse.ui.internal.handlers.HandlerProxy.execute(HandlerProxy.java:295)\n\tat org.eclipse.ui.internal.handlers.E4HandlerProxy.execute(E4HandlerProxy.java:90)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.lang.reflect.Method.invoke(Method.java:498)\n\tat org.eclipse.e4.core.internal.di.MethodRequestor.execute(MethodRequestor.java:55)\n\t... 40 more",
+      "revId": "d8f6dabbba3d85e84edbf586e55fd54b718fec2f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_414f458c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2016-12-18T13:09:13Z",
+      "side": 1,
+      "message": "this improvement is unrelated to this change, move it to a separate change",
+      "revId": "d8f6dabbba3d85e84edbf586e55fd54b718fec2f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
