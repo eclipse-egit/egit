@@ -18,6 +18,7 @@
  * Copyright (C) 2015, Denis Zygann <d.zygann@web.de>
  * Copyright (C) 2016, Lars Vogel <Lars.Vogel@vogella.com>
  * Copyright (C) 2017, Wim Jongman <wim.jongman@remainsoftware.com> bug 358152
+ * Copyright (C) 2016, Jaxsun McCathy Huggan <jaxsun.mccarthy@tasktop.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -2828,6 +2829,9 @@ public class UIText extends NLS {
 	public static String FetchGerritChangePage_ChangeLabel;
 
 	/** */
+	public static String FetchGerritChangePage_ChangeToLocalBranchRadio;
+
+	/** */
 	public static String FetchGerritChangePage_CheckingOutTaskName;
 
 	/** */
@@ -2855,7 +2859,7 @@ public class UIText extends NLS {
 	public static String FetchGerritChangePage_GetChangeTaskName;
 
 	/** */
-	public static String FetchGerritChangePage_LocalBranchRadio;
+	public static String FetchGerritChangePage_CreateLocalBranchRadio;
 
 	/** */
 	public static String FetchGerritChangePage_LocalBranchCheckout;
@@ -2873,7 +2877,10 @@ public class UIText extends NLS {
 	public static String FetchGerritChangePage_RunInBackground;
 
 	/** */
-	public static String FetchGerritChangePage_SuggestedRefNamePattern;
+	public static String Change_FullRefNamePattern;
+
+	/** */
+	public static String Change_SuggestedBranchNamePattern;
 
 	/** */
 	public static String FetchGerritChangePage_TagNameText;
