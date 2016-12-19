@@ -82,6 +82,7 @@ import org.eclipse.jface.text.source.IVerticalRuler;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.lib.ObjectId;
@@ -486,7 +487,7 @@ public class DiffViewer extends HyperlinkSourceViewer {
 					continue;
 				}
 				// Range overlaps region
-				switch (range.diffType) {
+				switch (range.getType()) {
 				case HEADLINE:
 					fileRange = findFileRange(diffDocument, fileRange,
 							range.getOffset());
@@ -564,21 +565,24 @@ public class DiffViewer extends HyperlinkSourceViewer {
 		private int getContextLines(IDocument document, DiffRegion hunk,
 				DiffRegion next) {
 			if (next != null) {
-				switch (next.diffType) {
-				case ADD:
-				case REMOVE:
-					try {
-						int diffLine = document
-								.getLineOfOffset(next.getOffset());
+				try {
+					switch (next.getType()) {
+					case CONTEXT:
+						int nofLines = document.getNumberOfLines(
+								next.getOffset(), next.getLength());
+						return nofLines - 1;
+					case ADD:
+					case REMOVE:
 						int hunkLine = document
 								.getLineOfOffset(hunk.getOffset());
+						int diffLine = document
+								.getLineOfOffset(next.getOffset());
 						return diffLine - hunkLine - 1;
-					} catch (BadLocationException e) {
-						// Ignore
+					default:
+						break;
 					}
-					break;
-				default:
-					break;
+				} catch (BadLocationException e) {
+					// Ignore
 				}
 			}
 			return 0;
@@ -595,7 +599,7 @@ public class DiffViewer extends HyperlinkSourceViewer {
 
 		private void createHeaderLinks(DiffDocument document, IRegion region,
 				FileDiffRegion fileRange, DiffRegion range, String line,
-				DiffEntry.Side side, List<IHyperlink> links) {
+				@NonNull DiffEntry.Side side, List<IHyperlink> links) {
 			Pattern p = document.getPathPattern(side);
 			if (p == null) {
 				return;

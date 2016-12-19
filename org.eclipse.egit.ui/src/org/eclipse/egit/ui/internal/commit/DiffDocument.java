@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter.DiffRegion;
 import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter.FileDiffRegion;
 import org.eclipse.egit.ui.internal.history.FileDiff;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
@@ -23,6 +24,7 @@ import org.eclipse.jface.text.rules.FastPartitioner;
 import org.eclipse.jface.text.rules.IPartitionTokenScanner;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.Repository;
 
@@ -55,6 +57,8 @@ public class DiffDocument extends Document {
 	private Repository defaultRepository;
 
 	private FileDiff defaultFileDiff;
+
+	private int[] maximumLineNumbers;
 
 	/**
 	 * Creates a new {@link DiffDocument}.
@@ -95,6 +99,7 @@ public class DiffDocument extends Document {
 				Pattern.quote(formatter.getNewPrefix()) + "\\S+"); //$NON-NLS-1$
 		oldPathPattern = Pattern.compile(
 				Pattern.quote(formatter.getOldPrefix()) + "\\S+"); //$NON-NLS-1$
+		maximumLineNumbers = formatter.getMaximumLineNumbers();
 		// Connect a new partitioner.
 		IDocumentPartitioner partitioner = new FastPartitioner(
 				new DiffPartitionTokenScanner(),
@@ -133,6 +138,16 @@ public class DiffDocument extends Document {
 		return fileRegions;
 	}
 
+	int getMaximumLineNumber(@NonNull DiffEntry.Side side) {
+		if (maximumLineNumbers == null) {
+			return DiffRegion.NO_LINE;
+		}
+		if (DiffEntry.Side.OLD.equals(side)) {
+			return maximumLineNumbers[0];
+		}
+		return maximumLineNumbers[1];
+	}
+
 	private int findRegionIndex(int offset) {
 		DiffRegion key = new DiffRegion(offset, 0);
 		return Arrays.binarySearch(regions, key, (a, b) -> {
@@ -159,7 +174,26 @@ public class DiffDocument extends Document {
 		return i >= 0 ? fileRegions[i] : null;
 	}
 
-	Pattern getPathPattern(DiffEntry.Side side) {
+	int getLogicalLine(int physicalLine, @NonNull DiffEntry.Side side) {
+		int offset;
+		try {
+			offset = getLineOffset(physicalLine);
+			DiffRegion region = findRegion(offset);
+			if (region == null) {
+				return DiffRegion.NO_LINE;
+			}
+			int logicalStart = region.getLine(side);
+			if (logicalStart == DiffRegion.NO_LINE) {
+				return DiffRegion.NO_LINE;
+			}
+			int physicalStart = getLineOfOffset(region.getOffset());
+			return logicalStart + (physicalLine - physicalStart);
+		} catch (BadLocationException e) {
+			return DiffRegion.NO_LINE;
+		}
+	}
+
+	Pattern getPathPattern(@NonNull DiffEntry.Side side) {
 		switch (side) {
 		case OLD:
 			return oldPathPattern;
@@ -224,7 +258,7 @@ public class DiffDocument extends Document {
 						- (currentOffset
 								- DiffDocument.this.regions[currIdx]
 										.getOffset());
-				switch (DiffDocument.this.regions[currIdx++].diffType) {
+				switch (DiffDocument.this.regions[currIdx++].getType()) {
 				case HEADLINE:
 					return HEADLINE_TOKEN;
 				case HUNK:
