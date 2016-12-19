@@ -50,6 +50,24 @@
       "revId": "d8f6dabbba3d85e84edbf586e55fd54b718fec2f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_c10995a4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1028
+      },
+      "writtenOn": "2016-12-19T08:33:23Z",
+      "side": 1,
+      "message": "sure",
+      "parentUuid": "a7c23755_414f458c",
+      "revId": "d8f6dabbba3d85e84edbf586e55fd54b718fec2f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
