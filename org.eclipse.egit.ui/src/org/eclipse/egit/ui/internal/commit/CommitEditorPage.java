@@ -19,7 +19,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -175,13 +174,6 @@ public class CommitEditorPage extends FormPage
 	private String getSignedOffByLine(PersonIdent person) {
 		return MessageFormat.format(SIGNED_OFF_BY, person.getName(),
 				person.getEmailAddress());
-	}
-
-	private String replaceSignedOffByLine(String message, PersonIdent person) {
-		Pattern pattern = Pattern.compile(
-				"^\\s*" + Pattern.quote(getSignedOffByLine(person)) //$NON-NLS-1$
-						+ "\\s*$", Pattern.MULTILINE); //$NON-NLS-1$
-		return pattern.matcher(message).replaceAll(""); //$NON-NLS-1$
 	}
 
 	private void setPerson(Text text, PersonIdent person, boolean isAuthor) {
@@ -406,13 +398,6 @@ public class CommitEditorPage extends FormPage
 
 		RevCommit commit = getCommit().getRevCommit();
 		String message = commit.getFullMessage();
-
-		PersonIdent author = commit.getAuthorIdent();
-		if (author != null)
-			message = replaceSignedOffByLine(message, author);
-		PersonIdent committer = commit.getCommitterIdent();
-		if (committer != null)
-			message = replaceSignedOffByLine(message, committer);
 
 		SpellcheckableMessageArea textContent = new SpellcheckableMessageArea(
 				messageArea, message, true, toolkit.getBorderStyle()) {
