@@ -92,7 +92,7 @@ public class HeaderText {
 				@Override
 				public void focusLost(FocusEvent e) {
 					titleLabel.setSelection(0);
-					Event selectionEvent= new Event();
+					Event selectionEvent = new Event();
 					selectionEvent.x = 0;
 					selectionEvent.y = 0;
 					titleLabel.notifyListeners(SWT.Selection, selectionEvent);
@@ -186,4 +186,12 @@ public class HeaderText {
 		}
 	}
 
+	/**
+	 * Retrieves the {@link Control} used for the title.
+	 *
+	 * @return the {@link Control}, or {@code null} if none
+	 */
+	public Control getControl() {
+		return titleLabel;
+	}
 }
