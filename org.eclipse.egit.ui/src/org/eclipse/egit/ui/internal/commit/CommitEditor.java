@@ -33,6 +33,7 @@ import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.jface.action.ContributionManager;
 import org.eclipse.jface.action.ControlContribution;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -153,6 +154,8 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 
 	private ListenerHandle refListenerHandle;
 
+	private FocusTracker headerFocusTracker = new FocusTracker();
+
 	private static class CommitEditorNestedSite extends MultiPageEditorSite {
 
 		public CommitEditorNestedSite(CommitEditor topLevelEditor,
@@ -216,11 +219,22 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	 */
 	@Override
 	protected void createHeaderContents(IManagedForm headerForm) {
+		headerForm.addPart(new FocusManagerFormPart(headerFocusTracker) {
+
+			@Override
+			public void setDefaultFocus() {
+				headerForm.getForm().getForm().setFocus();
+			}
+		});
 		RepositoryCommit commit = getCommit();
 		ScrolledForm form = headerForm.getForm();
 		String commitName = commit.getRevCommit().name();
 		String title = getFormattedHeaderTitle(commitName);
-		new HeaderText(form.getForm(), title, commitName);
+		HeaderText text = new HeaderText(form.getForm(), title, commitName);
+		Control textControl = text.getControl();
+		if (textControl != null) {
+			headerFocusTracker.addToFocusTracking(textControl);
+		}
 		form.setToolTipText(commitName);
 		getToolkit().decorateFormHeading(form.getForm());
 
@@ -238,6 +252,15 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 				String label = getCommit().getRepositoryName();
 
 				ImageHyperlink link = new ImageHyperlink(composite, SWT.NONE);
+				// Focus tracking on this link doesn't really work. It's a
+				// focusable control inside another focusable control (the
+				// toolbar). When focus leaves this control through tabbing
+				// or deactivating the editor, the toolbar gets the focus (and
+				// possibly loses it right away again). Thus the focus tracker
+				// will always see the toolbar as the last focused control.
+				// Unfortunately there is no other way to get some text onto
+				// the first line of a FormHeading.
+				headerFocusTracker.addToFocusTracking(link);
 				link.setText(label);
 				link.setFont(JFaceResources.getBannerFont());
 				link.setForeground(toolkit.getColors().getColor(
@@ -301,6 +324,12 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 				// Ignored
 			}
 		});
+		if (toolbar instanceof ToolBarManager) {
+			Control control = ((ToolBarManager) toolbar).getControl();
+			if (control != null) {
+				headerFocusTracker.addToFocusTracking(control);
+			}
+		}
 	}
 
 	private String getFormattedHeaderTitle(String commitName) {
@@ -335,14 +364,6 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 			index = -1;
 		}
 		return index;
-	}
-
-	@Override
-	public void setFocus() {
-		IFormPage currentPage = getActivePageInstance();
-		if (currentPage != null) {
-			currentPage.setFocus();
-		}
 	}
 
 	private void addContributions(IToolBarManager toolBarManager) {
@@ -391,6 +412,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	@Override
 	public void dispose() {
 		refListenerHandle.remove();
+		headerFocusTracker.dispose();
 		super.dispose();
 	}
 
