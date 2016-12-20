@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_96cd1aad",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/FocusTrackingFormPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-12-20T15:41:09Z",
+      "side": 1,
+      "message": "This will mean we\u0027ll never re-focus an item from the shared header.",
+      "revId": "7dc5e525eb651875e50c3f748ca3d72a279abb40",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
