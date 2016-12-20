@@ -71,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_b0af7dec",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/FocusTrackingFormPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 339
+      },
+      "writtenOn": "2016-12-20T15:00:02Z",
+      "side": 1,
+      "message": "ManagedForm#setFocus() is broken, see https://bugs.eclipse.org/378799\n\nI\u0027ll fix that for Eclipse 4.7M5, but EGit better sets the focus explicitly like this:\n\n\tgetManagedForm().getForm().setFocus();",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 112,
+        "endChar": 19
+      },
+      "revId": "61022b9c9327be478f269b400f5ee19995f63ea5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_10cf5127",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/StashEditorPage.java",
         "patchSetId": 1
