@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2016, Lars Vogel <Lars.Vogel@vogella.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,6 +12,7 @@ package org.eclipse.egit.ui.internal.fetch;
 
 import org.eclipse.egit.core.op.FetchOperationResult;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -21,6 +23,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -40,6 +43,8 @@ public class FetchResultDialog extends TitleAreaDialog {
 
 	private boolean hideConfigure;
 
+	private Image fetchResultImage;
+
 	/**
 	 * @param parentShell
 	 * @param localDb
@@ -54,6 +59,7 @@ public class FetchResultDialog extends TitleAreaDialog {
 		this.localDb = localDb;
 		this.result = result;
 		this.sourceString = sourceString;
+		fetchResultImage = UIIcons.WIZBAN_FETCH.createImage();
 	}
 
 	/**
@@ -70,6 +76,7 @@ public class FetchResultDialog extends TitleAreaDialog {
 		this.localDb = localDb;
 		this.result = new FetchOperationResult(result.getURI(), result);
 		this.sourceString = sourceString;
+		fetchResultImage = UIIcons.WIZBAN_FETCH.createImage();
 	}
 
 	@Override
@@ -118,6 +125,7 @@ public class FetchResultDialog extends TitleAreaDialog {
 		createFetchResultTable(composite);
 
 		applyDialogFont(composite);
+		setTitleImage(fetchResultImage);
 		return composite;
 	}
 
@@ -144,6 +152,13 @@ public class FetchResultDialog extends TitleAreaDialog {
 				.setText(NLS.bind(UIText.FetchResultDialog_title, sourceString));
 	}
 
+	@Override
+	public boolean close() {
+		if (fetchResultImage != null) {
+			fetchResultImage.dispose();
+		}
+		return super.close();
+	}
 	/**
 	 * @param show
 	 */
