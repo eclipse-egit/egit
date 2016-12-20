@@ -342,6 +342,8 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 		IFormPage currentPage = getActivePageInstance();
 		if (currentPage != null) {
 			currentPage.setFocus();
+		} else {
+			super.setFocus();
 		}
 	}
 

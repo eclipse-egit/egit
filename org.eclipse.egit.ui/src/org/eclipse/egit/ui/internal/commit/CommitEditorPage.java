@@ -74,7 +74,6 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
-import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
 import org.eclipse.ui.forms.events.HyperlinkAdapter;
@@ -91,7 +90,7 @@ import org.eclipse.ui.part.ShowInContext;
  * Commit editor page class displaying author, committer, parent commits,
  * message, and file information in form sections.
  */
-public class CommitEditorPage extends FormPage
+public class CommitEditorPage extends FocusTrackingFormPage
 		implements ISchedulingRule, IShowInSource {
 
 	private static final String SIGNED_OFF_BY = "Signed-off-by: {0} <{1}>"; //$NON-NLS-1$
@@ -445,6 +444,10 @@ public class CommitEditorPage extends FormPage
 		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, yHint).minSize(1, 20)
 				.grab(true, true).applyTo(textContent);
 
+		Control control = textContent.getTextWidget();
+		if (control != null) {
+			addToFocusTracking(control);
+		}
 		updateSectionClient(messageSection, messageArea, toolkit);
 	}
 
@@ -456,8 +459,14 @@ public class CommitEditorPage extends FormPage
 
 		branchViewer = new TableViewer(toolkit.createTable(branchesArea,
 				SWT.V_SCROLL | SWT.H_SCROLL));
-		GridDataFactory.fillDefaults().grab(true, true).hint(SWT.DEFAULT, 50)
-				.applyTo(branchViewer.getControl());
+		Control control = branchViewer.getControl();
+		if (control != null) {
+			control.setData(FormToolkit.KEY_DRAW_BORDER,
+					FormToolkit.TREE_BORDER);
+			GridDataFactory.fillDefaults().grab(true, true)
+					.hint(SWT.DEFAULT, 50).applyTo(control);
+			addToFocusTracking(control);
+		}
 		branchViewer.setSorter(new ViewerSorter());
 		branchViewer.setLabelProvider(new GitLabelProvider() {
 
@@ -468,9 +477,6 @@ public class CommitEditorPage extends FormPage
 
 		});
 		branchViewer.setContentProvider(ArrayContentProvider.getInstance());
-		branchViewer.getTable().setData(FormToolkit.KEY_DRAW_BORDER,
-				FormToolkit.TREE_BORDER);
-
 		updateSectionClient(branchSection, branchesArea, toolkit);
 	}
 
@@ -489,10 +495,13 @@ public class CommitEditorPage extends FormPage
 		diffViewer = new CommitFileDiffViewer(filesArea, getSite(), SWT.MULTI
 				| SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION
 				| toolkit.getBorderStyle());
-		diffViewer.getTable().setData(FormToolkit.KEY_DRAW_BORDER,
-				FormToolkit.TREE_BORDER);
-		GridDataFactory.fillDefaults().grab(true, true)
-				.applyTo(diffViewer.getControl());
+		Control control = diffViewer.getControl();
+		if (control != null) {
+			control.setData(FormToolkit.KEY_DRAW_BORDER,
+					FormToolkit.TREE_BORDER);
+			GridDataFactory.fillDefaults().grab(true, true).applyTo(control);
+			addToFocusTracking(control);
+		}
 		diffViewer.setContentProvider(ArrayContentProvider.getInstance());
 		diffViewer.setTreeWalk(getCommit().getRepository(), null);
 
@@ -503,9 +512,6 @@ public class CommitEditorPage extends FormPage
 		return AdapterUtils.adapt(getEditor(), RepositoryCommit.class);
 	}
 
-	/**
-	 * @see org.eclipse.ui.forms.editor.FormPage#createFormContent(org.eclipse.ui.forms.IManagedForm)
-	 */
 	@Override
 	protected void createFormContent(IManagedForm managedForm) {
 		Composite body = managedForm.getForm().getBody();
