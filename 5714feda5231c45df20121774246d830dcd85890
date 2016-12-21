@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_7c685fe7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchResultDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-12-21T11:25:58Z",
+      "side": 1,
+      "message": "Missing braces.",
+      "revId": "5714feda5231c45df20121774246d830dcd85890",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
