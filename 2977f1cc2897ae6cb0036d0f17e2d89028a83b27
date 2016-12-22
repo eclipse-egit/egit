@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_d00b12b3",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseGitProgressTransformer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2016-12-22T18:46:24Z",
+      "side": 1,
+      "message": "Quoting the Javadoc of SubMonitor.convert(): \"the same instance of IProgressMonitor must not be passed to convert more than once.\" This does not fit the contract of org.eclipse.jgit.lib.ProgressMonitor.\n\nFurthermore, AFAIK a SubMonitor consumes all remaining ticks of the parent. Which again doesn\u0027t fit the contract of the super class.\n\nOne could maybe convert in the constructor and use newChild() here. But probably one should also examine all uses of this class to see what is used as root monitor and whether beginTask has already been called on it.",
+      "revId": "2977f1cc2897ae6cb0036d0f17e2d89028a83b27",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
