@@ -666,6 +666,10 @@
 			<b>Finish</b>, the currently checked out commit will be pushed to the Gerrit branch specified. Also, the URI and Gerrit Branch values will be remembered and suggested again when the dialog is opened again later.
 		</p>
 		<p>This allows for more flexibility when working with different Gerrit branches in parallel (e.g. frequently switching between development and hotfixing).</p>
+		<h4 id="Pushing_as_Draft">Pushing as Draft</h4>
+		<p>The "refs/for" in the "Push to Gerrit" wizard is a combo drop-down box; click it and select "refs/drafts" instead of "refs/for" to 
+			<a href="https://gerrit-review.googlesource.com/Documentation/intro-user.html#drafts" target="egit_external">push a draft change to Gerrit</a>.
+		</p>
 		<h4 id="Editing_a_change">Editing a change</h4>
 		<p>When a change has been pushed to Gerrit and the reviewers suggest to make some improvements, a new patch set for the change has to be uploaded. First, edit the commit(s):</p>
 		<ul>
@@ -2493,24 +2497,27 @@ Sein oder nicht sein
 			</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Commit-editor-commit-page.png"/>
+			<img border="0" src="images/Commit-editor-commit-page-egit-4.6.png"/>
 		</p>
 		<ul>
 			<li>Diff tab
 				<ul>
-					<li>Text viewer with the output of the file differences</li>
-					<li>The colors used in the viewer can be configured from the 
+					<li>Read-only text editor with the output of the file differences, with a content outline linked to the editor.</li>
+					<li>The colors used in the viewer for highlighting lines can be configured from the 
 						<b>Preferences</b> &gt; 
 						<b>General</b> &gt; 
 						<b>Appearance</b> &gt; 
 						<b>Colors and Fonts</b> &gt; 
-						<i>Git</i> folder
+						<i>Git</i> folder.
 					</li>
+					<li>The overview ruler right of the editor's text viewer shows colored annotations for all added or removed lines.</li>
+					<li>Quick navigation between "hunks" (changes with added or removed lines) is available via clicking on an annotation in the overview ruler, or via the "Go To Next Annotation"/"Go To Previous Annotation" actions in the global Eclipse toolbar (default keyboard shortcuts are "Crtl/Cmd-." and "Shift-Ctrl/Cmd-.").</li>
+					<li>Line numbers in hunk headers, as well as the file names in file diff headers are hyperlinks to open the old or the new version or also the current working tree version in an editor, or to show a two-way diff between the old and the new version. The latter is also available on the word "diff" in a file diff headline (the one starting with "diff --git"). These links are only available if applicable; for instance there will be no link to open the old version for an added file since there was no old version in this case.</li>
 				</ul>
 			</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Commit-editor-diff-page.png"/>
+			<img border="0" src="images/Commit-editor-diff-page-egit-4.6.png"/>
 		</p>
 		<ul>
 			<li>Notes tab
@@ -2520,7 +2527,7 @@ Sein oder nicht sein
 			</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Commit-editor-notes-page.png"/>
+			<img border="0" src="images/Commit-editor-notes-page-egit-4.6.png"/>
 		</p>
 		<h3 id="Tagging_a_commit">Tagging a commit</h3>
 		<ul>

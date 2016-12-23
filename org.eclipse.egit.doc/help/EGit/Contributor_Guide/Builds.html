@@ -36,7 +36,7 @@
 		<p>Prerequisites for the Maven build are</p>
 		<ul>
 			<li>
-				<a href="http://maven.apache.org/download.html" target="egit_external">at least Maven 3.0.0</a> (but currently not Maven 3.1.0)
+				<a href="http://maven.apache.org/download.html" target="egit_external">at least Maven 3.0.0</a>
 			</li>
 			<li>see 
 				<a href="http://maven.apache.org/settings.html" target="egit_external">settings.xml reference</a> on how to do basic Maven configuration
@@ -57,7 +57,7 @@
 		<h2 id="JGit_2">JGit</h2>
 		<ul>
 			<li>JGit can be built using Maven 2 or 3.</li>
-			<li>use Java 7 to run the JGit Maven build</li>
+			<li>use Java 8 to run the JGit Maven build</li>
 			<li>JGit packaging projects (Eclipse feature and update site) are built using Maven 3 and Tycho.</li>
 		</ul>
 		<h2 id="EGit_2">EGit</h2>
@@ -108,13 +108,49 @@
 		<pre>[~/src/egit] $ mvn clean install -Djgit-site=<a href="https://repo.eclipse.org/content/unzip/snapshots.unzip/" target="egit_external">https://repo.eclipse.org/content/unzip/snapshots.unzip/</a>
                      org/eclipse/jgit/org.eclipse.jgit.repository/${JGIT_VERSION}/org.eclipse.jgit.repository-${JGIT_VERSION}.zip-unzip/
 </pre>
-		<p>If you wan to build EGit for the specific Juno platform, consider using the <code>platform-juno</code> maven profile:</p>
-		<pre>[~/src/egit] $ mvn -P platform-juno clean install
+		<p>If you wan to build EGit for the specific Neon (4.6) platform, consider using the <code>egit-4.6</code> target platform:</p>
+		<pre>[~/src/egit] $ mvn -Dtarget-platform=egit-4.6 clean install
 </pre>
-		<p>For EGit version 3.0, <code>platform-juno</code> (Eclipse 4.2) and <code>platform-kepler</code> (Eclipse 4.3) are available. In addition <code>platform-kepler-staging</code> refers to the Kepler staging repository.</p>
+		<p>For EGit version 4.6, <code>egit-4.5</code> (Mars, Eclipse 4.5), <code>egit-4.6</code> (Neon, Eclipse 4.6), and <code>egit-4.7</code> (Oxygen, Eclipse 4.7) are available. In addition <code>egit-4.7-staging</code> refers to the Oxygen staging repository.</p>
 		<p>Upon a successful build, a p2 update site should be generated inside 
-			<i>egit/org.eclipse.egit.repository/target/repository</i>. If not, make sure the target platform has been downloaded from within Eclipse (Windows&gt;Preferences&gt;Plug-in Development&gt;Target Platform). The default target platform defined in the maven build is currently Eclipse 4.3.
+			<i>egit/org.eclipse.egit.repository/target/repository</i>. If not, make sure the target platform has been downloaded from within Eclipse (Windows&gt;Preferences&gt;Plug-in Development&gt;Target Platform). The default target platform defined in the maven build is currently Eclipse 4.6. If you skip setting the system property <code>target-platform</code> the target platform for Eclipse 4.6 will be used.
 		</p>
+		<h2 id="JGit_Buck_Build">JGit Buck Build</h2>
+		<p>The JGit libraries used by Gerrit Code Review can also be built using 
+			<a href="https://buckbuild.com/" target="egit_external">buck</a>:
+		</p>
+		<ul>
+			<li>
+				<a href="https://buckbuild.com/setup/getting_started.html" target="egit_external">install buck</a>
+			</li>
+			<li>to build all libraries run</li>
+		</ul>
+		<pre>[jgit] $ buck build all
+</pre>
+		<ul>
+			<li>to run the unit tests run</li>
+		</ul>
+		<pre>[jgit] $ buck test
+</pre>
+		<h2 id="JGit_Bazel_Build">JGit Bazel Build</h2>
+		<p>Since Gerrit is migrating its build from buck to 
+			<a href="https://www.bazel.io/" target="egit_external">Bazel</a> a 
+			<a href="https://git.eclipse.org/r/#/c/84527/" target="egit_external">Bazel build for JGit</a> is under construction.
+		</p>
+		<p>You can try the Bazel build:</p>
+		<ul>
+			<li>
+				<a href="https://www.bazel.io/versions/master/docs/install.html" target="egit_external">install Bazel</a>
+			</li>
+			<li>fetch the change implementing the Bazel build</li>
+		</ul>
+		<pre>[jgit] $ git fetch <a href="https://git.eclipse.org/r/a/jgit/jgit" target="egit_external">https://git.eclipse.org/r/a/jgit/jgit</a> refs/changes/27/84527/8 &amp;&amp; git checkout FETCH_HEAD
+</pre>
+		<ul>
+			<li>to build all libraries run</li>
+		</ul>
+		<pre>[jgit] $ bazel build :all
+</pre>
 		<h2 id="FindBugs_and_PMD">FindBugs and PMD</h2>
 		<p>As part of the build, JGit and EGit run FindBugs and PMD to find issues.</p>
 		<ul>
