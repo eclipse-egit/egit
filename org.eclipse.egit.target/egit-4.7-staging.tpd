@@ -3,5 +3,7 @@ target "egit-4.7-staging" with source configurePhase
 include "projects/jetty-9.2.13.tpd"
 include "projects/swtbot-snapshot.tpd"
 include "projects/mylyn-latest.tpd"
+include "projects/ease-latest.tpd"
+include "projects/ecf.tpd"
 include "orbit/S20170120205402-Oxygen.tpd"
 include "releasetrain/staging.tpd"

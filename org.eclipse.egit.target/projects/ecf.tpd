@@ -1,0 +1,7 @@
+target "ecf" with source configurePhase
+
+location "http://download.eclipse.org/rt/ecf/3.13.4/site.p2" {
+	org.eclipse.ecf lazy
+	org.eclipse.ecf.filetransfer lazy
+	org.eclipse.ecf.identity lazy
+}

@@ -33,6 +33,9 @@
    <feature url="features/org.eclipse.jgit.lfs_0.0.0.qualifier.jar" id="org.eclipse.jgit.lfs" version="0.0.0">
       <category name="JGit"/>
    </feature>
+   <feature url="features/org.eclipse.egit.ease_0.0.0.qualifier.jar" id="org.eclipse.egit.ease" version="0.0.0">
+      <category name="EGit.experimental"/>
+   </feature>
    <bundle id="org.eclipse.egit.ui.smartimport" version="0.0.0">
       <category name="EGit.experimental"/>
    </bundle>
