@@ -1,0 +1,8 @@
+target "ease-latest" with source configurePhase
+
+location ease-latest "http://download.eclipse.org/ease/update/release" {
+	org.eclipse.ease.feature.feature.group lazy
+	org.eclipse.ease.ui.feature.feature.group lazy
+	org.eclipse.ease.modules.feature.feature.group lazy
+	org.eclipse.ease.javascript.feature.feature.group lazy
+}
