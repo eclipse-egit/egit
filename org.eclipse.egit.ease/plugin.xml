@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ease.modules">
+      <module
+            category="org.eclipse.ease.category.system"
+            class="org.eclipse.ease.modules.git.GitModule"
+            id="org.eclipse.ease.modules.git"
+            name="Git"
+            visible="true">
+      </module>
+   </extension>
+
+</plugin>
