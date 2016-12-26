@@ -264,6 +264,10 @@
 	<module>org.eclipse.egit.gitflow.ui</module>
     <module>org.eclipse.egit.gitflow.test</module>
 
+    <module>org.eclipse.egit.ease-feature</module>
+	<module>org.eclipse.egit.ease</module>
+	<module>org.eclipse.egit.ease.ui</module>
+
     <module>org.eclipse.egit.source-feature</module>
 
     <module>org.eclipse.egit.repository</module>
