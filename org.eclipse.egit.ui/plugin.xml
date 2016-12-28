@@ -2238,6 +2238,109 @@
             <test property="GitSelection.resourcesSingleRepository" args="isSafe" />
          </activeWhen>
       </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.RepositoriesViewImportProjects">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.ImportProjectsCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <or>
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.FolderNode" />
+                  </or>
+                  <not>
+                     <test property="GitRepository.isBare" />
+                  </not>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.RepositoriesViewCreateBranch">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.CreateBranchCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <or>
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RefNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.TagNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode" />
+                  </or>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.RepositoriesViewNewRemote">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.ConfigureRemoteCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RemotesNode" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.RepositoriesViewOpenInEditor">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.OpenInEditorCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <instanceof value="org.eclipse.egit.ui.internal.repository.tree.FileNode" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.RepositoriesViewOpen">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.OpenCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <instanceof value="org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.RepositoriesLinkWithSelection">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.LinkWithSelectionCommand">
+         </class>
+         <activeWhen>
+            <with variable="activePart">
+               <instanceof value="org.eclipse.egit.ui.internal.repository.RepositoriesView" />
+            </with>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.ImportChangedProjectsCommandId">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.ImportChangedProjectsCommand">
+         </class>
+         <activeWhen>
+            <iterate ifEmpty="false">
+               <instanceof value="org.eclipse.jgit.revplot.PlotCommit" />
+            </iterate>
+         </activeWhen>
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.views">
@@ -2577,27 +2680,7 @@
                icon="icons/obj16/new_branch_obj.gif"
                label="%RepoViewCreateBranch.label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <or>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
-                        </instanceof>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.TagNode">
-                        </instanceof>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode">
-                        </instanceof>
-                     </or>
-                  </iterate>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
          <command
                commandId="org.eclipse.ui.edit.rename"
@@ -2812,19 +2895,7 @@
                commandId="org.eclipse.egit.ui.RepositoriesViewNewRemote"
                label="%RepoViewCreateRemote.label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <instanceof
-                           value="org.eclipse.egit.ui.internal.repository.tree.RemotesNode">
-                     </instanceof>
-                  </iterate>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.SimplePush"
@@ -3691,34 +3762,7 @@
                icon="icons/obj16/import_prj.gif"
                label="%RepoViewImportProjects.label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <or>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-                        </instanceof>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode">
-                        </instanceof>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.FolderNode">
-                        </instanceof>
-                     </or>
-                  </iterate>
-                  <iterate>
-                     <not>
-                        <test
-                              property="GitRepository.isBare">
-                        </test>
-                     </not>
-                  </iterate>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
       </menuContribution>
       <menuContribution
@@ -3727,39 +3771,13 @@
                commandId="org.eclipse.egit.ui.RepositoriesViewOpenInEditor"
                label="%RepoViewOpenInEditor.label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate
-                        ifEmpty="false"
-                        operator="and">
-                     <instanceof
-                           value="org.eclipse.egit.ui.internal.repository.tree.FileNode">
-                     </instanceof>
-                  </iterate>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewOpen"
                label="%OpenInCommitViewerCommand.name"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode">
-                        </instanceof>
-                  </iterate>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
       </menuContribution>
       <menuContribution
@@ -4645,23 +4663,7 @@
                icon="icons/obj16/import_prj.gif"
                label="%ImportChangedProjects.label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <not>
-                     <count
-                           value="0">
-                     </count>
-                  </not>
-                  <iterate>
-                     <or>
-                        <instanceof
-                              value="org.eclipse.jgit.revplot.PlotCommit">
-                        </instanceof>
-                     </or>
-                  </iterate>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
       </menuContribution>
       <menuContribution
@@ -4904,7 +4906,6 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ImportProjectsCommand"
             id="org.eclipse.egit.ui.RepositoriesViewImportProjects"
             name="%ImportProjectsCommand"
             description="%ImportProjectsCommand_description"
@@ -4912,20 +4913,17 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.ImportChangedProjectsCommand"
             id="org.eclipse.egit.ui.ImportChangedProjectsCommandId"
             name="%ImportChangedProjectsCommand"
             description="%ImportProjectsCommand_description">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.CreateBranchCommand"
             id="org.eclipse.egit.ui.RepositoriesViewCreateBranch"
             name="%CreateBranchCommand">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ConfigureRemoteCommand"
             id="org.eclipse.egit.ui.RepositoriesViewNewRemote"
             name="%NewRemoteCommand">
       </command>
@@ -4961,19 +4959,16 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.OpenInEditorCommand"
             id="org.eclipse.egit.ui.RepositoriesViewOpenInEditor"
             name="%OpenInEditorCommand">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.OpenCommand"
             id="org.eclipse.egit.ui.RepositoriesViewOpen"
             name="%OpenCommand">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.LinkWithSelectionCommand"
             id="org.eclipse.egit.ui.RepositoriesLinkWithSelection"
             name="%LinkWithSelectionCommand">
           <state
