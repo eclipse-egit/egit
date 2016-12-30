@@ -3658,6 +3658,9 @@ public class UIText extends NLS {
 	public static String DiffEditorPage_ToggleLineNumbers;
 
 	/** */
+	public static String DiffEditorPage_WarningNoDiffForMerge;
+
+	/** */
 	public static String DiscardChangesAction_confirmActionTitle;
 
 	/** */
