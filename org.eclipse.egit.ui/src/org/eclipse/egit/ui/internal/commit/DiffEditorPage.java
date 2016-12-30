@@ -29,8 +29,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter.DiffRegion;
@@ -653,8 +653,8 @@ public class DiffEditorPage extends TextEditor
 						.getCommit();
 				if (commit != null && commit.getRevCommit() != null
 						&& commit.getRevCommit().getParentCount() > 1) {
-					return Activator.error(
-							UIText.DiffEditorPage_WarningNoDiffForMerge, null);
+					return Activator.createErrorStatus(
+							UIText.DiffEditorPage_WarningNoDiffForMerge);
 				}
 			}
 			return Status.OK_STATUS;
