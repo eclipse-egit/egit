@@ -14,16 +14,13 @@ package org.eclipse.egit.ui.internal.push;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.op.PushOperationSpecification;
@@ -35,9 +32,8 @@ import org.eclipse.egit.ui.internal.gerrit.GerritDialogSettings;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.fieldassist.ContentProposal;
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
-import org.eclipse.jface.fieldassist.IContentProposal;
-import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jface.fieldassist.SimpleContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -506,99 +502,14 @@ public class PushToGerritPage extends WizardPage {
 	}
 
 	private void addRefContentProposalToText(final Text textField) {
-		if (knownRemoteRefs.isEmpty()) {
-			return;
-		}
-		KeyStroke stroke = UIUtils
-				.getKeystrokeOfBestActiveBindingFor(IWorkbenchCommandConstants.EDIT_CONTENT_ASSIST);
-		if (stroke != null)
-			UIUtils.addBulbDecorator(textField, NLS.bind(
-					UIText.PushToGerritPage_ContentProposalHoverText,
-					stroke.format()));
-
-		IContentProposalProvider cp = new IContentProposalProvider() {
-			@Override
-			public IContentProposal[] getProposals(String contents, int position) {
-				List<IContentProposal> resultList = new ArrayList<>();
-
-				// make the simplest possible pattern check: allow "*"
-				// for multiple characters
-				String patternString = contents;
-				// ignore spaces in the beginning
-				while (patternString.length() > 0
-						&& patternString.charAt(0) == ' ') {
-					patternString = patternString.substring(1);
-				}
-
-				// we quote the string as it may contain spaces
-				// and other stuff colliding with the Pattern
-				patternString = Pattern.quote(patternString);
-
-				patternString = patternString.replaceAll("\\x2A", ".*"); //$NON-NLS-1$ //$NON-NLS-2$
-
-				// make sure we add a (logical) * at the end
-				if (!patternString.endsWith(".*")) //$NON-NLS-1$
-					patternString = patternString + ".*"; //$NON-NLS-1$
-
-				// let's compile a case-insensitive pattern (assumes ASCII only)
-				Pattern pattern;
-				try {
-					pattern = Pattern.compile(patternString,
-							Pattern.CASE_INSENSITIVE);
-				} catch (PatternSyntaxException e) {
-					pattern = null;
-				}
-
-				for (final String proposal : knownRemoteRefs) {
-					if (pattern != null && !pattern.matcher(proposal).matches())
-						continue;
-					IContentProposal propsal = new BranchContentProposal(
-							proposal);
-					resultList.add(propsal);
-				}
-
-				return resultList.toArray(new IContentProposal[resultList
-						.size()]);
-			}
-		};
-
-		ContentProposalAdapter adapter = new ContentProposalAdapter(textField,
-				new TextContentAdapter(), cp, stroke, null);
-		// set the acceptance style to always replace the complete content
-		adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
-	}
-
-	private final static class BranchContentProposal implements
-			IContentProposal {
-		private final String myString;
-
-		BranchContentProposal(String string) {
-			myString = string;
-		}
-
-		@Override
-		public String getContent() {
-			return myString;
-		}
-
-		@Override
-		public int getCursorPosition() {
-			return 0;
-		}
-
-		@Override
-		public String getDescription() {
-			return myString;
-		}
-
-		@Override
-		public String getLabel() {
-			return myString;
-		}
-
-		@Override
-		public String toString() {
-			return getContent();
-		}
+		UIUtils.<String> addContentProposalToText(textField,
+				() -> knownRemoteRefs, (pattern, refName) -> {
+					if (pattern != null
+							&& !pattern.matcher(refName).matches()) {
+						return null;
+					}
+					return new ContentProposal(refName);
+				}, UIText.PushToGerritPage_ContentProposalStartTypingText,
+				UIText.PushToGerritPage_ContentProposalHoverText);
 	}
 }

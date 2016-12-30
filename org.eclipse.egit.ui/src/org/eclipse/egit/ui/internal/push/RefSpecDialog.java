@@ -8,16 +8,12 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.push;
 
-import java.util.List;
-
 import org.eclipse.egit.ui.UIUtils;
-import org.eclipse.egit.ui.UIUtils.IRefListProvider;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RefContentAssistProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
@@ -161,12 +157,7 @@ public class RefSpecDialog extends TitleAreaDialog {
 		});
 		// content assist for source
 		UIUtils.addRefContentProposalToText(sourceText, repo,
-				new IRefListProvider() {
-					@Override
-					public List<Ref> getRefList() {
-						return assistProvider.getRefsForContentAssist(true, pushMode);
-					}
-				});
+				() -> assistProvider.getRefsForContentAssist(true, pushMode));
 
 		// suggest remote tracking branch
 		if (!pushMode) {
@@ -203,12 +194,7 @@ public class RefSpecDialog extends TitleAreaDialog {
 		});
 		// content assist for destination
 		UIUtils.addRefContentProposalToText(destinationText, repo,
-				new IRefListProvider() {
-					@Override
-					public List<Ref> getRefList() {
-						return assistProvider.getRefsForContentAssist(false, pushMode);
-					}
-				});
+				() -> assistProvider.getRefsForContentAssist(false, pushMode));
 
 		// force update
 		forceButton = new Button(main, SWT.CHECK);

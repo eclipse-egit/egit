@@ -247,6 +247,9 @@ public class UIText extends NLS {
 	public static String GerritConfigurationPage_BranchTooltipHover;
 
 	/** */
+	public static String GerritConfigurationPage_BranchTooltipStartTyping;
+
+	/** */
 	public static String GerritConfigurationPage_ConfigureFetchReviewNotes;
 
 	/** */
@@ -2726,6 +2729,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String PushToGerritPage_ContentProposalHoverText;
+
+	/** */
+	public static String PushToGerritPage_ContentProposalStartTypingText;
 
 	/** */
 	public static String PushToGerritPage_Message;

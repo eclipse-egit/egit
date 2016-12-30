@@ -12,12 +12,9 @@ package org.eclipse.egit.ui.internal.gerrit;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.ui.Activator;
@@ -25,17 +22,12 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.SWTUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage.Protocol;
-import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.fieldassist.ContentProposalAdapter;
-import org.eclipse.jface.fieldassist.IContentProposal;
-import org.eclipse.jface.fieldassist.IContentProposalProvider;
-import org.eclipse.jface.fieldassist.TextContentAdapter;
+import org.eclipse.jface.fieldassist.ContentProposal;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.URIish;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -49,7 +41,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -308,110 +299,26 @@ class GerritConfigurationPage extends WizardPage {
 	}
 
 	private void addRefContentProposalToText(final Text textField) {
-		KeyStroke stroke = UIUtils
-				.getKeystrokeOfBestActiveBindingFor(IWorkbenchCommandConstants.EDIT_CONTENT_ASSIST);
-		if (stroke != null)
-			UIUtils.addBulbDecorator(textField, NLS.bind(
-					UIText.GerritConfigurationPage_BranchTooltipHover,
-					stroke.format()));
-
-		IContentProposalProvider cp = new IContentProposalProvider() {
-			@Override
-			public IContentProposal[] getProposals(String contents, int position) {
-				List<IContentProposal> resultList = new ArrayList<>();
-
-				// make the simplest possible pattern check: allow "*"
-				// for multiple characters
-				String patternString = contents;
-				// ignore spaces in the beginning
-				while (patternString.length() > 0
-						&& patternString.charAt(0) == ' ') {
-					patternString = patternString.substring(1);
-				}
-
-				// we quote the string as it may contain spaces
-				// and other stuff colliding with the Pattern
-				patternString = Pattern.quote(patternString);
-
-				patternString = patternString.replaceAll("\\x2A", ".*"); //$NON-NLS-1$ //$NON-NLS-2$
-
-				// make sure we add a (logical) * at the end
-				if (!patternString.endsWith(".*")) //$NON-NLS-1$
-					patternString = patternString + ".*"; //$NON-NLS-1$
-
-				// let's compile a case-insensitive pattern (assumes ASCII only)
-				Pattern pattern;
-				try {
-					pattern = Pattern.compile(patternString,
-							Pattern.CASE_INSENSITIVE);
-				} catch (PatternSyntaxException e) {
-					pattern = null;
-				}
-
-				Set<String> proposals = new TreeSet<>();
-
-				try {
-					// propose the names of the remote tracking
-					// branches for the given remote
-					Set<String> remotes = repository
-							.getRefDatabase()
-							.getRefs(Constants.R_REMOTES + remoteName + "/").keySet(); //$NON-NLS-1$
-					proposals.addAll(remotes);
-				} catch (IOException e) {
-					// simply ignore, no proposals then
-				}
-
-				for (final String proposal : proposals) {
-					if (pattern != null && !pattern.matcher(proposal).matches())
-						continue;
-					IContentProposal propsal = new BranchContentProposal(
-							proposal);
-					resultList.add(propsal);
-				}
-
-				return resultList.toArray(new IContentProposal[resultList
-						.size()]);
-			}
-		};
-
-		ContentProposalAdapter adapter = new ContentProposalAdapter(textField,
-				new TextContentAdapter(), cp, stroke, null);
-		// set the acceptance style to always replace the complete content
-		adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
-	}
-
-	private final static class BranchContentProposal implements
-			IContentProposal {
-		private final String myString;
-
-		BranchContentProposal(String string) {
-			myString = string;
-		}
-
-		@Override
-		public String getContent() {
-			return myString;
-		}
-
-		@Override
-		public int getCursorPosition() {
-			return 0;
-		}
-
-		@Override
-		public String getDescription() {
-			return myString;
-		}
-
-		@Override
-		public String getLabel() {
-			return myString;
-		}
-
-		@Override
-		public String toString() {
-			return getContent();
-		}
+		UIUtils.<String> addContentProposalToText(textField,
+				() -> {
+					try {
+						Set<String> sortedSet = new TreeSet<>(
+								String.CASE_INSENSITIVE_ORDER);
+						sortedSet.addAll(repository.getRefDatabase()
+								.getRefs(Constants.R_REMOTES + remoteName + '/')
+								.keySet());
+						return sortedSet;
+					} catch (IOException e) {
+						return Collections.emptyList();
+					}
+				}, (pattern, refName) -> {
+					if (pattern != null
+							&& !pattern.matcher(refName).matches()) {
+						return null;
+					}
+					return new ContentProposal(refName);
+				}, UIText.GerritConfigurationPage_BranchTooltipStartTyping,
+				UIText.GerritConfigurationPage_BranchTooltipHover);
 	}
 
 }
