@@ -31,9 +31,9 @@ import org.junit.After;
 import org.junit.Before;
 
 public abstract class VariantsTestCase extends GitTestCase {
-	protected final String INITIAL_CONTENT_1 = "some content for the first file";
+	protected static final String INITIAL_CONTENT_1 = "some content for the first file";
 
-	protected final String INITIAL_CONTENT_2 = "some content for the second file";
+	protected static final String INITIAL_CONTENT_2 = "some content for the second file";
 
 	protected static final String MASTER = Constants.R_HEADS + Constants.MASTER;
 

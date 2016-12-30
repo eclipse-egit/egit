@@ -243,7 +243,7 @@ public class IndexDiffCacheEntryTest extends GitTestCase {
 		super.tearDown();
 	}
 
-	class IndexDiffCacheEntry2 extends IndexDiffCacheEntry {
+	private static class IndexDiffCacheEntry2 extends IndexDiffCacheEntry {
 
 		boolean reloadScheduled;
 

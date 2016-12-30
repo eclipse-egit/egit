@@ -502,7 +502,7 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		}
 	}
 
-	private class OpenWorkspaceVersionAction extends Action {
+	private static class OpenWorkspaceVersionAction extends Action {
 
 		private final ISelectionProvider selectionProvider;
 
