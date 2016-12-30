@@ -18,7 +18,6 @@ import java.util.List;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
-import org.eclipse.egit.ui.UIUtils.IRefListProvider;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.BranchRebaseModeCombo;
@@ -167,16 +166,12 @@ public class PullWizardPage extends WizardPage {
 		GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
 				.applyTo(remoteBranchNameText);
 		UIUtils.addRefContentProposalToText(remoteBranchNameText,
-				this.repository, new IRefListProvider() {
-
-					@Override
-					public List<Ref> getRefList() {
-						if (PullWizardPage.this.assist != null) {
-							return PullWizardPage.this.assist
-									.getRefsForContentAssist(false, true);
-						}
-						return Collections.emptyList();
+				this.repository, () -> {
+					if (PullWizardPage.this.assist != null) {
+						return PullWizardPage.this.assist
+								.getRefsForContentAssist(false, true);
 					}
+					return Collections.emptyList();
 				});
 		remoteBranchNameText.setText(getSuggestedBranchName());
 		remoteBranchNameText.addModifyListener(new ModifyListener() {
