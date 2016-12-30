@@ -309,9 +309,6 @@ public class GitCreatePatchWizard extends Wizard {
 			composite.setLayout(gridLayout);
 			composite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-			GridData gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-			gd.horizontalSpan = 2;
-
 			formatLabel = new Label(composite, SWT.NONE);
 			formatLabel.setText(UIText.GitCreatePatchWizard_Format);
 
