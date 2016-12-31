@@ -15,6 +15,7 @@ import org.eclipse.jface.text.source.CompositeRuler;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.LineNumberRulerColumn;
 import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
@@ -22,6 +23,8 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.themes.ColorUtil;
 
 /**
@@ -38,7 +41,15 @@ public class OldNewLogicalLineNumberRulerColumn extends LineNumberRulerColumn {
 	// the mouse cursor happens to be exactly on the gap.
 
 	/** Standard physical line numbers for plain display. */
-	private final LineNumberRulerColumn plainLines = new LineNumberRulerColumn();
+	private final LineNumberRulerColumn plainLines = new LineNumberRulerColumn() {
+
+		@Override
+		public Control createControl(CompositeRuler parentRuler,
+				Composite parentControl) {
+			return addMenuListener(
+					super.createControl(parentRuler, parentControl));
+		}
+	};
 
 	/**
 	 * Ruler for the old line numbers; draws a vertical line on its right edge
@@ -57,6 +68,13 @@ public class OldNewLogicalLineNumberRulerColumn extends LineNumberRulerColumn {
 		private ResourceManager resourceManager;
 
 		private Color lineColor;
+
+		@Override
+		public Control createControl(CompositeRuler parentRuler,
+				Composite parentControl) {
+			return addMenuListener(
+					super.createControl(parentRuler, parentControl));
+		}
 
 		@Override
 		public int getWidth() {
@@ -116,13 +134,31 @@ public class OldNewLogicalLineNumberRulerColumn extends LineNumberRulerColumn {
 
 	/** Ruler for the new line numbers. */
 	private final LineNumberRulerColumn newLines = new LogicalLineNumberRulerColumn(
-			DiffEntry.Side.NEW);
+			DiffEntry.Side.NEW) {
+
+		@Override
+		public Control createControl(CompositeRuler parentRuler,
+				Composite parentControl) {
+			return addMenuListener(
+					super.createControl(parentRuler, parentControl));
+		}
+	};
 
 	/**
 	 * Current display mode. If {@code true}, showing only physical line
 	 * numbers, otherwise showing both old and new logical line numbers.
 	 */
 	private boolean plain;
+
+	/**
+	 * We need our own listener for SWT.MenuDetect. The framework does propagate
+	 * the parent's listener to children, but our own CompositeRuler then
+	 * propagates its own to _its_ children. And that one looks for a menu set
+	 * on its own control. However, the text editor framework sets the menu only
+	 * on the outer CompositeRuler, and thus the context menu will not appear on
+	 * our own columns unless we set a MenuDetect listener ourselves.
+	 */
+	private Listener menuListener;
 
 	/**
 	 * Creates a new {@link OldNewLogicalLineNumberRulerColumn} showing both old
@@ -162,8 +198,24 @@ public class OldNewLogicalLineNumberRulerColumn extends LineNumberRulerColumn {
 	@Override
 	public Control createControl(CompositeRuler parentRuler,
 			Composite parentControl) {
+		menuListener = (event) -> {
+			if (event.type == SWT.MenuDetect) {
+				Menu contextMenu = parentControl.getMenu();
+				if (contextMenu != null) {
+					contextMenu.setLocation(event.x, event.y);
+					contextMenu.setVisible(true);
+				}
+			}
+		};
 		return composite.createControl(parentControl,
 				parentRuler.getTextViewer());
+	}
+
+	private Control addMenuListener(Control control) {
+		if (menuListener != null) {
+			control.addListener(SWT.MenuDetect, menuListener);
+		}
+		return control;
 	}
 
 	@Override
