@@ -17,15 +17,13 @@ import java.io.IOException;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.WorkspaceJob;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.op.MergeOperation;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.branch.LaunchFinder;
 import org.eclipse.egit.ui.internal.dialogs.BasicConfigurationDialog;
@@ -38,7 +36,6 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
@@ -49,74 +46,24 @@ public class MergeActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
-		final Repository repository = getRepository(true, event);
+		Repository repository = getRepository(true, event);
+		Shell shell = getShell(event);
 		if (repository == null
-				|| !checkMergeIsPossible(repository, getShell(event))
+				|| !checkMergeIsPossible(repository, shell)
 				|| LaunchFinder.shouldCancelBecauseOfRunningLaunches(repository,
 						null)) {
 			return null;
 		}
 		BasicConfigurationDialog.show(repository);
 		MergeTargetSelectionDialog mergeTargetSelectionDialog = new MergeTargetSelectionDialog(
-				getShell(event), repository);
+				shell, repository);
 		if (mergeTargetSelectionDialog.open() == IDialogConstants.OK_ID) {
-
-			final String refName = mergeTargetSelectionDialog.getRefName();
-
-			String jobname = NLS.bind(UIText.MergeAction_JobNameMerge, refName);
-			final MergeOperation op = new MergeOperation(repository, refName);
+			String refName = mergeTargetSelectionDialog.getRefName();
+			MergeOperation op = new MergeOperation(repository, refName);
 			op.setSquash(mergeTargetSelectionDialog.isMergeSquash());
 			op.setFastForwardMode(mergeTargetSelectionDialog.getFastForwardMode());
 			op.setCommit(mergeTargetSelectionDialog.isCommit());
-			Job job = new WorkspaceJob(jobname) {
-				@Override
-				public IStatus runInWorkspace(IProgressMonitor monitor) {
-					try {
-						op.execute(monitor);
-					} catch (final CoreException e) {
-						return e.getStatus();
-					}
-					return Status.OK_STATUS;
-				}
-			};
-			job.setUser(true);
-			job.setRule(op.getSchedulingRule());
-			job.addJobChangeListener(new JobChangeAdapter() {
-				@Override
-				public void done(IJobChangeEvent cevent) {
-					IStatus result = cevent.getJob().getResult();
-					if (result.getSeverity() == IStatus.CANCEL)
-						Display.getDefault().asyncExec(new Runnable() {
-							@Override
-							public void run() {
-								// don't use getShell(event) here since
-								// the active shell has changed since the
-								// execution has been triggered.
-								Shell shell = PlatformUI.getWorkbench()
-										.getActiveWorkbenchWindow().getShell();
-								MessageDialog
-										.openInformation(
-												shell,
-												UIText.MergeAction_MergeCanceledTitle,
-												UIText.MergeAction_MergeCanceledMessage);
-							}
-						});
-					else if (!result.isOK())
-						Activator.handleError(result.getMessage(), result
-								.getException(), true);
-					else
-						Display.getDefault().asyncExec(new Runnable() {
-							@Override
-							public void run() {
-								Shell shell = PlatformUI.getWorkbench()
-										.getActiveWorkbenchWindow().getShell();
-								MergeResultDialog.getDialog(shell, repository, op
-										.getResult()).open();
-							}
-						});
-				}
-			});
-			job.schedule();
+			doMerge(repository, op, refName);
 		}
 		return null;
 	}
@@ -161,5 +108,53 @@ public class MergeActionHandler extends RepositoryActionHandler {
 		if (message != null)
 			MessageDialog.openError(shell, UIText.MergeAction_CannotMerge, message);
 		return (message == null);
+	}
+
+	/**
+	 * Run a {@link MergeOperation} in a {@link WorkspaceJob} and report the
+	 * result in a dialog.
+	 *
+	 * @param repository
+	 *            the merge operates on
+	 * @param op
+	 *            performing the merge
+	 * @param refName
+	 *            the merge is for; used in the job's name
+	 */
+	public static void doMerge(Repository repository, MergeOperation op,
+			String refName) {
+		JobUtil.scheduleUserWorkspaceJob(op,
+				NLS.bind(UIText.MergeAction_JobNameMerge, refName),
+				JobFamilies.MERGE, new JobChangeAdapter() {
+
+					@Override
+					public void done(IJobChangeEvent event) {
+						IStatus result = event.getJob().getResult();
+						if (result.getSeverity() == IStatus.CANCEL) {
+							PlatformUI.getWorkbench().getDisplay()
+									.asyncExec(() -> {
+										Shell shell = PlatformUI.getWorkbench()
+												.getActiveWorkbenchWindow()
+												.getShell();
+										MessageDialog.openInformation(shell,
+												UIText.MergeAction_MergeCanceledTitle,
+												UIText.MergeAction_MergeCanceledMessage);
+									});
+						} else if (!result.isOK()) {
+							Activator.handleError(result.getMessage(),
+									result.getException(), true);
+						} else {
+							PlatformUI.getWorkbench().getDisplay()
+									.asyncExec(() -> {
+										Shell shell = PlatformUI.getWorkbench()
+												.getActiveWorkbenchWindow()
+												.getShell();
+										MergeResultDialog.getDialog(shell,
+												repository, op.getResult())
+												.open();
+									});
+						}
+					}
+				});
 	}
 }
