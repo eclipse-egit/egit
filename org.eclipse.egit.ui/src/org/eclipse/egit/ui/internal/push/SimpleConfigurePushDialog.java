@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2016 Mathias Kinzler <mathias.kinzler@sap.com> and others.
+ * Copyright (C) 2011, 2017 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -590,22 +590,14 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 								try {
 									final PushOperationResult result = op
 											.execute(monitor);
-									getShell().getDisplay().asyncExec(
-											new Runnable() {
-
-												@Override
-												public void run() {
-													PushResultDialog dlg = new PushResultDialog(
-															getShell(),
-															repository,
-															result,
-															op
-													.getDestinationString(),
-													true);
-													dlg.showConfigureButton(false);
-													dlg.open();
-												}
-											});
+									getShell().getDisplay().asyncExec(() -> {
+										PushResultDialog dlg = new PushResultDialog(
+												getShell(), repository, result,
+												op.getDestinationString(), true,
+												PushMode.UPSTREAM);
+										dlg.showConfigureButton(false);
+										dlg.open();
+									});
 								} catch (CoreException e) {
 									Activator.handleError(e.getMessage(), e,
 											true);
