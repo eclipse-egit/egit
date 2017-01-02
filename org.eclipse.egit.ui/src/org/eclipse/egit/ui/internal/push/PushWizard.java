@@ -2,7 +2,7 @@
  * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
- * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, 2017 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -169,7 +169,8 @@ public class PushWizard extends Wizard {
 				NLS.bind(UIText.PushWizard_jobName,
 						getURIsString(operation.getSpecification().getURIs())),
 				localDb, operation, resultToCompare,
-				getDestinationString(repoPage.getSelection()), true);
+				getDestinationString(repoPage.getSelection()), true,
+				PushMode.UPSTREAM);
 
 		job.setUser(true);
 		job.schedule();
