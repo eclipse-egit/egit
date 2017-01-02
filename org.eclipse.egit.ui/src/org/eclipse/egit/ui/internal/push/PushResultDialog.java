@@ -2,6 +2,7 @@
  * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
  * Copyright (C) 2010, Mathias Kinzler mathias.kinzler@sap.com>
  * Copyright (C) 2015, Christian Georgi <christian.georgi@sap.com>
+ * Copyright (C) 2017, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,11 +13,13 @@ package org.eclipse.egit.ui.internal.push;
 
 import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.components.TitleAndImageDialog;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
-import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
@@ -27,7 +30,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
-class PushResultDialog extends TitleAreaDialog {
+class PushResultDialog extends TitleAndImageDialog {
 	private static final int CONFIGURE = 99;
 
 	private final Repository localDb;
@@ -40,8 +43,9 @@ class PushResultDialog extends TitleAreaDialog {
 
 	PushResultDialog(final Shell parentShell, final Repository localDb,
 			final PushOperationResult result, final String destinationString,
-			boolean modal) {
-		super(parentShell);
+			boolean modal, @NonNull PushMode pushMode) {
+		super(parentShell, pushMode == PushMode.UPSTREAM ? UIIcons.WIZBAN_PUSH
+				: UIIcons.WIZBAN_PUSH_GERRIT);
 		int shellStyle = getShellStyle() | SWT.RESIZE;
 		if (!modal) {
 			shellStyle &= ~SWT.APPLICATION_MODAL;

@@ -26,9 +26,9 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentStateManager;
 import org.eclipse.egit.ui.internal.push.PushBranchWizard;
+import org.eclipse.egit.ui.internal.push.PushMode;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
 import org.eclipse.egit.ui.internal.push.PushToGerritWizard;
-import org.eclipse.egit.ui.internal.push.PushWizard;
 import org.eclipse.egit.ui.internal.push.SimpleConfigurePushDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.Wizard;
@@ -57,16 +57,6 @@ public class CommitJob extends Job {
 	private boolean openCommitEditor;
 
 	private PushMode pushMode;
-
-	/**
-	 * where to push changes
-	 */
-	public enum PushMode {
-		/** use {@link PushWizard} */
-		UPSTREAM,
-		/** use {@link PushToGerritWizard} */
-		GERRIT;
-	}
 
 	/**
 	 * @param repository
