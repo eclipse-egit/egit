@@ -475,6 +475,7 @@ public class PushToGerritPage extends WizardPage {
 			storeLastUsedBranch(branchText.getText());
 			storeLastUsedTopic(topicText.isEnabled(),
 					topicText.getText().trim(), repository.getBranch());
+			op.setPushMode(PushMode.GERRIT);
 			op.start();
 		} catch (URISyntaxException | IOException e) {
 			Activator.handleError(e.getMessage(), e, true);
