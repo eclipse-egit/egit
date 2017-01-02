@@ -503,8 +503,12 @@ public class RepositorySearchDialog extends WizardPage {
 				}
 
 				private boolean isGitInternal(@NonNull Path d) {
+					Path fileName = d.getFileName();
+					if (fileName == null) {
+						return false;
+					}
 					Path p = d.getParent();
-					String n = d.getFileName().toString();
+					String n = fileName.toString();
 					return p != null && isDotGit(p)
 							&& !Constants.MODULES.equals(n);
 				}
@@ -522,7 +526,11 @@ public class RepositorySearchDialog extends WizardPage {
 				}
 
 				private boolean isDotGit(@NonNull Path d) {
-					return Constants.DOT_GIT.equals(d.getFileName().toString());
+					Path fileName = d.getFileName();
+					if (fileName == null) {
+						return false;
+					}
+					return Constants.DOT_GIT.equals(fileName.toString());
 				}
 
 				private boolean isSameFile(@NonNull Path f1, @NonNull Path f2) {
