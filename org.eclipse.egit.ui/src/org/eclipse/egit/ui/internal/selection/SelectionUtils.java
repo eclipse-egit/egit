@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
@@ -73,6 +74,16 @@ public class SelectionUtils {
 	public static Repository getRepository(
 			@Nullable IEvaluationContext evaluationContext) {
 		return getRepository(false, getSelection(evaluationContext), null);
+	}
+
+	/**
+	 * @param evaluationContext
+	 * @return the single selected repository, or <code>null</code>
+	 */
+	@Nullable
+	public static Repository[] getRepositories(
+			@Nullable IEvaluationContext evaluationContext) {
+		return getRepositories(false, getSelection(evaluationContext), null);
 	}
 
 	/**
@@ -244,6 +255,65 @@ public class SelectionUtils {
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * Figure out which repository to use. All selected resources must map to
+	 * the same Git repository.
+	 *
+	 * @param warn
+	 *            Put up a message dialog to warn why a resource was not
+	 *            selected
+	 * @param selection
+	 * @param shell
+	 *            must be provided if warn = true
+	 * @return repository for current project, or null
+	 */
+	@Nullable
+	private static Repository[] getRepositories(boolean warn,
+			@NonNull IStructuredSelection selection, Shell shell) {
+
+		List<Repository> repositories = new ArrayList<>();
+		IPath[] locations = getSelectedLocations(selection);
+		if (GitTraceLocation.SELECTION.isActive())
+			GitTraceLocation.getTrace().trace(
+					GitTraceLocation.SELECTION.getLocation(),
+					"selection=" //$NON-NLS-1$
+							+ selection + ", locations=" //$NON-NLS-1$
+							+ Arrays.toString(locations));
+		for (IPath location : locations) {
+			RepositoryMapping mapping = RepositoryMapping.getMapping(location);
+			Repository repo;
+			if (mapping != null) {
+				repo = mapping.getRepository();
+			} else {
+				// location is outside workspace
+				repo = org.eclipse.egit.core.Activator.getDefault()
+						.getRepositoryCache().getRepository(location);
+			}
+			if (repo != null) {
+				repositories.add(repo);
+			}
+		}
+
+		if (repositories.size() == 0) {
+			for (Object o : selection.toArray()) {
+				Repository nextRepo = AdapterUtils.adapt(o, Repository.class);
+				if (nextRepo != null) {
+					repositories.add(nextRepo);
+				}
+			}
+		}
+
+		if (repositories.size() == 0) {
+			if (warn)
+				MessageDialog.openError(shell,
+						UIText.RepositoryAction_errorFindingRepoTitle,
+						UIText.RepositoryAction_errorFindingRepo);
+			return null;
+		}
+
+		return repositories.toArray(new Repository[repositories.size()]);
 	}
 
 	/**
