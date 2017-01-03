@@ -67,12 +67,23 @@ public class SelectionUtils {
 
 	/**
 	 * @param evaluationContext
-	 * @return the single selected repository, or <code>null</code>
+	 * @return the all repositories that are found in the selection, or
+	 *         <code>null</code>
 	 */
 	@Nullable
 	public static Repository getRepository(
 			@Nullable IEvaluationContext evaluationContext) {
 		return getRepository(false, getSelection(evaluationContext), null);
+	}
+
+	/**
+	 * @param evaluationContext
+	 * @return the single selected repository, or <code>null</code>
+	 */
+	@Nullable
+	public static Repository[] getRepositories(
+			@Nullable IEvaluationContext evaluationContext) {
+		return getRepositories(false, getSelection(evaluationContext), null);
 	}
 
 	/**
@@ -247,6 +258,64 @@ public class SelectionUtils {
 	}
 
 	/**
+	 * Figure out which repositories to use. It will return an array of all the
+	 * unique repositories found in the selection.
+	 *
+	 * @param warn
+	 *            Put up a message dialog to warn why a resource was not
+	 *            selected
+	 * @param selection
+	 * @param shell
+	 *            must be provided if warn = true
+	 * @return repository for current project, or null
+	 */
+	@Nullable
+	private static Repository[] getRepositories(boolean warn,
+			@NonNull IStructuredSelection selection, Shell shell) {
+
+		Set<Repository> repositories = new HashSet<>();
+		Set<Object> elements = getSelectionContents(selection);
+		if (GitTraceLocation.SELECTION.isActive()) {
+			GitTraceLocation.getTrace().trace(
+					GitTraceLocation.SELECTION.getLocation(), "selection=" //$NON-NLS-1$
+							+ selection + ", elements=" + elements.toString()); //$NON-NLS-1$
+		}
+		for (Object location : elements) {
+			Repository repo = null;
+			if (location instanceof Repository) {
+				repo = (Repository) location;
+			} else if (location instanceof IResource) {
+				repo = ResourceUtil.getRepository((IResource) location);
+			} else if (location instanceof IPath) {
+				repo = ResourceUtil.getRepository((IPath) location);
+			}
+			if (repo != null) {
+				repositories.add(repo);
+			}
+		}
+
+		if (repositories.size() == 0) {
+			for (Object o : selection.toArray()) {
+				Repository nextRepo = AdapterUtils.adapt(o, Repository.class);
+				if (nextRepo != null) {
+					repositories.add(nextRepo);
+				}
+			}
+		}
+
+		if (repositories.isEmpty()) {
+			if (warn) {
+				MessageDialog.openError(shell,
+						UIText.RepositoryAction_errorFindingRepoTitle,
+						UIText.RepositoryAction_errorFindingRepo);
+			}
+			return null;
+		}
+
+		return repositories.toArray(new Repository[repositories.size()]);
+	}
+
+	/**
 	 * Figure out which repository to use. All selected resources must map to
 	 * the same Git repository.
 	 *
@@ -265,10 +334,11 @@ public class SelectionUtils {
 			return null;
 		}
 		Set<Object> elements = getSelectionContents(selection);
-		if (GitTraceLocation.SELECTION.isActive())
+		if (GitTraceLocation.SELECTION.isActive()) {
 			GitTraceLocation.getTrace().trace(
 					GitTraceLocation.SELECTION.getLocation(), "selection=" //$NON-NLS-1$
 							+ selection + ", elements=" + elements.toString()); //$NON-NLS-1$
+		}
 
 		boolean hadNull = false;
 		Repository result = null;
