@@ -13,6 +13,7 @@
  *    Tobias Baumann <tobbaumann@gmail.com> - Bug 373969, 473544
  *    Thomas Wolf <thomas.wolf@paranor.ch>
  *    Tobias Hein <th.mailinglists@googlemail.com> - Bug 499697
+ *    Ralf M Petter <ralf.petter@gmail.com> - Bug 509945
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.staging;
 
@@ -947,7 +948,7 @@ public class StagingView extends ViewPart
 			}
 		};
 		commitMessageText = new CommitMessageArea(commitMessageTextComposite,
-				EMPTY_STRING, toolkit.getBorderStyle()) {
+				EMPTY_STRING, SWT.NONE) {
 			@Override
 			protected CommitProposalProcessor getCommitProposalProcessor() {
 				return commitProposalProcessor;
