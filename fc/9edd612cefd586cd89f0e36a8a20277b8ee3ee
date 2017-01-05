@@ -1,0 +1,7 @@
+Verified+1: Hudson CI
+Code-Review+2: Andrey Loskutov <loskutov@gmx.de>
+Submitted-by: Andrey Loskutov <loskutov@gmx.de>
+Submitted-at: Wed, 04 Jan 2017 19:00:28 -0500
+Reviewed-on: https://git.eclipse.org/r/87905
+Project: egit/egit
+Branch: refs/heads/stable-4.6
