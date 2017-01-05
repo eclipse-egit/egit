@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_dc3241f4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-01-05T14:07:20Z",
+      "side": 1,
+      "message": "style nit: I think we add an empty line at the beginning of an anonymous class",
+      "revId": "4e5f3b0982f1c17265f37c68418f5792d6075197",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
