@@ -1,0 +1,237 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_ef9c9ebd",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3041,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-06T15:21:07Z",
+      "side": 1,
+      "message": "This menu also appears in the package explorer on projects. Should it also be enabled there if projects from several repositories are selected?\n\n(It also appears on files and folders, but for those I presume we may keep the single repository restriction.)",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_efeade14",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-06T15:21:07Z",
+      "side": 1,
+      "message": "Not sure about the UI here (and also below where BranchOperationUI is called in a loop).\n\nWhat should happen if the newBranchName already exists in some of the repositories?",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_ef381e55",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-06T15:21:07Z",
+      "side": 1,
+      "message": "Missing braces.",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_2fe2164b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-06T15:21:07Z",
+      "side": 1,
+      "message": "Missing braces.",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_8fd08a72",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-06T15:21:07Z",
+      "side": 1,
+      "message": "Missing braces.",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_8f616a7d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-06T15:21:07Z",
+      "side": 1,
+      "message": "If it\u0027s a single repository, why return an array?",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_8f932add",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-06T15:21:07Z",
+      "side": 1,
+      "message": "Not true for this method.",
+      "range": {
+        "startLine": 261,
+        "startChar": 40,
+        "endLine": 262,
+        "endChar": 28
+      },
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_af5e26bc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-06T15:21:07Z",
+      "side": 1,
+      "message": "Javadoc is wrong.",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_afa9c614",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-06T15:21:07Z",
+      "side": 1,
+      "message": "This should be a Set to avoid duplicates.",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_0fb9da65",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-06T15:21:07Z",
+      "side": 1,
+      "message": "Missing braces.",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_4f9672d1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-06T15:21:07Z",
+      "side": 1,
+      "message": "Could be replaced safely with\n\n  Repository repo \u003d ResourceUtil.getRepository(location);\n\nBut we\u0027ve used the getSelectionContents() way below on purpose; finding the repository for an IResource is faster if we can go through the RepositoryMapping than converting to IPath and then trying to find the repo through that.\n\nI just noticed that lines 371 to 385 are most likely not needed anymore since getSelectionContents() already adapts to Repository.",
+      "range": {
+        "startLine": 285,
+        "startChar": 3,
+        "endLine": 293,
+        "endChar": 4
+      },
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_4fbf5249",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-06T15:21:07Z",
+      "side": 1,
+      "message": "Use isEmpty() instead of size() \u003d\u003d 0.",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_6fc40ed9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-06T15:21:07Z",
+      "side": 1,
+      "message": "Missing braces.",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
