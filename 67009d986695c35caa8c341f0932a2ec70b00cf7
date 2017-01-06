@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_12fbbd87",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 16528
+      },
+      "writtenOn": "2017-01-06T16:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_ef381e55",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_2fe2164b",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchWizard.java",
         "patchSetId": 2
@@ -64,6 +82,24 @@
       "writtenOn": "2017-01-06T15:21:07Z",
       "side": 1,
       "message": "Missing braces.",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_d27945a1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 16528
+      },
+      "writtenOn": "2017-01-06T16:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_2fe2164b",
       "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_f27641ae",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 16528
+      },
+      "writtenOn": "2017-01-06T16:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_8fd08a72",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_8f616a7d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
         "patchSetId": 2
@@ -98,6 +152,24 @@
       "writtenOn": "2017-01-06T15:21:07Z",
       "side": 1,
       "message": "If it\u0027s a single repository, why return an array?",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_f29f2166",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 16528
+      },
+      "writtenOn": "2017-01-06T16:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_8f616a7d",
       "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -127,6 +199,30 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_12901d54",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 16528
+      },
+      "writtenOn": "2017-01-06T16:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_8f932add",
+      "range": {
+        "startLine": 261,
+        "startChar": 40,
+        "endLine": 262,
+        "endChar": 28
+      },
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_af5e26bc",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
         "patchSetId": 2
@@ -138,6 +234,24 @@
       "writtenOn": "2017-01-06T15:21:07Z",
       "side": 1,
       "message": "Javadoc is wrong.",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_32951945",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 16528
+      },
+      "writtenOn": "2017-01-06T16:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_af5e26bc",
       "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -161,6 +275,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_52861523",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 16528
+      },
+      "writtenOn": "2017-01-06T16:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_afa9c614",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_0fb9da65",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
         "patchSetId": 2
@@ -172,6 +304,24 @@
       "writtenOn": "2017-01-06T15:21:07Z",
       "side": 1,
       "message": "Missing braces.",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_728b112a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 16528
+      },
+      "writtenOn": "2017-01-06T16:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_0fb9da65",
       "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -218,6 +368,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_92834d0f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 16528
+      },
+      "writtenOn": "2017-01-06T16:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_4fbf5249",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_6fc40ed9",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
         "patchSetId": 2
@@ -229,6 +397,24 @@
       "writtenOn": "2017-01-06T15:21:07Z",
       "side": 1,
       "message": "Missing braces.",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_b2804903",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 16528
+      },
+      "writtenOn": "2017-01-06T16:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_6fc40ed9",
       "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
