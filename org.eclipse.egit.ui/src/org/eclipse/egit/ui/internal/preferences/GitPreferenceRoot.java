@@ -100,8 +100,8 @@ public class GitPreferenceRoot extends FieldEditorPreferencePage implements
 				corePreferences.save();
 			} catch (IOException e) {
 				String message = JFaceResources.format(
-						"PreferenceDialog.saveErrorMessage", getTitle(), //$NON-NLS-1$
-						e.getMessage());
+						"PreferenceDialog.saveErrorMessage", //$NON-NLS-1$
+						new Object[] { getTitle(), e.getMessage() });
 				Policy.getStatusHandler().show(
 						new Status(IStatus.ERROR, Policy.JFACE, message, e),
 						JFaceResources
