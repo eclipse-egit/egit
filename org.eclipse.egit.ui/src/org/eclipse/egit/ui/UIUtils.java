@@ -292,6 +292,45 @@ public class UIUtils {
 	}
 
 	/**
+	 * Creates a simple {@link Pattern} that can be used for matching content
+	 * assist proposals. The pattern ignores leading blanks and allows '*' as a
+	 * wildcard matching multiple arbitrary characters.
+	 *
+	 * @param content
+	 *            to create the pattern from
+	 * @return the pattern, or {@code null} if none could be created
+	 */
+	public static Pattern createProposalPattern(String content) {
+		// Make the simplest possible pattern check: allow "*"
+		// for multiple characters.
+		String patternString = content;
+		// Ignore spaces in the beginning.
+		while (patternString.length() > 0 && patternString.charAt(0) == ' ') {
+			patternString = patternString.substring(1);
+		}
+
+		// We quote the string as it may contain spaces
+		// and other stuff colliding with the pattern.
+		patternString = Pattern.quote(patternString);
+
+		patternString = patternString.replaceAll("\\x2A", ".*"); //$NON-NLS-1$ //$NON-NLS-2$
+
+		// Make sure we add a (logical) * at the end.
+		if (!patternString.endsWith(".*")) { //$NON-NLS-1$
+			patternString = patternString + ".*"; //$NON-NLS-1$
+		}
+
+		// Compile a case-insensitive pattern (assumes ASCII only).
+		Pattern pattern;
+		try {
+			pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
+		} catch (PatternSyntaxException e) {
+			pattern = null;
+		}
+		return pattern;
+	}
+
+	/**
 	 * Adds a "previously used values" content proposal handler to a text field.
 	 * <p>
 	 * The list will be limited to 10 values.
@@ -320,48 +359,18 @@ public class UIUtils {
 
 			@Override
 			public IContentProposal[] getProposals(String contents, int position) {
-
 				List<IContentProposal> resultList = new ArrayList<>();
 
-				// make the simplest possible pattern check: allow "*"
-				// for multiple characters
-				String patternString = contents;
-				// ignore spaces in the beginning
-				while (patternString.length() > 0
-						&& patternString.charAt(0) == ' ') {
-					patternString = patternString.substring(1);
-				}
-
-				// we quote the string as it may contain spaces
-				// and other stuff colliding with the Pattern
-				patternString = Pattern.quote(patternString);
-
-				patternString = patternString.replaceAll("\\x2A", ".*"); //$NON-NLS-1$ //$NON-NLS-2$
-
-				// make sure we add a (logical) * at the end
-				if (!patternString.endsWith(".*")) { //$NON-NLS-1$
-					patternString = patternString + ".*"; //$NON-NLS-1$
-				}
-
-				// let's compile a case-insensitive pattern (assumes ASCII only)
-				Pattern pattern;
-				try {
-					pattern = Pattern.compile(patternString,
-							Pattern.CASE_INSENSITIVE);
-				} catch (PatternSyntaxException e) {
-					pattern = null;
-				}
-
+				Pattern pattern = createProposalPattern(contents);
 				String[] proposals = org.eclipse.egit.ui.Activator.getDefault()
 						.getDialogSettings().getArray(preferenceKey);
-
-				if (proposals != null)
+				if (proposals != null) {
 					for (final String uriString : proposals) {
 
 						if (pattern != null
-								&& !pattern.matcher(uriString).matches())
+								&& !pattern.matcher(uriString).matches()) {
 							continue;
-
+						}
 						IContentProposal propsal = new IContentProposal() {
 
 							@Override
@@ -386,7 +395,7 @@ public class UIUtils {
 						};
 						resultList.add(propsal);
 					}
-
+				}
 				return resultList.toArray(new IContentProposal[resultList
 						.size()]);
 			}
@@ -396,8 +405,8 @@ public class UIUtils {
 				new TextContentAdapter(), cp, stroke,
 				VALUE_HELP_ACTIVATIONCHARS);
 		// set the acceptance style to always replace the complete content
-		adapter
-				.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+		adapter.setProposalAcceptanceStyle(
+				ContentProposalAdapter.PROPOSAL_REPLACE);
 
 		return new IPreviousValueProposalHandler() {
 			@Override
@@ -510,47 +519,18 @@ public class UIUtils {
 			public IContentProposal[] getProposals(String contents, int position) {
 				List<IContentProposal> resultList = new ArrayList<>();
 
-				// make the simplest possible pattern check: allow "*"
-				// for multiple characters
-				String patternString = contents;
-				// ignore spaces in the beginning
-				while (patternString.length() > 0
-						&& patternString.charAt(0) == ' ') {
-					patternString = patternString.substring(1);
-				}
-
-				// we quote the string as it may contain spaces
-				// and other stuff colliding with the Pattern
-				patternString = Pattern.quote(patternString);
-
-				patternString = patternString.replaceAll("\\x2A", ".*"); //$NON-NLS-1$ //$NON-NLS-2$
-
-				// make sure we add a (logical) * at the end
-				if (!patternString.endsWith(".*")) { //$NON-NLS-1$
-					patternString = patternString + ".*"; //$NON-NLS-1$
-				}
-
-				// let's compile a case-insensitive pattern (assumes ASCII only)
-				Pattern pattern;
-				try {
-					pattern = Pattern.compile(patternString,
-							Pattern.CASE_INSENSITIVE);
-				} catch (PatternSyntaxException e) {
-					pattern = null;
-				}
-
+				Pattern pattern = createProposalPattern(contents);
 				Collection<? extends T> candidates = candidateProvider
 						.getCandidates();
-
-				if (candidates != null)
-					for (final T ref : candidates) {
+				if (candidates != null) {
+					for (final T candidate : candidates) {
 						IContentProposal proposal = factory.getProposal(pattern,
-								ref);
+								candidate);
 						if (proposal != null) {
 							resultList.add(proposal);
 						}
 					}
-
+				}
 				return resultList.toArray(new IContentProposal[resultList
 						.size()]);
 			}

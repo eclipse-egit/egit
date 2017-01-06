@@ -23,7 +23,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
@@ -861,42 +860,17 @@ public class FetchGerritChangePage extends WizardPage {
 			final Text textField) {
 		KeyStroke stroke = UIUtils
 				.getKeystrokeOfBestActiveBindingFor(IWorkbenchCommandConstants.EDIT_CONTENT_ASSIST);
-		if (stroke != null)
+		if (stroke != null) {
 			UIUtils.addBulbDecorator(textField, NLS.bind(
 					UIText.FetchGerritChangePage_ContentAssistTooltip,
 					stroke.format()));
-
+		}
 		IContentProposalProvider cp = new IContentProposalProvider() {
 			@Override
 			public IContentProposal[] getProposals(String contents, int position) {
 				List<IContentProposal> resultList = new ArrayList<>();
 
-				// make the simplest possible pattern check: allow "*"
-				// for multiple characters
-				String patternString = contents;
-				// ignore spaces in the beginning
-				while (patternString.length() > 0
-						&& patternString.charAt(0) == ' ')
-					patternString = patternString.substring(1);
-
-				// we quote the string as it may contain spaces
-				// and other stuff colliding with the Pattern
-				patternString = Pattern.quote(patternString);
-
-				patternString = patternString.replaceAll("\\x2A", ".*"); //$NON-NLS-1$ //$NON-NLS-2$
-
-				// make sure we add a (logical) * at the end
-				if (!patternString.endsWith(".*")) //$NON-NLS-1$
-					patternString = patternString + ".*"; //$NON-NLS-1$
-
-				// let's compile a case-insensitive pattern (assumes ASCII only)
-				Pattern pattern;
-				try {
-					pattern = Pattern.compile(patternString,
-							Pattern.CASE_INSENSITIVE);
-				} catch (PatternSyntaxException e) {
-					pattern = null;
-				}
+				Pattern pattern = UIUtils.createProposalPattern(contents);
 
 				List<Change> proposals;
 				try {
@@ -908,18 +882,17 @@ public class FetchGerritChangePage extends WizardPage {
 					return null;
 				}
 
-				if (proposals != null)
+				if (proposals != null) {
 					for (final Change ref : proposals) {
 						if (pattern != null
 								&& !pattern.matcher(
 										ref.getChangeNumber().toString())
-										.matches())
+										.matches()) {
 							continue;
-						IContentProposal propsal = new ChangeContentProposal(
-								ref);
-						resultList.add(propsal);
+						}
+						resultList.add(new ChangeContentProposal(ref));
 					}
-
+				}
 				return resultList.toArray(new IContentProposal[resultList
 						.size()]);
 			}
