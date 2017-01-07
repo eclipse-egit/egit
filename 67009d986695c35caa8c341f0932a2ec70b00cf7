@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_254155f2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-07T13:47:08Z",
+      "side": 1,
+      "message": "What I meant is that I don\u0027t like throwing multiple dialogs at the user. Re-using the \"create single branch\" wizard here doesn\u0027t seem like a good design choice. I\u0027d much prefer a single wizard allowing the user to create the branch in all repositories, if it doesn\u0027t exist already. For instance something like this mock-up: http://imgur.com/a/wRHvt .",
+      "parentUuid": "a7c23755_efeade14",
+      "revId": "67009d986695c35caa8c341f0932a2ec70b00cf7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_ef381e55",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
         "patchSetId": 2
