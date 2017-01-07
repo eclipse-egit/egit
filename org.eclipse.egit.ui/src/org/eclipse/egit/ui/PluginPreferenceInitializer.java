@@ -104,6 +104,8 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 
 		store.setDefault(UIPreferences.SHOW_REBASE_CONFIRM, true);
 		store.setDefault(UIPreferences.SHOW_INITIAL_CONFIG_DIALOG, true);
+		store.setDefault(UIPreferences.SHOW_FETCH_POPUP_SUCCESS, true);
+		store.setDefault(UIPreferences.SHOW_PUSH_POPUP_SUCCESS, true);
 		store.setDefault(UIPreferences.SHOW_HOME_DIR_WARNING, true);
 		store.setDefault(UIPreferences.SHOW_DETACHED_HEAD_WARNING, true);
 		store.setDefault(UIPreferences.SHOW_CHECKOUT_CONFIRMATION, true);
