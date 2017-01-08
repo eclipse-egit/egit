@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a7c23755_a5bf2515",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchWizard.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-08T10:07:00Z",
+      "side": 1,
+      "message": "This is always null (default initialized) here.",
+      "revId": "04c76f42fd7422d7afdb712b51494ddc8680beb9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_45349103",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
         "patchSetId": 3
