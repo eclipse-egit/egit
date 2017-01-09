@@ -45,52 +45,62 @@ public class DiscardChangesActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		// capture selection from active part as long as we have context
+		mySelection = getSelection(event);
+		try {
+			IWorkbenchPart part = getPart(event);
+			String question = UIText.DiscardChangesAction_confirmActionMessage;
+			ILaunchConfiguration launch = LaunchFinder
+					.getRunningLaunchConfiguration(
+							Arrays.asList(getRepositories()), null);
+			if (launch != null) {
+				question = MessageFormat.format(question,
+						"\n\n" + MessageFormat.format( //$NON-NLS-1$
+								UIText.LaunchFinder_RunningLaunchMessage,
+								launch.getName()));
+			} else {
+				question = MessageFormat.format(question, ""); //$NON-NLS-1$
+			}
+			boolean performAction = MessageDialog.openConfirm(getShell(event),
+					UIText.DiscardChangesAction_confirmActionTitle, question);
+			if (!performAction) {
+				return null;
+			}
+			final DiscardChangesOperation operation = createOperation(part,
+					event);
 
-		IWorkbenchPart part = getPart(event);
-		String question = UIText.DiscardChangesAction_confirmActionMessage;
-		ILaunchConfiguration launch = LaunchFinder
-				.getRunningLaunchConfiguration(Arrays.asList(getRepositories()),
-						null);
-		if (launch != null) {
-			question = MessageFormat.format(question,
-					"\n\n" + MessageFormat.format( //$NON-NLS-1$
-							UIText.LaunchFinder_RunningLaunchMessage,
-							launch.getName()));
-		} else {
-			question = MessageFormat.format(question, ""); //$NON-NLS-1$
-		}
-		boolean performAction = MessageDialog.openConfirm(getShell(event),
-				UIText.DiscardChangesAction_confirmActionTitle,
-				question);
-		if (!performAction)
-			return null;
-		final DiscardChangesOperation operation = createOperation(part, event);
-		if (operation == null)
-			return null;
-		String jobname = UIText.DiscardChangesAction_discardChanges;
-		Job job = new WorkspaceJob(jobname) {
-			@Override
-			public IStatus runInWorkspace(IProgressMonitor monitor) {
-				try {
-					operation.execute(monitor);
-				} catch (CoreException e) {
-					return Activator.createErrorStatus(e.getStatus()
-							.getMessage(), e);
+			if (operation == null) {
+				return null;
+			}
+			String jobname = UIText.DiscardChangesAction_discardChanges;
+			Job job = new WorkspaceJob(jobname) {
+				@Override
+				public IStatus runInWorkspace(IProgressMonitor monitor) {
+					try {
+						operation.execute(monitor);
+					} catch (CoreException e) {
+						return Activator.createErrorStatus(
+								e.getStatus().getMessage(), e);
+					}
+					return Status.OK_STATUS;
 				}
-				return Status.OK_STATUS;
-			}
 
-			@Override
-			public boolean belongsTo(Object family) {
-				if (JobFamilies.DISCARD_CHANGES.equals(family))
-					return true;
-				return super.belongsTo(family);
-			}
-		};
-		job.setUser(true);
-		job.setRule(operation.getSchedulingRule());
-		job.schedule();
-		return null;
+				@Override
+				public boolean belongsTo(Object family) {
+					if (JobFamilies.DISCARD_CHANGES.equals(family)) {
+						return true;
+					}
+					return super.belongsTo(family);
+				}
+			};
+			job.setUser(true);
+			job.setRule(operation.getSchedulingRule());
+			job.schedule();
+			return null;
+		} finally {
+			// cleanup mySelection to avoid side effects later after execution
+			mySelection = null;
+		}
 	}
 
 	@Override

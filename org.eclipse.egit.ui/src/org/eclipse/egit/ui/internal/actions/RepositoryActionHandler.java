@@ -68,7 +68,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 
 	private IEvaluationContext evaluationContext;
 
-	private IStructuredSelection mySelection;
+	IStructuredSelection mySelection;
 
 	/**
 	 * Set the selection when used by {@link RepositoryAction} as
