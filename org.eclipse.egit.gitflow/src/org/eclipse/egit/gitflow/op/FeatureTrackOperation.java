@@ -17,6 +17,7 @@ import java.net.URISyntaxException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 
@@ -90,10 +91,11 @@ public final class FeatureTrackOperation extends AbstractFeatureOperation {
 
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
+		SubMonitor progress = SubMonitor.convert(monitor, 3);
 		try {
 			String newLocalBranch = repository
 					.getConfig().getFeatureBranchName(featureName);
-			operationResult = fetch(monitor, timeout);
+			operationResult = fetch(progress.newChild(1), timeout);
 
 			if (repository.hasBranch(newLocalBranch)) {
 				String errorMessage = String.format(
@@ -104,11 +106,11 @@ public final class FeatureTrackOperation extends AbstractFeatureOperation {
 			CreateLocalBranchOperation createLocalBranchOperation = new CreateLocalBranchOperation(
 					repository.getRepository(), newLocalBranch, remoteFeature,
 					BranchRebaseMode.NONE);
-			createLocalBranchOperation.execute(monitor);
+			createLocalBranchOperation.execute(progress.newChild(1));
 
 			BranchOperation branchOperation = new BranchOperation(
 					repository.getRepository(), newLocalBranch);
-			branchOperation.execute(monitor);
+			branchOperation.execute(progress.newChild(1));
 			CheckoutResult result = branchOperation.getResult();
 			if (!Status.OK.equals(result.getStatus())) {
 				String errorMessage = String.format(
