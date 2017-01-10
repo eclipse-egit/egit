@@ -34,8 +34,6 @@ import org.eclipse.jgit.api.RebaseCommand.Operation;
 import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.NoHeadException;
-import org.eclipse.jgit.api.errors.RefNotFoundException;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.merge.MergeStrategy;
@@ -145,29 +143,21 @@ public class RebaseOperation implements IEGitOperation {
 					if (strategy != null) {
 						cmd.setStrategy(strategy);
 					}
-					if (handler != null)
+					if (handler != null) {
 						cmd.runInteractively(handler, true);
+					}
 					if (operation == Operation.BEGIN) {
 						cmd.setPreserveMerges(preserveMerges);
 						result = cmd.setUpstream(ref.getName()).call();
-					}
-					else
+					} else {
 						result = cmd.setOperation(operation).call();
-
-				} catch (NoHeadException e) {
-					throw new CoreException(Activator.error(e.getMessage(), e));
-				} catch (RefNotFoundException e) {
-					throw new CoreException(Activator.error(e.getMessage(), e));
-				} catch (JGitInternalException e) {
-					throw new CoreException(Activator.error(e.getMessage(), e));
-				} catch (GitAPIException e) {
+					}
+				} catch (JGitInternalException | GitAPIException e) {
 					throw new CoreException(Activator.error(e.getMessage(), e));
 				} finally {
 					if (refreshNeeded()) {
 						ProjectUtil.refreshValidProjects(validProjects,
 								progress.newChild(1));
-					} else {
-						progress.worked(1);
 					}
 				}
 			}
@@ -177,11 +167,8 @@ public class RebaseOperation implements IEGitOperation {
 	}
 
 	private boolean refreshNeeded() {
-		if (result == null)
-			return true;
-		if (result.getStatus() == RebaseResult.Status.UP_TO_DATE)
-			return false;
-		return true;
+		return result == null
+				|| result.getStatus() != RebaseResult.Status.UP_TO_DATE;
 	}
 
 	@Override
