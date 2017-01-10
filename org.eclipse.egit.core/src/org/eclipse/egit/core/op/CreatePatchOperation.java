@@ -172,7 +172,7 @@ public class CreatePatchOperation implements IEGitOperation {
 
 		final StringBuilder sb = new StringBuilder();
 		final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		final DiffFormatter diffFmt = new DiffFormatter(outputStream) {
+		try (final DiffFormatter diffFmt = new DiffFormatter(outputStream) {
 			private IProject project;
 
 			@Override
@@ -189,59 +189,68 @@ public class CreatePatchOperation implements IEGitOperation {
 				}
 				super.format(ent);
 			}
-		};
+		}) {
+			diffFmt.setProgressMonitor(gitMonitor);
+			diffFmt.setContext(contextLines);
 
-		diffFmt.setProgressMonitor(gitMonitor);
-		diffFmt.setContext(contextLines);
-
-		if (headerFormat != null && headerFormat != DiffHeaderFormat.NONE)
-			writeGitPatchHeader(sb);
-
-		diffFmt.setRepository(repository);
-		diffFmt.setPathFilter(pathFilter);
-
-		try {
-			if (commit != null) {
-				RevCommit[] parents = commit.getParents();
-				if (parents.length > 1)
-					throw new IllegalStateException(
-							CoreText.CreatePatchOperation_cannotCreatePatchForMergeCommit);
-
-				ObjectId parentId;
-				if (parents.length > 0)
-					parentId = parents[0].getId();
-				else
-					parentId = null;
-				List<DiffEntry> diffs = diffFmt.scan(parentId, commit.getId());
-				for (DiffEntry ent : diffs) {
-					String path;
-					if (ChangeType.DELETE.equals(ent.getChangeType()))
-						path = ent.getOldPath();
-					else
-						path = ent.getNewPath();
-					currentEncoding = CompareCoreUtils.getResourceEncoding(repository, path);
-					diffFmt.format(ent);
-				}
-			} else {
-				diffFmt.format(
-						new DirCacheIterator(repository.readDirCache()),
-						new FileTreeIterator(repository));
+			if (headerFormat != null && headerFormat != DiffHeaderFormat.NONE) {
+				writeGitPatchHeader(sb);
 			}
-			diffFmt.flush();
-		} catch (IOException e) {
-			Activator.logError(CoreText.CreatePatchOperation_patchFileCouldNotBeWritten, e);
-		}
 
-		try {
-			String encoding = currentEncoding != null ? currentEncoding
-					: RawParseUtils.UTF8_CHARSET.name();
-			sb.append(outputStream.toString(encoding));
-		} catch (UnsupportedEncodingException e) {
-			sb.append(outputStream.toString());
-		}
+			diffFmt.setRepository(repository);
+			diffFmt.setPathFilter(pathFilter);
 
-		if (DiffHeaderFormat.WORKSPACE == headerFormat)
-			updateWorkspacePatchPrefixes(sb, diffFmt);
+			try {
+				if (commit != null) {
+					RevCommit[] parents = commit.getParents();
+					if (parents.length > 1) {
+						throw new IllegalStateException(
+								CoreText.CreatePatchOperation_cannotCreatePatchForMergeCommit);
+					}
+
+					ObjectId parentId;
+					if (parents.length > 0) {
+						parentId = parents[0].getId();
+					} else {
+						parentId = null;
+					}
+					List<DiffEntry> diffs = diffFmt.scan(parentId,
+							commit.getId());
+					for (DiffEntry ent : diffs) {
+						String path;
+						if (ChangeType.DELETE.equals(ent.getChangeType())) {
+							path = ent.getOldPath();
+						} else {
+							path = ent.getNewPath();
+						}
+						currentEncoding = CompareCoreUtils
+								.getResourceEncoding(repository, path);
+						diffFmt.format(ent);
+					}
+				} else {
+					diffFmt.format(
+							new DirCacheIterator(repository.readDirCache()),
+							new FileTreeIterator(repository));
+				}
+				diffFmt.flush();
+			} catch (IOException e) {
+				Activator.logError(
+						CoreText.CreatePatchOperation_patchFileCouldNotBeWritten,
+						e);
+			}
+
+			try {
+				String encoding = currentEncoding != null ? currentEncoding
+						: RawParseUtils.UTF8_CHARSET.name();
+				sb.append(outputStream.toString(encoding));
+			} catch (UnsupportedEncodingException e) {
+				sb.append(outputStream.toString());
+			}
+
+			if (DiffHeaderFormat.WORKSPACE == headerFormat) {
+				updateWorkspacePatchPrefixes(sb, diffFmt);
+			}
+		}
 
 		patchContent = sb.toString();
 	}
