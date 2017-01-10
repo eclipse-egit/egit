@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SafeRunner;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.ui.IBranchNameProvider;
@@ -409,10 +410,10 @@ class CreateBranchPage extends WizardPage {
 	 */
 	public void createBranch(String newRefName, boolean checkoutNewBranch,
 			IProgressMonitor monitor)
-			throws CoreException,
-			IOException {
-		monitor.beginTask(UIText.CreateBranchPage_CreatingBranchMessage,
-				IProgressMonitor.UNKNOWN);
+			throws CoreException, IOException {
+		SubMonitor progress = SubMonitor.convert(monitor,
+				checkoutNewBranch ? 2 : 1);
+		progress.setTaskName(UIText.CreateBranchPage_CreatingBranchMessage);
 
 		final CreateLocalBranchOperation cbop;
 
@@ -425,15 +426,12 @@ class CreateBranchPage extends WizardPage {
 					myRepository.findRef(this.sourceRefName),
 					upstreamConfig);
 
-		cbop.execute(monitor);
+		cbop.execute(progress.newChild(1));
 
-		if (checkoutNewBranch) {
-			if (monitor.isCanceled())
-				return;
-			monitor.beginTask(UIText.CreateBranchPage_CheckingOutMessage,
-					IProgressMonitor.UNKNOWN);
+		if (checkoutNewBranch && !progress.isCanceled()) {
+			progress.setTaskName(UIText.CreateBranchPage_CheckingOutMessage);
 			BranchOperationUI.checkout(myRepository, Constants.R_HEADS + newRefName)
-					.run(monitor);
+					.run(progress.newChild(1));
 		}
 	}
 

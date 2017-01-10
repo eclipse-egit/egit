@@ -28,8 +28,8 @@ import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -280,11 +280,15 @@ public class GitImportWizard extends AbstractGitCloneWizard implements IImportWi
 						throws CoreException {
 					IProject[] currentProjects = ResourcesPlugin.getWorkspace()
 							.getRoot().getProjects();
+					SubMonitor progress = SubMonitor.convert(actMonitor,
+							currentProjects.length);
 					for (IProject current : currentProjects)
 						if (!previousProjects.contains(current)) {
 							ConnectProviderOperation cpo = new ConnectProviderOperation(
 									current, repoDir[0]);
-							cpo.execute(actMonitor);
+							cpo.execute(progress.newChild(1));
+						} else {
+							progress.worked(1);
 						}
 				}
 			};
@@ -320,17 +324,17 @@ public class GitImportWizard extends AbstractGitCloneWizard implements IImportWi
 								.getWorkspace().newProjectDescription(
 										projectName[0]);
 						desc.setLocation(new Path(path[0]));
-
+						SubMonitor progress = SubMonitor.convert(actMonitor, 4);
 						IProject prj = ResourcesPlugin.getWorkspace().getRoot()
 								.getProject(desc.getName());
-						prj.create(desc, actMonitor);
-						prj.open(actMonitor);
+						prj.create(desc, progress.newChild(1));
+						prj.open(progress.newChild(1));
 						ConnectProviderOperation cpo = new ConnectProviderOperation(
 								prj, repoDir[0]);
-						cpo.execute(new NullProgressMonitor());
+						cpo.execute(progress.newChild(1));
 
 						ResourcesPlugin.getWorkspace().getRoot().refreshLocal(
-								IResource.DEPTH_ONE, actMonitor);
+								IResource.DEPTH_ONE, progress.newChild(1));
 					}
 				};
 				ResourcesPlugin.getWorkspace().run(wsr, monitor);

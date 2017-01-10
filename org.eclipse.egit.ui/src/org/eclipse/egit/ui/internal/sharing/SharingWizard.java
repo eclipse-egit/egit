@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
@@ -95,6 +96,8 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 					public void run(IProgressMonitor monitor)
 							throws InvocationTargetException,
 							InterruptedException {
+						SubMonitor progress = SubMonitor.convert(monitor,
+								projectsToMove.size() * 2);
 						for (Map.Entry<IProject, File> entry : projectsToMove
 								.entrySet()) {
 							closeOpenEditorsForProject(activePage,
@@ -109,7 +112,8 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 										entry.getValue().toURI(),
 										UIText.SharingWizard_MoveProjectActionLabel);
 								try {
-									IStatus result = op.execute(monitor, null);
+									IStatus result = op.execute(
+											progress.newChild(1), null);
 									if (!result.isOK())
 										throw new RuntimeException();
 								} catch (ExecutionException e) {
@@ -118,11 +122,13 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 												.getCause());
 									throw new InvocationTargetException(e);
 								}
+							} else {
+								progress.worked(1);
 							}
 							try {
 								new ConnectProviderOperation(entry.getKey(),
 										selectedRepository.getDirectory())
-										.execute(monitor);
+												.execute(progress.newChild(1));
 							} catch (CoreException e) {
 								throw new InvocationTargetException(e);
 							}

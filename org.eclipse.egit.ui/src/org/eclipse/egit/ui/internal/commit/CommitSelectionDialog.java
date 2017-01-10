@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.UIText;
@@ -195,8 +196,9 @@ public class CommitSelectionDialog extends FilteredItemsSelectionDialog {
 			throws CoreException {
 		String pattern = itemsFilter.getPattern();
 		Repository[] repositories = getRepositories();
-		progressMonitor.beginTask(UIText.CommitSelectionDialog_TaskSearching,
+		SubMonitor progress = SubMonitor.convert(progressMonitor,
 				repositories.length);
+		progress.setTaskName(UIText.CommitSelectionDialog_TaskSearching);
 		for (Repository repository : repositories) {
 			try {
 				ObjectId commitId;
@@ -218,7 +220,7 @@ public class CommitSelectionDialog extends FilteredItemsSelectionDialog {
 			} catch (IOException ignored) {
 				// Ignore and advance
 			}
-			progressMonitor.worked(1);
+			progress.worked(1);
 		}
 	}
 

@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.gitflow.GitFlowRepository;
@@ -55,15 +56,16 @@ public final class FeatureListOperation extends GitFlowOperation {
 
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
+		SubMonitor progress = SubMonitor.convert(monitor, 2);
 		String uriString = FILE
 				+ repository.getRepository().getDirectory().getPath();
 		try {
-			operationResult = fetch(monitor, timeout);
+			operationResult = fetch(progress.newChild(1), timeout);
 
 			URIish uri = new URIish(uriString);
 			ListRemoteOperation listRemoteOperation = new ListRemoteOperation(
 					repository.getRepository(), uri, timeout);
-			listRemoteOperation.run(monitor);
+			listRemoteOperation.run(progress.newChild(1));
 			Collection<Ref> remoteRefs = listRemoteOperation.getRemoteRefs();
 			for (Ref ref : remoteRefs) {
 				if (ref.getName().startsWith(

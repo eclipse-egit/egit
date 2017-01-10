@@ -12,7 +12,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.api.FetchCommand;
@@ -115,11 +114,8 @@ public class FetchOperation {
 		if (operationResult != null)
 			throw new IllegalStateException(CoreText.OperationAlreadyExecuted);
 
-		IProgressMonitor actMonitor = monitor;
-		if (actMonitor == null)
-			actMonitor = new NullProgressMonitor();
 		EclipseGitProgressTransformer gitMonitor = new EclipseGitProgressTransformer(
-				actMonitor);
+				monitor);
 		try (Git git = new Git(repository)) {
 			FetchCommand command;
 			if (rc == null)

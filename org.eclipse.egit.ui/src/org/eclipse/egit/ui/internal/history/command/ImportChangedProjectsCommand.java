@@ -24,8 +24,8 @@ import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
@@ -94,8 +94,9 @@ public class ImportChangedProjectsCommand
 			File projectFile = searchEnclosingProjectInWorkDir(
 					changedFile.getParentFile().getAbsoluteFile(),
 					workingTreeRootPath);
-			if (projectFile != null)
+			if (projectFile != null) {
 				result.add(projectFile);
+			}
 		}
 		return result;
 	}
@@ -108,8 +109,9 @@ public class ImportChangedProjectsCommand
 		while (currentPath.toString().startsWith(workingTreeRootPath)) {
 			projectFile = new File(
 					currentPath.toString() + File.separator + ".project"); //$NON-NLS-1$
-			if (projectFile.isFile())
+			if (projectFile.isFile()) {
 				break;
+			}
 			projectFile = null;
 			currentPath = currentPath.getParentFile();
 		}
@@ -123,11 +125,14 @@ public class ImportChangedProjectsCommand
 			@Override
 			public IStatus runInWorkspace(IProgressMonitor monitor)
 					throws CoreException {
+				SubMonitor progress = SubMonitor.convert(monitor,
+						dotProjectFiles.size());
 				for (File f : dotProjectFiles) {
-					if (monitor.isCanceled())
+					if (progress.isCanceled()) {
 						return Status.CANCEL_STATUS;
+					}
 					String ap = f.getAbsolutePath();
-					importProject(ap);
+					importProject(ap, progress.newChild(1));
 				}
 				return Status.OK_STATUS;
 			}
@@ -135,7 +140,7 @@ public class ImportChangedProjectsCommand
 		job.schedule();
 	}
 
-	private void importProject(String path) {
+	private void importProject(String path, IProgressMonitor monitor) {
 		try {
 			IProjectDescription description = IDEWorkbenchPlugin
 					.getPluginWorkspace().loadProjectDescription(
@@ -144,14 +149,15 @@ public class ImportChangedProjectsCommand
 				String projectName = description.getName();
 				IProject project = ResourcesPlugin.getWorkspace().getRoot()
 						.getProject(projectName);
-				if (project.exists() == true) {
-					if (project.isOpen() == false)
-						project.open(IResource.BACKGROUND_REFRESH,
-								new NullProgressMonitor());
+				if (project.exists()) {
+					if (!project.isOpen()) {
+						project.open(IResource.BACKGROUND_REFRESH, monitor);
+					}
 				} else {
-					project.create(description, new NullProgressMonitor());
+					SubMonitor progress = SubMonitor.convert(monitor, 2);
+					project.create(description, progress.newChild(1));
 					project.open(IResource.BACKGROUND_REFRESH,
-							new NullProgressMonitor());
+							progress.newChild(1));
 				}
 			}
 		} catch (CoreException e) {

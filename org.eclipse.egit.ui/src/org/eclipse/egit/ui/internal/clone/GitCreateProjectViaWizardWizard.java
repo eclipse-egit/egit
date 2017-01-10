@@ -27,8 +27,8 @@ import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
@@ -189,11 +189,15 @@ public class GitCreateProjectViaWizardWizard extends Wizard {
 						throws CoreException {
 					IProject[] currentProjects = ResourcesPlugin.getWorkspace()
 							.getRoot().getProjects();
+					SubMonitor progress = SubMonitor.convert(monitor,
+							currentProjects.length);
 					for (IProject current : currentProjects) {
 						if (!previousProjects.contains(current)) {
 							ConnectProviderOperation cpo = new ConnectProviderOperation(
 									current, myRepository.getDirectory());
-							cpo.execute(actMonitor);
+							cpo.execute(progress.newChild(1));
+						} else {
+							progress.worked(1);
 						}
 					}
 
@@ -228,21 +232,22 @@ public class GitCreateProjectViaWizardWizard extends Wizard {
 						final IProjectDescription desc = ResourcesPlugin
 								.getWorkspace().newProjectDescription(
 										projectName[0]);
-						if (!defaultLocation[0])
+						if (!defaultLocation[0]) {
 							desc.setLocation(new Path(myGitDir));
-
+						}
+						SubMonitor progress = SubMonitor.convert(actMonitor, 4);
 						IProject prj = ResourcesPlugin.getWorkspace().getRoot()
 								.getProject(desc.getName());
-						prj.create(desc, actMonitor);
-						prj.open(actMonitor);
+						prj.create(desc, progress.newChild(1));
+						prj.open(progress.newChild(1));
 
 						ResourcesPlugin.getWorkspace().getRoot().refreshLocal(
-								IResource.DEPTH_ONE, actMonitor);
+								IResource.DEPTH_ONE, progress.newChild(1));
 
 						File repoDir = myRepository.getDirectory();
 						ConnectProviderOperation cpo = new ConnectProviderOperation(
 								prj, repoDir);
-						cpo.execute(new NullProgressMonitor());
+						cpo.execute(progress.newChild(1));
 					}
 				};
 				ResourcesPlugin.getWorkspace().run(wsr, monitor);

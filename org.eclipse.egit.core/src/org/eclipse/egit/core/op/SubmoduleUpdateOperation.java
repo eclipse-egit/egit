@@ -71,7 +71,7 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 
 			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
-				SubMonitor progress = SubMonitor.convert(pm, 3);
+				SubMonitor progress = SubMonitor.convert(pm, 4);
 
 				Git git = Git.wrap(repository);
 
@@ -94,18 +94,18 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 						update.setStrategy(strategy);
 					}
 					updated = update.call();
-					progress.worked(1);
-					SubMonitor refreshMonitor = progress
-							.newChild(updated.size());
+					SubMonitor refreshMonitor = progress.newChild(1)
+							.setWorkRemaining(updated.size());
 					for (String path : updated) {
 						Repository subRepo = SubmoduleWalk
 								.getSubmoduleRepository(repository, path);
-						if (subRepo != null)
+						if (subRepo != null) {
 							ProjectUtil.refreshValidProjects(
 									ProjectUtil.getValidOpenProjects(subRepo),
 									refreshMonitor.newChild(1));
-						else
+						} else {
 							refreshMonitor.worked(1);
+						}
 					}
 				} catch (GitAPIException e) {
 					throw new TeamException(e.getLocalizedMessage(),
@@ -114,8 +114,9 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
 				} finally {
-					if (updated != null && !updated.isEmpty())
+					if (updated != null && !updated.isEmpty()) {
 						repository.notifyIndexChanged();
+					}
 				}
 			}
 		};
