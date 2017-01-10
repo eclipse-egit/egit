@@ -18,7 +18,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -655,21 +654,7 @@ public class FetchGerritChangePage extends WizardPage {
 									changeRefs.add(change);
 							}
 							Collections.sort(changeRefs,
-									new Comparator<Change>() {
-										@Override
-										public int compare(Change o1, Change o2) {
-											// change number descending
-											int changeDiff = o2.changeNumber
-													.compareTo(o1.changeNumber);
-											if (changeDiff == 0)
-												// patch set number descending
-												changeDiff = o2
-														.getPatchSetNumber()
-														.compareTo(
-																o1.getPatchSetNumber());
-											return changeDiff;
-										}
-									});
+									Collections.reverseOrder());
 						}
 					});
 		}
@@ -939,7 +924,7 @@ public class FetchGerritChangePage extends WizardPage {
 		}
 	}
 
-	private final static class Change {
+	private final static class Change implements Comparable<Change> {
 		private final String refName;
 
 		private final Integer changeNumber;
@@ -997,6 +982,16 @@ public class FetchGerritChangePage extends WizardPage {
 		@Override
 		public String toString() {
 			return refName;
+		}
+
+		@Override
+		public int compareTo(Change o) {
+			int changeDiff = this.changeNumber.compareTo(o.changeNumber);
+			if (changeDiff == 0) {
+				changeDiff = this.getPatchSetNumber()
+						.compareTo(o.getPatchSetNumber());
+			}
+			return changeDiff;
 		}
 	}
 
