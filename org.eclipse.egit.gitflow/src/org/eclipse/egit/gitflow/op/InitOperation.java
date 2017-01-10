@@ -22,6 +22,7 @@ import java.io.IOException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
@@ -124,10 +125,13 @@ public final class InitOperation extends GitFlowOperation {
 			throw new CoreException(error(e.getMessage(), e));
 		}
 
+		SubMonitor progress = SubMonitor.convert(monitor, 1);
 		if (!repository.hasBranches()) {
+			progress.setWorkRemaining(2);
 			new CommitOperation(repository.getRepository(),
 					repository.getConfig().getUser(), repository.getConfig().getUser(),
-					CoreText.InitOperation_initialCommit).execute(monitor);
+					CoreText.InitOperation_initialCommit)
+							.execute(progress.newChild(1));
 		}
 
 		try {
@@ -137,12 +141,15 @@ public final class InitOperation extends GitFlowOperation {
 
 			RevCommit head = repository.findHead();
 			if (!repository.hasBranch(develop)) {
+				progress.setWorkRemaining(2);
 				CreateLocalBranchOperation branchFromHead = createBranchFromHead(
 						develop, head);
-				branchFromHead.execute(monitor);
+				branchFromHead.execute(progress.newChild(1));
 				BranchOperation checkoutOperation = new BranchOperation(
 						repository.getRepository(), develop);
-				checkoutOperation.execute(monitor);
+				checkoutOperation.execute(progress.newChild(1));
+			} else {
+				progress.worked(1);
 			}
 		} catch (WrongGitFlowStateException e) {
 			throw new CoreException(error(e));

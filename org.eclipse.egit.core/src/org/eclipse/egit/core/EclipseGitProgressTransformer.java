@@ -1,24 +1,33 @@
 /*******************************************************************************
- * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2008, 2017 Shawn O. Pearce <spearce@spearce.org> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   Thomas Wolf <thomas.wolf@paranor.ch> - use SubMonitor and infinite progress
  *******************************************************************************/
 package org.eclipse.egit.core;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jgit.lib.ProgressMonitor;
 
-/** Create a new Git to Eclipse progress monitor. */
+/**
+ * A JGit {@link ProgressMonitor} that reports progress and cancellation via an
+ * Eclipse {@link IProgressMonitor}.
+ */
 public class EclipseGitProgressTransformer implements ProgressMonitor {
-	private static final String EMPTY_STRING = "";  //$NON-NLS-1$
 
-	private final IProgressMonitor root;
+	// Because of the inconsistencies of JGit progress management (sometimes
+	// start() not called, sometimes more beginTask() calls than advertised
+	// in a previous start()), the best we can do to give some reasonable
+	// visual feedback in the progress bar is an infinite progress
+	// implementation.
 
-	private IProgressMonitor task;
+	private final SubMonitor root;
 
 	private String msg;
 
@@ -33,83 +42,73 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 	 *            the Eclipse monitor we update.
 	 */
 	public EclipseGitProgressTransformer(final IProgressMonitor eclipseMonitor) {
-		root = eclipseMonitor;
+		root = SubMonitor.convert(eclipseMonitor);
 	}
 
 	@Override
 	public void start(final int totalTasks) {
-		root.beginTask(EMPTY_STRING, totalTasks * 1000);
+		// Nothing to do
 	}
 
 	@Override
 	public void beginTask(final String name, final int total) {
-		endTask();
 		msg = name;
 		lastWorked = 0;
-		totalWork = total;
-		task = new SubProgressMonitor(root, 1000);
-		if (totalWork == UNKNOWN)
-			task.beginTask(EMPTY_STRING, IProgressMonitor.UNKNOWN);
-		else
-			task.beginTask(EMPTY_STRING, totalWork);
-		task.subTask(msg);
+		totalWork = total <= 0 ? UNKNOWN : total;
+		root.subTask(msg);
 	}
 
 	@Override
 	public void update(final int work) {
-		if (task == null)
+		if (work <= 0) {
 			return;
-
+		}
 		final int cmp = lastWorked + work;
-		if (totalWork == UNKNOWN && cmp > 0) {
-			if (lastWorked != cmp)
-				task.subTask(msg + ", " + cmp); //$NON-NLS-1$
-		} else if (totalWork <= 0) {
-			// Do nothing to update the task.
+		if (totalWork == UNKNOWN) {
+			root.subTask(msg + ", " + cmp); //$NON-NLS-1$
+			root.setWorkRemaining(100);
+			root.worked(1);
 		} else if (cmp * 100 / totalWork != lastWorked * 100 / totalWork) {
+			// Percentage changed: update the subTask message
 			final StringBuilder m = new StringBuilder();
 			m.append(msg);
 			m.append(": ");  //$NON-NLS-1$
-			while (m.length() < 25)
+			while (m.length() < 25) {
 				m.append(' ');
-
+			}
 			final String twstr = String.valueOf(totalWork);
 			String cmpstr = String.valueOf(cmp);
-			while (cmpstr.length() < twstr.length())
-				cmpstr = " " + cmpstr; //$NON-NLS-1$
+			while (cmpstr.length() < twstr.length()) {
+				cmpstr = ' ' + cmpstr;
+			}
 			final int pcnt = (cmp * 100 / totalWork);
-			if (pcnt < 100)
+			if (pcnt < 100) {
 				m.append(' ');
-			if (pcnt < 10)
+			}
+			if (pcnt < 10) {
 				m.append(' ');
+			}
 			m.append(pcnt);
 			m.append("% ("); //$NON-NLS-1$
 			m.append(cmpstr);
-			m.append("/"); //$NON-NLS-1$
+			m.append('/');
 			m.append(twstr);
-			m.append(")"); //$NON-NLS-1$
+			m.append(')');
 
-			task.subTask(m.toString());
+			root.subTask(m.toString());
+			root.setWorkRemaining(100);
+			root.worked(1);
 		}
 		lastWorked = cmp;
-		task.worked(work);
 	}
 
 	@Override
 	public void endTask() {
-		if (task != null) {
-			try {
-				task.done();
-			} finally {
-				task = null;
-			}
-		}
+		// Nothing to do
 	}
 
 	@Override
 	public boolean isCancelled() {
-		if (task != null)
-			return task.isCanceled();
 		return root.isCanceled();
 	}
 }
