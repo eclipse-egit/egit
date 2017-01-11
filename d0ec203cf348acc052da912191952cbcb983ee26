@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_64da6160",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseGitProgressTransformer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-01-11T21:57:06Z",
+      "side": 1,
+      "message": "can\u0027t this be fixed in JGit ?",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
