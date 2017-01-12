@@ -85,9 +85,9 @@
   <setupTask
       xsi:type="pde:APIBaselineTask"
       name="EGit"
-      version="4.5.0"
+      version="4.6.0"
       location="${workspace.location/../api.baseline}"
-      remoteURI="http://download.eclipse.org/egit/updates-4.5/org.eclipse.egit.repository-4.5.0.201609210915-r.zip"/>
+      remoteURI="http://download.eclipse.org/egit/updates-4.6/org.eclipse.egit.repository-4.6.0.201612231935-r.zip"/>
   <stream name="master">
     <setupTask
         xsi:type="setup:VariableTask"
@@ -229,6 +229,8 @@
               url="http://download.eclipse.org/technology/swtbot/snapshots"/>
           <repository
               url="http://download.eclipse.org/mylyn/releases/latest"/>
+          <repository
+              url="http://download.eclipse.org/tools/orbit/downloads/drops/S20161021172207/repository"/>
         </repositoryList>
         <repositoryList
             name="Mars">
@@ -240,6 +242,10 @@
               url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.2.13.v20150730"/>
           <repository
               url="http://download.eclipse.org/technology/swtbot/snapshots"/>
+          <repository
+              url="http://download.eclipse.org/tools/orbit/downloads/drops/S20161021172207/repository"/>
+          <repository
+              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20160221192158/repository/"/>
         </repositoryList>
       </targlet>
     </setupTask>
