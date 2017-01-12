@@ -34,6 +34,312 @@
       "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_55afcdec",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseGitProgressTransformer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 32204
+      },
+      "writtenOn": "2017-01-12T18:28:05Z",
+      "side": 1,
+      "message": "Suggest using at least 1000 ticks in cases where progress is unknown. Experimentally, SubMonitors that consume 1% per iteration seem to overflow at around 700 iterations. Change to:\n\nroot.setWorkRemaining(1000).worked(1);",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_b5bae125",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseGitProgressTransformer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 32204
+      },
+      "writtenOn": "2017-01-12T18:28:05Z",
+      "side": 1,
+      "message": "Suggest using 1000 ticks and fluent form:\n\nroot.setWorkRemaining(1000).worked(1);",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_35c6d1ad",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ProjectReferenceImporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 32204
+      },
+      "writtenOn": "2017-01-12T18:28:05Z",
+      "side": 1,
+      "message": "Change to: \n\nSubMonitor subProgress \u003d progress.split(1).setWorkRemaining(refs.size());",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_759be9c9",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ProjectReferenceImporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 32204
+      },
+      "writtenOn": "2017-01-12T18:28:05Z",
+      "side": 1,
+      "message": "Change to:\n\nSubMonitor subSubProgress \u003d subProgress.split(1).setWorkRemaining(repositoryPath \u003d\u003d null ? 2 : 1);\n\n(setWorkRemaining is slightly fewer characters to type and slightly more efficient than a call to SubMonitor.convert)",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_958c0594",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ProjectReferenceImporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 32204
+      },
+      "writtenOn": "2017-01-12T18:28:05Z",
+      "side": 1,
+      "message": "Unless you explicitly don\u0027t want cancellation checks (for example, if you\u0027re in a finally or catch block), it\u0027s better to use subSubProgress.split(1)",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_b59101a8",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/AddToIndexOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 32204
+      },
+      "writtenOn": "2017-01-12T18:28:05Z",
+      "side": 1,
+      "message": "Unless you\u0027re trying to suppress cancellation checks (and I don\u0027t think you should be here), it\u0027s normally better to use progress.split(1) rather than progress.worked(1).\n\nThe difference in performance is negligable.",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_15a0f5eb",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/AssumeUnchangedOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 32204
+      },
+      "writtenOn": "2017-01-12T18:28:05Z",
+      "side": 1,
+      "message": "This will consume most of the progress on the first loop. Suggest changing this to \"rsrcList.size() + caches.size()\" and removing the extra call to setWorkRemaining.",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_359df1b7",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/AssumeUnchangedOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 32204
+      },
+      "writtenOn": "2017-01-12T18:28:05Z",
+      "side": 1,
+      "message": "split(1) is usually preferred over worked(1)",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_f571b900",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 32204
+      },
+      "writtenOn": "2017-01-12T18:28:05Z",
+      "side": 1,
+      "message": "Use the one-argument version of \"convert\" and keep the call to setTaskName. Most monitors (including SubMonitor) ignore the string argument to convert(...) or beginTask(...) by default.\n\nsetTaskName is treated differently and is normally shown to the user.\n\nThere is no need to allocate or consume any ticks on this monitor since the entire thing is consumed by the parent. Remove the local variable and change to:\n\nSubMonitor.convert(actMonitor).setTaskName(CoreText.CommitOperation_PerformingCommit);",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_157b95e1",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 32204
+      },
+      "writtenOn": "2017-01-12T18:28:05Z",
+      "side": 1,
+      "message": "Delete. No need to report work at the end of a method. The caller will take care of this.",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_357891e2",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreateLocalBranchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 32204
+      },
+      "writtenOn": "2017-01-12T18:28:05Z",
+      "side": 1,
+      "message": "Delete. Reporting progress at the end of a method is a no-op.",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_5568ad13",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 32204
+      },
+      "writtenOn": "2017-01-12T18:28:05Z",
+      "side": 1,
+      "message": "No need to convert the monitor or allocate ticks since EclipseGitProgressTransformer does this internally. Just pass monitor directly.",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_354fb1bb",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DeleteBranchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 32204
+      },
+      "writtenOn": "2017-01-12T18:28:05Z",
+      "side": 1,
+      "message": "If you care about the task name, it\u0027s normally better to call setTaskName than to pass the string to convert. In this case, they are equivalent but in most situations since you\u0027re talking to a root monitor, but in most cases any string argument to convert(...) is ignored.",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_d55bdd7c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DeleteBranchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 32204
+      },
+      "writtenOn": "2017-01-12T18:28:05Z",
+      "side": 1,
+      "message": "Delete this cancellation check. Replace it with a call to progress.split(1).",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_f558d982",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DeleteBranchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 32204
+      },
+      "writtenOn": "2017-01-12T18:28:05Z",
+      "side": 1,
+      "message": "Replace this with a call to progress.split(1) and move it to the start of the loop.",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_50b35b35",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DisconnectProviderOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 32204
+      },
+      "writtenOn": "2017-01-12T18:28:05Z",
+      "side": 1,
+      "message": "Remove the * 2",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_70b85711",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DisconnectProviderOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 32204
+      },
+      "writtenOn": "2017-01-12T18:28:05Z",
+      "side": 1,
+      "message": "Remove the call to worked. Calling worked immediately before newChild(...) is an antipattern that reduces the progress resolution.",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_b0be6ffa",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/FetchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 32204
+      },
+      "writtenOn": "2017-01-12T18:28:05Z",
+      "side": 1,
+      "message": "Just pass monitor directly.",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
