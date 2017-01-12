@@ -264,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_30689f94",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/AssumeUnchangedOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-12T21:40:08Z",
+      "side": 1,
+      "message": "Or simply replace +1 by *2. Would have the same effect. I had, however, chosen +1 on purpose because I think caches.size() will be \u003c\u003d rsrcList.size(). (Probably much smaller for many resources.) But I should check how long writing the DirCache actually takes.",
+      "parentUuid": "a7c23755_308dff09",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_359df1b7",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/AssumeUnchangedOperation.java",
         "patchSetId": 2
