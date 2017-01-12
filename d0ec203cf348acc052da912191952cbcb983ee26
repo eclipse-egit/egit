@@ -246,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_308dff09",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/AssumeUnchangedOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 32204
+      },
+      "writtenOn": "2017-01-12T21:34:21Z",
+      "side": 1,
+      "message": "Then allocate 2 ticks here, and allocate two child submonitors - one for the first loop and one for the second.",
+      "parentUuid": "a7c23755_708bf7fb",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_359df1b7",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/AssumeUnchangedOperation.java",
         "patchSetId": 2
