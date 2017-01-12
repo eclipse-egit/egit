@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_10b9e3af",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseGitProgressTransformer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-12T21:15:28Z",
+      "side": 1,
+      "message": "They shouldn\u0027t overflow, should they? Saturate, yes, but overflow?",
+      "parentUuid": "a7c23755_55afcdec",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_b5bae125",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseGitProgressTransformer.java",
         "patchSetId": 2
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_f0af0766",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseGitProgressTransformer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-12T21:15:28Z",
+      "side": 1,
+      "message": "I\u0027ll have to see how it behaves with 1000. Progress might be too slow then.",
+      "parentUuid": "a7c23755_b5bae125",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_35c6d1ad",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ProjectReferenceImporter.java",
         "patchSetId": 2
@@ -82,6 +118,24 @@
       "writtenOn": "2017-01-12T18:28:05Z",
       "side": 1,
       "message": "Change to: \n\nSubMonitor subProgress \u003d progress.split(1).setWorkRemaining(refs.size());",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_5086fbf4",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ProjectReferenceImporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-12T21:15:28Z",
+      "side": 1,
+      "message": "I can do newChild(1) and then setWorkRemaining(), but we must not use split() since it\u0027s not available on our base platform Eclipse 4.4.",
+      "parentUuid": "a7c23755_35c6d1ad",
       "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -139,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_30db3f0d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/AddToIndexOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-12T21:15:28Z",
+      "side": 1,
+      "message": "We\u0027re not using split() since it\u0027s not available on our base platform Eclipse 4.4.",
+      "parentUuid": "a7c23755_b59101a8",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_15a0f5eb",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/AssumeUnchangedOperation.java",
         "patchSetId": 2
@@ -156,6 +228,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_708bf7fb",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/AssumeUnchangedOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-12T21:15:28Z",
+      "side": 1,
+      "message": "Doesn\u0027t work: caches is only populated during the first loop.",
+      "parentUuid": "a7c23755_15a0f5eb",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_359df1b7",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/AssumeUnchangedOperation.java",
         "patchSetId": 2
@@ -167,6 +257,24 @@
       "writtenOn": "2017-01-12T18:28:05Z",
       "side": 1,
       "message": "split(1) is usually preferred over worked(1)",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_907c1366",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/AssumeUnchangedOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-12T21:15:28Z",
+      "side": 1,
+      "message": "... unless you\u0027re targeting Eclipse 4.x that don\u0027t have split() :-)",
+      "parentUuid": "a7c23755_359df1b7",
       "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -235,6 +343,24 @@
       "writtenOn": "2017-01-12T18:28:05Z",
       "side": 1,
       "message": "No need to convert the monitor or allocate ticks since EclipseGitProgressTransformer does this internally. Just pass monitor directly.",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_b0810fda",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-12T21:15:28Z",
+      "side": 1,
+      "message": "Good catch. I did this part before rewriting EclipseGitProgressTransformer.",
+      "parentUuid": "a7c23755_5568ad13",
       "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
