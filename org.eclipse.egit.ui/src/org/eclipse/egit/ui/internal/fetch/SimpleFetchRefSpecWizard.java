@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2011, 2017 Mathias Kinzler <mathias.kinzler@sap.com> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.fetch;
 
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.Repository;
@@ -35,6 +36,7 @@ public class SimpleFetchRefSpecWizard extends Wizard {
 		sourcePage = new FetchSourcePage(localRepository, config);
 		destinationPage = new FetchDestinationPage(localRepository, config);
 		setWindowTitle(UIText.SimpleFetchRefSpecWizard_WizardTitle);
+		setDefaultPageImageDescriptor(UIIcons.WIZBAN_FETCH);
 	}
 
 	@Override
