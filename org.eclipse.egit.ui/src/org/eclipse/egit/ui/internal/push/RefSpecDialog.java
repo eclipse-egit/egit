@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2011, 2017 Mathias Kinzler <mathias.kinzler@sap.com> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,9 +9,10 @@
 package org.eclipse.egit.ui.internal.push;
 
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RefContentAssistProvider;
-import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.egit.ui.internal.components.TitleAndImageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
@@ -19,8 +20,6 @@ import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
@@ -34,7 +33,7 @@ import org.eclipse.swt.widgets.Text;
 /**
  * Add or edit a RefSpec
  */
-public class RefSpecDialog extends TitleAreaDialog {
+public class RefSpecDialog extends TitleAndImageDialog {
 	private final boolean pushMode;
 
 	private final Repository repo;
@@ -63,7 +62,7 @@ public class RefSpecDialog extends TitleAreaDialog {
 	 */
 	public RefSpecDialog(Shell parentShell, Repository repository,
 			RemoteConfig config, boolean push) {
-		super(parentShell);
+		super(parentShell, push ? UIIcons.WIZBAN_PUSH : UIIcons.WIZBAN_FETCH);
 		setShellStyle(getShellStyle() | SWT.SHELL_TRIM);
 		this.repo = repository;
 		this.config = config;
@@ -136,10 +135,9 @@ public class RefSpecDialog extends TitleAreaDialog {
 				false).applyTo(sourceText);
 		if (spec != null && spec.getSource() != null)
 			sourceText.setText(spec.getSource());
-		sourceText.addModifyListener(new ModifyListener() {
-			@Override
-			public void modifyText(ModifyEvent e) {
-				if (sourceText.isFocusControl())
+		sourceText.addModifyListener(event -> {
+			if (sourceText.isFocusControl()) {
+				try {
 					if (autoSuggestDestination) {
 						String name = sourceText.getText();
 						if (name.startsWith(Constants.R_HEADS))
@@ -151,8 +149,12 @@ public class RefSpecDialog extends TitleAreaDialog {
 						setSpec(sourceChanged
 								.setDestination(Constants.R_REMOTES
 										+ config.getName() + '/' + name));
-					} else
+					} else {
 						setSpec(getSpec().setSource(sourceText.getText()));
+					}
+				} catch (IllegalArgumentException | IllegalStateException e) {
+					// Text is not a valid source
+				}
 			}
 		});
 		// content assist for source
@@ -185,11 +187,13 @@ public class RefSpecDialog extends TitleAreaDialog {
 				false).applyTo(destinationText);
 		if (spec != null && spec.getDestination() != null)
 			destinationText.setText(spec.getDestination());
-		destinationText.addModifyListener(new ModifyListener() {
-			@Override
-			public void modifyText(ModifyEvent e) {
-				if (destinationText.isFocusControl())
+		destinationText.addModifyListener(event -> {
+			if (destinationText.isFocusControl()) {
+				try {
 					setSpec(getSpec().setDestination(destinationText.getText()));
+				} catch (IllegalArgumentException | IllegalStateException e) {
+					// Text is not a valid spec
+				}
 			}
 		});
 		// content assist for destination
@@ -220,13 +224,15 @@ public class RefSpecDialog extends TitleAreaDialog {
 				specString);
 		if (spec != null)
 			specString.setText(spec.toString());
-		specString.addModifyListener(new ModifyListener() {
-			@Override
-			public void modifyText(ModifyEvent e) {
-				if (!specString.isFocusControl()
-						|| getSpec().toString().equals(specString.getText()))
-					return;
+		specString.addModifyListener(event -> {
+			if (!specString.isFocusControl()
+					|| getSpec().toString().equals(specString.getText())) {
+				return;
+			}
+			try {
 				setSpec(new RefSpec(specString.getText()));
+			} catch (IllegalArgumentException | IllegalStateException e) {
+				// Invalid spec text
 			}
 		});
 
