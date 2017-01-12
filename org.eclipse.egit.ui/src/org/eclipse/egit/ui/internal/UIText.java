@@ -4763,31 +4763,70 @@ public class UIText extends NLS {
 	public static String RevertOperation_InternalError;
 
 	/** */
-	public static String SelectUriWiazrd_Title;
+	public static String SelectUriWizard_Title;
 
 	/** */
-	public static String SimpleConfigureFetchDialog_AddRefSpecButton;
+	public static String AbstractConfigureRemoteDialog_AddRefSpecLabel;
 
 	/** */
-	public static String SimpleConfigureFetchDialog_BranchLabel;
+	public static String AbstractConfigureRemoteDialog_BranchLabel;
 
 	/** */
-	public static String SimpleConfigureFetchDialog_ChangeRefSpecButton;
+	public static String AbstractConfigureRemoteDialog_ChangeRefSpecLabel;
 
 	/** */
-	public static String SimpleConfigureFetchDialog_ChangeUriButton;
+	public static String AbstractConfigureRemoteDialog_ChangeUriLabel;
 
 	/** */
-	public static String SimpleConfigureFetchDialog_CopyRefSpecButton;
+	public static String AbstractConfigureRemoteDialog_DeleteUriLabel;
 
 	/** */
-	public static String SimpleConfigureFetchDialog_DeleteRefSpecButton;
+	public static String AbstractConfigureRemoteDialog_DetachedHeadMessage;
 
 	/** */
-	public static String SimpleConfigureFetchDialog_DeleteUriButton;
+	public static String AbstractConfigureRemoteDialog_DryRunButton;
 
 	/** */
-	public static String SimpleConfigureFetchDialog_DetachedHeadMessage;
+	public static String AbstractConfigureRemoteDialog_EditAdvancedLabel;
+
+	/** */
+	public static String AbstractConfigureRemoteDialog_EmptyClipboardDialogMessage;
+
+	/** */
+	public static String AbstractConfigureRemoteDialog_EmptyClipboardDialogTitle;
+
+	/** */
+	public static String AbstractConfigureRemoteDialog_InvalidRefDialogMessage;
+
+	/** */
+	public static String AbstractConfigureRemoteDialog_InvalidRefDialogTitle;
+
+	/** */
+	public static String AbstractConfigureRemoteDialog_MissingUriMessage;
+
+	/** */
+	public static String AbstractConfigureRemoteDialog_NoRefSpecDialogMessage;
+
+	/** */
+	public static String AbstractConfigureRemoteDialog_NoRefSpecDialogTitle;
+
+	/** */
+	public static String AbstractConfigureRemoteDialog_PasteRefSpecButton;
+
+	/** */
+	public static String AbstractConfigureRemoteDialog_RefMappingGroup;
+
+	/** */
+	public static String AbstractConfigureRemoteDialog_ReusedRemoteWarning;
+
+	/** */
+	public static String AbstractConfigureRemoteDialog_RevertButton;
+
+	/** */
+	public static String AbstractConfigureRemoteDialog_SaveButton;
+
+	/** */
+	public static String AbstractConfigureRemoteDialog_UriLabel;
 
 	/** */
 	public static String SimpleConfigureFetchDialog_DialogMessage;
@@ -4796,55 +4835,10 @@ public class UIText extends NLS {
 	public static String SimpleConfigureFetchDialog_DialogTitle;
 
 	/** */
-	public static String SimpleConfigureFetchDialog_DryRunButton;
-
-	/** */
-	public static String SimpleConfigureFetchDialog_EditAdvancedButton;
-
-	/** */
-	public static String SimpleConfigureFetchDialog_EmptyClipboardMessage;
-
-	/** */
-	public static String SimpleConfigureFetchDialog_InvalidRefDialogMessage;
-
-	/** */
-	public static String SimpleConfigureFetchDialog_InvalidRefDialogTitle;
-
-	/** */
 	public static String SimpleConfigureFetchDialog_MissingMappingMessage;
 
 	/** */
-	public static String SimpleConfigureFetchDialog_MissingUriMessage;
-
-	/** */
-	public static String SimpleConfigureFetchDialog_NothingToPasteMessage;
-
-	/** */
-	public static String SimpleConfigureFetchDialog_NotRefSpecDialogMessage;
-
-	/** */
-	public static String SimpleConfigureFetchDialog_NotRefSpecDialogTitle;
-
-	/** */
-	public static String SimpleConfigureFetchDialog_PateRefSpecButton;
-
-	/** */
-	public static String SimpleConfigureFetchDialog_RefMappingGroup;
-
-	/** */
-	public static String SimpleConfigureFetchDialog_ReusedRemoteWarning;
-
-	/** */
-	public static String SimpleConfigureFetchDialog_RevertButton;
-
-	/** */
 	public static String SimpleConfigureFetchDialog_SaveAndFetchButton;
-
-	/** */
-	public static String SimpleConfigureFetchDialog_SaveButton;
-
-	/** */
-	public static String SimpleConfigureFetchDialog_UriLabel;
 
 	/** */
 	public static String SimpleConfigureFetchDialog_WindowTitle;
@@ -4853,22 +4847,7 @@ public class UIText extends NLS {
 	public static String SimpleConfigurePushDialog_AddPushUriButton;
 
 	/** */
-	public static String SimpleConfigurePushDialog_AddRefSpecButton;
-
-	/** */
-	public static String SimpleConfigurePushDialog_BranchLabel;
-
-	/** */
 	public static String SimpleConfigurePushDialog_ChangePushUriButton;
-
-	/** */
-	public static String SimpleConfigurePushDialog_ChangeRefSpecButton;
-
-	/** */
-	public static String SimpleConfigurePushDialog_ChangeUriButton;
-
-	/** */
-	public static String SimpleConfigurePushDialog_CopyRefSpecButton;
 
 	/** */
 	public static String SimpleConfigurePushDialog_DefaultPushNoRefspec;
@@ -4877,70 +4856,16 @@ public class UIText extends NLS {
 	public static String SimpleConfigurePushDialog_DeletePushUriButton;
 
 	/** */
-	public static String SimpleConfigurePushDialog_DeleteRefSpecButton;
-
-	/** */
-	public static String SimpleConfigurePushDialog_DeleteUriButton;
-
-	/** */
-	public static String SimpleConfigurePushDialog_DetachedHeadMessage;
-
-	/** */
 	public static String SimpleConfigurePushDialog_DialogMessage;
 
 	/** */
 	public static String SimpleConfigurePushDialog_DialogTitle;
 
 	/** */
-	public static String SimpleConfigurePushDialog_DryRunButton;
-
-	/** */
-	public static String SimpleConfigurePushDialog_EditAdvancedButton;
-
-	/** */
-	public static String SimpleConfigurePushDialog_EmptyClipboardDialogMessage;
-
-	/** */
-	public static String SimpleConfigurePushDialog_EmptyClipboardDialogTitle;
-
-	/** */
-	public static String SimpleConfigurePushDialog_InvalidRefDialogMessage;
-
-	/** */
-	public static String SimpleConfigurePushDialog_InvalidRefDialogTitle;
-
-	/** */
-	public static String SimpleConfigurePushDialog_MissingUriMessage;
-
-	/** */
-	public static String SimpleConfigurePushDialog_NoRefSpecDialogMessage;
-
-	/** */
-	public static String SimpleConfigurePushDialog_NoRefSpecDialogTitle;
-
-	/** */
-	public static String SimpleConfigurePushDialog_PasteRefSpecButton;
-
-	/** */
 	public static String SimpleConfigurePushDialog_PushUrisLabel;
 
 	/** */
-	public static String SimpleConfigurePushDialog_RefMappingGroup;
-
-	/** */
-	public static String SimpleConfigurePushDialog_ReusedOriginWarning;
-
-	/** */
-	public static String SimpleConfigurePushDialog_RevertButton;
-
-	/** */
 	public static String SimpleConfigurePushDialog_SaveAndPushButton;
-
-	/** */
-	public static String SimpleConfigurePushDialog_SaveButton;
-
-	/** */
-	public static String SimpleConfigurePushDialog_URILabel;
 
 	/** */
 	public static String SimpleConfigurePushDialog_UseUriForPushUriMessage;
