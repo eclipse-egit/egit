@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_704137f1",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseGitProgressTransformer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-12T22:52:50Z",
+      "side": 1,
+      "message": "Not done. Cloning Guice from https://github.com/google/guice.git the progress bar advances way too slow and then jumps to the end for clone configuration.\n\nSince this updates only when the percentage changes, i.e., at most 100 times per JGit \"subtask\", we should be fine. Even if it saturated at 700, we\u0027d reach that only after 7 JGit tasks.",
+      "parentUuid": "a7c23755_f0af0766",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_35c6d1ad",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ProjectReferenceImporter.java",
         "patchSetId": 2
