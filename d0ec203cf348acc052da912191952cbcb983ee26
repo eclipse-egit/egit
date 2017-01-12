@@ -16,6 +16,24 @@
       "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_9786cd20",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseGitProgressTransformer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-12T09:05:30Z",
+      "side": 1,
+      "message": "Of course it can. But it\u0027s quite a bit of work. Note that all JGit monitors currently are \"infinite progress\" monitors: see BatchingProgressMonitor, which also ignores the number of tasks. Also, JGit re-uses the same monitor for multiple sub-steps. For purely textual output this works fine, but if you have to report overall progress on some fixed scale from zero to \"all done\", that won\u0027t work well. JGit would basically need to have a concept akin to SubMonitor and use it consistently, too.\n\nThis implementation here makes this monitor behave like all other JGit monitors. It\u0027ll work whether or not the JGit monitor mechanism is changed. If and when it is changed, this implementation here could then be adapted, too.",
+      "parentUuid": "a7c23755_64da6160",
+      "revId": "d0ec203cf348acc052da912191952cbcb983ee26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
