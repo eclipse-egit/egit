@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2017, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,6 +20,7 @@ import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.jface.dialogs.Dialog;
@@ -86,9 +88,11 @@ public class RefSpecPage extends WizardPage {
 		if (pushPage) {
 			setTitle(UIText.RefSpecPage_titlePush);
 			setDescription(UIText.RefSpecPage_descriptionPush);
+			setImageDescriptor(UIIcons.WIZBAN_PUSH);
 		} else {
 			setTitle(UIText.RefSpecPage_titleFetch);
 			setDescription(UIText.RefSpecPage_descriptionFetch);
+			setImageDescriptor(UIIcons.WIZBAN_FETCH);
 		}
 
 	}
