@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_6fe4f5ca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-13T22:12:44Z",
+      "side": 1,
+      "message": "An alternative is of course to remove that \"Modify...\" action/button altogether -- the \"Advanced...\" button offers similar functionality.",
+      "revId": "d8109589536c6b46015e270f88d86d329e000bac",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
