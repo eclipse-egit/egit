@@ -562,7 +562,7 @@ public class DiffEditorPage extends TextEditor
 		if (commit == null) {
 			return;
 		}
-		if (commit.getRevCommit().getParentCount() > 1) {
+		if (!commit.isStash() && commit.getRevCommit().getParentCount() > 1) {
 			setInput(new DiffEditorInput(commit, null));
 			return;
 		}
@@ -651,7 +651,8 @@ public class DiffEditorPage extends TextEditor
 			if (element instanceof CommitEditorInput) {
 				RepositoryCommit commit = ((CommitEditorInput) element)
 						.getCommit();
-				if (commit != null && commit.getRevCommit() != null
+				if (commit != null && !commit.isStash()
+						&& commit.getRevCommit() != null
 						&& commit.getRevCommit().getParentCount() > 1) {
 					return Activator.createErrorStatus(
 							UIText.DiffEditorPage_WarningNoDiffForMerge);
