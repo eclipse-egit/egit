@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_b23e708e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-14T20:40:13Z",
+      "side": 1,
+      "message": "Nested try... can\u0027t you combine this with the try at line 203? The following use of diffFmt on line 251 actually needs only diffFmt.getOldPrefix() and diffFmt.getNewPrefix(), which could be gotten before the end of that try-statement.",
+      "revId": "882db9209322a021abc21d1988d74bbd651cf212",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
