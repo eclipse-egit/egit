@@ -616,14 +616,9 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 			if (repositoryCache == null)
 				return Status.OK_STATUS;
 
-			Repository[] repos = repositoryCache.getAllRepositories();
-			if (repos.length == 0)
-				return Status.OK_STATUS;
-
 			// When people use Git from the command line a lot of changes
 			// may happen. Don't scan when inactive depending on the user's
 			// choice.
-
 			if (Activator.getDefault().getPreferenceStore()
 					.getBoolean(UIPreferences.REFESH_ONLY_WHEN_ACTIVE)) {
 				if (!isActive()) {
@@ -631,6 +626,10 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 					return Status.OK_STATUS;
 				}
 			}
+
+			Repository[] repos = repositoryCache.getAllRepositories();
+			if (repos.length == 0)
+				return Status.OK_STATUS;
 
 			monitor.beginTask(UIText.Activator_scanningRepositories,
 					repos.length);
