@@ -163,6 +163,9 @@ public class UIPreferences {
 	public static final String DEFAULT_DATE_FORMAT_CHOICE = DATE_FORMAT_CUSTOM;
 	/** */
 	public static final String DEFAULT_CHANGESET_FORMAT = "[{author}] ({date}) {short_message}"; //$NON-NLS-1$
+
+	/** interval in seconds to check for repositories index changes */
+	public static final String REFESH_INDEX_INTERVAL = "refesh_index_interval"; //$NON-NLS-1$
 	/** */
 	public static final String REFESH_ON_INDEX_CHANGE = "refesh_on_index_change"; //$NON-NLS-1$
 	/** */
