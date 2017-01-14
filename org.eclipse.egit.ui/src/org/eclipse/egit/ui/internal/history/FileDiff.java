@@ -56,12 +56,23 @@ import org.eclipse.ui.model.WorkbenchAdapter;
 public class FileDiff extends WorkbenchAdapter {
 
 	/**
-	 * Comparator for sorting FileDiffs based on getPath().
+	 * Comparator for sorting FileDiffs based on getPath(). Compares first the
+	 * directory part, if those are equal, the filename part.
 	 */
 	public static final Comparator<FileDiff> PATH_COMPARATOR = new Comparator<FileDiff>() {
+
 		@Override
-		public int compare(FileDiff o1, FileDiff o2) {
-			return o1.getPath().compareTo(o2.getPath());
+		public int compare(FileDiff left, FileDiff right) {
+			String leftPath = left.getPath();
+			String rightPath = right.getPath();
+			int i = leftPath.lastIndexOf('/');
+			int j = rightPath.lastIndexOf('/');
+			int p = leftPath.substring(0, i + 1)
+					.compareTo(rightPath.substring(0, j + 1));
+			if (p != 0) {
+				return p;
+			}
+			return leftPath.compareTo(rightPath);
 		}
 	};
 

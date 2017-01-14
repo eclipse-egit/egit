@@ -12,7 +12,6 @@ import static java.util.Arrays.asList;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -155,7 +154,8 @@ public class StashEditorPage extends CommitEditorPage {
 					.getRepository(), stagedCommit).getDiffs();
 			stagedDiffsResult.addAll(asList(stagedDiffs));
 		}
-		return stagedDiffsResult.toArray(new FileDiff[0]);
+		return stagedDiffsResult
+				.toArray(new FileDiff[stagedDiffsResult.size()]);
 	}
 
 	/**
@@ -178,9 +178,7 @@ public class StashEditorPage extends CommitEditorPage {
 			unstagedDiffs.addAll(asList(untrackedDiffs));
 		}
 
-		Collections.sort(unstagedDiffs, FileDiff.PATH_COMPARATOR);
-
-		return unstagedDiffs.toArray(new FileDiff[0]);
+		return unstagedDiffs.toArray(new FileDiff[unstagedDiffs.size()]);
 	}
 
 	private void fillStagedDiffs(FileDiff[] diffs) {
