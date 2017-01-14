@@ -4620,6 +4620,12 @@ public class UIText extends NLS {
 	public static String RemoteConnectionPreferencePage_ZeroValueTooltip;
 
 	/** */
+	public static String RefreshPreferencesPage_RefreshIndexInterval;
+
+	/** */
+	public static String RefreshPreferencesPage_RefreshIndexIntervalTooltip;
+
+	/** */
 	public static String RefreshPreferencesPage_RefreshOnlyWhenActive;
 
 	/** */
