@@ -16,6 +16,24 @@
       "revId": "cefb94f242e015aec561edda2990af011335a61d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_0f89c179",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2017-01-14T12:22:02Z",
+      "side": 1,
+      "message": "It is my fault too, I\u0027ve reviewed \u0026 merged the patch :-)",
+      "parentUuid": "a7c23755_2f911da6",
+      "revId": "cefb94f242e015aec561edda2990af011335a61d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
