@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_2f911da6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-14T11:40:44Z",
+      "side": 1,
+      "message": "Sorry about that -- forgot that the selection listener ignores text selections :-(",
+      "revId": "cefb94f242e015aec561edda2990af011335a61d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
