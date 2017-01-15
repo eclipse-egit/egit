@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_75484233",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-15T19:53:39Z",
+      "side": 1,
+      "message": "private -- is not used outside of RepositoryChangeScanner anymore.\n\nThe class itself could also be made private.",
+      "revId": "00ad86ce3d62a5d084e8254a3bf43d3d24a70bf5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
