@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_1579ce6b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2017-01-15T19:18:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_5510a658",
+      "revId": "dbff4d49a7a466ebfb238844760dd04b1116d3cc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_750be22f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2017-01-15T15:20:33Z",
       "side": 1,
       "message": "Can be removed if shouldRun is overridden.",
+      "revId": "dbff4d49a7a466ebfb238844760dd04b1116d3cc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_35816ad8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2017-01-15T19:18:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_750be22f",
       "revId": "dbff4d49a7a466ebfb238844760dd04b1116d3cc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_559b4646",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2017-01-15T19:18:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_9516be52",
+      "revId": "dbff4d49a7a466ebfb238844760dd04b1116d3cc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_b511fa5b",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
         "patchSetId": 2
@@ -81,6 +135,24 @@
       "writtenOn": "2017-01-15T15:20:33Z",
       "side": 1,
       "message": "If shouldSchedule() and shouldRun() are overridden, the if is not necessary here.",
+      "revId": "dbff4d49a7a466ebfb238844760dd04b1116d3cc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_7596821e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2017-01-15T19:18:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_b511fa5b",
       "revId": "dbff4d49a7a466ebfb238844760dd04b1116d3cc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_f5753271",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2017-01-15T19:18:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_151aae74",
+      "revId": "dbff4d49a7a466ebfb238844760dd04b1116d3cc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_d523d6ad",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
         "patchSetId": 2
@@ -115,6 +205,24 @@
       "writtenOn": "2017-01-15T15:20:33Z",
       "side": 1,
       "message": "If shouldSchedule() and shouldRun() are overridden, the if is not necessary here.",
+      "revId": "dbff4d49a7a466ebfb238844760dd04b1116d3cc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_b58c9a0e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2017-01-15T19:18:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_d523d6ad",
       "revId": "dbff4d49a7a466ebfb238844760dd04b1116d3cc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_d572f688",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2017-01-15T19:18:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_351dea6b",
+      "revId": "dbff4d49a7a466ebfb238844760dd04b1116d3cc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_f5fff26f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
         "patchSetId": 2
@@ -149,6 +275,24 @@
       "writtenOn": "2017-01-15T15:20:33Z",
       "side": 1,
       "message": "For completeness, we should probably also remove it as listener:\n\n  getPreferenceStore().removePropertyChangeListener(rcs);",
+      "revId": "dbff4d49a7a466ebfb238844760dd04b1116d3cc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_357c0a5b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2017-01-15T19:18:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_f5fff26f",
       "revId": "dbff4d49a7a466ebfb238844760dd04b1116d3cc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
