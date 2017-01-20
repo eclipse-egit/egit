@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_f890b7a3",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-01-20T13:13:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_2d1bd3fe",
+      "revId": "81f276f655156ae50199c18e890def9abcb24d41",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_cd125fe3",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
         "patchSetId": 2
@@ -58,6 +76,54 @@
         "startChar": 13,
         "endLine": 514,
         "endChar": 23
+      },
+      "revId": "81f276f655156ae50199c18e890def9abcb24d41",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_7344c86c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-01-20T13:13:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_ad0fe3be",
+      "range": {
+        "startLine": 514,
+        "startChar": 13,
+        "endLine": 514,
+        "endChar": 23
+      },
+      "revId": "81f276f655156ae50199c18e890def9abcb24d41",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_b3ad80a5",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-01-20T13:13:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_cd125fe3",
+      "range": {
+        "startLine": 514,
+        "startChar": 46,
+        "endLine": 514,
+        "endChar": 57
       },
       "revId": "81f276f655156ae50199c18e890def9abcb24d41",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
