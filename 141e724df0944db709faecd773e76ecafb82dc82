@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_4510e358",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-20T15:10:37Z",
+      "side": 1,
+      "message": "Re-launching the Hudson job is not going to help. Sometimes it helps to actually look why Hudson fails :-) We must exclude bare repos here.",
+      "revId": "141e724df0944db709faecd773e76ecafb82dc82",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
