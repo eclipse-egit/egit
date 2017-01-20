@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceProxy;
 import org.eclipse.core.resources.IResourceProxyVisitor;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -38,14 +40,19 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitProvider;
+import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
+import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryFinder;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.RepositoryProvider;
 
@@ -169,6 +176,8 @@ public class ConnectProviderOperation implements IEGitOperation {
 		}
 
 		autoIgnoreDerivedResources(project, subMon.newChild(10));
+		autoIgnoreWorkspaceMetaData(
+				actualMapping.getRepository().getDirectory().toPath());
 	}
 
 	/**
@@ -221,6 +230,50 @@ public class ConnectProviderOperation implements IEGitOperation {
 			IgnoreOperation ignoreOp = new IgnoreOperation(paths);
 			ignoreOp.execute(monitor);
 		}
+	}
+
+	/**
+	 * Auto-ignore the .metadata and .recommenders folders located in the
+	 * workspace root if the workspace is in the working tree of a git
+	 * repository (which is not recommended)
+	 *
+	 * @param gitDir
+	 *            path of git directory containing the git repository
+	 */
+	private static void autoIgnoreWorkspaceMetaData(java.nio.file.Path gitDir) {
+		java.nio.file.Path workspaceRoot = ResourcesPlugin.getWorkspace()
+				.getRoot().getLocation().toFile().toPath();
+		try (Repository r = FileRepositoryBuilder.create(gitDir.toFile())) {
+			if (!r.isBare()
+					&& workspaceRoot.startsWith(r.getWorkTree().toPath())) {
+				Collection<IPath> ignoredPaths = buildIgnoredPathsList(
+						workspaceRoot, ".metadata", //$NON-NLS-1$
+						".recommenders"); //$NON-NLS-1$
+				JobUtil.scheduleUserJob(new IgnoreOperation(ignoredPaths),
+						CoreText.ConnectProviderOperation_autoIgnoreMetaData,
+						JobFamilies.AUTO_IGNORE);
+			}
+		} catch (IOException e) {
+			Activator.logError(e.getMessage(), e);
+		}
+	}
+
+	private static Collection<IPath> buildIgnoredPathsList(
+			java.nio.file.Path workspaceRoot,
+			String... metaDataDirectoryNames) {
+		Collection<IPath> ignoredPaths = new HashSet<IPath>();
+		for (String m : metaDataDirectoryNames) {
+			Path metaData = new Path(
+					workspaceRoot.resolve(m).toAbsolutePath().toString());
+			try {
+				if (RepositoryUtil.canBeAutoIgnored(metaData)) {
+					ignoredPaths.add(metaData);
+				}
+			} catch (IOException e) {
+				Activator.logError(e.getMessage(), e);
+			}
+		}
+		return ignoredPaths;
 	}
 
 	private List<IPath> findDerivedResources(IContainer c)
