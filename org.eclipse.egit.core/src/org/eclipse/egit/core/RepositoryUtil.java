@@ -12,8 +12,10 @@ package org.eclipse.egit.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -37,6 +39,8 @@ import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.core.internal.job.JobUtil;
+import org.eclipse.egit.core.op.IgnoreOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
@@ -480,8 +484,9 @@ public class RepositoryUtil {
 						CoreText.RepositoryUtil_DirectoryIsNotGitDirectory,
 						repositoryDir));
 
-			String dirString = repositoryDir.getAbsolutePath();
+			autoIgnoreWorkspaceMetaData(repositoryDir.toPath());
 
+			String dirString = repositoryDir.getAbsolutePath();
 			List<String> dirStrings = getConfiguredRepositories();
 			if (dirStrings.contains(dirString)) {
 				return false;
@@ -492,6 +497,32 @@ public class RepositoryUtil {
 				saveDirs(dirs);
 				return true;
 			}
+		}
+	}
+
+	/**
+	 * Auto-ignore the .metadata folder located in the workspace root if the
+	 * given repository directory is located directly in the workspace root
+	 *
+	 * @param gitDir
+	 *            path of git directory containing the git repository
+	 */
+	private static void autoIgnoreWorkspaceMetaData(java.nio.file.Path gitDir) {
+		java.nio.file.Path workspaceRoot = ResourcesPlugin.getWorkspace()
+				.getRoot().getLocation().toFile().toPath();
+		try {
+			if (Files.isSameFile(workspaceRoot, gitDir.getParent())) {
+				Path metaData = new Path(workspaceRoot.resolve(".metadata") //$NON-NLS-1$
+						.toAbsolutePath().toString());
+				Collection<IPath> ignore = new HashSet<IPath>();
+				ignore.add(metaData);
+				JobUtil.scheduleUserJob(
+						new IgnoreOperation(ignore),
+						CoreText.RepositoryUtil_autoIgnoreMetaData,
+						JobFamilies.AUTO_IGNORE);
+			}
+		} catch (IOException e) {
+			Activator.logError(e.getMessage(), e);
 		}
 	}
 
