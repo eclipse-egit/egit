@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="egit-4.7" sequenceNumber="1479337329">
+<target name="egit-4.7" sequenceNumber="1484987381">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.jetty.client" version="9.2.13.v20150730"/>
@@ -42,7 +42,7 @@
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="com.google.gson" version="2.2.4.v201311231704"/>
       <unit id="com.google.gson.source" version="2.2.4.v201311231704"/>
-      <unit id="com.jcraft.jsch" version="0.1.53.v201508180515"/>
+      <unit id="com.jcraft.jsch" version="0.1.54.v20170116-1932"/>
       <unit id="com.jcraft.jsch.source" version="0.1.53.v201508180515"/>
       <unit id="javaewah" version="1.1.6.v20160919-1400"/>
       <unit id="javaewah.source" version="1.1.6.v20160919-1400"/>
@@ -85,7 +85,7 @@
       <unit id="org.slf4j.impl.log4j12.source" version="1.7.2.v20131105-2200"/>
       <unit id="org.tukaani.xz" version="1.3.0.v201308270617"/>
       <unit id="org.tukaani.xz.source" version="1.3.0.v201308270617"/>
-      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/S20161021172207/repository/"/>
+      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/S20170120205402/repository/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.sdk.ide" version="0.0.0"/>

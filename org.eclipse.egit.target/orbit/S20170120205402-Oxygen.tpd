@@ -1,10 +1,10 @@
-target "S20161021172207-Oxygen" with source configurePhase
+target "S20170120205402-Oxygen" with source configurePhase
 // see http://download.eclipse.org/tools/orbit/downloads/
 
-location "http://download.eclipse.org/tools/orbit/downloads/drops/S20161021172207/repository/" {
+location "http://download.eclipse.org/tools/orbit/downloads/drops/S20170120205402/repository/" {
 	com.google.gson [2.2.4.v201311231704,2.2.4.v201311231704]
 	com.google.gson.source [2.2.4.v201311231704,2.2.4.v201311231704]
-	com.jcraft.jsch [0.1.53.v201508180515,0.1.53.v201508180515]
+	com.jcraft.jsch [0.1.54.v20170116-1932,0.1.54.v20170116-1932]
 	com.jcraft.jsch.source [0.1.53.v201508180515,0.1.53.v201508180515]
 	javaewah [1.1.6.v20160919-1400,1.1.6.v20160919-1400]
 	javaewah.source [1.1.6.v20160919-1400,1.1.6.v20160919-1400]
