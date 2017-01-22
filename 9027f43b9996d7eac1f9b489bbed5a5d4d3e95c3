@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_59328af5",
+        "filename": "org.eclipse.egit.ease-feature/.settings/org.eclipse.m2e.core.prefs",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-22T16:38:37Z",
+      "side": 1,
+      "message": "Why m2e?",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_f9d436e9",
+        "filename": "org.eclipse.egit.ease-feature/feature.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-22T16:38:37Z",
+      "side": 1,
+      "message": "Copyright date \u0026 author wrong.",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_39378ee7",
+        "filename": "org.eclipse.egit.ease.ui/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-22T16:38:37Z",
+      "side": 1,
+      "message": "4.7.0",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_79a4a6b9",
+        "filename": "org.eclipse.egit.ease.ui/src/org/eclipse/egit/ease/ui/GitUiModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-22T16:38:37Z",
+      "side": 1,
+      "message": "Weeellll... EGit does not _have_ any public API. However, this (as well as BranchOperationUI) are used only internally here and not exposed in the interface. So you could make them visible to ease.ui via x-friends.",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_792d8695",
+        "filename": "org.eclipse.egit.ease.ui/src/org/eclipse/egit/ease/ui/GitUiModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-22T16:38:37Z",
+      "side": 1,
+      "message": "How do EASE modules manage API versions? PDE API checking \u0026 @since tags needed?",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_999fc267",
+        "filename": "org.eclipse.egit.ease.ui/src/org/eclipse/egit/ease/ui/GitUiModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-22T16:38:37Z",
+      "side": 1,
+      "message": "Why are all these strings not externalized?",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_5999aa83",
+        "filename": "org.eclipse.egit.ease.ui/src/org/eclipse/egit/ease/ui/GitUiModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-22T16:38:37Z",
+      "side": 1,
+      "message": "How about some input validation? What if commits is null, zero, or negative?",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_19b492e9",
+        "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-22T16:38:37Z",
+      "side": 1,
+      "message": "In general: if repository is a location, openRepository uses Git.open(). Where and when is that Git instance closed?",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_399eae6f",
+        "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-01-22T16:38:37Z",
+      "side": 1,
+      "message": "Missing braces.\n\nWhy do these operations throw RuntimeException (as opposed to some checked exception, or maybe IllegalArgumentException)?",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
