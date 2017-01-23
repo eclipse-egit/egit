@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %fragment_name
 Bundle-SymbolicName: org.eclipse.egit.ui.smartimport;singleton:=true
-Fragment-Host: org.eclipse.egit.ui;bundle-version="[4.6.0,4.7.0)"
+Fragment-Host: org.eclipse.egit.ui;bundle-version="[4.6.1,4.7.0)"
 Bundle-Version: 4.6.1.qualifier
 Bundle-Vendor: %provider_name
 Require-Bundle: org.eclipse.ui,
