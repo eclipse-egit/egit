@@ -54,6 +54,11 @@
               </requirement>
               <requirement>
                 <type>eclipse-feature</type>
+                <id>org.eclipse.jgit.junit</id>
+                <versionRange>0.0.0</versionRange>
+              </requirement>
+              <requirement>
+                <type>eclipse-feature</type>
                 <id>org.eclipse.egit</id>
                 <versionRange>0.0.0</versionRange>
               </requirement>
