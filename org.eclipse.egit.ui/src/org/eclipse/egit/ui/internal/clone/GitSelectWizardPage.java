@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2017 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,10 +7,12 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Wim Jongman (wim.jongman@remainsoftware.com) - Bug 358152
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.clone;
 
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -159,6 +161,7 @@ public class GitSelectWizardPage extends WizardPage {
 		importExisting = new Button(wizardType, SWT.RADIO);
 		importExisting.setText(UIText.GitSelectWizardPage_ImportExistingButton);
 		importExisting.addSelectionListener(sl);
+		decorateWithFilterCount(importExisting);
 
 		newProjectWizard = new Button(wizardType, SWT.RADIO);
 		newProjectWizard
@@ -244,6 +247,27 @@ public class GitSelectWizardPage extends WizardPage {
 		Dialog.applyDialogFont(main);
 		setControl(main);
 
+	}
+
+	/**
+	 * Add '(<i>n</i> selected)' to the text of the button, in case the wizard
+	 * provides a project selection filter, where <i>n</i> is the number of
+	 * selected projects.
+	 *
+	 * @param button
+	 *            the button to decorate.
+	 */
+	private void decorateWithFilterCount(Button button) {
+		if (getWizard() instanceof GitCreateProjectViaWizardWizard) {
+			GitCreateProjectViaWizardWizard wizard = (GitCreateProjectViaWizardWizard) getWizard();
+			List<String> filter = wizard.getFilter();
+			if (filter.size() > 1) {
+				String decoration = MessageFormat.format(
+						UIText.GitSelectWizardPage_Selected,
+						new Integer(filter.size()));
+				button.setText(button.getText() + " " + decoration); //$NON-NLS-1$
+			}
+		}
 	}
 
 	/**

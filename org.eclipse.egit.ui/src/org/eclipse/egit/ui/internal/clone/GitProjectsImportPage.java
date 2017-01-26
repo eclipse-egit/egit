@@ -3,7 +3,7 @@
  * Copyright (C) 2007, Martin Oberhuber (martin.oberhuber@windriver.com)
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2009, Mykola Nikishov <mn@mn.com.ua>
- * Copyright (C) 2010, Wim Jongman <wim.jongman@remainsoftware.com>
+ * Copyright (C) 2010, 2017 Wim Jongman <wim.jongman@remainsoftware.com>
  * Copyright (C) 2010, Ryan Schmitt <ryan.schmitt@boeing.com>
  * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
  *
@@ -35,6 +35,7 @@ import org.eclipse.egit.ui.internal.components.CachedCheckboxTreeViewer;
 import org.eclipse.egit.ui.internal.components.FilteredCheckboxTree;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.ICheckStateListener;
@@ -134,7 +135,7 @@ public class GitProjectsImportPage extends WizardPage {
 		Composite workArea = new Composite(parent, SWT.NONE);
 		setControl(workArea);
 
-		workArea.setLayout(new GridLayout());
+		workArea.setLayout(GridLayoutFactory.fillDefaults().create());
 		workArea.setLayoutData(new GridData(GridData.FILL_BOTH
 				| GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL));
 
@@ -420,31 +421,34 @@ public class GitProjectsImportPage extends WizardPage {
 						if (!found)
 							return;
 
+						ArrayList<ProjectRecord> result = new ArrayList<>();
 						Iterator<File> filesIterator = files.iterator();
-						selectedProjects = new ProjectRecord[files.size()];
-						int index = 0;
 						monitor.worked(50);
 						monitor
 								.subTask(UIText.WizardProjectsImportPage_ProcessingMessage);
 						while (filesIterator.hasNext()) {
 							File file = filesIterator.next();
-							selectedProjects[index] = new ProjectRecord(file);
-							index++;
+							if (isSelected(file)) {
+								result.add(new ProjectRecord(file));
+							}
 						}
+						selectedProjects = result
+								.toArray(new ProjectRecord[result.size()]);
 
-						if (files.isEmpty())
+						if (selectedProjects.length == 0) {
 							// run in UI thread
-							Display.getDefault().syncExec(new Runnable() {
-								@Override
-								public void run() {
-									setErrorMessage(UIText.GitProjectsImportPage_NoProjectsMessage);
-								}
-							});
-
+							Display.getDefault().syncExec(() -> setErrorMessage(
+									UIText.GitProjectsImportPage_NoProjectsMessage));
+						}
 					} else {
 						monitor.worked(60);
 					}
 					monitor.done();
+				}
+
+				private boolean isSelected(File pFile) {
+					GitCreateProjectViaWizardWizard wizard = (GitCreateProjectViaWizardWizard) getWizard();
+					return wizard.getFilter().isEmpty() || wizard.getFilter().contains(pFile.getParent());
 				}
 
 			});

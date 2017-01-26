@@ -12,6 +12,8 @@
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -22,6 +24,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.clone.GitCreateProjectViaWizardWizard;
 import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -51,33 +54,74 @@ public class ImportProjectsCommand
 					UIText.ImportProjectsSelectionInRepositoryRequired);
 			return null;
 		}
-		RepositoryTreeNode node = selectedNodes.get(0);
-		String path;
 
+		openWizard(event, selectedNodes);
+		return null;
+	}
+
+	private void openWizard(ExecutionEvent event,
+			List<RepositoryTreeNode> selectedNodes) throws ExecutionException {
+		IWizardDescriptor descriptor = findSmartImportWizardDescriptor();
+		if (descriptor == null || multipleProjectsSelected(selectedNodes)) {
+			RepositoryTreeNode node;
+			if (multipleProjectsSelected(selectedNodes)) {
+				node = findRepoNode(selectedNodes.get(0));
+			} else {
+				node = selectedNodes.get(0);
+			}
+			String path = getPathFromNode(node);
+			if (path == null) {
+				return;
+			}
+			openGitCreateProjectViaWizardWizard(event, node, path,
+					getMultipleSelectedProjects(selectedNodes));
+		} else {
+			String path = getPathFromNode(selectedNodes.get(0));
+			openSmartImportWizard(event, descriptor, path);
+		}
+	}
+
+	private boolean multipleProjectsSelected(List<?> selectedNodes) {
+		return selectedNodes.size() > 1;
+	}
+
+	private List<String> getMultipleSelectedProjects(List<RepositoryTreeNode> pSelectedNodes) {
+		if (!multipleProjectsSelected(pSelectedNodes)) {
+			return Collections.emptyList();
+		}
+		ArrayList<String> paths = new ArrayList<>();
+		for (RepositoryTreeNode node : pSelectedNodes) {
+			String path = getPathFromNode(node);
+			if (path == null) {
+				return null;
+			}
+			paths.add(path);
+		}
+		return paths;
+	}
+
+	private RepositoryTreeNode findRepoNode(RepositoryTreeNode pNode) {
+		RepositoryTreeNode result = pNode;
+		while (!result.getType().equals(RepositoryTreeNodeType.REPO)) {
+			result = result.getParent();
+		}
+		return result;
+	}
+
+	private String getPathFromNode(RepositoryTreeNode node) {
 		switch (node.getType()) {
 		case REPO:
 			// fall through
 		case WORKINGDIR:
-			path = node.getRepository().getWorkTree().toString();
-			break;
+			return node.getRepository().getWorkTree().toString();
 		case FOLDER:
-			path = ((FolderNode) node).getObject().getPath().toString();
-			break;
+			return ((FolderNode) node).getObject().getPath().toString();
 		default:
 			MessageDialog.openError(Display.getDefault().getActiveShell(),
 					UIText.ImportProjectsWrongSelection,
 					UIText.ImportProjectsSelectionInRepositoryRequired);
 			return null;
 		}
-
-		IWizardDescriptor descriptor = findSmartImportWizardDescriptor();
-		if (descriptor != null) {
-			openSmartImportWizard(event, descriptor, path);
-		} else {
-			openGitCreateProjectViaWizardWizard(event, node, path);
-		}
-
-		return null;
 	}
 
 	private IWizardDescriptor findSmartImportWizardDescriptor() {
@@ -104,10 +148,16 @@ public class ImportProjectsCommand
 	}
 
 	private void openGitCreateProjectViaWizardWizard(ExecutionEvent event,
-			RepositoryTreeNode node, String path) {
-		WizardDialog dlg = new WizardDialog(getShell(event),
-				new GitCreateProjectViaWizardWizard(node.getRepository(),
-						path)) {
+			RepositoryTreeNode node, String path, List<String> pPaths) {
+		if (pPaths.size() == 1) {
+			path = pPaths.get(0);
+		}
+		GitCreateProjectViaWizardWizard wizard = new GitCreateProjectViaWizardWizard(
+				node.getRepository(), path);
+		if (pPaths.size() > 1) {
+			wizard.setFilter(pPaths);
+		}
+		WizardDialog dlg = new WizardDialog(getShell(event), wizard) {
 			@Override
 			protected IDialogSettings getDialogBoundsSettings() {
 				// preserve dialog bounds
