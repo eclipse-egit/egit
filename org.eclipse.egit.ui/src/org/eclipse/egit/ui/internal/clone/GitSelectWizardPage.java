@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2017 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,10 +7,12 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Wim Jongman (wim.jongman@remainsoftware.com) - Bug 358152
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.clone;
 
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -157,7 +159,8 @@ public class GitSelectWizardPage extends WizardPage {
 		wizardType.setLayout(new GridLayout(1, false));
 
 		importExisting = new Button(wizardType, SWT.RADIO);
-		importExisting.setText(UIText.GitSelectWizardPage_ImportExistingButton);
+		importExisting.setText(UIText.GitSelectWizardPage_ImportExistingButton
+				+ " " + getFilterCountString().trim()); //$NON-NLS-1$
 		importExisting.addSelectionListener(sl);
 
 		newProjectWizard = new Button(wizardType, SWT.RADIO);
@@ -244,6 +247,21 @@ public class GitSelectWizardPage extends WizardPage {
 		Dialog.applyDialogFont(main);
 		setControl(main);
 
+	}
+
+	/**
+	 * @return a decorator for the import button (e.g. "(3 selected)")
+	 */
+	private String getFilterCountString() {
+		if (getWizard() instanceof GitCreateProjectViaWizardWizard) {
+			GitCreateProjectViaWizardWizard wizard = (GitCreateProjectViaWizardWizard) getWizard();
+			List<String> filter = wizard.getFilter();
+			if (filter.size() > 1) {
+				return MessageFormat.format(UIText.GitSelectWizardPage_Selected,
+						new Integer(filter.size()));
+			}
+		}
+		return ""; //$NON-NLS-1$
 	}
 
 	/**
