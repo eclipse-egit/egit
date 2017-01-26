@@ -2244,19 +2244,45 @@
                class="org.eclipse.egit.ui.internal.repository.tree.command.ImportProjectsCommand">
          </class>
          <activeWhen>
-            <and>
-               <count value="1" />
-               <iterate>
-                  <or>
-                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode" />
-                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode" />
-                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.FolderNode" />
-                  </or>
-                  <not>
-                     <test property="GitRepository.isBare" />
-                  </not>
-               </iterate>
-            </and>
+            <or>
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <or>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                        </instanceof>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode">
+                        </instanceof>
+                     </or>
+                     <not>
+                        <test
+                              property="GitRepository.isBare">
+                        </test>
+                     </not>
+                  </iterate>
+               </and>
+               <and>
+                  <count
+                        value="+">
+                  </count>
+                  <iterate>
+                     <or>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.FolderNode">
+                        </instanceof>
+                     </or>
+                     <not>
+                        <test
+                              property="GitRepository.isBare">
+                        </test>
+                     </not>
+                  </iterate>
+               </and>
+            </or>
          </activeWhen>
       </handler>
       <handler
