@@ -17,6 +17,7 @@
  * Copyright (C) 2015, Laurent Delaigue <laurent.delaigue@obeo.fr>
  * Copyright (C) 2015, Denis Zygann <d.zygann@web.de>
  * Copyright (C) 2016, Lars Vogel <Lars.Vogel@vogella.com>
+ * Copyright (C) 2017, Wim Jongman <wim.jongman@remainsoftware.com> bug 358152
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -3925,6 +3926,9 @@ public class UIText extends NLS {
 	public static String GitSelectWizardPage_ProjectCreationHeader;
 
 	/** */
+	public static String GitSelectWizardPage_Selected;
+
+	/** */
 	public static String GitSelectWizardPage_UseNewProjectsWizardButton;
 
 	/** */
@@ -4245,6 +4249,7 @@ public class UIText extends NLS {
 	 * able to find the corresponding bundle file.
 	 */
 	private static final String BUNDLE_NAME = "org.eclipse.egit.ui.internal.uitext"; //$NON-NLS-1$
+
 
 	/** */
 	public static String CommitActionHandler_calculatingChanges;
