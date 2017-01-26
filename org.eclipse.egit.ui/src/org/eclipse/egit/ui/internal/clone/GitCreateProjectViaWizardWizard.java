@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 SAP AG and others.
+ * Copyright (c) 2010, 2013, 2017 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Wim Jongman (wim.jongman@remainsoftware.com) - Bug 358152
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.clone;
 
@@ -14,6 +15,7 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -52,6 +54,8 @@ public class GitCreateProjectViaWizardWizard extends Wizard {
 	private GitCreateGeneralProjectPage myCreateGeneralProjectPage;
 
 	private GitProjectsImportPage myProjectsImportPage;
+
+	private List<String> myFilter;
 
 	/**
 	 * @param repository
@@ -249,5 +253,33 @@ public class GitCreateProjectViaWizardWizard extends Wizard {
 			break;
 		}
 		}
+	}
+
+	/**
+	 * Add a list of paths that may match projects that this wizard can show. If
+	 * no filter is set or if the filter is empty then all projects will show.
+	 * If a non empty filter is set and no projects match then the wizard will
+	 * not show any projects.
+	 *
+	 * @param filter
+	 *            a list of paths
+	 */
+	public void setFilter(List<String> filter) {
+		myFilter = filter;
+	}
+
+	/**
+	 * Gets the list of projects that will filter in a subset of all eligible
+	 * projects.
+	 *
+	 * @return an unmodifiable list of projects which could be empty but never
+	 *         null.
+	 * @see #setFilter(List)
+	 */
+	public List<String> getFilter() {
+		if (myFilter == null) {
+			return Collections.emptyList();
+		}
+		return Collections.unmodifiableList(myFilter);
 	}
 }
