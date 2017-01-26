@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_e6ad6321",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCreateProjectViaWizardWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-01-26T21:55:31Z",
+      "side": 1,
+      "message": "why fFilter and pFilter ? I\u0027d just use filter for both",
+      "range": {
+        "startLine": 58,
+        "startChar": 22,
+        "endLine": 58,
+        "endChar": 29
+      },
+      "revId": "eef111fb73b13538bc201cf93098cc605e4195ca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_06a97f12",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitProjectsImportPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-01-26T21:55:31Z",
+      "side": 1,
+      "message": "unrelated formatting change",
+      "revId": "eef111fb73b13538bc201cf93098cc605e4195ca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_26b4bb66",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-01-26T21:55:31Z",
+      "side": 1,
+      "message": "style nit remove the prefix \"p\"",
+      "range": {
+        "startLine": 62,
+        "startChar": 28,
+        "endLine": 62,
+        "endChar": 42
+      },
+      "revId": "eef111fb73b13538bc201cf93098cc605e4195ca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_061b3ffe",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-01-26T21:55:31Z",
+      "side": 1,
+      "message": "this comment is unnecessary as the method below already says it\u0027s opening the smart import wizard",
+      "revId": "eef111fb73b13538bc201cf93098cc605e4195ca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
