@@ -25,6 +25,47 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_e2c2ac79",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCreateProjectViaWizardWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 879
+      },
+      "writtenOn": "2017-01-27T12:25:37Z",
+      "side": 1,
+      "message": "I do think that having a uniform coding style is more important than my personal style so I will take your suggestion or call it \"myFilter\" like the style in this class. My ideas about this are below.\n\n\nI was \"annoyed/puzzled/etc..\" by this naming style too when I first saw it. However, over the years I have come to the conclusion that I want to make absolutely clear in my code where I am dealing with a field, a parameter or a local variable. This style is dismissed by many in favor of the coloring capabilities of the IDE (or I\u0027m asked if I have heard of the \"this.fieldName\" construct.) In Eclipse, method parameters are colored the same way as local variables and there are cases where people have troubles seeing or interpreting colors. \n\nIn addition, when reading code outside the IDE you don\u0027t have to guess where the field comes from. For example, this very Gerrit review editor does not tell you by color if it is a field, parameter or local variable.",
+      "parentUuid": "a7c23755_e6ad6321",
+      "range": {
+        "startLine": 58,
+        "startChar": 22,
+        "endLine": 58,
+        "endChar": 29
+      },
+      "revId": "eef111fb73b13538bc201cf93098cc605e4195ca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_a2d4342f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCreateProjectViaWizardWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 879
+      },
+      "writtenOn": "2017-01-27T12:25:37Z",
+      "side": 1,
+      "message": "TODO: They are not regex. Must be fixed.",
+      "revId": "eef111fb73b13538bc201cf93098cc605e4195ca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_06a97f12",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitProjectsImportPage.java",
         "patchSetId": 2
@@ -36,6 +77,24 @@
       "writtenOn": "2017-01-26T21:55:31Z",
       "side": 1,
       "message": "unrelated formatting change",
+      "revId": "eef111fb73b13538bc201cf93098cc605e4195ca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_4206005d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitProjectsImportPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 879
+      },
+      "writtenOn": "2017-01-27T12:25:37Z",
+      "side": 1,
+      "message": "Missed that. Thanks!\n\nBy the way, I am using EGit\u0027s code formatting rules which cause the old code to be reformatted anyway. Too bad especially since I am a big CTRL+F fan.",
+      "parentUuid": "a7c23755_06a97f12",
       "revId": "eef111fb73b13538bc201cf93098cc605e4195ca",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -65,6 +124,30 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_4258c05d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 879
+      },
+      "writtenOn": "2017-01-27T12:25:37Z",
+      "side": 1,
+      "message": "Ok.",
+      "parentUuid": "a7c23755_26b4bb66",
+      "range": {
+        "startLine": 62,
+        "startChar": 28,
+        "endLine": 62,
+        "endChar": 42
+      },
+      "revId": "eef111fb73b13538bc201cf93098cc605e4195ca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_061b3ffe",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportProjectsCommand.java",
         "patchSetId": 2
@@ -76,6 +159,24 @@
       "writtenOn": "2017-01-26T21:55:31Z",
       "side": 1,
       "message": "this comment is unnecessary as the method below already says it\u0027s opening the smart import wizard",
+      "revId": "eef111fb73b13538bc201cf93098cc605e4195ca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_2212e486",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 879
+      },
+      "writtenOn": "2017-01-27T12:25:37Z",
+      "side": 1,
+      "message": "Ok",
+      "parentUuid": "a7c23755_061b3ffe",
       "revId": "eef111fb73b13538bc201cf93098cc605e4195ca",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
