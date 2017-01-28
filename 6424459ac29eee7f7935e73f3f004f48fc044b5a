@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_5626bebf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitProjectsImportPage.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-01-28T20:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_d60ace2a",
+      "revId": "6424459ac29eee7f7935e73f3f004f48fc044b5a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_d67f2e84",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportProjectsCommand.java",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_7619fa7e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportProjectsCommand.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-01-28T20:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_d67f2e84",
+      "revId": "6424459ac29eee7f7935e73f3f004f48fc044b5a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_f67a6a93",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportProjectsCommand.java",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2017-01-28T20:41:52Z",
       "side": 1,
       "message": "missing braces",
+      "revId": "6424459ac29eee7f7935e73f3f004f48fc044b5a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_961cd670",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportProjectsCommand.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-01-28T20:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_f67a6a93",
       "revId": "6424459ac29eee7f7935e73f3f004f48fc044b5a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
