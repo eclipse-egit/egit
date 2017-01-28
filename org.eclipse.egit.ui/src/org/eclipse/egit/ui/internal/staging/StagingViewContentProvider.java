@@ -27,6 +27,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -245,8 +246,8 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 	boolean isInFilter(StagingEntry stagingEntry) {
 		String filterString = getFilterString();
 		return filterString.length() == 0
-				|| stagingEntry.getPath().toUpperCase()
-						.contains(filterString.toUpperCase());
+				|| stagingEntry.getPath().toUpperCase(Locale.ROOT)
+						.contains(filterString.toUpperCase(Locale.ROOT));
 	}
 
 	private String getFilterString() {

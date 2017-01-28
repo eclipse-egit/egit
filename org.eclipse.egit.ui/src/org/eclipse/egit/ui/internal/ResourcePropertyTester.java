@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.internal;
 import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Locale;
 
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.resources.IResource;
@@ -140,7 +141,9 @@ public class ResourcePropertyTester extends PropertyTester {
 			// of the RepositoryState enum values.
 			if (property.length() > 3 && property.startsWith("is")) { //$NON-NLS-1$
 				// e.g. isCherryPickingResolved => CHERRY_PICKING_RESOLVED
-				String lookFor = property.substring(2,3) + property.substring(3).replaceAll("([A-Z])","_$1").toUpperCase();  //$NON-NLS-1$//$NON-NLS-2$
+				String lookFor = property.substring(2, 3)
+						+ property.substring(3).replaceAll("([A-Z])", "_$1") //$NON-NLS-1$//$NON-NLS-2$
+								.toUpperCase(Locale.ROOT);
 				if (state.toString().equals(lookFor))
 					return true;
 			}
