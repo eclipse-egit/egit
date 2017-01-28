@@ -134,7 +134,7 @@ public class CommitSearchQueryTest extends LocalRepositoryTestCase {
 		CommitSearchSettings settings = createSettings();
 		settings.setMatchCommit(true);
 		settings.setCaseSensitive(true);
-		settings.setTextPattern(commit.name().toUpperCase(Locale.US));
+		settings.setTextPattern(commit.name().toUpperCase(Locale.ROOT));
 		CommitSearchQuery query = new CommitSearchQuery(settings);
 		IStatus status = query.run(new NullProgressMonitor());
 		assertNotNull(status);

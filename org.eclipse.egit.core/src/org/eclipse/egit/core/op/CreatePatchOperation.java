@@ -284,7 +284,7 @@ public class CreatePatchOperation implements IEGitOperation {
 			int brace = segment.indexOf('}');
 			if (brace > 0) {
 				String keyword = segment.substring(0, brace);
-				keyword = keyword.toUpperCase().replaceAll(" ", "_"); //$NON-NLS-1$ //$NON-NLS-2$
+				keyword = keyword.toUpperCase(Locale.ROOT).replaceAll(" ", "_"); //$NON-NLS-1$ //$NON-NLS-2$
 				value = processKeyword(commit, DiffHeaderKeyword.valueOf(keyword));
 			}
 
