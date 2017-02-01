@@ -264,8 +264,8 @@ public class GitSelectWizardPage extends WizardPage {
 			if (filter.size() > 1) {
 				String decoration = MessageFormat.format(
 						UIText.GitSelectWizardPage_Selected,
-						new Integer(filter.size()));
-				button.setText(button.getText() + " " + decoration); //$NON-NLS-1$
+						Integer.valueOf(filter.size()));
+				button.setText(button.getText() + ' ' + decoration);
 			}
 		}
 	}
