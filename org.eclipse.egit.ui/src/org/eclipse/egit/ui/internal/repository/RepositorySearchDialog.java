@@ -23,11 +23,15 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
@@ -50,6 +54,7 @@ import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.IColorProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -371,6 +376,31 @@ public class RepositorySearchDialog extends WizardPage {
 			@Override
 			public void checkStateChanged(CheckStateChangedEvent event) {
 				enableOk();
+			}
+		});
+		fTreeViewer.addDoubleClickListener(event -> {
+			IStructuredSelection selection = (IStructuredSelection) event
+					.getSelection();
+
+			Object[] checkedElements = fTreeViewer.getCheckedElements();
+
+			// identify the elements which should be de-selected
+			List<Object> unselectedElements = Arrays
+					.stream(selection.toArray()).filter(el -> Arrays
+							.stream(checkedElements).anyMatch(el::equals))
+					.collect(Collectors.toList());
+
+
+			// combine the old selection with the new selection
+			Object[] selectedElements = Stream
+					.of(checkedElements, selection.toArray())
+					.flatMap(Stream::of)
+					.distinct()
+					.toArray(Object[]::new);
+			fTreeViewer.setCheckedElements(selectedElements);
+			// remove unselected elements
+			for (Object element : unselectedElements) {
+				fTreeViewer.setChecked(element, false);
 			}
 		});
 
