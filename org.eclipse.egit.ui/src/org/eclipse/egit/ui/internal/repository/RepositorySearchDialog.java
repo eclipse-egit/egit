@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2015 SAP AG and others.
+ * Copyright (c) 2010, 2017 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,6 +9,7 @@
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 479108
  *    Simon Scholz <simon.scholz@vogella.com> - Bug 476505
+ *    Lars Vogel <Lars.Vogel@vogella.com> - Bug 511628
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
@@ -23,11 +24,15 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
@@ -50,6 +55,7 @@ import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.IColorProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -372,6 +378,29 @@ public class RepositorySearchDialog extends WizardPage {
 			public void checkStateChanged(CheckStateChangedEvent event) {
 				enableOk();
 			}
+		});
+		fTreeViewer.addDoubleClickListener(event -> {
+			IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+
+			Object[] checkedElements = fTreeViewer.getCheckedElements();
+
+			// identify the elements which should be de-selected
+			List<Object> unselectedElements = Arrays
+					.stream(selection.toArray())
+					.filter(el -> Arrays.stream(checkedElements)
+							.anyMatch(el::equals))
+					.collect(Collectors.toList());
+
+
+			// combine the old selection with the new selection
+			Object[] selectedElements = Stream
+					.of(checkedElements, selection.toArray())
+					.flatMap(Stream::of)
+					.filter(el -> !unselectedElements.contains(el))
+					.distinct()
+					.toArray(Object[]::new);
+			fTreeViewer.setCheckedElements(selectedElements);
+
 		});
 
 		// Set a reasonable minimum height here; otherwise the dialog comes up
