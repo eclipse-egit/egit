@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_31c057f7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-03T21:05:50Z",
+      "side": 1,
+      "message": "The double click reduces the selection to the element the double click occurred on. So this is always either empty (if that can occur at all, perhaps if there are less elements than rows in the viewer?) or exactly one element.\n\nTherefore this code here doesn\u0027t make sense. It could just toggle the checked state on that single element.",
+      "revId": "5684af2a932a20df8d9fe7065a67f16493096f7b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_d1d003c3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-03T21:05:50Z",
+      "side": 1,
+      "message": "Since this does not fire CheckStateChangedEvents the \"Finish\" button remains disabled.",
+      "revId": "5684af2a932a20df8d9fe7065a67f16493096f7b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
