@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_94e679a4",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/AssumeUnchangedOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-02-04T00:41:48Z",
+      "side": 0,
+      "message": "this removal of unused mappings seems unrelated and should go in a separate change",
+      "revId": "daca0edba32687fe8a777df0da487da017f601e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_14f2695b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/UntrackOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-02-04T00:41:48Z",
+      "side": 0,
+      "message": "unrelated change",
+      "revId": "daca0edba32687fe8a777df0da487da017f601e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
