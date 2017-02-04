@@ -75,13 +75,12 @@ public class StashCreateUI {
 
 			@Override
 			public IStatus runInWorkspace(IProgressMonitor monitor) {
-				monitor.beginTask("", 1); //$NON-NLS-1$
 				try {
 					op.execute(monitor);
 					RevCommit commit = op.getCommit();
-					if (commit == null)
+					if (commit == null) {
 						showNoChangesToStash();
-
+					}
 				} catch (CoreException e) {
 					Activator
 							.logError(UIText.StashCreateCommand_stashFailed, e);

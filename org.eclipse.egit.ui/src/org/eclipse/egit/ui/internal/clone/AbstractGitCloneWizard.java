@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
@@ -391,17 +392,20 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 
 			@Override
 			public IStatus runInWorkspace(IProgressMonitor monitor) {
+				SubMonitor progress = SubMonitor.convert(monitor, 2);
 				List<File> files = new ArrayList<>();
 				ProjectUtil.findProjectFiles(files, repository.getWorkTree(),
-						true, monitor);
-				if (files.isEmpty())
+						true, progress.newChild(1));
+				if (files.isEmpty()) {
 					return Status.OK_STATUS;
-
+				}
 				Set<ProjectRecord> records = new LinkedHashSet<>();
-				for (File file : files)
+				for (File file : files) {
 					records.add(new ProjectRecord(file));
+				}
 				try {
-					ProjectUtils.createProjects(records, sets, monitor);
+					ProjectUtils.createProjects(records, sets,
+							progress.newChild(1));
 				} catch (InvocationTargetException e) {
 					Activator.logError(e.getLocalizedMessage(), e);
 				} catch (InterruptedException e) {

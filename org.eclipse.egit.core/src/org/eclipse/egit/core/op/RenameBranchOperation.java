@@ -13,7 +13,7 @@ import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
@@ -50,20 +50,16 @@ public class RenameBranchOperation implements IEGitOperation {
 	}
 
 	@Override
-	public void execute(IProgressMonitor m) throws CoreException {
-		IProgressMonitor monitor;
-		if (m == null)
-			monitor = new NullProgressMonitor();
-		else
-			monitor = m;
-
+	public void execute(IProgressMonitor monitor) throws CoreException {
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
+
 			@Override
 			public void run(IProgressMonitor actMonitor) throws CoreException {
 				String taskName = NLS.bind(
 						CoreText.RenameBranchOperation_TaskName, branch
 								.getName(), newName);
-				actMonitor.beginTask(taskName, 1);
+				SubMonitor progress = SubMonitor.convert(actMonitor);
+				progress.setTaskName(taskName);
 				try (Git git = new Git(repository)) {
 					git.branchRename().setOldName(
 							branch.getName()).setNewName(newName).call();
@@ -72,8 +68,6 @@ public class RenameBranchOperation implements IEGitOperation {
 				} catch (GitAPIException e) {
 					throw new CoreException(Activator.error(e.getMessage(), e));
 				}
-				actMonitor.worked(1);
-				actMonitor.done();
 			}
 		};
 		// lock workspace to protect working tree changes

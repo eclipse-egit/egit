@@ -15,7 +15,7 @@ import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
@@ -81,21 +81,15 @@ public class CreateLocalBranchOperation implements IEGitOperation {
 	}
 
 	@Override
-	public void execute(IProgressMonitor m) throws CoreException {
-		IProgressMonitor monitor;
-		if (m == null)
-			monitor = new NullProgressMonitor();
-		else
-			monitor = m;
-
+	public void execute(IProgressMonitor monitor) throws CoreException {
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 			@Override
 			public void run(IProgressMonitor actMonitor) throws CoreException {
-				String taskName = NLS
-						.bind(
-								CoreText.CreateLocalBranchOperation_CreatingBranchMessage,
-								name);
-				actMonitor.beginTask(taskName, 1);
+				String taskName = NLS.bind(
+						CoreText.CreateLocalBranchOperation_CreatingBranchMessage,
+						name);
+				SubMonitor progress = SubMonitor.convert(actMonitor);
+				progress.setTaskName(taskName);
 				try (Git git = new Git(repository)) {
 					if (ref != null) {
 						SetupUpstreamMode mode;
@@ -126,8 +120,6 @@ public class CreateLocalBranchOperation implements IEGitOperation {
 								e));
 					}
 				}
-				actMonitor.worked(1);
-				actMonitor.done();
 			}
 		};
 		// lock workspace to protect working tree changes

@@ -96,8 +96,7 @@ public class DeleteBranchOperation implements IEGitOperation {
 	}
 
 	@Override
-	public void execute(IProgressMonitor m) throws CoreException {
-		SubMonitor subMonitor = SubMonitor.convert(m);
+	public void execute(IProgressMonitor monitor) throws CoreException {
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 			@Override
 			public void run(IProgressMonitor actMonitor) throws CoreException {
@@ -118,9 +117,10 @@ public class DeleteBranchOperation implements IEGitOperation {
 					taskName = NLS.bind(
 							CoreText.DeleteBranchOperation_TaskName, names);
 				}
-				actMonitor.beginTask(taskName, branches.size());
+				SubMonitor progress = SubMonitor.convert(actMonitor, taskName,
+						branches.size());
 				for (Ref branch : branches) {
-					if (actMonitor.isCanceled()) {
+					if (progress.isCanceled()) {
 						throw new OperationCanceledException(
 								CoreText.DeleteBranchOperation_Canceled);
 					}
@@ -139,14 +139,13 @@ public class DeleteBranchOperation implements IEGitOperation {
 					} catch (GitAPIException e) {
 						throw new CoreException(Activator.error(e.getMessage(), e));
 					}
-					actMonitor.worked(1);
+					progress.worked(1);
 				}
-				actMonitor.done();
 			}
 		};
 		// lock workspace to protect working tree changes
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
-				IWorkspace.AVOID_UPDATE, subMonitor);
+				IWorkspace.AVOID_UPDATE, monitor);
 	}
 
 	@Override

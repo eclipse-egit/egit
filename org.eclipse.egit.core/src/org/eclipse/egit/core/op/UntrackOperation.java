@@ -20,7 +20,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
@@ -63,50 +63,45 @@ public class UntrackOperation implements IEGitOperation {
 		mappings = new IdentityHashMap<RepositoryMapping, Object>();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.egit.core.op.IEGitOperation#execute(org.eclipse.core.runtime.IProgressMonitor)
-	 */
 	@Override
-	public void execute(IProgressMonitor m) throws CoreException {
-		IProgressMonitor monitor;
-		if (m == null)
-			monitor = new NullProgressMonitor();
-		else
-			monitor = m;
+	public void execute(IProgressMonitor monitor) throws CoreException {
+		SubMonitor progress = SubMonitor.convert(monitor, rsrcList.size() * 2);
+		progress.setTaskName(CoreText.UntrackOperation_adding);
 
 		edits.clear();
 		mappings.clear();
 
-		monitor.beginTask(CoreText.UntrackOperation_adding, rsrcList.size() * 200);
 		try {
 			for (IResource obj : rsrcList) {
 				remove(obj);
-				monitor.worked(200);
+				progress.worked(1);
 			}
 
+			progress.setWorkRemaining(edits.size());
 			for (Map.Entry<Repository, DirCacheEditor> e : edits.entrySet()) {
 				final Repository db = e.getKey();
 				final DirCacheEditor editor = e.getValue();
-				monitor.setTaskName(NLS.bind(CoreText.UntrackOperation_writingIndex, db.getDirectory()));
+				progress.setTaskName(
+						NLS.bind(CoreText.UntrackOperation_writingIndex,
+								db.getDirectory()));
 				editor.commit();
+				progress.worked(1);
 			}
 		} catch (RuntimeException e) {
 			throw new CoreException(Activator.error(CoreText.UntrackOperation_failed, e));
 		} catch (IOException e) {
 			throw new CoreException(Activator.error(CoreText.UntrackOperation_failed, e));
 		} finally {
-			for (DirCacheEditor editor:edits.values())
-				if (editor.getDirCache() != null)
+			for (DirCacheEditor editor : edits.values()) {
+				if (editor.getDirCache() != null) {
 					editor.getDirCache().unlock();
+				}
+			}
 			edits.clear();
 			mappings.clear();
-			monitor.done();
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.egit.core.op.IEGitOperation#getSchedulingRule()
-	 */
 	@Override
 	public ISchedulingRule getSchedulingRule() {
 		return RuleUtil.getRuleForRepositories(rsrcList.toArray(new IResource[rsrcList.size()]));
