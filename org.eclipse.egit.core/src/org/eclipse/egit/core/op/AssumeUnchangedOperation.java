@@ -41,8 +41,6 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 
 	private final IdentityHashMap<Repository, DirCache> caches;
 
-	private final IdentityHashMap<RepositoryMapping, Object> mappings;
-
 	private boolean assumeUnchanged;
 
 	/**
@@ -60,7 +58,6 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 			final Collection<? extends IResource> rsrcs, boolean assumeUnchanged) {
 		rsrcList = rsrcs;
 		caches = new IdentityHashMap<Repository, DirCache>();
-		mappings = new IdentityHashMap<RepositoryMapping, Object>();
 		this.assumeUnchanged = assumeUnchanged;
 	}
 
@@ -70,7 +67,6 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 		progress.setTaskName(CoreText.AssumeUnchangedOperation_adding);
 
 		caches.clear();
-		mappings.clear();
 
 		try {
 			for (IResource resource : rsrcList) {
@@ -98,7 +94,6 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 				cache.unlock();
 			}
 			caches.clear();
-			mappings.clear();
 		}
 	}
 
@@ -130,7 +125,6 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 				throw new CoreException(Activator.error(CoreText.UntrackOperation_failed, err));
 			}
 			caches.put(db, cache);
-			mappings.put(rm, rm);
 		}
 
 		final String path = rm.getRepoRelativePath(resource);
