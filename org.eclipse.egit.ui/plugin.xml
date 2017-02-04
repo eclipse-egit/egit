@@ -2362,9 +2362,44 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.CheckoutCommand">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.CheckoutCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <or>
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.TagNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RefNode" />
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode" />
+                  </or>
+                  <not>
+                     <test property="GitRepository.isRefCheckedOut" />
+                  </not>
+                  <not>
+                     <test property="GitRepository.isBare" />
+                  </not>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.ImportChangedProjectsCommandId">
          <class
                class="org.eclipse.egit.ui.internal.history.command.ImportChangedProjectsCommand">
+         </class>
+         <activeWhen>
+            <iterate ifEmpty="false">
+               <instanceof value="org.eclipse.jgit.revplot.PlotCommit" />
+            </iterate>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.CheckoutCommand">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.CheckoutCommitHandler">
          </class>
          <activeWhen>
             <iterate ifEmpty="false">
@@ -2634,39 +2669,7 @@
                icon="icons/obj16/checkout.gif"
                label="%RepoViewCheckout.label"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <and>
-                        <or>
-                           <instanceof
-                                 value="org.eclipse.egit.ui.internal.repository.tree.TagNode">
-                           </instanceof>
-                           <instanceof
-                                 value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
-                           </instanceof>
-                           <instanceof
-                                 value="org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode">
-                           </instanceof>
-                        </or>
-                        <not>
-                           <test
-                                 property="GitRepository.isRefCheckedOut">
-                           </test>
-                        </not>
-                        <not>
-                           <test
-                                 property="GitRepository.isBare">
-                           </test>
-                        </not>
-                     </and>
-                  </iterate>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
          <command
                commandId="org.eclipse.egit.ui.team.Push"
@@ -5016,7 +5019,6 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.CheckoutCommand"
             id="org.eclipse.egit.ui.CheckoutCommand"
             name="%CheckoutCommand">
       </command>
@@ -5863,7 +5865,6 @@
             name="%SetQuickdiffBaselineCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.CheckoutCommitHandler"
             id="org.eclipse.egit.ui.history.CheckoutCommand"
             name="%CheckoutCommand.name">
       </command>
