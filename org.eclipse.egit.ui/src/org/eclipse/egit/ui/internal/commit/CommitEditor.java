@@ -163,7 +163,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	private IToolBarManager toolbar;
 
 	/** Ensures that the toolbar buttons in the header are properly updated. */
-	private IPartListener activationListener = new IPartListener() {
+	private final IPartListener activationListener = new IPartListener() {
 
 		private boolean isActive;
 
