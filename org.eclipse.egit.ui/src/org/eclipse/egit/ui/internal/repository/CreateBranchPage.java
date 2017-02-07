@@ -127,8 +127,6 @@ class CreateBranchPage extends WizardPage {
 	private final LocalResourceManager resourceManager = new LocalResourceManager(
 			JFaceResources.getResources());
 
-	private Button normalizeName;
-
 	private BranchNormalizer branchNormalizer = new BranchNormalizer();
 
 	/**
@@ -240,23 +238,6 @@ class CreateBranchPage extends WizardPage {
 		nameText.setData("org.eclipse.swtbot.widget.key", "BranchName"); //$NON-NLS-1$ //$NON-NLS-2$
 		GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
 				.applyTo(nameText);
-
-		normalizeName = new Button(main, SWT.CHECK);
-		normalizeName.setText(UIText.CreateBranchPage_NormalizeBranchName);
-		GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
-				.applyTo(normalizeName);
-		normalizeName.setSelection(true);
-		normalizeName.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				branchNormalizer.modifyText(null);
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				widgetSelected(e);
-			}
-		});
 
 		upstreamConfigComponent = new UpstreamConfigComponent(main, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, false).span(4, 1)
@@ -525,7 +506,7 @@ class CreateBranchPage extends WizardPage {
 		@Override
 		public void modifyText(ModifyEvent e) {
 			nameText.setFocus();
-			if (listenerActive || normalizeName.getSelection() == false)
+			if (listenerActive)
 				return;
 			try {
 				listenerActive = true;
