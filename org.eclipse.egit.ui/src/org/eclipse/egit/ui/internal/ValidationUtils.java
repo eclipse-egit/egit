@@ -10,12 +10,14 @@
 package org.eclipse.egit.ui.internal;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.jface.dialogs.IInputValidator;
+import org.eclipse.jgit.errors.RevisionSyntaxException;
 import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.util.StringUtils;
@@ -65,11 +67,17 @@ public class ValidationUtils {
 								UIText.ValidationUtils_RefNameConflictsWithExistingMessage,
 								joined);
 					}
-				} catch (IOException e1) {
+				} catch (IOException e) {
 					Activator.logError(NLS.bind(
 							UIText.ValidationUtils_CanNotResolveRefMessage,
-							testFor), e1);
-					return e1.getMessage();
+							testFor), e);
+					return e.getMessage();
+				} catch (RevisionSyntaxException e) {
+					String m = MessageFormat.format(
+							UIText.ValidationUtils_InvalidRevision,
+							testFor);
+					Activator.logError(m, e);
+					return m;
 				}
 				return null;
 			}
