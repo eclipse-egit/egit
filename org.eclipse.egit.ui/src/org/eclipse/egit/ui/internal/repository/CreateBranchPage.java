@@ -31,6 +31,7 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.ValidationUtils;
+import org.eclipse.egit.ui.internal.branch.BranchNormalizerModifyListener;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.egit.ui.internal.components.UpstreamConfigComponent;
 import org.eclipse.egit.ui.internal.dialogs.AbstractBranchSelectionDialog;
@@ -126,8 +127,6 @@ class CreateBranchPage extends WizardPage {
 
 	private final LocalResourceManager resourceManager = new LocalResourceManager(
 			JFaceResources.getResources());
-
-	private BranchNormalizer branchNormalizer = new BranchNormalizer();
 
 	/**
 	 * Constructs this page.
@@ -277,7 +276,7 @@ class CreateBranchPage extends WizardPage {
 
 		nameText.setFocus();
 		// add the listeners just now to avoid unneeded checkPage()
-		nameText.addModifyListener(branchNormalizer);
+		nameText.addModifyListener(new BranchNormalizerModifyListener());
 		nameText.addModifyListener(e -> checkPage());
 	}
 
@@ -493,45 +492,6 @@ class CreateBranchPage extends WizardPage {
 		@Override
 		protected String getMessageText() {
 			return UIText.CreateBranchPage_SourceSelectionDialogMessage;
-		}
-	}
-
-	private final class BranchNormalizer implements ModifyListener {
-		private static final String UNDERSCORE = "_"; //$NON-NLS-1$
-
-		private String oldName = ""; //$NON-NLS-1$
-
-		private boolean listenerActive;
-
-		@Override
-		public void modifyText(ModifyEvent e) {
-			nameText.setFocus();
-			if (listenerActive)
-				return;
-			try {
-				listenerActive = true;
-				normalize();
-			} finally {
-				listenerActive = false;
-			}
-		}
-
-		private void normalize() {
-			String name = nameText.getText();
-			// if not pasting then allow the user to type a space
-			if (!isPaste()) {
-				name = name.replaceAll("\\s$", UNDERSCORE);//$NON-NLS-1$
-			}
-			name = Repository.normalizeBranchName(name);
-			nameText.setText(name);
-			nameText.setSelection(nameText.getText().length() + 1);
-		}
-
-		private boolean isPaste() {
-			boolean result = Math
-					.abs(oldName.length() - nameText.getText().length()) > 1;
-			oldName = nameText.getText();
-			return result;
 		}
 	}
 }
