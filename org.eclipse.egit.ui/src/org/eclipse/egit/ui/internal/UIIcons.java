@@ -235,6 +235,9 @@ public class UIIcons {
 	/** Commit note icon */
 	public final static ImageDescriptor NOTE;
 
+	/** Normalize icon */
+	public final static ImageDescriptor NORMALIZE;
+
 	/** Show Annotation icon */
 	public final static ImageDescriptor ANNOTATE;
 
@@ -395,6 +398,7 @@ public class UIIcons {
 		AMEND_COMMIT = map("obj16/commit_amend.gif"); //$NON-NLS-1$
 		UNTRACKED_FILE = map("obj16/untracked_file.gif"); //$NON-NLS-1$
 		NOTE = map("obj16/note.png"); //$NON-NLS-1$
+		NORMALIZE = map("obj16/normalize.gif"); //$NON-NLS-1$
 		ANNOTATE = map("etool16/annotate.gif"); //$NON-NLS-1$
 		COMMIT = map("obj16/commit.png"); //$NON-NLS-1$
 		CHERRY_PICK = map("obj16/cherry-pick.png"); //$NON-NLS-1$

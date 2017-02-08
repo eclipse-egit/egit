@@ -56,6 +56,8 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.events.TraverseListener;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -75,6 +77,10 @@ import org.eclipse.swt.widgets.Text;
  * suggested initially.
  */
 class CreateBranchPage extends WizardPage {
+
+	private static final String UNDERSCORE = "_"; //$NON-NLS-1$
+
+	private static final String REGEX_BLANK = "\\s"; //$NON-NLS-1$
 
 	private static final String BRANCH_NAME_PROVIDER_ID = "org.eclipse.egit.ui.branchNameProvider"; //$NON-NLS-1$
 
@@ -127,7 +133,7 @@ class CreateBranchPage extends WizardPage {
 	private final LocalResourceManager resourceManager = new LocalResourceManager(
 			JFaceResources.getResources());
 
-	private BranchNormalizer branchNormalizer = new BranchNormalizer();
+	private Button normalizeButton;
 
 	/**
 	 * Constructs this page.
@@ -213,13 +219,22 @@ class CreateBranchPage extends WizardPage {
 		});
 		UIUtils.setButtonLayoutData(selectButton);
 
-		Label nameLabel = new Label(main, SWT.NONE);
+		Composite nameComposite = new Composite(main, SWT.NONE);
+		GridLayout gridLayout = new GridLayout(3, false);
+		gridLayout.marginWidth = 0;
+		gridLayout.marginHeight = 0;
+		gridLayout.verticalSpacing = 0;
+		gridLayout.horizontalSpacing = 4;
+		nameComposite.setLayout(gridLayout);
+		GridDataFactory.fillDefaults().span(4, 1).applyTo(nameComposite);
+
+		Label nameLabel = new Label(nameComposite, SWT.NONE);
 		nameLabel.setText(UIText.CreateBranchPage_BranchNameLabel);
 		nameLabel.setLayoutData(GridDataFactory.fillDefaults().span(1, 1)
 				.align(SWT.BEGINNING, SWT.CENTER).create());
 		nameLabel.setToolTipText(UIText.CreateBranchPage_BranchNameToolTip);
 
-		nameText = new Text(main, SWT.BORDER);
+		nameText = new Text(nameComposite, SWT.BORDER);
 		// give focus to the nameText if label is activated using the mnemonic
 		nameLabel.addTraverseListener(new TraverseListener() {
 			@Override
@@ -236,9 +251,25 @@ class CreateBranchPage extends WizardPage {
 		});
 		// enable testing with SWTBot
 		nameText.setData("org.eclipse.swtbot.widget.key", "BranchName"); //$NON-NLS-1$ //$NON-NLS-2$
-		GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
-				.applyTo(nameText);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(nameText);
 
+		normalizeButton = new Button(nameComposite, SWT.NONE);
+		normalizeButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String result = Repository
+						.normalizeBranchName(nameText.getText());
+				nameText.setText(result);
+			}
+		});
+		normalizeButton
+				.setImage(UIIcons.getImage(resourceManager, UIIcons.NORMALIZE));
+		normalizeButton.setToolTipText(UIText.CreateBranchPage_NormalizName);
+
+		/*
+		 * GridDataFactory.fillDefaults().grab(true, false).span(1, 1)
+		 * .applyTo(normalizeButton);
+		 */
 		upstreamConfigComponent = new UpstreamConfigComponent(main, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, false).span(4, 1)
 				.applyTo(upstreamConfigComponent.getContainer());
@@ -277,7 +308,12 @@ class CreateBranchPage extends WizardPage {
 
 		nameText.setFocus();
 		// add the listeners just now to avoid unneeded checkPage()
-		nameText.addModifyListener(branchNormalizer);
+		nameText.addVerifyListener(new VerifyListener() {
+			@Override
+			public void verifyText(VerifyEvent e) {
+				e.text = e.text.replaceAll(REGEX_BLANK, UNDERSCORE);
+			}
+		});
 		nameText.addModifyListener(e -> checkPage());
 	}
 
@@ -493,45 +529,6 @@ class CreateBranchPage extends WizardPage {
 		@Override
 		protected String getMessageText() {
 			return UIText.CreateBranchPage_SourceSelectionDialogMessage;
-		}
-	}
-
-	private final class BranchNormalizer implements ModifyListener {
-		private static final String UNDERSCORE = "_"; //$NON-NLS-1$
-
-		private String oldName = ""; //$NON-NLS-1$
-
-		private boolean listenerActive;
-
-		@Override
-		public void modifyText(ModifyEvent e) {
-			nameText.setFocus();
-			if (listenerActive)
-				return;
-			try {
-				listenerActive = true;
-				normalize();
-			} finally {
-				listenerActive = false;
-			}
-		}
-
-		private void normalize() {
-			String name = nameText.getText();
-			// if not pasting then allow the user to type a space
-			if (!isPaste()) {
-				name = name.replaceAll("\\s$", UNDERSCORE);//$NON-NLS-1$
-			}
-			name = Repository.normalizeBranchName(name);
-			nameText.setText(name);
-			nameText.setSelection(nameText.getText().length() + 1);
-		}
-
-		private boolean isPaste() {
-			boolean result = Math
-					.abs(oldName.length() - nameText.getText().length()) > 1;
-			oldName = nameText.getText();
-			return result;
 		}
 	}
 }
