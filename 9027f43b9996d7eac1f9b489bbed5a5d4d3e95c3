@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_03507855",
+        "filename": "org.eclipse.egit.ease-feature/.settings/org.eclipse.m2e.core.prefs",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_59328af5",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_f9d436e9",
         "filename": "org.eclipse.egit.ease-feature/feature.properties",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-01-22T16:38:37Z",
       "side": 1,
       "message": "Copyright date \u0026 author wrong.",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_0ecb3f97",
+        "filename": "org.eclipse.egit.ease-feature/feature.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done (I copied that mistake from the Gitflow feature)",
+      "parentUuid": "a7c23755_f9d436e9",
       "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -82,6 +118,54 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_2ed71b38",
+        "filename": "org.eclipse.egit.ease-feature/feature.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Well, EASE is in incubation. It feels wrong that one of its modules then shouldn\u0027t be. But I\u0027m not actually aware of any guidelines regarding this.",
+      "parentUuid": "a7c23755_b972be87",
+      "range": {
+        "startLine": 9,
+        "startChar": 56,
+        "endLine": 9,
+        "endChar": 66
+      },
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_8ed66f36",
+        "filename": "org.eclipse.egit.ease-feature/feature.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_d975ba71",
+      "range": {
+        "startLine": 9,
+        "startChar": 42,
+        "endLine": 9,
+        "endChar": 54
+      },
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_197c925a",
         "filename": "org.eclipse.egit.ease-feature/feature.properties",
         "patchSetId": 2
@@ -93,6 +177,30 @@
       "writtenOn": "2017-01-22T20:25:39Z",
       "side": 1,
       "message": "I think we only have one joint p2 repository so why have a different name for a single feature contained in this p2 repo ?",
+      "range": {
+        "startLine": 12,
+        "startChar": 15,
+        "endLine": 12,
+        "endChar": 44
+      },
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_aeea4be7",
+        "filename": "org.eclipse.egit.ease-feature/feature.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done (I copied that mistake from the Gitflow feature)",
+      "parentUuid": "a7c23755_197c925a",
       "range": {
         "startLine": 12,
         "startChar": 15,
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_cee7871e",
+        "filename": "org.eclipse.egit.ease-feature/feature.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_f978b669",
+      "range": {
+        "startLine": 15,
+        "startChar": 12,
+        "endLine": 15,
+        "endChar": 16
+      },
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_39ff8e28",
         "filename": "org.eclipse.egit.ease-feature/feature.xml",
         "patchSetId": 2
@@ -139,6 +271,30 @@
       "writtenOn": "2017-01-22T20:25:39Z",
       "side": 1,
       "message": "4.7.0",
+      "range": {
+        "startLine": 5,
+        "startChar": 15,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_0ee25f0d",
+        "filename": "org.eclipse.egit.ease-feature/feature.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_39ff8e28",
       "range": {
         "startLine": 5,
         "startChar": 15,
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_2e02bb48",
+        "filename": "org.eclipse.egit.ease-feature/feature.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_d9ee9a7f",
+      "range": {
+        "startLine": 29,
+        "startChar": 50,
+        "endLine": 29,
+        "endChar": 55
+      },
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_f9e1968d",
         "filename": "org.eclipse.egit.ease-feature/feature.xml",
         "patchSetId": 2
@@ -185,6 +365,30 @@
       "writtenOn": "2017-01-22T20:25:39Z",
       "side": 1,
       "message": "4.7.0",
+      "range": {
+        "startLine": 30,
+        "startChar": 54,
+        "endLine": 30,
+        "endChar": 59
+      },
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_4e07f757",
+        "filename": "org.eclipse.egit.ease-feature/feature.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_f9e1968d",
       "range": {
         "startLine": 30,
         "startChar": 54,
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_6e0cb37b",
+        "filename": "org.eclipse.egit.ease-feature/feature.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_19e57298",
+      "range": {
+        "startLine": 31,
+        "startChar": 52,
+        "endLine": 31,
+        "endChar": 57
+      },
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_796ca6aa",
         "filename": "org.eclipse.egit.ease-feature/pom.xml",
         "patchSetId": 2
@@ -231,6 +459,30 @@
       "writtenOn": "2017-01-22T20:25:39Z",
       "side": 1,
       "message": "4.7.0",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_6e23d3de",
+        "filename": "org.eclipse.egit.ease-feature/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_796ca6aa",
       "range": {
         "startLine": 19,
         "startChar": 13,
@@ -260,6 +512,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_8e282fbb",
+        "filename": "org.eclipse.egit.ease.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_3966aecc",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_5961aab0",
         "filename": "org.eclipse.egit.ease.ui/META-INF/MANIFEST.MF",
         "patchSetId": 2
@@ -277,6 +547,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_ee7a8394",
+        "filename": "org.eclipse.egit.ease.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_5961aab0",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_39378ee7",
         "filename": "org.eclipse.egit.ease.ui/pom.xml",
         "patchSetId": 2
@@ -288,6 +576,30 @@
       "writtenOn": "2017-01-22T16:38:37Z",
       "side": 1,
       "message": "4.7.0",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_ce1947af",
+        "filename": "org.eclipse.egit.ease.ui/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_39378ee7",
       "range": {
         "startLine": 19,
         "startChar": 13,
@@ -335,6 +647,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_6e5e734b",
+        "filename": "org.eclipse.egit.ease.ui/src/org/eclipse/egit/ease/ui/GitUiModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Yes, the API issue was the main reason for moving these EASE modules to the EGit repository. I wanted to preserve the change history with the first two patch-sets in this review. Since there seems to be no other major issue with this patch-set I\u0027m changing this now.",
+      "parentUuid": "a7c23755_9967c2c4",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_792d8695",
         "filename": "org.eclipse.egit.ease.ui/src/org/eclipse/egit/ease/ui/GitUiModule.java",
         "patchSetId": 2
@@ -346,6 +676,24 @@
       "writtenOn": "2017-01-22T16:38:37Z",
       "side": 1,
       "message": "How do EASE modules manage API versions? PDE API checking \u0026 @since tags needed?",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_ae67ab17",
+        "filename": "org.eclipse.egit.ease.ui/src/org/eclipse/egit/ease/ui/GitUiModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "To quote Christian Pontsegger: \"@since tags would be appreciated, however we do not parse them at the moment. However there are plans to make them visible in documentation in later releases. @deprecated tags will already be considered. But as is is hard to check scripts for API dependencies I would try to not deprecate script API if possible\"",
+      "parentUuid": "a7c23755_792d8695",
       "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -369,6 +717,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_5f8220a3",
+        "filename": "org.eclipse.egit.ease.ui/src/org/eclipse/egit/ease/ui/GitUiModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_999fc267",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_5999aa83",
         "filename": "org.eclipse.egit.ease.ui/src/org/eclipse/egit/ease/ui/GitUiModule.java",
         "patchSetId": 2
@@ -380,6 +746,24 @@
       "writtenOn": "2017-01-22T16:38:37Z",
       "side": 1,
       "message": "How about some input validation? What if commits is null, zero, or negative?",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_7f7fdc1c",
+        "filename": "org.eclipse.egit.ease.ui/src/org/eclipse/egit/ease/ui/GitUiModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "I guess we could fail early here if \u0027commits\u0027 is null. Any effort for adding additional input validation I would rather invest in EGit Core.",
+      "parentUuid": "a7c23755_5999aa83",
       "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -409,6 +793,30 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_ee71a3d0",
+        "filename": "org.eclipse.egit.ease/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_d95cdafb",
+      "range": {
+        "startLine": 5,
+        "startChar": 16,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_f94fd63c",
         "filename": "org.eclipse.egit.ease/META-INF/MANIFEST.MF",
         "patchSetId": 2
@@ -420,6 +828,24 @@
       "writtenOn": "2017-01-22T20:25:39Z",
       "side": 1,
       "message": "no version constraints for EASE ?",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_9f4bd804",
+        "filename": "org.eclipse.egit.ease/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_f94fd63c",
       "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -449,6 +875,30 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_2e3b9bf8",
+        "filename": "org.eclipse.egit.ease/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_b959de0b",
+      "range": {
+        "startLine": 8,
+        "startChar": 35,
+        "endLine": 8,
+        "endChar": 40
+      },
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_79f58642",
         "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
         "patchSetId": 2
@@ -460,6 +910,24 @@
       "writtenOn": "2017-01-22T20:25:39Z",
       "side": 1,
       "message": "Can we split this class into multiple modules, maybe one per wrapped JGit command or one per related JGit commands (I don\u0027t know EASE yet) ?\nOtherwise this class could become very large when we keep exposing more commands\n\nI would prefer to add each command in a separate commit, otherwise this review could become a pretty long one.",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_bfbb345d",
+        "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "I\u0027m ok with splitting this in separate commits. If it\u0027s just an issue of the class size, we could delegate calls, and keep this modularization internal. I.e. the user wouldn\u0027t need to know which module he needs to add. If we want to have separate modules, I think we have to come up with a very clear rule of separation. One per wrapped JGit command seems too fine grained to me. The EASE Modules View would certainly be cluttered. But maybe for now its sufficient to decide what this (\"Base\"?) Module should contain. What do you think?",
+      "parentUuid": "a7c23755_79f58642",
       "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -483,6 +951,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_0ea17fa8",
+        "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Maybe I should add that I copied this file from the EASE repository [1] with no changes. Christian added a license header in the meanwhile.\n\n[1] http://git.eclipse.org/c/ease/org.eclipse.ease.modules.git/tree/plugins/org.eclipse.ease.modules.team.git/src/org/eclipse/ease/modules/git/GitModule.java",
+      "parentUuid": "a7c23755_1953b2e7",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_394dce44",
         "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
         "patchSetId": 2
@@ -494,6 +980,24 @@
       "writtenOn": "2017-01-22T20:25:39Z",
       "side": 1,
       "message": "missing javadoc",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_7f56fca4",
+        "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_394dce44",
       "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -517,6 +1021,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_1f5fc8bc",
+        "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_993ee28e",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_19ce522a",
         "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
         "patchSetId": 2
@@ -528,6 +1050,24 @@
       "writtenOn": "2017-01-22T20:25:39Z",
       "side": 1,
       "message": "externalize string",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_9fb67875",
+        "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_19ce522a",
       "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -568,6 +1108,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_bf5094ad",
+        "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_99d982ed",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_59d36acc",
         "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
         "patchSetId": 2
@@ -579,6 +1137,24 @@
       "writtenOn": "2017-01-22T20:25:39Z",
       "side": 1,
       "message": "should be no problem to gain access when EASE integration is part of EGit, so remove comments or delete dead code",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_df4550ef",
+        "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_59d36acc",
       "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -602,6 +1178,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_ff4a0cfd",
+        "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_b9eb9e6f",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_79de66d6",
         "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
         "patchSetId": 2
@@ -613,6 +1207,30 @@
       "writtenOn": "2017-01-22T20:25:39Z",
       "side": 1,
       "message": "no, this is a RevCommit object",
+      "range": {
+        "startLine": 139,
+        "startChar": 12,
+        "endLine": 139,
+        "endChar": 25
+      },
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_3f5c84c5",
+        "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_79de66d6",
       "range": {
         "startLine": 139,
         "startChar": 12,
@@ -653,6 +1271,24 @@
       "writtenOn": "2017-01-22T16:38:37Z",
       "side": 1,
       "message": "Missing braces.\n\nWhy do these operations throw RuntimeException (as opposed to some checked exception, or maybe IllegalArgumentException)?",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_5f5940d3",
+        "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_399eae6f",
       "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -721,6 +1357,30 @@
       "writtenOn": "2017-01-22T20:25:39Z",
       "side": 1,
       "message": "this rather looks like a generic repository not tied to 0.3.0, so either name this ease-latest or use the 0.3.0 p2 repository",
+      "range": {
+        "startLine": 3,
+        "startChar": 54,
+        "endLine": 3,
+        "endChar": 68
+      },
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_2ea63bc9",
+        "filename": "org.eclipse.egit.target/projects/ease-0.3.0.tpd",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-12T14:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_f91c362a",
       "range": {
         "startLine": 3,
         "startChar": 54,
