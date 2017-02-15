@@ -934,6 +934,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_f346bc74",
+        "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-02-15T00:39:44Z",
+      "side": 1,
+      "message": "If these modules are shown in EASE UI (never saw this so far) it seems we should not go for very fine grained modules.\n\nMaybe we can split modules along the bundles they require:\n* jgit module requiring jgit bundles\n* egit.core requiring headless egit bundles\n* egit.ui requiring egit ui bundles \n\nnot sure in which environments EASE can be used, e.g. are there any headless scenarios (no UI) where EASE makes sense ?",
+      "parentUuid": "a7c23755_bfbb345d",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_1953b2e7",
         "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
         "patchSetId": 2
