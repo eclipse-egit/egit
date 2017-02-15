@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_7f799ce6",
+        "filename": "org.eclipse.egit.ease.ui/plugin.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-02-15T00:40:45Z",
+      "side": 1,
+      "message": "can you find a better name along the name we are using for the feature, many Eclipse users have no clue about Eclipse project names so they don\u0027t know what EASE is. So how about\n\nGit integration for Eclipse - scripting support UI",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 30
+      },
+      "revId": "b013a8183e37d467a883d112b1b836c63fb8a533",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_bf6a540a",
+        "filename": "org.eclipse.egit.ease.ui/src/org/eclipse/egit/ease/ui/internal/UIText.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-02-15T00:40:45Z",
+      "side": 1,
+      "message": "in other similar files we use a blank instead of a tab",
+      "revId": "b013a8183e37d467a883d112b1b836c63fb8a533",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_5f7ce0d8",
+        "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/internal/uitext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-02-15T00:40:45Z",
+      "side": 1,
+      "message": "combine text and parameters using MessageText.format",
+      "revId": "b013a8183e37d467a883d112b1b836c63fb8a533",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
