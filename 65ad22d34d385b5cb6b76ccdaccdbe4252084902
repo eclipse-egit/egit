@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_1f25f9b2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchNormalizerModifyListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-02-15T21:02:48Z",
+      "side": 1,
+      "message": "we don\u0027t use author tags, authors are already tracked in git history",
+      "revId": "65ad22d34d385b5cb6b76ccdaccdbe4252084902",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
