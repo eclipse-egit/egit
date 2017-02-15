@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_b3f364d8",
+        "filename": "org.eclipse.egit.ease-feature/.project",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-02-15T00:42:10Z",
+      "side": 1,
+      "message": "org",
+      "range": {
+        "startLine": 3,
+        "startChar": 7,
+        "endLine": 3,
+        "endChar": 11
+      },
+      "revId": "c331221fc31065246d7edc0f839dbc083fc70f25",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_7329ccbc",
+        "filename": "org.eclipse.egit.ease-feature/feature.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-02-15T00:42:10Z",
+      "side": 1,
+      "message": "missing required bundle org.eclipse.ui 3.5 (require same version as org.eclipse.egit.ui",
+      "revId": "c331221fc31065246d7edc0f839dbc083fc70f25",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_931d889d",
+        "filename": "org.eclipse.egit.ease-feature/feature.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-02-15T00:42:10Z",
+      "side": 1,
+      "message": "add the feature\u0027s dependencies to ensure that egit p2 repo is self-contained",
+      "revId": "c331221fc31065246d7edc0f839dbc083fc70f25",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_934f488d",
+        "filename": "org.eclipse.egit.ease-feature/pom.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-02-15T00:42:10Z",
+      "side": 1,
+      "message": "we use a different groupId for features hence there is no need to add feature here",
+      "range": {
+        "startLine": 23,
+        "startChar": 35,
+        "endLine": 23,
+        "endChar": 43
+      },
+      "revId": "c331221fc31065246d7edc0f839dbc083fc70f25",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_733b8cf4",
+        "filename": "org.eclipse.egit.ease.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-02-15T00:42:10Z",
+      "side": 1,
+      "message": "if possible don\u0027t require a different version than org.eclipse.egit.ui",
+      "range": {
+        "startLine": 18,
+        "startChar": 32,
+        "endLine": 18,
+        "endChar": 39
+      },
+      "revId": "c331221fc31065246d7edc0f839dbc083fc70f25",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_9059fe88",
+        "filename": "org.eclipse.egit.target/projects/ease-latest.tpd",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-02-15T00:42:10Z",
+      "side": 1,
+      "message": "* using a second location in the same tpd file doesn\u0027t seem to work\n* don\u0027t use release train repository to add a single additional bundle since these repos are huge and heavily slow down target platform resolution since p2 has to download the complete index",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 52
+      },
+      "revId": "c331221fc31065246d7edc0f839dbc083fc70f25",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
