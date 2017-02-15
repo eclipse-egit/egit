@@ -63,7 +63,7 @@
 
   <properties>
     <egit-version>4.6.1-SNAPSHOT</egit-version>
-    <tycho-version>0.26.0</tycho-version>
+    <tycho-version>1.0.0</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
     <jboss-tycho-plugins-version>0.26.0</jboss-tycho-plugins-version>
     <mockito-version>1.8.4</mockito-version>
@@ -362,6 +362,7 @@
             <source>1.8</source>
             <target>1.8</target>
             <!-- Do not use useProjectSettings; it'll always override -nowarn -->
+            <useProjectSettings>false</useProjectSettings>
             <compilerArgs>
               <arg>-properties</arg>
               <arg>${project.basedir}/.settings/org.eclipse.jdt.core.prefs</arg>
