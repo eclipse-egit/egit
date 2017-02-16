@@ -952,6 +952,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_d3de20d5",
+        "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2017-02-16T07:22:42Z",
+      "side": 1,
+      "message": "\u003e If these modules are shown in EASE UI (never saw this so far) it seems we should not go for very fine grained modules.\n\nLook for the \"Modules Explorer\" view (org.eclipse.ease.ui.views.modulesExplorer).\n\n\u003e not sure in which environments EASE can be used, e.g. are there any headless scenarios (no UI) where EASE makes sense ?\n\nChristian mentioned that somebody is already using it with an headless Eclipse application. Personally I don\u0027t see a considerable benefit for this over scripting JGit or native Git, but I assume they have good reasons.\n\n\u003e Maybe we can split modules along the bundles they require:\n\nMy understanding is, the two modules are already split along the bundles. One for egit.core/jgit and one for egit.ui.\nWhat would be the benefit of having separate modules for egit.core and jgit? The jgit module would have fewer dependencies, though it would still depend on eclipse bundles. Are there scenarios where a user would rather write an EASE script for jgit than a \"regular\" script using the jgit CLI?\nWould the two modules offer the same API, one using jgit commands, the other using egit operations?",
+      "parentUuid": "a7c23755_f346bc74",
+      "revId": "9027f43b9996d7eac1f9b489bbed5a5d4d3e95c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_1953b2e7",
         "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
         "patchSetId": 2
