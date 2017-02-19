@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_df1d379c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchNormalizerModifyListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-19T16:33:57Z",
+      "side": 1,
+      "message": "As Matthias had said, we don\u0027t use @author tags.",
+      "revId": "ce28c6d643d6f228d948bd8911dcb934a332d3d0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_bf279be8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchNormalizerModifyListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-19T16:33:57Z",
+      "side": 1,
+      "message": "Missing braces.",
+      "revId": "ce28c6d643d6f228d948bd8911dcb934a332d3d0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_1f188fa7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchNormalizerModifyListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-19T16:33:57Z",
+      "side": 1,
+      "message": "Why does this not allow me to type a branch name with a slash? Note that \"Fetch From Gerrit...\" will create branch names like \"change/92508/2\".",
+      "revId": "ce28c6d643d6f228d948bd8911dcb934a332d3d0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_ff1833ab",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchRenameDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-19T16:33:57Z",
+      "side": 1,
+      "message": "How does this interact with the validation listener added just above? In CreateBranchPage, the normalizer is added first... besides we now have in both places two modifyListeners. The setText() inside the normalizer will post yet another modify event.\n\nI find this event flow confusing, and even though I don\u0027t notice any detrimental effects on Mac, I have no idea what happens with other SWT implementations (GTK, Windows).\n\nI\u0027d feel safer if there was only one listener that did both, normalizing and then verifying. Besides, why are these ModifyListeners and not VerifyListeners? A VerifyListener gets a last-chance opportunity to change the text (by modifying event.text) *before* the widget\u0027s text is modified.",
+      "revId": "ce28c6d643d6f228d948bd8911dcb934a332d3d0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
