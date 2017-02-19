@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_9fa73f92",
+        "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-19T22:08:19Z",
+      "side": 1,
+      "message": "When and where is this repository closed?",
+      "revId": "cb97429278bb1f7da1ba0dfebc2c8d62edfff65d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_1fe08fb4",
+        "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-19T22:08:19Z",
+      "side": 1,
+      "message": "FindBugs complains about the return value of mkdirs() not being checked. What is intended to happen if the folder cannot be created?",
+      "revId": "cb97429278bb1f7da1ba0dfebc2c8d62edfff65d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_bfef9ba9",
+        "filename": "org.eclipse.egit.ease/src/org/eclipse/egit/ease/GitModule.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-19T22:08:19Z",
+      "side": 1,
+      "message": "split() takes a regex as argument. Shouldn\u0027t this be \"\\\\|\"??",
+      "range": {
+        "startLine": 156,
+        "startChar": 46,
+        "endLine": 156,
+        "endChar": 49
+      },
+      "revId": "cb97429278bb1f7da1ba0dfebc2c8d62edfff65d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
