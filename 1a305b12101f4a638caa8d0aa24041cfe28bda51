@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_ff2e7393",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-19T21:41:15Z",
+      "side": 1,
+      "message": "This has the same problems. (Obviously.)",
+      "revId": "1a305b12101f4a638caa8d0aa24041cfe28bda51",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
