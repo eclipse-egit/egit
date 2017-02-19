@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.preferences;
 
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -29,6 +30,19 @@ import org.eclipse.swt.widgets.Text;
  * Requests a key and value for adding a configuration entry
  */
 public class AddConfigEntryDialog extends TitleAreaDialog {
+
+	/**
+	 * Regular expression describing a valid git config key. See config.c in the
+	 * CGit sources. Basically section.subsection.name, where section and name
+	 * must contain only alphanumeric characters or the dash.
+	 *
+	 * Note that we allow arbitrary whitespace before and after; we'll trim that
+	 * away in {@link #okPressed}.
+	 */
+	private static final Pattern VALID_KEY = Pattern
+			.compile(
+					"(\\h|\\v)*[-\\p{Alnum}]+(?:\\..*)?\\.[-\\p{Alnum}]+(\\h|\\v)*"); //$NON-NLS-1$
+
 	private Text keyText;
 
 	private Text valueText;
@@ -65,7 +79,7 @@ public class AddConfigEntryDialog extends TitleAreaDialog {
 		keylLabel.setToolTipText(UIText.AddConfigEntryDialog_ConfigKeyTooltip);
 		keyText = new Text(main, SWT.BORDER);
 		if (suggestedKey != null) {
-			keyText.setText(suggestedKey);
+			keyText.setText(trimKey(suggestedKey));
 			keyText.selectAll();
 		}
 
@@ -91,6 +105,14 @@ public class AddConfigEntryDialog extends TitleAreaDialog {
 		return main;
 	}
 
+	private boolean isValidKey(String keyValue) {
+		return keyValue != null && VALID_KEY.matcher(keyValue).matches();
+	}
+
+	private String trimKey(String keyValue) {
+		return keyValue.replaceAll("^(?:\\h|\\v)*|(?:\\h|\\v)*$", ""); //$NON-NLS-1$ //$NON-NLS-2$
+	}
+
 	@Override
 	public void create() {
 		super.create();
@@ -113,6 +135,11 @@ public class AddConfigEntryDialog extends TitleAreaDialog {
 				hasError = true;
 				return;
 			}
+			if (!isValidKey(keyText.getText())) {
+				setErrorMessage(UIText.AddConfigEntryDialog_InvalidKeyMessage);
+				hasError = true;
+				return;
+			}
 			if (valueText.getText().length() == 0) {
 				setErrorMessage(UIText.AddConfigEntryDialog_EnterValueMessage);
 				hasError = true;
@@ -125,7 +152,7 @@ public class AddConfigEntryDialog extends TitleAreaDialog {
 
 	@Override
 	protected void okPressed() {
-		key = keyText.getText();
+		key = trimKey(keyText.getText());
 		value = valueText.getText();
 		super.okPressed();
 	}
