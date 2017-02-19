@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_9f5f3f45",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchNormalizerModifyListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-19T16:58:40Z",
+      "side": 1,
+      "message": "This makes editing somewhere inside the text nearly impossible.",
+      "revId": "ce28c6d643d6f228d948bd8911dcb934a332d3d0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_ff1833ab",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchRenameDialog.java",
         "patchSetId": 4
