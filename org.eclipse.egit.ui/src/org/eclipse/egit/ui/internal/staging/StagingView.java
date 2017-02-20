@@ -86,6 +86,7 @@ import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
 import org.eclipse.egit.ui.internal.components.ToggleableWarningLabel;
+import org.eclipse.egit.ui.internal.components.ToggleableWarningLabel.LabelImage;
 import org.eclipse.egit.ui.internal.decorators.IProblemDecoratable;
 import org.eclipse.egit.ui.internal.decorators.ProblemLabelDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageArea;
@@ -268,6 +269,10 @@ public class StagingView extends ViewPart
 	private TreeViewer unstagedViewer;
 
 	private ToggleableWarningLabel warningLabel;
+
+	private String hintMessage;
+
+	private ToggleableWarningLabel hintLabel;
 
 	private Text filterText;
 
@@ -925,9 +930,14 @@ public class StagingView extends ViewPart
 				.applyTo(commitMessageComposite);
 
 		warningLabel = new ToggleableWarningLabel(commitMessageComposite,
-				SWT.NONE);
+				SWT.NONE, LabelImage.WARNING);
 		GridDataFactory.fillDefaults().grab(true, false).exclude(true)
 				.applyTo(warningLabel);
+
+		hintLabel = new ToggleableWarningLabel(commitMessageComposite,
+				SWT.NONE, LabelImage.INFO);
+		GridDataFactory.fillDefaults().grab(true, false).exclude(true)
+				.applyTo(hintLabel);
 
 		Composite commitMessageTextComposite = toolkit
 				.createComposite(commitMessageComposite);
@@ -2472,24 +2482,39 @@ public class StagingView extends ViewPart
 	}
 
 	private void updateMessage() {
-		if (hasErrorsOrWarnings()) {
-			warningLabel.showMessage(UIText.StagingView_MessageErrors);
-			commitMessageSection.redraw();
-		} else {
-			String message = commitMessageComponent.getStatus().getMessage();
-			boolean needsRedraw = false;
-			if (message != null) {
-				warningLabel.showMessage(message);
-				needsRedraw = true;
-			} else {
-				needsRedraw = warningLabel.getVisible();
-				warningLabel.hideMessage();
-			}
-			// Without this explicit redraw, the ControlDecoration of the
+		if (updateWarningMessage() || updateHintMessage()) {
+			// Without explicit redraw, the ControlDecoration of the
 			// commit message area would not get updated and cause visual
 			// corruption.
-			if (needsRedraw)
-				commitMessageSection.redraw();
+			commitMessageSection.redraw();
+		}
+	}
+
+	private boolean updateWarningMessage() {
+		if (hasErrorsOrWarnings()) {
+			warningLabel.showMessage(UIText.StagingView_MessageErrors);
+			return true;
+		} else {
+			String message = commitMessageComponent.getStatus().getMessage();
+			if (message != null) {
+				warningLabel.showMessage(message);
+				return true;
+			} else {
+				boolean redraw = warningLabel.getVisible();
+				warningLabel.hideMessage();
+				return redraw;
+			}
+		}
+	}
+
+	private boolean updateHintMessage() {
+		if (hintMessage != null) {
+			hintLabel.showMessage(hintMessage);
+			return true;
+		} else {
+			boolean redraw = hintLabel.getVisible();
+			hintLabel.hideMessage();
+			return redraw;
 		}
 	}
 
@@ -3474,6 +3499,15 @@ public class StagingView extends ViewPart
 				boolean rebaseContinueEnabled = indexDiffAvailable
 						&& repository.getRepositoryState().isRebasing()
 						&& noConflicts;
+				if (!rebaseContinueButton.getEnabled()
+						&& rebaseContinueEnabled) {
+					hintMessage = UIText.StagingView_rebaseContinueHint;
+					updateMessage();
+				} else if (rebaseContinueButton.getEnabled()
+						&& !rebaseContinueEnabled) {
+					hintMessage = null;
+					updateMessage();
+				}
 				rebaseContinueButton.setEnabled(rebaseContinueEnabled);
 
 				form.setText(GitLabels.getStyledLabelSafe(repository).toString());
