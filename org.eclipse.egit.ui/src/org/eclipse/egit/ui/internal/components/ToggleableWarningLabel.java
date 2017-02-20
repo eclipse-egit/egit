@@ -10,6 +10,7 @@ package org.eclipse.egit.ui.internal.components;
 
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -23,6 +24,38 @@ import org.eclipse.ui.PlatformUI;
  */
 public class ToggleableWarningLabel extends Composite {
 
+	/**
+	 * Images for ToggleableWarningLabel
+	 */
+	public static enum LabelImage {
+
+		/**
+		 * information image
+		 */
+		INFO(ISharedImages.IMG_OBJS_INFO_TSK),
+
+		/**
+		 * warning image
+		 */
+
+		WARNING(ISharedImages.IMG_OBJS_WARN_TSK),
+
+		/**
+		 * error image
+		 */
+		ERROR(ISharedImages.IMG_OBJS_ERROR_TSK);
+
+		private String name;
+
+		private LabelImage(String name) {
+			this.name = name;
+		}
+
+		Image getImage() {
+			return PlatformUI.getWorkbench().getSharedImages().getImage(name);
+		}
+	}
+
 	private Label warningText;
 
 	/**
@@ -31,18 +64,19 @@ public class ToggleableWarningLabel extends Composite {
 	 *
 	 * @param parent
 	 * @param style
+	 * @param image
 	 */
-	public ToggleableWarningLabel(Composite parent, int style) {
+	public ToggleableWarningLabel(Composite parent, int style,
+			LabelImage image) {
 		super(parent, style);
 
 		setVisible(false);
 		setLayout(new GridLayout(2, false));
 
-		Label image = new Label(this, SWT.NONE);
+		Label img = new Label(this, SWT.NONE);
 		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.BEGINNING)
-				.applyTo(image);
-		image.setImage(PlatformUI.getWorkbench().getSharedImages()
-				.getImage(ISharedImages.IMG_OBJS_WARN_TSK));
+				.applyTo(img);
+		img.setImage(image.getImage());
 
 		warningText = new Label(this, SWT.WRAP);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(warningText);
