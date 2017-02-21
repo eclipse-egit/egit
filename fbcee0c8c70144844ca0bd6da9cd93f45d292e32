@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_66dad7e1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIText.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2621,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-21T22:32:21Z",
+      "side": 1,
+      "message": "Typo, missing e: NormalizeName",
+      "revId": "fbcee0c8c70144844ca0bd6da9cd93f45d292e32",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_06fcc331",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-21T22:32:21Z",
+      "side": 1,
+      "message": "Somehow this text field suddenly appears much larger (height) on my Mac, and text is displayed at the top border instead of centered.",
+      "revId": "fbcee0c8c70144844ca0bd6da9cd93f45d292e32",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_26f7ff4e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-21T22:32:21Z",
+      "side": 1,
+      "message": "This image-only button looks a bit strange. Rather non-standard.",
+      "revId": "fbcee0c8c70144844ca0bd6da9cd93f45d292e32",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_46f6bb51",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-21T22:32:21Z",
+      "side": 1,
+      "message": "What\u0027s with this code?",
+      "revId": "fbcee0c8c70144844ca0bd6da9cd93f45d292e32",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_86e8d375",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-21T22:32:21Z",
+      "side": 1,
+      "message": "Could use a Java 8 lambda here.",
+      "revId": "fbcee0c8c70144844ca0bd6da9cd93f45d292e32",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_a6eb0f6f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-21T22:32:21Z",
+      "side": 1,
+      "message": "Should enable/disable the button depending on whether the ref is syntactically correct.",
+      "revId": "fbcee0c8c70144844ca0bd6da9cd93f45d292e32",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
