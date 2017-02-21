@@ -16,7 +16,7 @@ import org.eclipse.egit.core.op.RenameBranchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.ValidationUtils;
-import org.eclipse.egit.ui.internal.branch.BranchNormalizerModifyListener;
+import org.eclipse.egit.ui.internal.components.BranchNameNormalizer;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -111,7 +111,9 @@ public class BranchRenameDialog extends TitleAreaDialog {
 			}
 		});
 
-		name.addModifyListener(new BranchNormalizerModifyListener());
+		BranchNameNormalizer normalizer = new BranchNameNormalizer(name,
+				UIText.BranchRenameDialog_NormalizeNameTooltip);
+		normalizer.setVisible(false);
 		getButton(OK).setEnabled(false);
 	}
 
