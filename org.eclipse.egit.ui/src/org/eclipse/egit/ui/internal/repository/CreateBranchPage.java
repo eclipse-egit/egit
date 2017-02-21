@@ -31,8 +31,8 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.ValidationUtils;
-import org.eclipse.egit.ui.internal.branch.BranchNormalizerModifyListener;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
+import org.eclipse.egit.ui.internal.components.BranchNameNormalizer;
 import org.eclipse.egit.ui.internal.components.UpstreamConfigComponent;
 import org.eclipse.egit.ui.internal.dialogs.AbstractBranchSelectionDialog;
 import org.eclipse.jface.dialogs.Dialog;
@@ -276,8 +276,10 @@ class CreateBranchPage extends WizardPage {
 
 		nameText.setFocus();
 		// add the listeners just now to avoid unneeded checkPage()
-		nameText.addModifyListener(new BranchNormalizerModifyListener());
 		nameText.addModifyListener(e -> checkPage());
+		BranchNameNormalizer normalizer = new BranchNameNormalizer(nameText,
+				UIText.CreateBranchPage_NormalizeNameTooltip);
+		normalizer.setVisible(false);
 	}
 
 	@Override
