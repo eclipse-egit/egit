@@ -2618,6 +2618,9 @@ public class UIText extends NLS {
 	public static String CreateBranchPage_MissingSourceMessage;
 
 	/** */
+	public static String CreateBranchPage_NormalizName;
+
+	/** */
 	public static String CreateBranchPage_SourceLabel;
 
 	/** */
