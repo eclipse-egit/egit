@@ -40,10 +40,10 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.ValidationUtils;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
+import org.eclipse.egit.ui.internal.branch.CleanupUncomittedChangesDialog;
 import org.eclipse.egit.ui.internal.branch.LaunchFinder;
 import org.eclipse.egit.ui.internal.dialogs.AbstractBranchSelectionDialog;
 import org.eclipse.egit.ui.internal.dialogs.BranchEditDialog;
-import org.eclipse.egit.ui.internal.dialogs.CheckoutConflictDialog;
 import org.eclipse.egit.ui.internal.gerrit.GerritDialogSettings;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.dialogs.Dialog;
@@ -97,6 +97,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.PlatformUI;
@@ -808,26 +809,40 @@ public class FetchGerritChangePage extends WizardPage {
 		bop.execute(monitor);
 
 		if (doCheckout) {
-			CheckoutCommand co = null;
-			try (Git git = new Git(repository)) {
-				co = git.checkout();
-				co.setName(textForBranch).call();
-			} catch (CheckoutConflictException e) {
-				final CheckoutResult result = co.getResult();
-
-				if (result.getStatus() == Status.CONFLICTS) {
-					PlatformUI.getWorkbench().getDisplay()
-							.asyncExec(new Runnable() {
-						@Override
-						public void run() {
-							new CheckoutConflictDialog(null, repository,
-									result.getConflictList()).open();
+			final CheckoutResult result = checkout(textForBranch);
+			if (result.getStatus() == Status.CONFLICTS) {
+				PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+					Shell shell = PlatformUI.getWorkbench()
+							.getActiveWorkbenchWindow().getShell();
+					CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
+							shell,
+							UIText.BranchResultDialog_CheckoutConflictsTitle,
+							UIText.AbstractRebaseCommandHandler_cleanupDialog_text,
+							repository, result.getConflictList());
+					cleanupUncomittedChangesDialog.open();
+					if (cleanupUncomittedChangesDialog.shouldContinue()) {
+						try {
+							checkout(textForBranch);
+						} catch (GitAPIException e) {
+							Activator.logError(e.getMessage(), e);
 						}
-					});
-				}
+					}
+				});
 			}
 		}
 		monitor.worked(1);
+	}
+
+	private CheckoutResult checkout(final String textForBranch)
+			throws GitAPIException {
+		CheckoutCommand co = null;
+		try (Git git = new Git(repository)) {
+			co = git.checkout();
+			co.setName(textForBranch).call();
+		} catch (CheckoutConflictException e) {
+			// ignore, conflict status is part of CheckoutResult
+		}
+		return co.getResult();
 	}
 
 	private void checkout(RevCommit commit, IProgressMonitor monitor)
