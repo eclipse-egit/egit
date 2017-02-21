@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.internal.fetch;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -28,8 +29,14 @@ import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
+import org.eclipse.egit.core.internal.job.JobUtil;
+import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.core.op.TagOperation;
@@ -40,10 +47,10 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.ValidationUtils;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
+import org.eclipse.egit.ui.internal.branch.CleanupUncomittedChangesDialog;
 import org.eclipse.egit.ui.internal.branch.LaunchFinder;
 import org.eclipse.egit.ui.internal.dialogs.AbstractBranchSelectionDialog;
 import org.eclipse.egit.ui.internal.dialogs.BranchEditDialog;
-import org.eclipse.egit.ui.internal.dialogs.CheckoutConflictDialog;
 import org.eclipse.egit.ui.internal.gerrit.GerritDialogSettings;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.dialogs.Dialog;
@@ -62,12 +69,8 @@ import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.CheckoutResult;
 import org.eclipse.jgit.api.CheckoutResult.Status;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.CheckoutConflictException;
-import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
@@ -97,6 +100,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.PlatformUI;
@@ -725,8 +729,7 @@ public class FetchGerritChangePage extends WizardPage {
 			boolean doCreateTag, boolean doCreateBranch,
 			boolean doCheckoutNewBranch, boolean doActivateAdditionalRefs,
 			String textForTag, String textForBranch, IProgressMonitor monitor)
-					throws IOException, CoreException, URISyntaxException,
-					GitAPIException {
+			throws IOException, CoreException, URISyntaxException {
 
 		int totalWork = 1;
 		if (doCheckout)
@@ -738,8 +741,7 @@ public class FetchGerritChangePage extends WizardPage {
 				totalWork);
 
 		try {
-			RevCommit commit = fetchChange(uri, spec,
-					monitor);
+			RevCommit commit = fetchChange(uri, spec, monitor);
 
 			if (doCreateTag)
 				createTag(spec, textForTag, commit, monitor);
@@ -800,34 +802,66 @@ public class FetchGerritChangePage extends WizardPage {
 	}
 
 	private void createBranch(final String textForBranch, boolean doCheckout,
-			RevCommit commit, IProgressMonitor monitor) throws CoreException,
-			GitAPIException {
-		monitor.setTaskName(UIText.FetchGerritChangePage_CreatingBranchTaskName);
+			RevCommit commit, IProgressMonitor monitor) throws CoreException {
+		SubMonitor progress = SubMonitor.convert(monitor,
+				UIText.FetchGerritChangePage_CreatingBranchTaskName, 10);
 		CreateLocalBranchOperation bop = new CreateLocalBranchOperation(
 				repository, textForBranch, commit);
-		bop.execute(monitor);
+		bop.execute(progress.newChild(8));
 
 		if (doCheckout) {
-			CheckoutCommand co = null;
-			try (Git git = new Git(repository)) {
-				co = git.checkout();
-				co.setName(textForBranch).call();
-			} catch (CheckoutConflictException e) {
-				final CheckoutResult result = co.getResult();
-
-				if (result.getStatus() == Status.CONFLICTS) {
-					PlatformUI.getWorkbench().getDisplay()
-							.asyncExec(new Runnable() {
-						@Override
-						public void run() {
-							new CheckoutConflictDialog(null, repository,
-									result.getConflictList()).open();
+			CheckoutResult result;
+			try {
+				result = checkout(textForBranch, progress.newChild(1));
+			} catch (OperationCanceledException | InterruptedException e1) {
+				return;
+			}
+			if (result.getStatus() == Status.CONFLICTS) {
+				PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+					Shell shell = PlatformUI.getWorkbench()
+							.getActiveWorkbenchWindow().getShell();
+					CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
+							shell,
+							UIText.BranchResultDialog_CheckoutConflictsTitle,
+							UIText.AbstractRebaseCommandHandler_cleanupDialog_text,
+							repository, result.getConflictList());
+					cleanupUncomittedChangesDialog.open();
+					if (cleanupUncomittedChangesDialog.shouldContinue()) {
+						try {
+							checkout(textForBranch, progress.newChild(1));
+						} catch (InterruptedException e) {
+							Activator.logError(e.getMessage(), e);
 						}
-					});
-				}
+					}
+				});
+			} else {
+				progress.setWorkRemaining(0);
 			}
 		}
 		monitor.worked(1);
+	}
+
+	private CheckoutResult checkout(final String textForBranch,
+			IProgressMonitor monitor)
+			throws OperationCanceledException, InterruptedException {
+		SubMonitor m = SubMonitor.convert(monitor);
+		final BranchOperation op = new BranchOperation(repository,
+				textForBranch, false);
+		String repoName = Activator.getDefault().getRepositoryUtil()
+				.getRepositoryName(repository);
+		String jobName = MessageFormat.format(UIText.BranchAction_checkingOut,
+				repoName, textForBranch);
+		final CheckoutResult[] result = new CheckoutResult[1];
+		JobUtil.scheduleUserWorkspaceJob(op, jobName, JobFamilies.CHECKOUT,
+				new JobChangeAdapter() {
+
+					@Override
+					public void done(IJobChangeEvent event) {
+						result[0] = op.getResult();
+					}
+				});
+		Job.getJobManager().join(JobFamilies.CHECKOUT, m);
+		return result[0];
 	}
 
 	private void checkout(RevCommit commit, IProgressMonitor monitor)
