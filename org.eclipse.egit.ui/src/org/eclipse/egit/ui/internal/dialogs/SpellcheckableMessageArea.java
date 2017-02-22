@@ -777,32 +777,36 @@ public class SpellcheckableMessageArea extends Composite {
 
 	private void addProposals(final SubMenuManager quickFixMenu) {
 		IAnnotationModel sourceModel = sourceViewer.getAnnotationModel();
+		if (sourceModel == null) {
+			return;
+		}
 		Iterator annotationIterator = sourceModel.getAnnotationIterator();
 		while (annotationIterator.hasNext()) {
 			Annotation annotation = (Annotation) annotationIterator.next();
 			boolean isDeleted = annotation.isMarkedDeleted();
-			boolean isIncluded = includes(sourceModel.getPosition(annotation),
-					getTextWidget().getCaretOffset());
-			boolean isFixable = sourceViewer.getQuickAssistAssistant().canFix(
-					annotation);
-			if (!isDeleted && isIncluded && isFixable) {
+			boolean isIncluded = !isDeleted
+					&& includes(sourceModel.getPosition(annotation),
+							getTextWidget().getCaretOffset());
+			boolean isFixable = isIncluded && sourceViewer
+					.getQuickAssistAssistant().canFix(annotation);
+			if (isFixable) {
 				IQuickAssistProcessor processor = sourceViewer
-				.getQuickAssistAssistant()
-				.getQuickAssistProcessor();
+						.getQuickAssistAssistant().getQuickAssistProcessor();
 				IQuickAssistInvocationContext context = sourceViewer
-				.getQuickAssistInvocationContext();
+						.getQuickAssistInvocationContext();
 				ICompletionProposal[] proposals = processor
-				.computeQuickAssistProposals(context);
+						.computeQuickAssistProposals(context);
 
-				for (ICompletionProposal proposal : proposals)
+				for (ICompletionProposal proposal : proposals) {
 					quickFixMenu.add(createQuickFixAction(proposal));
+				}
 			}
 		}
 	}
 
 	private boolean includes(Position position, int caretOffset) {
-		return position.includes(caretOffset)
-		|| (position.offset + position.length) == caretOffset;
+		return position != null && (position.includes(caretOffset)
+				|| (position.offset + position.length) == caretOffset);
 	}
 
 	private IAction createQuickFixAction(final ICompletionProposal proposal) {
