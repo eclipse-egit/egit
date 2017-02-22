@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_9c2d82ce",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-22T12:10:07Z",
+      "side": 1,
+      "message": "Obviously there\u0027s a race condition here. CleanupUncommittedChangesDialog creates, depending on the user\u0027s choice, a CommitJob, or a JobFamilies.RESET or JobFamilies.STASH job.\n\nWhich means after that dialog, we cannot do operations on the repo synchronously. They need to be in their own job so they get queued (if they all use an appropriate scheduling rule, which they should). Or in the worst case we\u0027d have to join on COMMIT, RESET, and STASH, but I\u0027d hate that.\n\nSeems to me that this needs a larger refactoring of this FetchGerritChangePage. I always found that internalDoFetch(...) method above with all its boolean flags (some of which [or even all?] are mutually exclusive) and that \"sequence\" of steps highly confusing.",
+      "revId": "56fc187bb976e4d8141f156077f9686291044993",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
