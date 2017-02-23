@@ -1,0 +1,8 @@
+Verified+1: Hudson CI
+Code-Review+1: Wim Jongman <wim.jongman@remainsoftware.com>
+Code-Review+2: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-by: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-at: Thu, 23 Feb 2017 08:52:58 -0500
+Reviewed-on: https://git.eclipse.org/r/91579
+Project: egit/egit
+Branch: refs/heads/master
