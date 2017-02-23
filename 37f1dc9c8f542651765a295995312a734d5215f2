@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_2d199aad",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-02-23T14:03:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_b2726587",
+      "revId": "37f1dc9c8f542651765a295995312a734d5215f2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_126319bd",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_4d1896a8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-02-23T14:03:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c23755_126319bd",
+      "revId": "37f1dc9c8f542651765a295995312a734d5215f2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_325e55f7",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-02-23T07:08:05Z",
       "side": 1,
       "message": ":-(",
+      "revId": "37f1dc9c8f542651765a295995312a734d5215f2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_6d13928b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-02-23T14:03:30Z",
+      "side": 1,
+      "message": "not nice, at least it works\n\ndidn\u0027t yet wrap my head around finding an asynchronous solution",
+      "parentUuid": "a7c23755_325e55f7",
       "revId": "37f1dc9c8f542651765a295995312a734d5215f2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
