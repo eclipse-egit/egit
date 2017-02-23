@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_b2726587",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-23T07:08:05Z",
+      "side": 1,
+      "message": "Monitor handling is not OK. Re-using the same monitor three times--should convert to SubMonitor here and pass children.",
+      "revId": "37f1dc9c8f542651765a295995312a734d5215f2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_126319bd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-23T07:08:05Z",
+      "side": 1,
+      "message": "Unclear what monitor to pass here. This one will already be fully consumed. But if we convert to SubMonitor and pass children, we\u0027ll terminate in the normal \"no conflict\" case at less than 100%.",
+      "revId": "37f1dc9c8f542651765a295995312a734d5215f2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_325e55f7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-23T07:08:05Z",
+      "side": 1,
+      "message": ":-(",
+      "revId": "37f1dc9c8f542651765a295995312a734d5215f2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
