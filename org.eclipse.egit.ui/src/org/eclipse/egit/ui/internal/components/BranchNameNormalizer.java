@@ -33,9 +33,9 @@ public class BranchNameNormalizer {
 
 	private static final String UNDERSCORE = "_"; //$NON-NLS-1$
 
-	private static final String REGEX_BLANK = "\\s"; //$NON-NLS-1$
+	private static final String REGEX_BLANK = "\\h|\\v"; //$NON-NLS-1$
 
-	private static final char[] BRANCH_NAME_NORMALIZER_ACTIVATION_CHARS = "\\~^:?[*" //$NON-NLS-1$
+	private static final char[] BRANCH_NAME_NORMALIZER_ACTIVATION_CHARS = "\\~^:?[*@<>|\"" //$NON-NLS-1$
 			.toCharArray();
 
 	private final ControlDecoration decorator;
