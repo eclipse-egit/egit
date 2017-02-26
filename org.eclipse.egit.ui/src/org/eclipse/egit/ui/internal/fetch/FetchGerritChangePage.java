@@ -29,6 +29,7 @@ import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
@@ -41,10 +42,8 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.ValidationUtils;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
-import org.eclipse.egit.ui.internal.branch.LaunchFinder;
 import org.eclipse.egit.ui.internal.dialogs.AbstractBranchSelectionDialog;
 import org.eclipse.egit.ui.internal.dialogs.BranchEditDialog;
-import org.eclipse.egit.ui.internal.dialogs.CheckoutConflictDialog;
 import org.eclipse.egit.ui.internal.gerrit.GerritDialogSettings;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.dialogs.Dialog;
@@ -63,12 +62,6 @@ import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.jgit.api.CheckoutCommand;
-import org.eclipse.jgit.api.CheckoutResult;
-import org.eclipse.jgit.api.CheckoutResult.Status;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.CheckoutConflictException;
-import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
@@ -653,10 +646,6 @@ public class FetchGerritChangePage extends WizardPage {
 		final String textForTag = tagText.getText();
 		final String textForBranch = branchText.getText();
 
-		if (doCheckoutNewBranch && LaunchFinder
-				.shouldCancelBecauseOfRunningLaunches(repository, null)) {
-			return false;
-		}
 		storeRunInBackgroundSelection();
 
 		if (runInBackgroud.getSelection()) {
@@ -726,8 +715,7 @@ public class FetchGerritChangePage extends WizardPage {
 			boolean doCreateTag, boolean doCreateBranch,
 			boolean doCheckoutNewBranch, boolean doActivateAdditionalRefs,
 			String textForTag, String textForBranch, IProgressMonitor monitor)
-					throws IOException, CoreException, URISyntaxException,
-					GitAPIException {
+			throws IOException, CoreException, URISyntaxException {
 
 		int totalWork = 1;
 		if (doCheckout)
@@ -739,17 +727,17 @@ public class FetchGerritChangePage extends WizardPage {
 				totalWork);
 
 		try {
-			RevCommit commit = fetchChange(uri, spec,
-					monitor);
+			RevCommit commit = fetchChange(uri, spec, monitor);
 
 			if (doCreateTag)
 				createTag(spec, textForTag, commit, monitor);
 
 			if (doCreateBranch)
-				createBranch(textForBranch, doCheckoutNewBranch, commit, monitor);
+				createBranch(textForBranch, doCheckoutNewBranch, commit,
+						monitor);
 
 			if (doCheckout || doCreateTag)
-				checkout(commit, monitor);
+				checkout(commit.name(), monitor);
 
 			if (doActivateAdditionalRefs)
 				activateAdditionalRefs();
@@ -801,41 +789,22 @@ public class FetchGerritChangePage extends WizardPage {
 	}
 
 	private void createBranch(final String textForBranch, boolean doCheckout,
-			RevCommit commit, IProgressMonitor monitor) throws CoreException,
-			GitAPIException {
-		monitor.setTaskName(UIText.FetchGerritChangePage_CreatingBranchTaskName);
+			RevCommit commit, IProgressMonitor monitor) throws CoreException {
+		SubMonitor progress = SubMonitor.convert(monitor,
+				UIText.FetchGerritChangePage_CreatingBranchTaskName,
+				doCheckout ? 10 : 2);
 		CreateLocalBranchOperation bop = new CreateLocalBranchOperation(
 				repository, textForBranch, commit);
-		bop.execute(monitor);
-
+		bop.execute(progress.newChild(2));
 		if (doCheckout) {
-			CheckoutCommand co = null;
-			try (Git git = new Git(repository)) {
-				co = git.checkout();
-				co.setName(textForBranch).call();
-			} catch (CheckoutConflictException e) {
-				final CheckoutResult result = co.getResult();
-
-				if (result.getStatus() == Status.CONFLICTS) {
-					PlatformUI.getWorkbench().getDisplay()
-							.asyncExec(new Runnable() {
-						@Override
-						public void run() {
-							new CheckoutConflictDialog(null, repository,
-									result.getConflictList()).open();
-						}
-					});
-				}
-			}
+			checkout(textForBranch, progress.newChild(8));
 		}
-		monitor.worked(1);
 	}
 
-	private void checkout(RevCommit commit, IProgressMonitor monitor)
+	private void checkout(String targetName, IProgressMonitor monitor)
 			throws CoreException {
 		monitor.setTaskName(UIText.FetchGerritChangePage_CheckingOutTaskName);
-		BranchOperationUI.checkout(repository, commit.name()).run(monitor);
-
+		BranchOperationUI.checkout(repository, targetName).run(monitor);
 		monitor.worked(1);
 	}
 
