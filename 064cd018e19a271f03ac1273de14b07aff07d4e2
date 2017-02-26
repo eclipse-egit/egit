@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_5733bc7c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-26T08:20:39Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed.",
+      "revId": "064cd018e19a271f03ac1273de14b07aff07d4e2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_37300071",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-26T08:20:39Z",
+      "side": 1,
+      "message": "Conversion to SubMonitor will consume everything anyway, so we don\u0027t need this.",
+      "revId": "064cd018e19a271f03ac1273de14b07aff07d4e2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
