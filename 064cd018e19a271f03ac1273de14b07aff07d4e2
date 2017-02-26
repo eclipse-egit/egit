@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "a7c23755_17394457",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-26T09:57:37Z",
+      "side": 1,
+      "message": "Is creating the local branch really 80% of the work? Typically checking out would take more time, wouldn\u0027t it?",
+      "revId": "064cd018e19a271f03ac1273de14b07aff07d4e2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_f73da845",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-26T09:57:37Z",
+      "side": 1,
+      "message": "This cause the exception, I suppose. When we join in the second checkout(), the wizard is already closed.",
+      "range": {
+        "startLine": 820,
+        "startChar": 43,
+        "endLine": 820,
+        "endChar": 52
+      },
+      "revId": "064cd018e19a271f03ac1273de14b07aff07d4e2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_5733bc7c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
         "patchSetId": 3
