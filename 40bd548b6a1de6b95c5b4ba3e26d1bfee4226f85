@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_a26850e9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-02-26T14:37:34Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "a7c23755_3702c080",
+      "range": {
+        "startLine": 751,
+        "startChar": 13,
+        "endLine": 751,
+        "endChar": 19
+      },
+      "revId": "40bd548b6a1de6b95c5b4ba3e26d1bfee4226f85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_d7c98cd0",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-02-26T11:18:12Z",
       "side": 0,
       "message": "Actually, the real problem is that this tries to do the checkout directly. Re-use BranchOperationUI here; it already handles all this. Just do the SubMonitor conversion, then here:\n\n  if (doCheckout) {\n    checkout(textForBranch, progress.newChild(1));\n  }",
+      "revId": "40bd548b6a1de6b95c5b4ba3e26d1bfee4226f85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_c2638c09",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-02-26T14:37:34Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "a7c23755_d7c98cd0",
       "revId": "40bd548b6a1de6b95c5b4ba3e26d1bfee4226f85",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_e27248d3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-02-26T14:37:34Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "a7c23755_f7d8489a",
+      "range": {
+        "startLine": 833,
+        "startChar": 23,
+        "endLine": 833,
+        "endChar": 39
+      },
+      "revId": "40bd548b6a1de6b95c5b4ba3e26d1bfee4226f85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_17d4e461",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
         "patchSetId": 3
@@ -76,6 +142,30 @@
       "writtenOn": "2017-02-26T11:18:12Z",
       "side": 0,
       "message": "targetName",
+      "range": {
+        "startLine": 836,
+        "startChar": 41,
+        "endLine": 836,
+        "endChar": 54
+      },
+      "revId": "40bd548b6a1de6b95c5b4ba3e26d1bfee4226f85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_026e64f2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-02-26T14:37:34Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "a7c23755_17d4e461",
       "range": {
         "startLine": 836,
         "startChar": 41,
