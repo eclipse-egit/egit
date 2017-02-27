@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_1d8ec53d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-27T06:20:31Z",
+      "side": 1,
+      "message": "How about\n\n  doCheckout ? 2 : 10",
+      "range": {
+        "startLine": 798,
+        "startChar": 57,
+        "endLine": 798,
+        "endChar": 59
+      },
+      "revId": "618e05a89863d502127a0c41932b33b4fb86445b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_fd9f4966",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-02-27T06:20:31Z",
+      "side": 1,
+      "message": "Unnecessary.",
+      "range": {
+        "startLine": 806,
+        "startChar": 2,
+        "endLine": 806,
+        "endChar": 20
+      },
+      "revId": "618e05a89863d502127a0c41932b33b4fb86445b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
