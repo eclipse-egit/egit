@@ -67,7 +67,7 @@ public class BranchNameNormalizer {
 						return null;
 					}
 					String normalized = Repository.normalizeBranchName(c);
-					if (normalized.isEmpty()) {
+					if (normalized == null || normalized.isEmpty()) {
 						return new ContentProposal[0];
 					}
 					return new ContentProposal[] {
