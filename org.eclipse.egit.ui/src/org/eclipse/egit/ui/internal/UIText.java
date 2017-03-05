@@ -2876,9 +2876,6 @@ public class UIText extends NLS {
 	public static String FetchGerritChangePage_PageTitle;
 
 	/** */
-	public static String FetchGerritChangePage_RunInBackground;
-
-	/** */
 	public static String FetchGerritChangePage_SuggestedRefNamePattern;
 
 	/** */
