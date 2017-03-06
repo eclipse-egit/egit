@@ -25,6 +25,7 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.SubmoduleConfig.FetchRecurseSubmodulesMode;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.TagOpt;
 import org.eclipse.jgit.transport.URIish;
@@ -63,6 +64,12 @@ public class RefSpecPage extends WizardPage {
 	private Button tagsFetchTagsButton;
 
 	private Button tagsNoTagsButton;
+
+	private Button recurseSubmodulesYesButton;
+
+	private Button recurseSubmodulesNoButton;
+
+	private Button recurseSubmodulesOnDemandButton;
 
 	private String transportError;
 
@@ -141,6 +148,22 @@ public class RefSpecPage extends WizardPage {
 					.setText(UIText.RefSpecPage_annotatedTagsFetchTags);
 			tagsNoTagsButton = new Button(tagsGroup, SWT.RADIO);
 			tagsNoTagsButton.setText(UIText.RefSpecPage_annotatedTagsNoTags);
+
+			final Group recurseGroup = new Group(panel, SWT.NULL);
+			recurseGroup.setLayoutData(
+					new GridData(SWT.FILL, SWT.FILL, true, false));
+			recurseGroup.setText(UIText.RefSpecPage_recurseSubmodulesGroup);
+			recurseGroup.setLayout(new GridLayout());
+			recurseSubmodulesYesButton = new Button(recurseGroup, SWT.RADIO);
+			recurseSubmodulesYesButton
+					.setText(UIText.RefSpecPage_recurseSubmodulesYes);
+			recurseSubmodulesNoButton = new Button(recurseGroup, SWT.RADIO);
+			recurseSubmodulesNoButton
+					.setText(UIText.RefSpecPage_recurseSubmodulesNo);
+			recurseSubmodulesOnDemandButton = new Button(recurseGroup,
+					SWT.RADIO);
+			recurseSubmodulesOnDemandButton
+					.setText(UIText.RefSpecPage_recurseSubmodulesOnDemand);
 		}
 
 		saveButton = new Button(panel, SWT.CHECK);
@@ -180,6 +203,21 @@ public class RefSpecPage extends WizardPage {
 		if (tagsFetchTagsButton.getSelection())
 			return TagOpt.FETCH_TAGS;
 		return TagOpt.NO_TAGS;
+	}
+
+	/**
+	 * @return selected submodule recurse mode. This result is relevant only for
+	 *         fetch page.
+	 */
+	public FetchRecurseSubmodulesMode getFetchRecurseSubmodulesMode() {
+		if (recurseSubmodulesYesButton.getSelection()) {
+			return FetchRecurseSubmodulesMode.YES;
+		}
+		if (recurseSubmodulesNoButton.getSelection()) {
+			return FetchRecurseSubmodulesMode.NO;
+		}
+
+		return FetchRecurseSubmodulesMode.ON_DEMAND;
 	}
 
 	/**
