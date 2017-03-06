@@ -18,6 +18,7 @@ import org.eclipse.jgit.api.FetchCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.SubmoduleConfig.FetchRecurseSubmodulesMode;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.RefSpec;
@@ -46,6 +47,8 @@ public class FetchOperation {
 	private CredentialsProvider credentialsProvider;
 
 	private TagOpt tagOpt;
+
+	private FetchRecurseSubmodulesMode recurseSubmodules;
 
 	/**
 	 * Constructs a FetchOperation based on URI and RefSpecs
@@ -107,6 +110,14 @@ public class FetchOperation {
 	}
 
 	/**
+	 * @param recurseSubmodules
+	 */
+	public void setRecurseSubmodules(
+			FetchRecurseSubmodulesMode recurseSubmodules) {
+		this.recurseSubmodules = recurseSubmodules;
+	}
+
+	/**
 	 * @param monitor
 	 * @throws InvocationTargetException
 	 */
@@ -128,6 +139,9 @@ public class FetchOperation {
 					.setProgressMonitor(gitMonitor);
 			if (tagOpt != null)
 				command.setTagOpt(tagOpt);
+			if (recurseSubmodules != null) {
+				command.setRecurseSubmodules(recurseSubmodules);
+			}
 			try {
 				operationResult = command.call();
 			} catch (JGitInternalException e) {

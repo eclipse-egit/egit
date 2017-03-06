@@ -30,6 +30,7 @@ import org.eclipse.egit.ui.internal.jobs.RepositoryJobResultAction;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.SubmoduleConfig.FetchRecurseSubmodulesMode;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.RefSpec;
@@ -92,6 +93,14 @@ public class FetchOperationUI {
 	 */
 	public void setTagOpt(TagOpt tagOpt) {
 		op.setTagOpt(tagOpt);
+	}
+
+	/**
+	 * @param recurseSubmodules
+	 */
+	public void setRecurseSubmodules(
+			FetchRecurseSubmodulesMode recurseSubmodules) {
+		op.setRecurseSubmodules(recurseSubmodules);
 	}
 
 	/**
