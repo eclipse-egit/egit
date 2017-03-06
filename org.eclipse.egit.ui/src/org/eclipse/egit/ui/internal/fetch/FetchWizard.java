@@ -130,8 +130,11 @@ public class FetchWizard extends Wizard {
 
 		// even if a RemoteConfig is selected, we need to make sure to
 		// add the RefSpecs from the RefSpec page into the FetchOperation
-		if (!calledFromRepoPage)
+		if (!calledFromRepoPage) {
 			op.setTagOpt(refSpecPage.getTagOpt());
+			op.setRecurseSubmodules(
+					refSpecPage.getFetchRecurseSubmodulesMode());
+		}
 		op.start();
 
 		repoPage.saveUriInPrefs();
