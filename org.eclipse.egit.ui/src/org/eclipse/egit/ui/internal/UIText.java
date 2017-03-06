@@ -1850,6 +1850,18 @@ public class UIText extends NLS {
 	public static String RefSpecPage_annotatedTagsNoTags;
 
 	/** */
+	public static String RefSpecPage_recurseSubmodulesGroup;
+
+	/** */
+	public static String RefSpecPage_recurseSubmodulesYes;
+
+	/** */
+	public static String RefSpecPage_recurseSubmodulesNo;
+
+	/** */
+	public static String RefSpecPage_recurseSubmodulesOnDemand;
+
+	/** */
 	public static String RefSpecWizard_pushTitle;
 
 	/** */
