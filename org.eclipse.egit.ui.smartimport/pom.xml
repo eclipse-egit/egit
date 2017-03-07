@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.eclipse.egit</groupId>
-		<version>4.6.1-SNAPSHOT</version>
+		<version>4.6.1.201703071140-r</version>
 		<artifactId>egit-parent</artifactId>
 	</parent>
 	<artifactId>org.eclipse.egit.ui.smartimport</artifactId>
