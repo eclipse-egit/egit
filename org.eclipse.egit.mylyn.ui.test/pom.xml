@@ -25,7 +25,7 @@
   <name>EGit Mylyn UI Test Plug-in</name>
 
   <properties>
-    <uitest.vmparams>-Xmx512m -XX:MaxPermSize=256m</uitest.vmparams>
+    <uitest.vmparams>-Xmx512m</uitest.vmparams>
   </properties>
 
   <profiles>
