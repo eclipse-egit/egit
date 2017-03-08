@@ -1,0 +1,283 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_e6823c56",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-03-08T17:15:51Z",
+      "side": 1,
+      "message": "Actually, it checks for \"github\".",
+      "revId": "716c36dca88d82f65a1eaecb2d45a136a7c54f2d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_c63aa082",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6366,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-03-08T17:15:51Z",
+      "side": 1,
+      "message": "I don\u0027t like that very much. Is it really necessary? Can\u0027t the early startup job be created \u0026 scheduled when Activator.start() runs?\n\nHmmm... the RepositorySourceProvider above already causes fairly early bundle activation...",
+      "revId": "716c36dca88d82f65a1eaecb2d45a136a7c54f2d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_0635788f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneDropAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-03-08T17:15:51Z",
+      "side": 1,
+      "message": "Should mention where this was copied from.",
+      "revId": "716c36dca88d82f65a1eaecb2d45a136a7c54f2d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_462e9046",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneDropAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-03-08T17:15:51Z",
+      "side": 1,
+      "message": "Needs a description, and we don\u0027t use @author tags. Your name is already in the header comment :-)",
+      "revId": "716c36dca88d82f65a1eaecb2d45a136a7c54f2d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_469210db",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneDropAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-03-08T17:15:51Z",
+      "side": 1,
+      "message": "I don\u0027t like this at all. Can we please please please let this run when the UI bundle activates anyway, and then use PlatformUI.getWorkbench().getDisplay()?",
+      "range": {
+        "startLine": 68,
+        "startChar": 32,
+        "endLine": 68,
+        "endChar": 52
+      },
+      "revId": "716c36dca88d82f65a1eaecb2d45a136a7c54f2d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_0670184e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneDropAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-03-08T17:15:51Z",
+      "side": 1,
+      "message": "Personally, I wouldn\u0027t have used a flag but just returned here.",
+      "revId": "716c36dca88d82f65a1eaecb2d45a136a7c54f2d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_a67844e4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneDropAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-03-08T17:15:51Z",
+      "side": 1,
+      "message": "Strange auto-formatting",
+      "revId": "716c36dca88d82f65a1eaecb2d45a136a7c54f2d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_c609c0bd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneDropAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-03-08T17:15:51Z",
+      "side": 1,
+      "message": "Empty line should be removed.",
+      "revId": "716c36dca88d82f65a1eaecb2d45a136a7c54f2d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_66554c48",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneDropAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-03-08T17:15:51Z",
+      "side": 1,
+      "message": "Can be removed.",
+      "range": {
+        "startLine": 288,
+        "startChar": 3,
+        "endLine": 290,
+        "endChar": 4
+      },
+      "revId": "716c36dca88d82f65a1eaecb2d45a136a7c54f2d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_c1b1aa2e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneDropAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-03-08T17:15:51Z",
+      "side": 1,
+      "message": "Can be removed.",
+      "range": {
+        "startLine": 291,
+        "startChar": 7,
+        "endLine": 291,
+        "endChar": 28
+      },
+      "revId": "716c36dca88d82f65a1eaecb2d45a136a7c54f2d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_a69da4b9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitUrlHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-03-08T17:15:51Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t help at all. OK, class GitUrlHandler is a \"Handler for git URLs\". I\u0027ve learned strictly nothing.",
+      "revId": "716c36dca88d82f65a1eaecb2d45a136a7c54f2d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_c67f00d2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitUrlHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-03-08T17:15:51Z",
+      "side": 1,
+      "message": "As mentioned on GitCloneDndAdapter we don\u0027t use @author tags.",
+      "revId": "716c36dca88d82f65a1eaecb2d45a136a7c54f2d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_46a850d8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitUrlHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-03-08T17:15:51Z",
+      "side": 1,
+      "message": "Fairly generic name; we should be able to come up with something better. Perhaps have a class that can validate (and sanitize) arbitrary text in clipboard or from DND, and either extract a valid git URI or not; maybe called GitUrlChecker or similar, and leave the triggerClone() stuff over in the GitCloneDropAdapter.",
+      "range": {
+        "startLine": 24,
+        "startChar": 22,
+        "endLine": 24,
+        "endChar": 35
+      },
+      "revId": "716c36dca88d82f65a1eaecb2d45a136a7c54f2d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_c694609c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitUrlHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-03-08T17:15:51Z",
+      "side": 1,
+      "message": "For a real implementation this should be expanded to do stricter checking. Also, the checks here should be unified with those done in RepositorySelectionPage for clipboard contents.\n\nIf the whole business of extracting and validating a URL from basically arbitrary text is factored out into a separate class, both places (and maybe more, for instance the paste handler in the repositories view) could use it.",
+      "revId": "716c36dca88d82f65a1eaecb2d45a136a7c54f2d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_068f3888",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitUrlHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-03-08T17:15:51Z",
+      "side": 1,
+      "message": "Needs better error handling for a production version. And, as suggested above, perhaps doesn\u0027t belong into this class at all.",
+      "revId": "716c36dca88d82f65a1eaecb2d45a136a7c54f2d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
