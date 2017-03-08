@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_2ce6d5a5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-03-08T22:38:07Z",
+      "side": 1,
+      "message": "When the fetch refspec page is opened none of the radio buttons is selected initially. Instead you should extend revalidateImpl() to select the recurse option configured for the selected repository. Similar to what it does for selecting configured autofollow option.",
+      "revId": "2dcc8de454001c1e92de229f57451e57e48ff0b0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
