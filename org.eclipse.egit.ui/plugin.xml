@@ -6369,4 +6369,10 @@
         </variable>
      </sourceProvider>
   </extension>
+  <extension
+        point="org.eclipse.ui.startup">
+     <startup
+           class="org.eclipse.egit.ui.internal.clone.GitCloneDropAdapter">
+     </startup>
+  </extension>
 </plugin>
