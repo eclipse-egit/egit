@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_21641e3c",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6366,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2017-03-08T20:37:28Z",
+      "side": 1,
+      "message": "I\u0027m curious, what is the issue with startup extensions? Relying on another extension to assume things about activation of another extension isn\u0027t easier to maintain IMHO.",
+      "parentUuid": "a7c23755_c63aa082",
+      "revId": "716c36dca88d82f65a1eaecb2d45a136a7c54f2d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_0635788f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneDropAdapter.java",
         "patchSetId": 1
