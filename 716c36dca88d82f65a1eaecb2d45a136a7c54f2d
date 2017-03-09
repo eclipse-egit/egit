@@ -95,6 +95,24 @@
     },
     {
       "key": {
+        "uuid": "a7c23755_87a502b8",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6366,
+      "author": {
+        "id": 587
+      },
+      "writtenOn": "2017-03-09T08:28:18Z",
+      "side": 1,
+      "message": "http://help.eclipse.org/neon/index.jsp?topic\u003d%2Forg.eclipse.platform.doc.isv%2Freference%2Fextension-points%2Forg_eclipse_ui_startup.html says earlyStartup is called in a separate thread.\nMoreover https://www.eclipse.org/forums/index.php/t/1072085/ says that the `earlyStartup` are actually applied after workbench is presented to user (so one can reference PlatformUI.getWorkbench() in it).\nIt\u0027s definitely the simplest way to implement such feature, and according to those resources, it\u0027s probably the best one as well.\n\n\u003e A completely different point is: if we now have two plugins (MPC \u0026 EGit) that do this, wouldn\u0027t general functionality for this (registering some global drop adapter; perhaps via extension point?) belong into platform.ui somewhere? Just a thought... though for pre-Oxygen Eclipses, EGit would need to roll its its own anyway.\n\nThat\u0027s a good thing to discuss. Would you mind opening a thread on platform-ui-dev mailing-list to discuss that? Or even directly a bug?",
+      "parentUuid": "a7c23755_8cf6094f",
+      "revId": "716c36dca88d82f65a1eaecb2d45a136a7c54f2d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c23755_0635788f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneDropAdapter.java",
         "patchSetId": 1
