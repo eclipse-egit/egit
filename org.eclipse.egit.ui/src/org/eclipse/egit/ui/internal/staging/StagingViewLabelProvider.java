@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.staging;
 
-import java.io.File;
-
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.Activator;
@@ -99,12 +97,8 @@ public class StagingViewLabelProvider extends LabelProvider {
 			image = (Image) resourceManager.get(UIUtils.DEFAULT_FILE_IMG);
 		}
 		if (diff.isSymlink()) {
-			IPath diffLocation = diff.getLocation();
-			if (diffLocation != null) {
-				File diffFile = diffLocation.toFile();
-				if (diffFile.isDirectory()) {
-					image = FOLDER;
-				}
+			if (diff.getLocation().toFile().isDirectory()) {
+				image = FOLDER;
 			}
 			image = addSymlinkDecorationToImage(image);
 		}
