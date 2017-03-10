@@ -327,7 +327,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			if (node.getRepository().isBare())
 				return children.toArray();
 			File workingDir = repo.getWorkTree();
-			if (workingDir == null || !workingDir.exists())
+			if (!workingDir.exists())
 				return children.toArray();
 
 			File[] childFiles = workingDir.listFiles();
@@ -568,7 +568,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			if (node.getRepository().isBare())
 				return false;
 			File workingDir = repo.getWorkTree();
-			if (workingDir == null || !workingDir.exists())
+			if (!workingDir.exists())
 				return false;
 			return workingDir.listFiles().length > 0;
 		default:
