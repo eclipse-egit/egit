@@ -16,6 +16,23 @@
       "revId": "70f4cfcb434fa59efc40b2b2ba62fbf7b63a38ad",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_9ef2a490",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefContentAssistProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2017-03-11T19:16:21Z",
+      "side": 1,
+      "message": "Thanks. With that hint I found an even better one to directly compare Refs, not names.",
+      "revId": "70f4cfcb434fa59efc40b2b2ba62fbf7b63a38ad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
