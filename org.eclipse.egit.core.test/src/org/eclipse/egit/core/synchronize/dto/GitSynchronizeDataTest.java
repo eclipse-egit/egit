@@ -40,7 +40,7 @@ public class GitSynchronizeDataTest extends GitTestCase {
 
 		// make initial commit
 		new Git(repo).commit().setAuthor("JUnit", "junit@jgit.org")
-				.setMessage("Initall commit").call();
+				.setMessage("Initial commit").call();
 	}
 
 	@Test
