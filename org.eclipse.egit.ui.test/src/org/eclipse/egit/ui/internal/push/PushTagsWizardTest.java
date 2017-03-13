@@ -39,8 +39,9 @@ public class PushTagsWizardTest extends LocalRepositoryTestCase {
 
 	@Test
 	public void pushTag() throws Exception {
-		Git git = new Git(repository);
-		git.tag().setName("foo").setMessage("Foo tag").call();
+		try (Git git = new Git(repository)) {
+			git.tag().setName("foo").setMessage("Foo tag").call();
+		}
 
 		PushTagsWizardTester wizard = PushTagsWizardTester
 				.startWizard(selectProject());

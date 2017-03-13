@@ -59,8 +59,10 @@ public class RewordCommitsOperationTest extends GitTestCase {
 				testRepository.getRepository(), commit, "new message");
 		op.execute(new NullProgressMonitor());
 
-		LogCommand log = new Git(testRepository.getRepository()).log();
-		RevCommit newCommit = log.call().iterator().next();
-		assertEquals("new message", newCommit.getFullMessage());
+		try (Git git = new Git(testRepository.getRepository())) {
+			LogCommand log = git.log();
+			RevCommit newCommit = log.call().iterator().next();
+			assertEquals("new message", newCommit.getFullMessage());
+		}
 	}
 }

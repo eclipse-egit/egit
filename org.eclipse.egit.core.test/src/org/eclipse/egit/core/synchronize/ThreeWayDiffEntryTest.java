@@ -43,9 +43,11 @@ public class ThreeWayDiffEntryTest extends LocalDiskRepositoryTestCase {
 	public void shouldListOutgoingAddition() throws Exception {
 		// given
 		writeTrashFile("a.txt", "content");
-		Git git = new Git(db);
-		git.add().addFilepattern("a.txt").call();
-		RevCommit c = git.commit().setMessage("initial commit").call();
+		RevCommit c;
+		try (Git git = new Git(db)) {
+			git.add().addFilepattern("a.txt").call();
+			c = git.commit().setMessage("initial commit").call();
+		}
 
 		// when
 		try (TreeWalk walk = new TreeWalk(db)) {
@@ -69,9 +71,11 @@ public class ThreeWayDiffEntryTest extends LocalDiskRepositoryTestCase {
 	public void shouldListIncomingAddition() throws Exception {
 		// given
 		writeTrashFile("a.txt", "content");
-		Git git = new Git(db);
-		git.add().addFilepattern("a.txt").call();
-		RevCommit c = git.commit().setMessage("initial commit").call();
+		RevCommit c;
+		try (Git git = new Git(db)) {
+			git.add().addFilepattern("a.txt").call();
+			c = git.commit().setMessage("initial commit").call();
+		}
 
 		// when
 		try (TreeWalk walk = new TreeWalk(db)) {
@@ -95,9 +99,11 @@ public class ThreeWayDiffEntryTest extends LocalDiskRepositoryTestCase {
 	public void shouldListOutgoingDelete() throws Exception {
 		// given
 		writeTrashFile("a.txt", "content");
-		Git git = new Git(db);
-		git.add().addFilepattern("a.txt").call();
-		RevCommit c = git.commit().setMessage("initial commit").call();
+		RevCommit c;
+		try (Git git = new Git(db)) {
+			git.add().addFilepattern("a.txt").call();
+			c = git.commit().setMessage("initial commit").call();
+		}
 
 		// when
 		try (TreeWalk walk = new TreeWalk(db)) {
@@ -121,9 +127,11 @@ public class ThreeWayDiffEntryTest extends LocalDiskRepositoryTestCase {
 	public void shouldListIncomingDelete() throws Exception {
 		// given
 		writeTrashFile("a.txt", "content");
-		Git git = new Git(db);
-		git.add().addFilepattern("a.txt").call();
-		RevCommit c = git.commit().setMessage("initial commit").call();
+		RevCommit c;
+		try (Git git = new Git(db)) {
+			git.add().addFilepattern("a.txt").call();
+			c = git.commit().setMessage("initial commit").call();
+		}
 
 		// when
 		try (TreeWalk walk = new TreeWalk(db)) {
@@ -147,9 +155,11 @@ public class ThreeWayDiffEntryTest extends LocalDiskRepositoryTestCase {
 	public void shouldListConflictingChange() throws Exception {
 		// given
 		writeTrashFile("a.txt", "content");
-		Git git = new Git(db);
-		git.add().addFilepattern("a.txt").call();
-		RevCommit c = git.commit().setMessage("initial commit").call();
+		RevCommit c;
+		try (Git git = new Git(db)) {
+			git.add().addFilepattern("a.txt").call();
+			c = git.commit().setMessage("initial commit").call();
+		}
 
 		// when
 		try (TreeWalk walk = new TreeWalk(db)) {
@@ -173,9 +183,11 @@ public class ThreeWayDiffEntryTest extends LocalDiskRepositoryTestCase {
 	public void shouldListConflictingChange2() throws Exception {
 		// given
 		writeTrashFile("a.txt", "content");
-		Git git = new Git(db);
-		git.add().addFilepattern("a.txt").call();
-		RevCommit c = git.commit().setMessage("initial commit").call();
+		RevCommit c;
+		try (Git git = new Git(db)) {
+			git.add().addFilepattern("a.txt").call();
+			c = git.commit().setMessage("initial commit").call();
+		}
 
 		// when
 		try (TreeWalk walk = new TreeWalk(db)) {
@@ -198,12 +210,14 @@ public class ThreeWayDiffEntryTest extends LocalDiskRepositoryTestCase {
 	public void shouldListIncomingModify() throws Exception {
 		// given
 		writeTrashFile("a.txt", "content");
-		Git git = new Git(db);
-		git.add().addFilepattern("a.txt").call();
-		RevCommit c = git.commit().setMessage("initial commit").call();
-		writeTrashFile("a.txt", "new line");
-		RevCommit c1 = git.commit().setAll(true).setMessage("second commit")
-				.call();
+		RevCommit c;
+		RevCommit c1;
+		try (Git git = new Git(db)) {
+			git.add().addFilepattern("a.txt").call();
+			c = git.commit().setMessage("initial commit").call();
+			writeTrashFile("a.txt", "new line");
+			c1 = git.commit().setAll(true).setMessage("second commit").call();
+		}
 
 		// when
 		try (TreeWalk walk = new TreeWalk(db)) {
@@ -227,12 +241,14 @@ public class ThreeWayDiffEntryTest extends LocalDiskRepositoryTestCase {
 	public void shouldListOutgoingModify() throws Exception {
 		// given
 		writeTrashFile("a.txt", "content");
-		Git git = new Git(db);
-		git.add().addFilepattern("a.txt").call();
-		RevCommit c = git.commit().setMessage("initial commit").call();
-		writeTrashFile("a.txt", "newe line");
-		RevCommit c1 = git.commit().setAll(true).setMessage("second commit")
-				.call();
+		RevCommit c;
+		RevCommit c1;
+		try (Git git = new Git(db)) {
+			git.add().addFilepattern("a.txt").call();
+			c = git.commit().setMessage("initial commit").call();
+			writeTrashFile("a.txt", "newe line");
+			c1 = git.commit().setAll(true).setMessage("second commit").call();
+		}
 
 		// when
 		try (TreeWalk walk = new TreeWalk(db)) {
@@ -256,12 +272,14 @@ public class ThreeWayDiffEntryTest extends LocalDiskRepositoryTestCase {
 	public void shouldListConflictingModify() throws Exception {
 		// given
 		writeTrashFile("a.txt", "content");
-		Git git = new Git(db);
-		git.add().addFilepattern("a.txt").call();
-		RevCommit c = git.commit().setMessage("initial commit").call();
-		writeTrashFile("a.txt", "new line");
-		RevCommit c1 = git.commit().setAll(true).setMessage("second commit")
-				.call();
+		RevCommit c;
+		RevCommit c1;
+		try (Git git = new Git(db)) {
+			git.add().addFilepattern("a.txt").call();
+			c = git.commit().setMessage("initial commit").call();
+			writeTrashFile("a.txt", "new line");
+			c1 = git.commit().setAll(true).setMessage("second commit").call();
+		}
 
 		// when
 		try (TreeWalk walk = new TreeWalk(db)) {
