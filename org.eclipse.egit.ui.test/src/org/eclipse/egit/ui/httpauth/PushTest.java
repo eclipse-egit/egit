@@ -73,9 +73,10 @@ public class PushTest extends EGitTestCase {
 		// change file
 		TestUtil.appendFileContent(file, "additional content", true);
 		// commit change
-		Git git = new Git(localRepository);
-		git.add().addFilepattern(SampleTestRepository.A_txt_name).call();
-		git.commit().setMessage("Change").call();
+		try (Git git = new Git(localRepository)) {
+			git.add().addFilepattern(SampleTestRepository.A_txt_name).call();
+			git.commit().setMessage("Change").call();
+		}
 		configurePush();
 		// push change
 		PushWizardTester wizardTester = new PushWizardTester();

@@ -83,9 +83,10 @@ public class SwitchToMenuTest extends LocalRepositoryTestCase {
 		File gitDir = createProjectAndCommitToRepository();
 
 		// create additional reflog entries
-		Git git = new Git(lookupRepository(gitDir));
-		git.checkout().setName("stable").call();
-		git.checkout().setName("master").call();
+		try (Git git = new Git(lookupRepository(gitDir))) {
+			git.checkout().setName("stable").call();
+			git.checkout().setName("master").call();
+		}
 
 		selectionWithProj1Common();
 

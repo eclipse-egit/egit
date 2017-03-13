@@ -322,11 +322,14 @@ public class SynchronizeViewGitChangeSetModelTest extends
 
 		// then file FILE1 should be in index
 		Repository repo = lookupRepository(repositoryFile);
-		Status status = new Git(repo).status().call();
+		Status status;
+		try (Git git = new Git(repo)) {
+			status = git.status().call();
+		}
 		assertThat(Long.valueOf(status.getChanged().size()),
 				is(Long.valueOf(1L)));
-		assertThat(status.getChanged().iterator().next(), is(PROJ1 + "/"
-				+ FOLDER + "/" + FILE1));
+		assertThat(status.getChanged().iterator().next(),
+				is(PROJ1 + "/" + FOLDER + "/" + FILE1));
 	}
 
 	@Test
@@ -349,11 +352,13 @@ public class SynchronizeViewGitChangeSetModelTest extends
 
 		// then file FILE1 should be unchanged in working tree
 		Repository repo = lookupRepository(repositoryFile);
-		Status status = new Git(repo).status().call();
-		assertThat(Long.valueOf(status.getModified().size()),
-				is(Long.valueOf(1)));
-		assertThat(status.getModified().iterator().next(), is(PROJ1 + "/"
-				+ FOLDER + "/" + FILE2));
+		try (Git git = new Git(repo)) {
+			Status status = git.status().call();
+			assertThat(Long.valueOf(status.getModified().size()),
+					is(Long.valueOf(1)));
+			assertThat(status.getModified().iterator().next(),
+					is(PROJ1 + "/" + FOLDER + "/" + FILE2));
+		}
 	}
 
 	@Test

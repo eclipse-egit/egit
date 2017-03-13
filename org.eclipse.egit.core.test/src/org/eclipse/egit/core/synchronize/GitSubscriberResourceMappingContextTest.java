@@ -58,8 +58,10 @@ public class GitSubscriberResourceMappingContextTest extends GitTestCase {
 		repo = RepositoryMapping.getMapping(iProject).getRepository();
 
 		// make initial commit
-		new Git(repo).commit().setAuthor("JUnit", "junit@jgit.org")
-				.setMessage("Initial commit").call();
+		try (Git git = new Git(repo)) {
+			git.commit().setAuthor("JUnit", "junit@jgit.org")
+					.setMessage("Initial commit").call();
+		}
 	}
 
 	@Test
