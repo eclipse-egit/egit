@@ -211,9 +211,11 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 		Repository repo3 = FileRepositoryBuilder.create(new File(
 				createProject(projectName3), ".git"));
 		repo3.create();
-		Git git = new Git(repo3);
-		git.add().addFilepattern(".").call();
-		git.commit().setAuthor("A U Thior", "au.thor@example.com").setMessage("Created Project 3").call();
+		try (Git git = new Git(repo3)) {
+			git.add().addFilepattern(".").call();
+			git.commit().setAuthor("A U Thior", "au.thor@example.com")
+					.setMessage("Created Project 3").call();
+		}
 		repo3.close();
 
 		ExistingOrNewPage existingOrNewPage = sharingWizard.openWizard(

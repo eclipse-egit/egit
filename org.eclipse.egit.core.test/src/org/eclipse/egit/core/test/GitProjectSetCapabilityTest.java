@@ -376,11 +376,13 @@ public class GitProjectSetCapabilityTest {
 		repo.create();
 		repo.close();
 
-		Git git = new Git(repo);
-		git.add().addFilepattern(".").call();
-		git.commit().setMessage("initial").call();
-		if (!branch.equals("master"))
-			git.checkout().setName(branch).setCreateBranch(true).call();
+		try (Git git = new Git(repo)) {
+			git.add().addFilepattern(".").call();
+			git.commit().setMessage("initial").call();
+			if (!branch.equals("master")) {
+				git.checkout().setName(branch).setCreateBranch(true).call();
+			}
+		}
 
 		pathsToClean.add(gitDirectory);
 		return gitDirectory;

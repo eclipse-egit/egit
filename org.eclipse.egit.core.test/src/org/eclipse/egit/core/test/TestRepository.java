@@ -226,12 +226,13 @@ public class TestRepository {
 			NoMessageException, UnmergedPathException,
 			ConcurrentRefUpdateException, JGitInternalException,
 			WrongRepositoryStateException, GitAPIException {
-		Git git = new Git(repository);
-		CommitCommand commitCommand = git.commit();
-		commitCommand.setAuthor("J. Git", "j.git@egit.org");
-		commitCommand.setCommitter(commitCommand.getAuthor());
-		commitCommand.setMessage(message);
-		return commitCommand.call();
+		try (Git git = new Git(repository)) {
+			CommitCommand commitCommand = git.commit();
+			commitCommand.setAuthor("J. Git", "j.git@egit.org");
+			commitCommand.setCommitter(commitCommand.getAuthor());
+			commitCommand.setMessage(message);
+			return commitCommand.call();
+		}
 	}
 
 	/**
@@ -245,7 +246,9 @@ public class TestRepository {
 	public void track(File file) throws IOException, NoFilepatternException, GitAPIException {
 		String repoPath = getRepoRelativePath(new Path(file.getPath())
 				.toString());
-		new Git(repository).add().addFilepattern(repoPath).call();
+		try (Git git = new Git(repository)) {
+			git.add().addFilepattern(repoPath).call();
+		}
 	}
 
 	/**
@@ -282,8 +285,8 @@ public class TestRepository {
 	public void untrack(File file) throws IOException {
 		String repoPath = getRepoRelativePath(new Path(file.getPath())
 				.toString());
-		try {
-			new Git(repository).rm().addFilepattern(repoPath).call();
+		try (Git git = new Git(repository)) {
+			git.rm().addFilepattern(repoPath).call();
 		} catch (GitAPIException e) {
 			throw new IOException(e.getMessage());
 		}
@@ -363,7 +366,9 @@ public class TestRepository {
 	 */
 	public void addToIndex(IResource resource) throws CoreException, IOException, NoFilepatternException, GitAPIException {
 		String repoPath = getRepoRelativePath(resource.getLocation().toString());
-		new Git(repository).add().addFilepattern(repoPath).call();
+		try (Git git = new Git(repository)) {
+			git.add().addFilepattern(repoPath).call();
+		}
 	}
 
 	/**

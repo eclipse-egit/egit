@@ -144,7 +144,10 @@ public class MergeOperationTest extends GitTestCase {
 	}
 
 	private int countCommitsInHead() throws GitAPIException {
-		LogCommand log = new Git(testRepository.getRepository()).log();
+		LogCommand log;
+		try (Git git = new Git(testRepository.getRepository())) {
+			log = git.log();
+		}
 		Iterable<RevCommit> commits = log.call();
 		int result = 0;
 		for (Iterator i = commits.iterator(); i.hasNext();) {

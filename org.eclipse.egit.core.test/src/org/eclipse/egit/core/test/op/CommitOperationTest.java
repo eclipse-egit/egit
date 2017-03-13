@@ -129,8 +129,10 @@ public class CommitOperationTest extends GitTestCase {
 		commitOperation.setRepository(repository);
 		commitOperation.execute(null);
 
-		Git git = new Git(repository);
-		Iterator<RevCommit> commits = git.log().call().iterator();
+		Iterator<RevCommit> commits;
+		try (Git git = new Git(repository)) {
+			commits = git.log().call().iterator();
+		}
 		RevCommit firstCommit = commits.next();
 		assertTrue(firstCommit.getCommitTime() > 0);
 
@@ -144,8 +146,9 @@ public class CommitOperationTest extends GitTestCase {
 		commitOperation.setRepository(repository);
 		commitOperation.execute(null);
 
-		git = new Git(repository);
-		commits = git.log().call().iterator();
+		try (Git git = new Git(repository)) {
+			commits = git.log().call().iterator();
+		}
 		RevCommit secondCommit = commits.next();
 		assertTrue(secondCommit.getCommitTime() > 0);
 
@@ -173,8 +176,10 @@ public class CommitOperationTest extends GitTestCase {
 		commitOperation.setRepository(repository);
 		commitOperation.execute(null);
 
-		Git git = new Git(repository);
-		Iterator<RevCommit> commits = git.log().call().iterator();
+		Iterator<RevCommit> commits;
+		try (Git git = new Git(repository)) {
+			commits = git.log().call().iterator();
+		}
 		RevCommit secondCommit = commits.next();
 		try (TreeWalk treeWalk = new TreeWalk(repository)) {
 			treeWalk.addTree(secondCommit.getTree().getId());
@@ -199,8 +204,9 @@ public class CommitOperationTest extends GitTestCase {
 		commitOperation.setCommitAll(false);
 		commitOperation.execute(null);
 
-		git = new Git(repository);
-		commits = git.log().call().iterator();
+		try (Git git = new Git(repository)) {
+			commits = git.log().call().iterator();
+		}
 		secondCommit = commits.next();
 		try (TreeWalk treeWalk = new TreeWalk(repository)) {
 			treeWalk.addTree(secondCommit.getTree().getId());

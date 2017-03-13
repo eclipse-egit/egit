@@ -107,7 +107,9 @@ public class GitModelCacheTest extends GitModelTestCase {
 		writeTrashFile(repo, "dir/b.txt", "trash");
 		writeTrashFile(repo, "dir/c.txt", "trash");
 		writeTrashFile(repo, "dir/d.txt", "trash");
-		new Git(repo).add().addFilepattern("dir").call();
+		try (Git git = new Git(repo)) {
+			git.add().addFilepattern("dir").call();
+		}
 
 		Map<String, Change> changes = StagedChangeCache.build(repo);
 		assertEquals(4, changes.size());

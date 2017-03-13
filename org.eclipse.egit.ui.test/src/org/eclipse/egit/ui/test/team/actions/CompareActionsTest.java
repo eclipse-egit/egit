@@ -191,26 +191,30 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 	public void testCompareWithPreviousWithMerge() throws Exception {
 		Repository repo = lookupRepository(repositoryFile);
 
-		Git git = new Git(repo);
-		ObjectId masterId = repo.resolve("refs/heads/master");
-		Ref newBranch = git.checkout().setCreateBranch(true)
-				.setStartPoint(commitOfTag.name()).setName("toMerge").call();
-		ByteArrayInputStream bis = new ByteArrayInputStream(
-				"Modified".getBytes("UTF-8"));
-		ResourcesPlugin.getWorkspace().getRoot().getProject(PROJ1)
-				.getFolder(FOLDER).getFile(FILE2)
-				.setContents(bis, false, false, null);
-		bis.close();
-		git.commit().setAll(true).setMessage("To be merged").call();
-		git.merge().include(masterId).call();
-		String menuLabel = util
-				.getPluginLocalizedValue("CompareWithPreviousAction.label");
-		SWTBotShell selectDialog = openCompareWithDialog(menuLabel, UIText.CommitSelectDialog_WindowTitle);
-		assertEquals(2, selectDialog.bot().table().rowCount());
-		selectDialog.close();
-		// cleanup: checkout again master and delete merged branch
-		git.checkout().setName("refs/heads/master").call();
-		git.branchDelete().setBranchNames(newBranch.getName()).setForce(true).call();
+		try (Git git = new Git(repo)) {
+			ObjectId masterId = repo.resolve("refs/heads/master");
+			Ref newBranch = git.checkout().setCreateBranch(true)
+					.setStartPoint(commitOfTag.name()).setName("toMerge")
+					.call();
+			ByteArrayInputStream bis = new ByteArrayInputStream(
+					"Modified".getBytes("UTF-8"));
+			ResourcesPlugin.getWorkspace().getRoot().getProject(PROJ1)
+					.getFolder(FOLDER).getFile(FILE2)
+					.setContents(bis, false, false, null);
+			bis.close();
+			git.commit().setAll(true).setMessage("To be merged").call();
+			git.merge().include(masterId).call();
+			String menuLabel = util
+					.getPluginLocalizedValue("CompareWithPreviousAction.label");
+			SWTBotShell selectDialog = openCompareWithDialog(menuLabel,
+					UIText.CommitSelectDialog_WindowTitle);
+			assertEquals(2, selectDialog.bot().table().rowCount());
+			selectDialog.close();
+			// cleanup: checkout again master and delete merged branch
+			git.checkout().setName("refs/heads/master").call();
+			git.branchDelete().setBranchNames(newBranch.getName())
+					.setForce(true).call();
+		}
 	}
 
 	@Test
@@ -229,8 +233,9 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		assertTreeCompareChanges(1);
 
 		// add to index -> no more changes
-		new Git(lookupRepository(repositoryFile)).add().addFilepattern(
-				PROJ1 + "/" + FOLDER + "/" + FILE1).call();
+		try (Git git = new Git(lookupRepository(repositoryFile))) {
+			git.add().addFilepattern(PROJ1 + "/" + FOLDER + "/" + FILE1).call();
+		}
 
 		clickCompareWith(compareWithIndexActionLabel);
 
@@ -263,8 +268,9 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		assertSynchronizeFile1Changed();
 
 		// add to index -> should still show as change
-		new Git(lookupRepository(repositoryFile)).add().addFilepattern(
-				PROJ1 + "/" + FOLDER + "/" + FILE1).call();
+		try (Git git = new Git(lookupRepository(repositoryFile))) {
+			git.add().addFilepattern(PROJ1 + "/" + FOLDER + "/" + FILE1).call();
+		}
 
 		clickCompareWithAndWaitForSync(compareWithHeadMenuLabel);
 

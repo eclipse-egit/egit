@@ -43,9 +43,10 @@ public abstract class AbstractCacheTest extends LocalDiskRepositoryTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		db = createWorkRepository();
-		Git git = new Git(db);
-		git.commit().setMessage("initial commit").call();
-		git.tag().setName(INITIAL_TAG).call();
+		try (Git git = new Git(db)) {
+			git.commit().setMessage("initial commit").call();
+			git.tag().setName(INITIAL_TAG).call();
+		}
 	}
 
 	protected void assertFileAddition(Map<String, Change> result, String path, String fileName) {
