@@ -611,7 +611,7 @@ public class FetchGerritChangePage extends WizardPage {
 		}
 	}
 
-	private @Nullable Ref getLocalRef(String ref) {
+	private Ref getLocalRef(String ref) {
 		Change change = Change.fromRef(ref);
 		if (change != null) {
 			try {
@@ -757,9 +757,7 @@ public class FetchGerritChangePage extends WizardPage {
 
 		if (doChangeBranch) {
 			Ref localRef = getLocalRef(spec.getSource());
-			if (localRef != null) {
-				checkout(localRef.getName(), monitor);
-			}
+			checkout(localRef.getName(), monitor);
 		} else {
 			try {
 				RevCommit commit = fetchChange(uri, spec, monitor);
