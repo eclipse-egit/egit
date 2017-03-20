@@ -3861,20 +3861,21 @@ public class StagingView extends ViewPart
 		if (pushUpstream) {
 			pushMode = gerritMode ? PushMode.GERRIT : PushMode.UPSTREAM;
 		}
-		final Job commitJob = new CommitJob(currentRepository, commitOperation)
+		Job commitJob = new CommitJob(currentRepository, commitOperation)
 				.setOpenCommitEditor(openNewCommitsAction.isChecked())
 				.setPushUpstream(pushMode);
 
 		// don't allow to do anything as long as commit is in progress
 		enableAllWidgets(false);
 		commitJob.addJobChangeListener(new JobChangeAdapter() {
+
 			@Override
 			public void done(IJobChangeEvent event) {
 				asyncExec(new Runnable() {
 					@Override
 					public void run() {
 						enableAllWidgets(true);
-						if (commitJob.getResult().isOK()) {
+						if (event.getResult().isOK()) {
 							commitMessageText.setText(EMPTY_STRING);
 						}
 					}
