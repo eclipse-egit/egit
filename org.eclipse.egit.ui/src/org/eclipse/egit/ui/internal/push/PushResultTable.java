@@ -34,7 +34,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.RemoteRefUpdate;
@@ -144,7 +144,7 @@ class PushResultTable {
 
 		};
 
-		treeViewer.setComparator(new ViewerComparator() {
+		treeViewer.setSorter(new ViewerSorter() {
 
 			@Override
 			public int compare(Viewer viewer, Object e1, Object e2) {

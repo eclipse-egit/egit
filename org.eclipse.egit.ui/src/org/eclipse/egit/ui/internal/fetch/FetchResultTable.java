@@ -36,7 +36,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
@@ -296,7 +296,7 @@ class FetchResultTable {
 			}
 
 		});
-		treeViewer.setComparator(new ViewerComparator() {
+		treeViewer.setSorter(new ViewerSorter() {
 
 			@Override
 			public int compare(Viewer viewer, Object e1, Object e2) {

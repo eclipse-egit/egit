@@ -30,7 +30,7 @@ import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.merge.ResolveMerger.MergeFailureReason;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -212,7 +212,7 @@ public class RevertFailureDialog extends MessageDialog {
 		};
 		viewer.setLabelProvider(new DelegatingStyledCellLabelProvider(
 				styleProvider));
-		viewer.setComparator(new ViewerComparator());
+		viewer.setSorter(new ViewerSorter());
 
 		Map<MergeFailureReason, RevertFailure> failures = new HashMap<>();
 		for (Entry<String, MergeFailureReason> reason : reasons.entrySet()) {

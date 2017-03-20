@@ -20,7 +20,7 @@ import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.search.ui.text.AbstractTextSearchViewPage;
@@ -33,7 +33,7 @@ import org.eclipse.ui.model.WorkbenchContentProvider;
  */
 public class CommitSearchResultsPage extends AbstractTextSearchViewPage {
 
-	private static class CommitSorter extends ViewerComparator {
+	private static class CommitSorter extends ViewerSorter {
 
 		@Override
 		public int compare(Viewer viewer, Object e1, Object e2) {
@@ -70,7 +70,7 @@ public class CommitSearchResultsPage extends AbstractTextSearchViewPage {
 	}
 
 	private void configureViewer(StructuredViewer viewer) {
-		viewer.setComparator(new CommitSorter());
+		viewer.setSorter(new CommitSorter());
 		viewer.setContentProvider(new WorkbenchContentProvider() {
 
 			@Override

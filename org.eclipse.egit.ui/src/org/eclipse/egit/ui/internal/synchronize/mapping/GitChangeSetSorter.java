@@ -15,7 +15,7 @@ import org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelTree;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelWorkingTree;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.jface.viewers.ViewerSorter;
 
 /**
  * Ensure proper ordering of nodes in Git Change Set.
@@ -29,7 +29,7 @@ import org.eclipse.jface.viewers.ViewerComparator;
  * alphabetical order.
  *
  */
-public class GitChangeSetSorter extends ViewerComparator {
+public class GitChangeSetSorter extends ViewerSorter {
 
 	@Override
 	public int compare(Viewer viewer, Object e1, Object e2) {

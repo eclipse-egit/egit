@@ -47,7 +47,7 @@ import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -474,7 +474,7 @@ public class CommitEditorPage extends FormPage
 		GridDataFactory.fillDefaults().grab(true, true).hint(SWT.DEFAULT, 50)
 				.applyTo(control);
 		addToFocusTracking(control);
-		branchViewer.setComparator(new ViewerComparator());
+		branchViewer.setSorter(new ViewerSorter());
 		branchViewer.setLabelProvider(new GitLabelProvider() {
 
 			@Override

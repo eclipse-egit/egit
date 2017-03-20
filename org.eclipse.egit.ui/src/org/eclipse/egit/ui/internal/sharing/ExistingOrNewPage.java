@@ -45,7 +45,7 @@ import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
@@ -164,7 +164,7 @@ class ExistingOrNewPage extends WizardPage {
 		v.setInput(new Object());
 		// the default ViewerSorter seems to do the right thing
 		// i.e. sort as String
-		v.setComparator(new ViewerComparator());
+		v.setSorter(new ViewerSorter());
 
 		existingRepoCombo.addSelectionListener(new SelectionAdapter() {
 			@Override
