@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_16df3f4f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3879,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-03-21T13:50:35Z",
+      "side": 1,
+      "message": "That might hide a bug. A Job _always_ must return an IStatus, so we should never have null here. Besides, we don\u0027t really know whether commitJob or commitJob.getResult() was null -- both would be equally puzzling.\n\nWe should know what\u0027s in the Eclipse log of the user\u0027s Eclipse who sent this AERI report. I suspect there was an earlier exception somewhere.\n\nIt might be safer not to use commitJob.getResult() but event.getResult() instead. commitJob then also doesn\u0027t need to be final.",
+      "revId": "10b00b7b4fdde8bcebc15b72b43dcbaf32e55fac",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
