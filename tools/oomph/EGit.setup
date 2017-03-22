@@ -213,7 +213,7 @@
           <repository
               url="http://download.eclipse.org/tools/orbit/downloads/drops/S20161021172207/repository"/>
           <repository
-              url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.2.13.v20150730"/>
+              url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.3.v20170317"/>
           <repository
               url="http://download.eclipse.org/technology/swtbot/releases/latest"/>
           <repository
@@ -224,7 +224,7 @@
           <repository
               url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
           <repository
-              url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.2.13.v20150730"/>
+              url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.3.v20170317"/>
           <repository
               url="http://download.eclipse.org/technology/swtbot/snapshots"/>
           <repository
@@ -239,7 +239,7 @@
           <repository
               url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
           <repository
-              url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.2.13.v20150730"/>
+              url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.3.v20170317"/>
           <repository
               url="http://download.eclipse.org/technology/swtbot/snapshots"/>
           <repository
