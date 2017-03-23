@@ -13,12 +13,13 @@ package org.eclipse.egit.ui.internal.repository.tree;
 import java.text.Collator;
 
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerSorter;
 
 /**
  * Sorter for the Git Repositories View.
  */
-public class RepositoriesViewSorter extends
-		org.eclipse.jface.viewers.ViewerSorter {
+@SuppressWarnings("deprecation")
+public class RepositoriesViewSorter extends ViewerSorter {
 
 	/**
 	 * Default constructor
