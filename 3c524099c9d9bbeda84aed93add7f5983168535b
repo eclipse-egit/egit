@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c23755_ee3ae74b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 925
+      },
+      "writtenOn": "2017-03-23T04:41:10Z",
+      "side": 1,
+      "message": "Add suppression of the deprecation warnings?\n\nI\u0027ve done it in a separate change; as a non-committer on this project I\u0027m not able to upload a new patch set to this change.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 64
+      },
+      "revId": "3c524099c9d9bbeda84aed93add7f5983168535b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
