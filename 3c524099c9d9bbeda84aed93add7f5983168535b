@@ -22,6 +22,30 @@
       "revId": "3c524099c9d9bbeda84aed93add7f5983168535b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c23755_0ec563a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-03-23T06:52:20Z",
+      "side": 1,
+      "message": "I thought about it. It\u0027s OK with me if you want to suppress them; OTOH, leaving them in will serve as a reminder to fix these two classes once our baseline is Oxygen (or whenever 484248 will be fixed).",
+      "parentUuid": "a7c23755_ee3ae74b",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 64
+      },
+      "revId": "3c524099c9d9bbeda84aed93add7f5983168535b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
