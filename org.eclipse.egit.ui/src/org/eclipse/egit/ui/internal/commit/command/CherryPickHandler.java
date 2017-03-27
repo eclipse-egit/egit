@@ -180,7 +180,7 @@ public class CherryPickHandler extends SelectionHandler {
 				String message, Repository repository, List<RevCommit> revCommits) {
 			super(parentShell, UIText.CherryPickHandler_ConfirmTitle, null,
 					message, MessageDialog.CONFIRM, new String[] {
-							IDialogConstants.OK_LABEL,
+							UIText.CherryPickHandler_cherryPickButtonLabel,
 							IDialogConstants.CANCEL_LABEL }, 0);
 			setShellStyle(getShellStyle() | SWT.RESIZE);
 
