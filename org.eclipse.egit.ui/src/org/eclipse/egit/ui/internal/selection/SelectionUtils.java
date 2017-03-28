@@ -125,10 +125,15 @@ public class SelectionUtils {
 	@NonNull
 	public static IStructuredSelection getStructuredSelection(
 			@NonNull ISelection selection) {
-		if (selection instanceof ITextSelection)
-			return getSelectionFromEditorInput(getEvaluationContext());
-		else if (selection instanceof IStructuredSelection)
+		if (selection instanceof ITextSelection) {
+			IEvaluationContext evaluationContext = getEvaluationContext();
+			if (evaluationContext == null) {
+				return StructuredSelection.EMPTY;
+			}
+			return getSelectionFromEditorInput(evaluationContext);
+		} else if (selection instanceof IStructuredSelection) {
 			return (IStructuredSelection) selection;
+		}
 		return StructuredSelection.EMPTY;
 	}
 
