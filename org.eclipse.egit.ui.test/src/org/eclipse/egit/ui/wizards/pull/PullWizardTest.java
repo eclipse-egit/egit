@@ -100,7 +100,7 @@ public class PullWizardTest extends GitRepositoriesViewTestBase {
 				"Pull Result");
 		bot.waitUntil(waitForShell(shellWithTextPrefixMatcher));
 		shellWithTextPrefixMatcher.getFoundShell().setFocus();
-		bot.button(IDialogConstants.OK_LABEL).click();
+		bot.button(IDialogConstants.CLOSE_LABEL).click();
 	}
 
 
