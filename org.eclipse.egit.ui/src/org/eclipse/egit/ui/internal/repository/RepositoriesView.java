@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
@@ -71,6 +73,8 @@ import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -135,6 +139,7 @@ import org.eclipse.ui.progress.WorkbenchJob;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheet;
 import org.eclipse.ui.views.properties.PropertySheetPage;
+import org.osgi.framework.Version;
 
 /**
  * The "Git Repositories View"
@@ -469,14 +474,39 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 
 			if (store.getBoolean(UIPreferences.SHOW_CHECKOUT_CONFIRMATION)) {
 				String toggleMessage = UIText.RepositoriesView_CheckoutConfirmationToggleMessage;
-				MessageDialogWithToggle dlg = MessageDialogWithToggle
-						.openOkCancelConfirm(
-								getViewSite().getShell(),
-				UIText.RepositoriesView_CheckoutConfirmationTitle,
-				MessageFormat.format(UIText.RepositoriesView_CheckoutConfirmationMessage,
-										shortName),
-										toggleMessage, false, store,
-										UIPreferences.SHOW_CHECKOUT_CONFIRMATION);
+				MessageDialogWithToggle dlg = null;
+				boolean canUseNewApi = Platform.getBundle("org.eclipse.jface") //$NON-NLS-1$
+						.getVersion()
+						.compareTo(Version.valueOf("3.13.0.qualifier")) >= 0; //$NON-NLS-1$
+
+				if(canUseNewApi) {
+					LinkedHashMap<String, Integer> buttonLabelToIdMap = new LinkedHashMap<>();
+					buttonLabelToIdMap.put(
+							UIText.RepositoriesView_CheckoutConfirmationOkButtonLabel,
+							IDialogConstants.OK_ID);
+					buttonLabelToIdMap.put(IDialogConstants.CANCEL_LABEL,
+							IDialogConstants.CANCEL_ID);
+					dlg = MessageDialogWithToggle.open(MessageDialog.CONFIRM,
+							getViewSite().getShell(),
+							UIText.RepositoriesView_CheckoutConfirmationTitle,
+							MessageFormat.format(
+									UIText.RepositoriesView_CheckoutConfirmationMessage,
+									shortName),
+							toggleMessage, false, store,
+							UIPreferences.SHOW_CHECKOUT_CONFIRMATION, SWT.NONE,
+							buttonLabelToIdMap);
+
+				} else {
+					dlg = MessageDialogWithToggle.openOkCancelConfirm(
+							getViewSite().getShell(),
+							UIText.RepositoriesView_CheckoutConfirmationTitle,
+							MessageFormat.format(
+									UIText.RepositoriesView_CheckoutConfirmationMessage,
+									shortName),
+							toggleMessage, false, store,
+							UIPreferences.SHOW_CHECKOUT_CONFIRMATION);
+				}
+
 				if (dlg.getReturnCode() != Window.OK)
 					return;
 			}
