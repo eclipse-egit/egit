@@ -1,0 +1,8 @@
+Verified+1: Hudson CI
+Code-Review+1: David Pursehouse <david.pursehouse@gmail.com>
+Code-Review+2: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-by: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-at: Mon, 03 Apr 2017 10:46:45 -0400
+Reviewed-on: https://git.eclipse.org/r/94255
+Project: egit/egit
+Branch: refs/heads/stable-4.6
