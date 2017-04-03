@@ -2111,6 +2111,9 @@ public class UIText extends NLS {
 	public static String PullResultDialog_NothingToFetchFromLocal;
 
 	/** */
+	public static String PullResultDialog_closeButtonLabel;
+
+	/** */
 	public static String PushAction_wrongURIDescription;
 
 	/** */
