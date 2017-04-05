@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87bd33cc_576050ae",
+        "filename": "org.eclipse.egit.doc/help/EGit/Contributor_Guide/Builds.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 925
+      },
+      "writtenOn": "2017-04-05T02:18:14Z",
+      "side": 1,
+      "message": "It also works without the colon, i.e.\n\n  bazel build all",
+      "range": {
+        "startLine": 130,
+        "startChar": 19,
+        "endLine": 130,
+        "endChar": 23
+      },
+      "revId": "b0aa57d011f331164ad114093c2800bbd8d1e79b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
