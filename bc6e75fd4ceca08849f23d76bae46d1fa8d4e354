@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87bd33cc_0004d020",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2017-04-05T15:12:23Z",
+      "side": 1,
+      "message": "Please add a note that the result of the change is only visible on platform version starting from ...",
+      "revId": "bc6e75fd4ceca08849f23d76bae46d1fa8d4e354",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd33cc_208e2c3b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2017-04-05T15:12:23Z",
+      "side": 1,
+      "message": "The commit message rules are different for j|egit projects. Just check the git history to see how it differs.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 13
+      },
+      "revId": "bc6e75fd4ceca08849f23d76bae46d1fa8d4e354",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd33cc_00605000",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2017-04-05T15:12:23Z",
+      "side": 1,
+      "message": "This is a constant value, so it should not be recomputed every call",
+      "range": {
+        "startLine": 478,
+        "startChar": 12,
+        "endLine": 478,
+        "endChar": 24
+      },
+      "revId": "bc6e75fd4ceca08849f23d76bae46d1fa8d4e354",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd33cc_807380d7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2017-04-05T15:12:23Z",
+      "side": 1,
+      "message": "qualifier part should not be used at all, and if it would be used, not this way",
+      "range": {
+        "startLine": 480,
+        "startChar": 40,
+        "endLine": 480,
+        "endChar": 50
+      },
+      "revId": "bc6e75fd4ceca08849f23d76bae46d1fa8d4e354",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd33cc_c08e583d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2017-04-05T15:12:23Z",
+      "side": 1,
+      "message": "Please move that part to a dedicated method with appropriate comment (that it should only be used if the API level is higher as ...)",
+      "range": {
+        "startLine": 482,
+        "startChar": 4,
+        "endLine": 482,
+        "endChar": 20
+      },
+      "revId": "bc6e75fd4ceca08849f23d76bae46d1fa8d4e354",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
