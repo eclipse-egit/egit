@@ -105,6 +105,7 @@ perl -pi~ -e '
 	s/^(Bundle-Version:\s*).*$/${1}'"$OSGI_V"'/;
 	s/(org.eclipse.egit.*;version=")[^"[(]*(")/${1}'"$EGIT_V"'${2}/;
 	s/(org.eclipse.egit.*;version="\[)[^"]*(\)")/${1}'"$EGIT_V,$EGIT_N"'${2}/;
+	s/(org.eclipse.egit.*;bundle-version="\[)[^"]*(\)")/${1}'"$EGIT_V,$EGIT_N"'${2}/;
 	s/(org.eclipse.jgit.*;version="\[)[^"]*(\)")/${1}'"$JGIT_V,$JGIT_N"'${2}/;
 	s/(org.eclipse.jgit;bundle-version="\[)[^"]*(\)")/${1}'"$JGIT_V,$JGIT_N"'${2}/;
 	' $(git ls-files | grep META-INF/MANIFEST.MF)
