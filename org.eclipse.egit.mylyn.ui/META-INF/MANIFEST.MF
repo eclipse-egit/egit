@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.eclipse.egit.mylyn.ui;singleton:=true
-Bundle-Version: 4.7.0.201704051617-r
+Bundle-Version: 4.7.1.qualifier
 Bundle-Activator: org.eclipse.egit.internal.mylyn.ui.EGitMylynUI
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.team.core,
@@ -21,19 +21,19 @@ Require-Bundle: org.eclipse.team.core,
  org.eclipse.ui.workbench.texteditor,
  org.eclipse.jface.text,
  org.eclipse.ui.forms,
- org.eclipse.egit.ui;bundle-version="[4.7.0,4.8.0)"
+ org.eclipse.egit.ui;bundle-version="[4.7.1,4.8.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
-Export-Package: org.eclipse.egit.internal.mylyn.ui;version="4.7.0";x-friends:="org.eclipse.egit.ui.test",
- org.eclipse.egit.internal.mylyn.ui.commit;version="4.7.0";x-internal:=true
-Import-Package: org.eclipse.egit.core;version="[4.7.0,4.8.0)",
- org.eclipse.egit.core.synchronize;version="[4.7.0,4.8.0)",
- org.eclipse.egit.ui;version="[4.7.0,4.8.0)",
- org.eclipse.egit.ui.internal.commit;version="[4.7.0,4.8.0)",
- org.eclipse.egit.ui.internal.synchronize.model;version="[4.7.0,4.8.0)",
- org.eclipse.jgit.errors;version="[4.7.0,4.8.0)",
- org.eclipse.jgit.lib;version="[4.7.0,4.8.0)",
- org.eclipse.jgit.revwalk;version="[4.7.0,4.8.0)",
- org.eclipse.jgit.transport;version="[4.7.0,4.8.0)",
+Export-Package: org.eclipse.egit.internal.mylyn.ui;version="4.7.1";x-friends:="org.eclipse.egit.ui.test",
+ org.eclipse.egit.internal.mylyn.ui.commit;version="4.7.1";x-internal:=true
+Import-Package: org.eclipse.egit.core;version="[4.7.1,4.8.0)",
+ org.eclipse.egit.core.synchronize;version="[4.7.1,4.8.0)",
+ org.eclipse.egit.ui;version="[4.7.1,4.8.0)",
+ org.eclipse.egit.ui.internal.commit;version="[4.7.1,4.8.0)",
+ org.eclipse.egit.ui.internal.synchronize.model;version="[4.7.1,4.8.0)",
+ org.eclipse.jgit.errors;version="[4.7.1,4.8.0)",
+ org.eclipse.jgit.lib;version="[4.7.1,4.8.0)",
+ org.eclipse.jgit.revwalk;version="[4.7.1,4.8.0)",
+ org.eclipse.jgit.transport;version="[4.7.1,4.8.0)",
  org.eclipse.ui.plugin
