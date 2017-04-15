@@ -85,9 +85,9 @@
   <setupTask
       xsi:type="pde:APIBaselineTask"
       name="EGit"
-      version="4.6.0"
+      version="4.7.0"
       location="${workspace.location/../api.baseline}"
-      remoteURI="http://download.eclipse.org/egit/updates-4.6/org.eclipse.egit.repository-4.6.0.201612231935-r.zip"/>
+      remoteURI="http://download.eclipse.org/egit/updates-4.7/org.eclipse.egit.repository-4.7.0.201704051617-r.zip"/>
   <stream name="master">
     <setupTask
         xsi:type="setup:VariableTask"
@@ -211,9 +211,9 @@
           <repository
               url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/S20161021172207/repository"/>
+              url="http://download.eclipse.org/tools/orbit/downloads/drops/S20170306214312/repository"/>
           <repository
-              url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.3.v20170317"/>
+              url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.3.17.v20170317"/>
           <repository
               url="http://download.eclipse.org/technology/swtbot/releases/latest"/>
           <repository
@@ -224,13 +224,13 @@
           <repository
               url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
           <repository
-              url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.3.v20170317"/>
+              url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.3.17.v20170317"/>
           <repository
               url="http://download.eclipse.org/technology/swtbot/snapshots"/>
           <repository
               url="http://download.eclipse.org/mylyn/releases/latest"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/S20161021172207/repository"/>
+              url="http://download.eclipse.org/tools/orbit/downloads/drops/S20170306214312/repository"/>
         </repositoryList>
         <repositoryList
             name="Mars">
@@ -239,11 +239,11 @@
           <repository
               url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
           <repository
-              url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.3.v20170317"/>
+              url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.3.17.v20170317"/>
           <repository
               url="http://download.eclipse.org/technology/swtbot/snapshots"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/S20161021172207/repository"/>
+              url="http://download.eclipse.org/tools/orbit/downloads/drops/S20170306214312/repository"/>
           <repository
               url="http://download.eclipse.org/tools/orbit/downloads/drops/R20160221192158/repository/"/>
         </repositoryList>
