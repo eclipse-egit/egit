@@ -56,8 +56,12 @@ public class BranchNameNormalizer {
 		if (stroke == null) {
 			stroke = KeyStroke.getInstance(SWT.MOD1, ' ');
 		}
-		decorator = UIUtils.addBulbDecorator(text,
-				MessageFormat.format(tooltipText, stroke.format()));
+		if (tooltipText == null || tooltipText.isEmpty()) {
+			decorator = UIUtils.addBulbDecorator(text, null);
+		} else {
+			decorator = UIUtils.addBulbDecorator(text,
+					MessageFormat.format(tooltipText, stroke.format()));
+		}
 		decorator.hide();
 		ContentProposalAdapter proposer = new ContentProposalAdapter(text,
 				new TextContentAdapter(),
