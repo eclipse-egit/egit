@@ -16,6 +16,24 @@
       "revId": "c65a31318162deccb1ff05f48340562244361610",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd33cc_5d78469b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1610,
+      "author": {
+        "id": 79641
+      },
+      "writtenOn": "2017-04-19T13:28:01Z",
+      "side": 1,
+      "message": "You are right, this should be resolved by tracking the selection ourselves. Thank you for noticing!",
+      "parentUuid": "a7c23755_138ba3fc",
+      "revId": "c65a31318162deccb1ff05f48340562244361610",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
