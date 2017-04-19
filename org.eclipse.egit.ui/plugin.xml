@@ -4143,6 +4143,7 @@
                </visibleWhen>
             </command>
             <menu
+                  id="egit.menu.stashes"
                   label="%StashesMenu.label">
                <dynamic
                      class="org.eclipse.egit.ui.internal.actions.StashesMenu"
@@ -4215,6 +4216,7 @@
                   visible="true">
             </separator>
             <menu
+                  id="egit.menu.remote"
                   label="%RemoteSubMenu.label">
                <command
                      commandId="org.eclipse.egit.ui.team.Push"
@@ -4280,6 +4282,7 @@
                   name="org.eclipse.egit.ui.branchSeparator">
             </separator>
             <menu
+                  id="egit.menu.switch"
                   label="%SwitchToMenu.label"
                   icon="icons/obj16/branches_obj.gif">
                <dynamic
@@ -4297,6 +4300,7 @@
                   name="org.eclipse.egit.ui.AdvancedSeparator">
             </separator>
             <menu
+                  id="egit.menu.repo"
                   label="%RepositorySubMenu.label">
                <visibleWhen
                      checkEnabled="false">
@@ -4354,6 +4358,7 @@
                      visible="true">
                </separator>
                <menu
+                     id="egit.menu.repo.switchto"
                      label="%SwitchToMenu.label"
                      icon="icons/obj16/branches_obj.gif">
                   <dynamic
@@ -4363,6 +4368,7 @@
                </menu>
             </menu>
             <menu
+                  id="egit.menu.advanced"
                   label="%AdvancedMenu.label">
                <command
                      commandId="org.eclipse.egit.ui.team.RenameBranch"
@@ -4390,6 +4396,7 @@
                   name="org.eclipse.egit.ui.SynchronizeWithSeparator"
                   visible="true" />
                <menu
+                  id="egit.menu.synchronize"
                   label="%SynchronizeWith_label"
                   icon="$nl$/icons/obj16/synchronize.png">
                   <dynamic
@@ -4520,6 +4527,7 @@
             </command>
             <menu
                   icon="icons/obj16/rebase.gif"
+                  id="egit.menu.rebase"
                   label="%RebaseMenu.label">
                <command
                      commandId="org.eclipse.egit.ui.org.eclipse.egit.ui.AbortRebase"
