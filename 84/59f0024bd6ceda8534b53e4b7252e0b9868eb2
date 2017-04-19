@@ -1,0 +1,8 @@
+Verified+1: Hudson CI
+Code-Review+1: Lars Vogel <Lars.Vogel@vogella.com>
+Code-Review+2: Andrey Loskutov <loskutov@gmx.de>
+Submitted-by: Andrey Loskutov <loskutov@gmx.de>
+Submitted-at: Wed, 19 Apr 2017 15:34:44 -0400
+Reviewed-on: https://git.eclipse.org/r/95272
+Project: egit/egit
+Branch: refs/heads/master
