@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87bd33cc_4ea6cec3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-04-20T08:16:13Z",
+      "side": 1,
+      "message": "Please follow the EGit guidelines about commit messages:\n\nhttp://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "revId": "1ea1ebfffed3dbaa1f6417aa20d012018266bc60",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
