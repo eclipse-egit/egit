@@ -39,6 +39,30 @@
       "revId": "a5cde41ce0c2cfc11dbfa00c189242a767d1b291",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd33cc_096a10e1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-04-20T10:44:29Z",
+      "side": 1,
+      "message": "Actually, that\u0027s not quite it either. There is already a content proposal adapter on this text field (it gets a list of existing branches in the remote repo). Interestingly, the two work well together since the existing one will never return anything if the name is invalid, and the new one only then provides any suggestions, and vice versa. So the two give results only under mutually exclusive conditions.\n\nHowever, if we set a tooltip here, both tooltips will be show one over the other. Therefore, this second proposal adapter must not have a tooltip.",
+      "parentUuid": "87bd33cc_0ec69690",
+      "range": {
+        "startLine": 365,
+        "startChar": 11,
+        "endLine": 365,
+        "endChar": 29
+      },
+      "revId": "a5cde41ce0c2cfc11dbfa00c189242a767d1b291",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
