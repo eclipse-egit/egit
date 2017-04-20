@@ -40,6 +40,7 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.ValidationUtils;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
+import org.eclipse.egit.ui.internal.components.BranchNameNormalizer;
 import org.eclipse.egit.ui.internal.dialogs.AbstractBranchSelectionDialog;
 import org.eclipse.egit.ui.internal.dialogs.BranchEditDialog;
 import org.eclipse.egit.ui.internal.gerrit.GerritDialogSettings;
@@ -248,14 +249,16 @@ public class FetchGerritChangePage extends WizardPage {
 				.applyTo(branchTextlabel);
 		branchTextlabel.setText(UIText.FetchGerritChangePage_BranchNameText);
 		branchText = new Text(checkoutGroup, SWT.SINGLE | SWT.BORDER);
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(branchText);
+		GridDataFactory.fillDefaults().grab(true, false)
+				.align(SWT.FILL, SWT.CENTER).applyTo(branchText);
 		branchText.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				checkPage();
 			}
 		});
-
+		BranchNameNormalizer normalizer = new BranchNameNormalizer(branchText);
+		normalizer.setVisible(false);
 		branchEditButton = new Button(checkoutGroup, SWT.PUSH);
 		branchEditButton.setFont(JFaceResources.getDialogFont());
 		branchEditButton.setText(UIText.FetchGerritChangePage_BranchEditButton);
