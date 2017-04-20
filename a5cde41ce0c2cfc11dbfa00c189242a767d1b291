@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87bd33cc_6ecb8a96",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-04-20T07:54:57Z",
+      "side": 1,
+      "message": "Eclipse Genie is rather finicky and wants a blank after the colon.",
+      "revId": "a5cde41ce0c2cfc11dbfa00c189242a767d1b291",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd33cc_0ec69690",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-04-20T07:54:57Z",
+      "side": 1,
+      "message": "Hm. We\u0027re in PushBranchPage here. We could add yet another UI text PushBranchPage_NormalizeNameTooltip, but this is getting tedious.\n\nI suggest instead to move that tooltip into the BranchNameNormalizer. Add a second constructor\n\n  public BranchNameNormalizer(Text text) {\n    this(text, UIText.BranchNameNormalizer_Tooltip);\n  }\n\nadd that new UI text, and use the new constructor.\n\nIn a follow-up change we can then change the other instantiations of BranchNameNormalizer and remove the duplicate and then unused UI texts for CreateBranchPage_NormalizeNameTooltip and BranchRenameDialog_NormalizeNameTooltip. Or if you want, you could do that in this change, too.",
+      "range": {
+        "startLine": 365,
+        "startChar": 11,
+        "endLine": 365,
+        "endChar": 29
+      },
+      "revId": "a5cde41ce0c2cfc11dbfa00c189242a767d1b291",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
