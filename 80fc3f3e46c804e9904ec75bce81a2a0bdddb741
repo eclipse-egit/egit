@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87bd33cc_4e188e80",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-04-20T08:19:41Z",
+      "side": 1,
+      "message": "I agree.",
+      "parentUuid": "87bd33cc_f8914ed6",
+      "revId": "80fc3f3e46c804e9904ec75bce81a2a0bdddb741",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87bd33cc_47d9879b",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 1
