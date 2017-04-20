@@ -33,6 +33,24 @@
       "revId": "b6b331b3b4c8177f24e8de023449f2436251e169",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd33cc_8e5706d6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1806,
+      "author": {
+        "id": 98314
+      },
+      "writtenOn": "2017-04-20T08:49:00Z",
+      "side": 1,
+      "message": "Since you have to press ALT+Mnemonic key this shouldn\u0027t be an issue.",
+      "parentUuid": "87bd33cc_ee3a3aef",
+      "revId": "b6b331b3b4c8177f24e8de023449f2436251e169",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
