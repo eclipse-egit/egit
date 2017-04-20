@@ -11,6 +11,7 @@ package org.eclipse.egit.ui.internal.components;
 import java.text.MessageFormat;
 
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.fieldassist.ContentProposal;
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
@@ -41,6 +42,17 @@ public class BranchNameNormalizer {
 	private final ControlDecoration decorator;
 
 	private boolean visible;
+
+	/**
+	 * Creates a new {@link BranchNameNormalizer} using
+	 * {@link UIText#BranchNameNormalizer_Tooltip} as tooltip text.
+	 *
+	 * @param text
+	 *            {@link Text} to operate on
+	 */
+	public BranchNameNormalizer(Text text) {
+		this(text, UIText.BranchNameNormalizer_Tooltip);
+	}
 
 	/**
 	 * Creates a new {@link BranchNameNormalizer}.
