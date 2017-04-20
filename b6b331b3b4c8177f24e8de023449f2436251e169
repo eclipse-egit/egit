@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87bd33cc_8e3d46ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-04-20T08:04:22Z",
+      "side": 1,
+      "message": "Please follow the EGit guidelines for commit messages:\n\nhttp://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines\n\nSomething like:\n\n  Add mnemonics to buttons in staging view\n\n  Give the \"Commit and Push\" and the \"Commit\" buttons\n  mnemonics \u0026P and \u0026C, respectively.\n\n  Bug: 515040\n  Change-Id: ...\n  Signed-off-by: ...",
+      "revId": "b6b331b3b4c8177f24e8de023449f2436251e169",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd33cc_ee3a3aef",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1806,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-04-20T08:04:22Z",
+      "side": 1,
+      "message": "I\u0027m on a Mac, where there are no mnemonics. Did you double-check that \u0026C and \u0026P don\u0027t conflict with anything else (like \"Copy\" and \"Paste\" in the context menu of the\ncommit message)?",
+      "revId": "b6b331b3b4c8177f24e8de023449f2436251e169",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
