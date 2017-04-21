@@ -91,6 +91,7 @@
             </goals>
             <configuration>
               <siteTemplateFolder>siteTemplate/</siteTemplateFolder>
+              <removeDefaultCategory>true</removeDefaultCategory>
               <!-- Symbols are used while expanding index.html template -->
               <symbols>
                 <update.site.name>EGit p2 Repository</update.site.name>

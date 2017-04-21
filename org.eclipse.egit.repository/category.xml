@@ -12,6 +12,7 @@
    <feature url="features/org.eclipse.egit.mylyn_0.0.0.qualifier.jar" id="org.eclipse.egit.mylyn" version="0.0.0">
       <category name="EGit"/>
    </feature>
+   <bundle id="org.eclipse.egit.ui.smartimport" version="0.0.0"/>
    <feature url="features/org.eclipse.jgit_0.0.0.qualifier.jar" id="org.eclipse.jgit" version="0.0.0" patch="true">
       <category name="JGit"/>
    </feature>
@@ -33,9 +34,6 @@
    <feature url="features/org.eclipse.jgit.lfs_0.0.0.qualifier.jar" id="org.eclipse.jgit.lfs" version="0.0.0">
       <category name="JGit"/>
    </feature>
-   <bundle id="org.eclipse.egit.ui.smartimport" version="0.0.0">
-      <category name="EGit.experimental"/>
-   </bundle>
    <category-def name="EGit" label="Git integration for Eclipse">
       <description>
          Versioning with Git, integration with Gerrit, GitHub, Gitflow, and Task repositories

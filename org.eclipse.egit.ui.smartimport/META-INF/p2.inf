@@ -1,2 +1,6 @@
 update.matchExp=providedCapabilities.exists(pc | pc.namespace == 'org.eclipse.equinox.p2.iu' && (pc.name == 'org.eclipse.egit.ui.smartimport' && pc.version < '$version$' || pc.name == 'org.eclipse.egit.ui.importer') )
 update.severity=0
+
+metaRequirements.0.namespace = org.eclipse.equinox.p2.iu
+metaRequirements.0.name = org.eclipse.ui.ide
+metaRequirements.0.range = [3.12.0,4.0.0)
