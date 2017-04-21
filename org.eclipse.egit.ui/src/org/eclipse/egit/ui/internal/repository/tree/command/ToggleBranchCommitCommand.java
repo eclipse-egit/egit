@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011 GitHub Inc.
+ *  Copyright (c) 2011, 2017 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,21 +7,14 @@
  *
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - factor out AbstractToggleCommand
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.ui.internal.repository.RepositoriesView;
-import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.handlers.HandlerUtil;
-
 /**
- * Toggles the "Display Latest Branch Commit" preference
+ * Toggles the "Display Latest Branch Commit" preference.
  */
-public class ToggleBranchCommitCommand extends
-		RepositoriesViewCommandHandler<RepositoryTreeNode> {
+public class ToggleBranchCommitCommand extends AbstractToggleCommand {
 
 	/**
 	 * The toggle branch latest commit command id
@@ -32,17 +25,5 @@ public class ToggleBranchCommitCommand extends
 	 * The toggle state of this command
 	 */
 	public static final String TOGGLE_STATE = "org.eclipse.ui.commands.toggleState"; //$NON-NLS-1$
-
-	/**
-	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
-	 */
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		HandlerUtil.toggleCommandState(event.getCommand());
-		IWorkbenchPart part = HandlerUtil.getActivePartChecked(event);
-		if (part instanceof RepositoriesView)
-			(((RepositoriesView) part).getCommonViewer()).refresh();
-		return null;
-	}
 
 }
