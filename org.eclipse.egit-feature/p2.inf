@@ -1,0 +1,6 @@
+requires.0.namespace = org.eclipse.equinox.p2.iu
+requires.0.name = org.eclipse.egit.ui.smartimport
+requires.0.optional = true
+metaRequirements.0.namespace = org.eclipse.equinox.p2.iu
+metaRequirements.0.name = org.eclipse.ui.ide
+metaRequirements.0.range = [3.12.0,4.0.0)
