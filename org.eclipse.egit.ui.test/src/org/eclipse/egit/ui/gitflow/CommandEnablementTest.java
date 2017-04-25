@@ -62,14 +62,12 @@ public class CommandEnablementTest extends AbstractGitflowHandlerTest {
 
 	private void selectPackageExplorerItem(int index) {
 		SWTBotTree explorerTree = TestUtil.getExplorerTree();
-		PlatformUI.getWorkbench().getDisplay()
-				.syncExec(() -> explorerTree.select(index));
+		explorerTree.select(index);
 	}
 
 	private void selectRepositoryInView(int index) {
-		SWTBotTree repoTree = getRepositoryTree();
-		PlatformUI.getWorkbench().getDisplay()
-				.syncExec(() -> repoTree.select(index));
+		SWTBotTree explorerTree = getRepositoryTree();
+		explorerTree.select(index);
 	}
 
 	private void assertAllCommandsEnabledAndExecutable() throws Exception {
