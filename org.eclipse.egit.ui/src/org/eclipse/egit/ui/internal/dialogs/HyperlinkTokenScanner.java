@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.JFaceColors;
 import org.eclipse.jface.text.BadLocationException;
@@ -33,6 +33,8 @@ import org.eclipse.jface.text.rules.ITokenScanner;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
+import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
@@ -51,7 +53,7 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 
 	private IToken hyperlinkToken;
 
-	private IHyperlinkDetector[] hyperlinkDetectors;
+	private Set<IHyperlinkDetector> hyperlinkDetectors;
 
 	private final ISourceViewer viewer;
 
@@ -149,24 +151,43 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 			hyperlinksOnLine.clear();
 			return Token.EOF;
 		}
-		if (hyperlinkDetectors != null && hyperlinkDetectors.length > 0) {
+		if (hyperlinkDetectors != null && !hyperlinkDetectors.isEmpty()) {
 			try {
 				IRegion currentLine = document
 						.getLineInformationOfOffset(currentOffset);
 				if (currentLine.getOffset() != lastLineStart) {
 					// Compute all hyperlinks in the line
 					hyperlinksOnLine.clear();
-					for (IHyperlinkDetector hyperlinkDetector : hyperlinkDetectors) {
+					Iterator<IHyperlinkDetector> detectors = hyperlinkDetectors
+							.iterator();
+					while (detectors.hasNext()) {
+						IHyperlinkDetector hyperlinkDetector = detectors.next();
 						// The NoMaskHyperlinkDetectors can be skipped; if there
 						// are any, they're only duplicates of others to ensure
 						// hyperlinks open also if no modifier key is active.
-						if (!(hyperlinkDetector instanceof HyperlinkSourceViewer.NoMaskHyperlinkDetector)) {
-							IHyperlink[] newLinks = hyperlinkDetector
-									.detectHyperlinks(viewer, currentLine,
-											false);
-							if (newLinks != null && newLinks.length > 0) {
-								Collections.addAll(hyperlinksOnLine, newLinks);
-							}
+						if (hyperlinkDetector instanceof HyperlinkSourceViewer.NoMaskHyperlinkDetector) {
+							continue;
+						}
+						IHyperlink[] newLinks = null;
+						try {
+							newLinks = hyperlinkDetector.detectHyperlinks(
+									viewer, currentLine, false);
+						} catch (RuntimeException e) {
+							// Do *not* log: we have no way of identifying the
+							// broken hyperlink detector to ignore it in the
+							// future. Since we re-get the contributed detectors
+							// frequently, we'll get new instances of
+							// HyperlinkDetectorDelegate, and that doesn't give
+							// access to the extension id. So even if we remove
+							// the detector here, we may acquire a new broken
+							// instance again and then log over and over again,
+							// which is hyper-bothersome if the error log is
+							// open and set to activate on new errors. And
+							// anyway the problem is not in EGit.
+							detectors.remove();
+						}
+						if (newLinks != null && newLinks.length > 0) {
+							Collections.addAll(hyperlinksOnLine, newLinks);
 						}
 					}
 					// Sort them by offset, and with increasing length
@@ -276,25 +297,23 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 		return null;
 	}
 
-	private @NonNull IHyperlinkDetector[] getHyperlinkDetectors() {
-		IHyperlinkDetector[] allDetectors;
+	private @NonNull Set<IHyperlinkDetector> getHyperlinkDetectors() {
+		Set<IHyperlinkDetector> allDetectors = new LinkedHashSet<>();
 		IHyperlinkDetector[] configuredDetectors = configuration
 				.getHyperlinkDetectors(viewer);
-		if (configuredDetectors == null || configuredDetectors.length == 0) {
-			allDetectors = new IHyperlinkDetector[0];
-		} else if (preferenceStore.getBoolean(URL_HYPERLINK_DETECTOR_KEY)
-				|| !preferenceStore.getBoolean(
-						AbstractTextEditor.PREFERENCE_HYPERLINKS_ENABLED)) {
-			allDetectors = configuredDetectors;
-		} else {
-			allDetectors = new IHyperlinkDetector[configuredDetectors.length
-					+ 1];
-			System.arraycopy(configuredDetectors, 0, allDetectors, 0,
-					configuredDetectors.length);
+		if (configuredDetectors != null && configuredDetectors.length > 0) {
+			for (IHyperlinkDetector detector : configuredDetectors) {
+				allDetectors.add(detector);
+			}
+			if (preferenceStore.getBoolean(URL_HYPERLINK_DETECTOR_KEY)
+					|| !preferenceStore.getBoolean(
+							AbstractTextEditor.PREFERENCE_HYPERLINKS_ENABLED)) {
+				return allDetectors;
+			}
 			// URLHyperlinkDetector can only detect hyperlinks at the start of
 			// the range. We need one that can detect all hyperlinks in a given
 			// region.
-			allDetectors[configuredDetectors.length] = new MultiURLHyperlinkDetector();
+			allDetectors.add(new MultiURLHyperlinkDetector());
 		}
 		return allDetectors;
 	}
