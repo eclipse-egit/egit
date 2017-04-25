@@ -16,7 +16,11 @@ import java.util.Arrays;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.TextAttribute;
+import org.eclipse.jface.text.hyperlink.AbstractHyperlinkDetector;
+import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
 import org.eclipse.jface.text.hyperlink.URLHyperlinkDetector;
 import org.eclipse.jface.text.rules.IToken;
@@ -42,6 +46,9 @@ public class HyperlinkTokenScannerTest {
 
 	private IHyperlinkDetector[] detectors = new IHyperlinkDetector[] {
 			new URLHyperlinkDetector() };
+
+	private IHyperlinkDetector[] detectorsWithFailure = new IHyperlinkDetector[] {
+			new URLHyperlinkDetector(), new CrashingHyperlinkDetector() };
 
 	@Test
 	public void tokenizeEmpty() {
@@ -103,20 +110,48 @@ public class HyperlinkTokenScannerTest {
 		assertTokens(testString, 15, 14, expected);
 	}
 
-	@SuppressWarnings("boxing")
+	@Test
+	public void tokenizeWithFailingDetector() {
+		String testString = "Link: http://foo bar";
+		String expected = "DDDDDDHHHHHHHHHHDDDD";
+		assertTokens(testString, 0, testString.length(), detectorsWithFailure,
+				expected);
+		// With only a failing detector
+		expected = "DDDDDDDDDDDDDDDDDDDD";
+		assertTokens(testString, 0, testString.length(),
+				new IHyperlinkDetector[] { new CrashingHyperlinkDetector() },
+				expected);
+	}
+
+	@Test
+	public void tokenizeWithoutDetectors() {
+		String testString = "Link: http://foo bar";
+		String expected = "DDDDDDDDDDDDDDDDDDDD";
+		assertTokens(testString, 0, testString.length(),
+				new IHyperlinkDetector[] {}, expected);
+	}
+
 	private void assertTokens(String text, int offset, int length,
 			String expected) {
+		assertTokens(text, offset, length, detectors, expected);
+	}
+
+	@SuppressWarnings("boxing")
+	private void assertTokens(String text, int offset, int length,
+			IHyperlinkDetector[] hyperlinkDetectors, String expected) {
 		assertEquals("Test definition problem: 'expected' length mismatch",
 				text.length(), expected.length());
 		IDocument testDocument = new Document(text);
 		when(viewer.getDocument()).thenReturn(testDocument);
-		when(configuration.getHyperlinkDetectors(viewer)).thenReturn(detectors);
+		when(configuration.getHyperlinkDetectors(viewer))
+				.thenReturn(hyperlinkDetectors);
 		when(preferenceStore
 				.getBoolean(AbstractTextEditor.PREFERENCE_HYPERLINKS_ENABLED))
 						.thenReturn(true);
 		when(preferenceStore.getBoolean(
 				"org.eclipse.ui.internal.editors.text.URLHyperlinkDetector"))
-						.thenReturn(false);
+						.thenReturn(hyperlinkDetectors.length == 0
+								|| (hyperlinkDetectors[0] instanceof CrashingHyperlinkDetector));
 		HyperlinkTokenScanner scanner = new HyperlinkTokenScanner(configuration,
 				viewer, preferenceStore, null);
 		scanner.setRangeAndColor(testDocument, offset, length, null);
@@ -141,4 +176,15 @@ public class HyperlinkTokenScannerTest {
 		assertEquals("Unexpected tokens", expected, new String(found));
 	}
 
+	private static class CrashingHyperlinkDetector
+			extends AbstractHyperlinkDetector {
+
+		@Override
+		public IHyperlink[] detectHyperlinks(ITextViewer textViewer,
+				IRegion region, boolean canShowMultipleHyperlinks) {
+			throw new IllegalStateException(
+					"CrashingHyperlinkDetector fails on purpose");
+		}
+
+	}
 }
