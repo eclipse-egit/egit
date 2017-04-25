@@ -305,6 +305,9 @@ public class FetchGerritChangePage extends WizardPage {
 				checkPage();
 			}
 		});
+		BranchNameNormalizer tagNormalizer = new BranchNameNormalizer(tagText,
+				UIText.BranchNameNormalizer_TooltipForTag);
+		tagNormalizer.setVisible(false);
 
 		// radio: checkout FETCH_HEAD
 		checkout = new Button(checkoutGroup, SWT.RADIO);

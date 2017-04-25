@@ -3110,6 +3110,9 @@ public class UIText extends NLS {
 	public static String BranchNameNormalizer_Tooltip;
 
 	/** */
+	public static String BranchNameNormalizer_TooltipForTag;
+
+	/** */
 	public static String BranchRebaseMode_Rebase;
 
 	/** */
