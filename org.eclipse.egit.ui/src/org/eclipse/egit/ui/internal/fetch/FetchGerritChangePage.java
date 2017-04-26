@@ -37,6 +37,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.ActionUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.ValidationUtils;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
@@ -76,12 +77,11 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.VerifyEvent;
-import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -93,6 +93,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.ActionFactory;
 
 /**
  * Fetch a change from Gerrit
@@ -208,15 +209,15 @@ public class FetchGerritChangePage extends WizardPage {
 		});
 		new Label(main, SWT.NONE)
 				.setText(UIText.FetchGerritChangePage_ChangeLabel);
-		refText = new Text(main, SWT.BORDER);
+		refText = new Text(main, SWT.SINGLE | SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(refText);
 		final ExplicitContentProposalAdapter contentProposer = addRefContentProposalToText(
 				refText);
-		refText.addVerifyListener(new VerifyListener() {
-			@Override
-			public void verifyText(VerifyEvent event) {
-				event.text = event.text.trim();
-			}
+		refText.addVerifyListener(event -> {
+			event.text = event.text
+					// C.f. https://bugs.eclipse.org/bugs/show_bug.cgi?id=273470
+					.replaceAll("\r|\n|\r\n|\u2028|\u2029", " ") //$NON-NLS-1$ //$NON-NLS-2$
+					.trim();
 		});
 
 		final Group checkoutGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
@@ -347,8 +348,11 @@ public class FetchGerritChangePage extends WizardPage {
 		activateAdditionalRefs
 				.setText(UIText.FetchGerritChangePage_ActivateAdditionalRefsButton);
 		activateAdditionalRefs
-				.setToolTipText(UIText.FetchGerritChangePage_ActivateAdditionalRefsTooltip);
+				.setToolTipText(
+						UIText.FetchGerritChangePage_ActivateAdditionalRefsTooltip);
 
+		ActionUtils.setGlobalActions(refText, ActionUtils.createGlobalAction(
+				ActionFactory.PASTE, () -> doPaste(refText)));
 		refText.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
@@ -454,7 +458,7 @@ public class FetchGerritChangePage extends WizardPage {
 			return null;
 		}
 		Pattern pattern = Pattern.compile(
-				"(?:https?://\\S+?/|/)?([1-9][0-9]*)(?:/([1-9][0-9]*)(?:/([1-9][0-9]*)(?:..\\d+)?)?)?(?:/\\S*)?"); //$NON-NLS-1$
+				"(?:https?://\\S+?/|/)?([1-9][0-9]*)(?:/([1-9][0-9]*)(?:/([1-9][0-9]*)(?:\\.\\.\\d+)?)?)?(?:/\\S*)?"); //$NON-NLS-1$
 		Matcher matcher = pattern.matcher(input);
 		if (matcher.matches()) {
 			String first = matcher.group(1);
@@ -490,6 +494,31 @@ public class FetchGerritChangePage extends WizardPage {
 			}
 		}
 		return null;
+	}
+
+	private void doPaste(Text text) {
+		Clipboard clipboard = new Clipboard(text.getDisplay());
+		try {
+			String clipText = (String) clipboard
+					.getContents(TextTransfer.getInstance());
+			if (clipText != null) {
+				String toInsert = determineChangeFromString(clipText.trim());
+				if (toInsert != null) {
+					clipboard.setContents(new Object[] { toInsert },
+							new Transfer[] { TextTransfer.getInstance() });
+					try {
+						text.paste();
+					} finally {
+						clipboard.setContents(new Object[] { clipText },
+								new Transfer[] { TextTransfer.getInstance() });
+					}
+				} else {
+					text.paste();
+				}
+			}
+		} finally {
+			clipboard.dispose();
+		}
 	}
 
 	private void storeLastUsedUri(String uri) {
