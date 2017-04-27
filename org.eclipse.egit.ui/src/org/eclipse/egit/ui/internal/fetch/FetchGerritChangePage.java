@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2016 SAP AG and others.
+ * Copyright (c) 2010, 2017 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -15,9 +15,12 @@ package org.eclipse.egit.ui.internal.fetch;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -27,8 +30,11 @@ import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.core.op.ListRemoteOperation;
@@ -44,6 +50,7 @@ import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.egit.ui.internal.components.BranchNameNormalizer;
 import org.eclipse.egit.ui.internal.dialogs.AbstractBranchSelectionDialog;
 import org.eclipse.egit.ui.internal.dialogs.BranchEditDialog;
+import org.eclipse.egit.ui.internal.dialogs.NonBlockingWizardDialog;
 import org.eclipse.egit.ui.internal.gerrit.GerritDialogSettings;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.dialogs.Dialog;
@@ -75,9 +82,12 @@ import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -94,6 +104,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
+import org.eclipse.ui.progress.WorkbenchJob;
 
 /**
  * Fetch a change from Gerrit
@@ -110,7 +121,7 @@ public class FetchGerritChangePage extends WizardPage {
 
 	private Combo uriCombo;
 
-	private List<Change> changeRefs;
+	private Map<String, ChangeList> changeRefs = new HashMap<>();
 
 	private Text refText;
 
@@ -139,11 +150,18 @@ public class FetchGerritChangePage extends WizardPage {
 	private Button runInBackgroud;
 
 	private IInputValidator branchValidator;
+
 	private IInputValidator tagValidator;
 
 	private Button branchEditButton;
 
 	private Button branchCheckoutButton;
+
+	private ExplicitContentProposalAdapter contentProposer;
+
+	private boolean branchTextEdited;
+
+	private boolean tagTextEdited;
 
 	/**
 	 * @param repository
@@ -175,6 +193,12 @@ public class FetchGerritChangePage extends WizardPage {
 
 	@Override
 	public void createControl(Composite parent) {
+		parent.addDisposeListener(event -> {
+			for (ChangeList l : changeRefs.values()) {
+				l.cancel(ChangeList.CancelMode.INTERRUPT);
+			}
+			changeRefs.clear();
+		});
 		Clipboard clipboard = new Clipboard(parent.getDisplay());
 		String clipText = (String) clipboard.getContents(TextTransfer
 				.getInstance());
@@ -204,15 +228,21 @@ public class FetchGerritChangePage extends WizardPage {
 		uriCombo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				changeRefs = null;
+				String uriText = uriCombo.getText();
+				ChangeList list = changeRefs.get(uriText);
+				if (list != null) {
+					list.cancel(ChangeList.CancelMode.INTERRUPT);
+				}
+				list = new ChangeList(repository, uriText);
+				changeRefs.put(uriText, list);
+				preFetch(list);
 			}
 		});
 		new Label(main, SWT.NONE)
 				.setText(UIText.FetchGerritChangePage_ChangeLabel);
 		refText = new Text(main, SWT.SINGLE | SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(refText);
-		final ExplicitContentProposalAdapter contentProposer = addRefContentProposalToText(
-				refText);
+		contentProposer = addRefContentProposalToText(refText);
 		refText.addVerifyListener(event -> {
 			event.text = event.text
 					// C.f. https://bugs.eclipse.org/bugs/show_bug.cgi?id=273470
@@ -252,6 +282,18 @@ public class FetchGerritChangePage extends WizardPage {
 		branchText = new Text(checkoutGroup, SWT.SINGLE | SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false)
 				.align(SWT.FILL, SWT.CENTER).applyTo(branchText);
+		branchText.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				branchTextEdited = true;
+			}
+		});
+		branchText.addVerifyListener(event -> {
+			if (event.text.isEmpty()) {
+				branchTextEdited = false;
+			}
+		});
 		branchText.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
@@ -273,6 +315,7 @@ public class FetchGerritChangePage extends WizardPage {
 				if (dlg.open() == Window.OK) {
 					branchText.setText(Repository.shortenRefName(dlg
 							.getRefName()));
+					branchTextEdited = true;
 				} else {
 					// force calling branchText's modify listeners
 					branchText.setText(branchText.getText());
@@ -300,6 +343,18 @@ public class FetchGerritChangePage extends WizardPage {
 		tagText = new Text(checkoutGroup, SWT.SINGLE | SWT.BORDER);
 		GridDataFactory.fillDefaults().exclude(true).grab(true, false)
 				.applyTo(tagText);
+		tagText.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				tagTextEdited = true;
+			}
+		});
+		tagText.addVerifyListener(event -> {
+			if (event.text.isEmpty()) {
+				tagTextEdited = false;
+			}
+		});
 		tagText.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
@@ -357,15 +412,18 @@ public class FetchGerritChangePage extends WizardPage {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				Change change = Change.fromRef(refText.getText());
+				String suggestion = ""; //$NON-NLS-1$
 				if (change != null) {
-					branchText.setText(NLS
-							.bind(UIText.FetchGerritChangePage_SuggestedRefNamePattern,
-									change.getChangeNumber(),
-									change.getPatchSetNumber()));
-					tagText.setText(branchText.getText());
-				} else {
-					branchText.setText(""); //$NON-NLS-1$
-					tagText.setText(""); //$NON-NLS-1$
+					suggestion = NLS.bind(
+							UIText.FetchGerritChangePage_SuggestedRefNamePattern,
+							change.getChangeNumber(),
+							change.getPatchSetNumber());
+				}
+				if (!branchTextEdited) {
+					branchText.setText(suggestion);
+				}
+				if (!tagTextEdited) {
+					tagText.setText(suggestion);
 				}
 				checkPage();
 			}
@@ -402,12 +460,20 @@ public class FetchGerritChangePage extends WizardPage {
 		}
 		for (String aUri : uris) {
 			uriCombo.add(aUri);
+			changeRefs.put(aUri, new ChangeList(repository, aUri));
 		}
 		if (defaultUri != null) {
 			uriCombo.setText(defaultUri);
 		} else {
 			selectLastUsedUri();
 		}
+		String currentUri = uriCombo.getText();
+		ChangeList list = changeRefs.get(currentUri);
+		if (list == null) {
+			list = new ChangeList(repository, currentUri);
+			changeRefs.put(currentUri, list);
+		}
+		preFetch(list);
 		restoreRunInBackgroundSelection();
 		refText.setFocus();
 		Dialog.applyDialogFont(main);
@@ -443,6 +509,14 @@ public class FetchGerritChangePage extends WizardPage {
 			}
 		}
 		checkPage();
+	}
+
+	private void preFetch(ChangeList list) {
+		try {
+			list.fetch();
+		} catch (InvocationTargetException e) {
+			Activator.handleError(e.getLocalizedMessage(), e.getCause(), true);
+		}
 	}
 
 	/**
@@ -616,40 +690,71 @@ public class FetchGerritChangePage extends WizardPage {
 
 	private List<Change> getRefsForContentAssist()
 			throws InvocationTargetException, InterruptedException {
-		if (changeRefs == null) {
-			final String uriText = uriCombo.getText();
-			getContainer().run(true, true,
-					new IRunnableWithProgress() {
-						@Override
-						public void run(IProgressMonitor monitor)
-								throws InvocationTargetException,
-								InterruptedException {
-							ListRemoteOperation listOp;
-							try {
-								listOp = new ListRemoteOperation(
-										repository,
-										new URIish(uriText),
-										Activator
-												.getDefault()
-												.getPreferenceStore()
-												.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT));
-							} catch (URISyntaxException e) {
-								throw new InvocationTargetException(e);
-							}
-
-							listOp.run(monitor);
-							changeRefs = new ArrayList<>();
-							for (Ref ref : listOp.getRemoteRefs()) {
-								Change change = Change.fromRef(ref.getName());
-								if (change != null)
-									changeRefs.add(change);
-							}
-							Collections.sort(changeRefs,
-									Collections.reverseOrder());
-						}
-					});
+		String uriText = uriCombo.getText();
+		if (!changeRefs.containsKey(uriText)) {
+			changeRefs.put(uriText, new ChangeList(repository, uriText));
 		}
-		return changeRefs;
+		ChangeList list = changeRefs.get(uriText);
+		if (!list.isDone()) {
+			IWizardContainer container = getContainer();
+			IRunnableWithProgress operation = monitor -> {
+				monitor.beginTask(MessageFormat.format(
+						UIText.FetchGerritChangePage_FetchingRemoteRefsMessage,
+						uriText), IProgressMonitor.UNKNOWN);
+				List<Change> result = list.get();
+				if (monitor.isCanceled()) {
+					return;
+				}
+				// If we get here, the ChangeList future is done.
+				if (result == null || result.isEmpty()) {
+					// Don't bother if we didn't get any results
+					return;
+				}
+				// If we do have results now, open the proposals.
+				Job showProposals = new WorkbenchJob(
+						UIText.FetchGerritChangePage_ShowingProposalsJobName) {
+
+					@Override
+					public IStatus runInUIThread(IProgressMonitor uiMonitor) {
+						// But only if we're not disposed, the focus is still
+						// (or again) in the Change field, and the uri is still
+						// the same
+						try {
+							if (container instanceof NonBlockingWizardDialog) {
+								// Otherwise the dialog was blocked anyway, and
+								// focus will be restored
+								if (refText != refText.getDisplay()
+										.getFocusControl()) {
+									return Status.CANCEL_STATUS;
+								}
+								String uriNow = uriCombo.getText();
+								if (!uriNow.equals(uriText)) {
+									return Status.CANCEL_STATUS;
+								}
+							}
+							contentProposer.openProposalPopup();
+						} catch (SWTException e) {
+							// Disposed already
+							return Status.CANCEL_STATUS;
+						} finally {
+							uiMonitor.done();
+						}
+						return Status.OK_STATUS;
+					}
+
+				};
+				showProposals.schedule();
+			};
+			if (container instanceof NonBlockingWizardDialog) {
+				NonBlockingWizardDialog dialog = (NonBlockingWizardDialog) container;
+				dialog.run(operation,
+						() -> list.cancel(ChangeList.CancelMode.ABANDON));
+			} else {
+				container.run(true, true, operation);
+			}
+			return null;
+		}
+		return list.get();
 	}
 
 	boolean doFetch() {
@@ -853,12 +958,9 @@ public class FetchGerritChangePage extends WizardPage {
 					stroke.format()));
 		}
 		IContentProposalProvider cp = new IContentProposalProvider() {
+
 			@Override
 			public IContentProposal[] getProposals(String contents, int position) {
-				List<IContentProposal> resultList = new ArrayList<>();
-
-				Pattern pattern = UIUtils.createProposalPattern(contents);
-
 				List<Change> proposals;
 				try {
 					proposals = getRefsForContentAssist();
@@ -869,19 +971,21 @@ public class FetchGerritChangePage extends WizardPage {
 					return null;
 				}
 
-				if (proposals != null) {
-					for (final Change ref : proposals) {
-						if (pattern != null
-								&& !pattern.matcher(
-										ref.getChangeNumber().toString())
-										.matches()) {
-							continue;
-						}
-						resultList.add(new ChangeContentProposal(ref));
-					}
+				if (proposals == null) {
+					return null;
 				}
-				return resultList.toArray(new IContentProposal[resultList
-						.size()]);
+				List<IContentProposal> resultList = new ArrayList<>();
+				Pattern pattern = UIUtils.createProposalPattern(contents);
+				for (final Change ref : proposals) {
+					if (pattern != null && !pattern
+							.matcher(ref.getChangeNumber().toString())
+							.matches()) {
+						continue;
+					}
+					resultList.add(new ChangeContentProposal(ref));
+				}
+				return resultList
+						.toArray(new IContentProposal[resultList.size()]);
 			}
 		};
 
@@ -1010,6 +1114,246 @@ public class FetchGerritChangePage extends WizardPage {
 		@Override
 		public String toString() {
 			return getContent();
+		}
+	}
+
+	/**
+	 * A {@code ChangeList} is a "Future", loading the list of change refs
+	 * asynchronously from the remote repository. The {@link ChangeList#get()
+	 * get()} method blocks until the result is available or the future is
+	 * canceled. Pre-fetching is possible by calling {@link ChangeList#fetch()}
+	 * directly.
+	 */
+	private static class ChangeList {
+
+		/**
+		 * Determines how to cancel a not-yet-completed future. Irrespective of
+		 * the mechanism, the job may actually terminate normally, and
+		 * subsequent calls to get() may return a result.
+		 */
+		public static enum CancelMode {
+			/**
+			 * Tries to cancel the job, which may decide to ignore the request.
+			 * Callers to get() will remain blocked until the job terminates.
+			 */
+			CANCEL,
+			/**
+			 * Tries to cancel the job, which may decide to ignore the request.
+			 * Outstanding get() calls will be woken up and may throw
+			 * InterruptedException or return a result if the job terminated in
+			 * the meantime.
+			 */
+			ABANDON,
+			/**
+			 * Tries to cancel the job, and if that doesn't succeed immediately,
+			 * interrupts the job's thread. Outstanding calls to get() will be
+			 * woken up and may throw InterruptedException or return a result if
+			 * the job terminated in the meantime.
+			 */
+			INTERRUPT
+		}
+
+		private static enum State {
+			PRISTINE, SCHEDULED, CANCELING, INTERRUPT, CANCELED, DONE
+		}
+
+		private final Repository repository;
+
+		private final String uriText;
+
+		private State state = State.PRISTINE;
+
+		private List<Change> result;
+
+		private InterruptibleJob job;
+
+		public ChangeList(Repository repository, String uriText) {
+			this.repository = repository;
+			this.uriText = uriText;
+		}
+
+		/**
+		 * Tries to cancel the future. {@code cancel(false)} tries a normal job
+		 * cancellation, which may or may not terminated the job (it may decide
+		 * not to react to cancellation requests).
+		 *
+		 * @param cancellation
+		 *            {@link CancelMode} defining how to cancel
+		 *
+		 * @return {@code true} if the future was canceled (its job is not
+		 *         running anymore), {@code false} otherwise.
+		 */
+		public synchronized boolean cancel(CancelMode cancellation) {
+			CancelMode mode = cancellation == null ? CancelMode.CANCEL
+					: cancellation;
+			switch (state) {
+			case PRISTINE:
+				finish(false);
+				return true;
+			case SCHEDULED:
+				state = State.CANCELING;
+				boolean canceled = job.cancel();
+				if (canceled) {
+					state = State.CANCELED;
+				} else if (mode == CancelMode.INTERRUPT) {
+					interrupt();
+				} else if (mode == CancelMode.ABANDON) {
+					notifyAll();
+				}
+				return canceled;
+			case CANCELING:
+				// cancel(CANCEL|ABANDON) was called before.
+				if (mode == CancelMode.INTERRUPT) {
+					interrupt();
+				} else if (mode == CancelMode.ABANDON) {
+					notifyAll();
+				}
+				return false;
+			case INTERRUPT:
+				if (mode != CancelMode.CANCEL) {
+					notifyAll();
+				}
+				return false;
+			case CANCELED:
+				return true;
+			default:
+				return false;
+			}
+		}
+
+		public synchronized boolean isDone() {
+			return state == State.CANCELED || state == State.DONE;
+		}
+
+		/**
+		 * Retrieves the result. If the result is not yet available, the method
+		 * blocks until it is or {@link #cancel(CancelMode)} is called with
+		 * {@link CancelMode#ABANDON} or {@link CancelMode#INTERRUPT}.
+		 *
+		 * @return the result, which may be {@code null} if the future was
+		 *         canceled
+		 * @throws InterruptedException
+		 *             if waiting was interrupted
+		 * @throws InvocationTargetException
+		 *             if the future's job cannot be created
+		 */
+		public synchronized List<Change> get()
+				throws InterruptedException, InvocationTargetException {
+			switch (state) {
+			case DONE:
+			case CANCELED:
+				return result;
+			case PRISTINE:
+				fetch();
+				return get();
+			default:
+				wait();
+				if (state == State.CANCELING || state == State.INTERRUPT) {
+					// canceled with ABANDON or INTERRUPT
+					throw new InterruptedException();
+				}
+				return get();
+			}
+		}
+
+		private synchronized void finish(boolean done) {
+			state = done ? State.DONE : State.CANCELED;
+			job = null;
+			notifyAll(); // We're done, wake up all outstanding get() calls
+		}
+
+		private synchronized void interrupt() {
+			state = State.INTERRUPT;
+			job.interrupt();
+			notifyAll(); // Abandon outstanding get() calls
+		}
+
+		/**
+		 * On the first call, starts a background job to fetch the result.
+		 * Subsequent calls do nothing and return immediately.
+		 *
+		 * @throws InvocationTargetException
+		 *             if starting the job fails
+		 */
+		public synchronized void fetch() throws InvocationTargetException {
+			if (job != null || state != State.PRISTINE) {
+				return;
+			}
+			ListRemoteOperation listOp;
+			try {
+				listOp = new ListRemoteOperation(repository,
+						new URIish(uriText),
+						Activator.getDefault().getPreferenceStore().getInt(
+								UIPreferences.REMOTE_CONNECTION_TIMEOUT));
+			} catch (URISyntaxException e) {
+				finish(false);
+				throw new InvocationTargetException(e);
+			}
+			job = new InterruptibleJob(MessageFormat.format(
+					UIText.FetchGerritChangePage_FetchingRemoteRefsMessage,
+					uriText)) {
+
+				@Override
+				protected IStatus run(IProgressMonitor monitor) {
+					try {
+						listOp.run(monitor);
+					} catch (InterruptedException e) {
+						return Status.CANCEL_STATUS;
+					} catch (InvocationTargetException e) {
+						synchronized (ChangeList.this) {
+							if (state == State.CANCELING
+									|| state == State.INTERRUPT) {
+								// JGit may report a TransportException when the
+								// thread is interrupted. Let's just pretend we
+								// canceled before. Also, if the user canceled
+								// already, he's not interested in errors
+								// anymore.
+								return Status.CANCEL_STATUS;
+							}
+						}
+						return Activator
+								.createErrorStatus(e.getLocalizedMessage(), e);
+					}
+					List<Change> changes = new ArrayList<>();
+					for (Ref ref : listOp.getRemoteRefs()) {
+						Change change = Change.fromRef(ref.getName());
+						if (change != null) {
+							changes.add(change);
+						}
+					}
+					Collections.sort(changes, Collections.reverseOrder());
+					result = changes;
+					return Status.OK_STATUS;
+				}
+
+			};
+			job.addJobChangeListener(new JobChangeAdapter() {
+
+				@Override
+				public void done(IJobChangeEvent event) {
+					IStatus status = event.getResult();
+					finish(status != null && status.isOK());
+				}
+
+			});
+			job.setUser(false);
+			job.setSystem(true);
+			state = State.SCHEDULED;
+			job.schedule();
+		}
+
+		private static abstract class InterruptibleJob extends Job {
+
+			public InterruptibleJob(String name) {
+				super(name);
+			}
+
+			public void interrupt() {
+				Thread thread = getThread();
+				if (thread != null) {
+					thread.interrupt();
+				}
+			}
 		}
 	}
 }
