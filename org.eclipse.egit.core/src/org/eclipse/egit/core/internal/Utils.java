@@ -8,7 +8,10 @@
  *******************************************************************************/
 package org.eclipse.egit.core.internal;
 
+import java.text.MessageFormat;
+
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.jgit.lib.ObjectId;
 
 /**
@@ -91,9 +94,22 @@ public class Utils {
 	 * @return a object of the given class, or <code>null</code> if this object
 	 *         does not have an adapter for the given class
 	 */
-	@SuppressWarnings("unchecked")
 	public static <T> T getAdapter(IAdaptable adaptable, Class<T> adapterClass) {
 		Object adapter = adaptable.getAdapter(adapterClass);
-		return (T) adapter;
+		if (adapter == null) {
+			return null;
+		}
+		// Guard against misbehaving IAdaptables...
+		if (adapterClass.isInstance(adapter)) {
+			return adapterClass.cast(adapter);
+		} else {
+			Activator.logError(
+					MessageFormat.format(CoreText.Utils_InvalidAdapterError,
+							adaptable.getClass().getName(),
+							adapterClass.getName(),
+							adapter.getClass().getName()),
+					new IllegalStateException());
+			return null;
+		}
 	}
 }
