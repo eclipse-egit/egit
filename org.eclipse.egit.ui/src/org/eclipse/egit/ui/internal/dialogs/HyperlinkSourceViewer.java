@@ -36,10 +36,12 @@ import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.HyperlinkDetectorDescriptor;
+import org.eclipse.ui.texteditor.spelling.SpellingProblem;
+import org.eclipse.ui.texteditor.spelling.SpellingService;
 
 /**
  * A {@link ProjectionViewer} that automatically reacts to changes in the
- * hyperlinking preferences.
+ * hyperlinking and spellchecking preferences.
  */
 public class HyperlinkSourceViewer extends ProjectionViewer {
 	// The default SourceViewer doesn't do this and instead AbstractTextEditor
@@ -56,6 +58,8 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 	private Set<String> preferenceKeysForActivation;
 
 	private IPropertyChangeListener hyperlinkChangeListener;
+
+	private IPropertyChangeListener spellCheckingListener;
 
 	/**
 	 * Constructs a new source viewer. The vertical ruler is initially visible.
@@ -134,6 +138,33 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 			configuration = null;
 			hyperlinkChangeListener = null;
 		}
+		spellCheckingListener = event -> {
+			if (SpellingService.PREFERENCE_SPELLING_ENABLED
+					.equals(event.getProperty())) {
+				boolean isEnabled = EditorsUI.getPreferenceStore().getBoolean(
+						SpellingService.PREFERENCE_SPELLING_ENABLED);
+				updateSpellChecking(isEnabled);
+			}
+		};
+		EditorsUI.getPreferenceStore()
+				.addPropertyChangeListener(spellCheckingListener);
+		this.getTextWidget().addDisposeListener(event -> {
+			if (hyperlinkChangeListener != null) {
+				EditorsUI.getPreferenceStore()
+						.removePropertyChangeListener(hyperlinkChangeListener);
+			}
+			EditorsUI.getPreferenceStore()
+					.removePropertyChangeListener(spellCheckingListener);
+		});
+	}
+
+	private void updateSpellChecking(boolean isEnabled) {
+		// See TextEditor.handlePreferenceStoreChanged.
+		this.unconfigure();
+		this.configure(configuration);
+		if (!isEnabled) {
+			SpellingProblem.removeAll(this, null);
+		}
 	}
 
 	private void configurePreferenceKeys() {
@@ -171,6 +202,10 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 		if (hyperlinkChangeListener != null) {
 			EditorsUI.getPreferenceStore()
 					.removePropertyChangeListener(hyperlinkChangeListener);
+		}
+		if (spellCheckingListener != null) {
+			EditorsUI.getPreferenceStore()
+					.removePropertyChangeListener(spellCheckingListener);
 		}
 		preferenceKeysForEnablement = null;
 		preferenceKeysForActivation = null;
