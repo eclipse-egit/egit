@@ -2465,25 +2465,7 @@ public class UIText extends NLS {
 	public static String GlobalConfigurationPreferencePage_repositorySettingNoRepositories;
 
 	/** */
-	public static String SpellcheckableMessageArea_redo;
-
-	/** */
 	public static String SpellcheckableMessageArea_showWhitespace;
-
-	/** */
-	public static String SpellcheckableMessageArea_undo;
-
-	/** */
-	public static String SpellCheckingMessageArea_copy;
-
-	/** */
-	public static String SpellCheckingMessageArea_cut;
-
-	/** */
-	public static String SpellCheckingMessageArea_paste;
-
-	/** */
-	public static String SpellCheckingMessageArea_selectAll;
 
 	/** */
 	public static String CommitMessageComponent_MessageInvalidAuthor;
