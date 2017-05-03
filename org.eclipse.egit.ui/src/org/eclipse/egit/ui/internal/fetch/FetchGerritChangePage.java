@@ -785,6 +785,12 @@ public class FetchGerritChangePage extends WizardPage {
 					if (doActivateAdditionalRefs) {
 						activateAdditionalRefs();
 					}
+					if (mode == CheckoutMode.NOCHECKOUT) {
+						// Tell the world that FETCH_HEAD only changed. In other
+						// cases, JGit will have sent a RefsChangeEvent
+						// already.
+						repository.fireEvent(new FetchHeadChangedEvent());
+					}
 					storeLastUsedUri(uri);
 				} catch (CoreException ce) {
 					return ce.getStatus();
