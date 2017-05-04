@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87bd33cc_f37af55f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-04T14:40:43Z",
+      "side": 1,
+      "message": "Please follow the EGit guidelines on commit messages. Basically remove the bug number from the title line and add it to the footer as\n\n  Bug: 513247\n\nSee https://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines.",
+      "revId": "1d6bf6220a8bfc6c988377b6195ba0fb0c0a62a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd33cc_932aa17c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneDropAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-04T14:40:43Z",
+      "side": 1,
+      "message": "Hmmm... why is this public?",
+      "range": {
+        "startLine": 99,
+        "startChar": 1,
+        "endLine": 99,
+        "endChar": 7
+      },
+      "revId": "1d6bf6220a8bfc6c988377b6195ba0fb0c0a62a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd33cc_33354dde",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneDropAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-04T14:40:43Z",
+      "side": 1,
+      "message": "This should be replaced with something more meaningful. Activator.logError(e.getLocalizedMessage(), e); might be a possibility.",
+      "range": {
+        "startLine": 177,
+        "startChar": 0,
+        "endLine": 178,
+        "endChar": 23
+      },
+      "revId": "1d6bf6220a8bfc6c988377b6195ba0fb0c0a62a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd33cc_b3707d82",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitUrlChecker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-04T14:40:43Z",
+      "side": 1,
+      "message": "Perhaps \"factored out of RepositorySelectionPage\"?",
+      "range": {
+        "startLine": 10,
+        "startChar": 17,
+        "endLine": 10,
+        "endChar": 92
+      },
+      "revId": "1d6bf6220a8bfc6c988377b6195ba0fb0c0a62a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd33cc_b3ccfd65",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitUrlChecker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-04T14:40:43Z",
+      "side": 1,
+      "message": "Now that we\u0027re on Java 8, this could be shortened to \\\\h|\\\\v.",
+      "revId": "1d6bf6220a8bfc6c988377b6195ba0fb0c0a62a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd33cc_d3cfb956",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitUrlChecker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-04T14:40:43Z",
+      "side": 1,
+      "message": "Not true.",
+      "range": {
+        "startLine": 59,
+        "startChar": 14,
+        "endLine": 59,
+        "endChar": 47
+      },
+      "revId": "1d6bf6220a8bfc6c988377b6195ba0fb0c0a62a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd33cc_938e2105",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitUrlChecker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-04T14:40:43Z",
+      "side": 1,
+      "message": "This function and the GIT_CLONE_COMMAND_PREFIX are now duplicated here and in RepositorySelectionPage. Make public here, perhaps rename to sanitizeAsGitURL, make it return only the first line in case we have multi-line input, and use here and in RepositorySelectionPage.",
+      "revId": "1d6bf6220a8bfc6c988377b6195ba0fb0c0a62a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd33cc_f3d675ef",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitUrlChecker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-04T14:40:43Z",
+      "side": 1,
+      "message": "Please add the missing braces for the loop and the if statement.",
+      "revId": "1d6bf6220a8bfc6c988377b6195ba0fb0c0a62a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd33cc_13da1114",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-04T14:40:43Z",
+      "side": 1,
+      "message": "If the clipboard contains multi-line text that just per chance starts with a recognized URL on the first line, we end up with the full multi-line text in the field. Previous code took only the first line in that case.",
+      "revId": "1d6bf6220a8bfc6c988377b6195ba0fb0c0a62a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
