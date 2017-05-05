@@ -780,7 +780,7 @@ public class FetchGerritChangePage extends WizardPage {
 								progress.newChild(1));
 						break;
 					default:
-						// nothing
+						break;
 					}
 					if (doActivateAdditionalRefs) {
 						activateAdditionalRefs();
