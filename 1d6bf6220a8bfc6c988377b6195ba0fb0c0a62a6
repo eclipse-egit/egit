@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87bd33cc_df1b3877",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 81063
+      },
+      "writtenOn": "2017-05-05T21:30:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87bd33cc_f37af55f",
+      "revId": "1d6bf6220a8bfc6c988377b6195ba0fb0c0a62a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87bd33cc_932aa17c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneDropAdapter.java",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "87bd33cc_1f35b0dd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneDropAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 81063
+      },
+      "writtenOn": "2017-05-05T21:30:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87bd33cc_932aa17c",
+      "range": {
+        "startLine": 99,
+        "startChar": 1,
+        "endLine": 99,
+        "endChar": 7
+      },
+      "revId": "1d6bf6220a8bfc6c988377b6195ba0fb0c0a62a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87bd33cc_33354dde",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneDropAdapter.java",
         "patchSetId": 3
@@ -53,6 +95,30 @@
       "writtenOn": "2017-05-04T14:40:43Z",
       "side": 1,
       "message": "This should be replaced with something more meaningful. Activator.logError(e.getLocalizedMessage(), e); might be a possibility.",
+      "range": {
+        "startLine": 177,
+        "startChar": 0,
+        "endLine": 178,
+        "endChar": 23
+      },
+      "revId": "1d6bf6220a8bfc6c988377b6195ba0fb0c0a62a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd33cc_3fbb4cbb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneDropAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 81063
+      },
+      "writtenOn": "2017-05-05T21:30:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87bd33cc_33354dde",
       "range": {
         "startLine": 177,
         "startChar": 0,
@@ -173,6 +239,24 @@
       "writtenOn": "2017-05-04T14:40:43Z",
       "side": 1,
       "message": "If the clipboard contains multi-line text that just per chance starts with a recognized URL on the first line, we end up with the full multi-line text in the field. Previous code took only the first line in that case.",
+      "revId": "1d6bf6220a8bfc6c988377b6195ba0fb0c0a62a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd33cc_dfe33894",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 81063
+      },
+      "writtenOn": "2017-05-05T21:30:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87bd33cc_13da1114",
       "revId": "1d6bf6220a8bfc6c988377b6195ba0fb0c0a62a6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
