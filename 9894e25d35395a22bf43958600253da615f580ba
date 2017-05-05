@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87bd33cc_2ea964dc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistorySelectionTracker.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-05T08:57:04Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "9894e25d35395a22bf43958600253da615f580ba",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd33cc_4ea4e002",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistorySelectionTracker.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-05T08:57:04Z",
+      "side": 1,
+      "message": "This debug/test output should be removed :-)",
+      "revId": "9894e25d35395a22bf43958600253da615f580ba",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
