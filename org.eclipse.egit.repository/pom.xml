@@ -96,7 +96,7 @@
                 <update.site.name>EGit p2 Repository</update.site.name>
                 <update.site.description>Use this URL in Eclipse to install EGit and JGit</update.site.description>
                 <update.site.version>${project.version}</update.site.version>
-                <target.eclipse.version>4.2.2 (Juno) or newer</target.eclipse.version>
+                <target.eclipse.version>4.4.0 (Luna) or newer</target.eclipse.version>
               </symbols>
               <associateSites>
                 <site>http://download.eclipse.org/e4/snapshots/org.eclipse.e4.ui</site>
