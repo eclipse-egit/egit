@@ -246,7 +246,7 @@ public class FetchGerritChangePage extends WizardPage {
 		refText.addVerifyListener(event -> {
 			event.text = event.text
 					// C.f. https://bugs.eclipse.org/bugs/show_bug.cgi?id=273470
-					.replaceAll("\r|\n|\r\n|\u2028|\u2029", " ") //$NON-NLS-1$ //$NON-NLS-2$
+					.replaceAll("\\v", " ") //$NON-NLS-1$ //$NON-NLS-2$
 					.trim();
 		});
 
