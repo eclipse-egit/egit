@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.egit.core;
 
+import java.util.concurrent.TimeUnit;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jgit.lib.ProgressMonitor;
@@ -20,6 +22,8 @@ import org.eclipse.jgit.lib.ProgressMonitor;
  * Eclipse {@link IProgressMonitor}.
  */
 public class EclipseGitProgressTransformer implements ProgressMonitor {
+
+	private static long UPDATE_INTERVAL = TimeUnit.MILLISECONDS.toMillis(100);
 
 	// Because of the inconsistencies of JGit progress management (sometimes
 	// start() not called, sometimes more beginTask() calls than advertised
@@ -33,7 +37,11 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 
 	private int lastWorked;
 
+	private int lastShown;
+
 	private int totalWork;
+
+	private long lastUpdatedAt;
 
 	/**
 	 * Create a new progress monitor.
@@ -54,6 +62,8 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 	public void beginTask(final String name, final int total) {
 		msg = name;
 		lastWorked = 0;
+		lastShown = 0;
+		lastUpdatedAt = 0;
 		totalWork = total <= 0 ? UNKNOWN : total;
 		root.subTask(msg);
 	}
@@ -65,14 +75,19 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 		}
 		final int cmp = lastWorked + work;
 		if (totalWork == UNKNOWN) {
-			root.subTask(msg + ", " + cmp); //$NON-NLS-1$
-			root.setWorkRemaining(100);
-			root.worked(1);
-		} else if (cmp * 100 / totalWork != lastWorked * 100 / totalWork) {
+			long now = System.currentTimeMillis();
+			if (now < lastUpdatedAt || now - lastUpdatedAt > UPDATE_INTERVAL) {
+				root.subTask(msg + ", " + cmp); //$NON-NLS-1$
+				root.setWorkRemaining(100);
+				root.worked(1);
+				lastUpdatedAt = now;
+			}
+		} else if (lastShown == 0
+				|| cmp * 100 / totalWork != lastShown * 100 / totalWork) {
 			// Percentage changed: update the subTask message
 			final StringBuilder m = new StringBuilder();
 			m.append(msg);
-			m.append(": ");  //$NON-NLS-1$
+			m.append(": "); //$NON-NLS-1$
 			while (m.length() < 25) {
 				m.append(' ');
 			}
@@ -98,6 +113,7 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 			root.subTask(m.toString());
 			root.setWorkRemaining(100);
 			root.worked(1);
+			lastShown = cmp;
 		}
 		lastWorked = cmp;
 	}
