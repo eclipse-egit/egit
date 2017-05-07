@@ -13,6 +13,7 @@
 package org.eclipse.egit.core.op;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -25,11 +26,15 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
+import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
+import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.SubmoduleInitCommand;
 import org.eclipse.jgit.api.SubmoduleUpdateCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.submodule.SubmoduleWalk;
@@ -71,7 +76,12 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 
 			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
+				RepositoryUtil util = Activator.getDefault()
+						.getRepositoryUtil();
 				SubMonitor progress = SubMonitor.convert(pm, 4);
+				progress.setTaskName(MessageFormat.format(
+						CoreText.SubmoduleUpdateOperation_updating,
+						util.getRepositoryName(repository)));
 
 				Git git = Git.wrap(repository);
 
@@ -93,6 +103,27 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 					if (strategy != null) {
 						update.setStrategy(strategy);
 					}
+					update.setCallback(new CloneCommand.Callback() {
+
+						@Override
+						public void initializedSubmodules(
+								Collection<String> submodules) {
+							// Nothing to do
+						}
+
+						@Override
+						public void cloningSubmodule(String path) {
+							progress.setTaskName(MessageFormat.format(
+									CoreText.SubmoduleUpdateOperation_cloning,
+									util.getRepositoryName(repository), path));
+						}
+
+						@Override
+						public void checkingOut(AnyObjectId commit,
+								String path) {
+							// Nothing to do
+						}
+					});
 					updated = update.call();
 					SubMonitor refreshMonitor = progress.newChild(1)
 							.setWorkRemaining(updated.size());
