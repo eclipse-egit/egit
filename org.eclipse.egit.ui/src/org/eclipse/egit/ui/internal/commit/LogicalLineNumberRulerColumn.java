@@ -25,6 +25,13 @@ public class LogicalLineNumberRulerColumn extends LineNumberRulerColumn {
 	private final @NonNull DiffEntry.Side side;
 
 	/**
+	 * Zoom level for workaround for HiDPI line number rulers on macOS retina.
+	 *
+	 * @see <a href="https://bugs.eclipse.org/516322">Bug 516322</a>
+	 */
+	int zoom = 100;
+
+	/**
 	 * @param side
 	 */
 	public LogicalLineNumberRulerColumn(@NonNull DiffEntry.Side side) {
@@ -68,5 +75,28 @@ public class LogicalLineNumberRulerColumn extends LineNumberRulerColumn {
 			++digits;
 		}
 		return digits;
+	}
+
+	/**
+	 * Enable workaround for HiDPI line number rulers on macOS retina. This
+	 * method will override an internal method in Oxygen (4.7).
+	 *
+	 * @return true
+	 * @see <a href="https://bugs.eclipse.org/516322">Bug 516322</a>
+	 */
+	protected boolean internalSupportsZoomedPaint() {
+		return true;
+	}
+
+	/**
+	 * Store zoom level for workaround for HiDPI line number rulers on macOS
+	 * retina. This method will override an internal method in Oxygen (4.7).
+	 *
+	 * @param zoomLevel
+	 *            the zoom level to use for drawing operations
+	 * @see <a href="https://bugs.eclipse.org/516322">Bug 516322</a>
+	 */
+	protected void internalSetZoom(int zoomLevel) {
+		this.zoom = zoomLevel;
 	}
 }
