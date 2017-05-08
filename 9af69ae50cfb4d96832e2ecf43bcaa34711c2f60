@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "479dfb6e_31187035",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/OldNewLogicalLineNumberRulerColumn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-08T21:55:39Z",
+      "side": 1,
+      "message": "Move to LogicalLineNumberRulerColumn and make protected. Give it a javadoc that indicates it\u0027s part of the work-around.",
+      "revId": "9af69ae50cfb4d96832e2ecf43bcaa34711c2f60",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_313f9074",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/OldNewLogicalLineNumberRulerColumn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-08T21:55:39Z",
+      "side": 1,
+      "message": "Move these two functions also to LogicalLineNumberRulerColumn and remove the @Override. (Interestingly, we don\u0027t seem to have missing override annotations configured as error or warning...)",
+      "revId": "9af69ae50cfb4d96832e2ecf43bcaa34711c2f60",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_51341494",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/OldNewLogicalLineNumberRulerColumn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-08T21:55:39Z",
+      "side": 1,
+      "message": "Also belongs to LogicalLineNumberRulerColumn",
+      "revId": "9af69ae50cfb4d96832e2ecf43bcaa34711c2f60",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
