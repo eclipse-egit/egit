@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "479dfb6e_b72a902e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceMapping.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-09T13:04:44Z",
+      "side": 1,
+      "message": "Seems to me that this is not really used. GitLightweightDecorator.DecorationHelper.decorateText doesn\u0027t use the value of getName() in the BINDING_RESOURCE_NAME binding. It only provides a prefix and a suffix and the BINDING_RESOURCE_NAME is only used to figure out which one is being constructed; the name itself is provided by whatever label provider is active.\n\nSo it doesn\u0027t matter at all what you provide here.",
+      "revId": "dfee7fa5bd6d2861042808c03e4938f87d9ca004",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
