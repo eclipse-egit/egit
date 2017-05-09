@@ -2001,6 +2001,13 @@ public class StagingView extends ViewPart
 		viewer.setComparator(new StagingEntryComparator(getSortCheckState(),
 				getPreferenceStore()
 						.getBoolean(UIPreferences.STAGING_VIEW_FILENAME_MODE)));
+		viewer.addDoubleClickListener(event -> {
+			IStructuredSelection selection = (IStructuredSelection) event
+					.getSelection();
+			Object selectedNode = selection.getFirstElement();
+			viewer.setExpandedState(selectedNode,
+					!viewer.getExpandedState(selectedNode));
+		});
 		enableAutoExpand(viewer);
 		addListenerToDisableAutoExpandOnCollapse(viewer);
 		return viewer;
