@@ -2446,6 +2446,75 @@
             </with>
          </activeWhen>
       </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.AbortRebase">
+         <class
+               class="org.eclipse.egit.ui.internal.commands.shared.AbortRebaseCommand">
+         </class>
+         <activeWhen>
+            <or>
+               <and>
+                  <count value="1" />
+                  <iterate>
+                     <and>
+                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode" />
+                        <test property="GitRepository.canAbortRebase" />
+                     </and>
+                  </iterate>
+               </and>
+               <test
+                     property="GitSelection.projectsSingleRepository"
+                     args="canAbortRebase">
+               </test>
+            </or>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.ContinueRebase">
+         <class
+               class="org.eclipse.egit.ui.internal.commands.shared.ContinueRebaseCommand">
+         </class>
+         <activeWhen>
+            <or>
+               <and>
+                  <count value="1" />
+                  <iterate>
+                     <and>
+                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode" />
+                        <test property="GitRepository.canContinueRebase" />
+                     </and>
+                  </iterate>
+               </and>
+               <test
+                     property="GitSelection.projectsSingleRepository"
+                     args="canContinueRebase">
+               </test>
+            </or>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.SkipRebase">
+         <class
+               class="org.eclipse.egit.ui.internal.commands.shared.SkipRebaseCommand">
+         </class>
+         <activeWhen>
+            <or>
+               <and>
+                  <count value="1" />
+                  <iterate>
+                     <and>
+                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode" />
+                        <test property="GitRepository.canAbortRebase" />
+                     </and>
+                  </iterate>
+               </and>
+               <test
+                     property="GitSelection.projectsSingleRepository"
+                     args="canAbortRebase">
+               </test>
+            </or>
+         </activeWhen>
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.views">
@@ -3672,73 +3741,22 @@
                icon="icons/obj16/rebase.gif"
                label="%RebaseMenu.label">
             <command
-                  commandId="org.eclipse.egit.ui.org.eclipse.egit.ui.AbortRebase"
+                  commandId="org.eclipse.egit.ui.AbortRebase"
                   label="%AbortCommand.label"
                   style="push">
-               <visibleWhen
-                     checkEnabled="false">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate>
-                        <and>
-                           <instanceof
-                                 value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-                           </instanceof>
-                           <test
-                                 property="GitRepository.canAbortRebase">
-                           </test>
-                        </and>
-                     </iterate>
-                  </and>
-               </visibleWhen>
+               <visibleWhen checkEnabled="true" />
             </command>
             <command
                   commandId="org.eclipse.egit.ui.ContinueRebase"
                   label="%ContinueCommand.label"
                   style="push">
-               <visibleWhen
-                     checkEnabled="false">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate>
-                        <and>
-                           <instanceof
-                                 value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-                           </instanceof>
-                           <test
-                                 property="GitRepository.canContinueRebase">
-                           </test>
-                        </and>
-                     </iterate>
-                  </and>
-               </visibleWhen>
+               <visibleWhen checkEnabled="true" />
             </command>
             <command
                   commandId="org.eclipse.egit.ui.SkipRebase"
                   label="%SkipCommand.label"
                   style="push">
-               <visibleWhen
-                     checkEnabled="false">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate>
-                        <and>
-                           <instanceof
-                                 value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-                           </instanceof>
-                           <test
-                                 property="GitRepository.canAbortRebase">
-                           </test>
-                        </and>
-                     </iterate>
-                  </and>
-               </visibleWhen>
+               <visibleWhen checkEnabled="true" />
             </command>
          </menu>
          <command
@@ -4531,37 +4549,19 @@
                   id="egit.menu.rebase"
                   label="%RebaseMenu.label">
                <command
-                     commandId="org.eclipse.egit.ui.org.eclipse.egit.ui.AbortRebase"
+                     commandId="org.eclipse.egit.ui.AbortRebase"
                      style="push">
-                  <visibleWhen
-                        checkEnabled="false">
-                     <test
-                           property="GitSelection.projectsSingleRepository"
-                           args="canAbortRebase">
-                     </test>
-                  </visibleWhen>
-               </command>
-               <command
-                     commandId="org.eclipse.egit.ui.SkipRebase"
-                     style="push">
-                  <visibleWhen
-                        checkEnabled="false">
-                     <test
-                           property="GitSelection.projectsSingleRepository"
-                           args="canAbortRebase">
-                     </test>
-                  </visibleWhen>
+                  <visibleWhen checkEnabled="true" />
                </command>
                <command
                      commandId="org.eclipse.egit.ui.ContinueRebase"
                      style="push">
-                  <visibleWhen
-                        checkEnabled="false">
-                     <test
-                           property="GitSelection.projectsSingleRepository"
-                           args="canContinueRebase">
-                     </test>
-                  </visibleWhen>
+                  <visibleWhen checkEnabled="true" />
+               </command>
+               <command
+                     commandId="org.eclipse.egit.ui.SkipRebase"
+                     style="push">
+                  <visibleWhen checkEnabled="true" />
                </command>
             </menu>
             <command
@@ -5077,19 +5077,16 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.commands.shared.AbortRebaseCommand"
-            id="org.eclipse.egit.ui.org.eclipse.egit.ui.AbortRebase"
+            id="org.eclipse.egit.ui.AbortRebase"
             name="%AbortRebaseCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.commands.shared.SkipRebaseCommand"
             id="org.eclipse.egit.ui.SkipRebase"
             name="%SkipRebaseCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.commands.shared.ContinueRebaseCommand"
             id="org.eclipse.egit.ui.ContinueRebase"
             name="%ContinueRebaseCommand.name">
       </command>
@@ -5275,7 +5272,7 @@
             icon="icons/obj16/clear.gif">
       </image>
       <image
-            commandId="org.eclipse.egit.ui.org.eclipse.egit.ui.AbortRebase"
+            commandId="org.eclipse.egit.ui.AbortRebase"
             icon="icons/elcl16/progress_stop.gif">
       </image>
       <image
