@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "479dfb6e_40a3582f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-10T08:56:14Z",
+      "side": 1,
+      "message": "Should become a StringBuilder now, at the end return builder.toString().",
+      "revId": "2650d1f14c029cb8fd42235ec9a77d3da8bf814f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_008950ad",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-10T08:56:14Z",
+      "side": 1,
+      "message": "Now that loading the message providers has changed, you can rely on there not being a null element in the list, so this check here is not needed.",
+      "revId": "2650d1f14c029cb8fd42235ec9a77d3da8bf814f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_204c941c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-10T08:56:14Z",
+      "side": 1,
+      "message": "Now that we loop this should be done once outside of the loop.",
+      "revId": "2650d1f14c029cb8fd42235ec9a77d3da8bf814f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_a09164d7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-10T08:56:14Z",
+      "side": 1,
+      "message": "Is that really necessary? I think just using \u0027\\n\u0027 should be good enough. Also for Windows.\n\nAlso, would it make sense to enforce one empty line between multiple messages? (I.e., add two \u0027\\n\u0027s.)",
+      "revId": "2650d1f14c029cb8fd42235ec9a77d3da8bf814f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_60469cfc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-10T08:56:14Z",
+      "side": 1,
+      "message": "I think we should be more careful here. After all we\u0027re calling untrusted external code.\n\nCheck for messageProvider returning null before trimming, and if the provided message is null or empty after trimming, don\u0027t modify calculatedCommitMessage.",
+      "revId": "2650d1f14c029cb8fd42235ec9a77d3da8bf814f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_804b8001",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-10T08:56:14Z",
+      "side": 1,
+      "message": "Should be renamed: plural, i.e., getCommitMessageProviders.",
+      "range": {
+        "startLine": 707,
+        "startChar": 38,
+        "endLine": 707,
+        "endChar": 62
+      },
+      "revId": "2650d1f14c029cb8fd42235ec9a77d3da8bf814f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_a0aa4407",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-10T08:56:14Z",
+      "side": 1,
+      "message": "Plural: configs.",
+      "range": {
+        "startLine": 712,
+        "startChar": 26,
+        "endLine": 712,
+        "endChar": 32
+      },
+      "revId": "2650d1f14c029cb8fd42235ec9a77d3da8bf814f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_00b2307b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-10T08:56:14Z",
+      "side": 1,
+      "message": "Why not\n\n  for (IConfigurationElement config : configs) { ... }\n\n?",
+      "revId": "2650d1f14c029cb8fd42235ec9a77d3da8bf814f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_40bc3856",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-10T08:56:14Z",
+      "side": 1,
+      "message": "Now that we\u0027re loading several extensions, I think we should catch CoreException and InvalidRegistryObjectException here and log them. Otherwise a single invalid extension will effectively also disable all other valid extensions.\n\nLogging should include, if possible, the name of the contributor to aid in localizing the problem. That name can be gotten via config.getDeclaringExtension().getContributor().getName(), which itself may raise InvalidRegistryObjectException, so be  careful.",
+      "revId": "2650d1f14c029cb8fd42235ec9a77d3da8bf814f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
