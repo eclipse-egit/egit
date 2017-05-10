@@ -58,6 +58,7 @@ import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jgit.junit.MockSystemReader;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -68,6 +69,7 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.jgit.util.IO;
+import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -232,6 +234,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 				.setValue(UIPreferences.SHOW_DETACHED_HEAD_WARNING,
 						false);
 		closeGitViews();
+		SystemReader.setInstance(new MockSystemReader());
 	}
 
 	@AfterClass
@@ -247,6 +250,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 					| FileUtils.RECURSIVE | FileUtils.RETRY);
 		}
 		testUtils.deleteTempDirs();
+		SystemReader.setInstance(null);
 	}
 
 	protected static void shutDownRepositories() throws Exception {
