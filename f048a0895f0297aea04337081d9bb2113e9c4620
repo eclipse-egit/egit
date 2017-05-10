@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "479dfb6e_a6eb3cec",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-10T14:52:30Z",
+      "side": 1,
+      "message": "if (message !\u003d null \u0026\u0026 !message.trim().isEmpty()) { ...\n\nNo need for those extra parentheses that only make the code difficult to read, and no need for \"\" either.",
+      "revId": "f048a0895f0297aea04337081d9bb2113e9c4620",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_660dd476",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-10T14:52:30Z",
+      "side": 1,
+      "message": "I prefer not adding it at all. Something like:\n\n  for (ICommitMessageProvider messageProvider : messageProviders) {\n    String message \u003d null;\n    try {\n      message \u003d messageProvider.getMessage(resourcesArray);\n    } catch (RuntimeException e) {\n      // TODO: log; don\u0027t re-throw\n    }\n    if (message \u003d\u003d null) {\n      continue;\n    }\n    message \u003d message.trim();\n    if (message.isEmpty()) {\n      continue;\n    }\n    if (calculatedCommitMessage.length() \u003e 0) {\n      calculatedCommitMessage.append(providedMessageSeparator);\n    }\n    calculatedCommitMessage.append(message);\n  }\n\nThe try-catch is also necessary -- we\u0027re calling out to contributed code that may come from anywhere. It might crash. If it does, it shouldn\u0027t take down EGit components.",
+      "revId": "f048a0895f0297aea04337081d9bb2113e9c4620",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_06fec8a0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-10T14:52:30Z",
+      "side": 1,
+      "message": "Add here:\n\n  String contributorName \u003d \"\u003cunknown\u003e\";",
+      "revId": "f048a0895f0297aea04337081d9bb2113e9c4620",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_262aecb5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-10T14:52:30Z",
+      "side": 1,
+      "message": "Add here:\n\n  contributorName \u003d\n    config.getDeclaringExtension().getContributor().getName();",
+      "revId": "f048a0895f0297aea04337081d9bb2113e9c4620",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_e6170477",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-10T14:52:30Z",
+      "side": 1,
+      "message": "And then just remove this.",
+      "range": {
+        "startLine": 734,
+        "startChar": 0,
+        "endLine": 740,
+        "endChar": 5
+      },
+      "revId": "f048a0895f0297aea04337081d9bb2113e9c4620",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_465a9057",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-10T14:52:30Z",
+      "side": 1,
+      "message": "We nowadays prefer to use MessageFormat.format() instead of NLS.bind().",
+      "range": {
+        "startLine": 742,
+        "startChar": 6,
+        "endLine": 742,
+        "endChar": 15
+      },
+      "revId": "f048a0895f0297aea04337081d9bb2113e9c4620",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
