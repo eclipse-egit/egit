@@ -21,12 +21,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewStyledCellLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefsNode;
+import org.eclipse.egit.ui.internal.repository.tree.BranchHierarchyNode;
 import org.eclipse.egit.ui.internal.repository.tree.LocalNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteTrackingNode;
@@ -40,6 +42,7 @@ import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -269,6 +272,7 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		FilteredTree tree = new FilteredTree(composite, selectionModel | SWT.BORDER,
 				new PatternFilter(), true);
 		branchTree = tree.getViewer();
+		branchTree.setUseHashlookup(true);
 		branchTree
 				.setLabelProvider(new RepositoriesViewStyledCellLabelProvider());
 		branchTree.setContentProvider(new RepositoriesViewContentProvider());
@@ -408,12 +412,12 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 				Ref ref = repo.exactRef(refName);
 				if (ref == null)
 					return false;
-				node = new RefNode(localBranches, repo, ref);
+				node = createRefNode(localBranches, repo, ref);
 			} else if (refName.startsWith(Constants.R_REMOTES)) {
 				Ref ref = repo.exactRef(refName);
 				if (ref == null)
 					return false;
-				node = new RefNode(remoteBranches, repo, ref);
+				node = createRefNode(remoteBranches, repo, ref);
 			} else if (Constants.HEAD.equals(refName)) {
 				Ref ref = repo.exactRef(refName);
 				if (ref == null)
@@ -427,7 +431,7 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 					Ref ref = repo.exactRef(mappedRef);
 					if (ref == null)
 						return false;
-					node = new RefNode(remoteBranches, repo, ref);
+					node = createRefNode(remoteBranches, repo, ref);
 				} else if (mappedRef != null
 						&& mappedRef.startsWith(Constants.R_TAGS)) {
 					Ref ref = repo.exactRef(mappedRef);
@@ -440,9 +444,39 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		} catch (IOException e) {
 			return false;
 		}
-
 		branchTree.setSelection(new StructuredSelection(node), true);
 		return true;
+	}
+
+	private RefNode createRefNode(RepositoryTreeNode<?> root,
+			Repository repository, Ref ref) {
+		IContentProvider cp = branchTree.getContentProvider();
+		if (cp instanceof RepositoriesViewContentProvider
+				&& ((RepositoriesViewContentProvider) cp).isHierarchical()) {
+			// Create intermediary BranchHierarchyNodes
+			String fullName = ref.getName();
+			int i = 0;
+			if (fullName.startsWith(Constants.R_HEADS)) {
+				i = Constants.R_HEADS.length();
+			} else if (fullName.startsWith(Constants.R_REMOTES)) {
+				i = Constants.R_REMOTES.length();
+			}
+			RepositoryTreeNode<?> top = root;
+			int l = fullName.length();
+			while (i < l) {
+				int j = fullName.indexOf('/', i);
+				if (j > i) {
+					top = new BranchHierarchyNode(top, repository,
+							new Path(fullName.substring(0, j)));
+					i = j + 1;
+				} else {
+					break;
+				}
+			}
+			return new RefNode(top, repository, ref);
+		} else {
+			return new RefNode(root, repository, ref);
+		}
 	}
 
 	/**

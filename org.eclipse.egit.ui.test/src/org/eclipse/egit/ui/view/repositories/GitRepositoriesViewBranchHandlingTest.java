@@ -21,13 +21,16 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.eclipse.core.commands.State;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
+import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchHierarchyCommand;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -44,7 +47,9 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
+import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
@@ -52,6 +57,8 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.ui.IPageLayout;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -358,6 +365,45 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		SWTBotShell mergeDialog = bot.shell(title);
 		// TODO do some merge here
 		mergeDialog.close();
+	}
+
+	@Test
+	public void testRebaseDialogOnRepo() throws Exception {
+		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(),
+				ICommandService.class);
+		State commandState = srv.getCommand(ToggleBranchHierarchyCommand.ID)
+				.getState(ToggleBranchHierarchyCommand.TOGGLE_STATE);
+		Boolean isHierarchical = (Boolean) commandState.getValue();
+		commandState.setValue(Boolean.TRUE);
+		try {
+			SWTBotTree tree = getOrOpenView().bot().tree();
+
+			myRepoViewUtil.getRootItem(tree, clonedRepositoryFile).select();
+
+			ContextMenuHelper.clickContextMenu(tree,
+					myUtil.getPluginLocalizedValue("RebaseCommand.label2"));
+
+			String title = MessageFormat.format(
+					UIText.RebaseTargetSelectionDialog_RebaseTitleWithBranch,
+					FileRepositoryBuilder.create(clonedRepositoryFile)
+							.getBranch());
+
+			SWTBotShell targetSelectionDialog = bot.shell(title);
+			SWTBot dialogBot = targetSelectionDialog.bot();
+			SWTBotTree dialogTree = dialogBot.tree();
+			assertEquals("Should have a node selected", 1,
+					dialogTree.selectionCount());
+			String[] result = { null };
+			PlatformUI.getWorkbench().getDisplay().syncExec(() -> {
+				TreeItem[] selected = dialogTree.widget.getSelection();
+				result[0] = selected[0].getText();
+			});
+			assertTrue("master node should be selected",
+					result[0] != null && result[0].contains("master"));
+			targetSelectionDialog.close();
+		} finally {
+			commandState.setValue(isHierarchical);
+		}
 	}
 
 	@Test

@@ -650,4 +650,15 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			return false;
 		}
 	}
+
+	/**
+	 * Tells whether this content provider is using a hierarchical branch
+	 * layout.
+	 *
+	 * @return {@code true} if this content provider uses a hierarchical branch
+	 *         layout; {@code false} otherwise
+	 */
+	public boolean isHierarchical() {
+		return branchHierarchyMode;
+	}
 }
