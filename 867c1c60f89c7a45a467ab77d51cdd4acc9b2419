@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX///VQ\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-05-10T20:31:31Z",
+      "side": 1,
+      "message": "backmpet is not your name, set user.name\u003dPeter Bäckman in your git configuration",
+      "revId": "867c1c60f89c7a45a467ab77d51cdd4acc9b2419",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX///VY\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-05-10T20:31:31Z",
+      "side": 1,
+      "message": "the assertion should be moved to a comment on this review",
+      "revId": "867c1c60f89c7a45a467ab77d51cdd4acc9b2419",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX///VU\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-05-10T20:31:31Z",
+      "side": 1,
+      "message": "if you sign off do that using your author identification (email address instead of company name): \n\nSigned-off-by: Peter Bäckman \u003cpeter.backman@tieto.com\u003e\n\nstyle nit: we don\u0027t want trailing whitespace",
+      "revId": "867c1c60f89c7a45a467ab77d51cdd4acc9b2419",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
