@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "479dfb6e_e0d8cc9a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2007,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-10T09:23:56Z",
+      "side": 1,
+      "message": "While I don\u0027t notice any detrimental effects, this also does something for leaves, which fires off quite some machinery in TreeViewer that ultimately does nothing. Also, selection.getFirstElement() may in theory return null (though that should never happen -- we should never get a double click event with an empty selection).\n\nBut how about guarding the setExpandedState() call with\n\n  if (selectedNode instanceof StagingFolderEntry) {\n    ...\n  }\n\n?",
+      "revId": "af0fd90db8773f39ac469670eb7b1a2fa6104718",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
