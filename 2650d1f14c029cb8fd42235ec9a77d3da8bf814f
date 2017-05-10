@@ -133,6 +133,23 @@
     },
     {
       "key": {
+        "uuid": "479dfb6e_6013fce8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-10T08:59:00Z",
+      "side": 1,
+      "message": "Additional thought: is the order deterministic here? Or can we get the same providers in different order on successive calls? That would be confusing, the commit message might end up being \"A B\" once and \"B A\" the next time...",
+      "revId": "2650d1f14c029cb8fd42235ec9a77d3da8bf814f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "479dfb6e_00b2307b",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
         "patchSetId": 1
