@@ -34,6 +34,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
@@ -61,6 +62,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.util.ChangeIdUtil;
 import org.eclipse.jgit.util.RawParseUtils;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Shell;
@@ -673,7 +675,7 @@ public class CommitMessageComponent {
 
 		if (amending)
 			return previousCommitMessage;
-		String calculatedCommitMessage = EMPTY_STRING;
+		StringBuilder calculatedCommitMessage = new StringBuilder();
 
 		Set<IResource> resources = new HashSet<>();
 		for (String path : paths) {
@@ -686,40 +688,61 @@ public class CommitMessageComponent {
 					.addAll(Arrays.asList(ProjectUtil.getProjects(repository)));
 		}
 		try {
-			List<ICommitMessageProvider> messageProviders = getCommitMessageProvider();
+			List<ICommitMessageProvider> messageProviders = getCommitMessageProviders();
+			IResource[] resourcesArray = resources
+					.toArray(new IResource[0]);
+			String providedMessageSeparator = "\n\n"; //$NON-NLS-1$
 			for (ICommitMessageProvider messageProvider : messageProviders) {
-				if (messageProvider != null) {
-					IResource[] resourcesArray = resources
-							.toArray(new IResource[0]);
-					calculatedCommitMessage = calculatedCommitMessage
-							+ System.getProperty("line.separator") //$NON-NLS-1$
-							+ (messageProvider.getMessage(resourcesArray)
-									.trim());
+				String message = messageProvider.getMessage(resourcesArray);
+				if ((message != null) && (!"".equals(message.trim()))) { //$NON-NLS-1$
+					calculatedCommitMessage.append(providedMessageSeparator)
+							.append((message.trim()));
 				}
+			}
+			// remove preceding line breaks before returning
+			if (calculatedCommitMessage.length() >= providedMessageSeparator
+					.length()) {
+				calculatedCommitMessage.delete(0,
+						providedMessageSeparator.length());
 			}
 		} catch (CoreException coreException) {
 			Activator.logError(coreException.getLocalizedMessage(),
 					coreException);
 		}
-		return calculatedCommitMessage;
+		return calculatedCommitMessage.toString();
 	}
 
-	private List<ICommitMessageProvider> getCommitMessageProvider()
+	private List<ICommitMessageProvider> getCommitMessageProviders()
 			throws CoreException {
 		List<ICommitMessageProvider> providers = new ArrayList<>();
 
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
-		IConfigurationElement[] config = registry
+		IConfigurationElement[] configs = registry
 				.getConfigurationElementsFor(COMMIT_MESSAGE_PROVIDER_ID);
-		for (int i = 0; i < config.length; i++) {
+		for (IConfigurationElement config : configs) {
 			Object provider;
-			provider = config[i].createExecutableExtension("class");//$NON-NLS-1$
-			if (provider instanceof ICommitMessageProvider) {
-				providers.add((ICommitMessageProvider) provider);
-			} else {
+			try {
+				provider = config.createExecutableExtension("class");//$NON-NLS-1$
+				if (provider instanceof ICommitMessageProvider) {
+					providers.add((ICommitMessageProvider) provider);
+				} else {
+					Activator.logError(
+							UIText.CommitDialog_WrongTypeOfCommitMessageProvider,
+							null);
+				}
+			} catch (CoreException | InvalidRegistryObjectException e) {
+				String contributorName;
+				try {
+					contributorName = config.getDeclaringExtension()
+							.getContributor().getName();
+				} catch (InvalidRegistryObjectException e1) {
+					contributorName = ""; //$NON-NLS-1$
+				}
 				Activator.logError(
-						UIText.CommitDialog_WrongTypeOfCommitMessageProvider,
-						null);
+						NLS.bind(
+								UIText.CommitDialog_ErrorCreatingCommitMessageProvider,
+								contributorName),
+						e);
 			}
 		}
 		return providers;
