@@ -58,6 +58,7 @@ import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jgit.junit.MockSystemReader;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -68,6 +69,7 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.jgit.util.IO;
+import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -232,6 +234,21 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 				.setValue(UIPreferences.SHOW_DETACHED_HEAD_WARNING,
 						false);
 		closeGitViews();
+		MockSystemReader reader = new MockSystemReader();
+		// Explicitly define an empty environment
+		reader.setProperty(Constants.GIT_AUTHOR_NAME_KEY, null);
+		reader.setProperty(Constants.GIT_AUTHOR_EMAIL_KEY, null);
+		reader.setProperty(Constants.GIT_COMMITTER_NAME_KEY, null);
+		reader.setProperty(Constants.GIT_COMMITTER_EMAIL_KEY, null);
+		reader.setProperty(Constants.GIT_CONFIG_NOSYSTEM_KEY, null);
+		reader.setProperty(Constants.GIT_CEILING_DIRECTORIES_KEY, null);
+		reader.setProperty(Constants.GIT_DIR_KEY, null);
+		reader.setProperty(Constants.GIT_WORK_TREE_KEY, null);
+		reader.setProperty(Constants.GIT_INDEX_FILE_KEY, null);
+		reader.setProperty(Constants.GIT_OBJECT_DIRECTORY_KEY, null);
+		reader.setProperty(Constants.GIT_ALTERNATE_OBJECT_DIRECTORIES_KEY,
+				null);
+		SystemReader.setInstance(reader);
 	}
 
 	@AfterClass
@@ -247,6 +264,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 					| FileUtils.RECURSIVE | FileUtils.RETRY);
 		}
 		testUtils.deleteTempDirs();
+		SystemReader.setInstance(null);
 	}
 
 	protected static void shutDownRepositories() throws Exception {
