@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "479dfb6e_4018b835",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-05-10T08:15:52Z",
+      "side": 1,
+      "message": "I doubt it makes sense to add such complexity for just changing a button label. If you start doing that for each and every dialog and wizard we add a lot of complexity for a little cosmetic change.\n\nI think this should wait until our base version is Oxygen.",
+      "revId": "6d201333be1eb80a66dd90aed8119a3d57ec9ebe",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
