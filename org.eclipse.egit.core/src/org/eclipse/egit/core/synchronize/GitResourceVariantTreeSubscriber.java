@@ -18,16 +18,16 @@ import static org.eclipse.jgit.lib.Repository.stripWorkDir;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.storage.WorkspaceFileRevision;
@@ -107,51 +107,67 @@ public class GitResourceVariantTreeSubscriber extends
 
 	@Override
 	public boolean isSupervised(IResource res) throws TeamException {
-		return IResource.FILE == res.getType()
-				&& gsds.contains(res.getProject())
-				&& gsds.shouldBeIncluded(res);
+		return gsds.contains(res.getProject()) && gsds.shouldBeIncluded(res);
 	}
 
 	/**
-	 * Returns all members of git repository (including those that are not
-	 * imported into workspace)
+	 * Returns all members of the given resource, whether in the workspace or
+	 * only recorded in git
 	 *
 	 * @param res
+	 *            the resource to get the members of
+	 * @return the resources, which may or may not exist in the workspace
 	 */
 	@Override
 	public IResource[] members(IResource res) throws TeamException {
-		if (res.getType() == IResource.FILE || !gsds.shouldBeIncluded(res))
+		if (res.getType() == IResource.FILE || !gsds.shouldBeIncluded(res)) {
 			return new IResource[0];
-
+		}
 		GitSynchronizeData gsd = gsds.getData(res.getProject());
 		Repository repo = gsd.getRepository();
 		GitSyncObjectCache repoCache = cache.get(repo);
 
-		Set<IResource> gitMembers = new HashSet<IResource>();
 		Map<String, IResource> allMembers = new HashMap<String, IResource>();
 
-		Set<GitSyncObjectCache> gitCachedMembers = new HashSet<GitSyncObjectCache>();
 		String path = stripWorkDir(repo.getWorkTree(), res.getLocation().toFile());
 		GitSyncObjectCache cachedMembers = repoCache.get(path);
-		if (cachedMembers != null) {
-			Collection<GitSyncObjectCache> members = cachedMembers.members();
-			if (members != null)
-				gitCachedMembers.addAll(members);
-		}
 		try {
-			for (IResource member : ((IContainer) res).members())
-				allMembers.put(member.getName(), member);
-
-			for (GitSyncObjectCache gitMember : gitCachedMembers) {
-				IResource member = allMembers.get(gitMember.getName());
-				if (member != null)
-					gitMembers.add(member);
+			IContainer container = (IContainer) res;
+			// Existing resources
+			if (container.exists()) {
+				for (IResource member : container.members()) {
+					allMembers.put(member.getName(), member);
+				}
+			}
+			// Now add non-existing ones from git
+			if (cachedMembers != null) {
+				Collection<GitSyncObjectCache> members = cachedMembers
+						.members();
+				if (members != null) {
+					for (GitSyncObjectCache gitMember : members) {
+						String name = gitMember.getName();
+						IResource existing = allMembers.get(name);
+						if (existing == null || (existing
+								.getType() != IResource.FILE) != gitMember
+										.getDiffEntry().isTree()) {
+							// Non-existing, or file vs. folder
+							IPath localPath = new Path(name);
+							if (gitMember.getDiffEntry().isTree()) {
+								allMembers.put(name,
+										container.getFolder(localPath));
+							} else {
+								allMembers.put(name,
+										container.getFile(localPath));
+							}
+						}
+					}
+				}
 			}
 		} catch (CoreException e) {
 			throw TeamException.asTeamException(e);
 		}
 
-		return gitMembers.toArray(new IResource[gitMembers.size()]);
+		return allMembers.values().toArray(new IResource[0]);
 	}
 
 	@Override
