@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "479dfb6e_7de2c293",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-11T08:13:11Z",
+      "side": 1,
+      "message": "Strange... the JDT UI settings in our projects should remove trailing whitespace. Please remove.",
+      "revId": "8feddcef257513dd85351c3620c8f0b60e25b442",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_9de766a1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-11T08:13:11Z",
+      "side": 1,
+      "message": "What\u0027s wrong with message.trim().isEmpty()? Saves you that pesky $NON_NLS-1$",
+      "range": {
+        "startLine": 704,
+        "startChar": 27,
+        "endLine": 704,
+        "endChar": 53
+      },
+      "revId": "8feddcef257513dd85351c3620c8f0b60e25b442",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_3de83a74",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-11T08:13:11Z",
+      "side": 1,
+      "message": "Either with \u003c\u003e, or completely without.",
+      "range": {
+        "startLine": 730,
+        "startChar": 29,
+        "endLine": 730,
+        "endChar": 37
+      },
+      "revId": "8feddcef257513dd85351c3620c8f0b60e25b442",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
