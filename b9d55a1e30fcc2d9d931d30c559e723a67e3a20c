@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "479dfb6e_7fa3912f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-12T14:13:48Z",
+      "side": 1,
+      "message": "Please change to !message.trim().isEmpty()) {",
+      "range": {
+        "startLine": 704,
+        "startChar": 27,
+        "endLine": 704,
+        "endChar": 70
+      },
+      "revId": "b9d55a1e30fcc2d9d931d30c559e723a67e3a20c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_9f2af501",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-12T14:13:48Z",
+      "side": 1,
+      "message": "Remove, we\u0027re not throwing CoreException. Then remove the try-catch at lines 690 and 713-716.",
+      "range": {
+        "startLine": 721,
+        "startChar": 3,
+        "endLine": 721,
+        "endChar": 23
+      },
+      "revId": "b9d55a1e30fcc2d9d931d30c559e723a67e3a20c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_9f9835fe",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-12T14:13:48Z",
+      "side": 1,
+      "message": "Either remove, or add \u003e at the end.",
+      "range": {
+        "startLine": 729,
+        "startChar": 29,
+        "endLine": 729,
+        "endChar": 30
+      },
+      "revId": "b9d55a1e30fcc2d9d931d30c559e723a67e3a20c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
