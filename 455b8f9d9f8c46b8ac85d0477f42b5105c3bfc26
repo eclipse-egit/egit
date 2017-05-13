@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "479dfb6e_68303572",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-05-13T17:58:25Z",
+      "side": 1,
+      "message": "can\u0027t we do the recursion in the first loop without a second pass ?",
+      "revId": "455b8f9d9f8c46b8ac85d0477f42b5105c3bfc26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
