@@ -16,6 +16,24 @@
       "revId": "455b8f9d9f8c46b8ac85d0477f42b5105c3bfc26",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_283e2d42",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-13T18:41:18Z",
+      "side": 1,
+      "message": "We can. I don\u0027t think it matters much, but somehow I had the feeling that doing it this way would traverse a less deep hierarchy than a pure depth-first search and thus be faster in cases where there are non-IN_SYNC files.\n\nEven better would be of course to either not have such folders in this GitSyncObjectTree, or have them have a ThreeWayDiffEntry that is already marked as IN_SYNC. But that would, as I mentioned in the commit comment, be a more adventurous undertaking. It\u0027s also one of those cases I mentioned in the comment in bugzilla: I haven\u0027t figured out yet why we have nodes/diffs for such trees at all. I see where they\u0027re coming from, but I don\u0027t know if that\u0027s intended or whether they do have some purpose somehow or could be safely eliminated.",
+      "parentUuid": "479dfb6e_68303572",
+      "revId": "455b8f9d9f8c46b8ac85d0477f42b5105c3bfc26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
