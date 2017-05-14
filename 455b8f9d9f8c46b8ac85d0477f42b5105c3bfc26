@@ -34,6 +34,24 @@
       "revId": "455b8f9d9f8c46b8ac85d0477f42b5105c3bfc26",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_937e6e5c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-05-14T14:58:15Z",
+      "side": 1,
+      "message": "ok, I did some experiments and you are right it doesn\u0027t really matter.\nThe method consumes only a small fraction of the overall runtime of the comparison.\n\nThis method could be also implemented using streams :\n\n private boolean hasNonSyncFile(GitSyncObjectCache obj) {\n    Optional\u003cGitSyncObjectCache\u003e found \u003d obj.members().stream().filter(\n       child -\u003e (!child.getDiffEntry().isTree() \u0026\u0026 child.getDiffEntry()\n          .getChangeType() !\u003d ThreeWayDiffEntry.ChangeType.IN_SYNC)\n          || (child.getDiffEntry().isTree() \u0026\u0026 hasNonSyncFile(child)))\n       .findFirst();\n    return found.isPresent();\n }",
+      "parentUuid": "479dfb6e_283e2d42",
+      "revId": "455b8f9d9f8c46b8ac85d0477f42b5105c3bfc26",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
