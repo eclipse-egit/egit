@@ -102,7 +102,8 @@ public class ReplaceActionsTest extends LocalRepositoryTestCase {
 						"ReplaceWithPreviousVersionAction.label");
 		clickReplaceWith(menuLabel);
 		bot.shell(UIText.DiscardChangesAction_confirmActionTitle).bot()
-				.button(IDialogConstants.OK_LABEL).click();
+				.button(UIText.DiscardChangesAction_discardChangesButtonText)
+				.click();
 		SWTBotShell selectDialog = bot
 				.shell(UIText.CommitSelectDialog_WindowTitle);
 		assertEquals(2, selectDialog.bot().table().rowCount());
@@ -140,7 +141,9 @@ public class ReplaceActionsTest extends LocalRepositoryTestCase {
 	private void executeReplace(SWTBotShell dialog) {
 		JobJoiner jobJoiner = JobJoiner.startListening(
 				JobFamilies.DISCARD_CHANGES, 30, TimeUnit.SECONDS);
-		dialog.bot().button(IDialogConstants.OK_LABEL).click();
+		dialog.bot()
+				.button(UIText.DiscardChangesAction_discardChangesButtonText)
+				.click();
 		jobJoiner.join();
 	}
 }
