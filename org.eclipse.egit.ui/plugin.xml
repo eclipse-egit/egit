@@ -2515,6 +2515,26 @@
             </or>
          </activeWhen>
       </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.clean">
+         <class
+               class="org.eclipse.egit.ui.internal.actions.CleanActionHandler">
+         </class>
+         <activeWhen>
+            <or>
+               <and>
+                  <count value="1" />
+                  <iterate>
+                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode" />
+                     <not>
+                        <test property="GitRepository.isBare" />
+                     </not>
+                  </iterate>
+               </and>
+               <test property="GitSelection.projectsSingleRepository" />
+            </or>
+         </activeWhen>
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.views">
@@ -3316,30 +3336,11 @@
                </and>
             </visibleWhen>
          </command>
-        <command
+         <command
               commandId="org.eclipse.egit.ui.team.clean"
               label="%CleanCommand.label"
               style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <and>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-                        </instanceof>
-                        <not>
-                           <test
-                                 property="GitRepository.isBare">
-                           </test>
-                        </not>
-                     </and>
-                  </iterate>
-               </and>
-            </visibleWhen>
+            <visibleWhen checkEnabled="true" />
          </command>
          <menu
                label="%StashesMenu.label">
@@ -4461,12 +4462,7 @@
                      commandId="org.eclipse.egit.ui.team.clean"
                      label="%CleanCommand.label"
                      style="push">
-                  <visibleWhen
-                        checkEnabled="false">
-                     <test
-                           property="GitSelection.projectsSingleRepository">
-                     </test>
-                  </visibleWhen>
+                  <visibleWhen checkEnabled="true" />
                </command>
                <separator
                      name="org.eclipse.egit.ui.TeamAdvancedFileSeparator"
@@ -5108,7 +5104,6 @@
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.team.clean"
-            defaultHandler="org.eclipse.egit.ui.internal.actions.CleanActionHandler"
             name="%CleanCommand.name">
       </command>
       <command
