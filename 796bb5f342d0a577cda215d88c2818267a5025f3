@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "479dfb6e_6bdd8aff",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommandConfirmation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-15T20:06:12Z",
+      "side": 1,
+      "message": "This should be Window.OK.",
+      "range": {
+        "startLine": 58,
+        "startChar": 33,
+        "endLine": 58,
+        "endChar": 34
+      },
+      "revId": "796bb5f342d0a577cda215d88c2818267a5025f3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
