@@ -5505,6 +5505,9 @@ public class UIText extends NLS {
 	/** */
 	public static String StagingViewPreferencePage_maxLimitListMode;
 
+	/** */
+	public static String CommandConfirmationHardResetDialog_resetButtonLabel;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
