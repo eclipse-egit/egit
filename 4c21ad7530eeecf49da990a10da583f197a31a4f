@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "479dfb6e_8eec81b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-15T08:41:01Z",
+      "side": 1,
+      "message": "The feature looks strange. The feature includes the smartimport bundle and at the same time has an optional dependency on it?\n\nHow about: the feature does not include it, but has only the optional dependency. The bundle is included in the update site. It\u0027s not listed in the categories. In the smartimport bundle\u0027s p2.inf add a metaRequirement on org.eclipse.ui.ide 3.12.0 or greater.\n\nSee https://wiki.eclipse.org/Equinox/p2/Customizing_Metadata on metaRequirements.\n\nWhat I would expect to happen when the egit feature is selected:\n\nOn Mars:\n* p2 sees that the feature needs (optionally) the smartimport IU\n* p2 finds the smartimport IU in the egit update site\n* p2 evaluates the p2.inf of the smartimport IU and detects\nthat this IU cannot be installed on Mars (since org.eclipse.ui.ide 3.12.0 is not already installed).\n* p2 goes looking elsewhere for that IU\n* if it doesn\u0027t find it, it\u0027s OK and the egit feature is installed without the smartimport\n* if it does find it (user has the current stable egit update site enabled...), installation fails? (Hm, probably not, since we do require a precise version, p2 cannot use an older version?)\n\nOn Neon or later:\n* p2 sees that the feature needs (optionally) the smartimport IU\n* p2 finds the smartimport IU in the egit update site\n* p2 evaluates the p2.inf of the smartimport IU and detects that it can be installed since org.eclipse.ui.ide 3.12.0 already exists in Neon.\n* p2 installs the egit feature plus the smartimport bundle.\n\nBut I\u0027m no p2 expert, so I don\u0027t know if that\u0027s correct.",
+      "revId": "4c21ad7530eeecf49da990a10da583f197a31a4f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
