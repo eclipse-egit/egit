@@ -428,6 +428,24 @@
                   property="GitSelection.resourcesAllInRepository">
             </test>
       </definition>
+      <definition
+            id="org.eclipse.egit.ui.commitsInRepository">
+         <and>
+            <test property="GitSelection.selectionSingleRepository" />
+            <iterate ifEmpty="false">
+               <adapt type="org.eclipse.egit.ui.internal.commit.RepositoryCommit" />
+            </iterate>
+         </and>
+      </definition>
+      <definition
+            id="org.eclipse.egit.ui.singleRepositoryCommit">
+         <and>
+            <count value="1" />
+            <iterate ifEmpty="false">
+               <adapt type="org.eclipse.egit.ui.internal.commit.RepositoryCommit" />
+            </iterate>
+         </and>
+      </definition>
    </extension>
 
    <extension point="org.eclipse.ui.preferencePages">
@@ -2441,12 +2459,70 @@
                class="org.eclipse.egit.ui.internal.commit.command.CheckoutHandler">
          </class>
          <activeWhen>
-            <and>
-               <count value="1" />
-               <iterate ifEmpty="false">
-                  <adapt type="org.eclipse.egit.ui.internal.commit.RepositoryCommit" />
-               </iterate>
-            </and>
+            <reference definitionId="org.eclipse.egit.ui.singleRepositoryCommit" />
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.commit.CreateTag">
+         <class
+               class="org.eclipse.egit.ui.internal.commit.command.CreateTagHandler">
+         </class>
+         <activeWhen>
+            <reference definitionId="org.eclipse.egit.ui.singleRepositoryCommit" />
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.commit.CreateBranch">
+         <class
+               class="org.eclipse.egit.ui.internal.commit.command.CreateBranchHandler">
+         </class>
+         <activeWhen>
+            <reference definitionId="org.eclipse.egit.ui.singleRepositoryCommit" />
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.commit.ShowInHistory">
+         <class
+               class="org.eclipse.egit.ui.internal.commit.command.ShowInHistoryHandler">
+         </class>
+         <activeWhen>
+            <reference definitionId="org.eclipse.egit.ui.singleRepositoryCommit" />
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.commit.CherryPick">
+         <class
+               class="org.eclipse.egit.ui.internal.commit.command.CherryPickHandler">
+         </class>
+         <activeWhen>
+            <reference definitionId="org.eclipse.egit.ui.singleRepositoryCommit" />
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.commit.Revert">
+         <class
+               class="org.eclipse.egit.ui.internal.commit.command.RevertHandler">
+         </class>
+         <activeWhen>
+            <reference definitionId="org.eclipse.egit.ui.commitsInRepository" />
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.commit.StashApply">
+         <class
+               class="org.eclipse.egit.ui.internal.commit.command.StashApplyHandler">
+         </class>
+         <activeWhen>
+            <reference definitionId="org.eclipse.egit.ui.singleRepositoryCommit" />
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.commit.StashDrop">
+         <class
+               class="org.eclipse.egit.ui.internal.commit.command.StashDropHandler">
+         </class>
+         <activeWhen>
+            <reference definitionId="org.eclipse.egit.ui.singleRepositoryCommit" />
          </activeWhen>
       </handler>
       <handler
@@ -5895,7 +5971,6 @@
             name="%CherryPickCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.commit.command.CherryPickHandler"
             id="org.eclipse.egit.ui.commit.CherryPick"
             name="%CherryPickCommand.name">
       </command>
@@ -5935,12 +6010,10 @@
             name="%RevertCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.commit.command.RevertHandler"
             id="org.eclipse.egit.ui.commit.Revert"
             name="%RevertCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.commit.command.ShowInHistoryHandler"
             id="org.eclipse.egit.ui.commit.ShowInHistory"
             name="%ShowInHistoryCommand.name">
       </command>
@@ -5969,12 +6042,10 @@
          name="%CommitViewerCommands.extension.name"
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.commit.command.CreateTagHandler"
             id="org.eclipse.egit.ui.commit.CreateTag"
             name="%CreateTagCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.commit.command.CreateBranchHandler"
             id="org.eclipse.egit.ui.commit.CreateBranch"
             name="%CreateBranchCommand">
       </command>
@@ -5988,12 +6059,10 @@
             name="%ShowBlameCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.commit.command.StashApplyHandler"
             id="org.eclipse.egit.ui.commit.StashApply"
             name="%StashApplyCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.commit.command.StashDropHandler"
             id="org.eclipse.egit.ui.commit.StashDrop"
             name="%StashDropCommand.name">
       </command>
