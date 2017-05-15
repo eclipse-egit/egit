@@ -18,6 +18,7 @@ import java.util.Collections;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.branch.LaunchFinder;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Shell;
@@ -47,7 +48,13 @@ public class CommandConfirmation {
 		} else {
 			question = MessageFormat.format(question, ""); //$NON-NLS-1$
 		}
-		return MessageDialog.openQuestion(shell,
-				UIText.ResetTargetSelectionDialog_ResetQuestion, question);
+
+		MessageDialog messageDialog = new MessageDialog(shell,
+				UIText.ResetTargetSelectionDialog_ResetQuestion, null, question,
+				MessageDialog.QUESTION, 0,
+				UIText.CommandConfirmationHardResetDialog_resetButtonLabel,
+				IDialogConstants.NO_LABEL);
+
+		return messageDialog.open() == 0;
 	}
 }
