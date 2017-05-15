@@ -2441,9 +2441,12 @@
                class="org.eclipse.egit.ui.internal.commit.command.CheckoutHandler">
          </class>
          <activeWhen>
-            <with variable="activePart">
-               <instanceof value="org.eclipse.egit.ui.internal.commit.CommitEditor" />
-            </with>
+            <and>
+               <count value="1" />
+               <iterate ifEmpty="false">
+                  <adapt type="org.eclipse.egit.ui.internal.commit.RepositoryCommit" />
+               </iterate>
+            </and>
          </activeWhen>
       </handler>
       <handler

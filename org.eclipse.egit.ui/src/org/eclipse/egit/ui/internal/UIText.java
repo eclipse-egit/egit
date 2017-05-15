@@ -4272,6 +4272,9 @@ public class UIText extends NLS {
 	public static String CommitEditor_showGitRepo;
 
 	/** */
+	public static String CommitEditor_toolbarCheckOut;
+
+	/** */
 	public static String CommitEditor_TitleHeaderCommit;
 
 	/** */
