@@ -33,6 +33,7 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.branch.LaunchFinder;
 import org.eclipse.egit.ui.internal.operations.GitScopeUtil;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
@@ -61,8 +62,7 @@ public class DiscardChangesActionHandler extends RepositoryActionHandler {
 			} else {
 				question = MessageFormat.format(question, ""); //$NON-NLS-1$
 			}
-			boolean performAction = MessageDialog.openConfirm(getShell(event),
-					UIText.DiscardChangesAction_confirmActionTitle, question);
+			boolean performAction = openConfirmationDialog(event, question);
 			if (!performAction) {
 				return null;
 			}
@@ -101,6 +101,16 @@ public class DiscardChangesActionHandler extends RepositoryActionHandler {
 			// cleanup mySelection to avoid side effects later after execution
 			mySelection = null;
 		}
+	}
+
+	private boolean openConfirmationDialog(ExecutionEvent event,
+			String question) throws ExecutionException {
+		MessageDialog dlg = new MessageDialog(getShell(event),
+				UIText.DiscardChangesAction_confirmActionTitle, null, question,
+				MessageDialog.CONFIRM, 0,
+				UIText.DiscardChangesAction_discardChangesButtonText,
+				IDialogConstants.CANCEL_LABEL);
+		return dlg.open() == 0;
 	}
 
 	@Override
