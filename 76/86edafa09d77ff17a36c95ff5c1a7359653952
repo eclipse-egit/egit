@@ -1,0 +1,7 @@
+Code-Review+2: Thomas Wolf <thomas.wolf@paranor.ch>
+Verified+1: Hudson CI
+Submitted-by: Thomas Wolf <thomas.wolf@paranor.ch>
+Submitted-at: Tue, 16 May 2017 05:45:23 -0400
+Reviewed-on: https://git.eclipse.org/r/9322
+Project: egit/egit
+Branch: refs/heads/master
