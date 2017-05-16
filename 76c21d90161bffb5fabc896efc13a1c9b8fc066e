@@ -16,6 +16,24 @@
       "revId": "76c21d90161bffb5fabc896efc13a1c9b8fc066e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "479dfb6e_61c68b3f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-16T09:31:10Z",
+      "side": 1,
+      "message": "Done. InvalidRegistryObjectException also is a RuntimeException.",
+      "parentUuid": "479dfb6e_214d6394",
+      "revId": "76c21d90161bffb5fabc896efc13a1c9b8fc066e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
