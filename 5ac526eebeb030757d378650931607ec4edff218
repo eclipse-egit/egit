@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "479dfb6e_c10d7778",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponentTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-16T08:52:07Z",
+      "side": 1,
+      "message": "This exception is logged. To avoid confusion when one looks at the build console log, it _must_ have a message stating that this exception was thrown on purpose.",
+      "revId": "5ac526eebeb030757d378650931607ec4edff218",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
