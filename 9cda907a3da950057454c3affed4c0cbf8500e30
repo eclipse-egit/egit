@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "479dfb6e_b666f246",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommandConfirmation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-18T08:57:18Z",
+      "side": 1,
+      "message": "As discussed on bugzilla, this should be CANCEL_LABEL.",
+      "range": {
+        "startLine": 57,
+        "startChar": 21,
+        "endLine": 57,
+        "endChar": 29
+      },
+      "revId": "9cda907a3da950057454c3affed4c0cbf8500e30",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
