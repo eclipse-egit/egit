@@ -208,6 +208,18 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	}
 
 	/**
+	 * Utility method to log warnings for this plug-in.
+	 *
+	 * @param message
+	 *            User comprehensible message
+	 * @param thr
+	 *            The exception through which we noticed the warning
+	 */
+	public static void logWarning(final String message, final Throwable thr) {
+		handleIssue(IStatus.WARNING, message, thr, false);
+	}
+
+	/**
 	 * @param message
 	 * @param e
 	 */
