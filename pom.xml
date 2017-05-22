@@ -270,6 +270,7 @@
 
     <module>org.eclipse.egit.core.test</module>
     <module>org.eclipse.egit.ui.test</module>
+    <module>org.eclipse.egit.ui.messageprovider.test</module>
     <module>org.eclipse.egit.mylyn.ui.test</module>
     <module>org.eclipse.egit.ui.importer.tests</module>
 
