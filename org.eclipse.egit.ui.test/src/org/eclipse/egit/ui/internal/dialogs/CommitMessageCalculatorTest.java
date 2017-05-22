@@ -20,7 +20,7 @@ import org.eclipse.egit.ui.ICommitMessageProvider;
 import org.eclipse.egit.ui.internal.UIText;
 import org.junit.Test;
 
-public class CommitMessageComponentTest {
+public class CommitMessageCalculatorTest {
 
 	@Test
 	public void commitFormat_simple() {
@@ -71,11 +71,11 @@ public class CommitMessageComponentTest {
 
 	@Test
 	public void commitMessageProvider_noProvider() throws Exception {
-		CommitMessageComponent commitMessageComponent = newCommitMessageComponent(
+		CommitMessageCalculator commitMessageCalculator = newCommitMessageCalculator(
 				createProviderList());
 
-		String calculatedCommitMessage = commitMessageComponent
-				.calculateCommitMessage(Collections.emptyList());
+		String calculatedCommitMessage = commitMessageCalculator
+				.calculateCommitMessage();
 
 		assertEquals("", calculatedCommitMessage);
 	}
@@ -84,11 +84,11 @@ public class CommitMessageComponentTest {
 	public void commitMessageProvider_oneProvider() throws Exception {
 		String message = "example single-line commit message";
 
-		CommitMessageComponent commitMessageComponent = newCommitMessageComponent(
+		CommitMessageCalculator commitMessageCalculator = newCommitMessageCalculator(
 				createProviderList(message));
 
-		String calculatedCommitMessage = commitMessageComponent
-				.calculateCommitMessage(Collections.emptyList());
+		String calculatedCommitMessage = commitMessageCalculator
+				.calculateCommitMessage();
 
 		assertEquals(message, calculatedCommitMessage);
 	}
@@ -98,11 +98,11 @@ public class CommitMessageComponentTest {
 		String message1 = "example single-line commit message";
 		String message2 = "example multi-line\n\ncommit message";
 
-		CommitMessageComponent commitMessageComponent = newCommitMessageComponent(
+		CommitMessageCalculator commitMessageCalculator = newCommitMessageCalculator(
 				createProviderList(message1, message2));
 
-		String calculatedCommitMessage = commitMessageComponent
-				.calculateCommitMessage(Collections.emptyList());
+		String calculatedCommitMessage = commitMessageCalculator
+				.calculateCommitMessage();
 
 		assertEquals(message1 + "\n\n" + message2, calculatedCommitMessage);
 	}
@@ -110,11 +110,11 @@ public class CommitMessageComponentTest {
 	@Test
 	public void commitMessageProvider_oneCrashingProvider() throws Exception {
 
-		CommitMessageComponent commitMessageComponent = newCommitMessageComponent(
+		CommitMessageCalculator commitMessageCalculator = newCommitMessageCalculator(
 				Arrays.asList(new CrashingCommitMessageProvider()));
 
-		String calculatedCommitMessage = commitMessageComponent
-				.calculateCommitMessage(Collections.emptyList());
+		String calculatedCommitMessage = commitMessageCalculator
+				.calculateCommitMessage();
 
 		assertEquals("", calculatedCommitMessage);
 	}
@@ -126,11 +126,11 @@ public class CommitMessageComponentTest {
 		List<ICommitMessageProvider> providers = createProviderList(message);
 		providers.add(new CrashingCommitMessageProvider());
 
-		CommitMessageComponent commitMessageComponent = newCommitMessageComponent(
+		CommitMessageCalculator commitMessageCalculator = newCommitMessageCalculator(
 				providers);
 
-		String calculatedCommitMessage = commitMessageComponent
-				.calculateCommitMessage(Collections.emptyList());
+		String calculatedCommitMessage = commitMessageCalculator
+				.calculateCommitMessage();
 
 		assertEquals(message, calculatedCommitMessage);
 	}
@@ -142,11 +142,11 @@ public class CommitMessageComponentTest {
 		List<ICommitMessageProvider> providers = createProviderList(message);
 		providers.add(0, new CrashingCommitMessageProvider());
 
-		CommitMessageComponent commitMessageComponent = newCommitMessageComponent(
+		CommitMessageCalculator commitMessageCalculator = newCommitMessageCalculator(
 				providers);
 
-		String calculatedCommitMessage = commitMessageComponent
-				.calculateCommitMessage(Collections.emptyList());
+		String calculatedCommitMessage = commitMessageCalculator
+				.calculateCommitMessage();
 
 		assertEquals(message, calculatedCommitMessage);
 	}
@@ -161,21 +161,21 @@ public class CommitMessageComponentTest {
 		providers.add(0, new CrashingCommitMessageProvider());
 		providers.add(3, new CrashingCommitMessageProvider());
 
-		CommitMessageComponent commitMessageComponent = newCommitMessageComponent(
+		CommitMessageCalculator commitMessageCalculator = newCommitMessageCalculator(
 				providers);
 
-		String calculatedCommitMessage = commitMessageComponent
-				.calculateCommitMessage(Collections.emptyList());
+		String calculatedCommitMessage = commitMessageCalculator
+				.calculateCommitMessage();
 
 		assertEquals(multiLineMessage + "\n\n" + singleLineMessage,
 				calculatedCommitMessage);
 	}
 
-	private CommitMessageComponent newCommitMessageComponent(
+	private CommitMessageCalculator newCommitMessageCalculator(
 			List<ICommitMessageProvider> providers) {
 		// Create anonymous subclass, as mocking does not currently work.
 		// See https://bugs.eclipse.org/bugs/show_bug.cgi?id=349164
-		return new CommitMessageComponent(null) {
+		return new CommitMessageCalculator(null, Collections.emptyList()) {
 
 			@Override
 			List<ICommitMessageProvider> getCommitMessageProviders() {
