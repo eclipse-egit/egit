@@ -2360,6 +2360,12 @@ public class UIText extends NLS {
 	public static String CommitDialog_ErrorCreatingCommitMessageProvider;
 
 	/** */
+	public static String CommitDialog_CaretPositionOutOfBounds;
+
+	/** */
+	public static String CommitDialog_MultipleCommitMessageProvider2Implementations;
+
+	/** */
 	public static String CommitDialog_ConfigureLink;
 
 	/** */
