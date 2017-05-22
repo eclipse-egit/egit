@@ -66,5 +66,11 @@
          </and>
       </enablement>
    </extension>
+   <extension
+         point="org.eclipse.egit.ui.commitMessageProvider">
+      <commitMessageProvider
+            class="org.eclipse.egit.ui.test.stagview.TestCommitMessageProviderExtensionFactory">
+      </commitMessageProvider>
+   </extension>
 
 </fragment>
