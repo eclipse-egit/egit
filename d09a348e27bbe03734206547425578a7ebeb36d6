@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07a783c0_e3a45abc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-22T21:02:52Z",
+      "side": 1,
+      "message": "This is not good. It means that the commit message provider has to be stateful. I\u0027d prefer an interface returning a data object:\n\n  public static class CommitMesssageWithPosition {\n\n    public static final int UNDEFINED_POSITION \u003d -1;\n\n    private final String text;\n    private final int desiredCaretPosition;\n    // Constructor(String, int), getters, equals, hashCode\n  }\n\n  CommitMessageWithPosition getCommitMessageWithPosition(IResource[] resources);\n\nThe CommitMessageCalculator can assemble the messages and determine the position, if any, and then return a CommitMessageWithPosition.\n\nThis will also greatly simplify the calculator since you won\u0027t need to remember which message came from which provider. The logic will basically stay the same: one function to instantiate them from the extension points, then basically loop through the providers:\n\n  StringBuilder finalMessage \u003d ...;\n  int pos \u003d CommitMessageWithPosition.UNDEFINED_POSITION;\n  for (IComitMessageProvider provider : providers) {\n    String msg \u003d null;\n    int p \u003d CommitMessageWithPosition.UNDEFINED_POSITION;\n    if (provider instanceof ICommitMessageProvider2) {\n      CommitMessageWithPosition c \u003d ((ICommitMessageProvider2) provider).getCommitMessageWithPosition(resources);\n      if (c \u003d\u003d null) {\n        continue;\n      }\n      msg \u003d c.getText();\n      p \u003d c.getDesiredCaretPosition();\n    } else {\n      msg \u003d provider.getCommitMessage(resources);\n    }\n    if (msg !\u003d null \u0026\u0026 !msg.isEmpty()) {\n      // Append msg to finalMessage\n      if (p \u003e\u003d 0 \u0026\u0026 pos \u003c 0) {\n        // Update pos\n      }\n    }\n  }\n  return new CommitMessageWithPosition(finalMsg.toString(), pos);\n\nand then EGit gets the message and the final position. (Of course in production code again with try-catch around the calls to the contributed providers.)",
+      "revId": "d09a348e27bbe03734206547425578a7ebeb36d6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
