@@ -1,215 +1,80 @@
-/*******************************************************************************
- * Copyright (C) 2015 SAP SE (Christian Georgi <christian.georgi@sap.com>)
- *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.io.File;
 
-import org.eclipse.core.resources.IResource;
-import org.eclipse.egit.ui.ICommitMessageProvider;
-import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.ui.common.StagingViewTester;
+import org.eclipse.egit.ui.internal.repository.RepositoriesView;
+import org.eclipse.egit.ui.internal.staging.StagingView;
+import org.eclipse.egit.ui.test.TestUtil;
+import org.eclipse.egit.ui.test.commitmessageprovider.CommitMessageProviderFactory;
+import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestUtils;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
-public class CommitMessageComponentTest {
+public class CommitMessageComponentTest extends LocalRepositoryTestCase {
 
-	@Test
-	public void commitFormat_simple() {
-		String commitMessage = "Simple message";
+	private static final GitRepositoriesViewTestUtils repoViewUtil = new GitRepositoriesViewTestUtils();
 
-		String formattedMessage = CommitMessageComponent
-				.formatIssuesInCommitMessage(commitMessage);
-		assertEquals(null, formattedMessage);
+	private File repositoryFile;
+
+	private Repository repository;
+
+	@Before
+	public void before() throws Exception {
+		CommitMessageProviderFactory.activate();
+
+		// TODO this code is copied from StagingViewTest. Remove redundancy
+		repositoryFile = createProjectAndCommitToRepository();
+		repository = lookupRepository(repositoryFile);
+		TestUtil.configureTestCommitterAsUser(repository);
+		Activator.getDefault().getRepositoryUtil()
+				.addConfiguredRepository(repositoryFile);
+
+		selectRepositoryNode();
+	}
+
+	@After
+	public void after() {
+		CommitMessageProviderFactory.deactivate();
+
+		// TODO this code is copied from StagingViewTest. Remove redundancy
+		TestUtil.hideView(RepositoriesView.VIEW_ID);
+		TestUtil.hideView(StagingView.VIEW_ID);
+		Activator.getDefault().getRepositoryUtil().removeDir(repositoryFile);
 	}
 
 	@Test
-	public void commitFormat_trailingWhitespace_ok() {
-		String commitMessage = "Simple message\n\n\n";
-
-		String formattedMessage = CommitMessageComponent
-				.formatIssuesInCommitMessage(commitMessage);
-		assertEquals(null, formattedMessage);
-	}
-
-	@Test
-	public void commitFormat_MultipleLines_ok() {
-		String commitMessage = "Simple message\n\nDetails";
-
-		String formattedMessage = CommitMessageComponent
-				.formatIssuesInCommitMessage(commitMessage);
-		assertEquals(null, formattedMessage);
-	}
-
-	@Test
-	public void commitFormat_MultipleLines_notOk() {
-		String commitMessage = "Simple message\nDetails";
-
-		String formattedMessage = CommitMessageComponent
-				.formatIssuesInCommitMessage(commitMessage);
-		assertEquals(UIText.CommitMessageComponent_MessageSecondLineNotEmpty,
-				formattedMessage);
-	}
-
-	@Test
-	public void commitFormat_MultipleLines_notOk2() {
-		String commitMessage = "Simple message\n \nDetails";
-
-		String formattedMessage = CommitMessageComponent
-				.formatIssuesInCommitMessage(commitMessage);
-		assertEquals(UIText.CommitMessageComponent_MessageSecondLineNotEmpty,
-				formattedMessage);
-	}
-
-	@Test
-	public void commitMessageProvider_noProvider() throws Exception {
-		CommitMessageComponent commitMessageComponent = newCommitMessageComponent(
-				createProviderList());
-
-		String calculatedCommitMessage = commitMessageComponent
-				.calculateCommitMessage(Collections.emptyList());
-
-		assertEquals("", calculatedCommitMessage);
-	}
-
-	@Test
-	public void commitMessageProvider_oneProvider() throws Exception {
-		String message = "example single-line commit message";
-
-		CommitMessageComponent commitMessageComponent = newCommitMessageComponent(
-				createProviderList(message));
-
-		String calculatedCommitMessage = commitMessageComponent
-				.calculateCommitMessage(Collections.emptyList());
-
-		assertEquals(message, calculatedCommitMessage);
-	}
-
-	@Test
-	public void commitMessageProvider_twoProviders() throws Exception {
-		String message1 = "example single-line commit message";
-		String message2 = "example multi-line\n\ncommit message";
-
-		CommitMessageComponent commitMessageComponent = newCommitMessageComponent(
-				createProviderList(message1, message2));
-
-		String calculatedCommitMessage = commitMessageComponent
-				.calculateCommitMessage(Collections.emptyList());
-
-		assertEquals(message1 + "\n\n" + message2, calculatedCommitMessage);
-	}
-
-	@Test
-	public void commitMessageProvider_oneCrashingProvider() throws Exception {
-
-		CommitMessageComponent commitMessageComponent = newCommitMessageComponent(
-				Arrays.asList(new CrashingCommitMessageProvider()));
-
-		String calculatedCommitMessage = commitMessageComponent
-				.calculateCommitMessage(Collections.emptyList());
-
-		assertEquals("", calculatedCommitMessage);
-	}
-
-	@Test
-	public void commitMessageProvider_twoProvidersSecondOneCrashing()
-			throws Exception {
-		String message = "example single-line commit message";
-		List<ICommitMessageProvider> providers = createProviderList(message);
-		providers.add(new CrashingCommitMessageProvider());
-
-		CommitMessageComponent commitMessageComponent = newCommitMessageComponent(
-				providers);
-
-		String calculatedCommitMessage = commitMessageComponent
-				.calculateCommitMessage(Collections.emptyList());
-
-		assertEquals(message, calculatedCommitMessage);
-	}
-
-	@Test
-	public void commitMessageProvider_twoProvidersFirstOneCrashing()
-			throws Exception {
-		String message = "example single-line commit message";
-		List<ICommitMessageProvider> providers = createProviderList(message);
-		providers.add(0, new CrashingCommitMessageProvider());
-
-		CommitMessageComponent commitMessageComponent = newCommitMessageComponent(
-				providers);
-
-		String calculatedCommitMessage = commitMessageComponent
-				.calculateCommitMessage(Collections.emptyList());
-
-		assertEquals(message, calculatedCommitMessage);
-	}
-
-	@Test
-	public void commitMessageProvider_multipleProvidersWithCrashAndNull()
-			throws Exception {
-		String singleLineMessage = "example single-line commit message";
-		String multiLineMessage = "example\nmulti-line\n\ncommit message";
-		List<ICommitMessageProvider> providers = createProviderList(
-				multiLineMessage + "\n\n\n", null, "\n" + singleLineMessage);
-		providers.add(0, new CrashingCommitMessageProvider());
-		providers.add(3, new CrashingCommitMessageProvider());
-
-		CommitMessageComponent commitMessageComponent = newCommitMessageComponent(
-				providers);
-
-		String calculatedCommitMessage = commitMessageComponent
-				.calculateCommitMessage(Collections.emptyList());
-
-		assertEquals(multiLineMessage + "\n\n" + singleLineMessage,
-				calculatedCommitMessage);
-	}
-
-	private CommitMessageComponent newCommitMessageComponent(
-			List<ICommitMessageProvider> providers) {
-		// Create anonymous subclass, as mocking does not currently work.
-		// See https://bugs.eclipse.org/bugs/show_bug.cgi?id=349164
-		return new CommitMessageComponent(null) {
-
-			@Override
-			List<ICommitMessageProvider> getCommitMessageProviders() {
-				return providers;
-			}
-		};
-	}
-
-	private List<ICommitMessageProvider> createProviderList(
-			String... messages) {
-		List<ICommitMessageProvider> providerList = new ArrayList<>();
-
-		for (String message : messages) {
-			providerList.add(new ICommitMessageProvider() {
-
-				@Override
-				public String getMessage(IResource[] resources) {
-					return message;
-				}
-			});
+	public void testCaretPosition() {
+		try {
+			StagingViewTester stagingView = StagingViewTester.openStagingView();
+			assertEquals(
+					CommitMessageProviderFactory.getProvidedCaretPosition(),
+					stagingView.getCaretPosition());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail(e.getMessage());
 		}
-
-		return providerList;
 	}
 
-	private static class CrashingCommitMessageProvider
-			implements ICommitMessageProvider {
+	// TODO this code is copied from StagingViewTest. Remove redundancy
+	private void selectRepositoryNode() throws Exception {
+		SWTBotView repositoriesView = TestUtil
+				.showView(RepositoriesView.VIEW_ID);
+		SWTBotTree tree = repositoriesView.bot().tree();
 
-		@Override
-		public String getMessage(IResource[] resources) {
-			throw new IllegalStateException(
-					"CrashingCommitMessageProvider fails on purpose.");
-		}
-
+		SWTBotTreeItem repoNode = repoViewUtil.getRootItem(tree,
+				repositoryFile);
+		repoNode.select();
 	}
 
 }

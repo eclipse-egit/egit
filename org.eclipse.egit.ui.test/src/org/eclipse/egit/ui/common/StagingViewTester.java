@@ -11,6 +11,7 @@ package org.eclipse.egit.ui.common;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.egit.ui.Activator;
@@ -22,6 +23,8 @@ import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
+import org.eclipse.swtbot.swt.finder.utils.Position;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotStyledText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarToggleButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 
@@ -151,5 +154,22 @@ public class StagingViewTester {
 		return stagingView.bot()
 				.styledTextWithLabel(UIText.StagingView_CommitMessage)
 				.getText();
+	}
+
+	public int getCaretPosition() {
+		SWTBotStyledText commitMessageArea = stagingView.bot().styledTextWithLabel(UIText.StagingView_CommitMessage);
+		Position cursorPosition = commitMessageArea.cursorPosition();
+		List<String> lines = commitMessageArea.getLines();
+
+		int caretPosition = 0;
+		for (int i = 0; i <= cursorPosition.line; i++) {
+			if (i < cursorPosition.line) {
+				caretPosition += lines.get(i).length();
+			} else {
+				caretPosition += cursorPosition.column;
+			}
+		}
+
+		return caretPosition;
 	}
 }

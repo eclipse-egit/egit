@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Git Team Provider UI Test Bundle for ICommitMessageProvider
+Bundle-Vendor: Eclipse.org
+Bundle-SymbolicName: org.eclipse.egit.ui.messageprovider.test;singleton:=true
+Bundle-Version: 4.9.0.qualifier
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.eclipse.core.resources,
+ org.eclipse.core.runtime;version="3.5.0",
+ org.eclipse.egit.ui;version="4.9.0"
+Export-Package: org.eclipse.egit.ui.test.commitmessageprovider;version="4.9.0"
