@@ -521,7 +521,7 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 							URIish testUri = new URIish(uriText.getText());
 							if (Protocol.FILE.defaultScheme
 									.equals(testUri.getScheme())) {
-								testFile = new File(uri.getPath());
+								testFile = new File(testUri.getPath());
 								if (testFile.exists()) {
 									dialog.setFilterPath(testFile.getPath());
 								}
