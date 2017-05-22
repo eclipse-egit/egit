@@ -17,7 +17,7 @@
          </appInfo>
       </annotation>
       <complexType>
-         <choice>
+         <choice minOccurs="1" maxOccurs="unbounded">
             <element ref="commitMessageProvider"/>
          </choice>
          <attribute name="point" type="string" use="required">
@@ -82,8 +82,8 @@
          <meta.section type="apiinfo"/>
       </appInfo>
       <documentation>
-         There is an interface org.eclipse.egit.ui.ICommitMessageProvider.
-This is the only interface you must implement to use the extension point.
+         There is an interface org.eclipse.egit.ui.ICommitMessageProvider, which you must implement to use the extension point.
+There is an interface org.eclipse.egit.ui.ICommitMessageProvider2, which extends ICommitMessageProvider. Implement this interface, if you want to provide a commit message and a caret position.
       </documentation>
    </annotation>
 
