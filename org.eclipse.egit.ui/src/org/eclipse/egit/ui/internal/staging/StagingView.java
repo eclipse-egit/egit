@@ -3825,11 +3825,14 @@ public class StagingView extends ViewPart
 				getCommitId(helper.getPreviousCommit()));
 		commitMessageComponent.enableListeners(false);
 		commitMessageComponent.setAuthor(oldState.getAuthor());
-		if (headCommitChanged)
+		if (headCommitChanged) {
 			addHeadChangedWarning(oldState.getCommitMessage());
-		else
+		} else {
 			commitMessageComponent
 					.setCommitMessage(oldState.getCommitMessage());
+			commitMessageComponent
+					.setCaretPosition(oldState.getCaretPosition());
+		}
 		commitMessageComponent.setCommitter(oldState.getCommitter());
 		commitMessageComponent.setHeadCommit(getCommitId(helper
 				.getPreviousCommit()));
