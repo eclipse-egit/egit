@@ -17,7 +17,7 @@
 				locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=group.gitflow">
 			<command
 					commandId="org.eclipse.egit.gitflow.ui.command.init"
-					icon="icons/obj16/git-flow_16x10.png"
+					icon="icons/obj16/gitflow.png"
 					label="%TeamGitFlowInit.name"
 					style="push">
 				<visibleWhen
@@ -39,7 +39,7 @@
 		<menuContribution
 				locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=group.gitflow">
 			<menu
-					icon="icons/obj16/git-flow_16x10.png"
+					icon="icons/obj16/gitflow.png"
 					label="%TeamGitFlowMenu.name">
 				<visibleWhen
 						checkEnabled="false">
@@ -536,7 +536,7 @@
 		<menuContribution
 				locationURI="popup:team.main?after=group11">
 			<menu
-					icon="icons/obj16/git-flow_16x10.png"
+					icon="icons/obj16/gitflow.png"
 					label="%TeamGitFlowMenu.name">
 				<visibleWhen
 						checkEnabled="false">
@@ -633,7 +633,7 @@
 				locationURI="popup:team.main?after=group11">
 			<command
 					commandId="org.eclipse.egit.gitflow.ui.command.init"
-					icon="icons/obj16/git-flow_16x10.png"
+					icon="icons/obj16/gitflow.png"
 					label="%TeamGitFlowInit.name"
 					style="push">
 				<visibleWhen
@@ -659,7 +659,7 @@
 				allPopups="false"
 				locationURI="popup:org.eclipse.egit.ui.historyPageContributions?after=additions">
 			<menu
-					icon="icons/obj16/git-flow_16x10.png"
+					icon="icons/obj16/gitflow.png"
 					label="%TeamGitFlowMenu.name">
 				<dynamic
 						class="org.eclipse.egit.gitflow.ui.internal.menu.DynamicHistoryMenu"
@@ -701,7 +701,7 @@
 				locationURI="popup:replaceWithMenu?after=gitReplaceWithGroup">
 			<command
 					commandId="org.eclipse.egit.gitflow.ui.command.replaceWithDevelop"
-					icon="icons/obj16/git-flow_16x10.png"
+					icon="icons/obj16/gitflow.png"
 					label="%TeamGitFlowDevelopReplace.label"
 					style="push">
 				<visibleWhen
@@ -738,7 +738,7 @@
 				locationURI="popup:compareWithMenu?after=gitCompareWithGroup">
 			<command
 					commandId="org.eclipse.egit.gitflow.ui.command.compareWithDevelop"
-					icon="icons/obj16/git-flow_16x10.png"
+					icon="icons/obj16/gitflow.png"
 					label="%TeamGitFlowDevelopCompare.label"
 					style="push">
 				<visibleWhen
