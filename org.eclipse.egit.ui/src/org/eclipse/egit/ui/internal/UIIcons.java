@@ -322,6 +322,9 @@ public class UIIcons {
 	/** Sort by state icon */
 	public final static ImageDescriptor STATE_SORT;
 
+	/** Unstage icon */
+	public final static ImageDescriptor UNSTAGE;
+
 	/** {@link #BRANCH} overlaid with {@link #OVR_CHECKEDOUT}. */
 	public final static ImageDescriptor CHECKED_OUT_BRANCH;
 
@@ -432,6 +435,7 @@ public class UIIcons {
 		CURRENT_STEP = map("obj16/current_step.png"); //$NON-NLS-1$
 		ALPHABETICALLY_SORT = map("obj16/alphab_sort_co.png"); //$NON-NLS-1$
 		STATE_SORT = map("obj16/state_sort_co.png"); //$NON-NLS-1$
+		UNSTAGE = map("obj16/unstage.png"); //$NON-NLS-1$
 		CHECKED_OUT_BRANCH = new DecorationOverlayDescriptor(BRANCH,
 				OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
 	}

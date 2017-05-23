@@ -5155,10 +5155,16 @@ public class UIText extends NLS {
 	public static String StagingView_UnstagedChanges;
 
 	/** */
+	public static String StagingView_UnstagedChangesTooltip;
+
+	/** */
 	public static String StagingView_ShowFileNamesFirst;
 
 	/** */
 	public static String StagingView_StagedChanges;
+
+	/** */
+	public static String StagingView_StagedChangesTooltip;
 
 	/** */
 	public static String StagingView_CommitMessage;
@@ -5254,10 +5260,16 @@ public class UIText extends NLS {
 	public static String StagingView_UnstageItemMenuLabel;
 
 	/** */
+	public static String StagingView_UnstageItemTooltip;
+
+	/** */
 	public static String StagingView_UnstagedSort;
 
 	/** */
 	public static String StagingView_StageItemMenuLabel;
+
+	/** */
+	public static String StagingView_StageItemTooltip;
 
 	/** */
 	public static String StagingView_IgnoreItemMenuLabel;
