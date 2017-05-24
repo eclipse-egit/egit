@@ -34,6 +34,24 @@
       "revId": "388a2dbc2dc4ce15bbc6c91414f8283bf37848a7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e78d0f46_97e58eca",
+        "filename": "org.eclipse.egit-feature/p2.inf",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-24T16:53:32Z",
+      "side": 1,
+      "message": "\u003e the smartimport plugin is not installed\n\nIf p2 doesn\u0027t go look for optional bundles that were not explicitly selected by the user, might it work if the smartimport bundle was included as a sub-feature?",
+      "parentUuid": "e78d0f46_17f99e8e",
+      "revId": "388a2dbc2dc4ce15bbc6c91414f8283bf37848a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
