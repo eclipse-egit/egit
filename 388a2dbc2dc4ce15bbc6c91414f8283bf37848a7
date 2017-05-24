@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e78d0f46_17f99e8e",
+        "filename": "org.eclipse.egit-feature/p2.inf",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-05-24T16:21:56Z",
+      "side": 1,
+      "message": "tried this with oxygen M7, it still doesn\u0027t work, the smartimport plugin is not installed",
+      "revId": "388a2dbc2dc4ce15bbc6c91414f8283bf37848a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
