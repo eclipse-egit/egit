@@ -52,6 +52,24 @@
       "revId": "388a2dbc2dc4ce15bbc6c91414f8283bf37848a7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_2dfe4d77",
+        "filename": "org.eclipse.egit-feature/p2.inf",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-24T21:34:08Z",
+      "side": 1,
+      "message": "All right; tried a number of things:\n\n* with/without metaRequirements: no difference.\n* only the requires here: egit.ui.smartimport bundle wasn\u0027t even in the update site\n* with a separate fragment for smartimport, included in egit-feature and marked as optional: bundle is in the updatesite, but doesn\u0027t get installed. Feature is also there, but not show in categories.\n\nI have no idea how to get this to work.",
+      "parentUuid": "e78d0f46_97e58eca",
+      "revId": "388a2dbc2dc4ce15bbc6c91414f8283bf37848a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
