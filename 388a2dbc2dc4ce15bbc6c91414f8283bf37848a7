@@ -16,6 +16,24 @@
       "revId": "388a2dbc2dc4ce15bbc6c91414f8283bf37848a7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e78d0f46_17cb5e4e",
+        "filename": "org.eclipse.egit-feature/p2.inf",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-05-24T16:40:36Z",
+      "side": 1,
+      "message": "I thought this should go into the p2.inf of the smartimport bundle, not here in the feature!",
+      "parentUuid": "e78d0f46_17f99e8e",
+      "revId": "388a2dbc2dc4ce15bbc6c91414f8283bf37848a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
