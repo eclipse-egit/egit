@@ -16,6 +16,24 @@
       "revId": "dfee7fa5bd6d2861042808c03e4938f87d9ca004",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_42ed2083",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceMapping.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 79641
+      },
+      "writtenOn": "2017-05-29T16:11:23Z",
+      "side": 1,
+      "message": "You are absolutely right. I exchanged the comment to explain the situation.",
+      "parentUuid": "479dfb6e_b72a902e",
+      "revId": "dfee7fa5bd6d2861042808c03e4938f87d9ca004",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
