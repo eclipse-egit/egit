@@ -2549,6 +2549,7 @@ public class StagingView extends ViewPart
 
 			@Override
 			public void menuAboutToShow(IMenuManager manager) {
+				control.setFocus();
 				final IStructuredSelection selection = (IStructuredSelection) treeViewer
 						.getSelection();
 				if (selection.isEmpty())

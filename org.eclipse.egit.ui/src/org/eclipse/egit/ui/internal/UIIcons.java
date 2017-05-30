@@ -274,6 +274,9 @@ public class UIIcons {
 	/** Stash icon */
 	public final static ImageDescriptor STASH;
 
+	/** Stash apply icon */
+	public final static ImageDescriptor STASH_APPLY;
+
 	/** History view icon */
 	public final static ImageDescriptor HISTORY;
 
@@ -300,6 +303,9 @@ public class UIIcons {
 
 	/** Fixup icon arrow down */
 	public final static ImageDescriptor FIXUP_DOWN;
+
+	/** Revert icon */
+	public final static ImageDescriptor REVERT;
 
 	/** Reword icon */
 	public final static ImageDescriptor REWORD;
@@ -410,6 +416,7 @@ public class UIIcons {
 		SUBMODULES = map("obj16/submodules.gif"); //$NON-NLS-1$
 		CLEAN = map("obj16/clean_obj.gif"); //$NON-NLS-1$
 		STASH = map("obj16/stash.png"); //$NON-NLS-1$
+		STASH_APPLY = map("obj16/stash-apply.png"); //$NON-NLS-1$
 		HISTORY = map("obj16/history.gif"); //$NON-NLS-1$
 		SEARCH_COMMIT = map("obj16/search-commit.gif"); //$NON-NLS-1$
 		HIERARCHY = map("elcl16/hierarchicalLayout.gif"); //$NON-NLS-1$
@@ -419,6 +426,7 @@ public class UIIcons {
 		SQUASH_DOWN = map("obj16/squash-down.png"); //$NON-NLS-1$
 		FIXUP_UP = map("obj16/fixup-up.png"); //$NON-NLS-1$
 		FIXUP_DOWN = map("obj16/fixup-down.png"); //$NON-NLS-1$
+		REVERT = map("obj16/revert.gif"); //$NON-NLS-1$
 		REWORD = map("obj16/reword.gif"); //$NON-NLS-1$
 		DONE_STEP = map("obj16/done_step.gif"); //$NON-NLS-1$
 		CURRENT_STEP = map("obj16/current_step.gif"); //$NON-NLS-1$

@@ -510,36 +510,38 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 				DirectoryDialog dialog = new DirectoryDialog(getShell());
 				// if a file was selected before, let's try to open
 				// the directory dialog on the same directory
-				if (!uriText.getText().equals(EMPTY_STRING))
+				if (!uriText.getText().isEmpty()) {
 					try {
 						// first we try if this is a simple file name
 						File testFile = new File(uriText.getText());
-						if (testFile.exists())
+						if (testFile.exists()) {
 							dialog.setFilterPath(testFile.getPath());
-						else {
+						} else {
 							// this could still be a file URIish
 							URIish testUri = new URIish(uriText.getText());
-							if (testUri.getScheme().equals(
-									Protocol.FILE.defaultScheme)) {
-								testFile = new File(uri.getPath());
-								if (testFile.exists())
+							if (Protocol.FILE.defaultScheme
+									.equals(testUri.getScheme())) {
+								testFile = new File(testUri.getPath());
+								if (testFile.exists()) {
 									dialog.setFilterPath(testFile.getPath());
+								}
 							}
 						}
-					} catch (IllegalArgumentException e) {
-						// ignore here, we just' don't set the directory in the
-						// browser
-					} catch (URISyntaxException e) {
+					} catch (IllegalArgumentException | URISyntaxException e) {
 						// ignore here, we just' don't set the directory in the
 						// browser
 					}
+				}
 				// if nothing else, we start the search from the default folder for repositories
-				if (EMPTY_STRING.equals(dialog.getFilterPath()))
+				String filterPath = dialog.getFilterPath();
+				if (filterPath == null || filterPath.isEmpty()) {
 					dialog.setFilterPath(
 							RepositoryUtil.getDefaultRepositoryDir());
+				}
 				String result = dialog.open();
-				if (result != null)
+				if (result != null) {
 					uriText.setText("file:///" + result); //$NON-NLS-1$
+				}
 			}
 
 		});

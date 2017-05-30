@@ -3692,6 +3692,9 @@ public class UIText extends NLS {
 	public static String DiscardChangesAction_discardChanges;
 
 	/** */
+	public static String DiscardChangesAction_discardChangesButtonText;
+
+	/** */
 	public static String Disconnect_disconnect;
 
 	/** */
@@ -4273,6 +4276,30 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommitEditor_showGitRepo;
+
+	/** */
+	public static String CommitEditor_toolbarApplyStash;
+
+	/** */
+	public static String CommitEditor_toolbarDeleteStash;
+
+	/** */
+	public static String CommitEditor_toolbarCreateTag;
+
+	/** */
+	public static String CommitEditor_toolbarCreateBranch;
+
+	/** */
+	public static String CommitEditor_toolbarCheckOut;
+
+	/** */
+	public static String CommitEditor_toolbarCherryPick;
+
+	/** */
+	public static String CommitEditor_toolbarRevert;
+
+	/** */
+	public static String CommitEditor_toolbarShowInHistory;
 
 	/** */
 	public static String CommitEditor_TitleHeaderCommit;
@@ -5507,6 +5534,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String StagingViewPreferencePage_maxLimitListMode;
+
+	/** */
+	public static String CommandConfirmationHardResetDialog_resetButtonLabel;
 
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);

@@ -62,7 +62,7 @@ public class StashDropHandler extends SelectionHandler {
 		final StashDropOperation op = new StashDropOperation(repo, stashIndex);
 
 		Job job = new WorkspaceJob(MessageFormat.format(
-				UIText.StashApplyCommand_jobTitle, commit.name())) {
+				UIText.StashDropCommand_jobTitle, commit.name())) {
 
 			@Override
 			public IStatus runInWorkspace(IProgressMonitor monitor) {
