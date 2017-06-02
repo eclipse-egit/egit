@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_d597fe18",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/decorators/DecoratableWorkingSetTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 79641
+      },
+      "writtenOn": "2017-06-02T15:50:52Z",
+      "side": 1,
+      "message": "You are right, better to be safe. I added the respective method for the necessary cleanup.",
+      "parentUuid": "c7880b39_795f3246",
+      "revId": "167e8635db37ac28871c9e9ef6e5d200591b7ff5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_f917a276",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecoratorTest.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-30T13:57:40Z",
       "side": 1,
       "message": "1. I don\u0027t like this duplication between the DecorationHelper and this class here. Can\u0027t we make the ImageDescriptors in DecorationHelper protected instead?\n\n2. Findbugs wants all these descriptors to be final.",
+      "revId": "167e8635db37ac28871c9e9ef6e5d200591b7ff5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_5556aedb",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecoratorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 79641
+      },
+      "writtenOn": "2017-06-02T15:50:52Z",
+      "side": 1,
+      "message": "Agreed, don\u0027t know why I didn\u0027t think of that. I made them protected and changed the CachedImageDescriptor class back to private. Thank you!",
+      "parentUuid": "c7880b39_f917a276",
       "revId": "167e8635db37ac28871c9e9ef6e5d200591b7ff5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_556f8ea5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceMapping.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 79641
+      },
+      "writtenOn": "2017-06-02T15:50:52Z",
+      "side": 1,
+      "message": "Great suggestion! I implemented it just like you said, thanks!",
+      "parentUuid": "c7880b39_cc4ce29a",
+      "revId": "167e8635db37ac28871c9e9ef6e5d200591b7ff5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_2c8486eb",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-05-30T13:57:40Z",
       "side": 1,
       "message": "Here, adaptations to IResource have precedence over adaptations to ResourceMapping. Is that still as intended?\n\nJust for fun I changed the precedence here to see if the new DecoratableResourceMapping would work for Java package fragment roots. Looks OK (I didn\u0027t notice any difference in the UI, and the new code was definitely used).\n\nI had somehow expected that changing the precedence here would also have fixed bug 387175... it might have, if Java\u0027s package fragments mapped to the files in that folder, but unfortunately they map to the folder, and so for git that\u0027s still the whole hierarchy.\n\nBut I wonder whether the resources-first strategy here is still fine for the intended use case of this change here. Where does this change come from? Probably some model elements that map to several IResources? If those elements also adapt to IResource (for instance, to a \"primary\" IResource?), it may still be necessary to change the precedence here.",
+      "revId": "167e8635db37ac28871c9e9ef6e5d200591b7ff5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_9036640b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 79641
+      },
+      "writtenOn": "2017-06-02T15:50:52Z",
+      "side": 1,
+      "message": "That is a very good question! I can see both sides of the argument being correct. \n\nRegarding the incentive for this change: As far as I know, the issue was visible for us in Papyrus models who map a number of different resources under a single node. In this case however, the resource mapping itself does not adapt to an IResource, so that should be covered either way. In any case, I will talk to Stefan who started this change and come back to you very soon.\n\nIn my mind, giving the resource mapping precedence over the resource seems slightly more logical, because it may not be obvious that the model object from the resource mapping is more important than the resource mapping itself.",
+      "parentUuid": "c7880b39_2c8486eb",
       "revId": "167e8635db37ac28871c9e9ef6e5d200591b7ff5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_755baa02",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 79641
+      },
+      "writtenOn": "2017-06-02T15:50:52Z",
+      "side": 1,
+      "message": "You are right, the Utils method may return null. I added the missing check.",
+      "parentUuid": "c7880b39_6c7e8e5f",
+      "revId": "167e8635db37ac28871c9e9ef6e5d200591b7ff5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_8c83bae0",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-05-30T13:57:40Z",
       "side": 1,
       "message": "When we touch old code, we also supply the missing braces.",
+      "revId": "167e8635db37ac28871c9e9ef6e5d200591b7ff5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_955016dd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 79641
+      },
+      "writtenOn": "2017-06-02T15:50:52Z",
+      "side": 1,
+      "message": "I assume you mean the curly brackets and added them.",
+      "parentUuid": "c7880b39_8c83bae0",
       "revId": "167e8635db37ac28871c9e9ef6e5d200591b7ff5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_f546ba26",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 79641
+      },
+      "writtenOn": "2017-06-02T15:50:52Z",
+      "side": 1,
+      "message": "Actually, I changed it back to provide since we now share the image descriptors below.",
+      "parentUuid": "c7880b39_6c504edc",
+      "revId": "167e8635db37ac28871c9e9ef6e5d200591b7ff5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_ac6236b6",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
         "patchSetId": 3
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_1544261d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 79641
+      },
+      "writtenOn": "2017-06-02T15:50:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_ac6236b6",
+      "revId": "167e8635db37ac28871c9e9ef6e5d200591b7ff5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_ec6c3ead",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
         "patchSetId": 3
@@ -149,6 +293,24 @@
       "writtenOn": "2017-05-30T13:57:40Z",
       "side": 1,
       "message": "This could be private.",
+      "revId": "167e8635db37ac28871c9e9ef6e5d200591b7ff5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_3541220d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 79641
+      },
+      "writtenOn": "2017-06-02T15:50:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_ec6c3ead",
       "revId": "167e8635db37ac28871c9e9ef6e5d200591b7ff5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
