@@ -32,11 +32,18 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.IUndoContext;
+import org.eclipse.core.expressions.EvaluationResult;
+import org.eclipse.core.expressions.Expression;
+import org.eclipse.core.expressions.ExpressionInfo;
+import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -135,6 +142,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeViewerListener;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -161,12 +169,14 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.VerifyKeyListener;
+import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSourceAdapter;
 import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.dnd.DropTargetAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.FileTransfer;
+import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
@@ -201,8 +211,10 @@ import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
+import org.eclipse.ui.ISources;
 import org.eclipse.ui.IURIEditorInput;
 import org.eclipse.ui.IViewSite;
+import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchPartSite;
@@ -215,6 +227,7 @@ import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
+import org.eclipse.ui.handlers.IHandlerActivation;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.operations.UndoRedoActionGroup;
 import org.eclipse.ui.part.IShowInSource;
@@ -222,6 +235,7 @@ import org.eclipse.ui.part.IShowInTarget;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
+import org.eclipse.ui.swt.IFocusService;
 
 /**
  * A GitX style staging view with embedded commit dialog.
@@ -233,6 +247,8 @@ public class StagingView extends ViewPart
 	 * Staging view id
 	 */
 	public static final String VIEW_ID = "org.eclipse.egit.ui.StagingView"; //$NON-NLS-1$
+
+	private static final String UNSTAGED_VIEW_ID = "org.eclipse.egit.ui.StagingView.unstagedView"; //$NON-NLS-1$
 
 	private static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
@@ -632,6 +648,56 @@ public class StagingView extends ViewPart
 			}
 		}
 
+	}
+
+	static class CopyHandler extends AbstractHandler {
+		private StructuredViewer viewer;
+
+		public CopyHandler(StructuredViewer viewer) {
+			this.viewer = viewer;
+		}
+
+		@Override
+		public Object execute(ExecutionEvent event) throws ExecutionException {
+			Clipboard cb = new Clipboard(viewer.getControl().getDisplay());
+			TextTransfer t = TextTransfer.getInstance();
+			Optional<String> text = getText();
+			if (!text.isPresent()) {
+				return null;
+			}
+			cb.setContents(new Object[] { text.get() }, new Transfer[] { t });
+			cb.dispose();
+			return null;
+		}
+
+		private Optional<String> getText() {
+			IStructuredSelection ssel = viewer.getStructuredSelection();
+			Object obj = ssel.getFirstElement();
+			if (obj instanceof StagingEntry) {
+				return Optional.of(((StagingEntry) obj).getFile().toString());
+			}
+			return Optional.empty();
+		}
+	}
+
+	static class ControlExpression extends Expression {
+		private Control control;
+
+		public ControlExpression(Control c) {
+			control = c;
+		}
+
+		@Override
+		public void collectExpressionInfo(ExpressionInfo info) {
+			info.addVariableNameAccess(ISources.ACTIVE_FOCUS_CONTROL_NAME);
+		}
+
+		@Override
+		public EvaluationResult evaluate(IEvaluationContext context)
+				throws CoreException {
+			return EvaluationResult.valueOf(context.getVariable(
+					ISources.ACTIVE_FOCUS_CONTROL_NAME) == control);
+		}
 	}
 
 	private final IPreferenceChangeListener prefListener = new IPreferenceChangeListener() {
@@ -2010,9 +2076,29 @@ public class StagingView extends ViewPart
 						!viewer.getExpandedState(selectedNode));
 			}
 		});
+		addCopyHandler(viewer);
 		enableAutoExpand(viewer);
 		addListenerToDisableAutoExpandOnCollapse(viewer);
 		return viewer;
+	}
+
+	private void addCopyHandler(final TreeViewer viewer) {
+		IFocusService focusService = CommonUtils.getService(getSite(),
+				IFocusService.class);
+		IHandlerService handlerService = CommonUtils.getService(getSite(),
+				IHandlerService.class);
+		focusService.addFocusTracker(viewer.getControl(),
+				UNSTAGED_VIEW_ID);
+		IHandlerActivation activateHandler = handlerService.activateHandler(
+				IWorkbenchCommandConstants.EDIT_COPY,
+				new CopyHandler(viewer),
+				new ControlExpression(viewer.getControl()));
+		viewer.getControl().addDisposeListener(new DisposeListener() {
+			@Override
+			public void widgetDisposed(DisposeEvent e) {
+				handlerService.deactivateHandler(activateHandler);
+			}
+		});
 	}
 
 	private void setStagingViewerInput(TreeViewer stagingViewer,
