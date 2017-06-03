@@ -407,6 +407,48 @@
        y1="356.2869"
        x2="446.22526"
        y2="356.2869" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3901"
+       id="linearGradient4090"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.92307692,0,0,1,23.269231,-8)"
+       x1="-16"
+       y1="1059.3622"
+       x2="-16"
+       y2="1051.3622" />
+    <linearGradient
+       id="linearGradient3901">
+      <stop
+         style="stop-color:#e9f8ff;stop-opacity:1;"
+         offset="0"
+         id="stop3903" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop3905" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3893"
+       id="linearGradient4092"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.92307692,0,0,1,23.269231,-8)"
+       x1="-16"
+       y1="1059.3622"
+       x2="-16"
+       y2="1051.3622" />
+    <linearGradient
+       id="linearGradient3893">
+      <stop
+         style="stop-color:#95a1b6;stop-opacity:1;"
+         offset="0"
+         id="stop3895" />
+      <stop
+         style="stop-color:#c5bc99;stop-opacity:1;"
+         offset="1"
+         id="stop3897" />
+    </linearGradient>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -443,7 +485,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -478,6 +520,35 @@
            d="m 561.06103,316.96303 -4.99773,0 0,17.59704 -3.52781,0 0,-17.59704 -5.17972,0 0,-3.30382 13.70526,0 0,3.30382"
            style="font-size:8px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#008000;fill-opacity:1;stroke:none;font-family:Helvetica CY;-inkscape-font-specification:Helvetica CY Bold"
            id="path3052"
+           inkscape:connector-curvature="0" />
+      </g>
+      <g
+         style="display:inline"
+         id="g3036"
+         transform="matrix(3.5838051,0,0,3.5838051,528.65279,-3411.5903)">
+        <rect
+           y="1043.8622"
+           x="2.5"
+           height="7"
+           width="12"
+           id="rect3123"
+           style="fill:url(#linearGradient4090);fill-opacity:1;stroke:url(#linearGradient4092);stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+        <path
+           sodipodi:nodetypes="cccscscscccccscscsccccc"
+           d="m 6.873,1049.3587 -0.388518,0 -0.1183567,-0.41 c -0.2921596,0.3617 -0.5249243,0.4135 -0.9066253,0.4135 -0.482243,0 -0.85713,-0.2241 -1.124662,-0.6722 C 4.111614,1048.3151 4,1047.8678 4,1047.3481 c 0,-0.518 0.11843,-0.9636 0.35529,-1.3367 0.274351,-0.4328 0.652645,-0.6492 1.134887,-0.6492 0.453271,0 0.770779,0.1647 1.027531,0.4192 0.1565814,0.1872 0.274056,0.3449 0.355292,0.5808 0.01364,0.05 -0.01874,-0.15 0,0 l -0.8063333,0 c -0.067787,-0.131 -0.018737,-0.054 -0.1198377,-0.1667 -0.113028,-0.1013 -0.1875043,-0.1269 -0.3817623,-0.1269 -0.318656,0 -0.501257,0.1452 -0.622803,0.4023 -0.107354,0.2385 -0.1526977,0.5211 -0.1526977,0.8976 0,0.3392 0.043823,0.6074 0.1648133,0.8716 0.155066,0.339 0.279145,0.4336 0.572242,0.4336 0.24197,0 0.3874544,-0.1197 0.5531217,-0.334 0.109057,-0.1618 0.1603647,-0.2216 0.1705917,-0.4207 l -0.6189154,0.01 -0.00842,-0.5651 1.25,0"
+           style="font-size:8px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Helvetica CY;-inkscape-font-specification:Helvetica CY Bold"
+           id="path3048-7"
+           inkscape:connector-curvature="0" />
+        <path
+           d="m 8.9,1049.3622 -0.8,0 0,-4 0.8,0 0,4"
+           style="font-size:8px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#c20000;fill-opacity:1;stroke:none;font-family:Helvetica CY;-inkscape-font-specification:Helvetica CY Bold"
+           id="path3050-9"
+           inkscape:connector-curvature="0" />
+        <path
+           sodipodi:nodetypes="ccccccccc"
+           d="m 13.378454,1046.1622 -1.478681,0 4.54e-4,3.2 -0.799813,0 -8.28e-4,-3.2 -1.115586,0 3.75e-4,-0.8 3,0 -4.53e-4,0.8"
+           style="font-size:8px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#008000;fill-opacity:1;stroke:none;font-family:Helvetica CY;-inkscape-font-specification:Helvetica CY Bold"
+           id="path3052-3"
            inkscape:connector-curvature="0" />
       </g>
     </g>
