@@ -71,6 +71,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.ActionUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -166,12 +167,14 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.VerifyKeyListener;
+import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSourceAdapter;
 import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.dnd.DropTargetAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.FileTransfer;
+import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
@@ -2120,9 +2123,75 @@ public class StagingView extends ViewPart
 						!viewer.getExpandedState(selectedNode));
 			}
 		});
+		addCopyAction(viewer);
 		enableAutoExpand(viewer);
 		addListenerToDisableAutoExpandOnCollapse(viewer);
 		return viewer;
+	}
+
+	private void addCopyAction(final TreeViewer viewer) {
+		IAction copyAction = createSelectionPathCopyAction(viewer);
+
+		ActionUtils.setGlobalActions(viewer.getControl(),
+				getSite().getService(IHandlerService.class), copyAction);
+	}
+
+	private IAction createSelectionPathCopyAction(final TreeViewer viewer) {
+		IStructuredSelection selection = (IStructuredSelection) viewer
+				.getSelection();
+		String copyPathActionText = (selection.size() <= 1) ? UIText.StagingView_CopyPath
+						: UIText.StagingView_CopyPaths;
+		IAction copyAction = ActionUtils.createGlobalAction(ActionFactory.COPY,
+				() -> copyPathOfSelectionToClipboard(viewer));
+		copyAction.setText(copyPathActionText);
+		return copyAction;
+	}
+
+	private void copyPathOfSelectionToClipboard(final TreeViewer viewer) {
+		Clipboard cb = new Clipboard(viewer.getControl().getDisplay());
+		TextTransfer t = TextTransfer.getInstance();
+		String text = getTextFrom(
+				(IStructuredSelection) viewer.getSelection());
+		try {
+			if (text != null) {
+				cb.setContents(new Object[] { text }, new Transfer[] { t });
+			}
+		} finally {
+			cb.dispose();
+		}
+	}
+
+	@Nullable
+	private String getTextFrom(IStructuredSelection selection) {
+		Object[] selectionEntries = selection.toArray();
+		if (selectionEntries.length <= 0) {
+			return null;
+		} else if (selectionEntries.length == 1) {
+			return getPathFrom(selectionEntries[0]);
+		} else {
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < selectionEntries.length; i++) {
+				String text = getPathFrom(selectionEntries[i]);
+				if (text != null) {
+					if (i < selectionEntries.length - 1) {
+						sb.append(text).append(System.lineSeparator());
+					} else {
+						sb.append(text);
+					}
+				}
+			}
+			return sb.toString();
+		}
+	}
+
+	@Nullable
+	private String getPathFrom(Object obj) {
+		if (obj instanceof StagingEntry) {
+			return ((StagingEntry) obj).getPath();
+		} else if (obj instanceof StagingFolderEntry) {
+			return ((StagingFolderEntry) obj).getPath().toString();
+		}
+		return null;
 	}
 
 	private void setStagingViewerInput(TreeViewer stagingViewer,
@@ -2723,6 +2792,8 @@ public class StagingView extends ViewPart
 					};
 					menuMgr.add(openCompareWithIndex);
 				}
+
+				menuMgr.add(createSelectionPathCopyAction(treeViewer));
 
 				Set<StagingEntry.Action> availableActions = getAvailableActions(fileSelection);
 
