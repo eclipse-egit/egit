@@ -1,0 +1,254 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_64b859ac",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-04T14:27:16Z",
+      "side": 1,
+      "message": "Missing copyright header.",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_24957111",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-04T14:27:16Z",
+      "side": 1,
+      "message": "It is in general bad practice to have Javadoc comments without description but only tags. Should have at least one sentence (including the final period) explaining what this method does.",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_04987549",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-04T14:27:16Z",
+      "side": 1,
+      "message": "This needs an explanation what those resources are.",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_848465ed",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-04T14:27:16Z",
+      "side": 1,
+      "message": "?? We don\u0027t use @author tags anyway. Just put a descriptive comment.",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_a4896105",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-04T14:27:16Z",
+      "side": 1,
+      "message": "How about\n\n  return Objects.hashCode(message, Integer.valueOf(desiredCaretPosition));\n\n?",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_e48369df",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-04T14:27:16Z",
+      "side": 1,
+      "message": "Please supply the missing curly braces.",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_c47e6d5d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-04T14:27:16Z",
+      "side": 1,
+      "message": "How about\n\n  return desiredCaretPosition \u003d\u003d other.desiredCaretPosition \u0026\u0026\n      Objects.equals(message, other.message);\n\n?",
+      "range": {
+        "startLine": 84,
+        "startChar": 3,
+        "endLine": 91,
+        "endChar": 15
+      },
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_44bb5da9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-04T14:27:16Z",
+      "side": 1,
+      "message": "Missing copyright header.",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_44e0bdb5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-04T14:27:16Z",
+      "side": 1,
+      "message": "This separation is awkward and results in our calling the ICommitMessageProvider2 twice, which is unnecessary since it already returns both the message and the desired caret position in the first call.",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_64ddb9ff",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-04T14:27:16Z",
+      "side": 1,
+      "message": "Why this underscore?",
+      "range": {
+        "startLine": 111,
+        "startChar": 9,
+        "endLine": 111,
+        "endChar": 10
+      },
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_c4a74d91",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-04T14:27:16Z",
+      "side": 1,
+      "message": "Why did you push this logic of when to add a separator down here? It makes much more sense in the loop that assembles the various commit messages.",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_e4ac4978",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-04T14:27:16Z",
+      "side": 1,
+      "message": "I would log a warning only.",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_24ae516d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-04T14:27:16Z",
+      "side": 1,
+      "message": "ResourceUtil has operations for this.",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_44927d29",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponentStateManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-04T14:27:16Z",
+      "side": 1,
+      "message": "This *must* be backwards compatible and also work with with old saved states that do not have that caret position.",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
