@@ -52,9 +52,11 @@ public class CommandConfirmation {
 
 		MessageDialog messageDialog = new MessageDialog(shell,
 				UIText.ResetTargetSelectionDialog_ResetQuestion, null, question,
-				MessageDialog.QUESTION, 0,
-				UIText.CommandConfirmationHardResetDialog_resetButtonLabel,
-				IDialogConstants.CANCEL_LABEL);
+				MessageDialog.QUESTION,
+				new String[] {
+						UIText.CommandConfirmationHardResetDialog_resetButtonLabel,
+						IDialogConstants.CANCEL_LABEL },
+				0);
 
 		return messageDialog.open() == Window.OK;
 	}
