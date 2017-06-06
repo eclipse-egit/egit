@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_fd785c38",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-06T11:44:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_64b859ac",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_24957111",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-04T14:27:16Z",
       "side": 1,
       "message": "It is in general bad practice to have Javadoc comments without description but only tags. Should have at least one sentence (including the final period) explaining what this method does.",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_1d76084a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-06T11:44:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_24957111",
       "revId": "707a269368bca078dc732bd4e87066518651b838",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_3d83c4a7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-06T11:44:01Z",
+      "side": 1,
+      "message": "javadoc was copied from the getMessage() in ICommitMessageProvider. I improved the docs.",
+      "parentUuid": "c7880b39_04987549",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_848465ed",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-04T14:27:16Z",
       "side": 1,
       "message": "?? We don\u0027t use @author tags anyway. Just put a descriptive comment.",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_5d809098",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-06T11:44:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_848465ed",
       "revId": "707a269368bca078dc732bd4e87066518651b838",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_7d4c6c1d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-06T11:44:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_a4896105",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_e48369df",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
         "patchSetId": 5
@@ -98,6 +188,24 @@
       "writtenOn": "2017-06-04T14:27:16Z",
       "side": 1,
       "message": "Please supply the missing curly braces.",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_9d5118b3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-06T11:44:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_e48369df",
       "revId": "707a269368bca078dc732bd4e87066518651b838",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -127,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_1d5d28c2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-06T11:44:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_c47e6d5d",
+      "range": {
+        "startLine": 84,
+        "startChar": 3,
+        "endLine": 91,
+        "endChar": 15
+      },
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_44bb5da9",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
         "patchSetId": 5
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_7d654c93",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-06T11:44:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_44bb5da9",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_44e0bdb5",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
         "patchSetId": 5
@@ -155,6 +305,24 @@
       "writtenOn": "2017-06-04T14:27:16Z",
       "side": 1,
       "message": "This separation is awkward and results in our calling the ICommitMessageProvider2 twice, which is unnecessary since it already returns both the message and the desired caret position in the first call.",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_5d25f05b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-06T11:44:01Z",
+      "side": 1,
+      "message": "I found it more readable. I changed the code to avoid the duplicate call",
+      "parentUuid": "c7880b39_44e0bdb5",
       "revId": "707a269368bca078dc732bd4e87066518651b838",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -184,6 +352,30 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_fd2dbc49",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-06T11:44:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_64ddb9ff",
+      "range": {
+        "startLine": 111,
+        "startChar": 9,
+        "endLine": 111,
+        "endChar": 10
+      },
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_c4a74d91",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
         "patchSetId": 5
@@ -195,6 +387,24 @@
       "writtenOn": "2017-06-04T14:27:16Z",
       "side": 1,
       "message": "Why did you push this logic of when to add a separator down here? It makes much more sense in the loop that assembles the various commit messages.",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_dd748045",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-06T11:44:01Z",
+      "side": 1,
+      "message": "I found it more readable to extract the details of appending MESSAGE_SEPARATOR to a separate method.",
+      "parentUuid": "c7880b39_c4a74d91",
       "revId": "707a269368bca078dc732bd4e87066518651b838",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -218,6 +428,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_dd39e08c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-06T11:44:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_e4ac4978",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_24ae516d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
         "patchSetId": 5
@@ -235,6 +463,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_bd341495",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-06T11:44:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_24ae516d",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_44927d29",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponentStateManager.java",
         "patchSetId": 5
@@ -246,6 +492,24 @@
       "writtenOn": "2017-06-04T14:27:16Z",
       "side": 1,
       "message": "This *must* be backwards compatible and also work with with old saved states that do not have that caret position.",
+      "revId": "707a269368bca078dc732bd4e87066518651b838",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_dd9d60ed",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponentStateManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-06T11:44:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_44927d29",
       "revId": "707a269368bca078dc732bd4e87066518651b838",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
