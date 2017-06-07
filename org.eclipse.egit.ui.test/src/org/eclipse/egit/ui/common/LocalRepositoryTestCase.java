@@ -58,16 +58,22 @@ import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jgit.junit.MockSystemReader;
+import org.eclipse.jgit.lib.Config;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryBuilder;
+import org.eclipse.jgit.storage.file.FileBasedConfig;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.jgit.util.IO;
+import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -196,6 +202,33 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		IEclipsePreferences p = InstanceScope.INSTANCE
 				.getNode(Activator.getPluginId());
 		p.put(GitCorePreferences.core_defaultRepositoryDir, repoRoot.getPath());
+
+		File configFile = File.createTempFile("gitconfigtest", "config");
+		MockSystemReader mockSystemReader = new MockSystemReader() {
+			@Override
+			public FileBasedConfig openUserConfig(Config parent, FS fs) {
+				return new FileBasedConfig(parent, configFile, fs);
+			}
+		};
+		// unset git user properties
+		mockSystemReader.setProperty(Constants.GIT_AUTHOR_NAME_KEY, null);
+		mockSystemReader.setProperty(Constants.GIT_AUTHOR_EMAIL_KEY, null);
+		mockSystemReader.setProperty(Constants.GIT_COMMITTER_NAME_KEY, null);
+		mockSystemReader.setProperty(Constants.GIT_COMMITTER_EMAIL_KEY, null);
+		configFile.deleteOnExit();
+		SystemReader.setInstance(mockSystemReader);
+		mockSystemReader.setProperty(Constants.GIT_CEILING_DIRECTORIES_KEY,
+				ResourcesPlugin.getWorkspace().getRoot().getLocation().toFile()
+						.getParentFile().getAbsoluteFile().toString());
+		FileBasedConfig userConfig = mockSystemReader.openUserConfig(null,
+				FS.DETECTED);
+		// We have to set autoDetach to false for tests, because tests expect to
+		// be able to clean up by recursively removing the repository, and
+		// background GC might be in the middle of writing or deleting files,
+		// which would disrupt this.
+		userConfig.setBoolean(ConfigConstants.CONFIG_GC_SECTION, null,
+				ConfigConstants.CONFIG_KEY_AUTODETACH, false);
+		userConfig.save();
 	}
 
 	@After
