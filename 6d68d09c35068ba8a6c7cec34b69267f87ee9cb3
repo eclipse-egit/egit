@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_8e5abc54",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-07T06:32:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_78d8fa66",
+      "revId": "6d68d09c35068ba8a6c7cec34b69267f87ee9cb3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_1d70c8fb",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-06T12:35:27Z",
       "side": 1,
       "message": "?? Who is this, and why 2010? Methinks this should be\n\n    Copyright (C) 2017 Stefan Rademacher \u003cstefan.rademacher@tk.de\u003e",
+      "revId": "6d68d09c35068ba8a6c7cec34b69267f87ee9cb3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_ae5f7844",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-07T06:32:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_1d70c8fb",
       "revId": "6d68d09c35068ba8a6c7cec34b69267f87ee9cb3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_0e66cc1b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-07T06:32:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_5d517059",
+      "revId": "6d68d09c35068ba8a6c7cec34b69267f87ee9cb3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_ddbc8026",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-06T12:35:27Z",
       "side": 1,
       "message": "Description missing.",
+      "revId": "6d68d09c35068ba8a6c7cec34b69267f87ee9cb3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_ee4fc08b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-07T06:32:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_ddbc8026",
       "revId": "6d68d09c35068ba8a6c7cec34b69267f87ee9cb3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -133,6 +205,30 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_6e8e703f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-07T06:32:54Z",
+      "side": 1,
+      "message": "My understanding was, that any implementor of ICommitMessageProvider2 does care about the caret position by definition. Providers, not caring would implement ICommitMessageProvider. Then, the current implementation with DEFAULT_POSITION works fine.\n\nIf you prefer, that ICommitMessageProvider is kind of deprecated, I would introduce UNDEFINED_POSITION again. ICommitMessageProvider2 implementors could then decide to return UNDEFINED_POSITION.",
+      "parentUuid": "c7880b39_5dc890b9",
+      "range": {
+        "startLine": 65,
+        "startChar": 71,
+        "endLine": 65,
+        "endChar": 73
+      },
+      "revId": "6d68d09c35068ba8a6c7cec34b69267f87ee9cb3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_9d9918d4",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
         "patchSetId": 6
@@ -178,6 +274,24 @@
       "writtenOn": "2017-06-06T12:35:27Z",
       "side": 1,
       "message": "Since this is never set when reading an old persisted state, it should initialized to DEFAULT_POSITION.",
+      "revId": "6d68d09c35068ba8a6c7cec34b69267f87ee9cb3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_ae88582f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponentState.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-07T06:32:54Z",
+      "side": 1,
+      "message": "I added the initialization to CommitMessageComponentStateManager.loadState(), where all other attributes are initialized as well.",
+      "parentUuid": "c7880b39_9db2f84f",
       "revId": "6d68d09c35068ba8a6c7cec34b69267f87ee9cb3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
