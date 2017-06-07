@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_c98d9e3f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-07T11:03:29Z",
+      "side": 1,
+      "message": "Partial sentence.",
+      "range": {
+        "startLine": 72,
+        "startChar": 50,
+        "endLine": 73,
+        "endChar": 54
+      },
+      "revId": "6af0127994cb63f1ee9b5001c8163ca1f409c406",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_297c6290",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-07T11:03:29Z",
+      "side": 1,
+      "message": "Independent of whether we use 0 or -1 as default position, we must validate the messageWithPosition.getDesiredCaretPosition() here. What if it is -300?? Or the message has 100 characters, but the position is 3000? ICommitMessageProviders are untrusted code; they may or may not return sensible things. EGit must not fail or wreck havoc when there is a misbehaving ICommitMessageProvider.",
+      "revId": "6af0127994cb63f1ee9b5001c8163ca1f409c406",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
