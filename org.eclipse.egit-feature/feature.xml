@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.egit"
       label="%featureName"
-      version="4.7.1.201706071930-r"
+      version="4.7.2.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.egit"
       license-feature="org.eclipse.license"
@@ -40,7 +40,7 @@
       <import plugin="org.eclipse.jsch.ui" version="1.1.100" match="compatible"/>
       <import plugin="org.eclipse.jsch.core" version="1.1.100" match="compatible"/>
       <import plugin="com.jcraft.jsch" version="0.1.37" match="compatible"/>
-      <import feature="org.eclipse.jgit" version="4.7.1" match="equivalent"/>
+      <import feature="org.eclipse.jgit" version="4.7.2" match="equivalent"/>
    </requires>
 
    <plugin

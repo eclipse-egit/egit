@@ -4,7 +4,7 @@ Bundle-Name: Git Team Provider UI Test Fragment
 Bundle-Vendor: Eclipse.org
 Bundle-SymbolicName: org.eclipse.egit.ui.test;singleton:=true
 Fragment-Host: org.eclipse.egit.ui
-Bundle-Version: 4.7.1.201706071930-r
+Bundle-Version: 4.7.2.qualifier
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.apache.log4j;bundle-version="[1.0.0,2.0.0)",
@@ -18,22 +18,22 @@ Require-Bundle: org.apache.log4j;bundle-version="[1.0.0,2.0.0)",
  org.objenesis;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.jdt.launching;bundle-version="[3.8.0,4.0.0)"
 Import-Package: org.eclipse.core.net.proxy;bundle-version="[1.1.0,2.0.0)",
- org.eclipse.egit.core.test;version="[4.7.1,4.8.0)",
- org.eclipse.egit.gitflow;version="[4.7.1,4.8.0)",
- org.eclipse.egit.gitflow.op;version="[4.7.1,4.8.0)",
- org.eclipse.egit.gitflow.ui;version="[4.7.1,4.8.0)",
- org.eclipse.egit.gitflow.ui.internal;version="[4.7.1,4.8.0)",
- org.eclipse.egit.gitflow.ui.internal.actions;version="[4.7.1,4.8.0)",
- org.eclipse.jgit.api;version="[4.7.1,4.8.0)",
- org.eclipse.jgit.api.errors;version="[4.7.1,4.8.0)",
- org.eclipse.jgit.junit;version="[4.7.1,4.8.0)",
- org.eclipse.jgit.junit.http;version="[4.7.1,4.8.0)",
- org.eclipse.jgit.lib;version="[4.7.1,4.8.0)",
- org.eclipse.jgit.revwalk;version="[4.7.1,4.8.0)",
- org.eclipse.jgit.storage.file;version="[4.7.1,4.8.0)",
- org.eclipse.jgit.transport;version="[4.7.1,4.8.0)",
- org.eclipse.jgit.transport.resolver;version="[4.7.1,4.8.0)",
- org.eclipse.jgit.util;version="[4.7.1,4.8.0)",
+ org.eclipse.egit.core.test;version="[4.7.2,4.8.0)",
+ org.eclipse.egit.gitflow;version="[4.7.2,4.8.0)",
+ org.eclipse.egit.gitflow.op;version="[4.7.2,4.8.0)",
+ org.eclipse.egit.gitflow.ui;version="[4.7.2,4.8.0)",
+ org.eclipse.egit.gitflow.ui.internal;version="[4.7.2,4.8.0)",
+ org.eclipse.egit.gitflow.ui.internal.actions;version="[4.7.2,4.8.0)",
+ org.eclipse.jgit.api;version="[4.7.2,4.8.0)",
+ org.eclipse.jgit.api.errors;version="[4.7.2,4.8.0)",
+ org.eclipse.jgit.junit;version="[4.7.2,4.8.0)",
+ org.eclipse.jgit.junit.http;version="[4.7.2,4.8.0)",
+ org.eclipse.jgit.lib;version="[4.7.2,4.8.0)",
+ org.eclipse.jgit.revwalk;version="[4.7.2,4.8.0)",
+ org.eclipse.jgit.storage.file;version="[4.7.2,4.8.0)",
+ org.eclipse.jgit.transport;version="[4.7.2,4.8.0)",
+ org.eclipse.jgit.transport.resolver;version="[4.7.2,4.8.0)",
+ org.eclipse.jgit.util;version="[4.7.2,4.8.0)",
  org.eclipse.swt.widgets,
  org.eclipse.swtbot.eclipse.finder,
  org.eclipse.swtbot.eclipse.finder.exceptions,
