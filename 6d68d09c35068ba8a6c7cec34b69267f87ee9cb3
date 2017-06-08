@@ -253,6 +253,30 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_f19884fe",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-08T06:54:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_89939660",
+      "range": {
+        "startLine": 65,
+        "startChar": 71,
+        "endLine": 65,
+        "endChar": 73
+      },
+      "revId": "6d68d09c35068ba8a6c7cec34b69267f87ee9cb3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_9d9918d4",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
         "patchSetId": 6
@@ -270,6 +294,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_d1a3882d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-08T06:54:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_9d9918d4",
+      "revId": "6d68d09c35068ba8a6c7cec34b69267f87ee9cb3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_7d7f0cd4",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
         "patchSetId": 6
@@ -281,6 +323,24 @@
       "writtenOn": "2017-06-06T12:35:27Z",
       "side": 1,
       "message": "Here we\u0027ll need to check that messageWithPosition.getDesiredCaretPosition() actually is within the bounds of the message. And if it\u0027s -1, no update should occur (and no logging, either).",
+      "revId": "6d68d09c35068ba8a6c7cec34b69267f87ee9cb3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_71b57463",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-08T06:54:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_7d7f0cd4",
       "revId": "6d68d09c35068ba8a6c7cec34b69267f87ee9cb3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
