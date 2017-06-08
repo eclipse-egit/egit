@@ -34,6 +34,24 @@
       "revId": "133465a91aee6cafd909c910306286d0ad2fdb4a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_ba55f127",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecoratorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-08T08:53:49Z",
+      "side": 1,
+      "message": "http://www.vogella.com/tutorials/Findbugs/article.html#using-findbugs-in-eclipse\n\nI haven\u0027t set it up for me. But it _is_ enabled on Hudson, and I tend to check the findbugs statistics there from time to time and examine any new findings. For me, that\u0027s good enough.",
+      "parentUuid": "c7880b39_5ac24d7c",
+      "revId": "133465a91aee6cafd909c910306286d0ad2fdb4a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
