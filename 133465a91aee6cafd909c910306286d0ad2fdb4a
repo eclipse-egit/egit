@@ -16,6 +16,24 @@
       "revId": "133465a91aee6cafd909c910306286d0ad2fdb4a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_5ac24d7c",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecoratorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 79641
+      },
+      "writtenOn": "2017-06-08T08:24:41Z",
+      "side": 1,
+      "message": "Thanks! Somehow I do not get the FindBugs notification for this, although it seems the project has FindBugs configured. Are you by any chance aware of any guide that shows how to use FindBugs in the context of EGit?",
+      "parentUuid": "c7880b39_046315bd",
+      "revId": "133465a91aee6cafd909c910306286d0ad2fdb4a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
