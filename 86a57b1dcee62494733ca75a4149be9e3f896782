@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_c08e4c3d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-09T07:38:45Z",
+      "side": 1,
+      "message": "I would store this in a local variable, makes this code much easier to read.",
+      "range": {
+        "startLine": 149,
+        "startChar": 7,
+        "endLine": 150,
+        "endChar": 31
+      },
+      "revId": "86a57b1dcee62494733ca75a4149be9e3f896782",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_26f2c88f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-09T07:38:45Z",
+      "side": 1,
+      "message": "This might return null.",
+      "range": {
+        "startLine": 157,
+        "startChar": 8,
+        "endLine": 157,
+        "endChar": 20
+      },
+      "revId": "86a57b1dcee62494733ca75a4149be9e3f896782",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_86c9bc50",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-09T07:38:45Z",
+      "side": 1,
+      "message": "Maybe 0 here? It\u0027s equivalent since we handled the NO_POSITION (-1) case above, but\n\n* I find zero more logical here since we\u0027re testing whether the returned position is within the returned message.\n* It avoids an implicit dependency on NO_POSITION being -1. This code would fail if NO_POSITION were -2 and the provider returned -1 as position.",
+      "range": {
+        "startLine": 159,
+        "startChar": 36,
+        "endLine": 159,
+        "endChar": 78
+      },
+      "revId": "86a57b1dcee62494733ca75a4149be9e3f896782",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
