@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_b3ed1786",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-11T22:50:21Z",
+      "side": 1,
+      "message": "could we do this also for non-selected elements ? Having to click on an element before being able to click a hover toolbar button requires too many clicks. Explicit selection seems ok for multi-selection but it feels inconsistent to me that I don\u0027t get the hover toolbar over non-selected elements",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 30
+      },
+      "revId": "901d34a8835b45aa5d36b811cfc39a617399f044",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_f3e79f9f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-11T22:50:21Z",
+      "side": 1,
+      "message": "In order to see the action name for an action in the hover toolbar I first have to hover over a selected staging entry and then hover over the action displayed, then I get a tooltip with the action name layered on top of the action button. Could we instead show the action name of actions in the hover toolbar just next to the action icon instead of having a tooltip on the toolbar action. Effectively this would yield a filtered context menu which is opened by hovering over an entry instead of right-clicking a selected entry.",
+      "revId": "901d34a8835b45aa5d36b811cfc39a617399f044",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_d3e2a391",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-11T22:50:21Z",
+      "side": 1,
+      "message": "maybe we should also rename the actions from \"Add to index\" to \"Stage\" and from \"Remove from index\" to \"Unstage\" ?",
+      "revId": "901d34a8835b45aa5d36b811cfc39a617399f044",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
