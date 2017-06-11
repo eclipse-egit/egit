@@ -21,10 +21,14 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.jgit.junit.MockSystemReader;
+import org.eclipse.jgit.lib.Config;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectInserter;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileBasedConfig;
+import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.jgit.util.IO;
 import org.eclipse.jgit.util.SystemReader;
@@ -54,11 +58,27 @@ public abstract class GitTestCase {
 		// ensure there are no shared Repository instances left
 		// when starting a new test
 		Activator.getDefault().getRepositoryCache().clear();
-		MockSystemReader mockSystemReader = new MockSystemReader();
+		File configFile = File.createTempFile("gitconfigtest", "config");
+		MockSystemReader mockSystemReader = new MockSystemReader() {
+			@Override
+			public FileBasedConfig openUserConfig(Config parent, FS fs) {
+				return new FileBasedConfig(parent, configFile, fs);
+			}
+		};
+		configFile.deleteOnExit();
 		SystemReader.setInstance(mockSystemReader);
 		mockSystemReader.setProperty(Constants.GIT_CEILING_DIRECTORIES_KEY,
 				ResourcesPlugin.getWorkspace().getRoot().getLocation().toFile()
 						.getParentFile().getAbsoluteFile().toString());
+		FileBasedConfig userConfig = mockSystemReader.openUserConfig(null,
+				FS.DETECTED);
+		// We have to set autoDetach to false for tests, because tests expect to
+		// be able to clean up by recursively removing the repository, and
+		// background GC might be in the middle of writing or deleting files,
+		// which would disrupt this.
+		userConfig.setBoolean(ConfigConstants.CONFIG_GC_SECTION, null,
+				ConfigConstants.CONFIG_KEY_AUTODETACH, false);
+		userConfig.save();
 		project = new TestProject(true);
 		gitDir = new File(project.getProject().getWorkspace().getRoot()
 				.getRawLocation().toFile(), Constants.DOT_GIT);

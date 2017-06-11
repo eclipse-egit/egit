@@ -33,7 +33,8 @@ class StorageSizeFieldEditor extends StringFieldEditor {
 		setEmptyStringAllowed(false);
 		setErrorMessage(
 				JFaceResources.format("IntegerFieldEditor.errorMessageRange", //$NON-NLS-1$
-						Integer.valueOf(min), Integer.valueOf(max)));
+						new Object[] { Integer.valueOf(min),
+								Integer.valueOf(max) }));
 		createControl(parent);
 		minValidValue = min;
 		maxValidValue = max;
