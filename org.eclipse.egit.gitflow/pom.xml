@@ -16,7 +16,7 @@
   <parent>
     <groupId>org.eclipse.egit</groupId>
     <artifactId>egit-parent</artifactId>
-    <version>4.8.0-SNAPSHOT</version>
+    <version>4.8.0.201706111038-r</version>
   </parent>
 
   <artifactId>org.eclipse.egit.gitflow</artifactId>
