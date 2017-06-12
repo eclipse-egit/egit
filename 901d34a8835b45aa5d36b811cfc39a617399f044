@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_8efe2e9f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-12T08:16:06Z",
+      "side": 1,
+      "message": "Showing the tooltip when there is no selection at all makes no sense since the action would then have no objects to work on.\n\nWhen there is a selection, showing it on elements not selected gives IMO a confusing UI: what does that mean then? It could also mean \"stage the element on which the hover appeared, irrespective of whether or not it\u0027s selected\". Also, if a selection exists but is invisible (user has lots of unstaged files, selects a few at the top, then scrolls down), I find it confusing to have the hover appear and then operate on invisible elements.\n\nWithout the tooltips, you have three clicks: one to select an item, a right click to bring up the context menu, and then a click on a menu entry. With the tooltips, you have two. I don\u0027t think we\u0027d want to go down to one.",
+      "parentUuid": "c7880b39_b3ed1786",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 30
+      },
+      "revId": "901d34a8835b45aa5d36b811cfc39a617399f044",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_f3e79f9f",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_2e69baec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-12T08:16:06Z",
+      "side": 1,
+      "message": "I\u0027ll have to experiment, but I\u0027m not sure this can be done well. Of course we could show the action name, but I don\u0027t really want to re-build context menus using SWT. Especially since normal context menus are platform-specific, so the look-and-feel will end up different.\n\nPerhaps I can re-use a menu and make it appear automatically, but I\u0027m not sure I can make it disappear automatically...\n\nAs I said, I\u0027ll have to try.",
+      "parentUuid": "c7880b39_f3e79f9f",
+      "revId": "901d34a8835b45aa5d36b811cfc39a617399f044",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_d3e2a391",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2017-06-11T22:50:21Z",
       "side": 1,
       "message": "maybe we should also rename the actions from \"Add to index\" to \"Stage\" and from \"Remove from index\" to \"Unstage\" ?",
+      "revId": "901d34a8835b45aa5d36b811cfc39a617399f044",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_6e4ae27c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-12T08:16:06Z",
+      "side": 1,
+      "message": "See bug 481360. I don\u0027t know what\u0027s easier to understand for users. As the renaming of \"Show Annotations\" to \"Show Revision Information\" has shown, changing the name of a menu action may confuse some users...",
+      "parentUuid": "c7880b39_d3e2a391",
       "revId": "901d34a8835b45aa5d36b811cfc39a617399f044",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
