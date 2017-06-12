@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_ae092abe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-12T10:43:13Z",
+      "side": 1,
+      "message": "As expected, I can use a Menu and make it appear correctly, but then the platform menu takes over mouse handling, and I cannot close the menu properly when the mouse moves away. Don\u0027t even get MouseExit events on the menu.\n\nIf we make this popup too menu-like, one could also wonder why it should be a filtered menu at all. Could then just as well show the normal context menu.\n\nBut without a reliable way to make that menu disappear on mouse moves using a Menu is not an option anyway.",
+      "parentUuid": "c7880b39_2e69baec",
+      "revId": "901d34a8835b45aa5d36b811cfc39a617399f044",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_d3e2a391",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
