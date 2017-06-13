@@ -2,5 +2,5 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EGit Target Platform Bundle
 Bundle-SymbolicName: org.eclipse.egit.target
-Bundle-Version: 4.8.0.201706111038-r
+Bundle-Version: 4.8.1.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

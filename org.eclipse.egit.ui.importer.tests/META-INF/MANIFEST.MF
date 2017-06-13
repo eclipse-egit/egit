@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin_name
 Bundle-SymbolicName: org.eclipse.egit.ui.importer.tests
-Bundle-Version: 4.8.0.201706111038-r
+Bundle-Version: 4.8.1.qualifier
 Bundle-Vendor: %provider_name
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Localization: plugin
