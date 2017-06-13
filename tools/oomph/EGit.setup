@@ -6,12 +6,12 @@
     xmlns:git="http://www.eclipse.org/oomph/setup/git/1.0"
     xmlns:pde="http://www.eclipse.org/oomph/setup/pde/1.0"
     xmlns:predicates="http://www.eclipse.org/oomph/predicates/1.0"
+    xmlns:projects="http://www.eclipse.org/oomph/setup/projects/1.0"
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
-    xmlns:setup.targlets="http://www.eclipse.org/oomph/setup/targlets/1.0"
     xmlns:setup.workingsets="http://www.eclipse.org/oomph/setup/workingsets/1.0"
     xmlns:workingsets="http://www.eclipse.org/oomph/workingsets/1.0"
-    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/pde/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/PDE.ecore http://www.eclipse.org/oomph/predicates/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupWorkingSets.ecore http://www.eclipse.org/oomph/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/WorkingSets.ecore"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/pde/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/PDE.ecore http://www.eclipse.org/oomph/predicates/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupWorkingSets.ecore http://www.eclipse.org/oomph/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/WorkingSets.ecore"
     name="egit"
     label="EGit"
     setup:toolVersion="8">
@@ -80,20 +80,36 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="eclipse.target.platform"
-      defaultValue="Neon"
-      storageURI="scope://Workspace"/>
+      defaultValue="egit-4.6"
+      storageURI="scope://Workspace">
+    <description>Default target platform for EGit development. Must be >= egit-4.6, otherwise the smartimport fragment will not compile.</description>
+  </setupTask>
   <setupTask
       xsi:type="pde:APIBaselineTask"
       name="EGit"
-      version="4.7.0"
-      location="${workspace.location/../api.baseline}"
-      remoteURI="http://download.eclipse.org/egit/updates-4.7/org.eclipse.egit.repository-4.7.0.201704051617-r.zip"/>
-  <stream name="master">
+      version="4.8.0"
+      location="${workspace.location/../api.baseline/4.8.0}"
+      remoteURI="http://download.eclipse.org/egit/updates-4.8/org.eclipse.egit.repository-4.8.0.201706111038-r.zip">
+    <description>EGit 4.8.0 API baseline; to be used with branch master</description>
+  </setupTask>
+  <setupTask
+      xsi:type="pde:APIBaselineTask"
+      name="EGit"
+      activate="false"
+      version="4.7.1"
+      location="${workspace.location/../api.baseline/4.7.1}"
+      remoteURI="http://download.eclipse.org/egit/updates-4.7.1/org.eclipse.egit.repository-4.7.1.201706071930-r.zip">
+    <description>EGit 4.7.1 API baseline; to be used with branch stable-4.8</description>
+  </setupTask>
+  <stream name="master"
+      label="Workspace setup for branch master">
     <setupTask
         xsi:type="setup:VariableTask"
         name="eclipse.target.platform"
-        defaultValue="Neon"
-        storageURI="scope://Workspace"/>
+        defaultValue="egit-4.6"
+        storageURI="scope://Workspace">
+      <description>Default target platform for EGit development. Must be >= egit-4.6, otherwise the smartimport fragment will not compile.</description>
+    </setupTask>
     <setupTask
         xsi:type="git:GitCloneTask"
         id="git.clone.jgit"
@@ -179,75 +195,23 @@
       <description>EGit Github Connector</description>
     </setupTask>
     <setupTask
-        xsi:type="setup.targlets:TargletTask">
-      <targlet
-          name="EGit"
-          activeRepositoryList="${eclipse.target.platform}">
-        <requirement
-            name="org.eclipse.platform.feature.group"/>
-        <requirement
-            name="org.eclipse.jdt.feature.group"/>
-        <requirement
-            name="org.eclipse.pde.feature.group"/>
-        <requirement
-            name="org.eclipse.swtbot.eclipse.feature.group"/>
-        <requirement
-            name="org.eclipse.swtbot.feature.group"/>
-        <requirement
-            name="org.eclipse.swtbot.eclipse.test.junit.feature.group"/>
-        <requirement
-            name="*"/>
-        <sourceLocator
-            rootFolder="${git.clone.jgit.location}"
-            locateNestedProjects="true"/>
-        <sourceLocator
-            rootFolder="${git.clone.egit.location}"
-            locateNestedProjects="true"/>
-        <sourceLocator
-            rootFolder="${git.clone.egit-github.location}"
-            locateNestedProjects="true"/>
-        <repositoryList
-            name="Oxygen">
-          <repository
-              url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
-          <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/S20170306214312/repository"/>
-          <repository
-              url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.5.v20170502"/>
-          <repository
-              url="http://download.eclipse.org/technology/swtbot/releases/latest"/>
-          <repository
-              url="http://download.eclipse.org/mylyn/releases/latest"/>
-        </repositoryList>
-        <repositoryList
-            name="Neon">
-          <repository
-              url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
-          <repository
-              url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.5.v20170502/"/>
-          <repository
-              url="http://download.eclipse.org/technology/swtbot/snapshots"/>
-          <repository
-              url="http://download.eclipse.org/mylyn/releases/latest"/>
-          <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/S20170306214312/repository"/>
-        </repositoryList>
-        <repositoryList
-            name="Mars">
-          <repository
-              url="http://download.eclipse.org/releases/mars"/>
-          <repository
-              url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
-          <repository
-              url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.5.v20170502/"/>
-          <repository
-              url="http://download.eclipse.org/technology/swtbot/snapshots"/>
-          <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/S20170306214312/repository"/>
-          <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20160221192158/repository/"/>
-        </repositoryList>
-      </targlet>
+        xsi:type="projects:ProjectsImportTask">
+      <sourceLocator
+          rootFolder="${git.clone.jgit.location}"
+          locateNestedProjects="true"/>
+      <sourceLocator
+          rootFolder="${git.clone.egit.location}"
+          locateNestedProjects="true"/>
+      <sourceLocator
+          rootFolder="${git.clone.egit-github.location}"
+          locateNestedProjects="true"/>
+      <description>Import the EGit/JGit projects from the git clones into the workspace</description>
+    </setupTask>
+    <setupTask
+        xsi:type="pde:TargetPlatformTask"
+        id="egit-4.6"
+        name="egit-4.6">
+      <description>EGit Neon target</description>
     </setupTask>
     <setupTask
         xsi:type="setup.workingsets:WorkingSetTask">
@@ -260,7 +224,7 @@
               project="org.eclipse.mylyn.github.core"/>
           <operand
               xsi:type="workingsets:ExclusionPredicate"
-              excludedWorkingSet="//@streams[name='master']/@setupTasks.5/@workingSets.6 //@streams[name='master']/@setupTasks.5/@workingSets.1"/>
+              excludedWorkingSet="//@streams[name='master']/@setupTasks.6/@workingSets.6 //@streams[name='master']/@setupTasks.6/@workingSets.1"/>
         </predicate>
       </workingSet>
       <workingSet
@@ -285,7 +249,7 @@
               project="org.eclipse.egit.core"/>
           <operand
               xsi:type="workingsets:ExclusionPredicate"
-              excludedWorkingSet="//@streams[name='master']/@setupTasks.5/@workingSets.6 //@streams[name='master']/@setupTasks.5/@workingSets.3"/>
+              excludedWorkingSet="//@streams[name='master']/@setupTasks.6/@workingSets.6 //@streams[name='master']/@setupTasks.6/@workingSets.3"/>
         </predicate>
       </workingSet>
       <workingSet
@@ -310,7 +274,7 @@
               project="org.eclipse.jgit"/>
           <operand
               xsi:type="workingsets:ExclusionPredicate"
-              excludedWorkingSet="//@streams[name='master']/@setupTasks.5/@workingSets.6 //@streams[name='master']/@setupTasks.5/@workingSets.5"/>
+              excludedWorkingSet="//@streams[name='master']/@setupTasks.6/@workingSets.6 //@streams[name='master']/@setupTasks.6/@workingSets.5"/>
         </predicate>
       </workingSet>
       <workingSet
@@ -347,7 +311,9 @@
               pattern="org\.eclipse\.jgit\.packaging"/>
         </predicate>
       </workingSet>
+      <description>Initialize working sets</description>
     </setupTask>
+    <description>Clone all EGit/JGit repositories, import projects, set target platform, initialize working sets</description>
   </stream>
   <logicalProjectContainer
       xsi:type="setup:ProjectCatalog"
