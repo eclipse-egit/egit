@@ -18,7 +18,6 @@ import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ViewerCell;
-import org.eclipse.jface.window.DefaultToolTip;
 import org.eclipse.jface.window.ToolTip;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -33,7 +32,7 @@ import org.eclipse.swt.widgets.ToolItem;
  * Tooltips for the staging viewer. On hover over selected staging entries, pop
  * up a toolbar giving quick access to the most common actions.
  */
-public class StagingViewTooltips extends DefaultToolTip {
+public class StagingViewTooltips extends FixedJFaceToolTip {
 
 	private final ColumnViewer viewer;
 
