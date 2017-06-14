@@ -313,6 +313,10 @@ public class StagingView extends ViewPart
 
 	private IAction stageAction;
 
+	private IAction unstageAllAction;
+
+	private IAction stageAllAction;
+
 	private IAction compareModeAction;
 
 	@Nullable
@@ -824,6 +828,30 @@ public class StagingView extends ViewPart
 		unstageAction.setEnabled(false);
 		stageAction.setEnabled(false);
 
+		unstageAllAction = new Action(
+				UIText.StagingView_UnstageAllItemMenuLabel,
+				UIIcons.UNSTAGE_ALL) {
+			@Override
+			public void run() {
+				stagedViewer.getTree().selectAll();
+				unstage((IStructuredSelection) stagedViewer.getSelection());
+			}
+		};
+		unstageAllAction
+				.setToolTipText(UIText.StagingView_UnstageAllItemTooltip);
+		stageAllAction = new Action(UIText.StagingView_StageAllItemMenuLabel,
+				UIIcons.ELCL16_ADD_ALL) {
+			@Override
+			public void run() {
+				unstagedViewer.getTree().selectAll();
+				stage((IStructuredSelection) unstagedViewer.getSelection());
+			}
+		};
+		stageAllAction.setToolTipText(UIText.StagingView_StageAllItemTooltip);
+
+		unstageAllAction.setEnabled(false);
+		stageAllAction.setEnabled(false);
+
 		unstagedSection = toolkit.createSection(stagingSashForm,
 				ExpandableComposite.TITLE_BAR);
 
@@ -840,6 +868,7 @@ public class StagingView extends ViewPart
 
 		unstagedViewer = createViewer(unstagedComposite, true,
 				selection -> unstage(selection), stageAction);
+
 		unstagedViewer.addSelectionChangedListener(event -> {
 			boolean hasSelection = !event.getSelection().isEmpty();
 			if (hasSelection != stageAction.isEnabled()) {
@@ -1510,6 +1539,7 @@ public class StagingView extends ViewPart
 		unstagedToolBarManager = new ToolBarManager(SWT.FLAT | SWT.HORIZONTAL);
 
 		unstagedToolBarManager.add(stageAction);
+		unstagedToolBarManager.add(stageAllAction);
 		unstagedToolBarManager.add(sortAction);
 		unstagedToolBarManager.add(unstagedExpandAllAction);
 		unstagedToolBarManager.add(unstagedCollapseAllAction);
@@ -1549,6 +1579,7 @@ public class StagingView extends ViewPart
 		stagedToolBarManager = new ToolBarManager(SWT.FLAT | SWT.HORIZONTAL);
 
 		stagedToolBarManager.add(unstageAction);
+		stagedToolBarManager.add(unstageAllAction);
 		stagedToolBarManager.add(stagedExpandAllAction);
 		stagedToolBarManager.add(stagedCollapseAllAction);
 		stagedToolBarManager.update(true);
@@ -1993,7 +2024,21 @@ public class StagingView extends ViewPart
 	private StagingViewContentProvider createStagingContentProvider(
 			boolean unstaged) {
 		StagingViewContentProvider provider = new StagingViewContentProvider(
-				this, unstaged);
+				this, unstaged) {
+
+			@Override
+			public void inputChanged(Viewer viewer, Object oldInput,
+					Object newInput) {
+				super.inputChanged(viewer, oldInput, newInput);
+				if (unstaged) {
+					stageAllAction.setEnabled(getCount() > 0);
+					unstagedToolBarManager.update(true);
+				} else {
+					unstageAllAction.setEnabled(getCount() > 0);
+					stagedToolBarManager.update(true);
+				}
+			}
+		};
 		provider.setFileNameMode(getPreferenceStore().getBoolean(
 				UIPreferences.STAGING_VIEW_FILENAME_MODE));
 		return provider;

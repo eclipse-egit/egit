@@ -82,6 +82,8 @@ public class UIIcons {
 	public final static ImageDescriptor ELCL16_DELETE;
 	/** Add icon */
 	public final static ImageDescriptor ELCL16_ADD;
+	/** "Add all" icon */
+	public final static ImageDescriptor ELCL16_ADD_ALL;
 	/** Trash icon */
 	public final static ImageDescriptor ELCL16_TRASH;
 	/** Clear icon */
@@ -325,6 +327,9 @@ public class UIIcons {
 	/** Unstage icon */
 	public final static ImageDescriptor UNSTAGE;
 
+	/** "Unstage all" icon */
+	public final static ImageDescriptor UNSTAGE_ALL;
+
 	/** {@link #BRANCH} overlaid with {@link #OVR_CHECKEDOUT}. */
 	public final static ImageDescriptor CHECKED_OUT_BRANCH;
 
@@ -364,6 +369,7 @@ public class UIIcons {
 		ELCL16_COMMITTER = map("elcl16/committer.png"); //$NON-NLS-1$
 		ELCL16_DELETE = map("elcl16/delete.png"); //$NON-NLS-1$
 		ELCL16_ADD = map("elcl16/add.png"); //$NON-NLS-1$
+		ELCL16_ADD_ALL = map("elcl16/add_all.png"); //$NON-NLS-1$
 		ELCL16_TRASH = map("elcl16/trash.png"); //$NON-NLS-1$
 		ELCL16_CLEAR = map("elcl16/clear_co.png"); //$NON-NLS-1$
 		ELCL16_REFRESH = map("elcl16/refresh.png"); //$NON-NLS-1$
@@ -436,6 +442,7 @@ public class UIIcons {
 		ALPHABETICALLY_SORT = map("obj16/alphab_sort_co.png"); //$NON-NLS-1$
 		STATE_SORT = map("obj16/state_sort_co.png"); //$NON-NLS-1$
 		UNSTAGE = map("obj16/unstage.png"); //$NON-NLS-1$
+		UNSTAGE_ALL = map("elcl16/unstage_all.png"); //$NON-NLS-1$
 		CHECKED_OUT_BRANCH = new DecorationOverlayDescriptor(BRANCH,
 				OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
 	}

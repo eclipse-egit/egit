@@ -5257,6 +5257,12 @@ public class UIText extends NLS {
 	public static String StagingView_replaceWithHeadRevision;
 
 	/** */
+	public static String StagingView_UnstageAllItemMenuLabel;
+
+	/** */
+	public static String StagingView_UnstageAllItemTooltip;
+
+	/** */
 	public static String StagingView_UnstageItemMenuLabel;
 
 	/** */
@@ -5264,6 +5270,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String StagingView_UnstagedSort;
+
+	/** */
+	public static String StagingView_StageAllItemMenuLabel;
+
+	/** */
+	public static String StagingView_StageAllItemTooltip;
 
 	/** */
 	public static String StagingView_StageItemMenuLabel;
