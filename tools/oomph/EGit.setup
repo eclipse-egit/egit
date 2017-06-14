@@ -56,10 +56,22 @@
         name="org.eclipse.swtbot.ide.feature.group"/>
     <requirement
         name="org.eclipse.swtbot.generator.feature.feature.group"/>
+    <requirement
+        name="AnyEditTools.feature.group"
+        optional="true"/>
+    <requirement
+        name="fr.obeo.releng.targetplatform-feature.feature.group"
+        optional="true"/>
     <repository
         url="http://download.eclipse.org/egit/updates-nightly"/>
     <repository
         url="http://download.eclipse.org/technology/swtbot/releases/latest"/>
+    <repository
+        url="http://mbarbero.github.io/fr.obeo.releng.targetplatform/p2/latest/"/>
+    <repository
+        url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+    <repository
+        url="http://andrei.gmxhome.de/eclipse/"/>
   </setupTask>
   <setupTask
       xsi:type="setup:EclipseIniTask"
