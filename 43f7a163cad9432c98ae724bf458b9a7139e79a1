@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_cbe3ba0f",
+        "filename": "org.eclipse.egit.ui.test/fragment.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-15T13:33:39Z",
+      "side": 1,
+      "message": "Not needed. Just use TestCommitMessageProviderExtensionFactory again!",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_8b1b72a5",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/stagview/CommitMessageComponentTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-15T13:33:39Z",
+      "side": 1,
+      "message": "Then you\u0027d do here\n\n  provider1 \u003d ...\n  provider2 \u003d ...\n  TestCommitMessageProviderExtensionFactory.INSTANCE\n    .setCommitMessageProviders(provider1, provider2);\n\n(Assuming something like\n\n  public void setCommitMessageProviders(ICommitMessageProvider... providers);\n\n)\n\nINSTANCE would be something like\n\n  private List\u003cICommitMessageProviders\u003e providers \u003d new ArrayList\u003c\u003e();\n\n  private int nofCalls \u003d 0;\n\n  public Object create() {\n    if (nofCalls \u003c providers.size()) {\n      ICommitMessageProvider p \u003d providers.get(nofCalls++);\n      if (p !\u003d null) {\n        return p;\n      }\n    }\n    return emptyProvider;\n  }\n\n  public void reset() { // To be called in @After\n    providers.clear();\n    nofCalls \u003d 0;\n  }\n\n  public void setCommitMessageProviders(ICommitMessageProvider... newProviders) {\n    providers.clear();\n    for (ICommitMessageProvider p : newProviders) {\n      providers.add(p);\n    }\n    nofCalls \u003d 0;\n  }\n\nOr maybe use a queue (linked list) and pop the front element on each create(). Then we don\u0027t need the count.",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_0b09426b",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/stagview/TestCommitMessageProviderExtensionFactory2.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-15T13:33:39Z",
+      "side": 1,
+      "message": "Not needed. Just specify the same factory class again in fragment.xml. The framework will instantiate the factory twice. Both instances will use the same INSTANCE variable, though. Then change that INSTANCE to accept a list of providers, and make it return successive elements from that list on successive calls to create(). (And return emptyProvider if more calls to create() occur than there are elements in the list.)",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
