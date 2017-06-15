@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_ab54ae4c",
+        "filename": "org.eclipse.egit.ui.test/fragment.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T17:18:55Z",
+      "side": 1,
+      "message": "you are right, let\u0027s keep it internal",
+      "parentUuid": "c7880b39_aba2eef3",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_cbe3ba0f",
         "filename": "org.eclipse.egit.ui.test/fragment.xml",
         "patchSetId": 20
@@ -168,6 +186,24 @@
       "side": 1,
       "message": "But then you need a stateful commit message provider.",
       "parentUuid": "c7880b39_ab8caebf",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_deb1ba2e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T17:18:55Z",
+      "side": 1,
+      "message": "ok, got it, then keep it like it is",
+      "parentUuid": "c7880b39_cb9f3aaf",
       "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -307,6 +343,30 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_feb67624",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T17:18:55Z",
+      "side": 1,
+      "message": "ok, agreed",
+      "parentUuid": "c7880b39_eb7f96d1",
+      "range": {
+        "startLine": 80,
+        "startChar": 5,
+        "endLine": 80,
+        "endChar": 35
+      },
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_4b198a06",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
         "patchSetId": 20
@@ -410,6 +470,24 @@
       "side": 1,
       "message": "That comes from your previous suggestion to rename this variable to \"providers\". But with some minor refactoring, we don\u0027t need the field at all (it\u0027s used in exactly one place only).",
       "parentUuid": "c7880b39_8b761248",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_3ec1de78",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T17:18:55Z",
+      "side": 1,
+      "message": "my bad, I didn\u0027t see the warning when I reviewed PS 18 in the Gerrit WebUI, now I had another look in Eclipse which shows the warning",
+      "parentUuid": "c7880b39_0b85c25e",
       "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
