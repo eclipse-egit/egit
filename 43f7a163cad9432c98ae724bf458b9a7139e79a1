@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_aba2eef3",
+        "filename": "org.eclipse.egit.ui.test/fragment.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-15T16:56:24Z",
+      "side": 1,
+      "message": "Do we really want to make it public API now? Until now it was an unofficial thing,and in theory we\u0027re still free to introduce breaking changes. Compare https://git.eclipse.org/r/#/c/8115/ ... one comment there was \"Maybe we also want to revisit the interface\".\n\nIn particular I\u0027m slightly worried that the interfaces use IResource: when a commit contains only files not in the Eclipse workspace, the ICommitMessageProvider will be given an empty list.",
+      "parentUuid": "c7880b39_2b47def7",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_cbe3ba0f",
         "filename": "org.eclipse.egit.ui.test/fragment.xml",
         "patchSetId": 20
@@ -138,6 +156,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_cb9f3aaf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-15T16:56:24Z",
+      "side": 1,
+      "message": "But then you need a stateful commit message provider.",
+      "parentUuid": "c7880b39_ab8caebf",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_6b92c6db",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
         "patchSetId": 20
@@ -247,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_eb7f96d1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-15T16:56:24Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment.  CommitMessageWithCaretPosition is the DTO class returned by an ICommitMessageProvider2.",
+      "parentUuid": "c7880b39_0b0f82c1",
+      "range": {
+        "startLine": 80,
+        "startChar": 5,
+        "endLine": 80,
+        "endChar": 35
+      },
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_4b198a06",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
         "patchSetId": 20
@@ -332,6 +392,24 @@
       "writtenOn": "2017-06-15T16:44:16Z",
       "side": 1,
       "message": "fix warning\n\nThe local variable providers is hiding a field from type CommitMessageCalculator",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_0b85c25e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-15T16:56:24Z",
+      "side": 1,
+      "message": "That comes from your previous suggestion to rename this variable to \"providers\". But with some minor refactoring, we don\u0027t need the field at all (it\u0027s used in exactly one place only).",
+      "parentUuid": "c7880b39_8b761248",
       "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
