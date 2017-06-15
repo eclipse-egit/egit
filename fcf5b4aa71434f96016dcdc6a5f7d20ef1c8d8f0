@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_8b70d2fd",
+        "filename": "tools/oomph/EGit.setup",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T16:58:25Z",
+      "side": 1,
+      "message": "can we link to the latest release\nhttp://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/2.12.0/ instead of using the composite p2 repo in order to avoid that we have to download the p2 index of all the xtext releases which takes a long time ?",
+      "revId": "fcf5b4aa71434f96016dcdc6a5f7d20ef1c8d8f0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
