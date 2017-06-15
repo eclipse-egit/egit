@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c7880b39_2b47def7",
+        "filename": "org.eclipse.egit.ui.test/fragment.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T16:44:16Z",
+      "side": 1,
+      "message": "fix warning\n\nAccess to extension point \u0027org.eclipse.egit.ui.commitMessageProvider\u0027 is discouraged",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_cbe3ba0f",
         "filename": "org.eclipse.egit.ui.test/fragment.xml",
         "patchSetId": 20
@@ -13,6 +30,40 @@
       "writtenOn": "2017-06-15T13:33:39Z",
       "side": 1,
       "message": "Not needed. Just use TestCommitMessageProviderExtensionFactory again!",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_abb58e65",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculatorTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T16:44:16Z",
+      "side": 1,
+      "message": "I don\u0027t understand why this class was renamed, it still tests CommitMessageComponent",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_cbb2da7a",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculatorTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T16:44:16Z",
+      "side": 1,
+      "message": "we don\u0027t use wildcard imports",
       "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -47,6 +98,257 @@
       "writtenOn": "2017-06-15T13:33:39Z",
       "side": 1,
       "message": "Not needed. Just specify the same factory class again in fragment.xml. The framework will instantiate the factory twice. Both instances will use the same INSTANCE variable, though. Then change that INSTANCE to accept a list of providers, and make it return successive elements from that list on successive calls to create(). (And return emptyProvider if more calls to create() occur than there are elements in the list.)",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_4b9eeae9",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/stagview/TestCommitMessageProviderFactory.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T16:44:16Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_ab8caebf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T16:44:16Z",
+      "side": 1,
+      "message": "I think this is a broken abstraction, the super interface already exposes the message so this interface should just add another method to access the caret position. Otherwise these interfaces expose the commit message twice",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_6b92c6db",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T16:44:16Z",
+      "side": 1,
+      "message": "I think an interface should not contain an implementation class",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_6b1d66f2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T16:44:16Z",
+      "side": 1,
+      "message": "I think this is rather a builder than a calculator",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_abcbceb5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T16:44:16Z",
+      "side": 1,
+      "message": "call this build() ?",
+      "range": {
+        "startLine": 72,
+        "startChar": 32,
+        "endLine": 72,
+        "endChar": 70
+      },
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_2bb8be2f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T16:44:16Z",
+      "side": 1,
+      "message": "this should return the interface ICommitMessageProvider2 instead of an implementation class",
+      "range": {
+        "startLine": 72,
+        "startChar": 1,
+        "endLine": 72,
+        "endChar": 31
+      },
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_0b0f82c1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T16:44:16Z",
+      "side": 1,
+      "message": "this should be just ICommitMessageProvider2, the implementation class is part of the respective provider implementation",
+      "range": {
+        "startLine": 80,
+        "startChar": 5,
+        "endLine": 80,
+        "endChar": 35
+      },
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_4b198a06",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T16:44:16Z",
+      "side": 1,
+      "message": "I think this null check should be done before the previous statement in line 82",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_4beb4a26",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T16:44:16Z",
+      "side": 1,
+      "message": "you are doing nothing more than concatenation, keep track of the number of messages being concatenated in the internal state of this class. I\u0027d call this method append(String message)",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_6bc1e696",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T16:44:16Z",
+      "side": 1,
+      "message": "updateCaretPosition ?",
+      "range": {
+        "startLine": 127,
+        "startChar": 13,
+        "endLine": 127,
+        "endChar": 36
+      },
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_0b9a22c6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T16:44:16Z",
+      "side": 1,
+      "message": "this method could be declared private",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_8b761248",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T16:44:16Z",
+      "side": 1,
+      "message": "fix warning\n\nThe local variable providers is hiding a field from type CommitMessageCalculator",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_4b750a3e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-15T16:44:16Z",
+      "side": 1,
+      "message": "fix warnings:\n\nNull type safety: The expression of type \u0027Repository\u0027 needs unchecked conversion to conform to \u0027@NonNull Repository\u0027\t\n\nNull type safety: The expression of type \u0027String\u0027 needs unchecked conversion to conform to \u0027@NonNull String\u0027",
       "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
