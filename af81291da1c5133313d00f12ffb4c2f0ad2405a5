@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_ae920126",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-15T08:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_2e2531e2",
+      "range": {
+        "startLine": 54,
+        "startChar": 20,
+        "endLine": 54,
+        "endChar": 40
+      },
+      "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_0e30751f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
         "patchSetId": 18
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-14T11:26:05Z",
       "side": 1,
       "message": "and",
+      "range": {
+        "startLine": 58,
+        "startChar": 20,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_ee6fa9a3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-15T08:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_0e30751f",
       "range": {
         "startLine": 58,
         "startChar": 20,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_2e7a9161",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-15T08:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_4e2a7db3",
+      "range": {
+        "startLine": 78,
+        "startChar": 10,
+        "endLine": 78,
+        "endChar": 21
+      },
+      "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_2eb29100",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
         "patchSetId": 18
@@ -82,6 +154,24 @@
       "writtenOn": "2017-06-14T11:26:05Z",
       "side": 1,
       "message": "there are a lot of blank lines in this class",
+      "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_4e7fdd50",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-15T08:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_2eb29100",
       "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_6e63b9bc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-15T08:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_0eadd5a3",
+      "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_6e9bb97f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
         "patchSetId": 18
@@ -116,6 +224,24 @@
       "writtenOn": "2017-06-14T11:26:05Z",
       "side": 1,
       "message": "inline",
+      "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_ee56c9d9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-15T08:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_6e9bb97f",
       "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_0e5cf5f8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-15T08:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_2e37f109",
+      "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_eea7a9c2",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
         "patchSetId": 18
@@ -150,6 +294,24 @@
       "writtenOn": "2017-06-14T11:26:05Z",
       "side": 1,
       "message": "unnecessary comment",
+      "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_2e51b1df",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-15T08:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_eea7a9c2",
       "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -173,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_ce410d0e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-15T08:23:57Z",
+      "side": 1,
+      "message": "That\u0027s, how the save action formats the code.\nFormatter: \"Unmanaged profile \u0027JGit Format\u0027\".",
+      "parentUuid": "c7880b39_ce158d70",
+      "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_ae1841a9",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
         "patchSetId": 18
@@ -184,6 +364,30 @@
       "writtenOn": "2017-06-14T11:26:05Z",
       "side": 1,
       "message": "can we find a shorter name ?",
+      "range": {
+        "startLine": 184,
+        "startChar": 16,
+        "endLine": 184,
+        "endChar": 74
+      },
+      "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_eec169fc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-15T08:23:57Z",
+      "side": 1,
+      "message": "How about \"CommitDialog_IgnoreCaretPosition\"?",
+      "parentUuid": "c7880b39_ae1841a9",
       "range": {
         "startLine": 184,
         "startChar": 16,
@@ -219,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_0ec79510",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-15T08:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_ce702dcd",
+      "range": {
+        "startLine": 193,
+        "startChar": 31,
+        "endLine": 193,
+        "endChar": 45
+      },
+      "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_ee3c09f1",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
         "patchSetId": 18
@@ -230,6 +458,24 @@
       "writtenOn": "2017-06-14T11:26:05Z",
       "side": 1,
       "message": "this can be inlined as the registry is used only once",
+      "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_6ed579b1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-15T08:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_ee3c09f1",
       "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -253,6 +499,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_4ed19dc5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-15T08:23:57Z",
+      "side": 1,
+      "message": "see above",
+      "parentUuid": "c7880b39_ee55e926",
+      "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_4e651d10",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
         "patchSetId": 18
@@ -264,6 +528,30 @@
       "writtenOn": "2017-06-14T11:26:05Z",
       "side": 1,
       "message": "toResourceArray, missing blank at the end",
+      "range": {
+        "startLine": 228,
+        "startChar": 21,
+        "endLine": 228,
+        "endChar": 44
+      },
+      "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_8ef9c543",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-15T08:23:57Z",
+      "side": 1,
+      "message": "Renaming done.\nWhat do you mean by \"missing blank at the end\"?",
+      "parentUuid": "c7880b39_4e651d10",
       "range": {
         "startLine": 228,
         "startChar": 21,
@@ -299,6 +587,30 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_8ed2a5c7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-15T08:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_2e60d100",
+      "range": {
+        "startLine": 229,
+        "startChar": 22,
+        "endLine": 229,
+        "endChar": 35
+      },
+      "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_6e69f9eb",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
         "patchSetId": 18
@@ -316,6 +628,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_eee88976",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-15T08:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_6e69f9eb",
+      "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_0e94f547",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
         "patchSetId": 18
@@ -327,6 +657,24 @@
       "writtenOn": "2017-06-14T11:26:05Z",
       "side": 1,
       "message": "and cherry-pick ?",
+      "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_0e4075ed",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-15T08:23:57Z",
+      "side": 1,
+      "message": "Right, cherry-pick, too.\nDone.",
+      "parentUuid": "c7880b39_0e94f547",
       "revId": "af81291da1c5133313d00f12ffb4c2f0ad2405a5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
