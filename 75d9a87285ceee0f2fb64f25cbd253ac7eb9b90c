@@ -93,6 +93,23 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_d2a7ebc2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageBuilder.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-16T22:57:05Z",
+      "side": 1,
+      "message": "Remove this field.",
+      "revId": "75d9a87285ceee0f2fb64f25cbd253ac7eb9b90c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_924ac379",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageBuilder.java",
         "patchSetId": 21
@@ -139,6 +156,46 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_f2ace7a9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageBuilder.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-16T22:57:05Z",
+      "side": 1,
+      "message": "Remove this line",
+      "revId": "75d9a87285ceee0f2fb64f25cbd253ac7eb9b90c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_12b25300",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageBuilder.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-16T22:57:05Z",
+      "side": 1,
+      "message": "getCommitMessageProviders()",
+      "range": {
+        "startLine": 79,
+        "startChar": 41,
+        "endLine": 79,
+        "endChar": 50
+      },
+      "revId": "75d9a87285ceee0f2fb64f25cbd253ac7eb9b90c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_323cafeb",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageBuilder.java",
         "patchSetId": 21
@@ -150,6 +207,30 @@
       "writtenOn": "2017-06-16T22:41:16Z",
       "side": 1,
       "message": "This second variable with the same value seems to be unnecessary",
+      "range": {
+        "startLine": 207,
+        "startChar": 19,
+        "endLine": 207,
+        "endChar": 30
+      },
+      "revId": "75d9a87285ceee0f2fb64f25cbd253ac7eb9b90c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_529bfb7e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageBuilder.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-16T22:57:05Z",
+      "side": 1,
+      "message": "I think it was introduced to get around null warnings.\n\n@Stefan: but it\u0027s not needed indeed; instead annotate the parameter in the constructor and the field with @NonNull (using org.eclipse.jgit.annotations.NonNull) so that the type is \"@NonNull Repository\". Then you don\u0027t need this variable or its null comparisons.",
+      "parentUuid": "c7880b39_323cafeb",
       "range": {
         "startLine": 207,
         "startChar": 19,
