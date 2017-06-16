@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_41232b65",
+        "filename": "org.eclipse.egit.ui.test/fragment.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-16T10:42:32Z",
+      "side": 1,
+      "message": "Done.\nBut I don\u0027t actually understand, how this works now. I am configuring the Factory once within the test cases. It is probably instantiated twice by the runtime, since it es configured twice here.\nDoes CommitMessageBuilder.getCommitMessageProviders() find two instances of TestCommitMessageProviderFactory now? Does each instance return the same providers?\nAnyway, the test pass...",
+      "parentUuid": "c7880b39_cbe3ba0f",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_abb58e65",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculatorTest.java",
         "patchSetId": 20
@@ -83,6 +101,24 @@
       "writtenOn": "2017-06-15T16:44:16Z",
       "side": 1,
       "message": "I don\u0027t understand why this class was renamed, it still tests CommitMessageComponent",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_5e1dcaf1",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculatorTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-16T10:42:32Z",
+      "side": 1,
+      "message": "You are right. I moved the existing tests back to CommitMessageComponentTest and kept the new tests in CommitMessageCalculatorTest.",
+      "parentUuid": "c7880b39_abb58e65",
       "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -106,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_610d8744",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculatorTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-16T10:42:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_cbb2da7a",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_8b1b72a5",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/stagview/CommitMessageComponentTest.java",
         "patchSetId": 20
@@ -117,6 +171,24 @@
       "writtenOn": "2017-06-15T13:33:39Z",
       "side": 1,
       "message": "Then you\u0027d do here\n\n  provider1 \u003d ...\n  provider2 \u003d ...\n  TestCommitMessageProviderExtensionFactory.INSTANCE\n    .setCommitMessageProviders(provider1, provider2);\n\n(Assuming something like\n\n  public void setCommitMessageProviders(ICommitMessageProvider... providers);\n\n)\n\nINSTANCE would be something like\n\n  private List\u003cICommitMessageProviders\u003e providers \u003d new ArrayList\u003c\u003e();\n\n  private int nofCalls \u003d 0;\n\n  public Object create() {\n    if (nofCalls \u003c providers.size()) {\n      ICommitMessageProvider p \u003d providers.get(nofCalls++);\n      if (p !\u003d null) {\n        return p;\n      }\n    }\n    return emptyProvider;\n  }\n\n  public void reset() { // To be called in @After\n    providers.clear();\n    nofCalls \u003d 0;\n  }\n\n  public void setCommitMessageProviders(ICommitMessageProvider... newProviders) {\n    providers.clear();\n    for (ICommitMessageProvider p : newProviders) {\n      providers.add(p);\n    }\n    nofCalls \u003d 0;\n  }\n\nOr maybe use a queue (linked list) and pop the front element on each create(). Then we don\u0027t need the count.",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_015203b5",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/stagview/CommitMessageComponentTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-16T10:42:32Z",
+      "side": 1,
+      "message": "I change the code, according to your suggestion.",
+      "parentUuid": "c7880b39_8b1b72a5",
       "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -151,6 +223,24 @@
       "writtenOn": "2017-06-15T16:44:16Z",
       "side": 1,
       "message": "missing license header",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_41096b38",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/stagview/TestCommitMessageProviderFactory.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-16T10:42:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_4b9eeae9",
       "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -227,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_e1b1772e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider2.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-16T10:42:32Z",
+      "side": 1,
+      "message": "Ok. I moved it to a separate file within the same package.",
+      "parentUuid": "c7880b39_6b92c6db",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_6b1d66f2",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
         "patchSetId": 20
@@ -238,6 +346,30 @@
       "writtenOn": "2017-06-15T16:44:16Z",
       "side": 1,
       "message": "I think this is rather a builder than a calculator",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_de30da73",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-16T10:42:32Z",
+      "side": 1,
+      "message": "I don\u0027t mind, which name to choose.\nI just took the name from the original method \"calculateCommitMessage()\".\nI am going to rename it...",
+      "parentUuid": "c7880b39_6b1d66f2",
       "range": {
         "startLine": 34,
         "startChar": 6,
@@ -289,6 +421,30 @@
         "startChar": 1,
         "endLine": 72,
         "endChar": 31
+      },
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_fe359661",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-16T10:42:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_abcbceb5",
+      "range": {
+        "startLine": 72,
+        "startChar": 32,
+        "endLine": 72,
+        "endChar": 70
       },
       "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
@@ -384,6 +540,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_3e30fe6d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-16T10:42:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_4b198a06",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_4beb4a26",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
         "patchSetId": 20
@@ -395,6 +569,24 @@
       "writtenOn": "2017-06-15T16:44:16Z",
       "side": 1,
       "message": "you are doing nothing more than concatenation, keep track of the number of messages being concatenated in the internal state of this class. I\u0027d call this method append(String message)",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_9e3e5240",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-16T10:42:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_4beb4a26",
       "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -424,6 +616,30 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_be3b0e4f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-16T10:42:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_6bc1e696",
+      "range": {
+        "startLine": 127,
+        "startChar": 13,
+        "endLine": 127,
+        "endChar": 36
+      },
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_0b9a22c6",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
         "patchSetId": 20
@@ -435,6 +651,24 @@
       "writtenOn": "2017-06-15T16:44:16Z",
       "side": 1,
       "message": "this method could be declared private",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_dedb7a99",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-16T10:42:32Z",
+      "side": 1,
+      "message": "Unfortunately not. It is visible for testing.",
+      "parentUuid": "c7880b39_0b9a22c6",
       "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -505,6 +739,24 @@
       "writtenOn": "2017-06-15T16:44:16Z",
       "side": 1,
       "message": "fix warnings:\n\nNull type safety: The expression of type \u0027Repository\u0027 needs unchecked conversion to conform to \u0027@NonNull Repository\u0027\t\n\nNull type safety: The expression of type \u0027String\u0027 needs unchecked conversion to conform to \u0027@NonNull String\u0027",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_7e57e651",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-16T10:42:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_4b750a3e",
       "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
