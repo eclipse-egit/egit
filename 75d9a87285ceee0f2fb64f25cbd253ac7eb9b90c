@@ -90,6 +90,75 @@
       "revId": "75d9a87285ceee0f2fb64f25cbd253ac7eb9b90c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_924ac379",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageBuilder.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-16T22:41:16Z",
+      "side": 1,
+      "message": "file paths",
+      "range": {
+        "startLine": 58,
+        "startChar": 23,
+        "endLine": 58,
+        "endChar": 28
+      },
+      "revId": "75d9a87285ceee0f2fb64f25cbd253ac7eb9b90c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_724d5793",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageBuilder.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-16T22:41:16Z",
+      "side": 1,
+      "message": "paths ?",
+      "range": {
+        "startLine": 61,
+        "startChar": 22,
+        "endLine": 61,
+        "endChar": 35
+      },
+      "revId": "75d9a87285ceee0f2fb64f25cbd253ac7eb9b90c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_323cafeb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageBuilder.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-16T22:41:16Z",
+      "side": 1,
+      "message": "This second variable with the same value seems to be unnecessary",
+      "range": {
+        "startLine": 207,
+        "startChar": 19,
+        "endLine": 207,
+        "endChar": 30
+      },
+      "revId": "75d9a87285ceee0f2fb64f25cbd253ac7eb9b90c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
