@@ -5441,7 +5441,7 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.PullWithOptions"
-            icon="icons/obj16/pull.png">
+            icon="icons/obj16/pull_with_options.png">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.Reset"
