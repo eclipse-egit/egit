@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_c1b2bb7a",
+        "filename": "org.eclipse.egit.ui.test/fragment.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-16T11:06:07Z",
+      "side": 1,
+      "message": "We have one INSTANCE, right? It\u0027s static final.\nThe framework creates two factories.\n\nSo we have\n\n  T1.create()---+\n                |\n                +---\u003e INSTANCE.create()\n                |\n  T2.create()---+\n\nIn our tests, we only ever configure INSTANCE. And no matter how many T instances (of type TestCommitMessageProviderExtensionFactory) the framework creates, they all delegate to our single INSTANCE.\n\nThat\u0027s why I had put that comment there about this indirection being needed. Our tests don\u0027t know and cannot configure the dynamically created T instances, but they do know and can configure the singleton INSTANCE the Ts all delegate to.\n\nSo, yes, CommitMessageBuilder.getCommitMessageProviders() does find 2 instances, T1, and T2. They do not return the same providers. One will return the first provider we configured on INSTANCE and the other will return the second provider we configured there.\n\nActually I think even during tests, CommitMessageBuilder.getCommitMessageProviders() will find and call a third provider: the one contributed by Mylyn. Luckily we have no Mylyn tasks associated in our tests, and so it always returns an empty string.",
+      "parentUuid": "c7880b39_41232b65",
+      "revId": "43f7a163cad9432c98ae724bf458b9a7139e79a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_abb58e65",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageCalculatorTest.java",
         "patchSetId": 20
