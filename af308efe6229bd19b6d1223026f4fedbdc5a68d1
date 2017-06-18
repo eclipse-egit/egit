@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_72a557fe",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-18T22:23:50Z",
+      "side": 1,
+      "message": "declare this class private static",
+      "revId": "af308efe6229bd19b6d1223026f4fedbdc5a68d1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_52a85bd8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-18T22:23:50Z",
+      "side": 1,
+      "message": "getFile() yields null if\n* project containing the file is not imported into Eclipse\n* StagingEntry is a file deletion\n* file is not located in an imported Eclipse project (e.g. pom.xml in jgit repository)\n\nuse getPath() instead, this always yields the path of the staging entry\n\nget the repository from the staging entry and get its worktree to construct the absolute file path",
+      "range": {
+        "startLine": 677,
+        "startChar": 44,
+        "endLine": 677,
+        "endChar": 53
+      },
+      "revId": "af308efe6229bd19b6d1223026f4fedbdc5a68d1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
