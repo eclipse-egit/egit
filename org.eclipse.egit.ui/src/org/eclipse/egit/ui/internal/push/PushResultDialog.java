@@ -59,12 +59,13 @@ class PushResultDialog extends TitleAndImageDialog {
 
 	@Override
 	protected void createButtonsForButtonBar(final Composite parent) {
-		if (!hideConfigure
-				&& SimpleConfigurePushDialog.getConfiguredRemote(localDb) != null)
+		if (!hideConfigure && SimpleConfigurePushDialog
+				.getConfiguredRemote(localDb) != null) {
 			createButton(parent, CONFIGURE,
 					UIText.PushResultDialog_ConfigureButton, false);
-		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
-				true);
+		}
+		createButton(parent, IDialogConstants.OK_ID,
+				IDialogConstants.CLOSE_LABEL, true);
 	}
 
 	@Override

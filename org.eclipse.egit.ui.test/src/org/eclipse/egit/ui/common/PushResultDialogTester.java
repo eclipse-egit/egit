@@ -20,7 +20,7 @@ public class PushResultDialogTester {
 	}
 
 	public void closeDialog() {
-		bot.button(IDialogConstants.OK_LABEL).click();
+		bot.button(IDialogConstants.CLOSE_LABEL).click();
 	}
 
 }
