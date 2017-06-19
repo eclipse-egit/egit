@@ -165,6 +165,24 @@
       "revId": "af308efe6229bd19b6d1223026f4fedbdc5a68d1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_2d2a8eb2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2102,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-19T06:33:32Z",
+      "side": 1,
+      "message": "Or, since we probably want to use our own text,\n\n  IAction copyAction \u003d new Action(\"Copy path\") {\n    @Override\n    public void run() {\n      /* Implement copying to clipboard here */\n    }\n  }\n  copyAction.setActionDefinitionId(IWorkbenchCommandConstants.EDIT_COPY)\n  \n  ActionUtils.setGlobalActions(viewer.getControl(), getSite().getService(IHandlerService.class), copyAction);",
+      "parentUuid": "c7880b39_0dbcf203",
+      "revId": "af308efe6229bd19b6d1223026f4fedbdc5a68d1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
