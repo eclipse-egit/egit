@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_05e76a1f",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageBuilderTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-19T09:54:07Z",
+      "side": 1,
+      "message": "I think this should again be (C) 2017 Stefan Rademacher \u003ce-mail\u003e .",
+      "revId": "8a27ed69ce0571dc41e68d2896be1d31f502aa11",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
