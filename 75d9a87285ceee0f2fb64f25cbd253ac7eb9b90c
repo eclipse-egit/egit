@@ -110,6 +110,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_4d50ba29",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageBuilder.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-19T07:39:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_d2a7ebc2",
+      "revId": "75d9a87285ceee0f2fb64f25cbd253ac7eb9b90c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_924ac379",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageBuilder.java",
         "patchSetId": 21
@@ -121,6 +139,30 @@
       "writtenOn": "2017-06-16T22:41:16Z",
       "side": 1,
       "message": "file paths",
+      "range": {
+        "startLine": 58,
+        "startChar": 23,
+        "endLine": 58,
+        "endChar": 28
+      },
+      "revId": "75d9a87285ceee0f2fb64f25cbd253ac7eb9b90c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_ed5a4655",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageBuilder.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-19T07:39:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_924ac379",
       "range": {
         "startLine": 58,
         "startChar": 23,
@@ -156,6 +198,30 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_2d652e11",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageBuilder.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-19T07:39:27Z",
+      "side": 1,
+      "message": "filesToCommit is from the original code. \nDone.",
+      "parentUuid": "c7880b39_724d5793",
+      "range": {
+        "startLine": 61,
+        "startChar": 22,
+        "endLine": 61,
+        "endChar": 35
+      },
+      "revId": "75d9a87285ceee0f2fb64f25cbd253ac7eb9b90c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_f2ace7a9",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageBuilder.java",
         "patchSetId": 21
@@ -173,6 +239,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_6d4d7693",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageBuilder.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-19T07:39:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_f2ace7a9",
+      "revId": "75d9a87285ceee0f2fb64f25cbd253ac7eb9b90c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_12b25300",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageBuilder.java",
         "patchSetId": 21
@@ -184,6 +268,30 @@
       "writtenOn": "2017-06-16T22:57:05Z",
       "side": 1,
       "message": "getCommitMessageProviders()",
+      "range": {
+        "startLine": 79,
+        "startChar": 41,
+        "endLine": 79,
+        "endChar": 50
+      },
+      "revId": "75d9a87285ceee0f2fb64f25cbd253ac7eb9b90c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_8d4aa279",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageBuilder.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-19T07:39:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_12b25300",
       "range": {
         "startLine": 79,
         "startChar": 41,
@@ -236,6 +344,53 @@
         "startChar": 19,
         "endLine": 207,
         "endChar": 30
+      },
+      "revId": "75d9a87285ceee0f2fb64f25cbd253ac7eb9b90c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_cda74ac3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageBuilder.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-19T07:39:27Z",
+      "side": 1,
+      "message": "Ah, thanks! Wasn\u0027t familiar with the usage of @NonNull.",
+      "parentUuid": "c7880b39_529bfb7e",
+      "range": {
+        "startLine": 207,
+        "startChar": 19,
+        "endLine": 207,
+        "endChar": 30
+      },
+      "revId": "75d9a87285ceee0f2fb64f25cbd253ac7eb9b90c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_6de3b6c3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageBuilder.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-19T07:39:27Z",
+      "side": 1,
+      "message": "I removed this null check, since repository is non-null by definition now.\nCommitMessageBuilderTest currently passes null. Tests now fail with NPE. I would like to mock this method, but I can\u0027t use mocking (https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d349164).\n\nDo you have any suggestions?\nMy only idea: pass a mock of Repository.class, which mocks all methods needed in ProjectUtil.getProjects(repository);",
+      "range": {
+        "startLine": 218,
+        "startChar": 31,
+        "endLine": 218,
+        "endChar": 50
       },
       "revId": "75d9a87285ceee0f2fb64f25cbd253ac7eb9b90c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
