@@ -19,6 +19,98 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_8dcf02a3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-19T05:36:05Z",
+      "side": 1,
+      "message": "What is the advantage of this Optional over just returning the string and testing for null here?",
+      "range": {
+        "startLine": 664,
+        "startChar": 3,
+        "endLine": 664,
+        "endChar": 11
+      },
+      "revId": "af308efe6229bd19b6d1223026f4fedbdc5a68d1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_2dc1ae78",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-19T05:36:05Z",
+      "side": 1,
+      "message": "This exists only since JFace 3.11; it will not work on Luna. Use getSelection() and cast to IStructuredSelection.",
+      "range": {
+        "startLine": 674,
+        "startChar": 38,
+        "endLine": 674,
+        "endChar": 60
+      },
+      "revId": "af308efe6229bd19b6d1223026f4fedbdc5a68d1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_4dc51a83",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-19T05:36:05Z",
+      "side": 1,
+      "message": "On a multi-selection, we should put all paths, each on its own line, into the clipboard. That\u0027s what the history view does.",
+      "range": {
+        "startLine": 675,
+        "startChar": 21,
+        "endLine": 675,
+        "endChar": 36
+      },
+      "revId": "af308efe6229bd19b6d1223026f4fedbdc5a68d1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_6dc2d67c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-19T05:36:05Z",
+      "side": 1,
+      "message": "What about folders?",
+      "range": {
+        "startLine": 676,
+        "startChar": 22,
+        "endLine": 676,
+        "endChar": 34
+      },
+      "revId": "af308efe6229bd19b6d1223026f4fedbdc5a68d1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_52a85bd8",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 1
@@ -36,6 +128,40 @@
         "endLine": 677,
         "endChar": 53
       },
+      "revId": "af308efe6229bd19b6d1223026f4fedbdc5a68d1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_adccbeae",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-19T05:36:05Z",
+      "side": 1,
+      "message": "Not needed if you use ActionUtils; see below.",
+      "revId": "af308efe6229bd19b6d1223026f4fedbdc5a68d1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_0dbcf203",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2102,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-19T05:36:05Z",
+      "side": 1,
+      "message": "Uhhh... take a look at ActionUtils and its uses.\n\nBasically, this should be as simple as\n\n  IAction copyAction \u003d ActonUtils.createGlobalAction(ActionFactory.COPY, () -\u003e {\n    /* Implement copying to clipboard here */\n  });\n\n  ActionUtils.setGlobalActions(viewer.getControl(), Collection.singleton(copyAction), getSite().getService(IHandlerService.class));\n\nand then also add the copyAction to the context menu of both viewers.",
       "revId": "af308efe6229bd19b6d1223026f4fedbdc5a68d1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
