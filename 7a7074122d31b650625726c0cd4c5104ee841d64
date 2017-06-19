@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c7880b39_e5ca5ec3",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/StagingViewTester.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-19T12:37:22Z",
+      "side": 1,
+      "message": "Should your name be added here, since you added a method, Thomas?",
+      "range": {
+        "startLine": 2,
+        "startChar": 2,
+        "endLine": 2,
+        "endChar": 77
+      },
+      "revId": "7a7074122d31b650625726c0cd4c5104ee841d64",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_c560027a",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/stagview/CommitMessageComponentTest.java",
         "patchSetId": 24
@@ -13,6 +36,24 @@
       "writtenOn": "2017-06-19T12:10:13Z",
       "side": 1,
       "message": "Rename this class. Two classes with the same name in different packages is confusing. Maybe \"CommitMessageProvidersTest\" or \"CommitMessageProvidersPositionTest\" or \"CommitMessagePositionTest\" or some such.",
+      "revId": "7a7074122d31b650625726c0cd4c5104ee841d64",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_e5189e03",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/stagview/CommitMessageComponentTest.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-19T12:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_c560027a",
       "revId": "7a7074122d31b650625726c0cd4c5104ee841d64",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -36,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_45317274",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/CommitMessageWithCaretPosition.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-19T12:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_e55b3ecc",
+      "revId": "7a7074122d31b650625726c0cd4c5104ee841d64",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_055beacd",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/CommitMessageWithCaretPosition.java",
         "patchSetId": 24
@@ -47,6 +106,24 @@
       "writtenOn": "2017-06-19T12:10:13Z",
       "side": 1,
       "message": "Missing period.",
+      "revId": "7a7074122d31b650625726c0cd4c5104ee841d64",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_852b5a06",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/CommitMessageWithCaretPosition.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-19T12:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_055beacd",
       "revId": "7a7074122d31b650625726c0cd4c5104ee841d64",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
