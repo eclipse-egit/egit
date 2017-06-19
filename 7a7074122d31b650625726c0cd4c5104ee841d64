@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_482187a6",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/StagingViewTester.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-19T13:59:48Z",
+      "side": 1,
+      "message": "Not needed. We do this informally for already existing sources; git gives the full history. In test classes, I usually don\u0027t bother. See also http://wiki.eclipse.org/EGit/Contributor_Guide#Copyright .\n\nIf we do another patch set, we could update the year at least to 2011, 2017.",
+      "parentUuid": "c7880b39_e5ca5ec3",
+      "range": {
+        "startLine": 2,
+        "startChar": 2,
+        "endLine": 2,
+        "endChar": 77
+      },
+      "revId": "7a7074122d31b650625726c0cd4c5104ee841d64",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_c560027a",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/stagview/CommitMessageComponentTest.java",
         "patchSetId": 24
