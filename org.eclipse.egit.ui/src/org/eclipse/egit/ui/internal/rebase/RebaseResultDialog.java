@@ -59,8 +59,8 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -204,6 +204,22 @@ public class RebaseResultDialog extends MessageDialog {
 		return status.toString();
 	}
 
+	private static String[] getButtonLabel(Status status) {
+		String[] buttonLabel = new String[1];
+		switch (status) {
+		case EDIT:
+		case CONFLICTS:
+		case STOPPED:
+		case INTERACTIVE_PREPARED:
+		case STASH_APPLY_CONFLICTS:
+			buttonLabel[0] = IDialogConstants.PROCEED_LABEL;
+			break;
+		default:
+			buttonLabel[0] = IDialogConstants.CLOSE_LABEL;
+		}
+		return buttonLabel;
+	}
+
 	/**
 	 * @param shell
 	 * @param repository
@@ -215,7 +231,7 @@ public class RebaseResultDialog extends MessageDialog {
 				getTitle(result.getStatus()),
 				result.getStatus() == Status.FAILED ? MessageDialog.ERROR
 						: MessageDialog.INFORMATION,
-				new String[] { IDialogConstants.OK_LABEL }, 0);
+				getButtonLabel(result.getStatus()), 0);
 		setShellStyle(getShellStyle() | SWT.SHELL_TRIM);
 		this.repo = repository;
 		this.result = result;
@@ -437,75 +453,61 @@ public class RebaseResultDialog extends MessageDialog {
 		startMergeButton = new Button(actionGroup, SWT.RADIO);
 		startMergeButton.setText(UIText.RebaseResultDialog_StartMergeRadioText);
 		startMergeButton.setEnabled(mergeToolAvailable);
-		startMergeButton.addSelectionListener(new SelectionListener() {
+		startMergeButton.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (startMergeButton.getSelection())
-					nextSteps
-							.getTextWidget()
-							.setText(
-									UIText.RebaseResultDialog_NextStepsAfterResolveConflicts);
+				if (startMergeButton.getSelection()) {
+					nextSteps.getTextWidget().setText(
+							UIText.RebaseResultDialog_NextStepsAfterResolveConflicts);
+					getButton(getDefaultButtonIndex())
+							.setText(IDialogConstants.PROCEED_LABEL);
+				}
 			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// nothing
-			}
-
 		});
 
 		skipCommitButton = new Button(actionGroup, SWT.RADIO);
 		skipCommitButton.setText(UIText.RebaseResultDialog_SkipCommitButton);
-		skipCommitButton.addSelectionListener(new SelectionListener() {
+		skipCommitButton.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (skipCommitButton.getSelection())
+				if (skipCommitButton.getSelection()) {
 					nextSteps.getTextWidget().setText(""); //$NON-NLS-1$
+					getButton(getDefaultButtonIndex())
+							.setText(IDialogConstants.PROCEED_LABEL);
+				}
 			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// nothing
-			}
-
 		});
 
 		abortRebaseButton = new Button(actionGroup, SWT.RADIO);
 		abortRebaseButton
 				.setText(UIText.RebaseResultDialog_AbortRebaseRadioText);
-		abortRebaseButton.addSelectionListener(new SelectionListener() {
+		abortRebaseButton.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (abortRebaseButton.getSelection())
+				if (abortRebaseButton.getSelection()) {
 					nextSteps.getTextWidget().setText(""); //$NON-NLS-1$
+					getButton(getDefaultButtonIndex())
+							.setText(IDialogConstants.ABORT_LABEL);
+				}
 			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// nothing
-			}
-
 		});
 
 		doNothingButton = new Button(actionGroup, SWT.RADIO);
 		doNothingButton.setText(UIText.RebaseResultDialog_DoNothingRadioText);
-		doNothingButton.addSelectionListener(new SelectionListener() {
+		doNothingButton.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (doNothingButton.getSelection())
+				if (doNothingButton.getSelection()) {
 					nextSteps.getTextWidget().setText(
 							UIText.RebaseResultDialog_NextStepsDoNothing);
+					getButton(getDefaultButtonIndex())
+							.setText(IDialogConstants.CLOSE_LABEL);
+				}
 			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// nothing
-			}
-
 		});
 
 		if (mergeToolAvailable)
