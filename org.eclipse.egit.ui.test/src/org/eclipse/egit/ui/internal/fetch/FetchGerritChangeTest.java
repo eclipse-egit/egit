@@ -10,8 +10,8 @@ package org.eclipse.egit.ui.internal.fetch;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import org.eclipse.egit.ui.internal.fetch.FetchGerritChangePage.Change;
 import org.junit.Test;
-
 /**
  * Tests for determining a Gerrit change number from a string.
  */
@@ -67,74 +67,105 @@ public class FetchGerritChangeTest {
 
 	@Test
 	public void testChangeStringUri() {
-		assertEquals("65510", FetchGerritChangePage.determineChangeFromString(
+		assertEquals(Change.create(65510),
+				FetchGerritChangePage.determineChangeFromString(
 				"https://git.example.org/r/#/c/65510"));
-		assertEquals("65510", FetchGerritChangePage.determineChangeFromString(
+		assertEquals(Change.create(65510),
+				FetchGerritChangePage.determineChangeFromString(
 				"https://git.example.org/r/#/c/65510/"));
-		assertEquals("65510", FetchGerritChangePage.determineChangeFromString(
+		assertEquals(Change.create(65510, 6),
+				FetchGerritChangePage.determineChangeFromString(
 				"https://git.example.org/r/#/c/65510/6"));
-		assertEquals("65510", FetchGerritChangePage.determineChangeFromString(
+		assertEquals(Change.create(65510, 6),
+				FetchGerritChangePage.determineChangeFromString(
 				"https://git.example.org/r/#/c/65510/6/"));
-		assertEquals("65510", FetchGerritChangePage.determineChangeFromString(
+		assertEquals(Change.create(65510, 6),
+				FetchGerritChangePage.determineChangeFromString(
 				"https://git.example.org/r/#/c/65510/6/some.path/some/File.txt"));
-		assertEquals("65510", FetchGerritChangePage.determineChangeFromString(
+		assertEquals(Change.create(65510),
+				FetchGerritChangePage.determineChangeFromString(
 				"https://git.example.org/r/#/c/65510/4..5"));
-		assertEquals("65510", FetchGerritChangePage.determineChangeFromString(
+		assertEquals(Change.create(65510),
+				FetchGerritChangePage.determineChangeFromString(
 				"https://git.example.org/r/#/c/65510/4..5/"));
-		assertEquals("65510", FetchGerritChangePage.determineChangeFromString(
+		assertEquals(Change.create(65510),
+				FetchGerritChangePage.determineChangeFromString(
 				"https://git.example.org/r/#/c/65510/4..5/some.path/some/File.txt"));
-		assertEquals("65510", FetchGerritChangePage.determineChangeFromString(
+		assertEquals(Change.create(65510),
+				FetchGerritChangePage.determineChangeFromString(
 				"https://git.example.org:8080/r/#/c/65510"));
 	}
 
 	@Test
 	public void testChangeStringSingleNumber() {
-		assertEquals("65510",
+		assertEquals(Change.create(65510),
 				FetchGerritChangePage.determineChangeFromString("65510"));
-		assertEquals("65510",
+		assertEquals(Change.create(65510),
 				FetchGerritChangePage.determineChangeFromString("/65510"));
-		assertEquals("65510",
+		assertEquals(Change.create(65510),
 				FetchGerritChangePage.determineChangeFromString("65510/"));
-		assertEquals("65510",
+		assertEquals(Change.create(65510),
 				FetchGerritChangePage.determineChangeFromString("/65510/"));
 	}
 
 	@Test
 	public void testChangeStringTwoNumbers() {
-		assertEquals("65510",
+		assertEquals(Change.create(65510, 6),
 				FetchGerritChangePage.determineChangeFromString("65510/6"));
-		assertEquals("65510",
+		assertEquals(Change.create(65510, 6),
 				FetchGerritChangePage.determineChangeFromString("/65510/6"));
-		assertEquals("65510",
+		assertEquals(Change.create(65510, 6),
 				FetchGerritChangePage.determineChangeFromString("65510/6/"));
-		assertEquals("65510",
+		assertEquals(Change.create(65510, 6),
 				FetchGerritChangePage.determineChangeFromString("/65510/6/"));
-		assertEquals("65510",
+		assertEquals(Change.create(65510),
 				FetchGerritChangePage.determineChangeFromString("10/65510"));
-		assertEquals("65510",
+		assertEquals(Change.create(65510),
 				FetchGerritChangePage.determineChangeFromString("10/65510/"));
-		assertEquals("65510",
+		assertEquals(Change.create(65510),
 				FetchGerritChangePage.determineChangeFromString("/10/65510"));
-		assertEquals("65510",
+		assertEquals(Change.create(65510),
 				FetchGerritChangePage.determineChangeFromString("/10/65510/"));
-		assertEquals("10",
+		assertEquals(Change.create(10),
 				FetchGerritChangePage.determineChangeFromString("/10/10"));
+		assertEquals(Change.create(10, 9),
+				FetchGerritChangePage.determineChangeFromString("/10/9"));
 	}
 
 	@Test
 	public void testChangeStringThreeNumbers() {
-		assertEquals("65510",
+		assertEquals(Change.create(65510, 6),
 				FetchGerritChangePage.determineChangeFromString("10/65510/6"));
-		assertEquals("65510",
+		assertEquals(Change.create(65510, 6),
 				FetchGerritChangePage.determineChangeFromString("/10/65510/6"));
-		assertEquals("65510",
+		assertEquals(Change.create(65510, 6),
 				FetchGerritChangePage.determineChangeFromString("10/65510/6/"));
-		assertEquals("65510", FetchGerritChangePage
+		assertEquals(Change.create(65510, 6), FetchGerritChangePage
 				.determineChangeFromString("/10/65510/6/"));
-		assertEquals("10",
+		assertEquals(Change.create(10, 6),
 				FetchGerritChangePage.determineChangeFromString("/10/10/6"));
-		assertEquals("10",
+		assertEquals(Change.create(10, 6),
 				FetchGerritChangePage.determineChangeFromString("/65510/10/6"));
 	}
 
+	@Test
+	public void testChangeRefs() {
+		assertEquals(Change.create(65510, 6), FetchGerritChangePage
+				.determineChangeFromString("refs/changes/10/65510/6"));
+		assertNull(FetchGerritChangePage
+				.determineChangeFromString("refs/changes/10/65510/"));
+		assertNull(FetchGerritChangePage
+				.determineChangeFromString("refs/changes/10/"));
+		assertEquals(Change.create(65510, 6), FetchGerritChangePage
+				.determineChangeFromString("refs/changes/42/65510/6"));
+	}
+
+	@Test
+	public void testFromRef() {
+		assertNull(Change.fromRef("refs/changes/42/65510/6"));
+		assertNull(Change.fromRef("refs/changes/10/65510/6..7"));
+		assertNull(Change.fromRef("refs/changes/10/65510/6/7"));
+		assertEquals(Change.create(65510, 6),
+				Change.fromRef("refs/changes/10/65510/6"));
+	}
 }
