@@ -290,7 +290,7 @@ public class CreatePatchOperation implements IEGitOperation {
 			} else if (!evaluated.isEmpty())
 				evaluated.add(trailingCharacters);
 		}
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		for (String string : evaluated)
 			buffer.append(string);
 
