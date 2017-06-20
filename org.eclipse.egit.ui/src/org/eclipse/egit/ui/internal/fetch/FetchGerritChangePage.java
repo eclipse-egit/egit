@@ -122,7 +122,7 @@ public class FetchGerritChangePage extends WizardPage {
 			"(?:https?://\\S+?/|/)?([1-9][0-9]*)(?:/([1-9][0-9]*)(?:/([1-9][0-9]*)(?:\\.\\.\\d+)?)?)?(?:/\\S*)?"); //$NON-NLS-1$
 
 	private static final Pattern GERRIT_CHANGE_REF_PATTERN = Pattern
-			.compile("refs/changes/\\d+/(\\d+)(?:/\\d*)"); //$NON-NLS-1$
+			.compile("refs/changes/\\d+/(\\d+)(?:/(\\d+))?"); //$NON-NLS-1$
 
 	private enum CheckoutMode {
 		CREATE_BRANCH, CREATE_TAG, CHECKOUT_FETCH_HEAD, NOCHECKOUT
@@ -219,7 +219,7 @@ public class FetchGerritChangePage extends WizardPage {
 		String defaultUri = null;
 		String defaultCommand = null;
 		String defaultChange = null;
-		String candidateChange = null;
+		ChangeAndPatchSet candidateChange = null;
 		if (clipText != null) {
 			Matcher matcher = GERRIT_FETCH_PATTERN.matcher(clipText);
 			if (matcher.matches()) {
@@ -444,7 +444,15 @@ public class FetchGerritChangePage extends WizardPage {
 		if (defaultChange != null) {
 			refText.setText(defaultChange);
 		} else if (candidateChange != null) {
-			refText.setText(candidateChange);
+			if (candidateChange.patchSetNumber != null) {
+				String subdir = Integer.toString(
+						Integer.parseInt(candidateChange.changeNumber) % 100);
+				refText.setText("refs/changes/" + subdir + '/' //$NON-NLS-1$
+						+ candidateChange.changeNumber + '/'
+						+ candidateChange.patchSetNumber);
+			} else {
+				refText.setText(candidateChange.changeNumber);
+			}
 		}
 
 		// get all available Gerrit URIs from the repository
@@ -527,14 +535,29 @@ public class FetchGerritChangePage extends WizardPage {
 	}
 
 	/**
+	 * A little internal DTO to pass around a change and patch set number. Note
+	 * that the patch set number may be null.
+	 */
+	private static class ChangeAndPatchSet {
+		protected final String changeNumber;
+
+		protected final String patchSetNumber;
+
+		protected ChangeAndPatchSet(String change, String patchSet) {
+			changeNumber = change;
+			patchSetNumber = patchSet;
+		}
+	}
+
+	/**
 	 * Tries to determine a Gerrit change number from an input string.
 	 *
 	 * @param input
 	 *            string to derive a change number from
-	 * @return the change number as a string, or {@code null} if none could be
-	 *         determined.
+	 * @return the change number and possibly also the patch set number, or
+	 *         {@code null} if none could be determined.
 	 */
-	protected static String determineChangeFromString(String input) {
+	protected static ChangeAndPatchSet determineChangeFromString(String input) {
 		if (input == null) {
 			return null;
 		}
@@ -545,10 +568,10 @@ public class FetchGerritChangePage extends WizardPage {
 			String third = matcher.group(3);
 			if (second != null && !second.isEmpty()) {
 				if (third != null && !third.isEmpty()) {
-					return second;
+					return new ChangeAndPatchSet(second, third);
 				} else if (input.startsWith("http")) { //$NON-NLS-1$
 					// A URL ending with two digits: take the first.
-					return first;
+					return new ChangeAndPatchSet(first, null);
 				} else {
 					// Take the numerically larger. Might be a fragment like
 					// /10/65510 as in refs/changes/10/65510/6, or /65510/6 as
@@ -559,9 +582,9 @@ public class FetchGerritChangePage extends WizardPage {
 					try {
 						if (Integer.parseInt(first) > Integer
 								.parseInt(second)) {
-							return first;
+							return new ChangeAndPatchSet(first, null);
 						} else {
-							return second;
+							return new ChangeAndPatchSet(second, null);
 						}
 					} catch (NumberFormatException e) {
 						// Numerical overflow?
@@ -569,8 +592,12 @@ public class FetchGerritChangePage extends WizardPage {
 					}
 				}
 			} else {
-				return first;
+				return new ChangeAndPatchSet(first, null);
 			}
+		}
+		matcher = GERRIT_CHANGE_REF_PATTERN.matcher(input);
+		if (matcher.matches()) {
+			return new ChangeAndPatchSet(matcher.group(1), matcher.group(2));
 		}
 		return null;
 	}
@@ -581,8 +608,21 @@ public class FetchGerritChangePage extends WizardPage {
 			String clipText = (String) clipboard
 					.getContents(TextTransfer.getInstance());
 			if (clipText != null) {
-				String toInsert = determineChangeFromString(clipText.trim());
-				if (toInsert != null) {
+				ChangeAndPatchSet input = determineChangeFromString(
+						clipText.trim());
+				if (input != null) {
+					String toInsert = input.changeNumber;
+					if (input.patchSetNumber != null) {
+						toInsert = toInsert + '/' + input.patchSetNumber;
+						if (text.getText().trim().isEmpty() || text
+								.getSelectionText().equals(text.getText())) {
+							// Paste will replace everything
+							String subdir = Integer.toString(
+									Integer.parseInt(input.changeNumber) % 100);
+							toInsert = "refs/changes/" + subdir + '/' //$NON-NLS-1$
+									+ toInsert;
+						}
+					}
 					clipboard.setContents(new Object[] { toInsert },
 							new Transfer[] { TextTransfer.getInstance() });
 					try {
