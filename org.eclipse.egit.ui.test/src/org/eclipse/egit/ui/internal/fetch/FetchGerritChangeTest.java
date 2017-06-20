@@ -10,8 +10,8 @@ package org.eclipse.egit.ui.internal.fetch;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import org.eclipse.egit.ui.internal.fetch.FetchGerritChangePage.ChangeAndPatchSet;
 import org.junit.Test;
-
 /**
  * Tests for determining a Gerrit change number from a string.
  */
@@ -67,73 +67,84 @@ public class FetchGerritChangeTest {
 
 	@Test
 	public void testChangeStringUri() {
-		assertEquals("65510", FetchGerritChangePage.determineChangeFromString(
+		assertEquals(new ChangeAndPatchSet("65510", null),
+				FetchGerritChangePage.determineChangeFromString(
 				"https://git.example.org/r/#/c/65510"));
-		assertEquals("65510", FetchGerritChangePage.determineChangeFromString(
+		assertEquals(new ChangeAndPatchSet("65510", null),
+				FetchGerritChangePage.determineChangeFromString(
 				"https://git.example.org/r/#/c/65510/"));
-		assertEquals("65510", FetchGerritChangePage.determineChangeFromString(
+		assertEquals(new ChangeAndPatchSet("65510", "6"),
+				FetchGerritChangePage.determineChangeFromString(
 				"https://git.example.org/r/#/c/65510/6"));
-		assertEquals("65510", FetchGerritChangePage.determineChangeFromString(
+		assertEquals(new ChangeAndPatchSet("65510", "6"),
+				FetchGerritChangePage.determineChangeFromString(
 				"https://git.example.org/r/#/c/65510/6/"));
-		assertEquals("65510", FetchGerritChangePage.determineChangeFromString(
+		assertEquals(new ChangeAndPatchSet("65510", "6"),
+				FetchGerritChangePage.determineChangeFromString(
 				"https://git.example.org/r/#/c/65510/6/some.path/some/File.txt"));
-		assertEquals("65510", FetchGerritChangePage.determineChangeFromString(
+		assertEquals(new ChangeAndPatchSet("65510", null),
+				FetchGerritChangePage.determineChangeFromString(
 				"https://git.example.org/r/#/c/65510/4..5"));
-		assertEquals("65510", FetchGerritChangePage.determineChangeFromString(
+		assertEquals(new ChangeAndPatchSet("65510", null),
+				FetchGerritChangePage.determineChangeFromString(
 				"https://git.example.org/r/#/c/65510/4..5/"));
-		assertEquals("65510", FetchGerritChangePage.determineChangeFromString(
+		assertEquals(new ChangeAndPatchSet("65510", null),
+				FetchGerritChangePage.determineChangeFromString(
 				"https://git.example.org/r/#/c/65510/4..5/some.path/some/File.txt"));
-		assertEquals("65510", FetchGerritChangePage.determineChangeFromString(
+		assertEquals(new ChangeAndPatchSet("65510", null),
+				FetchGerritChangePage.determineChangeFromString(
 				"https://git.example.org:8080/r/#/c/65510"));
 	}
 
 	@Test
 	public void testChangeStringSingleNumber() {
-		assertEquals("65510",
+		assertEquals(new ChangeAndPatchSet("65510", null),
 				FetchGerritChangePage.determineChangeFromString("65510"));
-		assertEquals("65510",
+		assertEquals(new ChangeAndPatchSet("65510", null),
 				FetchGerritChangePage.determineChangeFromString("/65510"));
-		assertEquals("65510",
+		assertEquals(new ChangeAndPatchSet("65510", null),
 				FetchGerritChangePage.determineChangeFromString("65510/"));
-		assertEquals("65510",
+		assertEquals(new ChangeAndPatchSet("65510", null),
 				FetchGerritChangePage.determineChangeFromString("/65510/"));
 	}
 
 	@Test
 	public void testChangeStringTwoNumbers() {
-		assertEquals("65510",
+		assertEquals(new ChangeAndPatchSet("65510", "6"),
 				FetchGerritChangePage.determineChangeFromString("65510/6"));
-		assertEquals("65510",
+		assertEquals(new ChangeAndPatchSet("65510", "6"),
 				FetchGerritChangePage.determineChangeFromString("/65510/6"));
-		assertEquals("65510",
+		assertEquals(new ChangeAndPatchSet("65510", "6"),
 				FetchGerritChangePage.determineChangeFromString("65510/6/"));
-		assertEquals("65510",
+		assertEquals(new ChangeAndPatchSet("65510", "6"),
 				FetchGerritChangePage.determineChangeFromString("/65510/6/"));
-		assertEquals("65510",
+		assertEquals(new ChangeAndPatchSet("65510", null),
 				FetchGerritChangePage.determineChangeFromString("10/65510"));
-		assertEquals("65510",
+		assertEquals(new ChangeAndPatchSet("65510", null),
 				FetchGerritChangePage.determineChangeFromString("10/65510/"));
-		assertEquals("65510",
+		assertEquals(new ChangeAndPatchSet("65510", null),
 				FetchGerritChangePage.determineChangeFromString("/10/65510"));
-		assertEquals("65510",
+		assertEquals(new ChangeAndPatchSet("65510", null),
 				FetchGerritChangePage.determineChangeFromString("/10/65510/"));
-		assertEquals("10",
+		assertEquals(new ChangeAndPatchSet("10", null),
 				FetchGerritChangePage.determineChangeFromString("/10/10"));
+		assertEquals(new ChangeAndPatchSet("10", "9"),
+				FetchGerritChangePage.determineChangeFromString("/10/9"));
 	}
 
 	@Test
 	public void testChangeStringThreeNumbers() {
-		assertEquals("65510",
+		assertEquals(new ChangeAndPatchSet("65510", "6"),
 				FetchGerritChangePage.determineChangeFromString("10/65510/6"));
-		assertEquals("65510",
+		assertEquals(new ChangeAndPatchSet("65510", "6"),
 				FetchGerritChangePage.determineChangeFromString("/10/65510/6"));
-		assertEquals("65510",
+		assertEquals(new ChangeAndPatchSet("65510", "6"),
 				FetchGerritChangePage.determineChangeFromString("10/65510/6/"));
-		assertEquals("65510", FetchGerritChangePage
+		assertEquals(new ChangeAndPatchSet("65510", "6"), FetchGerritChangePage
 				.determineChangeFromString("/10/65510/6/"));
-		assertEquals("10",
+		assertEquals(new ChangeAndPatchSet("10", "6"),
 				FetchGerritChangePage.determineChangeFromString("/10/10/6"));
-		assertEquals("10",
+		assertEquals(new ChangeAndPatchSet("10", "6"),
 				FetchGerritChangePage.determineChangeFromString("/65510/10/6"));
 	}
 
