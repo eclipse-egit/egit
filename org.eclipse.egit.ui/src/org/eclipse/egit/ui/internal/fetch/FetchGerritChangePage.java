@@ -683,10 +683,11 @@ public class FetchGerritChangePage extends WizardPage {
 				return;
 			}
 
-			if (createBranchSelected)
+			if (createBranchSelected) {
 				setErrorMessage(branchValidator.isValid(branchText.getText()));
-			else if (createTagSelected)
+			} else if (createTagSelected) {
 				setErrorMessage(tagValidator.isValid(tagText.getText()));
+			}
 		} finally {
 			setPageComplete(getErrorMessage() == null);
 		}
@@ -1015,12 +1016,18 @@ public class FetchGerritChangePage extends WizardPage {
 
 		static Change fromRef(String refName) {
 			try {
-				if (refName == null || !refName.startsWith("refs/changes/")) //$NON-NLS-1$
+				if (refName == null || !refName.startsWith("refs/changes/")) { //$NON-NLS-1$
 					return null;
+				}
 				String[] tokens = refName.substring(13).split("/"); //$NON-NLS-1$
-				if (tokens.length != 3)
+				if (tokens.length != 3) {
 					return null;
+				}
+				Integer subdir = Integer.valueOf(tokens[0]);
 				Integer changeNumber = Integer.valueOf(tokens[1]);
+				if (subdir.intValue() != changeNumber.intValue() % 100) {
+					return null;
+				}
 				Integer patchSetNumber = Integer.valueOf(tokens[2]);
 				return new Change(refName, changeNumber, patchSetNumber);
 			} catch (NumberFormatException e) {
