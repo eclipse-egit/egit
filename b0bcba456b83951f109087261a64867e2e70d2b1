@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_9f89e334",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-20T15:02:03Z",
+      "side": 1,
+      "message": "Why this extra builder? What am I missing here?",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 297,
+        "endChar": 20
+      },
+      "revId": "b0bcba456b83951f109087261a64867e2e70d2b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
