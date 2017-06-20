@@ -215,7 +215,7 @@ public class RebaseResultDialog extends MessageDialog {
 				getTitle(result.getStatus()),
 				result.getStatus() == Status.FAILED ? MessageDialog.ERROR
 						: MessageDialog.INFORMATION,
-				new String[] { IDialogConstants.OK_LABEL }, 0);
+				new String[] { IDialogConstants.CLOSE_LABEL }, 0);
 		setShellStyle(getShellStyle() | SWT.SHELL_TRIM);
 		this.repo = repository;
 		this.result = result;
