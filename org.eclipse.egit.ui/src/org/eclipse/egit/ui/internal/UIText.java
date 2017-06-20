@@ -2879,6 +2879,9 @@ public class UIText extends NLS {
 	public static String FetchGerritChangePage_TagRadio;
 
 	/** */
+	public static String FetchGerritChangePage_UnknownChangeRefMessage;
+
+	/** */
 	public static String FetchGerritChangePage_UpdateRadio;
 
 	/** */
