@@ -103,7 +103,7 @@ public abstract class GitCloneWizardTestBase extends LocalRepositoryTestCase {
 	@BeforeClass
 	public static void disableSecureStoragePasswordProviders() {
 		List availableModules = PasswordProviderSelector.getInstance().findAvailableModules(null);
-		StringBuffer tmp = new StringBuffer();
+		StringBuilder tmp = new StringBuilder();
 		for (Object module : availableModules) {
 			ExtStorageModule storageModule = (ExtStorageModule) module;
 			tmp.append(storageModule.moduleID).append(",");
