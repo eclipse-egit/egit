@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_a234bf65",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponentStateManager.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-22T11:22:38Z",
+      "side": 1,
+      "message": "This needs to be improved. If somebody has this and then opens the workspace with an Eclipse that has an older Egit version, he\u0027ll get an InvalidObjectIdException.\n\nAdd the new caret position at the end. Then old Egit can read state saved by new EGit (it\u0027ll simply ignore the caret position).",
+      "revId": "34da358f1f0262d13aee29cd1480dbed2f3566fd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
