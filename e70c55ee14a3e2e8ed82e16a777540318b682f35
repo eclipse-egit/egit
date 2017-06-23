@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_f3fcdaa9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponentStateManager.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-23T09:26:43Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c7880b39_33dca259",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 55
+      },
+      "revId": "e70c55ee14a3e2e8ed82e16a777540318b682f35",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_d3e6fe21",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponentStateManager.java",
         "patchSetId": 26
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-23T09:08:49Z",
       "side": 1,
       "message": "And this will prevent future additions since this version will not be able to read them. Keep the \u003c logic from the base version (\" \u003c MEMBER_COUNT_WITHOUT_CARET_POSITION \") in line 57 and just ignore any extra items in the array instead of returning null.",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 15
+      },
+      "revId": "e70c55ee14a3e2e8ed82e16a777540318b682f35",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_3340225e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponentStateManager.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 117881
+      },
+      "writtenOn": "2017-06-23T09:26:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_d3e6fe21",
       "range": {
         "startLine": 74,
         "startChar": 0,
