@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_f345ba69",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponentStateManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-23T09:29:52Z",
+      "side": 1,
+      "message": "\u003e\u003d . Otherwise the caret position will not be set if this is ever extended with additional fields.",
+      "range": {
+        "startLine": 68,
+        "startChar": 20,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "revId": "52a5d297975a407a46fd7b639c67599629052f7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_53b20e01",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponentStateManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-23T09:29:52Z",
+      "side": 1,
+      "message": "And then a simple else is sufficient here.",
+      "revId": "52a5d297975a407a46fd7b639c67599629052f7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
