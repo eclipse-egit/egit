@@ -71,6 +71,8 @@ import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -462,23 +464,37 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 
 	private void executeOpenCommandWithConfirmation(String refName) {
 		if (!BranchOperationUI.checkoutWillShowQuestionDialog(refName)) {
-			String shortName = Repository.shortenRefName(refName);
-
 			IPreferenceStore store = Activator.getDefault()
 					.getPreferenceStore();
 
 			if (store.getBoolean(UIPreferences.SHOW_CHECKOUT_CONFIRMATION)) {
-				String toggleMessage = UIText.RepositoriesView_CheckoutConfirmationToggleMessage;
-				MessageDialogWithToggle dlg = MessageDialogWithToggle
-						.openOkCancelConfirm(
-								getViewSite().getShell(),
-				UIText.RepositoriesView_CheckoutConfirmationTitle,
-				MessageFormat.format(UIText.RepositoriesView_CheckoutConfirmationMessage,
-										shortName),
-										toggleMessage, false, store,
-										UIPreferences.SHOW_CHECKOUT_CONFIRMATION);
-				if (dlg.getReturnCode() != Window.OK)
+				MessageDialogWithToggle dialog = new MessageDialogWithToggle(
+						getViewSite().getShell(),
+						UIText.RepositoriesView_CheckoutConfirmationTitle, null,
+						MessageFormat.format(
+								UIText.RepositoriesView_CheckoutConfirmationMessage,
+								Repository.shortenRefName(refName)),
+						MessageDialog.QUESTION,
+						new String[] {
+								UIText.RepositoriesView_CheckoutConfirmationDefaultButtonLabel,
+								IDialogConstants.CANCEL_LABEL },
+						0,
+						UIText.RepositoriesView_CheckoutConfirmationToggleMessage,
+						false);
+				// Since we use a custom button here, we may get back the first
+				// internal ID instead of Window.OK.
+				int result = dialog.open();
+				if (result != Window.OK
+						&& result != IDialogConstants.INTERNAL_ID) {
 					return;
+				}
+				// And with custom buttons and internal IDs, the framework
+				// doesn't save the preference (even if we set the preference
+				// store and key).
+				if (dialog.getToggleState()) {
+					store.setValue(UIPreferences.SHOW_CHECKOUT_CONFIRMATION,
+							false);
+				}
 			}
 		}
 		executeOpenCommand();
