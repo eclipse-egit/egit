@@ -149,7 +149,9 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		TestUtil.expandAndWait(node).getNode(branch).doubleClick();
 		SWTBotShell shell = bot
 				.shell(UIText.RepositoriesView_CheckoutConfirmationTitle);
-		shell.bot().button(IDialogConstants.OK_LABEL).click();
+		shell.bot()
+				.button(UIText.RepositoriesView_CheckoutConfirmationDefaultButtonLabel)
+				.click();
 		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 		refreshAndWait();
 	}
