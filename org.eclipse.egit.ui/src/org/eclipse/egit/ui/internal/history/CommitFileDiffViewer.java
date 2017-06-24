@@ -39,8 +39,6 @@ import org.eclipse.egit.ui.internal.blame.BlameOperation;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -333,18 +331,12 @@ public class CommitFileDiffViewer extends TableViewer {
 		selectAll.setEnabled(true);
 		copy = ActionUtils.createGlobalAction(ActionFactory.COPY,
 				() -> doCopy());
+		copy.setText(UIText.CommitFileDiffViewer_CopyFilePathMenuLabel);
 		copy.setEnabled(true);
 		ActionUtils.setGlobalActions(getControl(), copy, selectAll);
 		mgr.add(selectAll);
 		mgr.add(copy);
-
-		// See https://bugs.eclipse.org/bugs/show_bug.cgi?id=477510
-		mgr.addMenuListener(new IMenuListener() {
-			@Override
-			public void menuAboutToShow(IMenuManager manager) {
-				getControl().setFocus();
-			}
-		});
+		mgr.addMenuListener(manager -> getControl().setFocus());
 	}
 
 	private void updateActionEnablement(ISelection selection) {

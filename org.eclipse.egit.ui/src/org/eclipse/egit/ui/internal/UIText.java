@@ -4405,6 +4405,9 @@ public class UIText extends NLS {
 	public static String CommitFileDiffViewer_CompareWorkingDirectoryMenuLabel;
 
 	/** */
+	public static String CommitFileDiffViewer_CopyFilePathMenuLabel;
+
+	/** */
 	public static String CommitFileDiffViewer_MergeCommitMultiAncestorMessage;
 
 	/** */
@@ -4439,6 +4442,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommitGraphTable_CommitId;
+
+	/** */
+	public static String CommitGraphTable_CopyCommitIdLabel;
 
 	/** */
 	public static String CommitGraphTable_Committer;
