@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_3c170f07",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-06-25T21:15:51Z",
+      "side": 1,
+      "message": "why do we put it in the cache if it\u0027s bogus ?",
+      "range": {
+        "startLine": 55,
+        "startChar": 57,
+        "endLine": 56,
+        "endChar": 49
+      },
+      "revId": "c26fa04c9b6d74dc22e1fea422f00f4e6ba7941b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
