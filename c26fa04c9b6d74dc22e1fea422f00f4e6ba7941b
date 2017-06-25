@@ -22,6 +22,30 @@
       "revId": "c26fa04c9b6d74dc22e1fea422f00f4e6ba7941b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_3c69cf6f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-25T21:50:11Z",
+      "side": 1,
+      "message": "As far as I understand the code:\n\nCheck ThreeWayDiffEntry, lines 153ff. Folders always end up with direction CONFLICTING and change MODIFY. Git doesn\u0027t really do folders, and there\u0027s no code there that would set a meaningful state. Even if we did, passing on such meaningful state to the synchronization framework breaks other things as we\u0027ve seen. Yet we need to have the nodes in the GitSyncObjectCache; it\u0027s an internal representation of the directory tree.\n\nGitSyncObjectCache supports incremental updates via walks with a path filter, so maintaining a meaningful state is not easy, and changing ThreeWayDiff and GitSyncObjectCache.merge() to attempt to do so is non-trivial and may risk breaking other things. And it appears that a correct folder state is not needed by the EGit part of this synchronization business.\n\nReturning IN_SYNC here is in any case safe -- the code before commit f46237a (bug 516426) even completely ignored folders much earlier by telling the framework they were not under git control at all. That was too early, as that bug had shown, since it missed deletions. Now we are \"ignoring\" them as late as possible by telling team synchronize they were in sync.\n\n(I do suspect that this means team synchronize won\u0027t show empty folders that were added locally, but with git that\u0027s perfectly fine: such folders don\u0027t exist for git either.)",
+      "parentUuid": "c7880b39_3c170f07",
+      "range": {
+        "startLine": 55,
+        "startChar": 57,
+        "endLine": 56,
+        "endChar": 49
+      },
+      "revId": "c26fa04c9b6d74dc22e1fea422f00f4e6ba7941b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
