@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_2259a661",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseResultDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-26T14:27:06Z",
+      "side": 1,
+      "message": "Default texts defined here are OK for me.",
+      "revId": "e033083804dc1e1cec7d326a2bd86430013a71ac",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_c218e2aa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseResultDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-26T14:27:06Z",
+      "side": 1,
+      "message": "I think it would be nice if the default button label changed to \"Close\" when this button is selected. Just add \n\n  getButton(getDefaultButtonIndex()).setText(IDialogConstants.CLOSE_LABEL);\n\nto this if-statement, and the same with PROCEED_LABEL in the other three radio button listeners. (And BTW, all these listeners could be changed to SelectionAdapter and all the no-op overrides of widgetDefaultSelected could then be removed.)",
+      "revId": "e033083804dc1e1cec7d326a2bd86430013a71ac",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
