@@ -65,6 +65,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
+import org.eclipse.egit.ui.internal.repository.tree.command.LinkWithSelectionCommand;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
@@ -142,6 +143,20 @@ import org.eclipse.ui.views.properties.PropertySheetPage;
  * The "Git Repositories View"
  */
 public class RepositoriesView extends CommonNavigator implements IShowInSource, IShowInTargetList {
+
+	// /**
+	// * Mode constant for {@link #show(Repository, int)} specifying that the
+	// view
+	// * is to be opened if it doesn't exist already.
+	// */
+	// public static final int OPEN = 1 << 0;
+	//
+	// /**
+	// * Mode constant for {@link #show(Repository, int)} specifying that the
+	// * repository is to be selected even if the view does not currently follow
+	// * the active selection.
+	// */
+	// public static final int FORCE_SHOW = 1 << 1;
 
 	/** "remote" */
 	public static final String REMOTE = "remote"; //$NON-NLS-1$
@@ -377,8 +392,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		IWorkbenchWindow w = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
 		ICommandService csrv = CommonUtils.getService(w, ICommandService.class);
-		Command command = csrv
-				.getCommand("org.eclipse.egit.ui.RepositoriesLinkWithSelection"); //$NON-NLS-1$
+		Command command = csrv.getCommand(LinkWithSelectionCommand.ID);
 		reactOnSelection = (Boolean) command.getState(
 				RegistryToggleState.STATE_ID).getValue();
 
@@ -907,6 +921,69 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		return elements;
 	}
 
+	// /**
+	// * Highlight the given repository in the repositories view, it if contains
+	// * that repository, is open and set to follow the selection. Equivalent to
+	// * {@link #show(Repository, int) show(repository, 0)}.
+	// *
+	// * @param repository
+	// * to highlight
+	// */
+	// public static void show(Repository repository) {
+	// show(repository, 0);
+	// }
+	//
+	// /**
+	// * Highlight the given repository in the repositories view, it if contains
+	// * that repository.
+	// *
+	// * @param repository
+	// * to highlight
+	// * @param mode
+	// * specifies how to perform the operation, see {@link #OPEN} and
+	// * {@link #FORCE_SHOW}
+	// */
+	// public static void show(Repository repository, int mode) {
+	// IWorkbench workbench = PlatformUI.getWorkbench();
+	// if (workbench == null) {
+	// return;
+	// }
+	// IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+	// if (window == null) {
+	// return;
+	// }
+	// IWorkbenchPage page = window.getActivePage();
+	// if (page == null || !PlatformUI.isWorkbenchRunning()) {
+	// return;
+	// }
+	// if ((mode & FORCE_SHOW) == 0) {
+	// ICommandService service = CommonUtils.getService(window,
+	// ICommandService.class);
+	// if (service == null) {
+	// return;
+	// }
+	// Command command = service.getCommand(LinkWithSelectionCommand.ID);
+	// if (command == null || !((Boolean) command
+	// .getState(RegistryToggleState.STATE_ID).getValue())
+	// .booleanValue()) {
+	// return;
+	// }
+	// }
+	// try {
+	// IViewPart part = page.findView(VIEW_ID);
+	// if (part == null && (mode & OPEN) != 0) {
+	// part = page.showView(VIEW_ID);
+	// }
+	// if (part instanceof RepositoriesView) {
+	// ((RepositoriesView) part)
+	// .show(new ShowInContext(repository, null));
+	// }
+	// } catch (PartInitException e) {
+	// Activator.handleError("Cannot show git repositories view", e, true);
+	// //$NON-NLS-1$
+	// }
+	// }
+
 	/**
 	 * @param selection
 	 * @return the HistoryPageInput corresponding to the selection, or null
@@ -956,6 +1033,12 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			if (file != null) {
 				IPath path = new Path(file.getAbsolutePath());
 				showPaths(Arrays.asList(path));
+				return;
+			}
+			Repository repository = AdapterUtils.adapt(ssel.getFirstElement(),
+					Repository.class);
+			if (repository != null) {
+				show(new ShowInContext(repository, null));
 				return;
 			}
 		}
