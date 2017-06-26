@@ -85,6 +85,7 @@ import org.eclipse.egit.ui.internal.commit.CommitJob;
 import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
+import org.eclipse.egit.ui.internal.components.RepositoryMenuUtil;
 import org.eclipse.egit.ui.internal.components.ToggleableWarningLabel;
 import org.eclipse.egit.ui.internal.decorators.IProblemDecoratable;
 import org.eclipse.egit.ui.internal.decorators.ProblemLabelDecorator;
@@ -190,6 +191,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
@@ -217,6 +219,7 @@ import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.handlers.IHandlerService;
+import org.eclipse.ui.internal.forms.widgets.FormHeading;
 import org.eclipse.ui.operations.UndoRedoActionGroup;
 import org.eclipse.ui.part.IShowInSource;
 import org.eclipse.ui.part.IShowInTarget;
@@ -650,14 +653,12 @@ public class StagingView extends ViewPart
 			if (!RepositoryUtil.PREFS_DIRECTORIES_REL.equals(event.getKey())) {
 				return;
 			}
-
+			updateHeadMenu(event.getNewValue());
 			final Repository repo = currentRepository;
-			if (repo == null)
+			if (repo == null || Activator.getDefault().getRepositoryUtil()
+					.contains(repo)) {
 				return;
-
-			if (Activator.getDefault().getRepositoryUtil().contains(repo))
-				return;
-
+			}
 			reload(null);
 		}
 
@@ -679,6 +680,10 @@ public class StagingView extends ViewPart
 			}
 		}
 	};
+
+	private IMenuManager headMenuManager;
+
+	private Composite formHead;
 
 	private Action signedOffByAction;
 
@@ -793,6 +798,24 @@ public class StagingView extends ViewPart
 		toolkit.decorateFormHeading(form);
 		GridLayoutFactory.swtDefaults().applyTo(form.getBody());
 
+		formHead = form.getHead();
+		if (formHead instanceof FormHeading) {
+			headMenuManager = ((FormHeading) formHead)
+					.getMenuManager();
+			RepositoryUtil util = org.eclipse.egit.core.Activator.getDefault()
+					.getRepositoryUtil();
+			if (!util.getRepositories().isEmpty()) {
+				// This menu manager must be non-empty to have the triangle
+				// shown initially
+				headMenuManager.add(new Action() {
+					// Nothing
+				});
+			}
+			headMenuManager.setRemoveAllWhenShown(true);
+			headMenuManager.addMenuListener(manager -> RepositoryMenuUtil
+					.fillRepositories(manager, false, repo -> reactOnSelection(
+							new StructuredSelection(repo))));
+		}
 		mainSashForm = new SashForm(form.getBody(), SWT.HORIZONTAL);
 		saveSashFormWeightsOnDisposal(mainSashForm,
 				HORIZONTAL_SASH_FORM_WEIGHT);
@@ -1283,6 +1306,43 @@ public class StagingView extends ViewPart
 			// that the view is busy (e.g. reload() will trigger this job in
 			// background!).
 			service.showBusyForFamily(org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+	}
+
+	/**
+	 * Updates the visibility of the head menu indicator depending on whether we
+	 * have any configured repositories or not.
+	 *
+	 * @param newValue
+	 *            of the preference storing the configured repository names
+	 */
+	private void updateHeadMenu(Object newValue) {
+		if (headMenuManager == null) {
+			return;
+		}
+		boolean isEmpty = !(newValue instanceof String)
+				|| ((String) newValue).trim().isEmpty();
+		boolean managerEmpty = headMenuManager.isEmpty();
+		if (managerEmpty != isEmpty) {
+			IWorkbenchPartSite site = getSite();
+			Shell shell = site != null ? site.getShell() : null;
+			Display display = shell != null ? shell.getDisplay() : null;
+			if (display != null && !display.isDisposed()) {
+				display.asyncExec(() -> {
+					if (display.isDisposed() || headMenuManager == null) {
+						return;
+					}
+					if (managerEmpty) {
+						// Add a dummy entry to the manager
+						headMenuManager.add(new Action() {
+							// Nothing
+						});
+					} else {
+						headMenuManager.removeAll();
+					}
+					formHead.layout();
+				});
+			}
+		}
 	}
 
 	private boolean commitAndPushEnabled(boolean commitEnabled) {
