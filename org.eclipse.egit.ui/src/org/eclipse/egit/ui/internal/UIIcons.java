@@ -141,6 +141,9 @@ public class UIIcons {
 	/** Synchronize Wizard banner */
 	public final static ImageDescriptor WIZBAN_SYNCHRONIZE;
 
+	/** History view, show full repo history */
+	public final static ImageDescriptor FILTERNONE;
+
 	/** History view, select all version in same project */
 	public final static ImageDescriptor FILTERPROJECT;
 
@@ -380,6 +383,7 @@ public class UIIcons {
 		CHECKBOX_ENABLED_UNCHECKED = map("checkboxes/enabled_unchecked.png"); //$NON-NLS-1$
 		CHECKBOX_DISABLED_CHECKED = map("checkboxes/disabled_checked.png"); //$NON-NLS-1$
 		CHECKBOX_DISABLED_UNCHECKED = map("checkboxes/disabled_unchecked.png"); //$NON-NLS-1$
+		FILTERNONE = map("elcl16/filter_none.png"); //$NON-NLS-1$
 		FILTERRESOURCE = map("elcl16/filterresource.png"); //$NON-NLS-1$
 		FILTERPROJECT = map("elcl16/filterproject.png"); //$NON-NLS-1$
 		FILTERFOLDER = map("elcl16/filterfolder.png"); //$NON-NLS-1$
