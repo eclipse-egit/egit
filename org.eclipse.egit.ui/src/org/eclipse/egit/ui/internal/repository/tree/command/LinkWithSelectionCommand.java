@@ -22,12 +22,16 @@ import org.eclipse.ui.handlers.RegistryToggleState;
  */
 public class LinkWithSelectionCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> {
+
+	/** Command ID for the {@link LinkWithSelectionCommand}. */
+	public static final String ID = "org.eclipse.egit.ui.RepositoriesLinkWithSelection"; //$NON-NLS-1$
+
 	@Override
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		Command command = event.getCommand();
 		HandlerUtil.toggleCommandState(command);
-		@SuppressWarnings("boxing")
-		boolean test = (Boolean) command.getState(RegistryToggleState.STATE_ID).getValue();
+		boolean test = ((Boolean) command.getState(RegistryToggleState.STATE_ID)
+				.getValue()).booleanValue();
 		getView(event).setReactOnSelection(test);
 		return null;
 	}

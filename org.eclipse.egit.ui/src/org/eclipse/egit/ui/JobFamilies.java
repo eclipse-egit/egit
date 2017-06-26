@@ -216,4 +216,10 @@ public class JobFamilies {
 	 * Stash git job
 	 */
 	public static final Object STASH = new JobFamily(UIIcons.STASH);
+
+	/**
+	 * Staging view reload
+	 */
+	public static final Object STAGING_VIEW_RELOAD = new JobFamily();
+
 }
