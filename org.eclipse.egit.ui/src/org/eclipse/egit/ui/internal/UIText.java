@@ -71,6 +71,9 @@ public class UIText extends NLS {
 	public static String Activator_refreshFailed;
 
 	/** */
+	public static String Activator_refreshProblem;
+
+	/** */
 	public static String Activator_refreshingProjects;
 
 	/** */
