@@ -8,5 +8,4 @@ location "http://download.eclipse.org/mylyn/releases/latest/" {
 	org.eclipse.mylyn_feature.feature.group lazy
 	org.eclipse.mylyn.context_feature.feature.group lazy
 	org.eclipse.mylyn.sdk_feature.feature.group lazy
-	org.eclipse.mylyn.wikitext_feature.feature.group lazy
 }
