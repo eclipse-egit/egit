@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_92d1bec6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-30T09:57:59Z",
+      "side": 1,
+      "message": "That description appears to be outdated. Mylyn wikitext 3.0.9 is available on maven central: https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.eclipse.mylyn.docs%22 So we should be able to use that?\n\nNice examples of how to do it are at https://github.com/greensopinion/wikitext-examples .",
+      "range": {
+        "startLine": 18,
+        "startChar": 60,
+        "endLine": 18,
+        "endChar": 63
+      },
+      "revId": "cdeb913b174a9876befed1e5ab39c33a03b498b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
