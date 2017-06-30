@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_58da1515",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-06-30T20:23:21Z",
+      "side": 1,
+      "message": "This fixes the issue with the number being auto-supplied continually when the user edited the text while the content proposals were active. The first call to getRefsForContentAssist() occurs before the popup is open, but once open, the content assist adapter recalculates the proposals whenever the text changes, and in that case we must not auto-supply a possibly missing change number.",
+      "range": {
+        "startLine": 827,
+        "startChar": 6,
+        "endLine": 828,
+        "endChar": 6
+      },
+      "revId": "f0c7ae58e84a8fb08928c92885dc9d82cf38d16c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
