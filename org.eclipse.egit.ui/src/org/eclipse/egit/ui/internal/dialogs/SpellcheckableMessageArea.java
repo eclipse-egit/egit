@@ -985,31 +985,41 @@ public class SpellcheckableMessageArea extends Composite {
 		IntList wrapOffsets = new IntList();
 		int wordStart = 0;
 		int lineStart = 0;
-		boolean lastWasSpace = true;
-		boolean onlySpaces = true;
-		for (int i = 0; i < line.length(); i++) {
+		int length = line.length();
+		int nofPreviousWordChars = 0;
+		int nofCurrentWordChars = 0;
+		for (int i = 0; i < length; i++) {
 			char ch = line.charAt(i);
 			if (ch == ' ') {
-				lastWasSpace = true;
+				nofPreviousWordChars += nofCurrentWordChars;
+				nofCurrentWordChars = 0;
 			} else if (ch == '\n') {
 				lineStart = i + 1;
 				wordStart = i + 1;
-				lastWasSpace = true;
-				onlySpaces = true;
+				nofPreviousWordChars = 0;
+				nofCurrentWordChars = 0;
 			} else { // a word character
-				if (lastWasSpace) {
-					lastWasSpace = false;
-					if (!onlySpaces) { // don't break line with <spaces><veryLongWord>
+				if (nofCurrentWordChars == 0) {
+					// Break only if we had a certain number of previous
+					// non-space characters. If we had less, break only if we
+					// had at least one non-space character and the current line
+					// offset is at least half the maximum width. This prevents
+					// breaking if we have <blanks><very_long_word>, and also
+					// for things like "[1] <very_long_word>" or mark-up lists
+					// such as " * <very_long_word>".
+					if (nofPreviousWordChars > maxLineLength / 10
+							|| nofPreviousWordChars > 0
+									&& (i - lineStart) > maxLineLength / 2) {
 						wordStart = i;
 					}
-				} else {
-					onlySpaces = false;
 				}
+				nofCurrentWordChars++;
 				if (i >= lineStart + maxLineLength) {
 					if (wordStart != lineStart) { // don't break before a single long word
 						wrapOffsets.add(wordStart);
 						lineStart = wordStart;
-						onlySpaces = true;
+						nofPreviousWordChars = 0;
+						nofCurrentWordChars = 0;
 					}
 				}
 			}
