@@ -2405,6 +2405,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			if (UIUtils.isUsable(diffViewer)) {
 				IDocument document = new Document();
 				diffViewer.setDocument(document);
+				resizeCommentAndDiffScrolledComposite();
 			}
 			return;
 		}
@@ -2498,6 +2499,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 		Point size = commentAndDiffComposite
 				.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		commentAndDiffComposite.layout();
 		commentAndDiffScrolledComposite.setMinSize(size);
 		resizing = false;
 
