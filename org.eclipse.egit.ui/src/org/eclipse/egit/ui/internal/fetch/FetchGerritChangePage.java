@@ -8,7 +8,7 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Marc Khouzam (Ericsson)  - Add an option not to checkout the new branch
- *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 493935, 495777
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 493935, 495777, 518492
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.fetch;
 
@@ -16,9 +16,11 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -30,10 +32,13 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.core.resources.WorkspaceJob;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRunnable;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
@@ -126,6 +131,9 @@ public class FetchGerritChangePage extends WizardPage {
 	private static final Pattern GERRIT_CHANGE_REF_PATTERN = Pattern
 			.compile("refs/changes/(\\d\\d)/([1-9][0-9]*)(?:/([1-9][0-9]*)?)?"); //$NON-NLS-1$
 
+	private static final SimpleDateFormat SIMPLE_TIMESTAMP = new SimpleDateFormat(
+			"yyyyMMddHHmmss"); //$NON-NLS-1$
+
 	private enum CheckoutMode {
 		CREATE_BRANCH, CREATE_TAG, CHECKOUT_FETCH_HEAD, NOCHECKOUT
 	}
@@ -180,7 +188,7 @@ public class FetchGerritChangePage extends WizardPage {
 
 	private boolean fetching;
 
-	private boolean doAutoFill;
+	private boolean doAutoFill = true;
 
 	/**
 	 * @param repository
@@ -430,13 +438,17 @@ public class FetchGerritChangePage extends WizardPage {
 		refText.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
-				Change change = Change.fromRef(refText.getText());
+				Change change = determineChangeFromString(refText.getText());
 				String suggestion = ""; //$NON-NLS-1$
 				if (change != null) {
+					Object ps = change.getPatchSetNumber();
+					if (ps == null) {
+						ps = SIMPLE_TIMESTAMP.format(new Date());
+					}
 					suggestion = NLS.bind(
 							UIText.FetchGerritChangePage_SuggestedRefNamePattern,
 							change.getChangeNumber(),
-							change.getPatchSetNumber());
+							ps);
 				}
 				if (!branchTextEdited) {
 					branchText.setText(suggestion);
@@ -704,15 +716,32 @@ public class FetchGerritChangePage extends WizardPage {
 			if (refText.getText().length() > 0) {
 				Change change = Change.fromRef(refText.getText());
 				if (change == null) {
-					setErrorMessage(UIText.FetchGerritChangePage_MissingChangeMessage);
-					return;
+					change = determineChangeFromString(refText.getText());
+					if (change == null) {
+						setErrorMessage(
+								UIText.FetchGerritChangePage_MissingChangeMessage);
+						return;
+					}
 				}
 				ChangeList list = changeRefs.get(uriCombo.getText());
-				if (list != null && list.isDone()
-						&& !list.getResult().contains(change)) {
-					setErrorMessage(
-							UIText.FetchGerritChangePage_UnknownChangeRefMessage);
-					return;
+				if (list != null && list.isDone()) {
+					if (change.getPatchSetNumber() != null) {
+						if (!list.getResult().contains(change)) {
+							setErrorMessage(
+									UIText.FetchGerritChangePage_UnknownChangeRefMessage);
+							return;
+						}
+					} else {
+						Change fromGerrit = findHighestPatchSet(
+								list.getResult(),
+								change.getChangeNumber().intValue());
+						if (fromGerrit == null) {
+							setErrorMessage(NLS.bind(
+									UIText.FetchGerritChangePage_NoSuchChangeMessage,
+									change.getChangeNumber()));
+							return;
+						}
+					}
 				}
 			} else {
 				setErrorMessage(UIText.FetchGerritChangePage_MissingChangeMessage);
@@ -747,7 +776,7 @@ public class FetchGerritChangePage extends WizardPage {
 					return;
 				}
 				// If we get here, the ChangeList future is done.
-				if (result == null || result.isEmpty()) {
+				if (result == null || result.isEmpty() || fetching) {
 					// Don't bother if we didn't get any results
 					return;
 				}
@@ -789,6 +818,7 @@ public class FetchGerritChangePage extends WizardPage {
 							} else {
 								// Dialog was blocked
 								fillInPatchSet(result, null);
+								doAutoFill = false;
 							}
 							contentProposer.openProposalPopup();
 						} catch (SWTException e) {
@@ -807,7 +837,11 @@ public class FetchGerritChangePage extends WizardPage {
 			if (container instanceof NonBlockingWizardDialog) {
 				NonBlockingWizardDialog dialog = (NonBlockingWizardDialog) container;
 				dialog.run(operation,
-						() -> list.cancel(ChangeList.CancelMode.ABANDON));
+						() -> {
+							if (!fetching) {
+								list.cancel(ChangeList.CancelMode.ABANDON);
+							}
+						});
 			} else {
 				container.run(true, true, operation);
 			}
@@ -831,30 +865,46 @@ public class FetchGerritChangePage extends WizardPage {
 		}
 		Change change = determineChangeFromString(currentText);
 		if (change != null && change.getPatchSetNumber() == null) {
-			int changeNumber = change.getChangeNumber().intValue();
-			// We know that the result is sorted by change and
-			// patch set number descending
-			for (Change fromGerrit : changes) {
-				int num = fromGerrit.getChangeNumber().intValue();
-				if (num < changeNumber) {
-					return; // Doesn't exist
-				} else if (changeNumber == num) {
-					// Must be the one with the highest patch
-					// set number.
-					String fullRef = fromGerrit.getRefName();
-					refText.setText(fullRef);
-					refText.setSelection(fullRef.length());
-					return;
-				}
+			Change fromGerrit = findHighestPatchSet(changes,
+					change.getChangeNumber().intValue());
+			if (fromGerrit != null) {
+				String fullRef = fromGerrit.getRefName();
+				refText.setText(fullRef);
+				refText.setSelection(fullRef.length());
 			}
 		}
 	}
 
+	private Change findHighestPatchSet(Collection<Change> changes,
+			int changeNumber) {
+		// We know that the result is sorted by change and
+		// patch set number descending
+		for (Change fromGerrit : changes) {
+			int num = fromGerrit.getChangeNumber().intValue();
+			if (num < changeNumber) {
+				return null; // Doesn't exist
+			} else if (changeNumber == num) {
+				// Must be the one with the highest patch
+				// set number.
+				return fromGerrit;
+			}
+		}
+		return null;
+	}
+
 	boolean doFetch() {
 		fetching = true;
-		final RefSpec spec = new RefSpec().setSource(refText.getText())
-				.setDestination(Constants.FETCH_HEAD);
+		final Change change = determineChangeFromString(refText.getText());
 		final String uri = uriCombo.getText();
+		// If we have an incomplete change (missing patch set number), remove
+		// the change list future from the global map so that it won't be
+		// interrupted when the dialog closes.
+		final ChangeList changeList = change.getPatchSetNumber() == null
+				? changeRefs.remove(uri) : null;
+		if (changeList != null) {
+			// Make sure a pending get() from the content assist gets aborted
+			changeList.cancel(ChangeList.CancelMode.ABANDON);
+		}
 		final CheckoutMode mode = getCheckoutMode();
 		final boolean doCheckoutNewBranch = (mode == CheckoutMode.CREATE_BRANCH)
 				&& branchCheckoutButton.getSelection();
@@ -862,32 +912,65 @@ public class FetchGerritChangePage extends WizardPage {
 		final String textForTag = tagText.getText();
 		final String textForBranch = branchText.getText();
 
-		Job job = new WorkspaceJob(
+		Job job = new Job(
 				UIText.FetchGerritChangePage_GetChangeTaskName) {
 
 			@Override
-			public IStatus runInWorkspace(IProgressMonitor monitor) {
+			public IStatus run(IProgressMonitor monitor) {
 				try {
+					int steps = getTotalWork(mode);
 					SubMonitor progress = SubMonitor.convert(monitor,
 							UIText.FetchGerritChangePage_GetChangeTaskName,
-							getTotalWork(mode));
+							steps + 1);
+					Change finalChange = completeChange(change,
+							progress.newChild(1));
+					if (finalChange == null) {
+						// Returning an error status would log the message
+						Activator.showError(NLS.bind(
+								UIText.FetchGerritChangePage_NoSuchChangeMessage,
+								change.getChangeNumber()), null);
+						return Status.CANCEL_STATUS;
+					}
+					final RefSpec spec = new RefSpec()
+							.setSource(finalChange.getRefName())
+							.setDestination(Constants.FETCH_HEAD);
+					if (progress.isCanceled()) {
+						return Status.CANCEL_STATUS;
+					}
 					RevCommit commit = fetchChange(uri, spec,
 							progress.newChild(1));
-					switch (mode) {
-					case CHECKOUT_FETCH_HEAD:
-						checkout(commit.name(), progress.newChild(1));
-						break;
-					case CREATE_TAG:
-						createTag(spec, textForTag, commit,
-								progress.newChild(1));
-						checkout(commit.name(), progress.newChild(1));
-						break;
-					case CREATE_BRANCH:
-						createBranch(textForBranch, doCheckoutNewBranch, commit,
-								progress.newChild(1));
-						break;
-					default:
-						break;
+					if (mode != CheckoutMode.NOCHECKOUT) {
+						IWorkspace workspace = ResourcesPlugin.getWorkspace();
+						IWorkspaceRunnable operation = new IWorkspaceRunnable() {
+
+							@Override
+							public void run(IProgressMonitor innerMonitor)
+									throws CoreException {
+								SubMonitor innerProgress = SubMonitor
+										.convert(innerMonitor, steps);
+								switch (mode) {
+								case CHECKOUT_FETCH_HEAD:
+									checkout(commit.name(),
+											innerProgress.newChild(1));
+									break;
+								case CREATE_TAG:
+									createTag(spec, textForTag, commit,
+											innerProgress.newChild(1));
+									checkout(commit.name(),
+											innerProgress.newChild(1));
+									break;
+								case CREATE_BRANCH:
+									createBranch(textForBranch,
+											doCheckoutNewBranch, commit,
+											innerProgress.newChild(1));
+									break;
+								default:
+									break;
+								}
+							}
+						};
+						workspace.run(operation, null, IWorkspace.AVOID_UPDATE,
+								progress.newChild(steps));
 					}
 					if (doActivateAdditionalRefs) {
 						activateAdditionalRefs();
@@ -899,6 +982,8 @@ public class FetchGerritChangePage extends WizardPage {
 						repository.fireEvent(new FetchHeadChangedEvent());
 					}
 					storeLastUsedUri(uri);
+				} catch (OperationCanceledException oe) {
+					return Status.CANCEL_STATUS;
 				} catch (CoreException ce) {
 					return ce.getStatus();
 				} catch (Exception e) {
@@ -908,6 +993,37 @@ public class FetchGerritChangePage extends WizardPage {
 					monitor.done();
 				}
 				return Status.OK_STATUS;
+			}
+
+			@Override
+			protected void canceling() {
+				super.canceling();
+				if (changeList != null) {
+					changeList.cancel(ChangeList.CancelMode.INTERRUPT);
+				}
+			}
+
+			private Change completeChange(Change originalChange,
+					IProgressMonitor monitor)
+					throws OperationCanceledException {
+				if (changeList != null) {
+					monitor.subTask(NLS.bind(
+							UIText.FetchGerritChangePage_FetchingRemoteRefsMessage,
+							uri));
+					Collection<Change> changes;
+					try {
+						changes = changeList.get();
+					} catch (InvocationTargetException
+							| InterruptedException e) {
+						throw new OperationCanceledException();
+					}
+					if (monitor.isCanceled()) {
+						throw new OperationCanceledException();
+					}
+					return findHighestPatchSet(changes,
+							originalChange.getChangeNumber().intValue());
+				}
+				return originalChange;
 			}
 
 			private int getTotalWork(final CheckoutMode m) {
