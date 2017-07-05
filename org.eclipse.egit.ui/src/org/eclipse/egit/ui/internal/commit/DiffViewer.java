@@ -51,10 +51,7 @@ import org.eclipse.egit.ui.internal.dialogs.HyperlinkSourceViewer;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.egit.ui.internal.revision.GitCompareFileRevisionEditorInput;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.preference.PreferenceConverter;
-import org.eclipse.jface.resource.ColorDescriptor;
 import org.eclipse.jface.resource.ColorRegistry;
-import org.eclipse.jface.resource.DeviceResourceManager;
 import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.text.BadLocationException;
@@ -90,9 +87,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
@@ -102,8 +96,6 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.editors.text.EditorsUI;
-import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.themes.IThemeManager;
 
 /**
@@ -112,9 +104,6 @@ import org.eclipse.ui.themes.IThemeManager;
  * {@link DiffDocument} to get proper coloring and hyperlink support.
  */
 public class DiffViewer extends HyperlinkSourceViewer {
-
-	private final DeviceResourceManager colors = new DeviceResourceManager(
-			PlatformUI.getWorkbench().getDisplay());
 
 	private final Map<String, IToken> tokens = new HashMap<>();
 
@@ -138,14 +127,6 @@ public class DiffViewer extends HyperlinkSourceViewer {
 				refreshDiffStyles();
 				invalidateTextPresentation();
 			}
-		}
-	};
-
-	private IPropertyChangeListener editorPrefListener = new IPropertyChangeListener() {
-
-		@Override
-		public void propertyChange(PropertyChangeEvent event) {
-			styleViewer();
 		}
 	};
 
@@ -206,7 +187,6 @@ public class DiffViewer extends HyperlinkSourceViewer {
 			}
 			return reconciler;
 		}
-
 	}
 
 	/**
@@ -245,32 +225,22 @@ public class DiffViewer extends HyperlinkSourceViewer {
 		setEditable(false);
 		setDocument(new Document());
 		initListeners();
-		getControl().addDisposeListener(new DisposeListener() {
-
-			@Override
-			public void widgetDisposed(DisposeEvent e) {
-				EditorsUI.getPreferenceStore()
-						.removePropertyChangeListener(editorPrefListener);
-				PlatformUI.getWorkbench().getThemeManager()
-						.removePropertyChangeListener(themeListener);
-				colors.dispose();
-			}
-		});
+		getTextWidget()
+				.setFont(JFaceResources.getFont(JFaceResources.TEXT_FONT));
 		refreshDiffStyles();
-		styleViewer();
+	}
+
+	@Override
+	protected void handleDispose() {
+		PlatformUI.getWorkbench().getThemeManager()
+				.removePropertyChangeListener(themeListener);
+		super.handleDispose();
 	}
 
 	@Override
 	public void configure(SourceViewerConfiguration config) {
 		Assert.isTrue(config instanceof Configuration);
 		super.configure(config);
-	}
-
-	@Override
-	public void refresh() {
-		// Don't lose the annotation model, if there is one!
-		// (The super implementation ignores it.)
-		setDocument(getDocument(), getAnnotationModel());
 	}
 
 	@Override
@@ -337,8 +307,6 @@ public class DiffViewer extends HyperlinkSourceViewer {
 	private void initListeners() {
 		PlatformUI.getWorkbench().getThemeManager()
 				.addPropertyChangeListener(this.themeListener);
-		EditorsUI.getPreferenceStore().addPropertyChangeListener(
-				this.editorPrefListener);
 		getTextWidget().addLineBackgroundListener((event) -> {
 			IDocument document = getDocument();
 			if (document instanceof DiffDocument) {
@@ -361,43 +329,13 @@ public class DiffViewer extends HyperlinkSourceViewer {
 		});
 	}
 
-	private ColorDescriptor createEditorColorDescriptor(String key) {
-		return ColorDescriptor.createFrom(PreferenceConverter.getColor(
-				EditorsUI.getPreferenceStore(), key));
-	}
-
-	private Color getEditorColor(String key) {
-		return (Color) colors.get(createEditorColorDescriptor(key));
-	}
-
-	private void styleViewer() {
-		IPreferenceStore store = EditorsUI.getPreferenceStore();
-		Color foreground = null;
-		if (!store
-				.getBoolean(AbstractTextEditor.PREFERENCE_COLOR_FOREGROUND_SYSTEM_DEFAULT))
-			foreground = getEditorColor(AbstractTextEditor.PREFERENCE_COLOR_FOREGROUND);
-
-		Color background = null;
-		if (!store
-				.getBoolean(AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND_SYSTEM_DEFAULT))
-			background = getEditorColor(AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND);
-
-		Color selectionForeground = null;
-		if (!store
-				.getBoolean(AbstractTextEditor.PREFERENCE_COLOR_SELECTION_FOREGROUND_SYSTEM_DEFAULT))
-			selectionForeground = getEditorColor(AbstractTextEditor.PREFERENCE_COLOR_SELECTION_FOREGROUND);
-
-		Color selectionBackground = null;
-		if (!store
-				.getBoolean(AbstractTextEditor.PREFERENCE_COLOR_SELECTION_BACKGROUND_SYSTEM_DEFAULT))
-			selectionBackground = getEditorColor(AbstractTextEditor.PREFERENCE_COLOR_SELECTION_BACKGROUND);
-
-		StyledText text = getTextWidget();
-		text.setForeground(foreground);
-		text.setBackground(background);
-		text.setSelectionForeground(selectionForeground);
-		text.setSelectionBackground(selectionBackground);
-		text.setFont(JFaceResources.getFont(JFaceResources.TEXT_FONT));
+	@Override
+	protected void handleJFacePreferencesChange(PropertyChangeEvent event) {
+		if (JFaceResources.TEXT_FONT.equals(event.getProperty())) {
+			setFont(JFaceResources.getFont(JFaceResources.TEXT_FONT));
+		} else {
+			super.handleJFacePreferencesChange(event);
+		}
 	}
 
 	private static class SingleTokenScanner implements ITokenScanner {

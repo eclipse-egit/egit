@@ -36,7 +36,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.preference.JFacePreferences;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.text.DefaultTextDoubleClickStrategy;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
@@ -64,11 +64,14 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchPartSite;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
+import org.eclipse.ui.themes.IThemeManager;
 
 class CommitMessageViewer extends HyperlinkSourceViewer {
 
@@ -82,8 +85,8 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 	// listener to detect changes in the wrap and fill preferences
 	private final IPropertyChangeListener listener;
 
-	// Listener to react on syntax coloring preferences changes
-	private final IPropertyChangeListener syntaxColoringListener;
+	// Detects theme font changes
+	private final IPropertyChangeListener themeListener;
 
 	// the current repository
 	private Repository db;
@@ -122,22 +125,17 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 		activatePlugins();
 
 		// react on changes in the fill and wrap preferences
-		listener = new IPropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent event) {
-				String property = event.getProperty();
-				if (UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL
-						.equals(property)) {
-					setFill(((Boolean) event.getNewValue()).booleanValue());
-				} else
-					if (UIPreferences.HISTORY_SHOW_TAG_SEQUENCE.equals(property)
-							|| UIPreferences.HISTORY_SHOW_BRANCH_SEQUENCE
-									.equals(property)
-							|| UIPreferences.DATE_FORMAT.equals(property)
-							|| UIPreferences.DATE_FORMAT_CHOICE
-									.equals(property)) {
-					format();
-				}
+		listener = event -> {
+			String property = event.getProperty();
+			if (UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL
+					.equals(property)) {
+				setFill(((Boolean) event.getNewValue()).booleanValue());
+			} else if (UIPreferences.HISTORY_SHOW_TAG_SEQUENCE.equals(property)
+					|| UIPreferences.HISTORY_SHOW_BRANCH_SEQUENCE
+							.equals(property)
+					|| UIPreferences.DATE_FORMAT.equals(property)
+					|| UIPreferences.DATE_FORMAT_CHOICE.equals(property)) {
+				format();
 			}
 		};
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
@@ -145,27 +143,17 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 		fill = store
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL);
 
-		// React on changes in the JFace color preferences by updating the view
-		syntaxColoringListener = new IPropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent event) {
-				if (JFacePreferences.HYPERLINK_COLOR
-						.equals(event.getProperty())) {
-					if (!t.isDisposed()) {
-						t.getDisplay().asyncExec(new Runnable() {
-							@Override
-							public void run() {
-								if (!t.isDisposed()) {
-									refresh();
-								}
-							}
-						});
-					}
-				}
+		themeListener = event -> {
+			String property = event.getProperty();
+			if (IThemeManager.CHANGE_CURRENT_THEME.equals(property)
+					|| UIPreferences.THEME_CommitMessageFont.equals(property)) {
+				Font themeFont = UIUtils
+						.getFont(UIPreferences.THEME_CommitMessageFont);
+				async(() -> setFont(themeFont));
 			}
 		};
-		JFacePreferences.getPreferenceStore()
-				.addPropertyChangeListener(syntaxColoringListener);
+		PlatformUI.getWorkbench().getThemeManager()
+				.addPropertyChangeListener(themeListener);
 
 		// global action handlers for select all and copy
 		final IAction selectAll = ActionUtils.createGlobalAction(
@@ -245,6 +233,21 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 		});
 	}
 
+
+	@Override
+	protected void handleJFacePreferencesChange(PropertyChangeEvent event) {
+		if (JFaceResources.TEXT_FONT.equals(event.getProperty())) {
+			Font themeFont = UIUtils
+					.getFont(UIPreferences.THEME_CommitMessageFont);
+			Font jFaceFont = JFaceResources.getTextFont();
+			if (themeFont.equals(jFaceFont)) {
+				setFont(jFaceFont);
+			}
+		} else {
+			super.handleJFacePreferencesChange(event);
+		}
+	}
+
 	@Override
 	protected void handleDispose() {
 		if (formatJob != null) {
@@ -253,10 +256,11 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 		}
 		Activator.getDefault().getPreferenceStore()
 				.removePropertyChangeListener(listener);
-		JFacePreferences.getPreferenceStore()
-				.removePropertyChangeListener(syntaxColoringListener);
-		if (refsChangedListener != null)
+		PlatformUI.getWorkbench().getThemeManager()
+				.removePropertyChangeListener(themeListener);
+		if (refsChangedListener != null) {
 			refsChangedListener.remove();
+		}
 		refsChangedListener = null;
 		showBranchSequencePrefAction.dispose();
 		showTagSequencePrefAction.dispose();
