@@ -6,8 +6,4 @@ Bundle-Version: 4.9.0.qualifier
 Bundle-Vendor: %Bundle-Vendor
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
-Require-Bundle: org.eclipse.mylyn.wikitext.core;bundle-version="[2.9.0,3.0.0)";resolution:=optional,
- org.eclipse.mylyn.wikitext.core.ant;bundle-version="[2.9.0,3.0.0)";resolution:=optional,
- org.eclipse.mylyn.wikitext.mediawiki.core.ant;bundle-version="[2.9.0,3.0.0)";resolution:=optional,
- org.eclipse.mylyn.wikitext.mediawiki.core;bundle-version="[2.9.0,3.0.0)";resolution:=optional,
- org.eclipse.ui.cheatsheets;bundle-version="[3.3.0,4.0.0)"
+Require-Bundle: org.eclipse.ui.cheatsheets;bundle-version="[3.3.0,4.0.0)"

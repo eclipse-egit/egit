@@ -177,7 +177,7 @@
 +SVN is great
 </pre>
 		<p>Each time, the value of the changeset includes a pointer to what comes before, so the hash is continually changing.</p>
-		<p>''
+		<p>
 			<b>Note</b>: Rather than using <code>md5</code>, as shown here, most DVCS (including Git) use an <code>sha1</code> hash instead. Also, the exact way that the prior elements in the tree are stored, and their relationships, isn't accurately portrayed above; however, it gives sufficiently well the idea of how they are organised.''
 		</p>
 		<dl>
@@ -288,31 +288,31 @@ git push github
 		<h2 id="Initialising.2C_committing_and_branching">Initialising, committing and branching</h2>
 		<p>To create a new Git repository, the <code>git init</code> command is used. This creates an empty repository in the current directory. They can, but often don't, end with <code>.git</code> – typically it's only repositories pushed to remote servers that use the <code>.git</code> extension. As noted above, a Git repository should ideally hold only one or a few highly related/coupled projects.</p>
 		<dl>
-			<dd>☞ '
-				<b>git init' creates a fresh repository in the current directory</b>
+			<dd>☞ 
+				<b>'git init' creates a fresh repository in the current directory</b>
 			</dd>
 		</dl>
 		<p>Git allows you to commit files, much like any other VCS. Each commit may be a single file, or many files; and a message goes along with it. Unlike other VCS, Git has a separate concept of an 
 			<i>index</i>, which is a set of files that would be committed. You can think of it as an active changeset; as you're working on multiple files, you want only some changes to be committed as a unit. These files get <code>git add</code>ed to the index first, then <code>git commit</code>ted subsequently. (If you don't like this behaviour, there's a <code>git commit -a</code> option, which performs as CVS or SVN would.)
 		</p>
 		<dl>
-			<dd>☞ '
-				<b>git add' is used to add files and track changes to files</b>
+			<dd>☞ 
+				<b>'git add' is used to add files and track changes to files</b>
 			</dd>
-			<dd>☞ '
-				<b>git commit' is used to commit tracked files</b>
+			<dd>☞ 
+				<b>'git commit' is used to commit tracked files</b>
 			</dd>
 		</dl>
 		<p>To create branches, you can use <code>git branch</code> (which creates, but does not switch to, the new branch) and <code>git checkout</code> (which switches to the new branch). A shorthand for new branches is <code>git checkout -b</code>, which creates-and-switches to a branch. At any point, <code>git branch</code> shows you a list of branches and marks the current one with a * next to the name.</p>
 		<dl>
-			<dd>☞ '
-				<b>git branch' is used to create and list branches</b>
+			<dd>☞ 
+				<b>'git branch' is used to create and list branches</b>
 			</dd>
-			<dd>☞ '
-				<b>git checkout' is used to switch branches</b>
+			<dd>☞ 
+				<b>'git checkout' is used to switch branches</b>
 			</dd>
-			<dd>☞ '
-				<b>git checkout -b' is used to create and then switch branches</b>
+			<dd>☞ 
+				<b>'git checkout -b' is used to create and then switch branches</b>
 			</dd>
 		</dl>
 		<h2 id="Worked_example">Worked example</h2>

@@ -36,7 +36,6 @@
       <unit id="org.eclipse.mylyn_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.context_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.sdk_feature.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.mylyn.wikitext_feature.feature.group" version="0.0.0"/>
       <repository location="http://download.eclipse.org/mylyn/releases/latest/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
@@ -145,7 +144,6 @@
       <unit id="org.eclipse.mylyn_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.context_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.sdk_feature.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.mylyn.wikitext_feature.feature.group" version="0.0.0"/>
       <repository location="http://download.eclipse.org/releases/mars/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">

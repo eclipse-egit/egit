@@ -16,12 +16,7 @@
 		Generate Eclipse help content for the EGit user guide
 	</description>
 
-	<path id="wikitext.tasks.classpath">
-		<pathelement path="${compile_classpath}"/>
-	</path>
-        <echo message="compile classpath: ${compile_classpath}"/>
-	<taskdef classpathref="wikitext.tasks.classpath" resource="org/eclipse/mylyn/wikitext/mediawiki/core/ant/tasks.properties"/>
-	<taskdef classpathref="wikitext.tasks.classpath" resource="org/eclipse/mylyn/wikitext/core/ant/tasks.properties"/>
+	<taskdef resource="org/eclipse/mylyn/wikitext/mediawiki/ant/tasks.properties"/>
 
 	<property name="egit.help.doc.url.base" value="http://wiki.eclipse.org" />
 
