@@ -67,6 +67,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -210,7 +211,12 @@ public class DiffEditorPage extends TextEditor
 	protected ISourceViewer createSourceViewer(Composite parent,
 			IVerticalRuler ruler, int styles) {
 		DiffViewer viewer = new DiffViewer(parent, ruler, getOverviewRuler(),
-				isOverviewRulerVisible(), styles);
+				isOverviewRulerVisible(), styles) {
+			@Override
+			protected void setFont(Font font) {
+				// Don't do anything; AbstractTextEditor handles this.
+			}
+		};
 		getSourceViewerDecorationSupport(viewer);
 		ProjectionSupport projector = new ProjectionSupport(viewer,
 				getAnnotationAccess(), getSharedColors());

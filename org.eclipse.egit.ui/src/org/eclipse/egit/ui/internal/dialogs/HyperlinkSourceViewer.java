@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -15,6 +16,8 @@ import java.util.StringTokenizer;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.JFacePreferences;
+import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
@@ -24,14 +27,22 @@ import org.eclipse.jface.text.hyperlink.IHyperlinkDetectorExtension2;
 import org.eclipse.jface.text.source.IOverviewRuler;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.IVerticalRuler;
+import org.eclipse.jface.text.source.IVerticalRulerExtension;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
@@ -41,7 +52,7 @@ import org.eclipse.ui.texteditor.spelling.SpellingService;
 
 /**
  * A {@link ProjectionViewer} that automatically reacts to changes in the
- * hyperlinking and spellchecking preferences.
+ * hyperlinking, spellchecking, and color preferences.
  */
 public class HyperlinkSourceViewer extends ProjectionViewer {
 	// The default SourceViewer doesn't do this and instead AbstractTextEditor
@@ -51,6 +62,8 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 	// Note: although ProjectionViewer is marked as noextend, there are already
 	// a number of subclasses.
 
+	private final Map<String, Color> customColors = new HashMap<>();
+
 	private Configuration configuration;
 
 	private Set<String> preferenceKeysForEnablement;
@@ -59,7 +72,9 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 
 	private IPropertyChangeListener hyperlinkChangeListener;
 
-	private IPropertyChangeListener spellCheckingListener;
+	private IPropertyChangeListener editorPropertyChangeListener;
+
+	private IPropertyChangeListener jFacePropertyChangeListener;
 
 	/**
 	 * Constructs a new source viewer. The vertical ruler is initially visible.
@@ -101,6 +116,15 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 			int styles) {
 		super(parent, verticalRuler, overviewRuler, showAnnotationsOverview,
 				styles);
+		setColors();
+		editorPropertyChangeListener = event -> handleEditorPreferencesChange(
+				event);
+		EditorsUI.getPreferenceStore()
+				.addPropertyChangeListener(editorPropertyChangeListener);
+		jFacePropertyChangeListener = event -> handleJFacePreferencesChange(
+				event);
+		JFacePreferences.getPreferenceStore()
+				.addPropertyChangeListener(jFacePropertyChangeListener);
 	}
 
 	@Override
@@ -110,26 +134,13 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 			configuration = (Configuration) config;
 			configurePreferenceKeys();
 			// Install a listener
-			hyperlinkChangeListener = new IPropertyChangeListener() {
-				@Override
-				public void propertyChange(PropertyChangeEvent event) {
-					String property = event.getProperty();
-					if (preferenceKeysForEnablement.contains(property)) {
-						resetHyperlinkDetectors();
-						final Control control = getControl();
-						if (control != null && !control.isDisposed()) {
-							control.getDisplay().asyncExec(new Runnable() {
-								@Override
-								public void run() {
-									if (!control.isDisposed()) {
-										refresh();
-									}
-								}
-							});
-						}
-					} else if (preferenceKeysForActivation.contains(property)) {
-						resetHyperlinkDetectors();
-					}
+			hyperlinkChangeListener = event -> {
+				String property = event.getProperty();
+				if (preferenceKeysForEnablement.contains(property)) {
+					resetHyperlinkDetectors();
+					async(() -> refresh());
+				} else if (preferenceKeysForActivation.contains(property)) {
+					resetHyperlinkDetectors();
 				}
 			};
 			EditorsUI.getPreferenceStore()
@@ -138,24 +149,142 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 			configuration = null;
 			hyperlinkChangeListener = null;
 		}
-		spellCheckingListener = event -> {
-			if (SpellingService.PREFERENCE_SPELLING_ENABLED
-					.equals(event.getProperty())) {
-				boolean isEnabled = EditorsUI.getPreferenceStore().getBoolean(
-						SpellingService.PREFERENCE_SPELLING_ENABLED);
-				updateSpellChecking(isEnabled);
-			}
-		};
-		EditorsUI.getPreferenceStore()
-				.addPropertyChangeListener(spellCheckingListener);
-		this.getTextWidget().addDisposeListener(event -> {
-			if (hyperlinkChangeListener != null) {
-				EditorsUI.getPreferenceStore()
-						.removePropertyChangeListener(hyperlinkChangeListener);
-			}
+	}
+
+	@Override
+	protected void handleDispose() {
+		if (hyperlinkChangeListener != null) {
 			EditorsUI.getPreferenceStore()
-					.removePropertyChangeListener(spellCheckingListener);
-		});
+					.removePropertyChangeListener(hyperlinkChangeListener);
+			hyperlinkChangeListener = null;
+		}
+		if (editorPropertyChangeListener != null) {
+			EditorsUI.getPreferenceStore()
+					.removePropertyChangeListener(editorPropertyChangeListener);
+			editorPropertyChangeListener = null;
+		}
+		if (jFacePropertyChangeListener != null) {
+			JFacePreferences.getPreferenceStore()
+					.removePropertyChangeListener(jFacePropertyChangeListener);
+			jFacePropertyChangeListener = null;
+		}
+		for (Color color : customColors.values()) {
+			if (color != null) {
+				color.dispose();
+			}
+		}
+		customColors.clear();
+		super.handleDispose();
+	}
+
+	@Override
+	public void refresh() {
+		// Don't lose the annotation model, if there is one!
+		// (The super implementation ignores it.)
+		setDocument(getDocument(), getAnnotationModel());
+	}
+
+	/**
+	 * Executes the given {@link Runnable} via
+	 * {@link Display#asyncExec(Runnable)} if the viewer still exists.
+	 *
+	 * @param runnable
+	 *            to perform some operation in the UI thread.
+	 */
+	protected void async(Runnable runnable) {
+		Control control = getControl();
+		if (control != null && !control.isDisposed()) {
+			control.getDisplay().asyncExec(() -> {
+				if (!control.isDisposed()) {
+					runnable.run();
+				}
+			});
+		}
+	}
+
+	/**
+	 * Handle a change in EditorsUI preferences. The default implementation
+	 * handles spell-checking enablement changes, and foreground/background
+	 * color changes. May be overridden, but the subclass should invoke super.
+	 *
+	 * @param event
+	 *            describing the property change.
+	 */
+	protected void handleEditorPreferencesChange(PropertyChangeEvent event) {
+		switch (event.getProperty()) {
+		case SpellingService.PREFERENCE_SPELLING_ENABLED:
+			boolean isEnabled = EditorsUI.getPreferenceStore()
+					.getBoolean(SpellingService.PREFERENCE_SPELLING_ENABLED);
+			updateSpellChecking(isEnabled);
+			break;
+		case AbstractTextEditor.PREFERENCE_COLOR_FOREGROUND:
+		case AbstractTextEditor.PREFERENCE_COLOR_FOREGROUND_SYSTEM_DEFAULT:
+		case AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND:
+		case AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND_SYSTEM_DEFAULT:
+		case AbstractTextEditor.PREFERENCE_COLOR_SELECTION_FOREGROUND:
+		case AbstractTextEditor.PREFERENCE_COLOR_SELECTION_FOREGROUND_SYSTEM_DEFAULT:
+		case AbstractTextEditor.PREFERENCE_COLOR_SELECTION_BACKGROUND:
+		case AbstractTextEditor.PREFERENCE_COLOR_SELECTION_BACKGROUND_SYSTEM_DEFAULT:
+			async(() -> setColors());
+			break;
+		default:
+			break;
+		}
+	}
+
+	/**
+	 * Handle a change in EditorsUI preferences. The default implementation
+	 * handles hyperlink coloring changes. May be overridden, but the subclass
+	 * should invoke super.
+	 *
+	 * @param event
+	 *            describing the property change.
+	 */
+	protected void handleJFacePreferencesChange(PropertyChangeEvent event) {
+		if (JFacePreferences.HYPERLINK_COLOR.equals(event.getProperty())) {
+			async(() -> invalidateTextPresentation());
+		}
+	}
+
+	/**
+	 * Update the font of this viewer, trying to maintain the selection and the
+	 * top index. Note that when this viewer is used in an
+	 * {@link AbstractTextEditor}, the editor takes care of this and this method
+	 * should not be called.
+	 *
+	 * @param font
+	 *            to set
+	 */
+	protected void setFont(Font font) {
+		// See AbstractTextEditor.setFont()
+		StyledText styledText = getTextWidget();
+		IVerticalRuler verticalRuler = getVerticalRuler();
+		if (getDocument() != null) {
+			ISelectionProvider provider = getSelectionProvider();
+			ISelection selection = provider.getSelection();
+			int topIndex = getTopIndex();
+
+			Control parent = getControl();
+			parent.setRedraw(false);
+			styledText.setFont(font);
+			if (verticalRuler instanceof IVerticalRulerExtension) {
+				IVerticalRulerExtension e = (IVerticalRulerExtension) verticalRuler;
+				e.setFont(font);
+			}
+			provider.setSelection(selection);
+			setTopIndex(topIndex);
+			if (parent instanceof Composite) {
+				Composite composite = (Composite) parent;
+				composite.layout(true);
+			}
+			parent.setRedraw(true);
+		} else {
+			styledText.setFont(font);
+			if (verticalRuler instanceof IVerticalRulerExtension) {
+				IVerticalRulerExtension e = (IVerticalRulerExtension) verticalRuler;
+				e.setFont(font);
+			}
+		}
 	}
 
 	private void updateSpellChecking(boolean isEnabled) {
@@ -196,16 +325,77 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 		setHyperlinkDetectors(detectors, stateMask);
 	}
 
+	private void setColors() {
+		IPreferenceStore store = EditorsUI.getPreferenceStore();
+		StyledText styledText = getTextWidget();
+		setColor(styledText, store,
+				AbstractTextEditor.PREFERENCE_COLOR_FOREGROUND,
+				store.getBoolean(
+						AbstractTextEditor.PREFERENCE_COLOR_FOREGROUND_SYSTEM_DEFAULT));
+		setColor(styledText, store,
+				AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND,
+				store.getBoolean(
+						AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND_SYSTEM_DEFAULT));
+		setColor(styledText, store,
+				AbstractTextEditor.PREFERENCE_COLOR_SELECTION_FOREGROUND,
+				store.getBoolean(
+						AbstractTextEditor.PREFERENCE_COLOR_SELECTION_FOREGROUND_SYSTEM_DEFAULT));
+		setColor(styledText, store,
+				AbstractTextEditor.PREFERENCE_COLOR_SELECTION_BACKGROUND,
+				store.getBoolean(
+						AbstractTextEditor.PREFERENCE_COLOR_SELECTION_BACKGROUND_SYSTEM_DEFAULT));
+	}
+
+	private void setColor(StyledText styledText, IPreferenceStore store,
+			String key, boolean useDefault) {
+		Color newColor = useDefault ? null
+				: createColor(styledText.getDisplay(), store, key);
+		switch (key) {
+		case AbstractTextEditor.PREFERENCE_COLOR_FOREGROUND:
+			styledText.setForeground(newColor);
+			break;
+		case AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND:
+			styledText.setBackground(newColor);
+			break;
+		case AbstractTextEditor.PREFERENCE_COLOR_SELECTION_FOREGROUND:
+			styledText.setSelectionForeground(newColor);
+			break;
+		case AbstractTextEditor.PREFERENCE_COLOR_SELECTION_BACKGROUND:
+			styledText.setSelectionBackground(newColor);
+			break;
+		default:
+			return;
+		}
+		Color oldColor = customColors.remove(key);
+		if (oldColor != null) {
+			oldColor.dispose();
+		}
+		customColors.put(key, newColor);
+	}
+
+	private Color createColor(Display display, IPreferenceStore store,
+			String key) {
+		RGB rgb = null;
+		if (store.contains(key)) {
+			if (store.isDefault(key)) {
+				rgb = PreferenceConverter.getDefaultColor(store, key);
+			} else {
+				rgb = PreferenceConverter.getColor(store, key);
+			}
+			if (rgb != null) {
+				return new Color(display, rgb);
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public void unconfigure() {
 		super.unconfigure();
 		if (hyperlinkChangeListener != null) {
 			EditorsUI.getPreferenceStore()
 					.removePropertyChangeListener(hyperlinkChangeListener);
-		}
-		if (spellCheckingListener != null) {
-			EditorsUI.getPreferenceStore()
-					.removePropertyChangeListener(spellCheckingListener);
+			hyperlinkChangeListener = null;
 		}
 		preferenceKeysForEnablement = null;
 		preferenceKeysForActivation = null;
