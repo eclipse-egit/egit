@@ -34,6 +34,24 @@
       "revId": "376567df461e45c3172d1d7822135f3e30c549ec",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_a6b2ea2f",
+        "filename": "org.eclipse.egit.doc/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-07-06T15:20:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7880b39_bd2bddb7",
+      "revId": "376567df461e45c3172d1d7822135f3e30c549ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
