@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_e6b232ff",
+        "filename": "org.eclipse.egit.doc/help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-07-06T15:46:08Z",
+      "side": 1,
+      "message": "This is a bug in Mylyn wikitext; it gets confused by \u0027\u0027\u0027\u0027\u0027Note\u0027\u0027\u0027: more text\u0027\u0027, which should render as\n\n  \u003ci\u003e\u003cb\u003eNote\u003c/b\u003e: more text\u003c/i\u003e\n\nand which _is_ rendered as such on-wiki (though perhaps only because MediaWiki usually runs tidy over its HTML output to fix most errors).",
+      "range": {
+        "startLine": 181,
+        "startChar": 6,
+        "endLine": 181,
+        "endChar": 8
+      },
+      "revId": "a3c8f5e61414b3c53b413432727703e9539a759a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_0629febc",
+        "filename": "org.eclipse.egit.doc/help/EGit/New_and_Noteworthy/4.8/4.8.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-07-06T15:46:08Z",
+      "side": 1,
+      "message": "Compared to base, there is one line removed. \"This release has not yet been created\". I just checked, and the org.eclipse.egit.doc_4.8.0.201706111038-r bundle indeed claims the 4.8 release had not yet been created ;-)\n\nI think that bit should be fixed for 4.8.1, too. Not the refactoring of the toolchain, but maybe just regenerate the doc before releasing 4.8.1.",
+      "revId": "a3c8f5e61414b3c53b413432727703e9539a759a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_a68f4a38",
+        "filename": "org.eclipse.egit.doc/help/EGit/User_Guide/Reference.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-07-06T15:46:08Z",
+      "side": 1,
+      "message": "I\u0027ve fixed this on-wiki; should be \u0027\u0027\u0027 in wikitext and render as\n\n  \u003cb\u003eCommit\u003c/b\u003e or \u003cb\u003eCommit and Push\u003c/b\u003e button.",
+      "range": {
+        "startLine": 703,
+        "startChar": 12,
+        "endLine": 703,
+        "endChar": 14
+      },
+      "revId": "a3c8f5e61414b3c53b413432727703e9539a759a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
