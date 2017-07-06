@@ -16,6 +16,24 @@
       "revId": "376567df461e45c3172d1d7822135f3e30c549ec",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_bd2bddb7",
+        "filename": "org.eclipse.egit.doc/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-07-06T05:58:47Z",
+      "side": 1,
+      "message": "I think it was needed until now because wikitext was in the target platform (as opposed to being a maven dependency). But with this change, it should no longer be necessary.",
+      "parentUuid": "c7880b39_daa26f2a",
+      "revId": "376567df461e45c3172d1d7822135f3e30c549ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
