@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_917fea1b",
+        "filename": "org.eclipse.egit.doc/help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-07-06T22:05:42Z",
+      "side": 1,
+      "message": "I removed the 2 extra quotes which were present in the wiki",
+      "parentUuid": "c7880b39_e6b232ff",
+      "range": {
+        "startLine": 181,
+        "startChar": 6,
+        "endLine": 181,
+        "endChar": 8
+      },
+      "revId": "a3c8f5e61414b3c53b413432727703e9539a759a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_0629febc",
         "filename": "org.eclipse.egit.doc/help/EGit/New_and_Noteworthy/4.8/4.8.html",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-06T15:46:08Z",
       "side": 1,
       "message": "Compared to base, there is one line removed. \"This release has not yet been created\". I just checked, and the org.eclipse.egit.doc_4.8.0.201706111038-r bundle indeed claims the 4.8 release had not yet been created ;-)\n\nI think that bit should be fixed for 4.8.1, too. Not the refactoring of the toolchain, but maybe just regenerate the doc before releasing 4.8.1.",
+      "revId": "a3c8f5e61414b3c53b413432727703e9539a759a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_3108f6e3",
+        "filename": "org.eclipse.egit.doc/help/EGit/New_and_Noteworthy/4.8/4.8.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-07-06T22:05:42Z",
+      "side": 1,
+      "message": "I know, I noticed this shortly after I released 4.8 and fixed it in the wiki",
+      "parentUuid": "c7880b39_0629febc",
       "revId": "a3c8f5e61414b3c53b413432727703e9539a759a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
