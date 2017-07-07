@@ -111,7 +111,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchCommandConstants;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.progress.WorkbenchJob;
 
@@ -1127,19 +1126,8 @@ public class FetchGerritChangePage extends WizardPage {
 	}
 
 	private void activateAdditionalRefs() {
-		// do this in the UI thread as it results in a
-		// refresh() on the history page
-		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				Activator
-						.getDefault()
-						.getPreferenceStore()
-						.setValue(
-								UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS,
-								true);
-			}
-		});
+		Activator.getDefault().getPreferenceStore().setValue(
+				UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS, true);
 	}
 
 	private ExplicitContentProposalAdapter addRefContentProposalToText(
