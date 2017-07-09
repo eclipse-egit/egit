@@ -77,6 +77,7 @@ public class CreateRepositoryPage extends WizardPage {
 				File previousFile = new File(previous);
 				String result;
 				DirectoryDialog dialog = new DirectoryDialog(getShell());
+				dialog.setMessage(UIText.CreateRepositoryPage_PageMessage);
 				if (previousFile.exists() && previousFile.isDirectory()) {
 					dialog.setFilterPath(previousFile.getPath());
 				}

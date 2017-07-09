@@ -508,6 +508,13 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 			@Override
 			public void widgetSelected(SelectionEvent evt) {
 				DirectoryDialog dialog = new DirectoryDialog(getShell());
+				if (sourceSelection) {
+					dialog.setMessage(
+							UIText.RepositorySelectionPage_sourceSelectionTitle);
+				} else {
+					dialog.setMessage(
+							UIText.RepositorySelectionPage_destinationSelectionTitle);
+				}
 				// if a file was selected before, let's try to open
 				// the directory dialog on the same directory
 				if (!uriText.getText().isEmpty()) {

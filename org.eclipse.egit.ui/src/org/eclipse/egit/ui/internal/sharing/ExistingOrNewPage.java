@@ -220,6 +220,7 @@ class ExistingOrNewPage extends WizardPage {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				DirectoryDialog dlg = new DirectoryDialog(getShell());
+				dlg.setMessage(UIText.ExistingOrNewPage_title);
 				dlg.setFilterPath(selectedRepository.getWorkTree().getPath());
 				String directory = dlg.open();
 				if (directory != null) {
