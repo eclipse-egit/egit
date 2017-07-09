@@ -172,7 +172,9 @@ public class ConfigurationEditorComponent {
 
 		if (editableConfig instanceof FileBasedConfig) {
 			Composite locationPanel = new Composite(main, SWT.NONE);
-			locationPanel.setLayout(new GridLayout(4, false));
+			GridLayout locationLayout = new GridLayout(3, false);
+			locationLayout.marginWidth = 0;
+			locationPanel.setLayout(locationLayout);
 			GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
 					.applyTo(locationPanel);
 			Label locationLabel = new Label(locationPanel, SWT.NONE);
