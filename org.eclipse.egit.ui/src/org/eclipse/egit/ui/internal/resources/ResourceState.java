@@ -95,7 +95,8 @@ public class ResourceState implements IResourceState {
 
 	@Override
 	public final boolean hasUnstagedChanges() {
-		return !isTracked() || isDirty() || isMissing() || hasConflicts();
+		return !isIgnored()
+				&& (!isTracked() || isDirty() || isMissing() || hasConflicts());
 	}
 
 	/**

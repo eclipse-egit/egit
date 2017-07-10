@@ -44,7 +44,7 @@ class DecoratableResourceAdapter extends DecoratableResource {
 			GitTraceLocation.getTrace().trace(
 					GitTraceLocation.DECORATION.getLocation(),
 					"Decorate " + resourceToWrap.getFullPath()); //$NON-NLS-1$
-			start = System.currentTimeMillis();
+			start = System.nanoTime();
 		}
 		try {
 			RepositoryMapping mapping = RepositoryMapping
@@ -65,7 +65,7 @@ class DecoratableResourceAdapter extends DecoratableResource {
 			setConflicts(baseState.hasConflicts());
 			setAssumeUnchanged(baseState.isAssumeUnchanged());
 			setStagingState(baseState.getStagingState());
-			if (isRepositoryContainer()) {
+			if (isRepositoryContainer() && !isIgnored()) {
 				// We only need this very expensive info for for decorating
 				// projects and folders that are submodule or nested repository
 				// roots
@@ -84,8 +84,8 @@ class DecoratableResourceAdapter extends DecoratableResource {
 				GitTraceLocation
 						.getTrace()
 						.trace(GitTraceLocation.DECORATION.getLocation(),
-								"Decoration took " + (System.currentTimeMillis() - start) //$NON-NLS-1$
-										+ " ms"); //$NON-NLS-1$
+								"Decoration took " + (System.nanoTime() - start) //$NON-NLS-1$
+										+ " ns"); //$NON-NLS-1$
 		}
 	}
 
