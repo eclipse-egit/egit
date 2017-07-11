@@ -2423,9 +2423,6 @@ public class UIText extends NLS {
 	public static String ConfigurationEditorComponent_NoConfigLocationKnown;
 
 	/** */
-	public static String ConfigurationEditorComponent_NoSectionSubsectionMessage;
-
-	/** */
 	public static String ConfigurationEditorComponent_OpenEditorButton;
 
 	/** */
