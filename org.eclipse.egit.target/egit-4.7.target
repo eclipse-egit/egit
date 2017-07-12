@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="egit-4.7" sequenceNumber="1499272309">
+<target name="egit-4.7" sequenceNumber="1499842987">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.jetty.client" version="9.4.5.v20170502"/>
@@ -96,7 +96,6 @@
       <unit id="org.eclipse.mylyn_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.context_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.sdk_feature.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.mylyn.wikitext_feature.feature.group" version="0.0.0"/>
       <repository location="http://download.eclipse.org/releases/oxygen/"/>
     </location>
   </locations>

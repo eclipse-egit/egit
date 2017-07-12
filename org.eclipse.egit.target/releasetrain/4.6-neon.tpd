@@ -10,5 +10,4 @@ location "http://download.eclipse.org/releases/neon/" {
 	org.eclipse.mylyn_feature.feature.group lazy
 	org.eclipse.mylyn.context_feature.feature.group lazy
 	org.eclipse.mylyn.sdk_feature.feature.group lazy
-	org.eclipse.mylyn.wikitext_feature.feature.group lazy
 }
