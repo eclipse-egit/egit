@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_2c6b2be6",
+        "filename": "icons/org.eclipse.egit.ui/icons/elcl16/filter_none.svg",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-07-12T22:08:13Z",
+      "side": 1,
+      "message": "I think this icon is too complex for a small icon, I suggest to simplify it in the following way:\n* don\u0027t strikethrough the icon\n* remove the vertical line to depict nothing is filtered\n* extend the horizontal arrows",
+      "revId": "2d60afcb914e8f96406fc7686a792ef237ca99c4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_4c6877e7",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-07-12T22:08:13Z",
+      "side": 1,
+      "message": "how is this related to this change ?",
+      "revId": "2d60afcb914e8f96406fc7686a792ef237ca99c4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
