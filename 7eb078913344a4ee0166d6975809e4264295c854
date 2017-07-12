@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_0621f05b",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/selection/SelectionForViewsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-07-12T15:05:42Z",
+      "side": 1,
+      "message": "Could use some help here. I\u0027m out of ideas as to why the other views do not update their selection. It\u0027s not just the test (which goes through the selection provider directly, not via the UI), but also the UI doesn\u0027t update. Yet this works fine when I try it manually...\n\nBug 514687 in any case doesn\u0027t seem to be the culprit. The click on the menu item apparently happens (though I never see the menu opened): the action is invoked, and the staging view *does* change the repository. But the other views don\u0027t...\n\nAlso strange: yesterday, I had no problems running SWTBot tests. Today, I suddenly hit http://bugs.java.com/view_bug.do?bug_id\u003d8019496 . Even after upgrading to the latest JDK 8u131 the problem persists despite Oracle claiming to have this fixed this as per http://bugs.java.com/view_bug.do?bug_id\u003d8019623. I ended up adding -Djava.awt.headless\u003dtrue to the run config for that SWTBot test to get it to run at all.\n\nMaybe that\u0027s part of my troubles...",
+      "revId": "7eb078913344a4ee0166d6975809e4264295c854",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
