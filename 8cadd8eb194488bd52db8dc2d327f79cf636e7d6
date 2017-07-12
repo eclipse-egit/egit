@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_11e92c2d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigurationEditorComponent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-07-12T19:42:47Z",
+      "side": 1,
+      "message": "Sorry I didn\u0027t look closely enough the first time. You mention in the commit message that this error now cannot occur anymore. So why not remove all this,including the key in UIText and the text in the uitext.properties?\n\nI see no reason to keep on dragging obsolete code around. Or do you see any way this could occur? Even if it could, I doubt a log entry will be useful here.",
+      "range": {
+        "startLine": 407,
+        "startChar": 6,
+        "endLine": 413,
+        "endChar": 28
+      },
+      "revId": "8cadd8eb194488bd52db8dc2d327f79cf636e7d6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
