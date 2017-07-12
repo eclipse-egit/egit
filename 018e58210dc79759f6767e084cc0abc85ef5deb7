@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_23eedefd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigurationEditorComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-07-12T06:00:46Z",
+      "side": 1,
+      "message": "Use getSelection(). getStructuredSelection() is not available on older Eclipses. EGit is supposed to work on Eclipse Luna.",
+      "revId": "018e58210dc79759f6767e084cc0abc85ef5deb7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
