@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_8ca09fa5",
+        "filename": "icons/org.eclipse.egit.ui/icons/elcl16/filter_none.svg",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-07-12T22:49:05Z",
+      "side": 1,
+      "message": "Looks good on my screen ;-)\n\nA faded struck-out \"filter\" icon seemed an obvious choice to mean \"no filtering\". With your proposed changes, I\u0027m not sure the connection with the three other filter icons is still there. Also,I think I remember having seen somewhere in Eclipse an icon with several thin arrows pointing right, though I can\u0027t remember where. Maybe I\u0027m imagining it... but if so,our icon should not be too similar unless the function associated with it was also similar.\n\nI could try to make the upper-left arrow even more faded, so that the diagonal is emphasized more.\n\nThe strike-through is the same visual language as used in debug (enable/disable breakpoints), in the JDT outline, or in the Mylyn task view. In fact, the svg code for the diagonal was even taken from JDT.",
+      "parentUuid": "c7880b39_2c6b2be6",
+      "revId": "2d60afcb914e8f96406fc7686a792ef237ca99c4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_4c6877e7",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-12T22:08:13Z",
       "side": 1,
       "message": "how is this related to this change ?",
+      "revId": "2d60afcb914e8f96406fc7686a792ef237ca99c4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_6ca373b2",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-07-12T22:49:05Z",
+      "side": 1,
+      "message": "Admittedly only tangentially. Try without this re-ordering the following:\n\n* Have git repo view open.\n* Create one local repository. It will be added to both PREFS_DIRECTORIES_REL and PREFS_DIRECTORIES.\n* Now remove the repository from the view.\n\nExpected: repo view is empty.\nActual: the repo stays. You have to remove it a second time to get it to disappear.\n\nWhat happens:\n\nFirst remove:\n\n* It\u0027s removed from PREFS_DIRECTORIES_REL, which is then empty\n* Preference listener in repo view reacts on PREF_DIRECTORIES_REL having changed. That listener calls getRepositories again.\n* getRepositories reads PREFS_DIRECTORIES_REL. It\u0027s empty, and thus it reads PREFS_DIRECTORIES. That one has not yet been updated and still contains the repo.\n* repo view still has that repository\n* Finally, listener returns and we save PREF_DIRECTORIES here, which is now also empty.\n\nWe end up with both preferences being empty, but the repo view still showing the repository!\n\nSecond attempt:\n\nSame sequence, only since this time both preferences are already empty, the listener concludes that there are no more repositories.\n\nEGit listens always on PREF_DIRECTORIES_REL. So if we re-order the saving here, we can avoid this. Older EGit doesn\u0027t even know about the _REL preference and thus is unaffected by this change.\n\nSorry about this having sneaked into this change. I fixed it very early to avoid spurious puzzlements when I tested this change, then forgot about it.",
+      "parentUuid": "c7880b39_4c6877e7",
       "revId": "2d60afcb914e8f96406fc7686a792ef237ca99c4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
