@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
@@ -456,7 +457,7 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 	 * This class wraps a {@link RebaseTodoLine} and holds additional
 	 * information about the underlying commit, if available.
 	 */
-	public class PlanElement {
+	public class PlanElement implements IAdaptable {
 		private final RebaseTodoLine line;
 
 		/** author info, may be null */
@@ -672,6 +673,18 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 		@Override
 		public String toString() {
 			return line.toString();
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public Object getAdapter(Class adapter) {
+			// TODO generify once EGit baseline is Eclipse 4.5
+			if (adapter.isInstance(this)) {
+				return this;
+			} else if (Repository.class.equals(adapter)) {
+				return repositoryRef.get();
+			}
+			return null;
 		}
 	}
 

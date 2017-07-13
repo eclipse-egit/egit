@@ -525,10 +525,10 @@ public class RepositoryUtil {
 			sbAbsolute.append(File.pathSeparatorChar);
 		}
 
-		prefs.put(PREFS_DIRECTORIES_REL, sbRelative.toString());
 		// redundantly store absolute paths to ensure compatibility with older
 		// EGit versions
 		prefs.put(PREFS_DIRECTORIES, sbAbsolute.toString());
+		prefs.put(PREFS_DIRECTORIES_REL, sbRelative.toString());
 		try {
 			prefs.flush();
 		} catch (BackingStoreException e) {

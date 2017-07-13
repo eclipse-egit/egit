@@ -13,19 +13,19 @@
 package org.eclipse.egit.ui.internal.reflog;
 
 import java.io.File;
-import java.util.Collection;
 import java.util.Objects;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.lib.ReflogEntry;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.model.WorkbenchAdapter;
@@ -77,6 +77,7 @@ public class ReflogViewContentProvider implements ITreeContentProvider {
 		}
 	};
 
+
 	/**
 	 * Input class for this content provider.
 	 */
@@ -89,7 +90,7 @@ public class ReflogViewContentProvider implements ITreeContentProvider {
 
 		private final ISchedulingRule rule;
 
-		private Collection<ReflogEntry> refLog;
+		private ReflogItem[] refLog;
 
 		/**
 		 * Create input with non-null repository and non-null ref
@@ -126,7 +127,7 @@ public class ReflogViewContentProvider implements ITreeContentProvider {
 		@Override
 		public Object[] getChildren(Object o) {
 			if (refLog != null) {
-				return refLog.toArray();
+				return refLog;
 			}
 			return null;
 		}
@@ -138,8 +139,10 @@ public class ReflogViewContentProvider implements ITreeContentProvider {
 				return; // Already loaded.
 			}
 			try (Git git = new Git(repository)) {
-				refLog = git.reflog().setRef(ref).call();
-				collector.add(refLog.toArray(), monitor);
+				refLog = git.reflog().setRef(ref).call().stream()
+						.map(entry -> new ReflogItem(ReflogInput.this, entry))
+						.toArray(ReflogItem[]::new);
+				collector.add(refLog, monitor);
 			} catch (Exception e) {
 				Activator.logError("Error running reflog command", e); //$NON-NLS-1$
 				collector.add(ERROR_ELEMENT, monitor);
@@ -170,6 +173,16 @@ public class ReflogViewContentProvider implements ITreeContentProvider {
 		currentInput = newInput;
 		if (viewer instanceof AbstractTreeViewer && newInput != null) {
 			loader = new DeferredBatchLoader((AbstractTreeViewer) viewer);
+			loader.addUpdateCompleteListener(new JobChangeAdapter() {
+
+				@Override
+				public void done(IJobChangeEvent event) {
+					if (event.getResult().isOK()) {
+						// Force a selection event
+						viewer.setSelection(viewer.getSelection());
+					}
+				}
+			});
 		}
 	}
 
