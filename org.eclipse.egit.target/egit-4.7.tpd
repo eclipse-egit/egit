@@ -2,6 +2,5 @@ target "egit-4.7" with source configurePhase
 
 include "projects/jetty-9.4.5.tpd"
 include "projects/swtbot-snapshot.tpd"
-include "projects/mylyn-latest.tpd"
 include "orbit/R20170516192513-Oxygen.tpd"
 include "releasetrain/4.7-oxygen.tpd"
