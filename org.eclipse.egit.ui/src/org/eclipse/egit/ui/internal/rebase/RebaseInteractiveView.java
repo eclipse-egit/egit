@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2016 SAP AG and others.
+ * Copyright (c) 2013, 2017 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,7 +8,7 @@
  * Contributors:
  *    Tobias Pfeifer (SAP AG) - initial implementation
  *    Tobias Baumann (tobbaumann@gmail.com) - Bug 473950
- *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 477248, 460595
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 477248, 460595, 518607
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.rebase;
 
@@ -44,8 +44,10 @@ import org.eclipse.egit.ui.internal.commands.shared.ProcessStepsRebaseCommand;
 import org.eclipse.egit.ui.internal.commands.shared.SkipRebaseCommand;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.internal.components.RepositoryMenuUtil.RepositoryToolbarAction;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.egit.ui.internal.selection.RepositorySelectionProvider;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
@@ -114,6 +116,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.part.ViewPart;
@@ -175,22 +178,12 @@ public class RebaseInteractiveView extends ViewPart implements
 
 	private IPropertyChangeListener uiPrefsListener;
 
-	private InitialSelection initialSelection;
+	private IWorkbenchAction switchRepositoriesAction;
 
 	@Override
 	public void init(IViewSite site) throws PartInitException {
 		super.init(site);
 		setPartName(UIText.InteractiveRebaseView_this_partName);
-		initInitialSelection(site);
-	}
-
-	private void initInitialSelection(IViewSite site) {
-		this.initialSelection = new InitialSelection(
-				site.getWorkbenchWindow().getSelectionService().getSelection());
-		if (!isViewInputDerivableFromSelection(initialSelection.selection)) {
-			this.initialSelection.activeEditor = site.getPage()
-					.getActiveEditor();
-		}
 	}
 
 	private static boolean isViewInputDerivableFromSelection(Object o) {
@@ -205,6 +198,10 @@ public class RebaseInteractiveView extends ViewPart implements
 	 * @param o
 	 */
 	public void setInput(Object o) {
+		newInput(o, true);
+	}
+
+	private void newInput(Object o, boolean force) {
 		if (o == null)
 			return;
 
@@ -230,7 +227,9 @@ public class RebaseInteractiveView extends ViewPart implements
 		if (repo == null) {
 			repo = AdapterUtils.adapt(o, Repository.class);
 		}
-
+		if (repo == null && !force) {
+			return;
+		}
 		currentRepository = repo;
 		showRepository(repo);
 	}
@@ -246,6 +245,10 @@ public class RebaseInteractiveView extends ViewPart implements
 	public void dispose() {
 		removeListeners();
 		resources.dispose();
+		if (switchRepositoriesAction != null) {
+			switchRepositoriesAction.dispose();
+			switchRepositoriesAction = null;
+		}
 		super.dispose();
 	}
 
@@ -393,7 +396,17 @@ public class RebaseInteractiveView extends ViewPart implements
 		linkSelectionAction.setImageDescriptor(UIIcons.ELCL16_SYNCED);
 		toolbar.add(linkSelectionAction);
 
-		reactOnInitalSelection();
+		switchRepositoriesAction = new RepositoryToolbarAction(false,
+				() -> currentRepository,
+				repo -> setInput(new StructuredSelection(repo)));
+		toolbar.add(switchRepositoriesAction);
+
+		UIUtils.notifySelectionChangedWithCurrentSelection(
+				selectionChangedListener, getSite());
+
+		getSite().setSelectionProvider(new RepositorySelectionProvider(
+				planTreeViewer, () -> currentRepository));
+
 	}
 
 	private void createCommandToolBar(Form theForm, FormToolkit toolkit) {
@@ -508,38 +521,26 @@ public class RebaseInteractiveView extends ViewPart implements
 			public void selectionChanged(IWorkbenchPart part,
 					ISelection selection) {
 				if (!listenOnRepositoryViewSelection
-						|| part == getSite().getPart())
+						|| part == getSite().getPart()) {
 					return;
-
+				}
 				// this may happen if we switch between editors
 				if (part instanceof IEditorPart) {
 					IEditorInput input = ((IEditorPart) part).getEditorInput();
-					if (input instanceof IFileEditorInput)
-						setInput(new StructuredSelection(
-								((IFileEditorInput) input).getFile()));
-				} else
-					setInput(selection);
+					if (input instanceof IFileEditorInput) {
+						newInput(
+								new StructuredSelection(
+										((IFileEditorInput) input).getFile()),
+								false);
+					}
+				} else {
+					newInput(selection, false);
+				}
 			}
 		};
 
 		ISelectionService srv = CommonUtils.getService(getSite(), ISelectionService.class);
 		srv.addPostSelectionListener(selectionChangedListener);
-	}
-
-	private void reactOnInitalSelection() {
-		selectionChangedListener.selectionChanged(initialSelection.activeEditor,
-				initialSelection.selection);
-		this.initialSelection = null;
-	}
-
-	private static final class InitialSelection {
-		ISelection selection;
-
-		IEditorPart activeEditor;
-
-		InitialSelection(ISelection selection) {
-			this.selection = selection;
-		}
 	}
 
 	private class RebaseCommandItemSelectionListener extends SelectionAdapter {
@@ -911,7 +912,6 @@ public class RebaseInteractiveView extends ViewPart implements
 		} else {
 			currentPlan = null;
 			planIndexer = null;
-			form.setText(UIText.RebaseInteractiveView_NoSelection);
 		}
 		refresh();
 	}
@@ -934,6 +934,8 @@ public class RebaseInteractiveView extends ViewPart implements
 				try {
 					planTreeViewer.setInput(currentPlan);
 					refreshUI();
+					// Force a selection changed event
+					planTreeViewer.setSelection(planTreeViewer.getSelection());
 				} finally {
 					t.setRedraw(true);
 				}
