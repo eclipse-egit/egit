@@ -46,6 +46,30 @@
       "revId": "8cadd8eb194488bd52db8dc2d327f79cf636e7d6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_cc76277d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigurationEditorComponent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-07-13T06:25:50Z",
+      "side": 1,
+      "message": "My policy is to clean up if it\u0027s related to the change I made.\n\nMuch of the EGit code is old (and the missing {} here are a tell-tale sign of that), and was written by many people with different coding styles and evidently also different knowledge about the Eclipse (UI) framework (which moreover has evolved quite a bit overtime). So there are many places where things are done in slightly archaic ways, or where there is obsolete code, and there\u0027s too much duplicate code for my taste.\n\nEGit is rather hard to maintain because of that; letting obsolete code sit around is only going to make matters worse since a new contributor will have to spend so much time figuring out why things are as they are only to detect that some things aren\u0027t used anymore.\n\nDuplicate code is also bad. If it has a bug, you fix it in one place and think you\u0027re done, but the same bug may still lurk in a copy-pasted code piece elsewhere.\n\n \u003e Regarding the API problem from patchset 1, how can I actually avoid\n \u003e using a bad method? The Oomph setup automatically sets the egit-4.6\n \u003e target platform and the API baseline tooling only checks about\n \u003e versioning issues against the previously released version. What am\n \u003e I missing in the automated tooling to assure that the code is\n \u003e compatible to Luna?\n\nUnfortunately you\u0027re not missing anything. The smartimport bundle will not compile on any pre-Neon target platform, which is why the Oomph setup and the Hudson jobs use the egit-4.6 target. We don\u0027t even have a Luna target anymore.\n\nSo you have to know the potential pitfalls. (And there\u0027s quite a few.) I think by now I know most of them, but it still happens that such incompatibilities slip through. There are a few commits in EGit about \"backwards compatibility\".\n\nI usually do two things shortly before a new release from master:\n\n1. Install the nightly build in a pristine Eclipse Luna-R, and play around a little bit, and\n2. Try to compile against the Mars platform (with the smartimport bundle closed).\n\nI think currently the Mars platform is even broken since it references an earlier version of that smartimport stuff that no longer exists in the Mars update sites.",
+      "parentUuid": "c7880b39_ec7cc366",
+      "range": {
+        "startLine": 407,
+        "startChar": 6,
+        "endLine": 413,
+        "endChar": 28
+      },
+      "revId": "8cadd8eb194488bd52db8dc2d327f79cf636e7d6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
