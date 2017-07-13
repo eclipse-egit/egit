@@ -1,5 +1,0 @@
-target "easymport" with source configurePhase
-
-location easymport "http://download.eclipse.org/e4/snapshots/org.eclipse.e4.ui" {
-	org.eclipse.e4.ui.importer lazy
-}
