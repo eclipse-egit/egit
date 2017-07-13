@@ -22,6 +22,30 @@
       "revId": "8cadd8eb194488bd52db8dc2d327f79cf636e7d6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_ec7cc366",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigurationEditorComponent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2017-07-13T05:02:54Z",
+      "side": 1,
+      "message": "I just wasn\u0027t sure what your policy is for that. Do the smallest change possible to fix the problem or include cleanups as well, this sometimes depends on which project I submit a patch to. Will create new patch set.\n\nRegarding the API problem from patchset 1, how can I actually avoid using a bad method? The Oomph setup automatically sets the egit-4.6 target platform and the API baseline tooling only checks about versioning issues against the previously released version. What am I missing in the automated tooling to assure that the code is compatible to Luna?",
+      "parentUuid": "c7880b39_11e92c2d",
+      "range": {
+        "startLine": 407,
+        "startChar": 6,
+        "endLine": 413,
+        "endChar": 28
+      },
+      "revId": "8cadd8eb194488bd52db8dc2d327f79cf636e7d6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
