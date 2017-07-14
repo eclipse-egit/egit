@@ -85,6 +85,7 @@ Export-Package: org.eclipse.egit.ui;version="4.10.0";x-friends:="org.eclipse.egi
  org.eclipse.egit.ui.internal.credentials;version="4.10.0";x-internal:=true,
  org.eclipse.egit.ui.internal.decorators;version="4.10.0";x-internal:=true,
  org.eclipse.egit.ui.internal.dialogs;version="4.10.0";x-friends:="org.eclipse.egit.gitflow.ui",
+ org.eclipse.egit.ui.internal.expressions;version="4.10.0";x-internal:=true,
  org.eclipse.egit.ui.internal.factories;version="4.10.0";x-internal:=true,
  org.eclipse.egit.ui.internal.fetch;version="4.10.0";x-friends:="org.eclipse.mylyn.github.ui",
  org.eclipse.egit.ui.internal.gerrit;version="4.10.0";x-internal:=true,

@@ -5588,6 +5588,27 @@
             properties="hasStagedChanges,hasUnstagedChanges,hasNotIgnoredResources,hasTrackedResources"
             type="java.util.Collection">
       </propertyTester>
+      <propertyTester
+            class="org.eclipse.egit.ui.internal.expressions.GitPropertyTester"
+            id="org.eclipse.egit.ui.GitRepositoryCommitTester"
+            namespace="Git"
+            properties="parentCount,isBare,isSafe,canCommit,hasMultipleRefs,hasRef"
+            type="org.eclipse.egit.core.internal.IRepositoryCommit">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.egit.ui.internal.expressions.GitPropertyTester"
+            id="org.eclipse.egit.ui.GitRepositoryTester"
+            namespace="Git"
+            properties="isBare,isSafe,canCommit"
+            type="org.eclipse.jgit.lib.Repository">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.egit.ui.internal.expressions.GitPropertyTester"
+            id="org.eclipse.egit.ui.GitRevCommitTester"
+            namespace="Git"
+            properties="parentCount"
+            type="org.eclipse.jgit.revwalk.RevCommit">
+      </propertyTester>
    </extension>
    <extension
          point="org.eclipse.ui.navigator.linkHelper">
