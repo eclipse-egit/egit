@@ -29,7 +29,6 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.ProgressMonitorPart;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -40,13 +39,26 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * A special-purpose {@link WizardDialog} whose
+ * A special-purpose {@link MinimumSizeWizardDialog} whose
  * {@link #run(boolean, boolean, IRunnableWithProgress) run()} method really
  * runs the job in the background. Use this mechanism with care!
  */
-public class NonBlockingWizardDialog extends WizardDialog {
+public class NonBlockingWizardDialog extends MinimumSizeWizardDialog {
 
 	private Queue<BackgroundJob> jobs = new LinkedList<>();
+
+	/**
+	 * Creates a new {@link NonBlockingWizardDialog} that prevents the dialog
+	 * from being made too small to show the starting page.
+	 *
+	 * @param parentShell
+	 *            for the dialog
+	 * @param newWizard
+	 *            to show in the dialog
+	 */
+	public NonBlockingWizardDialog(Shell parentShell, IWizard newWizard) {
+		this(parentShell, newWizard, true);
+	}
 
 	/**
 	 * Creates a new {@link NonBlockingWizardDialog}.
@@ -55,9 +67,14 @@ public class NonBlockingWizardDialog extends WizardDialog {
 	 *            for the dialog
 	 * @param newWizard
 	 *            to show in the dialog
+	 * @param restrictResize
+	 *            {@code true} if the dialog should prevent being resized
+	 *            smaller than necessary to show the starting page;
+	 *            {@code false} if resizing to any size should be allowed
 	 */
-	public NonBlockingWizardDialog(Shell parentShell, IWizard newWizard) {
-		super(parentShell, newWizard);
+	public NonBlockingWizardDialog(Shell parentShell, IWizard newWizard,
+			boolean restrictResize) {
+		super(parentShell, newWizard, restrictResize);
 	}
 
 	@Override
