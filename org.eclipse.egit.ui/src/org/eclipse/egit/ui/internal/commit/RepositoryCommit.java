@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011, 2015 GitHub Inc. and others.
+ *  Copyright (c) 2011, 2017 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -20,6 +20,7 @@ import java.util.List;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.egit.core.internal.IRepositoryCommit;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -46,7 +47,8 @@ import org.eclipse.ui.model.WorkbenchAdapter;
  * This class computes and provides access to the {@link FileDiff} objects
  * introduced by the commit.
  */
-public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
+public class RepositoryCommit extends WorkbenchAdapter
+		implements IAdaptable, IRepositoryCommit {
 
 	/**
 	 * NAME_LENGTH
@@ -116,6 +118,7 @@ public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
 	 *
 	 * @return repository
 	 */
+	@Override
 	public Repository getRepository() {
 		return repository;
 	}
@@ -125,6 +128,7 @@ public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
 	 *
 	 * @return rev commit
 	 */
+	@Override
 	public RevCommit getRevCommit() {
 		return commit;
 	}
