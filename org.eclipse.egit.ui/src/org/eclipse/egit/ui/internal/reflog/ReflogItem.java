@@ -11,6 +11,7 @@ package org.eclipse.egit.ui.internal.reflog;
 import java.util.Objects;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.egit.core.internal.IRepositoryObject;
 import org.eclipse.egit.ui.internal.reflog.ReflogViewContentProvider.ReflogInput;
 import org.eclipse.jgit.lib.CheckoutEntry;
 import org.eclipse.jgit.lib.ObjectId;
@@ -22,7 +23,7 @@ import org.eclipse.jgit.lib.Repository;
  * A DTO for {@link ReflogEntry} to use as tree elements in the reflog view.
  * Also adapts to the repository the item was loaded from.
  */
-public class ReflogItem implements ReflogEntry, IAdaptable {
+public class ReflogItem implements ReflogEntry, IAdaptable, IRepositoryObject {
 
 	private final ReflogEntry entry;
 
@@ -40,7 +41,7 @@ public class ReflogItem implements ReflogEntry, IAdaptable {
 		if (adapter.isInstance(this)) {
 			return this;
 		} else if (Repository.class.equals(adapter)) {
-			return input.getRepository();
+			return getRepository();
 		}
 		return null;
 	}
@@ -90,5 +91,15 @@ public class ReflogItem implements ReflogEntry, IAdaptable {
 	public int hashCode() {
 		return Objects.hash(input, getNewId(), getOldId(), getWho(),
 				getComment());
+	}
+
+	@Override
+	public Repository getRepository() {
+		return input.getRepository();
+	}
+
+	@Override
+	public ObjectId getObjectId() {
+		return getNewId();
 	}
 }

@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.IRepositoryCommit;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
@@ -457,7 +458,7 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 	 * This class wraps a {@link RebaseTodoLine} and holds additional
 	 * information about the underlying commit, if available.
 	 */
-	public class PlanElement implements IAdaptable {
+	public class PlanElement implements IAdaptable, IRepositoryCommit {
 		private final RebaseTodoLine line;
 
 		/** author info, may be null */
@@ -465,6 +466,12 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 
 		/** committer info, may be null */
 		private final PersonIdent committer;
+
+		/** lazily set object id */
+		private ObjectId fullId;
+
+		/** lazily set full commit */
+		private RevCommit commit;
 
 		private PlanElement(RebaseTodoLine line, PersonIdent author,
 				PersonIdent committer) {
@@ -679,12 +686,68 @@ public class RebaseInteractivePlan implements IndexDiffChangedListener,
 		@Override
 		public Object getAdapter(Class adapter) {
 			// TODO generify once EGit baseline is Eclipse 4.5
-			if (adapter.isInstance(this)) {
-				return this;
-			} else if (Repository.class.equals(adapter)) {
-				return repositoryRef.get();
+			if (Repository.class.equals(adapter)) {
+				return getRepository();
+			} else if (RevCommit.class.equals(adapter)) {
+				return getRevCommit();
 			}
 			return null;
+		}
+
+		@Override
+		public Repository getRepository() {
+			return repositoryRef.get();
+		}
+
+		@Override
+		public ObjectId getObjectId() {
+			if (fullId != null) {
+				return fullId;
+			}
+			AbbreviatedObjectId shortId = line.getCommit();
+			if (shortId.isComplete()) {
+				fullId = shortId.toObjectId();
+				return fullId;
+			}
+			Repository repo = getRepository();
+			if (repo == null) {
+				return null;
+			}
+			try {
+				ObjectId id = repo.resolve(shortId.name());
+				if (id != null) {
+					commit = repo.parseCommit(id);
+					fullId = id;
+					return fullId;
+				}
+			} catch (IllegalArgumentException | IOException e) {
+				// Ignore
+			}
+			return null;
+		}
+
+		@Override
+		public RevCommit getRevCommit() {
+			if (commit != null) {
+				return commit;
+			}
+			ObjectId id = getObjectId();
+			if (commit != null) {
+				return commit;
+			}
+			if (id == null) {
+				return null;
+			}
+			Repository repo = getRepository();
+			if (repo == null) {
+				return null;
+			}
+			try {
+				commit = repo.parseCommit(id);
+				return commit;
+			} catch (IOException e) {
+				return null;
+			}
 		}
 	}
 
