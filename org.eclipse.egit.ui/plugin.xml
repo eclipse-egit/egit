@@ -5609,6 +5609,13 @@
             properties="parentCount"
             type="org.eclipse.jgit.revwalk.RevCommit">
       </propertyTester>
+      <propertyTester
+            class="org.eclipse.egit.ui.internal.history.GitHistoryPropertyTester"
+            id="org.eclipse.egit.ui.GitHistoryTester"
+            namespace="GitHistory"
+            properties="isSingleFileHistory"
+            type="org.eclipse.team.ui.history.IHistoryView">
+      </propertyTester>
    </extension>
    <extension
          point="org.eclipse.ui.navigator.linkHelper">
