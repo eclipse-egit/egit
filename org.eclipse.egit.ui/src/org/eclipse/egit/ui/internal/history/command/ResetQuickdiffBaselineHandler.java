@@ -21,12 +21,15 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class ResetQuickdiffBaselineHandler extends
 		AbstractHistoryCommandHandler {
+	/**
+	 * "Target" parameter for setting the quickdiff baseline (HEAD or HEAD^1)
+	 */
+	public static final String BASELINE_TARGET = "org.eclipse.egit.ui.history.ResetQuickdiffBaselineTarget"; //$NON-NLS-1$
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
-		String baseline = event
-				.getParameter(HistoryViewCommands.BASELINE_TARGET);
+		String baseline = event.getParameter(BASELINE_TARGET);
 		Repository repo = getRepository(event);
 		if (baseline == null)
 			throw new ExecutionException(

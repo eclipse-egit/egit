@@ -47,10 +47,21 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * the file content.
  */
 public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
+
+	/**
+	 * "Compare mode" parameter for the command.
+	 */
+	public static final String COMPARE_MODE_PARAM = "org.eclipse.egit.ui.history.CompareMode"; //$NON-NLS-1$
+
+	/**
+	 * Id of the command.
+	 */
+	public static final String COMMAND_ID = "org.eclipse.egit.ui.history.ShowVersions"; //$NON-NLS-1$
+
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		boolean compareMode = Boolean.TRUE.toString().equals(
-				event.getParameter(HistoryViewCommands.COMPARE_MODE_PARAM));
+		boolean compareMode = Boolean.TRUE.toString()
+				.equals(event.getParameter(COMPARE_MODE_PARAM));
 		IStructuredSelection selection = getSelection(getPage());
 		if (selection.size() < 1)
 			return null;

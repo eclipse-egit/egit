@@ -443,21 +443,24 @@
             </test>
       </definition>
       <definition
-            id="org.eclipse.egit.ui.commitsInRepository">
+            id="org.eclipse.egit.ui.singleRepositoryCommit">
          <and>
-            <test property="GitSelection.selectionSingleRepository" />
-            <iterate ifEmpty="false">
+            <count value="1" />
+            <iterate>
                <adapt type="org.eclipse.egit.ui.internal.commit.RepositoryCommit" />
             </iterate>
          </and>
       </definition>
       <definition
-            id="org.eclipse.egit.ui.singleRepositoryCommit">
+            id="org.eclipse.egit.ui.singleFileCommit">
          <and>
             <count value="1" />
-            <iterate ifEmpty="false">
-               <adapt type="org.eclipse.egit.ui.internal.commit.RepositoryCommit" />
+            <iterate>
+               <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
             </iterate>
+            <with variable="activePart">
+               <test property="GitHistory.isSingleFileHistory" />
+            </with>
          </and>
       </definition>
    </extension>
@@ -1903,15 +1906,10 @@
             class="org.eclipse.egit.ui.internal.history.command.RenameBranchOnCommitHandler">
          <activeWhen>
             <and>
-               <with
-                     variable="activePartId">
-                  <equals
-                        value="org.eclipse.team.ui.GenericHistoryView">
-                  </equals>
-               </with>
                <count value="1" />
                <iterate>
                   <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+                  <test property="Git.hasRef" args="refs/heads/,refs/remotes" />
                </iterate>
             </and>
          </activeWhen>
@@ -2449,7 +2447,7 @@
          </class>
          <activeWhen>
             <iterate ifEmpty="false">
-               <instanceof value="org.eclipse.jgit.revplot.PlotCommit" />
+               <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
             </iterate>
          </activeWhen>
       </handler>
@@ -2462,7 +2460,8 @@
             <and>
                <count value="1" />
                <iterate>
-                  <instanceof value="org.eclipse.jgit.revplot.PlotCommit" />
+                  <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+                  <test property="Git.canCommit" />
                </iterate>
             </and>
          </activeWhen>
@@ -2518,7 +2517,7 @@
                class="org.eclipse.egit.ui.internal.commit.command.RevertHandler">
          </class>
          <activeWhen>
-            <reference definitionId="org.eclipse.egit.ui.commitsInRepository" />
+            <reference definitionId="org.eclipse.egit.ui.singleRepositoryCommit" />
          </activeWhen>
       </handler>
       <handler
@@ -2626,6 +2625,368 @@
                </and>
                <test property="GitSelection.projectsSingleRepository" />
             </or>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.OpenInCommitViewerCommand">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.OpenInCommitViewerHandler">
+         </class>
+         <activeWhen>
+             <iterate operator="or" ifEmpty="false">
+                <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit" />
+             </iterate>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.CompareWithWorkingTree">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.CompareWithWorkingTreeHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit" />
+               </iterate>
+               <with variable="activePart">
+                  <test property="GitHistory.isSingleFileHistory" value="resource" />
+               </with>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.CompareWithHead">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.CompareWithWorkingTreeHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit" />
+               </iterate>
+               <with variable="activePart">
+                  <test property="GitHistory.isSingleFileHistory" value="file" />
+               </with>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.ShowVersions">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.ShowVersionsHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.ShowBlame">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.ShowBlameHandler">
+         </class>
+         <activeWhen>
+            <reference definitionId="org.eclipse.egit.ui.singleFileCommit" />
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.OpenInTextEditorCommand">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.OpenInTextEditorHandler">
+         </class>
+         <activeWhen>
+            <reference definitionId="org.eclipse.egit.ui.singleFileCommit" />
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.PushCommit">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.PushCommitHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.CreateBranch">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.CreateBranchOnCommitHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.DeleteBranch">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.DeleteBranchOnCommitHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
+                     <test property="Git.hasRef" args="refs/heads/,refs/remotes/" />
+                  </adapt>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.CreateTag">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.CreateTagOnCommitHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.DeleteTag">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.DeleteTagOnCommitHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
+                     <test property="Git.hasRef" args="refs/tags/" />
+                  </adapt>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.CreatePatch">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.CreatePatchHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <adapt type="org.eclipse.egit.core.internal.IRepositoryCommit">
+                     <or>
+                        <test property="Git.parentCount" value="1" />
+                        <test property="Git.parentCount" value="0" />
+                     </or>
+                  </adapt>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.CherryPick">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.CherryPickHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+                  <test property="Git.isSafe" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.Merge">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.MergeHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+                  <test property="Git.isSafe" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.RebaseCurrent">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.RebaseCurrentHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+                  <test property="Git.isSafe" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.RebaseInteractiveCurrent">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.RebaseInteractiveCurrentHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+                  <test property="Git.isSafe" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.Reset">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.ResetHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+                  <test property="Git.isSafe" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.Revert">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.RevertHandler">
+         </class>
+         <activeWhen>
+            <iterate ifEmpty="false">
+               <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+               <test property="Git.isBare" value="false" />
+            </iterate>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.SetQuickdiffBaseline">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.SetQuickdiffBaselineHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.ResetQuickdiffBaseline">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.ResetQuickdiffBaselineHandler">
+         </class>
+         <activeWhen>
+            <iterate ifEmpty="false">
+               <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+            </iterate>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.Reword">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.RewordHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+                  <test property="Git.isSafe" />
+                  <test property="Git.parentCount" value="1" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.Edit">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.EditHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="1" />
+               <iterate>
+                  <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+                  <test property="Git.isSafe" />
+                  <test property="Git.parentCount" value="1" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.Squash">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.SquashHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <not>
+                  <count value="1" />
+               </not>
+               <iterate ifEmpty="false">
+                  <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+                  <test property="Git.isSafe" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.CompareVersions">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.CompareVersionsHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="2" />
+               <iterate>
+                  <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.history.CompareVersionsInTree">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.CompareVersionsInTreeHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count value="2" />
+               <iterate>
+                  <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+               </iterate>
+               <with variable="activePart">
+                  <test property="GitHistory.isSingleFileHistory" value="false" />
+               </with>
+            </and>
          </activeWhen>
       </handler>
    </extension>
@@ -2864,6 +3225,272 @@
    </extension>
    <extension
          point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.egit.ui.historyPageContributions?after=history.group">
+         <command
+              commandId="org.eclipse.egit.ui.history.CompareWithWorkingTree"
+              label="%HistoryCompareWithWorkspace.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.history.CompareWithHead"
+              label="%HistoryCompareWithHead.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.history.ShowVersions"
+              label="%HistoryShowVersions.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.history.OpenInTextEditorCommand"
+              label="%HistoryOpenInTextEditorCommand.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.history.ShowBlame"
+              label="%HistoryShowBlame.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"
+              label="%HistoryOpenInCommitViewer.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.history.CompareVersions"
+              label="%HistoryCompareVersions.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.history.CompareVersionsInTree"
+              label="%HistoryCompareVersionsInTree.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <separator name="##Checkout" visible="true" />
+         <command
+              commandId="org.eclipse.egit.ui.history.CheckoutCommand"
+              label="%HistoryCheckoutCommand.label"
+              style="push">
+            <visibleWhen>
+               <and>
+                  <count value="1"/>
+                  <iterate>
+                     <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+                     <test property="Git.isBare" value="false" />
+                     <test property="Git.hasMultipleRefs" args="refs/heads/" value="false" />
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.history.CheckoutCommand"
+              label="%HistoryCheckoutCommand.label2"
+              style="push">
+            <visibleWhen>
+               <and>
+                  <count value="1"/>
+                  <iterate>
+                     <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+                     <test property="Git.isBare" value="false" />
+                     <test property="Git.hasMultipleRefs" args="refs/heads/"/>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.history.PushCommit"
+              label="%HistoryPushCommit.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <separator name="##Refs" visible="true" />
+         <command
+              commandId="org.eclipse.egit.ui.history.CreateBranch"
+              label="%HistoryCreateBranch.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.history.DeleteBranch"
+              label="%HistoryDeleteBranch.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+               commandId="org.eclipse.ui.edit.rename"
+               icon="icons/obj16/editconfig.png"
+               label="%HistoryRenameBranch.label"
+               style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.history.CreateTag"
+              label="%HistoryCreateTag.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.history.DeleteTag"
+              label="%HistoryDeleteTag.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <separator name="##Commits" visible="true" />
+         <command
+              commandId="org.eclipse.egit.ui.history.CreatePatch"
+              label="%HistoryCreatePatch.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.history.CherryPick"
+              label="%HistoryCherryPick.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.history.Merge"
+              label="%HistoryMerge.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.RebaseCurrent"
+              label="%HistoryRebaseCurrent.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <command
+              commandId="org.eclipse.egit.ui.RebaseInteractiveCurrent"
+              label="%HistoryRebaseInteractive.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <separator name="##Reset" visible="true" />
+         <!-- Reset submenu -->
+         <menu
+               icon="icons/obj16/reset.png"
+               id="org.eclipse.egit.ui.history.resetMenu"
+               label="%HistoryResetMenu.label">
+            <visibleWhen>
+               <and>
+                  <count value="1" />
+                  <iterate>
+                     <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+                  </iterate>
+               </and>
+            </visibleWhen>
+            <command
+                 commandId="org.eclipse.egit.ui.history.Reset"
+                 label="%HistoryResetSoft.label"
+                 style="push">
+               <parameter name="org.eclipse.egit.ui.history.ResetMode" value="SOFT" />
+               <visibleWhen checkEnabled="true" />
+            </command>
+            <command
+                 commandId="org.eclipse.egit.ui.history.Reset"
+                 label="%HistoryResetMixed.label"
+                 style="push">
+               <parameter name="org.eclipse.egit.ui.history.ResetMode" value="MIXED" />
+               <visibleWhen checkEnabled="true" />
+            </command>
+            <command
+                 commandId="org.eclipse.egit.ui.history.Reset"
+                 label="%HistoryResetHard.label"
+                 style="push">
+               <parameter name="org.eclipse.egit.ui.history.ResetMode" value="HARD" />
+               <visibleWhen checkEnabled="true" />
+            </command>
+         </menu>
+         <command
+              commandId="org.eclipse.egit.ui.history.Revert"
+              label="%HistoryRevert.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+         <separator name="##Submenus" visible="true" />
+         <!-- QuickDiff submenu -->
+         <menu
+               id="org.eclipse.egit.ui.history.quickDiff"
+               label="%HistoryQuickdiffMenu.label">
+            <visibleWhen>
+               <and>
+                  <count value="1" />
+                  <iterate>
+                     <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+                  </iterate>
+               </and>
+            </visibleWhen>
+            <command
+                 commandId="org.eclipse.egit.ui.history.SetQuickdiffBaseline"
+                 label="%HistoryQuickdiffSet.label"
+                 style="push">
+               <visibleWhen checkEnabled="true" />
+            </command>
+            <command
+                 commandId="org.eclipse.egit.ui.history.ResetQuickdiffBaseline"
+                 label="%HistoryResetQuickDiffHead.label"
+                 style="push">
+               <parameter name="org.eclipse.egit.ui.history.ResetQuickdiffBaselineTarget" value="HEAD" />
+               <visibleWhen checkEnabled="true" />
+            </command>
+            <command
+                 commandId="org.eclipse.egit.ui.history.ResetQuickdiffBaseline"
+                 label="%HistoryResetQuickDiffHeadParent.label"
+                 style="push">
+               <parameter name="org.eclipse.egit.ui.history.ResetQuickdiffBaselineTarget" value="HEAD^1" />
+               <visibleWhen checkEnabled="true" />
+            </command>
+         </menu>
+         <!-- Modify submenu -->
+         <menu
+               id="org.eclipse.egit.ui.history.modify"
+               label="%HistoryModifyMenu.label">
+            <visibleWhen>
+               <iterate ifEmpty="false" >
+                  <instanceof value="org.eclipse.egit.ui.internal.history.SWTCommit" />
+               </iterate>
+            </visibleWhen>
+            <command
+                 commandId="org.eclipse.egit.ui.history.Reword"
+                 label="%HistoryModifyReword.label"
+                 style="push">
+               <visibleWhen checkEnabled="true" />
+            </command>
+            <command
+                 commandId="org.eclipse.egit.ui.history.Edit"
+                 label="%HistoryModifyEdit.label"
+                 style="push">
+               <visibleWhen checkEnabled="true" />
+            </command>
+            <command
+                 commandId="org.eclipse.egit.ui.history.Squash"
+                 label="%HistoryModifySquash.label"
+                 style="push">
+               <visibleWhen checkEnabled="true" />
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.egit.ui.historyPageContributions?after=additions">
+            <command
+               commandId="org.eclipse.egit.ui.ImportChangedProjectsCommandId"
+               icon="icons/obj16/import_prj.png"
+               label="%ImportChangedProjects.label"
+               style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+      </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.internal.reflogview.popup">
          <command
@@ -4812,17 +5439,6 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
-            locationURI="popup:org.eclipse.egit.ui.historyPageContributions?after=additions">
-            <command
-               commandId="org.eclipse.egit.ui.ImportChangedProjectsCommandId"
-               icon="icons/obj16/import_prj.png"
-               label="%ImportChangedProjects.label"
-               style="push">
-            <visibleWhen checkEnabled="true" />
-         </command>
-      </menuContribution>
-      <menuContribution
-            allPopups="false"
             locationURI="popup:team.main?after=group8">
          <command
                commandId="org.eclipse.egit.ui.team.AddToIndex"
@@ -5925,24 +6541,24 @@
          name="%HistoryViewCommands.extension.name"
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.CompareVersionsHandler"
             id="org.eclipse.egit.ui.history.CompareVersions"
             name="%CompareCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.CompareVersionsInTreeHandler"
             id="org.eclipse.egit.ui.history.CompareVersionsInTree"
             name="%CompareInTreeCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.CompareWithWorkingTreeHandler"
             id="org.eclipse.egit.ui.history.CompareWithWorkingTree"
             name="%CompareWithWorkTreeCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.ShowVersionsHandler"
+            id="org.eclipse.egit.ui.history.CompareWithHead"
+            name="%CompareWithHeadCommand.name">
+      </command>
+      <command
             id="org.eclipse.egit.ui.history.ShowVersions"
-            name="%OpenCommand.name">
+            name="%ShowVersionsCommand.name">
          <commandParameter
                id="org.eclipse.egit.ui.history.CompareMode"
                name="%CompareModeCommandParameter.name"
@@ -5950,37 +6566,30 @@
          </commandParameter>
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.CreatePatchHandler"
             id="org.eclipse.egit.ui.history.CreatePatch"
             name="%CreatePatchCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.CreateBranchOnCommitHandler"
             id="org.eclipse.egit.ui.history.CreateBranch"
             name="%CreateBranchCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.DeleteBranchOnCommitHandler"
             id="org.eclipse.egit.ui.history.DeleteBranch"
             name="%DeleteBranchCommand">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.CreateTagOnCommitHandler"
             id="org.eclipse.egit.ui.history.CreateTag"
             name="%CreateTagCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.DeleteTagOnCommitHandler"
             id="org.eclipse.egit.ui.history.DeleteTag"
             name="%DeleteTagCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.PushCommitHandler"
             id="org.eclipse.egit.ui.history.PushCommit"
             name="%PushCommit.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.ResetHandler"
             id="org.eclipse.egit.ui.history.Reset"
             name="%ResetCommand.name">
          <commandParameter
@@ -5990,7 +6599,6 @@
          </commandParameter>
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.ResetQuickdiffBaselineHandler"
             id="org.eclipse.egit.ui.history.ResetQuickdiffBaseline"
             name="%ResetQuickdiffCommand.name">
          <commandParameter
@@ -6000,7 +6608,6 @@
          </commandParameter>
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.SetQuickdiffBaselineHandler"
             id="org.eclipse.egit.ui.history.SetQuickdiffBaseline"
             name="%SetQuickdiffBaselineCommand.name">
       </command>
@@ -6009,12 +6616,10 @@
             name="%CheckoutCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.OpenInTextEditorHandler"
             id="org.eclipse.egit.ui.history.OpenInTextEditorCommand"
             name="%OpenInTextEditorCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.CherryPickHandler"
             id="org.eclipse.egit.ui.history.CherryPick"
             name="%CherryPickCommand.name">
       </command>
@@ -6023,7 +6628,6 @@
             name="%CherryPickCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.SquashHandler"
             id="org.eclipse.egit.ui.history.Squash"
             name="%SquashCommitsCommand.name">
       </command>
@@ -6033,7 +6637,6 @@
             name="%SquashCommitsCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.RewordHandler"
             id="org.eclipse.egit.ui.history.Reword"
             name="%RewordCommitCommand.name">
       </command>
@@ -6043,7 +6646,6 @@
             name="%RewordCommitCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.EditHandler"
             id="org.eclipse.egit.ui.history.Edit"
             name="%EditCommitCommand.name">
       </command>
@@ -6053,7 +6655,6 @@
             name="%EditCommitCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.RevertHandler"
             id="org.eclipse.egit.ui.history.Revert"
             name="%RevertCommand.name">
       </command>
@@ -6066,22 +6667,18 @@
             name="%ShowInHistoryCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.MergeHandler"
             id="org.eclipse.egit.ui.history.Merge"
             name="%MergeCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.RebaseCurrentHandler"
             id="org.eclipse.egit.ui.RebaseCurrent"
             name="%RebaseCurrentCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.RebaseInteractiveCurrentHandler"
             id="org.eclipse.egit.ui.RebaseInteractiveCurrent"
             name="%RebaseInteractiveCurrentHandler.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.OpenInCommitViewerHandler"
             id="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"
             name="%OpenInCommitViewerCommand.name">
       </command>
@@ -6102,7 +6699,6 @@
             name="%CheckoutCommand">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.history.command.ShowBlameHandler"
             id="org.eclipse.egit.ui.history.ShowBlame"
             name="%ShowBlameCommand.name">
       </command>
