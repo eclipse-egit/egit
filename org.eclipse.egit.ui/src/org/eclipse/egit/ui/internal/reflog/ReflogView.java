@@ -388,8 +388,6 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		site.setSelectionProvider(new RepositorySelectionProvider(
 				refLogTableTreeViewer, () -> getRepository()));
 
-		// site.setSelectionProvider(refLogTableTreeViewer);
-
 		addRefsChangedListener = Repository.getGlobalListenerList()
 				.addRefsChangedListener(this);
 
