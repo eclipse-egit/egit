@@ -27,6 +27,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.internal.IRepositoryCommit;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
@@ -71,6 +72,14 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 
 	protected Repository getRepository(ExecutionEvent event)
 			throws ExecutionException {
+		IStructuredSelection selection = getSelection(event);
+		if (!selection.isEmpty()) {
+			IRepositoryCommit commit = AdapterUtils
+					.adapt(selection.getFirstElement(), IRepositoryCommit.class);
+			if (commit != null) {
+				return commit.getRepository();
+			}
+		}
 		Object input = getInput(event);
 		if (input == null) {
 			return null;
@@ -182,11 +191,16 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 	protected ObjectId getSelectedCommitId(ExecutionEvent event)
 			throws ExecutionException {
 		IStructuredSelection selection = getSelection(event);
-		if (selection.size() != 1)
+		if (selection.size() != 1) {
 			throw new ExecutionException(
 					UIText.AbstractHistoryCommandHandler_ActionRequiresOneSelectedCommitMessage);
-
-		RevCommit commit = (RevCommit) selection.getFirstElement();
+		}
+		RevCommit commit = AdapterUtils.adapt(selection.getFirstElement(),
+				RevCommit.class);
+		if (commit == null) {
+			throw new ExecutionException(
+					UIText.AbstractHistoryCommandHandler_ActionRequiresOneSelectedCommitMessage);
+		}
 		return commit.getId();
 	}
 
@@ -227,10 +241,12 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 		List<RevCommit> commits = new ArrayList<>();
 		try (RevWalk walk = new RevWalk(repository)) {
 			for (Object element : selection.toList()) {
-				RevCommit commit = (RevCommit) element;
-				// Re-parse commit to clear effects of TreeFilter
-				RevCommit reparsed = walk.parseCommit(commit.getId());
-				commits.add(reparsed);
+				RevCommit commit = AdapterUtils.adapt(element, RevCommit.class);
+				if (commit != null) {
+					// Re-parse commit to clear effects of TreeFilter
+					RevCommit reparsed = walk.parseCommit(commit.getId());
+					commits.add(reparsed);
+				}
 			}
 		} catch (IOException e) {
 			throw new ExecutionException(e.getMessage(), e);
@@ -286,12 +302,17 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 	}
 
 	private List<Ref> getBranchesOfCommit(IStructuredSelection selection,
-			String head,
-			boolean hideCurrentBranch) {
+			String head, boolean hideCurrentBranch) {
 		final List<Ref> branchesOfCommit = new ArrayList<>();
-		if (selection.isEmpty())
+		if (selection.isEmpty()) {
 			return branchesOfCommit;
-		PlotCommit commit = (PlotCommit) selection.getFirstElement();
+		}
+		RevCommit revCommit = AdapterUtils.adapt(selection.getFirstElement(),
+				RevCommit.class);
+		if (!(revCommit instanceof PlotCommit)) {
+			return branchesOfCommit;
+		}
+		PlotCommit commit = (PlotCommit) revCommit;
 
 		int refCount = commit.getRefCount();
 		for (int i = 0; i < refCount; i++) {

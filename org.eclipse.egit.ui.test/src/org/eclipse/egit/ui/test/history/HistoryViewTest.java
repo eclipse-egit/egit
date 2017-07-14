@@ -275,7 +275,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		SWTBotTableItem item = table.getTableItem(0);
 		item.select();
 		ContextMenuHelper.clickContextMenu(table,
-				UIText.GitHistoryPage_CreateBranchMenuLabel);
+				util.getPluginLocalizedValue("HistoryCreateBranch.label"));
 		SWTBotShell dialog = bot
 				.shell(UIText.CreateBranchWizard_NewBranchTitle);
 		dialog.bot().textWithId("BranchName").setText("NewBranch");
@@ -305,7 +305,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		});
 
 		ContextMenuHelper.clickContextMenu(table,
-				UIText.GitHistoryPage_CreateTagMenuLabel);
+				util.getPluginLocalizedValue("HistoryCreateTag.label"));
 		SWTBotShell dialog = bot.shell(UIText.CreateTagDialog_NewTag);
 		dialog.bot().textWithLabel(UIText.CreateTagDialog_tagName)
 				.setText("NewTag");
