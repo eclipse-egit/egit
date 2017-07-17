@@ -16,6 +16,24 @@
       "revId": "e37f9278e125ee624a0794f1627c570463512918",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_ebdf404c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3953,
+      "author": {
+        "id": 128863
+      },
+      "writtenOn": "2017-07-17T19:13:07Z",
+      "side": 1,
+      "message": "Perfect, thanks for the comment. I\u0027ll update the code.",
+      "parentUuid": "c7880b39_f0b4913e",
+      "revId": "e37f9278e125ee624a0794f1627c570463512918",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
