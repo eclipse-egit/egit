@@ -3947,9 +3947,10 @@ public class StagingView extends ViewPart
 
 	private void commit(boolean pushUpstream) {
 		if (!isCommitWithoutFilesAllowed()) {
-			MessageDialog.openError(getSite().getShell(),
+			MessageDialog.open(MessageDialog.ERROR, getSite().getShell(),
 					UIText.StagingView_committingNotPossible,
-					UIText.StagingView_noStagedFiles);
+					UIText.StagingView_noStagedFiles, SWT.NONE,
+					UIText.StagingView_CloseDiaglog);
 			return;
 		}
 		if (!commitMessageComponent.checkCommitInfo())
