@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_70598184",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4163,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-07-17T19:05:39Z",
+      "side": 1,
+      "message": "Please rename to \"...ButtonLabel\". It\u0027s not a button, it\u0027s a label for a button.",
+      "revId": "9c2d2407bf0c8bbc45149db92838923e14edd1c9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
