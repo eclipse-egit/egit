@@ -133,6 +133,9 @@ public final class LaunchFinder {
 	private static boolean isAnyProjectInSourceContainers(
 			ISourceContainer[] containers, Set<IProject> projects,
 			IProgressMonitor monitor) {
+		if (containers == null) {
+			return false;
+		}
 		SubMonitor progress = SubMonitor.convert(monitor, containers.length);
 		for (ISourceContainer container : containers) {
 			if (progress.isCanceled()) {
