@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_1e967e51",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-07-21T14:19:52Z",
+      "side": 1,
+      "message": "This conflicts with\n\n  CommitGraphTable_OpenCommitLabel\u003dOpen in Commit \u0026Viewer",
+      "revId": "5c339783b30121878638657a580ab98fb96d3902",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
