@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c7880b39_9e0c2e49",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-07-21T14:27:51Z",
+      "side": 1,
+      "message": "The patch changes it to \u0027v\u0027... which is already taken. But so is \u0027o\u0027: \"Open\" on a single-file history page input; GitHistoryPage_OpenMenuLabel.",
+      "range": {
+        "startLine": 9,
+        "startChar": 41,
+        "endLine": 9,
+        "endChar": 44
+      },
+      "revId": "5c339783b30121878638657a580ab98fb96d3902",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_1e967e51",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 2
