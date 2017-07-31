@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_6e589406",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-07-31T21:26:02Z",
+      "side": 1,
+      "message": "yes, unfortunately contribution rate to egit-github dropped dramatically when Kevin stopped maintaining it. We get few contributions (mostly for the github client) once in a while and I keep creating releases whenever I release a new version of egit.\n\n@Michael: would you be interested to help maintaining egit-github ?",
+      "parentUuid": "c7880b39_387176cf",
+      "range": {
+        "startLine": 9,
+        "startChar": 54,
+        "endLine": 10,
+        "endChar": 32
+      },
+      "revId": "60e9ee978e5b92bbcfe94ae99278e77b5d0f4ea4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_78a93e97",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-31T12:19:00Z",
       "side": 1,
       "message": "And if that does occur, we will need to remember to update the feature dependency to egit in org.eclipse.mylyn.github-feature/feature.xml. I notice it still specifies \u003e\u003d 3.2.0. OTOH, the target platform in github.target uses EGit nightly.",
+      "range": {
+        "startLine": 12,
+        "startChar": 52,
+        "endLine": 13,
+        "endChar": 14
+      },
+      "revId": "60e9ee978e5b92bbcfe94ae99278e77b5d0f4ea4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_ce5348e5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-07-31T21:26:02Z",
+      "side": 1,
+      "message": "oops, I didn\u0027t notice that when creating egit-github releases since 3.2, will try to remember this for new releases",
+      "parentUuid": "c7880b39_78a93e97",
       "range": {
         "startLine": 12,
         "startChar": 52,
