@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_ec83ac0d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-08-01T12:35:56Z",
+      "side": 1,
+      "message": "With only one button labeled \"Close\" I think it should not matter how I close the dialog to have the setting updated. Currently it is updates only if I do close the dialog via the button. If I close the dialog by closing its window or hitting ESC, the setting is not updated even if I did toggle the checkbox before.\n\nPerhaps just ignoring the result here would be a possibility. What do you think?",
+      "revId": "5312430e31407cb5541996847687da09c9647e4e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
