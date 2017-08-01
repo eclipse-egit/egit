@@ -4163,6 +4163,9 @@ public class UIText extends NLS {
 	public static String UnmergedBranchDialog_Title;
 
 	/** */
+	public static String UnmergedBranchDialog_deleteButtonLabel;
+
+	/** */
 	public static String Untrack_untrack;
 
 	/** */

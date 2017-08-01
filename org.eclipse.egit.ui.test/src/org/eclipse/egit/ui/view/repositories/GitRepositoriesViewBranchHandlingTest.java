@@ -207,7 +207,8 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		SWTBotShell confirmPopup = bot
 				.shell(UIText.UnmergedBranchDialog_Title);
 		confirmPopup.activate();
-		confirmPopup.bot().button(IDialogConstants.OK_LABEL).click();
+		confirmPopup.bot().button(UIText.UnmergedBranchDialog_deleteButtonLabel)
+				.click();
 		refreshAndWait();
 		localItem = myRepoViewUtil.getLocalBranchesItem(view.bot().tree(),
 				repositoryFile);
