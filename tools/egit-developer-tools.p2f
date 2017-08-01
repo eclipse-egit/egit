@@ -127,9 +127,9 @@
         <repository location='http://update.eclemma.org/'/>
       </repositories>
     </iu>
-    <iu id='edu.umd.cs.findbugs.plugin.eclipse.feature.group' name='FindBugs Feature' version='0.0.0'>
+    <iu id='com.github.spotbugs.plugin.eclipse.feature.group' name='SpotBugs Feature' version='0.0.0'>
       <repositories size='1'>
-        <repository location='http://findbugs.cs.umd.edu/eclipse'/>
+        <repository location='https://spotbugs.github.io/eclipse/'/>
       </repositories>
     </iu>
     <iu id='org.eclipse.mylyn_feature.feature.group' name='Mylyn' version='0.0.0'>
