@@ -62,6 +62,9 @@
     <requirement
         name="fr.obeo.releng.targetplatform-feature.feature.group"
         optional="true"/>
+    <requirement
+        name="com.github.spotbugs.plugin.eclipse.feature.group"
+        optional="true"/>
     <repository
         url="http://download.eclipse.org/egit/updates-nightly"/>
     <repository
@@ -72,6 +75,8 @@
         url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/latest/"/>
     <repository
         url="http://andrei.gmxhome.de/eclipse/"/>
+    <repository
+        url="https://spotbugs.github.io/eclipse/"/>
   </setupTask>
   <setupTask
       xsi:type="setup:EclipseIniTask"
