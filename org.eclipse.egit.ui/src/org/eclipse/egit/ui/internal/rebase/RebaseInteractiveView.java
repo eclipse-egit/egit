@@ -50,10 +50,9 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.selection.RepositorySelectionProvider;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.bindings.keys.SWTKeySupport;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -99,6 +98,7 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.ToolBar;
@@ -112,6 +112,7 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IViewSite;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PartInitException;
@@ -406,7 +407,6 @@ public class RebaseInteractiveView extends ViewPart implements
 
 		getSite().setSelectionProvider(new RepositorySelectionProvider(
 				planTreeViewer, () -> currentRepository));
-
 	}
 
 	private void createCommandToolBar(Form theForm, FormToolkit toolkit) {
@@ -1018,25 +1018,25 @@ public class RebaseInteractiveView extends ViewPart implements
 		createContextMenuItems(planViewer);
 
 		MenuManager manager = new MenuManager();
-		manager.addMenuListener(new IMenuListener() {
-			@Override
-			public void menuAboutToShow(IMenuManager menuManager) {
-				boolean selectionNotEmpty = !planViewer.getSelection()
-						.isEmpty();
-				boolean rebaseNotStarted = !currentPlan
-						.hasRebaseBeenStartedYet();
-				boolean menuEnabled = selectionNotEmpty && rebaseNotStarted;
-				for (PlanContextMenuAction item : contextMenuItems)
-					item.setEnabled(menuEnabled);
+		Control c = planViewer.getControl();
+		manager.setRemoveAllWhenShown(true);
+		manager.addMenuListener(m -> {
+			c.setFocus();
+			boolean selectionNotEmpty = !planViewer.getSelection().isEmpty();
+			boolean rebaseNotStarted = currentPlan != null
+					&& !currentPlan.hasRebaseBeenStartedYet();
+			boolean menuEnabled = selectionNotEmpty && rebaseNotStarted;
+			if (menuEnabled) {
+				for (PlanContextMenuAction item : contextMenuItems) {
+					m.add(item);
+				}
 			}
+			m.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		});
-
-		for (PlanContextMenuAction item : contextMenuItems)
-			manager.add(item);
-
-		Menu menu = manager.createContextMenu(planViewer.getControl());
-		planViewer.getControl().setMenu(menu);
-		planViewer.getControl().addKeyListener(new ContextMenuKeyListener());
+		Menu menu = manager.createContextMenu(c);
+		c.setMenu(menu);
+		c.addKeyListener(new ContextMenuKeyListener());
+		getSite().registerContextMenu(manager, planTreeViewer);
 	}
 
 	private void createContextMenuItems(final TreeViewer planViewer) {

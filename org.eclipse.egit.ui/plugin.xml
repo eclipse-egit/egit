@@ -3492,6 +3492,16 @@
          </command>
       </menuContribution>
       <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.egit.ui.InteractiveRebaseView?after=additions">
+         <command
+               commandId="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"
+               label="%RebaseInteractiveOpenInCommitViewer.label"
+               style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
+      </menuContribution>
+      <menuContribution
             locationURI="popup:org.eclipse.egit.ui.internal.reflogview.popup">
          <command
                commandId="org.eclipse.egit.ui.internal.reflog.CheckoutCommand"
@@ -5269,17 +5279,59 @@
                <command
                      commandId="org.eclipse.egit.ui.AbortRebase"
                      style="push">
-                  <visibleWhen checkEnabled="true" />
+                  <visibleWhen>
+                     <or>
+                        <with variable="activeMenuSelection">
+                           <count value="1" />
+                           <iterate>
+                              <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode" />
+                              <test property="GitRepository.canAbortRebase" />
+                           </iterate>
+                        </with>
+                        <test
+                              property="GitSelection.projectsSingleRepository"
+                              args="canAbortRebase">
+                        </test>
+                     </or>
+                  </visibleWhen>
                </command>
                <command
                      commandId="org.eclipse.egit.ui.ContinueRebase"
                      style="push">
-                  <visibleWhen checkEnabled="true" />
+                  <visibleWhen>
+                     <or>
+                        <with variable="activeMenuSelection">
+                           <count value="1" />
+                           <iterate>
+                              <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode" />
+                              <test property="GitRepository.canContinueRebase" />
+                           </iterate>
+                        </with>
+                        <test
+                              property="GitSelection.projectsSingleRepository"
+                              args="canContinueRebase">
+                        </test>
+                     </or>
+                  </visibleWhen>
                </command>
                <command
                      commandId="org.eclipse.egit.ui.SkipRebase"
                      style="push">
-                  <visibleWhen checkEnabled="true" />
+                  <visibleWhen>
+                     <or>
+                        <with variable="activeMenuSelection">
+                           <count value="1" />
+                           <iterate>
+                              <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode" />
+                              <test property="GitRepository.canAbortRebase" />
+                           </iterate>
+                        </with>
+                        <test
+                              property="GitSelection.projectsSingleRepository"
+                              args="canAbortRebase">
+                        </test>
+                     </or>
+                  </visibleWhen>
                </command>
             </menu>
             <command
