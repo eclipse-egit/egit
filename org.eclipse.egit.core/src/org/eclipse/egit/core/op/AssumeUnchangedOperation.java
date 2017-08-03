@@ -13,14 +13,16 @@ package org.eclipse.egit.core.op;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
@@ -38,10 +40,13 @@ import org.eclipse.osgi.util.NLS;
  */
 public class AssumeUnchangedOperation implements IEGitOperation {
 	private final Collection<? extends IResource> rsrcList;
+	private final Collection<IPath> locations;
+
+	private Repository db;
 
 	private final IdentityHashMap<Repository, DirCache> caches;
 
-	private boolean assumeUnchanged;
+	private final boolean assumeUnchanged;
 
 	/**
 	 * Create a new operation to ignore changes in tracked files
@@ -57,13 +62,37 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 	public AssumeUnchangedOperation(
 			final Collection<? extends IResource> rsrcs, boolean assumeUnchanged) {
 		rsrcList = rsrcs;
+		locations = Collections.emptyList();
+		caches = new IdentityHashMap<Repository, DirCache>();
+		this.assumeUnchanged = assumeUnchanged;
+	}
+
+	/**
+	 * Create a new operation to ignore changes in tracked files
+	 *
+	 * @param repository
+	 *            a Git repository
+	 * @param locations
+	 *            collection of {@link IPath}s which should be ignored when
+	 *            looking for changes or committing.
+	 * @param assumeUnchanged
+	 *            {@code true} to set the assume-valid flag in the git index
+	 *            entry, {@code false} to unset the assume-valid flag in the git
+	 *            index entry
+	 */
+	public AssumeUnchangedOperation(final Repository repository,
+			final Collection<IPath> locations,
+			boolean assumeUnchanged) {
+		this.db = repository;
+		this.locations = locations;
+		this.rsrcList = Collections.emptyList();
 		caches = new IdentityHashMap<Repository, DirCache>();
 		this.assumeUnchanged = assumeUnchanged;
 	}
 
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
-		SubMonitor progress = SubMonitor.convert(monitor, rsrcList.size() * 2);
+		SubMonitor progress = SubMonitor.convert(monitor, (rsrcList.size() + locations.size()) * 2);
 		progress.setTaskName(CoreText.AssumeUnchangedOperation_adding);
 
 		caches.clear();
@@ -71,6 +100,10 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 		try {
 			for (IResource resource : rsrcList) {
 				assumeValid(resource);
+				progress.worked(1);
+			}
+			for (IPath location : locations) {
+				assumeValid(location);
 				progress.worked(1);
 			}
 
@@ -115,8 +148,11 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 		if (rm == null) {
 			return;
 		}
-		final Repository db = rm.getRepository();
+		this.db = rm.getRepository();
+		assumeValid(resource.getLocation());
+	}
 
+	private void assumeValid(final IPath location) throws CoreException {
 		DirCache cache = caches.get(db);
 		if (cache == null) {
 			try {
@@ -127,16 +163,11 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 			caches.put(db, cache);
 		}
 
-		final String path = rm.getRepoRelativePath(resource);
-		if (resource instanceof IContainer) {
-			for (final DirCacheEntry ent : cache.getEntriesWithin(path)) {
-				ent.setAssumeValid(assumeUnchanged);
-			}
-		} else {
-			final DirCacheEntry ent = cache.getEntry(path);
-			if (ent != null) {
-				ent.setAssumeValid(assumeUnchanged);
-			}
+		IPath dbDir = new Path(db.getWorkTree().getAbsolutePath());
+		final String path = location.makeRelativeTo(dbDir).toString();
+		final DirCacheEntry ent = cache.getEntry(path);
+		if (ent != null) {
+			ent.setAssumeValid(assumeUnchanged);
 		}
 	}
 }
