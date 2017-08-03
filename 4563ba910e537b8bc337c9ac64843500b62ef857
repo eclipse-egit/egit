@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_ea3f03e1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2809,
+      "author": {
+        "id": 12380
+      },
+      "writtenOn": "2017-08-03T22:57:56Z",
+      "side": 1,
+      "message": "Several other places don\u0027t do it here. This got into here by copy/paste another action\u0027 section.",
+      "parentUuid": "c7880b39_2fd2fd43",
+      "revId": "4563ba910e537b8bc337c9ac64843500b62ef857",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_0fdf014f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 1
@@ -47,6 +65,24 @@
       "writtenOn": "2017-08-03T16:54:21Z",
       "side": 1,
       "message": "Strange indentation.",
+      "revId": "4563ba910e537b8bc337c9ac64843500b62ef857",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_0aae0fa0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2823,
+      "author": {
+        "id": 12380
+      },
+      "writtenOn": "2017-08-03T22:57:56Z",
+      "side": 1,
+      "message": "was done by save action",
+      "parentUuid": "c7880b39_0fdf014f",
       "revId": "4563ba910e537b8bc337c9ac64843500b62ef857",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
