@@ -16,6 +16,40 @@
       "revId": "4563ba910e537b8bc337c9ac64843500b62ef857",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_2fd2fd43",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2809,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-08-03T16:54:21Z",
+      "side": 1,
+      "message": "We use curly braces even for single-statement ifs.",
+      "revId": "4563ba910e537b8bc337c9ac64843500b62ef857",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_0fdf014f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2823,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-08-03T16:54:21Z",
+      "side": 1,
+      "message": "Strange indentation.",
+      "revId": "4563ba910e537b8bc337c9ac64843500b62ef857",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
