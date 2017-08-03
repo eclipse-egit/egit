@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_6fc8859c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-08-03T16:51:49Z",
+      "side": 1,
+      "message": "If you push a new patch set, please follow the EGit commit guidelines.[1]\n\n[1] http://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines\n\nBasically, we don\u0027t mention the bug number in the title line but in a footer line:\n\n  Bug: 381158",
+      "revId": "4563ba910e537b8bc337c9ac64843500b62ef857",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
