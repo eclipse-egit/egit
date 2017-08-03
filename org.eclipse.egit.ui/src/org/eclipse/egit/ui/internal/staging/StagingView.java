@@ -22,6 +22,7 @@ import static org.eclipse.egit.ui.internal.CommonUtils.runCommand;
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -61,8 +62,11 @@ import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.job.RuleUtil;
+import org.eclipse.egit.core.op.AssumeUnchangedOperation;
 import org.eclipse.egit.core.op.CommitOperation;
+import org.eclipse.egit.core.op.UntrackOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -101,6 +105,7 @@ import org.eclipse.egit.ui.internal.push.PushMode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.selection.MultiViewerSelectionProvider;
 import org.eclipse.egit.ui.internal.selection.RepositorySelectionProvider;
+import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ControlContribution;
 import org.eclipse.jface.action.IAction;
@@ -2737,6 +2742,10 @@ public class StagingView extends ViewPart
 				boolean addLaunchMergeTool = availableActions.contains(StagingEntry.Action.LAUNCH_MERGE_TOOL);
 				boolean addReplaceWithOursTheirsMenu = availableActions
 						.contains(StagingEntry.Action.REPLACE_WITH_OURS_THEIRS_MENU);
+				boolean addAssumeUnchanged = availableActions
+						.contains(StagingEntry.Action.ASSUME_UNCHANGED);
+				boolean addUntrack = availableActions
+						.contains(StagingEntry.Action.UNTRACK);
 
 				if (addStage)
 					menuMgr.add(
@@ -2797,6 +2806,23 @@ public class StagingView extends ViewPart
 					replaceWithMenu.add(oursTheirsMenu);
 					menuMgr.add(replaceWithMenu);
 				}
+				if (addAssumeUnchanged)
+					menuMgr.add(
+							new Action(UIText.StagingView_Assume_Unchanged,
+									UIIcons.ASSUME_UNCHANGED) {
+								@Override
+								public void run() {
+									assumeUnchanged(selection);
+								}
+							});
+				if (addUntrack)
+					menuMgr.add(new Action(UIText.StagingView_Untrack,
+							UIIcons.UNTRACK) {
+								@Override
+								public void run() {
+							untrack(selection);
+								}
+							});
 				menuMgr.add(new Separator());
 				menuMgr.add(createShowInMenu());
 			}
@@ -3389,6 +3415,24 @@ public class StagingView extends ViewPart
 		default:
 			// unstaged
 		}
+	}
+
+	private void assumeUnchanged(@NonNull IStructuredSelection selection) {
+		IResource[] selectedResources = SelectionUtils.getSelectedResources(selection);
+		if (selectedResources.length == 0)
+			return;
+		JobUtil.scheduleUserJob(
+				new AssumeUnchangedOperation(Arrays.asList(selectedResources), true),
+				UIText.AssumeUnchanged_assumeUnchanged,
+				JobFamilies.ASSUME_NOASSUME_UNCHANGED);
+	}
+
+	private void untrack(@NonNull IStructuredSelection selection) {
+		IResource[] selectedResources = SelectionUtils.getSelectedResources(selection);
+		if (selectedResources.length == 0)
+			return;
+		JobUtil.scheduleUserJob(new UntrackOperation(Arrays.asList(selectedResources)),
+				UIText.Untrack_untrack, JobFamilies.UNTRACK);
 	}
 
 	private void resetPathsToExpand() {
