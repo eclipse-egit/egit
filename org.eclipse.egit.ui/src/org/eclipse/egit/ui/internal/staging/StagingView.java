@@ -61,8 +61,11 @@ import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.job.RuleUtil;
+import org.eclipse.egit.core.op.AssumeUnchangedOperation;
 import org.eclipse.egit.core.op.CommitOperation;
+import org.eclipse.egit.core.op.UntrackOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -2738,8 +2741,12 @@ public class StagingView extends ViewPart
 				boolean addLaunchMergeTool = availableActions.contains(StagingEntry.Action.LAUNCH_MERGE_TOOL);
 				boolean addReplaceWithOursTheirsMenu = availableActions
 						.contains(StagingEntry.Action.REPLACE_WITH_OURS_THEIRS_MENU);
+				boolean addAssumeUnchanged = availableActions
+						.contains(StagingEntry.Action.ASSUME_UNCHANGED);
+				boolean addUntrack = availableActions
+						.contains(StagingEntry.Action.UNTRACK);
 
-				if (addStage)
+				if (addStage) {
 					menuMgr.add(
 							new Action(UIText.StagingView_StageItemMenuLabel,
 									UIIcons.ELCL16_ADD) {
@@ -2748,7 +2755,8 @@ public class StagingView extends ViewPart
 							stage(selection);
 						}
 					});
-				if (addUnstage)
+				}
+				if (addUnstage) {
 					menuMgr.add(
 							new Action(UIText.StagingView_UnstageItemMenuLabel,
 									UIIcons.UNSTAGE) {
@@ -2757,39 +2765,46 @@ public class StagingView extends ViewPart
 							unstage(selection);
 						}
 					});
+				}
 				boolean selectionIncludesNonWorkspaceResources = selectionIncludesNonWorkspaceResources(fileSelection);
-				if (addReplaceWithFileInGitIndex)
-					if (selectionIncludesNonWorkspaceResources)
+				if (addReplaceWithFileInGitIndex) {
+					if (selectionIncludesNonWorkspaceResources) {
 						menuMgr.add(new ReplaceAction(
 								UIText.StagingView_replaceWithFileInGitIndex,
 								fileSelection, false));
-					else
+					} else {
 						menuMgr.add(createItem(
 								UIText.StagingView_replaceWithFileInGitIndex,
 								ActionCommands.DISCARD_CHANGES_ACTION,
 								fileSelection)); // replace with index
-				if (addReplaceWithHeadRevision)
-					if (selectionIncludesNonWorkspaceResources)
+					}
+				}
+				if (addReplaceWithHeadRevision) {
+					if (selectionIncludesNonWorkspaceResources) {
 						menuMgr.add(new ReplaceAction(
 								UIText.StagingView_replaceWithHeadRevision,
 								fileSelection, true));
-					else
+					} else {
 						menuMgr.add(createItem(
 								UIText.StagingView_replaceWithHeadRevision,
 								ActionCommands.REPLACE_WITH_HEAD_ACTION,
 								fileSelection));
+					}
+				}
 				if (addIgnore) {
 					if (!stagingFolderSet.isEmpty()) {
 						menuMgr.add(new IgnoreFoldersAction(stagingFolderSet));
 					}
 					menuMgr.add(new IgnoreAction(fileSelection));
 				}
-				if (addDelete)
+				if (addDelete) {
 					menuMgr.add(new DeleteAction(fileSelection));
-				if (addLaunchMergeTool)
+				}
+				if (addLaunchMergeTool) {
 					menuMgr.add(createItem(UIText.StagingView_MergeTool,
 							ActionCommands.MERGE_TOOL_ACTION,
 							fileSelection));
+				}
 				if (addReplaceWithOursTheirsMenu) {
 					MenuManager replaceWithMenu = new MenuManager(
 							UIText.StagingView_ReplaceWith);
@@ -2797,6 +2812,25 @@ public class StagingView extends ViewPart
 					oursTheirsMenu.initialize(getSite());
 					replaceWithMenu.add(oursTheirsMenu);
 					menuMgr.add(replaceWithMenu);
+				}
+				if (addAssumeUnchanged) {
+					menuMgr.add(
+							new Action(UIText.StagingView_Assume_Unchanged,
+									UIIcons.ASSUME_UNCHANGED) {
+								@Override
+								public void run() {
+									assumeUnchanged(selection);
+								}
+							});
+				}
+				if (addUntrack) {
+					menuMgr.add(new Action(UIText.StagingView_Untrack,
+							UIIcons.UNTRACK) {
+						@Override
+						public void run() {
+							untrack(selection);
+						}
+					});
 				}
 				menuMgr.add(new Separator());
 				menuMgr.add(createShowInMenu());
@@ -3389,6 +3423,46 @@ public class StagingView extends ViewPart
 			return;
 		default:
 			// unstaged
+		}
+	}
+
+	private void assumeUnchanged(@NonNull IStructuredSelection selection) {
+		List<IPath> locations = new ArrayList<>();
+		collectPaths(selection.toList(), locations);
+
+		if (locations.isEmpty()) {
+			return;
+		}
+
+		JobUtil.scheduleUserJob(
+				new AssumeUnchangedOperation(currentRepository, locations, true),
+				UIText.AssumeUnchanged_assumeUnchanged,
+				JobFamilies.ASSUME_NOASSUME_UNCHANGED);
+	}
+
+	private void untrack(@NonNull IStructuredSelection selection) {
+		List<IPath> locations = new ArrayList<>();
+		collectPaths(selection.toList(), locations);
+
+		if (locations.isEmpty()) {
+			return;
+		}
+
+		JobUtil.scheduleUserJob(
+				new UntrackOperation(currentRepository, locations),
+				UIText.Untrack_untrack, JobFamilies.UNTRACK);
+	}
+
+	private void collectPaths(Object o, List<IPath> result) {
+		if (o instanceof Iterable<?>) {
+			((Iterable<?>) o).forEach(child -> collectPaths(child, result));
+		} else if (o instanceof StagingFolderEntry) {
+			StagingViewContentProvider contentProvider = getContentProvider(unstagedViewer);
+			List<StagingEntry> entries = contentProvider
+					.getStagingEntriesFiltered((StagingFolderEntry) o);
+			collectPaths(entries, result);
+		} else if (o instanceof StagingEntry) {
+			result.add(AdapterUtils.adapt(o, IPath.class));
 		}
 	}
 
