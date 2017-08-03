@@ -333,6 +333,12 @@ public class UIIcons {
 	/** "Unstage all" icon */
 	public final static ImageDescriptor UNSTAGE_ALL;
 
+	/** Assume Unchanged icon */
+	public final static ImageDescriptor ASSUME_UNCHANGED;
+
+	/** Untrack icon */
+	public final static ImageDescriptor UNTRACK;
+
 	/** {@link #BRANCH} overlaid with {@link #OVR_CHECKEDOUT}. */
 	public final static ImageDescriptor CHECKED_OUT_BRANCH;
 
@@ -447,6 +453,8 @@ public class UIIcons {
 		STATE_SORT = map("obj16/state_sort_co.png"); //$NON-NLS-1$
 		UNSTAGE = map("obj16/unstage.png"); //$NON-NLS-1$
 		UNSTAGE_ALL = map("elcl16/unstage_all.png"); //$NON-NLS-1$
+		ASSUME_UNCHANGED = map("obj16/assume_unchanged.png"); //$NON-NLS-1$
+		UNTRACK = map("obj16/untrack.png"); //$NON-NLS-1$
 		CHECKED_OUT_BRANCH = new DecorationOverlayDescriptor(BRANCH,
 				OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
 	}
