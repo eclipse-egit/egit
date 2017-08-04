@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_cad967ec",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2809,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-08-04T05:53:53Z",
+      "side": 1,
+      "message": "Egit rules have changes. Originally they even said _not_ to use curly braces in such cases. At some point it was switched, but no global clean-up was done. Instead we fix it as we go in code that we change anyway. New code, even if copy-pasted, should follow the current rules.\n\nI know it can be confusing. :-)",
+      "parentUuid": "c7880b39_ea3f03e1",
+      "revId": "4563ba910e537b8bc337c9ac64843500b62ef857",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_0fdf014f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 1
