@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_9ea6c409",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3460,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-08-04T13:22:02Z",
+      "side": 1,
+      "message": "Now there\u0027s another problem relating to filters. This applies the action to all files, even filtered out ones. Stage/unstage applies only to visible nodes. We should be consistent.\n\nTo see what I mean: have a test project with a folder foo containing two files A.txt and B.txt. Modify both. Enter \"foo/A\" in the filter box in the staging view\u0027s toolbar with Compact Tree View enabled. There should be only foo/A.txt visible in the unstaged viewer. Now choose \"Untrack\". Staged viewer shows deletion of foo/A.txt. Now clear the filter text in the toolbar. Oops, foo/B.txt also got removed from the index.\n\nLooking at stage(), I see it uses contentProvider.getStagingEntriesFiltered() to get the children of a StagingFolderEntry. I think that should be done here, too.\n\n(I also see that stage() has a funny \"if StagingEntry {} else if StagingFolderEntry {} else {}\" structure. I wonder what that else-branch could be good for... might be a leftover from old code. AFAIK we only have StagingEntry or StagingFolderEntry elements in that tree. unstage() doesn\u0027t have a corresponding else part either. Looks like some more clean-up and duplicate code unification would be needed here; but maybe in a later commit.)",
+      "range": {
+        "startLine": 3460,
+        "startChar": 54,
+        "endLine": 3460,
+        "endChar": 68
+      },
+      "revId": "ae96d52288b3e7f118b2f64d04260c74370b75c4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
