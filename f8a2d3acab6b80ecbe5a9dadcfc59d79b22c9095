@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_d4866d9c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-08-05T22:42:15Z",
+      "side": 1,
+      "message": "this check could be done earlier in onWorkingTreeModified so we don\u0027t need to enter this method if this option is on and the workbench isn\u0027t active",
+      "range": {
+        "startLine": 779,
+        "startChar": 0,
+        "endLine": 781,
+        "endChar": 20
+      },
+      "revId": "f8a2d3acab6b80ecbe5a9dadcfc59d79b22c9095",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
