@@ -22,6 +22,30 @@
       "revId": "f8a2d3acab6b80ecbe5a9dadcfc59d79b22c9095",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_74abf9d4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-08-06T18:38:26Z",
+      "side": 1,
+      "message": "I don\u0027t think so. We\u0027ll still want to merge the event so that when the workbench becomes active, we do the right refresh.\n\nBut I\u0027ll take a look again when I implement the missing part: the RepositoryChangeScanner (see commit message).",
+      "parentUuid": "c7880b39_d4866d9c",
+      "range": {
+        "startLine": 779,
+        "startChar": 0,
+        "endLine": 781,
+        "endChar": 20
+      },
+      "revId": "f8a2d3acab6b80ecbe5a9dadcfc59d79b22c9095",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
