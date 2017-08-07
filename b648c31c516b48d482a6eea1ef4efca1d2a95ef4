@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_12a2c52b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-08-07T12:14:06Z",
+      "side": 1,
+      "message": "remove this blank line, footers should be all in the last paragraph",
+      "revId": "b648c31c516b48d482a6eea1ef4efca1d2a95ef4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
