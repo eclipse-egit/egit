@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2017, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,7 +21,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitTag;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.lib.AnyObjectId;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.CoreConfig.EolStreamType;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
@@ -47,19 +51,22 @@ public class CommitFileRevision extends GitFileRevision implements
 
 	private ObjectId blobId;
 
+	private CheckoutMetadata metadata;
+
 	CommitFileRevision(final Repository repo, final RevCommit rc,
 			final String path) {
-		this(repo, rc, path, null);
+		this(repo, rc, path, null, null);
 	}
 
 	CommitFileRevision(final Repository repo, final RevCommit rc,
-			final String path, final ObjectId blob) {
+			final String path, final ObjectId blob, CheckoutMetadata metadata) {
 		super(path);
 		db = repo;
 		commit = rc;
 		author = rc.getAuthorIdent();
 		this.path = path;
 		blobId = blob;
+		this.metadata = metadata;
 	}
 
 	@Override
@@ -75,9 +82,10 @@ public class CommitFileRevision extends GitFileRevision implements
 	@Override
 	public IStorage getStorage(final IProgressMonitor monitor)
 			throws CoreException {
-		if (blobId == null)
-			blobId = locateBlobObjectId();
-		return new CommitBlobStorage(db, path, blobId, commit);
+		if (blobId == null) {
+			locateBlobObjectId();
+		}
+		return new CommitBlobStorage(db, path, blobId, commit, metadata);
 	}
 
 	@Override
@@ -107,7 +115,7 @@ public class CommitFileRevision extends GitFileRevision implements
 
 	@Override
 	public ITag[] getTags() {
-		final Collection<GitTag> ret = new ArrayList<GitTag>();
+		final Collection<GitTag> ret = new ArrayList<>();
 		for (final Map.Entry<String, Ref> tag : db.getTags().entrySet()) {
 			Ref ref = db.peel(tag.getValue());
 			ObjectId refId = ref.getPeeledObjectId();
@@ -129,14 +137,18 @@ public class CommitFileRevision extends GitFileRevision implements
 		return commit;
 	}
 
-	private ObjectId locateBlobObjectId() throws CoreException {
-		try {
-			final TreeWalk w = TreeWalk.forPath(db, path, commit.getTree());
+	private void locateBlobObjectId() throws CoreException {
+		try (TreeWalk w = TreeWalk.forPath(db, path, commit.getTree())) {
 			if (w == null)
 				throw new CoreException(Activator.error(NLS.bind(
 						CoreText.CommitFileRevision_pathNotIn, commit.getId().name(),
 						path), null));
-			return w.getObjectId(0);
+			blobId = w.getObjectId(0);
+			final EolStreamType eolStreamType = w
+					.getEolStreamType(TreeWalk.OperationType.CHECKOUT_OP);
+			final String filterCommand = w
+					.getFilterCommand(Constants.ATTR_FILTER_TYPE_SMUDGE);
+			metadata = new CheckoutMetadata(eolStreamType, filterCommand);
 		} catch (IOException e) {
 			throw new CoreException(Activator.error(NLS.bind(
 					CoreText.CommitFileRevision_errorLookingUpPath, commit

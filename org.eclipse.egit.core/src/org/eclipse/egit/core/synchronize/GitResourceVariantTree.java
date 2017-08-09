@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2013 IBM Corporation and others.
+ * Copyright (c) 2010, 2017 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -118,13 +118,13 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 		IResourceVariant variant = null;
 		ObjectId objectId = getObjectId(cachedData.getDiffEntry());
 		if (!objectId.equals(zeroId())) {
-			if (resource.getType() == IResource.FILE)
+			if (resource.getType() == IResource.FILE) {
 				variant = new GitRemoteFile(repo, getCommitId(gsd), objectId,
-						path);
-			else
+						path, cachedData.getDiffEntry().getMetadata());
+			} else {
 				variant = new GitRemoteFolder(repo, cachedData,
 						getCommitId(gsd), objectId, path);
-
+			}
 			cache.put(resource, variant);
 		}
 
