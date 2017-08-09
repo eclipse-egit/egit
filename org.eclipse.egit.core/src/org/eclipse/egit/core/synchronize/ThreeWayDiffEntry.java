@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2015 Dariusz Luksza <dariusz@luksza.org> and others.
+ * Copyright (C) 2011, 2017 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,7 +20,9 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.lib.AbbreviatedObjectId;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.MutableObjectId;
 import org.eclipse.jgit.lib.ObjectId;
@@ -133,6 +135,11 @@ public final class ThreeWayDiffEntry {
 			walk.getObjectId(idBuf, 2);
 			e.remoteId = AbbreviatedObjectId.fromObjectId(idBuf);
 
+			if (!walk.isSubtree()) {
+				e.metadata = new CheckoutMetadata(walk.getEolStreamType(), walk
+						.getFilterCommand(Constants.ATTR_FILTER_TYPE_SMUDGE));
+			}
+
 			boolean localSameAsBase = e.localId.equals(e.baseId);
 			if (!A_ZERO.equals(e.localId) && localSameAsBase
 					&& e.baseId.equals(e.remoteId)) {
@@ -201,6 +208,8 @@ public final class ThreeWayDiffEntry {
 
 	private AbbreviatedObjectId localId;
 
+	private CheckoutMetadata metadata;
+
 	private boolean isTree = false;
 
 	/**
@@ -252,6 +261,13 @@ public final class ThreeWayDiffEntry {
 	 */
 	public Direction getDirection() {
 		return direction;
+	}
+
+	/**
+	 * @return the {@link CheckoutMetadata}, or {@code null}.
+	 */
+	public CheckoutMetadata getMetadata() {
+		return metadata;
 	}
 
 	@Override
