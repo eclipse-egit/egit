@@ -112,15 +112,22 @@ public class IndexDiffCacheEntry {
 		}
 	};
 
-	private final Set<ListenerHandle> indexChangedListenerHandles = new HashSet<>();
-
-	private final Set<ListenerHandle> refsChangedListenerHandles = new HashSet<>();
+	private final Set<ListenerHandle> listenerHandles = new HashSet<>();
 
 	/**
 	 * Keep hard references to submodules -- we need them in the cache at least
 	 * as long as the parent repository.
 	 */
-	private final Set<Repository> submodules = new HashSet<>();
+	private final Map<Repository, String> submodules = new HashMap<>();
+
+	private final IndexDiffChangedListener submoduleListener = (submodule,
+			diffData) -> {
+		String path = submodules.get(submodule);
+		if (path != null) {
+			scheduleUpdateJob(Collections.singletonList(path),
+					Collections.emptyList());
+		}
+	};
 
 	private IResourceChangeListener resourceChangeListener;
 
@@ -140,24 +147,27 @@ public class IndexDiffCacheEntry {
 			addIndexDiffChangedListener(listener);
 		}
 
-		indexChangedListenerHandles.add(repository.getListenerList()
+		listenerHandles.add(repository.getListenerList()
 				.addIndexChangedListener(indexChangedListener));
-		refsChangedListenerHandles.add(repository.getListenerList()
+		listenerHandles.add(repository.getListenerList()
 				.addRefsChangedListener(refsChangedListener));
-		// Add the listeners also to all submodules in order to be notified when
+		// Add a listener also to all submodules in order to be notified when
 		// a branch switch or so occurs in a submodule.
 		try (SubmoduleWalk walk = SubmoduleWalk.forIndex(repository)) {
 			while (walk.next()) {
 				Repository submodule = walk.getRepository();
-				if (submodule != null) {
+				if (submodule != null && !submodule.isBare()) {
 					Repository cached = org.eclipse.egit.core.Activator
 							.getDefault().getRepositoryCache().lookupRepository(
 									submodule.getDirectory().getAbsoluteFile());
-					indexChangedListenerHandles.add(cached.getListenerList()
-							.addIndexChangedListener(indexChangedListener));
-					refsChangedListenerHandles.add(cached.getListenerList()
-							.addRefsChangedListener(refsChangedListener));
-					submodules.add(cached);
+					submodules.put(cached, walk.getPath());
+					IndexDiffCacheEntry submoduleCache = org.eclipse.egit.core.Activator
+							.getDefault().getIndexDiffCache()
+							.getIndexDiffCacheEntry(cached);
+					if (submoduleCache != null) {
+						submoduleCache
+								.addIndexDiffChangedListener(submoduleListener);
+					}
 					submodule.close();
 				}
 			}
@@ -769,14 +779,10 @@ public class IndexDiffCacheEntry {
 	 * are canceled.
 	 */
 	public void dispose() {
-		for (ListenerHandle h : indexChangedListenerHandles) {
+		for (ListenerHandle h : listenerHandles) {
 			h.remove();
 		}
-		for (ListenerHandle h : refsChangedListenerHandles) {
-			h.remove();
-		}
-		indexChangedListenerHandles.clear();
-		refsChangedListenerHandles.clear();
+		listenerHandles.clear();
 		submodules.clear();
 		if (resourceChangeListener != null) {
 			ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
