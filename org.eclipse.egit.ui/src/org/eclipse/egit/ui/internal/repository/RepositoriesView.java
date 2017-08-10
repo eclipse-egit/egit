@@ -521,17 +521,14 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		synchronized (repositories) {
 			repositories.clear();
 			unregisterRepositoryListener();
+			Set<File> dirs = new HashSet<>();
 			// listen for repository changes
 			for (String dir : repositoryUtil.getConfiguredRepositories()) {
 				File repoDir = new File(dir);
 				try {
 					Repository repo = repositoryCache.lookupRepository(repoDir);
-					myListeners.add(repo.getListenerList()
-							.addIndexChangedListener(myIndexChangedListener));
-					myListeners.add(repo.getListenerList()
-							.addRefsChangedListener(myRefsChangedListener));
-					myListeners.add(repo.getListenerList()
-							.addConfigChangedListener(myConfigChangeListener));
+					listenToRepository(repo);
+					dirs.add(repo.getDirectory());
 					repositories.add(repo);
 				} catch (IOException e) {
 					String message = NLS
@@ -541,7 +538,24 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 					repositoryUtil.removeDir(repoDir);
 				}
 			}
+			// Also listen to submodules and nested git repositories.
+			for (Repository repo : org.eclipse.egit.core.Activator.getDefault()
+					.getRepositoryCache().getAllRepositories()) {
+				if (!dirs.contains(repo.getDirectory())) {
+					listenToRepository(repo);
+					dirs.add(repo.getDirectory());
+				}
+			}
 		}
+	}
+
+	private void listenToRepository(Repository repo) {
+		myListeners.add(repo.getListenerList()
+				.addIndexChangedListener(myIndexChangedListener));
+		myListeners.add(repo.getListenerList()
+				.addRefsChangedListener(myRefsChangedListener));
+		myListeners.add(repo.getListenerList()
+				.addConfigChangedListener(myConfigChangeListener));
 	}
 
 	@Override
