@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_8cef6c26",
+        "filename": "org.eclipse.egit.ui/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 857
+      },
+      "writtenOn": "2017-08-10T14:08:43Z",
+      "side": 1,
+      "message": "This will be soon replaced with com.github.spotbugs, as the Maven plugin moved under the umbrella of the SpotBugs project \u003chttps://github.com/spotbugs/spotbugs-maven-plugin\u003e\n\nSee \u003chttps://github.com/spotbugs/spotbugs/issues/8\u003e\n\nI expect the first version to be 3.1.0-RC5.",
+      "revId": "05cd00f55a17454db8d3672ebd1edf2179691031",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
