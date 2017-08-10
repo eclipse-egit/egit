@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_0c461cfa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-08-10T13:38:59Z",
+      "side": 1,
+      "message": "mention why this is done in the commit message, looking at the javadoc of that method this seems to be the reason:\n\n\"Since instances of this class do not maintain any state, they can be shared between multiple clients.\"",
+      "revId": "173cfc63607a16be0aa54efd0983bdf5abb9c93f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
