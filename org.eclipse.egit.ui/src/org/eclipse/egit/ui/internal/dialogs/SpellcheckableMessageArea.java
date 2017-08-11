@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IAdaptable;
@@ -108,6 +109,11 @@ import org.eclipse.ui.themes.IThemeManager;
 public class SpellcheckableMessageArea extends Composite {
 
 	static final int MAX_LINE_WIDTH = 72;
+
+	private static final Pattern TRAILING_WHITE_SPACE_ON_LINES = Pattern
+			.compile("\\h+$", Pattern.MULTILINE); //$NON-NLS-1$
+
+	private static final Pattern TRAILING_NEWLINES = Pattern.compile("\\n+$"); //$NON-NLS-1$
 
 	private static class TextViewerAction extends Action implements IUpdate {
 
@@ -846,10 +852,11 @@ public class SpellcheckableMessageArea extends Composite {
 	}
 
 	/**
-	 * Returns the commit message, converting platform-specific line endings to '\n'
-	 * and hard-wrapping lines if necessary.
+	 * Returns the commit message, converting platform-specific line endings to
+	 * '\n' and hard-wrapping lines if necessary.
 	 *
-	 * @return commit message
+	 * @return commit message, without trailing whitespace on lines and without
+	 *         trailing empty lines.
 	 */
 	public String getCommitMessage() {
 		String text = getText();
@@ -857,6 +864,8 @@ public class SpellcheckableMessageArea extends Composite {
 		if (shouldHardWrap()) {
 			text = wrapCommitMessage(text);
 		}
+		text = TRAILING_WHITE_SPACE_ON_LINES.matcher(text).replaceAll(""); //$NON-NLS-1$
+		text = TRAILING_NEWLINES.matcher(text).replaceFirst("\n"); //$NON-NLS-1$
 		return text;
 	}
 
