@@ -113,7 +113,7 @@ public class SpellcheckableMessageArea extends Composite {
 	private static final Pattern TRAILING_WHITE_SPACE_ON_LINES = Pattern
 			.compile("\\h+$", Pattern.MULTILINE); //$NON-NLS-1$
 
-	private static final Pattern TRAILING_NEWLINES = Pattern.compile("\\n+$"); //$NON-NLS-1$
+	private static final Pattern TRAILING_NEWLINES = Pattern.compile("\\v+$"); //$NON-NLS-1$
 
 	private static class TextViewerAction extends Action implements IUpdate {
 
