@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_42538463",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ReportingTypedConfigGetter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-08-16T07:28:21Z",
+      "side": 1,
+      "message": "move this class to JGit (https://git.eclipse.org/r/#/c/103102/) to enable reuse ?",
+      "revId": "f36b979b097491a2f2e1a7cc85528c98260e1f16",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
