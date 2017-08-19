@@ -13,8 +13,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.clone;
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,8 +48,6 @@ import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -324,11 +320,9 @@ class SourceBranchPage extends WizardPage {
 		final ListRemoteOperation listRemoteOp;
 		final URIish uri = newRepoSelection.getURI();
 		try {
-			final Repository db = FileRepositoryBuilder
-					.create(new File("/tmp")); //$NON-NLS-1$
 			int timeout = Activator.getDefault().getPreferenceStore().getInt(
 					UIPreferences.REMOTE_CONNECTION_TIMEOUT);
-			listRemoteOp = new ListRemoteOperation(db, uri, timeout);
+			listRemoteOp = new ListRemoteOperation(uri, timeout);
 			if (credentials != null)
 				listRemoteOp
 						.setCredentialsProvider(new EGitCredentialsProvider(
@@ -346,9 +340,6 @@ class SourceBranchPage extends WizardPage {
 			transportError(why);
 			if (showDetailedFailureDialog())
 				SourceBranchFailureDialog.show(getShell(), uri);
-			return;
-		} catch (IOException e) {
-			transportError(UIText.SourceBranchPage_cannotCreateTemp);
 			return;
 		} catch (InterruptedException e) {
 			transportError(UIText.SourceBranchPage_remoteListingCancelled);

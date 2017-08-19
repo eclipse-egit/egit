@@ -246,7 +246,7 @@ public class RefSpecPage extends WizardPage {
 			uri = newRepoSelection.getURI(pushPage);
 			int timeout = Activator.getDefault().getPreferenceStore().getInt(
 					UIPreferences.REMOTE_CONNECTION_TIMEOUT);
-			listRemotesOp = new ListRemoteOperation(local, uri, timeout);
+			listRemotesOp = new ListRemoteOperation(uri, timeout);
 			if (credentials != null)
 				listRemotesOp
 						.setCredentialsProvider(new EGitCredentialsProvider(

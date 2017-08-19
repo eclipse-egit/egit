@@ -132,8 +132,8 @@ public class FetchSourcePage extends WizardPage {
 			URIish uriToCheck;
 			List<Ref> proposals = new ArrayList<>();
 			uriToCheck = config.getURIs().get(0);
-			final ListRemoteOperation lop = new ListRemoteOperation(repository,
-					uriToCheck, Activator.getDefault().getPreferenceStore()
+			final ListRemoteOperation lop = new ListRemoteOperation(uriToCheck,
+					Activator.getDefault().getPreferenceStore()
 							.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT));
 			try {
 				new ProgressMonitorDialog(getShell()).run(true, true,

@@ -790,9 +790,8 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 	}
 
 	protected static Collection<Ref> getRemoteRefs(URIish uri) throws Exception {
-		final Repository db = FileRepositoryBuilder.create(new File("/tmp")); //$NON-NLS-1$
 		int timeout = 20;
-		ListRemoteOperation listRemoteOp = new ListRemoteOperation(db, uri,
+		ListRemoteOperation listRemoteOp = new ListRemoteOperation(uri,
 				timeout);
 		listRemoteOp.run(null);
 		return listRemoteOp.getRemoteRefs();

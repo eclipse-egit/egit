@@ -19,7 +19,6 @@ import org.eclipse.jgit.api.LsRemoteCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.URIish;
 
@@ -34,21 +33,14 @@ public class ListRemoteOperation {
 	/**
 	 * Create listing operation for specified local repository (needed by
 	 * transport) and remote repository URI.
-	 *
-	 * @param localDb
-	 *            local repository (needed for transport) where fetch would
-	 *            occur.
 	 * @param uri
 	 *            URI of remote repository to list.
 	 * @param timeout
 	 *            timeout is seconds; 0 means no timeout
 	 */
-	public ListRemoteOperation(final Repository localDb, final URIish uri,
-			int timeout) {
-		try (Git git = new Git(localDb)) {
-			rc = git.lsRemote();
-			rc.setRemote(uri.toString()).setTimeout(timeout);
-		}
+	public ListRemoteOperation(final URIish uri, int timeout) {
+		rc = Git.lsRemoteRepository();
+		rc.setRemote(uri.toString()).setTimeout(timeout);
 	}
 
 	/**

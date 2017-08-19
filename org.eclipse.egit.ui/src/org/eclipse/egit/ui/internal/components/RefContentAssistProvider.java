@@ -85,8 +85,7 @@ public class RefContentAssistProvider {
 		try {
 			boolean local = pushMode == source;
 			if (!local) {
-				final ListRemoteOperation lop = new ListRemoteOperation(repo,
-						uri,
+				final ListRemoteOperation lop = new ListRemoteOperation(uri,
 						Activator.getDefault().getPreferenceStore().getInt(
 								UIPreferences.REMOTE_CONNECTION_TIMEOUT));
 				IRunnableWithProgress runnable = new IRunnableWithProgress() {
