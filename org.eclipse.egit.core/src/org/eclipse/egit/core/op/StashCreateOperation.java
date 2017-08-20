@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2012, 2014 GitHub Inc and others.
+ *  Copyright (c) 2012, 2017 GitHub Inc and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -16,6 +16,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.StashCreateCommand;
@@ -87,16 +88,24 @@ public class StashCreateOperation implements IEGitOperation {
 
 			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
+				OperationLogger opLogger = new OperationLogger(
+						CoreText.Start_Stash_Create, CoreText.End_Stash_Create,
+						CoreText.Error_Stash_Create, new String[] {
+								OperationLogger.getCurrentBranch(repository) });
+				opLogger.logStart();
 				try {
 					StashCreateCommand command = Git.wrap(repository).stashCreate();
 					if (message != null)
 						command.setWorkingDirectoryMessage(message);
 					command.setIncludeUntracked(includeUntracked);
 					commit = command.call();
+					opLogger.logEnd(new String[] { commit.getName() });
 				} catch (JGitInternalException e) {
+					opLogger.logError(e);
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
 				} catch (GitAPIException e) {
+					opLogger.logError(e);
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
 				} finally {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2015 Maik Schreiber and others
+ * Copyright (c) 2014, 2017 Maik Schreiber and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -109,6 +109,13 @@ public class SquashCommitsOperation implements IEGitOperation {
 						return messageHandler.modifyCommitMessage(oldMessage);
 					}
 				};
+				OperationLogger opLogger = new OperationLogger(
+						CoreText.Start_Squash, CoreText.End_Squash,
+						CoreText.Error_Squash,
+						new String[] {
+								OperationLogger.getCurrentBranch(repository),
+								commits.get(0).getParent(0).name() });
+				opLogger.logStart();
 				try (Git git = new Git(repository)) {
 					RebaseCommand command = git.rebase()
 							.setUpstream(commits.get(0).getParent(0))
@@ -120,7 +127,9 @@ public class SquashCommitsOperation implements IEGitOperation {
 						command.setStrategy(strategy);
 					}
 					command.call();
+					opLogger.logEnd();
 				} catch (GitAPIException e) {
+					opLogger.logError(e);
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
 				}
