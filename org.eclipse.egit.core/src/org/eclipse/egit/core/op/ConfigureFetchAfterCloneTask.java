@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2011-2012, Stefan Lay <stefan.lay@sap.com>
+ * Copyright (C) 2017, SATO Yusuke <yusuke.sato.zz@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -45,6 +46,12 @@ public class ConfigureFetchAfterCloneTask implements PostCloneTask {
 	@Override
 	public void execute(Repository repository, IProgressMonitor monitor)
 			throws CoreException {
+		OperationLogger opLogger = new OperationLogger(CoreText.Start_Fetch,
+				CoreText.End_Fetch, CoreText.Error_Fetch,
+				new String[] { remoteName,
+						OperationLogger.getBranch(repository),
+						OperationLogger.getPath(repository) });
+		opLogger.logStart();
 		try (Git git = new Git(repository)) {
 			RemoteConfig configToUse = new RemoteConfig(repository.getConfig(),
 					remoteName);
@@ -54,7 +61,9 @@ public class ConfigureFetchAfterCloneTask implements PostCloneTask {
 			configToUse.update(repository.getConfig());
 			repository.getConfig().save();
 			git.fetch().setRemote(remoteName).call();
+			opLogger.logEnd();
 		} catch (Exception e) {
+			opLogger.logError(e);
 			Activator.logError(NLS.bind(
 					CoreText.ConfigureFetchAfterCloneTask_couldNotFetch,
 					fetchRefSpec), e);

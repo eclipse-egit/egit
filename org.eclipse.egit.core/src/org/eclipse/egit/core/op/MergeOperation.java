@@ -4,6 +4,7 @@
  * Copyright (C) 2014 Axel Richard <axel.richard@obeo.fr>
  * Copyright (C) 2015 Obeo
  * Copyright (C) 2015, Stephan Hackstedt <stephan.hackstedt@googlemail.com>
+ * Copyright (C) 2017, SATO Yusuke <yusuke.sato.zz@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -158,6 +159,12 @@ public class MergeOperation implements IEGitOperation {
 				IProject[] validProjects = ProjectUtil.getValidOpenProjects(repository);
 				SubMonitor progress = SubMonitor.convert(mymonitor, NLS.bind(
 						CoreText.MergeOperation_ProgressMerge, refName), 3);
+				OperationLogger opLogger = new OperationLogger(
+						CoreText.Start_Merge, CoreText.End_Merge,
+						CoreText.Error_Merge, new String[] { refName,
+								OperationLogger.getBranch(repository),
+								OperationLogger.getPath(repository) });
+				opLogger.logStart();
 				try (Git git = new Git(repository)) {
 					progress.worked(1);
 					MergeCommand merge = git.merge().setProgressMonitor(
@@ -191,19 +198,25 @@ public class MergeOperation implements IEGitOperation {
 								Activator.getPluginId(),
 								mergeResult.toString()));
 					}
+					opLogger.logEnd();
 				} catch (IOException e) {
+					opLogger.logError(e);
 					throw new TeamException(
 							CoreText.MergeOperation_InternalError, e);
 				} catch (NoHeadException e) {
+					opLogger.logError(e);
 					throw new TeamException(
 							CoreText.MergeOperation_MergeFailedNoHead, e);
 				} catch (ConcurrentRefUpdateException e) {
+					opLogger.logError(e);
 					throw new TeamException(
 							CoreText.MergeOperation_MergeFailedRefUpdate, e);
 				} catch (CheckoutConflictException e) {
+					opLogger.logError(e);
 					mergeResult = new MergeResult(e.getConflictingPaths());
 					return;
 				} catch (GitAPIException e) {
+					opLogger.logError(e);
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
 				} finally {

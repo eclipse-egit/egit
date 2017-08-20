@@ -5,6 +5,7 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
  * Copyright (C) 2017, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2017, SATO Yusuke <yusuke.sato.zz@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -150,6 +151,10 @@ public class CloneOperation {
 			}
 		};
 		Repository repository = null;
+		OperationLogger opLogger = new OperationLogger(CoreText.Start_Clone,
+				CoreText.End_Clone, CoreText.Error_Clone,
+				new String[] { uri.toString() });
+		opLogger.logStart();
 		try {
 			CloneCommand cloneRepository = Git.cloneRepository();
 			cloneRepository.setCredentialsProvider(credentialsProvider);
@@ -185,7 +190,10 @@ public class CloneOperation {
 					task.execute(repository, progress.newChild(1));
 				}
 			}
+			opLogger.logEnd(
+					new String[] { remoteName, workdir.getAbsolutePath() });
 		} catch (final Exception e) {
+			opLogger.logError(e);
 			try {
 				if (repository != null) {
 					repository.close();

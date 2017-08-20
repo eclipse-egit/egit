@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2011, 2015 GitHub Inc and others.
+ *  Copyright (c) 2011, 2017 GitHub Inc and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -74,6 +74,14 @@ public class CherryPickOperation implements IEGitOperation {
 				progress.subTask(MessageFormat.format(
 						CoreText.CherryPickOperation_cherryPicking,
 						commit.name()));
+
+				OperationLogger opLogger = new OperationLogger(
+						CoreText.Start_CherryPick, CoreText.End_CherryPick,
+						CoreText.Error_CherryPick,
+						new String[] { commit.name(),
+								OperationLogger.getBranch(repo),
+								OperationLogger.getPath(repo) });
+				opLogger.logStart();
 				try (Git git = new Git(repo)) {
 					CherryPickCommand command = git.cherryPick()
 							.include(commit.getId());
@@ -83,7 +91,9 @@ public class CherryPickOperation implements IEGitOperation {
 						command.setStrategy(strategy);
 					}
 					result = command.call();
+					opLogger.logEnd();
 				} catch (GitAPIException e) {
+					opLogger.logError(e);
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
 				}

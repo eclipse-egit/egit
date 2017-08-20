@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2017, SATO Yusuke <yusuke.sato.zz@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -128,12 +129,22 @@ public class FetchOperation {
 					.setProgressMonitor(gitMonitor);
 			if (tagOpt != null)
 				command.setTagOpt(tagOpt);
+			OperationLogger opLogger = new OperationLogger(CoreText.Start_Fetch,
+					CoreText.End_Fetch, CoreText.Error_Fetch,
+					new String[] {
+							rc == null ? uri.toPrivateString() : rc.getName(),
+							OperationLogger.getBranch(repository),
+							OperationLogger.getPath(repository) });
+			opLogger.logStart();
 			try {
 				operationResult = command.call();
+				opLogger.logEnd();
 			} catch (JGitInternalException e) {
+				opLogger.logError(e);
 				throw new InvocationTargetException(
 						e.getCause() != null ? e.getCause() : e);
 			} catch (Exception e) {
+				opLogger.logError(e);
 				throw new InvocationTargetException(e);
 			}
 		}

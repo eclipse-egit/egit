@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2011, 2015 GitHub Inc and others.
+ *  Copyright (c) 2011, 2017 GitHub Inc and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -14,6 +14,7 @@ package org.eclipse.egit.core.op;
 
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
@@ -87,6 +88,14 @@ public class RevertCommitOperation implements IEGitOperation {
 				progress.subTask(MessageFormat.format(
 						CoreText.RevertCommitOperation_reverting,
 						Integer.valueOf(commits.size())));
+				OperationLogger opLogger = new OperationLogger(
+						CoreText.Start_Revert, CoreText.End_Revert,
+						CoreText.Error_Revert, new String[] {
+								commits.stream().map(i -> i.name())
+										.collect(Collectors.joining(", ")), //$NON-NLS-1$
+								OperationLogger.getBranch(repo),
+								OperationLogger.getPath(repo) });
+				opLogger.logStart();
 				try (Git git = new Git(repo)) {
 					RevertCommand command = git.revert();
 					MergeStrategy strategy = Activator.getDefault()
@@ -104,7 +113,9 @@ public class RevertCommitOperation implements IEGitOperation {
 					ProjectUtil.refreshValidProjects(
 							ProjectUtil.getValidOpenProjects(repo),
 							progress.newChild(1));
+					opLogger.logEnd();
 				} catch (GitAPIException e) {
+					opLogger.logError(e);
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
 				}

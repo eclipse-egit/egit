@@ -4,6 +4,7 @@
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  * Copyright (C) 2015, Stephan Hackstedt <stephan.hackstedt@googlemail.com>
  * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2017, SATO Yusuke <yusuke.sato.zz@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -179,6 +180,14 @@ public class PushOperation {
 					final EclipseGitProgressTransformer gitSubMonitor = new EclipseGitProgressTransformer(
 							progress.newChild(1));
 
+					OperationLogger opLogger = new OperationLogger(
+							CoreText.Start_Push, CoreText.End_Push,
+							CoreText.Error_Push,
+							new String[] {
+									uri == null ? "null" : uri.toString(), //$NON-NLS-1$
+									OperationLogger.getBranch(localDb),
+									OperationLogger.getPath(localDb) });
+					opLogger.logStart();
 					try (Transport transport = Transport.open(localDb, uri)) {
 						transport.setDryRun(dryRun);
 						transport.setTimeout(timeout);
@@ -193,7 +202,9 @@ public class PushOperation {
 								result);
 						specification.addURIRefUpdates(result.getURI(),
 								result.getRemoteUpdates());
+						opLogger.logEnd();
 					} catch (JGitInternalException e) {
+						opLogger.logError(e);
 						String errorMessage = e.getCause() != null
 								? e.getCause().getMessage() : e.getMessage();
 						String userMessage = NLS.bind(
@@ -201,12 +212,17 @@ public class PushOperation {
 								errorMessage);
 						handleException(uri, e, userMessage);
 					} catch (Exception e) {
+						opLogger.logError(e);
 						handleException(uri, e, e.getMessage());
 					}
 				}
 			else {
 				final EclipseGitProgressTransformer gitMonitor = new EclipseGitProgressTransformer(
 						progress.newChild(totalWork));
+				OperationLogger opLogger = new OperationLogger(
+						CoreText.Start_Push, CoreText.End_Push,
+						CoreText.Error_Push, new String[] { remoteName });
+				opLogger.logStart();
 				try {
 					Iterable<PushResult> results = git.push()
 							.setRemote(remoteName).setDryRun(dryRun)
@@ -217,7 +233,9 @@ public class PushOperation {
 						operationResult.addOperationResult(result.getURI(),
 								result);
 					}
+					opLogger.logEnd();
 				} catch (JGitInternalException e) {
+					opLogger.logError(e);
 					String errorMessage = e.getCause() != null
 							? e.getCause().getMessage() : e.getMessage();
 					String userMessage = NLS.bind(
@@ -226,6 +244,7 @@ public class PushOperation {
 					URIish uri = getPushURIForErrorHandling();
 					handleException(uri, e, userMessage);
 				} catch (Exception e) {
+					opLogger.logError(e);
 					URIish uri = getPushURIForErrorHandling();
 					handleException(uri, e, e.getMessage());
 				}

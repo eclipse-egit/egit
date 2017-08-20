@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010-2012, SAP AG and others.
+ * Copyright (c) 2010-2017, SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -128,9 +128,9 @@ public class CommitOperation implements IEGitOperation {
 		this.committer = committer;
 		this.message = stripLeadingWhitespace(message);
 		if (filesToCommit != null)
-			commitFileList = new HashSet<String>(filesToCommit);
+			commitFileList = new HashSet<>(filesToCommit);
 		if (notTracked != null)
-			this.notTracked = new HashSet<String>(notTracked);
+			this.notTracked = new HashSet<>(notTracked);
 	}
 
 	/**
@@ -172,7 +172,7 @@ public class CommitOperation implements IEGitOperation {
 	}
 
 	private Collection<String> buildFileList(Collection<IFile> files) throws CoreException {
-		Collection<String> result = new HashSet<String>();
+		Collection<String> result = new HashSet<>();
 		for (IFile file : files) {
 			RepositoryMapping mapping = RepositoryMapping.getMapping(file);
 			if (mapping == null)
@@ -236,6 +236,11 @@ public class CommitOperation implements IEGitOperation {
 	}
 
 	private void commit() throws TeamException {
+		OperationLogger opLogger = new OperationLogger(CoreText.Start_Commit,
+				CoreText.End_Commit, CoreText.Error_Commit,
+				new String[] { OperationLogger.getBranch(repo),
+						OperationLogger.getPath(repo) });
+		opLogger.logStart();
 		try (Git git = new Git(repo)) {
 			CommitCommand commitCommand = git.commit();
 			setAuthorAndCommitter(commitCommand);
@@ -246,7 +251,9 @@ public class CommitOperation implements IEGitOperation {
 				for(String path:commitFileList)
 					commitCommand.setOnly(path);
 			commit = commitCommand.call();
+			opLogger.logEnd();
 		} catch (Exception e) {
+			opLogger.logError(e);
 			throw new TeamException(
 					CoreText.MergeOperation_InternalError, e);
 		}
@@ -285,14 +292,22 @@ public class CommitOperation implements IEGitOperation {
 
 	// TODO: can the commit message be change by the user in case of a merge commit?
 	private void commitAll() throws TeamException {
+		OperationLogger opLogger = new OperationLogger(CoreText.Start_Commit,
+				CoreText.End_Commit, CoreText.Error_Commit,
+				new String[] { OperationLogger.getBranch(repo),
+						OperationLogger.getPath(repo) });
+		opLogger.logStart();
 		try (Git git = new Git(repo)) {
 			CommitCommand commitCommand = git.commit();
 			setAuthorAndCommitter(commitCommand);
 			commit = commitCommand.setAll(true).setMessage(message)
 					.setInsertChangeId(createChangeId).call();
+			opLogger.logEnd();
 		} catch (JGitInternalException e) {
+			opLogger.logError(e);
 			throw new TeamException(CoreText.MergeOperation_InternalError, e);
 		} catch (GitAPIException e) {
+			opLogger.logError(e);
 			throw new TeamException(e.getLocalizedMessage(), e);
 		}
 	}

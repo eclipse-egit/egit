@@ -4,6 +4,7 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2015, Stephan Hackstedt <stephan.hackstedt@googlemail.com>
+ * Copyright (C) 2017, SATO Yusuke <yusuke.sato.zz@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -98,9 +99,17 @@ public class ResetOperation implements IEGitOperation {
 		ResetCommand reset = Git.wrap(repository).reset();
 		reset.setMode(type);
 		reset.setRef(refName);
+		OperationLogger opLogger = new OperationLogger(
+				CoreText.Start_Reset, CoreText.End_Reset, CoreText.Error_Reset,
+				new String[] { OperationLogger.getBranch(repository),
+						OperationLogger.getPath(repository),
+						refName });
+		opLogger.logStart();
 		try {
 			reset.call();
+			opLogger.logEnd();
 		} catch (GitAPIException e) {
+			opLogger.logError(e);
 			throw new TeamException(e.getLocalizedMessage(), e.getCause());
 		}
 		progress.worked(1);

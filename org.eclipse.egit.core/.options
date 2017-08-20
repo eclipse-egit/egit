@@ -4,4 +4,6 @@ org.eclipse.egit.core/debug = false
 org.eclipse.egit.core/debug/core = false
 # Trace location for the IndexDiffCache
 org.eclipse.egit.core/debug/core/indexdiffcache = false
+# Trace location for the trace operations
+org.eclipse.egit.core/debug/core/optrace = false
 
