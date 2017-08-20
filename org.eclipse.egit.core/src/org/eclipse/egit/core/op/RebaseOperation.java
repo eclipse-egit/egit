@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2015 SAP AG and others.
+ * Copyright (c) 2010, 2017 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -134,6 +134,13 @@ public class RebaseOperation implements IEGitOperation {
 			@Override
 			public void run(IProgressMonitor actMonitor) throws CoreException {
 				SubMonitor progress = SubMonitor.convert(actMonitor, 2);
+				OperationLogger opLogger = new OperationLogger(
+						CoreText.Start_Rebase, CoreText.End_Rebase,
+						CoreText.Error_Rebase,
+						new String[] {
+								OperationLogger.getCurrentBranch(repository),
+								ref == null ? "null" : ref.getName() }); //$NON-NLS-1$
+				opLogger.logStart();
 				try (Git git = new Git(repository)) {
 					RebaseCommand cmd = git.rebase().setProgressMonitor(
 							new EclipseGitProgressTransformer(
@@ -149,10 +156,12 @@ public class RebaseOperation implements IEGitOperation {
 					if (operation == Operation.BEGIN) {
 						cmd.setPreserveMerges(preserveMerges);
 						result = cmd.setUpstream(ref.getName()).call();
+						opLogger.logEnd();
 					} else {
 						result = cmd.setOperation(operation).call();
 					}
 				} catch (JGitInternalException | GitAPIException e) {
+					opLogger.logError(e);
 					throw new CoreException(Activator.error(e.getMessage(), e));
 				} finally {
 					if (refreshNeeded()) {

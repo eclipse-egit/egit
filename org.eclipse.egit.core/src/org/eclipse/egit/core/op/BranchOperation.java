@@ -5,6 +5,7 @@
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2010, 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2015, Stephan Hackstedt <stephan.hackstedt@googlemail.com>
+ * Copyright (C) 2017, SATO Yusuke <yusuke.sato.zz@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -111,14 +112,22 @@ public class BranchOperation extends BaseOperation {
 					CheckoutCommand co = git.checkout();
 					co.setName(target);
 
+					OperationLogger opLogger = new OperationLogger(
+							CoreText.Start_Checkout, CoreText.End_Checkout,
+							CoreText.Error_Checkout, new String[] { target });
+					opLogger.logStart();
 					try {
 						co.call();
+						opLogger.logEnd();
 					} catch (CheckoutConflictException e) {
+						opLogger.logError(e);
 						return;
 					} catch (JGitInternalException e) {
+						opLogger.logError(e);
 						throw new CoreException(
 								Activator.error(e.getMessage(), e));
 					} catch (GitAPIException e) {
+						opLogger.logError(e);
 						throw new CoreException(
 								Activator.error(e.getMessage(), e));
 					} finally {

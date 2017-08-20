@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2010, 2016 Mathias Kinzler <mathias.kinzler@sap.com> and others
+ * Copyright (C) 2017, SATO Yusuke <yusuke.sato.zz@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -90,6 +91,10 @@ public class CreateLocalBranchOperation implements IEGitOperation {
 						name);
 				SubMonitor progress = SubMonitor.convert(actMonitor);
 				progress.setTaskName(taskName);
+				OperationLogger opLogger = new OperationLogger(
+						CoreText.Start_Branch, CoreText.End_Branch,
+						CoreText.Error_Branch, new String[] { name });
+				opLogger.logStart();
 				try (Git git = new Git(repository)) {
 					if (ref != null) {
 						SetupUpstreamMode mode;
@@ -99,12 +104,17 @@ public class CreateLocalBranchOperation implements IEGitOperation {
 							mode = SetupUpstreamMode.SET_UPSTREAM;
 						git.branchCreate().setName(name).setStartPoint(
 								ref.getName()).setUpstreamMode(mode).call();
+						opLogger.logEnd(new String[] { ref.getName() });
 					}
-					else
+					else {
 						git.branchCreate().setName(name).setStartPoint(commit)
 								.setUpstreamMode(SetupUpstreamMode.NOTRACK)
 								.call();
+						opLogger.logEnd(
+								new String[] { commit.getId().toString() });
+					}
 				} catch (Exception e) {
+					opLogger.logError(e);
 					throw new CoreException(Activator.error(e.getMessage(), e));
 				}
 

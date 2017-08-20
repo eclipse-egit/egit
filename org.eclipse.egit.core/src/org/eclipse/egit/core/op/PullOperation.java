@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2016 SAP AG and others.
+ * Copyright (c) 2010, 2017 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -172,6 +172,11 @@ public class PullOperation implements IEGitOperation {
 					Repository repository = repositories[i];
 					IProject[] validProjects = ProjectUtil.getValidOpenProjects(repository);
 					PullResult pullResult = null;
+					OperationLogger opLogger = new OperationLogger(
+							CoreText.Start_Pull, CoreText.End_Pull,
+							CoreText.Error_Pull, new String[] { OperationLogger
+									.getCurrentBranch(repository) });
+					opLogger.logStart();
 					try (Git git = new Git(repository)) {
 						PullCommand pull = git.pull();
 						SubMonitor newChild = progress.newChild(1,
@@ -199,18 +204,23 @@ public class PullOperation implements IEGitOperation {
 						}
 						pullResult = pull.call();
 						results.put(repository, pullResult);
+						opLogger.logEnd(new String[] { pull.getRemote() });
 					} catch (DetachedHeadException e) {
+						opLogger.logError(e);
 						results.put(repository, Activator.error(
 								CoreText.PullOperation_DetachedHeadMessage, e));
 					} catch (InvalidConfigurationException e) {
+						opLogger.logError(e);
 						IStatus error = Activator
 								.error(CoreText.PullOperation_PullNotConfiguredMessage,
 										e);
 						results.put(repository, error);
 					} catch (GitAPIException e) {
+						opLogger.logError(e);
 						results.put(repository,
 								Activator.error(e.getMessage(), e));
 					} catch (JGitInternalException e) {
+						opLogger.logError(e);
 						Throwable cause = e.getCause();
 						if (cause == null || !(cause instanceof TransportException))
 							cause = e;
