@@ -1,6 +1,7 @@
 /*******************************************************************************
  *  Copyright (c) 2014 Maik Schreiber
  *  Copyright (C) 2015, Stephan Hackstedt <stephan.hackstedt@googlemail.com>
+ *  Copyright (C) 2017, SATO Yusuke <yusuke.sato.zz@gmail.com>
  *
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
@@ -92,11 +93,19 @@ public class RewordCommitOperation implements IEGitOperation {
 						return newMessage;
 					}
 				};
+				OperationLogger opLogger = new OperationLogger(
+						CoreText.Start_Amend, CoreText.End_Amend,
+						CoreText.Error_Amend,
+						new String[] { commit.name(),
+								OperationLogger.getCurrentBranch(repository) });
+				opLogger.logStart();
 				try (Git git = new Git(repository)) {
 					git.rebase().setUpstream(commit.getParent(0))
 							.runInteractively(handler)
 							.setOperation(RebaseCommand.Operation.BEGIN).call();
+					opLogger.logEnd();
 				} catch (GitAPIException e) {
+					opLogger.logError(e);
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
 				}
