@@ -52,6 +52,24 @@
       "revId": "f36b979b097491a2f2e1a7cc85528c98260e1f16",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_f1fef729",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ReportingTypedConfigGetter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-08-21T09:12:52Z",
+      "side": 1,
+      "message": "I agree it would be good if platform provided this. But what would we do for older platforms (Luna to Oxygen)?",
+      "parentUuid": "c7880b39_712da7cb",
+      "revId": "f36b979b097491a2f2e1a7cc85528c98260e1f16",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
