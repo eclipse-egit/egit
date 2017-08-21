@@ -34,6 +34,24 @@
       "revId": "f36b979b097491a2f2e1a7cc85528c98260e1f16",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_712da7cb",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ReportingTypedConfigGetter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-08-21T06:14:56Z",
+      "side": 1,
+      "message": "Gunnar proposed a bridge implementation for platform here\nsee https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d514326\nand https://git.eclipse.org/r/#/c/96277/\n\nI have it on my must-review list, will review this change later this week",
+      "parentUuid": "c7880b39_9109336d",
+      "revId": "f36b979b097491a2f2e1a7cc85528c98260e1f16",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
