@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_91ff7371",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-08-21T08:23:29Z",
+      "side": 1,
+      "message": "The listener should trim only if:\n\n- the current message text is empty, or\n- all text in the message is currently selected (so the paste will replace it all)\n\nPossibly there are other conditions, for instance only trim leading whitespace if the current caret position is zero.",
+      "revId": "b7bd7a605de4bdb9ecf8e094650772086dceadd7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_5176ebaf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-08-21T08:23:29Z",
+      "side": 1,
+      "message": "Could use a lambda.\n\n  event -\u003e { ... }",
+      "range": {
+        "startLine": 399,
+        "startChar": 36,
+        "endLine": 401,
+        "endChar": 44
+      },
+      "revId": "b7bd7a605de4bdb9ecf8e094650772086dceadd7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_1199c384",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-08-21T08:23:29Z",
+      "side": 1,
+      "message": "Especially when copy-pasting from web pages, it\u0027s not uncommon to have hidden control characters or Unicode whitespace in the text. Maybe\n\n  private static final LEADING_AND_TRAILING_WHITESPACE \u003d Pattern.compile(\"^[\\\\h\\\\v]+|[\\\\h\\\\v]+$\");\n\n  event.text \u003d LEADING_AND_TRAILING_WHITESPACE.matcher(event.text).replaceAll(\"\");\n\n?",
+      "revId": "b7bd7a605de4bdb9ecf8e094650772086dceadd7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
