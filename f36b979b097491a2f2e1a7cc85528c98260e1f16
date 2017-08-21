@@ -16,6 +16,24 @@
       "revId": "f36b979b097491a2f2e1a7cc85528c98260e1f16",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_9109336d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ReportingTypedConfigGetter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-08-21T05:46:08Z",
+      "side": 1,
+      "message": "I want the log messages in the Eclipse log and appearing in the \"Error Log\" view. If I move this to JGit, I\u0027d have to log via slf4j, and thus we\u0027d need a bridge between slf4j and the OSGI logs used by Eclipse.\n\nI have no clear idea how to do such a bridge; the one used by xtext for instance is (a) specific to the Apache back-end and (b) replaces the default logging config, so even if we did something similar, we might get problems. (There\u0027d be a 2nd fragment replacing that logging config, and it\u0027s entirely unclear which config would be active in the end.) A similar bridge in m2e is specific to the ch.qos back-end.\n\nSo I prefer to do it the simple way and use the Eclipse platform logging mechanism right away. But that means the class cannot be in JGit.\n\nIf we want this to be reuseable, we might make this public API in egit.core.",
+      "parentUuid": "c7880b39_42538463",
+      "revId": "f36b979b097491a2f2e1a7cc85528c98260e1f16",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
