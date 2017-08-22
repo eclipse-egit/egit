@@ -10,13 +10,17 @@ package org.eclipse.egit.core.internal;
 
 import java.io.File;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.egit.core.Activator;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.DefaultTypedConfigGetter;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
+import org.eclipse.jgit.transport.RefSpec;
 
 /**
  * A {@link org.eclipse.jgit.lib.TypedConfigGetter TypedConfigGetter} that logs
@@ -94,6 +98,21 @@ public class ReportingTypedConfigGetter extends DefaultTypedConfigGetter {
 		}
 	}
 
+	@Override
+	public @NonNull List<RefSpec> getRefSpecs(Config config, String section,
+			String subsection, String name) {
+		String[] values = config.getStringList(section, subsection, name);
+		List<RefSpec> result = new ArrayList<>(values.length);
+		for (String spec : values) {
+			try {
+				result.add(new RefSpec(spec));
+			} catch (IllegalArgumentException e) {
+				warn(config, join(section, subsection, name), null, e);
+			}
+		}
+		return result;
+	}
+
 	private static void warn(Config config, String entry, String defaultValue,
 			Throwable cause) {
 		String location = null;
@@ -101,16 +120,31 @@ public class ReportingTypedConfigGetter extends DefaultTypedConfigGetter {
 			File file = ((FileBasedConfig) config).getFile();
 			location = file.getAbsolutePath();
 		}
+		Activator.logWarning(msg(location, entry, defaultValue), cause);
+	}
+
+	private static String msg(String location, String entry,
+			String defaultValue) {
 		if (location == null) {
-			Activator.logWarning(MessageFormat.format(
-					CoreText.ReportingTypedConfigGetter_invalidConfig, entry,
-					defaultValue), cause);
+			if (defaultValue == null) {
+				return MessageFormat.format(
+						CoreText.ReportingTypedConfigGetter_invalidConfigIgnored,
+						entry);
+			} else {
+				return MessageFormat.format(
+						CoreText.ReportingTypedConfigGetter_invalidConfig,
+						entry, defaultValue);
+			}
 		} else {
-			Activator.logWarning(
-					MessageFormat.format(
-							CoreText.ReportingTypedConfigGetter_invalidConfigWithLocation,
-							location, entry, defaultValue),
-					cause);
+			if (defaultValue == null) {
+				return MessageFormat.format(
+						CoreText.ReportingTypedConfigGetter_invalidConfigWithLocationIgnored,
+						location, entry);
+			} else {
+				return MessageFormat.format(
+						CoreText.ReportingTypedConfigGetter_invalidConfigWithLocation,
+						location, entry, defaultValue);
+			}
 		}
 	}
 
