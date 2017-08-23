@@ -21,6 +21,7 @@ package org.eclipse.egit.ui.internal.dialogs;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.regex.Pattern;
 
 import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
@@ -29,6 +30,7 @@ import org.eclipse.egit.ui.CommitMessageWithCaretPosition;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.UIUtils.IPreviousValueProposalHandler;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitHelper;
 import org.eclipse.egit.ui.internal.commit.CommitHelper.CommitInfo;
@@ -68,6 +70,9 @@ import org.eclipse.ui.PlatformUI;
  * of the toggle selections.
  */
 public class CommitMessageComponent {
+
+	private static final Pattern ANY_NON_WHITESPACE = Pattern
+			.compile("[^\\h\\v]"); //$NON-NLS-1$
 
 	/**
 	 * Status provider for whether a commit operation should be enabled or not
@@ -493,7 +498,13 @@ public class CommitMessageComponent {
 	public boolean checkCommitInfo() {
 		updateStateFromUI();
 
-		if (commitMessage.trim().length() == 0) {
+		String text = getCommitMessage();
+		// Strip footers
+		int footer = CommonUtils.getFooterOffset(text);
+		if (footer >= 0) {
+			text = text.substring(0, footer);
+		}
+		if (!ANY_NON_WHITESPACE.matcher(text).find()) {
 			MessageDialog.openWarning(getShell(),
 					UIText.CommitDialog_ErrorNoMessage,
 					UIText.CommitDialog_ErrorMustEnterCommitMessage);

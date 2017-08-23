@@ -98,6 +98,12 @@ public class CreateTagDialog extends TitleAreaDialog {
 	 */
 	private static final int CREATE_AND_START_PUSH_ID = 23;
 
+	/**
+	 * We trim leading whitespace from the tag commit message.
+	 */
+	private static final Pattern LEADING_WHITESPACE = Pattern
+			.compile("^[\\h\\v]+"); //$NON-NLS-1$
+
 	private String tagName;
 
 	private String tagMessage;
@@ -382,6 +388,10 @@ public class CreateTagDialog extends TitleAreaDialog {
 			if (commitCombo != null)
 				tagCommit = commitCombo.getValue();
 			tagMessage = tagMessageText.getCommitMessage();
+			if (tagMessage != null) {
+				tagMessage = LEADING_WHITESPACE.matcher(tagMessage)
+						.replaceFirst(""); //$NON-NLS-1$
+			}
 			overwriteTag = overwriteButton.getSelection();
 			okPressed();
 		} else {
