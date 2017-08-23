@@ -129,6 +129,8 @@ public class FindToolbar extends Composite {
 
 	private Action findPreviousAction;
 
+	private String lastSearchPattern;
+
 	private String lastErrorPattern;
 
 	private ToolItem prefsDropDown;
@@ -299,6 +301,10 @@ public class FindToolbar extends Composite {
 		patternModifyListener = new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
+				if (getSearchPattern().equals(lastSearchPattern)) {
+					// Don't bother if it's still the same.
+					return;
+				}
 				final FindToolbarJob finder = createFinder();
 				finder.setUser(false);
 				finder.schedule(200);
@@ -312,7 +318,7 @@ public class FindToolbar extends Composite {
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				if (e.detail != SWT.ICON_CANCEL
-						&& !patternField.getText().isEmpty()) {
+						&& !getSearchPattern().isEmpty()) {
 					// ENTER or the search icon clicked
 					final FindToolbarJob finder = createFinder();
 					finder.setUser(false);
@@ -445,6 +451,10 @@ public class FindToolbar extends Composite {
 		return patternField.getText();
 	}
 
+	private String getSearchPattern() {
+		return getText().trim();
+	}
+
 	@Override
 	public void addListener(int evtType, Listener mouseListener) {
 		patternField.addListener(evtType, mouseListener);
@@ -500,7 +510,7 @@ public class FindToolbar extends Composite {
 	}
 
 	private void find(boolean next) {
-		if (patternField.getText().length() > 0 && findResults.size() == 0) {
+		if (!getSearchPattern().isEmpty() && findResults.size() == 0) {
 			// If the toolbar was cleared and has a pattern typed,
 			// then we redo the find with the new table data.
 			final FindToolbarJob finder = createFinder();
@@ -596,7 +606,7 @@ public class FindToolbar extends Composite {
 		if (job != null) {
 			job.cancel();
 		}
-		final String currentPattern = patternField.getText();
+		final String currentPattern = getSearchPattern();
 
 		job = new FindToolbarJob(MessageFormat
 				.format(UIText.HistoryPage_findbar_find, currentPattern),
@@ -656,18 +666,21 @@ public class FindToolbar extends Composite {
 	 */
 	void setInput(final RevFlag hFlag, final Table historyTable,
 			final SWTCommit[] commitArray) {
-		// this may cause a FindBugs warning, but
-		// copying the array is probably not a good
-		// idea
+		// This may cause a FindBugs warning, but copying the array is probably
+		// not a good idea.
 		if (job != null) {
 			job.cancel();
 		}
+		// Reset last used pattern -- we must not prevent a re-search when the
+		// input changed.
+		this.lastSearchPattern = null;
 		this.fileRevisions = commitArray;
 		this.historyTable = historyTable;
 		findResults.setHighlightFlag(hFlag);
 	}
 
 	private void findCompletionUpdate(String pattern, boolean overflow) {
+		lastSearchPattern = pattern;
 		int total = findResults.size();
 		String label;
 		if (total > 0) {
