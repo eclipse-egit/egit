@@ -596,7 +596,7 @@ public class FindToolbar extends Composite {
 		if (job != null) {
 			job.cancel();
 		}
-		final String currentPattern = patternField.getText();
+		final String currentPattern = patternField.getText().trim();
 
 		job = new FindToolbarJob(MessageFormat
 				.format(UIText.HistoryPage_findbar_find, currentPattern),
