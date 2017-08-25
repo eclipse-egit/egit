@@ -28,7 +28,6 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevFlag;
@@ -218,7 +217,8 @@ public class FindToolbar extends Composite {
 		patternField.setLayoutData(findTextData);
 		patternField.setMessage(UIText.HistoryPage_findbar_find_msg);
 		patternField.setTextLimit(100);
-		patternField.setFont(JFaceResources.getDialogFont());
+		// Do _not_ set the font to JFaceResources.getDialogFont() here. It'll
+		// scale if changed, but the Text field may not adjust.
 		ToolBarManager manager = new ToolBarManager(SWT.HORIZONTAL);
 		findNextAction = new Action() {
 			@Override
