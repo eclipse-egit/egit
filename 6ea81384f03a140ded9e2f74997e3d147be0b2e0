@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_9f65acc1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/AbstractConfigureRemoteDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-08-26T14:09:18Z",
+      "side": 1,
+      "message": "use a lambda expression instead of an anonymous class: select IDoubleClickListener and click CTRL-1 (CMD-1 on Mac) then select \"convert to lambda expression\"\n\n specViewer.addDoubleClickListener(event -\u003e doChangeRefSpec());",
+      "range": {
+        "startLine": 400,
+        "startChar": 0,
+        "endLine": 406,
+        "endChar": 5
+      },
+      "revId": "6ea81384f03a140ded9e2f74997e3d147be0b2e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
