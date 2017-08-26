@@ -16,6 +16,24 @@
       "revId": "2f47b192c6a142235651be058d3107fb1830bee5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_df2c949c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ReportingTypedConfigGetter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-08-26T09:21:47Z",
+      "side": 1,
+      "message": "I don\u0027t think so. Consider a remote with multiple fetch refspecs, one of which is invalid. With your proposal, we\u0027d ignore all of them, even the valid ones. If we re-implement the list building here, we can warn about the invalid ones but can still honor the valid ones.\n\nI did think about adding a method to convert a single string to a RefSpec to TypedConfigGetter, but its interface would have been inconsistent with the other getters (would have been only \"RefSpec getRefSpec(String value)\", whereas all other Config getters take section, subsection, and name as parameters). In the end I preferred to have consistent method signatures in TypedConfigGetter and re-doing the list building here. It does duplicate some code, but it\u0027s trivial code and only a small duplication.",
+      "parentUuid": "c7880b39_dfa3b4af",
+      "revId": "2f47b192c6a142235651be058d3107fb1830bee5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
