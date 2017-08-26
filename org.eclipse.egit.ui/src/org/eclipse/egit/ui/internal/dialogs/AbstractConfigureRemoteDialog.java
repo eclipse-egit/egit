@@ -395,6 +395,8 @@ public abstract class AbstractConfigureRemoteDialog
 			}
 		});
 
+		specViewer.addDoubleClickListener(event -> doChangeRefSpec());
+
 		// Initial action enablement (no selection in the specViewer):
 		copyRefSpecAction.setEnabled(false);
 		changeRefSpecAction.setEnabled(false);
