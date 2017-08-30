@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_1650bd55",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3247,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2017-08-30T12:49:23Z",
+      "side": 1,
+      "message": "something is broken here",
+      "range": {
+        "startLine": 3247,
+        "startChar": 19,
+        "endLine": 3247,
+        "endChar": 56
+      },
+      "revId": "2d2cf5a8461f80d1cb9c4061ac04b86e95905f2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
