@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_d95bc6cc",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 6578,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2017-08-30T14:51:41Z",
+      "side": 1,
+      "message": "The name of the command and the label of the menu seem to be confused here (independent of your change). The menu item shows \"Delete Branch\", while the tooltip for the menu item is \"Delete Branch...\" (including ellipsis). For all other menu items, it is exactly the other way around.\n\nI\u0027m not exactly sure which 2 strings are relevant, but please notice that this command is the only one not using the pattern \"Command.name\" for the name property, like the commands below and above.",
+      "range": {
+        "startLine": 6578,
+        "startChar": 11,
+        "endLine": 6578,
+        "endChar": 40
+      },
+      "revId": "9b3d28f20e249eacacaf0797105d8b1b9995517e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_b977da45",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 6679,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2017-08-30T14:51:41Z",
+      "side": 1,
+      "message": "this one does not exist. can be noticed by hovering the menu item in runtime and seeing the untranslated name as tooltip",
+      "range": {
+        "startLine": 6679,
+        "startChar": 17,
+        "endLine": 6679,
+        "endChar": 56
+      },
+      "revId": "9b3d28f20e249eacacaf0797105d8b1b9995517e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
