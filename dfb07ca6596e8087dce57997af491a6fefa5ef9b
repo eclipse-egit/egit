@@ -34,6 +34,24 @@
       "revId": "dfb07ca6596e8087dce57997af491a6fefa5ef9b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_4c92b25e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clean/CleanRepositoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2017-08-30T16:02:29Z",
+      "side": 1,
+      "message": "yes, but when debugging I also see that finally I end up here in line 261 with the same InvocationTargetException",
+      "parentUuid": "c7880b39_ac679617",
+      "revId": "dfb07ca6596e8087dce57997af491a6fefa5ef9b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
