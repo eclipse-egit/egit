@@ -1148,6 +1148,12 @@ public class UIText extends NLS {
 	public static String CleanRepositoryPage_cleaningItems;
 
 	/** */
+	public static String CleanRepositoryPage_Failed;
+
+	/** */
+	public static String CleanRepositoryPage_FindItemsFailed;
+
+	/** */
 	public static String CleanRepositoryPage_findingItems;
 
 	/** */

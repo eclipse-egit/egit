@@ -11,10 +11,10 @@
 package org.eclipse.egit.ui.internal.clean;
 
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
@@ -22,16 +22,14 @@ import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
-import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.api.CleanCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -102,23 +100,19 @@ public class CleanRepositoryPage extends WizardPage {
 		cleanTable.setLabelProvider(new LabelProvider() {
 			@Override
 			public Image getImage(Object element) {
-				if(!(element instanceof String))
+				if(!(element instanceof String)) {
 					return null;
+				}
 
-				if(((String)element).endsWith("/")) //$NON-NLS-1$
+				if (((String) element).endsWith("/")) { //$NON-NLS-1$
 					return dirImage;
-				else
+				} else {
 					return fileImage;
+				}
 			}
 		});
 		setPageComplete(false);
-		cleanTable.addCheckStateListener(new ICheckStateListener() {
-
-			@Override
-			public void checkStateChanged(CheckStateChangedEvent event) {
-				updatePageComplete();
-			}
-		});
+		cleanTable.addCheckStateListener(event -> updatePageComplete());
 
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(cleanTable.getControl());
 
@@ -170,56 +164,44 @@ public class CleanRepositoryPage extends WizardPage {
 	private void updatePageComplete() {
 		boolean hasCheckedElements = cleanTable.getCheckedElements().length != 0;
 		setPageComplete(hasCheckedElements);
-		if (hasCheckedElements)
+		if (hasCheckedElements) {
 			setMessage(null, NONE);
-		else
+		} else {
 			setMessage(UIText.CleanRepositoryPage_SelectFilesToClean, INFORMATION);
+		}
 	}
 
 	@Override
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
-
-		if(visible)
-			getShell().getDisplay().asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					updateCleanItems();
-				}
-			});
+		if(visible) {
+			getShell().getDisplay().asyncExec(() -> updateCleanItems());
+		}
 	}
 
 	private void updateCleanItems() {
 		try {
-			getContainer().run(true, false, new IRunnableWithProgress() {
-				@Override
-				public void run(IProgressMonitor monitor) throws InvocationTargetException,
-						InterruptedException {
-					monitor.beginTask(UIText.CleanRepositoryPage_findingItems, IProgressMonitor.UNKNOWN);
+			getContainer().run(true, false, monitor -> {
 
+				monitor.beginTask(UIText.CleanRepositoryPage_findingItems,
+						IProgressMonitor.UNKNOWN);
+				try {
 					Git git = Git.wrap(repository);
 					CleanCommand command = git.clean().setDryRun(true);
 					command.setCleanDirectories(cleanDirectories);
 					command.setIgnore(!includeIgnored);
-					try {
-						final Set<String> paths = command.call();
-
-						getShell().getDisplay().syncExec(new Runnable() {
-							@Override
-							public void run() {
-								cleanTable.setInput(paths);
-							}
-						});
-					} catch (GitAPIException ex) {
-						Activator.logError("cannot call clean command!", ex); //$NON-NLS-1$
-					}
-
-					monitor.done();
+					final Set<String> paths = command.call();
+					getShell().getDisplay()
+							.syncExec(() -> cleanTable.setInput(paths));
+				} catch (GitAPIException | JGitInternalException e) {
+					throw new InvocationTargetException(e);
 				}
+				monitor.done();
 			});
 			updatePageComplete();
 		} catch (InvocationTargetException e) {
-			Activator.logError("Unexpected exception while finding items to clean", e); //$NON-NLS-1$
+			Activator.handleError(UIText.CleanRepositoryPage_FindItemsFailed,
+					e.getCause(), true);
 			clearPage();
 		} catch (InterruptedException e) {
 			clearPage();
@@ -239,10 +221,11 @@ public class CleanRepositoryPage extends WizardPage {
 		for(Object ele : cleanTable.getCheckedElements()) {
 			String str = ele.toString();
 
-			if(str.endsWith("/")) //$NON-NLS-1$
+			if (str.endsWith("/")) { //$NON-NLS-1$
 				result.add(str.substring(0, str.length() - 1));
-			else
+			} else {
 				result.add(str);
+			}
 		}
 
 		return result;
@@ -254,37 +237,33 @@ public class CleanRepositoryPage extends WizardPage {
 	public void finish() {
 		try {
 			final Set<String> itemsToClean = getItemsToClean();
+			getContainer().run(true, false, monitor -> {
 
-			getContainer().run(true, false, new IRunnableWithProgress() {
-				@Override
-				public void run(IProgressMonitor monitor) throws InvocationTargetException,
-						InterruptedException {
+				try {
 					SubMonitor subMonitor = SubMonitor.convert(monitor,
 							UIText.CleanRepositoryPage_cleaningItems, 1);
-
 					Git git = Git.wrap(repository);
 					CleanCommand command = git.clean().setDryRun(false);
 					command.setCleanDirectories(cleanDirectories);
 					command.setIgnore(!includeIgnored);
 					command.setPaths(itemsToClean);
-					try {
-						command.call();
-					} catch (GitAPIException ex) {
-						Activator.logError("cannot call clean command!", ex); //$NON-NLS-1$
-					}
-
-					try {
-						IProject[] projects = ProjectUtil.getProjectsContaining(repository, itemsToClean);
-						ProjectUtil.refreshResources(projects,
-								subMonitor.newChild(1));
-					} catch (CoreException e) {
-						// could not refresh... not a "real" problem
-					}
+					command.call();
+					ProjectUtil.refreshResources(
+									ProjectUtil.getProjectsContaining(
+											repository, itemsToClean),
+									subMonitor.newChild(1));
+				} catch (GitAPIException | JGitInternalException
+						| CoreException e) {
+					throw new InvocationTargetException(e);
 				}
 			});
-		} catch (Exception e) {
-			Activator.logError("Unexpected exception while cleaning", e); //$NON-NLS-1$
+		} catch (InvocationTargetException e) {
+			Activator.handleError(MessageFormat.format(
+					UIText.CleanRepositoryPage_Failed,
+					repository.getWorkTree().getAbsolutePath()),
+				e.getCause(), true);
+		} catch (InterruptedException e) {
+			// empty
 		}
 	}
-
 }
