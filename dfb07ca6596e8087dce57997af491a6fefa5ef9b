@@ -16,6 +16,24 @@
       "revId": "dfb07ca6596e8087dce57997af491a6fefa5ef9b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_ac679617",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clean/CleanRepositoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2017-08-30T15:55:53Z",
+      "side": 1,
+      "message": "getContainer().run() executes a runnable, and the exception goes there. When debugging, you end up in ModalContext.java, line 121 with your JGitException wrapped in the InvocationTargetException.",
+      "parentUuid": "c7880b39_79b012f8",
+      "revId": "dfb07ca6596e8087dce57997af491a6fefa5ef9b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
