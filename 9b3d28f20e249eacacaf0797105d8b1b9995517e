@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c7880b39_c0e4a3ce",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 6578,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-08-31T15:08:05Z",
+      "side": 1,
+      "message": "Fixed.\n\nWe can in later commit check whether we can make the menu show the ... if we\u0027re sure we\u0027ll show a dialog. For now, both the menu label and the command name are without ellipsis since we may not open a dialog (a single branch, not current HEAD).",
+      "parentUuid": "c7880b39_d95bc6cc",
+      "range": {
+        "startLine": 6578,
+        "startChar": 11,
+        "endLine": 6578,
+        "endChar": 40
+      },
+      "revId": "9b3d28f20e249eacacaf0797105d8b1b9995517e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7880b39_b977da45",
         "filename": "org.eclipse.egit.ui/plugin.xml",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-30T14:51:41Z",
       "side": 1,
       "message": "this one does not exist. can be noticed by hovering the menu item in runtime and seeing the untranslated name as tooltip",
+      "range": {
+        "startLine": 6679,
+        "startChar": 17,
+        "endLine": 6679,
+        "endChar": 56
+      },
+      "revId": "9b3d28f20e249eacacaf0797105d8b1b9995517e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_a0f07787",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 6679,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-08-31T15:08:05Z",
+      "side": 1,
+      "message": "Fixed. If you re-test, start the Eclipse with -clean,otherwise it won\u0027t pick up the fix.",
+      "parentUuid": "c7880b39_b977da45",
       "range": {
         "startLine": 6679,
         "startChar": 17,
