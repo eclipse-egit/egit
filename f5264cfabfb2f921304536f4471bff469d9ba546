@@ -16,6 +16,24 @@
       "revId": "f5264cfabfb2f921304536f4471bff469d9ba546",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_4a129217",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ListRemoteOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-08-31T09:32:56Z",
+      "side": 1,
+      "message": "See https://git.eclipse.org/r/#/c/104059/ : reverts the removal of repository, but adds this new constructor and keeps its uses in SourceBranchPage and LocalRepositoryTestCase.",
+      "parentUuid": "c7880b39_caaf6268",
+      "revId": "f5264cfabfb2f921304536f4471bff469d9ba546",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
