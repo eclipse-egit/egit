@@ -258,7 +258,7 @@ public class FetchGerritChangePage extends WizardPage {
 				if (list != null) {
 					list.cancel(ChangeList.CancelMode.INTERRUPT);
 				}
-				list = new ChangeList(uriText);
+				list = new ChangeList(repository, uriText);
 				changeRefs.put(uriText, list);
 				preFetch(list);
 			}
@@ -490,7 +490,7 @@ public class FetchGerritChangePage extends WizardPage {
 		}
 		for (String aUri : uris) {
 			uriCombo.add(aUri);
-			changeRefs.put(aUri, new ChangeList(aUri));
+			changeRefs.put(aUri, new ChangeList(repository, aUri));
 		}
 		if (defaultUri != null) {
 			uriCombo.setText(defaultUri);
@@ -500,7 +500,7 @@ public class FetchGerritChangePage extends WizardPage {
 		String currentUri = uriCombo.getText();
 		ChangeList list = changeRefs.get(currentUri);
 		if (list == null) {
-			list = new ChangeList(currentUri);
+			list = new ChangeList(repository, currentUri);
 			changeRefs.put(currentUri, list);
 		}
 		preFetch(list);
@@ -761,7 +761,7 @@ public class FetchGerritChangePage extends WizardPage {
 			throws InvocationTargetException, InterruptedException {
 		String uriText = uriCombo.getText();
 		if (!changeRefs.containsKey(uriText)) {
-			changeRefs.put(uriText, new ChangeList(uriText));
+			changeRefs.put(uriText, new ChangeList(repository, uriText));
 		}
 		ChangeList list = changeRefs.get(uriText);
 		if (!list.isFinished()) {
@@ -1379,6 +1379,8 @@ public class FetchGerritChangePage extends WizardPage {
 			PRISTINE, SCHEDULED, CANCELING, INTERRUPT, CANCELED, DONE
 		}
 
+		private final Repository repository;
+
 		private final String uriText;
 
 		private State state = State.PRISTINE;
@@ -1387,7 +1389,8 @@ public class FetchGerritChangePage extends WizardPage {
 
 		private InterruptibleJob job;
 
-		public ChangeList(String uriText) {
+		public ChangeList(Repository repository, String uriText) {
+			this.repository = repository;
 			this.uriText = uriText;
 		}
 
@@ -1512,7 +1515,8 @@ public class FetchGerritChangePage extends WizardPage {
 			}
 			ListRemoteOperation listOp;
 			try {
-				listOp = new ListRemoteOperation(new URIish(uriText),
+				listOp = new ListRemoteOperation(repository,
+						new URIish(uriText),
 						Activator.getDefault().getPreferenceStore().getInt(
 								UIPreferences.REMOTE_CONNECTION_TIMEOUT));
 			} catch (URISyntaxException e) {
