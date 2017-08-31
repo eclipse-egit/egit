@@ -64,7 +64,7 @@ public final class FeatureListOperation extends GitFlowOperation {
 
 			URIish uri = new URIish(uriString);
 			ListRemoteOperation listRemoteOperation = new ListRemoteOperation(
-					uri, timeout);
+					repository.getRepository(), uri, timeout);
 			listRemoteOperation.run(progress.newChild(1));
 			Collection<Ref> remoteRefs = listRemoteOperation.getRemoteRefs();
 			for (Ref ref : remoteRefs) {
