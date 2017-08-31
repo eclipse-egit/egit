@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_caaf6268",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ListRemoteOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-08-31T08:49:17Z",
+      "side": 1,
+      "message": "That change actually was not good.\n\nIf we ignore the repository, we\u0027ll also ignore settings in the repo config (and in fact because TransportHttp(URIish) will create a HttpConfig based on an empty new Config(), even the user config).\n\nWhich means for HTTP we\u0027ll completely ignore any http.* settings the user may have done, and we\u0027ll run the ls-remote with the default settings.\n\nInstead we\u0027ll have to make the command work with or without repo, and use this new way only if no repo was given. (The bit about using the user config when there\u0027s no repo would be fixed by https://git.eclipse.org/r/#/c/103993/ .)",
+      "revId": "f5264cfabfb2f921304536f4471bff469d9ba546",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
