@@ -401,7 +401,15 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 				}
 				Set<ProjectRecord> records = new LinkedHashSet<>();
 				for (File file : files) {
-					records.add(new ProjectRecord(file));
+					ProjectRecord record = new ProjectRecord(file);
+					if (record.getProjectDescription() == null) {
+						// Ignore invalid .project files
+						continue;
+					}
+					records.add(record);
+				}
+				if (records.isEmpty()) {
+					return Status.OK_STATUS;
 				}
 				try {
 					ProjectUtils.createProjects(records, sets,
