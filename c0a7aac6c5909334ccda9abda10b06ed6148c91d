@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_41a194a7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-09-01T12:57:51Z",
+      "side": 0,
+      "message": "This error case code has existed in EGit since the GitProjectsImportPage was added on January 2, 2009 when the project was not even at org.eclipse yet.",
+      "revId": "c0a7aac6c5909334ccda9abda10b06ed6148c91d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_618db040",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/ProjectUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-09-01T12:57:51Z",
+      "side": 0,
+      "message": "Setting a *file* here cannot possibly work; the location *must* be a directory. ProjectDescription.setLocation() sets the location of the *project*, not that of the .project file.",
+      "revId": "c0a7aac6c5909334ccda9abda10b06ed6148c91d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
