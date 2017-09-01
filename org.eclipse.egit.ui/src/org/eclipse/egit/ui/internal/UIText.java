@@ -5601,6 +5601,9 @@ public class UIText extends NLS {
 	/** */
 	public static String RepositorySearchDialog_BrowseDialogMessage;
 
+	/** */
+	public static String ProjectUtils_Invalid_ProjectFile;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}

@@ -10,6 +10,7 @@ package org.eclipse.egit.ui.internal.clone;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,12 +26,11 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.project.RepositoryFinder;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.ui.IWorkingSet;
 import org.eclipse.ui.IWorkingSetManager;
@@ -80,6 +80,9 @@ public class ProjectUtils {
 			final boolean open, final IWorkingSet[] selectedWorkingSets,
 			IProgressMonitor monitor)
 			throws InvocationTargetException, InterruptedException {
+		if (projectsToCreate.isEmpty()) {
+			return;
+		}
 		IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
 			@Override
 			public void run(IProgressMonitor actMonitor) throws CoreException {
@@ -160,20 +163,14 @@ public class ProjectUtils {
 			return null;
 		}
 		if (record.getProjectDescription() == null) {
-			// error case
-			record.setProjectDescription(workspace
-					.newProjectDescription(projectName));
-			IPath locationPath = new Path(record.getProjectSystemFile()
-					.getAbsolutePath());
-
-			// If it is under the root use the default location
-			if (Platform.getLocation().isPrefixOf(locationPath))
-				record.getProjectDescription().setLocation(null);
-			else
-				record.getProjectDescription().setLocation(locationPath);
-		} else {
-			record.getProjectDescription().setName(projectName);
+			// error case; should not occur.
+			String message = MessageFormat.format(
+					UIText.ProjectUtils_Invalid_ProjectFile,
+					record.getProjectSystemFile(), projectName);
+			Activator.logError(message, new IllegalStateException(message));
+			return null;
 		}
+		record.getProjectDescription().setName(projectName);
 
 		SubMonitor progress = SubMonitor.convert(monitor,
 				UIText.WizardProjectsImportPage_CreateProjectsTask, 8);
