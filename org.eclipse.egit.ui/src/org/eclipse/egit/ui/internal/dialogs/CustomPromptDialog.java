@@ -101,17 +101,19 @@ public class CustomPromptDialog extends TrayDialog {
 
 			if (item instanceof CharArrayType || item instanceof StringType) {
 				Text text = new Text(main, SWT.BORDER | (item.isValueSecure() ? SWT.PASSWORD : SWT.NONE));
-				GridDataFactory.defaultsFor(text).applyTo(text);
+				GridDataFactory.defaultsFor(text)
+						.align(SWT.BEGINNING, SWT.CENTER).applyTo(text);
 				text.setData(KEY_ITEM, item);
 				editingControls.add(text);
 			} else if (item instanceof YesNoType) {
 				Button checkBox = new Button(main, SWT.CHECK);
-				GridDataFactory.defaultsFor(checkBox).applyTo(checkBox);
+				checkBox.setData(KEY_ITEM, item);
+				GridDataFactory.defaultsFor(checkBox)
+						.align(SWT.BEGINNING, SWT.CENTER).applyTo(checkBox);
 				editingControls.add(checkBox);
 			} else {
 				// unknown type, not editable
-				Label dummy = new Label(main, SWT.NONE);
-				GridDataFactory.fillDefaults().applyTo(dummy);
+				GridDataFactory.defaultsFor(label).span(2, 1).applyTo(label);
 			}
 		}
 
