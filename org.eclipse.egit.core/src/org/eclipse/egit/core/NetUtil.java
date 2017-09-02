@@ -10,6 +10,7 @@ package org.eclipse.egit.core;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
@@ -22,6 +23,8 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.transport.HttpConfig;
+import org.eclipse.jgit.transport.URIish;
 
 /**
  * Networking utilities
@@ -70,17 +73,18 @@ public class NetUtil {
 			HttpURLConnection conn) throws IOException {
 		if ("https".equals(conn.getURL().getProtocol())) { //$NON-NLS-1$
 			HttpsURLConnection httpsConn = (HttpsURLConnection) conn;
-			if (!repo.getConfig().getBoolean("http", "sslVerify", true)) { //$NON-NLS-1$ //$NON-NLS-2$
-				try {
+			try {
+				HttpConfig http = new HttpConfig(repo.getConfig(),
+						new URIish(conn.getURL().toString()));
+				if (!http.isSslVerify()) {
 					SSLContext ctx = SSLContext.getInstance("TLS"); //$NON-NLS-1$
 					ctx.init(null, trustAllCerts, null);
 					httpsConn.setSSLSocketFactory(ctx.getSocketFactory());
 					httpsConn.setHostnameVerifier(trustAllHostNames);
-				} catch (KeyManagementException e) {
-					throw new IOException(e.getMessage());
-				} catch (NoSuchAlgorithmException e) {
-					throw new IOException(e.getMessage());
 				}
+			} catch (KeyManagementException | NoSuchAlgorithmException
+					| URISyntaxException e) {
+				throw new IOException(e.getMessage(), e);
 			}
 		}
 	}
