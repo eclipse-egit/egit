@@ -71,6 +71,8 @@ public class SampleTestRepository {
 
 	private String uri;
 
+	private String secureUri;
+
 	private RevBlob A_txt;
 
 	private RevCommit A, B, C;
@@ -83,6 +85,10 @@ public class SampleTestRepository {
 		return uri;
 	}
 
+	public String getSecureUri() {
+		return secureUri;
+	}
+
 	/**
 	 * Create a bare repository, generate some sample data and start git daemon
 	 * on a free port
@@ -90,15 +96,35 @@ public class SampleTestRepository {
 	 * @param n
 	 *            hint how many random commits should be generated
 	 * @param serveHttp
+	 *            whether to serve the repository over HTTP
 	 *
 	 * @throws Exception
 	 */
 	public SampleTestRepository(int n, boolean serveHttp) throws Exception {
+		this(n, serveHttp, false);
+	}
+
+	/**
+	 * Create a bare repository, generate some sample data and start git daemon
+	 * on a free port
+	 *
+	 * @param n
+	 *            hint how many random commits should be generated
+	 * @param serveHttp
+	 *            whether to serve the repository over HTTP
+	 * @param withSsl
+	 *            whether to server the repository also over HTTPS if
+	 *            {@code serveHttp} is {@code true}
+	 *
+	 * @throws Exception
+	 */
+	public SampleTestRepository(int n, boolean serveHttp, boolean withSsl)
+			throws Exception {
 		this.serveHttp = serveHttp;
 		src = createRepository();
 		generateSampleData(n);
 		if (serveHttp)
-			serveHttp();
+			serveHttp(withSsl);
 		else
 			serve();
 	}
@@ -110,7 +136,7 @@ public class SampleTestRepository {
 		Repository db = new RepositoryBuilder().setGitDir(gitdir).build();
 		assertFalse(gitdir.exists());
 		db.create(true);
-		return new TestRepository<Repository>(db);
+		return new TestRepository<>(db);
 	}
 
 	private void generateSampleData(int n) throws Exception {
@@ -154,7 +180,7 @@ public class SampleTestRepository {
 
 	private void serve() throws IOException {
 		d = new Daemon();
-		FileResolver<DaemonClient> resolver = new FileResolver<DaemonClient>();
+		FileResolver<DaemonClient> resolver = new FileResolver<>();
 		resolver.exportRepository(REPO_NAME, src.getRepository());
 		d.setRepositoryResolver(resolver);
 		d.start();
@@ -162,10 +188,13 @@ public class SampleTestRepository {
 				+ Constants.DOT_GIT_EXT;
 	}
 
-	private void serveHttp() throws Exception{
-		httpServer = new SimpleHttpServer(src.getRepository());
+	private void serveHttp(boolean withSsl) throws Exception {
+		httpServer = new SimpleHttpServer(src.getRepository(), withSsl);
 		httpServer.start();
 		uri = httpServer.getUri().toString();
+		if (withSsl) {
+			secureUri = httpServer.getSecureUri().toString();
+		}
 	}
 
 	/**
