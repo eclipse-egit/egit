@@ -422,14 +422,16 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				RepositoryTreeNode element = (RepositoryTreeNode) sel
 						.getFirstElement();
 				// Disable checkout for bare repositories
-				if (element.getRepository().isBare())
+				if (element.getRepository().isBare()) {
 					return;
-				if (element instanceof RefNode)
-					executeOpenCommandWithConfirmation(((RefNode) element)
-							.getObject().getName());
-				if (element instanceof TagNode)
-					executeOpenCommandWithConfirmation(((TagNode) element)
-							.getObject().getName());
+				}
+				if (element instanceof RefNode) {
+					executeOpenCommandWithConfirmation(element,
+							((RefNode) element).getObject().getName());
+				} else if (element instanceof TagNode) {
+					executeOpenCommandWithConfirmation(element,
+							((TagNode) element).getObject().getName());
+				}
 			}
 		});
 		// handle open event for the working directory
@@ -441,7 +443,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 						.getFirstElement();
 				if (element instanceof FileNode
 						|| element instanceof StashedCommitNode)
-					executeOpenCommand();
+					executeOpenCommand(element);
 			}
 		});
 		// react on selection changes
@@ -462,7 +464,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		return viewer;
 	}
 
-	private void executeOpenCommandWithConfirmation(String refName) {
+	private void executeOpenCommandWithConfirmation(RepositoryTreeNode element,
+			String refName) {
 		if (!BranchOperationUI.checkoutWillShowQuestionDialog(refName)) {
 			IPreferenceStore store = Activator.getDefault()
 					.getPreferenceStore();
@@ -497,24 +500,19 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				}
 			}
 		}
-		executeOpenCommand();
+		executeOpenCommand(element);
 	}
 
-	private void executeOpenCommand() {
-		IHandlerService srv = CommonUtils.getService(getViewSite(), IHandlerService.class);
-
-		try {
-			srv.executeCommand("org.eclipse.egit.ui.RepositoriesViewOpen", null); //$NON-NLS-1$
-		} catch (Exception e) {
-			Activator.handleError(e.getMessage(), e, false);
-		}
+	private void executeOpenCommand(RepositoryTreeNode element) {
+		CommonUtils.runCommand("org.eclipse.egit.ui.RepositoriesViewOpen", //$NON-NLS-1$
+				new StructuredSelection(element));
 	}
 
 	private void activateContextService() {
 		IContextService contextService = CommonUtils.getService(getSite(), IContextService.class);
-		if (contextService != null)
+		if (contextService != null) {
 			contextService.activateContext(VIEW_ID);
-
+		}
 	}
 
 	private void initRepositoriesAndListeners() {
