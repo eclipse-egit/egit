@@ -26,10 +26,13 @@ public class RemoveOrDeleteRepositoryCommand extends RemoveCommand {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		List<RepositoryNode> selectedNodes = getSelectedNodes(event);
-		if (selectedNodes.size() != 1)
+		if (selectedNodes.size() != 1) {
 			return null;
-
+		}
 		Repository repository = selectedNodes.get(0).getObject();
+		if (repository == null) {
+			return null;
+		}
 		String repositoryName = Activator.getDefault().getRepositoryUtil()
 				.getRepositoryName(repository);
 
@@ -47,10 +50,13 @@ public class RemoveOrDeleteRepositoryCommand extends RemoveCommand {
 				MessageDialog.QUESTION, buttonLabels, 0);
 
 		int result = dialog.open();
-		if (result == 0) // Remove from View
+		if (result == 0) {
+			// Remove from View
 			super.removeRepository(event, false);
-		else if (result == 1) // Delete Repository...
+		} else if (result == 1) {
+			// Delete Repository...
 			super.removeRepository(event, true);
+		}
 		return null;
 	}
 }
