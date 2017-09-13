@@ -16,6 +16,24 @@
       "revId": "ba97c2ad506bfdf3e35e94cf1ede3e2ebddfbf23",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7880b39_b3434e15",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CustomPromptDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-09-13T06:21:17Z",
+      "side": 1,
+      "message": "Means the yes-no CredentialItem cannot be used anymore to ask a single yes-no question. I think if we wanted to use radio buttons or a combo box, we\u0027d need a new kind of CredentialItem for a (single or multiple) choice from a list of values.",
+      "parentUuid": "c7880b39_b3726ed2",
+      "revId": "ba97c2ad506bfdf3e35e94cf1ede3e2ebddfbf23",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
