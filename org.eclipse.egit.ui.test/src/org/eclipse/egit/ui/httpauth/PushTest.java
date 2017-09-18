@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.httpauth;
 
+import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellIsActive;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -92,6 +93,7 @@ public class PushTest extends EGitTestCase {
 		wizardTester.finish();
 		loginDialogTester.login("agitter", "letmein");
 		PushResultDialogTester pushResultDialogTester = new PushResultDialogTester();
+		bot.waitUntil(shellIsActive("Push Results: push"));
 		String expectedMessage = "Repository " + remoteRepository.getUri();
 		pushResultDialogTester.assertResultMessage(expectedMessage);
 		pushResultDialogTester.closeDialog();
