@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7880b39_1a28a135",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/coretext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-09-20T22:37:47Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s an improvement. Consider:\n\n  class Foo implements Adaptable {\n\n    private Bar bar \u003d new Bar();\n\n    Object getAdapter(Class type) {\n       return bar;\n    }\n\n  }\n\n  Foo foo \u003d new Foo();\n\n  Foobar foobar \u003d Utils.getAdapter(foo, Foobar.class);\n\nThis produces the message\n\n  Adaptable of type Foo returned from getAdapter(Foobar.class)\n  an object of type Bar, which is not of the\n  requested type. Please ask the provider of Foo\n  to fix this bug in their code.\n\nWhy would you want to add an \"is\" in there?\n\nWe could simplify it to\n\n  Foo.getAdapter(Foobar.class) returned\n  an object of type Bar, which is not of the\n  requested type. Please ask the provider of Foo\n  to fix this bug in their code.\n\nthough.",
+      "revId": "38615a2a4b55aeac25730f0d41adb33ac38612f3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
