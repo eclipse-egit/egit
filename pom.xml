@@ -65,7 +65,7 @@
     <egit-version>4.9.0-SNAPSHOT</egit-version>
     <tycho-version>1.0.0</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
-    <jboss-tycho-plugins-version>0.26.0</jboss-tycho-plugins-version>
+    <jboss-tycho-plugins-version>1.0.0</jboss-tycho-plugins-version>
     <mockito-version>1.8.4</mockito-version>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.repository/target/repository</jgit-site>
     <license-site>http://download.eclipse.org/cbi/updates/license</license-site>
@@ -76,7 +76,6 @@
     <test.vmparams></test.vmparams>
     <coretest.vmparams></coretest.vmparams>
     <uitest.vmparams>-Dorg.eclipse.swtbot.search.timeout=30000 -Dorg.eclipse.swtbot.screenshots.dir=target/screenshots -Xmx1024m</uitest.vmparams>
-    <eclipse-with-smartimport>http://download.eclipse.org/eclipse/updates/4.6milestones/S-4.6M6-201603170200</eclipse-with-smartimport>
   </properties>
 
   <profiles>
