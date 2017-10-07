@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>JGit 4.9 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">JGit 4.9 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bug-Fixes.html" title="Bug Fixes">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bug Fixes</td>
+			</tr>
+		</table><hr class="navigation-separator"/>
+		<h1 id="JGit">JGit</h1>
+		<h2 id="Features">Features</h2>
+		<ul>
+			<li>Implement atomic BatchRefUpdates for RefDirectory. The existing packed-refs file provides a mechanism for implementing atomic multi-ref updates without any changes to the on-disk format or lockfile protocol. We just need to make sure that there are no loose refs involved in the transaction, which we can achieve by packing the refs while holding locks on all loose refs. Full details of the algorithm are in the PackedBatchRefUpdate javadoc.</li>
+			<li>reftable: new ref storage format. Some repositories contain a lot of references (e.g. android at 866k, rails at 31k). The reftable format provides:
+				<ul>
+					<li>Near constant time lookup for any single reference, even when the repository is cold and not in process or kernel cache.</li>
+					<li>Near constant time verification a SHA-1 is referred to by at least one reference (for allow-tip-sha1-in-want).</li>
+					<li>Efficient lookup of an entire namespace, such as `refs/tags/`.</li>
+					<li>Support atomic push `O(size_of_update)` operations.</li>
+					<li>Combine reflog storage with ref storage.</li>
+				</ul>
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=470318" target="egit_external">bug 470318</a> - Fetch submodule repo before resolving commits
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=374703" target="egit_external">bug 374703</a> - Handle SSL handshake failures in TransportHttp, use CredentialsProvider to inform the user
+			</li>
+			<li>Support http.&lt;url&gt;.* configs</li>
+			<li>Add BlobObjectChecker</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=520978" target="egit_external">bug 520978</a> - Improve getting typed values from a Config to enable handling invalid configuration options
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=496170" target="egit_external">bug 496170</a> - Support most %-token substitutions in OpenSshConfig
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=490939" target="egit_external">bug 490939</a> - Let Jsch know about ~/.ssh/config. Ensure the Jsch instance used knows about ~/.ssh/config. This enables Jsch to honor more user configurations, in particular also the UserKnownHostsFile configuration, or additional identities given via multiple IdentityFile entries.
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=465167" target="egit_external">bug 465167</a> - Add support to follow HTTP redirects
+				<ul>
+					<li>Implement config setting http.followRedirects</li>
+					<li>Number of redirects followed can be limited by http.maxRedirects (default 5)</li>
+				</ul>
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=500106" target="egit_external">bug 500106</a> - Send a detailed event on working tree modifications to provide the foundations for better file change tracking
+			</li>
+			<li>Add dfs fsck implementation</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=517128" target="egit_external">bug 517128</a> - Support -merge attribute in binary macro. The merger is now able to react to the use of the merge attribute. The value unset and the custom value 'binary' are handled (-merge and merge=binary)
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=518377" target="egit_external">bug 518377</a> - Support --match functionality in DescribeCommand
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=517847" target="egit_external">bug 517847</a> - Allow to programmatically set FastForwardMode for PullCommand
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=474174" target="egit_external">bug 474174</a> - Add support for config option "pull.ff"
+			</li>
+			<li>Add a new singlePack option to PackConfig. If set, "singlePack" will create a single GC pack file for all objects reachable from refs/*. If not set, the GC pack will contain object reachable from refs/heads/* and refs/tags/*, and the GC_REST pack will contain all other reachable objects.</li>
+			<li>fetch: Accept any SHA-1 on left hand side of refspec</li>
+		</ul>
+		<h2 id="JGit_Command_Line">JGit Command Line</h2>
+		<ul>
+			<li>Added API to TextBuiltin for piped usage.</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=518377" target="egit_external">bug 518377</a> - Add --match option for `jgit describe` to CLI
+			</li>
+		</ul>
+		<h2 id="Performance_Improvements">Performance Improvements</h2>
+		<ul>
+			<li>ReceivePack: clear advertised .haves if application changes refs to avoid over-advertising ".have" lines</li>
+			<li>Reftable: see above</li>
+		</ul>
+		<h2 id="Build_and_Release_Engineering">Build and Release Engineering</h2>
+		<ul>
+			<li>Upgrade Maven compiler plugins</li>
+			<li>Add org.apache.commons.codec 1.9.0 to target platform</li>
+			<li>Update args4j to 2.33 (CQ: 11068)</li>
+			<li>Update Oxygen Orbit p2 repository to R20170516192513</li>
+			<li>Replace findbugs by spotbugs</li>
+		</ul><hr class="navigation-separator"/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bug-Fixes.html" title="Bug Fixes">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bug Fixes</td>
+			</tr>
+		</table>
+	</body>
+</html>

@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>JGit 4.9 New and Noteworthy - Bug Fixes</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">Bug Fixes</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="4.9.html" title="JGit 4.9 New and Noteworthy">
+						<img alt="Previous" border="0" src="../../../images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">JGit 4.9 New and Noteworthy</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table><hr class="navigation-separator"/>
+		<h1 id="Bug_Fixes">Bug Fixes</h1>
+		<p>
+			<a href="https://bugs.eclipse.org/bugs/buglist.cgi?classification=Technology&amp;list_id=10006180&amp;order=Importance&amp;product=JGit&amp;query_format=advanced&amp;resolution=FIXED&amp;resolution=DUPLICATE&amp;target_milestone=4.9" target="egit_external"> 2 enhancement requests and 23 bugs</a> were closed
+		</p>
+		<ul>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=521296" target="egit_external">bug 521296</a> - Fix missing RefsChangedEvent when packed refs are used
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=376369" target="egit_external">bug 376369</a> - Fix Daemon.stop() to actually stop the listener thread
+			</li>
+			<li>Remove workaround for bug in Java's ReferenceQueue which was fixed in Java 8. 
+				<b>Minimum Java version 8-b100:</b> JGit 4.9 removes a 
+				<a href="https://git.eclipse.org/r/#/c/104245/" target="egit_external">workaround</a> for a 
+				<a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6837858" target="egit_external">bug</a> in ReferenceQueue of Sun's Java 5, 6, 7 implementation. This bug was fixed in 
+				<a href="http://hg.openjdk.java.net/jdk8/jdk8/jdk/rev/858c75eb83b5" target="egit_external">JDK 8-b100</a> hence this is the minimum supported Java version for JGit 4.9.
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=508801" target="egit_external">bug 508801</a> - Don't assume name = path in .gitmodules
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=515325" target="egit_external">bug 515325</a> - FetchCommand: pass on CredentialsProvider to submodule fetches
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=520920" target="egit_external">bug 520920</a> - Exclude file matching: fix backtracking on match failures after "**"
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=508568" target="egit_external">bug 508568</a> - Fix path pattern matching to work also for gitattributes
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=429625" target="egit_external">bug 429625</a> - Ignore invalid TagOpt values
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=519883" target="egit_external">bug 519883</a> - Fix default directory used to clone when setDirectory wasn't called
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=513043" target="egit_external">bug 513043</a> - Do authentication re-tries on HTTP POST
+			</li>
+			<li>Fix exception handling for opening bitmap index files</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=393170" target="egit_external">bug 393170</a> - Do not apply pushInsteadOf to existing pushUris
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=520702" target="egit_external">bug 520702</a> - Record submodule paths with untracked changes as FileMode.GITLINK
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=520910" target="egit_external">bug 520910</a> - Ensure EOL stream type is DIRECT when -text attribute is present. Otherwise fancy combinations of attributes (binary or -text in combination with crlf or eol) may result in the corruption of binary data.
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=520677" target="egit_external">bug 520677</a> - Use relative paths for attribute rule matching
+			</li>
+			<li>Treat RawText of binary data as file with one single line. This avoids executing mergeAlgorithm.merge on binary data, which is unlikely to be useful.</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=510685" target="egit_external">bug 510685</a> - Fix committing empty commits
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=519887" target="egit_external">bug 519887</a> - Fix JGit set core.fileMode to false by default instead of true for non Windows OS.
+			</li>
+			<li>Fix matching ignores and attributes pattern of form a/b/**.</li>
+			<li>Fix deleting symrefs</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=518377" target="egit_external">bug 518377</a> - Fix bug in multiple tag handling on DescribeCommand
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=393170" target="egit_external">bug 393170</a> - pushInsteadOf configuration is ignored by EGit. 
+				<b>Note:</b> Up to now JGit mistakenly applied pushInsteadOf also to existing pushUris. If some repositories had relied on this mis-feature, pushes may newly suddenly fail (the uncritical case; the config just needs to be fixed) or even still succeed but push to unexpected places, namely to the non-rewritten pushUrls (the critical case).
+			</li>
+		</ul><hr class="navigation-separator"/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="4.9.html" title="JGit 4.9 New and Noteworthy">
+						<img alt="Previous" border="0" src="../../../images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center">
+					<a href="4.9.html" title="JGit 4.9 New and Noteworthy">
+						<img alt="JGit 4.9 New and Noteworthy" border="0" src="../../../images/home.gif"/>
+					</a>
+				</td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">JGit 4.9 New and Noteworthy</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table>
+	</body>
+</html>

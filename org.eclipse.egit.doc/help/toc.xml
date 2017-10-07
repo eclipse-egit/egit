@@ -443,26 +443,27 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/4.8/4.8.html" label="EGit 4.8 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/4.8/4.8.html" label="EGit">
-			<topic href="help/EGit/New_and_Noteworthy/4.8/4.8.html#Features" label="Features"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/4.8/4.8.html#Usability_Improvements" label="Usability Improvements"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/4.8/4.8.html#Performance_Improvements" label="Performance Improvements"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/4.8/4.8.html#Build_and_Release_Engineering" label="Build and Release Engineering"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/4.9/4.9.html" label="EGit 4.9 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/4.9/4.9.html" label="EGit">
+			<topic href="help/EGit/New_and_Noteworthy/4.9/4.9.html#Features" label="Features"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/4.9/4.9.html#Usability" label="Usability"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/4.9/4.9.html#Performance_Improvements" label="Performance Improvements"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/4.9/4.9.html#Bug_Fixes" label="Bug Fixes"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/4.9/4.9.html#Build_and_Release_Engineering" label="Build and Release Engineering"></topic>
 		</topic>
-		<topic href="help/EGit/New_and_Noteworthy/4.8/Bug-Fixes.html" label="Bug Fixes"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/4.8/Contributors.html" label="Contributors"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/4.8/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/4.9/Contributors.html" label="Contributors"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/4.9/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/4.8/4.8.html" label="JGit 4.8 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/4.8/4.8.html" label="JGit">
-			<topic href="help/JGit/New_and_Noteworthy/4.8/4.8.html#Features" label="Features"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/4.8/4.8.html#Performance_Improvements" label="Performance Improvements"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/4.8/4.8.html#Build_and_Release_Engineering" label="Build and Release Engineering"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/4.9/4.9.html" label="JGit 4.9 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/4.9/4.9.html" label="JGit">
+			<topic href="help/JGit/New_and_Noteworthy/4.9/4.9.html#Features" label="Features"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/4.9/4.9.html#JGit_Command_Line" label="JGit Command Line"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/4.9/4.9.html#Performance_Improvements" label="Performance Improvements"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/4.9/4.9.html#Build_and_Release_Engineering" label="Build and Release Engineering"></topic>
 		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/4.8/Bug-Fixes.html" label="Bug Fixes"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/4.8/Contributors.html" label="Contributors"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/4.8/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/4.9/Bug-Fixes.html" label="Bug Fixes"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/4.9/Contributors.html" label="Contributors"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/4.9/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>
