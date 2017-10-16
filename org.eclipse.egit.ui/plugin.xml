@@ -4611,13 +4611,37 @@
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-4">
+         <!-- Use newer flat trash icon when running on Eclipse Photon or newer -->
          <command
                commandId="org.eclipse.egit.ui.team.GarbageCollect"
                label="%GarbageCollectCommand.label"
+               icon="icons/elcl16/trash_flat.png"
                style="push">
             <visibleWhen
                   checkEnabled="false">
                <and>
+                  <test property="org.eclipse.egit.ui.BundleProperty.isBundleInstalled" args="org.eclipse.ui,3.109.100" />
+                  <count
+                        value="+">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <!-- Use older trash icon when running on Eclipse Oxygen or older -->
+         <command
+               commandId="org.eclipse.egit.ui.team.GarbageCollect"
+               label="%GarbageCollectCommand.label"
+               icon="icons/elcl16/trash.png"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <test property="org.eclipse.egit.ui.BundleProperty.isBundleInstalled" args="org.eclipse.ui,3.109.100" value="false" />
                   <count
                         value="+">
                   </count>
@@ -6283,6 +6307,13 @@
             namespace="GitHistory"
             properties="isSingleFileHistory"
             type="org.eclipse.team.ui.history.IHistoryView">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.egit.ui.internal.expressions.BundlePropertyTester"
+            id="org.eclipse.egit.ui.BundlePropertyTester"
+            namespace="org.eclipse.egit.ui.BundleProperty"
+            properties="isBundleInstalled"
+            type="java.util.Collection">
       </propertyTester>
    </extension>
    <extension
