@@ -19,11 +19,13 @@ package org.eclipse.egit.ui.internal;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.swt.graphics.Image;
+import org.osgi.framework.Version;
 
 /**
  * Icons for the the Eclipse plugin. Mostly decorations.
@@ -379,7 +381,10 @@ public class UIIcons {
 		ELCL16_DELETE = map("elcl16/delete.png"); //$NON-NLS-1$
 		ELCL16_ADD = map("elcl16/add.png"); //$NON-NLS-1$
 		ELCL16_ADD_ALL = map("elcl16/add_all.png"); //$NON-NLS-1$
-		ELCL16_TRASH = map("elcl16/trash.png"); //$NON-NLS-1$
+		// For Photon and newer, use the new "flat look" trash icon
+		ELCL16_TRASH = map(Platform.getBundle("org.eclipse.ui").getVersion() //$NON-NLS-1$
+				.compareTo(Version.valueOf("3.109.100")) >= 0 ? //$NON-NLS-1$
+						"elcl16/trash_flat.png" : "elcl16/trash.png"); //$NON-NLS-1$ //$NON-NLS-2$
 		ELCL16_CLEAR = map("elcl16/clear_co.png"); //$NON-NLS-1$
 		ELCL16_REFRESH = map("elcl16/refresh.png"); //$NON-NLS-1$
 		ELCL16_SYNCED = map("elcl16/synced.png"); //$NON-NLS-1$
@@ -460,12 +465,13 @@ public class UIIcons {
 	}
 
 	private static ImageDescriptor map(final String icon) {
-		if (base != null)
+		if (base != null) {
 			try {
 				return ImageDescriptor.createFromURL(new URL(base, icon));
 			} catch (MalformedURLException mux) {
 				Activator.logError(UIText.UIIcons_errorLoadingPluginImage, mux);
 			}
+		}
 		return ImageDescriptor.getMissingImageDescriptor();
 	}
 
