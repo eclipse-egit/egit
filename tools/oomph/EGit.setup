@@ -104,10 +104,19 @@
   <setupTask
       xsi:type="pde:APIBaselineTask"
       name="EGit"
+      activate="false"
       version="4.8.0"
       location="${workspace.location/../api.baseline/4.8.0}"
       remoteURI="http://download.eclipse.org/egit/updates-4.8/org.eclipse.egit.repository-4.8.0.201706111038-r.zip">
-    <description>EGit 4.8.0 API baseline; to be used with branch master</description>
+    <description>EGit 4.8.0 API baseline; to be used with branch stable-4.9</description>
+  </setupTask>
+  <setupTask
+      xsi:type="pde:APIBaselineTask"
+      name="EGit"
+      version="4.9.0"
+      location="${workspace.location/../api.baseline/4.9.0}"
+      remoteURI="http://download.eclipse.org/egit/updates-4.9/org.eclipse.egit.repository-4.9.0.201710071750-r.zip">
+    <description>EGit 4.9.0 API baseline; to be used with branch master</description>
   </setupTask>
   <setupTask
       xsi:type="pde:APIBaselineTask"
