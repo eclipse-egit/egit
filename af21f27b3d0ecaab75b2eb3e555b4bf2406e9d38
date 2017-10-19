@@ -22,6 +22,30 @@
       "revId": "af21f27b3d0ecaab75b2eb3e555b4bf2406e9d38",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7979753_757e5a56",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-10-19T19:15:25Z",
+      "side": 1,
+      "message": "Done. Don\u0027t know why I missed it in Eclipse; it does show this as an error. Probably I was just too tired last night.\n\nWould still like to have Jenkins catch this during the tycho build. But this is PDE... is there a maven plugin for this?",
+      "parentUuid": "a7979753_753bbaf4",
+      "range": {
+        "startLine": 95,
+        "startChar": 11,
+        "endLine": 95,
+        "endChar": 14
+      },
+      "revId": "af21f27b3d0ecaab75b2eb3e555b4bf2406e9d38",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
