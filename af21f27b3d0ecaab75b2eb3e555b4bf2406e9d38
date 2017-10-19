@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7979753_753bbaf4",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-10-19T16:03:45Z",
+      "side": 1,
+      "message": "Just noticed: these will have to be updated to 4.10.\n\nHmmm... I\u0027ll have to see if I can make the Jenkins build become unstable (or fail) if that happens. And I\u0027ll have to double-check why I didn\u0027t notice this in Eclipse.",
+      "range": {
+        "startLine": 95,
+        "startChar": 11,
+        "endLine": 95,
+        "endChar": 14
+      },
+      "revId": "af21f27b3d0ecaab75b2eb3e555b4bf2406e9d38",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
