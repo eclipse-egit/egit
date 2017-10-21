@@ -18,12 +18,12 @@ import java.util.List;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.push.PushBranchDialog;
 import org.eclipse.egit.ui.internal.push.PushBranchWizard;
 import org.eclipse.egit.ui.internal.push.PushTagsWizard;
 import org.eclipse.egit.ui.internal.push.PushWizard;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
-import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -60,7 +60,7 @@ public class PushCommand extends
 			return null;
 		}
 
-		WizardDialog dlg = new WizardDialog(getShell(event), pushWiz);
+		WizardDialog dlg = new PushBranchDialog(getShell(event), pushWiz);
 		dlg.setHelpAvailable(pushWiz.isHelpAvailable());
 		dlg.open();
 
