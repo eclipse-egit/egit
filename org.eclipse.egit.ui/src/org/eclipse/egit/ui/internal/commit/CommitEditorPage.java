@@ -173,10 +173,8 @@ public class CommitEditorPage extends FormPage
 	}
 
 	Section createSection(Composite parent, FormToolkit toolkit, String title,
-			int span) {
-		Section section = toolkit.createSection(parent,
-				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE
-						| ExpandableComposite.EXPANDED);
+			int span, int extraStyles) {
+		Section section = toolkit.createSection(parent, extraStyles);
 		GridDataFactory.fillDefaults().span(span, 1).grab(true, true)
 				.applyTo(section);
 		section.setText(title);
@@ -419,7 +417,9 @@ public class CommitEditorPage extends FormPage
 	private void createMessageArea(Composite parent, FormToolkit toolkit,
 			int span) {
 		Section messageSection = createSection(parent, toolkit,
-				UIText.CommitEditorPage_SectionMessage, span);
+				UIText.CommitEditorPage_SectionMessage, span,
+				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE
+						| ExpandableComposite.EXPANDED);
 		Composite messageArea = createSectionClient(messageSection, toolkit);
 
 		RevCommit commit = getCommit().getRevCommit();
@@ -464,7 +464,10 @@ public class CommitEditorPage extends FormPage
 	private void createBranchesArea(Composite parent, FormToolkit toolkit,
 			int span) {
 		branchSection = createSection(parent, toolkit,
-				UIText.CommitEditorPage_SectionBranchesEmpty, span);
+				UIText.CommitEditorPage_SectionBranchesEmpty, span,
+				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE);
+		((GridData) branchSection
+				.getLayoutData()).grabExcessVerticalSpace = false;
 		Composite branchesArea = createSectionClient(branchSection, toolkit);
 
 		branchViewer = new TableViewer(toolkit.createTable(branchesArea,
@@ -488,15 +491,19 @@ public class CommitEditorPage extends FormPage
 	}
 
 	private void fillBranches(List<Ref> result) {
-		branchViewer.setInput(result);
-		branchSection.setText(MessageFormat.format(
-				UIText.CommitEditorPage_SectionBranches,
-				Integer.valueOf(result.size())));
+		if (!result.isEmpty()) {
+			branchViewer.setInput(result);
+			branchSection.setText(MessageFormat.format(
+					UIText.CommitEditorPage_SectionBranches,
+					Integer.valueOf(result.size())));
+		}
 	}
 
 	void createDiffArea(Composite parent, FormToolkit toolkit, int span) {
 		diffSection = createSection(parent, toolkit,
-				UIText.CommitEditorPage_SectionFilesEmpty, span);
+				UIText.CommitEditorPage_SectionFilesEmpty, span,
+				ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE
+						| ExpandableComposite.EXPANDED);
 		Composite filesArea = createSectionClient(diffSection, toolkit);
 
 		diffViewer = new CommitFileDiffViewer(filesArea, getSite(), SWT.MULTI
@@ -562,8 +569,8 @@ public class CommitEditorPage extends FormPage
 	}
 
 	void createChangesArea(Composite displayArea, FormToolkit toolkit) {
-		createDiffArea(displayArea, toolkit, 1);
-		createBranchesArea(displayArea, toolkit, 1);
+		createBranchesArea(displayArea, toolkit, 2);
+		createDiffArea(displayArea, toolkit, 2);
 	}
 
 	private List<Ref> loadTags() {
@@ -584,19 +591,77 @@ public class CommitEditorPage extends FormPage
 	}
 
 	private List<Ref> loadBranches() {
-		Repository repository = getCommit().getRepository();
-		RevCommit commit = getCommit().getRevCommit();
-		try (RevWalk revWalk = new RevWalk(repository)) {
-			Map<String, Ref> refsMap = new HashMap<>();
-			refsMap.putAll(repository.getRefDatabase().getRefs(
-					Constants.R_HEADS));
-			refsMap.putAll(repository.getRefDatabase().getRefs(
-					Constants.R_REMOTES));
-			return RevWalkUtils.findBranchesReachableFrom(commit, revWalk, refsMap.values());
+		RepositoryCommit commit = getCommit();
+		Repository repository = commit.getRepository();
+		Map<String, Ref> refsMap = getAllBranchRefs(repository);
+		if (refsMap.isEmpty()) {
+			return Collections.emptyList();
+		}
+		// TODO hardcoded or preference?
+		if (refsMap.size() < 42) {
+			return findBranchesReachableFromCommit(commit, refsMap);
+		} else {
+			Job branchRefreshJob = new Job(
+					MessageFormat.format(UIText.CommitEditorPage_JobName,
+							commit.getRevCommit().name())) {
+
+				@Override
+				protected IStatus run(IProgressMonitor monitor) {
+					final List<Ref> branches = findBranchesReachableFromCommit(
+							commit, refsMap);
+
+					final ScrolledForm form = getManagedForm().getForm();
+					if (UIUtils.isUsable(form) && !monitor.isCanceled())
+						form.getDisplay().syncExec(new Runnable() {
+
+							@Override
+							public void run() {
+								if (!UIUtils.isUsable(form)) {
+									return;
+								}
+								fillBranches(branches);
+								form.reflow(true);
+								form.layout(true, true);
+							}
+						});
+
+					return Status.OK_STATUS;
+				}
+
+				@Override
+				public boolean belongsTo(Object family) {
+					return CommitEditorPage.this == family;
+				}
+			};
+			branchRefreshJob.setRule(this);
+			branchRefreshJob.schedule();
+			return Collections.emptyList();
+		}
+	}
+
+	private List<Ref> findBranchesReachableFromCommit(RepositoryCommit commit,
+			Map<String, Ref> refsMap) {
+		try (RevWalk revWalk = new RevWalk(commit.getRepository())) {
+			return RevWalkUtils.findBranchesReachableFrom(commit.getRevCommit(),
+					revWalk, refsMap.values());
 		} catch (IOException e) {
 			Activator.handleError(e.getMessage(), e, false);
 			return Collections.emptyList();
 		}
+	}
+
+	private Map<String, Ref> getAllBranchRefs(Repository repository) {
+		Map<String, Ref> refsMap = new HashMap<>();
+		try {
+			refsMap.putAll(repository.getRefDatabase().getRefs(
+					Constants.R_HEADS));
+			refsMap.putAll(repository.getRefDatabase().getRefs(
+					Constants.R_REMOTES));
+		} catch (IOException e) {
+			Activator.handleError(e.getMessage(), e, false);
+			return Collections.emptyMap();
+		}
+		return refsMap;
 	}
 
 	void loadSections() {
@@ -611,13 +676,14 @@ public class CommitEditorPage extends FormPage
 				final FileDiff[] diffs = getCommit().getDiffs();
 
 				final ScrolledForm form = getManagedForm().getForm();
-				if (UIUtils.isUsable(form))
+				if (UIUtils.isUsable(form) && !monitor.isCanceled())
 					form.getDisplay().syncExec(new Runnable() {
 
 						@Override
 						public void run() {
-							if (!UIUtils.isUsable(form))
+							if (!UIUtils.isUsable(form)) {
 								return;
+							}
 
 							fillTags(getManagedForm().getToolkit(), tags);
 							fillDiffs(diffs);
@@ -628,6 +694,11 @@ public class CommitEditorPage extends FormPage
 					});
 
 				return Status.OK_STATUS;
+			}
+
+			@Override
+			public boolean belongsTo(Object family) {
+				return CommitEditorPage.this == family;
 			}
 		};
 		refreshJob.setRule(this);
@@ -644,6 +715,7 @@ public class CommitEditorPage extends FormPage
 	@Override
 	public void dispose() {
 		focusTracker.dispose();
+		Job.getJobManager().cancel(this);
 		super.dispose();
 	}
 
