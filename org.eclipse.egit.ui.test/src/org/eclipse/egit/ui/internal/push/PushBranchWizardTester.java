@@ -149,13 +149,13 @@ public class PushBranchWizardTester {
 	}
 
 	public void next() {
-		wizard.button(IDialogConstants.NEXT_LABEL).click();
+		wizard.button(UIText.PushBranchWizard_previewButton).click();
 	}
 
 	public void finish() {
 		JobJoiner jobJoiner = JobJoiner.startListening(JobFamilies.PUSH, 60,
 				TimeUnit.SECONDS);
-		wizard.button(IDialogConstants.FINISH_LABEL).click();
+		wizard.button(UIText.PushBranchWizard_pushButton).click();
 		jobJoiner.join();
 	}
 }

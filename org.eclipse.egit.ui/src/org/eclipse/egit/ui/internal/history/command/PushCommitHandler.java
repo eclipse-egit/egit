@@ -12,9 +12,9 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
+import org.eclipse.egit.ui.internal.push.PushWizardDialog;
 import org.eclipse.egit.ui.internal.push.PushBranchWizard;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -44,7 +44,7 @@ public class PushCommitHandler extends AbstractHistoryCommandHandler {
 				wizard = new PushBranchWizard(repo, commit.getId());
 			else
 				wizard = new PushBranchWizard(repo, localBranch);
-			WizardDialog dlg = new WizardDialog(
+			PushWizardDialog dlg = new PushWizardDialog(
 					HandlerUtil.getActiveShellChecked(event),
 					wizard);
 			dlg.setHelpAvailable(true);

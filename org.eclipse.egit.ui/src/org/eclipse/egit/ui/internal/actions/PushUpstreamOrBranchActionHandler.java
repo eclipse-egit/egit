@@ -12,10 +12,10 @@ import java.io.IOException;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.egit.ui.internal.push.PushWizardDialog;
 import org.eclipse.egit.ui.internal.push.PushBranchWizard;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
 import org.eclipse.egit.ui.internal.push.SimpleConfigurePushDialog;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -56,7 +56,7 @@ public class PushUpstreamOrBranchActionHandler extends RepositoryActionHandler {
 				PushBranchWizard pushBranchWizard = new PushBranchWizard(
 						repository, head);
 
-				WizardDialog dlg = new WizardDialog(shell,
+				PushWizardDialog dlg = new PushWizardDialog(shell,
 						pushBranchWizard);
 				dlg.open();
 			}

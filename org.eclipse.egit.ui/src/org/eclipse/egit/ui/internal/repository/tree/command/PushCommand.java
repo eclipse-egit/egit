@@ -12,12 +12,14 @@
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.net.URISyntaxException;
+import java.sql.Ref;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.push.PushWizardDialog;
 import org.eclipse.egit.ui.internal.push.PushBranchWizard;
 import org.eclipse.egit.ui.internal.push.PushTagsWizard;
 import org.eclipse.egit.ui.internal.push.PushWizard;
@@ -60,7 +62,7 @@ public class PushCommand extends
 			return null;
 		}
 
-		WizardDialog dlg = new WizardDialog(getShell(event), pushWiz);
+		WizardDialog dlg = new PushWizardDialog(getShell(event), pushWiz);
 		dlg.setHelpAvailable(pushWiz.isHelpAvailable());
 		dlg.open();
 
