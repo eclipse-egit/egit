@@ -9,15 +9,14 @@
 package org.eclipse.egit.ui.internal.actions;
 
 import java.io.IOException;
+import java.sql.Ref;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.egit.ui.internal.push.PushBranchDialog;
 import org.eclipse.egit.ui.internal.push.PushBranchWizard;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
 import org.eclipse.egit.ui.internal.push.SimpleConfigurePushDialog;
-import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.swt.widgets.Shell;
@@ -56,7 +55,7 @@ public class PushUpstreamOrBranchActionHandler extends RepositoryActionHandler {
 				PushBranchWizard pushBranchWizard = new PushBranchWizard(
 						repository, head);
 
-				WizardDialog dlg = new WizardDialog(shell,
+				PushBranchDialog dlg = new PushBranchDialog(shell,
 						pushBranchWizard);
 				dlg.open();
 			}
