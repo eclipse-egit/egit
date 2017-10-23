@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7979753_019f98b1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PushCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-10-23T15:56:09Z",
+      "side": 1,
+      "message": "What happened to setHelpAvailable()? Looks like somebody had once started with help pages, and set the help contexts on the PushWizard pages. But that work appears to be incomplete, and the wizard hasn\u0027t isHelpAvailable set...\n\nBut removing the setHelpAvailable() is a step backwards. If somebody wants to pick up this incomplete help work, he\u0027ll have to undo these changes here again.",
+      "revId": "0b07e2efad66e90854ca0d03a874fdf8877dccf0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
