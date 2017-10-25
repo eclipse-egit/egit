@@ -76,7 +76,7 @@ public class ConfigureGerritAfterCloneTask implements PostCloneTask {
 	 */
 	private static final Pattern GERRIT_SSHD_REPLY = Pattern
 			.compile(GERRIT_SSHD_VERSION_API
-					+ "\\s+(?:\\d+(?:\\.\\d+)+|.+-\\d+-g[0-9a-fA-F]{7})"); //$NON-NLS-1$
+					+ "\\s+(?:\\d+(?:\\.\\d+)+|.+-\\d+-g[0-9a-fA-F]{7,})"); //$NON-NLS-1$
 
 	/**
 	 * To prevent against Cross Site Script Inclusion (XSSI) attacks, the Gerrit
