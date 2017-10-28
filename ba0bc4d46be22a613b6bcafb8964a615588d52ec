@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7979753_3e474773",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-10-28T15:22:15Z",
+      "side": 1,
+      "message": "Stupid question: why have a limit? Why not do it asynchronously always?",
+      "revId": "ba0bc4d46be22a613b6bcafb8964a615588d52ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7979753_7e938f61",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-10-28T15:22:15Z",
+      "side": 1,
+      "message": "This job will forcibly run after the loadSections job because of the scheduling rule. Can\u0027t this be done in parallel?",
+      "revId": "ba0bc4d46be22a613b6bcafb8964a615588d52ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7979753_1ea52bb6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-10-28T15:22:15Z",
+      "side": 1,
+      "message": "Unrelated to this change, but why is this package-visible? Seems to be called only within this class...",
+      "revId": "ba0bc4d46be22a613b6bcafb8964a615588d52ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7979753_3ea2e7ad",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-10-28T15:22:15Z",
+      "side": 1,
+      "message": "loadSections is also called through onRefsChanged. The file diffs would be needed only when the page is loaded initially; they shouldn\u0027t change when branches or tags are added/deleted.",
+      "revId": "ba0bc4d46be22a613b6bcafb8964a615588d52ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7979753_de9ac37a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-10-28T15:22:15Z",
+      "side": 1,
+      "message": "Can these be null? (For instance,when the platform is shutting down.)",
+      "range": {
+        "startLine": 692,
+        "startChar": 14,
+        "endLine": 692,
+        "endChar": 41
+      },
+      "revId": "ba0bc4d46be22a613b6bcafb8964a615588d52ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7979753_fe977f4f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-10-28T15:22:15Z",
+      "side": 1,
+      "message": "This will keep the scheduling rule while updating the UI. How about scheduling a WorkbenchJob here instead of the syncExec?",
+      "range": {
+        "startLine": 692,
+        "startChar": 42,
+        "endLine": 692,
+        "endChar": 50
+      },
+      "revId": "ba0bc4d46be22a613b6bcafb8964a615588d52ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
