@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7979753_72749e75",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ConfigurationChecker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2017-10-31T15:49:05Z",
+      "side": 1,
+      "message": "Eek, this API is too new. How is this done \"normally\"?",
+      "range": {
+        "startLine": 86,
+        "startChar": 7,
+        "endLine": 86,
+        "endChar": 25
+      },
+      "revId": "d89c8004ab96d7f668c64e86d00b95fff2e02288",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
