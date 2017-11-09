@@ -214,7 +214,7 @@
          <adapter type="org.eclipse.core.resources.IResource"/>
       </factory>
       <factory
-            adaptableType="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode"
+            adaptableType="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode"
             class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
          <adapter type="org.eclipse.ui.model.IWorkbenchAdapter"/>
       </factory>

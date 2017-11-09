@@ -37,16 +37,16 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.egit.ui.internal.history.GitHistoryPageSource;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
-import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.egit.ui.internal.synchronize.mapping.GitModelWorkbenchAdapter;
 import org.eclipse.egit.ui.internal.synchronize.mapping.GitObjectMapping;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelTree;
-import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.ui.history.IHistoryPage;
 import org.eclipse.team.ui.history.IHistoryPageSource;
@@ -76,8 +76,10 @@ public class GitAdapterFactory implements IAdapterFactory {
 		}
 
 		if (IWorkbenchAdapter.class == adapterType) {
-			if (adaptableObject instanceof RepositoryNode) {
-				return getRepsitoryNodeWorkbenchAdapter((RepositoryNode)adaptableObject);
+			// property page names for git repository tree nodes
+			if (adaptableObject instanceof RepositoryTreeNode) {
+				return getRepositoryTreeNodeWorkbenchAdapter(
+						(RepositoryTreeNode) adaptableObject);
 			}
 
 			if (gitModelWorkbenchAdapter == null) {
@@ -214,7 +216,8 @@ public class GitAdapterFactory implements IAdapterFactory {
 				Repository.class, File.class, IHistoryPageSource.class};
 	}
 
-	private static IWorkbenchAdapter getRepsitoryNodeWorkbenchAdapter(final RepositoryNode node) {
+	private static IWorkbenchAdapter getRepositoryTreeNodeWorkbenchAdapter(
+			final RepositoryTreeNode node) {
 		return new WorkbenchAdapter() {
 			@Override
 			public String getLabel(Object object) {
