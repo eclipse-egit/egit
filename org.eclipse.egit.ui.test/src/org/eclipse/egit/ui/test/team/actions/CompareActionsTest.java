@@ -24,6 +24,7 @@ import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.mapping.ModelProvider;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.op.ResetOperation;
 import org.eclipse.egit.core.op.TagOperation;
@@ -55,6 +56,9 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.team.internal.ui.TeamUIPlugin;
+import org.eclipse.team.ui.TeamUI;
+import org.eclipse.team.ui.mapping.ITeamContentProviderDescriptor;
+import org.eclipse.team.ui.mapping.ITeamContentProviderManager;
 import org.eclipse.team.ui.synchronize.ISynchronizeManager;
 import org.eclipse.team.ui.synchronize.ISynchronizeView;
 import org.junit.Before;
@@ -77,6 +81,7 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		Repository repo = lookupRepository(repositoryFile);
 
 		disablePerspectiveSwitchPrompt();
+		setEnabledModelProvider(ModelProvider.RESOURCE_MODEL_PROVIDER_ID);
 
 		TagBuilder tag = new TagBuilder();
 		tag.setTag("SomeTag");
@@ -95,6 +100,15 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		// null, repo), repo));
 		TAGS = provider.getText(new TagsNode(new RepositoryNode(null, repo),
 				repo));
+	}
+
+	private static void setEnabledModelProvider(String modelProviderId) {
+		ITeamContentProviderManager contentProviderManager = TeamUI
+				.getTeamContentProviderManager();
+		ITeamContentProviderDescriptor descriptor = contentProviderManager
+				.getDescriptor(modelProviderId);
+		contentProviderManager.setEnabledDescriptors(
+				new ITeamContentProviderDescriptor[] { descriptor });
 	}
 
 	@SuppressWarnings("restriction")
