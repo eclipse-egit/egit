@@ -518,7 +518,8 @@ public class CommitEditorPage extends FormPage
 				| toolkit.getBorderStyle());
 		Control control = diffViewer.getControl();
 		control.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TREE_BORDER);
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(control);
+		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, 50).minSize(1, 50)
+				.grab(true, true).applyTo(control);
 		addToFocusTracking(control);
 		diffViewer.setContentProvider(ArrayContentProvider.getInstance());
 		diffViewer.setTreeWalk(getCommit().getRepository(), null);
