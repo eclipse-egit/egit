@@ -1,6 +1,6 @@
 target "egit-4.6" with source configurePhase
 
-include "projects/jetty-9.4.5.tpd"
+include "projects/jetty-9.4.8.tpd"
 include "projects/swtbot-snapshot.tpd"
 include "orbit/R20170516192513-Oxygen.tpd"
 include "releasetrain/4.6-neon.tpd"

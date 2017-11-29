@@ -1,6 +1,6 @@
 target "egit-4.8" with source configurePhase
 
-include "projects/jetty-9.4.5.tpd"
+include "projects/jetty-9.4.8.tpd"
 include "projects/swtbot-snapshot.tpd"
 include "orbit/S20170912163609-Photon.tpd"
 include "releasetrain/4.8-photon.tpd"
