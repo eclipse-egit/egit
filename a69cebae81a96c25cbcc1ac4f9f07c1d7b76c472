@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7979753_a33f453c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PushCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-12-05T14:53:39Z",
+      "side": 1,
+      "message": "Only the REPO case does have help available. This now leaves us with non-functional help buttons in the REF and TAG cases.",
+      "revId": "a69cebae81a96c25cbcc1ac4f9f07c1d7b76c472",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
