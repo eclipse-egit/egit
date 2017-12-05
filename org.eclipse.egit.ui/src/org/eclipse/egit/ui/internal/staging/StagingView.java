@@ -678,12 +678,9 @@ public class StagingView extends ViewPart
 		public void propertyChange(PropertyChangeEvent event) {
 			if (UIPreferences.COMMIT_DIALOG_WARN_ABOUT_MESSAGE_SECOND_LINE
 					.equals(event.getProperty())) {
-				asyncExec(new Runnable() {
-					@Override
-					public void run() {
-						if (!commitMessageSection.isDisposed()) {
-							updateMessage();
-						}
+				asyncExec(() -> {
+					if (!commitMessageSection.isDisposed()) {
+						updateMessage();
 					}
 				});
 			}
@@ -1086,13 +1083,10 @@ public class StagingView extends ViewPart
 									.removePropertyChangeListener(this);
 							return;
 						}
-						asyncExec(new Runnable() {
-							@Override
-							public void run() {
-								updateIgnoreErrorsButtonVisibility();
-								updateMessage();
-								updateCommitButtons();
-							}
+						asyncExec(() -> {
+							updateIgnoreErrorsButtonVisibility();
+							updateMessage();
+							updateCommitButtons();
 						});
 					}
 				});
@@ -3507,6 +3501,9 @@ public class StagingView extends ViewPart
 		saveCommitMessageComponentState();
 		realRepository = repository;
 		currentRepository = null;
+		if (isDisposed()) {
+			return;
+		}
 		StagingViewUpdate update = new StagingViewUpdate(null, null, null);
 		setStagingViewerInput(unstagedViewer, update, null, null);
 		setStagingViewerInput(stagedViewer, update, null, null);
@@ -3531,14 +3528,9 @@ public class StagingView extends ViewPart
 	 *            {@code}true if rebase is in progress
 	 */
 	protected void updateRebaseButtonVisibility(final boolean isRebasing) {
-		asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				if (isDisposed())
-					return;
-				showControl(rebaseSection, isRebasing);
-				rebaseSection.getParent().layout(true);
-			}
+		asyncExec(() -> {
+			showControl(rebaseSection, isRebasing);
+			rebaseSection.getParent().layout(true);
 		});
 	}
 
@@ -4066,13 +4058,10 @@ public class StagingView extends ViewPart
 
 			@Override
 			public void done(IJobChangeEvent event) {
-				asyncExec(new Runnable() {
-					@Override
-					public void run() {
-						enableAllWidgets(true);
-						if (event.getResult().isOK()) {
-							commitMessageText.setText(EMPTY_STRING);
-						}
+				asyncExec(() -> {
+					enableAllWidgets(true);
+					if (event.getResult().isOK()) {
+						commitMessageText.setText(EMPTY_STRING);
 					}
 				});
 			}
@@ -4177,10 +4166,19 @@ public class StagingView extends ViewPart
 	}
 
 	private void asyncExec(Runnable runnable) {
-		PlatformUI.getWorkbench().getDisplay().asyncExec(runnable);
+		if (!isDisposed()) {
+			PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+				if (!isDisposed()) {
+					runnable.run();
+				}
+			});
+		}
 	}
 
 	private void asyncUpdate(Runnable runnable) {
+		if (isDisposed()) {
+			return;
+		}
 		Job update = new WorkbenchJob(UIText.StagingView_LoadJob) {
 
 			@Override
@@ -4192,6 +4190,16 @@ public class StagingView extends ViewPart
 					return Activator.createErrorStatus(e.getLocalizedMessage(),
 							e);
 				}
+			}
+
+			@Override
+			public boolean shouldSchedule() {
+				return super.shouldSchedule() && !isDisposed();
+			}
+
+			@Override
+			public boolean shouldRun() {
+				return super.shouldRun() && !isDisposed();
 			}
 
 			@Override
