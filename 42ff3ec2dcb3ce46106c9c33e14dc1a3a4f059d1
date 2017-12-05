@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7979753_7ef332d9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PushCommand.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2017-12-05T15:45:11Z",
+      "side": 1,
+      "message": "Where does this come from?",
+      "revId": "42ff3ec2dcb3ce46106c9c33e14dc1a3a4f059d1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
