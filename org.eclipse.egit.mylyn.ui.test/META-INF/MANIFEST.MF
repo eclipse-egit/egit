@@ -1,6 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Git Team Provider Mylyn UI Test Fragment
+Automatic-Module-Name: org.eclipse.egit.mylyn.ui.test
 Bundle-SymbolicName: org.eclipse.egit.mylyn.ui.test
 Bundle-Version: 4.10.0.qualifier
 Fragment-Host: org.eclipse.egit.mylyn.ui

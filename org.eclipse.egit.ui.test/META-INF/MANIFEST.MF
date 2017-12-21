@@ -2,6 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Git Team Provider UI Test Fragment
 Bundle-Vendor: Eclipse.org
+Automatic-Module-Name: org.eclipse.egit.ui.test
 Bundle-SymbolicName: org.eclipse.egit.ui.test;singleton:=true
 Fragment-Host: org.eclipse.egit.ui
 Bundle-Version: 4.10.0.qualifier

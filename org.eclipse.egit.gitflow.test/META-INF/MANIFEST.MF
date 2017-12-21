@@ -1,6 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: GitFlow Test
+Automatic-Module-Name: org.eclipse.egit.gitflow.test
 Bundle-SymbolicName: org.eclipse.egit.gitflow.test;singleton:=true
 Bundle-Version: 4.10.0.qualifier
 Fragment-Host: org.eclipse.egit.gitflow
