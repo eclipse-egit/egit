@@ -12,3 +12,4 @@ Import-Package: org.junit;version="[4.3.1,5.0.0)",
  org.junit.runner;version="[4.3.1,5.0.0)",
  org.junit.runners;version="[4.3.1,5.0.0)",
  org.osgi.framework;version="[1.4.0,2.0.0)"
+Automatic-Module-Name: org.eclipse.egit.mylyn.ui.test

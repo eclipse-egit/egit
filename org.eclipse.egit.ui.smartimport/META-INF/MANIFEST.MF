@@ -13,3 +13,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.egit.ui.internal.clone;version="4.10.0";x-internal:=true;
  uses:="org.eclipse.ui,org.eclipse.jface.wizard,org.eclipse.jface.viewers"
+Automatic-Module-Name: org.eclipse.egit.ui.smartimport
