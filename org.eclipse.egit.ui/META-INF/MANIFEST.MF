@@ -122,3 +122,4 @@ Export-Package: org.eclipse.egit.ui;version="4.10.0";x-friends:="org.eclipse.egi
  org.eclipse.egit.ui.internal.synchronize.model;version="4.10.0";x-friends:="org.eclipse.egit.mylyn.ui",
  org.eclipse.egit.ui.internal.trace;version="4.10.0";x-internal:=true,
  org.eclipse.egit.ui.internal.variables;version="4.10.0";x-internal:=true
+Automatic-Module-Name: org.eclipse.egit.ui

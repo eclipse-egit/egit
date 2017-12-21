@@ -17,3 +17,4 @@ Require-Bundle: org.junit,
 Import-Package: org.eclipse.swtbot.eclipse.finder,
  org.eclipse.swtbot.eclipse.finder.widgets,
  org.eclipse.swtbot.swt.finder.junit
+Automatic-Module-Name: org.eclipse.egit.ui.importer.tests

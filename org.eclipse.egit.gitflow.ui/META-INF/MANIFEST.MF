@@ -54,3 +54,4 @@ Export-Package: org.eclipse.egit.gitflow.ui;version="4.10.0";x-friends:="org.ecl
  org.eclipse.egit.gitflow.ui.internal.menu;version="4.10.0";x-internal:=true,
  org.eclipse.egit.gitflow.ui.internal.properties;version="4.10.0";x-internal:=true,
  org.eclipse.egit.gitflow.ui.internal.validation;version="4.10.0";x-internal:=true
+Automatic-Module-Name: org.eclipse.egit.gitflow.ui
