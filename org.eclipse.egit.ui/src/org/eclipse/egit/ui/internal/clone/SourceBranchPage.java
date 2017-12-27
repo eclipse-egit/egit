@@ -373,7 +373,7 @@ class SourceBranchPage extends WizardPage {
 		Collections.sort(availableRefs, new Comparator<Ref>() {
 			@Override
 			public int compare(final Ref o1, final Ref o2) {
-				return o1.getName().compareTo(o2.getName());
+				return o1.getName().compareToIgnoreCase(o2.getName());
 			}
 		});
 		if (idHEAD != null && head == null) {
