@@ -29,8 +29,8 @@ import static org.junit.Assert.assertTrue;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.nio.file.Files;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -257,7 +257,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		File root = new File(getTestDirectory(), REPO1);
 		File nonWorkspace = new File(root, name);
 		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(nonWorkspace), "UTF-8"));
+				Files.newOutputStream(nonWorkspace.toPath()), "UTF-8"));
 
 		writer.append("file content");
 		writer.close();
@@ -283,7 +283,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		File root = new File(getTestDirectory(), REPO1);
 		File nonWorkspace = new File(root, name);
 		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(nonWorkspace), "UTF-8"));
+				Files.newOutputStream(nonWorkspace.toPath()), "UTF-8"));
 		writer.append(content);
 		writer.close();
 		// TODO Synchronize currently shows "No changes" when the only thing that has

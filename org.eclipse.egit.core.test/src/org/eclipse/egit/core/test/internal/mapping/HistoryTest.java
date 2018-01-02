@@ -16,10 +16,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.file.Files;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -92,7 +92,8 @@ public class HistoryTest extends GitTestCase {
 		File f = new File(workDir, name);
 		Writer fileWriter = null;
 		try {
-			fileWriter = new OutputStreamWriter(new FileOutputStream(f),
+			fileWriter = new OutputStreamWriter(
+					Files.newOutputStream(f.toPath()),
 					"UTF-8");
 			fileWriter.write(content);
 		} finally {
