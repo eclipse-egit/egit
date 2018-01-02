@@ -16,16 +16,13 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
-import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
-import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
-import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
@@ -259,11 +256,9 @@ public class IndexDiffCacheTest extends GitTestCase {
 				hasItem("Project-1/sub/ignore"));
 
 		IFile file = project.getProject().getFile("sub/ignore");
-		FileOutputStream str = new FileOutputStream(file.getLocation().toFile());
-		try {
+		try (OutputStream str = Files
+				.newOutputStream((file.getLocation().toFile().toPath()))) {
 			str.write("other contents".getBytes("UTF-8"));
-		} finally {
-			str.close();
 		}
 
 		// no job should be triggered for that change.

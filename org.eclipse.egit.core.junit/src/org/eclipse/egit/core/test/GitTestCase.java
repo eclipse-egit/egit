@@ -11,10 +11,11 @@
 package org.eclipse.egit.core.test;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.file.Files;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -99,10 +100,10 @@ public abstract class GitTestCase {
 
 	protected ObjectId createFile(Repository repository, IProject actProject, String name, String content) throws IOException {
 		File file = new File(actProject.getProject().getLocation().toFile(), name);
-		Writer fileWriter = new OutputStreamWriter(new FileOutputStream(
-				file), "UTF-8");
-		fileWriter.write(content);
-		fileWriter.close();
+		try (Writer fileWriter = new OutputStreamWriter(
+				Files.newOutputStream(file.toPath()), "UTF-8")) {
+			fileWriter.write(content);
+		}
 		byte[] fileContents = IO.readFully(file);
 		try (ObjectInserter inserter = repository.newObjectInserter()) {
 			ObjectId objectId = inserter.insert(Constants.OBJ_BLOB, fileContents);
@@ -119,14 +120,12 @@ public abstract class GitTestCase {
 				+ id.name().substring(0, 2) + "/" + id.name().substring(2));
 		byte[] readFully = IO.readFully(file);
 		FileUtils.delete(file);
-		FileOutputStream fileOutputStream = new FileOutputStream(file);
-		try {
+		try (OutputStream fileOutputStream = Files
+				.newOutputStream(file.toPath())) {
 			byte[] truncatedData = new byte[readFully.length - 1];
 			System.arraycopy(readFully, 0, truncatedData, 0,
 					truncatedData.length);
 			fileOutputStream.write(truncatedData);
-		} finally {
-			fileOutputStream.close();
 		}
 		return id;
 	}

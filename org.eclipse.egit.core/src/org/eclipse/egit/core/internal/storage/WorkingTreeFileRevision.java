@@ -11,9 +11,9 @@
 package org.eclipse.egit.core.internal.storage;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
@@ -65,8 +65,8 @@ public class WorkingTreeFileRevision extends GitFileRevision {
 			@Override
 			public InputStream getContents() throws CoreException {
 				try {
-					return new FileInputStream(file);
-				} catch (FileNotFoundException e) {
+					return Files.newInputStream(file.toPath());
+				} catch (IOException e) {
 					throw new CoreException(Activator.error(e.getMessage(), e));
 				}
 			}
