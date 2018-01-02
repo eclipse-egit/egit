@@ -14,10 +14,11 @@
 package org.eclipse.egit.core.project;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashMap;
@@ -71,9 +72,9 @@ import org.eclipse.team.core.TeamException;
  */
 public class GitProjectData {
 
-	private static final Map<IProject, GitProjectData> projectDataCache = new HashMap<IProject, GitProjectData>();
+	private static final Map<IProject, GitProjectData> projectDataCache = new HashMap<>();
 
-	private static Set<RepositoryMappingChangeListener> repositoryChangeListeners = new HashSet<RepositoryMappingChangeListener>();
+	private static Set<RepositoryMappingChangeListener> repositoryChangeListeners = new HashSet<>();
 
 	@SuppressWarnings("synthetic-access")
 	private static final IResourceChangeListener rcl = new RCL();
@@ -424,7 +425,7 @@ public class GitProjectData {
 
 	private final Map<IPath, RepositoryMapping> mappings = new HashMap<>();
 
-	private final Set<IResource> protectedResources = new HashSet<IResource>();
+	private final Set<IResource> protectedResources = new HashSet<>();
 
 	/**
 	 * Construct a {@link GitProjectData} for the mapping
@@ -568,8 +569,7 @@ public class GitProjectData {
 					"gpd_",  //$NON-NLS-1$
 					".prop",   //$NON-NLS-1$
 					dat.getParentFile());
-			final FileOutputStream o = new FileOutputStream(tmp);
-			try {
+			try (OutputStream o = Files.newOutputStream(tmp.toPath())) {
 				final Properties p = new Properties();
 				for (final RepositoryMapping repoMapping : mappings.values()) {
 					repoMapping.store(p);
@@ -577,7 +577,6 @@ public class GitProjectData {
 				p.store(o, "GitProjectData");  //$NON-NLS-1$
 				ok = true;
 			} finally {
-				o.close();
 				if (!ok && tmp.exists()) {
 					FileUtils.delete(tmp);
 				}
@@ -610,8 +609,7 @@ public class GitProjectData {
 		final File dat = propertyFile();
 		trace("load " + dat);  //$NON-NLS-1$
 
-		final FileInputStream o = new FileInputStream(dat);
-		try {
+		try (InputStream o = Files.newInputStream(dat.toPath())) {
 			final Properties p = new Properties();
 			p.load(o);
 
@@ -623,8 +621,6 @@ public class GitProjectData {
 					mappings.put(mapping.getContainerPath(), mapping);
 				}
 			}
-		} finally {
-			o.close();
 		}
 
 		if (!remapAll()) {
