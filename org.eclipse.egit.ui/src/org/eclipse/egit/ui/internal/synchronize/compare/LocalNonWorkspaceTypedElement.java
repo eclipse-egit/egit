@@ -16,10 +16,9 @@ package org.eclipse.egit.ui.internal.synchronize.compare;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Collections;
@@ -119,7 +118,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 								.encode(headCommit.name()));
 					}
 				}
-				return new FileInputStream(file);
+				return Files.newInputStream(file.toPath());
 			} catch (IOException | UnsupportedOperationException e) {
 				Activator.error(e.getMessage(), e);
 			}
@@ -205,11 +204,8 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 							updateLinkResource(wasBrokenLink, link);
 						}
 					} else {
-						if (!file.exists()) {
-							FileUtils.createNewFile(file);
-						}
-						try (FileOutputStream out = new FileOutputStream(
-								file)) {
+						try (OutputStream out = Files
+								.newOutputStream(file.toPath())) {
 							out.write(getContent());
 						}
 					}
