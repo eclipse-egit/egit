@@ -16,10 +16,11 @@
 package org.eclipse.egit.core.project;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashMap;
@@ -578,8 +579,7 @@ public class GitProjectData {
 					"gpd_",  //$NON-NLS-1$
 					".prop",   //$NON-NLS-1$
 					dat.getParentFile());
-			final FileOutputStream o = new FileOutputStream(tmp);
-			try {
+			try (OutputStream o = Files.newOutputStream(tmp.toPath())) {
 				final Properties p = new Properties();
 				for (final RepositoryMapping repoMapping : mappings.values()) {
 					repoMapping.store(p);
@@ -587,7 +587,6 @@ public class GitProjectData {
 				p.store(o, "GitProjectData");  //$NON-NLS-1$
 				ok = true;
 			} finally {
-				o.close();
 				if (!ok && tmp.exists()) {
 					FileUtils.delete(tmp);
 				}
@@ -620,8 +619,7 @@ public class GitProjectData {
 		final File dat = propertyFile();
 		trace("load " + dat);  //$NON-NLS-1$
 
-		final FileInputStream o = new FileInputStream(dat);
-		try {
+		try (InputStream o = Files.newInputStream(dat.toPath())) {
 			final Properties p = new Properties();
 			p.load(o);
 
@@ -633,8 +631,6 @@ public class GitProjectData {
 					mappings.put(mapping.getContainerPath(), mapping);
 				}
 			}
-		} finally {
-			o.close();
 		}
 
 		if (!remapAll()) {

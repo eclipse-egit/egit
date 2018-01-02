@@ -23,9 +23,9 @@ import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 import org.eclipse.core.resources.IFile;
@@ -138,17 +138,16 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		test.create(new ByteArrayInputStream(new byte[0]), false, null);
 		File testFile = new File(test.getLocation().toString());
 		assertTrue(testFile.exists());
-		FileInputStream fis = new FileInputStream(testFile);
-		try {
+		try (InputStream fis = Files.newInputStream(testFile.toPath())) {
 			FileUtils.delete(testFile);
 			return;
 		} catch (IOException e) {
 			// the test makes sense only if deletion of
 			// a file with open stream fails
 		} finally {
-			fis.close();
-			if (testFile.exists())
+			if (testFile.exists()) {
 				FileUtils.delete(testFile);
+			}
 		}
 		final Image folderImage = PlatformUI.getWorkbench().getSharedImages()
 				.getImage(ISharedImages.IMG_OBJ_FOLDER);
