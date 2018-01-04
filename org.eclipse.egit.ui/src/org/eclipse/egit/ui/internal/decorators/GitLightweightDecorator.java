@@ -793,6 +793,7 @@ class LabelEventJob extends Job {
 
 	private LabelEventJob(final String name) {
 		super(name);
+		setSystem(true);
 	}
 
 	private GitLightweightDecorator glwDecorator;
