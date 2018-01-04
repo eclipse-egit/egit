@@ -15,6 +15,7 @@ import org.eclipse.equinox.security.storage.EncodingUtils;
 import org.eclipse.equinox.security.storage.ISecurePreferences;
 import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.util.StringUtils;
 
 /**
  * This class wraps the Eclipse secure store. It provides methods to put
@@ -52,10 +53,15 @@ public class EGitSecureStore {
 	 */
 	public void putCredentials(URIish uri, UserPasswordCredentials credentials)
 			throws StorageException, IOException {
+		String u = credentials.getUser();
+		String p = credentials.getPassword();
+		if (StringUtils.isEmptyOrNull(u) || StringUtils.isEmptyOrNull(p)) {
+			return;
+		}
 		String pathName = calcNodePath(uri);
 		ISecurePreferences node = preferences.node(pathName);
-		node.put(USER, credentials.getUser(), false);
-		node.put(PASSWORD, credentials.getPassword(), true);
+		node.put(USER, u, false);
+		node.put(PASSWORD, p, true);
 		node.flush();
 	}
 
