@@ -71,8 +71,6 @@ public class GitProjectPropertyPage extends PropertyPage {
 		layout.numColumns = 2;
 		layout.marginHeight = 0;
 		layout.marginWidth = 0;
-		layout.horizontalSpacing = 0;
-		layout.verticalSpacing = 0;
 		composite.setLayout(layout);
 
 		gitDir = createLabeledReadOnlyText(composite, UIText.GitProjectPropertyPage_LabelGitDir);
