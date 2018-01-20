@@ -2,8 +2,8 @@ target "S20180119201206-Photon" with source configurePhase
 // see http://download.eclipse.org/tools/orbit/downloads/
 
 location "http://download.eclipse.org/tools/orbit/downloads/drops/S20180119201206/repository" {
-	com.google.gson [2.2.4.v201311231704,2.2.4.v201311231704]
-	com.google.gson.source [2.2.4.v201311231704,2.2.4.v201311231704]
+	com.google.gson [2.8.2.v20180104-1110,2.8.2.v20180104-1110]
+	com.google.gson.source [2.8.2.v20180104-1110,2.8.2.v20180104-1110]
 	com.jcraft.jsch [0.1.54.v20170116-1932,0.1.54.v20170116-1932]
 	com.jcraft.jsch.source [0.1.54.v20170116-1932,0.1.54.v20170116-1932]
 	javaewah [1.1.6.v20160919-1400,1.1.6.v20160919-1400]
