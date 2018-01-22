@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87929364_c2bb8f2a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-01-22T14:38:48Z",
+      "side": 1,
+      "message": "What happens if one tries to destroy a process twice?",
+      "revId": "f5c5e954e91b590edb9708a74d2b221ab2c2e79c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
