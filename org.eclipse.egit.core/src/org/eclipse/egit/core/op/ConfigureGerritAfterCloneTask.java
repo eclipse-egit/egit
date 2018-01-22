@@ -276,7 +276,8 @@ public class ConfigureGerritAfterCloneTask implements PostCloneTask {
 			session = SshSessionFactory.getInstance().getSession(sshUri,
 					provider, fs, 1000 * timeout);
 			process = session.exec(command, 0);
-			errorThread = new StreamCopyThread(process.getErrorStream(),
+			errorThread = new StreamCopyThread(process,
+					process.getErrorStream(),
 					stderr.getRawStream());
 			errorThread.start();
 			try (BufferedReader reader = new BufferedReader(
