@@ -49,6 +49,7 @@ class PushResultDialog extends TitleAndImageDialog {
 		int shellStyle = getShellStyle() | SWT.RESIZE;
 		if (!modal) {
 			shellStyle &= ~SWT.APPLICATION_MODAL;
+			setBlockOnOpen(false);
 		}
 		setShellStyle(shellStyle);
 		this.localDb = localDb;
