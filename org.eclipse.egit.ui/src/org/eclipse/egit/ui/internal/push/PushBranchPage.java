@@ -302,7 +302,7 @@ public class PushBranchPage extends WizardPage {
 					SWT.NONE);
 			upstreamConfigComponent.getContainer().setLayoutData(
 					GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
-							.indent(SWT.DEFAULT, 20).create());
+							.indent(SWT.NONE, 20).create());
 			upstreamConfigComponent
 					.addUpstreamConfigSelectionListener(new UpstreamConfigSelectionListener() {
 						@Override
