@@ -63,8 +63,11 @@ public class GitCloneSourceProviderExtension {
 			ImageDescriptor icon = null;
 			if (iconPath != null) {
 				Bundle declaringBundle = Platform.getBundle(config[myIndex]
-						.getDeclaringExtension().getNamespaceIdentifier());
-				icon = ImageDescriptor.createFromURL(declaringBundle.getResource(iconPath));
+						.getDeclaringExtension().getContributor().getName());
+				if (declaringBundle != null) {
+					icon = ImageDescriptor.createFromURL(
+							declaringBundle.getResource(iconPath));
+				}
 			}
 			myIndex++;
 			IConfigurationElement serverProviderElement = null;
