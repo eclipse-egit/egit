@@ -63,8 +63,11 @@ public class GitCloneSourceProviderExtension {
 			ImageDescriptor icon = null;
 			if (iconPath != null) {
 				Bundle declaringBundle = Platform.getBundle(config[myIndex]
-						.getDeclaringExtension().getNamespaceIdentifier());
-				icon = ImageDescriptor.createFromURL(declaringBundle.getResource(iconPath));
+						.getDeclaringExtension().getContributor().getName());
+				if (declaringBundle != null) {
+					icon = ImageDescriptor.createFromURL(
+							declaringBundle.getResource(iconPath));
+				}
 			}
 			myIndex++;
 			IConfigurationElement serverProviderElement = null;
@@ -86,7 +89,9 @@ public class GitCloneSourceProviderExtension {
 			addCloneSourceProvider(cloneSourceProvider, config, myIndex);
 		} catch (Exception e) {
 			Activator.logError("Could not create extension provided by " + //$NON-NLS-1$
-					Platform.getBundle(config[index].getDeclaringExtension().getNamespaceIdentifier()), e);
+					Platform.getBundle(config[index].getDeclaringExtension()
+							.getContributor().getName()),
+					e);
 		}
 	}
 
