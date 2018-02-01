@@ -1016,8 +1016,9 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 			else
 				portText.setText(EMPTY_STRING);
 
-			if (u.getScheme() != null) {
-				scheme.select(scheme.indexOf(u.getScheme()));
+			Protocol protocol = Protocol.fromUri(u);
+			if (protocol != null) {
+				scheme.select(scheme.indexOf(protocol.getDefaultScheme()));
 				scheme.notifyListeners(SWT.Selection, new Event());
 			}
 
