@@ -8,7 +8,7 @@
  * Copyright (C) 2012-2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, François Rey <eclipse.org_@_francois_._rey_._name>
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
- * Copyright (C) 2015-2017 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2015-2018 Thomas Wolf <thomas.wolf@paranor.ch>
  * Copyright (C) 2015-2017, Stefan Dirix <sdirix@eclipsesource.com>
  *
  * All rights reserved. This program and the accompanying materials
@@ -50,6 +50,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.DiffDocument;
 import org.eclipse.egit.ui.internal.commit.DiffRegionFormatter;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
+import org.eclipse.egit.ui.internal.commit.FocusTracker;
 import org.eclipse.egit.ui.internal.components.RepositoryMenuUtil.RepositoryToolbarAction;
 import org.eclipse.egit.ui.internal.dialogs.HyperlinkSourceViewer;
 import org.eclipse.egit.ui.internal.dialogs.HyperlinkTokenScanner;
@@ -856,6 +857,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	/** Toolbar to find commits in the history view. */
 	private SearchBar searchBar;
 
+	private FocusTracker focusTracker;
+
 	/**
 	 * Determine if the input can be shown in this viewer.
 	 *
@@ -1323,8 +1326,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					return myInput != null ? myInput.getRepository() : null;
 				}));
 		getSite().registerContextMenu(POPUP_ID, popupMgr, graph.getTableView());
-		// due to the issues described in bug 322751, it makes no
-		// sense to set a selection provider for the site here
+		// Track which of our controls has the focus, so that we can focus the
+		// last focused one in setFocus().
+		focusTracker = new FocusTracker();
+		trackFocus(graph.getControl());
+		trackFocus(diffViewer.getControl());
+		trackFocus(commentViewer.getControl());
+		trackFocus(fileViewer.getControl());
 		layout();
 
 		myRefsChangedHandle = Repository.getGlobalListenerList()
@@ -1338,6 +1346,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		if (trace)
 			GitTraceLocation.getTrace().traceExit(
 					GitTraceLocation.HISTORYVIEW.getLocation());
+	}
+
+	private void trackFocus(Control control) {
+		if (control != null) {
+			focusTracker.addToFocusTracking(control);
+		}
 	}
 
 	private void layoutSashForm(final SashForm sf, final String key) {
@@ -1546,6 +1560,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			GitTraceLocation.getTrace().traceEntry(
 					GitTraceLocation.HISTORYVIEW.getLocation());
 
+		if (focusTracker != null) {
+			focusTracker.dispose();
+			focusTracker = null;
+		}
 		detachSelectionTracker();
 
 		Activator.getDefault().getPreferenceStore()
@@ -1583,10 +1601,16 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 	@Override
 	public void setFocus() {
-		if (repoHasBeenRemoved(currentRepo))
+		if (repoHasBeenRemoved(currentRepo)) {
 			clearHistoryPage();
-
-		graph.getControl().setFocus();
+			graph.getControl().setFocus();
+		} else {
+			Control control = focusTracker.getLastFocusControl();
+			if (control == null) {
+				control = graph.getControl();
+			}
+			control.setFocus();
+		}
 	}
 
 	private boolean repoHasBeenRemoved(final Repository repo) {
