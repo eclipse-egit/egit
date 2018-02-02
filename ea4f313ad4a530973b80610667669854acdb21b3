@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87929364_297ed854",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 98314
+      },
+      "writtenOn": "2018-02-02T01:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7979753_59811405",
+      "revId": "ea4f313ad4a530973b80610667669854acdb21b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7979753_f9864021",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-15T14:05:58Z",
       "side": 1,
       "message": "Why not\n\n  IAction copyAction  \u003d ActionUtils.createGlobalAction(ActionFactory.COPY, () -\u003e copyPathOfSelectionToClipboard(viewer));\n  copyAction.setText(copyPathActionText);\n  return copyAction;\n\n?",
+      "revId": "ea4f313ad4a530973b80610667669854acdb21b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87929364_0952fce3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2171,
+      "author": {
+        "id": 98314
+      },
+      "writtenOn": "2018-02-02T01:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7979753_f9864021",
       "revId": "ea4f313ad4a530973b80610667669854acdb21b3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "87929364_c95714d5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2196,
+      "author": {
+        "id": 98314
+      },
+      "writtenOn": "2018-02-02T01:07:25Z",
+      "side": 1,
+      "message": "I\u0027ve also added a finally block to dispose cb when a RuntimeException is thrown.",
+      "parentUuid": "a7979753_d9950446",
+      "revId": "ea4f313ad4a530973b80610667669854acdb21b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7979753_99a0dca5",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "87929364_a98e4804",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2215,
+      "author": {
+        "id": 98314
+      },
+      "writtenOn": "2018-02-02T01:07:25Z",
+      "side": 1,
+      "message": "This is the behavior that the History view file list has. Should I change it nonetheless?",
+      "parentUuid": "a7979753_99a0dca5",
+      "revId": "ea4f313ad4a530973b80610667669854acdb21b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7979753_b9903856",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-15T14:05:58Z",
       "side": 1,
       "message": "Better also use sb.append: sb.append(text).append(System.lineSeparator());",
+      "revId": "ea4f313ad4a530973b80610667669854acdb21b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87929364_e95a10fd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2216,
+      "author": {
+        "id": 98314
+      },
+      "writtenOn": "2018-02-02T01:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7979753_b9903856",
       "revId": "ea4f313ad4a530973b80610667669854acdb21b3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
