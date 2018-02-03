@@ -85,26 +85,17 @@ public class NonBlockingWizardDialog extends MinimumSizeWizardDialog {
 	}
 
 	/**
-	 * If {@code fork} is {@code true}, this implementation does <em>not</em>
-	 * block but schedules a true background job. Such background jobs are
-	 * queued and will execute one after another. They are canceled when the
-	 * current wizard page changes, or when the dialog closes.
-	 * </p>
-	 */
-	@Override
-	public void run(boolean fork, boolean cancelable,
-			IRunnableWithProgress runnable)
-			throws InvocationTargetException, InterruptedException {
-		if (!fork) {
-			super.run(fork, cancelable, runnable);
-		}
-		run(runnable, null);
-	}
-
-	/**
 	 * Runs the given {@code runnable} in a background job, reporting progress
 	 * through the dialog's progress monitor, if any, and invoking
 	 * {@code onCancel} if the job is canceled.
+	 * <p>
+	 * The dialog is <em>not</em> made inactive while the job runs.
+	 * </p>
+	 * <p>
+	 * Such background jobs are queued and will execute one after another. They
+	 * are canceled when the current wizard page changes, or when the dialog
+	 * closes.
+	 * </p>
 	 *
 	 * @param runnable
 	 *            to run
