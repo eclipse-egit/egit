@@ -317,7 +317,8 @@ class GerritConfigurationPage extends WizardPage {
 						return null;
 					}
 					return new ContentProposal(refName);
-				}, UIText.GerritConfigurationPage_BranchTooltipStartTyping,
+				}, null,
+				UIText.GerritConfigurationPage_BranchTooltipStartTyping,
 				UIText.GerritConfigurationPage_BranchTooltipHover);
 	}
 

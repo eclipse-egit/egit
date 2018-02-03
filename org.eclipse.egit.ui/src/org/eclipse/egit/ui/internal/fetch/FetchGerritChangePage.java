@@ -50,6 +50,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.UIUtils.ExplicitContentProposalAdapter;
 import org.eclipse.egit.ui.internal.ActionUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.ValidationUtils;
@@ -60,17 +61,13 @@ import org.eclipse.egit.ui.internal.dialogs.BranchEditDialog;
 import org.eclipse.egit.ui.internal.dialogs.CancelableFuture;
 import org.eclipse.egit.ui.internal.dialogs.NonBlockingWizardDialog;
 import org.eclipse.egit.ui.internal.gerrit.GerritDialogSettings;
-import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.IPageChangeProvider;
 import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.PageChangedEvent;
-import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.fieldassist.IContentProposal;
-import org.eclipse.jface.fieldassist.IContentProposalProvider;
-import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.JFaceResources;
@@ -109,7 +106,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.progress.WorkbenchJob;
 
@@ -1135,72 +1131,29 @@ public class FetchGerritChangePage extends WizardPage {
 
 	private ExplicitContentProposalAdapter addRefContentProposalToText(
 			final Text textField) {
-		KeyStroke stroke = UIUtils
-				.getKeystrokeOfBestActiveBindingFor(IWorkbenchCommandConstants.EDIT_CONTENT_ASSIST);
-		if (stroke != null) {
-			UIUtils.addBulbDecorator(textField, NLS.bind(
-					UIText.FetchGerritChangePage_ContentAssistTooltip,
-					stroke.format()));
-		}
-		IContentProposalProvider cp = new IContentProposalProvider() {
-
-			@Override
-			public IContentProposal[] getProposals(String contents, int position) {
-				Collection<Change> proposals;
-				try {
-					proposals = getRefsForContentAssist(contents);
-				} catch (InvocationTargetException e) {
-					Activator.handleError(e.getMessage(), e, true);
-					return null;
-				} catch (InterruptedException e) {
-					return null;
-				}
-
-				if (proposals == null) {
-					return null;
-				}
-				List<IContentProposal> resultList = new ArrayList<>();
-				String input = contents;
-				Matcher matcher = GERRIT_CHANGE_REF_PATTERN.matcher(contents);
-				if (matcher.find()) {
-					input = matcher.group(2);
-				}
-				Pattern pattern = UIUtils.createProposalPattern(input);
-				for (final Change ref : proposals) {
-					if (pattern != null && !pattern
-							.matcher(ref.getChangeNumber().toString())
-							.matches()) {
-						continue;
-					}
-					resultList.add(new ChangeContentProposal(ref));
-				}
-				return resultList
-						.toArray(new IContentProposal[resultList.size()]);
+		return UIUtils.addContentProposalToText(textField, () -> {
+			try {
+				return getRefsForContentAssist(textField.getText());
+			} catch (InvocationTargetException e) {
+				Activator.handleError(e.getMessage(), e, true);
+				return null;
+			} catch (InterruptedException e) {
+				return null;
 			}
-		};
-
-		ExplicitContentProposalAdapter adapter = new ExplicitContentProposalAdapter(
-				textField, cp, stroke);
-		// set the acceptance style to always replace the complete content
-		adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
-		return adapter;
-	}
-
-	private static class ExplicitContentProposalAdapter
-			extends ContentProposalAdapter {
-
-		public ExplicitContentProposalAdapter(Control control,
-				IContentProposalProvider proposalProvider,
-				KeyStroke keyStroke) {
-			super(control, new TextContentAdapter(), proposalProvider,
-					keyStroke, null);
-		}
-
-		@Override
-		public void openProposalPopup() {
-			// Make this method accessible
-			super.openProposalPopup();
-		}
+		}, (pattern, ref) -> {
+			if (pattern == null || pattern
+					.matcher(ref.getChangeNumber().toString()).matches()) {
+				return new ChangeContentProposal(ref);
+			}
+			return null;
+		}, s -> {
+			String input = s;
+			Matcher matcher = GERRIT_CHANGE_REF_PATTERN.matcher(input);
+			if (matcher.find()) {
+				input = matcher.group(2);
+			}
+			return UIUtils.createProposalPattern(input);
+		}, null, UIText.FetchGerritChangePage_ContentAssistTooltip);
 	}
 
 	final static class Change implements Comparable<Change> {
