@@ -8,9 +8,9 @@
 package org.eclipse.egit.ui.internal.push;
 
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.dialogs.NonBlockingWizardDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.wizard.IWizard;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.Shell;
 /**
  * A dialog dedicated to {@link PushBranchWizard}, customizing button labels
  */
-public class PushWizardDialog extends WizardDialog {
+public class PushWizardDialog extends NonBlockingWizardDialog {
 
 	/**
 	 * @param parentShell
