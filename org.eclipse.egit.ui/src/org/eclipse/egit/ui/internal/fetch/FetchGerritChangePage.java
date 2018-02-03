@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2017 SAP AG and others.
+ * Copyright (c) 2010, 2018 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -41,9 +41,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.core.op.ListRemoteOperation;
@@ -59,6 +57,7 @@ import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.egit.ui.internal.components.BranchNameNormalizer;
 import org.eclipse.egit.ui.internal.dialogs.AbstractBranchSelectionDialog;
 import org.eclipse.egit.ui.internal.dialogs.BranchEditDialog;
+import org.eclipse.egit.ui.internal.dialogs.CancelableFuture;
 import org.eclipse.egit.ui.internal.dialogs.NonBlockingWizardDialog;
 import org.eclipse.egit.ui.internal.gerrit.GerritDialogSettings;
 import org.eclipse.jface.bindings.keys.KeyStroke;
@@ -542,7 +541,7 @@ public class FetchGerritChangePage extends WizardPage {
 
 	private void preFetch(ChangeList list) {
 		try {
-			list.fetch();
+			list.start();
 		} catch (InvocationTargetException e) {
 			Activator.handleError(e.getLocalizedMessage(), e.getCause(), true);
 		}
@@ -724,22 +723,26 @@ public class FetchGerritChangePage extends WizardPage {
 				}
 				ChangeList list = changeRefs.get(uriCombo.getText());
 				if (list != null && list.isDone()) {
-					if (change.getPatchSetNumber() != null) {
-						if (!list.getResult().contains(change)) {
-							setErrorMessage(
-									UIText.FetchGerritChangePage_UnknownChangeRefMessage);
-							return;
+					try {
+						if (change.getPatchSetNumber() != null) {
+							if (!list.get().contains(change)) {
+								setErrorMessage(
+										UIText.FetchGerritChangePage_UnknownChangeRefMessage);
+								return;
+							}
+						} else {
+							Change fromGerrit = findHighestPatchSet(list.get(),
+									change.getChangeNumber().intValue());
+							if (fromGerrit == null) {
+								setErrorMessage(NLS.bind(
+										UIText.FetchGerritChangePage_NoSuchChangeMessage,
+										change.getChangeNumber()));
+								return;
+							}
 						}
-					} else {
-						Change fromGerrit = findHighestPatchSet(
-								list.getResult(),
-								change.getChangeNumber().intValue());
-						if (fromGerrit == null) {
-							setErrorMessage(NLS.bind(
-									UIText.FetchGerritChangePage_NoSuchChangeMessage,
-									change.getChangeNumber()));
-							return;
-						}
+					} catch (InterruptedException
+							| InvocationTargetException e) {
+						// Ignore: since we're done, this should never occur
 					}
 				}
 			} else {
@@ -1340,254 +1343,59 @@ public class FetchGerritChangePage extends WizardPage {
 	}
 
 	/**
-	 * A {@code ChangeList} is a "Future", loading the list of change refs
-	 * asynchronously from the remote repository. The {@link ChangeList#get()
-	 * get()} method blocks until the result is available or the future is
-	 * canceled. Pre-fetching is possible by calling {@link ChangeList#fetch()}
-	 * directly.
+	 * A {@code ChangeList} loads the list of change refs asynchronously from
+	 * the remote repository.
 	 */
-	private static class ChangeList {
-
-		/**
-		 * Determines how to cancel a not-yet-completed future. Irrespective of
-		 * the mechanism, the job may actually terminate normally, and
-		 * subsequent calls to get() may return a result.
-		 */
-		public static enum CancelMode {
-			/**
-			 * Tries to cancel the job, which may decide to ignore the request.
-			 * Callers to get() will remain blocked until the job terminates.
-			 */
-			CANCEL,
-			/**
-			 * Tries to cancel the job, which may decide to ignore the request.
-			 * Outstanding get() calls will be woken up and may throw
-			 * InterruptedException or return a result if the job terminated in
-			 * the meantime.
-			 */
-			ABANDON,
-			/**
-			 * Tries to cancel the job, and if that doesn't succeed immediately,
-			 * interrupts the job's thread. Outstanding calls to get() will be
-			 * woken up and may throw InterruptedException or return a result if
-			 * the job terminated in the meantime.
-			 */
-			INTERRUPT
-		}
-
-		private static enum State {
-			PRISTINE, SCHEDULED, CANCELING, INTERRUPT, CANCELED, DONE
-		}
+	private static class ChangeList extends CancelableFuture<Set<Change>> {
 
 		private final Repository repository;
 
 		private final String uriText;
 
-		private State state = State.PRISTINE;
-
-		private Set<Change> result;
-
-		private InterruptibleJob job;
+		private ListRemoteOperation listOp;
 
 		public ChangeList(Repository repository, String uriText) {
 			this.repository = repository;
 			this.uriText = uriText;
 		}
 
-		/**
-		 * Tries to cancel the future. {@code cancel(false)} tries a normal job
-		 * cancellation, which may or may not terminated the job (it may decide
-		 * not to react to cancellation requests).
-		 *
-		 * @param cancellation
-		 *            {@link CancelMode} defining how to cancel
-		 *
-		 * @return {@code true} if the future was canceled (its job is not
-		 *         running anymore), {@code false} otherwise.
-		 */
-		public synchronized boolean cancel(CancelMode cancellation) {
-			CancelMode mode = cancellation == null ? CancelMode.CANCEL
-					: cancellation;
-			switch (state) {
-			case PRISTINE:
-				finish(false);
-				return true;
-			case SCHEDULED:
-				state = State.CANCELING;
-				boolean canceled = job.cancel();
-				if (canceled) {
-					state = State.CANCELED;
-				} else if (mode == CancelMode.INTERRUPT) {
-					interrupt();
-				} else if (mode == CancelMode.ABANDON) {
-					notifyAll();
-				}
-				return canceled;
-			case CANCELING:
-				// cancel(CANCEL|ABANDON) was called before.
-				if (mode == CancelMode.INTERRUPT) {
-					interrupt();
-				} else if (mode == CancelMode.ABANDON) {
-					notifyAll();
-				}
-				return false;
-			case INTERRUPT:
-				if (mode != CancelMode.CANCEL) {
-					notifyAll();
-				}
-				return false;
-			case CANCELED:
-				return true;
-			default:
-				return false;
-			}
+		@Override
+		protected String getJobTitle() {
+			return MessageFormat.format(
+					UIText.FetchGerritChangePage_FetchingRemoteRefsMessage,
+					uriText);
 		}
 
-		public synchronized boolean isFinished() {
-			return state == State.CANCELED || state == State.DONE;
-		}
-
-		public synchronized boolean isDone() {
-			return state == State.DONE;
-		}
-
-		/**
-		 * Retrieves the result. If the result is not yet available, the method
-		 * blocks until it is or {@link #cancel(CancelMode)} is called with
-		 * {@link CancelMode#ABANDON} or {@link CancelMode#INTERRUPT}.
-		 *
-		 * @return the result, which may be {@code null} if the future was
-		 *         canceled
-		 * @throws InterruptedException
-		 *             if waiting was interrupted
-		 * @throws InvocationTargetException
-		 *             if the future's job cannot be created
-		 */
-		public synchronized Collection<Change> get()
-				throws InterruptedException, InvocationTargetException {
-			switch (state) {
-			case DONE:
-			case CANCELED:
-				return result;
-			case PRISTINE:
-				fetch();
-				return get();
-			default:
-				wait();
-				if (state == State.CANCELING || state == State.INTERRUPT) {
-					// canceled with ABANDON or INTERRUPT
-					throw new InterruptedException();
-				}
-				return get();
-			}
-		}
-
-		public synchronized Collection<Change> getResult() {
-			if (isFinished()) {
-				return result;
-			}
-			throw new IllegalStateException(
-					"Fetching change list is not finished"); //$NON-NLS-1$
-		}
-
-		private synchronized void finish(boolean done) {
-			state = done ? State.DONE : State.CANCELED;
-			job = null;
-			notifyAll(); // We're done, wake up all outstanding get() calls
-		}
-
-		private synchronized void interrupt() {
-			state = State.INTERRUPT;
-			job.interrupt();
-			notifyAll(); // Abandon outstanding get() calls
-		}
-
-		/**
-		 * On the first call, starts a background job to fetch the result.
-		 * Subsequent calls do nothing and return immediately.
-		 *
-		 * @throws InvocationTargetException
-		 *             if starting the job fails
-		 */
-		public synchronized void fetch() throws InvocationTargetException {
-			if (job != null || state != State.PRISTINE) {
-				return;
-			}
-			ListRemoteOperation listOp;
+		@Override
+		protected void prepareRun() throws InvocationTargetException {
 			try {
 				listOp = new ListRemoteOperation(repository,
 						new URIish(uriText),
 						Activator.getDefault().getPreferenceStore().getInt(
 								UIPreferences.REMOTE_CONNECTION_TIMEOUT));
 			} catch (URISyntaxException e) {
-				finish(false);
 				throw new InvocationTargetException(e);
 			}
-			job = new InterruptibleJob(MessageFormat.format(
-					UIText.FetchGerritChangePage_FetchingRemoteRefsMessage,
-					uriText)) {
-
-				@Override
-				protected IStatus run(IProgressMonitor monitor) {
-					try {
-						listOp.run(monitor);
-					} catch (InterruptedException e) {
-						return Status.CANCEL_STATUS;
-					} catch (InvocationTargetException e) {
-						synchronized (ChangeList.this) {
-							if (state == State.CANCELING
-									|| state == State.INTERRUPT) {
-								// JGit may report a TransportException when the
-								// thread is interrupted. Let's just pretend we
-								// canceled before. Also, if the user canceled
-								// already, he's not interested in errors
-								// anymore.
-								return Status.CANCEL_STATUS;
-							}
-						}
-						return Activator
-								.createErrorStatus(e.getLocalizedMessage(), e);
-					}
-					List<Change> changes = new ArrayList<>();
-					for (Ref ref : listOp.getRemoteRefs()) {
-						Change change = Change.fromRef(ref.getName());
-						if (change != null) {
-							changes.add(change);
-						}
-					}
-					Collections.sort(changes, Collections.reverseOrder());
-					result = new LinkedHashSet<>(changes);
-					return Status.OK_STATUS;
-				}
-
-			};
-			job.addJobChangeListener(new JobChangeAdapter() {
-
-				@Override
-				public void done(IJobChangeEvent event) {
-					IStatus status = event.getResult();
-					finish(status != null && status.isOK());
-				}
-
-			});
-			job.setUser(false);
-			job.setSystem(true);
-			state = State.SCHEDULED;
-			job.schedule();
 		}
 
-		private static abstract class InterruptibleJob extends Job {
-
-			public InterruptibleJob(String name) {
-				super(name);
-			}
-
-			public void interrupt() {
-				Thread thread = getThread();
-				if (thread != null) {
-					thread.interrupt();
+		@Override
+		protected void run(IProgressMonitor monitor)
+				throws InterruptedException, InvocationTargetException {
+			listOp.run(monitor);
+			List<Change> changes = new ArrayList<>();
+			for (Ref ref : listOp.getRemoteRefs()) {
+				Change change = Change.fromRef(ref.getName());
+				if (change != null) {
+					changes.add(change);
 				}
 			}
+			Collections.sort(changes, Collections.reverseOrder());
+			set(new LinkedHashSet<>(changes));
+		}
+
+		@Override
+		protected void done() {
+			listOp = null;
 		}
 	}
 }
