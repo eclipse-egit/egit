@@ -105,6 +105,7 @@ public class PushBranchWizard extends Wizard {
 			}
 		};
 
+		setNeedsProgressMonitor(true);
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_PUSH);
 	}
 
