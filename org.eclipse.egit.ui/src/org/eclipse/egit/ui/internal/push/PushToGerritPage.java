@@ -510,7 +510,7 @@ public class PushToGerritPage extends WizardPage {
 						return null;
 					}
 					return new ContentProposal(refName);
-				}, UIText.PushToGerritPage_ContentProposalStartTypingText,
+				}, null, UIText.PushToGerritPage_ContentProposalStartTypingText,
 				UIText.PushToGerritPage_ContentProposalHoverText);
 	}
 }
