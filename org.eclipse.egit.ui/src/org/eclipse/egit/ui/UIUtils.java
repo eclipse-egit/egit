@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2015 SAP AG and others.
+ * Copyright (c) 2010, 2018 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -33,7 +34,6 @@ import org.eclipse.egit.ui.internal.RepositorySaveableFilter;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RefContentProposal;
-import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.bindings.Trigger;
 import org.eclipse.jface.bindings.TriggerSequence;
@@ -47,6 +47,7 @@ import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
+import org.eclipse.jface.fieldassist.IControlContentAdapter;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -61,6 +62,7 @@ import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
@@ -211,6 +213,58 @@ public class UIUtils {
 		 * @return a new {@link IContentProposal}, or {@code null} if none
 		 */
 		public IContentProposal getProposal(Pattern pattern, T element);
+	}
+
+	/**
+	 * A {@link ContentProposalAdapter} with a <em>public</em>
+	 * {@link #openProposalPopup()} method.
+	 */
+	public static class ExplicitContentProposalAdapter
+			extends ContentProposalAdapter {
+
+		/**
+		 * Construct a content proposal adapter that can assist the user with
+		 * choosing content for the field.
+		 *
+		 * @param control
+		 *            the control for which the adapter is providing content
+		 *            assist. May not be {@code null}.
+		 * @param controlContentAdapter
+		 *            the {@link IControlContentAdapter} used to obtain and
+		 *            update the control's contents as proposals are accepted.
+		 *            May not be {@code null}.
+		 * @param proposalProvider
+		 *            the {@link IContentProposalProvider}> used to obtain
+		 *            content proposals for this control.
+		 * @param keyStroke
+		 *            the keystroke that will invoke the content proposal popup.
+		 *            If this value is {@code null}, then proposals will be
+		 *            activated automatically when any of the auto activation
+		 *            characters are typed.
+		 * @param autoActivationCharacters
+		 *            characters that trigger auto-activation of content
+		 *            proposal. If specified, these characters will trigger
+		 *            auto-activation of the proposal popup, regardless of
+		 *            whether an explicit invocation keyStroke was specified. If
+		 *            this parameter is {@code null}, then only a specified
+		 *            keyStroke will invoke content proposal. If this parameter
+		 *            is {@code null} and the keyStroke parameter is
+		 *            {@code null}, then all alphanumeric characters will
+		 *            auto-activate content proposal.
+		 */
+		public ExplicitContentProposalAdapter(Control control,
+				IControlContentAdapter controlContentAdapter,
+				IContentProposalProvider proposalProvider,
+				KeyStroke keyStroke, char[] autoActivationCharacters) {
+			super(control, controlContentAdapter, proposalProvider, keyStroke,
+					autoActivationCharacters);
+		}
+
+		@Override
+		public void openProposalPopup() {
+			// Make this method accessible
+			super.openProposalPopup();
+		}
 	}
 
 	/**
@@ -465,11 +519,13 @@ public class UIUtils {
 	 *            the repository
 	 * @param refListProvider
 	 *            provides the {@link Ref}s to show in the proposal
+	 * @return the content proposal adapter set on the {@code textField}
 	 */
-	public static final void addRefContentProposalToText(Text textField,
+	public static final ExplicitContentProposalAdapter addRefContentProposalToText(
+			Text textField,
 			Repository repository,
 			IContentProposalCandidateProvider<Ref> refListProvider) {
-		UIUtils.<Ref> addContentProposalToText(textField,
+		return UIUtils.<Ref> addContentProposalToText(textField,
 				refListProvider, (pattern, ref) -> {
 					String shortenedName = Repository
 							.shortenRefName(ref.getName());
@@ -479,7 +535,8 @@ public class UIUtils {
 						return null;
 					}
 					return new RefContentProposal(repository, ref);
-				}, UIText.UIUtils_StartTypingForRemoteRefMessage,
+				}, null,
+				UIText.UIUtils_StartTypingForRemoteRefMessage,
 				UIText.UIUtils_PressShortcutForRemoteRefMessage);
 	}
 
@@ -497,20 +554,32 @@ public class UIUtils {
 	 * @param factory
 	 *            {@link IContentProposalFactory} to use to create proposals
 	 *            from candidates
+	 * @param patternProvider
+	 *            to convert the current text of the field into a pattern
+	 *            suitable for filtering the candidates. If {@code null}, a
+	 *            default pattern is constructed using
+	 *            {@link #createProposalPattern(String)}.
 	 * @param startTypingMessage
 	 *            hover message if no content assist key binding is active
 	 * @param shortcutMessage
 	 *            hover message if a content assist key binding is active,
 	 *            should have a "{0}" placeholder that will be filled by the
 	 *            appropriate keystroke
+	 * @return the content proposal adapter set on the {@code textField}
 	 */
-	public static final <T> void addContentProposalToText(Text textField,
+	public static final <T> ExplicitContentProposalAdapter addContentProposalToText(
+			Text textField,
 			IContentProposalCandidateProvider<T> candidateProvider,
-			IContentProposalFactory<T> factory, String startTypingMessage,
+			IContentProposalFactory<T> factory,
+			Function<String, Pattern> patternProvider,
+			String startTypingMessage,
 			String shortcutMessage) {
 		KeyStroke stroke = UIUtils
 				.getKeystrokeOfBestActiveBindingFor(IWorkbenchCommandConstants.EDIT_CONTENT_ASSIST);
 		if (stroke == null) {
+			if (startTypingMessage == null) {
+				return null;
+			}
 			addBulbDecorator(textField, startTypingMessage);
 		} else {
 			addBulbDecorator(textField,
@@ -521,16 +590,19 @@ public class UIUtils {
 			public IContentProposal[] getProposals(String contents, int position) {
 				List<IContentProposal> resultList = new ArrayList<>();
 
-				Pattern pattern = createProposalPattern(contents);
 				Collection<? extends T> candidates = candidateProvider
 						.getCandidates();
-				if (candidates != null) {
-					for (final T candidate : candidates) {
-						IContentProposal proposal = factory.getProposal(pattern,
-								candidate);
-						if (proposal != null) {
-							resultList.add(proposal);
-						}
+				if (candidates == null) {
+					return null;
+				}
+				Pattern pattern = patternProvider != null
+						? patternProvider.apply(contents)
+						: createProposalPattern(contents);
+				for (final T candidate : candidates) {
+					IContentProposal proposal = factory.getProposal(pattern,
+							candidate);
+					if (proposal != null) {
+						resultList.add(proposal);
 					}
 				}
 				return resultList.toArray(new IContentProposal[resultList
@@ -538,12 +610,13 @@ public class UIUtils {
 			}
 		};
 
-		ContentProposalAdapter adapter = new ContentProposalAdapter(textField,
-				new TextContentAdapter(), cp, stroke,
+		ExplicitContentProposalAdapter adapter = new ExplicitContentProposalAdapter(
+				textField, new TextContentAdapter(), cp, stroke,
 				UIUtils.VALUE_HELP_ACTIVATIONCHARS);
 		// set the acceptance style to always replace the complete content
 		adapter.setProposalAcceptanceStyle(
 				ContentProposalAdapter.PROPOSAL_REPLACE);
+		return adapter;
 	}
 
 	/**
