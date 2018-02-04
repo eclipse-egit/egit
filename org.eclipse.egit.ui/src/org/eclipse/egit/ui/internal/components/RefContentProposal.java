@@ -58,12 +58,14 @@ public class RefContentProposal implements IContentProposal {
 	private static void appendObjectSummary(final StringBuilder sb,
 			final String type, final PersonIdent author, final String message) {
 		sb.append(type);
-		sb.append(" "); //$NON-NLS-1$
-		sb.append(UIText.RefContentProposal_by);
-		sb.append(" "); //$NON-NLS-1$
-		sb.append(author.getName());
-		sb.append("\n");  //$NON-NLS-1$
-		sb.append(author.getWhen());
+		if (author != null) {
+			sb.append(" "); //$NON-NLS-1$
+			sb.append(UIText.RefContentProposal_by);
+			sb.append(" "); //$NON-NLS-1$
+			sb.append(author.getName());
+			sb.append("\n"); //$NON-NLS-1$
+			sb.append(author.getWhen());
+		}
 		sb.append("\n\n");  //$NON-NLS-1$
 		final int newLine = message.indexOf('\n');
 		final int last = (newLine != -1 ? newLine : message.length());
