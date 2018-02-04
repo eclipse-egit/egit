@@ -157,7 +157,8 @@ public class RefContentProposal implements IContentProposal {
 			return sb.toString();
 		} catch (IOException e) {
 			Activator.logError(NLS.bind(
-					UIText.RefContentProposal_errorReadingObject, objectId), e);
+					UIText.RefContentProposal_errorReadingObject, objectId,
+					refName), e);
 			return null;
 		}
 	}
