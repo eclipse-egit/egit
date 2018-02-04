@@ -322,7 +322,7 @@ public class PushBranchPage extends WizardPage {
 				});
 		candidateProvider.setContentProposalAdapter(
 				UIUtils.addRefContentProposalToText(remoteBranchNameText,
-						this.repository, candidateProvider));
+						this.repository, candidateProvider, true));
 		if (this.ref != null) {
 			upstreamConfigComponent = new UpstreamConfigComponent(inputPanel,
 					SWT.NONE);
