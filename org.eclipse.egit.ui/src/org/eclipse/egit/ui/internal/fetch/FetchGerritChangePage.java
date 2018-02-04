@@ -26,7 +26,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -44,7 +43,6 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
-import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.core.op.TagOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -55,10 +53,10 @@ import org.eclipse.egit.ui.internal.ActionUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.ValidationUtils;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
+import org.eclipse.egit.ui.internal.components.AsynchronousListOperation;
 import org.eclipse.egit.ui.internal.components.BranchNameNormalizer;
 import org.eclipse.egit.ui.internal.dialogs.AbstractBranchSelectionDialog;
 import org.eclipse.egit.ui.internal.dialogs.BranchEditDialog;
-import org.eclipse.egit.ui.internal.dialogs.CancelableFuture;
 import org.eclipse.egit.ui.internal.dialogs.NonBlockingWizardDialog;
 import org.eclipse.egit.ui.internal.gerrit.GerritDialogSettings;
 import org.eclipse.jface.dialogs.Dialog;
@@ -1299,56 +1297,24 @@ public class FetchGerritChangePage extends WizardPage {
 	 * A {@code ChangeList} loads the list of change refs asynchronously from
 	 * the remote repository.
 	 */
-	private static class ChangeList extends CancelableFuture<Set<Change>> {
-
-		private final Repository repository;
-
-		private final String uriText;
-
-		private ListRemoteOperation listOp;
+	private static class ChangeList extends AsynchronousListOperation<Change> {
 
 		public ChangeList(Repository repository, String uriText) {
-			this.repository = repository;
-			this.uriText = uriText;
+			super(repository, uriText,
+					UIText.FetchGerritChangePage_FetchingRemoteRefsMessage);
 		}
 
 		@Override
-		protected String getJobTitle() {
-			return MessageFormat.format(
-					UIText.FetchGerritChangePage_FetchingRemoteRefsMessage,
-					uriText);
-		}
-
-		@Override
-		protected void prepareRun() throws InvocationTargetException {
-			try {
-				listOp = new ListRemoteOperation(repository,
-						new URIish(uriText),
-						Activator.getDefault().getPreferenceStore().getInt(
-								UIPreferences.REMOTE_CONNECTION_TIMEOUT));
-			} catch (URISyntaxException e) {
-				throw new InvocationTargetException(e);
-			}
-		}
-
-		@Override
-		protected void run(IProgressMonitor monitor)
-				throws InterruptedException, InvocationTargetException {
-			listOp.run(monitor);
+		protected Collection<Change> convert(Collection<Ref> refs) {
 			List<Change> changes = new ArrayList<>();
-			for (Ref ref : listOp.getRemoteRefs()) {
+			for (Ref ref : refs) {
 				Change change = Change.fromRef(ref.getName());
 				if (change != null) {
 					changes.add(change);
 				}
 			}
 			Collections.sort(changes, Collections.reverseOrder());
-			set(new LinkedHashSet<>(changes));
-		}
-
-		@Override
-		protected void done() {
-			listOp = null;
+			return new LinkedHashSet<>(changes);
 		}
 	}
 }
