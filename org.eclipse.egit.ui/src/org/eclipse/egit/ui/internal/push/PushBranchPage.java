@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2016 Robin Stocker <robin@nibor.org> and others.
+ * Copyright (c) 2013, 2018 Robin Stocker <robin@nibor.org> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,29 +8,36 @@
 package org.eclipse.egit.ui.internal.push;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.components.AsynchronousListOperation;
+import org.eclipse.egit.ui.internal.components.AsynchronousRefProposalProvider;
 import org.eclipse.egit.ui.internal.components.BranchNameNormalizer;
-import org.eclipse.egit.ui.internal.components.RefContentAssistProvider;
 import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo;
 import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo.IRemoteSelectionListener;
 import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo.SelectionType;
 import org.eclipse.egit.ui.internal.components.UpstreamConfigComponent;
 import org.eclipse.egit.ui.internal.components.UpstreamConfigComponent.UpstreamConfigSelectionListener;
+import org.eclipse.egit.ui.internal.dialogs.CancelableFuture;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -91,8 +98,6 @@ public class PushBranchPage extends WizardPage {
 
 	private Text remoteBranchNameText;
 
-	private RefContentAssistProvider assist;
-
 	private BranchRebaseMode upstreamConfig;
 
 	private UpstreamConfigComponent upstreamConfigComponent;
@@ -103,6 +108,8 @@ public class PushBranchPage extends WizardPage {
 	private AddRemotePage addRemotePage;
 
 	private Set<Resource> disposables = new HashSet<>();
+
+	private Map<String, FutureRefs> refs = new HashMap<>();
 
 	/**
 	 * Create the page.
@@ -161,6 +168,12 @@ public class PushBranchPage extends WizardPage {
 
 	@Override
 	public void createControl(Composite parent) {
+		parent.addDisposeListener(event -> {
+			for (CancelableFuture<Collection<Ref>> l : refs.values()) {
+				l.cancel(CancelableFuture.CancelMode.INTERRUPT);
+			}
+			refs.clear();
+		});
 		try {
 			this.remoteConfigs = RemoteConfig.getAllRemoteConfigs(repository.getConfig());
 			Collections.sort(remoteConfigs, new Comparator<RemoteConfig>() {
@@ -288,15 +301,29 @@ public class PushBranchPage extends WizardPage {
 		GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
 				.applyTo(remoteBranchNameText);
 		remoteBranchNameText.setText(getSuggestedBranchName());
-		UIUtils.addRefContentProposalToText(remoteBranchNameText,
-				this.repository, () -> {
-					if (PushBranchPage.this.assist != null) {
-						return PushBranchPage.this.assist
-								.getRefsForContentAssist(false, true);
+		AsynchronousRefProposalProvider candidateProvider = new AsynchronousRefProposalProvider(
+				getContainer(), remoteBranchNameText, () -> {
+					RemoteConfig config = remoteSelectionCombo
+							.getSelectedRemote();
+					if (config == null) {
+						return null;
 					}
-					return Collections.emptyList();
+					List<URIish> uris = config.getURIs();
+					if (uris == null || uris.isEmpty()) {
+						return null;
+					}
+					return uris.get(0).toString();
+				}, uri -> {
+					FutureRefs list = refs.get(uri);
+					if (list == null) {
+						list = new FutureRefs(repository, uri);
+						refs.put(uri, list);
+					}
+					return list;
 				});
-
+		candidateProvider.setContentProposalAdapter(
+				UIUtils.addRefContentProposalToText(remoteBranchNameText,
+						this.repository, candidateProvider));
 		if (this.ref != null) {
 			upstreamConfigComponent = new UpstreamConfigComponent(inputPanel,
 					SWT.NONE);
@@ -483,9 +510,21 @@ public class PushBranchPage extends WizardPage {
 
 	private void setRefAssist(RemoteConfig config) {
 		if (config != null && config.getURIs().size() > 0) {
-			this.assist = new RefContentAssistProvider(
-					PushBranchPage.this.repository, config.getURIs().get(0),
-					getContainer());
+			String uriText = config.getURIs().get(0).toString();
+			FutureRefs list = refs.get(uriText);
+			if (list == null) {
+				list = new FutureRefs(repository, uriText);
+				refs.put(uriText, list);
+				preFetch(list);
+			}
+		}
+	}
+
+	private void preFetch(FutureRefs list) {
+		try {
+			list.start();
+		} catch (InvocationTargetException e) {
+			Activator.handleError(e.getLocalizedMessage(), e.getCause(), true);
 		}
 	}
 
@@ -523,4 +562,32 @@ public class PushBranchPage extends WizardPage {
 		for (Resource disposable : this.disposables)
 			disposable.dispose();
 	}
+
+	/**
+	 * {@code FutureRefs} are loaded asynchronously from the upstream
+	 * repository.
+	 */
+	private static class FutureRefs extends AsynchronousListOperation<Ref> {
+
+		public FutureRefs(Repository repository, String uriText) {
+			super(repository, uriText,
+					UIText.FetchGerritChangePage_FetchingRemoteRefsMessage);
+		}
+
+		@Override
+		protected Collection<Ref> convert(Collection<Ref> refs) {
+			List<Ref> filtered = new ArrayList<>();
+			// Restrict to branches
+			for (Ref ref : refs) {
+				String name = ref.getName();
+				if (name.startsWith(Constants.R_HEADS)) {
+					filtered.add(ref);
+				}
+			}
+			// Sort them
+			Collections.sort(filtered, CommonUtils.REF_ASCENDING_COMPARATOR);
+			return filtered;
+		}
+	}
+
 }
