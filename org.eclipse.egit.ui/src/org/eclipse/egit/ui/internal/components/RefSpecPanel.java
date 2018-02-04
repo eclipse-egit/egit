@@ -1742,7 +1742,7 @@ public class RefSpecPanel {
 		final List<RefContentProposal> result = new ArrayList<>(
 				set.size());
 		for (final Ref r : set)
-			result.add(new RefContentProposal(localDb, r));
+			result.add(new RefContentProposal(localDb, r, HEAD == null));
 		return result;
 	}
 
@@ -1818,7 +1818,8 @@ public class RefSpecPanel {
 
 				// check if contents can be safely added as wildcard spec
 				if (isValidRefExpression(contents))
-					result.add(new RefContentProposal(localDb, contents, null));
+					result.add(new RefContentProposal(localDb, contents, null,
+							true));
 
 				// let's expand wildcards
 				final String regex = ".*" //$NON-NLS-1$
@@ -1837,7 +1838,7 @@ public class RefSpecPanel {
 					if (id != null)
 						result
 								.add(new RefContentProposal(localDb, contents,
-										id));
+										id, false));
 				}
 			}
 			return result.toArray(new IContentProposal[0]);
