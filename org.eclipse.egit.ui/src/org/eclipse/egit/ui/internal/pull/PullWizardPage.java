@@ -172,7 +172,7 @@ public class PullWizardPage extends WizardPage {
 								.getRefsForContentAssist(false, true);
 					}
 					return Collections.emptyList();
-				});
+				}, true);
 		remoteBranchNameText.setText(getSuggestedBranchName());
 		remoteBranchNameText.addModifyListener(new ModifyListener() {
 			@Override

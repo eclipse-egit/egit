@@ -1736,13 +1736,15 @@ public class RefSpecPanel {
 			}
 		});
 		set.addAll(refs);
-		if (HEAD != null)
+		if (HEAD != null) {
 			set.add(HEAD);
+		}
 
 		final List<RefContentProposal> result = new ArrayList<>(
 				set.size());
-		for (final Ref r : set)
-			result.add(new RefContentProposal(localDb, r));
+		for (final Ref r : set) {
+			result.add(new RefContentProposal(localDb, r, HEAD == null));
+		}
 		return result;
 	}
 
@@ -1817,27 +1819,33 @@ public class RefSpecPanel {
 				// contents contains wildcards
 
 				// check if contents can be safely added as wildcard spec
-				if (isValidRefExpression(contents))
-					result.add(new RefContentProposal(localDb, contents, null));
+				if (isValidRefExpression(contents)) {
+					result.add(new RefContentProposal(localDb, contents, null,
+							true));
+				}
 
 				// let's expand wildcards
 				final String regex = ".*" //$NON-NLS-1$
 						+ contents.replace("*", ".*").replace("?", ".?") + ".*"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 				final Pattern p = Pattern.compile(regex);
-				for (final RefContentProposal prop : proposals)
-					if (p.matcher(prop.getContent()).matches())
+				for (final RefContentProposal prop : proposals) {
+					if (p.matcher(prop.getContent()).matches()) {
 						result.add(prop);
+					}
+				}
 			} else {
-				for (final RefContentProposal prop : proposals)
-					if (prop.getContent().contains(contents))
+				for (final RefContentProposal prop : proposals) {
+					if (prop.getContent().contains(contents)) {
 						result.add(prop);
+					}
+				}
 
 				if (tryResolvingLocally && result.isEmpty()) {
 					final ObjectId id = tryResolveLocalRef(contents);
-					if (id != null)
-						result
-								.add(new RefContentProposal(localDb, contents,
-										id));
+					if (id != null) {
+						result.add(new RefContentProposal(localDb, contents, id,
+								false));
+					}
 				}
 			}
 			return result.toArray(new IContentProposal[0]);

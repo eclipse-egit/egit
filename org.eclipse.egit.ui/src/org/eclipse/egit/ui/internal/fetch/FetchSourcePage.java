@@ -89,7 +89,7 @@ public class FetchSourcePage extends WizardPage {
 		});
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(sourceText);
 		UIUtils.addRefContentProposalToText(sourceText, repository,
-				() -> getRemoteRefs());
+				() -> getRemoteRefs(), true);
 		checkPage();
 		setControl(main);
 	}

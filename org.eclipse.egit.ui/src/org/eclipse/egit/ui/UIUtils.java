@@ -519,12 +519,16 @@ public class UIUtils {
 	 *            the repository
 	 * @param refListProvider
 	 *            provides the {@link Ref}s to show in the proposal
+	 * @param upstream
+	 *            {@code true} if the candidates provided by the
+	 *            {@code refListProvider} are from an upstream repository
 	 * @return the content proposal adapter set on the {@code textField}
 	 */
 	public static final ExplicitContentProposalAdapter addRefContentProposalToText(
 			Text textField,
 			Repository repository,
-			IContentProposalCandidateProvider<Ref> refListProvider) {
+			IContentProposalCandidateProvider<Ref> refListProvider,
+			boolean upstream) {
 		return UIUtils.<Ref> addContentProposalToText(textField,
 				refListProvider, (pattern, ref) -> {
 					String shortenedName = Repository
@@ -534,7 +538,7 @@ public class UIUtils {
 							&& !pattern.matcher(shortenedName).matches()) {
 						return null;
 					}
-					return new RefContentProposal(repository, ref);
+					return new RefContentProposal(repository, ref, upstream);
 				}, null,
 				UIText.UIUtils_StartTypingForRemoteRefMessage,
 				UIText.UIUtils_PressShortcutForRemoteRefMessage);

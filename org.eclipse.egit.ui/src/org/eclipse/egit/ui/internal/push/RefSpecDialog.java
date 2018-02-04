@@ -159,7 +159,8 @@ public class RefSpecDialog extends TitleAndImageDialog {
 		});
 		// content assist for source
 		UIUtils.addRefContentProposalToText(sourceText, repo,
-				() -> assistProvider.getRefsForContentAssist(true, pushMode));
+				() -> assistProvider.getRefsForContentAssist(true, pushMode),
+				!pushMode);
 
 		// suggest remote tracking branch
 		if (!pushMode) {
@@ -198,7 +199,8 @@ public class RefSpecDialog extends TitleAndImageDialog {
 		});
 		// content assist for destination
 		UIUtils.addRefContentProposalToText(destinationText, repo,
-				() -> assistProvider.getRefsForContentAssist(false, pushMode));
+				() -> assistProvider.getRefsForContentAssist(false, pushMode),
+				pushMode);
 
 		// force update
 		forceButton = new Button(main, SWT.CHECK);
