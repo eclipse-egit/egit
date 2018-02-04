@@ -94,7 +94,7 @@ public class FetchDestinationPage extends WizardPage {
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(
 				destinationText);
 		UIUtils.addRefContentProposalToText(sourceText, repository,
-				() -> getRemoteRefs());
+				() -> getRemoteRefs(), true);
 
 		force = new Button(main, SWT.CHECK);
 		force.setText(UIText.FetchDestinationPage_ForceCheckbox);
