@@ -49,7 +49,9 @@ import org.eclipse.jgit.lib.BranchConfig;
 import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectIdRef;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Ref.Storage;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -315,7 +317,8 @@ public class PushBranchPage extends WizardPage {
 				}, uri -> {
 					FutureRefs list = refs.get(uri);
 					if (list == null) {
-						list = new FutureRefs(repository, uri);
+						list = new FutureRefs(repository, uri,
+								getLocalBranchName());
 						refs.put(uri, list);
 					}
 					return list;
@@ -490,6 +493,13 @@ public class PushBranchPage extends WizardPage {
 		}
 	}
 
+	private String getLocalBranchName() {
+		if (ref != null && !ref.getName().startsWith(Constants.R_REMOTES)) {
+			return Repository.shortenRefName(ref.getName());
+		}
+		return null;
+	}
+
 	private String getSuggestedBranchName() {
 		if (ref != null && !ref.getName().startsWith(Constants.R_REMOTES)) {
 			StoredConfig config = repository.getConfig();
@@ -512,7 +522,8 @@ public class PushBranchPage extends WizardPage {
 			String uriText = config.getURIs().get(0).toString();
 			FutureRefs list = refs.get(uriText);
 			if (list == null) {
-				list = new FutureRefs(repository, uriText);
+				list = new FutureRefs(repository, uriText,
+						getLocalBranchName());
 				refs.put(uriText, list);
 				preFetch(list);
 			}
@@ -568,14 +579,42 @@ public class PushBranchPage extends WizardPage {
 	 */
 	private static class FutureRefs extends AsynchronousListOperation<Ref> {
 
-		public FutureRefs(Repository repository, String uriText) {
-			super(repository, uriText,
-					UIText.FetchGerritChangePage_FetchingRemoteRefsMessage);
+		private final String localBranchName;
+
+		public FutureRefs(Repository repository, String uriText,
+				String localBranchName) {
+			super(repository, uriText);
+			this.localBranchName = localBranchName;
 		}
 
 		@Override
 		protected Collection<Ref> convert(Collection<Ref> refs) {
+			// Add a new remote ref for localBranchName in front if it doesn't
+			// exist
+			String fullName = Constants.R_HEADS + localBranchName;
+			boolean found = false;
+			for (Ref ref : refs) {
+				if (fullName.equalsIgnoreCase(ref.getName())) {
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				List<Ref> newRefs = new ArrayList<>(refs.size() + 1);
+				newRefs.add(new ObjectIdRef.Unpeeled(Storage.NEW, fullName,
+						ObjectId.zeroId()));
+				newRefs.addAll(refs);
+				return newRefs;
+			}
 			return refs;
+			// TODO: sort the refs. Unfortunately a ContentProposalAdapter has
+			// no support to add a sorter, so we would need to sort here. But
+			// sorting should depend on the labels that the proposals ultimately
+			// get, and strictly speaking we don't know where those come from.
+			// So sorting here would be conceptually wrong. Note that a
+			// org.eclipse.jface.text.contentassist.CompletionProposalAdapter
+			// *does* have support for sorting, but not ContentProposalAdapter.
+			// Sometimes JFace interfaces are just inconsistent...
 		}
 	}
 

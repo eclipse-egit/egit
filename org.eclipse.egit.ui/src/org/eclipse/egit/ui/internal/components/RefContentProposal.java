@@ -136,6 +136,8 @@ public class RefContentProposal implements IContentProposal {
 	public String getDescription() {
 		if (objectId == null) {
 			return null;
+		} else if (upstream && objectId.equals(ObjectId.zeroId())) {
+			return refName + '\n' + UIText.RefContentProposal_newRemoteObject;
 		}
 		try (ObjectReader reader = db.newObjectReader()) {
 			ObjectLoader loader = null;
