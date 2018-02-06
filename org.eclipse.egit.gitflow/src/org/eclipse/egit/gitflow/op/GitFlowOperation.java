@@ -221,18 +221,19 @@ abstract public class GitFlowOperation implements IEGitOperation {
 		Ref develop = repository.findBranch(parentBranch);
 		Ref branch = repository.findBranch(branchName);
 
-		RevWalk walk = new RevWalk(repository.getRepository());
+		try (RevWalk walk = new RevWalk(repository.getRepository())) {
+			RevCommit branchCommit = walk.parseCommit(branch.getObjectId());
+			RevCommit developCommit = walk.parseCommit(develop.getObjectId());
 
-		RevCommit branchCommit = walk.parseCommit(branch.getObjectId());
-		RevCommit developCommit = walk.parseCommit(develop.getObjectId());
+			RevCommit mergeBase = findCommonBase(walk, branchCommit,
+					developCommit);
 
-		RevCommit mergeBase = findCommonBase(walk, branchCommit, developCommit);
+			walk.reset();
+			walk.setRevFilter(RevFilter.ALL);
+			int aheadCount = RevWalkUtils.count(walk, branchCommit, mergeBase);
 
-		walk.reset();
-		walk.setRevFilter(RevFilter.ALL);
-		int aheadCount = RevWalkUtils.count(walk, branchCommit, mergeBase);
-
-		return aheadCount;
+			return aheadCount;
+		}
 	}
 
 	private RevCommit findCommonBase(RevWalk walk, RevCommit branchCommit,
