@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87929364_d8cc2e35",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-02-07T20:53:48Z",
+      "side": 1,
+      "message": "I haven\u0027t quite figured out yet how to use the extracted support classes in FetchGerritChangePage itself. The FetchGerritChangePage does some special tricks inside the asynchronous jobs, such as adding a change number, or not doing so if we\u0027re already fetching. I may have to think more about how we could refactor FetchGerritChangePage itself so that it could make use of the new classes...\n\nExtracting this is still worth the trouble. We\u0027ll also be able to use it in a rewrite of RefSpecDialog, where we have the same kind of blocking content assist with popup. See bug 527400 on that one.",
+      "range": {
+        "startLine": 10,
+        "startChar": 54,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "7500e5849e1f7409531ecffb3196d010c95b2006",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
