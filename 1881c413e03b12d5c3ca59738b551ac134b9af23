@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a458a58b_01064695",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushBranchPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-02-10T06:51:10Z",
+      "side": 1,
+      "message": "You can still use the old approach of sorting this collection using ...sort(newRefs, CommonUtils.REF_ASCENDING_COMPARATOR)",
+      "revId": "1881c413e03b12d5c3ca59738b551ac134b9af23",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
