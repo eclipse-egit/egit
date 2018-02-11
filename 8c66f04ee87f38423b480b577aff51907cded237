@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf1e6d06_f39330e0",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-02-11T23:26:45Z",
+      "side": 1,
+      "message": "Hmmm... looking at Markus\u0027s LFS work, I wonder what happens here if we have lfs filters.",
+      "revId": "8c66f04ee87f38423b480b577aff51907cded237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
