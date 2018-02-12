@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2014, Obeo
+ * Copyright (C) 2017, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,6 +20,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.storage.GitBlobStorage;
+import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -44,10 +46,13 @@ public class CommitBlobStorage extends GitBlobStorage {
 	 *            blob id
 	 * @param commit
 	 *            from with blob version should be taken
+	 * @param metadata
+	 *            Smudge filters and EOL stream type to apply when the content
+	 *            is to be gotten.
 	 */
 	public CommitBlobStorage(final Repository repository, final String fileName,
-			final ObjectId blob, RevCommit commit) {
-		super(repository, fileName, blob);
+			final ObjectId blob, RevCommit commit, CheckoutMetadata metadata) {
+		super(repository, fileName, blob, metadata);
 		this.commit = commit;
 	}
 

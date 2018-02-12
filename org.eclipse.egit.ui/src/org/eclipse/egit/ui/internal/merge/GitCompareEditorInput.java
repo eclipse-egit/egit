@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2011 Mathias Kinzler <mathias.kinzler@sap.com> and others.
+ * Copyright (C) 2010, 2017 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -35,7 +35,9 @@ import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.CompareTreeView;
 import org.eclipse.egit.ui.internal.revision.FileRevisionTypedElement;
+import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.dircache.DirCacheIterator;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -121,6 +123,9 @@ public class GitCompareEditorInput extends CompareEditorInput {
 					IProgressMonitor.UNKNOWN);
 
 			for (IResource resource : resources) {
+				if (resource == null) {
+					continue;
+				}
 				RepositoryMapping map = RepositoryMapping.getMapping(resource);
 				if (map == null) {
 					throw new InvocationTargetException(
@@ -296,18 +301,24 @@ public class GitCompareEditorInput extends CompareEditorInput {
 				}
 
 				String encoding = null;
+				CheckoutMetadata metadata = null;
 
 				GitFileRevision compareRev = null;
 				if (compareVersionIterator != null) {
 					String entryPath = compareVersionIterator.getEntryPathString();
 					encoding = CompareCoreUtils.getResourceEncoding(repository, entryPath);
-					if (!useIndex)
+					if (!useIndex) {
+						metadata = new CheckoutMetadata(tw.getEolStreamType(
+								TreeWalk.OperationType.CHECKOUT_OP),
+								tw.getFilterCommand(
+										Constants.ATTR_FILTER_TYPE_SMUDGE));
 						compareRev = GitFileRevision.inCommit(repository,
 								compareCommit, entryPath,
-								tw.getObjectId(compareTreeIndex));
-					else
+								tw.getObjectId(compareTreeIndex), metadata);
+					} else {
 						compareRev = GitFileRevision.inIndex(repository,
 								entryPath);
+					}
 				}
 
 				GitFileRevision baseRev = null;
@@ -316,8 +327,15 @@ public class GitCompareEditorInput extends CompareEditorInput {
 					if (encoding == null) {
 						encoding = CompareCoreUtils.getResourceEncoding(repository, entryPath);
 					}
+					if (metadata == null) {
+						metadata = new CheckoutMetadata(
+								tw.getEolStreamType(
+										TreeWalk.OperationType.CHECKOUT_OP),
+								tw.getFilterCommand(
+										Constants.ATTR_FILTER_TYPE_SMUDGE));
+					}
 					baseRev = GitFileRevision.inCommit(repository, baseCommit,
-							entryPath, tw.getObjectId(baseTreeIndex));
+							entryPath, tw.getObjectId(baseTreeIndex), metadata);
 				}
 
 				if (compareVersionIterator != null

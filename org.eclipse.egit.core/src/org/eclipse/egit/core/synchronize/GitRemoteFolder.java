@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2011, 2017 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -90,12 +90,13 @@ class GitRemoteFolder extends GitRemoteResource {
 
 				GitRemoteResource obj;
 				ObjectId id = diffEntry.getRemoteId().toObjectId();
-				if (diffEntry.isTree())
+				if (diffEntry.isTree()) {
 					obj = new GitRemoteFolder(repo, member, getCommitId(), id,
 							memberPath);
-				else
-					obj = new GitRemoteFile(repo, getCommitId(), id, memberPath);
-
+				} else {
+					obj = new GitRemoteFile(repo, getCommitId(), id, memberPath,
+							diffEntry.getMetadata());
+				}
 				result.add(obj);
 				monitor.worked(1);
 			}

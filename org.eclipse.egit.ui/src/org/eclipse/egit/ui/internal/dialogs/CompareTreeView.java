@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2016 SAP AG and others.
+ * Copyright (c) 2011, 2017 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,7 +12,7 @@
  *    Robin Stocker <robin@nibor.org> - Unify workbench and PathNode tree code
  *    Marc Khouzam <marc.khouzam@ericsson.com> - Add compare mode toggle
  *    Marc Khouzam <marc.khouzam@ericsson.com> - Skip expensive computations for equal content (bug 431610)
- *    Thomas Wolf <thomas.wolf@paranor.ch> - Prevent NPE on empty content
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - Prevent NPE on empty content; git attributes
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
@@ -74,6 +74,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
@@ -576,9 +577,6 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 			}
 
 			tw.setRecursive(true);
-
-			if (monitor.isCanceled())
-				throw new InterruptedException();
 			while (tw.next()) {
 				if (monitor.isCanceled())
 					throw new InterruptedException();
@@ -636,6 +634,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 						repoRelativePath, false);
 				}
 
+				CheckoutMetadata metadata = null;
 				if (baseVersionIterator != null) {
 					if (baseCommit == null) {
 						if (file != null)
@@ -647,21 +646,33 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 									path.toFile());
 						}
 					} else {
-						left = GitFileRevision
-								.inCommit(repository, baseCommit,
-										repoRelativePath,
-										tw.getObjectId(baseTreeIndex));
+						metadata = new CheckoutMetadata(
+								tw.getEolStreamType(
+										TreeWalk.OperationType.CHECKOUT_OP),
+								tw.getFilterCommand(
+										Constants.ATTR_FILTER_TYPE_SMUDGE));
+						left = GitFileRevision.inCommit(repository, baseCommit,
+								repoRelativePath, tw.getObjectId(baseTreeIndex),
+								metadata);
 					}
 				}
 
 				if (compareVersionIterator != null) {
-					if (!useIndex)
+					if (!useIndex) {
+						if (metadata == null) {
+							metadata = new CheckoutMetadata(
+									tw.getEolStreamType(
+											TreeWalk.OperationType.CHECKOUT_OP),
+									tw.getFilterCommand(
+											Constants.ATTR_FILTER_TYPE_SMUDGE));
+						}
 						right = GitFileRevision.inCommit(repository,
 								compareCommit, repoRelativePath,
-								tw.getObjectId(compareTreeIndex));
-					else
+								tw.getObjectId(compareTreeIndex), metadata);
+					} else {
 						right = GitFileRevision.inIndex(repository,
 								repoRelativePath);
+					}
 				}
 
 				IPath containerPath = currentPath.removeLastSegments(1);

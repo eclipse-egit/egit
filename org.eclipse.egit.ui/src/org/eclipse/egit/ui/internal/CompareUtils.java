@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2015 SAP AG and others.
+ * Copyright (c) 2010, 2017 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,12 +13,15 @@
  *    Robin Stocker <robin@nibor.org>
  *    Laurent Goubet <laurent.goubet@obeo.fr>
  *    Gunnar Wagenknecht <gunnar@wagenknecht.org>
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - git attributes
  *******************************************************************************/
 package org.eclipse.egit.ui.internal;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
 
 import org.eclipse.compare.CompareEditorInput;
@@ -43,6 +46,7 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChang
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.RevUtils;
+import org.eclipse.egit.core.attributes.Filtering;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.internal.storage.WorkingTreeFileRevision;
@@ -63,10 +67,13 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.dircache.DirCache;
+import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.dircache.DirCacheEditor;
 import org.eclipse.jgit.dircache.DirCacheEntry;
+import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.CoreConfig.AutoCRLF;
+import org.eclipse.jgit.lib.CoreConfig.EolStreamType;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectInserter;
@@ -74,13 +81,16 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.TreeWalk.OperationType;
 import org.eclipse.jgit.treewalk.WorkingTreeOptions;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
+import org.eclipse.jgit.treewalk.filter.NotIgnoredFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.io.AutoLFInputStream;
+import org.eclipse.jgit.util.io.EolStreamTypeUtil;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.team.core.history.IFileRevision;
@@ -144,11 +154,12 @@ public class CompareUtils {
 
 		try {
 			IFileRevision nextFile = getFileRevision(gitPath, commit, db,
-							blobId);
-				if (nextFile != null) {
-					String encoding = CompareCoreUtils.getResourceEncoding(db, gitPath);
-					right = new FileRevisionTypedElement(nextFile, encoding);
-				}
+					blobId);
+			if (nextFile != null) {
+				String encoding = CompareCoreUtils.getResourceEncoding(db,
+						gitPath);
+				right = new FileRevisionTypedElement(nextFile, encoding);
+			}
 		} catch (IOException e) {
 			Activator.error(NLS.bind(UIText.GitHistoryPage_errorLookingUpPath,
 					gitPath, commit.getId()), e);
@@ -176,20 +187,24 @@ public class CompareUtils {
 	 *         contained in {@code commit}
 	 * @throws IOException
 	 */
-	public static IFileRevision getFileRevision(final String gitPath,
-			final RevCommit commit, final Repository db, ObjectId blobId)
+	public static IFileRevision getFileRevision(String gitPath,
+			RevCommit commit, Repository db, ObjectId blobId)
 			throws IOException {
-
-		TreeWalk w = TreeWalk.forPath(db, gitPath, commit.getTree());
-		// check if file is contained in commit
-		if (w != null) {
-			final IFileRevision fileRevision = GitFileRevision.inCommit(db,
-					commit, gitPath, blobId);
-			return fileRevision;
+		try (TreeWalk w = TreeWalk.forPath(db, gitPath, commit.getTree())) {
+			if (w == null) {
+				// Not in commit
+				return null;
+			}
+			CheckoutMetadata metadata = new CheckoutMetadata(
+					w.getEolStreamType(OperationType.CHECKOUT_OP),
+					w.getFilterCommand(Constants.ATTR_FILTER_TYPE_SMUDGE));
+			if (blobId == null) {
+				blobId = w.getObjectId(0);
+			}
+			return GitFileRevision.inCommit(db, commit, gitPath, blobId,
+					metadata);
 		}
-		return null;
 	}
-
 
 	/**
 	 * Creates a {@link ITypedElement} for the commit which is the common
@@ -948,9 +963,8 @@ public class CompareUtils {
 	 * @return typed element
 	 * @throws IOException
 	 */
-	public static ITypedElement getIndexTypedElement(@NonNull
-	final IFile baseFile)
-			throws IOException {
+	public static ITypedElement getIndexTypedElement(
+			final @NonNull IFile baseFile) throws IOException {
 		final RepositoryMapping mapping = RepositoryMapping.getMapping(baseFile);
 		if (mapping == null) {
 			Activator.error(NLS.bind(UIText.GitHistoryPage_errorLookingUpPath,
@@ -997,7 +1011,7 @@ public class CompareUtils {
 
 	/**
 	 * Set contents on index entry of specified path. Line endings of contents
-	 * are canonicalized if configured.
+	 * are canonicalized if configured, and gitattributes are honored.
 	 *
 	 * @param repository
 	 * @param gitPath
@@ -1013,32 +1027,41 @@ public class CompareUtils {
 			if (newContent.length == 0) {
 				editor.add(new DirCacheEditor.DeletePath(gitPath));
 			} else {
-				int length;
-				byte[] content;
-				WorkingTreeOptions workingTreeOptions = repository.getConfig()
-						.get(WorkingTreeOptions.KEY);
-				AutoCRLF autoCRLF = workingTreeOptions.getAutoCRLF();
-				switch (autoCRLF) {
-				case FALSE:
-					content = newContent;
-					length = newContent.length;
-					break;
-				case INPUT:
-				case TRUE:
-					AutoLFInputStream in = new AutoLFInputStream(
-							new ByteArrayInputStream(newContent), true);
-					// Canonicalization should lead to same or shorter length
-					// (CRLF to LF), so we don't have to expand the byte[].
-					content = new byte[newContent.length];
-					length = IO.readFully(in, content, 0);
-					break;
-				default:
-					throw new IllegalArgumentException(
-							"Unknown autocrlf option " + autoCRLF); //$NON-NLS-1$
+				EolStreamType streamType = null;
+				String command = null;
+				try (TreeWalk walk = new TreeWalk(repository)) {
+					walk.setOperationType(OperationType.CHECKIN_OP);
+					walk.addTree(new DirCacheIterator(cache));
+					FileTreeIterator files = new FileTreeIterator(repository);
+					files.setDirCacheIterator(walk, 0);
+					walk.addTree(files);
+					walk.setFilter(AndTreeFilter.create(
+							PathFilterGroup.createFromStrings(gitPath),
+							new NotIgnoredFilter(1)));
+					walk.setRecursive(true);
+					if (walk.next()) {
+						streamType = walk
+								.getEolStreamType(OperationType.CHECKIN_OP);
+						command = walk.getFilterCommand(
+								Constants.ATTR_FILTER_TYPE_CLEAN);
+					}
 				}
-
-				editor.add(new DirCacheEntryEditor(gitPath, repository,
-						content, length));
+				InputStream filtered = Filtering.filter(repository, gitPath,
+						new ByteArrayInputStream(newContent), command);
+				if (streamType == null) {
+					WorkingTreeOptions workingTreeOptions = repository
+							.getConfig().get(WorkingTreeOptions.KEY);
+					if (workingTreeOptions.getAutoCRLF() == AutoCRLF.FALSE) {
+						streamType = EolStreamType.DIRECT;
+					} else {
+						streamType = EolStreamType.AUTO_LF;
+					}
+				}
+				ByteBuffer content = IO.readWholeStream(
+						EolStreamTypeUtil.wrapInputStream(filtered, streamType),
+						newContent.length);
+				editor.add(
+						new DirCacheEntryEditor(gitPath, repository, content));
 			}
 			try {
 				editor.commit();
@@ -1062,15 +1085,13 @@ public class CompareUtils {
 
 		private final Repository repo;
 
-		private final byte[] content;
-		private final int contentLength;
+		private final ByteBuffer content;
 
 		public DirCacheEntryEditor(String path, Repository repo,
-				byte[] content, int contentLength) {
+				ByteBuffer content) {
 			super(path);
 			this.repo = repo;
 			this.content = content;
-			this.contentLength = contentLength;
 		}
 
 		@Override
@@ -1079,11 +1100,14 @@ public class CompareUtils {
 			if (ent.getFileMode() != FileMode.REGULAR_FILE)
 				ent.setFileMode(FileMode.REGULAR_FILE);
 
-			ent.setLength(contentLength);
+			ent.setLength(content.limit());
 			ent.setLastModified(System.currentTimeMillis());
 			try {
-				ent.setObjectId(inserter.insert(Constants.OBJ_BLOB, content, 0,
-						contentLength));
+				ByteArrayInputStream in = new ByteArrayInputStream(
+						content.array(), 0, content.limit());
+				ent.setObjectId(
+						inserter.insert(Constants.OBJ_BLOB, content.limit(),
+								in));
 				inserter.flush();
 			} catch (IOException ex) {
 				throw new RuntimeException(ex);
