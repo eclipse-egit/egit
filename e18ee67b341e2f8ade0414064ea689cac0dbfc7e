@@ -163,6 +163,24 @@
     },
     {
       "key": {
+        "uuid": "005bea8d_20096504",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-02-12T12:49:08Z",
+      "side": 1,
+      "message": "probably, yes",
+      "parentUuid": "1cb43090_8cdc3b82",
+      "revId": "e18ee67b341e2f8ade0414064ea689cac0dbfc7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34af78db_4f5baa81",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
         "patchSetId": 18
