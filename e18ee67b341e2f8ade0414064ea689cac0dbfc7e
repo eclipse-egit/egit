@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "253aedea_ba8244c7",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-02-12T08:34:54Z",
+      "side": 1,
+      "message": "whatever I get :D I have no idea what would fit better into the existing architecture. Basically /all/ I want to do here is call BuiltinLFS.register() and have that be activated automatically when the bundle is present. Is it possible to have an Activator in a fragment?",
+      "parentUuid": "0fdb0cbd_8b21339f",
+      "revId": "e18ee67b341e2f8ade0414064ea689cac0dbfc7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34af78db_4f5baa81",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
         "patchSetId": 18
