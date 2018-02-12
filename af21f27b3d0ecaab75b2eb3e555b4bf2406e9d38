@@ -46,6 +46,30 @@
       "revId": "af21f27b3d0ecaab75b2eb3e555b4bf2406e9d38",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "138a95ab_acab2645",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-02-12T01:13:05Z",
+      "side": 1,
+      "message": "I am not aware of such a Maven plugin, would be useful",
+      "parentUuid": "a7979753_757e5a56",
+      "range": {
+        "startLine": 95,
+        "startChar": 11,
+        "endLine": 95,
+        "endChar": 14
+      },
+      "revId": "af21f27b3d0ecaab75b2eb3e555b4bf2406e9d38",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
