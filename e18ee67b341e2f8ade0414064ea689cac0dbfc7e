@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "01e4ce14_c069b84f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-02-12T12:10:00Z",
+      "side": 1,
+      "message": "It would work with either. A fragment also has access to the host bundle\u0027s internals, and it uses the host\u0027s class loader. Don\u0027t know whether that would be needed. OTOH, a fragment should not provide new API, so if you\u0027re planning to do that, then use a separate bundle.\n\nThe activator here would have to check for registrations on that extension point and invoke registered handlers (and handle all kinds of exceptions -- EGit core must not crash when someone registers a buggy handler through that extension point). The new fragment/bundle would in its fragment.xml or plugin.xml register a handler for the extension point.\n\nI know it may sound like overkill, but personally I think since EGit runs on an OSGi platform we should also use the proper OSGi mechanisms. But I\u0027m open to be overruled on this one.",
+      "parentUuid": "28e7a1b8_f5784a85",
+      "revId": "e18ee67b341e2f8ade0414064ea689cac0dbfc7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34af78db_4f5baa81",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
         "patchSetId": 18
