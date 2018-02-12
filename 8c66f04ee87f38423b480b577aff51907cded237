@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "1ff0b5e7_4c5b499e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-02-12T08:04:35Z",
+      "side": 1,
+      "message": "Well if a smudge filter is properly respected with this change we can just remove my change once this is in :) of course we need to test it :D",
+      "parentUuid": "bf1e6d06_f39330e0",
+      "revId": "8c66f04ee87f38423b480b577aff51907cded237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87929364_2f6efca3",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/ThreeWayDiffEntry.java",
         "patchSetId": 6
