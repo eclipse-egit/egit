@@ -22,6 +22,30 @@
       "revId": "b0000de3973d94c3d485aa3abd9a1286206c7aeb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23c2ec64_8a4e5c55",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/AsynchronousRefContentProposalCandidateProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-02-12T10:33:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aeb6b7a_14ec6ca7",
+      "range": {
+        "startLine": 42,
+        "startChar": 13,
+        "endLine": 42,
+        "endChar": 60
+      },
+      "revId": "b0000de3973d94c3d485aa3abd9a1286206c7aeb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
