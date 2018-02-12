@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aeb6b7a_14ec6ca7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/AsynchronousRefContentProposalCandidateProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-02-12T00:11:02Z",
+      "side": 1,
+      "message": "can we find a name which is a bit shorter, e.g. AsynchronousRefProposalProvider ?",
+      "range": {
+        "startLine": 42,
+        "startChar": 13,
+        "endLine": 42,
+        "endChar": 60
+      },
+      "revId": "b0000de3973d94c3d485aa3abd9a1286206c7aeb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
