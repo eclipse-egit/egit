@@ -765,7 +765,7 @@ public class FetchGerritChangePage extends WizardPage {
 			IWizardContainer container = getContainer();
 			IRunnableWithProgress operation = monitor -> {
 				monitor.beginTask(MessageFormat.format(
-						UIText.FetchGerritChangePage_FetchingRemoteRefsMessage,
+						UIText.AsynchronousRefProposalProvider_FetchingRemoteRefsMessage,
 						uriText), IProgressMonitor.UNKNOWN);
 				Collection<Change> result = list.get();
 				if (monitor.isCanceled()) {
@@ -778,7 +778,7 @@ public class FetchGerritChangePage extends WizardPage {
 				}
 				// If we do have results now, open the proposals.
 				Job showProposals = new WorkbenchJob(
-						UIText.FetchGerritChangePage_ShowingProposalsJobName) {
+						UIText.AsynchronousRefProposalProvider_ShowingProposalsJobName) {
 
 					@Override
 					public boolean shouldRun() {
@@ -1004,7 +1004,7 @@ public class FetchGerritChangePage extends WizardPage {
 					throws OperationCanceledException {
 				if (changeList != null) {
 					monitor.subTask(NLS.bind(
-							UIText.FetchGerritChangePage_FetchingRemoteRefsMessage,
+							UIText.AsynchronousRefProposalProvider_FetchingRemoteRefsMessage,
 							uri));
 					Collection<Change> changes;
 					try {
@@ -1300,8 +1300,7 @@ public class FetchGerritChangePage extends WizardPage {
 	private static class ChangeList extends AsynchronousListOperation<Change> {
 
 		public ChangeList(Repository repository, String uriText) {
-			super(repository, uriText,
-					UIText.FetchGerritChangePage_FetchingRemoteRefsMessage);
+			super(repository, uriText);
 		}
 
 		@Override

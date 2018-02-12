@@ -50,7 +50,9 @@ import org.eclipse.jgit.lib.BranchConfig;
 import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectIdRef;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Ref.Storage;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -316,7 +318,8 @@ public class PushBranchPage extends WizardPage {
 				}, uri -> {
 					FutureRefs list = refs.get(uri);
 					if (list == null) {
-						list = new FutureRefs(repository, uri);
+						list = new FutureRefs(repository, uri,
+								getLocalBranchName());
 						refs.put(uri, list);
 					}
 					return list;
@@ -491,6 +494,13 @@ public class PushBranchPage extends WizardPage {
 		}
 	}
 
+	private String getLocalBranchName() {
+		if (ref != null && !ref.getName().startsWith(Constants.R_REMOTES)) {
+			return Repository.shortenRefName(ref.getName());
+		}
+		return null;
+	}
+
 	private String getSuggestedBranchName() {
 		if (ref != null && !ref.getName().startsWith(Constants.R_REMOTES)) {
 			StoredConfig config = repository.getConfig();
@@ -513,7 +523,8 @@ public class PushBranchPage extends WizardPage {
 			String uriText = config.getURIs().get(0).toString();
 			FutureRefs list = refs.get(uriText);
 			if (list == null) {
-				list = new FutureRefs(repository, uriText);
+				list = new FutureRefs(repository, uriText,
+						getLocalBranchName());
 				refs.put(uriText, list);
 				preFetch(list);
 			}
@@ -569,23 +580,42 @@ public class PushBranchPage extends WizardPage {
 	 */
 	private static class FutureRefs extends AsynchronousListOperation<Ref> {
 
-		public FutureRefs(Repository repository, String uriText) {
-			super(repository, uriText,
-					UIText.FetchGerritChangePage_FetchingRemoteRefsMessage);
+		private final String localBranchName;
+
+		public FutureRefs(Repository repository, String uriText,
+				String localBranchName) {
+			super(repository, uriText);
+			this.localBranchName = localBranchName;
 		}
 
 		@Override
 		protected Collection<Ref> convert(Collection<Ref> refs) {
 			List<Ref> filtered = new ArrayList<>();
+			String localFullName = localBranchName != null
+					? Constants.R_HEADS + localBranchName : null;
+			boolean localBranchFound = false;
 			// Restrict to branches
 			for (Ref ref : refs) {
 				String name = ref.getName();
 				if (name.startsWith(Constants.R_HEADS)) {
 					filtered.add(ref);
+					if (localFullName != null
+							&& localFullName.equalsIgnoreCase(name)) {
+						localBranchFound = true;
+					}
 				}
 			}
 			// Sort them
 			Collections.sort(filtered, CommonUtils.REF_ASCENDING_COMPARATOR);
+			// Add a new remote ref for localBranchName in front if it doesn't
+			// exist
+			if (localFullName != null && !localBranchFound) {
+				List<Ref> newRefs = new ArrayList<>(filtered.size() + 1);
+				newRefs.add(new ObjectIdRef.Unpeeled(Storage.NEW, localFullName,
+						ObjectId.zeroId()));
+				newRefs.addAll(filtered);
+				filtered = newRefs;
+			}
 			return filtered;
 		}
 	}

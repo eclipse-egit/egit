@@ -103,7 +103,7 @@ public class AsynchronousRefProposalProvider
 			if (!list.isFinished()) {
 				IRunnableWithProgress operation = monitor -> {
 					monitor.beginTask(MessageFormat.format(
-							UIText.FetchGerritChangePage_FetchingRemoteRefsMessage,
+							UIText.AsynchronousRefProposalProvider_FetchingRemoteRefsMessage,
 							uri), IProgressMonitor.UNKNOWN);
 					Collection<Ref> result = list.get();
 					if (monitor.isCanceled()) {
@@ -116,7 +116,7 @@ public class AsynchronousRefProposalProvider
 					}
 					// If we do have results now, open the proposals.
 					Job showProposals = new WorkbenchJob(
-							UIText.FetchGerritChangePage_ShowingProposalsJobName) {
+							UIText.AsynchronousRefProposalProvider_ShowingProposalsJobName) {
 
 						@Override
 						public boolean shouldRun() {
