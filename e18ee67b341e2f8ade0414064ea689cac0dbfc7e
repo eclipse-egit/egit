@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "8565e617_ab9b8edb",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-02-12T09:05:17Z",
+      "side": 1,
+      "message": "a fragment has no own lifecycle, it\u0027s extending the underlying host bundle, see e.g.\nhttp://blog.vogella.com/2016/02/09/osgi-bundles-fragments-dependencies/",
+      "parentUuid": "253aedea_ba8244c7",
+      "revId": "e18ee67b341e2f8ade0414064ea689cac0dbfc7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34af78db_4f5baa81",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
         "patchSetId": 18
