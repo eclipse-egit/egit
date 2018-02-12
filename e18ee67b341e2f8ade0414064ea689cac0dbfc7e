@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4c750e5f_92e62a9d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-02-12T08:13:59Z",
+      "side": 1,
+      "message": "Well, theoretically, with the optional dependency we could also just do the call here (and catch any exception in case the bundle is not wired :)).\n\nI agree that the extension point would be the cleanest method, although I fear that this is a quite large\u0027ish change. Can a committer create that bundle for me (along with tycho build, etc.), so I can fill it with some logic?",
+      "parentUuid": "d460ee4e_4b57ccea",
+      "revId": "e18ee67b341e2f8ade0414064ea689cac0dbfc7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34af78db_4f5baa81",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
         "patchSetId": 18
@@ -30,6 +48,30 @@
       "writtenOn": "2018-02-11T22:10:01Z",
       "side": 1,
       "message": "Can be removed; consumed by the CheckoutCommand\u0027s monitor now.",
+      "range": {
+        "startLine": 133,
+        "startChar": 5,
+        "endLine": 133,
+        "endChar": 24
+      },
+      "revId": "e18ee67b341e2f8ade0414064ea689cac0dbfc7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ee39b18_6848201a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-02-12T08:13:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34af78db_4f5baa81",
       "range": {
         "startLine": 133,
         "startChar": 5,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "77d57e8f_53f3e405",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-02-12T08:13:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a2b7af4_e029719a",
+      "range": {
+        "startLine": 163,
+        "startChar": 38,
+        "endLine": 163,
+        "endChar": 46
+      },
+      "revId": "e18ee67b341e2f8ade0414064ea689cac0dbfc7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da1f0e74_6fa509d3",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
         "patchSetId": 18
@@ -76,6 +142,30 @@
       "writtenOn": "2018-02-11T22:10:01Z",
       "side": 1,
       "message": "Remove",
+      "range": {
+        "startLine": 169,
+        "startChar": 3,
+        "endLine": 169,
+        "endChar": 22
+      },
+      "revId": "e18ee67b341e2f8ade0414064ea689cac0dbfc7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "519c8612_ddeb5ebf",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-02-12T08:13:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da1f0e74_6fa509d3",
       "range": {
         "startLine": 169,
         "startChar": 3,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "72432160_9fb3dba6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-02-12T08:13:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ba70ca9_0f3fb12a",
+      "range": {
+        "startLine": 189,
+        "startChar": 3,
+        "endLine": 189,
+        "endChar": 13
+      },
+      "revId": "e18ee67b341e2f8ade0414064ea689cac0dbfc7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99ab00d9_44dc8d32",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
         "patchSetId": 18
@@ -122,6 +236,30 @@
       "writtenOn": "2018-02-11T22:10:01Z",
       "side": 1,
       "message": "Just \"progress\" here (child now created at caller)",
+      "range": {
+        "startLine": 194,
+        "startChar": 39,
+        "endLine": 194,
+        "endChar": 59
+      },
+      "revId": "e18ee67b341e2f8ade0414064ea689cac0dbfc7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5322c625_6c1a6af9",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-02-12T08:13:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99ab00d9_44dc8d32",
       "range": {
         "startLine": 194,
         "startChar": 39,
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "18d5cb16_fabb8398",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-02-12T08:13:59Z",
+      "side": 1,
+      "message": "It looks like your change will properly use smudge filters to retrieve file content now? In this case, we can just remove this change. Which one would deal better with large files? would it make a difference?",
+      "parentUuid": "f1e0479e_307b7066",
+      "revId": "e18ee67b341e2f8ade0414064ea689cac0dbfc7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da2405bd_63e52999",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ConfigurationChecker.java",
         "patchSetId": 18
@@ -162,6 +318,30 @@
       "writtenOn": "2018-02-11T22:10:01Z",
       "side": 1,
       "message": "No longer true.",
+      "range": {
+        "startLine": 39,
+        "startChar": 37,
+        "endLine": 40,
+        "endChar": 22
+      },
+      "revId": "e18ee67b341e2f8ade0414064ea689cac0dbfc7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cba7aadc_60a64d6a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ConfigurationChecker.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-02-12T08:13:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da2405bd_63e52999",
       "range": {
         "startLine": 39,
         "startChar": 37,
@@ -191,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "4921eeff_0ba70912",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ConfigurationChecker.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-02-12T08:13:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c17cfdc4_00354158",
+      "revId": "e18ee67b341e2f8ade0414064ea689cac0dbfc7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdb63277_773cfe8d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitDocument.java",
         "patchSetId": 18
@@ -202,6 +400,24 @@
       "writtenOn": "2018-02-11T22:10:01Z",
       "side": 1,
       "message": "You really want to do QuickDiff on LFS blobs?? And this thing will load it fully into memory, then create a string from it, so at least temporarily you\u0027ll need twice the memory. And then we\u0027ll see what Document does with it when we do the set(value) in line 99 above.\n\nI just don\u0027t believe that\u0027s a good idea.",
+      "revId": "e18ee67b341e2f8ade0414064ea689cac0dbfc7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e370d25_01b7f4ee",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitDocument.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-02-12T08:13:59Z",
+      "side": 1,
+      "message": "Hm. Now you say it :) What would be a alternative? Maybe only provide the real content if it is smaller than a certain size? just don\u0027t support quick diff on LFS blobs? (what\u0027s the best location to disable quick diff based on .gitattributes?)",
+      "parentUuid": "bdb63277_773cfe8d",
       "revId": "e18ee67b341e2f8ade0414064ea689cac0dbfc7e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
