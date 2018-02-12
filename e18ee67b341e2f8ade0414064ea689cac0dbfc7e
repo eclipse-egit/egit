@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0fdb0cbd_8b21339f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-02-12T08:23:42Z",
+      "side": 1,
+      "message": "do you want an optional bundle or an optional bundle fragment like org.eclipse.egit.ui.smartimport ? if the latter which bundle would be the fragment\u0027s host bundle ?",
+      "parentUuid": "4c750e5f_92e62a9d",
+      "revId": "e18ee67b341e2f8ade0414064ea689cac0dbfc7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34af78db_4f5baa81",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
         "patchSetId": 18
