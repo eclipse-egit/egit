@@ -2,6 +2,7 @@
  * Copyright (C) 2006, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2017, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,6 +18,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.core.history.provider.FileRevision;
+import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
@@ -49,11 +51,15 @@ public abstract class GitFileRevision extends FileRevision {
 	 *            path within the commit's tree of the file.
 	 * @param blobId
 	 *            unique name of the content.
+	 * @param metadata
+	 *            Smudge filters and EOL stream type to apply when the content
+	 *            is to be gotten.
 	 * @return revision implementation for this file in the given commit.
 	 */
 	public static GitFileRevision inCommit(final Repository db,
-			final RevCommit commit, final String path, final ObjectId blobId) {
-		return new CommitFileRevision(db, commit, path, blobId);
+			final RevCommit commit, final String path, final ObjectId blobId,
+			CheckoutMetadata metadata) {
+		return new CommitFileRevision(db, commit, path, blobId, metadata);
 	}
 
 	/**
