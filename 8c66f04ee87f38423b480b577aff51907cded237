@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "87929364_af7aec5e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-02-12T01:13:05Z",
+      "side": 1,
+      "message": "internal",
+      "range": {
+        "startLine": 10,
+        "startChar": 14,
+        "endLine": 10,
+        "endChar": 21
+      },
+      "revId": "8c66f04ee87f38423b480b577aff51907cded237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf1e6d06_f39330e0",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
         "patchSetId": 6
@@ -13,6 +36,29 @@
       "writtenOn": "2018-02-11T23:26:45Z",
       "side": 1,
       "message": "Hmmm... looking at Markus\u0027s LFS work, I wonder what happens here if we have lfs filters.",
+      "revId": "8c66f04ee87f38423b480b577aff51907cded237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87929364_2f6efca3",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/ThreeWayDiffEntry.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-02-12T01:13:05Z",
+      "side": 1,
+      "message": "strange formatting",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 143,
+        "endChar": 60
+      },
       "revId": "8c66f04ee87f38423b480b577aff51907cded237",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
