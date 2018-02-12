@@ -68,6 +68,8 @@ import org.eclipse.ui.IWorkbenchCommandConstants;
  * Push the current HEAD to Gerrit
  */
 public class PushToGerritPage extends WizardPage {
+	private static final String REFS_FOR = "refs/for/"; //$NON-NLS-1$
+
 	private static final String LAST_BRANCH_POSTFIX = ".lastBranch"; //$NON-NLS-1$
 
 	private static final String LAST_TOPICS_POSTFIX = ".lastTopics"; //$NON-NLS-1$
@@ -88,8 +90,6 @@ public class PushToGerritPage extends WizardPage {
 	private final String lastBranchKey;
 
 	private Combo uriCombo;
-
-	private Combo prefixCombo;
 
 	private Label branchTextlabel;
 
@@ -156,10 +156,8 @@ public class PushToGerritPage extends WizardPage {
 		branchTextlabel = new Label(main, SWT.NONE);
 
 		// we visualize the prefix here
-		prefixCombo = new Combo(main, SWT.READ_ONLY | SWT.DROP_DOWN);
-		prefixCombo.add(GerritUtil.REFS_FOR);
-		prefixCombo.add(GerritUtil.REFS_DRAFTS);
-		prefixCombo.select(0);
+		Label prefixLabel = new Label(main, SWT.NONE);
+		prefixLabel.setText(REFS_FOR);
 
 		branchTextlabel.setText(UIText.PushToGerritPage_BranchLabel);
 		branchText = new Text(main, SWT.SINGLE | SWT.BORDER);
@@ -455,7 +453,7 @@ public class PushToGerritPage extends WizardPage {
 		try {
 			URIish uri = new URIish(uriCombo.getText());
 			Ref currentHead = repository.exactRef(Constants.HEAD);
-			String ref = prefixCombo.getItem(prefixCombo.getSelectionIndex())
+			String ref = REFS_FOR
 					+ branchText.getText().trim();
 			if (topicText.isEnabled()) {
 				ref = setTopicInRef(ref, topicText.getText().trim());
