@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.CancelableFuture;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -36,8 +37,6 @@ public abstract class AsynchronousListOperation<T>
 
 	private final String uriText;
 
-	private final String jobTitle;
-
 	private ListRemoteOperation listOp;
 
 	/**
@@ -47,19 +46,17 @@ public abstract class AsynchronousListOperation<T>
 	 *            local repository for which to run the operation
 	 * @param uriText
 	 *            upstream URI
-	 * @param jobTitle
-	 *            of the background job that will execute this
 	 */
-	public AsynchronousListOperation(Repository repository, String uriText,
-			String jobTitle) {
+	public AsynchronousListOperation(Repository repository, String uriText) {
 		this.repository = repository;
 		this.uriText = uriText;
-		this.jobTitle = jobTitle;
 	}
 
 	@Override
 	protected String getJobTitle() {
-		return MessageFormat.format(jobTitle, uriText);
+		return MessageFormat.format(
+				UIText.AsynchronousRefProposalProvider_FetchingRemoteRefsMessage,
+				uriText);
 	}
 
 	@Override
