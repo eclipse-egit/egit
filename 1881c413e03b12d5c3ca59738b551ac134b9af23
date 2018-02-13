@@ -34,6 +34,23 @@
       "revId": "1881c413e03b12d5c3ca59738b551ac134b9af23",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87929364_d9a27d2a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-02-13T00:29:25Z",
+      "side": 1,
+      "message": "can we shorten these insanely long keys ?",
+      "revId": "1881c413e03b12d5c3ca59738b551ac134b9af23",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
