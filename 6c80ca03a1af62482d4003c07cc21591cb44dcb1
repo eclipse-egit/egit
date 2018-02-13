@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "377cc228_1da7769c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1744,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-02-13T00:27:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "261a921e_277c503e",
+      "revId": "6c80ca03a1af62482d4003c07cc21591cb44dcb1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1ef8474_c8080e53",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-13T00:26:52Z",
       "side": 1,
       "message": "missing braces",
+      "revId": "6c80ca03a1af62482d4003c07cc21591cb44dcb1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5e021d_b74a1b66",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1820,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-02-13T00:27:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1ef8474_c8080e53",
       "revId": "6c80ca03a1af62482d4003c07cc21591cb44dcb1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cde545eb_3ed35a6e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1838,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-02-13T00:27:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b019c9ae_0a0c7402",
+      "revId": "6c80ca03a1af62482d4003c07cc21591cb44dcb1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4993094b_c6096f6c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2018-02-13T00:26:52Z",
       "side": 1,
       "message": "fishy formatting",
+      "revId": "6c80ca03a1af62482d4003c07cc21591cb44dcb1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7adaea7_672f64dc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1840,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-02-13T00:27:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4993094b_c6096f6c",
       "revId": "6c80ca03a1af62482d4003c07cc21591cb44dcb1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
