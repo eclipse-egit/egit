@@ -143,6 +143,12 @@ public class UIText extends NLS {
 	public static String AddToIndexCommand_addingFilesFailed;
 
 	/** */
+	public static String AsynchronousRefProposalProvider_FetchingRemoteRefsMessage;
+
+	/** */
+	public static String AsynchronousRefProposalProvider_ShowingProposalsJobName;
+
+	/** */
 	public static String RemoveFromIndexAction_removingFiles;
 
 	/** */
@@ -1556,6 +1562,9 @@ public class UIText extends NLS {
 	public static String RefContentProposal_errorReadingObject;
 
 	/** */
+	public static String RefContentProposal_newRemoteObject;
+
+	/** */
 	public static String RefContentProposal_tag;
 
 	/** */
@@ -1566,6 +1575,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RefContentProposal_unknownObject;
+
+	/** */
+	public static String RefContentProposal_unknownRemoteObject;
 
 	/** */
 	public static String ReflogView_DateColumnHeader;
@@ -2852,9 +2864,6 @@ public class UIText extends NLS {
 	public static String FetchGerritChangePage_CreatingTagTaskName;
 
 	/** */
-	public static String FetchGerritChangePage_FetchingRemoteRefsMessage;
-
-	/** */
 	public static String FetchGerritChangePage_FetchingTaskName;
 
 	/** */
@@ -2880,9 +2889,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String FetchGerritChangePage_PageTitle;
-
-	/** */
-	public static String FetchGerritChangePage_ShowingProposalsJobName;
 
 	/** */
 	public static String FetchGerritChangePage_SuggestedRefNamePattern;

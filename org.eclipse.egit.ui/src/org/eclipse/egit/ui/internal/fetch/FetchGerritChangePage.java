@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2017 SAP AG and others.
+ * Copyright (c) 2010, 2018 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -26,7 +26,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -41,37 +40,32 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
-import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.core.op.TagOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.UIUtils.ExplicitContentProposalAdapter;
 import org.eclipse.egit.ui.internal.ActionUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.ValidationUtils;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
+import org.eclipse.egit.ui.internal.components.AsynchronousListOperation;
 import org.eclipse.egit.ui.internal.components.BranchNameNormalizer;
 import org.eclipse.egit.ui.internal.dialogs.AbstractBranchSelectionDialog;
 import org.eclipse.egit.ui.internal.dialogs.BranchEditDialog;
 import org.eclipse.egit.ui.internal.dialogs.NonBlockingWizardDialog;
 import org.eclipse.egit.ui.internal.gerrit.GerritDialogSettings;
-import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.IPageChangeProvider;
 import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.PageChangedEvent;
-import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.fieldassist.IContentProposal;
-import org.eclipse.jface.fieldassist.IContentProposalProvider;
-import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.JFaceResources;
@@ -110,7 +104,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.progress.WorkbenchJob;
 
@@ -542,7 +535,7 @@ public class FetchGerritChangePage extends WizardPage {
 
 	private void preFetch(ChangeList list) {
 		try {
-			list.fetch();
+			list.start();
 		} catch (InvocationTargetException e) {
 			Activator.handleError(e.getLocalizedMessage(), e.getCause(), true);
 		}
@@ -724,22 +717,26 @@ public class FetchGerritChangePage extends WizardPage {
 				}
 				ChangeList list = changeRefs.get(uriCombo.getText());
 				if (list != null && list.isDone()) {
-					if (change.getPatchSetNumber() != null) {
-						if (!list.getResult().contains(change)) {
-							setErrorMessage(
-									UIText.FetchGerritChangePage_UnknownChangeRefMessage);
-							return;
+					try {
+						if (change.getPatchSetNumber() != null) {
+							if (!list.get().contains(change)) {
+								setErrorMessage(
+										UIText.FetchGerritChangePage_UnknownChangeRefMessage);
+								return;
+							}
+						} else {
+							Change fromGerrit = findHighestPatchSet(list.get(),
+									change.getChangeNumber().intValue());
+							if (fromGerrit == null) {
+								setErrorMessage(NLS.bind(
+										UIText.FetchGerritChangePage_NoSuchChangeMessage,
+										change.getChangeNumber()));
+								return;
+							}
 						}
-					} else {
-						Change fromGerrit = findHighestPatchSet(
-								list.getResult(),
-								change.getChangeNumber().intValue());
-						if (fromGerrit == null) {
-							setErrorMessage(NLS.bind(
-									UIText.FetchGerritChangePage_NoSuchChangeMessage,
-									change.getChangeNumber()));
-							return;
-						}
+					} catch (InterruptedException
+							| InvocationTargetException e) {
+						// Ignore: since we're done, this should never occur
 					}
 				}
 			} else {
@@ -768,7 +765,7 @@ public class FetchGerritChangePage extends WizardPage {
 			IWizardContainer container = getContainer();
 			IRunnableWithProgress operation = monitor -> {
 				monitor.beginTask(MessageFormat.format(
-						UIText.FetchGerritChangePage_FetchingRemoteRefsMessage,
+						UIText.AsynchronousRefProposalProvider_FetchingRemoteRefsMessage,
 						uriText), IProgressMonitor.UNKNOWN);
 				Collection<Change> result = list.get();
 				if (monitor.isCanceled()) {
@@ -781,7 +778,7 @@ public class FetchGerritChangePage extends WizardPage {
 				}
 				// If we do have results now, open the proposals.
 				Job showProposals = new WorkbenchJob(
-						UIText.FetchGerritChangePage_ShowingProposalsJobName) {
+						UIText.AsynchronousRefProposalProvider_ShowingProposalsJobName) {
 
 					@Override
 					public boolean shouldRun() {
@@ -1007,7 +1004,7 @@ public class FetchGerritChangePage extends WizardPage {
 					throws OperationCanceledException {
 				if (changeList != null) {
 					monitor.subTask(NLS.bind(
-							UIText.FetchGerritChangePage_FetchingRemoteRefsMessage,
+							UIText.AsynchronousRefProposalProvider_FetchingRemoteRefsMessage,
 							uri));
 					Collection<Change> changes;
 					try {
@@ -1132,72 +1129,29 @@ public class FetchGerritChangePage extends WizardPage {
 
 	private ExplicitContentProposalAdapter addRefContentProposalToText(
 			final Text textField) {
-		KeyStroke stroke = UIUtils
-				.getKeystrokeOfBestActiveBindingFor(IWorkbenchCommandConstants.EDIT_CONTENT_ASSIST);
-		if (stroke != null) {
-			UIUtils.addBulbDecorator(textField, NLS.bind(
-					UIText.FetchGerritChangePage_ContentAssistTooltip,
-					stroke.format()));
-		}
-		IContentProposalProvider cp = new IContentProposalProvider() {
-
-			@Override
-			public IContentProposal[] getProposals(String contents, int position) {
-				Collection<Change> proposals;
-				try {
-					proposals = getRefsForContentAssist(contents);
-				} catch (InvocationTargetException e) {
-					Activator.handleError(e.getMessage(), e, true);
-					return null;
-				} catch (InterruptedException e) {
-					return null;
-				}
-
-				if (proposals == null) {
-					return null;
-				}
-				List<IContentProposal> resultList = new ArrayList<>();
-				String input = contents;
-				Matcher matcher = GERRIT_CHANGE_REF_PATTERN.matcher(contents);
-				if (matcher.find()) {
-					input = matcher.group(2);
-				}
-				Pattern pattern = UIUtils.createProposalPattern(input);
-				for (final Change ref : proposals) {
-					if (pattern != null && !pattern
-							.matcher(ref.getChangeNumber().toString())
-							.matches()) {
-						continue;
-					}
-					resultList.add(new ChangeContentProposal(ref));
-				}
-				return resultList
-						.toArray(new IContentProposal[resultList.size()]);
+		return UIUtils.addContentProposalToText(textField, () -> {
+			try {
+				return getRefsForContentAssist(textField.getText());
+			} catch (InvocationTargetException e) {
+				Activator.handleError(e.getMessage(), e, true);
+				return null;
+			} catch (InterruptedException e) {
+				return null;
 			}
-		};
-
-		ExplicitContentProposalAdapter adapter = new ExplicitContentProposalAdapter(
-				textField, cp, stroke);
-		// set the acceptance style to always replace the complete content
-		adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
-		return adapter;
-	}
-
-	private static class ExplicitContentProposalAdapter
-			extends ContentProposalAdapter {
-
-		public ExplicitContentProposalAdapter(Control control,
-				IContentProposalProvider proposalProvider,
-				KeyStroke keyStroke) {
-			super(control, new TextContentAdapter(), proposalProvider,
-					keyStroke, null);
-		}
-
-		@Override
-		public void openProposalPopup() {
-			// Make this method accessible
-			super.openProposalPopup();
-		}
+		}, (pattern, ref) -> {
+			if (pattern == null || pattern
+					.matcher(ref.getChangeNumber().toString()).matches()) {
+				return new ChangeContentProposal(ref);
+			}
+			return null;
+		}, s -> {
+			String input = s;
+			Matcher matcher = GERRIT_CHANGE_REF_PATTERN.matcher(input);
+			if (matcher.find()) {
+				input = matcher.group(2);
+			}
+			return UIUtils.createProposalPattern(input);
+		}, null, UIText.FetchGerritChangePage_ContentAssistTooltip);
 	}
 
 	final static class Change implements Comparable<Change> {
@@ -1340,254 +1294,26 @@ public class FetchGerritChangePage extends WizardPage {
 	}
 
 	/**
-	 * A {@code ChangeList} is a "Future", loading the list of change refs
-	 * asynchronously from the remote repository. The {@link ChangeList#get()
-	 * get()} method blocks until the result is available or the future is
-	 * canceled. Pre-fetching is possible by calling {@link ChangeList#fetch()}
-	 * directly.
+	 * A {@code ChangeList} loads the list of change refs asynchronously from
+	 * the remote repository.
 	 */
-	private static class ChangeList {
-
-		/**
-		 * Determines how to cancel a not-yet-completed future. Irrespective of
-		 * the mechanism, the job may actually terminate normally, and
-		 * subsequent calls to get() may return a result.
-		 */
-		public static enum CancelMode {
-			/**
-			 * Tries to cancel the job, which may decide to ignore the request.
-			 * Callers to get() will remain blocked until the job terminates.
-			 */
-			CANCEL,
-			/**
-			 * Tries to cancel the job, which may decide to ignore the request.
-			 * Outstanding get() calls will be woken up and may throw
-			 * InterruptedException or return a result if the job terminated in
-			 * the meantime.
-			 */
-			ABANDON,
-			/**
-			 * Tries to cancel the job, and if that doesn't succeed immediately,
-			 * interrupts the job's thread. Outstanding calls to get() will be
-			 * woken up and may throw InterruptedException or return a result if
-			 * the job terminated in the meantime.
-			 */
-			INTERRUPT
-		}
-
-		private static enum State {
-			PRISTINE, SCHEDULED, CANCELING, INTERRUPT, CANCELED, DONE
-		}
-
-		private final Repository repository;
-
-		private final String uriText;
-
-		private State state = State.PRISTINE;
-
-		private Set<Change> result;
-
-		private InterruptibleJob job;
+	private static class ChangeList extends AsynchronousListOperation<Change> {
 
 		public ChangeList(Repository repository, String uriText) {
-			this.repository = repository;
-			this.uriText = uriText;
+			super(repository, uriText);
 		}
 
-		/**
-		 * Tries to cancel the future. {@code cancel(false)} tries a normal job
-		 * cancellation, which may or may not terminated the job (it may decide
-		 * not to react to cancellation requests).
-		 *
-		 * @param cancellation
-		 *            {@link CancelMode} defining how to cancel
-		 *
-		 * @return {@code true} if the future was canceled (its job is not
-		 *         running anymore), {@code false} otherwise.
-		 */
-		public synchronized boolean cancel(CancelMode cancellation) {
-			CancelMode mode = cancellation == null ? CancelMode.CANCEL
-					: cancellation;
-			switch (state) {
-			case PRISTINE:
-				finish(false);
-				return true;
-			case SCHEDULED:
-				state = State.CANCELING;
-				boolean canceled = job.cancel();
-				if (canceled) {
-					state = State.CANCELED;
-				} else if (mode == CancelMode.INTERRUPT) {
-					interrupt();
-				} else if (mode == CancelMode.ABANDON) {
-					notifyAll();
-				}
-				return canceled;
-			case CANCELING:
-				// cancel(CANCEL|ABANDON) was called before.
-				if (mode == CancelMode.INTERRUPT) {
-					interrupt();
-				} else if (mode == CancelMode.ABANDON) {
-					notifyAll();
-				}
-				return false;
-			case INTERRUPT:
-				if (mode != CancelMode.CANCEL) {
-					notifyAll();
-				}
-				return false;
-			case CANCELED:
-				return true;
-			default:
-				return false;
-			}
-		}
-
-		public synchronized boolean isFinished() {
-			return state == State.CANCELED || state == State.DONE;
-		}
-
-		public synchronized boolean isDone() {
-			return state == State.DONE;
-		}
-
-		/**
-		 * Retrieves the result. If the result is not yet available, the method
-		 * blocks until it is or {@link #cancel(CancelMode)} is called with
-		 * {@link CancelMode#ABANDON} or {@link CancelMode#INTERRUPT}.
-		 *
-		 * @return the result, which may be {@code null} if the future was
-		 *         canceled
-		 * @throws InterruptedException
-		 *             if waiting was interrupted
-		 * @throws InvocationTargetException
-		 *             if the future's job cannot be created
-		 */
-		public synchronized Collection<Change> get()
-				throws InterruptedException, InvocationTargetException {
-			switch (state) {
-			case DONE:
-			case CANCELED:
-				return result;
-			case PRISTINE:
-				fetch();
-				return get();
-			default:
-				wait();
-				if (state == State.CANCELING || state == State.INTERRUPT) {
-					// canceled with ABANDON or INTERRUPT
-					throw new InterruptedException();
-				}
-				return get();
-			}
-		}
-
-		public synchronized Collection<Change> getResult() {
-			if (isFinished()) {
-				return result;
-			}
-			throw new IllegalStateException(
-					"Fetching change list is not finished"); //$NON-NLS-1$
-		}
-
-		private synchronized void finish(boolean done) {
-			state = done ? State.DONE : State.CANCELED;
-			job = null;
-			notifyAll(); // We're done, wake up all outstanding get() calls
-		}
-
-		private synchronized void interrupt() {
-			state = State.INTERRUPT;
-			job.interrupt();
-			notifyAll(); // Abandon outstanding get() calls
-		}
-
-		/**
-		 * On the first call, starts a background job to fetch the result.
-		 * Subsequent calls do nothing and return immediately.
-		 *
-		 * @throws InvocationTargetException
-		 *             if starting the job fails
-		 */
-		public synchronized void fetch() throws InvocationTargetException {
-			if (job != null || state != State.PRISTINE) {
-				return;
-			}
-			ListRemoteOperation listOp;
-			try {
-				listOp = new ListRemoteOperation(repository,
-						new URIish(uriText),
-						Activator.getDefault().getPreferenceStore().getInt(
-								UIPreferences.REMOTE_CONNECTION_TIMEOUT));
-			} catch (URISyntaxException e) {
-				finish(false);
-				throw new InvocationTargetException(e);
-			}
-			job = new InterruptibleJob(MessageFormat.format(
-					UIText.FetchGerritChangePage_FetchingRemoteRefsMessage,
-					uriText)) {
-
-				@Override
-				protected IStatus run(IProgressMonitor monitor) {
-					try {
-						listOp.run(monitor);
-					} catch (InterruptedException e) {
-						return Status.CANCEL_STATUS;
-					} catch (InvocationTargetException e) {
-						synchronized (ChangeList.this) {
-							if (state == State.CANCELING
-									|| state == State.INTERRUPT) {
-								// JGit may report a TransportException when the
-								// thread is interrupted. Let's just pretend we
-								// canceled before. Also, if the user canceled
-								// already, he's not interested in errors
-								// anymore.
-								return Status.CANCEL_STATUS;
-							}
-						}
-						return Activator
-								.createErrorStatus(e.getLocalizedMessage(), e);
-					}
-					List<Change> changes = new ArrayList<>();
-					for (Ref ref : listOp.getRemoteRefs()) {
-						Change change = Change.fromRef(ref.getName());
-						if (change != null) {
-							changes.add(change);
-						}
-					}
-					Collections.sort(changes, Collections.reverseOrder());
-					result = new LinkedHashSet<>(changes);
-					return Status.OK_STATUS;
-				}
-
-			};
-			job.addJobChangeListener(new JobChangeAdapter() {
-
-				@Override
-				public void done(IJobChangeEvent event) {
-					IStatus status = event.getResult();
-					finish(status != null && status.isOK());
-				}
-
-			});
-			job.setUser(false);
-			job.setSystem(true);
-			state = State.SCHEDULED;
-			job.schedule();
-		}
-
-		private static abstract class InterruptibleJob extends Job {
-
-			public InterruptibleJob(String name) {
-				super(name);
-			}
-
-			public void interrupt() {
-				Thread thread = getThread();
-				if (thread != null) {
-					thread.interrupt();
+		@Override
+		protected Collection<Change> convert(Collection<Ref> refs) {
+			List<Change> changes = new ArrayList<>();
+			for (Ref ref : refs) {
+				Change change = Change.fromRef(ref.getName());
+				if (change != null) {
+					changes.add(change);
 				}
 			}
+			Collections.sort(changes, Collections.reverseOrder());
+			return new LinkedHashSet<>(changes);
 		}
 	}
 }

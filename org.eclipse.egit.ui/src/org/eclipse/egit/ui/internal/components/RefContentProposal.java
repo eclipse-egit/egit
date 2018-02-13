@@ -14,6 +14,7 @@ import java.io.IOException;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.fieldassist.IContentProposal;
+import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
@@ -57,12 +58,14 @@ public class RefContentProposal implements IContentProposal {
 	private static void appendObjectSummary(final StringBuilder sb,
 			final String type, final PersonIdent author, final String message) {
 		sb.append(type);
-		sb.append(" "); //$NON-NLS-1$
-		sb.append(UIText.RefContentProposal_by);
-		sb.append(" "); //$NON-NLS-1$
-		sb.append(author.getName());
-		sb.append("\n");  //$NON-NLS-1$
-		sb.append(author.getWhen());
+		if (author != null) {
+			sb.append(" "); //$NON-NLS-1$
+			sb.append(UIText.RefContentProposal_by);
+			sb.append(" "); //$NON-NLS-1$
+			sb.append(author.getName());
+			sb.append("\n"); //$NON-NLS-1$
+			sb.append(author.getWhen());
+		}
 		sb.append("\n\n");  //$NON-NLS-1$
 		final int newLine = message.indexOf('\n');
 		final int last = (newLine != -1 ? newLine : message.length());
@@ -76,6 +79,12 @@ public class RefContentProposal implements IContentProposal {
 	private final ObjectId objectId;
 
 	/**
+	 * Whether the ref is an upstream ref. For upstream refs, it's OK to have a
+	 * missing object; it just means we haven't fetched yet.
+	 */
+	private final boolean upstream;
+
+	/**
 	 * Create content proposal for specified ref.
 	 *
 	 * @param repo
@@ -84,9 +93,11 @@ public class RefContentProposal implements IContentProposal {
 	 * @param ref
 	 *            ref being a content proposal. May have null or locally
 	 *            non-existent object id.
+	 * @param upstream
+	 *            {@code true} if the ref comes from an upstream repository
 	 */
-	public RefContentProposal(final Repository repo, final Ref ref) {
-		this(repo, ref.getName(), ref.getObjectId());
+	public RefContentProposal(Repository repo, Ref ref, boolean upstream) {
+		this(repo, ref.getName(), ref.getObjectId(), upstream);
 	}
 
 	/**
@@ -100,12 +111,15 @@ public class RefContentProposal implements IContentProposal {
 	 * @param objectId
 	 *            object being pointed by this ref name. May be null or locally
 	 *            non-existent object.
+	 * @param upstream
+	 *            {@code true} if the ref comes from an upstream repository
 	 */
-	public RefContentProposal(final Repository repo, final String refName,
-			final ObjectId objectId) {
+	public RefContentProposal(Repository repo, String refName,
+			ObjectId objectId, boolean upstream) {
 		this.db = repo;
 		this.refName = refName;
 		this.objectId = objectId;
+		this.upstream = upstream;
 	}
 
 	@Override
@@ -120,10 +134,23 @@ public class RefContentProposal implements IContentProposal {
 
 	@Override
 	public String getDescription() {
-		if (objectId == null)
+		if (objectId == null) {
 			return null;
+		} else if (upstream && objectId.equals(ObjectId.zeroId())) {
+			return refName + '\n' + UIText.RefContentProposal_newRemoteObject;
+		}
 		try (ObjectReader reader = db.newObjectReader()) {
-			final ObjectLoader loader = reader.open(objectId);
+			ObjectLoader loader = null;
+			try {
+				loader = reader.open(objectId);
+			} catch (MissingObjectException e) {
+				if (upstream) {
+					return refName + '\n' + objectId.abbreviate(7).name()
+							+ " - " //$NON-NLS-1$
+							+ UIText.RefContentProposal_unknownRemoteObject;
+				}
+				throw e;
+			}
 			final StringBuilder sb = new StringBuilder();
 			sb.append(refName);
 			sb.append('\n');
@@ -157,7 +184,8 @@ public class RefContentProposal implements IContentProposal {
 			return sb.toString();
 		} catch (IOException e) {
 			Activator.logError(NLS.bind(
-					UIText.RefContentProposal_errorReadingObject, objectId), e);
+					UIText.RefContentProposal_errorReadingObject, objectId,
+					refName), e);
 			return null;
 		}
 	}
