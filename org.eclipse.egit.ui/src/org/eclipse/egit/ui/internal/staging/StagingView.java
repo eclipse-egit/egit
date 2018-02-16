@@ -148,6 +148,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.api.AddCommand;
@@ -3051,9 +3052,15 @@ public class StagingView extends ViewPart
 			} else {
 				question = MessageFormat.format(question, ""); //$NON-NLS-1$
 			}
-			boolean performAction = MessageDialog.openConfirm(form.getShell(),
-					UIText.DiscardChangesAction_confirmActionTitle, question);
-			if (!performAction) {
+
+			MessageDialog dlg = new MessageDialog(form.getShell(),
+					UIText.DiscardChangesAction_confirmActionTitle, null,
+					question, MessageDialog.CONFIRM,
+					new String[] {
+							UIText.DiscardChangesAction_discardChangesButtonText,
+							IDialogConstants.CANCEL_LABEL },
+					0);
+			if (dlg.open() != Window.OK) {
 				return;
 			}
 			List<String> files = new ArrayList<>();
