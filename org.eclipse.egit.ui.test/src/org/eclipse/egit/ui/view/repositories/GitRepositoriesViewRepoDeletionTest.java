@@ -37,7 +37,6 @@ import org.eclipse.egit.ui.internal.RepositoryCacheRule;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.SubmoduleAddCommand;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
@@ -92,7 +91,9 @@ public class GitRepositoriesViewRepoDeletionTest extends
 				.checkBox(
 						UIText.DeleteRepositoryConfirmDialog_DeleteWorkingDirectoryCheckbox)
 				.select();
-		shell.bot().button(IDialogConstants.OK_LABEL).click();
+		shell.bot().button(
+				UIText.DeleteRepositoryConfirmDialog_DeleteRepositoryConfirmButton)
+				.click();
 		TestUtil.joinJobs(JobFamilies.REPOSITORY_DELETE);
 
 		refreshAndWait();
@@ -131,7 +132,9 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		checkbox.deselect();
 		// Now "Remove project from workspace" is selected, but "Delete working
 		// tree" is not.
-		shell.bot().button(IDialogConstants.OK_LABEL).click();
+		shell.bot().button(
+				UIText.DeleteRepositoryConfirmDialog_DeleteRepositoryConfirmButton)
+				.click();
 		TestUtil.joinJobs(JobFamilies.REPOSITORY_DELETE);
 
 		refreshAndWait();
@@ -315,7 +318,9 @@ public class GitRepositoriesViewRepoDeletionTest extends
 				.checkBox(
 						UIText.DeleteRepositoryConfirmDialog_DeleteWorkingDirectoryCheckbox)
 				.select();
-		shell.bot().button(IDialogConstants.OK_LABEL).click();
+		shell.bot().button(
+				UIText.DeleteRepositoryConfirmDialog_DeleteRepositoryConfirmButton)
+				.click();
 		TestUtil.joinJobs(JobFamilies.REPOSITORY_DELETE);
 
 		refreshAndWait();
