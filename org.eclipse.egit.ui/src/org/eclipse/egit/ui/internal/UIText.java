@@ -3509,6 +3509,8 @@ public class UIText extends NLS {
 	public static String DeleteRepositoryConfirmDialog_DeleteRepositoryNoUndoWarning;
 
 	/** */
+	public static String DeleteRepositoryConfirmDialog_DeleteRepositoryConfirmButton;
+	/** */
 	public static String DeleteRepositoryConfirmDialog_DeleteRepositoryTitle;
 
 	/** */
