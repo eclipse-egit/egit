@@ -92,7 +92,9 @@ public class GitRepositoriesViewRepoDeletionTest extends
 				.checkBox(
 						UIText.DeleteRepositoryConfirmDialog_DeleteWorkingDirectoryCheckbox)
 				.select();
-		shell.bot().button(IDialogConstants.OK_LABEL).click();
+		shell.bot().button(
+				UIText.DeleteRepositoryConfirmDialog_DeleteRepositoryConfirmButton)
+				.click();
 		TestUtil.joinJobs(JobFamilies.REPOSITORY_DELETE);
 
 		refreshAndWait();
@@ -131,7 +133,9 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		checkbox.deselect();
 		// Now "Remove project from workspace" is selected, but "Delete working
 		// tree" is not.
-		shell.bot().button(IDialogConstants.OK_LABEL).click();
+		shell.bot().button(
+				UIText.DeleteRepositoryConfirmDialog_DeleteRepositoryConfirmButton)
+				.click();
 		TestUtil.joinJobs(JobFamilies.REPOSITORY_DELETE);
 
 		refreshAndWait();
@@ -315,7 +319,9 @@ public class GitRepositoriesViewRepoDeletionTest extends
 				.checkBox(
 						UIText.DeleteRepositoryConfirmDialog_DeleteWorkingDirectoryCheckbox)
 				.select();
-		shell.bot().button(IDialogConstants.OK_LABEL).click();
+		shell.bot().button(
+				UIText.DeleteRepositoryConfirmDialog_DeleteRepositoryConfirmButton)
+				.click();
 		TestUtil.joinJobs(JobFamilies.REPOSITORY_DELETE);
 
 		refreshAndWait();

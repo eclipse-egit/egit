@@ -188,4 +188,13 @@ public class DeleteRepositoryConfirmDialog extends TitleAreaDialog {
 		else
 			setMessage(UIText.DeleteRepositoryConfirmDialog_DeleteRepositoryConfirmMessage);
 	}
+
+	@Override
+	protected void createButtonsForButtonBar(Composite parent) {
+		createButton(parent, IDialogConstants.OK_ID,
+				UIText.DeleteRepositoryConfirmDialog_DeleteRepositoryConfirmButton,
+				true);
+		createButton(parent, IDialogConstants.CANCEL_ID,
+				IDialogConstants.CANCEL_LABEL, false);
+	}
 }
