@@ -78,7 +78,8 @@ public class FetchResultDialog extends TitleAndImageDialog {
 				&& SimpleConfigureFetchDialog.getConfiguredRemote(localDb) != null)
 			createButton(parent, CONFIGURE,
 					UIText.FetchResultDialog_ConfigureButton, false);
-		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
+		createButton(parent, IDialogConstants.OK_ID,
+				UIText.FetchResultDialog_CloseButton,
 				true);
 	}
 
