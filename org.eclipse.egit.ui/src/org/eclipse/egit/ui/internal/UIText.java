@@ -2924,6 +2924,9 @@ public class UIText extends NLS {
 	public static String FetchResultDialog_title;
 
 	/** */
+	public static String FetchResultDialog_CloseButton;
+
+	/** */
 	public static String FetchResultTable_counterCommits;
 
 	/** */
