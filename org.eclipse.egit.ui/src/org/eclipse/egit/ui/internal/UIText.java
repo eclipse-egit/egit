@@ -2909,6 +2909,9 @@ public class UIText extends NLS {
 	public static String FetchGerritChangePage_UriLabel;
 
 	/** */
+	public static String FetchGerritChangePage_RepositoryLabel;
+
+	/** */
 	public static String FetchGerritChangeWizard_WizardTitle;
 
 	/** */
