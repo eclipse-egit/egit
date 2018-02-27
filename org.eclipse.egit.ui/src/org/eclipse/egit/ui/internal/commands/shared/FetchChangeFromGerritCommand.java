@@ -12,12 +12,10 @@ package org.eclipse.egit.ui.internal.commands.shared;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.ui.internal.dialogs.NonBlockingWizardDialog;
 import org.eclipse.egit.ui.internal.fetch.FetchGerritChangeWizard;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -28,17 +26,12 @@ public class FetchChangeFromGerritCommand extends AbstractSharedCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repository = getRepository(event);
 		if (repository == null) {
-			Shell shell = getShell(event);
-			MessageDialog
-					.openInformation(
-							shell,
-							UIText.FetchChangeFromGerritCommand_noRepositorySelectedTitle,
-							UIText.FetchChangeFromGerritCommand_noRepositorySelectedMessage);
-
-			return null;
+			repository = Activator.getDefault().getRepositoryCache()
+					.getAllRepositories()[0];
 		}
 
-		FetchGerritChangeWizard wiz = new FetchGerritChangeWizard(repository);
+		FetchGerritChangeWizard wiz = new FetchGerritChangeWizard();
+		wiz.setRepository(repository);
 		NonBlockingWizardDialog dlg = new NonBlockingWizardDialog(
 				HandlerUtil.getActiveShellChecked(event), wiz);
 		dlg.setHelpAvailable(false);

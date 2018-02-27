@@ -130,13 +130,15 @@ public class FetchGerritChangePage extends WizardPage {
 		CREATE_BRANCH, CREATE_TAG, CHECKOUT_FETCH_HEAD, NOCHECKOUT
 	}
 
-	private final Repository repository;
+	private Repository repository;
 
 	private final IDialogSettings settings;
 
 	private final String lastUriKey;
 
 	private Combo uriCombo;
+
+	private Combo repositoryCombo;
 
 	private Map<String, ChangeList> changeRefs = new HashMap<>();
 
@@ -239,6 +241,38 @@ public class FetchGerritChangePage extends WizardPage {
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(2, false));
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
+
+		new Label(main, SWT.NONE)
+				.setText(UIText.FetchGerritChangePage_RepositoryLabel);
+		repositoryCombo = new Combo(main, SWT.DROP_DOWN);
+		GridDataFactory.fillDefaults().grab(true, false)
+				.applyTo(repositoryCombo);
+		Repository[] repositories = org.eclipse.egit.core.Activator.getDefault()
+				.getRepositoryCache().getAllRepositories();
+
+		for (Repository repo : repositories) {
+			String name = Activator.getDefault().getRepositoryUtil()
+					.getRepositoryName(repo);
+			repositoryCombo.add(name);
+			repositoryCombo.setData(name, repo);
+		}
+
+		repositoryCombo.setText(Activator.getDefault().getRepositoryUtil()
+				.getRepositoryName(repository));
+		repositoryCombo.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Repository selected = (Repository) repositoryCombo
+						.getData(repositoryCombo.getText());
+				// TODO: Figure out how to update the other fields of the dialog
+				// with the newly selected repository.
+				FetchGerritChangePage.this.repository = selected;
+
+
+			}
+		});
+
 		new Label(main, SWT.NONE)
 				.setText(UIText.FetchGerritChangePage_UriLabel);
 		uriCombo = new Combo(main, SWT.DROP_DOWN);
