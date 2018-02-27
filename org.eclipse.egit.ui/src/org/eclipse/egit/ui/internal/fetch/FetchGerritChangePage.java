@@ -41,6 +41,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.core.op.TagOperation;
@@ -130,7 +131,9 @@ public class FetchGerritChangePage extends WizardPage {
 		CREATE_BRANCH, CREATE_TAG, CHECKOUT_FETCH_HEAD, NOCHECKOUT
 	}
 
-	private final Repository repository;
+	private Repository repository;
+
+	private RepositoryCache repositoryCache;
 
 	private final IDialogSettings settings;
 
@@ -190,10 +193,7 @@ public class FetchGerritChangePage extends WizardPage {
 		super(FetchGerritChangePage.class.getName());
 		this.repository = repository;
 		this.refName = refName;
-		setTitle(NLS
-				.bind(UIText.FetchGerritChangePage_PageTitle,
-						Activator.getDefault().getRepositoryUtil()
-								.getRepositoryName(repository)));
+		setTitle(UIText.FetchGerritChangePage_PageTitle);
 		setMessage(UIText.FetchGerritChangePage_PageMessage);
 		settings = getDialogSettings();
 		lastUriKey = repository + GerritDialogSettings.LAST_URI_SUFFIX;
@@ -202,6 +202,9 @@ public class FetchGerritChangePage extends WizardPage {
 				Constants.R_HEADS, true);
 		tagValidator = ValidationUtils.getRefNameInputValidator(repository,
 				Constants.R_TAGS, true);
+		repositoryCache = org.eclipse.egit.core.Activator.getDefault()
+				.getRepositoryCache();
+
 	}
 
 	@Override
@@ -222,14 +225,12 @@ public class FetchGerritChangePage extends WizardPage {
 		String clipText = (String) clipboard.getContents(TextTransfer
 				.getInstance());
 		clipboard.dispose();
-		String defaultUri = null;
 		String defaultCommand = null;
 		String defaultChange = null;
 		Change candidateChange = null;
 		if (clipText != null) {
 			Matcher matcher = GERRIT_FETCH_PATTERN.matcher(clipText);
 			if (matcher.matches()) {
-				defaultUri = matcher.group(1);
 				defaultChange = matcher.group(2);
 				defaultCommand = matcher.group(3);
 			} else {
@@ -239,6 +240,7 @@ public class FetchGerritChangePage extends WizardPage {
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(2, false));
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
+
 		new Label(main, SWT.NONE)
 				.setText(UIText.FetchGerritChangePage_UriLabel);
 		uriCombo = new Combo(main, SWT.DROP_DOWN);
@@ -247,6 +249,7 @@ public class FetchGerritChangePage extends WizardPage {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				String uriText = uriCombo.getText();
+				repository = (Repository) uriCombo.getData(uriText);
 				ChangeList list = changeRefs.get(uriText);
 				if (list != null) {
 					list.cancel(ChangeList.CancelMode.INTERRUPT);
@@ -254,6 +257,7 @@ public class FetchGerritChangePage extends WizardPage {
 				list = new ChangeList(repository, uriText);
 				changeRefs.put(uriText, list);
 				preFetch(list);
+				openProposalPopupAsync();
 			}
 		});
 		new Label(main, SWT.NONE)
@@ -463,35 +467,44 @@ public class FetchGerritChangePage extends WizardPage {
 		}
 
 		// get all available Gerrit URIs from the repository
-		SortedSet<String> uris = new TreeSet<>();
-		try {
-			for (RemoteConfig rc : RemoteConfig.getAllRemoteConfigs(repository
-					.getConfig())) {
-				if (GerritUtil.isGerritFetch(rc)) {
-					if (rc.getURIs().size() > 0) {
-						uris.add(rc.getURIs().get(0).toPrivateString());
-					}
-					for (URIish u : rc.getPushURIs()) {
-						uris.add(u.toPrivateString());
+		boolean repositoryMatched = false;
+		for (Repository repo : repositoryCache.getAllRepositories()) {
+			SortedSet<String> uris = new TreeSet<>();
+			try {
+				for (RemoteConfig rc : RemoteConfig
+						.getAllRemoteConfigs(repo
+						.getConfig())) {
+					if (GerritUtil.isGerritFetch(rc)) {
+						if (rc.getURIs().size() > 0) {
+							uris.add(rc.getURIs().get(0).toPrivateString());
+						}
+						for (URIish u : rc.getPushURIs()) {
+							uris.add(u.toPrivateString());
+						}
 					}
 				}
-
+			} catch (URISyntaxException e) {
+				Activator.handleError(e.getMessage(), e, false);
+				setErrorMessage(e.getMessage());
 			}
-		} catch (URISyntaxException e) {
-			Activator.handleError(e.getMessage(), e, false);
-			setErrorMessage(e.getMessage());
+			for (String aUri : uris) {
+				uriCombo.add(aUri);
+				uriCombo.setData(aUri, repo);
+				changeRefs.put(aUri, new ChangeList(repo, aUri));
+				if (repo == repository) {
+					repositoryMatched = true;
+					int length = uriCombo.getItemCount() - 1;
+					uriCombo.select(length);
+				}
+			}
 		}
-		for (String aUri : uris) {
-			uriCombo.add(aUri);
-			changeRefs.put(aUri, new ChangeList(repository, aUri));
-		}
-		if (defaultUri != null) {
-			uriCombo.setText(defaultUri);
-		} else {
-			selectLastUsedUri();
+		if (!repositoryMatched) {
+			int length = uriCombo.getItemCount() - 1;
+			uriCombo.select(length);
 		}
 		String currentUri = uriCombo.getText();
 		ChangeList list = changeRefs.get(currentUri);
+		repository = (Repository) uriCombo.getData(currentUri);
 		if (list == null) {
 			list = new ChangeList(repository, currentUri);
 			changeRefs.put(currentUri, list);
@@ -513,18 +526,7 @@ public class FetchGerritChangePage extends WizardPage {
 									// Only the first time: remove myself
 									event.getPageChangeProvider()
 											.removePageChangedListener(this);
-									getControl().getDisplay()
-											.asyncExec(new Runnable() {
-										@Override
-										public void run() {
-											Control control = getControl();
-											if (control != null
-													&& !control.isDisposed()) {
-												contentProposer
-														.openProposalPopup();
-											}
-										}
-									});
+									openProposalPopupAsync();
 								}
 							}
 						});
@@ -539,6 +541,18 @@ public class FetchGerritChangePage extends WizardPage {
 		} catch (InvocationTargetException e) {
 			Activator.handleError(e.getLocalizedMessage(), e.getCause(), true);
 		}
+	}
+
+	private void openProposalPopupAsync() {
+		getControl().getDisplay().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				Control control = getControl();
+				if (control != null && !control.isDisposed()) {
+					contentProposer.openProposalPopup();
+				}
+			}
+		});
 	}
 
 	/**
@@ -644,17 +658,17 @@ public class FetchGerritChangePage extends WizardPage {
 		settings.put(lastUriKey, uri.trim());
 	}
 
-	private void selectLastUsedUri() {
-		String lastUri = settings.get(lastUriKey);
-		if (lastUri != null) {
-			int i = uriCombo.indexOf(lastUri);
-			if (i != -1) {
-				uriCombo.select(i);
-				return;
-			}
-		}
-		uriCombo.select(0);
-	}
+	// private void selectLastUsedUri() {
+	// String lastUri = settings.get(lastUriKey);
+	// if (lastUri != null) {
+	// int i = uriCombo.indexOf(lastUri);
+	// if (i != -1) {
+	// uriCombo.select(i);
+	// return;
+	// }
+	// }
+	// uriCombo.select(0);
+	// }
 
 	@Override
 	public void setVisible(boolean visible) {
