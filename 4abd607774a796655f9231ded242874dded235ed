@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "082032b8_35d3e72e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/FetchChangeFromGerritCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-02-27T20:52:55Z",
+      "side": 1,
+      "message": "Should probably only consider repos configured for Gerrit.",
+      "revId": "4abd607774a796655f9231ded242874dded235ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0aa278a_90324a83",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-02-27T20:52:55Z",
+      "side": 1,
+      "message": "Do we need the combo if invoked with a selected repo? I don\u0027t think so. We could allow instantiating the wizard with a null repo, and make it only then add this combo and initialize to the first of them.",
+      "revId": "4abd607774a796655f9231ded242874dded235ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a48c23db_69c44ba3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-02-27T20:52:55Z",
+      "side": 1,
+      "message": "Should probably only add repositories that are configured for Gerrit. Maybe we need a (static?) helper method getConfiguredGerritRepositories() that could be used here and in the command. Not sure where the best place for such a method might be; perhaps in GerritUtil.",
+      "revId": "4abd607774a796655f9231ded242874dded235ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "667f6ba8_f3c8ae93",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-02-27T20:52:55Z",
+      "side": 1,
+      "message": "Indeed, yes. Pretty crucial, actually, because updating the uriCombo to a new selection will deal with the asynchronous content assist future.",
+      "revId": "4abd607774a796655f9231ded242874dded235ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8e9f006_af499008",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangeWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-02-27T20:52:55Z",
+      "side": 1,
+      "message": "Keep the old constructors, please. Let\u0027s be nice to the EGerrit project. They use this wizard. (And yes, I know that it\u0027s been discontinued because Ericsson lost interest. And I told them several times to contact us so that we could figure out what kind of public API they\u0027d need, and they didn\u0027t. Still no reason to gratuitously break their code if it doesn\u0027t put a burden on us. Here, keeping the old constructors around is no big deal.)",
+      "revId": "4abd607774a796655f9231ded242874dded235ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
