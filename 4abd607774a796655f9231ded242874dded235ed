@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "939d39c0_2998fe30",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-02-27T20:56:19Z",
+      "side": 1,
+      "message": "Strange line break.",
+      "revId": "4abd607774a796655f9231ded242874dded235ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29edb42b_6d3c72e1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-02-27T20:56:19Z",
+      "side": 1,
+      "message": "Remove this empty line.",
+      "revId": "4abd607774a796655f9231ded242874dded235ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082032b8_35d3e72e",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/FetchChangeFromGerritCommand.java",
         "patchSetId": 2
