@@ -41,6 +41,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.core.op.TagOperation;
@@ -130,7 +131,9 @@ public class FetchGerritChangePage extends WizardPage {
 		CREATE_BRANCH, CREATE_TAG, CHECKOUT_FETCH_HEAD, NOCHECKOUT
 	}
 
-	private final Repository repository;
+	private Repository repository;
+
+	private RepositoryCache repositoryCache;
 
 	private final IDialogSettings settings;
 
@@ -202,6 +205,9 @@ public class FetchGerritChangePage extends WizardPage {
 				Constants.R_HEADS, true);
 		tagValidator = ValidationUtils.getRefNameInputValidator(repository,
 				Constants.R_TAGS, true);
+		repositoryCache = org.eclipse.egit.core.Activator.getDefault()
+				.getRepositoryCache();
+
 	}
 
 	@Override
@@ -236,9 +242,11 @@ public class FetchGerritChangePage extends WizardPage {
 				candidateChange = determineChangeFromString(clipText.trim());
 			}
 		}
+		System.out.println(defaultUri);
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(2, false));
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
+
 		new Label(main, SWT.NONE)
 				.setText(UIText.FetchGerritChangePage_UriLabel);
 		uriCombo = new Combo(main, SWT.DROP_DOWN);
@@ -247,6 +255,7 @@ public class FetchGerritChangePage extends WizardPage {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				String uriText = uriCombo.getText();
+				repository = (Repository) uriCombo.getData(uriText);
 				ChangeList list = changeRefs.get(uriText);
 				if (list != null) {
 					list.cancel(ChangeList.CancelMode.INTERRUPT);
@@ -254,6 +263,8 @@ public class FetchGerritChangePage extends WizardPage {
 				list = new ChangeList(repository, uriText);
 				changeRefs.put(uriText, list);
 				preFetch(list);
+				// Does this need to be async? See L542
+				contentProposer.openProposalPopup();
 			}
 		});
 		new Label(main, SWT.NONE)
@@ -463,35 +474,43 @@ public class FetchGerritChangePage extends WizardPage {
 		}
 
 		// get all available Gerrit URIs from the repository
-		SortedSet<String> uris = new TreeSet<>();
-		try {
-			for (RemoteConfig rc : RemoteConfig.getAllRemoteConfigs(repository
-					.getConfig())) {
-				if (GerritUtil.isGerritFetch(rc)) {
-					if (rc.getURIs().size() > 0) {
-						uris.add(rc.getURIs().get(0).toPrivateString());
-					}
-					for (URIish u : rc.getPushURIs()) {
-						uris.add(u.toPrivateString());
+		boolean itemWasSelected = false;
+		for (Repository repo : repositoryCache.getAllRepositories()) {
+			SortedSet<String> uris = new TreeSet<>();
+			try {
+				for (RemoteConfig rc : RemoteConfig
+						.getAllRemoteConfigs(repo
+						.getConfig())) {
+					if (GerritUtil.isGerritFetch(rc)) {
+						if (rc.getURIs().size() > 0) {
+							uris.add(rc.getURIs().get(0).toPrivateString());
+						}
+						for (URIish u : rc.getPushURIs()) {
+							uris.add(u.toPrivateString());
+						}
 					}
 				}
-
+			} catch (URISyntaxException e) {
+				Activator.handleError(e.getMessage(), e, false);
+				setErrorMessage(e.getMessage());
 			}
-		} catch (URISyntaxException e) {
-			Activator.handleError(e.getMessage(), e, false);
-			setErrorMessage(e.getMessage());
+			for (String aUri : uris) {
+				uriCombo.add(aUri);
+				uriCombo.setData(aUri, repo);
+				changeRefs.put(aUri, new ChangeList(repo, aUri));
+				if (repo == repository) {
+					itemWasSelected = true;
+					int length = uriCombo.getItemCount() - 1;
+					uriCombo.select(length);
+				}
+			}
 		}
-		for (String aUri : uris) {
-			uriCombo.add(aUri);
-			changeRefs.put(aUri, new ChangeList(repository, aUri));
-		}
-		if (defaultUri != null) {
-			uriCombo.setText(defaultUri);
-		} else {
+		if (!itemWasSelected) {
 			selectLastUsedUri();
 		}
 		String currentUri = uriCombo.getText();
 		ChangeList list = changeRefs.get(currentUri);
+		repository = (Repository) uriCombo.getData(currentUri);
 		if (list == null) {
 			list = new ChangeList(repository, currentUri);
 			changeRefs.put(currentUri, list);
