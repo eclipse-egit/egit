@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "11b61a8d_1ca29e9c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1093
+      },
+      "writtenOn": "2018-02-28T12:55:23Z",
+      "side": 1,
+      "message": "+1, as user I\u0027m frequently not aware of the current UI selection if I trigger a command.",
+      "parentUuid": "d079d0ad_7f7cb87c",
+      "revId": "4abd607774a796655f9231ded242874dded235ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a48c23db_69c44ba3",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
         "patchSetId": 2
