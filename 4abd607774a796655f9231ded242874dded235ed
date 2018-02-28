@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5bc095f3_5b5312a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-02-28T12:50:22Z",
+      "side": 1,
+      "message": "The staging view does this automatically after a certain number of letters in each line.",
+      "parentUuid": "939d39c0_2998fe30",
+      "revId": "4abd607774a796655f9231ded242874dded235ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29edb42b_6d3c72e1",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-27T20:56:19Z",
       "side": 1,
       "message": "Remove this empty line.",
+      "revId": "4abd607774a796655f9231ded242874dded235ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd797326_239340cc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-02-28T12:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29edb42b_6d3c72e1",
       "revId": "4abd607774a796655f9231ded242874dded235ed",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b099e07c_1a46dc5b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/FetchChangeFromGerritCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-02-28T12:50:22Z",
+      "side": 1,
+      "message": "Where can I find these?",
+      "parentUuid": "082032b8_35d3e72e",
+      "revId": "4abd607774a796655f9231ded242874dded235ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0aa278a_90324a83",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "4abd607774a796655f9231ded242874dded235ed",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d079d0ad_7f7cb87c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-02-28T12:50:22Z",
+      "side": 1,
+      "message": "I thought it would be cool to always have the ability to change the repo (useful for a misclick on the wrong repo for example). This would also align the dialog to not look like it\u0027s two different dialogs.",
+      "parentUuid": "e0aa278a_90324a83",
+      "revId": "4abd607774a796655f9231ded242874dded235ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6af25738_a5fa940a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-02-28T12:50:22Z",
+      "side": 1,
+      "message": "Should this be done in this commit? I had a look at GerritUtil and it looks like we would need to check every repository manually if it\u0027s a Gerrit repo. Maybe another helper function would be useful for that (if that\u0027s not already there.).",
+      "parentUuid": "a48c23db_69c44ba3",
+      "revId": "4abd607774a796655f9231ded242874dded235ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "667f6ba8_f3c8ae93",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
         "patchSetId": 2
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "e7eb8a81_4f9b0cab",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-02-28T12:50:22Z",
+      "side": 1,
+      "message": "Could you point me in the direction of how this would be achieved? I tried copying the code where these fields are initialized but that didn\u0027t really work out.",
+      "parentUuid": "667f6ba8_f3c8ae93",
+      "revId": "4abd607774a796655f9231ded242874dded235ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8e9f006_af499008",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangeWizard.java",
         "patchSetId": 2
@@ -115,6 +223,24 @@
       "writtenOn": "2018-02-27T20:52:55Z",
       "side": 1,
       "message": "Keep the old constructors, please. Let\u0027s be nice to the EGerrit project. They use this wizard. (And yes, I know that it\u0027s been discontinued because Ericsson lost interest. And I told them several times to contact us so that we could figure out what kind of public API they\u0027d need, and they didn\u0027t. Still no reason to gratuitously break their code if it doesn\u0027t put a burden on us. Here, keeping the old constructors around is no big deal.)",
+      "revId": "4abd607774a796655f9231ded242874dded235ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e8a4f5c_501f7c0a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangeWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-02-28T12:50:22Z",
+      "side": 1,
+      "message": "Haha, of course I will re-add it.",
+      "parentUuid": "e8e9f006_af499008",
       "revId": "4abd607774a796655f9231ded242874dded235ed",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
