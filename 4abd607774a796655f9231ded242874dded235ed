@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f37988ac_2d5a5fa2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-02-28T13:28:00Z",
+      "side": 1,
+      "message": "Then let\u0027s add an empty after the 3).",
+      "parentUuid": "5bc095f3_5b5312a1",
+      "revId": "4abd607774a796655f9231ded242874dded235ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29edb42b_6d3c72e1",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -195,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "49e505e9_f4717f68",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-02-28T13:28:00Z",
+      "side": 1,
+      "message": "For a first version it\u0027s OK without. But we\u0027ll have to figure out something before we can release this into the wild. (See below: if a non-Gerrit enabled repo is chosen, I think we may end up with an empty uriCombo.)\n\nEither we need to re-read all configs, but that may be too expensive if you have more than a handful of repos. (I have quite a few.) Or we need to cache (and persist that info so we can re-read it when Eclipse is started) such auxiliary info about repositories. Both would need to be done elsewhere, not here in this wizard. Or we need to loosen the restrictions in the uriCombo to show all remotes. But even then we somehow need to deal with repos without remotes. (Misconfigured, or simply local.) Do we also have to think about what to do with bare repos?",
+      "parentUuid": "6af25738_a5fa940a",
+      "revId": "4abd607774a796655f9231ded242874dded235ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "667f6ba8_f3c8ae93",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
         "patchSetId": 2
@@ -224,6 +260,24 @@
       "side": 1,
       "message": "Could you point me in the direction of how this would be achieved? I tried copying the code where these fields are initialized but that didn\u0027t really work out.",
       "parentUuid": "667f6ba8_f3c8ae93",
+      "revId": "4abd607774a796655f9231ded242874dded235ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bee9245_6813ec02",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-02-28T13:28:00Z",
+      "side": 1,
+      "message": "I would have to try it myself, too. Setting up the combo initially is done on line 506ff. There you also can see why it\u0027s important to offer only Gerrit-configured repos in the repo selector: otherwise you may end up with an empty URI combo.\n\nOnce you\u0027re there, we may also have to revisit the content assist future business. I suspect some changes may be necessary if the repo can change.",
+      "parentUuid": "e7eb8a81_4f9b0cab",
       "revId": "4abd607774a796655f9231ded242874dded235ed",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
