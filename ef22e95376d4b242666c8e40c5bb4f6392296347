@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "feb62114_66fd22ea",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/PluginPreferenceInitializer.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-03-03T22:35:45Z",
+      "side": 1,
+      "message": "?",
+      "revId": "ef22e95376d4b242666c8e40c5bb4f6392296347",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca3a6ba8_90893416",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ConfigurationChecker.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-03-03T22:35:45Z",
+      "side": 1,
+      "message": "I am strictly against popping up a dialog when EGit starts. If you want add a menu the user can use to enable LFS but auto-opening a dialog when the plugin starts is a no-go.\n\nI am ok to have an option auto-enabling LFS if that preference is off by default. But maybe it would be sufficient to have a button in the preferences to enable builtin LFS, maybe globally of for a given repository. Don\u0027t know why this should be run automatically repeatedly ?",
+      "revId": "ef22e95376d4b242666c8e40c5bb4f6392296347",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
