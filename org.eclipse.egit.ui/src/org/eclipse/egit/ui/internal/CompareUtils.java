@@ -926,6 +926,7 @@ public class CompareUtils {
 				rw.setTreeFilter(AndTreeFilter.create(
 						PathFilter.create(repoRelativePath),
 						TreeFilter.ANY_DIFF));
+				rw.setRewriteParents(false);
 				latestFileCommit = rw.next();
 				// Fall back to HEAD
 				if (latestFileCommit == null)
