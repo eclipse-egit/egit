@@ -1,4 +1,4 @@
-target "R20170919201930-Oxygen" with source configurePhase
+target "R20180206163158-Oxygen" with source configurePhase
 // see http://download.eclipse.org/tools/orbit/downloads/
 
 location "http://download.eclipse.org/tools/orbit/downloads/drops/R20170919201930/repository/" {
