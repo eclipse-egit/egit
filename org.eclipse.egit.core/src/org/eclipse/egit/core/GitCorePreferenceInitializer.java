@@ -24,7 +24,7 @@ public class GitCorePreferenceInitializer extends AbstractPreferenceInitializer 
 
 		p.putInt(GitCorePreferences.core_packedGitWindowSize, 8 * 1024);
 		p.putInt(GitCorePreferences.core_packedGitLimit, 10 * MB);
-		p.putBoolean(GitCorePreferences.core_packedGitMMAP, false);
+		p.putBoolean(GitCorePreferences.core_packedGitMMAP, true);
 		p.putInt(GitCorePreferences.core_deltaBaseCacheLimit, 10 * MB);
 		p.putInt(GitCorePreferences.core_streamFileThreshold, 50 * MB);
 		p.putBoolean(GitCorePreferences.core_autoShareProjects, true);
