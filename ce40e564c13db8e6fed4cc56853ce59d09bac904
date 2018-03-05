@@ -33,6 +33,24 @@
       "revId": "ce40e564c13db8e6fed4cc56853ce59d09bac904",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b80ce91b_c8b19e69",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-03-05T09:21:37Z",
+      "side": 1,
+      "message": "I agree. Your more general approach seems like a better idea anyway - not so LFS specific :)\n\nI will remove this change, but we need yours then instead.",
+      "parentUuid": "23d5092b_d5b4b606",
+      "revId": "ce40e564c13db8e6fed4cc56853ce59d09bac904",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
