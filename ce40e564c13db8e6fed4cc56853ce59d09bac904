@@ -51,6 +51,24 @@
       "revId": "ce40e564c13db8e6fed4cc56853ce59d09bac904",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8bfdbd0_7333da63",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-03-05T11:33:09Z",
+      "side": 1,
+      "message": "Not so fast. I said I was unsure here. This needs a real design decision. Maybe a TODO is sufficient. Then you could go on with this, and we could finalize my change later. I\u0027m a bit nervous about putting so many brand-new things into EGit now, when 4.11 is about to come out. (Or so I understood...) Personally I prefer to merge such things shortly _after_ a release was branched. Gives a longer beta-test period by EGit nightly users.\n\nIf we do this special case for LFS now, is it then still possible to switch later to the more general \"use smudge filter\"? And maybe we\u0027d then want to add something on top of that to also consider diff.*.textconv and use that, if set, and the smudge filter only otherwise. Change https://git.eclipse.org/r/#/c/102790/ would also need some design decisions...",
+      "parentUuid": "b80ce91b_c8b19e69",
+      "revId": "ce40e564c13db8e6fed4cc56853ce59d09bac904",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
