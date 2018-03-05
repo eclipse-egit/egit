@@ -69,6 +69,24 @@
       "revId": "ce40e564c13db8e6fed4cc56853ce59d09bac904",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "180a29fd_b50896fc",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-03-05T11:36:36Z",
+      "side": 1,
+      "message": "Of course, switching later on is always possible, and should be as straight forward as discarding this change when  rebasing/merging your changes... I\u0027ll resurrect the change so we could add a functioning LFS support to the release.",
+      "parentUuid": "b8bfdbd0_7333da63",
+      "revId": "ce40e564c13db8e6fed4cc56853ce59d09bac904",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
