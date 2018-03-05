@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99250dc7_d89cd310",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-03-05T08:40:57Z",
+      "side": 1,
+      "message": "The Eclipse built-in compare support just takes the contents as input. So I think the correct way is indeed to apply the smudge filter, not the diff driver/config.",
+      "revId": "ce40e564c13db8e6fed4cc56853ce59d09bac904",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23d5092b_d5b4b606",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/storage/GitBlobStorage.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-03-05T08:40:57Z",
+      "side": 1,
+      "message": "As I said on an earlier patch set, I\u0027m not sure whether special-casing this for LFS is the right way to go.\n\nAs mentioned over in https://git.eclipse.org/r/#/c/102790/ I do believe the user will need a way to control whether this will happen on a per-file basis; for instance with a .gitattribute.",
+      "revId": "ce40e564c13db8e6fed4cc56853ce59d09bac904",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
