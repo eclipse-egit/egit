@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef762deb_bad8fe45",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 26
+      },
+      "lineNbr": 2116,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-03-07T17:08:57Z",
+      "side": 1,
+      "message": "where is this option to enable LFS on a single repository exposed in the UI ? Couldn\u0027t find it ...",
+      "revId": "260782f43af145d6369efae9634a9a2fa30a7a44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9d18f64_acb5e128",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/DialogsPreferencePage.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-03-07T17:08:57Z",
+      "side": 1,
+      "message": "do we really need this with the preference which allows to switch this on globally ? AFAIK you could use Oomph to distribute preference settings to your team",
+      "revId": "260782f43af145d6369efae9634a9a2fa30a7a44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0928edd5_2675b5ac",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitPreferenceRoot.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-03-07T17:08:57Z",
+      "side": 1,
+      "message": "Using such a large button looks ugly, can we change this to a checkbox ?",
+      "revId": "260782f43af145d6369efae9634a9a2fa30a7a44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
