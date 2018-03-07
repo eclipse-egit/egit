@@ -214,8 +214,7 @@ public class ConfigureGerritAfterCloneTask implements PostCloneTask {
 				}
 			}
 		} else if (SSH.equals(s)) {
-			if (u.getPort() < 0 || u.getUser() == null
-					|| credentialsProvider == null) {
+			if (u.getPort() < 0) {
 				return false;
 			}
 			URIish sshUri = u.setPath(""); //$NON-NLS-1$
