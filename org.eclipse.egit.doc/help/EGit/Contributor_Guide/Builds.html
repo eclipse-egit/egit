@@ -36,7 +36,7 @@
 		<p>Prerequisites for the Maven build are</p>
 		<ul>
 			<li>
-				<a href="http://maven.apache.org/download.html" target="egit_external">at least Maven 3.0.0</a>
+				<a href="http://maven.apache.org/download.html" target="egit_external">at least Maven 3.5.2</a>
 			</li>
 			<li>see 
 				<a href="http://maven.apache.org/settings.html" target="egit_external">settings.xml reference</a> on how to do basic Maven configuration
@@ -108,12 +108,12 @@
 		<pre>[~/src/egit] $ mvn clean install -Djgit-site=<a href="https://repo.eclipse.org/content/unzip/snapshots.unzip/" target="egit_external">https://repo.eclipse.org/content/unzip/snapshots.unzip/</a>
                      org/eclipse/jgit/org.eclipse.jgit.repository/${JGIT_VERSION}/org.eclipse.jgit.repository-${JGIT_VERSION}.zip-unzip/
 </pre>
-		<p>If you wan to build EGit for the specific Neon (4.6) platform, consider using the <code>egit-4.6</code> target platform:</p>
-		<pre>[~/src/egit] $ mvn -Dtarget-platform=egit-4.6 clean install
+		<p>If you wan to build EGit for the specific Photon (4.8) platform, consider using the <code>egit-4.8</code> target platform:</p>
+		<pre>[~/src/egit] $ mvn -Dtarget-platform=egit-4.8 clean install
 </pre>
-		<p>For EGit version 4.9, <code>egit-4.5</code> (Mars, Eclipse 4.5), <code>egit-4.6</code> (Neon, Eclipse 4.6), and <code>egit-4.7</code> (Oxygen, Eclipse 4.7) are available. In addition <code>egit-4.7-staging</code> refers to the Oxygen staging repository.</p>
+		<p>For EGit version 4.10, <code>egit-4.5</code> (Mars, Eclipse 4.5), <code>egit-4.6</code> (Neon, Eclipse 4.6), <code>egit-4.7</code> (Oxygen, Eclipse 4.7), and <code>egit-4.8</code> (Photon, Eclipse 4.8) are available. In addition <code>egit-4.8-staging</code> refers to the Photon staging repository.</p>
 		<p>Upon a successful build, a p2 update site should be generated inside 
-			<i>egit/org.eclipse.egit.repository/target/repository</i>. If not, make sure the target platform has been downloaded from within Eclipse (Windows&gt;Preferences&gt;Plug-in Development&gt;Target Platform). The default target platform defined in the maven build is currently Eclipse 4.6. If you skip setting the system property <code>target-platform</code> the target platform for Eclipse 4.6 will be used.
+			<i>egit/org.eclipse.egit.repository/target/repository</i>. If not, make sure the target platform has been downloaded from within Eclipse (Windows&gt;Preferences&gt;Plug-in Development&gt;Target Platform). The default target platform defined in the maven build is currently Eclipse 4.7. If you skip setting the system property <code>target-platform</code> the target platform for Eclipse 4.7 will be used.
 		</p>
 		<h2 id="JGit_Bazel_Build">JGit Bazel Build</h2>
 		<p>Since Gerrit is built using 
@@ -159,16 +159,16 @@
 		<h2 id="Checking_for_JGit_API_Changes_using_API_Baseline">Checking for JGit API Changes using API Baseline</h2>
 		<p>The JGit projects have API tooling enabled. In order to use PDE API tools to get assistance with maintaining API changes and additions you need to set an API baseline:</p>
 		<ul>
-			<li>download the p2 repository for the latest EGit release (which includes the JGit artifacts) to a local folder, e.g. <code>~/egit-releases/updates-4.0</code>, find the p2 repository URLs 
+			<li>download the p2 repository for the latest EGit release (which includes the JGit artifacts) to a local folder, e.g. <code>~/egit-releases/updates-4.9.1</code>, find the p2 repository URLs 
 				<a href="http://wiki.eclipse.org/EGit/FAQ#Where_can_I_find_older_releases_of_EGit.3F" target="egit_external">here</a> and download the p2 repository of the latest minor release (service releases don't change API) using the corresponding link in the last column of that table
 			</li>
-			<li>in Eclipse click "Preferences &gt; Plug-In Development &gt; API Baselines", click "Add Baseline..." and define a new baseline (e.g. egit-4.0) and point it to the local copy of the corresponding EGit p2 repository.</li>
+			<li>in Eclipse click "Preferences &gt; Plug-In Development &gt; API Baselines", click "Add Baseline..." and define a new baseline (e.g. egit-4.9.1) and point it to the local copy of the corresponding EGit p2 repository.</li>
 			<li>the API tools will then raise warning/errors for all detected problems and provide quick fixes helping to resolve these problems</li>
 			<li>see the 
 				<a href="http://wiki.eclipse.org/PDE/API_Tools/User_Guide" target="egit_external">PDE API Tools User Guide</a> for more details.
 			</li>
 		</ul>
-		<h2 id="Automated_Signing_and_Publishing">Automated Signing and Publishing</h2>
+		<h2 id="Signing_and_Publishing">Signing and Publishing</h2>
 		<p>EGit and JGit builds running on the 
 			<a href="https://hudson.eclipse.org/egit/" target="egit_external">JGit/EGit Hudson</a> are automatically signed 
 			(using the 
@@ -186,18 +186,6 @@ latest stable branch:  /home/data/httpd/download.eclipse.org/egit/updates-stable
 				<i>download.eclipse.org</i> the maven profile <code>publish</code> must be enabled via the option <code>-P publish</code> in the egit build job.
 			</li>
 		</ul>
-		<h4 id="Signing_.28old_method.2C_replaced_by_automated_procedure.29">Signing (old method, replaced by automated procedure)</h4>
-		<p>To sign the EGit build, you need to have ssh access to build.eclipse.org and the ability to run 
-			<b>/usr/bin/sign</b>
-		</p>
-		<p>At the moment, Chris Aniszczyk (caniszczyk) and Matthias Sohn (msohn) have signing privileges.</p>
-		<p>The first step is to ensure you're in a place you can sign on build.eclipse.org</p>
-		<pre>cd /home/data/httpd/download-staging.priv/commonBuild
-</pre>
-		<p>Next you run the signing command (Usage: /usr/bin/sign &lt;file&gt; &lt;mail|nomail&gt; [outputDir]) on a zip of the EGit repo...</p>
-		<pre>sign egit-p2-repo.zip my@email.com /home/data/users/caniszczyk/egit-0.8
-</pre>
-		<p>After that, you can publish the zip that is generated with the signing information.</p>
 		<h2 id="Contribution_to_Release_Train">Contribution to Release Train</h2>
 		<p>The release train contribution for JGit and EGit is maintained in the git repository </p>
 		<pre>ssh://git.eclipse.org/gitroot/simrel/org.eclipse.simrel.build.git
