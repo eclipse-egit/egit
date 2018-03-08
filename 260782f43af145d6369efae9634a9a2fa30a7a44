@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7089352_5d3db782",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 26
+      },
+      "lineNbr": 2116,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-03-08T06:58:24Z",
+      "side": 1,
+      "message": "In the context menu of the repository, but it\u0027s only there if LFS is not enabled already (locally AND globally).",
+      "parentUuid": "ef762deb_bad8fe45",
+      "revId": "260782f43af145d6369efae9634a9a2fa30a7a44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9d18f64_acb5e128",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/DialogsPreferencePage.java",
         "patchSetId": 26
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b086ddc9_482259dc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/DialogsPreferencePage.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-03-08T06:58:24Z",
+      "side": 1,
+      "message": "Not a problem for me. We have a mechanism to distribute preferences, but not everybody has it, right? I thought the button was a good idea, I can remove it however.",
+      "parentUuid": "b9d18f64_acb5e128",
+      "revId": "260782f43af145d6369efae9634a9a2fa30a7a44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0928edd5_2675b5ac",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitPreferenceRoot.java",
         "patchSetId": 26
@@ -47,6 +83,24 @@
       "writtenOn": "2018-03-07T17:08:57Z",
       "side": 1,
       "message": "Using such a large button looks ugly, can we change this to a checkbox ?",
+      "revId": "260782f43af145d6369efae9634a9a2fa30a7a44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "575b794f_ee892e34",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitPreferenceRoot.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-03-08T06:58:24Z",
+      "side": 1,
+      "message": "Of course. Let\u0027s just settle on whether it should be there at all before I refactor it :D",
+      "parentUuid": "0928edd5_2675b5ac",
       "revId": "260782f43af145d6369efae9634a9a2fa30a7a44",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
