@@ -37,6 +37,29 @@
     },
     {
       "key": {
+        "uuid": "c953b8b0_56803b3e",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 26
+      },
+      "lineNbr": 4690,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-03-08T06:59:17Z",
+      "side": 1,
+      "message": "i think this is the reason why it is invisible if LFS is enabled already...",
+      "range": {
+        "startLine": 4690,
+        "startChar": 12,
+        "endLine": 4690,
+        "endChar": 47
+      },
+      "revId": "260782f43af145d6369efae9634a9a2fa30a7a44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9d18f64_acb5e128",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/DialogsPreferencePage.java",
         "patchSetId": 26
