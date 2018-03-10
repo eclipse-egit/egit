@@ -136,7 +136,7 @@ public class GitSynchronizeData {
 
 		repoParentPath = repo.getDirectory().getParentFile().getAbsolutePath();
 
-		projects = new HashSet<IProject>();
+		projects = new HashSet<>();
 		final Iterable<? extends IResource> includedResourceIterable;
 		if (includedResources == null)
 			// include all project in synchronization
@@ -202,15 +202,6 @@ public class GitSynchronizeData {
 	}
 
 	/**
-	 * @return {@code null}
-	 * @deprecated
-	 */
-	@Deprecated
-	public String getSrcMerge() {
-		return null;
-	}
-
-	/**
 	 * @return name of destination remote or {@code null} when destination
 	 *         branch is not a remote branch
 	 */
@@ -268,7 +259,7 @@ public class GitSynchronizeData {
 	 */
 	public void setIncludedResources(Set<IResource> includedResources) {
 		this.includedResources = includedResources;
-		Set<String> paths = new HashSet<String>();
+		Set<String> paths = new HashSet<>();
 		RepositoryMapping rm = RepositoryMapping.findRepositoryMapping(repo);
 		if (rm != null) {
 			for (IResource resource : includedResources) {
