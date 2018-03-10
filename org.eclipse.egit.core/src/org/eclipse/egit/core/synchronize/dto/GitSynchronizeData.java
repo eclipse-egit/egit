@@ -186,15 +186,6 @@ public class GitSynchronizeData {
 	}
 
 	/**
-	 * @return {@code null}
-	 * @deprecated
-	 */
-	@Deprecated
-	public String getSrcRemoteName() {
-		return null;
-	}
-
-	/**
 	 * @return ref specification of destination merge branch
 	 */
 	public String getDstMerge() {
