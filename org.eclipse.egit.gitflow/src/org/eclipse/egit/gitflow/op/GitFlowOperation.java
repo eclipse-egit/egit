@@ -281,20 +281,6 @@ abstract public class GitFlowOperation implements IEGitOperation {
 	}
 
 	/**
-	 * @param monitor
-	 * @return resulting of fetching from remote
-	 * @throws URISyntaxException
-	 * @throws InvocationTargetException
-	 * @deprecated Use {@link GitFlowOperation#fetch(IProgressMonitor, int)}
-	 *             instead.
-	 */
-	@Deprecated
-	protected FetchResult fetch(IProgressMonitor monitor)
-			throws URISyntaxException, InvocationTargetException {
-		return fetch(monitor, 0);
-	}
-
-	/**
 	 * @return The result of the merge this operation performs. May be null, if
 	 *         no merge was performed.
 	 */
