@@ -5,7 +5,7 @@
          point="org.eclipse.ui.importWizards">
       <wizard
             category="org.eclipse.egit.ui.internal.clone.gitclonecategory"
-            icon="icons/obj16/import_prj.gif"
+            icon="icons/obj16/import_prj.png"
             class="org.eclipse.egit.ui.internal.clone.SmartImportGitWizard"
             id="org.eclipse.egit.ui.importer.wizard"
             name="%EasymportGitWizard_label">
