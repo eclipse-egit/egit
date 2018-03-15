@@ -77,7 +77,7 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.WorkingTreeOptions;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
+import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.jgit.util.IO;
 import org.eclipse.jgit.util.io.AutoLFInputStream;
@@ -924,7 +924,7 @@ public class CompareUtils {
 				RevCommit headCommit = rw.parseCommit(head.getObjectId());
 				rw.markStart(headCommit);
 				rw.setTreeFilter(AndTreeFilter.create(
-						PathFilter.create(repoRelativePath),
+						PathFilterGroup.createFromStrings(repoRelativePath),
 						TreeFilter.ANY_DIFF));
 				rw.setRewriteParents(false);
 				latestFileCommit = rw.next();

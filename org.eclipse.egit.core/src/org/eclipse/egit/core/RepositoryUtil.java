@@ -57,7 +57,7 @@ import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
+import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.util.FS;
 import org.osgi.service.prefs.BackingStoreException;
 
@@ -72,6 +72,7 @@ public class RepositoryUtil {
 	 *
 	 * @deprecated maintained to ensure compatibility for old EGit versions
 	 */
+	@Deprecated
 	public static final String PREFS_DIRECTORIES = "GitRepositoriesView.GitDirectories"; //$NON-NLS-1$
 
 	/**
@@ -83,9 +84,9 @@ public class RepositoryUtil {
 	 */
 	public static final String PREFS_DIRECTORIES_REL = "GitRepositoriesView.GitDirectories.relative"; //$NON-NLS-1$
 
-	private final Map<String, Map<String, String>> commitMappingCache = new HashMap<String, Map<String, String>>();
+	private final Map<String, Map<String, String>> commitMappingCache = new HashMap<>();
 
-	private final Map<String, String> repositoryNameCache = new HashMap<String, String>();
+	private final Map<String, String> repositoryNameCache = new HashMap<>();
 
 	private final IEclipsePreferences prefs = InstanceScope.INSTANCE
 			.getNode(Activator.getPluginId());
@@ -243,14 +244,14 @@ public class RepositoryUtil {
 				return cacheEntry.get(commitId);
 			}
 			if (cacheEntry == null) {
-				cacheEntry = new HashMap<String, String>();
+				cacheEntry = new HashMap<>();
 				commitMappingCache.put(repository.getDirectory().getPath(),
 						cacheEntry);
 			} else {
 				cacheEntry.clear();
 			}
 
-			Map<String, Date> tagMap = new HashMap<String, Date>();
+			Map<String, Date> tagMap = new HashMap<>();
 			try (RevWalk rw = new RevWalk(repository)) {
 				Map<String, Ref> tags = repository.getRefDatabase().getRefs(
 						Constants.R_TAGS);
@@ -309,7 +310,7 @@ public class RepositoryUtil {
 
 			if (cacheValue == null) {
 				// we didnt't find a tag, so let's look for local branches
-				Set<String> branchNames = new TreeSet<String>();
+				Set<String> branchNames = new TreeSet<>();
 				// put this into a sorted set
 				try {
 					Map<String, Ref> remoteBranches = repository
@@ -333,7 +334,7 @@ public class RepositoryUtil {
 
 			if (cacheValue == null) {
 				// last try: remote branches
-				Set<String> branchNames = new TreeSet<String>();
+				Set<String> branchNames = new TreeSet<>();
 				// put this into a sorted set
 				try {
 					Map<String, Ref> remoteBranches = repository
@@ -447,7 +448,7 @@ public class RepositoryUtil {
 		if (dirs == null || dirs.isEmpty()) {
 			return Collections.emptySet();
 		}
-		Set<String> configuredStrings = new HashSet<String>();
+		Set<String> configuredStrings = new HashSet<>();
 		StringTokenizer tok = new StringTokenizer(dirs, File.pathSeparator);
 		while (tok.hasMoreTokens()) {
 			configuredStrings
@@ -461,7 +462,7 @@ public class RepositoryUtil {
 	 * @return the list of configured Repository paths; will be sorted
 	 */
 	public List<String> getConfiguredRepositories() {
-		final List<String> repos = new ArrayList<String>(getRepositories());
+		final List<String> repos = new ArrayList<>(getRepositories());
 		Collections.sort(repos);
 		return repos;
 	}
@@ -489,7 +490,7 @@ public class RepositoryUtil {
 			if (dirStrings.contains(dirString)) {
 				return false;
 			} else {
-				Set<String> dirs = new HashSet<String>();
+				Set<String> dirs = new HashSet<>();
 				dirs.addAll(dirStrings);
 				dirs.add(dirString);
 				saveDirs(dirs);
@@ -505,7 +506,7 @@ public class RepositoryUtil {
 	public boolean removeDir(File file) {
 		synchronized (prefs) {
 			String dirString = file.getAbsolutePath();
-			Set<String> dirStrings = new HashSet<String>();
+			Set<String> dirStrings = new HashSet<>();
 			dirStrings.addAll(getConfiguredRepositories());
 			if (dirStrings.remove(dirString)) {
 				saveDirs(dirStrings);
@@ -662,7 +663,7 @@ public class RepositoryUtil {
 		}
 		try (TreeWalk walk = new TreeWalk(repository)) {
 			walk.addTree(treeIterator);
-			walk.setFilter(PathFilter.create(repoRelativePath));
+			walk.setFilter(PathFilterGroup.createFromStrings(repoRelativePath));
 			while (walk.next()) {
 				WorkingTreeIterator workingTreeIterator = walk.getTree(0,
 						WorkingTreeIterator.class);
@@ -711,7 +712,7 @@ public class RepositoryUtil {
 		}
 		try (TreeWalk walk = new TreeWalk(repository)) {
 			walk.addTree(treeIterator);
-			walk.setFilter(PathFilter.create(repoRelativePath));
+			walk.setFilter(PathFilterGroup.createFromStrings(repoRelativePath));
 			while (walk.next()) {
 				WorkingTreeIterator workingTreeIterator = walk.getTree(0,
 						WorkingTreeIterator.class);

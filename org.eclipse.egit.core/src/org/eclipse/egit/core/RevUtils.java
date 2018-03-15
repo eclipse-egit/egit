@@ -24,7 +24,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
+import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
 
 /**
@@ -84,7 +84,8 @@ public class RevUtils {
 		try (RevWalk walk = new RevWalk(repository)) {
 			RevCommit ourCommit;
 			RevCommit theirCommit = null;
-			walk.setTreeFilter(AndTreeFilter.create(PathFilter.create(path),
+			walk.setTreeFilter(AndTreeFilter.create(
+					PathFilterGroup.createFromStrings(path),
 					TreeFilter.ANY_DIFF));
 
 			RevCommit head = walk.parseCommit(repository
