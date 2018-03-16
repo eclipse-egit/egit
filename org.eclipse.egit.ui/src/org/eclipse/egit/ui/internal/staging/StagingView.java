@@ -864,7 +864,8 @@ public class StagingView extends ViewPart
 		stageAllAction.setEnabled(false);
 
 		unstagedSection = toolkit.createSection(stagingSashForm,
-				ExpandableComposite.TITLE_BAR);
+				ExpandableComposite.SHORT_TITLE_BAR);
+		unstagedSection.clientVerticalSpacing = 0;
 
 		unstagedSection.setLayoutData(
 				GridDataFactory.fillDefaults().grab(true, true).create());
@@ -874,7 +875,7 @@ public class StagingView extends ViewPart
 		Composite unstagedComposite = toolkit.createComposite(unstagedSection);
 		toolkit.paintBordersFor(unstagedComposite);
 		unstagedSection.setClient(unstagedComposite);
-		GridLayoutFactory.fillDefaults().extendedMargins(2, 2, 2, 2)
+		GridLayoutFactory.fillDefaults().extendedMargins(0, 0, 0, 0)
 				.applyTo(unstagedComposite);
 
 		unstagedViewer = createViewer(unstagedComposite, true,
@@ -891,7 +892,8 @@ public class StagingView extends ViewPart
 		rebaseAndCommitComposite.setLayout(GridLayoutFactory.fillDefaults().create());
 
 		rebaseSection = toolkit.createSection(rebaseAndCommitComposite,
-				ExpandableComposite.TITLE_BAR);
+				ExpandableComposite.SHORT_TITLE_BAR);
+		rebaseSection.clientVerticalSpacing = 0;
 		rebaseSection.setText(UIText.StagingView_RebaseLabel);
 
 		Composite rebaseComposite = toolkit.createComposite(rebaseSection);
@@ -940,7 +942,8 @@ public class StagingView extends ViewPart
 		showControl(rebaseSection, false);
 
 		commitMessageSection = toolkit.createSection(rebaseAndCommitComposite,
-				ExpandableComposite.TITLE_BAR);
+				ExpandableComposite.SHORT_TITLE_BAR);
+		commitMessageSection.clientVerticalSpacing = 0;
 		commitMessageSection.setText(UIText.StagingView_CommitMessage);
 		commitMessageSection.setLayoutData(GridDataFactory.fillDefaults()
 				.grab(true, true).create());
@@ -1034,14 +1037,14 @@ public class StagingView extends ViewPart
 		};
 		commitMessageText.setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TEXT_BORDER);
-		GridDataFactory.fillDefaults().grab(true, true)
+		GridDataFactory.fillDefaults().indent(0, 0).grab(true, true)
 				.applyTo(commitMessageText);
 		UIUtils.addBulbDecorator(commitMessageText.getTextWidget(),
 				UIText.CommitDialog_ContentAssist);
 
 		Composite composite = toolkit.createComposite(commitMessageComposite);
 		toolkit.paintBordersFor(composite);
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(composite);
+		GridDataFactory.fillDefaults().indent(0, 0).grab(true, false).applyTo(composite);
 		GridLayoutFactory.swtDefaults().numColumns(2).applyTo(composite);
 
 		toolkit.createLabel(composite, UIText.StagingView_Author)
@@ -1050,7 +1053,7 @@ public class StagingView extends ViewPart
 		authorText = toolkit.createText(composite, null);
 		authorText
 				.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
-		authorText.setLayoutData(GridDataFactory.fillDefaults()
+		authorText.setLayoutData(GridDataFactory.fillDefaults().indent(0, 0)
 				.grab(true, false).create());
 
 		toolkit.createLabel(composite, UIText.StagingView_Committer)
@@ -1059,7 +1062,7 @@ public class StagingView extends ViewPart
 		committerText = toolkit.createText(composite, null);
 		committerText.setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TEXT_BORDER);
-		committerText.setLayoutData(GridDataFactory.fillDefaults()
+		committerText.setLayoutData(GridDataFactory.fillDefaults().indent(0, 0)
 				.grab(true, false).create());
 
 		Composite buttonsContainer = toolkit.createComposite(composite);
@@ -1105,9 +1108,10 @@ public class StagingView extends ViewPart
 
 		Composite commitButtonsContainer = toolkit
 				.createComposite(buttonsContainer);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
+		GridDataFactory.fillDefaults().indent(0, 0).align(SWT.FILL, SWT.CENTER)
 				.applyTo(commitButtonsContainer);
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(true)
+				.extendedMargins(0, 0, 0, 0)
 				.applyTo(commitButtonsContainer);
 
 
@@ -1137,14 +1141,15 @@ public class StagingView extends ViewPart
 				.applyTo(commitButton);
 
 		stagedSection = toolkit.createSection(stagingSashForm,
-				ExpandableComposite.TITLE_BAR);
+				ExpandableComposite.SHORT_TITLE_BAR);
+		stagedSection.clientVerticalSpacing = 0;
 
 		createStagedToolBarComposite();
 
 		Composite stagedComposite = toolkit.createComposite(stagedSection);
 		toolkit.paintBordersFor(stagedComposite);
 		stagedSection.setClient(stagedComposite);
-		GridLayoutFactory.fillDefaults().extendedMargins(2, 2, 2, 2)
+		GridLayoutFactory.fillDefaults().extendedMargins(0, 0, 0, 0)
 				.applyTo(stagedComposite);
 
 		stagedViewer = createViewer(stagedComposite, false,
@@ -2067,7 +2072,7 @@ public class StagingView extends ViewPart
 			final Consumer<IStructuredSelection> dropAction,
 			IAction... tooltipActions) {
 		final TreeViewer viewer = createTree(parent);
-		GridDataFactory.fillDefaults().grab(true, true)
+		GridDataFactory.fillDefaults().indent(0, 0).grab(true, true)
 				.applyTo(viewer.getControl());
 		viewer.getTree().setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TREE_BORDER);
