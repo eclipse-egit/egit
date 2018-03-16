@@ -864,7 +864,8 @@ public class StagingView extends ViewPart
 		stageAllAction.setEnabled(false);
 
 		unstagedSection = toolkit.createSection(stagingSashForm,
-				ExpandableComposite.TITLE_BAR);
+				ExpandableComposite.SHORT_TITLE_BAR);
+		unstagedSection.clientVerticalSpacing = 0;
 
 		unstagedSection.setLayoutData(
 				GridDataFactory.fillDefaults().grab(true, true).create());
@@ -874,8 +875,7 @@ public class StagingView extends ViewPart
 		Composite unstagedComposite = toolkit.createComposite(unstagedSection);
 		toolkit.paintBordersFor(unstagedComposite);
 		unstagedSection.setClient(unstagedComposite);
-		GridLayoutFactory.fillDefaults().extendedMargins(2, 2, 2, 2)
-				.applyTo(unstagedComposite);
+		GridLayoutFactory.fillDefaults().applyTo(unstagedComposite);
 
 		unstagedViewer = createViewer(unstagedComposite, true,
 				selection -> unstage(selection), stageAction);
@@ -891,7 +891,8 @@ public class StagingView extends ViewPart
 		rebaseAndCommitComposite.setLayout(GridLayoutFactory.fillDefaults().create());
 
 		rebaseSection = toolkit.createSection(rebaseAndCommitComposite,
-				ExpandableComposite.TITLE_BAR);
+				ExpandableComposite.SHORT_TITLE_BAR);
+		rebaseSection.clientVerticalSpacing = 0;
 		rebaseSection.setText(UIText.StagingView_RebaseLabel);
 
 		Composite rebaseComposite = toolkit.createComposite(rebaseSection);
@@ -940,7 +941,8 @@ public class StagingView extends ViewPart
 		showControl(rebaseSection, false);
 
 		commitMessageSection = toolkit.createSection(rebaseAndCommitComposite,
-				ExpandableComposite.TITLE_BAR);
+				ExpandableComposite.SHORT_TITLE_BAR);
+		commitMessageSection.clientVerticalSpacing = 0;
 		commitMessageSection.setText(UIText.StagingView_CommitMessage);
 		commitMessageSection.setLayoutData(GridDataFactory.fillDefaults()
 				.grab(true, true).create());
@@ -1137,15 +1139,15 @@ public class StagingView extends ViewPart
 				.applyTo(commitButton);
 
 		stagedSection = toolkit.createSection(stagingSashForm,
-				ExpandableComposite.TITLE_BAR);
+				ExpandableComposite.SHORT_TITLE_BAR);
+		stagedSection.clientVerticalSpacing = 0;
 
 		createStagedToolBarComposite();
 
 		Composite stagedComposite = toolkit.createComposite(stagedSection);
 		toolkit.paintBordersFor(stagedComposite);
 		stagedSection.setClient(stagedComposite);
-		GridLayoutFactory.fillDefaults().extendedMargins(2, 2, 2, 2)
-				.applyTo(stagedComposite);
+		GridLayoutFactory.fillDefaults().applyTo(stagedComposite);
 
 		stagedViewer = createViewer(stagedComposite, false,
 				selection -> stage(selection), unstageAction);
