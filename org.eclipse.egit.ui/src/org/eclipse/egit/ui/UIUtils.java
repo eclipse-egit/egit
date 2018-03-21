@@ -14,8 +14,6 @@ import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -53,12 +51,6 @@ import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.ResourceManager;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IRegion;
-import org.eclipse.jface.text.ITextViewer;
-import org.eclipse.jface.text.hyperlink.IHyperlink;
-import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.Viewer;
@@ -67,8 +59,6 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyleRange;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.KeyEvent;
@@ -85,7 +75,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
@@ -926,89 +915,6 @@ public class UIUtils {
 		MenuManager showInSubMenu = new MenuManager(getShowInMenuLabel());
 		showInSubMenu.add(ContributionItemFactory.VIEWS_SHOW_IN.create(workbenchWindow));
 		return showInSubMenu;
-	}
-
-	/**
-	 * Use hyperlink detectors to find a text viewer's hyperlinks and apply them
-	 * to the text widget. Existing overlapping styles are overwritten by new
-	 * styles from this.
-	 *
-	 * @param textViewer
-	 * @param hyperlinkDetectors
-	 * @deprecated Instead of applying SWT styling directly use JFace
-	 *             infrastructure (
-	 *             {@link org.eclipse.jface.text.rules.DefaultDamagerRepairer
-	 *             DefaultDamagerRepairer},
-	 *             {@link org.eclipse.jface.text.rules.ITokenScanner
-	 *             ITokenScanner}) to do syntax coloring. See also
-	 *             {@link org.eclipse.egit.ui.internal.dialogs.HyperlinkTokenScanner}
-	 *             .
-	 */
-	@Deprecated
-	public static void applyHyperlinkDetectorStyleRanges(
-			ITextViewer textViewer, IHyperlinkDetector[] hyperlinkDetectors) {
-		StyleRange[] styleRanges = getHyperlinkDetectorStyleRanges(textViewer,
-				hyperlinkDetectors);
-		StyledText styledText = textViewer.getTextWidget();
-		// Apply hyperlink style ranges one by one. setStyleRange takes care to
-		// do the right thing in case they overlap with an existing style range.
-		for (StyleRange styleRange : styleRanges)
-			styledText.setStyleRange(styleRange);
-	}
-
-	/**
-	 * Use hyperlink detectors to find a text viewer's hyperlinks and return the
-	 * style ranges to render them.
-	 *
-	 * @param textViewer
-	 * @param hyperlinkDetectors
-	 * @return the style ranges to render the detected hyperlinks
-	 * @deprecated Instead of applying SWT styling directly use JFace
-	 *             infrastructure (
-	 *             {@link org.eclipse.jface.text.rules.DefaultDamagerRepairer
-	 *             DefaultDamagerRepairer},
-	 *             {@link org.eclipse.jface.text.rules.ITokenScanner
-	 *             ITokenScanner}) to do syntax coloring. See also
-	 *             {@link org.eclipse.egit.ui.internal.dialogs.HyperlinkTokenScanner}
-	 *             .
-	 */
-	@Deprecated
-	public static StyleRange[] getHyperlinkDetectorStyleRanges(
-			ITextViewer textViewer, IHyperlinkDetector[] hyperlinkDetectors) {
-		HashSet<StyleRange> styleRangeList = new LinkedHashSet<>();
-		if (hyperlinkDetectors != null && hyperlinkDetectors.length > 0) {
-			IDocument doc = textViewer.getDocument();
-			for (int line = 0; line < doc.getNumberOfLines(); line++) {
-				try {
-					IRegion region = doc.getLineInformation(line);
-					for (IHyperlinkDetector hyperLinkDetector : hyperlinkDetectors) {
-						IHyperlink[] hyperlinks = hyperLinkDetector
-								.detectHyperlinks(textViewer, region, true);
-						if (hyperlinks != null) {
-							for (IHyperlink hyperlink : hyperlinks) {
-								StyleRange hyperlinkStyleRange = new StyleRange(
-										hyperlink.getHyperlinkRegion()
-												.getOffset(), hyperlink
-												.getHyperlinkRegion()
-												.getLength(), Display
-												.getDefault().getSystemColor(
-														SWT.COLOR_BLUE),
-										Display.getDefault().getSystemColor(
-												SWT.COLOR_WHITE));
-								hyperlinkStyleRange.underline = true;
-								styleRangeList.add(hyperlinkStyleRange);
-							}
-						}
-					}
-				} catch (BadLocationException e) {
-					Activator.logError(e.getMessage(), e);
-					break;
-				}
-			}
-		}
-		StyleRange[] styleRangeArray = new StyleRange[styleRangeList.size()];
-		styleRangeList.toArray(styleRangeArray);
-		return styleRangeArray;
 	}
 
 	private static String getShowInMenuLabel() {

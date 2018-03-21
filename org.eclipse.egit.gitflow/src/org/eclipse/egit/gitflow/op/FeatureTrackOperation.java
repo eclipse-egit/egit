@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.gitflow.op;
 
+import static org.eclipse.egit.gitflow.Activator.error;
 import static org.eclipse.jgit.lib.Constants.DEFAULT_REMOTE_NAME;
 import static org.eclipse.jgit.lib.Constants.R_REMOTES;
 
@@ -20,9 +21,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
-
-import static org.eclipse.egit.gitflow.Activator.error;
-
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.internal.CoreText;
 import org.eclipse.jgit.api.CheckoutResult;
@@ -44,20 +42,6 @@ public final class FeatureTrackOperation extends AbstractFeatureOperation {
 	private FetchResult operationResult;
 
 	private int timeout;
-
-	/**
-	 * Track given ref, referencing a feature branch.
-	 *
-	 * @param repository
-	 * @param ref
-	 * @deprecated Use
-	 *             {@link FeatureTrackOperation#FeatureTrackOperation(GitFlowRepository, Ref, int)}
-	 *             instead.
-	 */
-	@Deprecated
-	public FeatureTrackOperation(GitFlowRepository repository, Ref ref) {
-		this(repository, ref, 0);
-	}
 
 	/**
 	 * Track given ref, referencing a feature branch.

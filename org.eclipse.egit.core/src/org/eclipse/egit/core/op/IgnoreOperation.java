@@ -20,7 +20,6 @@ import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -71,22 +70,6 @@ public class IgnoreOperation implements IEGitOperation {
 	 */
 	public IgnoreOperation(Collection<IPath> paths) {
 		this.paths = paths;
-		gitignoreOutsideWSChanged = false;
-		schedulingRule = calcSchedulingRule();
-	}
-
-	/**
-	 * @param resources
-	 * @deprecated use {@link #IgnoreOperation(Collection)}
-	 */
-	@Deprecated
-	public IgnoreOperation(IResource[] resources) {
-		paths = new ArrayList<IPath>(resources.length);
-		for (IResource resource : resources) {
-			IPath location = resource.getLocation();
-			if (location != null)
-				paths.add(location);
-		}
 		gitignoreOutsideWSChanged = false;
 		schedulingRule = calcSchedulingRule();
 	}
