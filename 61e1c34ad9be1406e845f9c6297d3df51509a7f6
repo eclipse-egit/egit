@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6987466d_66251991",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-03-26T06:04:51Z",
+      "side": 1,
+      "message": "This _is_ the default, so this could simply be removed.",
+      "range": {
+        "startLine": 878,
+        "startChar": 35,
+        "endLine": 878,
+        "endChar": 62
+      },
+      "revId": "61e1c34ad9be1406e845f9c6297d3df51509a7f6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3e00558_2f381157",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-03-26T06:04:51Z",
+      "side": 1,
+      "message": "This _is_ the default.",
+      "range": {
+        "startLine": 1040,
+        "startChar": 33,
+        "endLine": 1040,
+        "endChar": 46
+      },
+      "revId": "61e1c34ad9be1406e845f9c6297d3df51509a7f6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
