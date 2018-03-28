@@ -16,7 +16,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -52,25 +51,6 @@ public class ConfigureGerritAfterCloneTask implements PostCloneTask {
 	private static final int GERRIT_SSHD_DEFAULT_PORT = 29418;
 
 	private static final String GERRIT_SSHD_VERSION_API = "gerrit version"; //$NON-NLS-1$
-
-	/**
-	 * Pattern to match the sshd reply[1] against to determine whether it's a
-	 * Gerrit.
-	 * <p>
-	 * [1]<a href=
-	 * "https://gerrit-documentation.storage.googleapis.com/Documentation/2.11/cmd-version.html">
-	 * Gerrit 2.11 gerrit version ssh command</a>
-	 * </p>
-	 * <p>
-	 * We match the whole reply from Gerrit's sshd (as opposed to a prefix match
-	 * for "gerrit version") just in case a non-Gerrit has the great idea to
-	 * return an error message like "gerrit version: unknown command" or some
-	 * such on its stdout...
-	 * </p>
-	 */
-	private static final Pattern GERRIT_SSHD_REPLY = Pattern
-			.compile(GERRIT_SSHD_VERSION_API
-					+ "\\s+(?:\\d+(?:\\.\\d+)+|.+-\\d+-g[0-9a-fA-F]{7,})"); //$NON-NLS-1$
 
 	/**
 	 * To prevent against Cross Site Script Inclusion (XSSI) attacks, the Gerrit
@@ -217,7 +197,7 @@ public class ConfigureGerritAfterCloneTask implements PostCloneTask {
 						credentialsProvider, repo.getFS(),
 						GERRIT_SSHD_VERSION_API, timeout);
 				return result != null
-						&& GERRIT_SSHD_REPLY.matcher(result).matches();
+						&& result.contains(GERRIT_SSHD_VERSION_API);
 			} catch (IOException e) {
 				// Something went wrong with the connection or with the command
 				// execution. Maybe the server didn't recognize the command. Do
