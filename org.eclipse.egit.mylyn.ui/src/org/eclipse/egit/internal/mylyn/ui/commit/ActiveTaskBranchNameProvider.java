@@ -53,8 +53,9 @@ public class ActiveTaskBranchNameProvider implements IBranchNameProvider {
 	}
 
 	private String normalizeBranchName(String name) {
-		String normalized = Repository.normalizeBranchName(name);
-		if (normalized != null && normalized.length() > 30) {
+		String normalized = Repository
+				.normalizeBranchName(name.replaceAll("[#$!]", " ")); //$NON-NLS-1$ //$NON-NLS-2$
+		if (normalized.length() > 30) {
 			normalized = Repository
 					.normalizeBranchName(normalized.substring(0, 30));
 		}
