@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce7fd90f_4266065d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-03-31T20:46:59Z",
+      "side": 1,
+      "message": "simpler",
+      "range": {
+        "startLine": 10,
+        "startChar": 3,
+        "endLine": 10,
+        "endChar": 14
+      },
+      "revId": "c5cce95f838b3b2e197f739e5b3b5dff1df5df45",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4810f6e_4a64b854",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-03-31T20:46:59Z",
+      "side": 1,
+      "message": "Since this doesn\u0027t fire a CheckStateChangedEvent the Finish button is never enabled. Call enableOk() explicitly here after having changed the state.",
+      "range": {
+        "startLine": 382,
+        "startChar": 15,
+        "endLine": 382,
+        "endChar": 25
+      },
+      "revId": "c5cce95f838b3b2e197f739e5b3b5dff1df5df45",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
