@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f29548b_4ca56ab2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2955,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-03-31T21:24:38Z",
+      "side": 1,
+      "message": "That looks needlessly complicated. Why not simply \"\\\\*\" ?",
+      "range": {
+        "startLine": 2955,
+        "startChar": 54,
+        "endLine": 2955,
+        "endChar": 63
+      },
+      "revId": "21e2eac957472b4bb039ab7cff088dfad19afade",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b66fbecc_f61e0034",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2955,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-03-31T21:24:38Z",
+      "side": 1,
+      "message": "Learned something new today... nevertheless, personally I find it clearer to use Pattern.compile(regex, Pattern.CASE_INSENSITIVE) instead.",
+      "range": {
+        "startLine": 2955,
+        "startChar": 18,
+        "endLine": 2955,
+        "endChar": 22
+      },
+      "revId": "21e2eac957472b4bb039ab7cff088dfad19afade",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cc4c632_52a3895c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2958,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-03-31T21:24:38Z",
+      "side": 1,
+      "message": "There might also be a \\Q\\E at the front, if the filter starts with an asterisk.",
+      "revId": "21e2eac957472b4bb039ab7cff088dfad19afade",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fe4e9ea_b11e8040",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2959,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-03-31T21:24:38Z",
+      "side": 1,
+      "message": "This never returns null. So getFilterPattern() never returns null after the filter has been edited once, even if it is cleared. Perhaps return null if filter.isEmpty()? (Or filter.trim().isEmpty()?)",
+      "revId": "21e2eac957472b4bb039ab7cff088dfad19afade",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
