@@ -27,10 +27,10 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -219,8 +219,8 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 	}
 
 	int getShownCount() {
-		String filterString = getFilterString();
-		if (filterString.length() == 0) {
+		Pattern filterPattern = getFilterPattern();
+		if (filterPattern == null) {
 			return getCount();
 		} else {
 			int shownCount = 0;
@@ -244,18 +244,17 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 	}
 
 	boolean isInFilter(StagingEntry stagingEntry) {
-		String filterString = getFilterString();
-		return filterString.length() == 0
-				|| stagingEntry.getPath().toUpperCase(Locale.ROOT)
-						.contains(filterString.toUpperCase(Locale.ROOT));
+		Pattern filterPattern = getFilterPattern();
+		return filterPattern == null
+				|| filterPattern.matcher(stagingEntry.getPath()).find();
 	}
 
-	private String getFilterString() {
-		return stagingView.getFilterString();
+	private Pattern getFilterPattern() {
+		return stagingView.getFilterPattern();
 	}
 
 	boolean hasVisibleChildren(StagingFolderEntry folder) {
-		if (getFilterString().length() == 0)
+		if (getFilterPattern() == null)
 			return true;
 		else
 			return !getStagingEntriesFiltered(folder).isEmpty();

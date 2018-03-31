@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.IUndoContext;
@@ -282,6 +284,9 @@ public class StagingView extends ViewPart
 	private ToggleableWarningLabel warningLabel;
 
 	private Text filterText;
+
+	/** Remember compiled pattern of the current filter string for performance. */
+	private Pattern filterPattern;
 
 	private SpellcheckableMessageArea commitMessageText;
 
@@ -1767,6 +1772,7 @@ public class StagingView extends ViewPart
 				filterText.addModifyListener(new ModifyListener() {
 					@Override
 					public void modifyText(ModifyEvent e) {
+						filterPattern = wildcardToRegex(filterText.getText());
 						final StagingViewSearchThread searchThread = new StagingViewSearchThread(
 								StagingView.this);
 						display.timerExec(200, new Runnable() {
@@ -2935,11 +2941,31 @@ public class StagingView extends ViewPart
 	 * @return the trimmed string which is the current filter, empty string for
 	 *         no filter
 	 */
-	String getFilterString() {
-		if (filterText != null && !filterText.isDisposed())
-			return filterText.getText().trim();
-		else
-			return ""; //$NON-NLS-1$
+	Pattern getFilterPattern() {
+		return filterPattern;
+	}
+
+	/**
+	 * Convert a filter string to a regex pattern. Wildcard characters "*" will
+	 * match anything, other characters must match literally (case insensitive).
+	 * The filter string will be trimmed.
+	 *
+	 * @param filter
+	 * @return compiled pattern, or {@code null} if trimmed filter input is
+	 *         empty
+	 */
+	private Pattern wildcardToRegex(String filter) {
+		String trimmed = filter.trim();
+		if (trimmed.isEmpty()) {
+			return null;
+		}
+		String regex = (trimmed.contains("*") ? "^" : "") + "\\Q"//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ trimmed.replaceAll("\\*", //$NON-NLS-1$
+						Matcher.quoteReplacement("\\E.*?\\Q")) //$NON-NLS-1$
+				+ "\\E";//$NON-NLS-1$
+		// remove potentially empty quotes at begin or end
+		regex = regex.replaceAll(Pattern.quote("\\Q\\E"), ""); //$NON-NLS-1$ //$NON-NLS-2$
+		return Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 	}
 
 	/**
