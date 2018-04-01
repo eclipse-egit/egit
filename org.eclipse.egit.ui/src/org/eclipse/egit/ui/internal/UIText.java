@@ -89,6 +89,9 @@ public class UIText extends NLS {
 	public static String Activator_setupFocusListener;
 
 	/** */
+	public static String AddCommand_AddButtonLabel;
+
+	/** */
 	public static String AddConfigEntryDialog_AddConfigTitle;
 
 	/** */

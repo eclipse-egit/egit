@@ -290,7 +290,7 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		shell.activate();
 		SWTBotTreeItem item = shell.bot().tree().getAllItems()[0];
 		item.check();
-		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
+		shell.bot().button(UIText.AddCommand_AddButtonLabel).click();
 		TestUtil.joinJobs(org.eclipse.egit.core.JobFamilies.AUTO_SHARE);
 		refreshAndWait();
 		assertHasRepo(repositoryFile);

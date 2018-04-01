@@ -444,7 +444,7 @@ public class RepositorySearchDialog extends WizardPage {
 		fTreeViewer.setLabelProvider(new RepositoryLabelProvider());
 
 		setControl(main);
-
+		enableOk();
 		if (fillSearch)
 			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 

@@ -37,12 +37,16 @@ import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.project.RepositoryFinder;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.RepositorySearchWizard;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.util.FileUtils;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.team.core.RepositoryProvider;
 
 /**
@@ -54,7 +58,17 @@ public class AddCommand extends
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RepositorySearchWizard wizard = new RepositorySearchWizard(
 				util.getConfiguredRepositories(), true);
-		WizardDialog dialog = new WizardDialog(getShell(event), wizard);
+		WizardDialog dialog = new WizardDialog(getShell(event), wizard) {
+			@Override
+			protected Button createButton(Composite parent, int id,
+					String label, boolean defaultButton) {
+				if (id == IDialogConstants.FINISH_ID) {
+					return super.createButton(parent, id,
+							UIText.AddCommand_AddButtonLabel, defaultButton);
+				}
+				return super.createButton(parent, id, label, defaultButton);
+			}
+		};
 		if (dialog.open() == Window.OK) {
 			for (String dir : wizard.getDirectories()) {
 				File repositoryDir = FileUtils.canonicalize(new File(dir));
