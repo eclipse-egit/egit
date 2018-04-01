@@ -340,7 +340,8 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		IPath newPath = new Path(getTestDirectory().getPath());
 		shell.bot().textWithLabel(UIText.CreateRepositoryPage_DirectoryLabel)
 				.setText(newPath.append("NewRepository").toOSString());
-		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
+		shell.bot().button(UIText.CreateRepositoryCommand_CreateButtonLabel)
+				.click();
 		refreshAndWait();
 		File repoFile = new File(newPath.append("NewRepository").toFile(),
 				Constants.DOT_GIT);
@@ -358,7 +359,8 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		shell.bot().textWithLabel(UIText.CreateRepositoryPage_DirectoryLabel)
 				.setText(newPath.toOSString());
 		shell.bot().checkBox(UIText.CreateRepositoryPage_BareCheckbox).select();
-		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
+		shell.bot().button(UIText.CreateRepositoryCommand_CreateButtonLabel)
+				.click();
 		refreshAndWait();
 		repoFile = newPath.toFile();
 		myRepoViewUtil.getRootItem(getOrOpenView().bot().tree(), repoFile);

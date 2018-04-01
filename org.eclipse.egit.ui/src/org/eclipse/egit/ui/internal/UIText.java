@@ -2663,6 +2663,9 @@ public class UIText extends NLS {
 	public static String CreateBranchWizard_NewBranchTitle;
 
 	/** */
+	public static String CreateRepositoryCommand_CreateButtonLabel;
+
+	/** */
 	public static String CreateRepositoryPage_BareCheckbox;
 
 	/** */
