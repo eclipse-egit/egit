@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1f03149_65800374",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/ActiveTaskBranchNameProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-04-01T10:16:22Z",
+      "side": 1,
+      "message": "I would substitute a blank instead of an underscore. Avoids initial underscores, since normalizeBranchName trims, and later replaces blanks by underscores.",
+      "revId": "f93013817767f7b5cda014015936a43cee2d78e7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
