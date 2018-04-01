@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d7d17d0_cfb79c20",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-04-01T18:40:13Z",
+      "side": 1,
+      "message": "First, it changes the API of the dialog, and second, this doesn\u0027t affect versioning at all since it\u0027s internal.",
+      "revId": "95ccfe4db291d0d1fb20e038cf445964a7e525c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6058bd9_fa0574fd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeleteRepositoryConfirmDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-04-01T18:40:13Z",
+      "side": 1,
+      "message": "How about having the table always enabled? First, if there are more projects than can be shown, I\u0027d like to able to scroll and check before checking the \"Remove projects\" checkbox. Second, if it\u0027s not always enabled, I would have expected it to be disabled also if the checkbox is disabled (even if checked).\n\nBeing able to select a project in that table is slightly confusing, but it\u0027s probably too much work to suppress selections (and possibly focus rectangles) altogether.",
+      "revId": "95ccfe4db291d0d1fb20e038cf445964a7e525c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "395d62a9_ff092153",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeleteRepositoryConfirmDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-04-01T18:40:13Z",
+      "side": 1,
+      "message": "Maybe use !projectsToDelete.isEmpty()?",
+      "range": {
+        "startLine": 201,
+        "startChar": 32,
+        "endLine": 201,
+        "endChar": 59
+      },
+      "revId": "95ccfe4db291d0d1fb20e038cf445964a7e525c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
