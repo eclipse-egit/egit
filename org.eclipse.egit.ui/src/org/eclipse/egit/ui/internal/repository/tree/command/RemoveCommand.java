@@ -118,7 +118,7 @@ public class RemoveCommand extends
 					// confirm dialog with check box
 					// "delete also working directory"
 					DeleteRepositoryConfirmDialog dlg = new DeleteRepositoryConfirmDialog(
-							getShell(event), repository, projectsToDelete.size());
+							getShell(event), repository, projectsToDelete);
 					if (dlg.open() != Window.OK)
 						return;
 					deleteWorkingDir = dlg.shouldDeleteWorkingDir();
