@@ -45,6 +45,30 @@
       "revId": "c5cce95f838b3b2e197f739e5b3b5dff1df5df45",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab08129b_5e8c6d55",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-04-01T04:27:54Z",
+      "side": 1,
+      "message": "I should have noticed this during testing. Really big oversight by me...",
+      "parentUuid": "b4810f6e_4a64b854",
+      "range": {
+        "startLine": 382,
+        "startChar": 15,
+        "endLine": 382,
+        "endChar": 25
+      },
+      "revId": "c5cce95f838b3b2e197f739e5b3b5dff1df5df45",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
