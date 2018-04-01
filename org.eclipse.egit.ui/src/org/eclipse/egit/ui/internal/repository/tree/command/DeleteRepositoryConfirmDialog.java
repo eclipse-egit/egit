@@ -11,7 +11,9 @@
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.text.MessageFormat;
+import java.util.Collection;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
@@ -19,6 +21,8 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -30,6 +34,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 /**
  * Asks whether the working directory of a (non-bare) Repository should also be
@@ -41,7 +46,8 @@ public class DeleteRepositoryConfirmDialog extends TitleAreaDialog {
 	private boolean shouldDeleteGitDir = false;
 	private boolean shouldDeleteWorkingDir = false;
 	private boolean shouldRemoveProjects = false;
-	private int numberOfProjects = 0;
+
+	private final Collection<IProject> projectsToDelete;
 
 	private Button deleteGitDir;
 	private Button deleteWorkDir;
@@ -52,18 +58,19 @@ public class DeleteRepositoryConfirmDialog extends TitleAreaDialog {
 	/**
 	 * @param parentShell
 	 * @param repository
-	 *            non-bare repository
-	 * @param numberOfProjects
+	 *                             non-bare repository
+	 * @param projectsToDelete
+	 *                             list of projects to delete
 	 */
 	public DeleteRepositoryConfirmDialog(Shell parentShell,
-			Repository repository, int numberOfProjects) {
+			Repository repository, Collection<IProject> projectsToDelete) {
 		super(parentShell);
 		setHelpAvailable(false);
 		if (repository.isBare())
 			throw new IllegalArgumentException(
 					"DeleteRepositoryConfirmDialog can only be used for non-bare repository."); //$NON-NLS-1$
 		this.repository = repository;
-		this.numberOfProjects = numberOfProjects;
+		this.projectsToDelete = projectsToDelete;
 	}
 
 	@Override
@@ -103,18 +110,30 @@ public class DeleteRepositoryConfirmDialog extends TitleAreaDialog {
 			}
 		});
 
-		if (numberOfProjects > 0) {
+		if (!projectsToDelete.isEmpty()) {
 			removeProjects.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					shouldRemoveProjects = removeProjects.getSelection();
+					updateUI();
 				}
 			});
 			GridDataFactory.fillDefaults().grab(true, false).applyTo(removeProjects);
 			removeProjects
 					.setText(MessageFormat
 							.format(UIText.DeleteRepositoryConfirmDialog_DeleteProjectsCheckbox,
-								Integer.valueOf(numberOfProjects)));
+									Integer.valueOf(projectsToDelete.size())));
+			TableViewer projectsViewer = new TableViewer(main,
+					SWT.BORDER | SWT.V_SCROLL);
+			// same indentation as the indented labels
+			GridDataFactory.fillDefaults().grab(true, true).indent(20, 0)
+					.hint(SWT.DEFAULT, 100)
+					.applyTo(projectsViewer.getControl());
+
+			projectsViewer.setLabelProvider(WorkbenchLabelProvider
+					.getDecoratingWorkbenchLabelProvider());
+			projectsViewer.setContentProvider(ArrayContentProvider.getInstance());
+			projectsViewer.setInput(projectsToDelete);
 		} else
 			removeProjects.setVisible(false);
 		deleteGitDir.setFocus();
@@ -177,7 +196,7 @@ public class DeleteRepositoryConfirmDialog extends TitleAreaDialog {
 		deleteWorkDirLabel.setEnabled(shouldDeleteGitDir);
 		removeProjects
 				.setEnabled(shouldDeleteGitDir && !shouldDeleteWorkingDir);
-		if (shouldDeleteWorkingDir && numberOfProjects > 0) {
+		if (shouldDeleteWorkingDir && !projectsToDelete.isEmpty()) {
 			removeProjects.setSelection(true);
 			shouldRemoveProjects = true;
 		}
