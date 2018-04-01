@@ -16,6 +16,24 @@
       "revId": "f93013817767f7b5cda014015936a43cee2d78e7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86b1e13d_ee96387c",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/ActiveTaskBranchNameProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-04-01T15:39:09Z",
+      "side": 1,
+      "message": "Done, sounds good. And removed the following null check, since I noticed normalize... is null safe.",
+      "parentUuid": "c1f03149_65800374",
+      "revId": "f93013817767f7b5cda014015936a43cee2d78e7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
