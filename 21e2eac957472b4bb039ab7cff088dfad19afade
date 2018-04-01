@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "7ea92dd0_e1f5918f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2955,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-04-01T16:03:54Z",
+      "side": 1,
+      "message": "Done. In our company, there are too many developers which always used character escaping for each metacharacter. Since that has a big chance of human error, we switched to a policy allowing only \\\\Q...\\\\E or Pattern.quote(...). That may look verbose for small input, but other developers can easily read the intended quotation, instead of decoding double and quadruple backslashes in their heads everytime. :)",
+      "parentUuid": "5f29548b_4ca56ab2",
+      "range": {
+        "startLine": 2955,
+        "startChar": 54,
+        "endLine": 2955,
+        "endChar": 63
+      },
+      "revId": "21e2eac957472b4bb039ab7cff088dfad19afade",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a96c72c_33ee5d9e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2955,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-04-01T16:03:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b66fbecc_f61e0034",
+      "range": {
+        "startLine": 2955,
+        "startChar": 18,
+        "endLine": 2955,
+        "endChar": 22
+      },
+      "revId": "21e2eac957472b4bb039ab7cff088dfad19afade",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cc4c632_52a3895c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 1
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "caf2a594_a38f3a07",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2958,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-04-01T16:03:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cc4c632_52a3895c",
+      "revId": "21e2eac957472b4bb039ab7cff088dfad19afade",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fe4e9ea_b11e8040",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 1
@@ -76,6 +142,24 @@
       "writtenOn": "2018-03-31T21:24:38Z",
       "side": 1,
       "message": "This never returns null. So getFilterPattern() never returns null after the filter has been edited once, even if it is cleared. Perhaps return null if filter.isEmpty()? (Or filter.trim().isEmpty()?)",
+      "revId": "21e2eac957472b4bb039ab7cff088dfad19afade",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de234717_6308d3cd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2959,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-04-01T16:03:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fe4e9ea_b11e8040",
       "revId": "21e2eac957472b4bb039ab7cff088dfad19afade",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
