@@ -85,10 +85,11 @@ public class BlameOperation implements IEGitOperation {
 			this.commit = commit;
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
-		public Object getAdapter(Class adapter) {
+		public <T> T getAdapter(Class<T> adapter) {
 			if (RevCommit.class == adapter)
-				return commit;
+				return (T) commit;
 			return Platform.getAdapterManager().getAdapter(this, adapter);
 		}
 

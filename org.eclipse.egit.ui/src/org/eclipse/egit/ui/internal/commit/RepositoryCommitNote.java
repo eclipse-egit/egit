@@ -78,13 +78,14 @@ public class RepositoryCommitNote extends PlatformObject implements
 		return ""; //$NON-NLS-1$
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Object getAdapter(Class adapter) {
+	public <T> T getAdapter(Class<T> adapter) {
 		if (RepositoryCommit.class == adapter)
-			return this.commit;
+			return (T) this.commit;
 
 		if (Repository.class == adapter)
-			return this.commit.getRepository();
+			return (T) this.commit.getRepository();
 
 		return super.getAdapter(adapter);
 	}

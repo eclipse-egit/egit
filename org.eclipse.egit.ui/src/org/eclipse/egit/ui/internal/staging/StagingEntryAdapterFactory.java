@@ -19,26 +19,27 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class StagingEntryAdapterFactory implements IAdapterFactory {
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Object getAdapter(Object adaptableObject, Class adapterType) {
+	public <T> T getAdapter(Object adaptableObject, Class<T> adapterType) {
 		if (adaptableObject != null) {
 			StagingEntry entry = (StagingEntry) adaptableObject;
 			if (adapterType == IResource.class) {
 				IResource resource = entry.getFile();
 				if (resource != null && resource.isAccessible()) {
-					return resource;
+					return (T) resource;
 				}
 			} else if (adapterType == IPath.class) {
-				return entry.getLocation();
+				return (T) entry.getLocation();
 			} else if (adapterType == Repository.class) {
-				return entry.getRepository();
+				return (T) entry.getRepository();
 			}
 		}
 		return null;
 	}
 
 	@Override
-	public Class[] getAdapterList() {
+	public Class<?>[] getAdapterList() {
 		return new Class[] { IResource.class, IPath.class, Repository.class };
 	}
 

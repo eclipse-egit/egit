@@ -289,6 +289,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 		return fDirty || (sharedDocumentAdapter != null && sharedDocumentAdapter.hasBufferedContents());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Object getAdapter(Class adapter) {
 		if (adapter == ISharedDocumentAdapter.class) {

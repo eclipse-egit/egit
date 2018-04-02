@@ -389,15 +389,16 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Object getAdapter(Class adapter) {
+	public <T> T getAdapter(Class<T> adapter) {
 		// integrate with Properties view
 		if (adapter == IPropertySheetPage.class) {
 			PropertySheetPage page = new PropertySheetPage();
 			page
 					.setPropertySourceProvider(new RepositoryPropertySourceProvider(
 							page));
-			return page;
+			return (T) page;
 		}
 		return super.getAdapter(adapter);
 	}

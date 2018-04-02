@@ -154,10 +154,11 @@ public class EditableRevision extends FileRevisionTypedElement implements
 		return modifiedContent;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Object getAdapter(Class adapter) {
+	public <T> T getAdapter(Class<T> adapter) {
 		if (adapter == ISharedDocumentAdapter.class) {
-			return getSharedDocumentAdapter();
+			return (T) getSharedDocumentAdapter();
 		}
 		return Platform.getAdapterManager().getAdapter(this, adapter);
 	}

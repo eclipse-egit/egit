@@ -66,12 +66,13 @@ public class StagingFolderEntry implements IAdaptable, IProblemDecoratable {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Object getAdapter(Class adapter) {
+	public <T> T getAdapter(Class<T> adapter) {
 		if (adapter == IResource.class || adapter == IContainer.class)
-			return getContainer();
+			return (T) getContainer();
 		else if (adapter == IPath.class)
-			return getLocation();
+			return (T) getLocation();
 		return null;
 	}
 

@@ -81,13 +81,14 @@ public class RepositoryCommit extends WorkbenchAdapter
 		this.commit = commit;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Object getAdapter(Class adapter) {
+	public <T> T getAdapter(Class<T> adapter) {
 		if (Repository.class == adapter)
-			return repository;
+			return (T) repository;
 
 		if (RevCommit.class == adapter)
-			return commit;
+			return (T) commit;
 
 		return Platform.getAdapterManager().getAdapter(this, adapter);
 	}

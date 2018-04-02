@@ -159,9 +159,7 @@ public class DiffEditorPage extends TextEditor
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Object getAdapter(Class adapter) {
-		// TODO Switch to generified signature once EGit's base dependency is
-		// Eclipse 4.6
+	public <T> T getAdapter(Class<T> adapter) {
 		if (IContentOutlinePage.class.equals(adapter)) {
 			if (outlinePage == null) {
 				outlinePage = createOutlinePage();
@@ -172,7 +170,7 @@ public class DiffEditorPage extends TextEditor
 							new StructuredSelection(currentFileDiffRange));
 				}
 			}
-			return outlinePage;
+			return (T) outlinePage;
 		}
 		return super.getAdapter(adapter);
 	}

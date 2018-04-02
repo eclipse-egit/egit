@@ -77,16 +77,17 @@ public class CommitEditorInput extends PlatformObject implements IEditorInput,
 	/**
 	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public Object getAdapter(Class adapter) {
+	public <T> T getAdapter(Class<T> adapter) {
 		if (RepositoryCommit.class == adapter)
-			return commit;
+			return (T) commit;
 
 		if (RevCommit.class == adapter)
-			return commit.getRevCommit();
+			return (T) commit.getRevCommit();
 
 		if (Repository.class == adapter)
-			return commit.getRepository();
+			return (T) commit.getRepository();
 
 		return super.getAdapter(adapter);
 	}

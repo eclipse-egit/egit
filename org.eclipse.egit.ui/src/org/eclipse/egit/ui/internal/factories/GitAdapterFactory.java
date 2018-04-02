@@ -69,23 +69,24 @@ public class GitAdapterFactory implements IAdapterFactory {
 	private static final IWorkspaceRoot root = ResourcesPlugin.getWorkspace()
 			.getRoot();
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Object getAdapter(Object adaptableObject, Class adapterType) {
+	public <T> T getAdapter(Object adaptableObject, Class<T> adapterType) {
 		if (adapterType.isAssignableFrom(IHistoryPageSource.class)) {
-			return GitHistoryPageSource.INSTANCE;
+			return (T) GitHistoryPageSource.INSTANCE;
 		}
 
 		if (IWorkbenchAdapter.class == adapterType) {
 			// property page names for git repository tree nodes
 			if (adaptableObject instanceof RepositoryTreeNode) {
-				return getRepositoryTreeNodeWorkbenchAdapter(
+				return (T) getRepositoryTreeNodeWorkbenchAdapter(
 						(RepositoryTreeNode) adaptableObject);
 			}
 
 			if (gitModelWorkbenchAdapter == null) {
 				gitModelWorkbenchAdapter = new GitModelWorkbenchAdapter();
 			}
-			return gitModelWorkbenchAdapter;
+			return (T) gitModelWorkbenchAdapter;
 		}
 
 		if (adaptableObject instanceof IHistoryView
@@ -93,23 +94,24 @@ public class GitAdapterFactory implements IAdapterFactory {
 			IHistoryView historyView = (IHistoryView) adaptableObject;
 			IHistoryPage historyPage = historyView.getHistoryPage();
 			if (historyPage instanceof GitHistoryPage) {
-				return historyPage;
+				return (T) historyPage;
 			}
 		}
 
 		if (adaptableObject instanceof IURIEditorInput
 				&& adapterType == Repository.class) {
-			return getRepository((IURIEditorInput) adaptableObject);
+			return (T) getRepository((IURIEditorInput) adaptableObject);
 		}
 
 		if (adaptableObject instanceof IURIEditorInput
 				&& adapterType == File.class) {
-			return getFile((IURIEditorInput) adaptableObject);
+			return (T) getFile((IURIEditorInput) adaptableObject);
 		}
 
 		if (adaptableObject instanceof GitModelObject
 				&& adapterType == ResourceMapping.class) {
-			return GitObjectMapping.create((GitModelObject) adaptableObject);
+			return (T) GitObjectMapping
+					.create((GitModelObject) adaptableObject);
 		}
 
 		if (adaptableObject instanceof GitModelObject
@@ -124,7 +126,7 @@ public class GitAdapterFactory implements IAdapterFactory {
 					res = getWorkspaceResourceFromGitPath(obj.getLocation());
 				}
 
-				return res;
+				return (T) res;
 			}
 
 			if (obj instanceof GitModelTree) {
@@ -133,7 +135,7 @@ public class GitAdapterFactory implements IAdapterFactory {
 					res = root.getFolder(obj.getLocation());
 				}
 
-				return res;
+				return (T) res;
 			}
 		}
 
@@ -141,7 +143,8 @@ public class GitAdapterFactory implements IAdapterFactory {
 			ResourceMapping m = AdapterUtils.adapt(adaptableObject,
 					ResourceMapping.class);
 			if (m != null) {
-				return SelectionUtils.getRepository(new StructuredSelection(m));
+				return (T) SelectionUtils
+						.getRepository(new StructuredSelection(m));
 			}
 		}
 
@@ -209,7 +212,7 @@ public class GitAdapterFactory implements IAdapterFactory {
 	}
 
 	@Override
-	public Class[] getAdapterList() {
+	public Class<?>[] getAdapterList() {
 		return new Class[] { IHistoryPageSource.class,
 				ISynchronizationCompareAdapter.class, ResourceMapping.class,
 				IResource.class, IWorkbenchAdapter.class, IShowInSource.class,

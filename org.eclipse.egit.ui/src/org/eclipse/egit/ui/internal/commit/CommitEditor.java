@@ -454,18 +454,20 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	}
 
 	private RepositoryCommit getCommit() {
-		return (RepositoryCommit) getAdapter(RepositoryCommit.class);
+		return getAdapter(RepositoryCommit.class);
 	}
 
 	/**
 	 * @see org.eclipse.ui.part.MultiPageEditorPart#getAdapter(java.lang.Class)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public Object getAdapter(Class adapter) {
+	public <T> T getAdapter(Class<T> adapter) {
 		if (RepositoryCommit.class == adapter) {
-			return AdapterUtils.adapt(getEditorInput(), RepositoryCommit.class);
+			return (T) AdapterUtils.adapt(getEditorInput(),
+					RepositoryCommit.class);
 		} else if (IContentOutlinePage.class == adapter) {
-			return getOutlinePage();
+			return (T) getOutlinePage();
 		}
 		return super.getAdapter(adapter);
 	}

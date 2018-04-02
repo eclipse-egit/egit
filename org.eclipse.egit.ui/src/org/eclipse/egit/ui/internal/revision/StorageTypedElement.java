@@ -122,8 +122,9 @@ abstract class StorageTypedElement implements ITypedElement,
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Object getAdapter(Class adapter) {
+	public <T> T getAdapter(Class<T> adapter) {
 		if (adapter == ISharedDocumentAdapter.class) {
 			synchronized (this) {
 				if (sharedDocumentAdapter == null)
@@ -141,7 +142,7 @@ abstract class StorageTypedElement implements ITypedElement,
 							// The document is read-only
 						}
 					};
-				return sharedDocumentAdapter;
+				return (T) sharedDocumentAdapter;
 			}
 		}
 		return Platform.getAdapterManager().getAdapter(this, adapter);
