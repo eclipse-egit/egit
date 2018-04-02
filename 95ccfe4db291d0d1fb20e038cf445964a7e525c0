@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "0b67fe86_535569f4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeleteRepositoryConfirmDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-04-02T07:24:13Z",
+      "side": 1,
+      "message": "Using the list even without the checkbox checked sounds reasonable, even though the visual appearance seemed better when it was disabled initially.",
+      "parentUuid": "e6058bd9_fa0574fd",
+      "revId": "95ccfe4db291d0d1fb20e038cf445964a7e525c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "395d62a9_ff092153",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeleteRepositoryConfirmDialog.java",
         "patchSetId": 1
@@ -47,6 +65,30 @@
       "writtenOn": "2018-04-01T18:40:13Z",
       "side": 1,
       "message": "Maybe use !projectsToDelete.isEmpty()?",
+      "range": {
+        "startLine": 201,
+        "startChar": 32,
+        "endLine": 201,
+        "endChar": 59
+      },
+      "revId": "95ccfe4db291d0d1fb20e038cf445964a7e525c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a6ea9ad_47b65711",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeleteRepositoryConfirmDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-04-02T07:24:13Z",
+      "side": 1,
+      "message": "Sure. This was an occurrence of just fixing the compiler error by adding \".size\" instead of really thinking about it. My fault.",
+      "parentUuid": "395d62a9_ff092153",
       "range": {
         "startLine": 201,
         "startChar": 32,
