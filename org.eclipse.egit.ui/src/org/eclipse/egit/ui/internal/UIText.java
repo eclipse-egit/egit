@@ -1238,6 +1238,9 @@ public class UIText extends NLS {
 	public static String CherryPickHandler_ConfirmTitle;
 
 	/** */
+	public static String CherryPickHandler_UncommittedFilesTitle;
+
+	/** */
 	public static String CherryPickHandler_unknown;
 
 	/** */

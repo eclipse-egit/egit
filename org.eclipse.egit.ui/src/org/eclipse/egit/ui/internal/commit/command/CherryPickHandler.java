@@ -114,8 +114,11 @@ public class CherryPickHandler extends SelectionHandler {
 		}
 
 		try {
-			if (!UIRepositoryUtils.handleUncommittedFiles(repo, shell))
+			if (!UIRepositoryUtils.handleUncommittedFiles(repo, commit,
+					parentIndex, UIText.CherryPickHandler_UncommittedFilesTitle,
+					shell)) {
 				return null;
+			}
 		} catch (GitAPIException e) {
 			Activator.logError(e.getMessage(), e);
 			return null;
