@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b482b360_a5f959f7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIRepositoryUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2018-04-03T14:26:44Z",
+      "side": 1,
+      "message": "It would save you from doing unnecessary parseCommit() calls if you would do:\n\n  RevCommit parent;\n  if (noParents \u003e 1 ... ) {\n    parent \u003d repo.parseCommit(commit.getParent(parentIndex));\n  } else {\n    parent \u003d repo.parseCommit(commit.getParent(0));\n  }",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 5
+      },
+      "revId": "85986034311ae8aa61f238659eddffaba192c53d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b34fcf7d_5d96e5a6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIRepositoryUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2018-04-03T14:26:44Z",
+      "side": 1,
+      "message": "I think this is an improvement, so +1. But it is still not like native git. Native git is clever to find out which paths have to be touched during a cherry-pick. For paths which don\u0027t have to be touched a dirty worktree will not stop the cherry-pick. In 99% of the cases the list of paths which have to be touched is the list you determine here: based on the diff of the commit against his parent. But when the commit you cherry pick changed the content of /a from x to z but the branch onto which you want to cherry pick already has the content z for file /a .... then a dirty worktree for /a will not stop native git from cherry-picking. At least in this example\n\n  \u003e git init\n  ...\n  \u003e echo initialA \u003ea\n  \u003e echo initialB \u003eb\n  \u003e git add .\n  \u003e git commit -m initial\n  \u003e git branch side\n  \u003e echo masterA \u003ea\n  \u003e echo masterB \u003eb\n  \u003e git commit -a -m mod_a_b_master\n  [master d68132e] mod_a_b_master\n   2 files changed, 2 insertions(+), 2 deletions(-)\n  \u003e git checkout side\n  Switched to branch \u0027side\u0027\n  \u003e echo masterA \u003ea\n  \u003e git commit -a -m copy_master_content_only_for_a\n  [side c4d850a] copy_master_content_for_a\n   1 file changed, 1 insertion(+), 1 deletion(-)\n  \u003e echo dirty \u003ea\n  \u003e git cherry-pick master\n  [side 9e85355] mod_a_b_master\n   Date: Tue Apr 3 16:17:21 2018 +0200\n   1 file changed, 1 insertion(+), 1 deletion(-)",
+      "revId": "85986034311ae8aa61f238659eddffaba192c53d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
