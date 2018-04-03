@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2010, 2016 SAP AG, GitHub Inc., and others
+ *  Copyright (c) 2010, 2018 SAP AG, GitHub Inc., and others
  *  and other copyright owners as documented in the project's IP log.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  *
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
- *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 495777
+ *    Thomas Wolf <thomas.wolf@paranor.ch>
  *****************************************************************************/
 package org.eclipse.egit.ui.internal.commit.command;
 
@@ -40,15 +40,19 @@ import org.eclipse.egit.ui.internal.branch.LaunchFinder;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.internal.dialogs.CommitSelectDialog;
 import org.eclipse.egit.ui.internal.handler.SelectionHandler;
+import org.eclipse.egit.ui.internal.jobs.RepositoryJob;
+import org.eclipse.egit.ui.internal.jobs.RepositoryJobResultAction;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.api.CherryPickResult;
 import org.eclipse.jgit.api.CherryPickResult.CherryPickStatus;
-import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.merge.ResolveMerger.MergeFailureReason;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -113,48 +117,73 @@ public class CherryPickHandler extends SelectionHandler {
 			return null;
 		}
 
-		try {
-			if (!UIRepositoryUtils.handleUncommittedFiles(repo, shell))
-				return null;
-		} catch (GitAPIException e) {
-			Activator.logError(e.getMessage(), e);
-			return null;
-		}
+		doCherryPick(repo, commit, parentIndex, true);
+		return null;
+	}
 
-		final CherryPickOperation op = new CherryPickOperation(repo, commit);
+	private void doCherryPick(@NonNull Repository repo, RevCommit commit,
+			int parentIndex, boolean withCleanup) {
+		CherryPickOperation op = new CherryPickOperation(repo, commit);
 		op.setMainlineIndex(parentIndex);
 
-		Job job = new Job(MessageFormat.format(
-				UIText.CherryPickHandler_JobName, Integer.valueOf(1))) {
+		Job job = new RepositoryJob(MessageFormat.format(
+				UIText.CherryPickHandler_JobName, Integer.valueOf(1)), null) {
+
+			private CherryPickResult result;
+
 			@Override
-			protected IStatus run(IProgressMonitor monitor) {
+			protected IStatus performJob(IProgressMonitor monitor) {
 				try {
 					op.execute(monitor);
-					CherryPickResult cherryPickResult = op.getResult();
-					RevCommit newHead = cherryPickResult.getNewHead();
-					if (newHead != null
-							&& cherryPickResult.getCherryPickedRefs()
-									.isEmpty()) {
-						showNotPerformedDialog(shell);
-					}
-					if (newHead == null) {
-						CherryPickStatus status = cherryPickResult.getStatus();
-						switch (status) {
-						case CONFLICTING:
-							showConflictDialog(shell);
-							break;
-						case FAILED:
-							showFailure(cherryPickResult);
-							break;
-						case OK:
-							break;
-						}
+					result = op.getResult();
+					if (!withCleanup
+							&& result.getStatus() == CherryPickStatus.FAILED) {
+						return getErrorList(result.getFailingPaths());
 					}
 				} catch (CoreException e) {
-					Activator.logError(
+					return Activator.createErrorStatus(
 							UIText.CherryPickOperation_InternalError, e);
 				}
 				return Status.OK_STATUS;
+			}
+
+			@Override
+			protected IAction getAction() {
+				RevCommit newHead = result.getNewHead();
+				if (newHead == null) {
+					switch (result.getStatus()) {
+					case CONFLICTING:
+						return new MessageAction(
+								UIText.CherryPickHandler_CherryPickConflictsTitle,
+								UIText.CherryPickHandler_CherryPickConflictsMessage);
+					case FAILED:
+						if (!withCleanup) {
+							return new RepositoryJobResultAction(repo,
+									UIText.CherryPickHandler_CherryPickFailedMessage) {
+
+								@Override
+								protected void showResult(
+										Repository repository) {
+									Activator.showErrorStatus(
+											UIText.CherryPickHandler_CherryPickFailedMessage,
+											getErrorList(
+													result.getFailingPaths()));
+								}
+							};
+						}
+						return new CleanupAction(repo,
+								UIText.CherryPickHandler_UncommittedFilesTitle,
+								result, () -> doCherryPick(repo, commit,
+										parentIndex, false));
+					case OK:
+						return null;
+					}
+				} else if (result.getCherryPickedRefs().isEmpty()) {
+					return new MessageAction(
+							UIText.CherryPickHandler_NoCherryPickPerformedTitle,
+							UIText.CherryPickHandler_NoCherryPickPerformedMessage);
+				}
+				return null;
 			}
 
 			@Override
@@ -164,11 +193,11 @@ public class CherryPickHandler extends SelectionHandler {
 				}
 				return super.belongsTo(family);
 			}
+
 		};
 		job.setUser(true);
 		job.setRule(op.getSchedulingRule());
 		job.schedule();
-		return null;
 	}
 
 	private String getLaunchMessage(Repository repository) {
@@ -264,37 +293,8 @@ public class CherryPickHandler extends SelectionHandler {
 		}
 	}
 
-	private void showNotPerformedDialog(final Shell shell) {
-		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				MessageDialog.openWarning(shell,
-						UIText.CherryPickHandler_NoCherryPickPerformedTitle,
-						UIText.CherryPickHandler_NoCherryPickPerformedMessage);
-			}
-		});
-	}
-
-	private void showConflictDialog(final Shell shell) {
-		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				MessageDialog.openWarning(shell,
-						UIText.CherryPickHandler_CherryPickConflictsTitle,
-						UIText.CherryPickHandler_CherryPickConflictsMessage);
-			}
-		});
-	}
-
-	private void showFailure(CherryPickResult result) {
-		IStatus details = getErrorList(result.getFailingPaths());
-		Activator.showErrorStatus(
-				UIText.CherryPickHandler_CherryPickFailedMessage, details);
-	}
-
-	private IStatus getErrorList(Map<String, MergeFailureReason> failingPaths) {
+	private static IStatus getErrorList(
+			Map<String, MergeFailureReason> failingPaths) {
 		MultiStatus result = new MultiStatus(Activator.getPluginId(),
 				IStatus.ERROR,
 				UIText.CherryPickHandler_CherryPickFailedMessage, null);
@@ -308,7 +308,7 @@ public class CherryPickHandler extends SelectionHandler {
 		return result;
 	}
 
-	private String getReason(MergeFailureReason mergeFailureReason) {
+	private static String getReason(MergeFailureReason mergeFailureReason) {
 		switch (mergeFailureReason) {
 		case COULD_NOT_DELETE:
 			return UIText.CherryPickHandler_CouldNotDeleteFile;
@@ -318,5 +318,82 @@ public class CherryPickHandler extends SelectionHandler {
 			return UIText.CherryPickHandler_WorktreeDirty;
 		}
 		return UIText.CherryPickHandler_unknown;
+	}
+
+	/**
+	 * Displays a simple warning dialog with the given title and message.
+	 */
+	private static class MessageAction extends Action {
+
+		private final String title;
+
+		private final String message;
+
+		public MessageAction(String title, String message) {
+			super(title);
+			this.title = title;
+			this.message = message;
+		}
+
+		@Override
+		public void run() {
+			MessageDialog.openWarning(PlatformUI.getWorkbench()
+					.getModalDialogShellProvider().getShell(), title, message);
+		}
+
+	}
+
+	/**
+	 * If a cherry-pick failure was due to a dirty index or working tree only,
+	 * show a dialog giving the user the opportunity to clean-up, and then
+	 * re-try the cherry-pick. If there were any other failures, show an error
+	 * dialog and abort.
+	 */
+	private static class CleanupAction extends RepositoryJobResultAction {
+
+		private final CherryPickResult result;
+
+		private final Runnable retry;
+
+		public CleanupAction(@NonNull Repository repo, String title,
+				CherryPickResult result, Runnable retry) {
+			super(repo, title);
+			this.result = result;
+			this.retry = retry;
+		}
+
+		@Override
+		protected void showResult(Repository repository) {
+			Map<String, MergeFailureReason> failed = result.getFailingPaths();
+			List<String> failedPaths = new ArrayList<>(failed.size());
+			for (Map.Entry<String, MergeFailureReason> entry : failed
+					.entrySet()) {
+				MergeFailureReason reason = entry.getValue();
+				if (reason == null) {
+					Activator.showErrorStatus(
+							UIText.CherryPickHandler_CherryPickFailedMessage,
+							getErrorList(failed));
+					return;
+				} else {
+					switch (reason) {
+					case DIRTY_INDEX:
+					case DIRTY_WORKTREE:
+						failedPaths.add(entry.getKey());
+						break;
+					default:
+						Activator.showErrorStatus(
+								UIText.CherryPickHandler_CherryPickFailedMessage,
+								getErrorList(failed));
+						return;
+					}
+				}
+			}
+			if (UIRepositoryUtils.showCleanupDialog(repository, failedPaths,
+					UIText.CherryPickHandler_UncommittedFilesTitle,
+					PlatformUI.getWorkbench().getModalDialogShellProvider()
+							.getShell())) {
+				retry.run();
+			}
+		}
 	}
 }

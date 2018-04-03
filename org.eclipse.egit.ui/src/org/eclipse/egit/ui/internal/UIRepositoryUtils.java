@@ -78,15 +78,35 @@ public final class UIRepositoryUtils {
 		}
 		if (status != null && status.hasUncommittedChanges()) {
 			List<String> files = new ArrayList<>(status.getModified());
-			Collections.sort(files);
-			CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
-					shell,
-					dialogTitle,
-					UIText.AbstractRebaseCommandHandler_cleanupDialog_text,
-					repo, files);
-			cleanupUncomittedChangesDialog.open();
-			return cleanupUncomittedChangesDialog.shouldContinue();
-		} else
-			return true;
+			return showCleanupDialog(repo, files, dialogTitle, shell);
+		}
+		return true;
 	}
+
+	/**
+	 * Displays a dialog giving the user the opportunity to commit, stash, or
+	 * reset uncommitted changes before doing a repository operation, or to
+	 * abandon the operation.
+	 *
+	 * @param repo
+	 *            {@link Repository} we're working on
+	 * @param files
+	 *            with uncommitted changes
+	 * @param title
+	 *            for the dialog
+	 * @param shell
+	 *            to parent the dialog off
+	 * @return whether to continue the operation
+	 */
+	public static boolean showCleanupDialog(Repository repo, List<String> files,
+			String title, Shell shell) {
+		Collections.sort(files);
+		CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
+				shell, title,
+				UIText.AbstractRebaseCommandHandler_cleanupDialog_text, repo,
+				files);
+		cleanupUncomittedChangesDialog.open();
+		return cleanupUncomittedChangesDialog.shouldContinue();
+	}
+
 }
