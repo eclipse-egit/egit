@@ -38,6 +38,7 @@ import org.eclipse.egit.ui.internal.UIRepositoryUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.branch.LaunchFinder;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.internal.dialogs.CommitSelectDialog;
 import org.eclipse.egit.ui.internal.handler.SelectionHandler;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -74,18 +75,46 @@ public class CherryPickHandler extends SelectionHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RevCommit commit = getSelectedItem(RevCommit.class, event);
-		if (commit == null)
+		if (commit == null) {
 			return null;
+		}
 		Repository repo = getSelectedItem(Repository.class, event);
-		if (repo == null)
+		if (repo == null) {
 			return null;
-		final Shell parent = getPart(event).getSite().getShell();
+		}
+		final Shell shell = getPart(event).getSite().getShell();
 
-		if (!confirmCherryPick(parent, repo, commit))
+		int parentIndex = -1;
+		if (commit.getParentCount() > 1) {
+			// Merge commit: select parent
+			List<RevCommit> parents = new ArrayList<>();
+			String branch = null;
+			try {
+				for (RevCommit parent : commit.getParents()) {
+					parents.add(repo.parseCommit(parent));
+				}
+				branch = repo.getBranch();
+			} catch (Exception e) {
+				Activator.handleError(e.getLocalizedMessage(), e, true);
+				return null;
+			}
+			CommitSelectDialog selectCommit = new CommitSelectDialog(shell,
+					parents, getLaunchMessage(repo));
+			selectCommit.create();
+			selectCommit.setTitle(UIText.CommitSelectDialog_ChooseParentTitle);
+			selectCommit.setMessage(MessageFormat.format(
+					UIText.CherryPickHandler_CherryPickMergeMessage,
+					commit.abbreviate(7).name(), branch));
+			if (selectCommit.open() != Window.OK) {
+				return null;
+			}
+			parentIndex = parents.indexOf(selectCommit.getSelectedCommit());
+		} else if (!confirmCherryPick(shell, repo, commit)) {
 			return null;
+		}
 
 		try {
-			if (!UIRepositoryUtils.handleUncommittedFiles(repo, parent))
+			if (!UIRepositoryUtils.handleUncommittedFiles(repo, shell))
 				return null;
 		} catch (GitAPIException e) {
 			Activator.logError(e.getMessage(), e);
@@ -93,6 +122,8 @@ public class CherryPickHandler extends SelectionHandler {
 		}
 
 		final CherryPickOperation op = new CherryPickOperation(repo, commit);
+		op.setMainlineIndex(parentIndex);
+
 		Job job = new Job(MessageFormat.format(
 				UIText.CherryPickHandler_JobName, Integer.valueOf(1))) {
 			@Override
@@ -102,13 +133,15 @@ public class CherryPickHandler extends SelectionHandler {
 					CherryPickResult cherryPickResult = op.getResult();
 					RevCommit newHead = cherryPickResult.getNewHead();
 					if (newHead != null
-							&& cherryPickResult.getCherryPickedRefs().isEmpty())
-						showNotPerformedDialog(parent);
+							&& cherryPickResult.getCherryPickedRefs()
+									.isEmpty()) {
+						showNotPerformedDialog(shell);
+					}
 					if (newHead == null) {
 						CherryPickStatus status = cherryPickResult.getStatus();
 						switch (status) {
 						case CONFLICTING:
-							showConflictDialog(parent);
+							showConflictDialog(shell);
 							break;
 						case FAILED:
 							showFailure(cherryPickResult);
@@ -126,14 +159,26 @@ public class CherryPickHandler extends SelectionHandler {
 
 			@Override
 			public boolean belongsTo(Object family) {
-				if (JobFamilies.CHERRY_PICK.equals(family))
+				if (JobFamilies.CHERRY_PICK.equals(family)) {
 					return true;
+				}
 				return super.belongsTo(family);
 			}
 		};
 		job.setUser(true);
 		job.setRule(op.getSchedulingRule());
 		job.schedule();
+		return null;
+	}
+
+	private String getLaunchMessage(Repository repository) {
+		ILaunchConfiguration launch = LaunchFinder
+				.getRunningLaunchConfiguration(
+						Collections.singleton(repository), null);
+		if (launch != null) {
+			return MessageFormat.format(
+					UIText.LaunchFinder_RunningLaunchMessage, launch.getName());
+		}
 		return null;
 	}
 
@@ -151,12 +196,9 @@ public class CherryPickHandler extends SelectionHandler {
 					"Exception obtaining current repository branch", e); //$NON-NLS-1$
 		}
 
-		ILaunchConfiguration launch = LaunchFinder
-				.getRunningLaunchConfiguration(
-						Collections.singleton(repository), null);
-		if (launch != null) {
-			message += "\n\n" + MessageFormat.format( //$NON-NLS-1$
-					UIText.LaunchFinder_RunningLaunchMessage, launch.getName());
+		String launchMessage = getLaunchMessage(repository);
+		if (launchMessage != null) {
+			message += "\n\n" + launchMessage; //$NON-NLS-1$
 		}
 		final String question = message;
 		shell.getDisplay().syncExec(new Runnable() {

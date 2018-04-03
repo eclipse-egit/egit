@@ -29,6 +29,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -40,6 +41,8 @@ import org.eclipse.swt.widgets.TableColumn;
 public class CommitSelectDialog extends TitleAreaDialog {
 	private final List<RevCommit> commits = new ArrayList<>();
 
+	private final String message;
+
 	private RevCommit selected;
 
 	/**
@@ -47,10 +50,26 @@ public class CommitSelectDialog extends TitleAreaDialog {
 	 * @param commits
 	 **/
 	public CommitSelectDialog(Shell parent, List<RevCommit> commits) {
+		this(parent, commits, null);
+	}
+
+	/**
+	 * Creates a new {@link CommitSelectDialog} instance.
+	 *
+	 * @param parent
+	 *            {@link Shell} to use as parent for the dialog
+	 * @param commits
+	 *            to display
+	 * @param message
+	 *            to display
+	 */
+	public CommitSelectDialog(Shell parent, List<RevCommit> commits,
+			String message) {
 		super(parent);
 		setShellStyle(getShellStyle() | SWT.SHELL_TRIM);
 		this.commits.addAll(commits);
 		setHelpAvailable(false);
+		this.message = message;
 	}
 
 	/**
@@ -111,6 +130,11 @@ public class CommitSelectDialog extends TitleAreaDialog {
 				okPressed();
 			}
 		});
+		if (message != null) {
+			Label label = new Label(main, SWT.LEFT | SWT.WRAP);
+			GridDataFactory.fillDefaults().grab(true, false).applyTo(label);
+			label.setText(message);
+		}
 		return main;
 	}
 

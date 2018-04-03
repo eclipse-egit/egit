@@ -43,6 +43,8 @@ public class CherryPickOperation implements IEGitOperation {
 
 	private final RevCommit commit;
 
+	private int parentIndex = -1;
+
 	private CherryPickResult result;
 
 	/**
@@ -54,6 +56,19 @@ public class CherryPickOperation implements IEGitOperation {
 	public CherryPickOperation(Repository repository, RevCommit commit) {
 		this.repo = repository;
 		this.commit = commit;
+	}
+
+	/**
+	 * Defines the parent to diff against if the commit is a merge commit.
+	 * Ignored if the commit has only one parent.
+	 *
+	 * @param parentIndex
+	 *            defining the diff, zero-based
+	 */
+	public void setMainlineIndex(int parentIndex) {
+		if (parentIndex >= 0 && parentIndex < commit.getParentCount()) {
+			this.parentIndex = parentIndex;
+		}
 	}
 
 	/**
@@ -81,6 +96,10 @@ public class CherryPickOperation implements IEGitOperation {
 							.getPreferredMergeStrategy();
 					if (strategy != null) {
 						command.setStrategy(strategy);
+					}
+					if (parentIndex >= 0
+							&& parentIndex < commit.getParentCount()) {
+						command.setMainlineParentNumber(parentIndex + 1);
 					}
 					result = command.call();
 				} catch (GitAPIException e) {

@@ -1217,6 +1217,9 @@ public class UIText extends NLS {
 	public static String CherryPickHandler_CherryPickFailedMessage;
 
 	/** */
+	public static String CherryPickHandler_CherryPickMergeMessage;
+
+	/** */
 	public static String CherryPickHandler_CouldNotDeleteFile;
 
 	/** */
@@ -5110,6 +5113,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommitSelectDialog_WindowTitle;
+
+	/** */
+	public static String CommitSelectDialog_ChooseParentTitle;
 
 	/** */
 	public static String CommitSelectionDialog_BuildingCommitListMessage;
