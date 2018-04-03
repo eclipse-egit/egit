@@ -3715,7 +3715,8 @@ public class StagingView extends ViewPart
 				}
 				configChangedListener = repository.getListenerList()
 						.addConfigChangedListener(
-								event -> resetCommitMessageComponent());
+								event -> asyncExec(
+										() -> resetCommitMessageComponent()));
 			}
 			final StagingViewUpdate update = new StagingViewUpdate(repository,
 					indexDiff, null);
