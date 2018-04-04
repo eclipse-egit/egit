@@ -21,9 +21,12 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SafeRunner;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.ui.IBranchNameProvider;
@@ -65,6 +68,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.progress.WorkbenchJob;
 
 /**
  * Allows to create a new local branch based on another branch or commit.
@@ -79,6 +83,7 @@ class CreateBranchPage extends WizardPage {
 
 	private static final String BRANCH_NAME_PROVIDER_ID = "org.eclipse.egit.ui.branchNameProvider"; //$NON-NLS-1$
 
+	private Job validateJob;
 	/**
 	 * Get proposed target branch name for given source branch name
 	 *
@@ -266,6 +271,8 @@ class CreateBranchPage extends WizardPage {
 			}
 		});
 
+		createValidateJob();
+
 		Dialog.applyDialogFont(main);
 		setControl(main);
 
@@ -276,14 +283,38 @@ class CreateBranchPage extends WizardPage {
 
 		nameText.setFocus();
 		// add the listeners just now to avoid unneeded checkPage()
-		nameText.addModifyListener(e -> checkPage());
+		nameText.addModifyListener(e -> {
+			validateJob.cancel();
+			// Schedule without delay to ensure the job finishes before the user
+			// can use the Finish button of the wizard. Otherwise we would have
+			// to disable the Finish button, leading to flickering from job
+			// start to job finish.
+			validateJob.schedule();
+		});
 		BranchNameNormalizer normalizer = new BranchNameNormalizer(nameText);
 		normalizer.setVisible(false);
+	}
+
+	private void createValidateJob() {
+		validateJob = new WorkbenchJob("Validate branch name") {//$NON-NLS-1$
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				if (sourceNameLabel.isDisposed()) {
+					return Status.CANCEL_STATUS;
+				}
+				checkPage();
+				return Status.OK_STATUS;
+			}
+		};
+		validateJob.setSystem(true);
 	}
 
 	@Override
 	public void dispose() {
 		resourceManager.dispose();
+		if (validateJob != null) {
+			validateJob.cancel();
+		}
 	}
 
 	private void setSourceRef(String refName) {
