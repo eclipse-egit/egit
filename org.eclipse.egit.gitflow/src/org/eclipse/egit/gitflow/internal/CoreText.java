@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2015, Max Hohenegger <eclipse@hohenegger.eu>
+ * Copyright (C) 2018, Max Hohenegger <eclipse@hohenegger.eu>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -53,6 +53,15 @@ public class CoreText extends NLS {
 
 	/** */
 	public static String FeatureRebaseOperation_notOnAFeatureBranch;
+
+	/** */
+	public static String FeatureStartOperation_andBranchMayBeFastForwarded;
+
+	/** */
+	public static String FeatureStartOperation_andLocalDevelopIsAheadOfOrigin;
+
+	/** */
+	public static String FeatureStartOperation_divergingDevelop;
 
 	/** */
 	public static String FeatureStartOperation_notOn;
