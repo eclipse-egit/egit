@@ -50,7 +50,7 @@ public class AbstractDualRepositoryTestCase extends DualRepositoryTestCase {
 
 	private File workdir2;
 
-	String projectName = "FeaturePublishTest";
+	String projectName = "FeatureTest";
 
 	protected RevCommit initialCommit;
 
