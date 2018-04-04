@@ -39,6 +39,24 @@
       "revId": "85986034311ae8aa61f238659eddffaba192c53d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ca05e3a_f2590025",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIRepositoryUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-04-04T09:59:25Z",
+      "side": 1,
+      "message": "All right. In that case, let\u0027s try something else; see patch set 2. We just do the operation, and if it complains about a dirty index or working tree, only then do we ask the user to clean up, and if he does, we then re-do the operation.",
+      "parentUuid": "b34fcf7d_5d96e5a6",
+      "revId": "85986034311ae8aa61f238659eddffaba192c53d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
