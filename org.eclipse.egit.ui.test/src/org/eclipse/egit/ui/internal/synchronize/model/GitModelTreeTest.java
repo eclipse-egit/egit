@@ -60,8 +60,8 @@ public class GitModelTreeTest extends GitModelTestCase {
 	@Test public void shouldReturnNotEqualForTreeAndCommit()
 			throws Exception {
 		// given
-		GitModelTree left = createModelTree(getTreeLocation());
-		GitModelCommit right = mock(GitModelCommit.class);
+		GitModelObject left = createModelTree(getTreeLocation());
+		GitModelObject right = mock(GitModelCommit.class);
 
 		// when
 		boolean actual = left.equals(right);
@@ -73,8 +73,8 @@ public class GitModelTreeTest extends GitModelTestCase {
 	@Test public void shouldReturnNotEqualForTreeAndBlob()
 			throws Exception {
 		// given
-		GitModelTree left = createModelTree(getTreeLocation());
-		GitModelBlob right = mock(GitModelBlob.class);
+		GitModelObject left = createModelTree(getTreeLocation());
+		GitModelObject right = mock(GitModelBlob.class);
 
 		// when
 		boolean actual = left.equals(right);

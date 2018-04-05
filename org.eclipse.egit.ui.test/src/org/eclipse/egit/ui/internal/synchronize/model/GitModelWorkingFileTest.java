@@ -71,8 +71,8 @@ public class GitModelWorkingFileTest extends GitModelTestCase {
 	@Test public void shouldReturnNotEqualWhenComparingWorkingFileAndCacheFile()
 			throws Exception {
 		// given
-		GitModelWorkingFile left = createWorkingFile(getFile1Location());
-		GitModelCacheFile right = mock(GitModelCacheFile.class);
+		GitModelObject left = createWorkingFile(getFile1Location());
+		GitModelObject right = mock(GitModelCacheFile.class);
 
 		// when
 		boolean actual = left.equals(right);
