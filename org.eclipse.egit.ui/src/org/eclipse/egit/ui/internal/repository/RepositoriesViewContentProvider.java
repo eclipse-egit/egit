@@ -30,8 +30,13 @@ import java.util.WeakHashMap;
 import org.eclipse.core.commands.IStateListener;
 import org.eclipse.core.commands.State;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.WorkspaceJob;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
@@ -41,7 +46,6 @@ import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefsNode;
 import org.eclipse.egit.ui.internal.repository.tree.BranchHierarchyNode;
 import org.eclipse.egit.ui.internal.repository.tree.BranchesNode;
-import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
 import org.eclipse.egit.ui.internal.repository.tree.ErrorNode;
 import org.eclipse.egit.ui.internal.repository.tree.FetchNode;
 import org.eclipse.egit.ui.internal.repository.tree.FileNode;
@@ -55,6 +59,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RemotesNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.StashNode;
+import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
 import org.eclipse.egit.ui.internal.repository.tree.SubmodulesNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagsNode;
@@ -559,11 +564,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		case SUBMODULES:
 			return true;
 		case TAGS:
-			try {
-				return !getRefs(repo, Constants.R_TAGS).isEmpty();
-			} catch (IOException e) {
-				return true;
-			}
+			return hasTagsChildren(repo);
 		case WORKINGDIR:
 			if (node.getRepository().isBare())
 				return false;
@@ -574,6 +575,42 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		default:
 			Object[] children = getChildren(element);
 			return children != null && children.length > 0;
+		}
+	}
+
+	/**
+	 * As long as the ref database has not been read, assume there are tags, and
+	 * start reading the database in the background. This should avoid long
+	 * blocking during startup.
+	 *
+	 * @param repo
+	 * @return whether the tags node has children.
+	 */
+	private boolean hasTagsChildren(Repository repo) {
+		try {
+			if (branchRefs.get(repo) == null) {
+				WorkspaceJob job = new WorkspaceJob(
+						UIText.RepositoriesViewContentProvider_ReadReferencesJob) {
+
+					@Override
+					public IStatus runInWorkspace(IProgressMonitor monitor)
+							throws CoreException {
+						try {
+							// trigger reading the reference database
+							getRefs(repo, Constants.R_TAGS);
+						} catch (IOException e) {
+							return Status.CANCEL_STATUS;
+						}
+						return Status.OK_STATUS;
+					}
+				};
+				job.setSystem(true);
+				job.schedule();
+				return true;
+			}
+			return !getRefs(repo, Constants.R_TAGS).isEmpty();
+		} catch (IOException e) {
+			return true;
 		}
 	}
 
