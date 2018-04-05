@@ -89,9 +89,9 @@ public class GitModelCacheTest extends GitModelTestCase {
 	@Test public void shouldReturnNotEqualWhenCacheTreeAndCommit()
 			throws Exception {
 		// given
-		GitModelCache left = new GitModelCache(createModelRepository(),
+		GitModelObject left = new GitModelCache(createModelRepository(),
 				lookupRepository(leftRepoFile), null);
-		GitModelCommit right = mock(GitModelCommit.class);
+		GitModelObject right = mock(GitModelCommit.class);
 
 		// when
 		boolean actual = left.equals(right);

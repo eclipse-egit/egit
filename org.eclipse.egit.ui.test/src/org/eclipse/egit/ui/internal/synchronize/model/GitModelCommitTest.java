@@ -92,10 +92,10 @@ public class GitModelCommitTest extends GitModelTestCase {
 	@Test public void shouldReturnNotEqualWhenCommitTreeAndCache()
 			throws Exception {
 		// given
-		GitModelCommit left = new GitModelCommit(createModelRepository(),
+		GitModelObject left = new GitModelCommit(createModelRepository(),
 				lookupRepository(leftRepoFile), getCommit(leftRepoFile, HEAD),
 				null);
-		GitModelCache right = mock(GitModelCache.class);
+		GitModelObject right = mock(GitModelCache.class);
 
 		// when
 		boolean actual = left.equals(right);
@@ -107,10 +107,10 @@ public class GitModelCommitTest extends GitModelTestCase {
 	@Test public void shouldReturnNotEqualWhenCommitTreeAndTree()
 			throws Exception {
 		// given
-		GitModelCommit left = new GitModelCommit(createModelRepository(),
+		GitModelObject left = new GitModelCommit(createModelRepository(),
 				lookupRepository(leftRepoFile), getCommit(leftRepoFile, HEAD),
 				null);
-		GitModelTree right = mock(GitModelTree.class);
+		GitModelObject right = mock(GitModelTree.class);
 
 		// when
 		boolean actual = left.equals(right);
@@ -122,10 +122,10 @@ public class GitModelCommitTest extends GitModelTestCase {
 	@Test public void shouldReturnNotEqualWhenCommitTreeAndBlob()
 			throws Exception {
 		// given
-		GitModelCommit left = new GitModelCommit(createModelRepository(),
+		GitModelObject left = new GitModelCommit(createModelRepository(),
 				lookupRepository(leftRepoFile), getCommit(leftRepoFile, HEAD),
 				null);
-		GitModelBlob right = mock(GitModelBlob.class);
+		GitModelObject right = mock(GitModelBlob.class);
 
 		// when
 		boolean actual = left.equals(right);

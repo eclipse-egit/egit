@@ -111,8 +111,8 @@ public class GitModelBlobTest extends GitModelTestCase {
 	@Test
 	public void shouldBeSymmetric1() throws Exception {
 		// given
-		GitModelBlob left = createGitModelBlob(zeroId(), getFile1Location());
-		GitModelCommit right = new GitModelCommit(createModelRepository(),
+		GitModelObject left = createGitModelBlob(zeroId(), getFile1Location());
+		GitModelObject right = new GitModelCommit(createModelRepository(),
 				lookupRepository(leftRepoFile), getCommit(leftRepoFile, HEAD),
 				null);
 
@@ -188,8 +188,8 @@ public class GitModelBlobTest extends GitModelTestCase {
 
 	@Test public void shouldReturnNotEqualForBlobAndCommit() throws Exception {
 		// given
-		GitModelBlob left = createGitModelBlob();
-		GitModelCommit right = new GitModelCommit(createModelRepository(),
+		GitModelObject left = createGitModelBlob();
+		GitModelObject right = new GitModelCommit(createModelRepository(),
 				lookupRepository(leftRepoFile), getCommit(leftRepoFile, HEAD),
 				null);
 
@@ -202,8 +202,8 @@ public class GitModelBlobTest extends GitModelTestCase {
 
 	@Test public void shouldReturnNotEqualForBlobAndTree() throws Exception {
 		// given
-		GitModelBlob left = createGitModelBlob();
-		GitModelTree right = mock(GitModelTree.class);
+		GitModelObject left = createGitModelBlob();
+		GitModelObject right = mock(GitModelTree.class);
 
 		// when
 		boolean actual = left.equals(right);
