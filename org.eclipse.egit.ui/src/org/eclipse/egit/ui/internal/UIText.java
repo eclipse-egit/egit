@@ -3649,6 +3649,9 @@ public class UIText extends NLS {
 	public static String RepositoriesViewContentProvider_ExceptionNodeText;
 
 	/** */
+	public static String RepositoriesViewContentProvider_ReadReferencesJob;
+
+	/** */
 	public static String RepositoriesViewLabelProvider_LocalNodetext;
 
 	/** */
