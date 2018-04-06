@@ -46,6 +46,7 @@ import org.eclipse.jgit.api.errors.CheckoutConflictException;
 import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -183,6 +184,11 @@ public class MergeOperation implements IEGitOperation {
 					}
 					if (message != null) {
 						merge.setMessage(message);
+					}
+					if (repository.getConfig().getBoolean(
+							ConfigConstants.CONFIG_GERRIT_SECTION,
+							ConfigConstants.CONFIG_KEY_CREATECHANGEID, false)) {
+						merge.setInsertChangeId(true);
 					}
 					mergeResult = merge.call();
 					if (MergeResult.MergeStatus.NOT_SUPPORTED
