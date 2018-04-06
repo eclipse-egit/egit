@@ -46,6 +46,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.util.ChangeIdUtil;
 import org.eclipse.jgit.util.RawParseUtils;
@@ -758,10 +759,11 @@ public class CommitMessageComponent {
 		if (createChangeId) {
 			// ChangeIdUtil uses \n line endings
 			String text = commitText.getText().replaceAll(Text.DELIMITER, "\n"); //$NON-NLS-1$
-			String changedText = ChangeIdUtil.insertId(
-					text,
-					originalChangeId != null ? originalChangeId : ObjectId
-							.zeroId(), true);
+			String changedText = ChangeIdUtil.insertId(text,
+					originalChangeId != null ? originalChangeId
+							: ObjectId.zeroId(),
+					repository
+							.getRepositoryState() != RepositoryState.CHERRY_PICKING_RESOLVED);
 			if (!text.equals(changedText)) {
 				changedText = changedText.replaceAll("\n", Text.DELIMITER); //$NON-NLS-1$
 				commitText.setText(changedText);
