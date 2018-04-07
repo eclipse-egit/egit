@@ -8,7 +8,7 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Marc Khouzam (Ericsson)  - Add an option not to checkout the new branch
- *    Thomas Wolf <thomas.wolf@paranor.ch> - Bug 493935, 495777, 518492
+ *    Thomas Wolf <thomas.wolf@paranor.ch>
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.fetch;
 
@@ -34,6 +34,7 @@ import java.util.regex.Pattern;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -53,6 +54,7 @@ import org.eclipse.egit.ui.internal.ActionUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.ValidationUtils;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
+import org.eclipse.egit.ui.internal.commit.command.CherryPickUI;
 import org.eclipse.egit.ui.internal.components.AsynchronousListOperation;
 import org.eclipse.egit.ui.internal.components.BranchNameNormalizer;
 import org.eclipse.egit.ui.internal.dialogs.AbstractBranchSelectionDialog;
@@ -72,6 +74,7 @@ import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
@@ -104,6 +107,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.progress.WorkbenchJob;
 
@@ -127,10 +131,10 @@ public class FetchGerritChangePage extends WizardPage {
 			"yyyyMMddHHmmss"); //$NON-NLS-1$
 
 	private enum CheckoutMode {
-		CREATE_BRANCH, CREATE_TAG, CHECKOUT_FETCH_HEAD, NOCHECKOUT
+		CREATE_BRANCH, CREATE_TAG, CHECKOUT_FETCH_HEAD, CHERRY_PICK, NOCHECKOUT
 	}
 
-	private final Repository repository;
+	private final @NonNull Repository repository;
 
 	private final IDialogSettings settings;
 
@@ -147,6 +151,8 @@ public class FetchGerritChangePage extends WizardPage {
 	private Button createTag;
 
 	private Button checkoutFetchHead;
+
+	private Button cherryPickFetchHead;
 
 	private Button updateFetchHead;
 
@@ -188,6 +194,7 @@ public class FetchGerritChangePage extends WizardPage {
 	 */
 	public FetchGerritChangePage(Repository repository, String refName) {
 		super(FetchGerritChangePage.class.getName());
+		Assert.isNotNull(repository);
 		this.repository = repository;
 		this.refName = refName;
 		setTitle(NLS
@@ -236,6 +243,12 @@ public class FetchGerritChangePage extends WizardPage {
 				candidateChange = determineChangeFromString(clipText.trim());
 			}
 		}
+		SelectionAdapter validatePage = new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				checkPage();
+			}
+		};
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(2, false));
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
@@ -278,12 +291,7 @@ public class FetchGerritChangePage extends WizardPage {
 		createBranch = new Button(checkoutGroup, SWT.RADIO);
 		GridDataFactory.fillDefaults().span(1, 1).applyTo(createBranch);
 		createBranch.setText(UIText.FetchGerritChangePage_LocalBranchRadio);
-		createBranch.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				checkPage();
-			}
-		});
+		createBranch.addSelectionListener(validatePage);
 
 		branchCheckoutButton = new Button(checkoutGroup, SWT.CHECK);
 		GridDataFactory.fillDefaults().span(2, 1).align(SWT.END, SWT.CENTER)
@@ -347,12 +355,7 @@ public class FetchGerritChangePage extends WizardPage {
 		createTag = new Button(checkoutGroup, SWT.RADIO);
 		GridDataFactory.fillDefaults().span(3, 1).applyTo(createTag);
 		createTag.setText(UIText.FetchGerritChangePage_TagRadio);
-		createTag.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				checkPage();
-			}
-		});
+		createTag.addSelectionListener(validatePage);
 
 		tagTextlabel = new Label(checkoutGroup, SWT.NONE);
 		GridDataFactory.defaultsFor(tagTextlabel).exclude(true)
@@ -387,23 +390,29 @@ public class FetchGerritChangePage extends WizardPage {
 		checkoutFetchHead = new Button(checkoutGroup, SWT.RADIO);
 		GridDataFactory.fillDefaults().span(3, 1).applyTo(checkoutFetchHead);
 		checkoutFetchHead.setText(UIText.FetchGerritChangePage_CheckoutRadio);
-		checkoutFetchHead.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				checkPage();
+		checkoutFetchHead.addSelectionListener(validatePage);
+
+		// radio: cherry-pick onto current HEAD
+		try {
+			String headName = repository.getBranch();
+			if (headName != null) {
+				cherryPickFetchHead = new Button(checkoutGroup, SWT.RADIO);
+				GridDataFactory.fillDefaults().span(3, 1)
+						.applyTo(cherryPickFetchHead);
+				cherryPickFetchHead.setText(MessageFormat.format(
+						UIText.FetchGerritChangePage_CherryPickRadio,
+						headName));
+				cherryPickFetchHead.addSelectionListener(validatePage);
 			}
-		});
+		} catch (IOException e) {
+			Activator.logError(e.getLocalizedMessage(), e);
+		}
 
 		// radio: don't checkout
 		updateFetchHead = new Button(checkoutGroup, SWT.RADIO);
 		GridDataFactory.fillDefaults().span(3, 1).applyTo(updateFetchHead);
 		updateFetchHead.setText(UIText.FetchGerritChangePage_UpdateRadio);
-		updateFetchHead.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				checkPage();
-			}
-		});
+		updateFetchHead.addSelectionListener(validatePage);
 
 		if ("checkout".equals(defaultCommand)) { //$NON-NLS-1$
 			checkoutFetchHead.setSelection(true);
@@ -935,7 +944,7 @@ public class FetchGerritChangePage extends WizardPage {
 					}
 					RevCommit commit = fetchChange(uri, spec,
 							progress.newChild(1));
-					if (mode != CheckoutMode.NOCHECKOUT) {
+					if (mode != CheckoutMode.NOCHECKOUT && commit != null) {
 						IWorkspace workspace = ResourcesPlugin.getWorkspace();
 						IWorkspaceRunnable operation = new IWorkspaceRunnable() {
 
@@ -958,6 +967,10 @@ public class FetchGerritChangePage extends WizardPage {
 								case CREATE_BRANCH:
 									createBranch(textForBranch,
 											doCheckoutNewBranch, commit,
+											innerProgress.newChild(1));
+									break;
+								case CHERRY_PICK:
+									cherryPick(commit,
 											innerProgress.newChild(1));
 									break;
 								default:
@@ -1026,6 +1039,7 @@ public class FetchGerritChangePage extends WizardPage {
 				switch (m) {
 				case CHECKOUT_FETCH_HEAD:
 				case CREATE_BRANCH:
+				case CHERRY_PICK:
 					return 2;
 				case CREATE_TAG:
 					return 3;
@@ -1048,6 +1062,7 @@ public class FetchGerritChangePage extends WizardPage {
 
 	private boolean showAdditionalRefs() {
 		return (checkoutFetchHead.getSelection()
+				|| cherryPickFetchHead.getSelection()
 				|| updateFetchHead.getSelection())
 				&& activateAdditionalRefs.getSelection();
 	}
@@ -1059,6 +1074,8 @@ public class FetchGerritChangePage extends WizardPage {
 			return CheckoutMode.CREATE_TAG;
 		} else if (checkoutFetchHead.getSelection()) {
 			return CheckoutMode.CHECKOUT_FETCH_HEAD;
+		} else if (cherryPickFetchHead.getSelection()) {
+			return CheckoutMode.CHERRY_PICK;
 		} else {
 			return CheckoutMode.NOCHECKOUT;
 		}
@@ -1119,6 +1136,32 @@ public class FetchGerritChangePage extends WizardPage {
 			throws CoreException {
 		monitor.subTask(UIText.FetchGerritChangePage_CheckingOutTaskName);
 		BranchOperationUI.checkout(repository, targetName).run(monitor);
+		monitor.worked(1);
+	}
+
+	private void cherryPick(@NonNull RevCommit commit,
+			IProgressMonitor monitor) {
+		monitor.subTask(UIText.FetchGerritChangePage_CherryPickTaskName);
+		WorkbenchJob job = new WorkbenchJob(
+				PlatformUI.getWorkbench().getDisplay(),
+				UIText.FetchGerritChangePage_CherryPickTaskName) {
+
+			@Override
+			public IStatus runInUIThread(IProgressMonitor progress) {
+				try {
+					CherryPickUI ui = new CherryPickUI();
+					ui.run(repository, commit, false);
+				} catch (CoreException e) {
+					return Activator.createErrorStatus(e.getLocalizedMessage(),
+							e);
+				} finally {
+					progress.done();
+				}
+				return Status.OK_STATUS;
+			}
+		};
+		job.setUser(true);
+		job.schedule();
 		monitor.worked(1);
 	}
 
