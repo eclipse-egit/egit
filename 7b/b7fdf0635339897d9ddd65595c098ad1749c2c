@@ -1,0 +1,8 @@
+Verified+1: CI Bot
+Code-Review+1: Michael Keppler <michael.keppler@gmx.de>
+Code-Review+2: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-by: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-at: Mon, 09 Apr 2018 02:56:32 -0400
+Reviewed-on: https://git.eclipse.org/r/120569
+Project: egit/egit
+Branch: refs/heads/stable-4.11
