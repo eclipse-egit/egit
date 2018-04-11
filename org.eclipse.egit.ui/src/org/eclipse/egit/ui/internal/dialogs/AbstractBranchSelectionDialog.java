@@ -265,12 +265,15 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		composite.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
 
 		int selectionModel = -1;
-		if ((settings & ALLOW_MULTISELECTION) != 0)
+		if ((settings & ALLOW_MULTISELECTION) != 0) {
 			selectionModel = SWT.MULTI;
-		else
+		} else {
 			selectionModel = SWT.SINGLE;
-		FilteredTree tree = new FilteredTree(composite, selectionModel | SWT.BORDER,
-				new PatternFilter(), true);
+		}
+		PatternFilter filter = new PatternFilter();
+		filter.setIncludeLeadingWildcard(true);
+		FilteredTree tree = new FilteredTree(composite,
+				selectionModel | SWT.BORDER, filter, true);
 		branchTree = tree.getViewer();
 		branchTree.setUseHashlookup(true);
 		branchTree
