@@ -24,6 +24,8 @@ import org.eclipse.jgit.util.HttpSupport;
  * A utility class to lazily download the Gitmojis from the
  * <a href="https://github.com/carloscuesta/gitmoji/">GitHub repository</a>, and
  * to keep a reference to them.
+ *
+ * @since 5.0
  */
 public final class GitmojiLibrary {
 

@@ -14,6 +14,8 @@ import java.util.Objects;
 /**
  * The representation of a Gitmoji, containing all the data needed to use it in
  * a commit message.
+ *
+ * @since 5.0
  */
 public final class Gitmoji {
 
