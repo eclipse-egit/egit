@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4605c72_af0699c1",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-04-23T22:25:09Z",
+      "side": 1,
+      "message": "Missing version constraint.",
+      "revId": "b2302d54a876b2331af25da15f40ea2455133470",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
