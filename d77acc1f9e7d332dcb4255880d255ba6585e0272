@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "047d3026_e5391828",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-04-23T22:24:48Z",
+      "side": 1,
+      "message": "Should have an upper bound of 3.0.0.",
+      "revId": "d77acc1f9e7d332dcb4255880d255ba6585e0272",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f2f5ba7_e8538278",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gitmoji/Gitmoji.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-04-23T22:24:48Z",
+      "side": 1,
+      "message": "Why not use @NonNull?",
+      "revId": "d77acc1f9e7d332dcb4255880d255ba6585e0272",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7dd1e626_6e2711ee",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gitmoji/GitmojiJsonReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-04-23T22:24:48Z",
+      "side": 1,
+      "message": "Why store the inputStream? Closing the jsonReader will close its reader, which will close the stream.",
+      "revId": "d77acc1f9e7d332dcb4255880d255ba6585e0272",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79bd3f99_dee0daa7",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gitmoji/GitmojiLibrary.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-04-23T22:24:48Z",
+      "side": 1,
+      "message": "Why limit this to this abridged list of emojis? Why not allow all emojis available? With Github, https://api.github.com/emojis would list them all. So why use this special list, which looks like someone\u0027s private repository? What if that repo vanishes?\n\nWhat if I use some other git server\u0027s web UI that has different emojis (or other icons)?\n\nWhy do we need to download the list at all? What if there\u0027s no Internet connection? Aren\u0027t emoji tokens (\":smiley:\" for what used to be \":-)\" and so on) pretty much standardized these days? So one could have at least a hard-coded fallback list.\n\nIf a download is needed, couldn\u0027t it be done in the background to hide the remote call the first time the user uses this as much as possible. (Usually, such a background download would have finished by the time the user tries to use the functionality, so the user would not experience any delay.)",
+      "revId": "d77acc1f9e7d332dcb4255880d255ba6585e0272",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08d79c71_bc9ffaef",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gitmoji/GitmojiLibrary.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-04-23T22:24:48Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be logged at least?",
+      "revId": "d77acc1f9e7d332dcb4255880d255ba6585e0272",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
