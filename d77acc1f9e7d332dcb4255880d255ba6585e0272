@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "e4269d7c_2508b104",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gitmoji/Gitmoji.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-04-23T23:10:55Z",
+      "side": 1,
+      "message": "+1, declare parameters @NonNull",
+      "parentUuid": "1f2f5ba7_e8538278",
+      "revId": "d77acc1f9e7d332dcb4255880d255ba6585e0272",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dd1e626_6e2711ee",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gitmoji/GitmojiJsonReader.java",
         "patchSetId": 1
@@ -70,6 +88,23 @@
     },
     {
       "key": {
+        "uuid": "7fab8ce9_b9a20ce3",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gitmoji/GitmojiLibrary.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-04-23T23:10:55Z",
+      "side": 1,
+      "message": "remove unnecessary comments",
+      "revId": "d77acc1f9e7d332dcb4255880d255ba6585e0272",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08d79c71_bc9ffaef",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gitmoji/GitmojiLibrary.java",
         "patchSetId": 1
@@ -81,6 +116,40 @@
       "writtenOn": "2018-04-23T22:24:48Z",
       "side": 1,
       "message": "Shouldn\u0027t this be logged at least?",
+      "revId": "d77acc1f9e7d332dcb4255880d255ba6585e0272",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9c64285_ab52aa9b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gitmoji/GitmojiLibrary.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-04-23T23:10:55Z",
+      "side": 1,
+      "message": "remove unnecessary comments",
+      "revId": "d77acc1f9e7d332dcb4255880d255ba6585e0272",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad169c0f_065ddacf",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gitmoji/GitmojiLibrary.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-04-23T23:10:55Z",
+      "side": 1,
+      "message": "remove unnecessary comments",
       "revId": "d77acc1f9e7d332dcb4255880d255ba6585e0272",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
