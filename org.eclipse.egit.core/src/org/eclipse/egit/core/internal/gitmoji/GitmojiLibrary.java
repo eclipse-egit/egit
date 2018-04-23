@@ -54,7 +54,7 @@ public final class GitmojiLibrary {
 	 *         they could not be downloaded.
 	 */
 	public static Collection<Gitmoji> gitmojis() {
-		if (allGitmojis == null) {
+		if (allGitmojis == null || allGitmojis.isEmpty()) {
 			// The gitmojis have to be loaded.
 			download();
 		}
