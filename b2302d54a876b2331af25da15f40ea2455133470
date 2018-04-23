@@ -16,6 +16,23 @@
       "revId": "b2302d54a876b2331af25da15f40ea2455133470",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6e81905_d85cc30b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/FilterGitmojiDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-04-23T23:15:52Z",
+      "side": 1,
+      "message": "where is this used ? Why do we need a dialog ? \n\nI\u0027d recommend to instead add content assist for gitmojis in the commit message editor of the staging view.",
+      "revId": "b2302d54a876b2331af25da15f40ea2455133470",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
