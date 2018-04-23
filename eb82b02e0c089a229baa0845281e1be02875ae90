@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53616ef5_cf5ab3e1",
+        "filename": "org.eclipse.egit.ui/icons/obj16/gitmoji.png",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-04-23T22:28:03Z",
+      "side": 1,
+      "message": "Egit requires an SVG source for all its icons. They\u0027re located in the top-level directory ./icons. Then we generate a 16x16 _and_ a 32x32 png named gitmoji@2x.png from that, and include those in the bundle.",
+      "revId": "eb82b02e0c089a229baa0845281e1be02875ae90",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea743ee9_41dc10c4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-04-23T22:28:03Z",
+      "side": 1,
+      "message": "I think this needs a preference setting to enable/disable the feature. Gitmojis are rather useless when looking at the commit message with some software that doesn\u0027t replace the tokens by the images (using PNGs or an emoji font). Therefore, this whole functionality is useful only for people using particular setups. For other people, an extra emoji button is just visual clutter.\n\nOr, as I suggested already on https://git.eclipse.org/r/#/c/121579, move all this to a separate feature and make this toolbar here extensible.",
+      "revId": "eb82b02e0c089a229baa0845281e1be02875ae90",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f6ab45d_7e70b529",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4170,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-04-23T22:28:03Z",
+      "side": 1,
+      "message": "Is a dialog for this (and a button) really good UI for this? How about using content completion proposals for this? When the user types Ctrl-Space and the current text context is :\\w*, the completions could suggest appropriate emoji tokens.\n\nHave you seen the animated graphic at https://plugins.jetbrains.com/plugin/10315-gitmoji ? Seems to me that something like that would give a more fluent UI.\n\nAnd it would integrate better if someone completed the attempt to make the commit editor pluggable (and solved the design issues with that).",
+      "revId": "eb82b02e0c089a229baa0845281e1be02875ae90",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
