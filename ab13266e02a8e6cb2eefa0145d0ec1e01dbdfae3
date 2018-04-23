@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a1eb7fc_a134b3be",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gitmoji/GitmojiLibrary.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-04-23T22:25:01Z",
+      "side": 1,
+      "message": "So if they cannot be downloaded we\u0027ll try over and over again?",
+      "revId": "ab13266e02a8e6cb2eefa0145d0ec1e01dbdfae3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
