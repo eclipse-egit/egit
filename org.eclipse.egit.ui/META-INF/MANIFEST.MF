@@ -36,6 +36,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.eclipse.egit.core;version="[5.0.0,5.1.0)",
  org.eclipse.egit.core.internal;version="[5.0.0,5.1.0)",
  org.eclipse.egit.core.internal.gerrit;version="[5.0.0,5.1.0)",
+ org.eclipse.egit.core.internal.gitmoji,
  org.eclipse.egit.core.internal.indexdiff;version="[5.0.0,5.1.0)",
  org.eclipse.egit.core.internal.job;version="[5.0.0,5.1.0)",
  org.eclipse.egit.core.internal.rebase;version="[5.0.0,5.1.0)",
