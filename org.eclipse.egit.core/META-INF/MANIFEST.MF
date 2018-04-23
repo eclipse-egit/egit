@@ -45,7 +45,8 @@ Export-Package: org.eclipse.egit.core;version="5.0.0";
  org.eclipse.egit.core.synchronize.dto;version="5.0.0";x-friends:="org.eclipse.egit.ui"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: com.jcraft.jsch;bundle-version="[0.1.37,0.2.0)",
+Import-Package: com.google.gson.stream;version="2.8.2",
+ com.jcraft.jsch;bundle-version="[0.1.37,0.2.0)",
  org.eclipse.core.net.proxy;bundle-version="[1.1.0,2.0.0)",
  org.eclipse.jgit.annotations;version="[5.0.0,5.1.0)",
  org.eclipse.jgit.api;version="[5.0.0,5.1.0)",
