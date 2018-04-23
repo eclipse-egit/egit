@@ -8,6 +8,7 @@
  * Copyright (C) 2014, Axel Richard <axel.richard@obeo.fr>
  * Copyright (C) 2015, Denis Zygann <d.zygann@web.de>
  * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2018, Thibault Falque <thibault.falque@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -248,6 +249,9 @@ public class UIIcons {
 	/** Commit icon */
 	public final static ImageDescriptor COMMIT;
 
+	/** Gitmoji icon */
+	public final static ImageDescriptor GITMOJI;
+
 	/** Cherry-pick icon */
 	public final static ImageDescriptor CHERRY_PICK;
 
@@ -425,6 +429,7 @@ public class UIIcons {
 		AMEND_COMMIT = map("obj16/commit_amend.png"); //$NON-NLS-1$
 		UNTRACKED_FILE = map("obj16/untracked_file.png"); //$NON-NLS-1$
 		NOTE = map("obj16/note.png"); //$NON-NLS-1$
+		GITMOJI = map("obj16/gitmoji.png"); //$NON-NLS-1$
 		ANNOTATE = map("etool16/annotate.png"); //$NON-NLS-1$
 		COMMIT = map("obj16/commit.png"); //$NON-NLS-1$
 		CHERRY_PICK = map("obj16/cherry-pick.png"); //$NON-NLS-1$

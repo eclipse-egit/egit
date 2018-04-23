@@ -3,6 +3,7 @@
  * Copyright (C) 2015 SAP SE (Christian Georgi <christian.georgi@sap.com>)
  * Copyright (C) 2015 Denis Zygann <d.zygann@web.de>
  * Copyright (C) 2016 IBM (Daniel Megert <daniel_megert@ch.ibm.com>)
+ * Copyright (C) 2018, Thibault Falque <thibault.falque@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -60,6 +61,8 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
+import org.eclipse.egit.core.internal.gitmoji.Gitmoji;
+import org.eclipse.egit.core.internal.gitmoji.GitmojiLibrary;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
@@ -99,6 +102,7 @@ import org.eclipse.egit.ui.internal.dialogs.CommitMessageArea;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponent;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentState;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentStateManager;
+import org.eclipse.egit.ui.internal.dialogs.FilterGitmojiDialog;
 import org.eclipse.egit.ui.internal.dialogs.ICommitMessageComponentNotifications;
 import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
 import org.eclipse.egit.ui.internal.operations.DeletePathsOperationUI;
@@ -223,6 +227,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
+import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.Form;
@@ -700,6 +705,8 @@ public class StagingView extends ViewPart
 
 	private Action addChangeIdAction;
 
+	private Action gitmojiAction;
+
 	private Action amendPreviousCommitAction;
 
 	private Action openNewCommitsAction;
@@ -996,6 +1003,16 @@ public class StagingView extends ViewPart
 		addChangeIdAction.setImageDescriptor(UIIcons.GERRIT);
 		commitMessageToolBarManager.add(addChangeIdAction);
 
+		gitmojiAction = new Action(UIText.StagingView_Gitmoji,
+				IAction.AS_CHECK_BOX) {
+			@Override
+			public void run() {
+				gitmoji();
+			}
+		};
+		gitmojiAction.setImageDescriptor(UIIcons.GITMOJI);
+		commitMessageToolBarManager.add(gitmojiAction);
+
 		commitMessageToolBarManager
 				.createControl(commitMessageToolbarComposite);
 
@@ -1131,6 +1148,8 @@ public class StagingView extends ViewPart
 		});
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
 				.applyTo(commitAndPushButton);
+
+
 
 		this.commitButton = toolkit.createButton(commitButtonsContainer,
 				UIText.StagingView_Commit, SWT.PUSH);
@@ -4125,6 +4144,35 @@ public class StagingView extends ViewPart
 		for (StagingEntry entry : entries)
 			files.add(entry.getPath());
 		return files;
+	}
+
+	/**
+	 * This method executes the action of the field gitmojiAction
+	 * {@link #gitmojiAction}.
+	 *
+	 * This action creates and shows a gitmoji dialog with list of gitmojis.
+	 */
+	private void gitmoji() {
+
+		Collection<Gitmoji> gitmojis=GitmojiLibrary.gitmojis();
+
+		if (gitmojis.isEmpty()) {
+			MessageDialog.openError(getSite().getShell(), "Error", //$NON-NLS-1$
+					"No gitmoji has been found. Please check your internet connection."); //$NON-NLS-1$
+			return;
+		}
+
+		ElementListSelectionDialog dialog = new FilterGitmojiDialog(
+				getSite().getShell(), gitmojis);
+
+		if (dialog.open() != Window.OK) {
+			return;
+		}
+
+		Object[] result = dialog.getResult();
+		Gitmoji message = (Gitmoji) result[0];
+		commitMessageText.setText(
+				message.getCode() + ' ' + commitMessageText.getText());
 	}
 
 	private void commit(boolean pushUpstream) {
