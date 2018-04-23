@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47a07bf1_6388a261",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-04-23T22:24:55Z",
+      "side": 1,
+      "message": "Missing version and x-friends.",
+      "revId": "30ce9443960cfaa7d7461ab64cd268b0e6f9986f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d26d2f5_d769f3e3",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gitmoji/Gitmoji.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-04-23T22:24:55Z",
+      "side": 1,
+      "message": "An internal package shall be exported as x-internal or with x-friends. It\u0027s not API, and thus doesn\u0027t need @since tags.",
+      "revId": "30ce9443960cfaa7d7461ab64cd268b0e6f9986f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
