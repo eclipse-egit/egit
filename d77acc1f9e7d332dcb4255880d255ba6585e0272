@@ -111,6 +111,23 @@
     },
     {
       "key": {
+        "uuid": "3fa352da_2d305bb1",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gitmoji/GitmojiLibrary.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-04-24T05:46:19Z",
+      "side": 1,
+      "message": "The few tweets at https://twitter.com/hashtag/gitmoji have one interesting bit in https://twitter.com/gobbergnulle/status/988050985783308288 : some people or organizations use their own set of emojis.\n\nThe set of emojis should be configurable. Probably even per repository. (I might have at the same time Github clones and other clones available.)\n\nAnd some organizations might want to provide a global default set. Sounds like some git config entry might be an appropriate way. Like a \"core.gitmoji\" config entry (ternary value: false\u003ddon\u0027t use; true\u003duse that carloscuesta set; otherwise: a URL to a JSON file describing the set; if unset default \u003d false. Note that such a URL could also be a file:// URL).\n\nThen a separate Eclipse preference might not be necessary.",
+      "revId": "d77acc1f9e7d332dcb4255880d255ba6585e0272",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fab8ce9_b9a20ce3",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/gitmoji/GitmojiLibrary.java",
         "patchSetId": 1
