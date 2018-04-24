@@ -33,6 +33,24 @@
       "revId": "b2302d54a876b2331af25da15f40ea2455133470",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7c7ef98_80767f21",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/FilterGitmojiDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-04-24T05:47:44Z",
+      "side": 1,
+      "message": "\u003e I\u0027d recommend to instead add content assist for gitmojis in the\n \u003e commit message editor of the staging view.\n\nI made the same suggestion in https://git.eclipse.org/r/#/c/121583/ .",
+      "parentUuid": "a6e81905_d85cc30b",
+      "revId": "b2302d54a876b2331af25da15f40ea2455133470",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
