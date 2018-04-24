@@ -71,7 +71,8 @@ public class MergeHandler extends AbstractHistoryCommandHandler {
 			BranchSelectionDialog<Ref> dlg = new BranchSelectionDialog<>(
 					shell, nodes,
 					UIText.MergeHandler_SelectBranchTitle,
-					UIText.MergeHandler_SelectBranchMessage, SWT.SINGLE);
+					UIText.MergeHandler_SelectBranchMessage,
+					UIText.MergeHandler_SelectBranchButton, SWT.SINGLE);
 			if (dlg.open() == Window.OK) {
 				refName = dlg.getSelectedNode().getName();
 			} else {

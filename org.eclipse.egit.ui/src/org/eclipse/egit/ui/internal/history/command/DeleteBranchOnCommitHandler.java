@@ -75,6 +75,7 @@ public class DeleteBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 					branchesOfCommit,
 					UIText.DeleteBranchOnCommitHandler_SelectBranchDialogTitle,
 					UIText.DeleteBranchOnCommitHandler_SelectBranchDialogMessage,
+					UIText.DeleteBranchOnCommitHandler_SelectBranchDialogButton,
 					SWT.MULTI);
 			if (dlg.open() != Window.OK)
 				return null;
