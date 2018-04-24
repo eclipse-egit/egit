@@ -44,8 +44,9 @@ public class RenameBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 			BranchSelectionDialog<Ref> dlg = new BranchSelectionDialog<>(
 					shell,
 					branchesOfCommit,
-					UIText.RenameBranchOnCommitHandler_SelectBranchDialogTitle,
-					UIText.RenameBranchOnCommitHandler_SelectBranchDialogMessage,
+					UIText.RenameBranchOnCommitHandler_RenameBranchDialogTitle,
+					UIText.RenameBranchOnCommitHandler_RenameBranchDialogMessage,
+					UIText.RenameBranchOnCommitHandler_RenameBranchDialogButton,
 					SWT.SINGLE);
 			if (dlg.open() != Window.OK)
 				return null;

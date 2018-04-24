@@ -1196,10 +1196,13 @@ public class UIText extends NLS {
 	public static String CheckoutDialog_Title;
 
 	/** */
-	public static String CheckoutHandler_SelectBranchMessage;
+	public static String CheckoutHandler_CheckoutBranchDialogButton;
 
 	/** */
-	public static String CheckoutHandler_SelectBranchTitle;
+	public static String CheckoutHandler_CheckoutBranchDialogMessage;
+
+	/** */
+	public static String CheckoutHandler_CheckoutBranchDialogTitle;
 
 	/** */
 	public static String CherryPickHandler_NoCherryPickPerformedMessage;
@@ -1313,10 +1316,13 @@ public class UIText extends NLS {
 	public static String CompareUtils_wrongResourceArgument;
 
 	/** */
-	public static String MergeHandler_SelectBranchMessage;
+	public static String MergeHandler_MergeBranchDialogButton;
 
 	/** */
-	public static String MergeHandler_SelectBranchTitle;
+	public static String MergeHandler_MergeBranchDialogMessage;
+
+	/** */
+	public static String MergeHandler_MergeBranchDialogTitle;
 
 	/** */
 	public static String RepositoryAction_errorFindingRepo;
@@ -3503,10 +3509,13 @@ public class UIText extends NLS {
 	public static String DeleteBranchDialog_WindowTitle;
 
 	/** */
-	public static String DeleteBranchOnCommitHandler_SelectBranchDialogMessage;
+	public static String DeleteBranchOnCommitHandler_DeleteBranchesDialogButton;
 
 	/** */
-	public static String DeleteBranchOnCommitHandler_SelectBranchDialogTitle;
+	public static String DeleteBranchOnCommitHandler_DeleteBranchesDialogMessage;
+
+	/** */
+	public static String DeleteBranchOnCommitHandler_DeleteBranchesDialogTitle;
 
 	/** */
 	public static String DeleteRepositoryConfirmDialog_DeleteGitDirCheckbox;
@@ -3532,10 +3541,13 @@ public class UIText extends NLS {
 	public static String DeleteRepositoryConfirmDialog_DeleteProjectsCheckbox;
 
 	/** */
-	public static String DeleteTagOnCommitHandler_SelectTagDialogMessage;
+	public static String DeleteTagOnCommitHandler_DeleteTagsDialogButton;
 
 	/** */
-	public static String DeleteTagOnCommitHandler_SelectTagDialogTitle;
+	public static String DeleteTagOnCommitHandler_DeleteTagsDialogMessage;
+
+	/** */
+	public static String DeleteTagOnCommitHandler_DeleteTagsDialogTitle;
 
 	/** */
 	public static String DeleteTagCommand_deletingTagsProgress;
@@ -4764,10 +4776,13 @@ public class UIText extends NLS {
 	public static String RenameBranchDialog_WindowTitle;
 
 	/** */
-	public static String RenameBranchOnCommitHandler_SelectBranchDialogMessage;
+	public static String RenameBranchOnCommitHandler_RenameBranchDialogButton;
 
 	/** */
-	public static String RenameBranchOnCommitHandler_SelectBranchDialogTitle;
+	public static String RenameBranchOnCommitHandler_RenameBranchDialogMessage;
+
+	/** */
+	public static String RenameBranchOnCommitHandler_RenameBranchDialogTitle;
 
 	/** */
 	public static String RepositoryStatistics_Description;

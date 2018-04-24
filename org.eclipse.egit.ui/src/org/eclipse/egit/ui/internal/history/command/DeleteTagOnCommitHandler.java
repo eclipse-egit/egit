@@ -60,8 +60,9 @@ public class DeleteTagOnCommitHandler extends AbstractHistoryCommandHandler {
 			BranchSelectionDialog<Ref> dialog = new BranchSelectionDialog<>(
 					shell,
 					tags,
-					UIText.DeleteTagOnCommitHandler_SelectTagDialogTitle,
-					UIText.DeleteTagOnCommitHandler_SelectTagDialogMessage,
+					UIText.DeleteTagOnCommitHandler_DeleteTagsDialogTitle,
+					UIText.DeleteTagOnCommitHandler_DeleteTagsDialogMessage,
+					UIText.DeleteTagOnCommitHandler_DeleteTagsDialogButton,
 					SWT.MULTI);
 			if (dialog.open() != Window.OK)
 				return null;
