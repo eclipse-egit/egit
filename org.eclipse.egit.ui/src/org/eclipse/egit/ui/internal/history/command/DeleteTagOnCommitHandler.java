@@ -62,6 +62,7 @@ public class DeleteTagOnCommitHandler extends AbstractHistoryCommandHandler {
 					tags,
 					UIText.DeleteTagOnCommitHandler_SelectTagDialogTitle,
 					UIText.DeleteTagOnCommitHandler_SelectTagDialogMessage,
+					UIText.DeleteTagOnCommitHandler_SelectTagDialogButton,
 					SWT.MULTI);
 			if (dialog.open() != Window.OK)
 				return null;

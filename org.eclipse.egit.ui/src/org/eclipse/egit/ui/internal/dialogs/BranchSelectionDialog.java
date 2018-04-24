@@ -83,13 +83,17 @@ public class BranchSelectionDialog<T> extends MessageDialog {
 	 * @param nodes
 	 * @param title
 	 * @param message
+	 * @param buttonLabel
+	 *                        label of the okay button, should be the verb used
+	 *                        in the title
 	 * @param style
-	 *            only {@link SWT#SINGLE} and {@link SWT#MULTI} are supported
+	 *                        only {@link SWT#SINGLE} and {@link SWT#MULTI} are
+	 *                        supported
 	 */
 	public BranchSelectionDialog(Shell parentShell, List<T> nodes, String title,
-			String message, int style) {
+			String message, String buttonLabel, int style) {
 		super(parentShell, title, null, message, MessageDialog.QUESTION,
-				new String[] { IDialogConstants.OK_LABEL,
+				new String[] { buttonLabel,
 						IDialogConstants.CANCEL_LABEL }, 0);
 		this.nodes = nodes;
 		this.style = style;

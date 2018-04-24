@@ -1196,6 +1196,9 @@ public class UIText extends NLS {
 	public static String CheckoutDialog_Title;
 
 	/** */
+	public static String CheckoutHandler_SelectBranchButton;
+
+	/** */
 	public static String CheckoutHandler_SelectBranchMessage;
 
 	/** */
@@ -1311,6 +1314,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CompareUtils_wrongResourceArgument;
+
+	/** */
+	public static String MergeHandler_SelectBranchButton;
 
 	/** */
 	public static String MergeHandler_SelectBranchMessage;
@@ -3503,6 +3509,9 @@ public class UIText extends NLS {
 	public static String DeleteBranchDialog_WindowTitle;
 
 	/** */
+	public static String DeleteBranchOnCommitHandler_SelectBranchDialogButton;
+
+	/** */
 	public static String DeleteBranchOnCommitHandler_SelectBranchDialogMessage;
 
 	/** */
@@ -3530,6 +3539,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String DeleteRepositoryConfirmDialog_DeleteProjectsCheckbox;
+
+	/** */
+	public static String DeleteTagOnCommitHandler_SelectTagDialogButton;
 
 	/** */
 	public static String DeleteTagOnCommitHandler_SelectTagDialogMessage;
@@ -4759,6 +4771,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RenameBranchDialog_WindowTitle;
+
+	/** */
+	public static String RenameBranchOnCommitHandler_SelectBranchDialogButton;
 
 	/** */
 	public static String RenameBranchOnCommitHandler_SelectBranchDialogMessage;
