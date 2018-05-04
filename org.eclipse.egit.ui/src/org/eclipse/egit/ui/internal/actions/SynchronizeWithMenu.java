@@ -29,11 +29,11 @@ import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.synchronize.GitModelSynchronize;
 import org.eclipse.egit.ui.internal.synchronize.GitSynchronizeWizard;
-import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectIdRef.PeeledTag;
 import org.eclipse.jgit.lib.Ref;
@@ -84,6 +84,7 @@ public class SynchronizeWithMenu extends ContributionItem implements
 		branchImage = UIIcons.BRANCH.createImage();
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public void fill(final Menu menu, int index) {
 		if (srv == null)

@@ -117,6 +117,7 @@ public class RebaseInteractiveStepActionToolBarProvider {
 				SWTKeySupport.convertAcceleratorToKeyStroke(accelerator)) + ')';
 	}
 
+	@SuppressWarnings("unused")
 	private void createToolBarItems() {
 		ToolItem itemPick = new ToolItem(theToolbar, SWT.RADIO);
 		itemPick.setImage(getImage(UIIcons.CHERRY_PICK));

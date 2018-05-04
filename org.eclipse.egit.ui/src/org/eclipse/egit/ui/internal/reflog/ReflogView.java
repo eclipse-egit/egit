@@ -133,6 +133,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 
 	private IWorkbenchAction switchRepositoriesAction;
 
+	@SuppressWarnings("unused")
 	@Override
 	public void createPartControl(Composite parent) {
 		dateFormatter = PreferenceBasedDateFormatter.create();

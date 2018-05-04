@@ -238,7 +238,7 @@ public class FileTreeContentProvider implements ITreeContentProvider {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		rootNodes.clear();
 

@@ -57,6 +57,7 @@ public class CheckoutConflictDialog extends MessageDialog {
 		this.conflicts = conflicts;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	protected Control createCustomArea(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);

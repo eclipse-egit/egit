@@ -64,6 +64,7 @@ public class CleanupUncomittedChangesDialog extends MessageDialog {
 		this.fileList = fileList;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	protected Control createCustomArea(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);

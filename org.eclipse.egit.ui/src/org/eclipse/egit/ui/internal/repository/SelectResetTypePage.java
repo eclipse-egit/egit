@@ -106,6 +106,7 @@ public class SelectResetTypePage extends WizardPage {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public void createControl(Composite parent) {
 		Composite displayArea = new Composite(parent, SWT.NONE);

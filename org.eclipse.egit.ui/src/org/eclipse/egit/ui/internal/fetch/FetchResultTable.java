@@ -249,6 +249,7 @@ class FetchResultTable {
 
 	private Map<ObjectId, String> abbrevations;
 
+	@SuppressWarnings("unused")
 	FetchResultTable(final Composite parent) {
 		treePanel = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.swtDefaults().numColumns(2).applyTo(treePanel);

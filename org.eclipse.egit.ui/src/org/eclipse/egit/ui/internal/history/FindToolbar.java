@@ -191,6 +191,7 @@ public class FindToolbar extends Composite {
 		createToolbar();
 	}
 
+	@SuppressWarnings("unused")
 	private void createToolbar() {
 		errorBackgroundColor = new Color(getDisplay(), new RGB(255, 150, 150));
 		ResourceManager resourceManager = Activator.getDefault()

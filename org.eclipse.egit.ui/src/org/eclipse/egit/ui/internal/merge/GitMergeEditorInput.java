@@ -263,6 +263,7 @@ public class GitMergeEditorInput extends CompareEditorInput {
 		// we do NOT dispose the images, as these are shared
 	}
 
+	@SuppressWarnings("unused")
 	private IDiffContainer buildDiffContainer(Repository repository,
 			RevCommit headCommit,
 			RevCommit ancestorCommit, List<String> filterPaths, RevWalk rw,

@@ -104,6 +104,7 @@ public class MergeResultDialog extends Dialog {
 				true).setFocus();
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public Control createDialogArea(final Composite parent) {
 		final Composite composite = (Composite) super.createDialogArea(parent);

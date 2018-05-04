@@ -127,6 +127,7 @@ class ExistingOrNewPage extends WizardPage {
 		this.myWizard = w;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public void createControl(Composite parent) {
 		final RepositoryUtil util = Activator.getDefault().getRepositoryUtil();
