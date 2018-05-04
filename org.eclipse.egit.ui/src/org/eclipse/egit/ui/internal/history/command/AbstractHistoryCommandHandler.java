@@ -16,9 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -269,11 +267,12 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 		List<Ref> availableBranches = new ArrayList<>();
 		List<RefNode> nodes = new ArrayList<>();
 		try {
-			Map<String, Ref> branches = new HashMap<>();
+			List<Ref> branches = new ArrayList<>();
 			for (String refPrefix : refPrefixes) {
-				branches.putAll(repo.getRefDatabase().getRefs(refPrefix));
+				branches.addAll(
+						repo.getRefDatabase().getRefsByPrefix(refPrefix));
 			}
-			for (Ref branch : branches.values()) {
+			for (Ref branch : branches) {
 				ObjectId objectId = branch.getLeaf().getObjectId();
 				if (objectId != null && objectId.equals(commit)) {
 					availableBranches.add(branch);

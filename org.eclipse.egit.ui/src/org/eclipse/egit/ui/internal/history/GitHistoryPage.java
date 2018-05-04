@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -2420,7 +2419,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				walk.addAdditionalRefs(db.getRefDatabase()
 						.getAdditionalRefs());
 			walk.addAdditionalRefs(db.getRefDatabase()
-					.getRefs(Constants.R_NOTES).values());
+					.getRefsByPrefix(Constants.R_NOTES));
 		} catch (IOException e) {
 			throw new IllegalStateException(NLS.bind(
 					UIText.GitHistoryPage_errorReadingAdditionalRefs, Activator
@@ -2763,9 +2762,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	 */
 	private void markStartAllRefs(RevWalk walk, String prefix) throws IOException,
 			MissingObjectException, IncorrectObjectTypeException {
-		for (Entry<String, Ref> refEntry : input.getRepository()
-				.getRefDatabase().getRefs(prefix).entrySet()) {
-			Ref ref = refEntry.getValue();
+		for (Ref ref : input.getRepository().getRefDatabase()
+				.getRefsByPrefix(prefix)) {
 			if (ref.isSymbolic())
 				continue;
 			markStartRef(walk, ref);
@@ -2795,9 +2793,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 	private void markUninteresting(RevWalk walk, String prefix) throws IOException,
 			MissingObjectException, IncorrectObjectTypeException {
-		for (Entry<String, Ref> refEntry : input.getRepository()
-				.getRefDatabase().getRefs(prefix).entrySet()) {
-			Ref ref = refEntry.getValue();
+		for (Ref ref : input.getRepository().getRefDatabase()
+				.getRefsByPrefix(prefix)) {
 			if (ref.isSymbolic())
 				continue;
 			Object refTarget = walk

@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -244,9 +243,7 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 	private void markStartAllRefs(RevWalk currentWalk, String prefix)
 			throws IOException, MissingObjectException,
 			IncorrectObjectTypeException {
-		for (Entry<String, Ref> refEntry : repository.getRefDatabase().getRefs(
-				prefix).entrySet()) {
-			Ref ref = refEntry.getValue();
+		for (Ref ref : repository.getRefDatabase().getRefsByPrefix(prefix)) {
 			if (ref.isSymbolic())
 				continue;
 			currentWalk.markStart(currentWalk.parseCommit(ref.getObjectId()));

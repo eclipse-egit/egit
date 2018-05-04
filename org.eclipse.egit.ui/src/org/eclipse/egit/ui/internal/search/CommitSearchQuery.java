@@ -203,11 +203,11 @@ public class CommitSearchQuery implements ISearchQuery {
 			List<RevCommit> commits = new LinkedList<>();
 			if (this.settings.isAllBranches()) {
 				for (Ref ref : repository.getRefDatabase()
-						.getRefs(Constants.R_HEADS).values())
+						.getRefsByPrefix(Constants.R_HEADS))
 					if (!ref.isSymbolic())
 						commits.add(walk.parseCommit(ref.getObjectId()));
 				for (Ref ref : repository.getRefDatabase()
-						.getRefs(Constants.R_REMOTES).values())
+						.getRefsByPrefix(Constants.R_REMOTES))
 					if (!ref.isSymbolic())
 						commits.add(walk.parseCommit(ref.getObjectId()));
 			} else {

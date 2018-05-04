@@ -202,8 +202,8 @@ public class RepositoryCommit extends WorkbenchAdapter
 				Repository repo = getRepository();
 				Git git = Git.wrap(repo);
 				RevCommit revCommit = getRevCommit();
-				for (Ref ref : repo.getRefDatabase().getRefs(Constants.R_NOTES)
-						.values()) {
+				for (Ref ref : repo.getRefDatabase()
+						.getRefsByPrefix(Constants.R_NOTES)) {
 					Note note = git.notesShow().setNotesRef(ref.getName())
 							.setObjectId(revCommit).call();
 					if (note != null)

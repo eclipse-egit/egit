@@ -113,15 +113,15 @@ public class RefContentAssistProvider {
 						result.add(ref);
 
 			} else if (pushMode)
-				for (Ref ref : repo.getRefDatabase().getRefs(
-						RefDatabase.ALL).values()) {
+				for (Ref ref : repo.getRefDatabase()
+						.getRefsByPrefix(RefDatabase.ALL)) {
 					if (ref.getName().startsWith(Constants.R_REMOTES))
 						continue;
 					result.add(ref);
 				}
 			else
-				for (Ref ref : repo.getRefDatabase().getRefs(
-						Constants.R_REMOTES).values())
+				for (Ref ref : repo.getRefDatabase()
+						.getRefsByPrefix(Constants.R_REMOTES))
 					result.add(ref);
 		} catch (RuntimeException e) {
 			throw e;

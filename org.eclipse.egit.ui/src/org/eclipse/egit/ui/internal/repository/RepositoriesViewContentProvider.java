@@ -209,10 +209,9 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			} else {
 				List<RepositoryTreeNode<Ref>> refs = new ArrayList<>();
 				try {
-					for (Entry<String, Ref> refEntry : getRefs(repo, Constants.R_HEADS).entrySet()) {
-						if (!refEntry.getValue().isSymbolic())
-							refs.add(new RefNode(node, repo, refEntry
-									.getValue()));
+					for (Ref ref : getRefs(repo, Constants.R_HEADS).values()) {
+						if (!ref.isSymbolic())
+							refs.add(new RefNode(node, repo, ref));
 					}
 				} catch (Exception e) {
 					return handleException(e, node);

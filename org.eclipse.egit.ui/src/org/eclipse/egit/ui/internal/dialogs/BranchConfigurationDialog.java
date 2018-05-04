@@ -162,7 +162,7 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 
 	private void addBranchItemsForLocal() throws IOException {
 		Collection<Ref> localRefs = myRepository.getRefDatabase()
-				.getRefs(Constants.R_HEADS).values();
+				.getRefsByPrefix(Constants.R_HEADS);
 		for (Ref ref : localRefs)
 			branchText.add(ref.getName());
 	}
@@ -176,7 +176,7 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 		}
 
 		Collection<Ref> allRefs = myRepository.getRefDatabase()
-				.getRefs(Constants.R_REFS).values();
+				.getRefsByPrefix(Constants.R_REFS);
 		for (Ref ref : allRefs) {
 			for (RefSpec fetchSpec : fetchSpecs) {
 				// Fetch specs map remote ref names (source) to local ref names

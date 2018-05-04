@@ -317,8 +317,8 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 		List<Ref> ref = new ArrayList<>();
 		try {
 			RefDatabase refDb = repo.getRefDatabase();
-			ref.addAll(refDb.getRefs(Constants.R_HEADS).values());
-			ref.addAll(refDb.getRefs(Constants.R_REMOTES).values());
+			ref.addAll(refDb.getRefsByPrefix(Constants.R_HEADS));
+			ref.addAll(refDb.getRefsByPrefix(Constants.R_REMOTES));
 		} catch (IOException e) {
 			Activator.logError(e.getMessage(), e);
 		}
