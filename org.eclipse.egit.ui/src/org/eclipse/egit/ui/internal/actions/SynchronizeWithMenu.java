@@ -110,7 +110,7 @@ public class SynchronizeWithMenu extends ContributionItem implements
 			// do nothing
 		}
 		try {
-			refs.addAll(refDatabase.getRefs(RefDatabase.ALL).values());
+			refs.addAll(refDatabase.getRefsByPrefix(RefDatabase.ALL));
 		} catch (IOException e) {
 			// do nothing
 		}

@@ -13,7 +13,6 @@ package org.eclipse.egit.core.internal.storage;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Map.Entry;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -24,11 +23,6 @@ import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.synchronize.GitRemoteResource;
-import org.eclipse.osgi.util.NLS;
-import org.eclipse.team.core.history.IFileHistoryProvider;
-import org.eclipse.team.core.history.IFileRevision;
-import org.eclipse.team.core.history.provider.FileHistory;
-import org.eclipse.team.core.variants.IResourceVariant;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.AnyObjectId;
@@ -40,6 +34,11 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
+import org.eclipse.osgi.util.NLS;
+import org.eclipse.team.core.history.IFileHistoryProvider;
+import org.eclipse.team.core.history.IFileRevision;
+import org.eclipse.team.core.history.provider.FileHistory;
+import org.eclipse.team.core.variants.IResourceVariant;
 
 /**
  * A list of revisions for a specific resource according to some filtering
@@ -158,9 +157,7 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 	private void markStartAllRefs(RevWalk theWalk, String prefix)
 			throws IOException, MissingObjectException,
 			IncorrectObjectTypeException {
-		for (Entry<String, Ref> refEntry : db.getRefDatabase().getRefs(prefix)
-				.entrySet()) {
-			Ref ref = refEntry.getValue();
+		for (Ref ref : db.getRefDatabase().getRefsByPrefix(prefix)) {
 			if (ref.isSymbolic())
 				continue;
 			markStartRef(theWalk, ref);

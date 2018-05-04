@@ -16,9 +16,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -601,18 +599,18 @@ public class CommitEditorPage extends FormPage
 	private List<Ref> loadBranches() {
 		RepositoryCommit commit = getCommit();
 		Repository repository = commit.getRepository();
-		Map<String, Ref> refsMap = getAllBranchRefs(repository);
-		if (refsMap.isEmpty()) {
+		List<Ref> refs = getAllBranchRefs(repository);
+		if (refs.isEmpty()) {
 			return Collections.emptyList();
 		}
-		if (refsMap.size() < BRANCH_LIMIT_FOR_SYNC_LOAD) {
-			return findBranchesReachableFromCommit(commit, refsMap);
+		if (refs.size() < BRANCH_LIMIT_FOR_SYNC_LOAD) {
+			return findBranchesReachableFromCommit(commit, refs);
 		} else {
 			Job branchRefreshJob = new CommitEditorPageJob(commit) {
 				@Override
 				protected IStatus run(IProgressMonitor monitor) {
 					List<Ref> branches = findBranchesReachableFromCommit(commit,
-							refsMap);
+							refs);
 					updateUI(monitor, () -> fillBranches(branches));
 					return Status.OK_STATUS;
 				}
@@ -623,28 +621,28 @@ public class CommitEditorPage extends FormPage
 	}
 
 	private List<Ref> findBranchesReachableFromCommit(RepositoryCommit commit,
-			Map<String, Ref> refsMap) {
+			List<Ref> refs) {
 		try (RevWalk revWalk = new RevWalk(commit.getRepository())) {
 			return RevWalkUtils.findBranchesReachableFrom(commit.getRevCommit(),
-					revWalk, refsMap.values());
+					revWalk, refs);
 		} catch (IOException e) {
 			Activator.handleError(e.getMessage(), e, false);
 			return Collections.emptyList();
 		}
 	}
 
-	private Map<String, Ref> getAllBranchRefs(Repository repository) {
-		Map<String, Ref> refsMap = new HashMap<>();
+	private List<Ref> getAllBranchRefs(Repository repository) {
+		List<Ref> refs = new ArrayList<>();
 		try {
-			refsMap.putAll(repository.getRefDatabase().getRefs(
+			refs.addAll(repository.getRefDatabase().getRefsByPrefix(
 					Constants.R_HEADS));
-			refsMap.putAll(repository.getRefDatabase().getRefs(
+			refs.addAll(repository.getRefDatabase().getRefsByPrefix(
 					Constants.R_REMOTES));
 		} catch (IOException e) {
 			Activator.handleError(e.getMessage(), e, false);
-			return Collections.emptyMap();
+			return Collections.emptyList();
 		}
-		return refsMap;
+		return refs;
 	}
 
 	void loadSections() {

@@ -717,8 +717,8 @@ public class CreateTagDialog extends TitleAreaDialog {
 	 */
 	private List<Object> getRevTags() throws IOException {
 		List<Object> result = new ArrayList<>();
-		Collection<Ref> refs = repo.getRefDatabase().getRefs(Constants.R_TAGS)
-				.values();
+		Collection<Ref> refs = repo.getRefDatabase()
+				.getRefsByPrefix(Constants.R_TAGS);
 		for (Ref ref : refs) {
 			RevObject any;
 			try {

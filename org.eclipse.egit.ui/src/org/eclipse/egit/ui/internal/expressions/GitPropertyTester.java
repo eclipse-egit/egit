@@ -157,8 +157,8 @@ public class GitPropertyTester extends AbstractPropertyTester {
 			try {
 				ObjectId selectedId = commit.getRevCommit().getId();
 				for (String name : names) {
-					for (Ref branch : repository.getRefDatabase().getRefs(name)
-							.values()) {
+					for (Ref branch : repository.getRefDatabase()
+							.getRefsByPrefix(name)) {
 						ObjectId objectId = branch.getLeaf().getObjectId();
 						if (objectId != null && objectId.equals(selectedId)) {
 							if (++count > 1) {
@@ -194,8 +194,8 @@ public class GitPropertyTester extends AbstractPropertyTester {
 			try {
 				ObjectId selectedId = commit.getRevCommit().getId();
 				for (String name : names) {
-					for (Ref branch : repository.getRefDatabase().getRefs(name)
-							.values()) {
+					for (Ref branch : repository.getRefDatabase()
+							.getRefsByPrefix(name)) {
 						ObjectId objectId = branch.getLeaf().getObjectId();
 						if (objectId != null && objectId.equals(selectedId)) {
 							return true;

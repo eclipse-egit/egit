@@ -670,8 +670,8 @@ public class CommitMessageComponent {
 
 	private boolean isContainedInAnyRemoteBranch(RevCommit commit) {
 		try {
-			Collection<Ref> refs = repository.getRefDatabase().getRefs(
-					Constants.R_REMOTES).values();
+			Collection<Ref> refs = repository.getRefDatabase()
+					.getRefsByPrefix(Constants.R_REMOTES);
 			return RevUtils.isContainedInAnyRef(repository, commit, refs);
 		} catch (IOException e) {
 			// The result only affects a warning, so pretend there was no

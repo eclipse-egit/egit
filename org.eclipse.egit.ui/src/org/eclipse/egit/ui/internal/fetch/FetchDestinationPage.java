@@ -140,8 +140,8 @@ public class FetchDestinationPage extends WizardPage {
 		if (this.trackingBranches == null) {
 			List<Ref> proposals = new ArrayList<>();
 			try {
-				for (Ref ref : repository.getRefDatabase().getRefs(
-						Constants.R_REMOTES).values()) {
+				for (Ref ref : repository.getRefDatabase()
+						.getRefsByPrefix(Constants.R_REMOTES)) {
 					proposals.add(ref);
 				}
 				this.trackingBranches = proposals;

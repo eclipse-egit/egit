@@ -66,7 +66,8 @@ public class RevUtilsTest extends GitTestCase {
 	}
 
 	private boolean isContainedInAnyRemoteRef(RevCommit commit) throws IOException {
-		Collection<Ref> remoteRefs = repository.getRefDatabase().getRefs(Constants.R_REMOTES).values();
+		Collection<Ref> remoteRefs = repository.getRefDatabase()
+				.getRefsByPrefix(Constants.R_REMOTES);
 		return RevUtils.isContainedInAnyRef(repository, commit, remoteRefs);
 	}
 

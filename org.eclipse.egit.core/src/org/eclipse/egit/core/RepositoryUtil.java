@@ -253,9 +253,9 @@ public class RepositoryUtil {
 
 			Map<String, Date> tagMap = new HashMap<>();
 			try (RevWalk rw = new RevWalk(repository)) {
-				Map<String, Ref> tags = repository.getRefDatabase().getRefs(
+				List<Ref> tags = repository.getRefDatabase().getRefsByPrefix(
 						Constants.R_TAGS);
-				for (Ref tagRef : tags.values()) {
+				for (Ref tagRef : tags) {
 					RevObject any = rw.parseAny(repository.resolve(tagRef.getName()));
 					if (any instanceof RevTag) {
 						RevTag tag = (RevTag) any;
@@ -313,9 +313,9 @@ public class RepositoryUtil {
 				Set<String> branchNames = new TreeSet<>();
 				// put this into a sorted set
 				try {
-					Map<String, Ref> remoteBranches = repository
-							.getRefDatabase().getRefs(Constants.R_HEADS);
-					for (Ref branch : remoteBranches.values()) {
+					List<Ref> remoteBranches = repository.getRefDatabase()
+							.getRefsByPrefix(Constants.R_HEADS);
+					for (Ref branch : remoteBranches) {
 						ObjectId objectId = branch.getObjectId();
 						if (objectId != null
 								&& objectId.name().equals(commitId)) {
@@ -337,9 +337,9 @@ public class RepositoryUtil {
 				Set<String> branchNames = new TreeSet<>();
 				// put this into a sorted set
 				try {
-					Map<String, Ref> remoteBranches = repository
-							.getRefDatabase().getRefs(Constants.R_REMOTES);
-					for (Ref branch : remoteBranches.values()) {
+					List<Ref> remoteBranches = repository.getRefDatabase()
+							.getRefsByPrefix(Constants.R_REMOTES);
+					for (Ref branch : remoteBranches) {
 						ObjectId objectId = branch.getObjectId();
 						if (objectId != null
 								&& objectId.name().equals(commitId)) {
