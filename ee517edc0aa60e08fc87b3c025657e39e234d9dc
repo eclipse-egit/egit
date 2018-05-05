@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2eb92f2_b830678f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-05-05T23:17:47Z",
+      "side": 1,
+      "message": "these names are pretty confusing, this button is not going to select a branch but it\u0027s going to checkout, right ?",
+      "range": {
+        "startLine": 284,
+        "startChar": 16,
+        "endLine": 284,
+        "endChar": 34
+      },
+      "revId": "ee517edc0aa60e08fc87b3c025657e39e234d9dc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b14f3d3_6f0bb9fd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 1246,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-05-05T23:17:47Z",
+      "side": 1,
+      "message": "same here and below",
+      "range": {
+        "startLine": 1246,
+        "startChar": 28,
+        "endLine": 1246,
+        "endChar": 52
+      },
+      "revId": "ee517edc0aa60e08fc87b3c025657e39e234d9dc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
