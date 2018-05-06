@@ -2684,6 +2684,9 @@ public class UIText extends NLS {
 	public static String CreateRepositoryPage_BrowseButton;
 
 	/** */
+	public static String CreateRepositoryPage_DefaultRepositoryName;
+
+	/** */
 	public static String CreateRepositoryPage_DirectoryLabel;
 
 	/** */

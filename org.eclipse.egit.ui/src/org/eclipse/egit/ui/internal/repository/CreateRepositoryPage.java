@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.repository;
 
 import java.io.File;
+import java.nio.file.Paths;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -65,7 +66,21 @@ public class CreateRepositoryPage extends WizardPage {
 		Label directoryLabel = new Label(main, SWT.NONE);
 		directoryLabel.setText(UIText.CreateRepositoryPage_DirectoryLabel);
 		directoryText = new Text(main, SWT.BORDER);
-		directoryText.setText(RepositoryUtil.getDefaultRepositoryDir());
+		String initialDirectory = RepositoryUtil.getDefaultRepositoryDir();
+		int cursorPosition = initialDirectory.length();
+		if (!initialDirectory.isEmpty()) {
+			initialDirectory = RepositoryUtil.getDefaultRepositoryDir()
+					+ File.separatorChar
+					+ UIText.CreateRepositoryPage_DefaultRepositoryName;
+			int repoCounter = 2;
+			while (Paths.get(initialDirectory).toFile().exists()) {
+				initialDirectory = RepositoryUtil.getDefaultRepositoryDir()
+						+ File.separatorChar
+						+ UIText.CreateRepositoryPage_DefaultRepositoryName + repoCounter++;
+			}
+			cursorPosition++;
+		}
+		directoryText.setText(initialDirectory);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
 				.grab(true, false).applyTo(directoryText);
 		Button browseButton = new Button(main, SWT.PUSH);
@@ -113,7 +128,14 @@ public class CreateRepositoryPage extends WizardPage {
 
 		setControl(main);
 		directoryText.setFocus();
-		directoryText.setSelection(directoryText.getText().length());
+		directoryText.setSelection(cursorPosition,
+				directoryText.getText().length());
+		if (!directoryText.getText().isEmpty()) {
+			// enforce validation if a default repository directory is set.
+			// Otherwise the wizards initial validation state would be different
+			// than when entering the same directory text manually
+			checkPage();
+		}
 	}
 
 	/**
