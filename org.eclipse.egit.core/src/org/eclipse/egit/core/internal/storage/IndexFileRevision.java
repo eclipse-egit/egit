@@ -4,6 +4,7 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2017, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,9 +21,17 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.dircache.DirCache;
+import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.dircache.DirCacheEntry;
+import org.eclipse.jgit.dircache.DirCacheIterator;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.treewalk.FileTreeIterator;
+import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
+import org.eclipse.jgit.treewalk.filter.NotIgnoredFilter;
+import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.history.IFileRevision;
 
@@ -41,6 +50,8 @@ public class IndexFileRevision extends GitFileRevision implements
 
 	private ObjectId blobId;
 
+	private CheckoutMetadata metadata;
+
 	IndexFileRevision(final Repository repo, final String path) {
 		this(repo, path, FIRST_AVAILABLE);
 	}
@@ -54,9 +65,21 @@ public class IndexFileRevision extends GitFileRevision implements
 
 	@Override
 	public IStorage getStorage(IProgressMonitor monitor) throws CoreException {
-		if (blobId == null)
-			blobId = locateBlobObjectId();
-		return new IndexBlobStorage(db, path, blobId);
+		if (blobId == null) {
+			try {
+				DirCache cache = db.readDirCache();
+				blobId = locateBlobObjectId(cache);
+				if (blobId != null) {
+					metadata = getMetadata(cache);
+				}
+			} catch (IOException e) {
+				throw new CoreException(Activator.error(
+						NLS.bind(CoreText.IndexFileRevision_errorLookingUpPath,
+								path),
+						e));
+			}
+		}
+		return new IndexBlobStorage(db, path, blobId, metadata);
 	}
 
 	@Override
@@ -84,30 +107,45 @@ public class IndexFileRevision extends GitFileRevision implements
 		return INDEX;
 	}
 
-	private ObjectId locateBlobObjectId() throws CoreException {
-		try {
-			DirCache dc = db.readDirCache();
-			int firstIndex = dc.findEntry(path);
-			if (firstIndex < 0)
-				return null;
-
-			// Try to avoid call to nextEntry if first entry already matches
-			DirCacheEntry firstEntry = dc.getEntry(firstIndex);
-			if (stage == FIRST_AVAILABLE || firstEntry.getStage() == stage)
-				return firstEntry.getObjectId();
-
-			// Ok, we have to search
-			int nextIndex = dc.nextEntry(firstIndex);
-			for (int i = firstIndex; i < nextIndex; i++) {
-				DirCacheEntry entry = dc.getEntry(i);
-				if (entry.getStage() == stage)
-					return entry.getObjectId();
+	private CheckoutMetadata getMetadata(DirCache cache) throws IOException {
+		try (TreeWalk walk = new TreeWalk(db)) {
+			walk.addTree(new DirCacheIterator(cache));
+			FileTreeIterator files = new FileTreeIterator(db);
+			files.setDirCacheIterator(walk, 0);
+			walk.addTree(files);
+			walk.setFilter(AndTreeFilter.create(
+					PathFilterGroup.createFromStrings(path),
+					new NotIgnoredFilter(1)));
+			walk.setRecursive(true);
+			if (walk.next()) {
+				return new CheckoutMetadata(
+						walk.getEolStreamType(
+								TreeWalk.OperationType.CHECKOUT_OP),
+						walk
+						.getFilterCommand(Constants.ATTR_FILTER_TYPE_SMUDGE));
 			}
-			return null;
-		} catch (IOException e) {
-			throw new CoreException(Activator.error(NLS.bind(
-					CoreText.IndexFileRevision_errorLookingUpPath, path), e));
 		}
+		return null;
+	}
+
+	private ObjectId locateBlobObjectId(DirCache cache) {
+		int firstIndex = cache.findEntry(path);
+		if (firstIndex < 0)
+			return null;
+
+		// Try to avoid call to nextEntry if first entry already matches
+		DirCacheEntry firstEntry = cache.getEntry(firstIndex);
+		if (stage == FIRST_AVAILABLE || firstEntry.getStage() == stage)
+			return firstEntry.getObjectId();
+
+		// Ok, we have to search
+		int nextIndex = cache.nextEntry(firstIndex);
+		for (int i = firstIndex; i < nextIndex; i++) {
+			DirCacheEntry entry = cache.getEntry(i);
+			if (entry.getStage() == stage)
+				return entry.getObjectId();
+		}
+		return null;
 	}
 
 	@Override

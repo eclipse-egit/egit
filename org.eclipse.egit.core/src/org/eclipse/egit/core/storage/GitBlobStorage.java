@@ -3,6 +3,7 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2014, Obeo
+ * Copyright (C) 2017, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,15 +23,19 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.attributes.Filtering;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.CoreConfig.AutoCRLF;
+import org.eclipse.jgit.lib.CoreConfig.EolStreamType;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.WorkingTreeOptions;
-import org.eclipse.jgit.util.io.AutoCRLFInputStream;
+import org.eclipse.jgit.util.io.EolStreamTypeUtil;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -39,6 +44,8 @@ import org.eclipse.osgi.util.NLS;
  * @since 4.0
  */
 public class GitBlobStorage implements IEncodedStorage {
+
+
 	/** Repository containing the object this storage provides access to. */
 	protected final Repository db;
 
@@ -47,6 +54,9 @@ public class GitBlobStorage implements IEncodedStorage {
 
 	/** Id of this object in its repository. */
 	protected final ObjectId blobId;
+
+	/** Checkout metadata: smudge filters, EOL stream type. */
+	private final CheckoutMetadata metadata;
 
 	private String charset;
 
@@ -60,12 +70,38 @@ public class GitBlobStorage implements IEncodedStorage {
 	 *            validating if the blob is reachable using this path.
 	 * @param blob
 	 *            Id of this object in its repository.
+	 * @deprecated Use
+	 *             {@link #GitBlobStorage(Repository, String, ObjectId, CheckoutMetadata)}
+	 *             instead.
 	 */
+	@Deprecated
 	public GitBlobStorage(final Repository repository, final String path,
 			final ObjectId blob) {
+		this(repository, path, blob, null);
+	}
+
+	/**
+	 * @param repository
+	 *                       The repository containing this object.
+	 * @param path
+	 *                       Repository-relative path of the underlying object.
+	 *                       This path is not validated by this class, i.e. it's
+	 *                       returned as is by {@code #getAbsolutePath()} and
+	 *                       {@code #getFullPath()} without validating if the
+	 *                       blob is reachable using this path.
+	 * @param blob
+	 *                       Id of this object in its repository.
+	 * @param metadata
+	 *                       Smudge filters and EOL stream type to apply when
+	 *                       the content is to be gotten.
+	 * @since 5.0
+	 */
+	public GitBlobStorage(final Repository repository, final String path,
+			final ObjectId blob, final CheckoutMetadata metadata) {
 		this.db = repository;
 		this.path = path;
 		this.blobId = blob;
+		this.metadata = metadata;
 	}
 
 	@Override
@@ -81,23 +117,28 @@ public class GitBlobStorage implements IEncodedStorage {
 
 	private InputStream open() throws IOException, CoreException,
 			IncorrectObjectTypeException {
-		if (blobId == null)
+		if (blobId == null) {
 			return new ByteArrayInputStream(new byte[0]);
-
+		}
 		try {
 			WorkingTreeOptions workingTreeOptions = db.getConfig().get(WorkingTreeOptions.KEY);
-			final InputStream objectInputStream = db.open(blobId,
+			InputStream objectInputStream = db.open(blobId,
 					Constants.OBJ_BLOB).openStream();
-			switch (workingTreeOptions.getAutoCRLF()) {
-			case INPUT:
-				// When autocrlf == input the working tree could be either CRLF or LF, i.e. the comparison
-				// itself should ignore line endings.
-			case FALSE:
-				return objectInputStream;
-			case TRUE:
-			default:
-				return new AutoCRLFInputStream(objectInputStream, true);
+			InputStream filteredInputStream = objectInputStream;
+			if (metadata != null) {
+				filteredInputStream = Filtering.filter(db, path,
+						objectInputStream, metadata.smudgeFilterCommand);
 			}
+			EolStreamType streamType;
+			if (metadata != null && metadata.eolStreamType != null) {
+				streamType = metadata.eolStreamType;
+			} else if (workingTreeOptions.getAutoCRLF() == AutoCRLF.TRUE) {
+				streamType = EolStreamType.AUTO_CRLF;
+			} else {
+				streamType = EolStreamType.DIRECT;
+			}
+			return EolStreamTypeUtil.wrapInputStream(filteredInputStream,
+					streamType);
 		} catch (MissingObjectException notFound) {
 			throw new CoreException(Activator.error(NLS.bind(
 					CoreText.BlobStorage_blobNotFound, blobId.name(), path),
