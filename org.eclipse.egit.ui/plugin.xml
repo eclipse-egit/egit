@@ -7011,6 +7011,25 @@
      </variable>
   </extension>
   <extension
+        point="org.eclipse.debug.ui.stringVariablePresentations">
+     <variablePresentation
+           argumentSelector="org.eclipse.debug.internal.ui.stringsubstitution.ResourceSelector"
+           variableName="git_dir">
+     </variablePresentation>
+     <variablePresentation
+           argumentSelector="org.eclipse.debug.internal.ui.stringsubstitution.ResourceSelector"
+           variableName="git_repo_relative_path">
+     </variablePresentation>
+     <variablePresentation
+           argumentSelector="org.eclipse.debug.internal.ui.stringsubstitution.ResourceSelector"
+           variableName="git_work_tree">
+     </variablePresentation>
+     <variablePresentation
+           argumentSelector="org.eclipse.debug.internal.ui.stringsubstitution.ResourceSelector"
+           variableName="git_branch">
+     </variablePresentation>
+  </extension>
+  <extension
         point="org.eclipse.mylyn.tasks.bugs.support">
         <product
               description="%support.egit.description"
