@@ -59,7 +59,8 @@ public final class HotfixFinishOperation extends AbstractHotfixOperation {
 		}
 
 		// this may result in conflicts, but that's ok
-		safeCreateTag(progress.newChild(1), versionName,
+		safeCreateTag(progress.newChild(1),
+				repository.getConfig().getVersionTagPrefix() + versionName,
 				NLS.bind(CoreText.HotfixFinishOperation_hotfix, versionName));
 
 		finish(progress.newChild(1), hotfixBranchName);
