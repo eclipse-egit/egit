@@ -10,16 +10,18 @@
  *******************************************************************************/
 package org.eclipse.egit.gitflow;
 
+import static org.eclipse.egit.gitflow.Activator.error;
+
+import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.errors.RevisionSyntaxException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-
-import static org.eclipse.egit.gitflow.Activator.error;
 
 /**
  * Checks if name is valid and branch does not exist.
@@ -70,16 +72,23 @@ public class BranchNameValidator {
 
 	private static boolean branchExists(GitFlowRepository repository,
 			String fullBranchName) throws CoreException {
-		List<Ref> branches;
 		try {
-			branches = Git.wrap(repository.getRepository()).branchList().call();
-		} catch (GitAPIException e) {
-			throw new CoreException(error(e.getMessage(), e));
-		}
-		for (Ref ref : branches) {
-			if (fullBranchName.equals(ref.getTarget().getName())) {
+			if (repository.getRepository().resolve(fullBranchName) != null) {
 				return true;
 			}
+		} catch (RevisionSyntaxException | IOException e1) {
+			// ignore invalid names
+		}
+		try {
+			List<Ref> branches = Git.wrap(repository.getRepository())
+					.branchList().call();
+			for (Ref ref : branches) {
+				if (fullBranchName.equals(ref.getTarget().getName())) {
+					return true;
+				}
+			}
+		} catch (GitAPIException e) {
+			throw new CoreException(error(e.getMessage(), e));
 		}
 
 		return false;
