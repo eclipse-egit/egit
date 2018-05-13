@@ -1,0 +1,8 @@
+Code-Review+1: Michael Keppler <michael.keppler@gmx.de>
+Code-Review+2: Matthias Sohn <matthias.sohn@sap.com>
+Verified+1: CI Bot
+Submitted-by: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-at: Sat, 12 May 2018 20:52:32 -0400
+Reviewed-on: https://git.eclipse.org/r/120622
+Project: egit/egit
+Branch: refs/heads/master
