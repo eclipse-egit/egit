@@ -844,6 +844,9 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		private final RepositoryCache repositoryCache;
 
 		private final IndexChangedListener listener = event -> {
+			if (event.isInternal()) {
+				return;
+			}
 			Repository repository = event.getRepository();
 			if (repository.isBare()) {
 				return;

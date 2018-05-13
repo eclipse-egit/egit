@@ -42,7 +42,7 @@ public class SubmoduleSyncOperation implements IEGitOperation {
 	 */
 	public SubmoduleSyncOperation(final Repository repository) {
 		this.repository = repository;
-		paths = new ArrayList<String>();
+		paths = new ArrayList<>();
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class SubmoduleSyncOperation implements IEGitOperation {
 							e.getCause());
 				} finally {
 					if (updates != null && !updates.isEmpty()) {
-						repository.notifyIndexChanged();
+						repository.notifyIndexChanged(true);
 					}
 				}
 			}

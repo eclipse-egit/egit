@@ -258,7 +258,7 @@ public class RemoveCommand extends
 						&& node.getParent().getType() == RepositoryTreeNodeType.SUBMODULES) {
 					FileUtils.delete(workTree, FileUtils.RECURSIVE
 							| FileUtils.RETRY | FileUtils.SKIP_MISSING);
-					node.getParent().getRepository().notifyIndexChanged();
+					node.getParent().getRepository().notifyIndexChanged(true);
 				}
 				// Delete if empty working directory
 				String[] files = workTree.list();

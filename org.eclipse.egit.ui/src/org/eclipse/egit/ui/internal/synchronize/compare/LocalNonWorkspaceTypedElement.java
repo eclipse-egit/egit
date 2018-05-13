@@ -265,7 +265,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 		if (!updated) {
 			RepositoryMapping mapping = RepositoryMapping.getMapping(path);
 			if (mapping != null) {
-				mapping.getRepository().fireEvent(new IndexChangedEvent());
+				mapping.getRepository().fireEvent(new IndexChangedEvent(true));
 			}
 		}
 	}
