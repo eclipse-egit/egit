@@ -19,17 +19,17 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 
-import static org.eclipse.egit.gitflow.Activator.error;
-
 /**
  * Checks if name is valid and branch does not exist.
  *
  * @since 4.0
  */
+@Deprecated
 public class BranchNameValidator {
 	/**
 	 * Characters not allowed in git flow branches.
 	 */
+	@Deprecated
 	public static final String ILLEGAL_CHARS = "/ "; //$NON-NLS-1$
 
 	/**
@@ -38,6 +38,7 @@ public class BranchNameValidator {
 	 * @return Whether featureName corresponds to existing branch.
 	 * @throws CoreException
 	 */
+	@Deprecated
 	public static boolean featureExists(GitFlowRepository repository,
 			String featureName) throws CoreException {
 		return branchExists(repository,
@@ -50,6 +51,7 @@ public class BranchNameValidator {
 	 * @return Whether hotfixName corresponds to existing branch.
 	 * @throws CoreException
 	 */
+	@Deprecated
 	public static boolean hotfixExists(GitFlowRepository repository,
 			String hotfixName) throws CoreException {
 		return branchExists(repository,
@@ -62,6 +64,7 @@ public class BranchNameValidator {
 	 * @return Whether releaseName corresponds to existing branch.
 	 * @throws CoreException
 	 */
+	@Deprecated
 	public static boolean releaseExists(GitFlowRepository repository,
 			String releaseName) throws CoreException {
 		return branchExists(repository,
@@ -74,7 +77,7 @@ public class BranchNameValidator {
 		try {
 			branches = Git.wrap(repository.getRepository()).branchList().call();
 		} catch (GitAPIException e) {
-			throw new CoreException(error(e.getMessage(), e));
+			throw new CoreException(Activator.error(e.getMessage(), e));
 		}
 		for (Ref ref : branches) {
 			if (fullBranchName.equals(ref.getTarget().getName())) {
@@ -89,6 +92,7 @@ public class BranchNameValidator {
 	 * @param name
 	 * @return Whether or not name would be a valid name for a branch.
 	 */
+	@Deprecated
 	public static boolean isBranchNameValid(String name) {
 		return Repository.isValidRefName(Constants.R_HEADS + name);
 	}
