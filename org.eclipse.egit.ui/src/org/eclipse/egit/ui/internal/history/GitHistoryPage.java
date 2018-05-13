@@ -1863,6 +1863,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 						input = new HistoryPageInput(repo, new File[] { file });
 					}
 				}
+				else {
+					setErrorMessage(UIText.GitHistoryPage_NoInputMessage);
+					return false;
+				}
 			}
 			selection = AdapterUtils.adapt(o, RevCommit.class);
 
