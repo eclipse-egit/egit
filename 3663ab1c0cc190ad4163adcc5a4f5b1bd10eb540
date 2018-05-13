@@ -16,6 +16,24 @@
       "revId": "3663ab1c0cc190ad4163adcc5a4f5b1bd10eb540",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7680b25_1e5e749d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1873,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-05-13T18:25:42Z",
+      "side": 1,
+      "message": "Nope. input is not null. It is a RepositoryTreeNode, just the repository member of that input is null.",
+      "parentUuid": "82e13b58_48c6edad",
+      "revId": "3663ab1c0cc190ad4163adcc5a4f5b1bd10eb540",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
