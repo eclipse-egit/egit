@@ -101,7 +101,7 @@ public class StashCreateOperation implements IEGitOperation {
 							e.getCause());
 				} finally {
 					if (commit != null) {
-						repository.notifyIndexChanged();
+						repository.notifyIndexChanged(true);
 					}
 				}
 			}

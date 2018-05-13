@@ -64,7 +64,7 @@ public class SubmoduleAddOperation implements IEGitOperation {
 					Repository subRepo = add.call();
 					if (subRepo != null) {
 						subRepo.close();
-						repo.notifyIndexChanged();
+						repo.notifyIndexChanged(true);
 					}
 				} catch (GitAPIException e) {
 					throw new TeamException(e.getLocalizedMessage(),

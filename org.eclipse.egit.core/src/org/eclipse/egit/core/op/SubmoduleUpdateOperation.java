@@ -56,7 +56,7 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 	 */
 	public SubmoduleUpdateOperation(final Repository repository) {
 		this.repository = repository;
-		paths = new ArrayList<String>();
+		paths = new ArrayList<>();
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class SubmoduleUpdateOperation implements IEGitOperation {
 							e.getCause());
 				} finally {
 					if (updated != null && !updated.isEmpty()) {
-						repository.notifyIndexChanged();
+						repository.notifyIndexChanged(true);
 					}
 				}
 			}
