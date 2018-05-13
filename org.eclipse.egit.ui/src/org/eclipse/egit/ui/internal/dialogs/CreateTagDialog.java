@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -24,6 +25,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
@@ -39,11 +41,12 @@ import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jgit.errors.RevisionSyntaxException;
 import org.eclipse.jgit.lib.AnyObjectId;
@@ -79,7 +82,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
-import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 /**
  * Dialog for creating and editing tags.
@@ -139,8 +141,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 
 	private final RevWalk rw;
 
-	private static class TagLabelProvider extends WorkbenchLabelProvider implements
-			ITableLabelProvider {
+	private static class TagLabelProvider extends LabelProvider {
 		private final Image IMG_TAG;
 
 		private final Image IMG_LIGHTTAG;
@@ -151,7 +152,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 		}
 
 		@Override
-		public Image getColumnImage(Object element, int columnIndex) {
+		public Image getImage(Object element) {
 			// initially, we just display a single String ("Loading...")
 			if (element instanceof String)
 				return null;
@@ -162,7 +163,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 		}
 
 		@Override
-		public String getColumnText(Object element, int columnIndex) {
+		public String getText(Object element) {
 			// initially, we just display a single String ("Loading...")
 			if (element instanceof String)
 				return (String) element;
@@ -572,6 +573,12 @@ public class CreateTagDialog extends TitleAreaDialog {
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				fillTagDialog(event.getSelection());
+			}
+		});
+		tagViewer.setComparator(new ViewerComparator() {
+			@Override
+			protected Comparator<? super String> getComparator() {
+				return CommonUtils.STRING_ASCENDING_COMPARATOR;
 			}
 		});
 		tagViewer.addFilter(new ViewerFilter() {
