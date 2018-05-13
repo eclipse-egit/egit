@@ -19,13 +19,12 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 
-import static org.eclipse.egit.gitflow.Activator.error;
-
 /**
  * Checks if name is valid and branch does not exist.
  *
  * @since 4.0
  */
+@Deprecated
 public class BranchNameValidator {
 	/**
 	 * Characters not allowed in git flow branches.
@@ -74,7 +73,7 @@ public class BranchNameValidator {
 		try {
 			branches = Git.wrap(repository.getRepository()).branchList().call();
 		} catch (GitAPIException e) {
-			throw new CoreException(error(e.getMessage(), e));
+			throw new CoreException(Activator.error(e.getMessage(), e));
 		}
 		for (Ref ref : branches) {
 			if (fullBranchName.equals(ref.getTarget().getName())) {
