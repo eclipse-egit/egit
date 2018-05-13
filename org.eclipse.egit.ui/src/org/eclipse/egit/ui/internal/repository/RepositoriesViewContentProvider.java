@@ -14,11 +14,17 @@ package org.eclipse.egit.ui.internal.repository;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.DirectoryIteratorException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.FileVisitOption;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -92,6 +98,9 @@ import org.eclipse.ui.commands.ICommandService;
  */
 public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		IStateListener {
+
+	private static final Object[] NO_CHILDREN = new Object[0];
+
 	private final RepositoryCache repositoryCache = org.eclipse.egit.core.Activator
 			.getDefault().getRepositoryCache();
 
@@ -271,9 +280,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			return children.toArray();
 		}
 
-		case TAGS: {
+		case TAGS:
 			return getTagsChildren(node, repo);
-		}
 
 		case ADDITIONALREFS: {
 			List<RepositoryTreeNode<Ref>> refs = new ArrayList<>();
@@ -308,7 +316,6 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		}
 
 		case REPO: {
-
 			List<RepositoryTreeNode<? extends Object>> nodeList = new ArrayList<>();
 			nodeList.add(new BranchesNode(node, repo));
 			nodeList.add(new TagsNode(node, repo));
@@ -325,77 +332,16 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			return nodeList.toArray();
 		}
 
-		case WORKINGDIR: {
-			List<RepositoryTreeNode<File>> children = new ArrayList<>();
-
-			if (node.getRepository().isBare())
-				return children.toArray();
-			File workingDir = repo.getWorkTree();
-			if (!workingDir.exists())
-				return children.toArray();
-
-			File[] childFiles = workingDir.listFiles();
-			Arrays.sort(childFiles, new Comparator<File>() {
-				@Override
-				public int compare(File o1, File o2) {
-					if (o1.isDirectory()) {
-						if (o2.isDirectory()) {
-							return o1.compareTo(o2);
-						}
-						return -1;
-					} else if (o2.isDirectory()) {
-						return 1;
-					}
-					return o1.compareTo(o2);
-				}
-			});
-			for (File file : childFiles) {
-				if (file.isDirectory()) {
-					children.add(new FolderNode(node, repo, file));
-				} else {
-					children.add(new FileNode(node, repo, file));
-				}
+		case WORKINGDIR:
+			if (repo.isBare()) {
+				return NO_CHILDREN;
 			}
+			return getDirectoryChildren(node, repo.getWorkTree());
 
-			return children.toArray();
-		}
-
-		case FOLDER: {
-			List<RepositoryTreeNode<File>> children = new ArrayList<>();
-
-			File parent = ((File) node.getObject());
-
-			File[] childFiles = parent.listFiles();
-			if (childFiles == null)
-				return children.toArray();
-
-			Arrays.sort(childFiles, new Comparator<File>() {
-				@Override
-				public int compare(File o1, File o2) {
-					if (o1.isDirectory()) {
-						if (o2.isDirectory()) {
-							return o1.compareTo(o2);
-						}
-						return -1;
-					} else if (o2.isDirectory()) {
-						return 1;
-					}
-					return o1.compareTo(o2);
-				}
-			});
-			for (File file : childFiles) {
-				if (file.isDirectory()) {
-					children.add(new FolderNode(node, repo, file));
-				} else {
-					children.add(new FileNode(node, repo, file));
-				}
-			}
-
-			return children.toArray();
-		}
+		case FOLDER:
+			return getDirectoryChildren(node, (File) node.getObject());
 
 		case REMOTE: {
-
 			List<RepositoryTreeNode<String>> children = new ArrayList<>();
 
 			String remoteName = (String) node.getObject();
@@ -492,6 +438,44 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 
 	}
 
+	private Object[] getDirectoryChildren(RepositoryTreeNode parentNode,
+			File parent) {
+		Repository repo = parentNode.getRepository();
+		List<RepositoryTreeNode<File>> children = new ArrayList<>();
+
+		try {
+			Files.walkFileTree(parent.toPath(),
+					EnumSet.noneOf(FileVisitOption.class), 1,
+					new SimpleFileVisitor<java.nio.file.Path>() {
+						@Override
+						public FileVisitResult visitFile(
+								java.nio.file.Path file,
+								BasicFileAttributes attrs) throws IOException {
+							if (attrs.isDirectory()) {
+								children.add(new FolderNode(parentNode, repo,
+										file.toFile()));
+							} else {
+								children.add(new FileNode(parentNode, repo,
+										file.toFile()));
+							}
+							return FileVisitResult.CONTINUE;
+						}
+
+						@Override
+						public FileVisitResult visitFileFailed(
+								java.nio.file.Path file, IOException exc)
+								throws IOException {
+							// Just ignore it
+							return FileVisitResult.CONTINUE;
+						}
+					});
+		} catch (IOException e) {
+			// Ignore
+		}
+
+		return children.toArray();
+	}
+
 	private Object[] getTagsChildren(RepositoryTreeNode parentNode,
 			Repository repo) {
 		List<RepositoryTreeNode<Ref>> nodes = new ArrayList<>();
@@ -555,25 +539,31 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		Repository repo = node.getRepository();
 		switch (node.getType()) {
 		case BRANCHES:
-			return true;
 		case REPO:
-			return true;
 		case ADDITIONALREFS:
-			return true;
 		case SUBMODULES:
 			return true;
 		case TAGS:
 			return hasTagsChildren(repo);
 		case WORKINGDIR:
-			if (node.getRepository().isBare())
-				return false;
-			File workingDir = repo.getWorkTree();
-			if (!workingDir.exists())
-				return false;
-			return workingDir.listFiles().length > 0;
+			return !repo.isBare() && hasDirectoryChildren(repo.getWorkTree());
+		case FOLDER:
+			return !repo.isBare()
+					&& hasDirectoryChildren((File) node.getObject());
+		case FILE:
+			return false;
 		default:
 			Object[] children = getChildren(element);
 			return children != null && children.length > 0;
+		}
+	}
+
+	private boolean hasDirectoryChildren(File file) {
+		try (DirectoryStream<java.nio.file.Path> dir = Files
+				.newDirectoryStream(file.toPath())) {
+			return dir.iterator().hasNext();
+		} catch (DirectoryIteratorException | IOException e) {
+			return false;
 		}
 	}
 
