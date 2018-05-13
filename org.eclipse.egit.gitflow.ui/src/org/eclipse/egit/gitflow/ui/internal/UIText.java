@@ -224,12 +224,6 @@ public class UIText extends NLS {
 	/**	 */
 	public static String HotfixPublishHandler_publishingHotfix;
 
-	/**	 */
-	public static String NameValidator_invalidName;
-
-	/**	 */
-	public static String NameValidator_nameAlreadyExists;
-
 	/** */
 	public static String FeatureCheckoutHandler_cleanupDialog_title;
 
