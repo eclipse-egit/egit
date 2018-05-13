@@ -159,12 +159,11 @@ public class Utils {
 				return OK_STATUS;
 			}
 		}
-		String testFor = refPrefix + refNameInput;
-		if (!Repository.isValidRefName(testFor)) {
-			return Activator.error(MessageFormat.format(
-					CoreText.ValidationUtils_InvalidRefNameMessage, testFor),
-					null);
+		IStatus status = validateNewRefName(refNameInput, refPrefix);
+		if (!status.isOK()) {
+			return status;
 		}
+		String testFor = refPrefix + refNameInput;
 		try {
 			if (repo.exactRef(testFor) != null) {
 				return Activator.error(MessageFormat.format(
@@ -187,6 +186,28 @@ public class Utils {
 			String m = MessageFormat
 					.format(CoreText.ValidationUtils_InvalidRevision, testFor);
 			return Activator.error(m, e);
+		}
+		return OK_STATUS;
+	}
+
+	/**
+	 * @param refNameInput
+	 *            Short ref name.
+	 * @param refPrefix
+	 *            The ref namespace (refs/heads/, refs/tags, ...). Must end with
+	 *            a slash. If empty, {@code refNameInput} must be a full ref
+	 *            name.
+	 * @return {@link org.eclipse.core.runtime.Status#OK_STATUS} in case of
+	 *         successful validation, or an error status with respective error
+	 *         message.
+	 */
+	public static IStatus validateNewRefName(String refNameInput,
+			String refPrefix) {
+		String testFor = refPrefix + refNameInput;
+		if (!Repository.isValidRefName(testFor)) {
+			return Activator.error(MessageFormat.format(
+					CoreText.ValidationUtils_InvalidRefNameMessage, testFor),
+					null);
 		}
 		return OK_STATUS;
 	}
