@@ -34,6 +34,24 @@
       "revId": "3663ab1c0cc190ad4163adcc5a4f5b1bd10eb540",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9dbbc492_920016d0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1873,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-05-13T18:33:32Z",
+      "side": 1,
+      "message": "Hm? An OR should work?\n\n  if (input \u003d\u003d null || repo \u003d\u003d null) {\n    ...\n\nWould avoid the code duplication and would also reset this.name.",
+      "parentUuid": "a7680b25_1e5e749d",
+      "revId": "3663ab1c0cc190ad4163adcc5a4f5b1bd10eb540",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
