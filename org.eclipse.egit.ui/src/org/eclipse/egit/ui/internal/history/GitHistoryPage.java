@@ -1885,6 +1885,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				}
 			} else if (o instanceof HistoryPageInput) {
 				input = (HistoryPageInput) o;
+				repo = input.getRepository();
 			} else if (o instanceof Path) {
 				Path path = (Path) o;
 				RepositoryMapping mapping = RepositoryMapping.getMapping(path);
@@ -1918,7 +1919,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			}
 			selection = AdapterUtils.adapt(o, RevCommit.class);
 
-			if (input == null) {
+			if (input == null || repo == null) {
 				this.name = ""; //$NON-NLS-1$
 				setErrorMessage(UIText.GitHistoryPage_NoInputMessage);
 				return false;
