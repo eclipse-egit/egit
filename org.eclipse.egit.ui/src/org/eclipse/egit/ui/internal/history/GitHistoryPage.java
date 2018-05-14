@@ -1866,7 +1866,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			}
 			selection = AdapterUtils.adapt(o, RevCommit.class);
 
-			if (input == null) {
+			if (input == null || repo == null) {
 				this.name = ""; //$NON-NLS-1$
 				setErrorMessage(UIText.GitHistoryPage_NoInputMessage);
 				return false;
