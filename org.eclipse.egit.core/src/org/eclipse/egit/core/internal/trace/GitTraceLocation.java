@@ -22,7 +22,9 @@ public enum GitTraceLocation implements ITraceLocation {
 	/** Core */
 	CORE("/debug/core"), //$NON-NLS-1$
 	/** IndexDiffCache */
-	INDEXDIFFCACHE("/debug/core/indexdiffcache"); //$NON-NLS-1$
+	INDEXDIFFCACHE("/debug/core/indexdiffcache"), //$NON-NLS-1$
+	/** JSch logging */
+	JSCH("/debug/core/jsch"); //$NON-NLS-1$
 
 	/**
 	 * Initialize the locations
