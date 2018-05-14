@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62680b4e_44c5f883",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-05-14T18:51:58Z",
+      "side": 1,
+      "message": "By default.\n\nOne _can_ see them and define keys for them by clicking on the \"Filter...\" button and UN-checking the \"Filter uncategorized commands\" check box.\n\n(No need to change the commit message. Just thought I\u0027d point it out.)",
+      "range": {
+        "startLine": 9,
+        "startChar": 28,
+        "endLine": 9,
+        "endChar": 38
+      },
+      "revId": "b1d5dc14eb4b1e6f86684676032e27fb9a7e21b2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
