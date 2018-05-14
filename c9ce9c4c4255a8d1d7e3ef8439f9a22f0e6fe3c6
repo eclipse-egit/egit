@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44fbac81_88c0caa4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1843,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-05-14T06:33:07Z",
+      "side": 1,
+      "message": "Some tests fail now. Didn\u0027t analyze this to the end, but the only place where input gets set and repo remains null seems to be here. So we\u0027d probably also need repo \u003d input.getRepository() here. Or we go with your initial version all the same.",
+      "revId": "c9ce9c4c4255a8d1d7e3ef8439f9a22f0e6fe3c6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
