@@ -138,54 +138,67 @@
 				name="%TeamGitFlowInit.name">
 		</command>
 		<command
+				categoryId="org.eclipse.egit.ui.commandCategory"
 				id="org.eclipse.egit.gitflow.ui.command.featureStart"
 				name="%TeamGitFlowFeatureStart.name">
 		</command>
 		<command
+				categoryId="org.eclipse.egit.ui.commandCategory"
 				id="org.eclipse.egit.gitflow.ui.command.featureFinish"
 				name="%TeamGitFlowFeatureFinish.name">
 		</command>
 		<command
+				categoryId="org.eclipse.egit.ui.commandCategory"
 				id="org.eclipse.egit.gitflow.ui.command.releaseStart"
 				name="%TeamGitFlowReleaseStart.name">
 		</command>
 		<command
+				categoryId="org.eclipse.egit.ui.commandCategory"
 				id="org.eclipse.egit.gitflow.ui.command.releaseFinish"
 				name="%TeamGitFlowReleaseFinish.name">
 		</command>
 		<command
+				categoryId="org.eclipse.egit.ui.commandCategory"
 				id="org.eclipse.egit.gitflow.ui.command.featurePublish"
 				name="%TeamGitFlowFeaturePublish.name">
 		</command>
 		<command
+				categoryId="org.eclipse.egit.ui.commandCategory"
 				id="org.eclipse.egit.gitflow.ui.command.releasePublish"
 				name="%TeamGitFlowReleasePublish.name">
 		</command>
 		<command
+				categoryId="org.eclipse.egit.ui.commandCategory"
 				id="org.eclipse.egit.gitflow.ui.command.hotfixPublish"
 				name="%TeamGitFlowHotfixPublish.name">
 		</command>
 		<command
+				categoryId="org.eclipse.egit.ui.commandCategory"
 				id="org.eclipse.egit.gitflow.ui.command.featureTrack"
 				name="%TeamGitFlowFeatureTrack.name">
 		</command>
 		<command
+				categoryId="org.eclipse.egit.ui.commandCategory"
 				id="org.eclipse.egit.gitflow.ui.command.featureCheckout"
 				name="%TeamGitFlowFeatureCheckout.name">
 		</command>
 		<command
+				categoryId="org.eclipse.egit.ui.commandCategory"
 				id="org.eclipse.egit.gitflow.ui.command.featureRebase"
 				name="%TeamGitFlowFeatureRebase.name">
 		</command>
 		<command
+				categoryId="org.eclipse.egit.ui.commandCategory"
 				id="org.eclipse.egit.gitflow.ui.command.hotfixStart"
 				name="%TeamGitFlowHotfixStart.name">
 		</command>
 		<command
+				categoryId="org.eclipse.egit.ui.commandCategory"
 				id="org.eclipse.egit.gitflow.ui.command.hotfixFinish"
 				name="%TeamGitFlowHotfixFinish.name">
 		</command>
 		<command
+				categoryId="org.eclipse.egit.ui.commandCategory"
 				id="org.eclipse.egit.gitflow.ui.command.developCheckout"
 				name="%TeamGitFlowDevelopCheckout.name">
 		</command>
@@ -774,10 +787,12 @@
 	<extension
 			point="org.eclipse.ui.commands">
 		<command
+				categoryId="org.eclipse.egit.ui.commandCategory"
 				id="org.eclipse.egit.gitflow.ui.command.replaceWithDevelop"
 				name="%TeamGitFlowDevelopReplace.name">
 		</command>
 		<command
+				categoryId="org.eclipse.egit.ui.commandCategory"
 				id="org.eclipse.egit.gitflow.ui.command.compareWithDevelop"
 				name="%TeamGitFlowDevelopCompare.name">
 		</command>
