@@ -4,7 +4,7 @@ Bundle-Name: %fragment_name
 Automatic-Module-Name: org.eclipse.egit.ui.smartimport
 Bundle-SymbolicName: org.eclipse.egit.ui.smartimport;singleton:=true
 Fragment-Host: org.eclipse.egit.ui;bundle-version="[5.0.0,5.1.0)"
-Bundle-Version: 5.0.0.qualifier
+Bundle-Version: 5.0.0.201805151920-m7
 Bundle-Vendor: %provider_name
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
