@@ -105,6 +105,32 @@ public class CommonUtils {
 				return o1.compareTo(o2);
 			}
 		}
+
+		private LinkedList<String> splitIntoDigitAndNonDigitParts(
+				String input) {
+			LinkedList<String> parts = new LinkedList<>();
+			int partStart = 0;
+			boolean previousWasDigit = Character.isDigit(input.charAt(0));
+			for (int i = 1; i < input.length(); i++) {
+				boolean isDigit = Character.isDigit(input.charAt(i));
+				if (isDigit != previousWasDigit) {
+					parts.add(input.substring(partStart, i));
+					partStart = i;
+					previousWasDigit = isDigit;
+				}
+			}
+			parts.add(input.substring(partStart));
+			return parts;
+		}
+
+		private String stripLeadingZeros(String input) {
+			for (int i = 0; i < input.length(); i++) {
+				if (input.charAt(i) != '0') {
+					return input.substring(i);
+				}
+			}
+			return ""; //$NON-NLS-1$
+		}
 	};
 
 	/**
@@ -143,7 +169,7 @@ public class CommonUtils {
 	};
 
 	/**
-	 * Programatically run command based on it id and given selection
+	 * Programmatically run command based on its id and given selection
 	 *
 	 * @param commandId
 	 *            id of command that should be run
@@ -201,30 +227,6 @@ public class CommonUtils {
 	public static <T> T getService(IServiceLocator locator, Class<T> api) {
 		Object service = locator.getService(api);
 		return (T) service;
-	}
-
-	private static LinkedList<String> splitIntoDigitAndNonDigitParts(
-			String input) {
-		LinkedList<String> parts = new LinkedList<>();
-		int partStart = 0;
-		boolean previousWasDigit = Character.isDigit(input.charAt(0));
-		for (int i = 1; i < input.length(); i++) {
-			boolean isDigit = Character.isDigit(input.charAt(i));
-			if (isDigit != previousWasDigit) {
-				parts.add(input.substring(partStart, i));
-				partStart = i;
-				previousWasDigit = isDigit;
-			}
-		}
-		parts.add(input.substring(partStart));
-		return parts;
-	}
-
-	private static String stripLeadingZeros(String input) {
-		for (int i = 0; i < input.length(); i++)
-			if (input.charAt(i) != '0')
-				return input.substring(i);
-		return ""; //$NON-NLS-1$
 	}
 
 	/**
