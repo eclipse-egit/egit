@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79920259_1f661982",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-05-23T13:33:04Z",
+      "side": 1,
+      "message": "Any proposal for a better method name?",
+      "range": {
+        "startLine": 546,
+        "startChar": 14,
+        "endLine": 546,
+        "endChar": 38
+      },
+      "revId": "530641959a82ef976e03d7be2c9004628c91155f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86100835_4ce2a752",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-05-23T13:33:04Z",
+      "side": 1,
+      "message": "Not sure if we need this so I just commented it out for now.",
+      "range": {
+        "startLine": 661,
+        "startChar": 0,
+        "endLine": 671,
+        "endChar": 5
+      },
+      "revId": "530641959a82ef976e03d7be2c9004628c91155f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
