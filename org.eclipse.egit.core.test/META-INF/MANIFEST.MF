@@ -5,7 +5,7 @@ Bundle-Vendor: Eclipse.org
 Automatic-Module-Name: org.eclipse.egit.core.test
 Bundle-SymbolicName: org.eclipse.egit.core.test;singleton:=true
 Fragment-Host: org.eclipse.egit.core
-Bundle-Version: 5.0.0.qualifier
+Bundle-Version: 5.1.0.qualifier
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.filesystem;bundle-version="[1.1.0,2.0.0)",
  org.eclipse.core.resources;bundle-version="[3.4.0,4.0.0)",
@@ -18,15 +18,15 @@ Bundle-ActivationPolicy: lazy
 Import-Package: org.mockito;version="[1.8.0,1.10.0)",
  org.mockito.runners;version="[1.8.0,1.10.0)",
  org.mockito.stubbing;version="[1.8.0,1.10.0)",
- org.eclipse.egit.core;version="[5.0.0,5.1.0)",
- org.eclipse.egit.core.op;version="[5.0.0,5.1.0)",
- org.eclipse.egit.core.project;version="[5.0.0,5.1.0)",
- org.eclipse.jgit.api.errors;version="[5.0.0,5.1.0)",
- org.eclipse.jgit.attributes;version="[5.0.0,5.1.0)",
- org.eclipse.jgit.junit;version="[5.0.0,5.1.0)",
- org.eclipse.jgit.lib;version="[5.0.0,5.1.0)",
- org.eclipse.jgit.treewalk;version="[5.0.0,5.1.0)",
- org.eclipse.jgit.treewalk.filter;version="[5.0.0,5.1.0)",
- org.eclipse.jgit.util;version="[5.0.0,5.1.0)"
+ org.eclipse.egit.core;version="[5.1.0,5.2.0)",
+ org.eclipse.egit.core.op;version="[5.1.0,5.2.0)",
+ org.eclipse.egit.core.project;version="[5.1.0,5.2.0)",
+ org.eclipse.jgit.api.errors;version="[5.1.0,5.2.0)",
+ org.eclipse.jgit.attributes;version="[5.1.0,5.2.0)",
+ org.eclipse.jgit.junit;version="[5.1.0,5.2.0)",
+ org.eclipse.jgit.lib;version="[5.1.0,5.2.0)",
+ org.eclipse.jgit.treewalk;version="[5.1.0,5.2.0)",
+ org.eclipse.jgit.treewalk.filter;version="[5.1.0,5.2.0)",
+ org.eclipse.jgit.util;version="[5.1.0,5.2.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.eclipse.egit.core.test;version="5.0.0"
+Export-Package: org.eclipse.egit.core.test;version="5.1.0"
