@@ -338,6 +338,7 @@ public class ConfigurationEditorComponent {
 						else
 							entry.addValue(dlg.getValue());
 						markDirty();
+						reveal(sectionName, null, entryName);
 					} else if (st.countTokens() > 2) {
 						int n = st.countTokens();
 						String sectionName = st.nextToken();
@@ -356,6 +357,7 @@ public class ConfigurationEditorComponent {
 						else
 							entry.addValue(dlg.getValue());
 						markDirty();
+						reveal(sectionName, subSectionName, entryName);
 					} else
 						Activator
 								.handleError(
@@ -507,6 +509,15 @@ public class ConfigurationEditorComponent {
 		setDirty(true);
 		((GitConfig) tv.getInput()).refresh();
 		tv.refresh();
+	}
+
+	private void reveal(String sectionName, String subSectionName,
+			String entryName) {
+		Entry entry = ((GitConfig) tv.getInput()).getEntry(sectionName,
+				subSectionName, entryName);
+		if (entry != null) {
+			tv.reveal(entry);
+		}
 	}
 
 	private final static class GitConfig extends WorkbenchAdapter {
@@ -895,6 +906,14 @@ public class ConfigurationEditorComponent {
 			} else if (!subsectionparent.equals(other.subsectionparent))
 				return false;
 			return true;
+		}
+
+		@Override
+		public Object getParent(Object object) {
+			if (sectionparent != null)
+				return sectionparent;
+			else
+				return subsectionparent;
 		}
 	}
 
