@@ -435,7 +435,15 @@ public class FetchGerritChangePage extends WizardPage {
 						UIText.FetchGerritChangePage_ActivateAdditionalRefsTooltip);
 
 		ActionUtils.setGlobalActions(refText, ActionUtils.createGlobalAction(
-				ActionFactory.PASTE, () -> doPaste(refText)));
+				ActionFactory.PASTE, () -> {
+					if (doPaste(refText) && contentProposer != null) {
+						refText.getDisplay().asyncExec(() -> {
+							if (!refText.isDisposed()) {
+								contentProposer.openProposalPopup();
+							}
+						});
+					}
+				}));
 		refText.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
@@ -612,7 +620,17 @@ public class FetchGerritChangePage extends WizardPage {
 		return null;
 	}
 
-	private void doPaste(Text text) {
+	/**
+	 * Paste text from the clipboard into the {@code text} field. If possible,
+	 * determine the patch set number automatically. If only a change number can
+	 * be determined, return {@code true} to indicate to the caller that a
+	 * content assist might be helpful.
+	 *
+	 * @param text
+	 *            {@link Text} field to paste into
+	 * @return whether invoking a content assist might be helpful to the user
+	 */
+	private boolean doPaste(Text text) {
 		Clipboard clipboard = new Clipboard(text.getDisplay());
 		try {
 			String clipText = (String) clipboard
@@ -622,15 +640,18 @@ public class FetchGerritChangePage extends WizardPage {
 						clipText.trim());
 				if (input != null) {
 					String toInsert = input.getChangeNumber().toString();
+					boolean replacesEverything = text.getText().trim().isEmpty()
+							|| text.getSelectionText().equals(text.getText());
+					boolean openContentAssist = false;
 					if (input.getPatchSetNumber() != null) {
-						if (text.getText().trim().isEmpty() || text
-								.getSelectionText().equals(text.getText())) {
-							// Paste will replace everything
+						if (replacesEverything) {
 							toInsert = input.getRefName();
 						} else {
 							toInsert = toInsert + '/'
 									+ input.getPatchSetNumber();
 						}
+					} else {
+						openContentAssist = replacesEverything;
 					}
 					clipboard.setContents(new Object[] { toInsert },
 							new Transfer[] { TextTransfer.getInstance() });
@@ -640,6 +661,7 @@ public class FetchGerritChangePage extends WizardPage {
 						clipboard.setContents(new Object[] { clipText },
 								new Transfer[] { TextTransfer.getInstance() });
 					}
+					return openContentAssist;
 				} else {
 					text.paste();
 				}
@@ -647,6 +669,7 @@ public class FetchGerritChangePage extends WizardPage {
 		} finally {
 			clipboard.dispose();
 		}
+		return false;
 	}
 
 	private void storeLastUsedUri(String uri) {
