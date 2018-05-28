@@ -16,6 +16,7 @@ import java.util.Map;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.DecorationOverlayDescriptor;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
@@ -312,7 +313,8 @@ class FetchResultTable {
 							&& f2.getChildren(f2).length > 0)
 						return -1;
 
-					return f1.getLabel(f1).compareToIgnoreCase(f2.getLabel(f2));
+					return CommonUtils.STRING_ASCENDING_COMPARATOR
+							.compare(f1.getLabel(f1), f2.getLabel(f2));
 				}
 
 				// Leave commits order alone
