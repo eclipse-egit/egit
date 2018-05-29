@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "628955f9_2955b7ca",
+        "filename": "org.eclipse.egit-feature/feature.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-05-29T11:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a20f3df_7bdc5fdf",
+      "range": {
+        "startLine": 4,
+        "startChar": 67,
+        "endLine": 4,
+        "endChar": 71
+      },
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72ab084b_58e818df",
         "filename": "org.eclipse.egit-feature/feature.properties",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2018-05-29T10:10:42Z",
       "side": 1,
       "message": "Do we also want to use in feature.xml\n\n  license-feature-version\u003d\"2.0.0\"\n\nI\u0027d kind of prefer that the license didn\u0027t change without us noticing...",
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6048361c_fb67c699",
+        "filename": "org.eclipse.egit-feature/feature.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-05-29T11:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72ab084b_58e818df",
       "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "1e675311_ef360113",
+        "filename": "org.eclipse.egit-feature/feature.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-05-29T11:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "139eecbf_48aa2286",
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e27f14e_8c9a321d",
         "filename": "org.eclipse.egit.core/about.html",
         "patchSetId": 1
@@ -70,6 +130,24 @@
       "writtenOn": "2018-05-29T10:10:42Z",
       "side": 1,
       "message": "Where did you take the about.html from? I think the correct one for us is https://www.eclipse.org/legal/epl/epl-2.0/about.html .",
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d50593a4_c6099e01",
+        "filename": "org.eclipse.egit.core/about.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-05-29T11:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e27f14e_8c9a321d",
       "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "4cda3f5b_43d449f4",
+        "filename": "org.eclipse.egit.core/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-05-29T11:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e7277af_acdd7085",
+      "range": {
+        "startLine": 4,
+        "startChar": 67,
+        "endLine": 4,
+        "endChar": 71
+      },
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "313d0cb4_9f937401",
         "filename": "org.eclipse.egit.doc/about.html",
         "patchSetId": 1
@@ -110,6 +212,24 @@
       "writtenOn": "2018-05-29T10:10:42Z",
       "side": 1,
       "message": "Huh? What\u0027s this?",
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de670d7d_5f7dae51",
+        "filename": "org.eclipse.egit.doc/about.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-05-29T11:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "313d0cb4_9f937401",
       "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "9d56721e_51c91a5f",
+        "filename": "org.eclipse.egit.doc/help/EGit/Contributor_Guide/Automated-Developer-Setup.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-05-29T11:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1fdd34a_3e6b383e",
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1053a41_e9eef2ba",
         "filename": "org.eclipse.egit.gitflow-feature/feature.properties",
         "patchSetId": 1
@@ -144,6 +282,24 @@
       "writtenOn": "2018-05-29T10:20:06Z",
       "side": 1,
       "message": "\\n\\ here and on the following line.",
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a880b0e_042ca29c",
+        "filename": "org.eclipse.egit.gitflow-feature/feature.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-05-29T11:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1053a41_e9eef2ba",
       "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "0c4f6e83_21d5af36",
+        "filename": "org.eclipse.egit.source-feature/feature.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-05-29T11:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c07c3e47_37d7dfcd",
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7addf5b0_34987fdb",
         "filename": "pom.xml",
         "patchSetId": 1
@@ -184,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "097f4bc9_d785186d",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-05-29T11:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7addf5b0_34987fdb",
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a40e232_8eaf7572",
         "filename": "pom.xml",
         "patchSetId": 1
@@ -195,6 +387,24 @@
       "writtenOn": "2018-05-29T10:10:42Z",
       "side": 1,
       "message": "Also here!",
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e182c2f_3a2a08c1",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-05-29T11:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a40e232_8eaf7572",
       "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
