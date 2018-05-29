@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b278ffd_220add0e",
+        "filename": "org.eclipse.egit.mylyn-feature/feature.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-05-29T13:45:35Z",
+      "side": 1,
+      "message": "Missing backslash at the end of this line.",
+      "revId": "86a1ded1d4b14e345f7ce256ae467849133325a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
