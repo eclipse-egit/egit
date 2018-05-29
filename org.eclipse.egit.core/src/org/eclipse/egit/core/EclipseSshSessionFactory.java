@@ -4,12 +4,15 @@
  * Copyright (C) 2009, Google, Inc.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
 package org.eclipse.egit.core;
 
+import org.eclipse.egit.core.internal.trace.JSchLogger;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.CredentialsProviderUserInfo;
 import org.eclipse.jgit.transport.JschConfigSessionFactory;
@@ -23,6 +26,7 @@ import com.jcraft.jsch.Session;
 import com.jcraft.jsch.UserInfo;
 
 class EclipseSshSessionFactory extends JschConfigSessionFactory {
+
 	private final IJSchService provider;
 
 	EclipseSshSessionFactory(final IJSchService p) {
@@ -36,6 +40,7 @@ class EclipseSshSessionFactory extends JschConfigSessionFactory {
 		// our parent class in case non-default JSch instances need to be made.
 		//
 		provider.createSession("127.0.0.1", 0, "eclipse"); //$NON-NLS-1$ //$NON-NLS-2$
+		JSch.setLogger(new JSchLogger());
 		return provider.getJSch();
 	}
 
