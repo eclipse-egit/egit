@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "344b174f_8e405424",
+        "filename": "org.eclipse.egit.core/about.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-05-29T11:49:22Z",
+      "side": 1,
+      "message": "What happened here? Copy-paste from the browser?\n\n  curl -O https://www.eclipse.org/legal/epl/epl-2.0/about.html\n\ngives a different file with\n\n  \u003cmeta http-equiv\u003d\"Content-Type\" content\u003d\"text/html; charset\u003dISO-8859-1\" /\u003e\n\nand some minor formatting differences.",
+      "revId": "c3189a461626296325c2d9c51552b10ac587cf5e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06e5e488_46090801",
+        "filename": "org.eclipse.egit.mylyn-feature/feature.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-05-29T11:49:22Z",
+      "side": 1,
+      "message": "No SPDX",
+      "revId": "c3189a461626296325c2d9c51552b10ac587cf5e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0617eb75_56ba0d50",
+        "filename": "org.eclipse.egit.mylyn-feature/feature.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-05-29T11:49:22Z",
+      "side": 1,
+      "message": "No SPDX",
+      "revId": "c3189a461626296325c2d9c51552b10ac587cf5e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fab6806_0f360b2c",
+        "filename": "org.eclipse.egit.mylyn-feature/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-05-29T11:49:22Z",
+      "side": 1,
+      "message": "Strange... why don\u0027t we have the SPDX identifier here?",
+      "revId": "c3189a461626296325c2d9c51552b10ac587cf5e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
