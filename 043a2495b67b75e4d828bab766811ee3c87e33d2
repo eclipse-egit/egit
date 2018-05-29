@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cccd460_083f7981",
+        "filename": "org.eclipse.egit.ui.importer.tests/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-05-29T13:45:54Z",
+      "side": 1,
+      "message": "added missing license header",
+      "revId": "043a2495b67b75e4d828bab766811ee3c87e33d2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e807e9dc_a6b7c3e6",
+        "filename": "org.eclipse.egit.ui.smartimport/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-05-29T13:45:54Z",
+      "side": 1,
+      "message": "added missing license header",
+      "revId": "043a2495b67b75e4d828bab766811ee3c87e33d2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
