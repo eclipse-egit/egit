@@ -42,6 +42,23 @@
     },
     {
       "key": {
+        "uuid": "139eecbf_48aa2286",
+        "filename": "org.eclipse.egit-feature/feature.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-05-29T10:20:06Z",
+      "side": 1,
+      "message": "Needs \\n\\ at the end of this line and the following line.",
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e27f14e_8c9a321d",
         "filename": "org.eclipse.egit.core/about.html",
         "patchSetId": 1
@@ -110,6 +127,40 @@
       "writtenOn": "2018-05-29T10:10:42Z",
       "side": 1,
       "message": "Can your script avoid touching files that don\u0027t contain any mention of the license? Grepping before running sed might help. Something like\n\n  find . -type f -exec grep -q \u0027Eclipse Public License v1.0\u0027 {} \\; -exec sed -i \u0027\u0027 \u0027s/Eclipse Public License v1.0/Eclipse Public License 2.0/g\u0027 {} +",
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d1053a41_e9eef2ba",
+        "filename": "org.eclipse.egit.gitflow-feature/feature.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-05-29T10:20:06Z",
+      "side": 1,
+      "message": "\\n\\ here and on the following line.",
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c07c3e47_37d7dfcd",
+        "filename": "org.eclipse.egit.source-feature/feature.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-05-29T10:20:06Z",
+      "side": 1,
+      "message": "Needs \\n\\ added manually on this line and on the following line.",
       "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
