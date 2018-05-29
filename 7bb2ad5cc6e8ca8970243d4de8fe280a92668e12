@@ -22,6 +22,131 @@
       "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72ab084b_58e818df",
+        "filename": "org.eclipse.egit-feature/feature.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-05-29T10:10:42Z",
+      "side": 1,
+      "message": "Do we also want to use in feature.xml\n\n  license-feature-version\u003d\"2.0.0\"\n\nI\u0027d kind of prefer that the license didn\u0027t change without us noticing...",
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e27f14e_8c9a321d",
+        "filename": "org.eclipse.egit.core/about.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-05-29T10:10:42Z",
+      "side": 1,
+      "message": "Where did you take the about.html from? I think the correct one for us is https://www.eclipse.org/legal/epl/epl-2.0/about.html .",
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e7277af_acdd7085",
+        "filename": "org.eclipse.egit.core/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-05-29T10:10:42Z",
+      "side": 1,
+      "message": "Should also be changed.",
+      "range": {
+        "startLine": 4,
+        "startChar": 67,
+        "endLine": 4,
+        "endChar": 71
+      },
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "313d0cb4_9f937401",
+        "filename": "org.eclipse.egit.doc/about.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-05-29T10:10:42Z",
+      "side": 1,
+      "message": "Huh? What\u0027s this?",
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1fdd34a_3e6b383e",
+        "filename": "org.eclipse.egit.doc/help/EGit/Contributor_Guide/Automated-Developer-Setup.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-05-29T10:10:42Z",
+      "side": 1,
+      "message": "Can your script avoid touching files that don\u0027t contain any mention of the license? Grepping before running sed might help. Something like\n\n  find . -type f -exec grep -q \u0027Eclipse Public License v1.0\u0027 {} \\; -exec sed -i \u0027\u0027 \u0027s/Eclipse Public License v1.0/Eclipse Public License 2.0/g\u0027 {} +",
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7addf5b0_34987fdb",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-05-29T10:10:42Z",
+      "side": 1,
+      "message": "And here.",
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a40e232_8eaf7572",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-05-29T10:10:42Z",
+      "side": 1,
+      "message": "Also here!",
+      "revId": "7bb2ad5cc6e8ca8970243d4de8fe280a92668e12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
