@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Git Team Provider Mylyn UI Test Fragment
 Automatic-Module-Name: org.eclipse.egit.mylyn.ui.test
 Bundle-SymbolicName: org.eclipse.egit.mylyn.ui.test
-Bundle-Version: 5.0.0.qualifier
+Bundle-Version: 5.0.0.201805301535-rc2
 Fragment-Host: org.eclipse.egit.mylyn.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.apache.log4j;bundle-version="[1.0.0,2.0.0)",
