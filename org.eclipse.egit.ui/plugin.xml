@@ -3089,7 +3089,7 @@
    <extension
          point="org.eclipse.ui.navigator.navigatorContent">
       <navigatorContent
-            contentProvider="org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider"
+            contentProvider="org.eclipse.egit.ui.internal.repository.RepositoriesViewExtensionFactory:org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider"
             icon="icons/obj16/repository_rep.png"
             id="org.eclipse.egit.ui.RepositoriesViewContent"
             labelProvider="org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider"

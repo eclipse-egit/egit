@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2017 Bernard Leach <leachbj@bouncycastle.org> and others.
+ * Copyright (C) 2011, 2018 Bernard Leach <leachbj@bouncycastle.org> and others.
  * Copyright (C) 2015 SAP SE (Christian Georgi <christian.georgi@sap.com>)
  * Copyright (C) 2015 Denis Zygann <d.zygann@web.de>
  * Copyright (C) 2016 IBM (Daniel Megert <daniel_megert@ch.ibm.com>)
@@ -22,6 +22,7 @@ package org.eclipse.egit.ui.internal.staging;
 import static org.eclipse.egit.ui.internal.CommonUtils.runCommand;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -94,7 +95,6 @@ import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
 import org.eclipse.egit.ui.internal.commit.DiffViewer;
 import org.eclipse.egit.ui.internal.components.RepositoryMenuUtil.RepositoryToolbarAction;
-import org.eclipse.egit.ui.internal.components.ToggleableWarningLabel;
 import org.eclipse.egit.ui.internal.decorators.IProblemDecoratable;
 import org.eclipse.egit.ui.internal.decorators.ProblemLabelDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageArea;
@@ -166,6 +166,7 @@ import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -283,7 +284,7 @@ public class StagingView extends ViewPart
 
 	private TreeViewer unstagedViewer;
 
-	private ToggleableWarningLabel warningLabel;
+	private ToggleableLabel warningLabel;
 
 	private Text filterText;
 
@@ -351,6 +352,10 @@ public class StagingView extends ViewPart
 	private Set<IPath> pathsToExpandInStaged = new HashSet<>();
 
 	private Set<IPath> pathsToExpandInUnstaged = new HashSet<>();
+
+	private boolean isUnbornHead;
+
+	private String currentBranch;
 
 	/**
 	 * Presentation mode of the staged/unstaged files.
@@ -1007,7 +1012,7 @@ public class StagingView extends ViewPart
 		GridLayoutFactory.fillDefaults().numColumns(1)
 				.applyTo(commitMessageComposite);
 
-		warningLabel = new ToggleableWarningLabel(commitMessageComposite,
+		warningLabel = new ToggleableLabel(commitMessageComposite,
 				SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, false).exclude(true)
 				.applyTo(warningLabel);
@@ -2682,6 +2687,10 @@ public class StagingView extends ViewPart
 			if (message != null) {
 				warningLabel.showMessage(message);
 				needsRedraw = true;
+			} else if (isUnbornHead) {
+				warningLabel.showInfo(MessageFormat.format(
+						UIText.StagingView_InitialCommitText, currentBranch));
+				needsRedraw = true;
 			} else {
 				needsRedraw = warningLabel.getVisible();
 				warningLabel.hideMessage();
@@ -3777,6 +3786,19 @@ public class StagingView extends ViewPart
 					&& noConflicts;
 			rebaseContinueButton.setEnabled(rebaseContinueEnabled);
 
+			isUnbornHead = false;
+			if (repository.getRepositoryState() == RepositoryState.SAFE) {
+				try {
+					Ref head = repository.exactRef(Constants.HEAD);
+					if (head != null && head.isSymbolic()
+							&& head.getObjectId() == null) {
+						isUnbornHead = true;
+					}
+					currentBranch = repository.getBranch();
+				} catch (IOException e) {
+					Activator.logError(e.getLocalizedMessage(), e);
+				}
+			}
 			form.setText(GitLabels.getStyledLabelSafe(repository).toString());
 			updateCommitMessageComponent(repositoryChanged, indexDiffAvailable);
 			enableCommitWidgets(indexDiffAvailable && noConflicts);
