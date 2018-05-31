@@ -22,6 +22,7 @@ package org.eclipse.egit.ui.internal.staging;
 import static org.eclipse.egit.ui.internal.CommonUtils.runCommand;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -147,6 +148,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeViewerListener;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -166,6 +168,7 @@ import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -3777,7 +3780,19 @@ public class StagingView extends ViewPart
 					&& noConflicts;
 			rebaseContinueButton.setEnabled(rebaseContinueEnabled);
 
-			form.setText(GitLabels.getStyledLabelSafe(repository).toString());
+			StyledString title = GitLabels.getStyledLabelSafe(repository);
+			if (repository.getRepositoryState() == RepositoryState.SAFE) {
+				try {
+					Ref head = repository.exactRef(Constants.HEAD);
+					if (head != null && head.isSymbolic()
+							&& head.getObjectId() == null) {
+						title.append(UIText.StagingView_InitialCommitText);
+					}
+				} catch (IOException e) {
+					Activator.logError(e.getLocalizedMessage(), e);
+				}
+			}
+			form.setText(title.toString());
 			updateCommitMessageComponent(repositoryChanged, indexDiffAvailable);
 			enableCommitWidgets(indexDiffAvailable && noConflicts);
 

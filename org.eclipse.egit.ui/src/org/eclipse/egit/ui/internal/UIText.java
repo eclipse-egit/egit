@@ -3699,6 +3699,9 @@ public class UIText extends NLS {
 	public static String RepositoriesViewLabelProvider_TagsNodeText;
 
 	/** */
+	public static String RepositoriesViewLabelProvider_UnbornBranchText;
+
+	/** */
 	public static String DialogsPreferencePage_DetachedHeadCombo;
 
 	/** */
@@ -5376,6 +5379,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String StagingView_IgnoreItemMenuLabel;
+
+	/** */
+	public static String StagingView_InitialCommitText;
 
 	/** */
 	public static String StagingView_IgnoreFolderMenuLabel;
