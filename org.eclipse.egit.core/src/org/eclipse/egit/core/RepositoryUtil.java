@@ -593,15 +593,13 @@ public class RepositoryUtil {
 		if (head == null) {
 			return CoreText.RepositoryUtil_noHead;
 		}
+		if (head.isSymbolic()) {
+			return repository.getBranch();
+		}
 		ObjectId objectId = head.getObjectId();
 		if (objectId == null) {
 			return CoreText.RepositoryUtil_noHead;
 		}
-
-		if (head.isSymbolic()) {
-			return repository.getBranch();
-		}
-
 		String id = objectId.name();
 		String ref = mapCommitToRef(repository, id, false);
 		if (ref != null) {
