@@ -401,28 +401,30 @@ public class RepositoriesViewLabelProvider extends ColumnLabelProvider
 			StyledString refName = new StyledString(
 					Repository.shortenRefName(ref.getName()));
 
-			ObjectId refId;
 			if (ref.isSymbolic()) {
 				refName.append(' ');
 				refName.append('[', StyledString.DECORATIONS_STYLER);
 				refName.append(ref.getLeaf().getName(),
 						StyledString.DECORATIONS_STYLER);
 				refName.append(']', StyledString.DECORATIONS_STYLER);
-				refId = ref.getLeaf().getObjectId();
-			} else
-				refId = ref.getObjectId();
-
+			}
+			ObjectId refId = ref.getObjectId();
 			refName.append(' ');
 			RevCommit commit = getLatestCommit(node);
-			if (commit != null)
+			if (commit != null) {
 				refName.append(abbreviate(commit),
 						StyledString.QUALIFIER_STYLER)
 						.append(' ')
 						.append(commit.getShortMessage(),
 								StyledString.QUALIFIER_STYLER);
-			else
+			} else if (!ref.isSymbolic() || refId != null) {
 				refName.append(abbreviate(refId),
 						StyledString.QUALIFIER_STYLER);
+			} else {
+				refName.append(
+						UIText.RepositoriesViewLabelProvider_UnbornBranchText,
+						StyledString.QUALIFIER_STYLER);
+			}
 			return refName;
 		case WORKINGDIR:
 			StyledString dirString = new StyledString(

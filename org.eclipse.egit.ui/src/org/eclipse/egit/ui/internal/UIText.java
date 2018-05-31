@@ -3699,6 +3699,9 @@ public class UIText extends NLS {
 	public static String RepositoriesViewLabelProvider_TagsNodeText;
 
 	/** */
+	public static String RepositoriesViewLabelProvider_UnbornBranchText;
+
+	/** */
 	public static String DialogsPreferencePage_DetachedHeadCombo;
 
 	/** */
