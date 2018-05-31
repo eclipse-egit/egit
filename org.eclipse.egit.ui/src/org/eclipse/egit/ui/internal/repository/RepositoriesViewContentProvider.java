@@ -109,14 +109,30 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 
 	private boolean branchHierarchyMode = false;
 
+	private boolean showUnbornHead = false;
+
 	private Map<Repository, Map<String, Ref>> branchRefs = new WeakHashMap<>();
 
 	private Map<Repository, ListenerHandle> refsChangedListeners = new WeakHashMap<>();
 
 	/**
-	 * Constructs this instance
+	 * Constructs a new {@link RepositoriesViewContentProvider} that doesn't
+	 * show an unborn branch as HEAD.
 	 */
 	public RepositoriesViewContentProvider() {
+		this(false);
+	}
+
+	/**
+	 * Constructs a new {@link RepositoriesViewContentProvider}.
+	 * 
+	 * @param showUnbornHead
+	 *            whether to show an unborn branch as HEAD as an additional
+	 *            reference.
+	 */
+	public RepositoriesViewContentProvider(boolean showUnbornHead) {
+		super();
+		this.showUnbornHead = showUnbornHead;
 		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(), ICommandService.class);
 		commandState = srv.getCommand(
 				ToggleBranchHierarchyCommand.ID)
@@ -220,8 +236,16 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 						refs.add(new AdditionalRefNode(node, repo, refEntry
 								.getValue()));
 				}
-				for (Ref r : repo.getRefDatabase().getAdditionalRefs())
+				for (Ref r : repo.getRefDatabase().getAdditionalRefs()) {
 					refs.add(new AdditionalRefNode(node, repo, r));
+				}
+				if (showUnbornHead) {
+					Ref head = repo.exactRef(Constants.HEAD);
+					if (head != null && head.isSymbolic()
+							&& head.getObjectId() == null) {
+						refs.add(new AdditionalRefNode(node, repo, head));
+					}
+				}
 			} catch (Exception e) {
 				return handleException(e, node);
 			}

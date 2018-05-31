@@ -1829,7 +1829,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				case ADDITIONALREF:
 					input = new HistoryPageInput(repo);
 					ref = ((AdditionalRefNode) repoNode).getObject();
-					showRef = true;
+					if (ref.getObjectId() == null) {
+						ref = null;
+					}
+					showRef = ref != null;
 					break;
 				case TAG:
 					input = new HistoryPageInput(repo);
