@@ -46,6 +46,30 @@
       "revId": "368305c8a227a1e428fb2e04c2807433d7f5135c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02276bc7_3f7db22a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-01T17:05:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb2f31b7_c9eaf918",
+      "range": {
+        "startLine": 130,
+        "startChar": 48,
+        "endLine": 130,
+        "endChar": 58
+      },
+      "revId": "368305c8a227a1e428fb2e04c2807433d7f5135c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
