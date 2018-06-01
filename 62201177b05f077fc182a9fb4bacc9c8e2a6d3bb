@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e5294f2_5f35f528",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-01T20:12:56Z",
+      "side": 1,
+      "message": "Good; this will also catch things like \"master~1\" (don\u0027t know if that can occur as input at all). But it\u0027s not case-insensitive.",
+      "revId": "62201177b05f077fc182a9fb4bacc9c8e2a6d3bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "939c656d_5729448b",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-01T20:12:56Z",
+      "side": 1,
+      "message": "I don\u0027t get the logic here. Where\u0027s the bit about the case-insensitivity?\n\nShould this \"equals\" here be \"equalsIgnoreCase\"?",
+      "revId": "62201177b05f077fc182a9fb4bacc9c8e2a6d3bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
