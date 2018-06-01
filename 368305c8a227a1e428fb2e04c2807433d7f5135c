@@ -22,6 +22,30 @@
       "revId": "368305c8a227a1e428fb2e04c2807433d7f5135c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb2f31b7_c9eaf918",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-01T17:02:40Z",
+      "side": 1,
+      "message": "Parse it as \"(unborn branch as HEAD) as an additional ref\".\n\nBut I\u0027ll just rephrase to \"show HEAD even if it is an unborn branch\".",
+      "parentUuid": "f18a479c_975c56df",
+      "range": {
+        "startLine": 130,
+        "startChar": 48,
+        "endLine": 130,
+        "endChar": 58
+      },
+      "revId": "368305c8a227a1e428fb2e04c2807433d7f5135c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
