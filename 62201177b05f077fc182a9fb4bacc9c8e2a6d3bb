@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d458dbe8_59e6a644",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-06-02T09:17:37Z",
+      "side": 1,
+      "message": "On my machine (Windows) it handles the case sensitivy. If \"master\" exists, then .resolve(\"Master\") returns that branch. I\u0027ve basically taken this line from ValidationUtils.java:58, where it shows the error message \"Ref {0} already exists\", when trying to create a branch \"Master\" via the \"Create branch wizard\".\n\nSo to summarize I\u0027m not sure if this code catches case sensitive only name changes on other operating systems, but it does the same as the egit create branch dialog now, which at least resolves my initial issue.",
+      "parentUuid": "7e5294f2_5f35f528",
+      "revId": "62201177b05f077fc182a9fb4bacc9c8e2a6d3bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "939c656d_5729448b",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-06-01T20:12:56Z",
       "side": 1,
       "message": "I don\u0027t get the logic here. Where\u0027s the bit about the case-insensitivity?\n\nShould this \"equals\" here be \"equalsIgnoreCase\"?",
+      "revId": "62201177b05f077fc182a9fb4bacc9c8e2a6d3bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2f06d56_52ad14de",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-06-02T09:17:37Z",
+      "side": 1,
+      "message": "This code has not changed (but the gerrit diff view makes it look different). I\u0027ve only added the lines 75 to 81 _before_ this code.",
+      "parentUuid": "939c656d_5729448b",
       "revId": "62201177b05f077fc182a9fb4bacc9c8e2a6d3bb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
