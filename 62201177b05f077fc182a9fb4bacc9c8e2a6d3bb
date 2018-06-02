@@ -123,6 +123,24 @@
       "revId": "62201177b05f077fc182a9fb4bacc9c8e2a6d3bb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4cf4ffb_06e3ca27",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-06-02T10:40:49Z",
+      "side": 1,
+      "message": "Aarg, now I remember why I did not use ValidationUtils directly. ValidationUtils lives in egit.ui, since it implements *.jface.*.IInputValidator. The gitflow BranchNameValidator however is in non-ui.\n\nDo you think it makes sense to move the functionality of org.eclipse.egit.ui.internal.ValidationUtils.getRefNameInputValidator into egit.core and to leave only a thin wrapper adding the IInputValidator interface? Then I would try to go this way.",
+      "parentUuid": "aee21e52_5a478be2",
+      "revId": "62201177b05f077fc182a9fb4bacc9c8e2a6d3bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
