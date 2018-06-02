@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "39481fa8_42b8996a",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-02T09:55:11Z",
+      "side": 1,
+      "message": "Let\u0027s assume there is no ref \"refs/heads/Foo\", but there is a *packed* ref \"refs/heads/foo\". If you try to resolve \"ref/heads/Foo\", you\u0027ll get null, also on case-insensitive file systems.",
+      "parentUuid": "d458dbe8_59e6a644",
+      "revId": "62201177b05f077fc182a9fb4bacc9c8e2a6d3bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "939c656d_5729448b",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "This code has not changed (but the gerrit diff view makes it look different). I\u0027ve only added the lines 75 to 81 _before_ this code.",
       "parentUuid": "939c656d_5729448b",
+      "revId": "62201177b05f077fc182a9fb4bacc9c8e2a6d3bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfea8cff_3db7504f",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-02T09:55:11Z",
+      "side": 1,
+      "message": "Yes, I got that. But if the resolve() above already handled case insensitivity then this second try block wouldn\u0027t be needed at all. But resolve() is not sufficient, and so this here should use equalsIgnoreCase.\n\nSo in essence I don\u0027t quite understand what you\u0027re trying to do:\n\n1. If you\u0027re trying to forbid creating \"Foo\" if \"foo\" already exists _on all platforms_, you need both and equalsIgnoreCase here.\n\n2. If you just want to forbid it when it would cause trouble (\"foo\" exists as a loose ref on a case-insensitive file system), then the resolve alone above would be sufficient.\n\nNote that the IInputValidator from ValidationUtils checks more. It\u0027ll also reject \"refs/heads/Foo\" if a ref \"refs/heads/Foo/bar\" already exists. So if it\u0027s (2) you\u0027re after, why not use the IInputValidator from ValiationUtils directly?",
+      "parentUuid": "e2f06d56_52ad14de",
       "revId": "62201177b05f077fc182a9fb4bacc9c8e2a6d3bb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
