@@ -105,6 +105,24 @@
       "revId": "62201177b05f077fc182a9fb4bacc9c8e2a6d3bb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aee21e52_5a478be2",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-06-02T10:33:50Z",
+      "side": 1,
+      "message": "It\u0027s number 2. I just want the gitflow menu to reject such input similar like the create branch menu would, instead of taking the input and running into an error afterwards when running the operation.\n\nI was not able to decide on my own whether this piece (comparing branch names) was still needed after adding my resolve(). But with your explanations it really seems best to just invoke the ValidationUtils here and to remove all other code. Thanks for that advice.",
+      "parentUuid": "bfea8cff_3db7504f",
+      "revId": "62201177b05f077fc182a9fb4bacc9c8e2a6d3bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
