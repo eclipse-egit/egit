@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "753bf803_cdf83ebf",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/AssumeUnchangedOperation.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-06-02T21:05:39Z",
+      "side": 0,
+      "message": "removing this branch caused the regression bug https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d529141",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 3
+      },
+      "revId": "ebd8f363193c9b8de6e9c4deb8d2f396b65d5314",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
