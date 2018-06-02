@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b00663c_0341e63a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-06-02T07:53:25Z",
+      "side": 1,
+      "message": "maybe we should show a hint in the staging view like the one git status shows:\n\nempty (master #)]$ git status\nOn branch master\n\nNo commits yet\n\nnothing to commit (create/copy files and use \"git add\" to track)",
+      "revId": "e509d7d4b8ae614b0d2b9c798581199a2fe0d324",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
