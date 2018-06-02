@@ -65,7 +65,7 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 			final Collection<? extends IResource> rsrcs, boolean assumeUnchanged) {
 		rsrcList = rsrcs;
 		locations = Collections.emptyList();
-		caches = new IdentityHashMap<Repository, DirCache>();
+		caches = new IdentityHashMap<>();
 		this.assumeUnchanged = assumeUnchanged;
 	}
 
@@ -88,7 +88,7 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 		this.db = repository;
 		this.locations = locations;
 		this.rsrcList = Collections.emptyList();
-		caches = new IdentityHashMap<Repository, DirCache>();
+		caches = new IdentityHashMap<>();
 		this.assumeUnchanged = assumeUnchanged;
 	}
 
@@ -167,9 +167,15 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 
 		IPath dbDir = new Path(db.getWorkTree().getAbsolutePath());
 		final String path = location.makeRelativeTo(dbDir).toString();
-		final DirCacheEntry ent = cache.getEntry(path);
-		if (ent != null) {
-			ent.setAssumeValid(assumeUnchanged);
+		if (location.toFile().isDirectory()) {
+			for (DirCacheEntry ent : cache.getEntriesWithin(path)) {
+				ent.setAssumeValid(assumeUnchanged);
+			}
+		} else {
+			DirCacheEntry ent = cache.getEntry(path);
+			if (ent != null) {
+				ent.setAssumeValid(assumeUnchanged);
+			}
 		}
 	}
 }
