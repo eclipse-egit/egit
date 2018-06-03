@@ -199,6 +199,24 @@
       "revId": "62201177b05f077fc182a9fb4bacc9c8e2a6d3bb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b16f87a_c60f0e2a",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-03T15:22:20Z",
+      "side": 1,
+      "message": "This BranchNameValidator class here is called only from gitflow.ui. A pity that it\u0027s public API... since it is, I agree that moving the IInputValidator logic to egit.core\nand leaving both this BranchNameValidator and the ValidationUtils thin wrappers.",
+      "parentUuid": "f84d1284_214b6238",
+      "revId": "62201177b05f077fc182a9fb4bacc9c8e2a6d3bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
