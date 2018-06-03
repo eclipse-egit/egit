@@ -16,6 +16,24 @@
       "revId": "e509d7d4b8ae614b0d2b9c798581199a2fe0d324",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03c1c3c9_b7918a39",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-03T16:07:39Z",
+      "side": 1,
+      "message": "Done. Staging view now shows \"repo_name [branch]: initial commit on empty branch\" for this case.\n\nNot sure that info really helps anybody...",
+      "parentUuid": "2b00663c_0341e63a",
+      "revId": "e509d7d4b8ae614b0d2b9c798581199a2fe0d324",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
