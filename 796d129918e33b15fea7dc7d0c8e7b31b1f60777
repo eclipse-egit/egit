@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03949c50_60a2257e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3788,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-06-03T19:39:22Z",
+      "side": 1,
+      "message": "just wondering if this repeated code can be extracted as Ref.isUnborn()...",
+      "range": {
+        "startLine": 3787,
+        "startChar": 21,
+        "endLine": 3788,
+        "endChar": 36
+      },
+      "revId": "796d129918e33b15fea7dc7d0c8e7b31b1f60777",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
