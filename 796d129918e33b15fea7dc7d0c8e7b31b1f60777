@@ -22,6 +22,30 @@
       "revId": "796d129918e33b15fea7dc7d0c8e7b31b1f60777",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d6b2501_7bb68315",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3788,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-04T06:28:06Z",
+      "side": 1,
+      "message": "I think you can have an unborn branch only if HEAD is a sym ref to a branch that doesn\u0027t exist yet. So I don\u0027t think it makes sense to have such an operation on Ref in general. Maybe Repository.isHeadUnborn() or Repository.isUnbornBranch()...",
+      "parentUuid": "03949c50_60a2257e",
+      "range": {
+        "startLine": 3787,
+        "startChar": 21,
+        "endLine": 3788,
+        "endChar": 36
+      },
+      "revId": "796d129918e33b15fea7dc7d0c8e7b31b1f60777",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
