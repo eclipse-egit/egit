@@ -69,6 +69,30 @@
       "revId": "796d129918e33b15fea7dc7d0c8e7b31b1f60777",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1a6e5b7_40a95526",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 1881,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-04T20:53:01Z",
+      "side": 1,
+      "message": "Done. Since I believe this is more an information than a warning I\u0027ve chosen to also show an info icon in this case.",
+      "parentUuid": "e7eb4d43_e8104941",
+      "range": {
+        "startLine": 1881,
+        "startChar": 32,
+        "endLine": 1881,
+        "endChar": 62
+      },
+      "revId": "796d129918e33b15fea7dc7d0c8e7b31b1f60777",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
