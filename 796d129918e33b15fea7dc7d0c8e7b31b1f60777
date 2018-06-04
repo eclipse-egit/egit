@@ -46,6 +46,29 @@
       "revId": "796d129918e33b15fea7dc7d0c8e7b31b1f60777",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7eb4d43_e8104941",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 1881,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-06-04T18:40:11Z",
+      "side": 1,
+      "message": "I think this could be misunderstood, there is no commit yet\n\nmaybe better something like:\n* unborn branch: create an initial commit to start history\n* no commit yet on unborn branch\n\ninstead of showing this in the title we could use warningLabel to show it above the commit message widget",
+      "range": {
+        "startLine": 1881,
+        "startChar": 32,
+        "endLine": 1881,
+        "endChar": 62
+      },
+      "revId": "796d129918e33b15fea7dc7d0c8e7b31b1f60777",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
