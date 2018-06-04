@@ -71,6 +71,8 @@ class CommitGraphTableHoverManager extends
 			ViewerCell cell, MouseEvent e) {
 		final int columnIndex = cell.getColumnIndex();
 		switch (columnIndex) {
+		case 0:
+			return computeInformationForHash(commit, cell);
 		case 1:
 			return computeInformationForRef(commit, cell, e);
 		case 2:
@@ -81,29 +83,67 @@ class CommitGraphTableHoverManager extends
 			return computeInformationForName(commit.getCommitterIdent(), cell);
 		case 5:
 			return computeInformationForDate(commit.getCommitterIdent(), cell);
+		default:
+			return null;
 		}
-		return null;
+	}
+
+	private Information computeInformationForHash(SWTCommit commit,
+			ViewerCell cell) {
+		return new Information(
+				commit.getName() + '\n' + commit.getShortMessage(),
+				cell.getBounds());
 	}
 
 	private Information computeInformationForRef(SWTCommit commit,
 			ViewerCell cell, MouseEvent e) {
-		if (commit.getRefCount() == 0)
-			return null;
 		Rectangle itemBounds = cell.getBounds();
+		int minRefX = -1;
+		int maxRefX = itemBounds.x;
 		int relativeX = e.x - itemBounds.x;
 		for (int i = 0; i < commit.getRefCount(); i++) {
 			Ref ref = commit.getRef(i);
 			Point textSpan = renderer.getRefHSpan(ref);
-			if ((textSpan != null)
-					&& (relativeX >= textSpan.x && relativeX <= textSpan.y)) {
-
-				String hoverText = getHoverText(ref, i, commit);
-				int x = itemBounds.x + textSpan.x;
-				int width = textSpan.y - textSpan.x;
-				Rectangle rectangle = new Rectangle(x, itemBounds.y, width,
-						itemBounds.height);
-				return new Information(hoverText, rectangle);
+			if (textSpan != null) {
+				if (relativeX >= textSpan.x && relativeX <= textSpan.y) {
+					String hoverText = getHoverText(ref, i, commit);
+					int x = itemBounds.x + textSpan.x;
+					int width = textSpan.y - textSpan.x;
+					Rectangle rectangle = new Rectangle(x, itemBounds.y, width,
+							itemBounds.height);
+					return new Information(hoverText, rectangle);
+				} else {
+					if (minRefX < 0) {
+						minRefX = itemBounds.x + textSpan.x;
+					} else {
+						minRefX = Math.min(minRefX, itemBounds.x + textSpan.x);
+					}
+					maxRefX = Math.max(maxRefX, itemBounds.x + textSpan.y);
+				}
 			}
+		}
+		if (minRefX < 0) {
+			if (relativeX > itemBounds.width / 2) {
+				return new Information(commit.getShortMessage(),
+						new Rectangle(itemBounds.x + itemBounds.width / 2,
+								itemBounds.y, itemBounds.width / 2,
+								itemBounds.height));
+			} else {
+				int left = Math.max(itemBounds.x, e.x - 10);
+				return new Information(commit.getShortMessage(),
+						new Rectangle(left, itemBounds.y,
+								itemBounds.x + itemBounds.width - left,
+								itemBounds.height));
+			}
+		} else if (e.x > maxRefX) {
+			return new Information(commit.getShortMessage(),
+					new Rectangle(maxRefX, itemBounds.y,
+							itemBounds.x + itemBounds.width - maxRefX,
+							itemBounds.height));
+		} else if (e.x < minRefX) {
+			return new Information(commit.getShortMessage(),
+					new Rectangle(itemBounds.x, itemBounds.y,
+							minRefX - itemBounds.x, itemBounds.height));
 		}
 		return null;
 	}
