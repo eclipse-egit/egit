@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d8c4b50_d40c9f78",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-06-04T21:52:47Z",
+      "side": 1,
+      "message": "missing braces",
+      "revId": "b09db679475539802bb822e90640c7c3ecd33a91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de224092_8e36f1f8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-06-04T21:52:47Z",
+      "side": 1,
+      "message": "missing braces",
+      "revId": "b09db679475539802bb822e90640c7c3ecd33a91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
