@@ -2039,6 +2039,7 @@ public class StagingView extends ViewPart
 		Tree tree = toolkit.createTree(composite, SWT.FULL_SELECTION
 				| SWT.MULTI);
 		TreeViewer treeViewer = new TreeViewer(tree);
+		treeViewer.setUseHashlookup(true);
 		return treeViewer;
 	}
 
