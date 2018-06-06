@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d0adb521_15d30d38",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-06-06T14:58:50Z",
+      "side": 1,
+      "message": "Your comment is not consistent with the code formatting rules in the project. The save actions are configured to\n* format edited lines only and to\n* not enforce blocks in for/if/while statements\n\nThat\u0027s why I carefully don\u0027t change such existing (moved) code.\n\nIf we want to enforce blocks now (which I\u0027m very happy with), we should change the formatter settings and run a single reformatting change on the repository.",
+      "parentUuid": "16254777_2d32f441",
+      "revId": "b09db679475539802bb822e90640c7c3ecd33a91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de224092_8e36f1f8",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
         "patchSetId": 2
