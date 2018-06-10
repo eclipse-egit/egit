@@ -3726,8 +3726,7 @@ public class StagingView extends ViewPart
 				}
 				configChangedListener = repository.getListenerList()
 						.addConfigChangedListener(
-								event -> asyncExec(
-										() -> resetCommitMessageComponent()));
+								event -> resetCommitMessageComponentOnAuthorChange());
 			}
 			final StagingViewUpdate update = new StagingViewUpdate(repository,
 					indexDiff, null);
@@ -3806,6 +3805,22 @@ public class StagingView extends ViewPart
 			updateCommitButtons();
 			updateSectionText();
 		});
+	}
+
+	private void resetCommitMessageComponentOnAuthorChange() {
+		if (currentRepository != null) {
+			CommitHelper helper = new CommitHelper(currentRepository);
+			String newAuthor = helper.getAuthor();
+			String newCommitter = helper.getCommitter();
+			asyncExec(() -> {
+				String currentAuthor = commitMessageComponent.getAuthor();
+				String currentCommitter = commitMessageComponent.getCommitter();
+				if (!currentAuthor.equals(newAuthor)
+						|| !(currentCommitter.equals(newCommitter))) {
+					resetCommitMessageComponent();
+				}
+			});
+		}
 	}
 
 	/**
