@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d8de41a3_09dbd936",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-06-11T13:46:57Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "2a4c70f2_ab11a68f",
+      "range": {
+        "startLine": 60,
+        "startChar": 1,
+        "endLine": 60,
+        "endChar": 67
+      },
+      "revId": "485024905793e6606883bceaab56aed3be3cabf6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86502063_aac24a0c",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-06-11T12:24:33Z",
       "side": 1,
       "message": "this only works with an optional dependency to jgit lfs to make the classloader happy. shall we log something if it does not work? how?",
+      "range": {
+        "startLine": 277,
+        "startChar": 2,
+        "endLine": 287,
+        "endChar": 3
+      },
+      "revId": "485024905793e6606883bceaab56aed3be3cabf6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aef23b42_8f1f9a03",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-06-11T13:46:57Z",
+      "side": 1,
+      "message": "yes, I\u0027d log failures, the bundle activator has some methods for logging:\nActivator.logError()",
+      "parentUuid": "86502063_aac24a0c",
       "range": {
         "startLine": 277,
         "startChar": 2,
@@ -65,6 +113,47 @@
         "endLine": 4690,
         "endChar": 47
       },
+      "revId": "485024905793e6606883bceaab56aed3be3cabf6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "037addba_edee285e",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4690,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-06-11T13:46:57Z",
+      "side": 1,
+      "message": "enabled how ?",
+      "parentUuid": "d059289b_5a794e03",
+      "range": {
+        "startLine": 4690,
+        "startChar": 12,
+        "endLine": 4690,
+        "endChar": 47
+      },
+      "revId": "485024905793e6606883bceaab56aed3be3cabf6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2548d86_26d80000",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/InstallLfsLocalCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-06-11T13:46:57Z",
+      "side": 1,
+      "message": "update license header to EPL-2.0. See any of the other source files which have been mass migrated",
       "revId": "485024905793e6606883bceaab56aed3be3cabf6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
