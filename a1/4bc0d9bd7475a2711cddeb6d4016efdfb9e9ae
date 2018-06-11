@@ -1,0 +1,7 @@
+Code-Review+2: Thomas Wolf <thomas.wolf@paranor.ch>
+Verified+1: CI Bot
+Submitted-by: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-at: Mon, 11 Jun 2018 07:45:21 -0400
+Reviewed-on: https://git.eclipse.org/r/124336
+Project: egit/egit
+Branch: refs/heads/stable-5.0
