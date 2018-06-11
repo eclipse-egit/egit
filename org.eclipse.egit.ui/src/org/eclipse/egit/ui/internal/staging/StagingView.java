@@ -749,6 +749,8 @@ public class StagingView extends ViewPart
 
 	private ListenerHandle refsChangedListener;
 
+	private ListenerHandle configChangedListener;
+
 	private LocalResourceManager resources = new LocalResourceManager(
 			JFaceResources.getResources());
 
@@ -3625,6 +3627,7 @@ public class StagingView extends ViewPart
 	 */
 	private void clearRepository(@Nullable Repository repository) {
 		saveCommitMessageComponentState();
+		removeRepositoryListeners();
 		realRepository = repository;
 		currentRepository = null;
 		if (isDisposed()) {
@@ -3722,12 +3725,15 @@ public class StagingView extends ViewPart
 			if (repositoryChanged) {
 				// Reset paths, they're from the old repository
 				resetPathsToExpand();
-				if (refsChangedListener != null)
-					refsChangedListener.remove();
+				removeRepositoryListeners();
 				refsChangedListener = repository.getListenerList()
 						.addRefsChangedListener(
 								event -> updateRebaseButtonVisibility(repository
 										.getRepositoryState().isRebasing()));
+				configChangedListener = repository.getListenerList()
+						.addConfigChangedListener(
+								event -> updateCommitAuthorAndCommitter(
+										repository));
 			}
 			final StagingViewUpdate update = new StagingViewUpdate(repository,
 					indexDiff, null);
@@ -3806,6 +3812,17 @@ public class StagingView extends ViewPart
 			updateCommitButtons();
 			updateSectionText();
 		});
+	}
+
+	private void removeRepositoryListeners() {
+		if (refsChangedListener != null) {
+			refsChangedListener.remove();
+			refsChangedListener = null;
+		}
+		if (configChangedListener != null) {
+			configChangedListener.remove();
+			configChangedListener = null;
+		}
 	}
 
 	/**
@@ -4014,6 +4031,19 @@ public class StagingView extends ViewPart
 				.isAmending());
 		amendPreviousCommitAction.setEnabled(helper.amendAllowed());
 		updateMessage();
+	}
+
+	private void updateCommitAuthorAndCommitter(Repository repository) {
+		CommitHelper helper = new CommitHelper(repository);
+		asyncExec(() -> {
+			boolean authorEqualsCommitter = commitMessageComponent.getAuthor()
+					.equals(commitMessageComponent.getCommitter());
+			if (authorEqualsCommitter) {
+				commitMessageComponent.setAuthor(helper.getAuthor());
+			}
+			commitMessageComponent.setCommitter(helper.getCommitter());
+			commitMessageComponent.updateUIFromState(false);
+		});
 	}
 
 	/**
@@ -4285,9 +4315,7 @@ public class StagingView extends ViewPart
 		InstanceScope.INSTANCE.getNode(
 				org.eclipse.egit.core.Activator.getPluginId())
 				.removePreferenceChangeListener(prefListener);
-		if (refsChangedListener != null) {
-			refsChangedListener.remove();
-		}
+		removeRepositoryListeners();
 
 		if (switchRepositoriesAction != null) {
 			switchRepositoriesAction.dispose();

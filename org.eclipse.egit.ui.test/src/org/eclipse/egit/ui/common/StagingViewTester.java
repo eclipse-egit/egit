@@ -59,6 +59,16 @@ public class StagingViewTester {
 				.setText(committer);
 	}
 
+	public String getAuthor() {
+		return stagingView.bot().textWithLabel(UIText.StagingView_Author)
+				.getText();
+	}
+
+	public String getCommitter() {
+		return stagingView.bot().textWithLabel(UIText.StagingView_Committer)
+				.getText();
+	}
+
 	public void setCommitMessage(String message) {
 		stagingView.bot().styledTextWithLabel(UIText.StagingView_CommitMessage)
 				.setText(message);
