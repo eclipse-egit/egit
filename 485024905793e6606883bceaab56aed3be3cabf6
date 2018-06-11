@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a4c70f2_ab11a68f",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-06-11T12:24:33Z",
+      "side": 1,
+      "message": "this is required so that EGit may call the register method in LFS via reflection - this must have been lost somewhere along the latest changes (not in this commit but upstream it seems)...",
+      "range": {
+        "startLine": 60,
+        "startChar": 1,
+        "endLine": 60,
+        "endChar": 67
+      },
+      "revId": "485024905793e6606883bceaab56aed3be3cabf6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86502063_aac24a0c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-06-11T12:24:33Z",
+      "side": 1,
+      "message": "this only works with an optional dependency to jgit lfs to make the classloader happy. shall we log something if it does not work? how?",
+      "range": {
+        "startLine": 277,
+        "startChar": 2,
+        "endLine": 287,
+        "endChar": 3
+      },
+      "revId": "485024905793e6606883bceaab56aed3be3cabf6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d059289b_5a794e03",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4690,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-06-11T12:24:33Z",
+      "side": 1,
+      "message": "this means the action is only visible in the repository context menu when it is enabled as well - good/bad?",
+      "range": {
+        "startLine": 4690,
+        "startChar": 12,
+        "endLine": 4690,
+        "endChar": 47
+      },
+      "revId": "485024905793e6606883bceaab56aed3be3cabf6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
