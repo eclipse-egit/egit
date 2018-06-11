@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "8161f766_1e8f983c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-06-11T14:24:33Z",
+      "side": 1,
+      "message": "Done - but i made it a warning - it\u0027s optional after all.",
+      "parentUuid": "aef23b42_8f1f9a03",
+      "range": {
+        "startLine": 277,
+        "startChar": 2,
+        "endLine": 287,
+        "endChar": 3
+      },
+      "revId": "485024905793e6606883bceaab56aed3be3cabf6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d059289b_5a794e03",
         "filename": "org.eclipse.egit.ui/plugin.xml",
         "patchSetId": 2
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "adf69ae1_f4c852fd",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4690,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-06-11T14:24:33Z",
+      "side": 1,
+      "message": "if no LFS support is detected at all (neither globally nor locally in the repo) - see GitRepository.canEnableLfs condition.",
+      "parentUuid": "037addba_edee285e",
+      "range": {
+        "startLine": 4690,
+        "startChar": 12,
+        "endLine": 4690,
+        "endChar": 47
+      },
+      "revId": "485024905793e6606883bceaab56aed3be3cabf6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2548d86_26d80000",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/InstallLfsLocalCommand.java",
         "patchSetId": 2
@@ -154,6 +202,24 @@
       "writtenOn": "2018-06-11T13:46:57Z",
       "side": 1,
       "message": "update license header to EPL-2.0. See any of the other source files which have been mass migrated",
+      "revId": "485024905793e6606883bceaab56aed3be3cabf6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "670b4a43_91bfaa90",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/InstallLfsLocalCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-06-11T14:24:33Z",
+      "side": 1,
+      "message": "Done - i copied your name with the old header as well - oups :D",
+      "parentUuid": "a2548d86_26d80000",
       "revId": "485024905793e6606883bceaab56aed3be3cabf6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
