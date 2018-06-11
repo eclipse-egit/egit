@@ -396,10 +396,23 @@ public class CommitMessageComponent {
 	 *
 	 */
 	public void updateUIFromState() {
-		commitText.setText(commitMessage);
-		commitText.getTextWidget().setCaretOffset(caretPosition);
-		authorText.setText(author);
+		updateUIFromState(true);
+	}
+
+	/**
+	 * Set the UI widgets to the values from the internal state.
+	 *
+	 * @param withCommitMessage
+	 *            {@code true} if the commit message shall be updated, too,
+	 *            {@code false} to only update author and committer
+	 */
+	public void updateUIFromState(boolean withCommitMessage) {
+		if (withCommitMessage) {
+			commitText.setText(commitMessage);
+			commitText.getTextWidget().setCaretOffset(caretPosition);
+		}
 		committerText.setText(committer);
+		authorText.setText(author);
 	}
 
 	/**
@@ -564,20 +577,41 @@ public class CommitMessageComponent {
 			}
 		});
 		committerText.addModifyListener(new ModifyListener() {
-			String oldCommitter = committerText.getText();
+			String oldCommitter = committerText.getText().trim();
 
 			@Override
 			public void modifyText(ModifyEvent e) {
-				if (!listenersEnabled || !committerText.isEnabled())
+				String newCommitter = committerText.getText().trim();
+				if (!listenersEnabled || !committerText.isEnabled()) {
+					if (!oldCommitter.equals(newCommitter) && RawParseUtils
+							.parsePersonIdent(newCommitter) != null) {
+						oldCommitter = newCommitter;
+					}
 					return;
-				if (signedOff) {
-					// the commit message is signed
-					// the signature must be updated
-					String newCommitter = committerText.getText();
-					String oldSignOff = getSignedOff(oldCommitter);
-					String newSignOff = getSignedOff(newCommitter);
-					commitText.setText(replaceSignOff(commitText.getText(),
-							oldSignOff, newSignOff));
+				}
+				if (!oldCommitter.equals(newCommitter) && RawParseUtils
+						.parsePersonIdent(newCommitter) != null) {
+					String oldCommitText = commitText.getText();
+					String newCommitText = oldCommitText;
+					String currentAuthor = authorText.getText().trim();
+					if (newCommitter.equals(currentAuthor)) {
+						if (signedOff) {
+							// Only add a new signed-off if there isn't one
+							// already
+							String signOff = getSignedOff(newCommitter);
+							if (!hasSignOff(oldCommitText, signOff)) {
+								newCommitText = signOff(oldCommitText);
+							}
+						}
+					} else {
+						String oldSignOff = getSignedOff(oldCommitter);
+						String newSignOff = getSignedOff(newCommitter);
+						newCommitText = replaceSignOff(oldCommitText,
+								oldSignOff, newSignOff);
+					}
+					if (!oldCommitText.equals(newCommitText)) {
+						commitText.setText(newCommitText);
+					}
 					oldCommitter = newCommitter;
 				}
 				listener.statusUpdated();
@@ -787,7 +821,7 @@ public class CommitMessageComponent {
 	}
 
 	private String getSignedOff() {
-		return getSignedOff(committerText.getText());
+		return getSignedOff(committerText.getText().trim());
 	}
 
 	private String getSignedOff(String signer) {
@@ -824,10 +858,14 @@ public class CommitMessageComponent {
 
 	private void updateSignedOffButton() {
 		String curText = commitText.getText();
-		if (!curText.endsWith(Text.DELIMITER))
+		if (!curText.endsWith(Text.DELIMITER)) {
 			curText += Text.DELIMITER;
-		signedOff = curText.indexOf(getSignedOff() + Text.DELIMITER) != -1;
-		listener.updateSignedOffToggleSelection(signedOff);
+		}
+		if (RawParseUtils
+				.parsePersonIdent(committerText.getText().trim()) != null) {
+			signedOff = curText.indexOf(getSignedOff() + Text.DELIMITER) != -1;
+			listener.updateSignedOffToggleSelection(signedOff);
+		}
 	}
 
 	private void refreshSignedOffBy() {
@@ -846,6 +884,14 @@ public class CommitMessageComponent {
 				commitText.setText(curText);
 			}
 		}
+	}
+
+	private boolean hasSignOff(String input, String signature) {
+		String curText = input;
+		if (!curText.endsWith(Text.DELIMITER)) {
+			curText += Text.DELIMITER;
+		}
+		return curText.indexOf(signature + Text.DELIMITER) >= 0;
 	}
 
 	private String replaceSignOff(String input, String oldSignOff,
