@@ -26,6 +26,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.NetUtil;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.core.op.CloneOperation.PostCloneTask;
+import org.eclipse.jgit.errors.CommandFailedException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
@@ -220,7 +221,7 @@ public class ConfigureGerritAfterCloneTask implements PostCloneTask {
 						GERRIT_SSHD_VERSION_API, timeout);
 				return result != null
 						&& GERRIT_SSHD_REPLY.matcher(result).matches();
-			} catch (IOException e) {
+			} catch (IOException | CommandFailedException e) {
 				// Something went wrong with the connection or with the command
 				// execution. Maybe the server didn't recognize the command. Do
 				// the safe thing and claim it wasn't a Gerrit. In the worst
