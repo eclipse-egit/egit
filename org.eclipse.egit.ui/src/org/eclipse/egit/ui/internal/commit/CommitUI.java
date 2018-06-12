@@ -19,19 +19,19 @@
 package org.eclipse.egit.ui.internal.commit;
 
 
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
-import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -41,6 +41,7 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.IteratorService;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -260,31 +261,52 @@ public class CommitUI  {
 			Set<String> mayBeCommitted,
 			IResource[] resourcesSelected) {
 		Set<String> preselectionCandidates = new LinkedHashSet<>();
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		// iterate through all the files that may be committed
-		for (String fileName : mayBeCommitted) {
-			URI uri = new File(repository.getWorkTree(), fileName).toURI();
-			IFile[] workspaceFiles = root.findFilesForLocationURI(uri);
-			if (workspaceFiles.length > 0) {
-				IFile file = workspaceFiles[0];
-				for (IResource resource : resourcesSelected) {
-					// if any selected resource contains the file, add it as a
-					// preselection candidate
-					if (resource.contains(file)) {
-						preselectionCandidates.add(fileName);
-						break;
-					}
-				}
-			} else {
-				// could be file outside of workspace
-				for (IResource resource : resourcesSelected) {
-					IPath location = resource.getLocation();
-					if(location != null && location.toFile().equals(new File(uri))) {
-						preselectionCandidates.add(fileName);
+		if (repository == null || mayBeCommitted.isEmpty()) {
+			return preselectionCandidates;
+		}
+		List<String> selectedDirectories = new ArrayList<>();
+		Set<String> selectedFiles = new HashSet<>();
+		for (IResource rsc : resourcesSelected) {
+			IPath p = ResourceUtil.getRepositoryRelativePath(rsc.getLocation(),
+					repository);
+			if (p != null) {
+				if (p.isEmpty()) {
+					// Resource is the root of the working tree: include all
+					return mayBeCommitted;
+				} else {
+					String rscPath = p.toString();
+					if (rsc.getType() == IResource.FILE) {
+						selectedFiles.add(rscPath);
+					} else {
+						selectedDirectories.add(rscPath + '/');
 					}
 				}
 			}
 		}
+		// Sorting moves parent directories to the front and thus we waste
+		// less time re-checking for sub-directories.
+		Collections.sort(selectedDirectories);
+		String lastAncestor = null;
+		for (String prefix : selectedDirectories) {
+			if (lastAncestor != null && prefix.startsWith(lastAncestor)) {
+				// Skip sub-directories if we already checked for an ancestor.
+				continue;
+			}
+			Iterator<String> iterator = mayBeCommitted.iterator();
+			while (iterator.hasNext()) {
+				String candidate = iterator.next();
+				if (candidate.startsWith(prefix)) {
+					iterator.remove();
+					preselectionCandidates.add(candidate);
+				}
+			}
+			if (mayBeCommitted.isEmpty()) {
+				return preselectionCandidates;
+			}
+			lastAncestor = prefix;
+		}
+		selectedFiles.retainAll(mayBeCommitted);
+		preselectionCandidates.addAll(selectedFiles);
 		return preselectionCandidates;
 	}
 
