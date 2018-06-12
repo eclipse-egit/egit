@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8819064b_23a0b5aa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-12T15:19:33Z",
+      "side": 1,
+      "message": "How does this interact with the clean filter and CR-LF translations being applied in setIndexEntryContents() above?",
+      "revId": "a15fa518ad9f046afa0ff6838425e6a914dbce44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
