@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47ef21ec_5e4940b4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1112,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-13T18:34:47Z",
+      "side": 1,
+      "message": "Damn. Why is this again here?",
+      "revId": "9df32ed5010bd1cb6851f9385e494b205046fbca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
