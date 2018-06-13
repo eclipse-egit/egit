@@ -52,6 +52,24 @@
       "revId": "a15fa518ad9f046afa0ff6838425e6a914dbce44",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d34ca604_8adfe7be",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-13T11:12:41Z",
+      "side": 1,
+      "message": "\u003e works as expected (although slow)\n\nSlower than _with_ the change? (IIRC correctly, this code here would be used on an index edit.)\n\nAnyway, there are various places where the whole blob is read into memory. For instance, here we have it fully in memory, or also in GitDocument. I don\u0027t think this will really work with truly large files (which is what LFS is for, after all).",
+      "parentUuid": "2a1907a3_90f69724",
+      "revId": "a15fa518ad9f046afa0ff6838425e6a914dbce44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
