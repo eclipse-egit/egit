@@ -712,6 +712,21 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_defaultMergeStrategyLabel;
 
 	/** */
+	public static String GitPreferenceRoot_lfsSupportCaption;
+
+	/** */
+	public static String GitPreferenceRoot_lfsSupportCaptionNotAvailable;
+
+	/** */
+	public static String GitPreferenceRoot_lfsSupportInstall;
+
+	/** */
+	public static String GitPreferenceRoot_lfsSupportSuccessMessage;
+
+	/** */
+	public static String GitPreferenceRoot_lfsSupportSuccessTitle;
+
+	/** */
 	public static String ProcessStepsRebaseCommand_CancelDialogMessage;
 
 	/** */
@@ -2446,6 +2461,12 @@ public class UIText extends NLS {
 	public static String ConfigurationChecker_homeNotSet;
 
 	/** */
+	public static String ConfigurationChecker_installLfsCannotInstall;
+
+	/** */
+	public static String ConfigurationChecker_installLfsCannotLoadConfig;
+
+	/** */
 	public static String ConfigurationEditorComponent_ConfigLocationLabel;
 
 	/** */
@@ -3700,6 +3721,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RepositoriesViewLabelProvider_UnbornBranchText;
+
+	/** */
+	public static String DialogsPreferencePage_autoConfigureLfs;
 
 	/** */
 	public static String DialogsPreferencePage_DetachedHeadCombo;

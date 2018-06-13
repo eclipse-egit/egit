@@ -749,8 +749,6 @@ public class StagingView extends ViewPart
 
 	private ListenerHandle refsChangedListener;
 
-	private ListenerHandle configChangedListener;
-
 	private LocalResourceManager resources = new LocalResourceManager(
 			JFaceResources.getResources());
 
@@ -2044,6 +2042,7 @@ public class StagingView extends ViewPart
 		Tree tree = toolkit.createTree(composite, SWT.FULL_SELECTION
 				| SWT.MULTI);
 		TreeViewer treeViewer = new TreeViewer(tree);
+		treeViewer.setUseHashlookup(true);
 		return treeViewer;
 	}
 
@@ -3721,13 +3720,6 @@ public class StagingView extends ViewPart
 						.addRefsChangedListener(
 								event -> updateRebaseButtonVisibility(repository
 										.getRepositoryState().isRebasing()));
-				if (configChangedListener != null) {
-					configChangedListener.remove();
-				}
-				configChangedListener = repository.getListenerList()
-						.addConfigChangedListener(
-								event -> asyncExec(
-										() -> resetCommitMessageComponent()));
 			}
 			final StagingViewUpdate update = new StagingViewUpdate(repository,
 					indexDiff, null);
@@ -4280,9 +4272,6 @@ public class StagingView extends ViewPart
 				.removePreferenceChangeListener(prefListener);
 		if (refsChangedListener != null) {
 			refsChangedListener.remove();
-		}
-		if (configChangedListener != null) {
-			configChangedListener.remove();
 		}
 
 		if (switchRepositoriesAction != null) {

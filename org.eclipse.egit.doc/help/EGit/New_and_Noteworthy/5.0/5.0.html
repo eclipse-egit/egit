@@ -1,0 +1,184 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 5.0 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 5.0 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table><hr class="navigation-separator"/>
+		<h1 id="EGit">EGit</h1>
+		<h2 id="Features">Features</h2>
+		<ul>
+			<li>Built-in EGit integration for LFS
+				<ul>
+					<li>Register builtin LFS on startup. When EGit starts and the lfs bundle (org.eclipse.jgit.lfs) is available register the LFS implementation and check configuration.</li>
+					<li>Allow install (enablement) of LFS support in Preferences (global) and on the repository (local).</li>
+					<li>Apply smudge/clean filters where applicable and required.</li>
+					<li>LFS integration using built-in JGit lfs filters fully works when using Gerrit with lfs plugin using ssh protocol.</li>
+					<li>Authentication when transporting lfs objects over http still missing, this is tracked in JGit 
+						<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=535814" target="egit_external">bug 535814</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=534604" target="egit_external">bug 534604</a> Enable resource selection for launch variables
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=533344" target="egit_external">bug 533344</a> Allow cherry-picking a Gerrit change
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=531953" target="egit_external">bug 531953</a> Allow cherry-picking merge commits
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=529255" target="egit_external">bug 529255</a> Github API: Support diff/patch generation via the Github API
+			</li>
+		</ul>
+		<h2 id="Usability">Usability</h2>
+		<ul>
+			<li>Add tracing of low-level JSch log messages</li>
+			<li>Natural sort for refs in FetchResultTable</li>
+			<li>Allow shortcuts for Gitflow commands</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=534404" target="egit_external">bug 534404</a> Suggest complete repository path in NewRepositoryWizard
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=529449" target="egit_external">bug 529449</a> Natural sort for tags in CreateTagDialog
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=478159" target="egit_external">bug 478159</a> Show affected projects when deleting repository
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=510132" target="egit_external">bug 510132</a> Add support for the "*" as wildcard character in the staging view filter
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=511628" target="egit_external">bug 511628</a> Select repositories via double-click in RepositorySearchDialog
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=533019" target="egit_external">bug 533019</a> Update staging view on repository config changes
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=532458" target="egit_external">bug 532458</a> Remove some margins in staging view
+			</li>
+		</ul>
+		<h2 id="Performance_Improvements">Performance Improvements</h2>
+		<ul>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=535516" target="egit_external">bug 535516</a> Use hash lookup for TreeViewers
+			</li>
+			<li>Ignore IndexChangedEvent if it originates from the same JGit process</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=500106" target="egit_external">bug 500106</a> Improve asynchronous Eclipse workspace refreshes done by EGit
+			</li>
+			<li>Speed up the RepositoriesViewContentProvider</li>
+			<li>Use PathFilterGroup instead of PathFilter if possible. TreeWalks looking for a single path can use PathFilterGroup instead of PathFilter. This should be a little bit faster.</li>
+			<li>In EGit use mmap to map git packfiles into memory. Avoids allocating JGit buffer cache on the Java heap.</li>
+		</ul>
+		<h2 id="Bug_Fixes">Bug Fixes</h2>
+		<p>
+			<a href="https://bugs.eclipse.org/bugs/buglist.cgi?resolution=FIXED&amp;resolution=DUPLICATE&amp;classification=Technology&amp;list_id=10006180&amp;order=Importance&amp;product=EGit&amp;query_format=advanced&amp;target_milestone=5.0" target="egit_external">21 Bugs and 8 enhancement requests</a> were closed
+		</p>
+		<ul>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=529141" target="egit_external">bug 529141</a> Fix AssumeUnchangedOperation not working on directory/project
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=525769" target="egit_external">bug 525769</a> Don't try to store incomplete credentials in secure store
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=470452" target="egit_external">bug 470452</a> Improve check for uncommitted changes before cherry-pick
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=520693" target="egit_external">bug 520693</a> Respect gitattributes in the compare editor
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=533230" target="egit_external">bug 533230</a> Fix Repositories view blocking Eclipse on startup
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=533198" target="egit_external">bug 533198</a> improve branch name validation performance which was bad for big repositories
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=533477" target="egit_external">bug 533477</a> Fix substring matches in filter in branch selection dialogs
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=358206" target="egit_external">bug 358206</a> Handle Gerrit Change-Ids for merge commits
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=533336" target="egit_external">bug 533336</a> Keep Gerrit Change-Id for conflicting cherry-pick
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=531171" target="egit_external">bug 531171</a> Remove problem characters from task related branch name suggestion
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=533019" target="egit_external">bug 533019</a> Fix invalid thread access in staging view when config changes
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=525769" target="egit_external">bug 525769</a> Don't try to store incomplete credentials in secure store
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=534440" target="egit_external">bug 534440</a> Github API: Fix Repository.getWatchers(); add Repository.getStars()
+			</li>
+		</ul>
+		<h2 id="Removal_of.C2.A0deprecated_methods">Removal of deprecated methods</h2>
+		<ul>
+			<li>Remove deprecated UIUtils#applyHyperlinkDetectorStyleRanges and #getHyperlinkDetectorStyleRanges.</li>
+			<li>Remove deprecated InitOperation constructor. Use InitOperation#InitOperation(Repository, InitParameters) instead.</li>
+			<li>Remove deprecated GitFlowOperation#fetch(IProgressMonitor). Use GitFlowOperation#fetch(IProgressMonitor, int) instead.</li>
+			<li>Remove deprecated FeatureTrackOperation constructor. Use FeatureTrackOperation#FeatureTrackOperation(GitFlowRepository, Ref, int) instead.</li>
+			<li>Remove deprecated GitSynchronizeData#getSrcRemoteName</li>
+			<li>Remove deprecated GitSynchronizeData#getSrcMerge</li>
+			<li>Remove deprecated RepositoryMapping#getSubmoduleRepository. Use #getMapping(IResource) and then #getRepository()} on the returned mapping instead; it will return a submodule repository if the resource is in one.</li>
+			<li>Remove deprecated RemoveFromIndexOperation(Repository, IResource[]). Use #RemoveFromIndexOperation(Collection) instead.</li>
+			<li>Remove deprecated IgnoreOperation#IgnoreOperation(IResource[]). Use #IgnoreOperation(Collection) instead.</li>
+			<li>Github API: Remove deprecated WatcherService. Use StargazerService instead.</li>
+			<li>Github API: Remove deprecated User#getGravatarId and #setGravatarId</li>
+			<li>Github API: Remove deprecated Repository#getMasterBranch and #setMasterBranch</li>
+			<li>Github API: Remove deprecated Gist#setUser and #getUser methods</li>
+		</ul>
+		<h2 id="Build_and_Release_Engineering">Build and Release Engineering</h2>
+		<ul>
+			<li>Update to latest Photon Orbit R20180606145124</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=530393" target="egit_external">bug 530393</a> Update EGit license to EPL-2.0
+			</li>
+			<li>Update target platform to use Orbit R20180531190352</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=532272" target="egit_external">bug 532272</a> Update API baseline in Oomph setup
+			</li>
+		</ul><hr class="navigation-separator"/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Contributors.html" title="Contributors">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Contributors</td>
+			</tr>
+		</table>
+	</body>
+</html>
