@@ -313,6 +313,7 @@
 				<topic href="help/EGit/User_Guide/Tasks.html#Export" label="Export"></topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Format" label="Format"></topic>
 			</topic>
+			<topic href="help/EGit/User_Guide/Tasks.html#GIT_LFS_Support" label="GIT LFS Support"></topic>
 		</topic>
 		<topic href="help/EGit/User_Guide/Reference.html" label="Reference">
 			<topic href="help/EGit/User_Guide/Reference.html#Menus" label="Menus">
@@ -445,25 +446,28 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/4.11/4.11.html" label="EGit 4.11 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/4.11/4.11.html" label="EGit">
-			<topic href="help/EGit/New_and_Noteworthy/4.11/4.11.html#Usability" label="Usability"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/4.11/4.11.html#Performance_Improvements" label="Performance Improvements"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/4.11/4.11.html#Bug_Fixes" label="Bug Fixes"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/4.11/4.11.html#Build_and_Release_Engineering" label="Build and Release Engineering"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/5.0/5.0.html" label="EGit 5.0 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/5.0/5.0.html" label="EGit">
+			<topic href="help/EGit/New_and_Noteworthy/5.0/5.0.html#Features" label="Features"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.0/5.0.html#Usability" label="Usability"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.0/5.0.html#Performance_Improvements" label="Performance Improvements"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.0/5.0.html#Bug_Fixes" label="Bug Fixes"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.0/5.0.html#Removal_of.C2.A0deprecated_methods" label="Removal of deprecated methods"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.0/5.0.html#Build_and_Release_Engineering" label="Build and Release Engineering"></topic>
 		</topic>
-		<topic href="help/EGit/New_and_Noteworthy/4.11/Contributors.html" label="Contributors"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/4.11/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/5.0/Contributors.html" label="Contributors"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/5.0/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/4.11/4.11.html" label="JGit 4.11 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/4.11/4.11.html" label="JGit">
-			<topic href="help/JGit/New_and_Noteworthy/4.11/4.11.html#Features" label="Features"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/4.11/4.11.html#Performance_Improvements" label="Performance Improvements"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/4.11/4.11.html#Fixes" label="Fixes"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/4.11/4.11.html#Build_and_Release_Engineering" label="Build and Release Engineering"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/4.11/4.11.html#Contributors" label="Contributors"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/5.0/5.0.html" label="JGit 5.0 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/5.0/5.0.html" label="JGit">
+			<topic href="help/JGit/New_and_Noteworthy/5.0/5.0.html#Features" label="Features"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/5.0/5.0.html#Performance_Improvements" label="Performance Improvements"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/5.0/5.0.html#Fixes" label="Fixes"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/5.0/5.0.html#Incompatible_Changes" label="Incompatible Changes"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/5.0/5.0.html#Build_and_Release_Engineering" label="Build and Release Engineering"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/5.0/5.0.html#Contributors" label="Contributors"></topic>
 		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/4.11/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/5.0/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>
@@ -530,6 +534,7 @@
 				<topic href="help/EGit/Contributor_Guide/Bugs.html#Filing_Bugs" label="Filing Bugs">
 					<topic href="help/EGit/Contributor_Guide/Bugs.html#How_to_file_bugs" label="How to file bugs"></topic>
 					<topic href="help/EGit/Contributor_Guide/Bugs.html#File_a_bug" label="File a bug"></topic>
+					<topic href="help/EGit/Contributor_Guide/Bugs.html#File_a_bug_for_a_vulnerability" label="File a bug for a vulnerability"></topic>
 				</topic>
 				<topic href="help/EGit/Contributor_Guide/Bugs.html#Bug_Reports_and_Links" label="Bug Reports and Links"></topic>
 			</topic>
@@ -560,6 +565,7 @@
 			<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Coding_standards" label="Coding standards">
 				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Braces_for_one-line_statements" label="Braces for one-line statements"></topic>
 				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Removing_trailing_whitespace" label="Removing trailing whitespace"></topic>
+				<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Use_of_the_.22final.22_modifier" label="Use of the &quot;final&quot; modifier"></topic>
 			</topic>
 			<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Commit_message_guidelines" label="Commit message guidelines"></topic>
 			<topic href="help/EGit/Contributor_Guide/Contributing-Patches.html#Copyright" label="Copyright"></topic>

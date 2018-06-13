@@ -65,6 +65,7 @@ public class DiffEditorOutlinePage extends NestedContentOutlinePage {
 		super.createControl(parent);
 		TreeViewer viewer = getTreeViewer();
 		viewer.setAutoExpandLevel(2);
+		viewer.setUseHashlookup(true);
 		viewer.setContentProvider(new DiffContentProvider());
 		viewer.setLabelProvider(new DiffLabelProvider());
 		viewer.addDoubleClickListener(

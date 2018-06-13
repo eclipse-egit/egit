@@ -46,6 +46,9 @@ public class CoreText extends NLS {
 	public static String Activator_ignoreResourceFailed;
 
 	/** */
+	public static String Activator_noBuiltinLfsSupportDetected;
+
+	/** */
 	public static String Activator_ReconfigureWindowCacheError;
 
 	/** */
