@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>JGit 5.0 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">JGit 5.0 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Updating-This-Document.html" title="Updating This Document">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Updating This Document</td>
+			</tr>
+		</table><hr class="navigation-separator"/>
+		<h1 id="JGit">JGit</h1>
+		<h2 id="Features">Features</h2>
+		<ul>
+			<li>Fetch: Basic support for protocol v2 of the fetch-pack/upload-pack protocol. This protocol is described in the Git project in 
+				<a href="https://github.com/git/git/blob/master/Documentation/technical/protocol-v2.txt" target="egit_external">"Documentation/technical/protocol-v2.txt"</a>. Notes:
+				<ul>
+					<li>
+						<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=534847" target="egit_external">bug 534847</a> AdvertiseRefsHook is not executed for v2, to be replaced by an appropriate hook
+					</li>
+					<li>
+						<a href="https://git.eclipse.org/r/#/c/120007/" target="egit_external">change 120007</a> support for shallow fetch using protocol v2 is not complete
+					</li>
+				</ul>
+			</li>
+			<li>Add protocol v2 support in jgit daemon. With this patch, a server spawned by jgit daemon can be accessed using protocol v2 from a Git client that supports it (for example, "git" with the appropriate patches, to be released with git 2.18). This is only activated if the repository's config has "protocol.version" be 2.</li>
+			<li>Store in IndexChangedEvent if it was caused by JGit itself. This allows to differentiate if index was changed by an external git command or by JGit itself.</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=358206" target="egit_external">bug 358206</a> Handle Gerrit Change-Ids for merge commits
+			</li>
+			<li>UploadPack: basic support for filtering by blob size. This is incomplete in that the filter-by-sparse-specification feature also supported by Git is not included yet.</li>
+			<li>Implement --force option in FetchCommand and CLI fetch command</li>
+		</ul>
+		<h2 id="Performance_Improvements">Performance Improvements</h2>
+		<ul>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=388582" target="egit_external">bug 388582</a> Skip ignored directories in FileTreeIterator
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=532300" target="egit_external">bug 532300</a> Significantly speed up FileTreeIterator on Windows
+			</li>
+			<li>Configure WindowCache settings to use in JGit CLI. Set the same defaults as in EGit. Use mmap to map git packfiles into memory. Avoids allocating JGit buffer cache on the Java heap.</li>
+		</ul>
+		<h2 id="Fixes">Fixes</h2>
+		<p>
+			<a href="https://bugs.eclipse.org/bugs/buglist.cgi?classification=Technology&amp;list_id=10006180&amp;order=Importance&amp;product=JGit&amp;query_format=advanced&amp;resolution=FIXED&amp;resolution=DUPLICATE&amp;target_milestone=5.0" target="egit_external">0 enhancement requests and 6 bugs</a> were closed
+		</p>
+		<ul>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=423206" target="egit_external">bug 423206</a> Make JGit describe behaves same as c-git for lightweight tags
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=535672" target="egit_external">bug 535672</a> Ensure Jsch checks all configured algorithms
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=535655" target="egit_external">bug 535655</a> Validate branch names on branch creation
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=533549" target="egit_external">bug 533549</a> Don't prune symbolic refs when fetch.prune = true
+			</li>
+			<li>Use a secure random generator to seed nonce for digest authentication</li>
+			<li>Retry stale NFS file handles on .git/config file (
+				<a href="https://git.eclipse.org/r/#/c/120973/" target="egit_external">https://git.eclipse.org/r/#/c/120973/</a>)
+			</li>
+			<li>
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=529463" target="egit_external">bug 529463</a> ssh: Kill the external process when we're done instead of waiting forever
+			</li>
+			<li>Allow '@' as last character of ref. Previously @ was allowed e.g. in branch names, but not as the last character.</li>
+			<li>Don't throw an exception if a pre-push hook is ignored.</li>
+			<li>LFS: Fix potential NPE in LfsPrePushHook</li>
+			<li>FS#runProcess: Fix OutputStream left unclosed after IOException</li>
+		</ul>
+		<h2 id="Incompatible_Changes">Incompatible Changes</h2>
+		<ul>
+			<li>Remove deprecated Repository#notifyIndexChanged. Implementors should now override Repository#notifyIndexChanged(boolean)</li>
+			<li>Remove deprecated LfsProtocolServlet#getLargeFileRepository. Use LfsProtocolServlet##getLargeFileRepository(LfsRequest, String, String) instead.</li>
+			<li>Remove deprecated Lfs#Lfs(Path). Use Lfs#Lfs(Repository) instead.</li>
+			<li>Remove deprecated StreamCopyThread#flush</li>
+			<li>Remove deprecated SafeBufferedOutputStream. Use Java 8 BufferedOutputStream instead.</li>
+			<li>Remove deprecated EolCanonicalizingInputStream. Use AutoLFInputStream instead.</li>
+			<li>Remove deprecated FileUtils#relativize(String, String). Use the more-clearly-named FileUtils#relativizeNativePath(String, String) instead, or directly call FileUtils#relativizePath(String, String, String, boolean).</li>
+			<li>Remove deprecated FileUtil using Java 7 NIO</li>
+			<li>Remove deprecated TreeWalk#getEolStreamType. Use TreeWalk#getEolStreamType(OperationType) instead.</li>
+			<li>Remove deprecated FileTreeIterator(WorkingTreeIterator, File, FS). Use FileTreeIterator#FileTreeIterator(FileTreeIterator, File, FS) instead.</li>
+			<li>Remove deprecated TransportHttp#httpOpen(String, URL). Use TransportHttp#httpOpen(String, URL, AcceptEncoding) instead.</li>
+			<li>Remove deprecated ResolveMerger#processEntry method</li>
+			<li>Remove deprecated Repository#getRef. Use Repository#exactRef(String) or Repository#findRef(String) instead.</li>
+			<li>Remove deprecated BitmapBuilder#add. Use BitmapBuilder#or or BitmapBuilder#addObject instead.</li>
+			<li>Remove deprecated LockFile(File, FS) constructor. Use org.eclipse.jgit.internal.storage.file.LockFile#LockFile(File) instead.</li>
+			<li>Remove deprecated IgnoreNode#isIgnored method. Parameter negateFirstMatch is not honored anymore</li>
+			<li>Remove deprecated Statistics, UploadPackLogger, UploadPackLoggerChain. Use PackStatistics and PostUploadHook and PostUploadHookChain instead.</li>
+			<li>Remove UploadPack#getPackStatistics. Use #getStatistics instead</li>
+			<li>Remove UploadPack#getLogger and UploadPack#setLogger</li>
+			<li>Remove deprecated StoredObjectRepresentationnotAvailableException constructor. Use #StoredObjectRepresentationNotAvailableException(ObjectToPack, Throwable) instead.</li>
+			<li>Remove deprecated ArchiveCommand#putEntry method. Use #putEntry(Closeable, ObjectId, String, FileMode, ObjectLoader)} instead.</li>
+			<li>Fix misspelled class name: EmtpyCommitException -&gt; EmptyCommitException</li>
+			<li>RemoteAddCommand#setName(String) and #setUri(URIish): return RemoteAddCommand to allow chaining.</li>
+		</ul>
+		<h2 id="Build_and_Release_Engineering">Build and Release Engineering</h2>
+		<ul>
+			<li>Update to latest Photon Orbit R20180606145124</li>
+			<li>Update maven plugins to fix Zip Slip vulnerability</li>
+			<li>Bazel: Add a target to build jgit commandline tool</li>
+			<li>Use eclipse compiler in Maven build. Define profiles "ecj" for using Eclipse compiler and "javac" for using javac including errorprone. By default ecj will be used.</li>
+			<li>Upgrade error_prone_core to 2.3.1</li>
+			<li>Update SUA to current version.</li>
+		</ul>
+		<h2 id="Contributors">Contributors</h2>
+		<p>The following 17 contributors worked on this release:</p>
+		<p>Carsten Pfeiffer,
+			Christian Halstrick,
+			Dave Borowitz,
+			David Pursehouse,
+			David Turner,
+			Han-Wen Nienhuys,
+			Jonathan Nieder,
+			Jonathan Tan,
+			Marcel Trautwein,
+			Markus Duft,
+			Masaya Suzuki,
+			Matthias Sohn,
+			Michael Keppler,
+			Mincong HUANG,
+			Minh Thai,
+			Nasser Grainawi,
+			Thomas Wolf</p><hr class="navigation-separator"/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Updating-This-Document.html" title="Updating This Document">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Updating This Document</td>
+			</tr>
+		</table>
+	</body>
+</html>

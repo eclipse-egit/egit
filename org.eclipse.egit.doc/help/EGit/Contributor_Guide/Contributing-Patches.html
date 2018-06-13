@@ -59,7 +59,7 @@
 		</ul>
 		<p>In addition ensure</p>
 		<ul>
-			<li>that the contributed code is licensed under the project license (EPL for EGit and EDL for JGit). This is done by putting a 
+			<li>that the contributed code is licensed under the project license (EPL 2.0 for EGit and EDL 1.0 for JGit). This is done by putting a 
 				<a href="http://www.eclipse.org/legal/copyrightandlicensenotice.php" target="egit_external">copyright and license header</a> into every new java file. See other existing project source files for the correct content.
 			</li>
 		</ul>
@@ -298,6 +298,26 @@ git config remote.review.push HEAD:refs/for/master
 		<p>Another workaround is to use 
 			<a href="http://stackoverflow.com/questions/10413922/convert-spaces-to-tabs-in-lines-i-changed-in-a-commit?answertab=active#tab-top" target="egit_external">this little script</a> from the command line to edit away trailing whitespace from changed lines.
 		</p>
+		<h3 id="Use_of_the_.22final.22_modifier">Use of the "final" modifier</h3>
+		<p>New code uses the "final" modifier in the following circumstances
+			<a href="https://gerrit-review.googlesource.com/c/gerrit/+/61701/" target="egit_external">https://gerrit-review.googlesource.com/c/gerrit/+/61701/</a>.
+		</p>
+		<p>Always:</p>
+		<ul>
+			<li>final fields: marking fields as final forces them to be initialized in the constructor or at declaration</li>
+			<li>final static fields: clearly communicates the intent</li>
+			<li>where necessary to use final variables in inner anonymous classes</li>
+		</ul>
+		<p>Optional:</p>
+		<ul>
+			<li>final classes: use when appropriate, e.g. API restriction</li>
+			<li>final methods: similar to final classes</li>
+		</ul>
+		<p>Never:</p>
+		<ul>
+			<li>local variables: it clutters the code, and makes the code less readable. When copying old code to new location, finals should be removed</li>
+			<li>method parameters: similar to local variables</li>
+		</ul>
 		<h2 id="Commit_message_guidelines">Commit message guidelines</h2>
 		<ul>
 			<li>The commit message header should fit on one line and should start with an uppercase letter. A blank line separates it from the body of the message.</li>
@@ -368,6 +388,7 @@ Copyright (C) YEAR Your Name &lt;you@example.org&gt;
 			<a href="#Manual_alpha_testing">Manual alpha testing</a> section for some advice about how to test you work yourself.
 		</p>
 		<ul>
+			<li>Add automated tests for enhancements and bug fixes to ensure functional correctness and avoid regressions</li>
 			<li>Run all existing tests. It does not take very long.</li>
 			<li>Pay attention to the Java and Eclipse SDK baselines. EGit requires only Java 8 and Eclipse 4.4. You cannot use API's that are newer.</li>
 		</ul>
