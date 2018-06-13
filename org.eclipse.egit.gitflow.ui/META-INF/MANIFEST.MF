@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %plugin_name
 Automatic-Module-Name: org.eclipse.egit.gitflow.ui
 Bundle-SymbolicName: org.eclipse.egit.gitflow.ui;singleton:=true
-Bundle-Version: 5.0.0.201806131210-r
+Bundle-Version: 5.0.0.qualifier
 Bundle-Activator: org.eclipse.egit.gitflow.ui.Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
