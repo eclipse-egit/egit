@@ -70,6 +70,24 @@
       "revId": "a15fa518ad9f046afa0ff6838425e6a914dbce44",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92ed3bbe_b2571a09",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-06-13T11:30:39Z",
+      "side": 1,
+      "message": "Nope, having the change in has zero effect :)\n\nAnd yes, for at least most LFS files this does not make too much sense/difference anyway. It\u0027s just us here managing large .sql/.ddl files with LFS :D they are plain text and diffs do help, as well as index editing support. I verified that it works with the changes you did, so it\u0027s save to remove this :)",
+      "parentUuid": "d34ca604_8adfe7be",
+      "revId": "a15fa518ad9f046afa0ff6838425e6a914dbce44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
