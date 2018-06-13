@@ -34,6 +34,24 @@
       "revId": "a15fa518ad9f046afa0ff6838425e6a914dbce44",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a1907a3_90f69724",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-06-13T08:22:50Z",
+      "side": 1,
+      "message": "I tested and everything works as expected (although slow) without this change, since you implemented this differently in the meantime :)... I reverted it.",
+      "parentUuid": "c7195db2_60596d6f",
+      "revId": "a15fa518ad9f046afa0ff6838425e6a914dbce44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
