@@ -16,6 +16,24 @@
       "revId": "a15fa518ad9f046afa0ff6838425e6a914dbce44",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7195db2_60596d6f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-06-13T08:19:41Z",
+      "side": 1,
+      "message": "I will test whether it works still without this. With the change everything is working, but you\u0027re right, maybe we\u0027re filtering twice, where the second time would not find anything to do though (it detects that very quickly) :)",
+      "parentUuid": "8819064b_23a0b5aa",
+      "revId": "a15fa518ad9f046afa0ff6838425e6a914dbce44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
