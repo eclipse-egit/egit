@@ -3356,8 +3356,8 @@ public class StagingView extends ViewPart
 		StagingViewContentProvider contentProvider = getContentProvider(unstagedViewer);
 		final Repository repository = currentRepository;
 		Iterator iterator = selection.iterator();
-		final List<String> addPaths = new ArrayList<>();
-		final List<String> rmPaths = new ArrayList<>();
+		final Set<String> addPaths = new HashSet<>();
+		final Set<String> rmPaths = new HashSet<>();
 		resetPathsToExpand();
 		while (iterator.hasNext()) {
 			Object element = iterator.next();
@@ -3452,7 +3452,7 @@ public class StagingView extends ViewPart
 	}
 
 	private void selectEntryForStaging(StagingEntry entry,
-			List<String> addPaths, List<String> rmPaths) {
+			Collection<String> addPaths, Collection<String> rmPaths) {
 		switch (entry.getState()) {
 		case ADDED:
 		case CHANGED:
@@ -3477,7 +3477,7 @@ public class StagingView extends ViewPart
 		if (selection.isEmpty())
 			return;
 
-		final List<String> paths = processUnstageSelection(selection);
+		Collection<String> paths = processUnstageSelection(selection);
 		if (paths.isEmpty())
 			return;
 
@@ -3505,8 +3505,9 @@ public class StagingView extends ViewPart
 		schedule(resetJob, true);
 	}
 
-	private List<String> processUnstageSelection(IStructuredSelection selection) {
-		List<String> paths = new ArrayList<>();
+	private Collection<String> processUnstageSelection(
+			IStructuredSelection selection) {
+		Set<String> paths = new HashSet<>();
 		resetPathsToExpand();
 		for (Object element : selection.toList()) {
 			if (element instanceof StagingEntry) {
@@ -3526,7 +3527,7 @@ public class StagingView extends ViewPart
 		return paths;
 	}
 
-	private void addUnstagePath(StagingEntry entry, List<String> paths) {
+	private void addUnstagePath(StagingEntry entry, Collection<String> paths) {
 		switch (entry.getState()) {
 		case ADDED:
 		case CHANGED:
@@ -3585,13 +3586,20 @@ public class StagingView extends ViewPart
 
 	private static void addExpandedPathsBelowFolder(StagingFolderEntry folder,
 			TreeViewer treeViewer, Set<IPath> addToSet) {
-		Object[] expandedElements = treeViewer.getVisibleExpandedElements();
-		for (Object expandedElement : expandedElements) {
-			if (expandedElement instanceof StagingFolderEntry) {
-				StagingFolderEntry expandedFolder = (StagingFolderEntry) expandedElement;
-				if (folder.getPath().isPrefixOf(
-						expandedFolder.getPath()))
-					addPathAndParentPaths(expandedFolder.getPath(), addToSet);
+		if (treeViewer.getExpandedState(folder)) {
+			addPathAndParentPaths(folder.getPath(), addToSet);
+		}
+		addExpandedSubfolders(folder, treeViewer, addToSet);
+	}
+
+	private static void addExpandedSubfolders(StagingFolderEntry folder,
+			TreeViewer treeViewer, Set<IPath> addToSet) {
+		for (Object child : folder.getChildren()) {
+			if (child instanceof StagingFolderEntry
+					&& treeViewer.getExpandedState(child)) {
+				addToSet.add(((StagingFolderEntry) child).getPath());
+				addExpandedSubfolders((StagingFolderEntry) child, treeViewer,
+						addToSet);
 			}
 		}
 	}

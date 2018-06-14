@@ -227,8 +227,9 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		} else {
 			int shownCount = 0;
 			for (StagingEntry entry : content) {
-				if (isInFilter(entry))
+				if (matches(entry, filterPattern)) {
 					shownCount++;
+				}
 			}
 			return shownCount;
 		}
@@ -236,19 +237,28 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 
 	List<StagingEntry> getStagingEntriesFiltered(StagingFolderEntry folder) {
 		List<StagingEntry> stagingEntries = new ArrayList<>();
-		for (StagingEntry stagingEntry : content) {
-			if (folder.getLocation().isPrefixOf(stagingEntry.getLocation())) {
-				if (isInFilter(stagingEntry))
-					stagingEntries.add(stagingEntry);
-			}
-		}
+		addFilteredDescendants(folder, getFilterPattern(), stagingEntries);
 		return stagingEntries;
 	}
 
+	private void addFilteredDescendants(StagingFolderEntry folder,
+			Pattern pattern, List<StagingEntry> result) {
+		for (Object child : folder.getChildren()) {
+			if (child instanceof StagingFolderEntry) {
+				addFilteredDescendants((StagingFolderEntry) child, pattern,
+						result);
+			} else if (matches((StagingEntry) child, pattern)) {
+				result.add((StagingEntry) child);
+			}
+		}
+	}
+
+	private boolean matches(StagingEntry entry, Pattern pattern) {
+		return pattern == null || pattern.matcher(entry.getPath()).find();
+	}
+
 	boolean isInFilter(StagingEntry stagingEntry) {
-		Pattern filterPattern = getFilterPattern();
-		return filterPattern == null
-				|| filterPattern.matcher(stagingEntry.getPath()).find();
+		return matches(stagingEntry, getFilterPattern());
 	}
 
 	private Pattern getFilterPattern() {
@@ -256,10 +266,26 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 	}
 
 	boolean hasVisibleChildren(StagingFolderEntry folder) {
-		if (getFilterPattern() == null)
+		Pattern pattern = getFilterPattern();
+		if (pattern == null) {
 			return true;
-		else
-			return !getStagingEntriesFiltered(folder).isEmpty();
+		}
+		return hasVisibleDescendants(folder, pattern);
+	}
+
+	private boolean hasVisibleDescendants(StagingFolderEntry folder,
+			Pattern pattern) {
+		for (Object child : folder.getChildren()) {
+			if (child instanceof StagingFolderEntry) {
+				if (hasVisibleDescendants((StagingFolderEntry) child,
+						pattern)) {
+					return true;
+				}
+			} else if (matches((StagingEntry) child, pattern)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	StagingEntry[] getStagingEntries() {
