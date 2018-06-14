@@ -63,7 +63,7 @@
     <egit-version>5.1.0-SNAPSHOT</egit-version>
     <tycho-version>1.2.0</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
-    <jboss-tycho-plugins-version>1.0.0</jboss-tycho-plugins-version>
+    <jboss-tycho-plugins-version>1.1.0</jboss-tycho-plugins-version>
     <mockito-version>1.8.4</mockito-version>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.repository/target/repository</jgit-site>
     <license-site>http://download.eclipse.org/cbi/updates/license</license-site>
@@ -456,7 +456,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>3.0.2</version>
+          <version>3.1.0</version>
           <configuration>
             <encoding>ISO-8859-1</encoding>
           </configuration>
@@ -469,7 +469,7 @@
         <plugin>
           <groupId>com.github.spotbugs</groupId>
           <artifactId>spotbugs-maven-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.1.3.1</version>
           <configuration>
             <findbugsXmlOutput>true</findbugsXmlOutput>
             <failOnError>false</failOnError>
@@ -485,7 +485,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-pmd-plugin</artifactId>
-          <version>3.8</version>
+          <version>3.10.0</version>
           <configuration>
             <sourceEncoding>utf-8</sourceEncoding>
             <minimumTokens>100</minimumTokens>
@@ -514,7 +514,7 @@
         <plugin>
           <groupId>org.eclipse.cbi.maven.plugins</groupId>
           <artifactId>eclipse-jarsigner-plugin</artifactId>
-          <version>1.1.4</version>
+          <version>1.1.5</version>
         </plugin>
       </plugins>
     </pluginManagement>
