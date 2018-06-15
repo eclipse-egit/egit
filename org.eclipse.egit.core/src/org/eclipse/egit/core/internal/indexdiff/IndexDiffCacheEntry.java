@@ -32,6 +32,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
@@ -98,7 +99,7 @@ public class IndexDiffCacheEntry {
 	// used to serialize index diff update jobs
 	private ReentrantLock lock = new ReentrantLock(true);
 
-	private Set<IndexDiffChangedListener> listeners = new HashSet<IndexDiffChangedListener>();
+	private Set<IndexDiffChangedListener> listeners = new HashSet<>();
 
 	private final IndexChangedListener indexChangedListener = new IndexChangedListener() {
 		@Override
@@ -257,8 +258,10 @@ public class IndexDiffCacheEntry {
 						IProject[] validOpenProjects = ProjectUtil
 								.getValidOpenProjects(repository);
 						repository = null;
-						ProjectUtil.refreshResources(validOpenProjects,
-								monitor);
+						ResourcesPlugin.getWorkspace()
+								.run(pm -> ProjectUtil.refreshResources(
+										validOpenProjects, pm), null,
+										IWorkspace.AVOID_UPDATE, monitor);
 					} catch (CoreException e) {
 						return Activator.error(e.getMessage(), e);
 					}
@@ -338,7 +341,7 @@ public class IndexDiffCacheEntry {
 				return;
 			}
 
-			Set<String> paths = new TreeSet<String>();
+			Set<String> paths = new TreeSet<>();
 			try (TreeWalk walk = new TreeWalk(repository)) {
 				walk.addTree(new DirCacheIterator(oldIndex));
 				walk.addTree(new DirCacheIterator(currentIndex));
@@ -634,7 +637,7 @@ public class IndexDiffCacheEntry {
 	 * have become newly untracked.
 	 */
 	private List<String> calcTreeFilterPaths(Collection<String> filesToUpdate) {
-		List<String> paths = new ArrayList<String>();
+		List<String> paths = new ArrayList<>();
 		for (String fileToUpdate : filesToUpdate) {
 			for (String untrackedFolder : indexDiffData.getUntrackedFolders()) {
 				if (fileToUpdate.startsWith(untrackedFolder)

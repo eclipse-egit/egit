@@ -26,7 +26,7 @@ import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.CompareUI;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -34,7 +34,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.FileChecker;
 import org.eclipse.egit.core.internal.FileChecker.CheckResult;
 import org.eclipse.egit.core.internal.FileChecker.CheckResultEntry;
-import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
@@ -549,24 +549,16 @@ public class RebaseResultDialog extends MessageDialog {
 			}
 			if (startMergeButton.getSelection()) {
 				super.buttonPressed(buttonId);
-				// open the merge tool
-				IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
-						.getProjects();
-				for (IProject project : projects) {
-					RepositoryMapping mapping = RepositoryMapping
-							.getMapping(project);
-					if (mapping != null && mapping.getRepository().equals(repo)) {
-						try {
-							// make sure to refresh before opening the merge
-							// tool
-							project
-									.refreshLocal(IResource.DEPTH_INFINITE,
-											null);
-						} catch (CoreException e) {
-							Activator.handleError(e.getMessage(), e, false);
-						}
-					}
+				// make sure to refresh before opening the merge tool
+				IProject[] projects = ProjectUtil.getProjects(repo);
+				try {
+					ResourcesPlugin.getWorkspace().run(
+							pm -> ProjectUtil.refreshResources(projects, pm),
+							null, IWorkspace.AVOID_UPDATE, null);
+				} catch (CoreException e) {
+					Activator.logError(e.getMessage(), e);
 				}
+				// open the merge tool
 				List<IPath> locationList = new ArrayList<>();
 				IPath repoWorkdirPath = new Path(repo.getWorkTree().getPath());
 				for (String repoPath : conflictPaths) {
