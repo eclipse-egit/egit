@@ -16,6 +16,24 @@
       "revId": "f98fbc64ebfd07c2eec62563c8846692e8979708",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c24518b_8ae218b6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-06-15T11:21:51Z",
+      "side": 1,
+      "message": "The correct OSGi way would probably be a OSGi service, extension points are Eclipse specific ;)\n\nBack to serious: yes, some mechanism like this would be the right way, but requires a lot more thinking about; what if there are two competing implementations, which to choose? priorities, overrides, ...? There may only be one implementation for a certain filter type, right? Also I would not want this to be LFS specific, but rather allow to contribut implementations for any filter type somehow - is this feasible in the first place?",
+      "parentUuid": "55a5a35d_7cf1b1c6",
+      "revId": "f98fbc64ebfd07c2eec62563c8846692e8979708",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
