@@ -31,6 +31,7 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -132,27 +133,30 @@ public class ProjectUtil {
 	 */
 	public static void refreshValidProjects(IProject[] projects, boolean delete,
 			IProgressMonitor monitor) throws CoreException {
-		SubMonitor progress = SubMonitor.convert(monitor,
-				CoreText.ProjectUtil_refreshingProjects, projects.length);
-		for (IProject p : projects) {
-			if (progress.isCanceled())
-				break;
-			IPath projectLocation = p.getLocation();
-			if (projectLocation == null) {
-				progress.worked(1);
-				continue;
+		ResourcesPlugin.getWorkspace().run(pm -> {
+			SubMonitor progress = SubMonitor.convert(monitor,
+					CoreText.ProjectUtil_refreshingProjects, projects.length);
+			for (IProject p : projects) {
+				if (progress.isCanceled())
+					break;
+				IPath projectLocation = p.getLocation();
+				if (projectLocation == null) {
+					progress.worked(1);
+					continue;
+				}
+				String projectFilePath = projectLocation
+						.append(IProjectDescription.DESCRIPTION_FILE_NAME)
+						.toOSString();
+				File projectFile = new File(projectFilePath);
+				if (projectFile.exists())
+					p.refreshLocal(IResource.DEPTH_INFINITE,
+							progress.newChild(1));
+				else if (delete)
+					p.delete(false, true, progress.newChild(1));
+				else
+					closeMissingProject(p, projectFile, progress.newChild(1));
 			}
-			String projectFilePath = projectLocation
-					.append(IProjectDescription.DESCRIPTION_FILE_NAME)
-					.toOSString();
-			File projectFile = new File(projectFilePath);
-			if (projectFile.exists())
-				p.refreshLocal(IResource.DEPTH_INFINITE, progress.newChild(1));
-			else if (delete)
-				p.delete(false, true, progress.newChild(1));
-			else
-				closeMissingProject(p, projectFile, progress.newChild(1));
-		}
+		}, null, IWorkspace.AVOID_UPDATE, monitor);
 	}
 
 	/**
@@ -223,14 +227,16 @@ public class ProjectUtil {
 	public static void refreshResources(IResource[] resources,
 			IProgressMonitor monitor) throws CoreException {
 		try {
-			SubMonitor progress = SubMonitor.convert(monitor,
-					CoreText.ProjectUtil_refreshing, resources.length);
-			for (IResource resource : resources) {
-				if (progress.isCanceled())
-					break;
-				resource.refreshLocal(IResource.DEPTH_INFINITE,
-						progress.newChild(1));
-			}
+			ResourcesPlugin.getWorkspace().run(pm -> {
+				SubMonitor progress = SubMonitor.convert(pm,
+						CoreText.ProjectUtil_refreshing, resources.length);
+				for (IResource resource : resources) {
+					if (progress.isCanceled())
+						break;
+					resource.refreshLocal(IResource.DEPTH_INFINITE,
+							progress.newChild(1));
+				}
+			}, null, IWorkspace.AVOID_UPDATE, monitor);
 		} finally {
 			monitor.done();
 		}
