@@ -11,7 +11,6 @@ package org.eclipse.egit.core;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.Authenticator;
 import java.net.ProxySelector;
 import java.text.MessageFormat;
@@ -274,15 +273,9 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	}
 
 	private void registerBuiltinLFS() {
-		Class<?> lfs;
 		try {
-			lfs = Class.forName("org.eclipse.jgit.lfs.BuiltinLFS"); //$NON-NLS-1$
-			if (lfs != null) {
-				lfs.getMethod("register").invoke(null); //$NON-NLS-1$
-			}
-		} catch (ClassNotFoundException | IllegalAccessException
-				| IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e1) {
+			org.eclipse.jgit.lfs.BuiltinLFS.register();
+		} catch (Throwable e1) {
 			logWarning(CoreText.Activator_noBuiltinLfsSupportDetected, e1);
 		}
 	}
