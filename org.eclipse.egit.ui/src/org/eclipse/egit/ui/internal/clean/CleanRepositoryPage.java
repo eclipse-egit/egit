@@ -17,6 +17,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
@@ -277,7 +279,10 @@ public class CleanRepositoryPage extends WizardPage {
 
 					try {
 						IProject[] projects = ProjectUtil.getProjectsContaining(repository, itemsToClean);
-						ProjectUtil.refreshResources(projects,
+						ResourcesPlugin.getWorkspace().run(
+								pm -> ProjectUtil.refreshResources(projects,
+										pm),
+								null, IWorkspace.AVOID_UPDATE,
 								subMonitor.newChild(1));
 					} catch (CoreException e) {
 						// could not refresh... not a "real" problem

@@ -91,10 +91,12 @@ public class ResetOperation implements IEGitOperation {
 						type.toString().toLowerCase(Locale.ROOT), refName),
 				type == ResetType.HARD ? 2 : 1);
 
-		IProject[] validProjects = null;
+		IProject[] validProjects;
 		if (type == ResetType.HARD) {
 			validProjects = ProjectUtil.getValidOpenProjects(repository);
 			ResourceUtil.saveLocalHistory(repository);
+		} else {
+			validProjects = null;
 		}
 
 		ResetCommand reset = Git.wrap(repository).reset();
@@ -109,8 +111,9 @@ public class ResetOperation implements IEGitOperation {
 
 		// only refresh if working tree changes
 		if (type == ResetType.HARD) {
-			ProjectUtil.refreshValidProjects(validProjects,
-					progress.newChild(1));
+			ResourcesPlugin.getWorkspace().run(
+					pm -> ProjectUtil.refreshResources(validProjects, pm), null,
+					IWorkspace.AVOID_UPDATE, progress.newChild(1));
 		}
 	}
 }
