@@ -34,6 +34,24 @@
       "revId": "f98fbc64ebfd07c2eec62563c8846692e8979708",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e578dd2b_88c21250",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2018-06-15T15:22:29Z",
+      "side": 1,
+      "message": "Please also consider not to do LFS activation in bundle.start() method at all, because it should be fast - otherwise OSGI will stop activation with a timeout error...",
+      "parentUuid": "4c24518b_8ae218b6",
+      "revId": "f98fbc64ebfd07c2eec62563c8846692e8979708",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
