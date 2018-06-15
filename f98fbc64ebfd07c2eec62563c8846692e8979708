@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55a5a35d_7cf1b1c6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-15T06:15:40Z",
+      "side": 1,
+      "message": "The correct OSGi way would still be an extension point. Also, a warning would be needed only if the user actually does have a config that says he wants to use the JGit built-in LFS.",
+      "revId": "f98fbc64ebfd07c2eec62563c8846692e8979708",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
