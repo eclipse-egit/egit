@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "000875c0_2e544cf0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-06-17T19:39:18Z",
+      "side": 1,
+      "message": "can you please add a comment here? I had to think for quite some time for the idea that this sorts shorter paths first, and that in turn will match the items in the following loop faster.",
+      "range": {
+        "startLine": 286,
+        "startChar": 2,
+        "endLine": 286,
+        "endChar": 40
+      },
+      "revId": "9112ae3a94cc75496cbfe36c94ee8424d5dc6cc5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
