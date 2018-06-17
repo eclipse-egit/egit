@@ -47,7 +47,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -91,6 +90,9 @@ public class FindToolbar extends Composite {
 		public void setMessage(FindToolbar originator, String text);
 	}
 
+	private static final String CCS_CLASS_KEY = "org.eclipse.e4.ui.css.CssClassName"; //$NON-NLS-1$
+
+	private static final String NO_RESULTS_CLASS = "org-eclipse-egit-ui-FindToolbar-noResults"; //$NON-NLS-1$
 	/**
 	 * Preference value for searching all the fields
 	 */
@@ -105,8 +107,6 @@ public class FindToolbar extends Composite {
 	private static final int PREFS_FINDIN_COMMITTER = 4;
 
 	private static final int PREFS_FINDIN_REFERENCE = 5;
-
-	private Color errorBackgroundColor;
 
 	/**
 	 * The results (matches) of the current find operation.
@@ -178,6 +178,9 @@ public class FindToolbar extends Composite {
 
 	private CopyOnWriteArrayList<StatusListener> layoutListeners = new CopyOnWriteArrayList<>();
 
+	/** Whether the text field has the "no results" background. */
+	private boolean noResults = false;
+
 	/**
 	 * Creates the toolbar.
 	 *
@@ -195,7 +198,6 @@ public class FindToolbar extends Composite {
 
 	@SuppressWarnings("unused")
 	private void createToolbar() {
-		errorBackgroundColor = new Color(getDisplay(), new RGB(255, 150, 150));
 		ResourceManager resourceManager = Activator.getDefault()
 				.getResourceManager();
 		allIcon = UIIcons.getImage(resourceManager, UIIcons.SEARCH_COMMIT);
@@ -211,13 +213,13 @@ public class FindToolbar extends Composite {
 		findLayout.marginHeight = 0;
 		findLayout.marginBottom = 1;
 		findLayout.marginWidth = 0;
-		findLayout.numColumns = 5;
+		findLayout.numColumns = 2;
 		setLayout(findLayout);
-		setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false));
 
 		patternField = new Text(this,
 				SWT.SEARCH | SWT.ICON_CANCEL | SWT.ICON_SEARCH);
-		GridData findTextData = new GridData(SWT.FILL, SWT.LEFT, true, false);
+		GridData findTextData = new GridData(SWT.LEFT, SWT.TOP, true, false);
 		findTextData.minimumWidth = 150;
 		patternField.setLayoutData(findTextData);
 		patternField.setMessage(UIText.HistoryPage_findbar_find_msg);
@@ -248,6 +250,7 @@ public class FindToolbar extends Composite {
 		findPreviousAction.setEnabled(false);
 		manager.add(findPreviousAction);
 		final ToolBar toolBar = manager.createControl(this);
+		toolBar.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
 
 		prefsDropDown = new ToolItem(toolBar, SWT.DROP_DOWN);
 		prefsMenu = new Menu(getShell(), SWT.POP_UP);
@@ -304,9 +307,13 @@ public class FindToolbar extends Composite {
 		patternModifyListener = new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
-				if (getSearchPattern().equals(lastSearchPattern)) {
+				String pattern = getSearchPattern();
+				if (pattern.equals(lastSearchPattern)) {
 					// Don't bother if it's still the same.
 					return;
+				}
+				if (pattern.isEmpty()) {
+					setNormalBackgroundColor();
 				}
 				final FindToolbarJob finder = createFinder();
 				finder.setUser(false);
@@ -390,12 +397,32 @@ public class FindToolbar extends Composite {
 					job = null;
 				}
 				prefsMenu.dispose();
-				errorBackgroundColor.dispose();
 				if (historyTable != null && !historyTable.isDisposed()) {
 					historyTable.clearAll();
 				}
 			}
 		});
+	}
+
+	private void setNotFoundBackgroundColor() {
+		patternField.setData(CCS_CLASS_KEY, NO_RESULTS_CLASS);
+		patternField.reskin(SWT.ALL);
+		noResults = true;
+	}
+
+	private void setNormalBackgroundColor() {
+		if (noResults) {
+			Color currentColor = patternField.getBackground();
+			patternField.setData(CCS_CLASS_KEY, null);
+			patternField.reskin(SWT.ALL);
+			if (currentColor.equals(patternField.getBackground())) {
+				// If the theme has no definition for the text field's
+				// background, it remains unchanged. Reset it to the SWT default
+				// in that case.
+				patternField.setBackground(null);
+			}
+			noResults = false;
+		}
 	}
 
 	/**
@@ -700,14 +727,14 @@ public class FindToolbar extends Composite {
 				int ix = findResults.getFirstIndex();
 				notifyListeners(ix);
 			}
-			patternField.setBackground(null);
+			setNormalBackgroundColor();
 			findNextAction.setEnabled(total > 1);
 			findPreviousAction.setEnabled(total > 1);
 			lastErrorPattern = null;
 		} else {
 			currentPosition = -1;
 			if (pattern.length() > 0) {
-				patternField.setBackground(errorBackgroundColor);
+				setNotFoundBackgroundColor();
 				label = UIText.HistoryPage_findbar_notFound;
 				// Don't keep beeping every time if the user is deleting
 				// a long not found pattern
@@ -719,7 +746,7 @@ public class FindToolbar extends Composite {
 				}
 				lastErrorPattern = pattern;
 			} else {
-				patternField.setBackground(null);
+				setNormalBackgroundColor();
 				label = ""; //$NON-NLS-1$
 				findNextAction.setEnabled(false);
 				findPreviousAction.setEnabled(false);
@@ -740,7 +767,7 @@ public class FindToolbar extends Composite {
 	 */
 	void clear() {
 		if (!isDisposed()) {
-			patternField.setBackground(null);
+			setNormalBackgroundColor();
 			if (patternField.getText().length() > 0) {
 				patternField.selectAll();
 			}
@@ -832,7 +859,7 @@ public class FindToolbar extends Composite {
 								}
 								findNextAction.setEnabled(total > 1);
 								findPreviousAction.setEnabled(total > 1);
-								patternField.setBackground(null);
+								setNormalBackgroundColor();
 								if (firstUpdate) {
 									historyTable.clearAll();
 								}
