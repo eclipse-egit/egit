@@ -22,6 +22,30 @@
       "revId": "9112ae3a94cc75496cbfe36c94ee8424d5dc6cc5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a5c66c5_fdc1aee6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-17T21:55:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "000875c0_2e544cf0",
+      "range": {
+        "startLine": 286,
+        "startChar": 2,
+        "endLine": 286,
+        "endChar": 40
+      },
+      "revId": "9112ae3a94cc75496cbfe36c94ee8424d5dc6cc5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
