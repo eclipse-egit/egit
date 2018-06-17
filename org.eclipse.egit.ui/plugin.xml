@@ -7153,6 +7153,12 @@
         </themeid>
      </stylesheet>
   </extension>
+   <extension
+        point="org.eclipse.e4.ui.css.swt.theme">
+     <stylesheet
+           uri="css/egit.css">
+     </stylesheet>
+  </extension>
   <extension point="org.eclipse.core.contenttype.contentTypes">
     <file-association
         content-type="org.eclipse.core.runtime.text"
