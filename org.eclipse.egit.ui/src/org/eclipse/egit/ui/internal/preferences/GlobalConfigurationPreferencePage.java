@@ -91,7 +91,8 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 				SWTUtils.MARGINS_NONE);
 		TabFolder tabFolder = new TabFolder(composite, SWT.NONE);
 		tabFolder.setLayoutData(SWTUtils.createHVFillGridData());
-		userConfigEditor = new ConfigurationEditorComponent(tabFolder, userConfig, true) {
+		userConfigEditor = new ConfigurationEditorComponent(tabFolder,
+				userConfig, true, 5) {
 			@Override
 			protected void setErrorMessage(String message) {
 				GlobalConfigurationPreferencePage.this.setErrorMessage(message);
@@ -103,7 +104,8 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 				updateApplyButton();
 			}
 		};
-		sysConfigEditor = new ConfigurationEditorComponent(tabFolder, sysConfig, true) {
+		sysConfigEditor = new ConfigurationEditorComponent(tabFolder, sysConfig,
+				true, 5) {
 			@Override
 			protected void setErrorMessage(String message) {
 				GlobalConfigurationPreferencePage.this.setErrorMessage(message);
@@ -310,7 +312,7 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 			repositoryConfig = repository.getConfig();
 		}
 		ConfigurationEditorComponent editorComponent = new ConfigurationEditorComponent(
-				repoConfigComposite, repositoryConfig, true) {
+				repoConfigComposite, repositoryConfig, true, 5) {
 			@Override
 			protected void setErrorMessage(String message) {
 				GlobalConfigurationPreferencePage.this.setErrorMessage(message);

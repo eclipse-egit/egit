@@ -111,6 +111,8 @@ public class ConfigurationEditorComponent {
 
 	private boolean editable;
 
+	private int margin;
+
 	/**
 	 * @param parent
 	 *            the parent
@@ -118,13 +120,16 @@ public class ConfigurationEditorComponent {
 	 *            to be used instead of the user configuration
 	 * @param useDialogFont
 	 *            if <code>true</code>, the current dialog font is used
+	 * @param margin
+	 *            horizontal margin to be used
 	 */
 	public ConfigurationEditorComponent(Composite parent, StoredConfig config,
-			boolean useDialogFont) {
+			boolean useDialogFont, int margin) {
 		editableConfig = config;
 		this.shellProvider = new SameShellProvider(parent);
 		this.parent = parent;
 		this.useDialogFont = useDialogFont;
+		this.margin = margin;
 	}
 
 	void setConfig(FileBasedConfig config) throws IOException {
@@ -169,7 +174,8 @@ public class ConfigurationEditorComponent {
 	 */
 	public Control createContents() {
 		final Composite main = new Composite(parent, SWT.NONE);
-		main.setLayout(new GridLayout(2, false));
+		GridLayoutFactory.fillDefaults().numColumns(2).margins(margin, 0)
+				.applyTo(main);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
 
 		if (editableConfig instanceof FileBasedConfig) {
