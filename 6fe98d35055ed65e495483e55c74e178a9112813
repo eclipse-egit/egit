@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd9ec07f_a527ea02",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FindToolbar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-22T19:22:36Z",
+      "side": 1,
+      "message": "Removed. Looks like it\u0027s a leftover from earlier attempts to get this working.",
+      "parentUuid": "3562e926_f19f6e1a",
+      "revId": "6fe98d35055ed65e495483e55c74e178a9112813",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85f8ecca_33441e8e",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FindToolbar.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-06-19T09:01:08Z",
       "side": 1,
       "message": "Is this necessary? If I remove the update line everything seems still to work.",
+      "revId": "6fe98d35055ed65e495483e55c74e178a9112813",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "892ba529_cc232a69",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FindToolbar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-22T19:22:36Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "85f8ecca_33441e8e",
       "revId": "6fe98d35055ed65e495483e55c74e178a9112813",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
