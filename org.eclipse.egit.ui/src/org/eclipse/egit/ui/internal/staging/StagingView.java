@@ -4152,20 +4152,28 @@ public class StagingView extends ViewPart
 	}
 
 	private void commit(boolean pushUpstream) {
+		// don't allow to do anything as long as commit is in progress
+		enableAllWidgets(false);
+
 		if (!isCommitWithoutFilesAllowed()) {
 			MessageDialog md = new MessageDialog(getSite().getShell(),
 					UIText.StagingView_committingNotPossible, null,
 					UIText.StagingView_noStagedFiles, MessageDialog.ERROR,
 					new String[] { IDialogConstants.CLOSE_LABEL }, 0);
 			md.open();
+			enableAllWidgets(true);
 			return;
 		}
-		if (!commitMessageComponent.checkCommitInfo())
+		if (!commitMessageComponent.checkCommitInfo()) {
+			enableAllWidgets(true);
 			return;
+		}
 
 		if (!UIUtils.saveAllEditors(currentRepository,
-				UIText.StagingView_cancelCommitAfterSaving))
+				UIText.StagingView_cancelCommitAfterSaving)) {
+			enableAllWidgets(true);
 			return;
+		}
 
 		String commitMessage = commitMessageComponent.getCommitMessage();
 		CommitOperation commitOperation = null;
@@ -4176,6 +4184,7 @@ public class StagingView extends ViewPart
 					commitMessage);
 		} catch (CoreException e) {
 			Activator.handleError(UIText.StagingView_commitFailed, e, true);
+			enableAllWidgets(true);
 			return;
 		}
 		if (amendPreviousCommitAction.isChecked())
@@ -4191,8 +4200,6 @@ public class StagingView extends ViewPart
 				.setOpenCommitEditor(openNewCommitsAction.isChecked())
 				.setPushUpstream(pushMode);
 
-		// don't allow to do anything as long as commit is in progress
-		enableAllWidgets(false);
 		commitJob.addJobChangeListener(new JobChangeAdapter() {
 
 			@Override
