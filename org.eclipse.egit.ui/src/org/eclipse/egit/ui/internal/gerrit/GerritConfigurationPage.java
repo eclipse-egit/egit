@@ -21,6 +21,7 @@ import java.util.TreeSet;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.SWTUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage.Protocol;
@@ -305,7 +306,7 @@ class GerritConfigurationPage extends WizardPage {
 				() -> {
 					try {
 						Set<String> sortedSet = new TreeSet<>(
-								String.CASE_INSENSITIVE_ORDER);
+								CommonUtils.STRING_ASCENDING_COMPARATOR);
 						sortedSet.addAll(repository.getRefDatabase()
 								.getRefs(Constants.R_REMOTES + remoteName + '/')
 								.keySet());

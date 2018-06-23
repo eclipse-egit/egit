@@ -104,7 +104,7 @@ public class PushToGerritPage extends WizardPage {
 	private Text topicText;
 
 	private Set<String> knownRemoteRefs = new TreeSet<>(
-			String.CASE_INSENSITIVE_ORDER);
+			CommonUtils.STRING_ASCENDING_COMPARATOR);
 
 	@SuppressWarnings("serial")
 	private Map<String, String> topicProposals = new LinkedHashMap<String, String>(
