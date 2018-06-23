@@ -2128,7 +2128,7 @@ public class StagingView extends ViewPart
 					}
 				});
 		viewer.addOpenListener(event -> compareWith(event));
-		viewer.setComparator(new StagingEntryComparator(getSortCheckState(),
+		viewer.setComparator(new StagingEntryComparator(!getSortCheckState(),
 				getPreferenceStore()
 						.getBoolean(UIPreferences.STAGING_VIEW_FILENAME_MODE)));
 		viewer.addDoubleClickListener(event -> {
