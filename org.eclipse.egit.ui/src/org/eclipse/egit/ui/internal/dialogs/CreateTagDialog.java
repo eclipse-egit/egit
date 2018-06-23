@@ -32,6 +32,7 @@ import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.ValidationUtils;
+import org.eclipse.egit.ui.internal.components.BranchNameNormalizer;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -442,6 +443,8 @@ public class CreateTagDialog extends TitleAreaDialog {
 				validateInput();
 			}
 		});
+		BranchNameNormalizer normalizer = new BranchNameNormalizer(tagNameText);
+		normalizer.setVisible(false);
 
 		UIUtils.addBulbDecorator(tagNameText,
 				UIText.CreateTagDialog_tagNameToolTip);
