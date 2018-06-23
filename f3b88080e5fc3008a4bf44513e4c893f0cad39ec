@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee319ee9_5865b3a7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-23T14:00:25Z",
+      "side": 1,
+      "message": "I think we should remove this, including the text.\n\n1. It unconditionally adds the lightbulb, even when there is no content assist. That\u0027s confusing.\n\n2. The text is grammatically wrong: \"Start typing tag name to filter list of existing tags\". Should be \"a tag name\" and \"the list\".\n\n3. When the BranchNameNormalizer does have suggestions, hovering over the lightbulb displays both texts, one above the other.\n\nI think this lightbulb with the UIText.CreateTagDialog_tagNameToolTip is just not needed.",
+      "revId": "f3b88080e5fc3008a4bf44513e4c893f0cad39ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
