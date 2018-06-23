@@ -4305,9 +4305,6 @@ public class UIText extends NLS {
 	public static String CreateTagDialog_advancedMessage;
 
 	/** */
-	public static String CreateTagDialog_tagNameToolTip;
-
-	/** */
 	public static String CreateTagDialog_clearButton;
 
 	/** */
