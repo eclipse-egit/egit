@@ -4196,6 +4196,47 @@
                </and>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.egit.ui.team.stash.create"
+               label="%StashCreateCommand.name"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="+">
+                  </count>
+                  <iterate>
+                     <and>
+                     	<or>
+	                        <instanceof
+	                              value="org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode">
+	                        </instanceof>
+	                        <instanceof
+	                              value="org.eclipse.egit.ui.internal.repository.tree.StashNode">
+	                        </instanceof>
+                        </or>
+                        <not>
+                           <test
+                                 property="GitRepository.isSubmodule">
+                           </test>
+                        </not>
+                        <not>
+                           <test
+                                 property="GitRepository.isBare">
+                           </test>
+                        </not>
+                        <test
+                              property="GitRepository.canStash">
+                        </test>
+                        <test
+                              property="GitRepository.containsHead">
+                        </test>
+                     </and>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-commit">
