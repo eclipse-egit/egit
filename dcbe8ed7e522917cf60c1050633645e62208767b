@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "910c3dc3_8d8493d6",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4217,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-24T13:03:36Z",
+      "side": 1,
+      "message": "Nit: for some reason unknown to me our plugin.xml files are indented with three spaces, not tabs.",
+      "revId": "dcbe8ed7e522917cf60c1050633645e62208767b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
