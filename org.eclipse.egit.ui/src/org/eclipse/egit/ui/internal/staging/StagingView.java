@@ -4416,12 +4416,17 @@ public class StagingView extends ViewPart
 		private String getStagingEntryText(Object element) {
 			String text = ""; //$NON-NLS-1$
 			StagingEntry stagingEntry = getStagingEntry(element);
+			// Replace slashes by ASCII \001 to make e.g.
+			// "org.eclipse.egit.gitflow/..." sort before
+			// "org.eclipse.egit.gitflow.ui/...".
 			if (stagingEntry != null) {
+				text = stagingEntry.getPath().replace('/', '\001');
 				if (isFileNamesFirst()) {
-					text = stagingEntry.getName();
-				} else {
-					text = stagingEntry.getPath();
+					text = stagingEntry.getName() + '\001' + text;
 				}
+			} else if (element instanceof StagingFolderEntry) {
+				text = ((StagingFolderEntry) element).getNodePath().toString()
+						.replace('/', '\001');
 			}
 			return text;
 		}
