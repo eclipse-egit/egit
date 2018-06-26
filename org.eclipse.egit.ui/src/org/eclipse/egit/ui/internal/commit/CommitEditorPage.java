@@ -522,7 +522,6 @@ public class CommitEditorPage extends FormPage
 				.grab(true, true).applyTo(control);
 		addToFocusTracking(control);
 		diffViewer.setContentProvider(ArrayContentProvider.getInstance());
-		diffViewer.setTreeWalk(getCommit().getRepository(), null);
 
 		updateSectionClient(diffSection, filesArea, toolkit);
 	}

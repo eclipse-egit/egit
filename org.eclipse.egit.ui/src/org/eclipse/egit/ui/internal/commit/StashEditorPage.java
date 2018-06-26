@@ -110,7 +110,6 @@ public class StashEditorPage extends CommitEditorPage {
 		addToFocusTracking(control);
 		stagedDiffViewer.setContentProvider(ArrayContentProvider
 				.getInstance());
-		stagedDiffViewer.setTreeWalk(getCommit().getRepository(), null);
 
 		updateSectionClient(stagedDiffSection, unstagedChangesArea, toolkit);
 	}

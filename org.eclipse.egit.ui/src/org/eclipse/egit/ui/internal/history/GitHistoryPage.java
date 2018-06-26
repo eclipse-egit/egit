@@ -111,8 +111,6 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.diff.DiffConfig;
 import org.eclipse.jgit.diff.DiffEntry;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
@@ -121,7 +119,6 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revplot.PlotWalk;
 import org.eclipse.jgit.revwalk.FollowFilter;
 import org.eclipse.jgit.revwalk.RenameCallback;
@@ -818,6 +815,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	/** Tracks the file names that are to be highlighted in the diff file viewer */
 	private Set<String> fileViewerInterestingPaths;
 
+	/** Tree walker to use in the file diff viewer. */
+	private TreeWalk fileDiffWalker;
+
 	// react on changes to the relative date preference
 	private final IPropertyChangeListener listener = new IPropertyChangeListener() {
 		@Override
@@ -1440,7 +1440,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				if (input == null) {
 					return;
 				}
-				final PlotCommit<?> c = (PlotCommit<?>) sel.getFirstElement();
+				final SWTCommit c = (SWTCommit) sel.getFirstElement();
 				if (c.equals(commentViewer.getInput())) {
 					return;
 				}
@@ -1450,15 +1450,17 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					final RevCommit unfilteredCommit = walk.parseCommit(c);
 					for (RevCommit parent : unfilteredCommit.getParents())
 						walk.parseBody(parent);
-					fileViewer.setInput(unfilteredCommit);
+					fileViewer.setInput(new FileDiffInput(input.getRepository(),
+							fileDiffWalker, unfilteredCommit,
+							fileViewerInterestingPaths,
+							input.getSingleFile() != null));
 				} catch (IOException e) {
-					fileViewer.setInput(c);
+					fileViewer.setInput(new FileDiffInput(input.getRepository(),
+							fileDiffWalker, c, fileViewerInterestingPaths,
+							input.getSingleFile() != null));
 				} finally {
 					walk.dispose();
 				}
-
-				if (input.getSingleFile() != null)
-					fileViewer.selectFirstInterestingElement();
 			}
 		});
 		commentViewer
@@ -1626,19 +1628,16 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		currentRepo = null;
 		name = ""; //$NON-NLS-1$
 		input = null;
-		clearCommentViewer();
-		clearFileViewer();
+		commentViewer.setInput(null);
+		fileViewer.setInput(null);
 		setInput(null);
 	}
 
-	private void clearCommentViewer() {
-		commentViewer.setRepository(null);
-		commentViewer.setInput(null);
-	}
-
-	private void clearFileViewer() {
-		fileViewer.setTreeWalk(null, null);
-		fileViewer.setInput(null);
+	private void clearViewers() {
+		TableViewer viewer = graph.getTableView();
+		viewer.setInput(new SWTCommit[0]);
+		// Force a selection changed event
+		viewer.setSelection(viewer.getSelection());
 	}
 
 	@Override
@@ -1648,9 +1647,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 	@Override
 	public void refresh() {
-		if (repoHasBeenRemoved(currentRepo))
+		if (repoHasBeenRemoved(currentRepo)) {
 			clearHistoryPage();
-
+		}
 		this.input = null;
 		inputSet();
 	}
@@ -2201,6 +2200,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 	private void updateInterestingPathsOfFileViewer() {
 		fileViewer.setInterestingPaths(fileViewerInterestingPaths);
+		fileViewer.refresh();
 	}
 
 	private void setWarningText(String warning) {
@@ -2232,13 +2232,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 			AnyObjectId headId = resolveHead(db, true);
 			if (headId == null) {
-				TableViewer viewer = graph.getTableView();
-				viewer.setInput(new SWTCommit[0]);
 				currentHeadId = null;
 				currentFetchHeadId = null;
 				currentRepo = db;
-				// Force a selection changed event
-				viewer.setSelection(viewer.getSelection());
+				clearViewers();
 				return;
 			}
 			AnyObjectId fetchHeadId = resolveFetchHead(db);
@@ -2246,19 +2243,34 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			List<FilterPath> paths = buildFilterPaths(input.getItems(), input
 					.getFileList(), db);
 
-			if (forceNewWalk || shouldRedraw(db, headId, fetchHeadId, paths)) {
+			boolean repoChanged = false;
+			if (!db.equals(currentRepo)) {
+				repoChanged = true;
+				currentRepo = db;
+			}
+
+			if (forceNewWalk || repoChanged
+					|| shouldRedraw(headId, fetchHeadId, paths)) {
 				releaseGenerateHistoryJob();
 
-				SWTWalk walk = createNewWalk(db, headId, fetchHeadId);
-				setWalkStartPoints(walk, db, headId);
+				if (repoChanged) {
+					// Clear all viewers. Otherwise it may be possible that the
+					// user invokes a context menu command and due to to the
+					// highly asynchronous loading we end up with inconsistent
+					// diff computations trying to find the diff for a commit in
+					// the wrong repository.
+					clearViewers();
+				}
 
-				setupFileViewer(walk, db, paths);
-				setupCommentViewer(db);
+				SWTWalk walk = createNewWalk(db, headId, fetchHeadId);
+
+				fileDiffWalker = createFileWalker(walk, db, paths);
 
 				loadInitialHistory(walk);
-			} else
+			} else {
 				// needed for context menu and double click
 				graph.setHistoryPageInput(input);
+			}
 		} finally {
 			if (trace)
 				GitTraceLocation.getTrace().traceExit(
@@ -2267,11 +2279,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		}
 	}
 
-	private boolean shouldRedraw(Repository db, AnyObjectId headId,
-			AnyObjectId fetchHeadId, List<FilterPath> paths) {
+	private boolean shouldRedraw(AnyObjectId headId, AnyObjectId fetchHeadId,
+			List<FilterPath> paths) {
 		boolean pathChanged = pathChanged(pathFilters, paths);
 		boolean headChanged = headId == null || !headId.equals(currentHeadId);
-		boolean repoChanged = false;
 
 		boolean allBranchesChanged = currentShowAllBranches != store
 			.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES);
@@ -2293,12 +2304,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		boolean followRenamesChanged = currentFollowRenames != getFollowRenames();
 		currentFollowRenames = getFollowRenames();
 
-		if (!db.equals(currentRepo)) {
-			repoChanged = true;
-			currentRepo = db;
-		}
-
-		return pathChanged || headChanged || fetchHeadChanged || repoChanged
+		return pathChanged || headChanged || fetchHeadChanged
 				|| allBranchesChanged || additionalRefsChange
 				|| showNotesChanged || followRenamesChanged;
 	}
@@ -2420,7 +2426,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			AnyObjectId fetchHeadId) {
 		currentHeadId = headId;
 		currentFetchHeadId = fetchHeadId;
-		SWTWalk walk = new SWTWalk(db);
+		SWTWalk walk = new GitHistoryWalk(db, headId);
 		try {
 			if (store
 					.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS))
@@ -2440,45 +2446,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		return walk;
 	}
 
-	private void setWalkStartPoints(RevWalk walk, Repository db, AnyObjectId headId) {
-		try {
-			if (store
-					.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES)) {
-				markStartAllRefs(walk, Constants.R_HEADS);
-				markStartAllRefs(walk, Constants.R_REMOTES);
-				markStartAllRefs(walk, Constants.R_TAGS);
-			}
-			if (store
-					.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS))
-				markStartAdditionalRefs(walk);
-			if (store
-					.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_NOTES))
-				markStartAllRefs(walk, Constants.R_NOTES);
-			else
-				markUninteresting(walk, Constants.R_NOTES);
-
-			walk.markStart(walk.parseCommit(headId));
-		} catch (IOException e) {
-			throw new IllegalStateException(NLS.bind(
-					UIText.GitHistoryPage_errorSettingStartPoints, Activator
-							.getDefault().getRepositoryUtil()
-							.getRepositoryName(db)), e);
-		}
-	}
-
-	private void setupCommentViewer(Repository db) {
-		commentViewer.setRepository(db);
-		commentViewer.refresh();
-	}
-
-	private TreeWalk setupFileViewer(RevWalk walk, Repository db, List<FilterPath> paths) {
-		final TreeWalk fileWalker = createFileWalker(walk, db, paths);
-		fileViewer.setTreeWalk(db, fileWalker);
-		fileViewer.setInterestingPaths(fileViewerInterestingPaths);
-		fileViewer.refresh();
-		return fileWalker;
-	}
-
 	private void formatDiffs(final List<FileDiff> diffs) {
 		Job.getJobManager().cancel(JobFamilies.HISTORY_DIFF);
 		if (diffs.isEmpty()) {
@@ -2490,7 +2457,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			return;
 		}
 
-		final Repository repository = fileViewer.getRepository();
 		Job formatJob = new Job(UIText.GitHistoryPage_FormatDiffJobName) {
 
 			@Override
@@ -2513,7 +2479,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 						}
 						progress.subTask(diff.getPath());
 						try {
-							formatter.write(repository, diff);
+							formatter.write(diff.getRepository(), diff);
 						} catch (IOException ignore) {
 							// Ignored
 						}
@@ -2757,60 +2723,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		j.schedule();
 	}
 
-	/**
-	 * {@link RevWalk#markStart(RevCommit)} all refs with given prefix to mark
-	 * start of graph traversal using currentWalker
-	 * @param walk the walk to be configured
-	 *
-	 * @param prefix
-	 *            prefix of refs to be marked
-	 * @throws IOException
-	 * @throws MissingObjectException
-	 * @throws IncorrectObjectTypeException
-	 */
-	private void markStartAllRefs(RevWalk walk, String prefix) throws IOException,
-			MissingObjectException, IncorrectObjectTypeException {
-		for (Ref ref : input.getRepository().getRefDatabase()
-				.getRefsByPrefix(prefix)) {
-			if (ref.isSymbolic())
-				continue;
-			markStartRef(walk, ref);
-		}
-	}
-
-	private void markStartAdditionalRefs(RevWalk walk) throws IOException {
-		List<Ref> additionalRefs = input.getRepository().getRefDatabase()
-				.getAdditionalRefs();
-		for (Ref ref : additionalRefs)
-			markStartRef(walk, ref);
-	}
-
-	private void markStartRef(RevWalk walk, Ref ref) throws IOException,
-			IncorrectObjectTypeException {
-		try {
-			RevObject refTarget = walk.parseAny(ref.getLeaf().getObjectId());
-			RevObject peeled = walk.peel(refTarget);
-			if (peeled instanceof RevCommit)
-				walk.markStart((RevCommit) peeled);
-		} catch (MissingObjectException e) {
-			// If there is a ref which points to Nirvana then we should simply
-			// ignore this ref. We should not let a corrupt ref cause that the
-			// history view is not filled at all
-		}
-	}
-
-	private void markUninteresting(RevWalk walk, String prefix) throws IOException,
-			MissingObjectException, IncorrectObjectTypeException {
-		for (Ref ref : input.getRepository().getRefDatabase()
-				.getRefsByPrefix(prefix)) {
-			if (ref.isSymbolic())
-				continue;
-			Object refTarget = walk
-					.parseAny(ref.getLeaf().getObjectId());
-			if (refTarget instanceof RevCommit)
-				walk.markUninteresting((RevCommit) refTarget);
-		}
-	}
 
 	private void releaseGenerateHistoryJob() {
 		if (job != null) {
