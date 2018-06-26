@@ -21,12 +21,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.DecorationOverlayDescriptor;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IDecoration;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.diff.DiffFormatter;
@@ -82,9 +86,9 @@ public class FileDiff extends WorkbenchAdapter {
 
 	private final RevCommit commit;
 
-	private DiffEntry diffEntry;
+	private final DiffEntry diffEntry;
 
-	private Repository repository;
+	private final Repository repository;
 
 	static ObjectId[] trees(final RevCommit commit, final RevCommit[] parents) {
 		final ObjectId[] r = new ObjectId[parents.length + 1];
@@ -100,6 +104,8 @@ public class FileDiff extends WorkbenchAdapter {
 	 * @param repository
 	 * @param walk
 	 * @param commit
+	 * @param monitor
+	 *            for progress reporting an cancellation; may be {@code null}
 	 * @param markTreeFilters
 	 *            optional filters for marking entries, see
 	 *            {@link #isMarked(int)}
@@ -109,11 +115,11 @@ public class FileDiff extends WorkbenchAdapter {
 	 * @throws CorruptObjectException
 	 * @throws IOException
 	 */
-	public static FileDiff[] compute(final Repository repository,
-			final TreeWalk walk, final RevCommit commit,
-			final TreeFilter... markTreeFilters) throws MissingObjectException,
+	public static FileDiff[] compute(Repository repository, TreeWalk walk,
+			RevCommit commit, @Nullable IProgressMonitor monitor,
+			TreeFilter... markTreeFilters) throws MissingObjectException,
 			IncorrectObjectTypeException, CorruptObjectException, IOException {
-		return compute(repository, walk, commit, commit.getParents(),
+		return compute(repository, walk, commit, commit.getParents(), monitor,
 				markTreeFilters);
 	}
 
@@ -124,6 +130,8 @@ public class FileDiff extends WorkbenchAdapter {
 	 * @param walk
 	 * @param commit
 	 * @param parents
+	 * @param monitor
+	 *            for progress reporting an cancellation; may be {@code null}
 	 * @param markTreeFilters
 	 *            optional filters for marking entries, see
 	 *            {@link #isMarked(int)}
@@ -133,11 +141,12 @@ public class FileDiff extends WorkbenchAdapter {
 	 * @throws CorruptObjectException
 	 * @throws IOException
 	 */
-	public static FileDiff[] compute(final Repository repository,
-			final TreeWalk walk, final RevCommit commit,
-			final RevCommit[] parents,
-			final TreeFilter... markTreeFilters) throws MissingObjectException,
-			IncorrectObjectTypeException, CorruptObjectException, IOException {
+	public static FileDiff[] compute(Repository repository, TreeWalk walk,
+			RevCommit commit, RevCommit[] parents,
+			@Nullable IProgressMonitor monitor, TreeFilter... markTreeFilters)
+			throws MissingObjectException, IncorrectObjectTypeException,
+			CorruptObjectException, IOException {
+
 		final ArrayList<FileDiff> r = new ArrayList<>();
 
 		if (parents.length > 0) {
@@ -149,21 +158,36 @@ public class FileDiff extends WorkbenchAdapter {
 		}
 
 		if (walk.getTreeCount() <= 2) {
-			List<DiffEntry> entries = DiffEntry.scan(walk, false, markTreeFilters);
+			// TODO: make JGit DiffEntry.scan and RenameDetector.compute
+			// cancelable
+			SubMonitor progress = SubMonitor.convert(monitor, 3);
+			List<DiffEntry> entries = DiffEntry.scan(walk, false,
+					markTreeFilters);
+			if (progress.isCanceled()) {
+				return new FileDiff[0];
+			}
+			progress.worked(1);
 			List<DiffEntry> xentries = new LinkedList<>(entries);
 			RenameDetector detector = new RenameDetector(repository);
 			detector.addAll(entries);
+			EclipseGitProgressTransformer jgitProgress = new EclipseGitProgressTransformer(
+					progress.newChild(1));
 			List<DiffEntry> renames = detector.compute(walk.getObjectReader(),
-					org.eclipse.jgit.lib.NullProgressMonitor.INSTANCE);
-			for (DiffEntry m : renames) {
-				final FileDiff d = new FileDiff(repository, commit, m);
-				r.add(d);
-				for (Iterator<DiffEntry> i = xentries.iterator(); i.hasNext();) {
-					DiffEntry n = i.next();
-					if (m.getOldPath().equals(n.getOldPath()))
-						i.remove();
-					else if (m.getNewPath().equals(n.getNewPath()))
-						i.remove();
+					jgitProgress);
+			if (!progress.isCanceled()) {
+				progress.setWorkRemaining(renames.size());
+				for (DiffEntry m : renames) {
+					final FileDiff d = new FileDiff(repository, commit, m);
+					r.add(d);
+					for (Iterator<DiffEntry> i = xentries.iterator(); i
+							.hasNext();) {
+						DiffEntry n = i.next();
+						if (m.getOldPath().equals(n.getOldPath()))
+							i.remove();
+						else if (m.getNewPath().equals(n.getNewPath()))
+							i.remove();
+					}
+					progress.worked(1);
 				}
 			}
 			for (DiffEntry m : xentries) {
@@ -172,6 +196,7 @@ public class FileDiff extends WorkbenchAdapter {
 			}
 		}
 		else { // DiffEntry does not support walks with more than two trees
+			SubMonitor progress = SubMonitor.convert(monitor, 1);
 			final int nTree = walk.getTreeCount();
 			final int myTree = nTree - 1;
 
@@ -179,9 +204,13 @@ public class FileDiff extends WorkbenchAdapter {
 					markTreeFilters);
 
 			while (walk.next()) {
-				if (matchAnyParent(walk, myTree))
+				if (progress.isCanceled()) {
+					break;
+				}
+				progress.setWorkRemaining(100).worked(1);
+				if (matchAnyParent(walk, myTree)) {
 					continue;
-
+				}
 				int treeFilterMarks = treeFilterMarker.getMarks(walk);
 
 				final FileDiffForMerges d = new FileDiffForMerges(repository,
@@ -205,7 +234,6 @@ public class FileDiff extends WorkbenchAdapter {
 					d.blobs[i] = walk.getObjectId(i);
 					d.modes[i] = walk.getFileMode(i);
 				}
-
 
 				r.add(d);
 			}
@@ -332,6 +360,15 @@ public class FileDiff extends WorkbenchAdapter {
 	}
 
 	/**
+	 * Retrieves the repository the {@link FileDiff} and its commit belong to.
+	 *
+	 * @return the {@link Repository}
+	 */
+	public Repository getRepository() {
+		return repository;
+	}
+
+	/**
 	 * @return the old path in case of a delete, the new path otherwise, but
 	 *         never null or <code>/dev/null</code>
 	 * @see #getNewPath()
@@ -399,7 +436,7 @@ public class FileDiff extends WorkbenchAdapter {
 	/**
 	 * Whether the mark tree filter with the specified index matched during scan
 	 * or not, see
-	 * {@link #compute(Repository, TreeWalk, RevCommit, RevCommit[], TreeFilter...)}
+	 * {@link #compute(Repository, TreeWalk, RevCommit, RevCommit[], IProgressMonitor, TreeFilter...)}
 	 * .
 	 *
 	 * @param index
