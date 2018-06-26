@@ -3046,7 +3046,13 @@ public class UIText extends NLS {
 	public static String FetchWizard_windowTitleWithSource;
 
 	/** */
+	public static String FileDiffContentProvider_computingFileDiffs;
+
+	/** */
 	public static String FileDiffContentProvider_errorGettingDifference;
+
+	/** */
+	public static String FileDiffContentProvider_updatingFileDiffs;
 
 	/** */
 	public static String FileDiffLabelProvider_RenamedFromToolTip;

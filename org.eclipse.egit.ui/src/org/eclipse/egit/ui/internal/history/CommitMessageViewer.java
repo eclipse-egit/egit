@@ -6,7 +6,7 @@
  * Copyright (C) 2011, Stefan Lay <stefan.lay@sap.com>
  * Copyright (C) 2014, Marc-Andre Laperle <marc-andre.laperle@ericsson.com>
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
- * Copyright (C) 2015, 2016 Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2015, 2018 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -63,7 +63,6 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Font;
@@ -90,11 +89,8 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 	// Detects theme font changes
 	private final IPropertyChangeListener themeListener;
 
-	// the current repository
-	private Repository db;
-
 	// the "input" (set by setInput())
-	private PlotCommit<?> commit;
+	private SWTCommit commit;
 
 	// formatting option to fill the lines
 	private boolean fill;
@@ -286,12 +282,12 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 		// so we only rebuild this when the commit did in fact change
 		if (input == commit)
 			return;
-		commit = (PlotCommit<?>) input;
+		commit = (SWTCommit) input;
 		if (refsChangedListener != null) {
 			refsChangedListener.remove();
 			refsChangedListener = null;
 		}
-
+		Repository db = commit == null ? null : commit.getRepository();
 		if (db != null) {
 			allRefs = getBranches(db);
 			refsChangedListener = db.getListenerList().addRefsChangedListener(
@@ -311,10 +307,6 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 		return commit;
 	}
 
-	void setRepository(final Repository repository) {
-		this.db = repository;
-	}
-
 	private static List<Ref> getBranches(Repository repo)  {
 		List<Ref> ref = new ArrayList<>();
 		try {
@@ -327,28 +319,24 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 		return ref;
 	}
 
-	private Repository getRepository() {
-		if (db == null)
-			throw new IllegalStateException("Repository has not been set"); //$NON-NLS-1$
-		return db;
-	}
-
 	private void format() {
-		if (db == null || commit == null) {
-			setDocument(new Document("")); //$NON-NLS-1$
-			return;
-		}
-		if (formatJob != null && formatJob.getState() != Job.NONE)
+		if (formatJob != null && formatJob.getState() != Job.NONE) {
 			formatJob.cancel();
-		scheduleFormatJob();
+		}
+		if (commit == null) {
+			setDocument(new Document("")); //$NON-NLS-1$
+		} else {
+			scheduleFormatJob();
+		}
 	}
 
 	private void scheduleFormatJob() {
 		IWorkbenchSiteProgressService siteService = AdapterUtils.adapt(partSite, IWorkbenchSiteProgressService.class);
-		if (siteService == null)
+		if (siteService == null) {
 			return;
+		}
 		FormatJob.FormatRequest formatRequest = new FormatJob.FormatRequest(
-				getRepository(), commit, fill, allRefs);
+				commit.getRepository(), commit, fill, allRefs);
 		formatJob = new FormatJob(formatRequest);
 		addDoneListenerToFormatJob();
 		siteService.schedule(formatJob, 0 /* now */, true /*

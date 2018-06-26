@@ -4,7 +4,7 @@
  * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, Gunnar Wagenknecht <gunnar@wagenknecht.org>
  * Copyright (C) 2013, Laurent Goubet <laurent.goubet@obeo.fr>
- * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, 2018 Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -18,9 +18,9 @@ package org.eclipse.egit.ui.internal.history;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -56,13 +56,11 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
-import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
@@ -94,10 +92,6 @@ import org.eclipse.ui.themes.ColorUtil;
  */
 public class CommitFileDiffViewer extends TableViewer {
 	private static final String LINESEP = System.getProperty("line.separator"); //$NON-NLS-1$
-
-	private Repository db;
-
-	private TreeWalk walker;
 
 	private Clipboard clipboard;
 
@@ -259,9 +253,11 @@ public class CommitFileDiffViewer extends TableViewer {
 					return;
 				final IStructuredSelection iss = (IStructuredSelection) s;
 				for (Iterator<FileDiff> it = iss.iterator(); it.hasNext();) {
-					String relativePath = it.next().getPath();
+					FileDiff diff = it.next();
+					String relativePath = diff.getPath();
 					File file = new Path(
-							getRepository().getWorkTree().getAbsolutePath())
+							diff.getRepository().getWorkTree()
+									.getAbsolutePath())
 									.append(relativePath).toFile();
 					DiffViewer.openFileInEditor(file, -1);
 				}
@@ -352,13 +348,14 @@ public class CommitFileDiffViewer extends TableViewer {
 		boolean deleteSelected = false;
 		for (Object item : sel.toList()) {
 			FileDiff fileDiff = (FileDiff) item;
-			if (fileDiff.isSubmodule())
+			if (fileDiff.isSubmodule()) {
 				submoduleSelected = true;
-
-			if (fileDiff.getChange() == ChangeType.ADD)
+			}
+			if (fileDiff.getChange() == ChangeType.ADD) {
 				addSelected = true;
-			else if (fileDiff.getChange() == ChangeType.DELETE)
+			} else if (fileDiff.getChange() == ChangeType.DELETE) {
 				deleteSelected = true;
+			}
 		}
 
 		selectAll.setEnabled(!allSelected);
@@ -371,12 +368,15 @@ public class CommitFileDiffViewer extends TableViewer {
 			openPreviousVersion.setEnabled(oneOrMoreSelected && !addSelected);
 			compare.setEnabled(sel.size() == 1);
 			blame.setEnabled(oneOrMoreSelected);
-			if (sel.size() == 1 && !db.isBare()) {
+			if (sel.size() == 1) {
 				FileDiff diff = (FileDiff) sel.getFirstElement();
-				String path = new Path(
-						getRepository().getWorkTree().getAbsolutePath())
-								.append(diff.getPath()).toOSString();
-				boolean workTreeFileExists = new File(path).exists();
+				Repository repo = diff.getRepository();
+				boolean workTreeFileExists = false;
+				if (!repo.isBare()) {
+					String path = new Path(repo.getWorkTree().getAbsolutePath())
+							.append(diff.getPath()).toOSString();
+					workTreeFileExists = new File(path).exists();
+				}
 				compareWorkingTreeVersion.setEnabled(workTreeFileExists);
 				openWorkingTreeVersion.setEnabled(workTreeFileExists);
 			} else {
@@ -393,27 +393,25 @@ public class CommitFileDiffViewer extends TableViewer {
 		}
 	}
 
-	@Override
-	protected void inputChanged(final Object input, final Object oldInput) {
-		if (oldInput == null && input == null)
-			return;
-		super.inputChanged(input, oldInput);
-		revealFirstInterestingElement();
-	}
-
 	/**
 	 * @return the show in context or null
 	 * @see IShowInSource#getShowInContext()
 	 */
 	public ShowInContext getShowInContext() {
-		if (db.isBare())
-			return null;
-		IPath workTreePath = new Path(db.getWorkTree().getAbsolutePath());
 		IStructuredSelection selection = (IStructuredSelection) getSelection();
 		List<Object> elements = new ArrayList<>();
 		List<File> files = new ArrayList<>();
+		Repository repo = null;
+		IPath workTreePath = null;
 		for (Object selectedElement : selection.toList()) {
 			FileDiff fileDiff = (FileDiff) selectedElement;
+			if (repo == null || workTreePath == null) {
+				repo = fileDiff.getRepository();
+				if (repo == null || repo.isBare()) {
+					return null;
+				}
+				workTreePath = new Path(repo.getWorkTree().getAbsolutePath());
+			}
 			IPath path = workTreePath.append(fileDiff.getPath());
 			IFile file = ResourceUtil.getFileForLocation(path, false);
 			if (file != null)
@@ -424,7 +422,7 @@ public class CommitFileDiffViewer extends TableViewer {
 		}
 		HistoryPageInput historyPageInput = null;
 		if (!files.isEmpty()) {
-			historyPageInput = new HistoryPageInput(db,
+			historyPageInput = new HistoryPageInput(repo,
 					files.toArray(new File[files.size()]));
 		}
 		return new ShowInContext(historyPageInput,
@@ -432,11 +430,11 @@ public class CommitFileDiffViewer extends TableViewer {
 	}
 
 	private void openThisVersionInEditor(FileDiff d) {
-		DiffViewer.openInEditor(getRepository(), d, DiffEntry.Side.NEW, -1);
+		DiffViewer.openInEditor(d.getRepository(), d, DiffEntry.Side.NEW, -1);
 	}
 
 	private void openPreviousVersionInEditor(FileDiff d) {
-		DiffViewer.openInEditor(getRepository(), d, DiffEntry.Side.OLD, -1);
+		DiffViewer.openInEditor(d.getRepository(), d, DiffEntry.Side.OLD, -1);
 	}
 
 	private void showAnnotations(FileDiff d) {
@@ -448,7 +446,7 @@ public class CommitFileDiffViewer extends TableViewer {
 					? d.getCommit().getParent(0) : d.getCommit();
 			String path = d.getPath();
 			IFileRevision rev = CompareUtils.getFileRevision(path, commit,
-					getRepository(),
+					d.getRepository(),
 					d.getChange().equals(ChangeType.DELETE) ? d.getBlobs()[0]
 							: d.getBlobs()[d.getBlobs().length - 1]);
 			if (rev instanceof CommitFileRevision) {
@@ -470,7 +468,7 @@ public class CommitFileDiffViewer extends TableViewer {
 
 	void showTwoWayFileDiff(final FileDiff d) {
 		if (d.getBlobs().length <= 2) {
-			DiffViewer.showTwoWayFileDiff(getRepository(), d);
+			DiffViewer.showTwoWayFileDiff(d.getRepository(), d);
 		} else {
 			MessageDialog.openInformation(
 					PlatformUI.getWorkbench().getActiveWorkbenchWindow()
@@ -481,60 +479,34 @@ public class CommitFileDiffViewer extends TableViewer {
 	}
 
 	void showWorkingDirectoryFileDiff(final FileDiff d) {
-		final String p = d.getPath();
-		final RevCommit commit = d.getCommit();
+		String p = d.getPath();
+		RevCommit commit = d.getCommit();
+		Repository repo = d.getRepository();
 
-		if (commit == null) {
+		if (commit == null || repo == null) {
 			Activator.showError(UIText.GitHistoryPage_openFailed, null);
 			return;
 		}
 
 		IWorkbenchPage activePage = site.getWorkbenchWindow().getActivePage();
-		IFile file = ResourceUtil.getFileForLocation(getRepository(), p, false);
+		IFile file = ResourceUtil.getFileForLocation(repo, p, false);
 		try {
 			if (file != null) {
 				final IResource[] resources = new IResource[] { file, };
-				CompareUtils.compare(resources, getRepository(), Constants.HEAD,
+				CompareUtils.compare(resources, repo, Constants.HEAD,
 						commit.getName(), true, activePage);
 			} else {
-				IPath path = new Path(
-						getRepository().getWorkTree().getAbsolutePath())
-								.append(p);
+				IPath path = new Path(repo.getWorkTree().getAbsolutePath())
+						.append(p);
 				File ioFile = path.toFile();
-				if (ioFile.exists())
-					CompareUtils.compare(path, getRepository(), Constants.HEAD,
+				if (ioFile.exists()) {
+					CompareUtils.compare(path, repo, Constants.HEAD,
 							commit.getName(), true, activePage);
+				}
 			}
 		} catch (IOException e) {
-			Activator.logError(UIText.GitHistoryPage_openFailed, e);
-			Activator.showError(UIText.GitHistoryPage_openFailed, null);
+			Activator.handleError(UIText.GitHistoryPage_openFailed, e, true);
 		}
-	}
-
-	TreeWalk getTreeWalk() {
-		if (walker == null)
-			throw new IllegalStateException("TreeWalk has not been set"); //$NON-NLS-1$
-		return walker;
-	}
-
-	@NonNull
-	Repository getRepository() {
-		Repository repo = db;
-		if (repo == null) {
-			throw new IllegalStateException("Repository has not been set"); //$NON-NLS-1$
-		}
-		return repo;
-	}
-
-	/**
-	 * Set repository and tree walk
-	 *
-	 * @param repository
-	 * @param walk
-	 */
-	public void setTreeWalk(Repository repository, TreeWalk walk) {
-		db = repository;
-		walker = walk;
 	}
 
 	private void doSelectAll() {
@@ -569,53 +541,11 @@ public class CommitFileDiffViewer extends TableViewer {
 	}
 
 	/**
-	 * @see FileDiffContentProvider#setInterestingPaths(Set)
+	 * @see FileDiffContentProvider#setInterestingPaths(Collection)
 	 * @param interestingPaths
 	 */
-	void setInterestingPaths(Set<String> interestingPaths) {
+	void setInterestingPaths(Collection<String> interestingPaths) {
 		((FileDiffContentProvider) getContentProvider())
 				.setInterestingPaths(interestingPaths);
-	}
-
-	void selectFirstInterestingElement() {
-		IStructuredContentProvider contentProvider = ((IStructuredContentProvider) getContentProvider());
-		Object[] elements = contentProvider.getElements(getInput());
-		for (final Object element : elements) {
-			if (element instanceof FileDiff) {
-				FileDiff fileDiff = (FileDiff) element;
-				boolean marked = fileDiff.isMarked(
-						FileDiffContentProvider.INTERESTING_MARK_TREE_FILTER_INDEX);
-				if (marked) {
-					setSelection(new StructuredSelection(fileDiff));
-					return;
-				}
-			}
-		}
-	}
-
-	private void revealFirstInterestingElement() {
-		IStructuredContentProvider contentProvider = ((IStructuredContentProvider) getContentProvider());
-		Object[] elements = contentProvider.getElements(getInput());
-		if (elements.length <= 1)
-			return;
-
-		for (final Object element : elements) {
-			if (element instanceof FileDiff) {
-				FileDiff fileDiff = (FileDiff) element;
-				boolean marked = fileDiff.isMarked(
-						FileDiffContentProvider.INTERESTING_MARK_TREE_FILTER_INDEX);
-				if (marked) {
-					// Does not yet work reliably, see comment on bug 393610.
-					getTable().getDisplay().asyncExec(new Runnable() {
-						@Override
-						public void run() {
-							reveal(element);
-						}
-					});
-					// Only reveal first
-					return;
-				}
-			}
-		}
 	}
 }
