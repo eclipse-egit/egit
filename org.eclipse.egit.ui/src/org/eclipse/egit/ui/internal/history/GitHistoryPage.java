@@ -1805,7 +1805,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				GitTraceLocation.getTrace().traceEntry(
 						GitTraceLocation.HISTORYVIEW.getLocation(), useAsInput);
 
-			if (useAsInput == getInput())
+			if (useAsInput == super.getInput())
 				return true;
 			this.input = null;
 			return super.setInput(useAsInput);
@@ -2174,6 +2174,18 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		return this.input;
 	}
 
+	/**
+	 * The super implementation returns the raw input (e.g. the workbench
+	 * selection). The Git History Page however adapts that input before
+	 * actually using it. If we don't return this adapted input, then the
+	 * history drop down will show the same (adapted) history input multiple
+	 * times.
+	 */
+	@Override
+	public Object getInput() {
+		return getInputInternal();
+	}
+
 	void setWarningTextInUIThread(final Job j) {
 		graph.getControl().getDisplay().asyncExec(new Runnable() {
 			@Override
@@ -2208,7 +2220,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 						GitTraceLocation.getTrace().trace(
 								GitTraceLocation.HISTORYVIEW.getLocation(),
 								"Setting input to table"); //$NON-NLS-1$
-					final Object currentInput = getInput();
+					final Object currentInput = GitHistoryPage.super.getInput();
 					searchBar.setInput(new ICommitsProvider() {
 
 						@Override
