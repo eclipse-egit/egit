@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1db2221_05948351",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiff.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-06-26T06:26:21Z",
+      "side": 1,
+      "message": "just wondering why you use i+1 and j+1 everywhere. that would be there very last slash. the compare result would be exactly the same by just leaving that last character away (i.e. taking substring(i) etc. only), or wouldn\u0027t it?",
+      "range": {
+        "startLine": 73,
+        "startChar": 3,
+        "endLine": 79,
+        "endChar": 44
+      },
+      "revId": "f2790c82b8ad8dde9e8c96502448c29febd2b911",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
