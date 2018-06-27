@@ -20,7 +20,6 @@ import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.ui.IWorkbench;
@@ -99,7 +98,7 @@ public class HistoryPreferencePage extends FieldEditorPreferencePage implements
 
 		addField(new BooleanFieldEditor(UIPreferences.HISTORY_CUT_AT_START,
 				UIText.HistoryPreferencePage_toggleShortenAtStart, showGroup));
-		updateMargins(showGroup);
+		fixGridLayout(showGroup);
 		Group commentGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		// we need a span of 2 to accommodate the field editors
 		GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
@@ -119,15 +118,21 @@ public class HistoryPreferencePage extends FieldEditorPreferencePage implements
 				UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL,
 				UIText.ResourceHistory_toggleCommentFill,
 				commentGroup));
-		updateMargins(commentGroup);
+		fixGridLayout(commentGroup);
 		adjustGridLayout();
 	}
 
-	private void updateMargins(Group group) {
-		// make sure there is some room between the group border
-		// and the controls in the group
-		GridLayout layout = (GridLayout) group.getLayout();
-		layout.marginWidth = 5;
-		layout.marginHeight = 5;
+	/**
+	 * Every BooleanFieldEditor will change the layout of the parent composite
+	 * to only one column. Therefore we have to set a new layout after adding
+	 * all fields to the group. Additionally we apply some margin between the
+	 * field editors and the group.
+	 *
+	 * @param group
+	 *            field editor container group
+	 */
+	private void fixGridLayout(Group group) {
+		GridLayoutFactory.fillDefaults().numColumns(2).margins(5, 5)
+				.applyTo(group);
 	}
 }
