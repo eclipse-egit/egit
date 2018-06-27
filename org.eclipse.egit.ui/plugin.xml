@@ -2648,7 +2648,10 @@
                <and>
                   <count value="1" />
                   <iterate>
-                     <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode" />
+                     <or>
+                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode" />
+                        <instanceof value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode" />
+                     </or>
                      <not>
                         <test property="GitRepository.isBare" />
                      </not>
@@ -4096,12 +4099,6 @@
                </and>
             </visibleWhen>
          </command>
-         <command
-              commandId="org.eclipse.egit.ui.team.clean"
-              label="%CleanCommand.label"
-              style="push">
-            <visibleWhen checkEnabled="true" />
-         </command>
          <menu
                label="%StashesMenu.label">
             <dynamic
@@ -4641,6 +4638,12 @@
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-4">
+         <command
+              commandId="org.eclipse.egit.ui.team.clean"
+              label="%CleanCommand.label"
+              style="push">
+            <visibleWhen checkEnabled="true" />
+         </command>
          <!-- Use newer flat trash icon when running on Eclipse Photon or newer -->
          <command
                commandId="org.eclipse.egit.ui.team.GarbageCollect"
