@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.TreeMap;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.ui.Activator;
@@ -30,9 +31,9 @@ import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.SWTUtils;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.DecorationHelper;
 import org.eclipse.egit.ui.internal.decorators.DecoratableResource;
 import org.eclipse.egit.ui.internal.decorators.DecorationResult;
+import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.DecorationHelper;
 import org.eclipse.egit.ui.internal.resources.IResourceState.StagingState;
 import org.eclipse.egit.ui.internal.synchronize.mapping.GitChangeSetLabelProvider;
 import org.eclipse.jface.dialogs.Dialog;
@@ -189,7 +190,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 				UIText.DecoratorPreferencesPage_bindingCommitMessage);
 
 
-		CHANGESET_LABEL_BINDINGS = new HashMap<>();
+		CHANGESET_LABEL_BINDINGS = new TreeMap<>();
 		CHANGESET_LABEL_BINDINGS.put(removeBraces(GitChangeSetLabelProvider.BINDING_CHANGESET_AUTHOR),
 				UIText.DecoratorPreferencesPage_bindingChangeSetAuthor);
 		CHANGESET_LABEL_BINDINGS.put(removeBraces(GitChangeSetLabelProvider.BINDING_CHANGESET_DATE),
