@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.decorators;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -22,7 +23,10 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
@@ -108,26 +112,42 @@ public class ProblemLabelDecorator extends BaseLabelProvider implements
 
 	@Override
 	public void resourceChanged(IResourceChangeEvent event) {
-		Set<IResource> resources = new HashSet<>();
+		Set<IPath> paths = new HashSet<>();
 
 		IMarkerDelta[] markerDeltas = event.findMarkerDeltas(IMarker.PROBLEM,
 				true);
 		for (IMarkerDelta delta : markerDeltas) {
-			// Also add parents
 			IResource resource = delta.getResource();
-			while (resource.getType() != IResource.ROOT
-					&& resources.add(resource)) {
-				resource = resource.getParent();
+			if (resource == null) {
+				continue;
+			}
+			RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
+			if (mapping == null || mapping.getRepository().isBare()) {
+				continue;
+			}
+			IPath path = resource.getLocation();
+			if (path == null) {
+				continue;
+			}
+			// Also add parents
+			File workTree = mapping.getWorkTree();
+			if (workTree == null) {
+				continue;
+			}
+			int n = new Path(workTree.getAbsolutePath()).segmentCount();
+			for (int i = path.segmentCount(); i > n; i--) {
+				paths.add(path);
+				path = path.removeLastSegments(1);
 			}
 		}
 
-		if (!resources.isEmpty()) {
-		    updateLabels(resources);
+		if (!paths.isEmpty()) {
+			updateLabels(paths);
 		}
 	}
 
-	private void updateLabels(Set<IResource> changedResources) {
-		List<Object> elements = getAffectedElements(changedResources);
+	private void updateLabels(Set<IPath> changedPaths) {
+		List<Object> elements = getAffectedElements(changedPaths);
 		if (!elements.isEmpty()) {
 			final Object[] updateElements = elements.toArray(new Object[elements.size()]);
 			Display display = viewer.getControl().getDisplay();
@@ -141,25 +161,31 @@ public class ProblemLabelDecorator extends BaseLabelProvider implements
 		}
 	}
 
-	private List<Object> getAffectedElements(Set<IResource> resources) {
+	private List<Object> getAffectedElements(Set<IPath> paths) {
 		List<Object> result = new ArrayList<>();
 		if (viewer.getContentProvider() instanceof IStructuredContentProvider) {
 			IStructuredContentProvider contentProvider = (IStructuredContentProvider) viewer.getContentProvider();
-			getAffectedElements(resources, contentProvider.getElements(null),
+			getAffectedElements(paths, contentProvider.getElements(null),
 					contentProvider, result);
 		}
 		return result;
 	}
 
-	private void getAffectedElements(Set<IResource> resources,
-			Object[] elements, IStructuredContentProvider contentProvider,
-			List<Object> result) {
+	private void getAffectedElements(Set<IPath> paths, Object[] elements,
+			IStructuredContentProvider contentProvider, List<Object> result) {
 		for (Object element : elements) {
-			IResource resource = AdapterUtils.adapt(element, IResource.class);
-			if (resource != null && resources.contains(resource)) {
+			IPath path = AdapterUtils.adapt(element, IPath.class);
+			if (path == null) {
+				IResource resource = AdapterUtils.adapt(element,
+						IResource.class);
+				if (resource != null) {
+					path = resource.getLocation();
+				}
+			}
+			if (path != null && paths.contains(path)) {
 				result.add(element);
 				if (contentProvider instanceof ITreeContentProvider) {
-					getAffectedElements(resources,
+					getAffectedElements(paths,
 							((ITreeContentProvider) contentProvider)
 									.getChildren(element),
 							contentProvider, result);
