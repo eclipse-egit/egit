@@ -16,6 +16,24 @@
       "revId": "f3b88080e5fc3008a4bf44513e4c893f0cad39ec",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd269dcc_a9a064b4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-06-30T13:47:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee319ee9_5865b3a7",
+      "revId": "f3b88080e5fc3008a4bf44513e4c893f0cad39ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
