@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da17bca2_12639515",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitDecoratorPreferencePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-06-30T17:06:12Z",
+      "side": 1,
+      "message": "Done. Good catch, I did not notice that those are multiple different variable selection dialogs.",
+      "parentUuid": "9b5c856d_08e7a7ed",
+      "range": {
+        "startLine": 168,
+        "startChar": 33,
+        "endLine": 168,
+        "endChar": 40
+      },
+      "revId": "570ef017f946b47c397f109f3534e220301f293e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "159f824c_cbb1bf3c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitDecoratorPreferencePage.java",
         "patchSetId": 1
