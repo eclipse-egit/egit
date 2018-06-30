@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a874c51f_d2612230",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/HistoryPreferencePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-06-30T17:39:53Z",
+      "side": 1,
+      "message": "Done. However, I left \"shorten\" instead of \"elide\". I consider myself fluent in English, but I\u0027ve never heard that word before, so I assume that many other users would have a similar problem understanding this.",
+      "parentUuid": "e72fb094_3f2a7682",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 53
+      },
+      "revId": "540c366142b323841378c2c1bf6fcbafb6a5b925",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1a87ad9_62fdc8c2",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/HistoryPreferencePage.java",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "b7ac9f18_4fafa579",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/HistoryPreferencePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-06-30T17:39:53Z",
+      "side": 1,
+      "message": "Done. Yes, much more simple solution.",
+      "parentUuid": "b1a87ad9_62fdc8c2",
+      "revId": "540c366142b323841378c2c1bf6fcbafb6a5b925",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34d658ac_e3557f7d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/HistoryPreferencePage.java",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2018-06-30T15:04:18Z",
       "side": 1,
       "message": "Bah. This FieldEditorPreferencePage and its FieldEditors are crap. The individual editors allassumethattheirparentis the fieldEditorParent; if there are intermediate composites, everything goes wonky.\n\nThe adjustGridLayout at the end is not needed, super.createControl() will do that anyway. But it\u0027ll set the fieldEditorParent to have 2 columns, not the groups. An that\u0027s the reason why all our groups need a horizontal span of 2.\n\nIn CommittingPreferencePage we have the same thing but with an IntegerFieldEditor at the end: that one will set the group\u0027s layout to two columns. So there it works by chance, but will fail as soon as one adds another BooleanFieldEditor after the integer field.\n\nYuck yuck yuck.\n\nIn any case, this second fixGridLayout call is not needed, and neither is the adjustGridLayout below.\n\nWould have to check whether these editors also fiddle with the margins. If not, why not set the margins up front correctly?",
+      "revId": "540c366142b323841378c2c1bf6fcbafb6a5b925",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93c5fc06_9b5bb261",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/HistoryPreferencePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-06-30T17:39:53Z",
+      "side": 1,
+      "message": "In fact, they manipulate the margins. I\u0027ve now documented that in the Javadoc.",
+      "parentUuid": "34d658ac_e3557f7d",
       "revId": "540c366142b323841378c2c1bf6fcbafb6a5b925",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
