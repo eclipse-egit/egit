@@ -13,8 +13,8 @@
 package org.eclipse.egit.core.test.op;
 
 import static java.util.Arrays.asList;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -103,7 +103,7 @@ public class RemoveFromIndexOperationTest extends GitTestCase {
 	}
 
 	@Test
-	public void shouldUnstExistingFile() throws Exception {
+	public void shouldUnstageExistingFile() throws Exception {
 		// given
 		IFile file1 = createFileInRepo("a.txt");
 		new AddToIndexOperation(asList(file1)).execute(null);
