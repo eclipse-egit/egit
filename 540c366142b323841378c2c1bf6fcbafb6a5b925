@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e72fb094_3f2a7682",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/HistoryPreferencePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-30T15:04:18Z",
+      "side": 1,
+      "message": "This text constant says \"Shorten long tag and branch names at start\". I had trouble understanding what that meant. At the start of what? Of the Eclipse IDE? I had to look up in the code what we do when it\u0027s set to grok it. Please rephrase to\n\"Elide long tag and branch names at the front (... at the beginning)\" or some such.",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 53
+      },
+      "revId": "540c366142b323841378c2c1bf6fcbafb6a5b925",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1a87ad9_62fdc8c2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/HistoryPreferencePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-30T15:04:18Z",
+      "side": 1,
+      "message": "Alternative: move this last BooleanFieldEditor up to before the IntegerFieldEditors (line 86). Then you don\u0027t need this fixGridLayout at all.\n\nThis layout framework is crazy spaghetti. See comment below. In this case, since moving this last BooleanFieldEditor up looks better anyway, I\u0027d go for that solution.",
+      "revId": "540c366142b323841378c2c1bf6fcbafb6a5b925",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34d658ac_e3557f7d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/HistoryPreferencePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-06-30T15:04:18Z",
+      "side": 1,
+      "message": "Bah. This FieldEditorPreferencePage and its FieldEditors are crap. The individual editors allassumethattheirparentis the fieldEditorParent; if there are intermediate composites, everything goes wonky.\n\nThe adjustGridLayout at the end is not needed, super.createControl() will do that anyway. But it\u0027ll set the fieldEditorParent to have 2 columns, not the groups. An that\u0027s the reason why all our groups need a horizontal span of 2.\n\nIn CommittingPreferencePage we have the same thing but with an IntegerFieldEditor at the end: that one will set the group\u0027s layout to two columns. So there it works by chance, but will fail as soon as one adds another BooleanFieldEditor after the integer field.\n\nYuck yuck yuck.\n\nIn any case, this second fixGridLayout call is not needed, and neither is the adjustGridLayout below.\n\nWould have to check whether these editors also fiddle with the margins. If not, why not set the margins up front correctly?",
+      "revId": "540c366142b323841378c2c1bf6fcbafb6a5b925",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
