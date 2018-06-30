@@ -16,6 +16,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.BooleanFieldEditor;
+import org.eclipse.jface.preference.FieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.IntegerFieldEditor;
@@ -84,6 +85,8 @@ public class HistoryPreferencePage extends FieldEditorPreferencePage implements
 				UIPreferences.RESOURCEHISTORY_SHOW_EMAIL_ADDRESSES,
 				UIText.HistoryPreferencePage_toggleEmailAddresses,
 				showGroup));
+		addField(new BooleanFieldEditor(UIPreferences.HISTORY_CUT_AT_START,
+				UIText.HistoryPreferencePage_toggleShortenAtStart, showGroup));
 		addField(new IntegerFieldEditor(UIPreferences.HISTORY_MAX_NUM_COMMITS,
 				UIText.ResourceHistory_MaxNumCommitsInList,
 				showGroup));
@@ -96,10 +99,8 @@ public class HistoryPreferencePage extends FieldEditorPreferencePage implements
 				showGroup));
 		addField(new IntegerFieldEditor(UIPreferences.HISTORY_MAX_DIFF_LINES,
 				UIText.HistoryPreferencePage_MaxDiffLines, showGroup));
-
-		addField(new BooleanFieldEditor(UIPreferences.HISTORY_CUT_AT_START,
-				UIText.HistoryPreferencePage_toggleShortenAtStart, showGroup));
 		updateMargins(showGroup);
+
 		Group commentGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		// we need a span of 2 to accommodate the field editors
 		GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
@@ -120,12 +121,17 @@ public class HistoryPreferencePage extends FieldEditorPreferencePage implements
 				UIText.ResourceHistory_toggleCommentFill,
 				commentGroup));
 		updateMargins(commentGroup);
-		adjustGridLayout();
 	}
 
+	/**
+	 * {@link FieldEditor} sets the margin of its parent to zero in its
+	 * <code>createControl(Composite)</code> method. Therefore fix the group
+	 * margin only after adding the field editors.
+	 *
+	 * @param group
+	 *            group control
+	 */
 	private void updateMargins(Group group) {
-		// make sure there is some room between the group border
-		// and the controls in the group
 		GridLayout layout = (GridLayout) group.getLayout();
 		layout.marginWidth = 5;
 		layout.marginHeight = 5;
