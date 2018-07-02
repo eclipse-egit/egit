@@ -31,6 +31,7 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceRuleFactory;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -134,11 +135,14 @@ public class ProjectUtil {
 			IProgressMonitor monitor) throws CoreException {
 		SubMonitor progress = SubMonitor.convert(monitor,
 				CoreText.ProjectUtil_refreshingProjects, projects.length);
+		IResourceRuleFactory ruleFactory = ResourcesPlugin.getWorkspace()
+				.getRuleFactory();
 		for (IProject p : projects) {
 			if (progress.isCanceled())
 				break;
 			IPath projectLocation = p.getLocation();
-			if (projectLocation == null) {
+			if (projectLocation == null
+					|| !p.contains(ruleFactory.refreshRule(p))) {
 				progress.worked(1);
 				continue;
 			}

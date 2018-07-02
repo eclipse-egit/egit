@@ -19,8 +19,8 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -98,7 +98,7 @@ public class ProjectUtilTest extends GitTestCase {
 			IProject[] projectSelf = ProjectUtil.getProjectsContaining(
 					repository.getRepository(),
 					Collections.singleton("Project-1"));
-			Set<String> files = new TreeSet<String>();
+			Set<String> files = new TreeSet<>();
 			files.add("Project-1/xxx");
 			files.add("Project-1/zzz");
 			IProject[] multiFile = ProjectUtil.getProjectsContaining(
@@ -147,7 +147,7 @@ public class ProjectUtilTest extends GitTestCase {
 			IProject[] projectSelf = ProjectUtil.getProjectsContaining(
 					repository.getRepository(),
 					Collections.singleton("Project-1"));
-			Set<String> files = new TreeSet<String>();
+			Set<String> files = new TreeSet<>();
 			files.add("Project-1/xxx");
 			files.add("Project-1/zzz");
 			IProject[] multiFile = ProjectUtil.getProjectsContaining(
@@ -197,10 +197,8 @@ public class ProjectUtilTest extends GitTestCase {
 
 	@Test
 	public void testRefreshValidProjects() throws Exception {
-		IProject p = mock(IProject.class);
-		when(p.getLocation()).thenReturn(project.getProject().getLocation());
-		IProject[] projects = new IProject[1];
-		projects[0] = p;
+		IProject p = spy(project.getProject());
+		IProject[] projects = { p };
 		ProjectUtil.refreshValidProjects(projects, new NullProgressMonitor());
 		verify(p).refreshLocal(eq(IResource.DEPTH_INFINITE),
 				any(IProgressMonitor.class));
@@ -248,21 +246,21 @@ public class ProjectUtilTest extends GitTestCase {
 
 	@Test
 	public void testFindProjectFiles() {
-		Collection<File> files = new ArrayList<File>();
+		Collection<File> files = new ArrayList<>();
 		assertTrue(ProjectUtil.findProjectFiles(files, gitDir.getParentFile(),
 				true, new NullProgressMonitor()));
 	}
 
 	@Test
 	public void testFindProjectFilesNullDir() {
-		Collection<File> files = new ArrayList<File>();
+		Collection<File> files = new ArrayList<>();
 		assertFalse(ProjectUtil.findProjectFiles(files, null, true,
 				new NullProgressMonitor()));
 	}
 
 	@Test
 	public void testFindProjectFilesEmptyDir() throws Exception {
-		Collection<File> files = new ArrayList<File>();
+		Collection<File> files = new ArrayList<>();
 		File dir = new File(gitDir.getParentFile().getPath() + File.separator
 				+ "xxx");
 		FileUtils.mkdir(dir);
@@ -275,7 +273,7 @@ public class ProjectUtilTest extends GitTestCase {
 		project2 = new TestProject(true, "Project-1/Project-Nested");
 		File workingDir = gitDir.getParentFile();
 
-		Collection<File> nestedResult = new ArrayList<File>();
+		Collection<File> nestedResult = new ArrayList<>();
 		boolean nestedFound = ProjectUtil.findProjectFiles(nestedResult,
 				workingDir, true,
 				new NullProgressMonitor());
@@ -287,7 +285,7 @@ public class ProjectUtilTest extends GitTestCase {
 		assertThat(nestedResult, hasItem(new File(workingDir,
 				"Project-1/Project-Nested/.project")));
 
-		Collection<File> noNestedResult = new ArrayList<File>();
+		Collection<File> noNestedResult = new ArrayList<>();
 		boolean noNestedFound = ProjectUtil.findProjectFiles(noNestedResult,
 				workingDir, false, new NullProgressMonitor());
 		assertTrue("Expected to find projects", noNestedFound);
