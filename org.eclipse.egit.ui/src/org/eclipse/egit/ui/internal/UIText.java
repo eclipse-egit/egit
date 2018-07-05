@@ -3055,6 +3055,9 @@ public class UIText extends NLS {
 	public static String FileRevisionEditorInput_NameAndRevisionTitle;
 
 	/** */
+	public static String FileRevisionEditorInput_cannotWriteTempFile;
+
+	/** */
 	public static String FileTreeContentProvider_NonWorkspaceResourcesNode;
 
 	/** */

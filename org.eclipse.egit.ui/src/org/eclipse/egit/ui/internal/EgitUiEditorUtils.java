@@ -53,10 +53,15 @@ import org.eclipse.ui.texteditor.ITextEditor;
 public class EgitUiEditorUtils {
 
 	/**
+	 * Opens an {@link IFileRevision} is the configured editor.
+	 *
 	 * @param page
+	 *            to open the editor in
 	 * @param revision
+	 *            to open
 	 * @param monitor
-	 * @return the part
+	 *            for progress reporting
+	 * @return the part; may be {@code null} if an external editor was opened
 	 * @throws CoreException
 	 */
 	public static IEditorPart openEditor(IWorkbenchPage page,
@@ -94,35 +99,39 @@ public class EgitUiEditorUtils {
 		SubMonitor progress = SubMonitor.convert(monitor, 1);
 		FileRevisionEditorInput fileRevEditorInput = FileRevisionEditorInput
 				.createEditorInputFor(revision, progress.newChild(1));
-		openEditor(page, fileRevEditorInput, EditorsUI.DEFAULT_TEXT_EDITOR_ID);
+		page.openEditor(fileRevEditorInput, EditorsUI.DEFAULT_TEXT_EDITOR_ID);
 	}
 
 	/**
+	 * Opens an editor for a {@link FileRevisionEditorInput}.
+	 *
 	 * @param page
+	 *            to open the editor in
 	 * @param editorInput
-	 * @return the part
+	 *            to open
+	 * @return the part; may be {@code null} if an external editor was opened
 	 * @throws PartInitException
 	 */
 	public static IEditorPart openEditor(IWorkbenchPage page,
 			FileRevisionEditorInput editorInput) throws PartInitException {
-		String id = getEditorId(editorInput);
-		return openEditor(page, editorInput, id);
+		return openEditor(page, editorInput, getEditor(editorInput));
 	}
 
 	/**
 	 * @param page
 	 * @param editorInput
-	 * @param editorId
+	 * @param editor
 	 * @return the part
 	 * @throws PartInitException
 	 */
 	private static IEditorPart openEditor(IWorkbenchPage page,
-			FileRevisionEditorInput editorInput, String editorId)
+			FileRevisionEditorInput editorInput, IEditorDescriptor editor)
 			throws PartInitException {
+		String editorId = editor.getId();
 		try {
 			IEditorPart part = page.openEditor(editorInput, editorId,
 					OpenStrategy.activateOnOpen());
-			if (part == null) {
+			if (part == null && !editor.isOpenExternal()) {
 				throw new PartInitException(NLS.bind(
 						UIText.EgitUiUtils_CouldNotOpenEditorMessage, editorId));
 			}
@@ -167,24 +176,22 @@ public class EgitUiEditorUtils {
 		return null;
 	}
 
-	private static String getEditorId(FileRevisionEditorInput editorInput) {
-		String id = getEditorId(editorInput.getFileRevision().getName(),
-				getContentType(editorInput));
-		return id;
-	}
-
-	private static String getEditorId(String fileName, IContentType type) {
+	private static IEditorDescriptor getEditor(
+			FileRevisionEditorInput editorInput) {
 		IEditorRegistry registry = PlatformUI.getWorkbench()
 				.getEditorRegistry();
+		String fileName = editorInput.getFileRevision().getName();
+		IContentType type = getContentType(editorInput);
 		IEditorDescriptor descriptor = registry
 				.getDefaultEditor(fileName, type);
-		String id;
-		if (descriptor == null || descriptor.isOpenExternal()) {
-			id = EditorsUI.DEFAULT_TEXT_EDITOR_ID;
-		} else {
-			id = descriptor.getId();
+		if (descriptor != null) {
+			descriptor = IDE.overrideDefaultEditorAssociation(editorInput, type,
+					descriptor);
 		}
-		return id;
+		if (descriptor == null) {
+			descriptor = registry.findEditor(EditorsUI.DEFAULT_TEXT_EDITOR_ID);
+		}
+		return descriptor;
 	}
 
 	private static IContentType getContentType(
