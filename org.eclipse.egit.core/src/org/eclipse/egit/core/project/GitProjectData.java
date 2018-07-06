@@ -73,9 +73,9 @@ import org.eclipse.team.core.TeamException;
  */
 public class GitProjectData {
 
-	private static final Map<IProject, GitProjectData> projectDataCache = new HashMap<IProject, GitProjectData>();
+	private static final Map<IProject, GitProjectData> projectDataCache = new HashMap<>();
 
-	private static Set<RepositoryMappingChangeListener> repositoryChangeListeners = new HashSet<RepositoryMappingChangeListener>();
+	private static Set<RepositoryMappingChangeListener> repositoryChangeListeners = new HashSet<>();
 
 	@SuppressWarnings("synthetic-access")
 	private static final IResourceChangeListener rcl = new RCL();
@@ -189,7 +189,7 @@ public class GitProjectData {
 				return super.belongsTo(family);
 			}
 		};
-
+		job.setUser(false);
 		job.schedule();
 	}
 
@@ -426,7 +426,7 @@ public class GitProjectData {
 
 	private final Map<IPath, RepositoryMapping> mappings = new HashMap<>();
 
-	private final Set<IResource> protectedResources = new HashSet<IResource>();
+	private final Set<IResource> protectedResources = new HashSet<>();
 
 	/**
 	 * Construct a {@link GitProjectData} for the mapping
