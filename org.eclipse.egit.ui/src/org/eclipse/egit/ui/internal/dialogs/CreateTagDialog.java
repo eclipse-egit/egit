@@ -341,6 +341,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 			}
 		};
 		job.setSystem(true);
+		job.setUser(false);
 		job.schedule();
 	}
 
