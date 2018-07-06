@@ -82,6 +82,7 @@ public class GarbageCollectCommand extends
 				return Status.OK_STATUS;
 			}
 		};
+		job.setUser(true);
 		IServiceLocator serviceLocator = HandlerUtil.getActiveSite(event);
 		if (serviceLocator != null) {
 			IWorkbenchSiteProgressService service = CommonUtils.getService(

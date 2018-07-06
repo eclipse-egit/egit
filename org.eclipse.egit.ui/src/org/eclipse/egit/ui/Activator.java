@@ -431,6 +431,8 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 				return Status.OK_STATUS;
 			}
 		};
+		job.setSystem(true);
+		job.setUser(false);
 		job.schedule();
 	}
 
