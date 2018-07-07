@@ -34,6 +34,24 @@
       "revId": "32505f5d1c4eeb75e086c34853dd10fec7489745",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "226be999_c9361b38",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-07T16:11:21Z",
+      "side": 1,
+      "message": "Probably doesn\u0027t matter here, since the only listener we have here is the GitLightWeightDecorator. However, non-system jobs using scheduling rules may interrupt the auto build job. Compare bug 459525; relevant code appears to be AutoBuildJob.isInterrupted() (the isBlocking() call).\n\nI\u0027m a bit puzzled by your statement that this job might be slow on workbench start. Perhaps we should analyze this and check if those events are needed on workbench start, or whether we might suppress them in some cases, or whether we can do without altogether and somehow refresh the decorator explicitly otherwise. See https://git.eclipse.org/r/#/c/68494/ and bug 489696 for why the decorator listens on that event. Since it\u0027s the only listener for that event we might really have a chance to completely get rid of it and of this job.",
+      "parentUuid": "3fe2b222_d94f2087",
+      "revId": "32505f5d1c4eeb75e086c34853dd10fec7489745",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
