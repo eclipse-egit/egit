@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "222821ab_668b0422",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/revision/FileRevisionEditorInput.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-07-07T04:47:00Z",
+      "side": 1,
+      "message": "This needs to be limited by length. The prefix + storage.getName() together can exceed MAX_PATH (260) characters on Windows, if the file already had a very long name when being checked in.\n\nBesides that, everything looks good to me. I tested on Windows and it worked as expected. I thought I could trick you into problems with the read-only flag when opening the same revision multiple times, but since that uses a new temp path every time, also that looks good. :)",
+      "range": {
+        "startLine": 348,
+        "startChar": 2,
+        "endLine": 355,
+        "endChar": 3
+      },
+      "revId": "36bdbca6f371de1cee99217acba2d465b469fbad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
