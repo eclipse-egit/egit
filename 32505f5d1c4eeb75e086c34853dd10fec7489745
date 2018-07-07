@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05cbb19e_79c80ca7",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-07T13:10:51Z",
+      "side": 1,
+      "message": "setSystem(true), too?",
+      "revId": "32505f5d1c4eeb75e086c34853dd10fec7489745",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
