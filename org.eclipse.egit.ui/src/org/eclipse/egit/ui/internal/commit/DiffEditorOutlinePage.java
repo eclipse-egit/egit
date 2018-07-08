@@ -224,19 +224,21 @@ public class DiffEditorOutlinePage extends NestedContentOutlinePage {
 						}
 					}
 				});
-			}
-			if (selected.size() == 1) {
-				menuManager.add(new Separator());
-				menuManager.add(new Action(
-						UIText.CommitFileDiffViewer_CompareMenuLabel) {
+				if (selected.size() == 1) {
+					menuManager.add(new Separator());
+					menuManager.add(new Action(
+							UIText.CommitFileDiffViewer_CompareMenuLabel) {
 
-					@Override
-					public void run() {
-						FileDiffRegion fileDiff = selected.iterator().next();
-						DiffViewer.showTwoWayFileDiff(fileDiff.getRepository(),
-								fileDiff.getDiff());
-					}
-				});
+						@Override
+						public void run() {
+							FileDiffRegion fileDiff = selected.iterator()
+									.next();
+							DiffViewer.showTwoWayFileDiff(
+									fileDiff.getRepository(),
+									fileDiff.getDiff());
+						}
+					});
+				}
 			}
 		});
 		Menu menu = contextMenu.createContextMenu(viewer.getTree());

@@ -39,7 +39,6 @@ import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
@@ -842,11 +841,8 @@ public class DiffViewer extends HyperlinkSourceViewer {
 							newCommit.getName(), oldCommit.getName(), false,
 							page);
 				} else {
-					IPath location = new Path(
-							repository.getWorkTree().getAbsolutePath())
-									.append(np);
-					CompareUtils.compare(location, repository,
-							newCommit.getName(), oldCommit.getName(), false,
+					CompareUtils.compareBetween(repository, np, op,
+							newCommit.getName(), oldCommit.getName(),
 							page);
 				}
 			} catch (IOException e) {

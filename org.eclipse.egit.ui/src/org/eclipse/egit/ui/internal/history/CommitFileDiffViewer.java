@@ -366,7 +366,7 @@ public class CommitFileDiffViewer extends TableViewer {
 			boolean oneOrMoreSelected = !sel.isEmpty();
 			openThisVersion.setEnabled(oneOrMoreSelected && !deleteSelected);
 			openPreviousVersion.setEnabled(oneOrMoreSelected && !addSelected);
-			compare.setEnabled(sel.size() == 1);
+			compare.setEnabled(sel.size() == 1 && !addSelected);
 			blame.setEnabled(oneOrMoreSelected);
 			if (sel.size() == 1) {
 				FileDiff diff = (FileDiff) sel.getFirstElement();
