@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77d62428_5a2f3213",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3115,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-08T19:20:16Z",
+      "side": 1,
+      "message": "Also, I think this logic is wrong. Currently I can click \"Amend\" and then switch to another branch, and the staging view updates correctly. With this change, it doesn\u0027t. The commit message remains. Moreover, because of the soft reset, I end up with the same unstaged changes on the new branch.",
+      "revId": "494440419b5496cf40b50bed3e82b9c032182e24",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
