@@ -2737,7 +2737,7 @@ public class UIText extends NLS {
 	public static String PushResultDialog_title;
 
 	/** */
-	public static String PushResultTable_MesasgeText;
+	public static String PushResultTable_MessageText;
 
 	/** */
 	public static String PushResultTable_repository;
