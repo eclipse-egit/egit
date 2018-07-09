@@ -203,7 +203,7 @@ class PushResultTable {
 		treeViewer.setContentProvider(new RefUpdateContentProvider());
 		// detail message
 		Group messageGroup = new Group(root, SWT.NONE);
-		messageGroup.setText(UIText.PushResultTable_MesasgeText);
+		messageGroup.setText(UIText.PushResultTable_MessageText);
 		GridLayoutFactory.swtDefaults().applyTo(messageGroup);
 		GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
 				.applyTo(messageGroup);
