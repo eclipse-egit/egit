@@ -32,8 +32,12 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.internal.history.FileDiff;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
 
 /**
@@ -59,7 +63,18 @@ public class ImportChangedProjectsCommand
 		}
 		Set<File> dotProjectFiles = findDotProjectFiles(changedFiles,
 				repository);
-		importProjects(dotProjectFiles);
+		if (dotProjectFiles.isEmpty()) {
+			Display.getDefault().asyncExec(() -> {
+				Shell shell = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getShell();
+				MessageDialog.openInformation(shell,
+						UIText.ImportChangedProjectsCommand_NoProjectsChangedTitle,
+						UIText.ImportChangedProjectsCommand_NoProjectsChangedMessage);
+
+			});
+		} else {
+			importProjects(dotProjectFiles);
+		}
 		return null;
 	}
 
