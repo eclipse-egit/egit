@@ -4649,6 +4649,12 @@ public class UIText extends NLS {
 	public static String ImportChangedProjectsCommand_ImportingChangedProjects;
 
 	/** */
+	public static String ImportChangedProjectsCommand_NoProjectsChangedTitle;
+
+	/** */
+	public static String ImportChangedProjectsCommand_NoProjectsChangedMessage;
+
+	/** */
 	public static String InteractiveRebaseView_abortItem_text;
 
 	/** */
