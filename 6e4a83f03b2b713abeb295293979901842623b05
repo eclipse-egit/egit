@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ecba5b77_4c42922b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiffContentProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-15T13:47:38Z",
+      "side": 1,
+      "message": "What exactly does volatile give us? Reads and writes to references are atomic in Java. Besides, all accesses to this variable are in the UI thread.",
+      "parentUuid": "dc3b0935_8e72ad26",
+      "range": {
+        "startLine": 53,
+        "startChar": 24,
+        "endLine": 53,
+        "endChar": 30
+      },
+      "revId": "6e4a83f03b2b713abeb295293979901842623b05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1bb9326_b43d458e",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiffContentProvider.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-07-09T07:34:20Z",
       "side": 1,
       "message": "I believe we are in UI thread here, if not, this must be volatile and currentInput too.",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 16
+      },
+      "revId": "6e4a83f03b2b713abeb295293979901842623b05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ffd0d96_17140d0f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiffContentProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-15T13:47:38Z",
+      "side": 1,
+      "message": "Yes, we are in the UI thread.",
+      "parentUuid": "e1bb9326_b43d458e",
       "range": {
         "startLine": 69,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d7b0eb6a_f5041be5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiffContentProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-15T13:47:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ae7b9bf_107b1113",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 4
+      },
+      "revId": "6e4a83f03b2b713abeb295293979901842623b05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7908b038_aa53e8a1",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiffContentProvider.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2018-07-09T07:34:20Z",
       "side": 1,
       "message": "If we revert if and return new Object[0] here, the code below would be easier to read.",
+      "range": {
+        "startLine": 90,
+        "startChar": 3,
+        "endLine": 90,
+        "endChar": 5
+      },
+      "revId": "6e4a83f03b2b713abeb295293979901842623b05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ae84bf5_eb021d10",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiffContentProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-15T13:47:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7908b038_aa53e8a1",
       "range": {
         "startLine": 90,
         "startChar": 3,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f60e3283_bdd04383",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiffContentProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-15T13:47:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b9f6adb_d92b8ae3",
+      "range": {
+        "startLine": 99,
+        "startChar": 12,
+        "endLine": 99,
+        "endChar": 19
+      },
+      "revId": "6e4a83f03b2b713abeb295293979901842623b05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b811d135_3e8887a1",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiffContentProvider.java",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "9b0e0936_2acb6431",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiffContentProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-15T13:47:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b811d135_3e8887a1",
+      "range": {
+        "startLine": 106,
+        "startChar": 8,
+        "endLine": 106,
+        "endChar": 11
+      },
+      "revId": "6e4a83f03b2b713abeb295293979901842623b05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d088d0e0_e36841cc",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiffContentProvider.java",
         "patchSetId": 2
@@ -151,6 +295,30 @@
       "writtenOn": "2018-07-09T07:34:20Z",
       "side": 1,
       "message": "I would rather use repository as rule. In our case where repo is ~15 GB, running two jobs in parallel on same repo doesn\u0027t make sense due heavy I/O.",
+      "range": {
+        "startLine": 212,
+        "startChar": 22,
+        "endLine": 212,
+        "endChar": 30
+      },
+      "revId": "6e4a83f03b2b713abeb295293979901842623b05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9a43ffb_cfb220b2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiffContentProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-15T13:47:38Z",
+      "side": 1,
+      "message": "For smaller repositories it may make sense. Until DiffEntry.scan() and RenameDetector.compute() are made cancelable, I think using the TreeWalk will give a quicker UI update if the repository didn\u0027t change (only the \"focus\" resource changed).",
+      "parentUuid": "d088d0e0_e36841cc",
       "range": {
         "startLine": 212,
         "startChar": 22,
