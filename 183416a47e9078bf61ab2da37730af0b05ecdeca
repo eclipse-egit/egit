@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56d245ad_91db9ac3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1937,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-16T13:08:50Z",
+      "side": 1,
+      "message": "Previously, this was also done when no new job was started. Was that unnecessary, or should the new code also do this in that case?",
+      "revId": "183416a47e9078bf61ab2da37730af0b05ecdeca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
