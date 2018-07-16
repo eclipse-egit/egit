@@ -67,6 +67,23 @@
       "revId": "7a066533c320f51119f0f7e99a518985d8d4eb87",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8ab82ef_b9cc656d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2726,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-16T20:35:48Z",
+      "side": 1,
+      "message": "Another thought: I think the JobChangeAdapter would need to be set on the job before the job gets scheduled. Otherwise it might theoretically be possible that the job is already finished before the listener is added, and then the listener would never be called.\n\nAlso, I\u0027m not quite sure about the order in which things ought to be happening. GenereateHistoryJob.updateUI() calls back to showCommitList() here, which runs an asyncExec(). So does the listener, but newly _after_ showCommitList().\n\nLooks like this needs careful thought. showCommitList() is called _only_ by the job\u0027s updateUI(). Maybe we\u0027ll have to do the showHead/showTag/etc stuff in showCommitList() if we do schedule a new job, _and_ in inputSet() if we don\u0027t.",
+      "revId": "7a066533c320f51119f0f7e99a518985d8d4eb87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
