@@ -34,6 +34,24 @@
       "revId": "183416a47e9078bf61ab2da37730af0b05ecdeca",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58f1f065_cbeff378",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1937,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-16T16:31:15Z",
+      "side": 1,
+      "message": "Nope, not a no-op. The table no longer updates when you select a branch or tag in the git repositories view. Previously it would reveal the selected branch or tag commit.",
+      "parentUuid": "11ba61eb_148fa83d",
+      "revId": "183416a47e9078bf61ab2da37730af0b05ecdeca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
