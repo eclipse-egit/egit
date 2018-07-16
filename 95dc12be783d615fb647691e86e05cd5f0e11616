@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "132d4619_c4678f06",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1927,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2018-07-16T13:56:55Z",
+      "side": 1,
+      "message": "This was the reason for bad (broken) scrolling. We trigger this job too many times...",
+      "range": {
+        "startLine": 1927,
+        "startChar": 9,
+        "endLine": 1927,
+        "endChar": 30
+      },
+      "revId": "95dc12be783d615fb647691e86e05cd5f0e11616",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
