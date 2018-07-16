@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9d123ed_b5b31f93",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1918,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-16T16:31:15Z",
+      "side": 1,
+      "message": "Strange formatting.",
+      "revId": "7a066533c320f51119f0f7e99a518985d8d4eb87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48fae3fc_3d9534a1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1923,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-16T16:31:15Z",
+      "side": 1,
+      "message": "I see some incremental loading in the GenerateHistoryJob. How would this interact with newly using a JobChangeAdapter?\n\nI guess it was previously frequently a no-op when a job got scheduled since it only waited on the synchronized block, but the generateHistoryJob updates the UI only at the end. I must confess the purpose of the incremental loading is then a bit unclear to me...",
+      "revId": "7a066533c320f51119f0f7e99a518985d8d4eb87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "606ebffb_70e0f24f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1950,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-16T16:31:15Z",
+      "side": 1,
+      "message": "These choices are actually mutually exclusive, and if none of them is true, we don\u0027t even need the whole JobChangeAdapter.",
+      "revId": "7a066533c320f51119f0f7e99a518985d8d4eb87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e80d0e1_b198cf30",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2715,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-16T16:31:15Z",
+      "side": 1,
+      "message": "Why the local variable \"old\"? Either we\u0027re accessing this \"job\" variable only in the UI thread and then simply using \"job\" is fine, or we don\u0027t and then we also need to use \"old.cancel()\".",
+      "revId": "7a066533c320f51119f0f7e99a518985d8d4eb87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
