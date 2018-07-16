@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9e89253e_cee29695",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiffContentProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2018-07-16T06:25:00Z",
+      "side": 1,
+      "message": "If everything is in one thread, nothing. I was not sure if this is the case, because jobs usually means more then one thread.",
+      "parentUuid": "ecba5b77_4c42922b",
+      "range": {
+        "startLine": 53,
+        "startChar": 24,
+        "endLine": 53,
+        "endChar": 30
+      },
+      "revId": "6e4a83f03b2b713abeb295293979901842623b05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1bb9326_b43d458e",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiffContentProvider.java",
         "patchSetId": 2
