@@ -37,8 +37,10 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -1893,21 +1895,16 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			actions.showAllResourceVersionsAction.setEnabled(filtersActive);
 
 			setErrorMessage(null);
+			Job initJob;
 			try {
-				initAndStartRevWalk(false);
+				initJob = initAndStartRevWalk(false);
 			} catch (IllegalStateException e) {
 				Activator.handleError(e.getMessage(), e, true);
 				return false;
 			}
 
-			if (showHead)
-				showHead(repo);
-			if (showRef)
-				showRef(ref, repo);
-			if (showTag)
-				showTag(ref, repo);
-			if (selection != null)
-				graph.selectCommitStored(selection);
+			showSelection(showHead, showRef, showTag, repo, selection, ref,
+					initJob);
 
 			return true;
 		} finally {
@@ -1915,6 +1912,43 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				GitTraceLocation.getTrace().traceExit(
 						GitTraceLocation.HISTORYVIEW.getLocation());
 		}
+	}
+
+	private void showSelection(boolean showHead, boolean showRef,
+			boolean showTag,
+			Repository repo, RevCommit selection, Ref ref, Job initJob) {
+		if (initJob == null) {
+			return;
+		}
+		initJob.addJobChangeListener(new JobChangeAdapter() {
+			@Override
+			public void done(IJobChangeEvent event) {
+				if (event.getResult() == null || !event.getResult().isOK()) {
+					return;
+				}
+				Control control = graph.getControl();
+				if (control.isDisposed()) {
+					return;
+				}
+				control.getDisplay().asyncExec(() -> {
+					if (control.isDisposed()) {
+						return;
+					}
+					if (showHead) {
+						showHead(repo);
+					}
+					if (showRef) {
+						showRef(ref, repo);
+					}
+					if (showTag) {
+						showTag(ref, repo);
+					}
+					if (selection != null) {
+						graph.selectCommitStored(selection);
+					}
+				});
+			}
+		});
 	}
 
 	private void showHead(Repository repo) {
@@ -2216,18 +2250,18 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		warningComposite.getParent().layout(true);
 	}
 
-	void initAndStartRevWalk(boolean forceNewWalk) throws IllegalStateException {
+	Job initAndStartRevWalk(boolean forceNewWalk) throws IllegalStateException {
 		try {
 			if (trace)
 				GitTraceLocation.getTrace().traceEntry(
 						GitTraceLocation.HISTORYVIEW.getLocation());
 
 			if (input == null)
-				return;
+				return null;
 			Repository db = input.getRepository();
 			if (repoHasBeenRemoved(db)) {
 				clearHistoryPage();
-				return;
+				return null;
 			}
 
 			AnyObjectId headId = resolveHead(db, true);
@@ -2236,7 +2270,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				currentFetchHeadId = null;
 				currentRepo = db;
 				clearViewers();
-				return;
+				return null;
 			}
 			AnyObjectId fetchHeadId = resolveFetchHead(db);
 
@@ -2266,10 +2300,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 				fileDiffWalker = createFileWalker(walk, db, paths);
 
-				loadInitialHistory(walk);
+				return loadInitialHistory(walk);
 			} else {
 				// needed for context menu and double click
 				graph.setHistoryPageInput(input);
+				return null;
 			}
 		} finally {
 			if (trace)
@@ -2672,8 +2707,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	 *
 	 * @param walk
 	 *            the revwalk, non null
+	 * @return scheduled job
 	 */
-	private void loadInitialHistory(@NonNull RevWalk walk) {
+	private Job loadInitialHistory(@NonNull RevWalk walk) {
 		job = new GenerateHistoryJob(this, graph.getControl(), walk, resources);
 		job.setRule(pageSchedulingRule);
 		job.setLoadHint(INITIAL_ITEM);
@@ -2682,6 +2718,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					GitTraceLocation.HISTORYVIEW.getLocation(),
 					"Scheduling initial GenerateHistoryJob"); //$NON-NLS-1$
 		schedule(job);
+		return job;
 	}
 
 	/**
