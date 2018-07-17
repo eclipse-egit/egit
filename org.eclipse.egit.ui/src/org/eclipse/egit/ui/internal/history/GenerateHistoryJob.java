@@ -25,11 +25,11 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
-import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jface.resource.ResourceManager;
+import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevFlag;
 import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -92,27 +92,23 @@ class GenerateHistoryJob extends Job {
 						GitTraceLocation.getTrace().trace(
 								GitTraceLocation.HISTORYVIEW.getLocation(),
 								"Filling commit list"); //$NON-NLS-1$
-					// ensure that filling (here) and reading (CommitGraphTable)
-					// the commit list is thread safe
-					synchronized (loadedCommits) {
-						if (commitToLoad != null) {
-							loadedCommits.fillTo(commitToLoad, maxCommits);
-							commitToShow = commitToLoad;
-							commitToLoad = null;
-							boolean commitFound = false;
-							for (RevCommit commit : loadedCommits) {
-								if (commit.getId().equals(commitToShow.getId())) {
-									commitFound = true;
-									break;
-								}
-							}
-							commitNotFound = !commitFound;
-						} else {
-							loadedCommits.fillTo(oldsz + BATCH_SIZE - 1);
-							if (oldsz == loadedCommits.size()) {
-								forcedRedrawsAfterListIsCompleted++;
+					if (commitToLoad != null) {
+						loadedCommits.fillTo(commitToLoad, maxCommits);
+						commitToShow = commitToLoad;
+						commitToLoad = null;
+						boolean commitFound = false;
+						for (RevCommit commit : loadedCommits) {
+							if (commit.getId().equals(commitToShow.getId())) {
+								commitFound = true;
 								break;
 							}
+						}
+						commitNotFound = !commitFound;
+					} else {
+						loadedCommits.fillTo(oldsz + BATCH_SIZE - 1);
+						if (oldsz == loadedCommits.size()) {
+							forcedRedrawsAfterListIsCompleted++;
+							break;
 						}
 					}
 					if (monitor.isCanceled())

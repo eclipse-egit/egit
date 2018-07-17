@@ -379,11 +379,12 @@ class CommitGraphTable {
 		}
 		highlight = hFlag;
 		allCommits = list;
-		int newAllCommitsLength = allCommits.size();
+		int newAllCommitsLength = asArray == null ? 0 : asArray.length;
 		table.setInput(asArray);
-		if (asArray != null && asArray.length > 0) {
-			if (oldList != list || allCommitsLength < newAllCommitsLength)
-				initCommitsMap();
+		if (newAllCommitsLength > 0) {
+			if (oldList != list || allCommitsLength < newAllCommitsLength) {
+				initCommitsMap(asArray);
+			}
 		} else {
 			table.getTable().deselectAll();
 			// Fire an event
@@ -402,14 +403,12 @@ class CommitGraphTable {
 		this.input = input;
 	}
 
-	private void initCommitsMap() {
+	private void initCommitsMap(SWTCommit[] asArray) {
 		commitsMap = new HashMap<>();
-		// ensure that filling (GenerateHistoryJob) and reading (here)
-		// the commit list is thread safe
-		synchronized (allCommits) {
-			for (PlotCommit commit : allCommits)
-				if (commit != null)
-					commitsMap.put(commit.getId().name(), commit);
+		for (SWTCommit commit : asArray) {
+			if (commit != null) {
+				commitsMap.put(commit.getId().name(), commit);
+			}
 		}
 	}
 
