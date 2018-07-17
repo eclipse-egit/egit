@@ -107,7 +107,7 @@ public class CommitFileDiffViewer extends TableViewer {
 
 	private IAction openWorkingTreeVersion;
 
-	private IAction compare;
+	private IAction compareWithPrevious;
 
 	private IAction compareWorkingTreeVersion;
 
@@ -264,7 +264,8 @@ public class CommitFileDiffViewer extends TableViewer {
 			}
 		};
 
-		compare = new Action(UIText.CommitFileDiffViewer_CompareMenuLabel) {
+		compareWithPrevious = new Action(
+				UIText.CommitFileDiffViewer_CompareMenuLabel) {
 			@Override
 			public void run() {
 				ISelection s = getSelection();
@@ -313,7 +314,7 @@ public class CommitFileDiffViewer extends TableViewer {
 		mgr.add(openThisVersion);
 		mgr.add(openPreviousVersion);
 		mgr.add(new Separator());
-		mgr.add(compare);
+		mgr.add(compareWithPrevious);
 		mgr.add(compareWorkingTreeVersion);
 		mgr.add(blame);
 
@@ -366,7 +367,8 @@ public class CommitFileDiffViewer extends TableViewer {
 			boolean oneOrMoreSelected = !sel.isEmpty();
 			openThisVersion.setEnabled(oneOrMoreSelected && !deleteSelected);
 			openPreviousVersion.setEnabled(oneOrMoreSelected && !addSelected);
-			compare.setEnabled(sel.size() == 1 && !addSelected);
+			compareWithPrevious.setEnabled(
+					sel.size() == 1 && !addSelected && !deleteSelected);
 			blame.setEnabled(oneOrMoreSelected);
 			if (sel.size() == 1) {
 				FileDiff diff = (FileDiff) sel.getFirstElement();
@@ -387,7 +389,7 @@ public class CommitFileDiffViewer extends TableViewer {
 			openThisVersion.setEnabled(false);
 			openPreviousVersion.setEnabled(false);
 			openWorkingTreeVersion.setEnabled(false);
-			compare.setEnabled(false);
+			compareWithPrevious.setEnabled(false);
 			blame.setEnabled(false);
 			compareWorkingTreeVersion.setEnabled(false);
 		}

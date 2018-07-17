@@ -224,7 +224,9 @@ public class DiffEditorOutlinePage extends NestedContentOutlinePage {
 						}
 					}
 				});
-				if (selected.size() == 1) {
+				if (selected.size() == 1 && !haveNew.isEmpty()) {
+					// "Compare with previous" makes only sense if there are
+					// both a new and a previous version.
 					menuManager.add(new Separator());
 					menuManager.add(new Action(
 							UIText.CommitFileDiffViewer_CompareMenuLabel) {
