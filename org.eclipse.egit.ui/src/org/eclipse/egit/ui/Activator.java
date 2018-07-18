@@ -597,7 +597,8 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 			if (changes.isEmpty()) {
 				return; // Should actually not occur
 			}
-			Set<IPath> roots = getProjectLocations(changes.getWorkTree());
+			Map<IPath, IProject> roots = getProjectLocations(
+					changes.getWorkTree());
 			if (roots.isEmpty()) {
 				// No open projects from this repository in the workspace
 				return;
@@ -642,17 +643,17 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 					progress.newChild(1));
 		}
 
-		private Set<IPath> getProjectLocations(File workTree) {
+		private Map<IPath, IProject> getProjectLocations(File workTree) {
 			IProject[] projects = RuleUtil.getProjects(workTree);
 			if (projects == null) {
-				return Collections.emptySet();
+				return Collections.emptyMap();
 			}
-			Set<IPath> result = new HashSet<>();
+			Map<IPath, IProject> result = new HashMap<>();
 			for (IProject project : projects) {
 				if (project.isAccessible()) {
 					IPath path = project.getLocation();
 					if (path != null) {
-						result.add(path);
+						result.put(path, project);
 					}
 				}
 			}
@@ -661,7 +662,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 
 		private Map<IResource, Boolean> computeResources(
 				Set<String> modified, Set<String> deleted, IPath workTree,
-				Set<IPath> roots, IProgressMonitor monitor) {
+				Map<IPath, IProject> roots, IProgressMonitor monitor) {
 			// Attempt to minimize the refreshes by returning IContainers if
 			// more than one file in a container has changed.
 			if (GitTraceLocation.REPOSITORYCHANGESCANNER.isActive()) {
@@ -681,9 +682,19 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 				}
 				IPath filePath = "/".equals(path) ? workTree //$NON-NLS-1$
 						: workTree.append(path);
+				IProject project = roots.get(filePath);
+				if (project != null) {
+					// Eclipse knows this as a project. Make sure it gets
+					// refreshed as such. One can refresh a folder via an IFile,
+					// but not an IProject.
+					handled.put(filePath, null);
+					result.put(project, Boolean.FALSE);
+					progress.worked(1);
+					return;
+				}
 				if (fullRefreshes.stream()
 						.anyMatch(full -> full.isPrefixOf(filePath))
-						|| !roots.stream()
+						|| !roots.keySet().stream()
 								.anyMatch(root -> root.isPrefixOf(filePath))) {
 					// Not in workspace or covered by a full container refresh
 					progress.worked(1);
