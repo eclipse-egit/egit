@@ -768,6 +768,20 @@ public class StagingView extends ViewPart
 				.getSelection();
 	}
 
+	private Composite createPersonLabel(Composite parent, ImageDescriptor image,
+			String text) {
+		Composite composite = new Composite(parent, SWT.NONE);
+		composite.setLayout(new RowLayout(SWT.HORIZONTAL));
+
+		Label imageLabel = new Label(composite, SWT.NONE);
+		imageLabel.setImage(UIIcons.getImage(resources, image));
+
+		Label textLabel = toolkit.createLabel(composite, text);
+		textLabel.setForeground(
+				toolkit.getColors().getColor(IFormColors.TB_TOGGLE));
+		return composite;
+	}
+
 	@Override
 	public void createPartControl(final Composite parent) {
 		GridLayoutFactory.fillDefaults().applyTo(parent);
@@ -1060,18 +1074,16 @@ public class StagingView extends ViewPart
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(composite);
 		GridLayoutFactory.swtDefaults().numColumns(2).applyTo(composite);
 
-		toolkit.createLabel(composite, UIText.StagingView_Author)
-				.setForeground(
-						toolkit.getColors().getColor(IFormColors.TB_TOGGLE));
+		createPersonLabel(composite, UIIcons.ELCL16_AUTHOR,
+				UIText.StagingView_Author);
 		authorText = toolkit.createText(composite, null);
 		authorText
 				.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
 		authorText.setLayoutData(GridDataFactory.fillDefaults()
 				.grab(true, false).create());
 
-		toolkit.createLabel(composite, UIText.StagingView_Committer)
-				.setForeground(
-						toolkit.getColors().getColor(IFormColors.TB_TOGGLE));
+		createPersonLabel(composite, UIIcons.ELCL16_COMMITTER,
+				UIText.StagingView_Committer);
 		committerText = toolkit.createText(composite, null);
 		committerText.setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TEXT_BORDER);
