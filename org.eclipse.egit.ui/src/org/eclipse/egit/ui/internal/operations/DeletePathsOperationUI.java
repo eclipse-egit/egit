@@ -21,10 +21,12 @@ import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.op.DeletePathsOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.IShellProvider;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.actions.DeleteResourceAction;
 
 /**
@@ -67,8 +69,18 @@ public class DeletePathsOperationUI {
 		action.run();
 	}
 
+	private String[] getButtonLabels() {
+		return new String[] { UIText.DeletePathsOperationUI_ButtonOK, IDialogConstants.CANCEL_LABEL };
+	}
+
+	private boolean openConfirm(Shell parent, String title, String message) {
+		MessageDialog dialog = new MessageDialog(parent, title, null, message,
+				MessageDialog.CONFIRM, 0, getButtonLabels());
+		return dialog.open() == 0;
+	}
+
 	private void runNonWorkspaceAction() {
-		boolean performAction = MessageDialog.openConfirm(
+		boolean performAction = openConfirm(
 				shellProvider.getShell(),
 				UIText.DeleteResourcesOperationUI_confirmActionTitle,
 				UIText.DeleteResourcesOperationUI_confirmActionMessage);
