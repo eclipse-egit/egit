@@ -23,6 +23,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -280,4 +281,13 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 		else
 			return OrTreeFilter.create(filters);
 	}
+
+	@Override
+	protected void createButtonsForButtonBar(Composite parent) {
+		createButton(parent, IDialogConstants.OK_ID,
+				UIText.HistoryCommitSelectionDialog_ButtonOK, true);
+		createButton(parent, IDialogConstants.CANCEL_ID,
+				IDialogConstants.CANCEL_LABEL, false);
+	}
+
 }

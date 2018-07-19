@@ -59,6 +59,7 @@ public class FeatureCheckoutHandler extends AbstractHandler {
 
 		FeatureBranchSelectionDialog dialog = new FeatureBranchSelectionDialog(
 				HandlerUtil.getActiveShell(event), refs,
+				UIText.FeatureCheckoutHandler_ButtonOK,
 				UIText.FeatureCheckoutHandler_selectFeature,
 				UIText.FeatureCheckoutHandler_localFeatures,
 				Constants.R_HEADS + gfRepo.getConfig().getFeaturePrefix(), gfRepo);

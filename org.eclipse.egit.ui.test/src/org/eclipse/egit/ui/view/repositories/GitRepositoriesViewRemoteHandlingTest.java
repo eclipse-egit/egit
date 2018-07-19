@@ -144,7 +144,7 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 				"testRemote");
 		// configure fetch first
 		shell.bot().radio(UIText.NewRemoteDialog_FetchRadio).click();
-		shell.bot().button(IDialogConstants.OK_LABEL).click();
+		shell.bot().button(UIText.NewRemoteDialog_ButtonOK).click();
 
 		// configure fetch dialog
 		shell = bot.shell(UIText.SimpleConfigureFetchDialog_WindowTitle);

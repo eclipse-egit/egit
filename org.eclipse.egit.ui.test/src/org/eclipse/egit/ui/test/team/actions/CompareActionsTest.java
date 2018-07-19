@@ -38,7 +38,6 @@ import org.eclipse.egit.ui.internal.dialogs.CompareTreeView;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.egit.ui.test.TestUtil;
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ResetCommand.ResetType;
 import org.eclipse.jgit.lib.Constants;
@@ -127,7 +126,8 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		JobJoiner jobJoiner = JobJoiner.startListening(
 				ISynchronizeManager.FAMILY_SYNCHRONIZE_OPERATION, 60,
 				TimeUnit.SECONDS);
-		dialog.bot().button(IDialogConstants.OK_LABEL).click();
+		dialog.bot().button(UIText.HistoryCommitSelectionDialog_ButtonOK)
+				.click();
 		jobJoiner.join();
 
 		closeFirstEmptySynchronizeDialog();
@@ -141,7 +141,8 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		jobJoiner = JobJoiner.startListening(
 				ISynchronizeManager.FAMILY_SYNCHRONIZE_OPERATION, 60,
 				TimeUnit.SECONDS);
-		dialog.bot().button(IDialogConstants.OK_LABEL).click();
+		dialog.bot().button(UIText.HistoryCommitSelectionDialog_ButtonOK)
+				.click();
 		jobJoiner.join();
 
 		assertSynchronizeFile1Changed();

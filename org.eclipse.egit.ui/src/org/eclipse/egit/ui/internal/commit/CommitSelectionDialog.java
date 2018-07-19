@@ -26,6 +26,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.search.CommitSearchPage;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.StyledString;
@@ -229,6 +230,14 @@ public class CommitSelectionDialog extends FilteredItemsSelectionDialog {
 	@Override
 	public String getElementName(Object item) {
 		return labelProvider.getText(item);
+	}
+
+	@Override
+	protected void createButtonsForButtonBar(Composite parent) {
+		createButton(parent, IDialogConstants.OK_ID,
+				UIText.CommitSelectionDialog_ButtonOK, true);
+		createButton(parent, IDialogConstants.CANCEL_ID,
+				IDialogConstants.CANCEL_LABEL, false);
 	}
 
 }
