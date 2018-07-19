@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.internal.dialogs;
 import java.util.Set;
 
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jgit.lib.ConfigConstants;
@@ -154,4 +155,11 @@ public class NewRemoteDialog extends TitleAreaDialog {
 		return pushMode;
 	}
 
+	@Override
+	protected void createButtonsForButtonBar(Composite parent) {
+		createButton(parent, IDialogConstants.OK_ID,
+				UIText.NewRemoteDialog_ButtonOK, true);
+		createButton(parent, IDialogConstants.CANCEL_ID,
+				IDialogConstants.CANCEL_LABEL, false);
+	}
 }

@@ -43,7 +43,7 @@ public abstract class AbstractFeatureFinishHandlerTest extends AbstractGitflowHa
 		bot.waitUntil(shellIsActive(UIText.FinishFeatureDialog_title));
 		selectOptions();
 		bot.checkBox(UIText.FinishFeatureDialog_saveAsDefault).click();
-		bot.button("OK").click();
+		bot.button(UIText.FinishFeatureDialog_ButtonOK).click();
 		preFinish();
 		bot.waitUntil(Conditions.waitForJobs(JobFamilies.GITFLOW_FAMILY, "Git flow jobs"));
 	}
@@ -67,7 +67,7 @@ public abstract class AbstractFeatureFinishHandlerTest extends AbstractGitflowHa
 
 		bot.waitUntil(shellIsActive(UIText.FeatureStartHandler_provideFeatureName));
 		bot.text().setText(featureName);
-		bot.button("OK").click();
+		bot.button(UIText.StartDialog_ButtonOK).click();
 		bot.waitUntil(Conditions.waitForJobs(JobFamilies.GITFLOW_FAMILY, "Git flow jobs"));
 	}
 
@@ -91,7 +91,7 @@ public abstract class AbstractFeatureFinishHandlerTest extends AbstractGitflowHa
 		bot.text().setText(featureName);
 		TestUtil.waitForJobs(500, 5000);
 		bot.tree().select(featureName);
-		bot.button("OK").click();
+		bot.button(UIText.FeatureCheckoutHandler_ButtonOK).click();
 		bot.waitUntil(Conditions.waitForJobs(JobFamilies.GITFLOW_FAMILY, "Git flow jobs"));
 	}
 
