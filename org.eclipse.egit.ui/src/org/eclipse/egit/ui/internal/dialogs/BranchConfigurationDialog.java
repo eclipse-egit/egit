@@ -23,6 +23,7 @@ import java.util.List;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.BranchRebaseModeCombo;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jgit.api.PullCommand;
@@ -246,5 +247,13 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 		} catch (RuntimeException e) {
 			Activator.handleError(e.getMessage(), e, true);
 		}
+	}
+
+	@Override
+	protected void createButtonsForButtonBar(Composite parent) {
+		createButton(parent, IDialogConstants.OK_ID,
+				UIText.BranchConfigurationDialog_ButtonOK, true);
+		createButton(parent, IDialogConstants.CANCEL_ID,
+				IDialogConstants.CANCEL_LABEL, false);
 	}
 }

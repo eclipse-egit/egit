@@ -165,6 +165,9 @@ public class UIText extends NLS {
 	public static String InitDialog_versionTagPrefix;
 
 	/**	 */
+	public static String InitDialog_ButtonOK;
+
+	/**	 */
 	public static String InitHandler_doYouWantToInitNow;
 
 	/**	 */
