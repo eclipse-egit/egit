@@ -16,6 +16,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.swt.SWT;
@@ -131,4 +132,11 @@ class LoginDialog extends Dialog {
 		this.oldUser = oldUser;
 	}
 
+	@Override
+	protected void createButtonsForButtonBar(Composite parent) {
+		createButton(parent, IDialogConstants.OK_ID,
+				UIText.LoginDialog_ButtonOK, true);
+		createButton(parent, IDialogConstants.CANCEL_ID,
+				IDialogConstants.CANCEL_LABEL, false);
+	}
 }
