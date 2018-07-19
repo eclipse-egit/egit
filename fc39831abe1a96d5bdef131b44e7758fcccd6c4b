@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d95b62b_39ef7a60",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-19T20:56:36Z",
+      "side": 1,
+      "message": "Needs to become\n\n  .grab(true, false).align(SWT.FILL, SWT.CENTER)\n\nnow.",
+      "range": {
+        "startLine": 1083,
+        "startChar": 4,
+        "endLine": 1083,
+        "endChar": 22
+      },
+      "revId": "fc39831abe1a96d5bdef131b44e7758fcccd6c4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c623f65a_21c1b763",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-19T20:56:36Z",
+      "side": 1,
+      "message": ".grab(true, false).align(SWT.FILL, SWT.CENTER)",
+      "range": {
+        "startLine": 1091,
+        "startChar": 4,
+        "endLine": 1091,
+        "endChar": 22
+      },
+      "revId": "fc39831abe1a96d5bdef131b44e7758fcccd6c4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
