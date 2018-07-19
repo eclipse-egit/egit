@@ -125,6 +125,7 @@ import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.layout.LayoutConstants;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -768,6 +769,16 @@ public class StagingView extends ViewPart
 				.getSelection();
 	}
 
+	private void createPersonLabel(Composite parent, ImageDescriptor image,
+			String text) {
+		Label imageLabel = new Label(parent, SWT.NONE);
+		imageLabel.setImage(UIIcons.getImage(resources, image));
+
+		Label textLabel = toolkit.createLabel(parent, text);
+		textLabel.setForeground(
+				toolkit.getColors().getColor(IFormColors.TB_TOGGLE));
+	}
+
 	@Override
 	public void createPartControl(final Composite parent) {
 		GridLayoutFactory.fillDefaults().applyTo(parent);
@@ -1058,29 +1069,28 @@ public class StagingView extends ViewPart
 		Composite composite = toolkit.createComposite(commitMessageComposite);
 		toolkit.paintBordersFor(composite);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(composite);
-		GridLayoutFactory.swtDefaults().numColumns(2).applyTo(composite);
+		GridLayoutFactory.swtDefaults().margins(1, 2).numColumns(3)
+				.spacing(1, LayoutConstants.getSpacing().y).applyTo(composite);
 
-		toolkit.createLabel(composite, UIText.StagingView_Author)
-				.setForeground(
-						toolkit.getColors().getColor(IFormColors.TB_TOGGLE));
+		createPersonLabel(composite, UIIcons.ELCL16_AUTHOR,
+				UIText.StagingView_Author);
 		authorText = toolkit.createText(composite, null);
-		authorText
-				.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
-		authorText.setLayoutData(GridDataFactory.fillDefaults()
-				.grab(true, false).create());
+		authorText.setData(FormToolkit.KEY_DRAW_BORDER,
+				FormToolkit.TEXT_BORDER);
+		authorText.setLayoutData(GridDataFactory.fillDefaults().indent(5, 0)
+				.grab(true, false).align(SWT.FILL, SWT.CENTER).create());
 
-		toolkit.createLabel(composite, UIText.StagingView_Committer)
-				.setForeground(
-						toolkit.getColors().getColor(IFormColors.TB_TOGGLE));
+		createPersonLabel(composite, UIIcons.ELCL16_COMMITTER,
+				UIText.StagingView_Committer);
 		committerText = toolkit.createText(composite, null);
 		committerText.setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TEXT_BORDER);
-		committerText.setLayoutData(GridDataFactory.fillDefaults()
-				.grab(true, false).create());
+		committerText.setLayoutData(GridDataFactory.fillDefaults().indent(5, 0)
+				.grab(true, false).align(SWT.FILL, SWT.CENTER).create());
 
 		Composite buttonsContainer = toolkit.createComposite(composite);
-		GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
-				.indent(0, 8).applyTo(buttonsContainer);
+		GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
+				.indent(0, 3).applyTo(buttonsContainer);
 		GridLayoutFactory.fillDefaults().numColumns(2)
 				.applyTo(buttonsContainer);
 
