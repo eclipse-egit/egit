@@ -19,7 +19,6 @@ import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
@@ -65,7 +64,7 @@ public class StashesMenuTest extends LocalRepositoryTestCase {
 		SWTBotText enterMessageText = createDialog.bot().text(0);
 		String stashMessage = "stash message";
 		enterMessageText.setText(stashMessage);
-		createDialog.bot().button(IDialogConstants.OK_LABEL).click();
+		createDialog.bot().button(UIText.StashCreateCommand_ButtonOK).click();
 
 		assertEquals(originalContent, getTestFileContent());
 

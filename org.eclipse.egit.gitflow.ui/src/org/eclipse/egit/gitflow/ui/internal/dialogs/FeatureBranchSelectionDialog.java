@@ -11,7 +11,6 @@
 package org.eclipse.egit.gitflow.ui.internal.dialogs;
 
 import static org.eclipse.jface.dialogs.IDialogConstants.CANCEL_LABEL;
-import static org.eclipse.jface.dialogs.IDialogConstants.OK_LABEL;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,13 +44,14 @@ public class FeatureBranchSelectionDialog extends MessageDialog {
 	 * @param title
 	 * @param message
 	 * @param featurePrefix
+	 * @param okButtonLabel
 	 * @param gfRepo
 	 */
 	public FeatureBranchSelectionDialog(Shell parentShell,
-			List<Ref> refs, String title, String message,
+			List<Ref> refs, String okButtonLabel, String title, String message,
 			String featurePrefix, GitFlowRepository gfRepo) {
 		super(parentShell, title, null, message, MessageDialog.QUESTION,
-				new String[] { OK_LABEL, CANCEL_LABEL }, 0);
+				new String[] { okButtonLabel, CANCEL_LABEL }, 0);
 		this.gfRepo = gfRepo;
 		filteredFeatures = new FilteredBranchesWidget(refs, featurePrefix, gfRepo);
 	}

@@ -76,6 +76,7 @@ public class FeatureTrackHandler extends AbstractHandler {
 
 		FeatureBranchSelectionDialog dialog = new FeatureBranchSelectionDialog(
 				HandlerUtil.getActiveShell(event), refs,
+				UIText.FeatureTrackHandler_ButtonOK,
 				UIText.FeatureCheckoutHandler_selectFeature,
 				UIText.FeatureTrackHandler_remoteFeatures,
 				R_REMOTES + DEFAULT_REMOTE_NAME + SEP + gfRepo.getConfig().getFeaturePrefix(), gfRepo);
