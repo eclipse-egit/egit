@@ -49,7 +49,7 @@ public class ReleaseStartHandler extends AbstractHandler {
 
 	void doExecute(GitFlowRepository gfRepo,
 			final String startCommitSha1, Shell activeShell) {
-		InputDialog inputDialog = new InputDialog(
+		InputDialog inputDialog = new StartDialog(
 				activeShell,
 				UIText.ReleaseStartHandler_provideReleaseName,
 				UIText.ReleaseStartHandler_provideANameForTheNewRelease, "", //$NON-NLS-1$

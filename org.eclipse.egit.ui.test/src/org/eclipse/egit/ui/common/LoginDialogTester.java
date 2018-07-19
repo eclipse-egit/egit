@@ -11,7 +11,6 @@
 package org.eclipse.egit.ui.common;
 
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 
 public class LoginDialogTester {
@@ -22,7 +21,7 @@ public class LoginDialogTester {
 		bot.textWithLabel(UIText.LoginDialog_user).setText(user);
 		bot.textWithLabel(UIText.LoginDialog_password).setText(password);
 		bot.checkBoxWithLabel(UIText.LoginDialog_storeInSecureStore).deselect();
-		bot.button(IDialogConstants.OK_LABEL).click();
+		bot.button(UIText.LoginDialog_ButtonOK).click();
 	}
 
 }

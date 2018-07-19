@@ -34,7 +34,7 @@ public class FeatureStartHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final GitFlowRepository gfRepo = GitFlowHandlerUtil.getRepository(event);
 
-		InputDialog inputDialog = new InputDialog(
+		InputDialog inputDialog = new StartDialog(
 				HandlerUtil.getActiveShell(event),
 				UIText.FeatureStartHandler_provideFeatureName,
 				UIText.FeatureStartHandler_pleaseProvideANameForTheNewFeature,
