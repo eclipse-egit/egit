@@ -171,7 +171,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 				.getProject(PROJ1).getFolder(FOLDER).getFile("ToBeDeleted");
 		toBeDeleted.create(new ByteArrayInputStream(new byte[0]), false, null);
 
-		ArrayList<IFile> untracked = new ArrayList<IFile>();
+		ArrayList<IFile> untracked = new ArrayList<>();
 		untracked.add(toBeDeleted);
 		// commit to stable
 		CommitOperation op = new CommitOperation(new IFile[] { toBeDeleted },
@@ -418,11 +418,13 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		// rename stable to renamed
 		SWTBotShell newNameDialog = bot.shell(UIText.BranchRenameDialog_Title);
 		newNameDialog.bot().text().setText("master");
-		assertFalse(newNameDialog.bot().button(IDialogConstants.OK_LABEL)
+		assertFalse(newNameDialog.bot()
+				.button(UIText.RenameBranchDialog_RenameButtonLabel)
 				.isEnabled());
 
 		newNameDialog.bot().text().setText("renamed");
-		newNameDialog.bot().button(IDialogConstants.OK_LABEL).click();
+		newNameDialog.bot().button(UIText.RenameBranchDialog_RenameButtonLabel)
+				.click();
 
 		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 

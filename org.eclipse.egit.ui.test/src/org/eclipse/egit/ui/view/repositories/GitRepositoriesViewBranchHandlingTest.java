@@ -324,10 +324,12 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		renameDialog.bot().text(" " + // the text is now in the error message, and the MessageAreaDialog seems to add a space
 				NLS.bind(UIText.ValidationUtils_InvalidRefNameMessage,
 						"refs/heads/invalid~name"));
-		assertFalse(renameDialog.bot().button(IDialogConstants.OK_LABEL)
+		assertFalse(renameDialog.bot()
+				.button(UIText.RenameBranchDialog_RenameButtonLabel)
 				.isEnabled());
 		newBranchNameText.setText("newmaster");
-		renameDialog.bot().button(IDialogConstants.OK_LABEL).click();
+		renameDialog.bot().button(UIText.RenameBranchDialog_RenameButtonLabel)
+				.click();
 
 		refreshAndWait();
 
@@ -501,7 +503,8 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		};
 		ListenerHandle handle = repo.getConfig().addChangeListener(listener);
 		// only now click ok
-		configureBranchDialog.bot().button("OK").click();
+		configureBranchDialog.bot()
+				.button(UIText.BranchConfigurationDialog_ButtonOK).click();
 
 		// cleanup behind ourselves
 		handle.remove();

@@ -121,6 +121,9 @@ public class UIText extends NLS {
 	public static String AddConfigEntryDialog_ValueLabel;
 
 	/** */
+	public static String AddConfigEntryDialog_ButtonOK;
+
+	/** */
 	public static String AddRemotePage_EnterRemoteNameMessage;
 
 	/** */
@@ -3148,6 +3151,9 @@ public class UIText extends NLS {
 	public static String BranchConfigurationDialog_UpstreamBranchLabel;
 
 	/** */
+	public static String BranchConfigurationDialog_ButtonOK;
+
+	/** */
 	public static String BranchOperationUI_CheckoutRemoteTrackingAsLocal;
 
 	/** */
@@ -3218,6 +3224,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String BranchRenameDialog_WrongPrefixErrorMessage;
+
+	/** */
+	public static String BranchRenameDialog_ButtonOK;
 
 	/** */
 	public static String BranchPropertySource_RebaseDescriptor;
@@ -4703,6 +4712,9 @@ public class UIText extends NLS {
 	public static String LoginDialog_user;
 
 	/** */
+	public static String LoginDialog_ButtonOK;
+
+	/** */
 	public static String NewRemoteDialog_ConfigurationMessage;
 
 	/** */
@@ -4725,6 +4737,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String NewRemoteDialog_WindowTitle;
+
+	/** */
+	public static String NewRemoteDialog_ButtonOK;
 
 	/** */
 	public static String NewRepositoryWizard_WizardTitle;
@@ -5225,6 +5240,12 @@ public class UIText extends NLS {
 	public static String CommitSelectionDialog_WindowTitle;
 
 	/** */
+	public static String CommitSelectionDialog_ButtonOK;
+
+	/** */
+	public static String HistoryCommitSelectionDialog_ButtonOK;
+
+	/** */
 	public static String CommitUI_commitFailed;
 
 	/** */
@@ -5493,6 +5514,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String StashCreateCommand_includeUntrackedLabel;
+
+	/** */
+	public static String StashCreateCommand_ButtonOK;
 
 	/** */
 	public static String StashDropCommand_confirmSingle;

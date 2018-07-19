@@ -13,8 +13,8 @@
 package org.eclipse.egit.ui.prefpages.configuration;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -126,7 +126,8 @@ public class GlobalConfigurationPageTest {
 		// reset saved preferences state
 		SWTBotShell preferencePage = new Eclipse().openPreferencePage(null);
 		preferencePage.bot().tree(0).getTreeItem("General").select();
-		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
+		preferencePage.bot().button(UIText.AddConfigEntryDialog_ButtonOK)
+				.click();
 		TestUtil.processUIEvents();
 	}
 
@@ -360,7 +361,7 @@ public class GlobalConfigurationPageTest {
 
 	@Test
 	public void testRemoveValue() throws Exception {
-		List<String> values = new ArrayList<String>(2);
+		List<String> values = new ArrayList<>(2);
 		values.add("true");
 		values.add("false");
 		config.setStringList(TESTSECTION, null, TESTNAME, values);
@@ -383,7 +384,7 @@ public class GlobalConfigurationPageTest {
 
 	@Test
 	public void testRemoveSubSection() throws Exception {
-		List<String> values = new ArrayList<String>(2);
+		List<String> values = new ArrayList<>(2);
 		values.add("true");
 		values.add("false");
 		config.setStringList(TESTSECTION, null, TESTNAME, values);
@@ -409,7 +410,7 @@ public class GlobalConfigurationPageTest {
 
 	@Test
 	public void testRemoveSection() throws Exception {
-		List<String> values = new ArrayList<String>(2);
+		List<String> values = new ArrayList<>(2);
 		values.add("true");
 		values.add("false");
 		config.setStringList(TESTSECTION, null, TESTNAME, values);

@@ -136,7 +136,7 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		JobJoiner jobJoiner = JobJoiner.startListening(
 				ISynchronizeManager.FAMILY_SYNCHRONIZE_OPERATION, 60,
 				TimeUnit.SECONDS);
-		dialog.bot().button(IDialogConstants.OK_LABEL).click();
+		dialog.bot().button(UIText.CommitSelectionDialog_ButtonOK).click();
 		jobJoiner.join();
 
 		closeFirstEmptySynchronizeDialog();
