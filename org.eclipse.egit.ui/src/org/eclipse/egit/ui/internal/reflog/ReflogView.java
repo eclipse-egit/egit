@@ -306,6 +306,10 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 					return (Image) resourceManager.get(UIIcons.CREATE_BRANCH);
 				if (comment.startsWith("checkout")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.CHECKOUT);
+				if (comment.startsWith("cherry-pick")) //$NON-NLS-1$
+					return (Image) resourceManager.get(UIIcons.CHERRY_PICK);
+				if (comment.startsWith("Branch: renamed ")) //$NON-NLS-1$
+					return (Image) resourceManager.get(UIIcons.EDITCONFIG);
 				return null;
 			}
 
