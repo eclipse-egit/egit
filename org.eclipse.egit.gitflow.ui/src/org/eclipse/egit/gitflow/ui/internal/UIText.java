@@ -87,6 +87,9 @@ public class UIText extends NLS {
 	public static String FeatureStartHandler_startingNewFeature;
 
 	/**	 */
+	public static String FeatureTrackHandler_ButtonOK;
+
+	/**	 */
 	public static String FeatureTrackHandler_fetchingRemoteFeatures;
 
 	/**	 */
@@ -165,6 +168,9 @@ public class UIText extends NLS {
 	public static String InitDialog_versionTagPrefix;
 
 	/**	 */
+	public static String InitDialog_ButtonOK;
+
+	/**	 */
 	public static String InitHandler_doYouWantToInitNow;
 
 	/**	 */
@@ -198,6 +204,9 @@ public class UIText extends NLS {
 	public static String ReleaseStartHandler_startingNewRelease;
 
 	/**	 */
+	public static String FeatureCheckoutHandler_ButtonOK;
+
+	/**	 */
 	public static String FeatureCheckoutHandler_checkingOutFeature;
 
 	/**	 */
@@ -228,6 +237,9 @@ public class UIText extends NLS {
 	public static String FeatureCheckoutHandler_cleanupDialog_text;
 
 	/** */
+	public static String FinishFeatureDialog_ButtonOK;
+
+	/** */
 	public static String FinishFeatureDialog_keepBranch;
 
 	/** */
@@ -247,6 +259,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String ReleaseFinishOperation_unexpectedConflictsReleaseAborted;
+
+	/** */
+	public static String StartDialog_ButtonOK;
 
 	/** */
 	public static String UIIcons_errorDeterminingIconBase;

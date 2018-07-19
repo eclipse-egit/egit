@@ -32,7 +32,7 @@ public class HotfixStartHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final GitFlowRepository gfRepo = GitFlowHandlerUtil.getRepository(event);
 
-		InputDialog inputDialog = new InputDialog(
+		InputDialog inputDialog = new StartDialog(
 				HandlerUtil.getActiveShell(event),
 				UIText.HotfixStartHandler_provideHotfixName,
 				UIText.HotfixStartHandler_pleaseProvideANameForTheNewHotfix,

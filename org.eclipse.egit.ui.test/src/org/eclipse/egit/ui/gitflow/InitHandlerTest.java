@@ -146,7 +146,7 @@ public class InitHandlerTest extends AbstractGitflowHandlerTest {
 	private void fillDialog(String masterBranch) {
 		typeInto(InitDialog_developBranch, ILLEGAL_BRANCH_NAME);
 
-		SWTBotButton ok = bot.button("OK");
+		SWTBotButton ok = bot.button(UIText.InitDialog_ButtonOK);
 		assertFalse(ok.isEnabled());
 
 		typeInto(InitDialog_developBranch, DEVELOP_BRANCH);

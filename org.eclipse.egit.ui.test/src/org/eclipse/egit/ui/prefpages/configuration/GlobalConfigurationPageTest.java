@@ -13,8 +13,8 @@
 package org.eclipse.egit.ui.prefpages.configuration;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -126,7 +126,8 @@ public class GlobalConfigurationPageTest {
 		// reset saved preferences state
 		SWTBotShell preferencePage = new Eclipse().openPreferencePage(null);
 		preferencePage.bot().tree(0).getTreeItem("General").select();
-		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
+		preferencePage.bot().button(IDialogConstants.OK_LABEL)
+				.click();
 		TestUtil.processUIEvents();
 	}
 
@@ -168,7 +169,7 @@ public class GlobalConfigurationPageTest {
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_ValueLabel)
 				.setText("true");
 		// close the dialog
-		addDialog.bot().button(IDialogConstants.OK_LABEL).click();
+		addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK).click();
 		// close the editor
 		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
 		config.load();
@@ -194,7 +195,7 @@ public class GlobalConfigurationPageTest {
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_ValueLabel)
 				.setText("true");
 		// close the dialog
-		addDialog.bot().button(IDialogConstants.OK_LABEL).click();
+		addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK).click();
 		// close the editor
 		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
 		config.load();
@@ -241,7 +242,7 @@ public class GlobalConfigurationPageTest {
 				.setText(TESTSECTION + "." + TESTNAME);
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_ValueLabel)
 				.setText("true");
-		assertTrue(addDialog.bot().button(IDialogConstants.OK_LABEL)
+		assertTrue(addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK)
 				.isEnabled());
 		addDialog.close();
 	}
@@ -255,74 +256,91 @@ public class GlobalConfigurationPageTest {
 				.shell(UIText.AddConfigEntryDialog_AddConfigTitle);
 		addDialog.activate();
 		assertFalse("Should be disabled when neither key nor value set",
-				addDialog.bot().button(IDialogConstants.OK_LABEL).isEnabled());
+				addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK)
+						.isEnabled());
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_ValueLabel)
 				.setText("Somevalue");
 		assertFalse("Should be disabled when no key",
-				addDialog.bot().button(IDialogConstants.OK_LABEL).isEnabled());
+				addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK)
+						.isEnabled());
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_KeyLabel)
 				.setText(TESTSECTION);
 		assertFalse("Should be disabled when no dot",
-				addDialog.bot().button(IDialogConstants.OK_LABEL).isEnabled());
+				addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK)
+						.isEnabled());
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_KeyLabel)
 				.setText(TESTSECTION + "." + TESTNAME);
 		assertTrue("Should be enabled with one dot",
-				addDialog.bot().button(IDialogConstants.OK_LABEL).isEnabled());
+				addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK)
+						.isEnabled());
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_KeyLabel)
 				.setText(TESTSECTION + "." + TESTSUBSECTION + "." + TESTNAME);
 		assertTrue("Should be enabled with two dots",
-				addDialog.bot().button(IDialogConstants.OK_LABEL).isEnabled());
+				addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK)
+						.isEnabled());
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_KeyLabel)
 				.setText(TESTSECTION
 						+ ". some stuff with dots.. and . non-ASCII characters: àéè."
 						+ TESTNAME);
 		// ok: first and last section alphanumeric,subsection will be quoted
 		assertTrue("Should be enabled with strange subsection",
-				addDialog.bot().button(IDialogConstants.OK_LABEL).isEnabled());
+				addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK)
+						.isEnabled());
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_KeyLabel)
 				.setText("föö.bar.baz");
 		assertFalse("Should be disabled with non-ASCII in first segment",
-				addDialog.bot().button(IDialogConstants.OK_LABEL).isEnabled());
+				addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK)
+						.isEnabled());
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_KeyLabel)
 				.setText("foo.bar.bàz");
 		assertFalse("Should be disabled with non-ASCII in last segment",
-				addDialog.bot().button(IDialogConstants.OK_LABEL).isEnabled());
+				addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK)
+						.isEnabled());
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_KeyLabel)
 				.setText("foo bar.baz");
 		assertFalse("Should be disabled with blank in first segment",
-				addDialog.bot().button(IDialogConstants.OK_LABEL).isEnabled());
+				addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK)
+						.isEnabled());
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_KeyLabel)
 				.setText("foo.bar baz");
 		assertFalse("Should be disabled with blank in last segment",
-				addDialog.bot().button(IDialogConstants.OK_LABEL).isEnabled());
+				addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK)
+						.isEnabled());
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_KeyLabel)
 				.setText("foo-bar.baz-");
 		assertTrue("Should be enabled with dashes",
-				addDialog.bot().button(IDialogConstants.OK_LABEL).isEnabled());
+				addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK)
+						.isEnabled());
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_KeyLabel)
 				.setText("foo.bar.");
 		assertFalse("Should be disabled when ending in dot",
-				addDialog.bot().button(IDialogConstants.OK_LABEL).isEnabled());
+				addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK)
+						.isEnabled());
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_KeyLabel)
 				.setText(".foo.bar.");
 		assertFalse("Should be disabled when beginning with dot",
-				addDialog.bot().button(IDialogConstants.OK_LABEL).isEnabled());
+				addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK)
+						.isEnabled());
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_KeyLabel)
 				.setText("..");
 		assertFalse("Should be disabled for \"..\"",
-				addDialog.bot().button(IDialogConstants.OK_LABEL).isEnabled());
+				addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK)
+						.isEnabled());
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_KeyLabel)
 				.setText("foobar.9nines");
 		assertFalse("Should be disabled for variable name starting with digit",
-				addDialog.bot().button(IDialogConstants.OK_LABEL).isEnabled());
+				addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK)
+						.isEnabled());
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_KeyLabel)
 				.setText("foobar.-bar");
 		assertFalse("Should be disabled for variable name starting with a dash",
-				addDialog.bot().button(IDialogConstants.OK_LABEL).isEnabled());
+				addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK)
+						.isEnabled());
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_KeyLabel)
 				.setText("foobar.b-9");
 		assertTrue("Should be enabled for variable name starting with a letter",
-				addDialog.bot().button(IDialogConstants.OK_LABEL).isEnabled());
+				addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK)
+						.isEnabled());
 	}
 
 	@Test
@@ -340,11 +358,11 @@ public class GlobalConfigurationPageTest {
 				.setText(TESTSECTION + "." + subsection + "." + TESTNAME);
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_ValueLabel)
 				.setText("true");
-		assertTrue(addDialog.bot().button(IDialogConstants.OK_LABEL)
+		assertTrue(addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK)
 				.isEnabled());
 
 		// close the dialog
-		addDialog.bot().button(IDialogConstants.OK_LABEL).click();
+		addDialog.bot().button(UIText.AddConfigEntryDialog_ButtonOK).click();
 		// close the editor
 		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
 

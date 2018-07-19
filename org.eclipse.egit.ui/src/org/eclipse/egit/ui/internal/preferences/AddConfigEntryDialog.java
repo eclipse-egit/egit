@@ -17,6 +17,7 @@ import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
@@ -177,5 +178,13 @@ public class AddConfigEntryDialog extends TitleAreaDialog {
 	 */
 	public String getValue() {
 		return value;
+	}
+
+	@Override
+	protected void createButtonsForButtonBar(Composite parent) {
+		createButton(parent, IDialogConstants.OK_ID,
+				UIText.AddConfigEntryDialog_ButtonOK, true);
+		createButton(parent, IDialogConstants.CANCEL_ID,
+				IDialogConstants.CANCEL_LABEL, false);
 	}
 }
