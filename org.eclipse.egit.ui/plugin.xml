@@ -566,6 +566,18 @@
                id="org.eclipse.egit.ui.keyword.git">
          </keywordReference>
       </page>
+      <page
+            category="org.eclipse.egit.ui.internal.preferences.HistoryPreferencePage"
+            class="org.eclipse.egit.ui.internal.preferences.HistoryColumnsPreferencePage"
+            id="org.eclipse.egit.ui.internal.preferences.HistoryColumnsPreferencePage"
+            name="%HistoryColumnsPreferencePage.name">
+         <keywordReference
+               id="org.eclipse.egit.ui.keyword.git">
+         </keywordReference>
+	    <keywordReference
+		  id="org.eclipse.egit.ui.keyword.history">
+	    </keywordReference>
+      </page>
    </extension>
 
    <extension point="org.eclipse.ui.propertyPages">
@@ -612,6 +624,10 @@
 	  <keyword
 			id="org.eclipse.egit.ui.keyword.date"
 			label="%GitKeyword_Date_label">
+	  </keyword>
+	  <keyword
+			id="org.eclipse.egit.ui.keyword.history"
+			label="%GitKeyword_History_label">
 	  </keyword>
    </extension>
 

@@ -149,6 +149,12 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.USE_LOGICAL_MODEL, true);
 
 		store.setDefault(UIPreferences.REBASE_INTERACTIVE_SYNC_SELECTION, true);
+
+		store.setDefault(UIPreferences.HISTORY_COLUMN_ID, true);
+		store.setDefault(UIPreferences.HISTORY_COLUMN_AUTHOR, true);
+		store.setDefault(UIPreferences.HISTORY_COLUMN_AUTHOR_DATE, true);
+		store.setDefault(UIPreferences.HISTORY_COLUMN_COMMITTER, true);
+		store.setDefault(UIPreferences.HISTORY_COLUMN_COMMITTER_DATE, true);
 	}
 
 }
