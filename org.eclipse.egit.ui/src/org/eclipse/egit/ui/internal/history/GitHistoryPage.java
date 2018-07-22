@@ -157,6 +157,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.team.ui.history.HistoryPage;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.IActionBars;
@@ -173,6 +174,7 @@ import org.eclipse.ui.part.IShowInTargetList;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 import org.eclipse.ui.progress.UIJob;
+import org.eclipse.ui.texteditor.IUpdate;
 
 /** Graphical commit history viewer. */
 public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
@@ -1518,11 +1520,46 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		mgr.add(actions.showAllBranchesAction);
 	}
 
+	private class ColumnAction extends Action implements IUpdate {
+
+		private final int columnIndex;
+
+		public ColumnAction(String text, int idx) {
+			super(text, IAction.AS_CHECK_BOX);
+			columnIndex = idx;
+			update();
+		}
+
+		@Override
+		public void run() {
+			graph.setVisible(columnIndex, isChecked());
+		}
+
+		@Override
+		public void update() {
+			setChecked(graph.getTableView().getTable().getColumn(columnIndex)
+					.getWidth() > 0);
+		}
+	}
+
 	private void setupViewMenu() {
 		IMenuManager viewMenuMgr = getSite().getActionBars().getMenuManager();
 		viewMenuMgr.add(actions.refreshAction);
 
 		viewMenuMgr.add(new Separator());
+		IMenuManager columnsMenuMgr = new MenuManager(
+				UIText.GitHistoryPage_ColumnsSubMenuLabel);
+		viewMenuMgr.add(columnsMenuMgr);
+		TableColumn[] columns = graph.getTableView().getTable().getColumns();
+		for (int i = 0; i < columns.length; i++) {
+			if (i != 1) {
+				ColumnAction action = new ColumnAction(columns[i].getText(), i);
+				columnsMenuMgr.add(action);
+				columns[i].addListener(SWT.Resize, event -> {
+					action.update();
+				});
+			}
+		}
 		IMenuManager showSubMenuMgr = new MenuManager(
 				UIText.GitHistoryPage_ShowSubMenuLabel);
 		viewMenuMgr.add(showSubMenuMgr);
