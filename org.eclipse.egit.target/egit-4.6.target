@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="egit-4.6" sequenceNumber="1529923955">
+<target name="egit-4.6" sequenceNumber="1532243632">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.jetty.client" version="9.4.8.v20171121"/>
@@ -89,10 +89,11 @@
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.sdk.ide" version="0.0.0"/>
       <unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.ecf.core.feature.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.ecf.filetransfer.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.commons.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.ide_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.team_feature.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.mylyn.context.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.context_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.sdk_feature.feature.group" version="0.0.0"/>
