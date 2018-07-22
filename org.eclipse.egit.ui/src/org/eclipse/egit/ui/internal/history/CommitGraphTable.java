@@ -32,6 +32,7 @@ import org.eclipse.core.commands.IParameter;
 import org.eclipse.core.commands.Parameterization;
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.commands.common.NotDefinedException;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.op.CreatePatchOperation;
 import org.eclipse.egit.core.op.CreatePatchOperation.DiffHeaderFormat;
@@ -49,7 +50,10 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ResourceManager;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.viewers.ColumnLayoutData;
 import org.eclipse.jface.viewers.ColumnPixelData;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -90,6 +94,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Scrollable;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -122,6 +127,14 @@ class CommitGraphTable {
 
 	private final TableViewer table;
 
+	private final CommitGraphTableLayout tableLayout;
+
+	private final ColumnLayoutData[] columnLayouts = new ColumnLayoutData[6];
+
+	private final ColumnLayoutData[] baseLayouts = new ColumnLayoutData[6];
+
+	private final ColumnLayoutData[] defaultLayouts = new ColumnLayoutData[6];
+
 	private Clipboard clipboard;
 
 	private final SWTPlotRenderer renderer;
@@ -151,21 +164,22 @@ class CommitGraphTable {
 
 	private boolean enableAntialias = true;
 
-	CommitGraphTable(Composite parent, final TableLoader loader,
-			final ResourceManager resources) {
-		this(parent, loader, resources, true);
+	CommitGraphTable(Composite parent, TableLoader loader,
+			ResourceManager resources, boolean canShowEmailAddresses) {
+		this(parent, loader, resources, canShowEmailAddresses, false);
 	}
 
 	CommitGraphTable(Composite parent, final TableLoader loader,
-			final ResourceManager resources, boolean canShowEmailAddresses) {
+			final ResourceManager resources, boolean canShowEmailAddresses,
+			boolean useColumnPreferences) {
 		nFont = UIUtils.getFont(UIPreferences.THEME_CommitGraphNormalFont);
 		hFont = highlightFont();
 		tableLoader = loader;
 
 		Composite tableContainer = new Composite(parent, SWT.NONE);
 		final Table rawTable = new Table(tableContainer,
-				SWT.MULTI | SWT.H_SCROLL
-				| SWT.V_SCROLL | SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL);
+				SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER
+						| SWT.FULL_SELECTION | SWT.VIRTUAL);
 		rawTable.setHeaderVisible(true);
 		rawTable.setLinesVisible(false);
 		rawTable.setFont(nFont);
@@ -184,13 +198,43 @@ class CommitGraphTable {
 			}
 		});
 
-		TableColumnLayout layout = new TableColumnLayout();
-		tableContainer.setLayout(layout);
+		tableLayout = new CommitGraphTableLayout();
+		tableContainer.setLayout(tableLayout);
 
-		createColumns(rawTable, layout);
+		createColumns(rawTable);
 		createPaintListener(rawTable);
 
-		rawTable.addListener(SWT.Resize, event -> layout(rawTable, layout));
+		System.arraycopy(columnLayouts, 0, defaultLayouts, 0,
+				columnLayouts.length);
+		System.arraycopy(columnLayouts, 0, baseLayouts, 0,
+				columnLayouts.length);
+		if (useColumnPreferences) {
+			IPreferenceStore store = Activator.getDefault()
+					.getPreferenceStore();
+			applyColumnPreferences(store, rawTable);
+			IPropertyChangeListener prefsChanged = event -> {
+				String property = event.getProperty();
+				if (UIPreferences.HISTORY_COLUMN_ID.equals(property)
+						|| UIPreferences.HISTORY_COLUMN_AUTHOR.equals(property)
+						|| UIPreferences.HISTORY_COLUMN_AUTHOR_DATE
+								.equals(property)
+						|| UIPreferences.HISTORY_COLUMN_COMMITTER
+								.equals(property)
+						|| UIPreferences.HISTORY_COLUMN_COMMITTER_DATE
+								.equals(property)) {
+					rawTable.getDisplay().asyncExec(() -> {
+						if (!rawTable.isDisposed()) {
+							applyColumnPreferences(store, rawTable);
+							rawTable.getParent().layout();
+						}
+					});
+				}
+			};
+			store.addPropertyChangeListener(prefsChanged);
+			rawTable.addDisposeListener(
+					event -> store.removePropertyChangeListener(prefsChanged));
+		}
+		rawTable.addListener(SWT.Resize, event -> layout(rawTable));
 
 		table = new TableViewer(rawTable) {
 			@Override
@@ -268,7 +312,7 @@ class CommitGraphTable {
 	CommitGraphTable(final Composite parent, final IPageSite site,
 			final MenuManager menuMgr, final TableLoader loader,
 			final ResourceManager resources) {
-		this(parent, loader, resources);
+		this(parent, loader, resources, true, true);
 
 		final IAction selectAll = ActionUtils.createGlobalAction(
 				ActionFactory.SELECT_ALL,
@@ -417,8 +461,7 @@ class CommitGraphTable {
 		}
 	}
 
-	private void createColumns(Table rawTable,
-			TableColumnLayout layout) {
+	private void createColumns(Table rawTable) {
 		final TableColumn commitId = new TableColumn(rawTable, SWT.NONE);
 		commitId.setResizable(true);
 		commitId.setText(UIText.CommitGraphTable_CommitId);
@@ -430,37 +473,43 @@ class CommitGraphTable {
 		} finally {
 			gc.dispose();
 		}
-		layout.setColumnData(commitId, new ColumnPixelData(minWidth, false));
+		columnLayouts[0] = new ColumnPixelData(minWidth, false);
+		tableLayout.setColumnData(commitId, columnLayouts[0]);
 
 		final TableColumn graph = new TableColumn(rawTable, SWT.NONE);
 		graph.setResizable(true);
 		graph.setText(UIText.CommitGraphTable_messageColumn);
 		graph.setWidth(400);
-		layout.setColumnData(graph, new ColumnWeightData(20, 200, true));
+		columnLayouts[1] = new ColumnWeightData(20, 200, true);
+		tableLayout.setColumnData(graph, columnLayouts[1]);
 
 		final TableColumn author = new TableColumn(rawTable, SWT.NONE);
 		author.setResizable(true);
 		author.setText(UIText.HistoryPage_authorColumn);
 		author.setWidth(100);
-		layout.setColumnData(author, new ColumnWeightData(5, 80, true));
+		columnLayouts[2] = new ColumnWeightData(5, 80, true);
+		tableLayout.setColumnData(author, columnLayouts[2]);
 
 		final TableColumn date = new TableColumn(rawTable, SWT.NONE);
 		date.setResizable(true);
 		date.setText(UIText.HistoryPage_authorDateColumn);
 		date.setWidth(100);
-		layout.setColumnData(date, new ColumnWeightData(5, 80, true));
+		columnLayouts[3] = new ColumnWeightData(5, 80, true);
+		tableLayout.setColumnData(date, columnLayouts[3]);
 
 		final TableColumn committer = new TableColumn(rawTable, SWT.NONE);
 		committer.setResizable(true);
 		committer.setText(UIText.CommitGraphTable_Committer);
 		committer.setWidth(100);
-		layout.setColumnData(committer, new ColumnWeightData(5, 80, true));
+		columnLayouts[4] = new ColumnWeightData(5, 80, true);
+		tableLayout.setColumnData(committer, columnLayouts[4]);
 
 		final TableColumn committerDate = new TableColumn(rawTable, SWT.NONE);
 		committerDate.setResizable(true);
-		committerDate.setText(UIText.CommitGraphTable_committerDataColumn);
+		committerDate.setText(UIText.CommitGraphTable_committerDateColumn);
 		committerDate.setWidth(100);
-		layout.setColumnData(committerDate, new ColumnWeightData(5, 80, true));
+		columnLayouts[5] = new ColumnWeightData(5, 80, true);
+		tableLayout.setColumnData(committerDate, columnLayouts[5]);
 	}
 
 	private void createPaintListener(final Table rawTable) {
@@ -529,7 +578,7 @@ class CommitGraphTable {
 		return table;
 	}
 
-	private void layout(Table rawTable, TableColumnLayout layout) {
+	private void layout(Table rawTable) {
 		rawTable.getParent().layout();
 		// Check that the table now fits
 		int tableWidth = rawTable.getSize().x;
@@ -540,16 +589,75 @@ class CommitGraphTable {
 		}
 		if (columnsWidth > tableWidth) {
 			// Re-distribute the space again
-			layout.setColumnData(columns[1],
-					new ColumnWeightData(20, 200, true));
-			for (int i = 2; i < columns.length; i++) {
-				layout.setColumnData(columns[i],
-						new ColumnWeightData(5, 80, true));
+			for (int i = 1; i < columns.length; i++) {
+				if (columns[i].getWidth() != 0) {
+					tableLayout.setColumnData(columns[i], baseLayouts[i]);
+				}
 			}
 			rawTable.getParent().layout();
 		}
 		// Sometimes observed cheese on Cocoa without this
 		rawTable.redraw();
+	}
+
+	void setVisible(int columnIndex, boolean visible) {
+		Assert.isLegal(columnIndex >= 0 && columnIndex < columnLayouts.length);
+		if (columnIndex == 1) {
+			return; // Commit message column is always visible
+		}
+		Table rawTable = table.getTable();
+		TableColumn col = rawTable.getColumn(columnIndex);
+		boolean isVisible = col.getWidth() > 0;
+		if (isVisible != visible) {
+			if (isVisible) {
+				columnLayouts[columnIndex] = tableLayout.getLayoutData(rawTable,
+						columnIndex);
+				if (columnLayouts[columnIndex] == null) {
+					columnLayouts[columnIndex] = defaultLayouts[columnIndex];
+				}
+				tableLayout.setColumnData(col, new ColumnPixelData(0));
+			} else {
+				tableLayout.setColumnData(col, columnLayouts[columnIndex]);
+			}
+			rawTable.getParent().layout();
+		}
+	}
+
+	private void setColumn(TableColumn column, int index, boolean visible) {
+		if (visible) {
+			baseLayouts[index] = defaultLayouts[index];
+			if (column.getWidth() > 0) {
+				return;
+			}
+			tableLayout.setColumnData(column, columnLayouts[index]);
+		} else {
+			baseLayouts[index] = new ColumnPixelData(0);
+			tableLayout.setColumnData(column, baseLayouts[index]);
+		}
+	}
+
+	private void applyColumnPreferences(IPreferenceStore store,
+			Table rawTable) {
+		setColumn(rawTable.getColumn(0), 0,
+				store.getBoolean(UIPreferences.HISTORY_COLUMN_ID));
+		setColumn(rawTable.getColumn(2), 2,
+				store.getBoolean(UIPreferences.HISTORY_COLUMN_AUTHOR));
+		setColumn(rawTable.getColumn(3), 3,
+				store.getBoolean(UIPreferences.HISTORY_COLUMN_AUTHOR_DATE));
+		setColumn(rawTable.getColumn(4), 4,
+				store.getBoolean(UIPreferences.HISTORY_COLUMN_COMMITTER));
+		setColumn(rawTable.getColumn(5), 5,
+				store.getBoolean(UIPreferences.HISTORY_COLUMN_COMMITTER_DATE));
+	}
+
+	private static class CommitGraphTableLayout extends TableColumnLayout {
+
+		@Override
+		protected ColumnLayoutData getLayoutData(Scrollable tableTree,
+				int columnIndex) {
+			// Make this method accessible here
+			return super.getLayoutData(tableTree, columnIndex);
+		}
 	}
 
 	private final class CommitDragSourceListener extends DragSourceAdapter {
