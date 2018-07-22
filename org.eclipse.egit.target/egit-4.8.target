@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="egit-4.8" sequenceNumber="1528872799">
+<target name="egit-4.8" sequenceNumber="1532269448">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.jetty.client" version="9.4.8.v20171121"/>
@@ -98,7 +98,15 @@
       <unit id="org.eclipse.mylyn.team_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn_feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.context_feature.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.mylyn.sdk_feature.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.mylyn.bugzilla_feature.feature.group" version="0.0.0"/>
+      <unit id="javax.xml" version="0.0.0"/>
+      <unit id="org.apache.lucene.analyzers-common" version="6.1.0.v20161115-1612"/>
+      <unit id="org.apache.lucene.core" version="6.1.0.v20170814-1820"/>
+      <unit id="org.apache.lucene.queryparser" version="6.1.0.v20161115-1612"/>
+      <unit id="org.apache.xerces" version="0.0.0"/>
+      <unit id="org.apache.xml.resolver" version="0.0.0"/>
+      <unit id="org.apache.xml.serializer" version="0.0.0"/>
+      <unit id="org.eclipse.tools.layout.spy" version="0.0.0"/>
       <repository location="http://download.eclipse.org/releases/photon/"/>
     </location>
   </locations>
