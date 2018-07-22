@@ -147,8 +147,9 @@ public class DateFormatPreferencePage extends FieldEditorPreferencePage
 		dummyLabel.setLayoutData(SWTUtils.createGridData(SWT.DEFAULT,
 				SWT.DEFAULT, false, false));
 		formatExplanation = new Label(pane, SWT.LEFT | SWT.WRAP);
-		GridData layout = SWTUtils.createGridData(SWT.FILL, SWT.TOP,
+		GridData layout = SWTUtils.createGridData(SWT.DEFAULT, SWT.DEFAULT,
 				true, false);
+		layout.widthHint = 150; // For wrapping
 		formatExplanation.setLayoutData(layout);
 		// Setup based on initial values. We don't get any events by the editors
 		// on initial load!
