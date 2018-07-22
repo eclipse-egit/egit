@@ -566,6 +566,18 @@
                id="org.eclipse.egit.ui.keyword.git">
          </keywordReference>
       </page>
+      <page
+            category="org.eclipse.egit.ui.internal.preferences.HistoryPreferencePage"
+            class="org.eclipse.egit.ui.internal.preferences.HistoryColumnsPreferencePage"
+            id="org.eclipse.egit.ui.internal.preferences.HistoryColumnsPreferencePage"
+            name="%HistoryColumnsPreferencePage.name">
+         <keywordReference
+               id="org.eclipse.egit.ui.keyword.git">
+         </keywordReference>
+         <keywordReference
+               id="org.eclipse.egit.ui.keyword.history">
+         </keywordReference>
+      </page>
    </extension>
 
    <extension point="org.eclipse.ui.propertyPages">
@@ -573,46 +585,50 @@
             name="%Git"
             class="org.eclipse.egit.ui.internal.preferences.GitProjectPropertyPage"
             id="org.eclipse.egit.ui.preferences.GitProjectPropertyPage">
-	    <enabledWhen>
-		<adapt type="org.eclipse.core.resources.IResource">
-			<test
-				property="org.eclipse.core.resources.projectPersistentProperty"
-				args="org.eclipse.team.core.repository, org.eclipse.egit.core.GitProvider">
-			</test>
-		</adapt>
-	    </enabledWhen>
+         <enabledWhen>
+            <adapt type="org.eclipse.core.resources.IResource">
+               <test
+                     property="org.eclipse.core.resources.projectPersistentProperty"
+                     args="org.eclipse.team.core.repository, org.eclipse.egit.core.GitProvider">
+               </test>
+            </adapt>
+         </enabledWhen>
       </page>
       <page
             class="org.eclipse.egit.ui.internal.repository.RepositoryPropertyPage"
             id="org.eclipse.egit.ui.property.RepositoryPropertyPage"
             name="%RepositoryConfigPropertyPage">
-        <enabledWhen>
-           <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode" />
-        </enabledWhen>
+         <enabledWhen>
+            <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode" />
+         </enabledWhen>
       </page>
       <page
             class="org.eclipse.egit.ui.internal.repository.RepositoryStatisticsPage"
             id="org.eclipse.egit.ui.property.RepositoryStatisticsPage"
             name="%RepositoryStatisticsPage">
-        <enabledWhen>
-           <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode" />
-        </enabledWhen>
+         <enabledWhen>
+            <instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode" />
+         </enabledWhen>
       </page>
    </extension>
 
    <extension point="org.eclipse.ui.keywords">
-	  <keyword
-			id="org.eclipse.egit.ui.keyword.git"
-			label="%GitKeyword_label">
-	  </keyword>
-	  <keyword
-			id="org.eclipse.egit.ui.keyword.refresh"
-			label="%GitKeyword_Refresh_label">
-	  </keyword>
-	  <keyword
-			id="org.eclipse.egit.ui.keyword.date"
-			label="%GitKeyword_Date_label">
-	  </keyword>
+      <keyword
+            id="org.eclipse.egit.ui.keyword.git"
+            label="%GitKeyword_label">
+      </keyword>
+      <keyword
+            id="org.eclipse.egit.ui.keyword.refresh"
+            label="%GitKeyword_Refresh_label">
+      </keyword>
+      <keyword
+            id="org.eclipse.egit.ui.keyword.date"
+            label="%GitKeyword_Date_label">
+      </keyword>
+      <keyword
+            id="org.eclipse.egit.ui.keyword.history"
+            label="%GitKeyword_History_label">
+      </keyword>
    </extension>
 
    <extension point="org.eclipse.ui.decorators">

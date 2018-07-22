@@ -643,6 +643,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_ShowSubMenuLabel;
 
 	/** */
+	public static String GitHistoryPage_ColumnsSubMenuLabel;
+
+	/** */
 	public static String GitHistoryPage_toggleEmailAddresses;
 
 	/** */
@@ -2105,6 +2108,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String HistoryPreferencePage_toggleEmailAddresses;
+
+	/** */
+	public static String HistoryColumnsPreferencePage_description;
+
+	/** */
+	public static String HistoryColumnsPreferencePage_title;
 
 	/** */
 	public static String PullWizardPage_PageName;
@@ -4556,7 +4565,7 @@ public class UIText extends NLS {
 	public static String CommitGraphTable_Committer;
 
 	/** */
-	public static String CommitGraphTable_committerDataColumn;
+	public static String CommitGraphTable_committerDateColumn;
 
 	/** */
 	public static String CommitGraphTable_CompareWithEachOtherInTreeMenuLabel;
