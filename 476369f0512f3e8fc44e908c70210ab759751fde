@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dced79a_80d9c8a8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-23T07:39:19Z",
+      "side": 1,
+      "message": "This extra pixel is needed to display the top border of the author field on gtk. The borders around these fields are needed only on Windows; OS X text fields have a border already, and OS X ignores the extra border from the from toolkit. On gtk, the author and committer fields get a double border (one from the field, plus the one from the form toolkit).",
+      "range": {
+        "startLine": 1072,
+        "startChar": 45,
+        "endLine": 1072,
+        "endChar": 46
+      },
+      "revId": "476369f0512f3e8fc44e908c70210ab759751fde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4db0c8c_848cd375",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-23T07:39:19Z",
+      "side": 1,
+      "message": "This reduces the horizontal spacing between icon, label, and text field.",
+      "range": {
+        "startLine": 1073,
+        "startChar": 5,
+        "endLine": 1073,
+        "endChar": 14
+      },
+      "revId": "476369f0512f3e8fc44e908c70210ab759751fde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
