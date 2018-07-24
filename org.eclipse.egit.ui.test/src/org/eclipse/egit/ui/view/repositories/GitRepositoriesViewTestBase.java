@@ -130,6 +130,7 @@ public abstract class GitRepositoriesViewTestBase extends
 			fail("Refresh took longer 60 seconds");
 		}
 		TestUtil.processUIEvents();
+		TestUtil.waitForDecorations();
 	}
 
 	@Override

@@ -29,6 +29,7 @@ import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.CachedCheckboxTreeViewer;
 import org.eclipse.egit.ui.internal.components.FilteredCheckboxTree;
@@ -196,7 +197,9 @@ class SourceBranchPage extends WizardPage {
 
 			@Override
 			public Image getImage(Object element) {
-				return RepositoryTreeNodeType.REF.getIcon();
+				return UIIcons.getImage(
+						Activator.getDefault().getResourceManager(),
+						RepositoryTreeNodeType.REF.getIcon());
 			}
 		});
 

@@ -69,7 +69,7 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 	 * @throws Exception
 	 */
 	@Test
-	public void testExpandRemotes() throws Exception {
+	public void testExpandRemoteNodes() throws Exception {
 		removeRemotesConfig(repositoryFile);
 		refreshAndWait();
 		SWTBotTree tree = getOrOpenView().bot().tree();
@@ -80,8 +80,8 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 		StoredConfig cfg = lookupRepository(repositoryFile).getConfig();
 		String remoteUri = "file:///" + remoteRepositoryFile.getPath();
 
-		cfg.setString("remote", "test", "url", remoteUri);
-		cfg.setString("remote", "test", "fetch", "somejunk");
+		cfg.setString("remote", "test1", "url", remoteUri);
+		cfg.setString("remote", "test1", "fetch", "somejunk");
 		cfg.setString("remote", "test2", "url", remoteUri);
 		cfg.setString("remote", "test2", "fetch", "somejunk");
 		cfg.setString("remote", "test2", "pushurl", remoteUri);
@@ -97,7 +97,7 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 				.size());
 
 		List<String> testnodes = TestUtil
-				.expandAndWait(remotesItem.getNode("test")).getNodes();
+				.expandAndWait(remotesItem.getNode("test1")).getNodes();
 		assertEquals(2, testnodes.size());
 		List<String> test2nodes = TestUtil
 				.expandAndWait(remotesItem.getNode("test2")).getNodes();
@@ -107,7 +107,7 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 				.getNodes().size());
 
 		// test the properties view on remote
-		remotesItem.getNode("test").select();
+		remotesItem.getNode("test1").select();
 		ContextMenuHelper.clickContextMenuSync(tree,
 				myUtil.getPluginLocalizedValue("ShowIn"),
 				"Properties");
