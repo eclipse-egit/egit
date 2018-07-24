@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2012 SAP AG and others.
+ * Copyright (c) 2010, 2018 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -38,7 +38,7 @@ public class GitRepositoriesViewTestUtils {
 	 * @return label provider
 	 */
 	public static RepositoriesViewLabelProvider createLabelProvider() {
-		final AtomicReference<RepositoriesViewLabelProvider> providerRef = new AtomicReference<RepositoriesViewLabelProvider>();
+		final AtomicReference<RepositoriesViewLabelProvider> providerRef = new AtomicReference<>();
 		Display.getDefault().syncExec(new Runnable() {
 
 			@Override
@@ -61,6 +61,10 @@ public class GitRepositoriesViewTestUtils {
 		labelProvider = createLabelProvider();
 	}
 
+	public void dispose() {
+		Display.getDefault().syncExec(() -> labelProvider.dispose());
+	}
+
 	public SWTBotTreeItem getLocalBranchesItem(SWTBotTree tree, File repo)
 			throws Exception {
 		Repository repository = lookupRepository(repo);
@@ -69,12 +73,11 @@ public class GitRepositoriesViewTestUtils {
 		LocalNode localBranches = new LocalNode(branches,
 				repository);
 
-		String rootText = labelProvider.getStyledText(root).getString();
-		SWTBotTreeItem rootItem = tree.getTreeItem(rootText);
-		SWTBotTreeItem branchesItem = TestUtil.expandAndWait(rootItem)
-				.getNode(labelProvider.getStyledText(branches).getString());
-		SWTBotTreeItem localItem = TestUtil.expandAndWait(branchesItem).getNode(
-				labelProvider.getStyledText(localBranches).getString());
+		String rootText = labelProvider.getText(root);
+		String branchesText = labelProvider.getText(branches);
+		String localText = labelProvider.getText(localBranches);
+		SWTBotTreeItem localItem = TestUtil.navigateTo(tree, rootText,
+				branchesText, localText);
 		return localItem;
 	}
 
@@ -84,10 +87,9 @@ public class GitRepositoriesViewTestUtils {
 		RepositoryNode root = new RepositoryNode(null, repository);
 		TagsNode tags = new TagsNode(root, repository);
 
-		String rootText = labelProvider.getStyledText(root).getString();
-		SWTBotTreeItem rootItem = tree.getTreeItem(rootText);
-		SWTBotTreeItem tagsItem = TestUtil.expandAndWait(rootItem)
-				.getNode(labelProvider.getStyledText(tags).getString());
+		String rootText = labelProvider.getText(root);
+		String tagsText = labelProvider.getText(tags);
+		SWTBotTreeItem tagsItem = TestUtil.navigateTo(tree, rootText, tagsText);
 		return tagsItem;
 	}
 
@@ -99,13 +101,11 @@ public class GitRepositoriesViewTestUtils {
 		RemoteTrackingNode remoteBranches = new RemoteTrackingNode(branches,
 				repository);
 
-		String rootText = labelProvider.getStyledText(root).getString();
-		SWTBotTreeItem rootItem = tree.getTreeItem(rootText);
-		SWTBotTreeItem branchesItem = TestUtil.expandAndWait(rootItem)
-				.getNode(labelProvider.getStyledText(branches).getString());
-		SWTBotTreeItem remoteItem = TestUtil.expandAndWait(branchesItem)
-				.getNode(labelProvider.getStyledText(remoteBranches)
-						.getString());
+		String rootText = labelProvider.getText(root);
+		String branchesText = labelProvider.getText(branches);
+		String remoteText = labelProvider.getText(remoteBranches);
+		SWTBotTreeItem remoteItem = TestUtil.navigateTo(tree, rootText,
+				branchesText, remoteText);
 		return remoteItem;
 	}
 
@@ -113,13 +113,12 @@ public class GitRepositoriesViewTestUtils {
 			throws Exception {
 		Repository repository = lookupRepository(repositoryFile);
 		RepositoryNode root = new RepositoryNode(null, repository);
-
 		WorkingDirNode workdir = new WorkingDirNode(root, repository);
 
-		String rootText = labelProvider.getStyledText(root).getString();
-		SWTBotTreeItem rootItem = tree.getTreeItem(rootText);
-		SWTBotTreeItem workdirItem = TestUtil.expandAndWait(rootItem)
-				.getNode(labelProvider.getStyledText(workdir).getString());
+		String rootText = labelProvider.getText(root);
+		String workDirText = labelProvider.getText(workdir);
+		SWTBotTreeItem workdirItem = TestUtil.navigateTo(tree, rootText,
+				workDirText);
 		return workdirItem;
 	}
 
@@ -127,8 +126,9 @@ public class GitRepositoriesViewTestUtils {
 			throws Exception {
 		Repository repository = lookupRepository(repositoryFile);
 		RepositoryNode root = new RepositoryNode(null, repository);
-		String rootText = labelProvider.getStyledText(root).getString();
-		SWTBotTreeItem rootItem = tree.getTreeItem(rootText);
+
+		String rootText = labelProvider.getText(root);
+		SWTBotTreeItem rootItem = TestUtil.navigateTo(tree, rootText);
 		return rootItem;
 	}
 
@@ -137,10 +137,11 @@ public class GitRepositoriesViewTestUtils {
 		Repository repository = lookupRepository(repositoryFile);
 		RepositoryNode root = new RepositoryNode(null, repository);
 		AdditionalRefsNode symrefsnode = new AdditionalRefsNode(root, repository);
-		SWTBotTreeItem rootItem = tree
-				.getTreeItem(labelProvider.getStyledText(root).getString());
-		SWTBotTreeItem symrefsitem = TestUtil.expandAndWait(rootItem)
-				.getNode(labelProvider.getStyledText(symrefsnode).getString());
+
+		String rootText = labelProvider.getText(root);
+		String symrefsText = labelProvider.getText(symrefsnode);
+		SWTBotTreeItem symrefsitem = TestUtil.navigateTo(tree, rootText,
+				symrefsText);
 		return symrefsitem;
 	}
 
@@ -150,10 +151,10 @@ public class GitRepositoriesViewTestUtils {
 		RepositoryNode root = new RepositoryNode(null, repository);
 		RemotesNode remotes = new RemotesNode(root, repository);
 
-		String rootText = labelProvider.getStyledText(root).getString();
-		SWTBotTreeItem rootItem = tree.getTreeItem(rootText);
-		SWTBotTreeItem remotesItem = TestUtil.expandAndWait(rootItem)
-				.getNode(labelProvider.getStyledText(remotes).getString());
+		String rootText = labelProvider.getText(root);
+		String remotesText = labelProvider.getText(remotes);
+		SWTBotTreeItem remotesItem = TestUtil.navigateTo(tree, rootText,
+				remotesText);
 		return remotesItem;
 	}
 

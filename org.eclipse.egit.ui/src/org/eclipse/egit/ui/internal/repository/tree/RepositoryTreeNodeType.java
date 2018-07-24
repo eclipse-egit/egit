@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2018 SAP AG and others
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -9,11 +9,12 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Thomas Wolf <thomas.wolf@paranor.ch> - change from Image to ImageDescriptor
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree;
 
 import org.eclipse.egit.ui.internal.UIIcons;
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
@@ -22,68 +23,68 @@ import org.eclipse.ui.PlatformUI;
  */
 public enum RepositoryTreeNodeType {
 	/**	 */
-	REPO(UIIcons.REPOSITORY.createImage()), //
+	REPO(UIIcons.REPOSITORY), //
 	/**	 */
-	BRANCHES(UIIcons.BRANCHES.createImage()), //
+	BRANCHES(UIIcons.BRANCHES), //
 	/** */
-	REF(UIIcons.BRANCH.createImage()), //
+	REF(UIIcons.BRANCH), //
 	/** */
-	LOCAL(PlatformUI.getWorkbench().getSharedImages().getImage(
+	LOCAL(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
 			ISharedImages.IMG_OBJ_FOLDER)), //
 	/** */
-	BRANCHHIERARCHY(PlatformUI.getWorkbench().getSharedImages().getImage(
+	BRANCHHIERARCHY(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
 			ISharedImages.IMG_OBJ_FOLDER)), //
 	/** */
-	REMOTETRACKING(PlatformUI.getWorkbench().getSharedImages().getImage(
+	REMOTETRACKING(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
 			ISharedImages.IMG_OBJ_FOLDER)), //
 	/** */
-	TAGS(UIIcons.TAGS.createImage()), //
+	TAGS(UIIcons.TAGS), //
 	/** */
-	ADDITIONALREFS(PlatformUI.getWorkbench().getSharedImages().getImage(
+	ADDITIONALREFS(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
 			ISharedImages.IMG_OBJ_FOLDER)), //
 	/** */
-	ADDITIONALREF(PlatformUI.getWorkbench().getSharedImages().getImage(
+	ADDITIONALREF(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
 			ISharedImages.IMG_OBJ_FILE)), // TODO icon
 	/** */
-	TAG(UIIcons.TAG.createImage()), //
+	TAG(UIIcons.TAG), //
 	/**	 */
-	FOLDER(PlatformUI.getWorkbench().getSharedImages().getImage(
+	FOLDER(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
 			ISharedImages.IMG_OBJ_FOLDER)), //
 	/**	 */
-	FILE(PlatformUI.getWorkbench().getSharedImages().getImage(
+	FILE(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
 			ISharedImages.IMG_OBJ_FILE)), //
 	/**	 */
-	REMOTES(UIIcons.REMOTE_REPOSITORY.createImage()), //
+	REMOTES(UIIcons.REMOTE_REPOSITORY), //
 	/**	 */
-	REMOTE(UIIcons.REMOTE_SPEC.createImage()), //
+	REMOTE(UIIcons.REMOTE_SPEC), //
 	/**	 */
-	FETCH(UIIcons.FETCH.createImage()), //
+	FETCH(UIIcons.FETCH), //
 	/**	 */
-	PUSH(UIIcons.PUSH.createImage()), //
+	PUSH(UIIcons.PUSH), //
 	/** */
-	SUBMODULES(UIIcons.SUBMODULES.createImage()),
+	SUBMODULES(UIIcons.SUBMODULES),
 	/** */
-	STASH(UIIcons.STASH.createImage()),
+	STASH(UIIcons.STASH),
 	/** */
-	STASHED_COMMIT(UIIcons.CHANGESET.createImage()),
+	STASHED_COMMIT(UIIcons.CHANGESET),
 	/**	 */
-	WORKINGDIR(PlatformUI.getWorkbench().getSharedImages().getImage(
+	WORKINGDIR(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
 			ISharedImages.IMG_OBJ_FOLDER)), //
 	/** */
-	ERROR(PlatformUI.getWorkbench().getSharedImages().getImage(
+	ERROR(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
 			ISharedImages.IMG_ELCL_STOP)); // TODO icon?
 
-	private final Image myImage;
+	private final ImageDescriptor myImage;
 
-	private RepositoryTreeNodeType(Image icon) {
+	private RepositoryTreeNodeType(ImageDescriptor icon) {
 		myImage = icon;
 
 	}
 
 	/**
-	 * @return the icon for this type
+	 * @return the {@link ImageDescriptor} for the icon for this type
 	 */
-	public Image getIcon() {
+	public ImageDescriptor getIcon() {
 		return myImage;
 	}
 }

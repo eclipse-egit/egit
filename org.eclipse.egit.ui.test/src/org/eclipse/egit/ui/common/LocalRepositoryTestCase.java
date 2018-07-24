@@ -238,6 +238,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		TestUtil.processUIEvents();
 		// close all editors/dialogs
 		new Eclipse().reset();
+		clearAllConfiguredRepositories();
 		closeGitViews();
 		TestUtil.processUIEvents();
 		// cleanup
@@ -284,11 +285,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		testUtils.deleteTempDirs();
 	}
 
-	protected static void shutDownRepositories() throws Exception {
-		RepositoryCache cache = Activator.getDefault().getRepositoryCache();
-		for(Repository repository:cache.getAllRepositories())
-			repository.close();
-		cache.clear();
+	protected void clearAllConfiguredRepositories() throws Exception {
 		IEclipsePreferences prefs = Activator.getDefault().getRepositoryUtil()
 				.getPreferences();
 		synchronized (prefs) {
@@ -296,6 +293,14 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 			prefs.put(RepositoryUtil.PREFS_DIRECTORIES_REL, "");
 			prefs.flush();
 		}
+	}
+
+	protected static void shutDownRepositories() throws Exception {
+		RepositoryCache cache = Activator.getDefault().getRepositoryCache();
+		for (Repository repository : cache.getAllRepositories()) {
+			repository.close();
+		}
+		cache.clear();
 	}
 
 	protected static void deleteAllProjects() throws Exception {
@@ -381,7 +386,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		} else {
 			commitables = new IFile[] { dotProject, textFile, textFile2 };
 		}
-		ArrayList<IFile> untracked = new ArrayList<IFile>();
+		ArrayList<IFile> untracked = new ArrayList<>();
 		untracked.addAll(Arrays.asList(commitables));
 		// commit to stable
 		CommitOperation op = new CommitOperation(commitables,
@@ -662,7 +667,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		IFile file = touch(newContent);
 
 		IFile[] commitables = new IFile[] { file };
-		ArrayList<IFile> untracked = new ArrayList<IFile>();
+		ArrayList<IFile> untracked = new ArrayList<>();
 		untracked.addAll(Arrays.asList(commitables));
 		String message = commitMessage;
 		if (message == null)
@@ -716,7 +721,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 	}
 
 	protected static void stage(IFile file) throws Exception {
-		ArrayList<IFile> unstaged = new ArrayList<IFile>();
+		ArrayList<IFile> unstaged = new ArrayList<>();
 		unstaged.addAll(Arrays.asList(new IFile[] { file }));
 		AddToIndexOperation op = new AddToIndexOperation(unstaged);
 		op.execute(null);
@@ -728,7 +733,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		if (!prj.isAccessible())
 			throw new IllegalStateException("No project to touch");
 		IFile[] commitables = new IFile[] { file };
-		ArrayList<IFile> untracked = new ArrayList<IFile>();
+		ArrayList<IFile> untracked = new ArrayList<>();
 		untracked.addAll(Arrays.asList(commitables));
 		CommitOperation op = new CommitOperation(commitables,
 				untracked, TestUtil.TESTAUTHOR, TestUtil.TESTCOMMITTER,

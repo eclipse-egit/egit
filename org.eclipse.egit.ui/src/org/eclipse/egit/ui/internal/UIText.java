@@ -403,6 +403,9 @@ public class UIText extends NLS {
 	public static String GitCloneWizard_errorCannotCreate;
 
 	/** */
+	public static String GitDecorator_jobTitle;
+
+	/** */
 	public static String GitDecoratorPreferencePage_bindingRepositoryNameFlag;
 
 	/** */
@@ -644,6 +647,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitHistoryPage_toggleEmailAddresses;
+
+	/** */
+	public static String GitLightweightDecorator_name;
 
 	/** */
 	public static String GitPreferenceRoot_automaticallyEnableChangesetModel;
@@ -1364,6 +1370,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RepositoryToolbarAction_tooltip;
+
+	/** */
+	public static String RepositoryTreeNodeDecorator_name;
 
 	/** */
 	public static String RepositoryCommit_AuthorDate;

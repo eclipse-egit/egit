@@ -80,7 +80,9 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.JFaceColors;
+import org.eclipse.jface.viewers.DecoratingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -389,6 +391,12 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			service.showBusyForFamily(JobFamilies.REPO_VIEW_REFRESH);
 			service.showBusyForFamily(JobFamilies.CLONE);
 		}
+	}
+
+	@Override
+	protected CommonViewer createCommonViewerObject(Composite aParent) {
+		return new RepositoriesCommonViewer(getViewSite().getId(), aParent,
+				SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 	}
 
 	@Override
@@ -1014,5 +1022,29 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 			}
 
 		return currentNode;
+	}
+
+	/**
+	 * Customized {@link CommonViewer} that doesn't create a decorating label
+	 * provider -- our label provider already does so, and we don't want double
+	 * decorations.
+	 */
+	private static class RepositoriesCommonViewer extends CommonViewer {
+
+		public RepositoriesCommonViewer(String viewId, Composite parent,
+				int style) {
+			super(viewId, parent, style);
+		}
+
+		@Override
+		protected void init() {
+			super.init();
+			IBaseLabelProvider labelProvider = getLabelProvider();
+			// Our label provider already decorates. Avoid double decorating.
+			if (labelProvider instanceof DecoratingStyledCellLabelProvider) {
+				((DecoratingStyledCellLabelProvider) labelProvider)
+						.setLabelDecorator(null);
+			}
+		}
 	}
 }
