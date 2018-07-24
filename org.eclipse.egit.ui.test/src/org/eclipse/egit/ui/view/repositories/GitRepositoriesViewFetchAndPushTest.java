@@ -74,7 +74,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 
 		// now let's clone the remote repository
 		uri = new URIish(remoteRepositoryFile.getPath());
-		workdir = new File(getTestDirectory(), "ClonedRepo2");
+		workdir = new File(getTestDirectory(), "RepoClone2");
 
 		op = new CloneOperation(uri, true, null, workdir, "refs/heads/master",
 				"origin", 0);
@@ -118,6 +118,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		}
 
 		Job.getJobManager().join(JobFamilies.REPO_VIEW_REFRESH, null);
+		TestUtil.waitForDecorations();
 		SWTBotTree tree = repoView.bot().tree();
 		tree.select(0);
 
@@ -295,8 +296,8 @@ public class GitRepositoriesViewFetchAndPushTest extends
 			throws Exception {
 		SWTBotTreeItem remotesNode = myRepoViewUtil.getRemotesItem(tree,
 				clonedRepositoryFile);
-		SWTBotTreeItem originNode = TestUtil.expandAndWait(remotesNode)
-				.getNode("origin");
+		SWTBotTreeItem originNode = TestUtil
+				.getChildNode(TestUtil.expandAndWait(remotesNode), "origin");
 		if (useRemote) {
 			originNode.select();
 		} else {

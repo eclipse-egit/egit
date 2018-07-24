@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013 Robin Stocker <robin@nibor.org> and others.
+ * Copyright (c) 2013, 2018 Robin Stocker <robin@nibor.org> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -11,6 +11,7 @@ package org.eclipse.egit.ui.internal.repository;
 
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.IToolTipProvider;
 
 /**
  * Wraps {@link RepositoriesViewLabelProvider} in a
@@ -28,7 +29,7 @@ public class RepositoriesViewStyledCellLabelProvider extends
 
 	/** */
 	public RepositoriesViewStyledCellLabelProvider() {
-		super(new RepositoriesViewLabelProvider());
+		super(RepositoriesViewLabelProvider.getDecoratingStyledLabelProvider());
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class RepositoriesViewStyledCellLabelProvider extends
 
 	@Override
 	public String getToolTipText(Object element) {
-		return ((RepositoriesViewLabelProvider) getStyledStringProvider())
+		return ((IToolTipProvider) getStyledStringProvider())
 				.getToolTipText(element);
 	}
 
