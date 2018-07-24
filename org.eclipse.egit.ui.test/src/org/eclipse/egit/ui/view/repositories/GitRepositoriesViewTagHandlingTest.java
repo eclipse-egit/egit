@@ -20,7 +20,6 @@ import java.io.File;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -67,7 +66,7 @@ public class GitRepositoriesViewTagHandlingTest extends
 	}
 
 	@Test
-	public void testCreateTags() throws Exception {
+	public void testCreateTagMultiple() throws Exception {
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		int initialCount = myRepoViewUtil.getTagsItem(tree, repositoryFile)
 				.expand().rowCount();
@@ -90,7 +89,7 @@ public class GitRepositoriesViewTagHandlingTest extends
 	}
 
 	@Test
-	public void testDeleteTag() throws Exception {
+	public void testTagDeletionSingle() throws Exception {
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		int initialCount = myRepoViewUtil.getTagsItem(tree, repositoryFile)
 				.expand().rowCount();
@@ -114,11 +113,7 @@ public class GitRepositoriesViewTagHandlingTest extends
 	}
 
 	@Test
-	public void testDeleteTags() throws Exception {
-		//TODO Remove once bug355200 has been fixed
-		if (Platform.OS_MACOSX.equals(Platform.getOS()))
-			return;
-
+	public void testTagDeletionMultiple() throws Exception {
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		int initialCount = myRepoViewUtil.getTagsItem(tree, repositoryFile)
 				.expand().rowCount();

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2015 Benjamin Muskalla and others.
+ * Copyright (c) 2011, 2018 Benjamin Muskalla and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
@@ -57,7 +57,8 @@ public class GitLabelProvider extends LabelProvider implements
 	@Override
 	public Image getImage(Object element) {
 		if (element instanceof Repository) {
-			return RepositoryTreeNodeType.REPO.getIcon();
+			return UIIcons.getImage(getImageCache(),
+					RepositoryTreeNodeType.REPO.getIcon());
 		}
 
 		if (element instanceof RefNode) {
@@ -106,12 +107,16 @@ public class GitLabelProvider extends LabelProvider implements
 	private Image getRefIcon(Ref ref) {
 		String name = ref.getName();
 		if (name.startsWith(Constants.R_HEADS)
-				|| name.startsWith(Constants.R_REMOTES))
-			return RepositoryTreeNodeType.REF.getIcon();
-		else if (name.startsWith(Constants.R_TAGS))
-			return RepositoryTreeNodeType.TAG.getIcon();
-		else
-			return RepositoryTreeNodeType.ADDITIONALREF.getIcon();
+				|| name.startsWith(Constants.R_REMOTES)) {
+			return UIIcons.getImage(getImageCache(),
+					RepositoryTreeNodeType.REF.getIcon());
+		} else if (name.startsWith(Constants.R_TAGS)) {
+			return UIIcons.getImage(getImageCache(),
+					RepositoryTreeNodeType.TAG.getIcon());
+		} else {
+			return UIIcons.getImage(getImageCache(),
+					RepositoryTreeNodeType.ADDITIONALREF.getIcon());
+		}
 	}
 
 	private LabelProvider getWorkbenchLabelProvider() {

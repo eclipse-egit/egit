@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2012 SAP AG and others.
+ * Copyright (C) 2011, 2018 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -29,7 +29,7 @@ import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
-import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
+import org.eclipse.egit.ui.internal.repository.RepositoriesViewStyledCellLabelProvider;
 import org.eclipse.egit.ui.internal.repository.RepositorySearchWizard;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
@@ -161,7 +161,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 				return false;
 			}
 		});
-		tv.setLabelProvider(new RepositoriesViewLabelProvider());
+		tv.setLabelProvider(new RepositoriesViewStyledCellLabelProvider());
 
 		Composite tb = new Composite(main, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(tb);
