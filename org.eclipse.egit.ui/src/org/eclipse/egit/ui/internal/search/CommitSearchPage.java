@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011 GitHub Inc.
+ *  Copyright (c) 2011, 2018 GitHub Inc. and others
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License 2.0
  *  which accompanies this distribution, and is available at
@@ -42,7 +42,6 @@ import org.eclipse.jface.text.FindReplaceDocumentAdapterContentProposalProvider;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
-import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.search.ui.ISearchPage;
@@ -313,8 +312,7 @@ public class CommitSearchPage extends DialogPage implements ISearchPage {
 				repositoryGroup, SWT.SINGLE | SWT.V_SCROLL | SWT.H_SCROLL
 						| SWT.BORDER);
 		this.repositoryViewer
-				.setLabelProvider(new DelegatingStyledCellLabelProvider(
-						new RepositoriesViewLabelProvider()));
+				.setLabelProvider(new RepositoriesViewLabelProvider());
 		this.repositoryViewer
 				.setContentProvider(new RepositoriesViewContentProvider());
 		this.repositoryViewer

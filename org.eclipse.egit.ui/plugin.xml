@@ -647,6 +647,21 @@
             %Decorator_description
          </description>
       </decorator>
+      <decorator
+            lightweight="true"
+            adaptable="false"
+            label="%Repo_decorator_name"
+            class="org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeDecorator"
+            state="true"
+            location="BOTTOM_RIGHT"
+            id="org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeDecorator">
+            <enablement>
+              <objectClass name="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode"/>
+            </enablement>
+         <description>
+            %Repo_decorator_description
+         </description>
+      </decorator>
    </extension>
 
    <extension point="org.eclipse.ui.themes">

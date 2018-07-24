@@ -270,11 +270,13 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		SWTBotShell shell = bot.shell(wizardTitle);
 		bot.radio(UIText.GitSelectWizardPage_ImportExistingButton).click();
 		TableCollection selected = shell.bot().tree().selection();
-		String wizardNode = selected.get(0, 0);
+		String wizardNodeText = selected.get(0, 0);
 		// wizard directory should be working dir
-		assertEquals(
-				myRepoViewUtil.getWorkdirItem(tree, repositoryFile).getText(),
-				wizardNode);
+		String expected = myRepoViewUtil.getWorkdirItem(tree, repositoryFile)
+				.getText();
+		// One or the other or both or none might contain decorations
+		assertTrue(expected.contains(wizardNodeText)
+				|| wizardNodeText.contains(expected));
 		shell.close();
 		tree = getOrOpenView().bot().tree();
 		// start wizard from .git
@@ -285,9 +287,9 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 				myUtil.getPluginLocalizedValue("ImportProjectsCommand"));
 		shell = bot.shell(wizardTitle);
 		selected = shell.bot().tree().selection();
-		wizardNode = selected.get(0, 0);
+		wizardNodeText = selected.get(0, 0);
 		// wizard directory should be .git
-		assertEquals(Constants.DOT_GIT, wizardNode);
+		assertEquals(Constants.DOT_GIT, wizardNodeText);
 		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
 		shell.bot().label("Import Projects"); // wait for import projects page
 		assertEquals(0, shell.bot().tree().getAllItems().length);
@@ -330,7 +332,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 
 	private static IWizardDescriptor[] getAllWizards(
 			IWizardCategory[] categories) {
-		List<IWizardDescriptor> results = new ArrayList<IWizardDescriptor>();
+		List<IWizardDescriptor> results = new ArrayList<>();
 		for (IWizardCategory wizardCategory : categories) {
 			results.addAll(Arrays.asList(wizardCategory.getWizards()));
 			results.addAll(Arrays
@@ -658,7 +660,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 	}
 
 	@Test
-	public void testDeleteMultipleBranches() throws Exception {
+	public void testDeleteBranchMultiple() throws Exception {
 		// expand first level
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		refreshAndWait();

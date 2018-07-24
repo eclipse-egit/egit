@@ -45,6 +45,8 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Collection of utility methods for Git Repositories View tests
@@ -59,7 +61,21 @@ public abstract class GitRepositoriesViewTestBase extends
 	protected final static String viewName = myUtil
 			.getPluginLocalizedValue("GitRepositoriesView_name");
 
-	protected static final GitRepositoriesViewTestUtils myRepoViewUtil = new GitRepositoriesViewTestUtils();
+	protected static GitRepositoriesViewTestUtils myRepoViewUtil;
+
+	@Before
+	public void setup() {
+		setTestUtils();
+	}
+
+	private static void setTestUtils() {
+		myRepoViewUtil = new GitRepositoriesViewTestUtils();
+	}
+
+	@After
+	public void teardown() {
+		myRepoViewUtil.dispose();
+	}
 
 	/**
 	 * remove all configured repositories from the view
@@ -130,6 +146,13 @@ public abstract class GitRepositoriesViewTestBase extends
 			fail("Refresh took longer 60 seconds");
 		}
 		TestUtil.processUIEvents();
+		TestUtil.waitForDecorations();
+	}
+
+	@Override
+	protected void clearAllConfiguredRepositories() throws Exception {
+		super.clearAllConfiguredRepositories();
+		refreshAndWait();
 	}
 
 	@Override

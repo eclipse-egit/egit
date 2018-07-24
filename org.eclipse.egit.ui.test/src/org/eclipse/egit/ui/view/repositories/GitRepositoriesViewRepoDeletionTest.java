@@ -243,10 +243,13 @@ public class GitRepositoriesViewRepoDeletionTest extends
 					Thread.currentThread().interrupt();
 					return Status.CANCEL_STATUS;
 				}
+				// Make sure the label provider is disposed. We don't need it
+				// anymore.
+				myRepoViewUtil.dispose();
 				// Finally... Java does not give any guarantees about when
 				// exactly an only weakly reachable object is finalized and
 				// garbage collected.
-				waitForFinalization(5000);
+				waitForFinalization(10000);
 				// Experience shows that an explicit garbage collection run very
 				// often does reclaim only weakly reachable objects and set the
 				// weak references' referents to null, but not even that can be
@@ -340,15 +343,23 @@ public class GitRepositoriesViewRepoDeletionTest extends
 	private void waitForFinalization(int maxMillis) {
 		long stop = System.currentTimeMillis() + maxMillis;
 		MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
-		do {
+		for (;;) {
 			System.gc();
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
+				System.out.println("Garbage collection interrupted");
 				break;
 			}
-		} while (System.currentTimeMillis() < stop
-				&& memoryBean.getObjectPendingFinalizationCount() > 0);
+			if (memoryBean.getObjectPendingFinalizationCount() == 0) {
+				break;
+			}
+			if (System.currentTimeMillis() > stop) {
+				System.out.println(
+						"Garbage collection timed out; not all objects collected.");
+				break;
+			}
+		}
 	}
 }

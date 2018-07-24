@@ -219,7 +219,7 @@ public class GitRepositoriesViewBranchHandlingTest extends
 	}
 
 	@Test
-	public void testClonedRepository() throws Exception {
+	public void testBranchCreateInClone() throws Exception {
 		SWTBotTree tree = getOrOpenView().bot().tree();
 
 		SWTBotTreeItem item = TestUtil.expandAndWait(myRepoViewUtil
