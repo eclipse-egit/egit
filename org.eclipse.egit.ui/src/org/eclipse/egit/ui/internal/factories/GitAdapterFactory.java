@@ -5,6 +5,7 @@
  * Copyright (C) 2011, IBM Corporation
  * Copyright (C) 2012, Daniel Megert <daniel_megert@ch.ibm.com>
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2018, Thomas Wolf <thomas.wolf@paranor.ch>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -38,7 +39,7 @@ import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.egit.ui.internal.history.GitHistoryPageSource;
-import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
+import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeWorkbenchAdapter;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.egit.ui.internal.synchronize.mapping.GitModelWorkbenchAdapter;
@@ -46,7 +47,6 @@ import org.eclipse.egit.ui.internal.synchronize.mapping.GitObjectMapping;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelTree;
-import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Repository;
@@ -56,7 +56,6 @@ import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.team.ui.mapping.ISynchronizationCompareAdapter;
 import org.eclipse.ui.IURIEditorInput;
 import org.eclipse.ui.model.IWorkbenchAdapter;
-import org.eclipse.ui.model.WorkbenchAdapter;
 import org.eclipse.ui.part.IShowInSource;
 
 /**
@@ -78,10 +77,8 @@ public class GitAdapterFactory implements IAdapterFactory {
 		}
 
 		if (IWorkbenchAdapter.class == adapterType) {
-			// property page names for git repository tree nodes
 			if (adaptableObject instanceof RepositoryTreeNode) {
-				return getRepositoryTreeNodeWorkbenchAdapter(
-						(RepositoryTreeNode) adaptableObject);
+				return RepositoryTreeNodeWorkbenchAdapter.INSTANCE;
 			}
 
 			if (gitModelWorkbenchAdapter == null) {
@@ -216,16 +213,5 @@ public class GitAdapterFactory implements IAdapterFactory {
 				ISynchronizationCompareAdapter.class, ResourceMapping.class,
 				IResource.class, IWorkbenchAdapter.class, IShowInSource.class,
 				Repository.class, File.class, IHistoryPageSource.class};
-	}
-
-	private static IWorkbenchAdapter getRepositoryTreeNodeWorkbenchAdapter(
-			final RepositoryTreeNode node) {
-		return new WorkbenchAdapter() {
-			@Override
-			public String getLabel(Object object) {
-				ILabelProvider labelProvider= new RepositoriesViewLabelProvider();
-				return labelProvider.getText(node);
-			}
-		};
 	}
 }
