@@ -40,13 +40,8 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
-import org.eclipse.egit.ui.internal.repository.tree.LocalNode;
-import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
-import org.eclipse.egit.ui.internal.repository.tree.TagsNode;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
-import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestUtils;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Constants;
@@ -100,12 +95,8 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		top.execute(null);
 		touchAndSubmit(null);
 
-		RepositoriesViewLabelProvider provider = GitRepositoriesViewTestUtils
-				.createLabelProvider();
-		LOCAL_BRANCHES = provider.getText(new LocalNode(new RepositoryNode(
-				null, repo), repo));
-		TAGS = provider.getText(new TagsNode(new RepositoryNode(null, repo),
-				repo));
+		LOCAL_BRANCHES = UIText.RepositoriesViewLabelProvider_LocalNodetext;
+		TAGS = UIText.RepositoriesViewLabelProvider_TagsNodeText;
 	}
 
 	@Test
@@ -171,7 +162,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 				.getProject(PROJ1).getFolder(FOLDER).getFile("ToBeDeleted");
 		toBeDeleted.create(new ByteArrayInputStream(new byte[0]), false, null);
 
-		ArrayList<IFile> untracked = new ArrayList<IFile>();
+		ArrayList<IFile> untracked = new ArrayList<>();
 		untracked.add(toBeDeleted);
 		// commit to stable
 		CommitOperation op = new CommitOperation(new IFile[] { toBeDeleted },

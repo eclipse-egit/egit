@@ -22,14 +22,9 @@ import java.util.concurrent.TimeUnit;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
-import org.eclipse.egit.ui.internal.repository.tree.LocalNode;
-import org.eclipse.egit.ui.internal.repository.tree.RemoteTrackingNode;
-import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.egit.ui.test.TestUtil;
-import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -65,13 +60,9 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 	public void setup() throws Exception {
 		repositoryFile = createProjectAndCommitToRepository();
 		childRepositoryFile = createChildRepository(repositoryFile);
-		RepositoriesViewLabelProvider provider = GitRepositoriesViewTestUtils
-				.createLabelProvider();
 		Repository repo = lookupRepository(childRepositoryFile);
-		REMOTE_BRANCHES = provider.getText(new RemoteTrackingNode(
-				new RepositoryNode(null, repo), repo));
-		LOCAL_BRANCHES = provider.getText(new LocalNode(new RepositoryNode(
-				null, repo), repo));
+		REMOTE_BRANCHES = UIText.RepositoriesViewLabelProvider_RemoteTrackingNodetext;
+		LOCAL_BRANCHES = UIText.RepositoriesViewLabelProvider_LocalNodetext;
 		ObjectId id = repo.resolve(repo.getFullBranch());
 		initialCommitId = id.name();
 	}

@@ -8,7 +8,7 @@
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2011, Christian Halstrick <christian.halstrick@sap.com>
  * Copyright (C) 2015, IBM Corporation (Dani Megert <daniel_megert@ch.ibm.com>)
- * Copyright (C) 2016, Thomas Wolf <thomas.wolf@paranor.ch>
+ * Copyright (C) 2016, 2018 Thomas Wolf <thomas.wolf@paranor.ch>
  * Copyright (C) 2016, Stefan Dirix <sdirix@eclipsesource.com>
  *
  * All rights reserved. This program and the accompanying materials
@@ -35,12 +35,8 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.AdapterUtils;
-import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.util.ExceptionCollector;
 import org.eclipse.egit.core.project.GitProjectData;
@@ -57,9 +53,6 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.IDecoration;
-import org.eclipse.jface.viewers.ILightweightLabelDecorator;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
@@ -86,9 +79,8 @@ import org.eclipse.ui.themes.ITheme;
  * when compared to <code>HEAD</code>, as well as the index in the relevant
  * repository.
  */
-public class GitLightweightDecorator extends LabelProvider implements
-		ILightweightLabelDecorator, IPropertyChangeListener,
-		IndexDiffChangedListener {
+public class GitLightweightDecorator extends GitDecorator
+		implements IPropertyChangeListener {
 
 	/**
 	 * Property constant pointing back to the extension point id of the
@@ -139,7 +131,6 @@ public class GitLightweightDecorator extends LabelProvider implements
 		PlatformUI.getWorkbench().getThemeManager().getCurrentTheme()
 				.addPropertyChangeListener(this);
 
-		org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache().addIndexDiffChangedListener(this);
 		GitProjectData.addRepositoryChangeListener(mappingChangeListener);
 	}
 
@@ -178,7 +169,6 @@ public class GitLightweightDecorator extends LabelProvider implements
 				.removePropertyChangeListener(this);
 		TeamUI.removePropertyChangeListener(this);
 		Activator.removePropertyChangeListener(this);
-		org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache().removeIndexDiffChangedListener(this);
 		GitProjectData.removeRepositoryChangeListener(mappingChangeListener);
 		mappingChangeListener = null;
 	}
@@ -704,7 +694,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 			IndexDiffData indexDiffData) {
 		// clear calculated repo data
 		DecoratableResourceHelper.clearState(repository);
-		postLabelEvent();
+		super.indexDiffChanged(repository, indexDiffData);
 	}
 
 	// -------- Helper methods --------
@@ -732,30 +722,6 @@ public class GitLightweightDecorator extends LabelProvider implements
 	}
 
 	/**
-	 * Post a label event to the LabelEventJob
-	 *
-	 * Posts a generic label event. No specific elements are provided; all
-	 * decorations shall be invalidated. Same as
-	 * <code>postLabelEvent(null, true)</code>.
-	 */
-	private void postLabelEvent() {
-		// Post label event to LabelEventJob
-		LabelEventJob.getInstance().postLabelEvent(this);
-	}
-
-	void fireLabelEvent() {
-		final LabelProviderChangedEvent event = new LabelProviderChangedEvent(
-				this);
-		// Re-trigger decoration process (in UI thread)
-		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				fireLabelProviderChanged(event);
-			}
-		});
-	}
-
-	/**
 	 * Handle exceptions that occur in the decorator. Exceptions are only logged
 	 * for resources that are accessible (i.e. exist in an open project).
 	 *
@@ -768,57 +734,9 @@ public class GitLightweightDecorator extends LabelProvider implements
 		if (resource == null || resource.isAccessible())
 			EXCEPTION_COLLECTOR.handleException(e);
 	}
-}
-
-/**
- * Job reducing label events to prevent unnecessary (i.e. redundant) event
- * processing
- */
-class LabelEventJob extends Job {
-
-	/**
-	 * Constant defining the waiting time (in milliseconds) until an event is
-	 * fired
-	 */
-	private static final long DELAY = 100L;
-
-	private static LabelEventJob instance = new LabelEventJob("LabelEventJob"); //$NON-NLS-1$
-
-	/**
-	 * Get the LabelEventJob singleton
-	 *
-	 * @return the LabelEventJob singleton
-	 */
-	static LabelEventJob getInstance() {
-		return instance;
-	}
-
-	private LabelEventJob(final String name) {
-		super(name);
-		setSystem(true);
-	}
-
-	private GitLightweightDecorator glwDecorator;
-
-	/**
-	 * Post a label event
-	 *
-	 * @param decorator
-	 *            The GitLightweightDecorator that is used to fire a
-	 *            LabelProviderChangedEvent
-	 */
-	void postLabelEvent(final GitLightweightDecorator decorator) {
-		if (glwDecorator == null)
-			glwDecorator = decorator;
-		if (getState() == SLEEPING || getState() == WAITING)
-			cancel();
-		schedule(DELAY);
-	}
 
 	@Override
-	protected IStatus run(IProgressMonitor monitor) {
-		if (glwDecorator != null)
-			glwDecorator.fireLabelEvent();
-		return Status.OK_STATUS;
+	protected String getName() {
+		return UIText.GitLightweightDecorator_name;
 	}
 }
