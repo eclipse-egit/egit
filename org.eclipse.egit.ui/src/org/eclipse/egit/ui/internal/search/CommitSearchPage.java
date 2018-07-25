@@ -28,7 +28,7 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
-import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
+import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.DialogPage;
@@ -312,7 +312,7 @@ public class CommitSearchPage extends DialogPage implements ISearchPage {
 				repositoryGroup, SWT.SINGLE | SWT.V_SCROLL | SWT.H_SCROLL
 						| SWT.BORDER);
 		this.repositoryViewer
-				.setLabelProvider(new RepositoriesViewLabelProvider());
+				.setLabelProvider(new RepositoryTreeNodeLabelProvider());
 		this.repositoryViewer
 				.setContentProvider(new RepositoriesViewContentProvider());
 		this.repositoryViewer
