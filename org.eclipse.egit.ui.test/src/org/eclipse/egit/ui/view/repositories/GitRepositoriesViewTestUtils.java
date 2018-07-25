@@ -15,7 +15,7 @@ package org.eclipse.egit.ui.view.repositories;
 import java.io.File;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
+import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefsNode;
 import org.eclipse.egit.ui.internal.repository.tree.BranchesNode;
 import org.eclipse.egit.ui.internal.repository.tree.LocalNode;
@@ -33,17 +33,17 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 public class GitRepositoriesViewTestUtils {
 
 	/**
-	 * Create a new instance of {@link RepositoriesViewLabelProvider}
+	 * Create a new instance of {@link RepositoryTreeNodeLabelProvider}
 	 *
 	 * @return label provider
 	 */
-	public static RepositoriesViewLabelProvider createLabelProvider() {
-		final AtomicReference<RepositoriesViewLabelProvider> providerRef = new AtomicReference<>();
+	public static RepositoryTreeNodeLabelProvider createLabelProvider() {
+		final AtomicReference<RepositoryTreeNodeLabelProvider> providerRef = new AtomicReference<>();
 		Display.getDefault().syncExec(new Runnable() {
 
 			@Override
 			public void run() {
-				providerRef.set(new RepositoriesViewLabelProvider());
+				providerRef.set(new RepositoryTreeNodeLabelProvider());
 			}
 
 		});
@@ -52,7 +52,7 @@ public class GitRepositoriesViewTestUtils {
 
 	protected static final TestUtil myUtil = new TestUtil();
 
-	private final RepositoriesViewLabelProvider labelProvider;
+	private final RepositoryTreeNodeLabelProvider labelProvider;
 
 	/**
 	 * Create repositories view test utilities
