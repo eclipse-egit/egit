@@ -29,7 +29,7 @@ import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
-import org.eclipse.egit.ui.internal.repository.RepositoriesViewStyledCellLabelProvider;
+import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeStyledCellLabelProvider;
 import org.eclipse.egit.ui.internal.repository.RepositorySearchWizard;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
@@ -161,7 +161,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 				return false;
 			}
 		});
-		tv.setLabelProvider(new RepositoriesViewStyledCellLabelProvider());
+		tv.setLabelProvider(new RepositoryTreeNodeStyledCellLabelProvider());
 
 		Composite tb = new Composite(main, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(tb);

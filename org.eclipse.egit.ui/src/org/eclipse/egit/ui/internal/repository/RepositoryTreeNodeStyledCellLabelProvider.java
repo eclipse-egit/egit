@@ -14,7 +14,7 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.IToolTipProvider;
 
 /**
- * Wraps {@link RepositoriesViewLabelProvider} in a
+ * Wraps {@link RepositoryTreeNodeLabelProvider} in a
  * {@link DelegatingStyledCellLabelProvider} to provide styled text support for
  * use in tree or table viewers.
  * <p>
@@ -24,12 +24,12 @@ import org.eclipse.jface.viewers.IToolTipProvider;
  * Also implements ILabelProvider for use with PatternFilter (see bug 258029 in
  * platform which would make this unnecessary).
  */
-public class RepositoriesViewStyledCellLabelProvider extends
+public class RepositoryTreeNodeStyledCellLabelProvider extends
 		DelegatingStyledCellLabelProvider implements ILabelProvider {
 
 	/** */
-	public RepositoriesViewStyledCellLabelProvider() {
-		super(RepositoriesViewLabelProvider.getDecoratingStyledLabelProvider());
+	public RepositoryTreeNodeStyledCellLabelProvider() {
+		super(RepositoryTreeNodeLabelProvider.getDecoratingStyledLabelProvider());
 	}
 
 	@Override

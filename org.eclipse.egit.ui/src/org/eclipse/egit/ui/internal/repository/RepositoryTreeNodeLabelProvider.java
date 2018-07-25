@@ -29,7 +29,7 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
 /**
  * Label Provider for the Git Repositories View
  */
-public class RepositoriesViewLabelProvider extends WorkbenchLabelProvider
+public class RepositoryTreeNodeLabelProvider extends WorkbenchLabelProvider
 		implements IToolTipProvider {
 
 	/**
@@ -40,7 +40,7 @@ public class RepositoriesViewLabelProvider extends WorkbenchLabelProvider
 	 */
 	public static ILabelProvider getDecoratingLabelProvider() {
 		return new DecoratingLabelProviderWithToolTips(
-				new RepositoriesViewLabelProvider());
+				new RepositoryTreeNodeLabelProvider());
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class RepositoriesViewLabelProvider extends WorkbenchLabelProvider
 	 */
 	public static IStyledLabelProvider getDecoratingStyledLabelProvider() {
 		return new DecoratingLabelProviderWithToolTips(
-				new RepositoriesViewLabelProvider());
+				new RepositoryTreeNodeLabelProvider());
 	}
 
 	@Override
@@ -68,10 +68,10 @@ public class RepositoriesViewLabelProvider extends WorkbenchLabelProvider
 			extends DecoratingLabelProvider
 			implements IStyledLabelProvider, IToolTipProvider {
 
-		private final RepositoriesViewLabelProvider labelProvider;
+		private final RepositoryTreeNodeLabelProvider labelProvider;
 
 		DecoratingLabelProviderWithToolTips(
-				RepositoriesViewLabelProvider labelProvider) {
+				RepositoryTreeNodeLabelProvider labelProvider) {
 			super(labelProvider, PlatformUI.getWorkbench().getDecoratorManager()
 					.getLabelDecorator());
 			this.labelProvider = labelProvider;
