@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
-import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
+import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
@@ -200,8 +200,7 @@ public class GitSelectWizardPage extends WizardPage {
 		tv.setContentProvider(cp);
 		GridDataFactory.fillDefaults().grab(true, true).hint(SWT.DEFAULT, 200)
 				.applyTo(tv.getTree());
-		tv.setLabelProvider(new RepositoriesViewLabelProvider());
-
+		tv.setLabelProvider(new RepositoryTreeNodeLabelProvider());
 		tv.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			@Override
