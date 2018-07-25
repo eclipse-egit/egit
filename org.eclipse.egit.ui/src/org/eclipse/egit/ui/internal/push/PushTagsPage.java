@@ -24,7 +24,7 @@ import org.eclipse.egit.ui.internal.components.FilteredCheckboxTree;
 import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo;
 import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo.SelectionType;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
-import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
+import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagsNode;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -134,8 +134,7 @@ public class PushTagsPage extends WizardPage {
 		TagsNode tagsNode = new TagsNode(null, repository);
 		ContentProvider contentProvider = new ContentProvider(tagsNode);
 		treeViewer.setContentProvider(contentProvider);
-		treeViewer
-				.setLabelProvider(new RepositoriesViewLabelProvider());
+		treeViewer.setLabelProvider(new RepositoryTreeNodeLabelProvider());
 		treeViewer.setComparator(new ViewerComparator(
 				CommonUtils.STRING_ASCENDING_COMPARATOR));
 		treeViewer.setInput(tagsNode);

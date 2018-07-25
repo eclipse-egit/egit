@@ -32,7 +32,7 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
 /**
  * A decorating label provider for repository tree nodes.
  */
-public class RepositoriesViewLabelProvider
+public class RepositoryTreeNodeLabelProvider
 		extends DecoratingStyledCellLabelProvider
 		implements ILabelProvider, IStyledLabelProvider {
 
@@ -41,13 +41,13 @@ public class RepositoriesViewLabelProvider
 	private final WeakHashMap<Object, StyledString> previousDecoratedLabels = new WeakHashMap<>();
 
 	/**
-	 * Creates a new {@link RepositoriesViewLabelProvider}.
+	 * Creates a new {@link RepositoryTreeNodeLabelProvider}.
 	 */
-	public RepositoriesViewLabelProvider() {
+	public RepositoryTreeNodeLabelProvider() {
 		this(new WorkbenchLabelProvider());
 	}
 
-	private RepositoriesViewLabelProvider(
+	private RepositoryTreeNodeLabelProvider(
 			WorkbenchLabelProvider labelProvider) {
 		super(labelProvider, PlatformUI.getWorkbench()
 				.getDecoratorManager().getLabelDecorator(), null);

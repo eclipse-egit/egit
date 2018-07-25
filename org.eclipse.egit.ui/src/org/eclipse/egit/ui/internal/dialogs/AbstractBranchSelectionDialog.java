@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
-import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
+import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefsNode;
 import org.eclipse.egit.ui.internal.repository.tree.BranchHierarchyNode;
@@ -278,8 +278,7 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 				selectionModel | SWT.BORDER, filter, true);
 		branchTree = tree.getViewer();
 		branchTree.setUseHashlookup(true);
-		branchTree
-				.setLabelProvider(new RepositoriesViewLabelProvider());
+		branchTree.setLabelProvider(new RepositoryTreeNodeLabelProvider());
 		branchTree.setContentProvider(new RepositoriesViewContentProvider());
 		ColumnViewerToolTipSupport.enableFor(branchTree);
 
