@@ -15,6 +15,7 @@
 package org.eclipse.egit.core.internal;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.resources.IContainer;
@@ -29,6 +30,7 @@ import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.diff.RenameDetector;
+import org.eclipse.jgit.errors.CancelledException;
 import org.eclipse.jgit.lib.NullProgressMonitor;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
@@ -140,8 +142,13 @@ public class CompareCoreUtils {
 
 			RenameDetector detector = new RenameDetector(repository);
 			detector.addAll(entries);
-			List<DiffEntry> renames = detector.compute(walk.getObjectReader(),
-					NullProgressMonitor.INSTANCE);
+			List<DiffEntry> renames = Collections.emptyList();
+			try {
+				renames = detector.compute(walk.getObjectReader(),
+						NullProgressMonitor.INSTANCE);
+			} catch (CancelledException e) {
+				return null;
+			}
 			for (DiffEntry diff : renames) {
 				if (diff.getChangeType() == ChangeType.RENAME
 						&& newPath.equals(diff.getNewPath()))
