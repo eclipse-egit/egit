@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77dd2fd2_6464b649",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-07-29T11:52:24Z",
+      "side": 1,
+      "message": "last time you reminded me of the 3 blanks indentation ;)",
+      "revId": "1de9bed3bb14f7b6eb0e3c9c166c37b9c0270237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "095eb887_67f536b5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/HistoryColumnsPreferencePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-07-29T11:52:24Z",
+      "side": 1,
+      "message": "please remove the label and call setDescription() in the constructor instead.",
+      "revId": "1de9bed3bb14f7b6eb0e3c9c166c37b9c0270237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fc772f0_f584a10d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-07-29T11:52:24Z",
+      "side": 1,
+      "message": "-Define +Select",
+      "revId": "1de9bed3bb14f7b6eb0e3c9c166c37b9c0270237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
