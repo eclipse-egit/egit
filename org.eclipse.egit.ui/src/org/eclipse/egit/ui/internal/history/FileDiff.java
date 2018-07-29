@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -39,6 +40,7 @@ import org.eclipse.jgit.diff.MyersDiff;
 import org.eclipse.jgit.diff.RawText;
 import org.eclipse.jgit.diff.RawTextComparator;
 import org.eclipse.jgit.diff.RenameDetector;
+import org.eclipse.jgit.errors.CancelledException;
 import org.eclipse.jgit.errors.CorruptObjectException;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
@@ -170,11 +172,16 @@ public class FileDiff extends WorkbenchAdapter {
 			List<DiffEntry> xentries = new LinkedList<>(entries);
 			RenameDetector detector = new RenameDetector(repository);
 			detector.addAll(entries);
-			EclipseGitProgressTransformer jgitProgress = new EclipseGitProgressTransformer(
-					progress.newChild(1));
-			List<DiffEntry> renames = detector.compute(walk.getObjectReader(),
-					jgitProgress);
-			if (!progress.isCanceled()) {
+			boolean cancelled = false;
+			List<DiffEntry> renames = Collections.emptyList();
+			try {
+				renames = detector.compute(walk.getObjectReader(),
+						new EclipseGitProgressTransformer(
+								progress.newChild(1)));
+			} catch (CancelledException e) {
+				cancelled = true;
+			}
+			if (!cancelled) {
 				progress.setWorkRemaining(renames.size());
 				for (DiffEntry m : renames) {
 					final FileDiff d = new FileDiff(repository, commit, m);
