@@ -23,8 +23,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,12 +33,9 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.selection.SelectionUtils;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -83,51 +78,6 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		mySelection = SelectionUtils.getStructuredSelection(selection);
 	}
 
-	/**
-	 * Retrieve the list of projects that contains the given resources. All
-	 * resources must actually map to a project shared with egit, otherwise an
-	 * empty array is returned. In case of a linked resource, the project
-	 * returned is the one that contains the link target and is shared with
-	 * egit, if any, otherwise an empty array is also returned.
-	 *
-	 * @param selection
-	 * @return the projects hosting the selected resources
-	 */
-	private IProject[] getProjectsForSelectedResources(
-			IStructuredSelection selection) {
-		Set<IProject> ret = new LinkedHashSet<>();
-		for (IResource resource : getSelectedAdaptables(selection,
-				IResource.class)) {
-			RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
-			if (mapping != null && (mapping.getContainer() instanceof IProject))
-				ret.add((IProject) mapping.getContainer());
-			else
-				return new IProject[0];
-		}
-		ret.addAll(extractProjectsFromMappings(selection));
-
-		return ret.toArray(new IProject[0]);
-	}
-
-	private Set<IProject> extractProjectsFromMappings(
-			IStructuredSelection selection) {
-		Set<IProject> ret = new LinkedHashSet<>();
-		for (ResourceMapping mapping : getSelectedAdaptables(selection,
-				ResourceMapping.class)) {
-			IProject[] mappedProjects = mapping.getProjects();
-			if (mappedProjects != null && mappedProjects.length != 0) {
-				// Some mappings (WorkingSetResourceMapping) return the projects
-				// in unpredictable order. Sort them like the navigator to
-				// correspond to the order the user usually sees.
-				List<IProject> projects = new ArrayList<>(
-						Arrays.asList(mappedProjects));
-				Collections
-						.sort(projects, CommonUtils.RESOURCE_NAME_COMPARATOR);
-				ret.addAll(projects);
-			}
-		}
-		return ret;
-	}
 
 	/**
 	 * Retrieve the list of projects that contains the selected resources. All
@@ -143,7 +93,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	protected IProject[] getProjectsForSelectedResources(ExecutionEvent event)
 			throws ExecutionException {
 		IStructuredSelection selection = getSelection(event);
-		return getProjectsForSelectedResources(selection);
+		return SelectionUtils.getSelectedProjects(selection);
 	}
 
 	/**
@@ -157,7 +107,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 */
 	protected IProject[] getProjectsForSelectedResources() {
 		IStructuredSelection selection = getSelection();
-		return getProjectsForSelectedResources(selection);
+		return SelectionUtils.getSelectedProjects(selection);
 	}
 
 	/**
@@ -246,22 +196,8 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 */
 	protected Repository[] getRepositories(ExecutionEvent event)
 			throws ExecutionException {
-		IProject[] selectedProjects = getProjectsForSelectedResources(event);
-		if (selectedProjects.length > 0) {
-			return getRepositoriesFor(selectedProjects);
-		}
 		IStructuredSelection selection = getSelection(event);
-		if (!selection.isEmpty()) {
-			Set<Repository> repos = new LinkedHashSet<>();
-			for (Object o : selection.toArray()) {
-				Repository repo = AdapterUtils.adapt(o, Repository.class);
-				if (repo != null) {
-					repos.add(repo);
-				}
-			}
-			return repos.toArray(new Repository[0]);
-		}
-		return new Repository[0];
+		return SelectionUtils.getRepositories(selection);
 	}
 
 	/**
@@ -271,24 +207,8 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 * @return repositories for selection, or an empty array
 	 */
 	public Repository[] getRepositories() {
-		IProject[] selectedProjects = getProjectsForSelectedResources();
-		if (selectedProjects.length > 0)
-			return getRepositoriesFor(selectedProjects);
 		IStructuredSelection selection = getSelection();
-		if (!selection.isEmpty()) {
-			Set<Repository> repos = new LinkedHashSet<>();
-			for (Object o : selection.toArray()) {
-				Repository repo = AdapterUtils.adapt(o, Repository.class);
-				if (repo != null) {
-					repos.add(repo);
-				} else {
-					// no repository found for one of the objects!
-					return new Repository[0];
-				}
-			}
-			return repos.toArray(new Repository[0]);
-		}
-		return new Repository[0];
+		return SelectionUtils.getRepositories(selection);
 	}
 
 	/**
@@ -321,32 +241,6 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	@Override
 	public void setEnabled(Object evaluationContext) {
 		this.evaluationContext = (IEvaluationContext) evaluationContext;
-	}
-
-	/**
-	 * Creates an array of the given class type containing all the objects in
-	 * the selection that adapt to the given class.
-	 *
-	 * @param selection
-	 * @param c
-	 * @return the selected adaptables
-	 */
-	private <T> List<T> getSelectedAdaptables(ISelection selection,
-			Class<T> c) {
-		List<T> result;
-		if (selection != null && !selection.isEmpty()) {
-			result = new ArrayList<>();
-			Iterator elements = ((IStructuredSelection) selection).iterator();
-			while (elements.hasNext()) {
-				T adapter = AdapterUtils.adapt(elements.next(), c);
-				if (adapter != null) {
-					result.add(adapter);
-				}
-			}
-		} else {
-			result = Collections.emptyList();
-		}
-		return result;
 	}
 
 	/**

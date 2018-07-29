@@ -13,6 +13,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.selection;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -20,11 +23,13 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.expressions.IEvaluationContext;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
@@ -61,6 +66,51 @@ public class SelectionUtils {
 	public static Repository getRepository(
 			@NonNull IStructuredSelection selection) {
 		return getRepository(false, selection, null);
+	}
+
+	/**
+	 * @param evaluationContext
+	 * @return array of selected repositories
+	 */
+	@NonNull
+	public static Repository[] getRepositories(
+			@Nullable IEvaluationContext evaluationContext) {
+		return getRepositories(getSelection(evaluationContext));
+	}
+
+	/**
+	 * Retrieves all the repositories associated with the current selection. It
+	 * attempts to first identify the selections as projects and if that yields
+	 * an empty result, it then changes to adapt the selections to the
+	 * repository class
+	 *
+	 * @param selection
+	 * @return array of repositories
+	 */
+	@NonNull
+	public static Repository[] getRepositories(
+			@NonNull IStructuredSelection selection) {
+
+		IProject[] selectedProjects = getSelectedProjects(selection);
+
+		if (selectedProjects.length > 0)
+			return getRepositoriesFor(selectedProjects);
+
+		if (selection.isEmpty()) {
+			return new Repository[0];
+		}
+
+		Set<Repository> repos = new LinkedHashSet<>();
+		for (Object o : selection.toArray()) {
+			Repository repo = AdapterUtils.adapt(o, Repository.class);
+			if (repo != null) {
+				repos.add(repo);
+			} else {
+				// no repository found for one of the objects!
+				return new Repository[0];
+			}
+		}
+		return repos.toArray(new Repository[0]);
 	}
 
 	/**
@@ -243,8 +293,7 @@ public class SelectionUtils {
 			}
 		}
 
-		IResource[] resourceArray = resources.toArray(new IResource[resources
-				.size()]);
+		IResource[] resourceArray = resources.toArray(new IResource[0]);
 		return new HistoryPageInput(repository, resourceArray);
 	}
 
@@ -422,4 +471,95 @@ public class SelectionUtils {
 		return ctx;
 	}
 
+	/**
+	 * Retrieve the list of projects that contains the given resources. All
+	 * resources must actually map to a project shared with egit, otherwise an
+	 * empty array is returned. In case of a linked resource, the project
+	 * returned is the one that contains the link target and is shared with
+	 * egit, if any, otherwise an empty array is also returned.
+	 *
+	 * @param selection
+	 * @return the projects hosting the selected resources
+	 */
+	public static IProject[] getSelectedProjects(
+			IStructuredSelection selection) {
+		Set<IProject> ret = new LinkedHashSet<>();
+		for (IResource resource : getSelectedAdaptables(selection,
+				IResource.class)) {
+			RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
+			if (mapping != null && (mapping.getContainer() instanceof IProject))
+				ret.add((IProject) mapping.getContainer());
+			else
+				return new IProject[0];
+		}
+		ret.addAll(extractProjectsFromMappings(selection));
+
+		return ret.toArray(new IProject[0]);
+	}
+
+	private static Set<IProject> extractProjectsFromMappings(
+			IStructuredSelection selection) {
+		Set<IProject> ret = new LinkedHashSet<>();
+		for (ResourceMapping mapping : getSelectedAdaptables(selection,
+				ResourceMapping.class)) {
+			IProject[] mappedProjects = mapping.getProjects();
+			if (mappedProjects != null && mappedProjects.length != 0) {
+				// Some mappings (WorkingSetResourceMapping) return the projects
+				// in unpredictable order. Sort them like the navigator to
+				// correspond to the order the user usually sees.
+				List<IProject> projects = new ArrayList<>(
+						Arrays.asList(mappedProjects));
+				Collections.sort(projects,
+						CommonUtils.RESOURCE_NAME_COMPARATOR);
+				ret.addAll(projects);
+			}
+		}
+		return ret;
+	}
+
+	/**
+	 * Creates an array of the given class type containing all the objects in
+	 * the selection that adapt to the given class.
+	 *
+	 * @param selection
+	 * @param c
+	 * @return the selected adaptables
+	 */
+	@NonNull
+	private static <T> List<T> getSelectedAdaptables(ISelection selection,
+			Class<T> c) {
+		List<T> result;
+		if (selection != null && !selection.isEmpty()) {
+			result = new ArrayList<>();
+			Iterator elements = ((IStructuredSelection) selection).iterator();
+			while (elements.hasNext()) {
+				T adapter = AdapterUtils.adapt(elements.next(), c);
+				if (adapter != null) {
+					result.add(adapter);
+				}
+			}
+		} else {
+			result = Collections.emptyList();
+		}
+		return result;
+	}
+
+	/**
+	 * @param projects
+	 *            a list of projects
+	 * @return the repositories that projects map to if all projects are mapped
+	 */
+	@NonNull
+	private static Repository[] getRepositoriesFor(final IProject[] projects) {
+		Set<Repository> ret = new LinkedHashSet<>();
+		for (IProject project : projects) {
+			RepositoryMapping repositoryMapping = RepositoryMapping
+					.getMapping(project);
+			if (repositoryMapping == null) {
+				return new Repository[0];
+			}
+			ret.add(repositoryMapping.getRepository());
+		}
+		return ret.toArray(new Repository[0]);
+	}
 }
