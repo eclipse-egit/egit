@@ -17,6 +17,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.resources.IProject;
@@ -152,10 +154,69 @@ public class SwitchToMenuTest extends LocalRepositoryTestCase {
 		assertTextEquals(UIText.SwitchToMenu_OtherMenuLabel, items[23]);
 	}
 
+	@Test
+	public void multipleSelectionWithMultipleRepositories() throws Exception {
+		File gitOne = createProjectAndCommitToRepository(REPO1, PROJ1);
+		File gitTwo = createProjectAndCommitToRepository(REPO2, PROJ2);
+
+		Repository repoOne = lookupRepository(gitOne);
+		Repository repoTwo = lookupRepository(gitTwo);
+		for (int i = 0; i < SwitchToMenu.MAX_NUM_MENU_ENTRIES; i++) {
+			createBranch(repoOne, "refs/heads/change/" + i);
+			createBranch(repoTwo, "refs/heads/change/" + (i + 15));
+		}
+
+		mockMultiProjectSelection(PROJ1, PROJ2);
+
+		MenuItem[] items = fillMenu();
+		assertTextEquals("change/15", items[0]);
+		assertTextEquals("change/16", items[1]);
+		assertTextEquals("change/17", items[2]);
+		assertTextEquals("change/18", items[3]);
+		assertTextEquals("change/19", items[4]);
+		assertTextEquals("master", items[5]);
+		assertTextEquals("stable", items[6]);
+	}
+
+	@Test
+	public void multipleSelectionWithMultipleRepositoriesAndNoCommonBranches()
+			throws Exception {
+		File gitOne = createProjectAndCommitToRepository(REPO1, PROJ1);
+		File gitTwo = createProjectAndCommitToRepository(REPO2, PROJ2);
+
+		try (Git git = new Git(lookupRepository(gitOne))) {
+			git.checkout().setName("stable").call();
+			git.branchDelete().setBranchNames("master").setForce(true).call();
+		}
+
+		try (Git git = new Git(lookupRepository(gitTwo))) {
+			git.branchDelete().setBranchNames("stable").setForce(true).call();
+		}
+
+		mockMultiProjectSelection(PROJ1, PROJ2);
+
+		MenuItem[] items = fillMenu();
+		assertTextEquals(UIText.SwitchToMenu_NoCommonBranchesFound, items[0]);
+
+		// delete reflog again to not confuse other tests
+		new File(gitOne, Constants.LOGS + "/" + Constants.HEAD).delete();
+		new File(gitTwo, Constants.LOGS + "/" + Constants.HEAD).delete();
+	}
+
 	private void mockSelection(ISelection selection) {
 		EvaluationContext context = new EvaluationContext(null, new Object());
 		context.addVariable(ISources.ACTIVE_MENU_SELECTION_NAME, selection);
 		when(handlerService.getCurrentState()).thenReturn(context);
+	}
+
+	private void mockMultiProjectSelection(String... projNames) {
+
+		List<IProject> projects = new ArrayList<>();
+		for (String s : projNames) {
+			projects.add(
+					ResourcesPlugin.getWorkspace().getRoot().getProject(s));
+		}
+		mockSelection(new StructuredSelection(projects));
 	}
 
 	private MenuItem[] fillMenu() {
