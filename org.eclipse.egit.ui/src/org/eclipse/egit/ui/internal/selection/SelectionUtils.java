@@ -69,6 +69,16 @@ public class SelectionUtils {
 	}
 
 	/**
+	 * @param evaluationContext
+	 * @return array of selected repositories
+	 */
+	@NonNull
+	public static Repository[] getRepositories(
+			@Nullable IEvaluationContext evaluationContext) {
+		return getRepositories(getSelection(evaluationContext));
+	}
+
+	/**
 	 * Retrieves all the repositories associated with the current selection. It
 	 * attempts to first identify the selections as projects and if that yields
 	 * an empty result, it then changes to adapt the selections to the
@@ -77,6 +87,7 @@ public class SelectionUtils {
 	 * @param selection
 	 * @return array of repositories
 	 */
+	@NonNull
 	public static Repository[] getRepositories(
 			@NonNull IStructuredSelection selection) {
 
@@ -514,6 +525,7 @@ public class SelectionUtils {
 	 * @param c
 	 * @return the selected adaptables
 	 */
+	@NonNull
 	private static <T> List<T> getSelectedAdaptables(ISelection selection,
 			Class<T> c) {
 		List<T> result;
@@ -537,6 +549,7 @@ public class SelectionUtils {
 	 *            a list of projects
 	 * @return the repositories that projects map to if all projects are mapped
 	 */
+	@NonNull
 	private static Repository[] getRepositoriesFor(final IProject[] projects) {
 		Set<Repository> ret = new LinkedHashSet<>();
 		for (IProject project : projects) {
