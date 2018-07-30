@@ -69,6 +69,16 @@ public class SelectionUtils {
 	}
 
 	/**
+	 * @param evaluationContext
+	 * @return the selected repositories, or <code>null</code>
+	 */
+	@Nullable
+	public static Repository[] getRepositories(
+			@Nullable IEvaluationContext evaluationContext) {
+		return getRepositories(getSelection(evaluationContext));
+	}
+
+	/**
 	 * Retrieves all the repositories associated with the current selection. It
 	 * attempts to first identify the selections as projects and if that yields
 	 * an empty result, it then changes to adapt the selections to the

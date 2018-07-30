@@ -5105,7 +5105,7 @@
                <visibleWhen
                      checkEnabled="false">
                   <test
-                        property="GitSelection.projectsSingleRepository">
+                        property="GitSelection.projectsWithRepositories">
                   </test>
                </visibleWhen>
             </menu>
