@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8feb752d_53f8eecb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiff.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-30T19:26:01Z",
+      "side": 1,
+      "message": "if (!cancelled) {",
+      "revId": "e320ee17a7a13c5ab87ca5e00e6520ba82d5c748",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
