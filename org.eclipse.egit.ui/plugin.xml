@@ -4063,6 +4063,44 @@
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=repo-0">
          <menu
                icon="icons/obj16/branches_obj.png"
+               label="%SwitchToMenuMultiple.label">
+            <dynamic
+                  class="org.eclipse.egit.ui.internal.actions.SwitchToMenu"
+                  id="org.eclipse.egit.ui.switchToMenu">
+            </dynamic>
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="(1-">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <and>
+                        <or>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.BranchesNode">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.LocalNode">
+                           </instanceof>
+                        </or>
+                        <not>
+                           <test
+                                 property="GitRepository.isBare">
+                           </test>
+                        </not>
+                     </and>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </menu>
+         <menu
+               icon="icons/obj16/branches_obj.png"
                label="%SwitchToMenu.label">
             <dynamic
                   class="org.eclipse.egit.ui.internal.actions.SwitchToMenu"
@@ -5137,6 +5175,21 @@
                      checkEnabled="false">
                   <test
                         property="GitSelection.projectsSingleRepository">
+                  </test>
+               </visibleWhen>
+            </menu>
+            <menu
+                  id="egit.menu.switchMultiple"
+                  label="%SwitchToMenuMultiple.label"
+                  icon="icons/obj16/branches_obj.png">
+               <dynamic
+                     class="org.eclipse.egit.ui.internal.actions.SwitchToMenu"
+                     id="org.eclipse.egit.ui.switchToMenuMultiple">
+               </dynamic>
+               <visibleWhen
+                     checkEnabled="false">
+                  <test
+                        property="GitSelection.resourcesMultipleRepositories">
                   </test>
                </visibleWhen>
             </menu>
@@ -6340,7 +6393,7 @@
             class="org.eclipse.egit.ui.internal.selection.SelectionPropertyTester"
             id="org.eclipse.egit.ui.SelectionTester"
             namespace="GitSelection"
-            properties="projectsSingleRepository,projectsWithRepositories,resourcesSingleRepository,fileOrFolderInRepository,resourcesAllInRepository,selectionSingleRepository"
+            properties="projectsSingleRepository,projectsWithRepositories,resourcesSingleRepository,resourcesMultipleRepositories,fileOrFolderInRepository,resourcesAllInRepository,selectionSingleRepository"
             type="java.util.Collection">
       </propertyTester>
       <propertyTester
