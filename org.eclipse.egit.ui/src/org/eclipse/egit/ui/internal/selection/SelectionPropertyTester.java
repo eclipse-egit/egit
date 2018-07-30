@@ -18,6 +18,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.resources.IContainer;
@@ -59,6 +61,9 @@ public class SelectionPropertyTester extends PropertyTester {
 		} else if ("selectionSingleRepository".equals(property)) { //$NON-NLS-1$
 			return SelectionUtils
 					.getRepository(getStructuredSelection(collection)) != null;
+
+		} else if ("resourcesMultipleRepositories".equals(property)) { //$NON-NLS-1$
+			return selectionContainMoreThanOneRepository(collection, args);
 
 		} else if ("resourcesSingleRepository".equals(property)) { //$NON-NLS-1$
 			IStructuredSelection selection = getStructuredSelection(collection);
@@ -114,6 +119,23 @@ public class SelectionPropertyTester extends PropertyTester {
 			return true;
 		}
 		return false;
+	}
+
+	private boolean selectionContainMoreThanOneRepository(
+			Collection<?> collection, Object[] args) {
+		IStructuredSelection selection = getStructuredSelection(collection);
+
+		IResource[] resources = SelectionUtils.getSelectedResources(selection);
+		Set<Repository> repositories = Stream.of(resources) //
+				.map(SelectionPropertyTester::getRepositoryOfMapping) //
+				.collect(Collectors.toSet());
+
+		if (repositories.size() < 2) {
+			return false;
+		}
+
+		return repositories.stream().allMatch(
+				r -> SelectionPropertyTester.testRepositoryProperties(r, args));
 	}
 
 	private static @NonNull IStructuredSelection getStructuredSelection(
