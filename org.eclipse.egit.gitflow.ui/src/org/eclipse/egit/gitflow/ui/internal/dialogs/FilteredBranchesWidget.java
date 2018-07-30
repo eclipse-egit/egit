@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
+import org.eclipse.egit.ui.internal.TreeColumnPatternFilter;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.TreeColumnLayout;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -37,7 +38,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.dialogs.FilteredTree;
-import org.eclipse.ui.dialogs.PatternFilter;
 
 /**
  * Widget for viewing a filtered list of Gitflow branches.
@@ -66,25 +66,9 @@ public class FilteredBranchesWidget {
 		GridDataFactory.fillDefaults().grab(true, true).span(2, 1).applyTo(area);
 		area.setLayout(new GridLayout(1, false));
 
-		PatternFilter filter = new PatternFilter() {
-			@Override
-			protected boolean isLeafMatch(Viewer viewer, Object element) {
-				TreeViewer treeViewer = (TreeViewer) viewer;
-				int numberOfColumns = treeViewer.getTree().getColumnCount();
-				boolean isMatch = false;
-				for (int columnIndex = 0; columnIndex < numberOfColumns; columnIndex++) {
-					ColumnLabelProvider labelProvider = (ColumnLabelProvider) treeViewer
-							.getLabelProvider(columnIndex);
-					String labelText = labelProvider.getText(element);
-					isMatch |= wordMatches(labelText);
-				}
-				return isMatch;
-			}
-		};
-		filter.setIncludeLeadingWildcard(true);
-
 		final FilteredTree tree = new FilteredTree(area, SWT.MULTI | SWT.H_SCROLL
-				| SWT.V_SCROLL | SWT.BORDER | SWT.FULL_SELECTION, filter,
+						| SWT.V_SCROLL | SWT.BORDER | SWT.FULL_SELECTION,
+				new TreeColumnPatternFilter(),
 				true);
 		tree.setQuickSelectionMode(true);
 		branchesViewer = tree.getViewer();

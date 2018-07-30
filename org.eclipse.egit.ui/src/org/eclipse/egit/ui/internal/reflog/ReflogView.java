@@ -26,6 +26,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
+import org.eclipse.egit.ui.internal.TreeColumnPatternFilter;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.ResetMenu;
@@ -91,7 +92,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.dialogs.FilteredTree;
-import org.eclipse.ui.dialogs.PatternFilter;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.events.HyperlinkAdapter;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
@@ -169,7 +169,8 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		final TreeColumnLayout layout = new TreeColumnLayout();
 
 		FilteredTree filteredTree = new FilteredTree(tableComposite, SWT.NONE
-				| SWT.BORDER | SWT.FULL_SELECTION, new PatternFilter(), true) {
+				| SWT.BORDER | SWT.FULL_SELECTION,
+				new TreeColumnPatternFilter(), true) {
 			@Override
 			protected void createControl(Composite composite, int treeStyle) {
 				super.createControl(composite, treeStyle);
