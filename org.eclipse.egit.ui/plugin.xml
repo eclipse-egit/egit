@@ -4057,7 +4057,7 @@
                   checkEnabled="false">
                <and>
                   <count
-                        value="1">
+                        value="+">
                   </count>
                   <iterate
                         ifEmpty="false"
@@ -5103,7 +5103,7 @@
                <visibleWhen
                      checkEnabled="false">
                   <test
-                        property="GitSelection.projectsSingleRepository">
+                        property="GitSelection.projectsWithRepositories">
                   </test>
                </visibleWhen>
             </menu>
@@ -5121,7 +5121,7 @@
                <visibleWhen
                      checkEnabled="false">
                   <test
-                        property="GitSelection.projectsSingleRepository">
+                        property="GitSelection.resourcesAllInRepository">
                   </test>
                </visibleWhen>
             </menu>

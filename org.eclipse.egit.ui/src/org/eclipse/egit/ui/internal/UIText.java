@@ -5060,6 +5060,9 @@ public class UIText extends NLS {
 	public static String SwitchToMenu_NewBranchMenuLabel;
 
 	/** */
+	public static String SwitchToMenu_NoCommonBranchesFound;
+
+	/** */
 	public static String SwitchToMenu_OtherMenuLabel;
 
 	/** */
