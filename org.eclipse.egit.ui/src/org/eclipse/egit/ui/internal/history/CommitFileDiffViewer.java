@@ -468,7 +468,14 @@ public class CommitFileDiffViewer extends TableViewer {
 		}
 	}
 
-	void showTwoWayFileDiff(final FileDiff d) {
+	/**
+	 * Open a file diff compare editor, unless that is a merge with multiple
+	 * ancestors.
+	 *
+	 * @param d
+	 *            file diff
+	 */
+	public static void showTwoWayFileDiff(final FileDiff d) {
 		if (d.getBlobs().length <= 2) {
 			DiffViewer.showTwoWayFileDiff(d.getRepository(), d);
 		} else {

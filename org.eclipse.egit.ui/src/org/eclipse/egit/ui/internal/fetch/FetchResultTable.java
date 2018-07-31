@@ -25,6 +25,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.WorkbenchStyledLabelProvider;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.internal.history.CommitFileDiffViewer;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -396,11 +397,18 @@ class FetchResultTable {
 				handleOpen(selection, true);
 			}
 			private void handleOpen(ISelection selection, boolean activateOnOpen) {
-				if (selection instanceof IStructuredSelection)
+				if (selection instanceof IStructuredSelection) {
 					for (Object element : ((IStructuredSelection) selection)
-							.toArray())
-						if (element instanceof RepositoryCommit)
-							CommitEditor.openQuiet((RepositoryCommit) element, activateOnOpen);
+							.toArray()) {
+						if (element instanceof RepositoryCommit) {
+							CommitEditor.openQuiet((RepositoryCommit) element,
+									activateOnOpen);
+						} else if (element instanceof FileDiff) {
+							CommitFileDiffViewer
+									.showTwoWayFileDiff((FileDiff) element);
+						}
+					}
+				}
 			}
 		};
 	}
