@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3be251ab_082512a4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitDecorator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-31T20:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "528a09cd_ac08e7f4",
+      "revId": "b9f85e921de3cf7c15f5284a426f0056fccf7d88",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e5ced83_c573867a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeWorkbenchAdapter.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-07-29T11:15:36Z",
       "side": 1,
       "message": "I think it might be quite hard to come up with a recognizable 7*7 pixel overlay for what is currently almost the entire 16*16 pixel gerrit repository icon.\n\nTherefore I\u0027d remove this todo.",
+      "revId": "b9f85e921de3cf7c15f5284a426f0056fccf7d88",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0bde232b_bb084510",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNodeWorkbenchAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-07-31T20:47:15Z",
+      "side": 1,
+      "message": "Done.\n\nYou\u0027re right, the Gerrit indicator is much larger than a typical overlay. It\u0027s also bottom left, where we shouldn\u0027t place overlays.",
+      "parentUuid": "8e5ced83_c573867a",
       "revId": "b9f85e921de3cf7c15f5284a426f0056fccf7d88",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
