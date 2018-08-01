@@ -56,8 +56,6 @@ public class DiffDocument extends Document {
 
 	private Pattern oldPathPattern;
 
-	private Repository defaultRepository;
-
 	private FileDiff defaultFileDiff;
 
 	private int[] maximumLineNumbers;
@@ -93,9 +91,9 @@ public class DiffDocument extends Document {
 		regions = formatter.getRegions();
 		fileRegions = formatter.getFileRegions();
 		if ((fileRegions == null || fileRegions.length == 0)
-				&& defaultRepository != null && defaultFileDiff != null) {
-			fileRegions = new FileDiffRegion[] { new FileDiffRegion(
-					defaultRepository, defaultFileDiff, 0, getLength()) };
+				&& defaultFileDiff != null) {
+			fileRegions = new FileDiffRegion[] {
+					new FileDiffRegion(defaultFileDiff, 0, getLength()) };
 		}
 		newPathPattern = Pattern.compile(
 				Pattern.quote(formatter.getNewPrefix()) + "\\S+"); //$NON-NLS-1$
@@ -122,13 +120,10 @@ public class DiffDocument extends Document {
 	 * a connected {@link DiffRegionFormatter}. Useful if the document is
 	 * used for only individual edits from a file.
 	 *
-	 * @param repository
-	 *            to use if none set explicitly
 	 * @param fileDiff
 	 *            to use if none set explicitly
 	 */
-	public void setDefault(Repository repository, FileDiff fileDiff) {
-		defaultRepository = repository;
+	public void setDefault(FileDiff fileDiff) {
 		defaultFileDiff = fileDiff;
 	}
 
@@ -166,7 +161,7 @@ public class DiffDocument extends Document {
 	}
 
 	FileDiffRegion findFileRegion(int offset) {
-		FileDiffRegion key = new FileDiffRegion(null, null, offset, 0);
+		FileDiffRegion key = new FileDiffRegion(null, offset, 0);
 		int i = Arrays.binarySearch(fileRegions, key, (a, b) -> {
 			if (!TextUtilities.overlaps(a, b)) {
 				return a.getOffset() - b.getOffset();
