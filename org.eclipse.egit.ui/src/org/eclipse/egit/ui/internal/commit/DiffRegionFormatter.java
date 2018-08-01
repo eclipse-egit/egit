@@ -141,20 +141,15 @@ public class DiffRegionFormatter extends DiffFormatter {
 	}
 
 	/**
-	 * Region giving access to the {@link FileDiff} and its {@link Repository}
-	 * that generated the content.
+	 * Region giving access to the {@link FileDiff} that generated the content.
 	 */
 	public static class FileDiffRegion extends Region {
 
-		private final FileDiff diff;
-
-		private final Repository repository;
+		private final @NonNull FileDiff diff;
 
 		/**
 		 * Creates a new {@link FileDiffRegion}.
 		 *
-		 * @param repository
-		 *            the {@link FileDiff} belongs to
 		 * @param fileDiff
 		 *            the range belongs to
 		 * @param start
@@ -162,11 +157,10 @@ public class DiffRegionFormatter extends DiffFormatter {
 		 * @param length
 		 *            of the range
 		 */
-		public FileDiffRegion(Repository repository, FileDiff fileDiff,
+		public FileDiffRegion(@NonNull FileDiff fileDiff,
 				int start, int length) {
 			super(start, length);
 			this.diff = fileDiff;
-			this.repository = repository;
 		}
 
 		/**
@@ -174,17 +168,9 @@ public class DiffRegionFormatter extends DiffFormatter {
 		 *
 		 * @return the {@link FileDiff}
 		 */
+		@NonNull
 		public FileDiff getDiff() {
 			return diff;
-		}
-
-		/**
-		 * Retrieves the {@link Repository}.
-		 *
-		 * @return the {@link Repository}
-		 */
-		public Repository getRepository() {
-			return repository;
 		}
 
 		@Override
@@ -199,7 +185,7 @@ public class DiffRegionFormatter extends DiffFormatter {
 
 		@Override
 		public String toString() {
-			return "[FileDiffRange " + (diff == null ? "null" : diff.getPath()) //$NON-NLS-1$ //$NON-NLS-2$
+			return "[FileDiffRange " + diff.getPath() //$NON-NLS-1$
 					+ ' ' + super.toString() + ']';
 		}
 	}
@@ -305,21 +291,19 @@ public class DiffRegionFormatter extends DiffFormatter {
 	/**
 	 * Write diff
 	 *
-	 * @param repository
 	 * @param diff
 	 * @return this formatter
 	 * @throws IOException
 	 */
-	public DiffRegionFormatter write(Repository repository, FileDiff diff)
+	public DiffRegionFormatter write(FileDiff diff)
 			throws IOException {
+		Repository repository = diff.getRepository();
 		this.stream.charset = CompareCoreUtils.getResourceEncoding(repository,
 				diff.getPath());
 		int start = stream.offset;
 		diff.outputDiff(null, repository, this, true);
 		flush();
-		fileRegions
-				.add(new FileDiffRegion(repository, diff, start,
-						stream.offset - start));
+		fileRegions.add(new FileDiffRegion(diff, start, stream.offset - start));
 		return this;
 	}
 
