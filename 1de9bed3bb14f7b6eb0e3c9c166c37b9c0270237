@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8107d24e_927306fc",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-01T19:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77dd2fd2_6464b649",
+      "revId": "1de9bed3bb14f7b6eb0e3c9c166c37b9c0270237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "095eb887_67f536b5",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/HistoryColumnsPreferencePage.java",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a44aa211_cbac135e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/HistoryColumnsPreferencePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-01T19:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "095eb887_67f536b5",
+      "revId": "1de9bed3bb14f7b6eb0e3c9c166c37b9c0270237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fc772f0_f584a10d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2018-07-29T11:52:24Z",
       "side": 1,
       "message": "-Define +Select",
+      "revId": "1de9bed3bb14f7b6eb0e3c9c166c37b9c0270237",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41511240_b9868250",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-01T19:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fc772f0_f584a10d",
       "revId": "1de9bed3bb14f7b6eb0e3c9c166c37b9c0270237",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
