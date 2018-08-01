@@ -563,7 +563,7 @@ public class DiffViewer extends HyperlinkSourceViewer {
 						m.end() - m.start());
 				if (TextUtilities.overlaps(region, linkRegion)) {
 					if (side == DiffEntry.Side.NEW) {
-						File file = new Path(fileRange.getRepository()
+						File file = new Path(fileRange.getDiff().getRepository()
 								.getWorkTree().getAbsolutePath()).append(
 										fileRange.getDiff().getNewPath())
 										.toFile();
@@ -602,7 +602,8 @@ public class DiffViewer extends HyperlinkSourceViewer {
 						links.add(
 								new CompareLink(linkRegion, fileRange, lineNo));
 					}
-					File file = new Path(fileRange.getRepository().getWorkTree()
+					File file = new Path(
+							fileRange.getDiff().getRepository().getWorkTree()
 							.getAbsolutePath())
 									.append(fileRange.getDiff().getNewPath())
 									.toFile();
@@ -667,14 +668,11 @@ public class DiffViewer extends HyperlinkSourceViewer {
 
 	private static class CompareLink extends RevealLink {
 
-		protected final Repository repository;
-
 		protected final FileDiff fileDiff;
 
 		public CompareLink(IRegion region, FileDiffRegion fileRange,
 				int lineNo) {
 			super(region, lineNo);
-			this.repository = fileRange.getRepository();
 			this.fileDiff = fileRange.getDiff();
 		}
 
@@ -687,7 +685,7 @@ public class DiffViewer extends HyperlinkSourceViewer {
 		public void open() {
 			// No way to selectAndReveal a line or a diff node in a
 			// CompareEditor?
-			showTwoWayFileDiff(repository, fileDiff);
+			showTwoWayFileDiff(fileDiff);
 		}
 
 	}
@@ -714,7 +712,7 @@ public class DiffViewer extends HyperlinkSourceViewer {
 
 		@Override
 		public void open() {
-			openInEditor(repository, fileDiff, side, lineNo);
+			openInEditor(fileDiff, side, lineNo);
 		}
 
 	}
@@ -745,8 +743,6 @@ public class DiffViewer extends HyperlinkSourceViewer {
 	 * Opens either the new or the old version of a {@link FileDiff} in an
 	 * editor.
 	 *
-	 * @param repository
-	 *            the {@link FileDiff} belongs to
 	 * @param d
 	 *            the {@link FileDiff}
 	 * @param side
@@ -754,16 +750,17 @@ public class DiffViewer extends HyperlinkSourceViewer {
 	 * @param lineNoToReveal
 	 *            if >= 0, select and reveals the given line
 	 */
-	public static void openInEditor(Repository repository, FileDiff d,
-			DiffEntry.Side side, int lineNoToReveal) {
+	public static void openInEditor(FileDiff d, DiffEntry.Side side,
+			int lineNoToReveal) {
 		ObjectId[] blobs = d.getBlobs();
 		switch (side) {
 		case OLD:
-			openInEditor(repository, d.getOldPath(), d.getCommit().getParent(0),
+			openInEditor(d.getRepository(), d.getOldPath(),
+					d.getCommit().getParent(0),
 					blobs[0], lineNoToReveal);
 			break;
 		default:
-			openInEditor(repository, d.getNewPath(), d.getCommit(),
+			openInEditor(d.getRepository(), d.getNewPath(), d.getCommit(),
 					blobs[blobs.length - 1], lineNoToReveal);
 			break;
 		}
@@ -796,12 +793,10 @@ public class DiffViewer extends HyperlinkSourceViewer {
 	 * Shows a two-way diff between the old and new versions of a
 	 * {@link FileDiff} in a compare editor.
 	 *
-	 * @param repository
-	 *            the {@link FileDiff} belongs to
 	 * @param d
 	 *            the {@link FileDiff} to show
 	 */
-	public static void showTwoWayFileDiff(Repository repository, FileDiff d) {
+	public static void showTwoWayFileDiff(FileDiff d) {
 		String np = d.getNewPath();
 		String op = d.getOldPath();
 		RevCommit c = d.getCommit();
@@ -831,6 +826,7 @@ public class DiffViewer extends HyperlinkSourceViewer {
 		IWorkbenchWindow window = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
 		IWorkbenchPage page = window.getActivePage();
+		Repository repository = d.getRepository();
 		if (oldCommit != null && newCommit != null && repository != null) {
 			IFile file = np != null
 					? ResourceUtil.getFileForLocation(repository, np, false)

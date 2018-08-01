@@ -2516,7 +2516,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 						}
 						progress.subTask(diff.getPath());
 						try {
-							formatter.write(diff.getRepository(), diff);
+							formatter.write(diff);
 						} catch (IOException ignore) {
 							// Ignored
 						}

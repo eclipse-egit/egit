@@ -21,6 +21,7 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
+import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.TextUtilities;
 import org.eclipse.jface.text.rules.FastPartitioner;
 import org.eclipse.jface.text.rules.IPartitionTokenScanner;
@@ -56,8 +57,6 @@ public class DiffDocument extends Document {
 
 	private Pattern oldPathPattern;
 
-	private Repository defaultRepository;
-
 	private FileDiff defaultFileDiff;
 
 	private int[] maximumLineNumbers;
@@ -92,10 +91,12 @@ public class DiffDocument extends Document {
 	public void connect(DiffRegionFormatter formatter) {
 		regions = formatter.getRegions();
 		fileRegions = formatter.getFileRegions();
-		if ((fileRegions == null || fileRegions.length == 0)
-				&& defaultRepository != null && defaultFileDiff != null) {
-			fileRegions = new FileDiffRegion[] { new FileDiffRegion(
-					defaultRepository, defaultFileDiff, 0, getLength()) };
+		if (fileRegions == null || fileRegions.length == 0) {
+			FileDiff implicitFileDiff = defaultFileDiff;
+			if (implicitFileDiff != null) {
+				fileRegions = new FileDiffRegion[] {
+						new FileDiffRegion(implicitFileDiff, 0, getLength()) };
+			}
 		}
 		newPathPattern = Pattern.compile(
 				Pattern.quote(formatter.getNewPrefix()) + "\\S+"); //$NON-NLS-1$
@@ -122,13 +123,10 @@ public class DiffDocument extends Document {
 	 * a connected {@link DiffRegionFormatter}. Useful if the document is
 	 * used for only individual edits from a file.
 	 *
-	 * @param repository
-	 *            to use if none set explicitly
 	 * @param fileDiff
 	 *            to use if none set explicitly
 	 */
-	public void setDefault(Repository repository, FileDiff fileDiff) {
-		defaultRepository = repository;
+	public void setDefault(@NonNull FileDiff fileDiff) {
 		defaultFileDiff = fileDiff;
 	}
 
@@ -166,7 +164,7 @@ public class DiffDocument extends Document {
 	}
 
 	FileDiffRegion findFileRegion(int offset) {
-		FileDiffRegion key = new FileDiffRegion(null, null, offset, 0);
+		Region key = new Region(offset, 0);
 		int i = Arrays.binarySearch(fileRegions, key, (a, b) -> {
 			if (!TextUtilities.overlaps(a, b)) {
 				return a.getOffset() - b.getOffset();

@@ -67,7 +67,6 @@ import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.RGB;
@@ -587,14 +586,13 @@ public class DiffEditorPage extends TextEditor
 						document)) {
 					SubMonitor progress = SubMonitor.convert(monitor,
 							diffs.length);
-					Repository repository = commit.getRepository();
 					for (FileDiff diff : diffs) {
 						if (progress.isCanceled()) {
 							break;
 						}
 						progress.subTask(diff.getPath());
 						try {
-							formatter.write(repository, diff);
+							formatter.write(diff);
 						} catch (IOException ignore) {
 							// Ignored
 						}
