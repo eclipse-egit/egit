@@ -178,8 +178,8 @@ public class DiffEditorOutlinePage extends NestedContentOutlinePage {
 							.equals(DiffEntry.ChangeType.ADD))
 					.collect(Collectors.toList());
 			Collection<FileDiffRegion> existing = haveNew.stream()
-					.filter(diff -> new Path(diff.getRepository().getWorkTree()
-							.getAbsolutePath())
+					.filter(diff -> new Path(diff.getDiff().getRepository()
+							.getWorkTree().getAbsolutePath())
 									.append(diff.getDiff().getNewPath())
 									.toFile().exists())
 					.collect(Collectors.toList());
@@ -190,10 +190,12 @@ public class DiffEditorOutlinePage extends NestedContentOutlinePage {
 					@Override
 					public void run() {
 						for (FileDiffRegion fileDiff : existing) {
-							File file = new Path(fileDiff.getRepository()
-									.getWorkTree().getAbsolutePath()).append(
-											fileDiff.getDiff().getNewPath())
-											.toFile();
+							File file = new Path(
+									fileDiff.getDiff().getRepository()
+											.getWorkTree().getAbsolutePath())
+													.append(fileDiff.getDiff()
+															.getNewPath())
+													.toFile();
 							DiffViewer.openFileInEditor(file, -1);
 						}
 					}
@@ -206,8 +208,8 @@ public class DiffEditorOutlinePage extends NestedContentOutlinePage {
 					@Override
 					public void run() {
 						for (FileDiffRegion fileDiff : haveNew) {
-							DiffViewer.openInEditor(fileDiff.getRepository(),
-									fileDiff.getDiff(), DiffEntry.Side.NEW, -1);
+							DiffViewer.openInEditor(fileDiff.getDiff(),
+									DiffEntry.Side.NEW, -1);
 						}
 					}
 				});
@@ -219,8 +221,8 @@ public class DiffEditorOutlinePage extends NestedContentOutlinePage {
 					@Override
 					public void run() {
 						for (FileDiffRegion fileDiff : haveOld) {
-							DiffViewer.openInEditor(fileDiff.getRepository(),
-									fileDiff.getDiff(), DiffEntry.Side.OLD, -1);
+							DiffViewer.openInEditor(fileDiff.getDiff(),
+									DiffEntry.Side.OLD, -1);
 						}
 					}
 				});
@@ -235,9 +237,7 @@ public class DiffEditorOutlinePage extends NestedContentOutlinePage {
 						public void run() {
 							FileDiffRegion fileDiff = selected.iterator()
 									.next();
-							DiffViewer.showTwoWayFileDiff(
-									fileDiff.getRepository(),
-									fileDiff.getDiff());
+							DiffViewer.showTwoWayFileDiff(fileDiff.getDiff());
 						}
 					});
 				}

@@ -391,9 +391,8 @@ public class BlameInformationControl extends AbstractInformationControl
 						revision.getCommit(), parent, reader);
 				if (diffEntry != null) {
 					FileDiff fileDiff = new FileDiff(revision.getRepository(),
-							revision.getCommit(),
-							diffEntry);
-					document.setDefault(revision.getRepository(), fileDiff);
+							revision.getCommit(), diffEntry);
+					document.setDefault(fileDiff);
 				}
 			}
 			document.connect(diffFormatter);

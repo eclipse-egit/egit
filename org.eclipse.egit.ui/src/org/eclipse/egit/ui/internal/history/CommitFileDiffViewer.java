@@ -432,11 +432,11 @@ public class CommitFileDiffViewer extends TableViewer {
 	}
 
 	private void openThisVersionInEditor(FileDiff d) {
-		DiffViewer.openInEditor(d.getRepository(), d, DiffEntry.Side.NEW, -1);
+		DiffViewer.openInEditor(d, DiffEntry.Side.NEW, -1);
 	}
 
 	private void openPreviousVersionInEditor(FileDiff d) {
-		DiffViewer.openInEditor(d.getRepository(), d, DiffEntry.Side.OLD, -1);
+		DiffViewer.openInEditor(d, DiffEntry.Side.OLD, -1);
 	}
 
 	private void showAnnotations(FileDiff d) {
@@ -470,7 +470,7 @@ public class CommitFileDiffViewer extends TableViewer {
 
 	void showTwoWayFileDiff(final FileDiff d) {
 		if (d.getBlobs().length <= 2) {
-			DiffViewer.showTwoWayFileDiff(d.getRepository(), d);
+			DiffViewer.showTwoWayFileDiff(d);
 		} else {
 			MessageDialog.openInformation(
 					PlatformUI.getWorkbench().getActiveWorkbenchWindow()
