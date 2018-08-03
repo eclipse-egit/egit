@@ -352,9 +352,10 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 									ISharedImages.IMG_TOOL_DELETE)));
 		} else {
 			toolbar.add(createActionContributionItem(CreateTagHandler.ID,
-					UIText.CommitEditor_toolbarCreateTag, UIIcons.TAG));
+					UIText.CommitEditor_toolbarCreateTag, UIIcons.CREATE_TAG));
 			toolbar.add(createActionContributionItem(CreateBranchHandler.ID,
-					UIText.CommitEditor_toolbarCreateBranch, UIIcons.BRANCH));
+					UIText.CommitEditor_toolbarCreateBranch,
+					UIIcons.CREATE_BRANCH));
 			toolbar.add(createActionContributionItem(CheckoutHandler.ID,
 					UIText.CommitEditor_toolbarCheckOut, UIIcons.CHECKOUT));
 			toolbar.add(createActionContributionItem(CherryPickHandler.ID,
