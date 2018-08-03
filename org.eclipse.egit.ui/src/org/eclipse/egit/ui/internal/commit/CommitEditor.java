@@ -354,7 +354,8 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 			toolbar.add(createActionContributionItem(CreateTagHandler.ID,
 					UIText.CommitEditor_toolbarCreateTag, UIIcons.TAG));
 			toolbar.add(createActionContributionItem(CreateBranchHandler.ID,
-					UIText.CommitEditor_toolbarCreateBranch, UIIcons.BRANCH));
+					UIText.CommitEditor_toolbarCreateBranch,
+					UIIcons.CREATE_BRANCH));
 			toolbar.add(createActionContributionItem(CheckoutHandler.ID,
 					UIText.CommitEditor_toolbarCheckOut, UIIcons.CHECKOUT));
 			toolbar.add(createActionContributionItem(CherryPickHandler.ID,
