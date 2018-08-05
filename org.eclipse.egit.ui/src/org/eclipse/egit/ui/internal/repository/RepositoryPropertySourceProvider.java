@@ -14,11 +14,13 @@
 package org.eclipse.egit.ui.internal.repository;
 
 import org.eclipse.core.runtime.Adapters;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jgit.events.ConfigChangedEvent;
-import org.eclipse.jgit.events.ConfigChangedListener;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
@@ -40,12 +42,14 @@ public class RepositoryPropertySourceProvider implements
 
 	private final PropertySheetPage myPage;
 
+	private final IPreferenceStore store;
+
 	private Object lastObject;
 
 	private IPropertySource lastRepositorySource;
 
 	private enum SourceType {
-		UNDEFINED, REPOSITORY, REMOTE, BRANCH
+		UNDEFINED, REPOSITORY, REMOTE, BRANCH, TAG
 	}
 
 	private SourceType lastSourceType = SourceType.UNDEFINED;
@@ -54,12 +58,33 @@ public class RepositoryPropertySourceProvider implements
 
 	private DisposeListener disposeListener;
 
+	private boolean listenToDateFormatChanges;
+
+	private IPropertyChangeListener dateFormatListener = event -> {
+		if (!listenToDateFormatChanges) {
+			return;
+		}
+		String property = event.getProperty();
+		if (property == null) {
+			return;
+		}
+		switch (property) {
+		case UIPreferences.DATE_FORMAT:
+		case UIPreferences.DATE_FORMAT_CHOICE:
+			refreshPage();
+			break;
+		default:
+			break;
+		}
+	};
+
 	/**
 	 * @param page
 	 *            the page
 	 */
 	public RepositoryPropertySourceProvider(PropertySheetPage page) {
 		myPage = page;
+		store = Activator.getDefault().getPreferenceStore();
 	}
 
 	private void registerDisposal() {
@@ -75,6 +100,9 @@ public class RepositoryPropertySourceProvider implements
 			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				removeListener();
+				if (listenToDateFormatChanges) {
+					store.removePropertyChangeListener(dateFormatListener);
+				}
 			}
 		};
 		control.addDisposeListener(disposeListener);
@@ -84,6 +112,12 @@ public class RepositoryPropertySourceProvider implements
 		final ListenerHandle handle = listenerHandle;
 		if (handle != null)
 			handle.remove();
+	}
+
+	private void refreshPage() {
+		lastObject = null;
+		myPage.getSite().getShell().getDisplay()
+				.asyncExec(() -> myPage.setPropertySourceProvider(this));
 	}
 
 	@Override
@@ -109,20 +143,7 @@ public class RepositoryPropertySourceProvider implements
 
 		RepositoryTreeNode node = (RepositoryTreeNode) object;
 		listenerHandle = node.getRepository().getListenerList()
-				.addConfigChangedListener(new ConfigChangedListener() {
-					@Override
-					public void onConfigChanged(ConfigChangedEvent event) {
-						// force a refresh of the page
-						lastObject = null;
-						myPage.getSite().getShell().getDisplay().asyncExec(new Runnable() {
-
-							@Override
-							public void run() {
-								myPage.setPropertySourceProvider(RepositoryPropertySourceProvider.this);
-							}
-						});
-					}
-				});
+				.addConfigChangedListener(event -> refreshPage());
 
 		if (node.getType() == RepositoryTreeNodeType.REPO) {
 			lastObject = object;
@@ -150,8 +171,14 @@ public class RepositoryPropertySourceProvider implements
 				return lastRepositorySource;
 			}
 			return null;
-		} else
-			return null;
+		} else if (node.getType() == RepositoryTreeNodeType.TAG) {
+			lastObject = object;
+			checkChangeType(SourceType.TAG);
+			lastRepositorySource = new TagPropertySource(node.getRepository(),
+					(Ref) node.getObject());
+			return lastRepositorySource;
+		}
+		return null;
 	}
 
 	private void checkChangeType(SourceType type) {
@@ -171,6 +198,15 @@ public class RepositoryPropertySourceProvider implements
 				// manager, to get proper layout when items are added or
 				// removed.
 				bars.updateActionBars();
+			}
+			if (lastSourceType == SourceType.TAG) {
+				// Remove date format listener
+				store.removePropertyChangeListener(dateFormatListener);
+				listenToDateFormatChanges = false;
+			} else if (type == SourceType.TAG) {
+				// Add date format listener
+				listenToDateFormatChanges = true;
+				store.addPropertyChangeListener(dateFormatListener);
 			}
 		}
 		lastSourceType = type;
