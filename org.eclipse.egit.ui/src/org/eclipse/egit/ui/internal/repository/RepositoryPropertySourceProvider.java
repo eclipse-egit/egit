@@ -43,7 +43,7 @@ public class RepositoryPropertySourceProvider implements
 	private IPropertySource lastRepositorySource;
 
 	private enum SourceType {
-		UNDEFINED, REPOSITORY, REMOTE, BRANCH
+		UNDEFINED, REPOSITORY, REMOTE, BRANCH, TAG
 	}
 
 	private SourceType lastSourceType = SourceType.UNDEFINED;
@@ -139,8 +139,15 @@ public class RepositoryPropertySourceProvider implements
 				return lastRepositorySource;
 			}
 			return null;
-		} else
+		} else if (node.getType() == RepositoryTreeNodeType.TAG) {
+			lastObject = object;
+			checkChangeType(SourceType.TAG);
+			lastRepositorySource = new TagPropertySource(node.getRepository(),
+					(Ref) node.getObject());
+			return lastRepositorySource;
+		} else {
 			return null;
+		}
 	}
 
 	private void checkChangeType(SourceType type) {
