@@ -127,7 +127,7 @@ class TreeBuilder {
 			tree.setChildren(object.children);
 		}
 
-		return rootChildren.toArray(new GitModelObject[rootChildren.size()]);
+		return rootChildren.toArray(new GitModelObject[0]);
 	}
 
 	private static class Node {

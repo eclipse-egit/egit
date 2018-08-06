@@ -489,7 +489,7 @@ public class GitCompareEditorInput extends CompareEditorInput {
 				if (!skip)
 					resourceList.add(originalInput);
 			}
-			return resourceList.toArray(new IResource[resourceList.size()]);
+			return resourceList.toArray(new IResource[0]);
 		} else
 			return input;
 	}

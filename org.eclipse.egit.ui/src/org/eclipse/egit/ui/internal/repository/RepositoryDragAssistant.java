@@ -55,7 +55,7 @@ public class RepositoryDragAssistant extends CommonDragAdapterAssistant {
 					if (file != null && file.exists())
 						files.add(file.getAbsolutePath());
 				}
-			event.data = files.toArray(new String[files.size()]);
+			event.data = files.toArray(new String[0]);
 			return !files.isEmpty();
 		}
 

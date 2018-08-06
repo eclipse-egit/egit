@@ -98,7 +98,7 @@ public class RepositoryCache {
 				}
 			}
 		}
-		return repositories.toArray(new Repository[repositories.size()]);
+		return repositories.toArray(new Repository[0]);
 	}
 
 	/**

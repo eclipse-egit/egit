@@ -114,7 +114,7 @@ public class GitModelTree extends GitModelObjectContainer {
 	}
 
 	void setChildren(List<GitModelObject> children) {
-		this.children = children.toArray(new GitModelObject[children.size()]);
+		this.children = children.toArray(new GitModelObject[0]);
 	}
 
 }

@@ -471,7 +471,7 @@ public class DiffEditorPage extends TextEditor
 			viewer.getProjectionAnnotationModel().modifyAnnotations(
 					currentFoldingAnnotations, newAnnotations, null);
 			currentFoldingAnnotations = newAnnotations.keySet()
-					.toArray(new Annotation[newAnnotations.size()]);
+					.toArray(new Annotation[0]);
 		} else {
 			viewer.disableProjection();
 			currentFoldingAnnotations = null;
@@ -520,7 +520,7 @@ public class DiffEditorPage extends TextEditor
 			}
 		}
 		currentOverviewAnnotations = newAnnotations.keySet()
-				.toArray(new Annotation[newAnnotations.size()]);
+				.toArray(new Annotation[0]);
 	}
 
 	private FileDiffRegion getFileDiffRange(int widgetOffset) {
@@ -555,7 +555,7 @@ public class DiffEditorPage extends TextEditor
 					.addAll(asList(new RepositoryCommit(commit.getRepository(),
 							untrackedCommit).getDiffs()));
 		}
-		FileDiff[] result = diffResult.toArray(new FileDiff[diffResult.size()]);
+		FileDiff[] result = diffResult.toArray(new FileDiff[0]);
 		Arrays.sort(result, FileDiff.PATH_COMPARATOR);
 		return result;
 	}

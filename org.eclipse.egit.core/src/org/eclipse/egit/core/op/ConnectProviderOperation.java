@@ -305,7 +305,7 @@ public class ConnectProviderOperation implements IEGitOperation {
 	@Override
 	public ISchedulingRule getSchedulingRule() {
 		Set<IProject> projectSet = projects.keySet();
-		return new MultiRule(projectSet.toArray(new IProject[projectSet.size()]));
+		return new MultiRule(projectSet.toArray(new IProject[0]));
 	}
 
 	/**

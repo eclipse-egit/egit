@@ -218,7 +218,7 @@ class BranchProjectTracker {
 			if (path != null && path.length() > 0)
 				projects.add(path);
 		}
-		return projects.toArray(new String[projects.size()]);
+		return projects.toArray(new String[0]);
 	}
 
 	/**

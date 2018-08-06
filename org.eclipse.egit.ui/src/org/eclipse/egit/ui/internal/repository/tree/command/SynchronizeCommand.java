@@ -72,7 +72,7 @@ public class SynchronizeCommand extends
 
 					Set<IProject> projects = data.getProjects();
 					IResource[] resources = projects
-							.toArray(new IResource[projects.size()]);
+							.toArray(new IResource[0]);
 
 					GitModelSynchronize.launch(data, resources);
 				} catch (IOException e) {

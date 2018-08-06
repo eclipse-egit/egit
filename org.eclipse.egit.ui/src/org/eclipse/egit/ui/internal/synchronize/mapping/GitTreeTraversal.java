@@ -45,7 +45,7 @@ class GitTreeTraversal extends ResourceTraversal {
 				result.add(resource);
 		}
 
-		return result.toArray(new IResource[result.size()]);
+		return result.toArray(new IResource[0]);
 	}
 
 }

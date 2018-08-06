@@ -95,7 +95,7 @@ public class MockLogicalResourceMapping extends ResourceMapping {
 							"Exception while computing logical model", e));
 		}
 		final IResource[] resourceArray = result
-				.toArray(new IResource[result.size()]);
+				.toArray(new IResource[0]);
 		return new ResourceTraversal[] { new ResourceTraversal(resourceArray,
 				IResource.DEPTH_ONE, IResource.NONE), };
 	}

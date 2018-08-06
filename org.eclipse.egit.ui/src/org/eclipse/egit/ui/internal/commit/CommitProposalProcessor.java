@@ -163,7 +163,7 @@ public abstract class CommitProposalProcessor implements IContentAssistProcessor
 			for (CommitFile file : files)
 				proposals.add(file.createProposal(offset, 0));
 		}
-		return proposals.toArray(new ICompletionProposal[proposals.size()]);
+		return proposals.toArray(new ICompletionProposal[0]);
 	}
 
 	/**

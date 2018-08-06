@@ -159,7 +159,7 @@ public class StashEditorPage extends CommitEditorPage {
 			stagedDiffsResult.addAll(asList(stagedDiffs));
 		}
 		return stagedDiffsResult
-				.toArray(new FileDiff[stagedDiffsResult.size()]);
+				.toArray(new FileDiff[0]);
 	}
 
 	/**
@@ -182,7 +182,7 @@ public class StashEditorPage extends CommitEditorPage {
 			unstagedDiffs.addAll(asList(untrackedDiffs));
 		}
 
-		return unstagedDiffs.toArray(new FileDiff[unstagedDiffs.size()]);
+		return unstagedDiffs.toArray(new FileDiff[0]);
 	}
 
 	private void fillStagedDiffs(FileDiff[] diffs) {

@@ -65,7 +65,7 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 				for (IResource resource : gsd.getIncludedResources())
 					roots.add(resource.getProject());
 
-		return roots.toArray(new IResource[roots.size()]);
+		return roots.toArray(new IResource[0]);
 	}
 
 	/**

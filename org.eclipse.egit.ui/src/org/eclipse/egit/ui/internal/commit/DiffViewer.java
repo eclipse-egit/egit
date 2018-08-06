@@ -490,7 +490,7 @@ public class DiffViewer extends HyperlinkSourceViewer {
 			if (links.isEmpty()) {
 				return null;
 			}
-			return links.toArray(new IHyperlink[links.size()]);
+			return links.toArray(new IHyperlink[0]);
 		}
 
 		private String getString(IDocument document, int offset, int length) {

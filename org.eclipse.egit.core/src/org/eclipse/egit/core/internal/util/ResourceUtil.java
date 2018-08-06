@@ -655,7 +655,7 @@ public class ResourceUtil {
 				Activator.logError(e.getMessage(), e);
 			}
 		}
-		return mappings.toArray(new ResourceMapping[mappings.size()]);
+		return mappings.toArray(new ResourceMapping[0]);
 	}
 
 	/**
