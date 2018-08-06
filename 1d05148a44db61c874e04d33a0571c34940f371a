@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "99cd2900_51040a1b",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-06T21:15:18Z",
+      "side": 1,
+      "message": "No, I think you are using UIText.SwitchToMenu_NoCommonBranchesFound, which uses the message from uitext.properties for that disabled menu entry.\n\nSo the question remains: I don\u0027t see where this label from plugin.properties would be used. Is this a left-over from an earlier attempt? I think it can be removed.",
+      "parentUuid": "941bb9c4_66e1d394",
+      "revId": "1d05148a44db61c874e04d33a0571c34940f371a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "941ad0dc_3e86a19c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
         "patchSetId": 2
