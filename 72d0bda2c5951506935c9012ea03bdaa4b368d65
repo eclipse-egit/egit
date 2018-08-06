@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "458fda07_d7fd41b3",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 5106,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-06T21:15:18Z",
+      "side": 1,
+      "message": "Why this change? How is this related to the SwitchTo... menu?",
+      "revId": "72d0bda2c5951506935c9012ea03bdaa4b368d65",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
