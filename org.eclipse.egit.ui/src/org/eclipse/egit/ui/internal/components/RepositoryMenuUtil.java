@@ -130,12 +130,12 @@ public final class RepositoryMenuUtil {
 				files.add(gitDir);
 			}
 		}
-		String[] repoNames = repos.keySet().toArray(new String[repos.size()]);
+		String[] repoNames = repos.keySet().toArray(new String[0]);
 		Arrays.sort(repoNames, CommonUtils.STRING_ASCENDING_COMPARATOR);
 		List<IAction> result = new ArrayList<>();
 		for (String repoName : repoNames) {
 			Set<File> files = repos.get(repoName);
-			File[] gitDirs = files.toArray(new File[files.size()]);
+			File[] gitDirs = files.toArray(new File[0]);
 			Arrays.sort(gitDirs);
 			for (File f : gitDirs) {
 				IAction menuItem = new Action(repoName,

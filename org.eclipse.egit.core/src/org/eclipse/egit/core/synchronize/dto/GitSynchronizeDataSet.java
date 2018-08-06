@@ -130,7 +130,7 @@ public class GitSynchronizeDataSet implements Iterable<GitSynchronizeData> {
 		for (GitSynchronizeData data : gsdSet) {
 			resource.addAll(data.getProjects());
 		}
-		return resource.toArray(new IProject[resource.size()]);
+		return resource.toArray(new IProject[0]);
 	}
 
 	/**

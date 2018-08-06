@@ -106,7 +106,7 @@ class GitRemoteFolder extends GitRemoteResource {
 			monitor.done();
 		}
 
-		return result.toArray(new GitRemoteResource[result.size()]);
+		return result.toArray(new GitRemoteResource[0]);
 	}
 
 }

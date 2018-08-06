@@ -135,7 +135,7 @@ public class PushOperationTest extends DualRepositoryTestCase {
 		IFile newFile = testUtils.addFileToProject(proj, "folder2/file2.txt",
 				"New file");
 		files.add(newFile);
-		IFile[] fileArr = files.toArray(new IFile[files.size()]);
+		IFile[] fileArr = files.toArray(new IFile[0]);
 
 		AddToIndexOperation trop = new AddToIndexOperation(files);
 		trop.execute(null);

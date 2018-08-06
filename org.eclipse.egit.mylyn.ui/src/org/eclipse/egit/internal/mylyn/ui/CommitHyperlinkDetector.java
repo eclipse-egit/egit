@@ -219,7 +219,7 @@ public class CommitHyperlinkDetector extends AbstractHyperlinkDetector {
 		if (hyperlinks.isEmpty()) {
 			return null;
 		}
-		return hyperlinks.toArray(new IHyperlink[hyperlinks.size()]);
+		return hyperlinks.toArray(new IHyperlink[0]);
 	}
 
 	private List<IHyperlink> detectHyperlinks(ITextViewer textViewer,

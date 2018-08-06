@@ -67,7 +67,7 @@ public class DisconnectProviderOperation implements IEGitOperation {
 
 	@Override
 	public ISchedulingRule getSchedulingRule() {
-		return new MultiRule(projectList.toArray(new IProject[projectList.size()]));
+		return new MultiRule(projectList.toArray(new IProject[0]));
 	}
 
 	private void unmarkTeamPrivate(final IContainer p) throws CoreException {

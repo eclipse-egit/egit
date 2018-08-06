@@ -281,7 +281,7 @@ public class PushToGerritPage extends WizardPage {
 		} else if (isValid) {
 			topicProposals.put(topic, null);
 			settings.put(repository + LAST_TOPICS_POSTFIX, topicProposals
-					.keySet().toArray(new String[topicProposals.size()]));
+					.keySet().toArray(new String[0]));
 		}
 		if (branch != null && !ObjectId.isId(branch)) {
 			// Don't store on detached HEAD
@@ -493,7 +493,7 @@ public class PushToGerritPage extends WizardPage {
 							stroke.format()));
 		}
 		String[] recentTopics = topicProposals.keySet()
-				.toArray(new String[topicProposals.size()]);
+				.toArray(new String[0]);
 		Arrays.sort(recentTopics, CommonUtils.STRING_ASCENDING_COMPARATOR);
 		SimpleContentProposalProvider proposalProvider = new SimpleContentProposalProvider(
 				recentTopics);

@@ -211,7 +211,7 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 				capacity);
 		providers.add(GitChangeSetModelProvider.getProvider());
 
-		return providers.toArray(new ModelProvider[providers.size()]);
+		return providers.toArray(new ModelProvider[0]);
 	}
 
 	@Override

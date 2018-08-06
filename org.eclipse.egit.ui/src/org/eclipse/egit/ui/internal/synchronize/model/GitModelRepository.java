@@ -78,7 +78,7 @@ public class GitModelRepository extends GitModelObjectContainer implements HasPr
 
 		result.addAll(getWorkingChanges());
 		disposeOldChildren();
-		children = result.toArray(new GitModelObjectContainer[result.size()]);
+		children = result.toArray(new GitModelObjectContainer[0]);
 
 		return children;
 	}
@@ -150,7 +150,7 @@ public class GitModelRepository extends GitModelObjectContainer implements HasPr
 	private List<GitModelObjectContainer> getListOfCommit(List<Commit> commitCache) {
 		Repository repo = gsd.getRepository();
 		Set<IProject> projectsSet = gsd.getProjects();
-		IProject[] projects = projectsSet.toArray(new IProject[projectsSet.size()]);
+		IProject[] projects = projectsSet.toArray(new IProject[0]);
 		List<GitModelObjectContainer> result = new ArrayList<>();
 
 		for (Commit commit : commitCache)

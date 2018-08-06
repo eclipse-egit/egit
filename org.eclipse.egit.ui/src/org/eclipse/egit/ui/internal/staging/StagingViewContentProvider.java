@@ -363,7 +363,7 @@ public class StagingViewContentProvider extends WorkbenchContentProvider {
 		setSymlinkFileMode(indexDiff, nodes);
 		setSubmoduleFileMode(indexDiff, nodes);
 
-		content = nodes.toArray(new StagingEntry[nodes.size()]);
+		content = nodes.toArray(new StagingEntry[0]);
 		Arrays.sort(content, comparator);
 
 		treeRoots = null;

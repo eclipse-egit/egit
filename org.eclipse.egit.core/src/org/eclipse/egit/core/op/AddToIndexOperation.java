@@ -88,7 +88,7 @@ public class AddToIndexOperation implements IEGitOperation {
 	 */
 	@Override
 	public ISchedulingRule getSchedulingRule() {
-		return RuleUtil.getRuleForRepositories(rsrcList.toArray(new IResource[rsrcList.size()]));
+		return RuleUtil.getRuleForRepositories(rsrcList.toArray(new IResource[0]));
 	}
 
 	private void addToCommand(IResource resource, Map<RepositoryMapping, AddCommand> addCommands) {

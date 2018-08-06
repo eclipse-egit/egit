@@ -127,7 +127,7 @@ public class CommitFileRevision extends GitFileRevision implements
 				continue;
 			ret.add(new GitTag(tag.getKey()));
 		}
-		return ret.toArray(new ITag[ret.size()]);
+		return ret.toArray(new ITag[0]);
 	}
 
 	/**

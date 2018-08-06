@@ -558,7 +558,7 @@ public class ConfigurationEditorComponent {
 							return o1.name.compareTo(o2.name);
 						}
 					});
-					children = sections.toArray(new Section[sections.size()]);
+					children = sections.toArray(new Section[0]);
 				} else
 					children = new Section[0];
 			return children;
@@ -721,7 +721,7 @@ public class ConfigurationEditorComponent {
 									index++));
 					}
 				}
-				children = entries.toArray(new Entry[entries.size()]);
+				children = entries.toArray(new Entry[0]);
 			}
 			return children;
 		}

@@ -109,14 +109,14 @@ public class HistoryPageInput {
 	 * @return the list provided to our constructor
 	 */
 	public IResource[] getItems() {
-		return list == null ? null : list.toArray(new IResource[list.size()]);
+		return list == null ? null : list.toArray(new IResource[0]);
 	}
 
 	/**
 	 * @return the list provided to our constructor
 	 */
 	public File[] getFileList() {
-		return files == null ? null : files.toArray(new File[files.size()]);
+		return files == null ? null : files.toArray(new File[0]);
 	}
 
 	/**

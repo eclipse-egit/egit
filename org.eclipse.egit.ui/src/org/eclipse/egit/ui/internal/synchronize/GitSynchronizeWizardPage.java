@@ -222,7 +222,7 @@ class GitSynchronizeWizardPage extends WizardPage {
 
 				Collections.sort(refs, CommonUtils.STRING_ASCENDING_COMPARATOR);
 
-				branchesEditor.setItems(refs.toArray(new String[refs.size()]));
+				branchesEditor.setItems(refs.toArray(new String[0]));
 
 				return branchesEditor;
 			}
@@ -286,7 +286,7 @@ class GitSynchronizeWizardPage extends WizardPage {
 		});
 
 		treeViewer.setInput(repositoriesList
-				.toArray(new Repository[repositoriesList.size()]));
+				.toArray(new Repository[0]));
 		projectsColumn.getColumn().pack();
 
 		Composite buttonsComposite = new Composite(composite, SWT.NONE);

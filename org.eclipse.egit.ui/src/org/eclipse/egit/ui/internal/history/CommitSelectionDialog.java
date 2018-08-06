@@ -239,7 +239,7 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 				.toString()));
 		setMessage(UIText.CommitSelectionDialog_DialogMessage);
 		table.setInput(highlightFlag, allCommits, allCommits
-				.toArray(new SWTCommit[allCommits.size()]), null, true);
+				.toArray(new SWTCommit[0]), null, true);
 	}
 
 	private void markStartAllRefs(RevWalk currentWalk, String prefix)

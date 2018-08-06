@@ -274,6 +274,6 @@ public class BranchOperation extends BaseOperation {
 		} catch (IOException e) {
 			return new IProject[0];
 		}
-		return toBeClosed.toArray(new IProject[toBeClosed.size()]);
+		return toBeClosed.toArray(new IProject[0]);
 	}
 }

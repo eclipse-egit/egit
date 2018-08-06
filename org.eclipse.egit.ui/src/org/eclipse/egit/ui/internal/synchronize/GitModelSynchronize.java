@@ -104,7 +104,7 @@ public class GitModelSynchronize {
 				gitMappings.add(mapping);
 		}
 
-		return gitMappings.toArray(new ResourceMapping[gitMappings.size()]);
+		return gitMappings.toArray(new ResourceMapping[0]);
 	}
 
 	/**

@@ -493,7 +493,7 @@ public class StagingView extends ViewPart
 						}
 					}
 				if (!files.isEmpty()) {
-					event.data = files.toArray(new String[files.size()]);
+					event.data = files.toArray(new String[0]);
 					return;
 				}
 				// We may still end up with an empty list here if the selection

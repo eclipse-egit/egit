@@ -278,7 +278,7 @@ public class IndexDiffCache {
 		IndexDiffChangedListener[] tmpListeners;
 		synchronized (listeners) {
 			tmpListeners = listeners
-					.toArray(new IndexDiffChangedListener[listeners.size()]);
+					.toArray(new IndexDiffChangedListener[0]);
 		}
 		for (int i = 0; i < tmpListeners.length; i++) {
 			try {

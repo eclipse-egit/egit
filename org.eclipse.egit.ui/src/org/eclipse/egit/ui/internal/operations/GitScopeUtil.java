@@ -135,7 +135,7 @@ public class GitScopeUtil {
 		List<ResourceMapping> result = new ArrayList<>();
 		for (IResource resource : resources)
 			result.add(getResourceMapping(resource));
-		return result.toArray(new ResourceMapping[result.size()]);
+		return result.toArray(new ResourceMapping[0]);
 	}
 
 	private static IResource[] findRelatedChanges(final IWorkbenchPart part,
@@ -163,7 +163,7 @@ public class GitScopeUtil {
 		IProgressService progressService = CommonUtils.getService(part.getSite(), IProgressService.class);
 		progressService.run(true, true, runnable);
 
-		return relatedChanges.toArray(new IResource[relatedChanges.size()]);
+		return relatedChanges.toArray(new IResource[0]);
 	}
 
 	private static List<IResource> collectRelatedChanges(
