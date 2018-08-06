@@ -362,7 +362,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 				if (!skip)
 					resources.add(originalInput);
 			}
-			this.input = resources.toArray(new IResource[resources.size()]);
+			this.input = resources.toArray(new IResource[0]);
 		} else
 			this.input = input;
 	}

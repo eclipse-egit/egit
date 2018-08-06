@@ -312,7 +312,7 @@ public class MergeResultDialog extends Dialog {
 							UIText.MergeResultDialog_couldNotFindCommit,
 							merge.name()), e);
 				}
-			return commits.toArray(new RepositoryCommit[commits.size()]);
+			return commits.toArray(new RepositoryCommit[0]);
 		}
 	}
 

@@ -181,7 +181,7 @@ public class GitResourceVariantTreeSubscriber extends
 			throw TeamException.asTeamException(e);
 		}
 
-		return allMembers.toArray(new IResource[allMembers.size()]);
+		return allMembers.toArray(new IResource[0]);
 	}
 
 	@Override

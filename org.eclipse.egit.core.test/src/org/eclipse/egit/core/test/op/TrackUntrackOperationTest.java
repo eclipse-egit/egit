@@ -81,7 +81,7 @@ public class TrackUntrackOperationTest extends DualRepositoryTestCase {
 			}
 		});
 
-		IFile[] fileArr = files.toArray(new IFile[files.size()]);
+		IFile[] fileArr = files.toArray(new IFile[0]);
 
 		assertTrackedState(fileArr, false);
 
@@ -127,7 +127,7 @@ public class TrackUntrackOperationTest extends DualRepositoryTestCase {
 			}
 		});
 
-		IFile[] fileArr = files.toArray(new IFile[files.size()]);
+		IFile[] fileArr = files.toArray(new IFile[0]);
 
 		assertTrackedState(fileArr, false);
 

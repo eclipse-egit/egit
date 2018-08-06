@@ -493,7 +493,7 @@ public class UIUtils {
 							values.remove(values.size() - 1);
 
 						settings.put(preferenceKey, values
-								.toArray(new String[values.size()]));
+								.toArray(new String[0]));
 					}
 				}
 			}

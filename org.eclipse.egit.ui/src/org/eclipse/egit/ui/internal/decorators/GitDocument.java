@@ -307,7 +307,7 @@ class GitDocument extends Document implements RefsChangedListener {
 	static void refreshRelevant(final Repository repository) throws IOException {
 		final Entry[] docs;
 		synchronized (doc2repo) {
-			docs = doc2repo.entrySet().toArray(new Entry[doc2repo.size()]);
+			docs = doc2repo.entrySet().toArray(new Entry[0]);
 		}
 		for (Entry doc : docs)
 			if (doc.getValue() == repository)

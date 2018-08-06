@@ -95,6 +95,6 @@ public class PushMenu extends CompoundContributionItem implements
 				}
 			}
 		}
-		return res.toArray(new IContributionItem[res.size()]);
+		return res.toArray(new IContributionItem[0]);
 	}
 }

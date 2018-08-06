@@ -140,7 +140,7 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 		if (checkState == null) {
 			return new Object[0];
 		}
-		return checkState.toArray(new Object[checkState.size()]);
+		return checkState.toArray(new Object[0]);
 	}
 
 	/**

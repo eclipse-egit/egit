@@ -438,7 +438,7 @@ public class GitProjectsImportPage extends WizardPage {
 							progress.worked(1);
 						}
 						selectedProjects = result
-								.toArray(new ProjectRecord[result.size()]);
+								.toArray(new ProjectRecord[0]);
 
 						if (selectedProjects.length == 0) {
 							// run in UI thread
@@ -523,7 +523,7 @@ public class GitProjectsImportPage extends WizardPage {
 				validProjects.add(selectedProjects[i]);
 			}
 		}
-		return validProjects.toArray(new ProjectRecord[validProjects.size()]);
+		return validProjects.toArray(new ProjectRecord[0]);
 	}
 
 	/**

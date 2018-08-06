@@ -177,7 +177,7 @@ class RefUpdateElement extends WorkbenchAdapter {
 			List<RepositoryCommit> commits = new ArrayList<>();
 			for (RevCommit commit : walk)
 				commits.add(new RepositoryCommit(repo, commit));
-			return commits.toArray(new RepositoryCommit[commits.size()]);
+			return commits.toArray(new RepositoryCommit[0]);
 		} catch (IOException e) {
 			Activator.logError("Error parsing commits from push result", e); //$NON-NLS-1$
 			return new RepositoryCommit[0];

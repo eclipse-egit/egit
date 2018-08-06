@@ -206,7 +206,7 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 		// Use array since calling save updates the dirty state which updates
 		// the set of dirty repositories that is being iterated over
 		final Repository[] repos = dirtyRepositories
-				.toArray(new Repository[dirtyRepositories.size()]);
+				.toArray(new Repository[0]);
 		for (Repository repository : repos) {
 			ConfigurationEditorComponent editor = repoConfigEditors.get(repository);
 			try {
@@ -280,7 +280,7 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 			if (repoName.length() > 0)
 				items.add(repoName);
 		}
-		return items.toArray(new String[items.size()]);
+		return items.toArray(new String[0]);
 	}
 
 	private void showRepositoryConfiguration(int index) {

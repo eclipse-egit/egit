@@ -76,7 +76,7 @@ public class RepositoryRemotePropertySource implements IPropertySource {
 		desc = new PropertyDescriptor(RepositoriesView.PUSH,
 				UIText.RepositoryRemotePropertySource_PushLabel);
 		resultList.add(desc);
-		return resultList.toArray(new IPropertyDescriptor[resultList.size()]);
+		return resultList.toArray(new IPropertyDescriptor[0]);
 	}
 
 	@Override

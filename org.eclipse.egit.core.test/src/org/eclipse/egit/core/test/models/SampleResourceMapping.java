@@ -58,7 +58,7 @@ public class SampleResourceMapping extends ResourceMapping {
 			}
 		}
 		final IResource[] resourceArray = sampleSiblings
-				.toArray(new IResource[sampleSiblings.size()]);
+				.toArray(new IResource[0]);
 		return new ResourceTraversal[] { new ResourceTraversal(
 				resourceArray, IResource.DEPTH_ONE, IResource.NONE), };
 	}

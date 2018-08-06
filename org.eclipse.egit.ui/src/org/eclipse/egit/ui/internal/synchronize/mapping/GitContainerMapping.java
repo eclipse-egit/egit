@@ -59,7 +59,7 @@ class GitContainerMapping extends GitObjectMapping {
 				result.add(createTraversalForFile(child, dataSet));
 		}
 
-		return result.toArray(new ResourceTraversal[result.size()]);
+		return result.toArray(new ResourceTraversal[0]);
 	}
 
 	private Set<ResourceTraversal> createTraversalForContainer(

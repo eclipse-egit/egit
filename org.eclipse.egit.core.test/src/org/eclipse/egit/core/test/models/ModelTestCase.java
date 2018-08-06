@@ -157,7 +157,7 @@ public abstract class ModelTestCase extends GitTestCase {
 			}
 		} while (includedResources.addAll(newResources));
 		ResourceMapping[] mappings = allMappings
-				.toArray(new ResourceMapping[allMappings.size()]);
+				.toArray(new ResourceMapping[0]);
 
 		GitSynchronizeData gsd = new GitSynchronizeData(repository, srcRev,
 				dstRev, true, includedResources);

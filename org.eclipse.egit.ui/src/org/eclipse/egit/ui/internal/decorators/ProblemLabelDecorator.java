@@ -149,7 +149,7 @@ public class ProblemLabelDecorator extends BaseLabelProvider implements
 	private void updateLabels(Set<IPath> changedPaths) {
 		List<Object> elements = getAffectedElements(changedPaths);
 		if (!elements.isEmpty()) {
-			final Object[] updateElements = elements.toArray(new Object[elements.size()]);
+			final Object[] updateElements = elements.toArray(new Object[0]);
 			Display display = viewer.getControl().getDisplay();
 			display.asyncExec(new Runnable() {
 				@Override

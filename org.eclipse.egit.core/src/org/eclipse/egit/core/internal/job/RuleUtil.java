@@ -120,7 +120,7 @@ public class RuleUtil {
 		if (rules.size() == 0)
 			return null;
 		else
-			return new MultiRule(rules.toArray(new ISchedulingRule[rules.size()]));
+			return new MultiRule(rules.toArray(new ISchedulingRule[0]));
 	}
 
 	/**
@@ -163,7 +163,7 @@ public class RuleUtil {
 				result.add(p);
 			}
 		}
-		return result.toArray(new IProject[result.size()]);
+		return result.toArray(new IProject[0]);
 	}
 
 }

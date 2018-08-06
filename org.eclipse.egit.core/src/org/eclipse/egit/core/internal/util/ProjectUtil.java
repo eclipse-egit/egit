@@ -90,7 +90,7 @@ public class ProjectUtil {
 				result.add(p);
 			}
 		}
-		return result.toArray(new IProject[result.size()]);
+		return result.toArray(new IProject[0]);
 	}
 
 	/**
@@ -306,7 +306,7 @@ public class ProjectUtil {
 				result.add(project);
 			}
 		}
-		return result.toArray(new IProject[result.size()]);
+		return result.toArray(new IProject[0]);
 	}
 
 	/**
@@ -342,7 +342,7 @@ public class ProjectUtil {
 			}
 		}
 
-		return result.toArray(new IProject[result.size()]);
+		return result.toArray(new IProject[0]);
 	}
 
 	/**
@@ -427,7 +427,7 @@ public class ProjectUtil {
 				projects.add(p);
 			}
 		}
-		return projects.toArray(new IProject[projects.size()]);
+		return projects.toArray(new IProject[0]);
 	}
 
 	/**

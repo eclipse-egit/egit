@@ -425,7 +425,7 @@ public class CommitFileDiffViewer extends TableViewer {
 		HistoryPageInput historyPageInput = null;
 		if (!files.isEmpty()) {
 			historyPageInput = new HistoryPageInput(repo,
-					files.toArray(new File[files.size()]));
+					files.toArray(new File[0]));
 		}
 		return new ShowInContext(historyPageInput,
 				new StructuredSelection(elements));

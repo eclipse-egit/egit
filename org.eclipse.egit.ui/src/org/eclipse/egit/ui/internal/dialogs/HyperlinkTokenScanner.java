@@ -372,7 +372,7 @@ public class HyperlinkTokenScanner implements ITokenScanner {
 						break;
 					}
 				}
-				return allLinks.toArray(new IHyperlink[allLinks.size()]);
+				return allLinks.toArray(new IHyperlink[0]);
 			} catch (BadLocationException e) {
 				return null;
 			}

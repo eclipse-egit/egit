@@ -137,7 +137,7 @@ public class GitLazyResourceVariantTreeSubscriber
 		} catch (CoreException e) {
 			Activator.logError(e.getMessage(), e);
 		}
-		return projects.toArray(new IResource[projects.size()]);
+		return projects.toArray(new IResource[0]);
 	}
 
 }

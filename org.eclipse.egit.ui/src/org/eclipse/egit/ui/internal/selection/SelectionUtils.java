@@ -161,7 +161,7 @@ public class SelectionUtils {
 					}
 			}
 		}
-		return result.toArray(new IPath[result.size()]);
+		return result.toArray(new IPath[0]);
 	}
 
 	/**
@@ -174,7 +174,7 @@ public class SelectionUtils {
 	public static IResource[] getSelectedResources(
 			@NonNull IStructuredSelection selection) {
 		Set<IResource> result = getSelectedResourcesSet(selection);
-		return result.toArray(new IResource[result.size()]);
+		return result.toArray(new IResource[0]);
 	}
 
 	/**

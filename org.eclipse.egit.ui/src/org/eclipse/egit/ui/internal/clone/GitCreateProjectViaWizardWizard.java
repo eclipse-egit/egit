@@ -170,7 +170,7 @@ public class GitCreateProjectViaWizardWizard extends Wizard {
 				}
 			});
 			ProjectUtils.createProjects(projectsToCreate,
-					workingSets.toArray(new IWorkingSet[workingSets.size()]),
+					workingSets.toArray(new IWorkingSet[0]),
 					monitor);
 			break;
 		}

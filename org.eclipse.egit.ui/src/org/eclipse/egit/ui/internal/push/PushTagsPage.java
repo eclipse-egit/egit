@@ -182,7 +182,7 @@ public class PushTagsPage extends WizardPage {
 		}
 
 		TagNode[] checkedTagsArray = checkedTags
-				.toArray(new TagNode[checkedTags.size()]);
+				.toArray(new TagNode[0]);
 		viewer.setCheckedElements(checkedTagsArray);
 		if (checkedTagsArray.length > 0) {
 			// Reveal tags (just using reveal does not work on some platforms)

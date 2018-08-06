@@ -229,7 +229,7 @@ public class CommitUI  {
 			if (mapping != null && mapping.getRepository() == repo)
 				ret.add(project);
 		}
-		return ret.toArray(new IProject[ret.size()]);
+		return ret.toArray(new IProject[0]);
 	}
 
 	private void resetState() {

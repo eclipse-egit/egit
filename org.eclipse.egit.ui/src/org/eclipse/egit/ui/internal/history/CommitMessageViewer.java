@@ -512,7 +512,7 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 					}
 				}
 				if (!result.isEmpty()) {
-					return result.toArray(new IHyperlink[result.size()]);
+					return result.toArray(new IHyperlink[0]);
 				}
 			}
 			return null;

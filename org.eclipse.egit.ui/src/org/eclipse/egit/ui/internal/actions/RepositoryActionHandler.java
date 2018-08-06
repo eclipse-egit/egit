@@ -106,7 +106,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		}
 		ret.addAll(extractProjectsFromMappings(selection));
 
-		return ret.toArray(new IProject[ret.size()]);
+		return ret.toArray(new IProject[0]);
 	}
 
 	private Set<IProject> extractProjectsFromMappings(
@@ -174,7 +174,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 				return new Repository[0];
 			ret.add(repositoryMapping.getRepository());
 		}
-		return ret.toArray(new Repository[ret.size()]);
+		return ret.toArray(new Repository[0]);
 	}
 
 	/**
@@ -259,7 +259,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 					repos.add(repo);
 				}
 			}
-			return repos.toArray(new Repository[repos.size()]);
+			return repos.toArray(new Repository[0]);
 		}
 		return new Repository[0];
 	}
@@ -286,7 +286,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 					return new Repository[0];
 				}
 			}
-			return repos.toArray(new Repository[repos.size()]);
+			return repos.toArray(new Repository[0]);
 		}
 		return new Repository[0];
 	}

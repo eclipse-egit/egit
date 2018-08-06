@@ -179,14 +179,14 @@ public class ModelAwareGitSynchronizer extends DefaultGitSynchronizer {
 				// source...
 				// Synchronize using the local data for now.
 				final ResourceMapping[] mappings = allMappings
-						.toArray(new ResourceMapping[allMappings.size()]);
+						.toArray(new ResourceMapping[0]);
 				final GitSynchronizeData data = new GitSynchronizeData(
 						repository, leftRev, rightRev, true, includedResources);
 				GitModelSynchronize.launch(new GitSynchronizeDataSet(data),
 						mappings);
 			} else {
 				final ResourceMapping[] mappings = allMappings
-						.toArray(new ResourceMapping[allMappings.size()]);
+						.toArray(new ResourceMapping[0]);
 				final GitSynchronizeData data = new GitSynchronizeData(
 						repository, leftRev, rightRev, includeLocal,
 						includedResources);

@@ -73,7 +73,7 @@ public class GitModelRoot {
 				Activator.logError(e.getMessage(), e);
 		}
 		disposeOldChildren();
-		children = result.toArray(new GitModelObject[result.size()]);
+		children = result.toArray(new GitModelObject[0]);
 
 		return children;
 	}

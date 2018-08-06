@@ -265,7 +265,7 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 		 * @return all protocols
 		 */
 		public static Protocol[] values() {
-			return protocols.values().toArray(new Protocol[protocols.size()]);
+			return protocols.values().toArray(new Protocol[0]);
 		}
 
 		/**

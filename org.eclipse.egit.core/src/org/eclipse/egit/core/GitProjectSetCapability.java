@@ -57,7 +57,7 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 				references.add(reference);
 			}
 		}
-		return references.toArray(new String[references.size()]);
+		return references.toArray(new String[0]);
 	}
 
 	@Nullable
@@ -127,7 +127,7 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 			throw TeamException.asTeamException(e);
 		}
 		final IProject[] result = importedProjects
-				.toArray(new IProject[importedProjects.size()]);
+				.toArray(new IProject[0]);
 		return result;
 	}
 

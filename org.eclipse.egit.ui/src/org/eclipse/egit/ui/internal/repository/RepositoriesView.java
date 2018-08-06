@@ -957,7 +957,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 				return null;
 		}
 		if (repo != null)
-			return new HistoryPageInput(repo, files.toArray(new File[files.size()]));
+			return new HistoryPageInput(repo, files.toArray(new File[0]));
 		else
 			return null;
 	}

@@ -572,7 +572,7 @@ public class TestUtil {
 				if (project.equals(name))
 					items.add(item);
 		}
-		return items.isEmpty() ? null : items.toArray(new SWTBotTreeItem[items.size()]);
+		return items.isEmpty() ? null : items.toArray(new SWTBotTreeItem[0]);
 	}
 
 	/**
