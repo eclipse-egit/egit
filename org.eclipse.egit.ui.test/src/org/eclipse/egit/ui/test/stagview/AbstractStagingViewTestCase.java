@@ -14,22 +14,16 @@ import java.io.File;
 
 import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
-import org.eclipse.egit.ui.internal.repository.RepositoriesView;
-import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.egit.ui.test.TestUtil;
-import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestUtils;
+import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestBase;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.After;
 import org.junit.Before;
 
 public abstract class AbstractStagingViewTestCase
-		extends LocalRepositoryTestCase {
-
-	protected static final GitRepositoriesViewTestUtils repoViewUtil = new GitRepositoriesViewTestUtils();
+		extends GitRepositoriesViewTestBase {
 
 	protected File repositoryFile;
 
@@ -48,8 +42,7 @@ public abstract class AbstractStagingViewTestCase
 
 	@After
 	public void after() {
-		TestUtil.hideView(RepositoriesView.VIEW_ID);
-		TestUtil.hideView(StagingView.VIEW_ID);
+		repository = null;
 		Activator.getDefault().getRepositoryUtil().removeDir(repositoryFile);
 	}
 
@@ -59,11 +52,9 @@ public abstract class AbstractStagingViewTestCase
 	}
 
 	protected void selectRepositoryNode() throws Exception {
-		SWTBotView repositoriesView = TestUtil
-				.showView(RepositoriesView.VIEW_ID);
-		SWTBotTree tree = repositoriesView.bot().tree();
+		SWTBotTree tree = getOrOpenView().bot().tree();
 
-		SWTBotTreeItem repoNode = repoViewUtil.getRootItem(tree,
+		SWTBotTreeItem repoNode = myRepoViewUtil.getRootItem(tree,
 				repositoryFile);
 		repoNode.select();
 	}

@@ -32,6 +32,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.progress.UIJob;
 
 /**
@@ -182,7 +183,8 @@ public class FileDiffContentProvider implements IStructuredContentProvider {
 
 		@Override
 		public IStatus runInUIThread(IProgressMonitor monitor) {
-			if (viewer.getControl().isDisposed() || loader != loadJob) {
+			Control control = viewer == null ? null : viewer.getControl();
+			if (control == null || control.isDisposed() || loader != loadJob) {
 				return Status.CANCEL_STATUS;
 			}
 			diff = loadJob.getDiffs();
