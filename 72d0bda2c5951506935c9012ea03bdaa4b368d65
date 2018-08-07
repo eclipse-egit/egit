@@ -16,6 +16,24 @@
       "revId": "72d0bda2c5951506935c9012ea03bdaa4b368d65",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6907a6d9_58c8743d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 5106,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-08-07T03:40:24Z",
+      "side": 1,
+      "message": "This change was probably left out from when I was experimenting. Reverted back.",
+      "parentUuid": "458fda07_d7fd41b3",
+      "revId": "72d0bda2c5951506935c9012ea03bdaa4b368d65",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
