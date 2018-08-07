@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0bd08c45_3b1ce983",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-08-07T03:40:24Z",
+      "side": 1,
+      "message": "You are right, thanks for pointing that out. Done.",
+      "parentUuid": "99cd2900_51040a1b",
+      "revId": "1d05148a44db61c874e04d33a0571c34940f371a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "941ad0dc_3e86a19c",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionUtils.java",
         "patchSetId": 2
