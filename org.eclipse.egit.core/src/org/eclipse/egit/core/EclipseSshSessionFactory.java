@@ -35,6 +35,8 @@ class EclipseSshSessionFactory extends JschConfigSessionFactory {
 
 	@Override
 	protected JSch createDefaultJSch(FS fs) throws JSchException {
+		JSch.setConfig("ssh-rsa", JSch.getConfig("signature.rsa")); //$NON-NLS-1$ //$NON-NLS-2$
+		JSch.setConfig("ssh-dss", JSch.getConfig("signature.dss")); //$NON-NLS-1$ //$NON-NLS-2$
 		// Forcing a dummy session to be created will cause the known hosts
 		// and configured private keys to be initialized. This is needed by
 		// our parent class in case non-default JSch instances need to be made.
