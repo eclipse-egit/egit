@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7beed7c4_1e372edf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-08-10T22:18:01Z",
+      "side": 1,
+      "message": "this maybe null if we cannot guarantee that FileDiffRegion.getDiff() is non-null\n\nDiffDocument.findFileRegion(int) constructs a FileDiffRegion and passes explicitly null to the constructor\u0027s fileDiff argument so it seems FileDiffRegions may have a null diff field.",
+      "range": {
+        "startLine": 181,
+        "startChar": 30,
+        "endLine": 181,
+        "endChar": 44
+      },
+      "revId": "dbf5a57adf04c9a36bb1b42151867febbc0d9429",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
