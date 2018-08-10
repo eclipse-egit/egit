@@ -22,6 +22,53 @@
       "revId": "dbf5a57adf04c9a36bb1b42151867febbc0d9429",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4b67637_9060d128",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-10T22:59:56Z",
+      "side": 1,
+      "message": "Good catch. It is actually never null, except for that key used internally in DiffDocument.findFileRegion(). But your comment prompted me to re-examine that code, and it turns out that one can simply use Region for the key, and make FileDiffRegion.getDiff() @NonNull.",
+      "parentUuid": "7beed7c4_1e372edf",
+      "range": {
+        "startLine": 181,
+        "startChar": 30,
+        "endLine": 181,
+        "endChar": 44
+      },
+      "revId": "dbf5a57adf04c9a36bb1b42151867febbc0d9429",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ca5f12e_138c9700",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorOutlinePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-10T22:59:56Z",
+      "side": 1,
+      "message": "As you can see, we relied on it never being null already before :-)",
+      "range": {
+        "startLine": 183,
+        "startChar": 17,
+        "endLine": 183,
+        "endChar": 31
+      },
+      "revId": "dbf5a57adf04c9a36bb1b42151867febbc0d9429",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
