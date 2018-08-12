@@ -44,6 +44,7 @@ import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.MergeResult.MergeStatus;
 import org.eclipse.jgit.api.PullCommand;
 import org.eclipse.jgit.api.PullResult;
+import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.errors.DetachedHeadException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidConfigurationException;
@@ -275,13 +276,19 @@ public class PullOperation implements IEGitOperation {
 	}
 
 	boolean refreshNeeded(PullResult pullResult) {
-		if (pullResult == null)
+		if (pullResult == null) {
 			return true;
-		MergeResult mergeResult = pullResult.getMergeResult();
-		if (mergeResult == null)
-			return true;
-		if (mergeResult.getMergeStatus() == MergeStatus.ALREADY_UP_TO_DATE)
+		}
+		RebaseResult rebaseResult = pullResult.getRebaseResult();
+		if (rebaseResult != null
+				&& rebaseResult.getStatus() == RebaseResult.Status.UP_TO_DATE) {
 			return false;
+		}
+		MergeResult mergeResult = pullResult.getMergeResult();
+		if (mergeResult != null && mergeResult
+				.getMergeStatus() == MergeStatus.ALREADY_UP_TO_DATE) {
+			return false;
+		}
 		return true;
 	}
 
