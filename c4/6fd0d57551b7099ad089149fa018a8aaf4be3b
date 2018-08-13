@@ -1,0 +1,8 @@
+Code-Review+1: Michael Keppler <michael.keppler@gmx.de>
+Code-Review+2: Thomas Wolf <thomas.wolf@paranor.ch>
+Verified+1: CI Bot
+Submitted-by: Thomas Wolf <thomas.wolf@paranor.ch>
+Submitted-at: Mon, 13 Aug 2018 16:48:08 -0400
+Reviewed-on: https://git.eclipse.org/r/127344
+Project: egit/egit
+Branch: refs/heads/master
