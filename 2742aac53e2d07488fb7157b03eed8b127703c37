@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39d4e697_e026b01f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchResultTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2018-08-13T08:30:25Z",
+      "side": 1,
+      "message": "I don\u0027t see how this affect the tags/commits order change - it seem to be about generic children size?\n\nWhat does this strange check do actually?",
+      "revId": "2742aac53e2d07488fb7157b03eed8b127703c37",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
