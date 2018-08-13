@@ -814,7 +814,8 @@ public class CommitMessageComponent {
 					cleanedText = text.substring(0, changeIdOffset);
 				else
 					cleanedText = text.substring(0, changeIdOffset)
-							+ text.substring(endOfChangeId + 1);
+							+ text.substring(
+									endOfChangeId + Text.DELIMITER.length());
 				commitText.setText(cleanedText);
 			}
 		}
