@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10e0d5c6_1f9c615f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-13T21:26:25Z",
+      "side": 1,
+      "message": "Indentation is wrong from here on.",
+      "revId": "573ef2d5bd372f9eae4a2fccee4f8043247f9b13",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7fbb0a0_e2319e42",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-13T21:26:25Z",
+      "side": 1,
+      "message": "This needs more work. Some precondition checks such as for running launches should be done only once but covering projects from all selected repositories.\n\nAlso, behavior in error cases needs to be improved. If one repository cannot switch because of conflicts, the others are still switched. I didn\u0027t try what would happen if more than one repository would fail.\n\nSo just launching a number of jobs (one per repository) is not really good.",
+      "revId": "573ef2d5bd372f9eae4a2fccee4f8043247f9b13",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
