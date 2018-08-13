@@ -310,10 +310,10 @@ class FetchResultTable {
 					FetchResultAdapter f2 = (FetchResultAdapter) e2;
 					if (f1.getChildren(f1).length > 0
 							&& f2.getChildren(f2).length == 0)
-						return 1;
+						return -1;
 					if (f1.getChildren(f1).length == 0
 							&& f2.getChildren(f2).length > 0)
-						return -1;
+						return 1;
 
 					return CommonUtils.STRING_ASCENDING_COMPARATOR
 							.compare(f1.getLabel(f1), f2.getLabel(f2));
