@@ -16,6 +16,24 @@
       "revId": "2742aac53e2d07488fb7157b03eed8b127703c37",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3faddc8c_65accd1b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchResultTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-08-13T08:54:17Z",
+      "side": 1,
+      "message": "The pull result view is a tree view, where tags and branches are the root children. The \"FetchResultAdapter\" adapts both tags and branches. Tags have zero children themself, branches have as many children as commits happened since last fetch (you can think of a tree data structure exactly as shown in the tree view)\n\nThe changed comparison is therefore triggered whenever a tag (children.length\u003d\u003d0) and a branch (children.length \u003e 0) are compared, and it results in always sorting either kind before the other kind.\n\nIn all other cases (comparing tags with tags or branches with branches) the sorting falls back to simple label comparison.",
+      "parentUuid": "39d4e697_e026b01f",
+      "revId": "2742aac53e2d07488fb7157b03eed8b127703c37",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
