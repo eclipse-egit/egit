@@ -274,8 +274,9 @@ public class RebaseResultDialog extends MessageDialog {
 		resultLabel.setText(UIText.MergeResultDialog_result);
 		resultLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false,
 				false));
-		Text resultText = new Text(composite, SWT.READ_ONLY);
-		resultText.setText(getStatusText(result.getStatus()));
+		Text resultText = new Text(composite, SWT.READ_ONLY | SWT.MULTI);
+		resultText.setText(getStatusText(result.getStatus()).replace("\n", //$NON-NLS-1$
+				Text.DELIMITER));
 		if (!result.getStatus().isSuccessful())
 			resultText.setForeground(composite.getParent().getDisplay()
 					.getSystemColor(SWT.COLOR_RED));
@@ -288,7 +289,7 @@ public class RebaseResultDialog extends MessageDialog {
 			pathsLabel.setText(UIText.MergeResultDialog_failed);
 			pathsLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false,
 					false));
-			Text pathsText = new Text(composite, SWT.READ_ONLY);
+			Text pathsText = new Text(composite, SWT.READ_ONLY | SWT.MULTI);
 			pathsText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false,
 					false));
 			Set<Entry<String, MergeFailureReason>> failedPaths = result
@@ -317,7 +318,7 @@ public class RebaseResultDialog extends MessageDialog {
 			pathsLabel.setText(UIText.MergeResultDialog_conflicts);
 			pathsLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false,
 					false));
-			Text pathsText = new Text(composite, SWT.READ_ONLY);
+			Text pathsText = new Text(composite, SWT.READ_ONLY | SWT.MULTI);
 			pathsText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false,
 					false));
 			List<String> conflList = result.getConflicts();
