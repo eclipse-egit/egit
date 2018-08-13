@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "341b6064_407572bd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/TagPropertySource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-13T19:34:44Z",
+      "side": 1,
+      "message": "Use try-with-resource, RevWalk is AutoCloseable.",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 7
+      },
+      "revId": "675bae65e93f41e87a43cdbe3e9a0d5f002020ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcc8632e_c9dfe9ee",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/TagPropertySource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-13T19:34:44Z",
+      "side": 1,
+      "message": "Strange indent. Moreover, it shows (e.g. on the EGit 0.7.1 tag) the message \"EGit 0.7.1 -----BEGIN PGP SIGNATURE----- Version: GnuPG v1.4.8 (Darwin)\". I wonder if JGit has a problem here, or if the tag\u0027s message should really look like that.\n\nThe repositories view uses the commit message of the commit being pointed to, which doesn\u0027t have that signature line.",
+      "revId": "675bae65e93f41e87a43cdbe3e9a0d5f002020ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fc02aa7_ae458243",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 1496,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-13T19:34:44Z",
+      "side": 1,
+      "message": "I\u0027d use singular since the property page shows only one tag.",
+      "revId": "675bae65e93f41e87a43cdbe3e9a0d5f002020ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
