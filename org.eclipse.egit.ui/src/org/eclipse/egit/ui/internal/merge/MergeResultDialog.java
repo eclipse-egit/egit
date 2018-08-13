@@ -130,7 +130,7 @@ public class MergeResultDialog extends Dialog {
 			Label pathsLabel = new Label(composite, SWT.NONE);
 			pathsLabel.setText(UIText.MergeResultDialog_failed);
 			pathsLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
-			Text pathsText = new Text(composite, SWT.READ_ONLY);
+			Text pathsText = new Text(composite, SWT.READ_ONLY | SWT.MULTI);
 			pathsText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 			Set<Entry<String, MergeFailureReason>> failedPaths = mergeResult.getFailingPaths().entrySet();
 			int n = 0;
