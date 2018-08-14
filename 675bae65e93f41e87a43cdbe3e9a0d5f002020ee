@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "12ce19a8_5b4f4206",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/TagPropertySource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-08-14T22:07:21Z",
+      "side": 1,
+      "message": "these are signed tags which contain a PGP signature, \"git show\" shows such tags like this:\n\n $ git show v5.0.2.201807311906-r\n tag v5.0.2.201807311906-r\n Tagger: Matthias Sohn \u003cmatthias.sohn@sap.com\u003e\n Date:   Wed Aug 1 01:06:30 2018 +0200\n\n JGit v5.0.2.201807311906-r\n -----BEGIN PGP SIGNATURE-----\n Comment: GPGTools - http://gpgtools.org\n \n iIwEABEIADQWIQR8ZpgQiSy9MUj6kplbBczeFAwodgUCW2DrdhY cbWF0dGhpYXMu\n c29obkBzYXAuY29tAAoJEFsFzN4UDCh2zbUA/1bIEGW5j4pnexdvuFuCu9jVdBEo\n VnUMGk0v4zQKr447AP0V0TIlKTQu7DS+2ACJKZ6dWd3ABNhgymUiVMu3+grcBA\u003d\u003d\n \u003dj8Wq\n -----END PGP SIGNATURE-----\n\nSimilarly signed commits also contain a PGP signature\n\nIn general both commit and tag messages can contain many lines. Either we only show the first line (subject) or we show the complete message in the properties view, but then we should show it as multi-line and not squeeze it into a single line\n\nCan we show the tag\u0027s data sorted before the commit\u0027s meta data in a similar way how git show shows an annotated or signed tag ?",
+      "parentUuid": "443de97b_02b5a009",
+      "revId": "675bae65e93f41e87a43cdbe3e9a0d5f002020ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fc02aa7_ae458243",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 3
