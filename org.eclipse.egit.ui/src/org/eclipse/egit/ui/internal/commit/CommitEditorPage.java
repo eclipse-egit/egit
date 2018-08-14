@@ -32,6 +32,7 @@ import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.ClipboardUtils;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -63,6 +64,8 @@ import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
@@ -70,6 +73,9 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -108,7 +114,7 @@ public class CommitEditorPage extends FormPage
 	/**
 	 * Abbreviated length of parent id links displayed
 	 */
-	public static final int PARENT_LENGTH = 20;
+	public static final int PARENT_LENGTH = 7;
 
 	private LocalResourceManager resources = new LocalResourceManager(
 			JFaceResources.getResources());
@@ -340,8 +346,26 @@ public class CommitEditorPage extends FormPage
 					}
 				}
 			});
+			String sha1 = parentCommit.getName();
+			link.setToolTipText(sha1);
+			createParentContextMenu(link, sha1);
 			addToFocusTracking(link);
 		}
+	}
+
+	private void createParentContextMenu(Hyperlink link, String sha1) {
+		Menu contextMenu = new Menu(link);
+
+		final MenuItem copySHA1MenuItem = new MenuItem(contextMenu, SWT.PUSH);
+		copySHA1MenuItem.setText(UIText.Header_contextMenu_copy_SHA1);
+		final Shell shell = link.getShell();
+		copySHA1MenuItem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent event) {
+				ClipboardUtils.copySha1ToClipboard(sha1, shell);
+			}
+		});
+		link.setMenu(contextMenu);
 	}
 
 	@SuppressWarnings("unused")
