@@ -69,6 +69,30 @@
       "revId": "476369f0512f3e8fc44e908c70210ab759751fde",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc8a52d7_5201b6bc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-14T22:04:26Z",
+      "side": 1,
+      "message": "No. The default horizontal spacing with swtDefaults() is 5. So, if you want, this is a -4. Moves icon and label closer together. (Space may be at a premium when the view is vertical, for instance in the outline view\u0027s stack.)",
+      "parentUuid": "d7c0b1b4_7918f3dd",
+      "range": {
+        "startLine": 1073,
+        "startChar": 5,
+        "endLine": 1073,
+        "endChar": 14
+      },
+      "revId": "476369f0512f3e8fc44e908c70210ab759751fde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
