@@ -108,7 +108,7 @@ public class CommitEditorPage extends FormPage
 	/**
 	 * Abbreviated length of parent id links displayed
 	 */
-	public static final int PARENT_LENGTH = 20;
+	public static final int PARENT_LENGTH = 7;
 
 	private LocalResourceManager resources = new LocalResourceManager(
 			JFaceResources.getResources());
@@ -340,6 +340,7 @@ public class CommitEditorPage extends FormPage
 					}
 				}
 			});
+			link.setToolTipText(parentCommit.getName());
 			addToFocusTracking(link);
 		}
 	}
