@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5f7ac31d_b0e8cc02",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/TagPropertySource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-08-14T07:15:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "341b6064_407572bd",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 7
+      },
+      "revId": "675bae65e93f41e87a43cdbe3e9a0d5f002020ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcc8632e_c9dfe9ee",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/TagPropertySource.java",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "443de97b_02b5a009",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/TagPropertySource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-08-14T07:15:49Z",
+      "side": 1,
+      "message": "I\u0027m not sure about JGit returning 3 lines as short message, but generally speaking, yes that is the message you also see in the create tag dialog when selecting this tag. And that message is also the main reason for why I implemented this change.\n\nHowever, since it might be confusing for users, which are used to the commit message in the repository view, the current patch set now shows both the commit properties (id, message) as well as tag properties (name, message) in the properties view. That way all parties should be happy.",
+      "parentUuid": "dcc8632e_c9dfe9ee",
+      "revId": "675bae65e93f41e87a43cdbe3e9a0d5f002020ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fc02aa7_ae458243",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 3
@@ -53,6 +95,24 @@
       "writtenOn": "2018-08-13T19:34:44Z",
       "side": 1,
       "message": "I\u0027d use singular since the property page shows only one tag.",
+      "revId": "675bae65e93f41e87a43cdbe3e9a0d5f002020ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e33f6da4_2c2d3b26",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 1496,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-08-14T07:15:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fc02aa7_ae458243",
       "revId": "675bae65e93f41e87a43cdbe3e9a0d5f002020ee",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
