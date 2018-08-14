@@ -119,7 +119,6 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revplot.PlotWalk;
 import org.eclipse.jgit.revwalk.FollowFilter;
 import org.eclipse.jgit.revwalk.RenameCallback;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -1447,8 +1446,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					return;
 				}
 				commentViewer.setInput(c);
-				final PlotWalk walk = new PlotWalk(input.getRepository());
-				try {
+				try (RevWalk walk = new RevWalk(input.getRepository())) {
 					final RevCommit unfilteredCommit = walk.parseCommit(c);
 					for (RevCommit parent : unfilteredCommit.getParents())
 						walk.parseBody(parent);
@@ -1460,8 +1458,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					fileViewer.setInput(new FileDiffInput(input.getRepository(),
 							fileDiffWalker, c, fileViewerInterestingPaths,
 							input.getSingleFile() != null));
-				} finally {
-					walk.dispose();
 				}
 			}
 		});
