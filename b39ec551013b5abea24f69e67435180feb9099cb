@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8a98684e_42a490f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-08-14T21:42:15Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t add the bug id to the subject but add it to the footer (last paragraph of the commit message) like this\n\nBug: 537542",
+      "revId": "b39ec551013b5abea24f69e67435180feb9099cb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07e89eff_4f3604a6",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -13,6 +30,24 @@
       "writtenOn": "2018-08-01T23:52:42Z",
       "side": 1,
       "message": "Possibly it would be OK to just call DiffViewer.showTwoWayFileDiff() directly, and get rid of CommitFileDiffViewer.showTwoWayFileDiff() altogether. For merge commits the diffs shown are those for which the new file differs from _all_ parents. Showing the diff against the first parent is probably what most users would expect anyway.\n\nIt is in any case strange to be shown some file diffs and have the option to show the diff only to get a message dialog informing one that EGit cannot do the operation. Moreover the message text is strange: \"This is a merge commit with more than one ancestor.\" -- can there be merge commits with only one ancestor??",
+      "revId": "b39ec551013b5abea24f69e67435180feb9099cb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5388447a_07843fc3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-08-14T21:42:15Z",
+      "side": 1,
+      "message": "yes, this should be fixed\n\nGerrit shows only conflict resolutions in the diff for merge commits by re-merging the two commits the merge commit merged transiently and comparing that against the merge commit in the history. If this yields a difference a conflict resolution was done.",
+      "parentUuid": "07e89eff_4f3604a6",
       "revId": "b39ec551013b5abea24f69e67435180feb9099cb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
