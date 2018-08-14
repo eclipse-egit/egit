@@ -45,6 +45,30 @@
       "revId": "476369f0512f3e8fc44e908c70210ab759751fde",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c0b1b4_7918f3dd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-08-14T21:22:07Z",
+      "side": 1,
+      "message": "is this a -1 ?",
+      "parentUuid": "d4db0c8c_848cd375",
+      "range": {
+        "startLine": 1073,
+        "startChar": 5,
+        "endLine": 1073,
+        "endChar": 14
+      },
+      "revId": "476369f0512f3e8fc44e908c70210ab759751fde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
