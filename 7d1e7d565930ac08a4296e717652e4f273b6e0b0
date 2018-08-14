@@ -22,6 +22,30 @@
       "revId": "7d1e7d565930ac08a4296e717652e4f273b6e0b0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b5d16f1_ef582270",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1080,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-08-14T21:22:07Z",
+      "side": 1,
+      "message": "should this be added as a comment or in the commit message or does this need another improvement ?",
+      "parentUuid": "ce39a34b_698a691e",
+      "range": {
+        "startLine": 1080,
+        "startChar": 57,
+        "endLine": 1080,
+        "endChar": 70
+      },
+      "revId": "7d1e7d565930ac08a4296e717652e4f273b6e0b0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
