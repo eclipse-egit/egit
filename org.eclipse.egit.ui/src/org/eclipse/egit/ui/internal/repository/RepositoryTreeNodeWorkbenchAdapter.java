@@ -11,9 +11,11 @@
 package org.eclipse.egit.ui.internal.repository;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.egit.ui.internal.DecorationOverlayDescriptor;
 import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.ResourcePropertyTester;
 import org.eclipse.egit.ui.internal.UIIcons;
@@ -23,9 +25,14 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.IDecoration;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.WorkbenchAdapter;
 
@@ -53,7 +60,26 @@ public class RepositoryTreeNodeWorkbenchAdapter extends WorkbenchAdapter {
 
 	@Override
 	public ImageDescriptor getImageDescriptor(Object object) {
+		if (object == null) {
+			return null;
+		}
 		RepositoryTreeNode<?> node = (RepositoryTreeNode) object;
+		ImageDescriptor base = getBaseImageDescriptor(node);
+		if (base == null) {
+			return null;
+		}
+		// We have to decorate here: if we let an asynchronous lightweight
+		// decorator do it, image decorations may flicker in the repositories
+		// view and elsewhere where we'd refresh viewers.
+		try {
+			return decorateImageDescriptor(base, node);
+		} catch (IOException e) {
+			return base;
+		}
+	}
+
+	private ImageDescriptor getBaseImageDescriptor(
+			@NonNull RepositoryTreeNode<?> node) {
 		switch (node.getType()) {
 		case FILE: {
 			Object item = node.getObject();
@@ -80,6 +106,76 @@ public class RepositoryTreeNodeWorkbenchAdapter extends WorkbenchAdapter {
 			break;
 		}
 		return node.getType().getIcon();
+	}
+
+	private ImageDescriptor decorateImageDescriptor(
+			@NonNull ImageDescriptor base, @NonNull RepositoryTreeNode<?> node)
+			throws IOException {
+		switch (node.getType()) {
+		case TAG:
+		case ADDITIONALREF:
+		case REF:
+			// if the branch or tag is checked out,
+			// we want to decorate the corresponding
+			// node with a little check indicator
+			String refName = ((Ref) node.getObject()).getName();
+			Ref leaf = ((Ref) node.getObject()).getLeaf();
+
+			String compareString = null;
+			Repository repository = node.getRepository();
+			String branchName = repository.getFullBranch();
+			if (branchName == null) {
+				return base;
+			}
+			if (refName.startsWith(Constants.R_HEADS)) {
+				// local branch: HEAD would be on the branch
+				compareString = refName;
+			} else if (refName.startsWith(Constants.R_TAGS)) {
+				// tag: HEAD would be on the commit id to which the tag is
+				// pointing
+				TagNode tagNode = (TagNode) node;
+				compareString = tagNode.getCommitId();
+			} else if (refName.startsWith(Constants.R_REMOTES)) {
+				// remote branch: HEAD would be on the commit id to which
+				// the branch is pointing
+				ObjectId id = repository.resolve(refName);
+				if (id == null) {
+					return base;
+				}
+				try (RevWalk rw = new RevWalk(repository)) {
+					RevCommit commit = rw.parseCommit(id);
+					compareString = commit.getId().name();
+				}
+			} else if (refName.equals(Constants.HEAD)) {
+				return new DecorationOverlayDescriptor(base,
+						UIIcons.OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
+			} else {
+				String leafname = leaf.getName();
+				if (leafname.startsWith(Constants.R_REFS)
+						&& leafname.equals(branchName)) {
+					return new DecorationOverlayDescriptor(base,
+							UIIcons.OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
+				}
+				ObjectId objectId = leaf.getObjectId();
+				if (objectId != null && objectId
+						.equals(repository.resolve(Constants.HEAD))) {
+					return new DecorationOverlayDescriptor(base,
+							UIIcons.OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
+				}
+				// some other symbolic reference
+				return base;
+			}
+
+			if (compareString != null && compareString.equals(branchName)) {
+				return new DecorationOverlayDescriptor(base,
+						UIIcons.OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
+			}
+
+			break;
+		default:
+			break;
+		}
+		return base;
 	}
 
 	@Override
