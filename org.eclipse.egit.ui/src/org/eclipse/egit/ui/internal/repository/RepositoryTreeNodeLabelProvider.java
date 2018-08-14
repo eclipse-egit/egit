@@ -38,6 +38,19 @@ public class RepositoryTreeNodeLabelProvider
 
 	private final WorkbenchLabelProvider labelProvider;
 
+	/**
+	 * Keeps the last label. If the label we originally get is undecorated, we
+	 * return this last decorated label instead to prevent flickering. When the
+	 * asynchronous lightweight decorator then has computed the decoration, the
+	 * label will be updated. Note that this works only because our
+	 * RepositoryTreeNodeDecorator always decorates! (If there's no decoration,
+	 * it appends a single blank to ensure the decorated label is different from
+	 * the undecorated one.)
+	 * <p>
+	 * For images, there is no such work-around, and thus we need to do the
+	 * image decorations in the label provider (in the
+	 * RepositoryTreeNodeWorkbenchAdapter in our case) in the UI thread.
+	 */
 	private final WeakHashMap<Object, StyledString> previousDecoratedLabels = new WeakHashMap<>();
 
 	/**
@@ -63,7 +76,9 @@ public class RepositoryTreeNodeLabelProvider
 	@Override
 	public StyledString getStyledText(Object element) {
 		StyledString decoratedLabel = super.getStyledText(element);
-		if (decoratedLabel.getString().equals(labelProvider.getText(element))) {
+		String decoratedValue = decoratedLabel.getString();
+		String simpleValue = labelProvider.getText(element);
+		if (decoratedValue.equals(simpleValue)) {
 			// Decoration not available yet... but may be shortly. Try to
 			// prevent flickering by returning the previous decorated label, if
 			// any.
@@ -71,6 +86,9 @@ public class RepositoryTreeNodeLabelProvider
 			if (previousLabel != null) {
 				return previousLabel;
 			}
+		} else if (decoratedValue.trim().equals(simpleValue)) {
+			// No decoration...
+			decoratedLabel = labelProvider.getStyledText(element);
 		}
 		if (element instanceof RepositoryNode) {
 			Repository repository = ((RepositoryNode) element).getRepository();
