@@ -610,7 +610,7 @@ public class CompareUtils {
 				destCommit = getFileRevisionTypedElement(gitPath, commit,
 						repository);
 
-				if (base != null && commit != null) {
+				if (base != null) {
 					final ObjectId headCommitId = repository
 							.resolve(Constants.HEAD);
 					commonAncestor = getFileRevisionTypedElementForCommonAncestor(

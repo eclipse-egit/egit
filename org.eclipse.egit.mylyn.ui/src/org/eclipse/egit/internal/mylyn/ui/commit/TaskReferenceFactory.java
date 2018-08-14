@@ -91,11 +91,9 @@ public class TaskReferenceFactory implements IAdapterFactory {
 			// try to get repository url and commit message
 			try (RevWalk revWalk = new RevWalk(r)) {
 				RevCommit revCommit = revWalk.parseCommit(commit);
-				if (revCommit != null) {
-					repoUrl = getRepoUrl(r);
-					message = revCommit.getFullMessage();
-					timestamp = (long)revCommit.getCommitTime() * 1000;
-				}
+				repoUrl = getRepoUrl(r);
+				message = revCommit.getFullMessage();
+				timestamp = (long) revCommit.getCommitTime() * 1000;
 			} catch (IOException e) {
 				continue;
 			} catch (RuntimeException e) {
