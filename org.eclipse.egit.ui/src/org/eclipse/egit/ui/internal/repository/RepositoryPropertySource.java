@@ -201,6 +201,11 @@ public class RepositoryPropertySource implements IPropertySource {
 						mgr.add(new Action(aMode.getText()) {
 							@Override
 							public void run() {
+								if (aMode == getCurrentMode()) {
+									// the currently checked menu item can be
+									// hit again
+									return;
+								}
 								changeModeAction.getAction().setText(
 										aMode.getText());
 								boolean enabled = true;
@@ -223,10 +228,9 @@ public class RepositoryPropertySource implements IPropertySource {
 
 							@Override
 							public boolean isEnabled() {
-								return aMode != getCurrentMode()
-										&& (aMode != DisplayMode.SYSTEM
+								return aMode != DisplayMode.SYSTEM
 												|| systemConfig
-														.getFile() != null);
+												.getFile() != null;
 							}
 
 							@Override
@@ -236,7 +240,7 @@ public class RepositoryPropertySource implements IPropertySource {
 
 							@Override
 							public int getStyle() {
-								return IAction.AS_CHECK_BOX;
+								return IAction.AS_RADIO_BUTTON;
 							}
 						});
 					}
