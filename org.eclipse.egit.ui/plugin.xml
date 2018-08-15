@@ -2447,11 +2447,6 @@
          <class
                class="org.eclipse.egit.ui.internal.repository.tree.command.LinkWithSelectionCommand">
          </class>
-         <activeWhen>
-            <with variable="activePart">
-               <instanceof value="org.eclipse.egit.ui.internal.repository.RepositoriesView" />
-            </with>
-         </activeWhen>
       </handler>
       <handler
             commandId="org.eclipse.egit.ui.RepositoriesViewRemove">
