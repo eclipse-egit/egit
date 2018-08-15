@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "813edfe7_abc08bd4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/TagPropertySource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-15T10:56:41Z",
+      "side": 1,
+      "message": "Ah, so that\u0027s it: display of multi-line text in a single-line text field.\n\nI don\u0027t think the PropertySheetPage supports displaying multi-line properties.",
+      "parentUuid": "12ce19a8_5b4f4206",
+      "revId": "675bae65e93f41e87a43cdbe3e9a0d5f002020ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fc02aa7_ae458243",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 3
