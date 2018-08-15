@@ -223,10 +223,9 @@ public class RepositoryPropertySource implements IPropertySource {
 
 							@Override
 							public boolean isEnabled() {
-								return aMode != getCurrentMode()
-										&& (aMode != DisplayMode.SYSTEM
+								return aMode != DisplayMode.SYSTEM
 												|| systemConfig
-														.getFile() != null);
+												.getFile() != null;
 							}
 
 							@Override
@@ -236,7 +235,7 @@ public class RepositoryPropertySource implements IPropertySource {
 
 							@Override
 							public int getStyle() {
-								return IAction.AS_CHECK_BOX;
+								return IAction.AS_RADIO_BUTTON;
 							}
 						});
 					}
