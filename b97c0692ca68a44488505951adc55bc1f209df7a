@@ -16,6 +16,24 @@
       "revId": "b97c0692ca68a44488505951adc55bc1f209df7a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a21af0b_fb4883dd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryPropertySource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-08-17T20:08:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "025299c0_58b4d191",
+      "revId": "b97c0692ca68a44488505951adc55bc1f209df7a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
