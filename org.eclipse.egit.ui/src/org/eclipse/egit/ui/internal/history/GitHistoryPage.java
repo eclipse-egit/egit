@@ -1443,7 +1443,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					return;
 				}
 				final SWTCommit c = (SWTCommit) sel.getFirstElement();
-				if (c.equals(commentViewer.getInput())) {
+				if (c == commentViewer.getInput()) {
 					return;
 				}
 				commentViewer.setInput(c);
