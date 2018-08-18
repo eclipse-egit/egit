@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="egit-4.5" sequenceNumber="1534585401">
+<target name="egit-4.5" sequenceNumber="1534605747">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.jetty.client" version="9.4.8.v20171121"/>
@@ -81,7 +81,7 @@
       <unit id="org.tukaani.xz.source" version="1.6.0.v20170629-1752"/>
       <unit id="com.jcraft.jzlib" version="1.1.1.v201205102305"/>
       <unit id="com.jcraft.jzlib.source" version="1.1.1.v201205102305"/>
-      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository"/>
+      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/S20180730183850/repository"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.sdk.ide" version="0.0.0"/>
