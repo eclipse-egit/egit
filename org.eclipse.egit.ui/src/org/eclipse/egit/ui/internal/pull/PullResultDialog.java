@@ -35,6 +35,7 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
@@ -148,9 +149,10 @@ public class PullResultDialog extends Dialog {
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		createButton(parent, IDialogConstants.OK_ID,
+		Button okayButton = createButton(parent, IDialogConstants.OK_ID,
 				IDialogConstants.CLOSE_LABEL,
 				true);
+		okayButton.setFocus();
 	}
 
 	@Override
