@@ -7,10 +7,10 @@ Fragment-Host: org.eclipse.egit.ui;bundle-version="[5.1.0,5.2.0)"
 Bundle-Version: 5.1.0.qualifier
 Bundle-Vendor: %provider_name
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
  org.eclipse.ui.ide;bundle-version="3.12.0"
 Bundle-Localization: fragment
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.egit.ui.internal.clone;version="5.1.0";x-internal:=true;
- uses:="org.eclipse.ui,org.eclipse.jface.wizard,org.eclipse.jface.viewers"
+ uses:="org.eclipse.ui,
+  org.eclipse.jface.wizard,
+  org.eclipse.jface.viewers"
