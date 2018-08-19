@@ -6,4 +6,3 @@ Bundle-Version: 5.1.0.qualifier
 Bundle-Vendor: %Bundle-Vendor
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
-Require-Bundle: org.eclipse.ui.cheatsheets;bundle-version="[3.3.0,4.0.0)"
