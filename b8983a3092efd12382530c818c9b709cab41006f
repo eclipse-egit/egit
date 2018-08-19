@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d715a2a_890a5069",
+        "filename": "org.eclipse.egit.core.test/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-08-19T23:34:36Z",
+      "side": 1,
+      "message": "missing double quote",
+      "revId": "b8983a3092efd12382530c818c9b709cab41006f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42306cc7_3a826791",
+        "filename": "org.eclipse.egit.ui.smartimport/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-08-19T23:34:36Z",
+      "side": 1,
+      "message": "5.1.0",
+      "revId": "b8983a3092efd12382530c818c9b709cab41006f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
