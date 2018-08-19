@@ -120,6 +120,24 @@
     },
     {
       "key": {
+        "uuid": "afaa26aa_1c33cfe3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/TagPropertySource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-08-19T13:05:55Z",
+      "side": 1,
+      "message": "The javadoc of RevTag.getShortMessage() and  RevCommit.getShortMessage() seems contradictory:\n\n\"Parse the tag / commit message and return the first \"line\" of it.\nThe first line is everything up to the first pair of LFs. This is the\n\"oneline\" format, suitable for output in a single line display.\"\n\n...\n\n\"@return decoded tag / commit message as a string. Never null. The returned string does not contain any LFs, even if the first paragraph spanned multiple lines. Embedded LFs are converted to spaces.\"\n\nThis is something different than everything up to the first pair of LFs. And rendering a complete commit message, which could be very long, on a single line seems not suitable for output in a single line display.\n\nThe \"oneline\" log format of native git returns a shorter representation, e.g.\n\n $ git log --oneline v5.0.2.201807311906-r\n 40813388e (tag: v5.0.2.201807311906-r) JGit v5.0.2.201807311906-r\n ...",
+      "parentUuid": "813edfe7_abc08bd4",
+      "revId": "675bae65e93f41e87a43cdbe3e9a0d5f002020ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fc02aa7_ae458243",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 3
