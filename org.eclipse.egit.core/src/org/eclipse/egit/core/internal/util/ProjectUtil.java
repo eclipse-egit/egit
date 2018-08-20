@@ -27,6 +27,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.internal.resources.ResourceException;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
@@ -40,6 +41,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.annotations.NonNull;
@@ -128,7 +130,6 @@ public class ProjectUtil {
 	 * @param delete
 	 *            true to delete projects, false to close them
 	 * @param monitor
-	 *
 	 * @throws CoreException
 	 */
 	public static void refreshValidProjects(IProject[] projects, boolean delete,
@@ -150,12 +151,19 @@ public class ProjectUtil {
 					.append(IProjectDescription.DESCRIPTION_FILE_NAME)
 					.toOSString();
 			File projectFile = new File(projectFilePath);
-			if (projectFile.exists())
-				p.refreshLocal(IResource.DEPTH_INFINITE, progress.newChild(1));
-			else if (delete)
-				p.delete(false, true, progress.newChild(1));
-			else
-				closeMissingProject(p, projectFile, progress.newChild(1));
+			try {
+				if (projectFile.exists()) {
+					p.refreshLocal(IResource.DEPTH_INFINITE,
+							progress.newChild(1));
+				} else if (delete) {
+					p.delete(false, true, progress.newChild(1));
+				} else {
+					closeMissingProject(p, projectFile, progress.newChild(1));
+				}
+			} catch (@SuppressWarnings("restriction")
+			ResourceException e) {
+				Activator.logWarning(e.getMessage(), e);
+			}
 		}
 	}
 
