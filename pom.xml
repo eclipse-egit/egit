@@ -65,6 +65,7 @@
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
     <jboss-tycho-plugins-version>1.1.0</jboss-tycho-plugins-version>
     <mockito-version>1.8.4</mockito-version>
+    <spotbugs-maven-plugin-version>3.1.5</spotbugs-maven-plugin-version>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.repository/target/repository</jgit-site>
     <license-site>http://download.eclipse.org/cbi/updates/license</license-site>
     <signer-input-directory>/home/data/httpd/download-staging.priv/egit</signer-input-directory>
@@ -469,9 +470,9 @@
         <plugin>
           <groupId>com.github.spotbugs</groupId>
           <artifactId>spotbugs-maven-plugin</artifactId>
-          <version>3.1.3.1</version>
+          <version>${spotbugs-maven-plugin-version}</version>
           <configuration>
-            <findbugsXmlOutput>true</findbugsXmlOutput>
+            <spotbugsXmlOutput>true</spotbugsXmlOutput>
             <failOnError>false</failOnError>
           </configuration>
           <executions>
