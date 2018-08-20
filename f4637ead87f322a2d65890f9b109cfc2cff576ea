@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ca585d96_40447aa3",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-08-20T21:38:46Z",
+      "side": 0,
+      "message": "apparently the maven build and test on this version succeeded, maybe this now works since I also removed the same dependency from org.eclipse.egit.core ?",
+      "parentUuid": "d5058640_3fdda4f0",
+      "revId": "f4637ead87f322a2d65890f9b109cfc2cff576ea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8902aac_8b465b31",
         "filename": "org.eclipse.egit.doc/META-INF/MANIFEST.MF",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5e890f3d_e7904bf5",
+        "filename": "org.eclipse.egit.doc/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-08-20T21:38:46Z",
+      "side": 0,
+      "message": "I installed this version in the photon committer package and tried the cheat sheet of the clone wizard and this worked",
+      "parentUuid": "a8902aac_8b465b31",
+      "revId": "f4637ead87f322a2d65890f9b109cfc2cff576ea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6397bc32_4c369676",
         "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2018-08-20T13:43:43Z",
       "side": 0,
       "message": "Hmmmm. org.slf4j was added by you for bug 509008.",
+      "revId": "f4637ead87f322a2d65890f9b109cfc2cff576ea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5174cea5_caedaab6",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-08-20T21:38:46Z",
+      "side": 0,
+      "message": "I installed this version in photon committer package and can open the staging view",
+      "parentUuid": "6397bc32_4c369676",
       "revId": "f4637ead87f322a2d65890f9b109cfc2cff576ea",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
