@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "936854a3_c22458b4",
+        "filename": "org.eclipse.egit.ui.test/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-20T14:13:54Z",
+      "side": 1,
+      "message": "Why do we have this in ImportPackage _and_ in RequireBundle?",
+      "revId": "094bc6152106a6b8259f25d6a376256d907adba9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "a8902aac_8b465b31",
+        "filename": "org.eclipse.egit.doc/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-20T14:13:54Z",
+      "side": 0,
+      "message": "Sure about this one? Do the cheat sheets still work when deployed?",
+      "revId": "f4637ead87f322a2d65890f9b109cfc2cff576ea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6397bc32_4c369676",
         "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
         "patchSetId": 2
