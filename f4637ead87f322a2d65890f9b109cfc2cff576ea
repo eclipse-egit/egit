@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "58a5974f_5b169395",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-20T22:02:50Z",
+      "side": 0,
+      "message": "This _is_ egit.core :-) But OK. I never understood why egit should need to declare these transitive dependencies.",
+      "parentUuid": "ca585d96_40447aa3",
+      "revId": "f4637ead87f322a2d65890f9b109cfc2cff576ea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8902aac_8b465b31",
         "filename": "org.eclipse.egit.doc/META-INF/MANIFEST.MF",
         "patchSetId": 2
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "b384bcaf_44c97969",
+        "filename": "org.eclipse.egit.doc/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-20T22:02:50Z",
+      "side": 0,
+      "message": "OK then.",
+      "parentUuid": "5e890f3d_e7904bf5",
+      "revId": "f4637ead87f322a2d65890f9b109cfc2cff576ea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6397bc32_4c369676",
         "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
         "patchSetId": 2
@@ -101,6 +137,24 @@
       "side": 0,
       "message": "I installed this version in photon committer package and can open the staging view",
       "parentUuid": "6397bc32_4c369676",
+      "revId": "f4637ead87f322a2d65890f9b109cfc2cff576ea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "184cab52_dba8c200",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-20T22:02:50Z",
+      "side": 0,
+      "message": "OK.",
+      "parentUuid": "5174cea5_caedaab6",
       "revId": "f4637ead87f322a2d65890f9b109cfc2cff576ea",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
