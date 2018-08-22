@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5b360c8_20908c80",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 7
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-22T06:10:23Z",
+      "side": 1,
+      "message": "Typo.",
+      "range": {
+        "startLine": 357,
+        "startChar": 29,
+        "endLine": 357,
+        "endChar": 35
+      },
+      "revId": "4dc339fab240f626bef085a2f6ca980a0d63ab69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2bdf525_4d6cd871",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 4071,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-22T06:10:23Z",
+      "side": 1,
+      "message": "I didn\u0027t try it yet, but I think this would need a property test, too. Otherwise it\u0027ll be active if I select two nodes in the same repository, won\u0027t it?",
+      "revId": "4dc339fab240f626bef085a2f6ca980a0d63ab69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f5963490_7a76e791",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/selection/SelectionPropertyTester.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-22T06:10:23Z",
+      "side": 1,
+      "message": "Can\u0027t we just do\n\n   Repository[] repositories \u003d SelectionUtils.getRepositories(selection);\n\n   if (repositories.length \u003c 2) {\n     return false;\n   }\n\n   return Arrays.stream(repositories).allMatch(...);\n\n?",
+      "range": {
+        "startLine": 128,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 3
+      },
+      "revId": "4dc339fab240f626bef085a2f6ca980a0d63ab69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
