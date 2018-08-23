@@ -55,6 +55,23 @@
     },
     {
       "key": {
+        "uuid": "1c9fcb92_85882e6b",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-23T10:42:50Z",
+      "side": 0,
+      "message": "Argh. This one must stay! Patch follows.",
+      "revId": "f4637ead87f322a2d65890f9b109cfc2cff576ea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8902aac_8b465b31",
         "filename": "org.eclipse.egit.doc/META-INF/MANIFEST.MF",
         "patchSetId": 2
