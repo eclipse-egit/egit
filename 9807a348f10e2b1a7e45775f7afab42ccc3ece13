@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "264393e8_ca85d723",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-23T08:38:34Z",
+      "side": 1,
+      "message": "This won\u0027t help. The exception is caught and logged in EclipsePreferences.create(). It is not propagated out.",
+      "revId": "9807a348f10e2b1a7e45775f7afab42ccc3ece13",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
