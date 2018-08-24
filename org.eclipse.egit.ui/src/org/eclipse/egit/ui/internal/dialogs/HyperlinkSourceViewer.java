@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2015, 2016 Thomas Wolf <thomas.wolf@paranor.ch>.
+ * Copyright (C) 2015, 2018 Thomas Wolf <thomas.wolf@paranor.ch>.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -170,13 +170,17 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 					.removePropertyChangeListener(jFacePropertyChangeListener);
 			jFacePropertyChangeListener = null;
 		}
-		for (Color color : customColors.values()) {
-			if (color != null) {
-				color.dispose();
+		// Dispose of the colors last.
+		try {
+			super.handleDispose();
+		} finally {
+			for (Color color : customColors.values()) {
+				if (color != null) {
+					color.dispose();
+				}
 			}
+			customColors.clear();
 		}
-		customColors.clear();
-		super.handleDispose();
 	}
 
 	@Override
@@ -235,9 +239,9 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 	}
 
 	/**
-	 * Handle a change in EditorsUI preferences. The default implementation
-	 * handles hyperlink coloring changes. May be overridden, but the subclass
-	 * should invoke super.
+	 * Handle a change in JFace preferences. The default implementation handles
+	 * hyperlink coloring changes. May be overridden, but the subclass should
+	 * invoke super.
 	 *
 	 * @param event
 	 *            describing the property change.
@@ -368,11 +372,10 @@ public class HyperlinkSourceViewer extends ProjectionViewer {
 		default:
 			return;
 		}
-		Color oldColor = customColors.remove(key);
+		Color oldColor = customColors.put(key, newColor);
 		if (oldColor != null) {
 			oldColor.dispose();
 		}
-		customColors.put(key, newColor);
 	}
 
 	private Color createColor(Display display, IPreferenceStore store,
