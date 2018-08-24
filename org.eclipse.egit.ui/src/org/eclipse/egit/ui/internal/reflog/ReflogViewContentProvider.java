@@ -15,6 +15,7 @@
 package org.eclipse.egit.ui.internal.reflog;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 import org.eclipse.core.runtime.Assert;
@@ -29,6 +30,7 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.model.WorkbenchAdapter;
 import org.eclipse.ui.progress.DeferredTreeContentManager;
@@ -140,9 +142,21 @@ public class ReflogViewContentProvider implements ITreeContentProvider {
 			if (refLog != null) {
 				return; // Already loaded.
 			}
-			try (Git git = new Git(repository)) {
+			try (Git git = new Git(repository);
+					RevWalk walk = new RevWalk(repository)) {
 				refLog = git.reflog().setRef(ref).call().stream()
-						.map(entry -> new ReflogItem(ReflogInput.this, entry))
+						.map(entry -> {
+							String commitMessage = null;
+							try {
+								commitMessage = walk
+										.parseCommit(entry.getNewId())
+										.getShortMessage();
+							} catch (IOException e) {
+								// Ignore here
+							}
+							return new ReflogItem(ReflogInput.this, entry,
+									commitMessage);
+						})
 						.toArray(ReflogItem[]::new);
 				collector.add(refLog, monitor);
 			} catch (Exception e) {

@@ -67,7 +67,6 @@ import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.ReflogEntry;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
-import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -225,24 +224,14 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 
 			@Override
 			public String getText(Object element) {
-				if (element instanceof ReflogEntry) {
-					final ReflogEntry entry = (ReflogEntry) element;
-					RevCommit c = getCommit(entry);
-					return c == null ? "" : c.getShortMessage(); //$NON-NLS-1$
+				if (element instanceof ReflogItem) {
+					ReflogItem entry = (ReflogItem) element;
+					String c = entry.getCommitMessage();
+					return c == null ? "" : c; //$NON-NLS-1$
 				} else if (element instanceof IWorkbenchAdapter) {
 					return ((IWorkbenchAdapter) element).getLabel(element);
 				}
 				return null;
-			}
-
-			private RevCommit getCommit(final ReflogEntry entry) {
-				try (RevWalk walk = new RevWalk(getRepository())) {
-					walk.setRetainBody(true);
-					return walk.parseCommit(entry.getNewId());
-				} catch (IOException ignored) {
-					// ignore
-					return null;
-				}
 			}
 		});
 

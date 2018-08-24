@@ -31,9 +31,12 @@ public class ReflogItem implements ReflogEntry, IAdaptable, IRepositoryObject {
 
 	private final ReflogInput input;
 
-	ReflogItem(ReflogInput input, ReflogEntry entry) {
+	private final String commitMessage;
+
+	ReflogItem(ReflogInput input, ReflogEntry entry, String commitMessage) {
 		this.entry = entry;
 		this.input = input;
+		this.commitMessage = commitMessage;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -73,6 +76,14 @@ public class ReflogItem implements ReflogEntry, IAdaptable, IRepositoryObject {
 		return entry.parseCheckout();
 	}
 
+	/**
+	 * @return the (short) commit message of the commit, if any, or {@code null}
+	 *         otherwise.
+	 */
+	public String getCommitMessage() {
+		return commitMessage;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
@@ -83,6 +94,7 @@ public class ReflogItem implements ReflogEntry, IAdaptable, IRepositoryObject {
 		}
 		ReflogItem other = (ReflogItem) obj;
 		return input == other.input
+				&& Objects.equals(commitMessage, other.commitMessage)
 				&& Objects.equals(getNewId(), other.getNewId())
 				&& Objects.equals(getOldId(), other.getOldId())
 				&& Objects.equals(getWho(), other.getWho())
@@ -91,8 +103,8 @@ public class ReflogItem implements ReflogEntry, IAdaptable, IRepositoryObject {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(input, getNewId(), getOldId(), getWho(),
-				getComment());
+		return Objects.hash(input, commitMessage, getNewId(), getOldId(),
+				getWho(), getComment());
 	}
 
 	@Override
