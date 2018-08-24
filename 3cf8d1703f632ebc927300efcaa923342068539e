@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd0431bf_0bc4446a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-08-24T11:25:05Z",
+      "side": 1,
+      "message": "Could you please set user.name \u003d Luís Copetti and fix the \"committer\" for these two changes?",
+      "range": {
+        "startLine": 4,
+        "startChar": 12,
+        "endLine": 4,
+        "endChar": 43
+      },
+      "revId": "3cf8d1703f632ebc927300efcaa923342068539e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
