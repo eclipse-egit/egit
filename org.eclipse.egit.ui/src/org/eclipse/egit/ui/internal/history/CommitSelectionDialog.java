@@ -21,6 +21,7 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -234,9 +235,9 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 	}
 
 	private void updateUi() {
-		setTitle(NLS.bind(UIText.CommitSelectionDialog_DialogTitle, Integer
-				.valueOf(allCommits.size()), repository.getDirectory()
-				.toString()));
+		setTitle(NLS.bind(UIText.CommitSelectionDialog_DialogTitle,
+				Integer.valueOf(allCommits.size()),
+				GitLabels.getPlainShortLabel(repository)));
 		setMessage(UIText.CommitSelectionDialog_DialogMessage);
 		table.setInput(highlightFlag, allCommits, allCommits
 				.toArray(new SWTCommit[0]), null, true);
