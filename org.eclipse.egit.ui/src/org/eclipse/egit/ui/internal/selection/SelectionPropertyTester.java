@@ -14,10 +14,13 @@
 package org.eclipse.egit.ui.internal.selection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.resources.IContainer;
@@ -59,6 +62,14 @@ public class SelectionPropertyTester extends PropertyTester {
 		} else if ("selectionSingleRepository".equals(property)) { //$NON-NLS-1$
 			return SelectionUtils
 					.getRepository(getStructuredSelection(collection)) != null;
+
+		} else if ("resourcesMultipleRepositories".equals(property)) { //$NON-NLS-1$
+			return resourceSelectionContainsMoreThanOneRepository(collection,
+					args);
+
+		} else if ("selectionMultipleRepositories".equals(property)) { //$NON-NLS-1$
+			return selectionContainsMoreThanOneRepository(collection,
+					args);
 
 		} else if ("resourcesSingleRepository".equals(property)) { //$NON-NLS-1$
 			IStructuredSelection selection = getStructuredSelection(collection);
@@ -114,6 +125,32 @@ public class SelectionPropertyTester extends PropertyTester {
 			return true;
 		}
 		return false;
+	}
+
+	private boolean resourceSelectionContainsMoreThanOneRepository(
+			Collection<?> collection, Object[] args) {
+		IStructuredSelection selection = getStructuredSelection(collection);
+		IResource[] resources = SelectionUtils.getSelectedResources(selection);
+		Set<Repository> repos = Stream.of(resources) //
+				.map(SelectionPropertyTester::getRepositoryOfMapping) //
+				.collect(Collectors.toSet());
+		return testMultipleRepositoryProperties(repos, args);
+	}
+
+	private boolean selectionContainsMoreThanOneRepository(
+			Collection<?> collection, Object[] args) {
+		IStructuredSelection selection = getStructuredSelection(collection);
+		Repository[] repos = SelectionUtils.getRepositories(selection);
+		return testMultipleRepositoryProperties(Arrays.asList(repos), args);
+	}
+
+	private boolean testMultipleRepositoryProperties(
+			Collection<Repository> repos, Object[] args) {
+		if (repos.size() < 2)
+			return false;
+
+		return repos.stream().allMatch(
+				r -> SelectionPropertyTester.testRepositoryProperties(r, args));
 	}
 
 	private static @NonNull IStructuredSelection getStructuredSelection(
