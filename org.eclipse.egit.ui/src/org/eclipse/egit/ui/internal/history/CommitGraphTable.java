@@ -125,6 +125,8 @@ class CommitGraphTable {
 
 	private static final String LINESEP = System.getProperty("line.separator"); //$NON-NLS-1$
 
+	private final Composite tableContainer;
+
 	private final TableViewer table;
 
 	private final CommitGraphTableLayout tableLayout;
@@ -176,7 +178,7 @@ class CommitGraphTable {
 		hFont = highlightFont();
 		tableLoader = loader;
 
-		Composite tableContainer = new Composite(parent, SWT.NONE);
+		tableContainer = new Composite(parent, SWT.NONE);
 		final Table rawTable = new Table(tableContainer,
 				SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER
 						| SWT.FULL_SELECTION | SWT.VIRTUAL);
@@ -317,7 +319,7 @@ class CommitGraphTable {
 		final IAction selectAll = ActionUtils.createGlobalAction(
 				ActionFactory.SELECT_ALL,
 				() -> getTableView().getTable().selectAll());
-		ActionUtils.setGlobalActions(getControl(), copy, selectAll);
+		ActionUtils.setGlobalActions(getTable(), copy, selectAll);
 
 		getTableView().addOpenListener(new IOpenListener() {
 			@Override
@@ -357,13 +359,17 @@ class CommitGraphTable {
 		menuMgr.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		menuMgr.add(new Separator());
 		menuMgr.add(copy);
-		Control c = getControl();
+		Control c = getTable();
 		menuMgr.addMenuListener(manager -> c.setFocus());
 		c.setMenu(menuMgr.createContextMenu(c));
 	}
 
 	Control getControl() {
-		return table.getControl();
+		return tableContainer;
+	}
+
+	Table getTable() {
+		return table.getTable();
 	}
 
 	void selectCommitStored(final RevCommit c) {
