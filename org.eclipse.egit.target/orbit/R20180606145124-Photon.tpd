@@ -1,7 +1,7 @@
 target "R20180606145124-Photon" with source configurePhase
 // see http://download.eclipse.org/tools/orbit/downloads/
 
-location "http://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository" {
+location "http://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository/" {
 	com.google.gson [2.8.2.v20180104-1110,2.8.2.v20180104-1110]
 	com.google.gson.source [2.8.2.v20180104-1110,2.8.2.v20180104-1110]
 	com.jcraft.jsch [0.1.54.v20170116-1932,0.1.54.v20170116-1932]
@@ -23,6 +23,8 @@ location "http://download.eclipse.org/tools/orbit/downloads/drops/R2018060614512
 	org.apache.commons.logging.source [1.1.1.v201101211721,1.1.1.v201101211721]
 	org.apache.httpcomponents.httpcore [4.4.6.v20170210-0925,4.4.6.v20170210-0925]
 	org.apache.httpcomponents.httpcore.source [4.4.6.v20170210-0925,4.4.6.v20170210-0925]
+	org.apache.httpcomponents.httpclient [4.5.2.v20180410-1551,4.5.2.v20180410-1551]
+	org.apache.httpcomponents.httpclient.source [4.5.2.v20180410-1551,4.5.2.v20180410-1551]
 	org.apache.log4j [1.2.15.v201012070815,1.2.15.v201012070815]
 	org.apache.log4j.source [1.2.15.v201012070815,1.2.15.v201012070815]
 	org.kohsuke.args4j [2.33.0.v20160323-2218,2.33.0.v20160323-2218]
@@ -52,10 +54,4 @@ location "http://download.eclipse.org/tools/orbit/downloads/drops/R2018060614512
 	org.tukaani.xz.source [1.6.0.v20170629-1752,1.6.0.v20170629-1752]
 	com.jcraft.jzlib [1.1.1.v201205102305,1.1.1.v201205102305]
 	com.jcraft.jzlib.source [1.1.1.v201205102305,1.1.1.v201205102305]
-}
-
-location "http://download.eclipse.org/tools/orbit/downloads/drops/R20170919201930/repository/" {
-	// platform uses this outdated version of httpclient in Photon
-	org.apache.httpcomponents.httpclient [4.5.2.v20170210-0925,4.5.2.v20170210-0925]
-	org.apache.httpcomponents.httpclient.source [4.5.2.v20170210-0925,4.5.2.v20170210-0925]
 }

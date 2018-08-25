@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="egit-4.6" sequenceNumber="1528375657">
+<target name="egit-4.6" sequenceNumber="1535218919">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.jetty.client" version="9.4.8.v20171121"/>
@@ -35,8 +35,11 @@
       <unit id="com.jcraft.jsch.source" version="0.1.54.v20170116-1932"/>
       <unit id="javaewah" version="1.1.6.v20160919-1400"/>
       <unit id="javaewah.source" version="1.1.6.v20160919-1400"/>
+      <unit id="javax.activation" version="1.1.0.v201211130549"/>
       <unit id="javax.servlet" version="3.1.0.v201410161800"/>
       <unit id="javax.servlet.source" version="3.1.0.v201410161800"/>
+      <unit id="javax.xml.bind" version="2.2.0.v201105210648"/>
+      <unit id="javax.xml.stream" version="1.0.1.v201004272200"/>
       <unit id="org.apache.ant" version="1.9.6.v201510161327"/>
       <unit id="org.apache.ant.source" version="1.9.6.v201510161327"/>
       <unit id="org.apache.commons.codec" version="1.9.0.v20170208-1614"/>
@@ -78,7 +81,7 @@
       <unit id="org.tukaani.xz.source" version="1.6.0.v20170629-1752"/>
       <unit id="com.jcraft.jzlib" version="1.1.1.v201205102305"/>
       <unit id="com.jcraft.jzlib.source" version="1.1.1.v201205102305"/>
-      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository"/>
+      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.sdk.ide" version="0.0.0"/>
