@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f0807a3_2689e2e0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-08-25T09:21:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfc2ca29_cc5fa3ab",
+      "revId": "e397e166ab608002004531efecc0fd4988c6eb4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbafb9a2_099e9476",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-08-14T22:26:03Z",
       "side": 1,
       "message": "style nit: move this line up before the Change-Id",
+      "revId": "e397e166ab608002004531efecc0fd4988c6eb4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1bc18e27_f0f50792",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-08-25T09:21:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbafb9a2_099e9476",
       "revId": "e397e166ab608002004531efecc0fd4988c6eb4b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
