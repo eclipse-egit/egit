@@ -1331,7 +1331,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		// Track which of our controls has the focus, so that we can focus the
 		// last focused one in setFocus().
 		focusTracker = new FocusTracker();
-		trackFocus(graph.getControl());
+		trackFocus(graph.getTable());
 		trackFocus(diffViewer.getControl());
 		trackFocus(commentViewer.getControl());
 		trackFocus(fileViewer.getControl());
