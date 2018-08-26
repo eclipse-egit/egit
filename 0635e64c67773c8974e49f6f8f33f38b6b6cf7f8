@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60f871f2_c2f9c417",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/internal/coretext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-08-26T13:02:14Z",
+      "side": 1,
+      "message": "Good point. I will fix this in a separate commit and reference it here, as it was not part of this change.",
+      "parentUuid": "0de8d85d_92d5ce00",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 67
+      },
+      "revId": "0635e64c67773c8974e49f6f8f33f38b6b6cf7f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e22bf2f_4b4b8c87",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/internal/coretext.properties",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "4a2af3ff_c8b300e7",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/internal/coretext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-08-26T13:02:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e22bf2f_4b4b8c87",
+      "revId": "0635e64c67773c8974e49f6f8f33f38b6b6cf7f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6d07adb_d493fa22",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/internal/coretext.properties",
         "patchSetId": 1
@@ -53,6 +95,30 @@
       "writtenOn": "2018-08-26T06:58:51Z",
       "side": 1,
       "message": "some (old and new) string use two single quotes around arguments like \u0027\u0027{0}\u0027\u0027, while most only use one. is this some intended quoting I\u0027m not aware of, or is it a mistake?",
+      "range": {
+        "startLine": 19,
+        "startChar": 61,
+        "endLine": 34,
+        "endChar": 74
+      },
+      "revId": "0635e64c67773c8974e49f6f8f33f38b6b6cf7f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "901bff5b_747ccbb0",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/internal/coretext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-08-26T13:02:14Z",
+      "side": 1,
+      "message": "My intention was to produce the same message as CLI Gitflow. In that, the new use of quotes seems correct.\nI see that there is an inconsistency, though. I will have look at that separately. Thanks for noting!",
+      "parentUuid": "c6d07adb_d493fa22",
       "range": {
         "startLine": 19,
         "startChar": 61,
