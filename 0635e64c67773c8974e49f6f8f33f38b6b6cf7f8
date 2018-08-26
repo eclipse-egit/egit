@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0de8d85d_92d5ce00",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/internal/coretext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-08-26T06:58:51Z",
+      "side": 1,
+      "message": "unrelated: \"notOnAFeatureBranch\" exists twice, but with a typo in the key in the abstract class",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 67
+      },
+      "revId": "0635e64c67773c8974e49f6f8f33f38b6b6cf7f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e22bf2f_4b4b8c87",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/internal/coretext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-08-26T06:58:51Z",
+      "side": 1,
+      "message": "missing dot at end",
+      "revId": "0635e64c67773c8974e49f6f8f33f38b6b6cf7f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6d07adb_d493fa22",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/internal/coretext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-08-26T06:58:51Z",
+      "side": 1,
+      "message": "some (old and new) string use two single quotes around arguments like \u0027\u0027{0}\u0027\u0027, while most only use one. is this some intended quoting I\u0027m not aware of, or is it a mistake?",
+      "range": {
+        "startLine": 19,
+        "startChar": 61,
+        "endLine": 34,
+        "endChar": 74
+      },
+      "revId": "0635e64c67773c8974e49f6f8f33f38b6b6cf7f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
