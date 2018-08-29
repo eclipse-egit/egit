@@ -140,8 +140,9 @@ public class RepositoryMappingTest extends GitTestCase {
 		String gitAbsolute = projectPath.uptoSegment(0)
 				.append(projectPath.segment(0) + "fake").append(".git")
 				.toPortableString();
-		String parents = "";
+		StringBuilder parentsBuffer = new StringBuilder("");
 		while (projectPath.segmentCount() > 2) {
+			final String parents = parentsBuffer.toString();
 			String pathString = projectPath.toOSString();
 			assertRepoMappingPath(proj, pathString, gitHereTest, parents);
 			assertRepoMappingPath(proj, pathString, gitTest, parents);
@@ -149,7 +150,7 @@ public class RepositoryMappingTest extends GitTestCase {
 			assertRepoMappingPath(proj, pathString, gitSubmoduleTest, parents);
 			assertRepoMappingPath(proj, pathString, gitAbsolute, "");
 			projectPath = projectPath.removeLastSegments(1);
-			parents += "../";
+			parentsBuffer.append("../");
 		}
 	}
 

@@ -45,8 +45,6 @@ public class LinkedResourcesTest {
 
 	TestUtils testUtils;
 
-	File project1Dir;
-
 	File project2Dir;
 
 	File otherFolder;
@@ -76,7 +74,6 @@ public class LinkedResourcesTest {
 		File rootDir = testUtils.createTempDir("FirstRepository");
 		project1 = testUtils.createProjectInLocalFileSystem(rootDir,
 				project1Name);
-		project1Dir = project1.getRawLocation().toFile();
 		otherFolder = new File(rootDir, "other_folder");
 		assertTrue(otherFolder.mkdirs());
 		File otherFile = new File(otherFolder, "otherFile.txt");
