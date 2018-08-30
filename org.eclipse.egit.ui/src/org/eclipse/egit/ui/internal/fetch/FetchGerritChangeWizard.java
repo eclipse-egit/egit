@@ -12,17 +12,17 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.fetch;
 
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Repository;
 
 /**
  * Wizard for fetching a Gerrit change
  */
 public class FetchGerritChangeWizard extends Wizard {
-	private final Repository repository;
+	private @NonNull Repository repository;
 
 	FetchGerritChangePage page;
 
@@ -32,8 +32,7 @@ public class FetchGerritChangeWizard extends Wizard {
 	 * @param repository
 	 *            the repository
 	 */
-	public FetchGerritChangeWizard(Repository repository) {
-		Assert.isNotNull(repository);
+	public FetchGerritChangeWizard(@NonNull Repository repository) {
 		this.repository = repository;
 		setNeedsProgressMonitor(true);
 		setHelpAvailable(false);
@@ -45,7 +44,8 @@ public class FetchGerritChangeWizard extends Wizard {
 	 * @param repository
 	 * @param refName initial value for the ref field
 	 */
-	public FetchGerritChangeWizard(Repository repository, String refName) {
+	public FetchGerritChangeWizard(@NonNull Repository repository,
+			String refName) {
 		this(repository);
 		this.refName = refName;
 	}
@@ -59,5 +59,20 @@ public class FetchGerritChangeWizard extends Wizard {
 	@Override
 	public boolean performFinish() {
 		return page.doFetch();
+	}
+
+	/**
+	 * @return Repository
+	 */
+	@NonNull
+	public Repository getRepository() {
+		return repository;
+	}
+
+	/**
+	 * @param repository
+	 */
+	public void setRepository(@NonNull Repository repository) {
+		this.repository = repository;
 	}
 }
