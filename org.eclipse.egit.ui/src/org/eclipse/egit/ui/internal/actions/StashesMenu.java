@@ -19,6 +19,7 @@ import java.util.List;
 import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
@@ -67,7 +68,8 @@ public class StashesMenu extends CompoundContributionItem implements
 
 	private static IContributionItem createStashChangesItem(
 			final Repository repository) {
-		Action action = new Action(UIText.StashesMenu_StashChangesActionText) {
+		Action action = new Action(UIText.StashesMenu_StashChangesActionText,
+				UIIcons.STASH_CREATE) {
 			@Override
 			public void run() {
 				StashCreateUI stashCreateUI = new StashCreateUI(repository);

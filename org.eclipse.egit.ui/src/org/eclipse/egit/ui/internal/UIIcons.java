@@ -286,6 +286,9 @@ public class UIIcons {
 	/** Stash apply icon */
 	public final static ImageDescriptor STASH_APPLY;
 
+	/** Stash apply icon */
+	public final static ImageDescriptor STASH_CREATE;
+
 	/** History view icon */
 	public final static ImageDescriptor HISTORY;
 
@@ -443,6 +446,7 @@ public class UIIcons {
 		CLEAN = map("obj16/clean_obj.png"); //$NON-NLS-1$
 		STASH = map("obj16/stash.png"); //$NON-NLS-1$
 		STASH_APPLY = map("obj16/stash-apply.png"); //$NON-NLS-1$
+		STASH_CREATE = map("obj16/stash-create.png"); //$NON-NLS-1$
 		HISTORY = map("obj16/history.png"); //$NON-NLS-1$
 		SEARCH_COMMIT = map("obj16/search-commit.png"); //$NON-NLS-1$
 		HIERARCHY = map("elcl16/hierarchicalLayout.png"); //$NON-NLS-1$
