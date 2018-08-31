@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42c02a44_50f8a2a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-08-31T15:41:42Z",
+      "side": 1,
+      "message": "I\u0027d reference this in the footer\n\nBug: 538414",
+      "revId": "3ad5dfb72bb83c77007646b1d1914f5b3d22b290",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
