@@ -18,7 +18,7 @@ import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.jgit.errors.MissingObjectException;
 
 /**
- * Abstract representation of all object that are included in Git ChangeSet
+ * Abstract representation of all objects that are included in Git ChangeSet
  * model.
  */
 public abstract class GitModelObject extends PlatformObject {
@@ -59,7 +59,7 @@ public abstract class GitModelObject extends PlatformObject {
 	public abstract int repositoryHashCode();
 
 	/**
-	 * @return child's of particular model object
+	 * @return children of particular model object
 	 */
 	public abstract GitModelObject[] getChildren();
 
