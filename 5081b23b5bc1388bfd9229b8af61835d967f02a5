@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40c58edd_8c1e9025",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/internal/coretext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-09-01T17:34:04Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 29,
+        "startChar": 29,
+        "endLine": 29,
+        "endChar": 35
+      },
+      "revId": "5081b23b5bc1388bfd9229b8af61835d967f02a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6cd55030_07fa3478",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/internal/coretext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-09-01T17:34:04Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 30,
+        "startChar": 36,
+        "endLine": 30,
+        "endChar": 42
+      },
+      "revId": "5081b23b5bc1388bfd9229b8af61835d967f02a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
