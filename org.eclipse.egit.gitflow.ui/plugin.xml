@@ -32,6 +32,16 @@
 								</test>
 							</not>
 						</with>
+						<and>
+							<count
+									value="1">
+							</count>
+							<iterate>
+								<instanceof
+										value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+								</instanceof>
+							</iterate>
+						</and>
 					</and>
 				</visibleWhen>
 			</command>
@@ -43,12 +53,41 @@
 					label="%TeamGitFlowMenu.name">
 				<visibleWhen
 						checkEnabled="false">
-					<with variable="org.eclipse.egit.ui.currentRepository">
-						<test
-								forcePluginActivation="true"
-								property="GitFlowRepository.isInitialized">
-						</test>
-					</with>
+					<and>
+						<with variable="org.eclipse.egit.ui.currentRepository">
+							<test
+									forcePluginActivation="true"
+									property="GitFlowRepository.isInitialized">
+							</test>
+						</with>
+						<and>
+							<count
+									value="1">
+							</count>
+							<iterate>
+								<or>
+									<instanceof
+										value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+									</instanceof>
+									<instanceof
+										value="org.eclipse.egit.ui.internal.repository.tree.BranchesNode">
+									</instanceof>
+									<instanceof
+										value="org.eclipse.egit.ui.internal.repository.tree.BranchHierarchyNode">
+									</instanceof>
+									<instanceof
+										value="org.eclipse.egit.ui.internal.repository.tree.LocalNode">
+									</instanceof>
+									<instanceof
+										value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+									</instanceof>
+									<instanceof
+										value="org.eclipse.egit.ui.internal.repository.tree.RemoteTrackingNode">
+									</instanceof>
+								</or>
+							</iterate>
+						</and>
+					</and>
 				</visibleWhen>
 				<command
 						commandId="org.eclipse.egit.gitflow.ui.command.featureStart"
