@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1ed3f298_31536349",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/internal/coretext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-09-01T15:33:39Z",
+      "side": 1,
+      "message": "See: https://git.eclipse.org/r/#/c/128491/",
+      "parentUuid": "60f871f2_c2f9c417",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 67
+      },
+      "revId": "0635e64c67773c8974e49f6f8f33f38b6b6cf7f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e22bf2f_4b4b8c87",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/internal/coretext.properties",
         "patchSetId": 1
@@ -119,6 +143,30 @@
       "side": 1,
       "message": "My intention was to produce the same message as CLI Gitflow. In that, the new use of quotes seems correct.\nI see that there is an inconsistency, though. I will have look at that separately. Thanks for noting!",
       "parentUuid": "c6d07adb_d493fa22",
+      "range": {
+        "startLine": 19,
+        "startChar": 61,
+        "endLine": 34,
+        "endChar": 74
+      },
+      "revId": "0635e64c67773c8974e49f6f8f33f38b6b6cf7f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ac3e85e_f74c73f6",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/internal/coretext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-09-01T15:33:39Z",
+      "side": 1,
+      "message": "See: https://git.eclipse.org/r/#/c/128491/",
+      "parentUuid": "901bff5b_747ccbb0",
       "range": {
         "startLine": 19,
         "startChar": 61,
