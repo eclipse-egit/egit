@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "674ce249_644ac513",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/LinkedResourcesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-09-01T22:17:35Z",
+      "side": 0,
+      "message": "why is an unused field a performance issue ? I think these are unrelated fixes",
+      "revId": "9b3ec079d2f01562dd1704e3214c7b186f7bec2d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
