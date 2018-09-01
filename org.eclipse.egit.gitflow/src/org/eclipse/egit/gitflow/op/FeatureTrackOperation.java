@@ -31,6 +31,7 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.transport.FetchResult;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * git flow feature track
@@ -84,7 +85,7 @@ public final class FeatureTrackOperation extends AbstractFeatureOperation {
 			operationResult = fetch(progress.newChild(1), timeout);
 
 			if (repository.hasBranch(newLocalBranch)) {
-				String errorMessage = String.format(
+				String errorMessage = NLS.bind(
 						CoreText.FeatureTrackOperation_localBranchExists,
 						newLocalBranch);
 				throw new CoreException(error(errorMessage));
@@ -99,7 +100,7 @@ public final class FeatureTrackOperation extends AbstractFeatureOperation {
 			branchOperation.execute(progress.newChild(1));
 			CheckoutResult result = branchOperation.getResult();
 			if (!Status.OK.equals(result.getStatus())) {
-				String errorMessage = String.format(
+				String errorMessage = NLS.bind(
 						CoreText.FeatureTrackOperation_checkoutReturned,
 						newLocalBranch, result.getStatus().name());
 				throw new CoreException(error(errorMessage));
