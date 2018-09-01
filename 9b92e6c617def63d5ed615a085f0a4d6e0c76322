@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "069db556_d605e3c9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ClipboardUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-09-01T23:42:48Z",
+      "side": 1,
+      "message": "style nit: unnecessary empty line",
+      "revId": "9b92e6c617def63d5ed615a085f0a4d6e0c76322",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
