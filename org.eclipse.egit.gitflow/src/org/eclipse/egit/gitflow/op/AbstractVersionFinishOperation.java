@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.egit.gitflow.op;
 
-import static java.lang.String.format;
 import static org.eclipse.egit.gitflow.Activator.error;
 
 import java.io.IOException;
@@ -24,6 +23,7 @@ import org.eclipse.egit.gitflow.internal.CoreText;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.TagBuilder;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * common logic for git flow * finish
@@ -64,7 +64,7 @@ abstract public class AbstractVersionFinishOperation extends GitFlowOperation {
 			if (commitForTag == null) {
 				createTag(monitor, head, tagName, tagMessage);
 			} else if (!head.equals(commitForTag)) {
-				throw new CoreException(error(format(
+				throw new CoreException(error(NLS.bind(
 						CoreText.AbstractVersionFinishOperation_tagNameExists,
 						versionName)));
 			}

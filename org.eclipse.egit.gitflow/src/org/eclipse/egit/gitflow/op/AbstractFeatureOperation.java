@@ -46,7 +46,7 @@ abstract public class AbstractFeatureOperation extends GitFlowOperation {
 		String currentBranch = repository.getRepository().getBranch();
 		if (currentBranch == null || !repository.isFeature()) {
 			throw new WrongGitFlowStateException(
-					CoreText.AbstractFeatureOperation_notOnAFeautreBranch);
+					CoreText.AbstractFeatureOperation_notOnAFeatureBranch);
 		}
 		return currentBranch.substring(repository.getConfig()
 				.getFeaturePrefix().length());

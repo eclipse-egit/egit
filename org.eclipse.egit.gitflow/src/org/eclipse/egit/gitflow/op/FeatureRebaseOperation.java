@@ -10,14 +10,13 @@
  *******************************************************************************/
 package org.eclipse.egit.gitflow.op;
 
+import static org.eclipse.egit.gitflow.Activator.error;
+
 import java.io.IOException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.op.RebaseOperation;
-
-import static org.eclipse.egit.gitflow.Activator.error;
-
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.WrongGitFlowStateException;
 import org.eclipse.egit.gitflow.internal.CoreText;
@@ -43,7 +42,7 @@ public final class FeatureRebaseOperation extends GitFlowOperation {
 		try {
 			if (!repository.isFeature()) {
 				throw new WrongGitFlowStateException(
-						CoreText.FeatureRebaseOperation_notOnAFeatureBranch);
+						CoreText.AbstractFeatureOperation_notOnAFeatureBranch);
 			}
 
 			Repository jgitRepo = repository.getRepository();
