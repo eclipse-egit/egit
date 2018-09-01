@@ -10,17 +10,14 @@
  *******************************************************************************/
 package org.eclipse.egit.gitflow.op;
 
-import java.io.IOException;
+import static org.eclipse.egit.gitflow.Activator.error;
+import static org.eclipse.jgit.lib.Constants.R_TAGS;
 
-import static java.lang.String.format;
+import java.io.IOException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
-
-import static org.eclipse.egit.gitflow.Activator.error;
-import static org.eclipse.jgit.lib.Constants.*;
-
 import org.eclipse.egit.gitflow.GitFlowConfig;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.egit.gitflow.WrongGitFlowStateException;
@@ -76,7 +73,7 @@ public final class ReleaseStartOperation extends AbstractReleaseOperation {
 		try {
 			if (releaseExists()) {
 				throw new CoreException(
-						error(format(
+						error(NLS.bind(
 								CoreText.ReleaseStartOperation_releaseNameAlreadyExists,
 								versionName)));
 			}
