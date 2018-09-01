@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.egit.gitflow.op;
 
-import static java.lang.String.format;
 import static org.eclipse.egit.gitflow.Activator.error;
 import static org.eclipse.jgit.api.MergeCommand.FastForwardMode.NO_FF;
 
@@ -43,6 +42,7 @@ import org.eclipse.jgit.revwalk.RevWalkUtils;
 import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.RemoteConfig;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * Common logic for Git Flow operations.
@@ -132,7 +132,7 @@ abstract public class GitFlowOperation implements IEGitOperation {
 
 			Ref branch = repository.findBranch(branchName);
 			if (branch == null) {
-				throw new IllegalStateException(String.format(
+				throw new IllegalStateException(NLS.bind(
 						CoreText.GitFlowOperation_branchMissing, branchName));
 			}
 			boolean forceDelete = squash;
@@ -173,7 +173,7 @@ abstract public class GitFlowOperation implements IEGitOperation {
 			String targetBranchName, boolean squash, boolean fastForwardSingleCommit) throws CoreException {
 		try {
 			if (!repository.hasBranch(targetBranchName)) {
-				throw new RuntimeException(String.format(
+				throw new RuntimeException(NLS.bind(
 						CoreText.GitFlowOperation_branchNotFound,
 						targetBranchName));
 			}
@@ -185,7 +185,7 @@ abstract public class GitFlowOperation implements IEGitOperation {
 			branchOperation.execute(progress.newChild(1));
 			Status status = branchOperation.getResult().getStatus();
 			if (!CheckoutResult.Status.OK.equals(status)) {
-				throw new CoreException(error(format(
+				throw new CoreException(error(NLS.bind(
 						CoreText.GitFlowOperation_unableToCheckout, branchName,
 						status.toString())));
 			}
@@ -202,7 +202,7 @@ abstract public class GitFlowOperation implements IEGitOperation {
 
 			MergeResult result = mergeOperation.getResult();
 			if (result == null) {
-				throw new CoreException(error(format(
+				throw new CoreException(error(NLS.bind(
 						CoreText.GitFlowOperation_unableToMerge, branchName,
 						targetBranchName)));
 			}
