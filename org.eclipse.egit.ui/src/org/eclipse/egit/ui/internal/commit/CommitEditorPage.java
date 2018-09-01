@@ -736,4 +736,11 @@ public class CommitEditorPage extends FormPage
 		}
 		return null;
 	}
+
+	@Override
+	public void setFocus() {
+		if (diffViewer != null) {
+			diffViewer.getControl().setFocus();
+		}
+	}
 }

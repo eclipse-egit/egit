@@ -566,4 +566,13 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 		}
 		return null;
 	}
+
+	@Override
+	public void setFocus() {
+		// super class sets focus to form header
+		IFormPage currentPage = getActivePageInstance();
+		if (currentPage != null) {
+			currentPage.setFocus();
+		}
+	}
 }
