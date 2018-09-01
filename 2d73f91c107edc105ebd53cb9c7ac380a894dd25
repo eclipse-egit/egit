@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b3642a6_00c61a2b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-09-01T23:11:35Z",
+      "side": 1,
+      "message": "Why is this a problem ? The commit ID needs to be selectable so that it can be copied to the clipboard.",
+      "revId": "2d73f91c107edc105ebd53cb9c7ac380a894dd25",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
