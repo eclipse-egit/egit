@@ -16,6 +16,24 @@
       "revId": "9b3ec079d2f01562dd1704e3214c7b186f7bec2d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d25c2e2a_b9674460",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/LinkedResourcesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-09-02T05:25:53Z",
+      "side": 0,
+      "message": "Findbugs/Spotbugs have issue codes and issue categories. These changes are all from the performance category: https://ci.eclipse.org/egit/job/egit/4847/findbugsResult/category.672572432/\n\nBut I admit it probably makes reviewing more easy by really splitting changes by issue code, and not to have multiple issue codes of the same category in a single change.",
+      "parentUuid": "674ce249_644ac513",
+      "revId": "9b3ec079d2f01562dd1704e3214c7b186f7bec2d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
