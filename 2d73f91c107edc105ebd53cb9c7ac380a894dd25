@@ -16,6 +16,24 @@
       "revId": "2d73f91c107edc105ebd53cb9c7ac380a894dd25",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6a855e8_e2d644cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-09-02T05:26:11Z",
+      "side": 1,
+      "message": "It remains selectable. It is just not the _default_ widget anymore, that has the focus directly after opening the editor.\n\nI find it very annoying to see a blinking cursor in a widget that does not accept textual input.",
+      "parentUuid": "7b3642a6_00c61a2b",
+      "revId": "2d73f91c107edc105ebd53cb9c7ac380a894dd25",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
