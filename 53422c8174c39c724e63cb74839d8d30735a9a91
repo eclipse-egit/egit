@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd637d78_f8f3b5c6",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/internal/coretext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-09-03T22:55:06Z",
+      "side": 1,
+      "message": "also use double single quotes to quote parameters here ?\nok, you did that in the follow-up change https://git.eclipse.org/r/#/c/128491/2/org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/internal/coretext.properties",
+      "revId": "53422c8174c39c724e63cb74839d8d30735a9a91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
