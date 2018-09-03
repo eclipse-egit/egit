@@ -16,6 +16,24 @@
       "revId": "53422c8174c39c724e63cb74839d8d30735a9a91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af3a2eb1_a182d199",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/internal/coretext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-09-03T23:04:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd637d78_f8f3b5c6",
+      "revId": "53422c8174c39c724e63cb74839d8d30735a9a91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
