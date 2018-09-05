@@ -16,17 +16,12 @@ package org.eclipse.egit.ui.internal.commit;
 import java.lang.reflect.Field;
 
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.ClipboardUtils;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.TextViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTError;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.dnd.Clipboard;
-import org.eclipse.swt.dnd.DND;
-import org.eclipse.swt.dnd.TextTransfer;
-import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.FocusAdapter;
@@ -149,7 +144,7 @@ public class HeaderText {
 		copySHA1MenuItem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
-				copyToClipboard(sha1String, shell);
+				ClipboardUtils.copySha1ToClipboard(sha1String, shell);
 			}
 		});
 
@@ -170,22 +165,6 @@ public class HeaderText {
 		});
 
 		styledText.setMenu(menu);
-	}
-
-	private static void copyToClipboard(String str, Shell shell) {
-		Clipboard clipboard= new Clipboard(shell.getDisplay());
-		try {
-			clipboard.setContents(new String[] { str },	new Transfer[] { TextTransfer.getInstance() });
-		} catch (SWTError ex) {
-			if (ex.code != DND.ERROR_CANNOT_SET_CLIPBOARD)
-				throw ex;
-			String title= UIText.Header_copy_SHA1_error_title;
-			String message= UIText.Header_copy_SHA1_error_message;
-			if (MessageDialog.openQuestion(shell, title, message))
-				copyToClipboard(str, shell);
-		} finally {
-			clipboard.dispose();
-		}
 	}
 
 	/**

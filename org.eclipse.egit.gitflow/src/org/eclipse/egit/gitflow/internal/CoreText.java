@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2015, Max Hohenegger <eclipse@hohenegger.eu>
+ * Copyright (C) 2018, Max Hohenegger <eclipse@hohenegger.eu>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -31,7 +31,7 @@ public class CoreText extends NLS {
 	}
 
 	/** */
-	public static String AbstractFeatureOperation_notOnAFeautreBranch;
+	public static String AbstractFeatureOperation_notOnAFeatureBranch;
 
 	/** */
 	public static String AbstractHotfixOperation_notOnAHotfixBranch;
@@ -52,10 +52,13 @@ public class CoreText extends NLS {
 	public static String unableToStoreGitConfig;
 
 	/** */
-	public static String FeatureRebaseOperation_notOnAFeatureBranch;
+	public static String FeatureStartOperation_andBranchMayBeFastForwarded;
 
 	/** */
-	public static String FeatureStartOperation_notOn;
+	public static String FeatureStartOperation_andLocalDevelopIsAheadOfOrigin;
+
+	/** */
+	public static String FeatureStartOperation_divergingDevelop;
 
 	/** */
 	public static String FeatureTrackOperation_checkoutReturned;
@@ -85,9 +88,6 @@ public class CoreText extends NLS {
 	public static String HotfixFinishOperation_hotfix;
 
 	/** */
-	public static String HotfixFinishOperation_mergeFromHotfixToMasterFailed;
-
-	/** */
 	public static String InitOperation_initialCommit;
 
 	/** */
@@ -95,9 +95,6 @@ public class CoreText extends NLS {
 
 	/** */
 	public static String ReleaseFinishOperation_releaseOf;
-
-	/** */
-	public static String ReleaseStartOperation_notOn;
 
 	/** */
 	public static String ReleaseStartOperation_releaseNameAlreadyExists;

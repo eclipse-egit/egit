@@ -97,6 +97,9 @@ public class GitModelCache extends GitModelObjectContainer {
 
 	@Override
 	public GitModelObject[] getChildren() {
+		if (children == null) {
+			return new GitModelObject[0];
+		}
 		return children;
 	}
 

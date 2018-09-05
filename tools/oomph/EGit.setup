@@ -70,7 +70,7 @@
     <repository
         url="http://download.eclipse.org/technology/swtbot/releases/latest"/>
     <repository
-        url="http://mbarbero.github.io/fr.obeo.releng.targetplatform/p2/latest/"/>
+        url="https://dl.bintray.com/mbarbero/fr.obeo.releng.targetplatform/latest"/>
     <repository
         url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/latest/"/>
     <repository

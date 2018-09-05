@@ -3568,14 +3568,17 @@
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.internal.reflogview.popup">
          <command
+               commandId="org.eclipse.egit.ui.internal.reflog.OpenInCommitViewerCommand"
+               label="%RefLogViewOpenInCommitViewer.label"
+               style="push">
+         </command>
+         <separator
+               name="##Checkout" visible="true">
+         </separator>
+         <command
                commandId="org.eclipse.egit.ui.internal.reflog.CheckoutCommand"
                icon="icons/obj16/checkout.png"
                label="%RefLogViewCheckout.label"
-               style="push">
-         </command>
-         <command
-               commandId="org.eclipse.egit.ui.internal.reflog.OpenInCommitViewerCommand"
-               label="%RefLogViewOpenInCommitViewer.label"
                style="push">
          </command>
          <command

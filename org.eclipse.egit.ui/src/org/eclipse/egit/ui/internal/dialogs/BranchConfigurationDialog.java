@@ -17,10 +17,12 @@ package org.eclipse.egit.ui.internal.dialogs;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.BranchRebaseModeCombo;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -163,8 +165,9 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 	}
 
 	private void addBranchItemsForLocal() throws IOException {
-		Collection<Ref> localRefs = myRepository.getRefDatabase()
-				.getRefsByPrefix(Constants.R_HEADS);
+		List<Ref> localRefs = new ArrayList<>(myRepository.getRefDatabase()
+				.getRefsByPrefix(Constants.R_HEADS));
+		Collections.sort(localRefs, CommonUtils.REF_ASCENDING_COMPARATOR);
 		for (Ref ref : localRefs)
 			branchText.add(ref.getName());
 	}
@@ -177,8 +180,9 @@ public class BranchConfigurationDialog extends TitleAreaDialog {
 			return;
 		}
 
-		Collection<Ref> allRefs = myRepository.getRefDatabase()
-				.getRefsByPrefix(Constants.R_REFS);
+		List<Ref> allRefs = new ArrayList<>(myRepository.getRefDatabase()
+				.getRefsByPrefix(Constants.R_REFS));
+		Collections.sort(allRefs, CommonUtils.REF_ASCENDING_COMPARATOR);
 		for (Ref ref : allRefs) {
 			for (RefSpec fetchSpec : fetchSpecs) {
 				// Fetch specs map remote ref names (source) to local ref names

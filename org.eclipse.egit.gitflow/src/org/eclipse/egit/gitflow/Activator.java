@@ -81,4 +81,15 @@ public class Activator extends Plugin {
 	public static String getPluginId() {
 		return getDefault().getBundle().getSymbolicName();
 	}
+
+	/**
+	 * Log an info message for this plug-in
+	 *
+	 * @param message
+	 * @since 5.1
+	 */
+	public static void logInfo(final String message) {
+		getDefault().getLog()
+				.log(new Status(IStatus.INFO, getPluginId(), 0, message, null));
+	}
 }
