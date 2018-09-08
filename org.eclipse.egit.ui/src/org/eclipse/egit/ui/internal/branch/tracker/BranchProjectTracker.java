@@ -10,7 +10,7 @@
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
  *****************************************************************************/
-package org.eclipse.egit.ui.internal.branch;
+package org.eclipse.egit.ui.internal.branch.tracker;
 
 import java.io.File;
 import java.io.IOException;
