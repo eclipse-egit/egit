@@ -78,6 +78,16 @@ public abstract class GitUrlChecker {
 			sanitized = sanitized.substring(GIT_CLONE_COMMAND_PREFIX.length())
 					.trim();
 		}
+		// For file URLs, take everything up to the first vertical space
+		try {
+			URIish uri = new URIish(sanitized);
+			if (Protocol.FILE.handles(uri)) {
+				return sanitized.split("\\v", 2)[0]; //$NON-NLS-1$
+			}
+		} catch (URISyntaxException e) {
+			// Ignore here; error will be reported later where this method is
+			// used.
+		}
 		// Take only the part up to the first whitespace character
 		return sanitized.split("[\\h|\\v]", 2)[0]; //$NON-NLS-1$
 	}

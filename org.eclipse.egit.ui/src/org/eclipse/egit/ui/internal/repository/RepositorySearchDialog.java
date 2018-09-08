@@ -52,7 +52,6 @@ import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.IColorProvider;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -377,12 +376,6 @@ public class RepositorySearchDialog extends WizardPage {
 			public void checkStateChanged(CheckStateChangedEvent event) {
 				enableOk();
 			}
-		});
-		fTreeViewer.addDoubleClickListener(event -> {
-			Object element = ((IStructuredSelection) event.getSelection())
-					.getFirstElement();
-			fTreeViewer.setChecked(element, !fTreeViewer.getChecked(element));
-			enableOk();
 		});
 
 		// Set a reasonable minimum height here; otherwise the dialog comes up
