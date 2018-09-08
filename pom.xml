@@ -493,6 +493,7 @@
             <targetJdk>1.8</targetJdk>
             <format>xml</format>
             <failOnViolation>false</failOnViolation>
+            <linkXref>false</linkXref>
           </configuration>
           <executions>
             <execution>
