@@ -10,7 +10,7 @@
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
  *****************************************************************************/
-package org.eclipse.egit.ui.internal.branch;
+package org.eclipse.egit.ui.internal.branch.tracker;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;

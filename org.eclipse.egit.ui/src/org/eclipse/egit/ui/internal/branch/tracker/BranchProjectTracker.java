@@ -10,7 +10,7 @@
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
  *****************************************************************************/
-package org.eclipse.egit.ui.internal.branch;
+package org.eclipse.egit.ui.internal.branch.tracker;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,7 +58,7 @@ import org.eclipse.ui.XMLMemento;
  * newly checked out branch
  *
  */
-class BranchProjectTracker {
+public class BranchProjectTracker {
 
 	private static final String PREFIX = "BranchProjectTracker_"; //$NON-NLS-1$
 
