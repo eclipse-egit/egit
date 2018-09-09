@@ -18,6 +18,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -49,17 +51,20 @@ public class BranchProjectTrackerTest extends LocalRepositoryTestCase {
 		repository = Activator.getDefault().getRepositoryCache()
 				.lookupRepository(repoFile);
 		assertNotNull(repository);
-		BranchProjectTracker tracker = new BranchProjectTracker(repository);
 		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
-				.setValue(tracker.getPreference(Constants.MASTER), "");
+				.setValue(getPreferenceKey(Constants.MASTER), "");
 		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
-				.setValue(tracker.getPreference(BRANCH), "");
+				.setValue(getPreferenceKey(BRANCH), "");
+	}
+
+	private String getPreferenceKey(String branch) {
+		return ProjectTrackerPreferenceHelper.getPreferenceKey(repository,
+				branch);
 	}
 
 	@Test
 	public void twoProjectsWithOnlyOneOnBranch() throws Exception {
-		BranchProjectTracker tracker = new BranchProjectTracker(repository);
-		String[] paths = tracker.getProjectPaths();
+		String[] paths = getProjectPaths();
 		assertNotNull(paths);
 		assertEquals(0, paths.length);
 		assertNotNull(Git.wrap(repository).branchCreate().setName(BRANCH)
@@ -67,7 +72,7 @@ public class BranchProjectTrackerTest extends LocalRepositoryTestCase {
 		BranchOperationUI.checkout(repository, BRANCH).start();
 		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 
-		paths = tracker.getProjectPaths(Constants.MASTER);
+		paths = getProjectPaths(Constants.MASTER);
 		assertNotNull(paths);
 		assertEquals(2, paths.length);
 
@@ -85,7 +90,7 @@ public class BranchProjectTrackerTest extends LocalRepositoryTestCase {
 		BranchOperationUI.checkout(repository, Constants.MASTER).start();
 		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 
-		paths = tracker.getProjectPaths(BRANCH);
+		paths = getProjectPaths(BRANCH);
 		assertNotNull(paths);
 		assertEquals(1, paths.length);
 
@@ -107,5 +112,20 @@ public class BranchProjectTrackerTest extends LocalRepositoryTestCase {
 		assertTrue(project1.isOpen());
 		assertTrue(project2.exists());
 		assertTrue(project2.isOpen());
+	}
+
+	private String[] getProjectPaths() {
+		try {
+			String branch = repository.getBranch();
+			return getProjectPaths(branch);
+		} catch (IOException e) {
+			return new String[0];
+		}
+	}
+
+	private String[] getProjectPaths(String branch) {
+		List<String> value = ProjectTrackerPreferenceHelper
+				.restoreFromPreferences(repository, branch);
+		return value.toArray(new String[0]);
 	}
 }
