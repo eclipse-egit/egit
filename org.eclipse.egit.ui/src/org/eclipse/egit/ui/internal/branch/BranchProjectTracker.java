@@ -14,10 +14,9 @@ package org.eclipse.egit.ui.internal.branch;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,11 +31,9 @@ import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.clone.ProjectRecord;
 import org.eclipse.egit.ui.internal.clone.ProjectUtils;
-import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.ui.IMemento;
-import org.eclipse.ui.WorkbenchException;
-import org.eclipse.ui.XMLMemento;
+import org.eclipse.jgit.util.StringUtils;
 
 /**
  * Class to track which projects are imported for each branch.
@@ -51,22 +48,14 @@ import org.eclipse.ui.XMLMemento;
  * 1. Call {@link #snapshot()} to get the current projects for the currently
  * checked out branch
  * <p>
- * 2. Call {@link #save(IMemento)} after the new branch has been successfully
- * checked out with the memento returned from step 1
+ * 2. Call {@link #save(ProjectTrackerMemento)} after the new branch has been
+ * successfully checked out with the memento returned from step 1
  * <p>
  * 3. Call {@link #restore(IProgressMonitor)} to restore the projects for the
  * newly checked out branch
  *
  */
 class BranchProjectTracker {
-
-	private static final String PREFIX = "BranchProjectTracker_"; //$NON-NLS-1$
-
-	private static final String KEY_PROJECTS = "projects"; //$NON-NLS-1$
-
-	private static final String KEY_PROJECT = "project"; //$NON-NLS-1$
-
-	private static final String KEY_BRANCH = "branch"; //$NON-NLS-1$
 
 	private static final String REPO_ROOT = "/"; //$NON-NLS-1$
 
@@ -90,44 +79,51 @@ class BranchProjectTracker {
 	}
 
 	/**
-	 * Get preference key for branch. This will be unique to the repository and
-	 * branch.
-	 *
-	 * @param branch
-	 * @return key
-	 */
-	public String getPreference(final String branch) {
-		if (branch == null)
-			throw new IllegalArgumentException("Branch cannot be null"); //$NON-NLS-1$
-		if (branch.length() == 0)
-			throw new IllegalArgumentException("Branch cannot be empty"); //$NON-NLS-1$
-
-		return PREFIX + '_' + repository.getDirectory().getAbsolutePath() + '_'
-				+ branch;
-	}
-
-	/**
 	 * Snapshot the projects currently associated with the repository
 	 * <p>
-	 * The memento returned can be later passed to {@link #save(IMemento)} to
-	 * persist it
+	 * The memento returned can be later passed to
+	 * {@link #save(ProjectTrackerMemento)} to persist it
 	 *
-	 * @see #save(IMemento)
-	 * @return memento, will be null on failures
+	 * @see #save(ProjectTrackerMemento)
+	 * @return memento
 	 */
-	public IMemento snapshot() {
+	public ProjectTrackerMemento snapshot() {
+
+		ProjectTrackerMemento memento = new ProjectTrackerMemento();
+
+		ProjectTrackerPreferenceSnapshot snapshot = takeSnapshot();
+		if (snapshot != null) {
+			memento.addSnapshot(snapshot);
+		}
+
+		return memento;
+	}
+
+	private ProjectTrackerPreferenceSnapshot takeSnapshot() {
+
 		String branch = getBranch();
-		if (branch == null)
+		if (StringUtils.isEmptyOrNull(branch))
 			return null;
 
-		IProject[] projects;
-		try {
-			projects = ProjectUtil.getValidOpenProjects(repository);
-		} catch (CoreException e) {
+		List<String> projectPaths = getAssociatedProjectsPaths();
+		if (projectPaths.isEmpty()) {
 			return null;
 		}
-		XMLMemento memento = XMLMemento.createWriteRoot(KEY_PROJECTS);
-		memento.putString(KEY_BRANCH, branch);
+
+		return new ProjectTrackerPreferenceSnapshot(repository, branch,
+				projectPaths);
+	}
+
+	@NonNull
+	private List<String> getAssociatedProjectsPaths() {
+
+		IProject[] projects = getValidOpenProjects();
+		if (projects == null) {
+			return Collections.emptyList();
+		}
+
+		List<String> projectPaths = new ArrayList<>();
+
 		final String workDir = repository.getWorkTree().getAbsolutePath();
 		for (IProject project : projects) {
 			IPath path = project.getLocation();
@@ -144,11 +140,18 @@ class BranchProjectTracker {
 				if (relative.length() == 0) {
 					relative = REPO_ROOT;
 				}
-				IMemento child = memento.createChild(KEY_PROJECT);
-				child.putTextData(relative);
+				projectPaths.add(relative);
 			}
 		}
-		return memento;
+		return projectPaths;
+	}
+
+	private IProject[] getValidOpenProjects() {
+		try {
+			return ProjectUtil.getValidOpenProjects(repository);
+		} catch (CoreException e) {
+			return null;
+		}
 	}
 
 	/**
@@ -156,69 +159,23 @@ class BranchProjectTracker {
 	 * previously returned from a call to {@link #snapshot()}.
 	 *
 	 * @see #snapshot()
-	 * @param memento
+	 * @param snapshot
 	 * @return this tracker
 	 */
-	public BranchProjectTracker save(final IMemento memento) {
-		if (!(memento instanceof XMLMemento))
-			throw new IllegalArgumentException("Invalid memento"); //$NON-NLS-1$
+	public BranchProjectTracker save(ProjectTrackerMemento snapshot) {
 
-		String branch = memento.getString(KEY_BRANCH);
-		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
-		String pref = getPreference(branch);
-		StringWriter writer = new StringWriter();
-		try {
-			((XMLMemento) memento).save(writer);
-			store.setValue(pref, writer.toString());
-		} catch (IOException e) {
-			Activator.logError("Error writing branch-project associations", e); //$NON-NLS-1$
-		}
+		snapshot.getSnapshots().stream()
+				.forEach(BranchProjectTracker::savePreference);
 		return this;
 	}
 
-	/**
-	 * Load the project paths associated with the currently checked out branch.
-	 * These paths will be relative to the repository root.
-	 *
-	 * @return non-null but possibly empty array of projects
-	 */
-	public String[] getProjectPaths() {
-		String branch = getBranch();
-		if (branch == null)
-			return new String[0];
-		return getProjectPaths(branch);
-	}
+	private static void savePreference(ProjectTrackerPreferenceSnapshot snapshot) {
 
-	/**
-	 * Load the project paths associated with the given branch. These paths will
-	 * be relative to the repository root.
-	 *
-	 * @param branch
-	 * @return non-null but possibly empty array of projects
-	 */
-	public String[] getProjectPaths(final String branch) {
-		String pref = getPreference(branch);
-		String value = Activator.getDefault().getPreferenceStore()
-				.getString(pref);
-		if (value.length() == 0)
-			return new String[0];
-		XMLMemento memento;
-		try {
-			memento = XMLMemento.createReadRoot(new StringReader(value));
-		} catch (WorkbenchException e) {
-			Activator.logError("Error reading branch-project associations", e); //$NON-NLS-1$
-			return new String[0];
-		}
-		IMemento[] children = memento.getChildren(KEY_PROJECT);
-		if (children.length == 0)
-			return new String[0];
-		List<String> projects = new ArrayList<>(children.length);
-		for (int i = 0; i < children.length; i++) {
-			String path = children[i].getTextData();
-			if (path != null && path.length() > 0)
-				projects.add(path);
-		}
-		return projects.toArray(new String[0]);
+		Repository repo = snapshot.getRepository();
+		String branch = snapshot.getBranch();
+		List<String> projects = snapshot.getAssociatedProjects();
+		ProjectTrackerPreferenceHelper.saveToPreferences(repo, branch,
+				projects);
 	}
 
 	/**
@@ -229,8 +186,9 @@ class BranchProjectTracker {
 	 */
 	public void restore(final IProgressMonitor monitor) {
 		String branch = getBranch();
-		if (branch != null)
+		if (branch != null) {
 			restore(branch, monitor);
+		}
 	}
 
 	/**
@@ -240,8 +198,9 @@ class BranchProjectTracker {
 	 * @param monitor
 	 */
 	public void restore(final String branch, final IProgressMonitor monitor) {
-		String[] paths = getProjectPaths(branch);
-		if (paths.length == 0)
+		List<String> paths = ProjectTrackerPreferenceHelper
+				.restoreFromPreferences(repository, branch);
+		if (paths.size() == 0)
 			return;
 
 		Set<ProjectRecord> records = new LinkedHashSet<>();
