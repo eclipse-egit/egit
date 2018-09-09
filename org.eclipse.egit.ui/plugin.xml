@@ -3704,40 +3704,6 @@
                visible="true">
          </separator>
          <command
-               commandId="org.eclipse.egit.ui.team.Merge"
-               icon="icons/obj16/merge.png"
-               label="%RepoViewMergeSimple.label"
-               style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <and>
-                        <or>
-                           <instanceof
-                                 value="org.eclipse.egit.ui.internal.repository.tree.TagNode">
-                           </instanceof>
-                           <instanceof
-                                 value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
-                           </instanceof>
-                        </or>
-                        <test
-                              property="GitRepository.canMerge">
-                        </test>
-                        <not>
-                           <test
-                                 property="GitRepository.isRefCheckedOut">
-                           </test>
-                        </not>
-                     </and>
-                  </iterate>
-               </and>
-            </visibleWhen>
-         </command>
-         <command
                commandId="org.eclipse.ui.edit.delete"
                label="%DeleteTagCommand.name"
                style="push">
@@ -3751,36 +3717,6 @@
                      <instanceof
                            value="org.eclipse.egit.ui.internal.repository.tree.TagNode">
                      </instanceof>
-                  </iterate>
-               </and>
-            </visibleWhen>
-         </command>
-         <command
-               commandId="org.eclipse.egit.ui.team.Rebase"
-               label="%RebaseCommand.label"
-               style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <and>
-                        <test
-                              property="GitRepository.canMerge">
-                        </test>
-                        <and>
-                           <instanceof
-                                 value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
-                           </instanceof>
-                           <not>
-                              <test
-                                    property="GitRepository.isRefCheckedOut">
-                              </test>
-                           </not>
-                        </and>
-                     </and>
                   </iterate>
                </and>
             </visibleWhen>
@@ -4452,6 +4388,40 @@
          <command
                commandId="org.eclipse.egit.ui.team.Merge"
                icon="icons/obj16/merge.png"
+               label="%RepoViewMergeSimple.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <and>
+                        <or>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.TagNode">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+                           </instanceof>
+                        </or>
+                        <test
+                              property="GitRepository.canMerge">
+                        </test>
+                        <not>
+                           <test
+                                 property="GitRepository.isRefCheckedOut">
+                           </test>
+                        </not>
+                     </and>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.team.Merge"
+               icon="icons/obj16/merge.png"
                label="%RepoViewMerge.label"
                style="push">
             <visibleWhen
@@ -4478,6 +4448,36 @@
                               </test>
                            </and>
                         </or>
+                     </and>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.team.Rebase"
+               label="%RebaseCommand.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <and>
+                        <test
+                              property="GitRepository.canMerge">
+                        </test>
+                        <and>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+                           </instanceof>
+                           <not>
+                              <test
+                                    property="GitRepository.isRefCheckedOut">
+                              </test>
+                           </not>
+                        </and>
                      </and>
                   </iterate>
                </and>
