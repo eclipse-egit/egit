@@ -5,7 +5,7 @@ Bundle-Vendor: Eclipse.org
 Automatic-Module-Name: org.eclipse.egit.ui.test
 Bundle-SymbolicName: org.eclipse.egit.ui.test;singleton:=true
 Fragment-Host: org.eclipse.egit.ui
-Bundle-Version: 5.0.3.qualifier
+Bundle-Version: 5.0.3.201809091024-r
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.apache.log4j;bundle-version="[1.0.0,2.0.0)",
