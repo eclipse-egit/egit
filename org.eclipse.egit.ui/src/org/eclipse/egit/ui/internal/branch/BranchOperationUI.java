@@ -35,6 +35,7 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.branch.tracker.BranchProjectTracker;
+import org.eclipse.egit.ui.internal.branch.tracker.ProjectTrackerMemento;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.NonDeletedFilesDialog;
 import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
@@ -50,7 +51,6 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IMemento;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -142,7 +142,7 @@ public class BranchOperationUI {
 		} else {
 			final BranchProjectTracker tracker = new BranchProjectTracker(
 					repository);
-			IMemento snapshot = tracker.snapshot();
+			ProjectTrackerMemento snapshot = tracker.snapshot();
 			bop.execute(progress.newChild(7));
 			tracker.save(snapshot);
 			IWorkspaceRunnable action = new IWorkspaceRunnable() {
