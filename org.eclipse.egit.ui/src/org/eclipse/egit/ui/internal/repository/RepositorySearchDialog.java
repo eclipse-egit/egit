@@ -20,6 +20,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
@@ -603,7 +604,15 @@ public class RepositorySearchDialog extends WizardPage {
 		// perform the search...
 		final Set<Path> directories = new TreeSet<>(
 				CommonUtils.PATH_STRING_COMPARATOR);
-		final Path file = Paths.get(dir.getText());
+		Path file;
+		try {
+			file = Paths.get(dir.getText());
+		} catch (InvalidPathException e) {
+			setErrorMessage(MessageFormat.format(
+					UIText.RepositorySearchDialog_DirectoryNotFoundMessage,
+					dir.getText()));
+			return;
+		}
 		final boolean lookForNested = lookForNestedButton.getSelection();
 		final boolean skipHidden = skipHiddenButton.getSelection();
 		if (!Files.exists(file)) {
