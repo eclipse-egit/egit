@@ -35,6 +35,7 @@ import java.util.stream.Stream;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
@@ -653,7 +654,11 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 				if (project.isAccessible()) {
 					IPath path = project.getLocation();
 					if (path != null) {
-						result.put(path, project);
+						IPath projectFilePath = path.append(
+								IProjectDescription.DESCRIPTION_FILE_NAME);
+						if (projectFilePath.toFile().exists()) {
+							result.put(path, project);
+						}
 					}
 				}
 			}
