@@ -22,6 +22,30 @@
       "revId": "cee8183a00701aa8cc07d4cf226d2c31b2870f20",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aec42900_ab946545",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-10T18:43:02Z",
+      "side": 1,
+      "message": "super() would not create a GitSyncInfo. I think its better to return null. But this synchronize framework is obtuse, and I\u0027m not 100% sure why we even get NPEs here. Which is why this fix is on master and not on stable-5.1: I want more time to have people beta-test it via Egit nightly.",
+      "parentUuid": "dc3437f6_466b8bd9",
+      "range": {
+        "startLine": 585,
+        "startChar": 65,
+        "endLine": 585,
+        "endChar": 69
+      },
+      "revId": "cee8183a00701aa8cc07d4cf226d2c31b2870f20",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
