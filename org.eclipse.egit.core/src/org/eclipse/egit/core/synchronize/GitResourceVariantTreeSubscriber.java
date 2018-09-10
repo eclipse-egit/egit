@@ -127,7 +127,13 @@ public class GitResourceVariantTreeSubscriber extends
 			return new IResource[0];
 		}
 		GitSynchronizeData gsd = gsds.getData(res.getProject());
+		if (gsd == null) {
+			return new IResource[0];
+		}
 		Repository repo = gsd.getRepository();
+		if (repo == null) {
+			return new IResource[0];
+		}
 		GitSyncObjectCache repoCache = cache.get(repo);
 
 		Collection<IResource> allMembers = new ArrayList<>();
@@ -198,7 +204,7 @@ public class GitResourceVariantTreeSubscriber extends
 		}
 
 		// not refreshing the workspace, locate and collect target resources
-		Map<GitSynchronizeData, Collection<String>> updateRequests = new HashMap<GitSynchronizeData, Collection<String>>();
+		Map<GitSynchronizeData, Collection<String>> updateRequests = new HashMap<>();
 		for (IResource resource : resources) {
 			IProject project = resource.getProject();
 			GitSynchronizeData data = gsds.getData(project.getName());
@@ -209,7 +215,7 @@ public class GitResourceVariantTreeSubscriber extends
 				if (mapping != null) {
 					Collection<String> paths = updateRequests.get(data);
 					if (paths == null) {
-						paths = new ArrayList<String>();
+						paths = new ArrayList<>();
 						updateRequests.put(data, paths);
 					}
 
@@ -574,9 +580,9 @@ public class GitResourceVariantTreeSubscriber extends
 	@Override
 	protected SyncInfo getSyncInfo(IResource local, IResourceVariant base,
 			IResourceVariant remote) throws TeamException {
-
-		Repository repo = gsds.getData(local.getProject()).getRepository();
-		return getSyncInfo(local, base, remote, repo);
+		GitSynchronizeData data = gsds.getData(local.getProject());
+		Repository repo = data != null ? data.getRepository() : null;
+		return repo != null ? getSyncInfo(local, base, remote, repo) : null;
 	}
 
 	/**
