@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1174fc3b_92c233ae",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiffContentProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-09-10T17:07:49Z",
+      "side": 1,
+      "message": "That\u0027s an interesting way to make this forward-compatible for future restructuring of the class hierarchy. Thanks for showing this trick.",
+      "range": {
+        "startLine": 178,
+        "startChar": 5,
+        "endLine": 178,
+        "endChar": 31
+      },
+      "revId": "f8716c727348911761472f255b5cfe040579e1f9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
