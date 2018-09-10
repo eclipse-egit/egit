@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc3437f6_466b8bd9",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-09-10T17:00:44Z",
+      "side": 1,
+      "message": "Would super() be an alternative here? I really don\u0027t know this code at all, and was just wondering if that is a kind of useful fallback...",
+      "range": {
+        "startLine": 585,
+        "startChar": 65,
+        "endLine": 585,
+        "endChar": 69
+      },
+      "revId": "cee8183a00701aa8cc07d4cf226d2c31b2870f20",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
