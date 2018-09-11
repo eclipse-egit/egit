@@ -7027,7 +7027,20 @@
                style="push"
                toolbarPath="org.eclipse.search.searchActionSet/Search"
                tooltip="%OpenCommitAction.tooltip"/>
-       </actionSet>
+      </actionSet>
+      <actionSet
+            label="%GitSearchActionSet.label"
+            description="%GitSearchActionSet.description"
+            visible="false"
+            id="org.eclipse.egit.ui.SearchActionSet">
+         <action
+               label="%OpenCommitSearchPageAction.label"
+               icon="icons/obj16/search-commit.png"
+               class="org.eclipse.egit.ui.internal.search.OpenCommitSearchPageAction"
+               menubarPath="org.eclipse.search.menu/dialogGroup"
+               id="org.eclipse.egit.ui.actions.OpenCommitSearchPage">
+         </action>
+      </actionSet>
    </extension>
    <extension
          point="org.eclipse.ui.actionSetPartAssociations">
@@ -7053,6 +7066,36 @@
          </part>
          <part
                id="org.eclipse.team.ui.GenericHistoryView">
+         </part>
+         <part
+               id="org.eclipse.team.sync.views.SynchronizeView">
+         </part>
+      </actionSetPartAssociation>
+      <actionSetPartAssociation
+            targetID="org.eclipse.egit.ui.SearchActionSet">
+         <part
+               id="org.eclipse.egit.ui.RepositoriesView">
+         </part>
+         <part
+               id="org.eclipse.egit.ui.StagingView">
+         </part>
+         <part
+               id="org.eclipse.egit.ui.CompareTreeView">
+         </part>
+         <part
+               id="org.eclipse.egit.ui.ReflogView">
+         </part>
+         <part
+               id="org.eclipse.egit.ui.InteractiveRebaseView">
+         </part>
+         <part
+               id="org.eclipse.egit.ui.commitEditor">
+         </part>
+         <part
+               id="org.eclipse.team.ui.GenericHistoryView">
+         </part>
+         <part
+               id="org.eclipse.team.sync.views.SynchronizeView">
          </part>
       </actionSetPartAssociation>
    </extension>
