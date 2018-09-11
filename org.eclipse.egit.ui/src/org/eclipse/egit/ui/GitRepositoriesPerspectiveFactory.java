@@ -31,34 +31,41 @@ public class GitRepositoriesPerspectiveFactory implements IPerspectiveFactory {
 	public void createInitialLayout(IPageLayout layout) {
 
 		// repositories on the left hand
-		layout.addView(RepositoriesView.VIEW_ID, IPageLayout.LEFT, (float) 0.5, layout.getEditorArea());
+		layout.addView(RepositoriesView.VIEW_ID, IPageLayout.LEFT, (float) 0.3,
+				layout.getEditorArea());
 
 		IFolderLayout bottom = layout.createFolder(
 				"bottom", IPageLayout.BOTTOM, (float) 0.5, //$NON-NLS-1$
 				layout.getEditorArea());
 
 		// Views under editor area
-		bottom.addView(IPageLayout.ID_PROP_SHEET);
 		bottom.addView(IHistoryView.VIEW_ID);
 		bottom.addView(ISynchronizeView.VIEW_ID);
 		bottom.addView(StagingView.VIEW_ID);
 		bottom.addView(ReflogView.VIEW_ID);
+		bottom.addView(IPageLayout.ID_PROP_SHEET);
 
 		// place holder for Package Explorer under repositories
 		layout.addPlaceholder("org.eclipse.jdt.ui.PackageExplorer", IPageLayout.BOTTOM, (float) 0.7, RepositoriesView.VIEW_ID); //$NON-NLS-1$
 
-		// shortcut to Package Explorer
+		// Window->Show View
 		layout.addShowViewShortcut("org.eclipse.jdt.ui.PackageExplorer"); //$NON-NLS-1$
-		// shortcut to History view
 		layout.addShowViewShortcut(IHistoryView.VIEW_ID);
-		// shortcut to Synchronize view
 		layout.addShowViewShortcut(ISynchronizeView.VIEW_ID);
-		// shortcut to Staging view
 		layout.addShowViewShortcut(StagingView.VIEW_ID);
-		// shortcut to Reflog view
 		layout.addShowViewShortcut(ReflogView.VIEW_ID);
+		layout.addShowViewShortcut(RepositoriesView.VIEW_ID);
 
+		// Window->Perspective->Open
+		layout.addPerspectiveShortcut("org.eclipse.ui.resourcePerspective"); //$NON-NLS-1$
+
+		// Window->Perspective->Customize
 		layout.addActionSet("org.eclipse.egit.ui.navigation"); //$NON-NLS-1$
+		layout.addActionSet("org.eclipse.egit.ui.SearchActionSet"); //$NON-NLS-1$
+
+		// File->New
+		layout.addNewWizardShortcut(
+				"org.eclipse.egit.ui.CreateRepositoryWizard"); //$NON-NLS-1$
 	}
 
 }
