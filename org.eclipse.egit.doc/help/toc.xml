@@ -446,28 +446,26 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/5.0/5.0.html" label="EGit 5.0 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/5.0/5.0.html" label="EGit">
-			<topic href="help/EGit/New_and_Noteworthy/5.0/5.0.html#Features" label="Features"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.0/5.0.html#Usability" label="Usability"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.0/5.0.html#Performance_Improvements" label="Performance Improvements"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.0/5.0.html#Bug_Fixes" label="Bug Fixes"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.0/5.0.html#Removal_of.C2.A0deprecated_methods" label="Removal of deprecated methods"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/5.0/5.0.html#Build_and_Release_Engineering" label="Build and Release Engineering"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/5.1/5.1.html" label="EGit 5.1 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/5.1/5.1.html" label="EGit">
+			<topic href="help/EGit/New_and_Noteworthy/5.1/5.1.html#Features" label="Features"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.1/5.1.html#Usability" label="Usability"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.1/5.1.html#Performance_Improvements" label="Performance Improvements"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.1/5.1.html#Bug_Fixes" label="Bug Fixes"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/5.1/5.1.html#Build_and_Release_Engineering" label="Build and Release Engineering"></topic>
 		</topic>
-		<topic href="help/EGit/New_and_Noteworthy/5.0/Contributors.html" label="Contributors"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/5.0/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/5.1/Contributors.html" label="Contributors"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/5.1/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/5.0/5.0.html" label="JGit 5.0 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/5.0/5.0.html" label="JGit">
-			<topic href="help/JGit/New_and_Noteworthy/5.0/5.0.html#Features" label="Features"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/5.0/5.0.html#Performance_Improvements" label="Performance Improvements"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/5.0/5.0.html#Fixes" label="Fixes"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/5.0/5.0.html#Incompatible_Changes" label="Incompatible Changes"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/5.0/5.0.html#Build_and_Release_Engineering" label="Build and Release Engineering"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/5.0/5.0.html#Contributors" label="Contributors"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/5.1/5.1.html" label="JGit 5.1 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/5.1/5.1.html" label="JGit">
+			<topic href="help/JGit/New_and_Noteworthy/5.1/5.1.html#Features" label="Features"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/5.1/5.1.html#Performance_Improvements" label="Performance Improvements"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/5.1/5.1.html#Bug_Fixes" label="Bug Fixes"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/5.1/5.1.html#Build_and_Release_Engineering" label="Build and Release Engineering"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/5.1/5.1.html#Contributors" label="Contributors"></topic>
 		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/5.0/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/5.1/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>
