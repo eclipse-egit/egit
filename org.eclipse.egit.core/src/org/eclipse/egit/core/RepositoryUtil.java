@@ -14,6 +14,7 @@ package org.eclipse.egit.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -140,6 +141,12 @@ public class RepositoryUtil {
 		if (result == null || result.isEmpty()) {
 			result = ResourcesPlugin.getWorkspace().getRoot().getRawLocation()
 					.toOSString();
+		}
+		try {
+			result = FileSystems.getDefault().getPath(result).normalize()
+					.toAbsolutePath().toString();
+		} catch (Exception e) {
+			// ignore, take the non-normalized path
 		}
 		return result;
 	}
