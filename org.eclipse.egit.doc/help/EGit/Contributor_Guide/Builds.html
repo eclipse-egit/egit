@@ -79,7 +79,7 @@
 			<li>Due to a 
 				<a href="http://wiki.eclipse.org/Tycho/How_Tos/Dependency_on_pom-first_artifacts" target="egit_external">limitation of Tycho</a> it is not possible to mix pom-first and manifest-first builds in the same reactor build hence the pom-first JGit build has to run separately before the build for the manifest-first JGit packaging project.
 			</li>
-			<li>The 3 builds must share the same local Maven repository otherwise dependencies between these builds cannot be resolved.</li>
+			<li>The local maven builds must share the same local Maven repository otherwise dependencies between these builds cannot be resolved.</li>
 			<li>To run the build behind a firewall follow 
 				<a href="http://maven.apache.org/guides/mini/guide-proxies.html" target="egit_external">http://maven.apache.org/guides/mini/guide-proxies.html</a> 
 			</li>
@@ -98,11 +98,20 @@
 [~/src/egit] $ mvn clean install
 [INFO] Scanning for projects...
 ...
+
+[~/src/jgit] $ cd ../egit-github
+
+[~/src/egit-github] $ mvn clean install
+[INFO] Scanning for projects...
+...
 </pre>
 		<p>The EGit build uses the JGit p2 repository to resolve jgit dependencies. For local builds the build assumes
 			that egit and jgit source trees are located under a common parent folder. If this is not the case the path
 			to the jgit p2 repository has to be injected via system property:</p>
-		<pre>[~/src/egit] $ mvn clean install -Djgit-site=file:/path/to/org.eclipse.jgit.updatesite/target/site
+		<pre>[~/src/egit] $ mvn clean install -Djgit-site=file:/path/to/jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.repository/target/repository
+</pre>
+		<p>in the same way you can configure a custom path for the build of egit-github to the egit p2 repository</p>
+		<pre>[~/src/egit-github] $ mvn clean install -Degit-site=file:/path/to/egit/org.eclipse.egit.repository/target/repository
 </pre>
 		<p>The hudson build on build.eclipse.org uses (for SNAPSHOT builds):</p>
 		<pre>[~/src/egit] $ mvn clean install -Djgit-site=<a href="https://repo.eclipse.org/content/unzip/snapshots.unzip/" target="egit_external">https://repo.eclipse.org/content/unzip/snapshots.unzip/</a>

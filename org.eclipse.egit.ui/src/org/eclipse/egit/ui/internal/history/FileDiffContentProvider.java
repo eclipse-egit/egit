@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -169,6 +170,12 @@ public class FileDiffContentProvider implements IStructuredContentProvider {
 
 		public FileDiff[] getDiffs() {
 			return diffs;
+		}
+
+		@Override
+		public boolean belongsTo(Object family) {
+			return family == JobFamilies.HISTORY_DIFF
+					|| super.belongsTo(family);
 		}
 	}
 
