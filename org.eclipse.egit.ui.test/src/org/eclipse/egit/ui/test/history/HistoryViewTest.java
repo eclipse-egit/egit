@@ -50,6 +50,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarToggleButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.team.ui.history.IHistoryView;
+import org.eclipse.ui.PlatformUI;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -265,6 +266,16 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		return getHistoryViewBot().table();
 	}
 
+	private SWTBotTable getFileDiffTable() throws Exception {
+		Job.getJobManager().join(JobFamilies.HISTORY_DIFF, null);
+		// Wait a little bit to give the UiJob triggered a chance to run
+		Thread.sleep(100);
+		// Then join the UI update
+		PlatformUI.getWorkbench().getDisplay().syncExec(() -> {
+			/* empty */ });
+		return getHistoryViewBot().table(1);
+	}
+
 	private SWTBot getHistoryViewBot() {
 		return TestUtil.showHistoryView().bot();
 	}
@@ -384,8 +395,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		assertEquals(commitCount + 1, commitsTable.rowCount());
 		commitsTable.select(0);
 
-		SWTBot viewBot = getHistoryViewBot();
-		SWTBotTable fileDiffTable = viewBot.table(1);
+		SWTBotTable fileDiffTable = getFileDiffTable();
 		assertEquals(1, fileDiffTable.rowCount());
 
 		fileDiffTable.select(0);

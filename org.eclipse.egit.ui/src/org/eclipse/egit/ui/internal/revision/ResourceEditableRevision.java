@@ -80,8 +80,13 @@ public class ResourceEditableRevision extends EditableRevision {
 				}
 			});
 		} catch (InvocationTargetException e) {
-			Activator.handleError(e.getTargetException().getMessage(),
-					e.getTargetException(), true);
+			if (e.getCause() instanceof CoreException) {
+				Activator.showErrorStatus(e.getCause().getLocalizedMessage(),
+						((CoreException) e.getCause()).getStatus());
+			} else {
+				Activator.showError(e.getCause().getLocalizedMessage(),
+						e.getCause());
+			}
 		} catch (InterruptedException e) {
 			// ignore here
 		}
