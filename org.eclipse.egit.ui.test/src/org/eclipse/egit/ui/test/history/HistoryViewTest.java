@@ -271,7 +271,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		// Wait a little bit to give the UiJob triggered a chance to run
 		Thread.sleep(100);
 		// Then join the UI update
-		PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+		PlatformUI.getWorkbench().getDisplay().syncExec(() -> {
 			/* empty */ });
 		return getHistoryViewBot().table(1);
 	}
