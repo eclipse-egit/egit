@@ -61,6 +61,7 @@ import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.util.FS;
+import org.eclipse.jgit.util.FileUtils;
 import org.osgi.service.prefs.BackingStoreException;
 
 /**
@@ -141,7 +142,7 @@ public class RepositoryUtil {
 			result = ResourcesPlugin.getWorkspace().getRoot().getRawLocation()
 					.toOSString();
 		}
-		return result;
+		return FileUtils.canonicalize(new File(result)).toString();
 	}
 
 	@NonNull
