@@ -20,6 +20,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.sql.Ref;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -33,9 +34,7 @@ import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.widgets.Display;
@@ -271,7 +270,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		// Wait a little bit to give the UiJob triggered a chance to run
 		Thread.sleep(100);
 		// Then join the UI update
-		PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+		PlatformUI.getWorkbench().getDisplay().syncExec(() -> {
 			/* empty */ });
 		return getHistoryViewBot().table(1);
 	}
