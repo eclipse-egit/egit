@@ -16,6 +16,24 @@
       "revId": "ae6b485a73bfc4e6428533c1de56096ed191f79b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e6f4063_46b70543",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-09-13T09:12:34Z",
+      "side": 1,
+      "message": "Thanks, I used that now. Stuff like that makes me scratch my head each time. File.getCanonicalPath? Paths.get(...).something? Apache FileUtils? FileSystem.somethingElse? You get the idea...",
+      "parentUuid": "4bc21881_83564c9d",
+      "revId": "ae6b485a73bfc4e6428533c1de56096ed191f79b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
