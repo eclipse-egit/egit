@@ -146,8 +146,12 @@ public class RefSpecPanel {
 
 	private static boolean isValidRefExpression(final String s) {
 		if (RefSpec.isWildcard(s)) {
+			// don't allow multiple wildcards
+			if (s.indexOf('*', s.indexOf('*') + 1) >= 0) {
+				return false;
+			}
 			// replace wildcard with some legal name just for checking
-			return isValidRefExpression(s.substring(0, s.length() - 1) + 'X');
+			return isValidRefExpression(s.replace('*', 'X'));
 		} else
 			return Repository.isValidRefName(s)
 					|| Repository.isValidRefName(Constants.R_HEADS + s)
