@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bc21881_83564c9d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-13T06:58:10Z",
+      "side": 1,
+      "message": "Many roads lead to Rome... I would have done\n\n  return FileUtils.canonicalize(new File(result)).toString();\n\n(using org.eclipse.jgit.util.FileUtils)",
+      "revId": "ae6b485a73bfc4e6428533c1de56096ed191f79b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
