@@ -16,6 +16,24 @@
       "revId": "39e38e3595fba17ba83b720b14ff183c9a9599fc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86fabddb_05f2dd05",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-09-14T18:28:19Z",
+      "side": 1,
+      "message": "Thanks for teaching me something again (the refspec constraints).\n\nRefSpec.isValid() is not public. I\u0027m wondering if it should become public, since it seems fairly easy to use it wrong (it is meant for a source/destination expression, but might be called with a complete refspec then). That\u0027s why I would go with code duplication basically, and check for double wildcards here instead.",
+      "parentUuid": "0798a48f_2d5bf366",
+      "revId": "39e38e3595fba17ba83b720b14ff183c9a9599fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
