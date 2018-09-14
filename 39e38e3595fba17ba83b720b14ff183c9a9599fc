@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0798a48f_2d5bf366",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-14T11:26:29Z",
+      "side": 1,
+      "message": "A RefSpec src or destination may contain at most one \u0027*\u0027, otherwise it is invalid. With your change, \"refs/*/*\" would pass, though.\n\nCall RefSpec.isValid(s) first before doing any wildcard replacement.",
+      "revId": "39e38e3595fba17ba83b720b14ff183c9a9599fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
