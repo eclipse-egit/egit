@@ -10,20 +10,22 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.variables;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.internal.corext.template.java.CodeTemplateContext;
-import org.eclipse.jdt.internal.corext.template.java.CompilationUnitContext;
 import org.eclipse.jface.text.templates.TemplateContext;
 import org.eclipse.jface.text.templates.TemplateVariable;
 import org.eclipse.jface.text.templates.TemplateVariableResolver;
+import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
+import org.osgi.framework.Version;
 
 /**
  * Resolves Git variables within templates
@@ -133,6 +135,10 @@ public class GitTemplateVariableResolver extends TemplateVariableResolver {
 		}
 	}
 
+	private static final boolean NO_ADAPTABLE_SUPPORT = Platform
+			.getBundle("org.eclipse.text").getVersion() //$NON-NLS-1$
+			.compareTo(Version.valueOf("3.7.100")) < 0; //$NON-NLS-1$
+
 	/**
 	 * Retrieves the current project from a template context.
 	 *
@@ -140,23 +146,41 @@ public class GitTemplateVariableResolver extends TemplateVariableResolver {
 	 *            the current template context.
 	 * @return the current project
 	 */
+	@Nullable
 	protected static IProject getProject(TemplateContext context) {
-		IProject project = null;
-		if (Activator.hasJavaPlugin()) {
-			if (context instanceof CodeTemplateContext) {
-				IJavaProject javaProject = ((CodeTemplateContext) context)
-						.getJavaProject();
-				if (javaProject != null) {
-					project = javaProject.getProject();
+		IProject project = Platform.getAdapterManager().getAdapter(context,
+				IProject.class);
+		if (project != null) {
+			return project;
+		}
+		// Note: block below can be removed after EGit minimum target platform
+		// will be 4.10, see bug 539095 for details
+		if (NO_ADAPTABLE_SUPPORT && Activator.hasJavaPlugin()) {
+			boolean hasPublicMethod = context.getClass().getSimpleName()
+					.equals("CodeTemplateContext"); //$NON-NLS-1$
+			try {
+				Method method;
+				if (hasPublicMethod) {
+					// CodeTemplateContext has public getJavaProject() method
+					method = context.getClass().getMethod("getJavaProject"); //$NON-NLS-1$
+				} else {
+					// JavaContext inherits from CompilationUnitContext which
+					// has protected getJavaProject() method
+					method = context.getClass().getSuperclass()
+							.getDeclaredMethod("getJavaProject"); //$NON-NLS-1$
+					method.setAccessible(true);
 				}
-			} else if (context instanceof CompilationUnitContext) {
-				ICompilationUnit cu = ((CompilationUnitContext) context)
-						.getCompilationUnit();
-				if (cu != null) {
-					project = cu.getJavaProject().getProject();
+				Object result = method.invoke(context);
+				if (result instanceof IJavaProject) {
+					IJavaProject javaProject = (IJavaProject) result;
+					return javaProject.getProject();
 				}
+			} catch (NoSuchMethodException | SecurityException
+					| IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException e) {
+				return null;
 			}
 		}
-		return project;
+		return null;
 	}
 }
