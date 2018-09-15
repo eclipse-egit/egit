@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7909fa55_66db9dea",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/variables/GitTemplateVariableResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-09-15T12:50:18Z",
+      "side": 1,
+      "message": "might want to move into the try block for more local scope",
+      "range": {
+        "startLine": 161,
+        "startChar": 3,
+        "endLine": 161,
+        "endChar": 17
+      },
+      "revId": "ca483367a120b59456380014a4a0454ada6b10f9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
