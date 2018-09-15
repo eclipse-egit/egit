@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b60a21fe_ba7ee21d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-15T14:18:52Z",
+      "side": 1,
+      "message": "Ok... but isWildcard() already searches for \u0027*\u0027. Since we have to do this ourselves anyway, let\u0027s clean up this whole method and avoid the needless tail recursion altogether:\n\n  if (s \u003d\u003d null) {\n    return false;\n  }\n  String spec \u003d s;\n  int i \u003d spec.indexOf(\u0027*\u0027);\n  if (i \u003e\u003d 0) {\n    if (spec.indexOf(\u0027*\u0027, i+1) \u003e\u003d 0) {\n      return false; // Only one \u0027*\u0027 allowed\n    }\n    // replace wildcard by arbitrary legal character for checking\n    spec \u003d spec.replace(\u0027*\u0027, \u0027X\u0027);\n  }\n  return Repository.isValidRefName(Constants.R_HEADS + spec);\n\nI think the extra check for R_TAGS + s can be omitted. If the spec is invalid for R_HEADS, it\u0027ll also be invalid for R_TAGS. Ditto for the check against spec itself. If spec is just \"foo\", then we need to prefix R_HEADS anyway. And if spec if \"foo/bar\", then checking against R_HEADS + \"foo/bar\" gives the same result.",
+      "revId": "081462ed8bc4d6592553d9725b3ac5e1681c898a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
