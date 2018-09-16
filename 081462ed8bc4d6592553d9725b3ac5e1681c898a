@@ -16,6 +16,24 @@
       "revId": "081462ed8bc4d6592553d9725b3ac5e1681c898a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51d1d3cb_16bcccd4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-09-16T09:09:33Z",
+      "side": 1,
+      "message": "Done\n\nI\u0027ve taken your suggestion as is. I was shortly thinking the removed isValidRefName might influence checking input like \"HEAD\", but even there everything is fine.",
+      "parentUuid": "b60a21fe_ba7ee21d",
+      "revId": "081462ed8bc4d6592553d9725b3ac5e1681c898a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
