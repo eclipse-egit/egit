@@ -145,13 +145,19 @@ public class RefSpecPanel {
 	}
 
 	private static boolean isValidRefExpression(final String s) {
-		if (RefSpec.isWildcard(s)) {
-			// replace wildcard with some legal name just for checking
-			return isValidRefExpression(s.substring(0, s.length() - 1) + 'X');
-		} else
-			return Repository.isValidRefName(s)
-					|| Repository.isValidRefName(Constants.R_HEADS + s)
-					|| Repository.isValidRefName(Constants.R_TAGS + s);
+		if (s == null) {
+			return false;
+		}
+		String spec = s;
+		int i = spec.indexOf('*');
+		if (i >= 0) {
+			if (spec.indexOf('*', i + 1) >= 0) {
+				return false; // Only one '*' allowed
+			}
+			// replace wildcard by arbitrary legal character for checking
+			spec = spec.replace('*', 'X');
+		}
+		return Repository.isValidRefName(Constants.R_HEADS + spec);
 	}
 
 	private static RefSpec setRefSpecSource(final RefSpec spec, final String src) {
