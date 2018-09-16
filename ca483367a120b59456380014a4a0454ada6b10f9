@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "cf6df32b_5d8c76ed",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/variables/GitTemplateVariableResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-16T09:09:58Z",
+      "side": 1,
+      "message": "I don\u0027t understand this. So you make TemplateContext an IAdaptable. So what? Where\u0027s the implementation in JDT that makes the CodeTemplateContext or the CompilationUnitContext adapt to IProject?\n\nBesides I don\u0027t think it\u0027s necessary to make TemplateContext an IAdaptable. With an AdapterFactory, you can adapt any object to anything.\n\nJDT has a minimum version requirement for org.eclipse.text of 3.5.0. I doubt it\u0027ll be increased to 3.7.100.\n\nSo a better change is to provide an adapter factory, and here in EGit we\u0027ll have to always use the reflective way.",
+      "revId": "ca483367a120b59456380014a4a0454ada6b10f9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7909fa55_66db9dea",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/variables/GitTemplateVariableResolver.java",
         "patchSetId": 2
