@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fcc7b402_5d4e6e84",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/variables/GitTemplateVariableResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-18T14:00:32Z",
+      "side": 1,
+      "message": "Sorry, still doesn\u0027t make sense to me. Testing a version of org.eclipse.text to deduce that JDT had a particular feature...\n\nNO_ADAPTABLE_SUPPORT is simply not needed. If the thing adapts to an IProject, fine, if it doesn\u0027t, we may well be on an older platform where JDT doesn\u0027t have this yet. So let\u0027s just try the reflective way.\n\nBesides, this should use org.eclipse.egit.core.AdapterUtils.getAdapter(). The platform\u0027s AdapterManager tries the factories directly.",
+      "parentUuid": "e61480f3_19f71007",
+      "revId": "ca483367a120b59456380014a4a0454ada6b10f9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7909fa55_66db9dea",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/variables/GitTemplateVariableResolver.java",
         "patchSetId": 2
