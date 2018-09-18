@@ -174,7 +174,7 @@ public class FileDiffContentProvider implements IStructuredContentProvider {
 
 		@Override
 		public boolean belongsTo(Object family) {
-			return family == JobFamilies.HISTORY_DIFF
+			return family == JobFamilies.HISTORY_FILE_DIFF
 					|| super.belongsTo(family);
 		}
 	}
