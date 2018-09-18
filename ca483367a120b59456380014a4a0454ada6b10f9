@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "28351a28_97b120ea",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/variables/GitTemplateVariableResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-18T14:06:38Z",
+      "side": 1,
+      "message": "\u003e AdapterUtils.getAdapter() is not available on 4.6 which we still\n \u003e support.\n\norg.eclipse.egit.core.AdapterUtils.getAdapter()\n\nis available everywhere EGit is available :-)\n\n \u003e NO_ADAPTABLE_SUPPORT makes sense to avoid unneeded overhead on modern platforms.\n\nNot in my view. If you want use a feature test:\n\n  if (!(context instanceof IAdaptable)) ...\n\nBut do not test one bundle version to deduce something about another bundle.",
+      "parentUuid": "59371530_d94791c4",
+      "revId": "ca483367a120b59456380014a4a0454ada6b10f9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7909fa55_66db9dea",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/variables/GitTemplateVariableResolver.java",
         "patchSetId": 2
