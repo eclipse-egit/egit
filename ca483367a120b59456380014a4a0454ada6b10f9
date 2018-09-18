@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e61480f3_19f71007",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/variables/GitTemplateVariableResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2018-09-18T13:44:44Z",
+      "side": 1,
+      "message": "The reason to implement is to allow easy to use and to discoverabl API for both implementors/users.\n\nNo one will know about the factory and will reinvent the wheel again.\n\nJDT: https://git.eclipse.org/r/129463\n\nSure I will update the minimum text version once the build is there",
+      "parentUuid": "cf6df32b_5d8c76ed",
+      "revId": "ca483367a120b59456380014a4a0454ada6b10f9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7909fa55_66db9dea",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/variables/GitTemplateVariableResolver.java",
         "patchSetId": 2
