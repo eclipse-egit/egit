@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "0d856a38_86349008",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/variables/GitTemplateVariableResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2018-09-18T14:11:57Z",
+      "side": 1,
+      "message": "I misread AdapterUtils and Adapters... But yes, we can check for IAdaptable first and skip the bundle check.",
+      "parentUuid": "28351a28_97b120ea",
+      "revId": "ca483367a120b59456380014a4a0454ada6b10f9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7909fa55_66db9dea",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/variables/GitTemplateVariableResolver.java",
         "patchSetId": 2
