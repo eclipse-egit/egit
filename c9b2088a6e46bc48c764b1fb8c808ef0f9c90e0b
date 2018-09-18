@@ -224,6 +224,23 @@
     },
     {
       "key": {
+        "uuid": "777c2aee_03bcebf5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/MultiBranchOperationResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-18T14:52:35Z",
+      "side": 1,
+      "message": "This class is copied from the MultiPullResultDialog. Please factor it out into a general utility class. I think you only need to pass in the TableViewer in the constructor; then this can be a separate class.",
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d23f8313_64facbe6",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 1
