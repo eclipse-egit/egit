@@ -1,0 +1,272 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4aa277d_6c93974b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-18T09:31:37Z",
+      "side": 1,
+      "message": "Somehow all your commit messages are a single line. Please hard-wrap them at less than 72 characters.",
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "245cbd9a_f40c2dbe",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-18T09:31:37Z",
+      "side": 1,
+      "message": "gitRepo",
+      "range": {
+        "startLine": 194,
+        "startChar": 5,
+        "endLine": 194,
+        "endChar": 31
+      },
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c73ed89_ca84c3b9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-18T09:31:37Z",
+      "side": 1,
+      "message": "Missing {}",
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bfc15f9_9a191f50",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-18T09:31:37Z",
+      "side": 1,
+      "message": "Could use a lambda.",
+      "range": {
+        "startLine": 163,
+        "startChar": 52,
+        "endLine": 168,
+        "endChar": 4
+      },
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2c37640_c29cc349",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-18T09:31:37Z",
+      "side": 1,
+      "message": "Lambda?",
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5cec3a1d_bd8964b6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/MultiBranchOperationResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-18T09:31:37Z",
+      "side": 1,
+      "message": "Since you do override this with a TableLayout below anyway it\u0027s not necessary to set a GridLayout on the main Composite.",
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "907bb63f_8a9147f8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/MultiBranchOperationResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-18T09:31:37Z",
+      "side": 1,
+      "message": "300px wide, 1200px high? Seems to be rather narrow but too high, especially for small screens. But it\u0027s overridden anyway on line 161 below. So can\u0027t we just remove this?",
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97ab16ca_60c89239",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/MultiBranchOperationResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-18T09:31:37Z",
+      "side": 1,
+      "message": "Remove these commented lines.",
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b83d4d21_b26f49c2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/MultiBranchOperationResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-18T09:31:37Z",
+      "side": 1,
+      "message": "Missing {}. And why this special case anyway? getMessageForStatus(Status.OK) would return UIText.MultiBranchOperationResultDialog_CheckoutResultOK (\"Checkout completed normally\"). This returns just \"OK\"... looks like UIText.MultiBranchOperationResultDialog_OkStatus is not needed?",
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "089dfcc0_4a25796b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/MultiBranchOperationResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-18T09:31:37Z",
+      "side": 1,
+      "message": "Really? Should be 1, I guess.",
+      "range": {
+        "startLine": 152,
+        "startChar": 24,
+        "endLine": 152,
+        "endChar": 25
+      },
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "308b4da7_2f743f6f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/MultiBranchOperationResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-18T09:31:37Z",
+      "side": 1,
+      "message": "This overrides the 300x1200px setting above.",
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc9f7269_bc749676",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/MultiBranchOperationResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-18T09:31:37Z",
+      "side": 1,
+      "message": "What is SITA_TAXI? Looks like something from your in-house application slipped through :-)",
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d23f8313_64facbe6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1593,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-18T09:31:37Z",
+      "side": 1,
+      "message": "and {0} hard-coded to SITA_TAXI... hmmm. How about \"Problems checking out multiple repositories\"?",
+      "range": {
+        "startLine": 1593,
+        "startChar": 71,
+        "endLine": 1593,
+        "endChar": 77
+      },
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5c4ba98_c0ed3c00",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1594,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-18T09:31:37Z",
+      "side": 1,
+      "message": "checked out",
+      "range": {
+        "startLine": 1594,
+        "startChar": 86,
+        "endLine": 1594,
+        "endChar": 94
+      },
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

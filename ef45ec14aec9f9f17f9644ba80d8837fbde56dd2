@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8df420f_50a3f08f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-18T09:31:37Z",
+      "side": 0,
+      "message": "Why did you remove this?",
+      "revId": "ef45ec14aec9f9f17f9644ba80d8837fbde56dd2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
