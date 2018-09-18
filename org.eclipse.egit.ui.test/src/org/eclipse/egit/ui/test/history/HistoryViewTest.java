@@ -267,12 +267,12 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 	}
 
 	private SWTBotTable getFileDiffTable() throws Exception {
-		Job.getJobManager().join(JobFamilies.HISTORY_DIFF, null);
+		Job.getJobManager().join(JobFamilies.HISTORY_FILE_DIFF, null);
 		// Wait a little bit to give the UiJob triggered a chance to run
 		Thread.sleep(100);
-		// Then join the UI update
 		PlatformUI.getWorkbench().getDisplay().syncExec(() -> {
-			/* empty */ });
+			// Join the UI update
+		});
 		return getHistoryViewBot().table(1);
 	}
 
