@@ -57,6 +57,30 @@
       "revId": "ca483367a120b59456380014a4a0454ada6b10f9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5533935a_67a28fb1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/variables/GitTemplateVariableResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2018-09-18T13:57:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7909fa55_66db9dea",
+      "range": {
+        "startLine": 161,
+        "startChar": 3,
+        "endLine": 161,
+        "endChar": 17
+      },
+      "revId": "ca483367a120b59456380014a4a0454ada6b10f9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
