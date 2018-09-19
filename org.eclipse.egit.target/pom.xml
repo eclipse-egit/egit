@@ -20,7 +20,7 @@
   <parent>
     <groupId>org.eclipse.egit</groupId>
     <artifactId>egit-parent</artifactId>
-    <version>5.1.1.201809181055-r</version>
+    <version>5.1.2-SNAPSHOT</version>
   </parent>
 
   <build>
