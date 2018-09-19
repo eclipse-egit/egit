@@ -58,6 +58,11 @@ public class JobFamilies {
 	public final static Object HISTORY_DIFF = new JobFamily();
 
 	/**
+	 * History file diff generation jobs
+	 */
+	public final static Object HISTORY_FILE_DIFF = new JobFamily();
+
+	/**
 	 * Commit job
 	 */
 	public final static Object COMMIT = new JobFamily(UIIcons.COMMIT);
