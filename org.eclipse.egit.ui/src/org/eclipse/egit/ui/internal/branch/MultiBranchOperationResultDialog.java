@@ -17,6 +17,7 @@ import java.util.Map.Entry;
 
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.LabelColumnComparator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -27,14 +28,10 @@ import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jgit.api.CheckoutResult;
 import org.eclipse.jgit.api.CheckoutResult.Status;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -163,74 +160,9 @@ public class MultiBranchOperationResultDialog extends TitleAreaDialog {
 		newShell.setText(UIText.MultiBranchOperationResultDialog_WindowTitle);
 	}
 
-	private ColumnComparator createComparator(TableColumn column,
+	private LabelColumnComparator createComparator(TableColumn column,
 			int columnIndex) {
-		return new ColumnComparator(column, columnIndex);
-	}
-
-	private class ColumnComparator extends ViewerComparator {
-
-		private static final int ASCENDING = SWT.DOWN;
-
-		private static final int NONE = SWT.NONE;
-
-		private static final int DESCENDING = SWT.UP;
-
-		private final TableColumn column;
-
-		private final int columnIndex;
-
-		private int direction;
-
-		public ColumnComparator(TableColumn column, int columnIndex) {
-			super(null);
-			this.column = column;
-			this.columnIndex = columnIndex;
-			column.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					if (tv.getComparator() == ColumnComparator.this) {
-						if (direction == ASCENDING) {
-							setDirection(DESCENDING);
-						} else {
-							setDirection(NONE);
-						}
-					} else {
-						setDirection(ASCENDING);
-					}
-				}
-			});
-		}
-
-		private void setDirection(int newDirection) {
-			direction = newDirection;
-			Table table = column.getParent();
-			table.setSortDirection(direction);
-			if (direction == NONE) {
-				table.setSortColumn(null);
-				tv.setComparator(null);
-			} else {
-				table.setSortColumn(column);
-				if (tv.getComparator() == this) {
-					tv.refresh();
-				} else {
-					tv.setComparator(this);
-				}
-			}
-		}
-
-		@Override
-		public int compare(Viewer viewer, Object e1, Object e2) {
-			ColumnLabelProvider labelProvider = (ColumnLabelProvider) tv
-					.getLabelProvider(columnIndex);
-			String label1 = labelProvider.getText(e1);
-			String label2 = labelProvider.getText(e2);
-			if (direction == ASCENDING) {
-				return label1.compareTo(label2);
-			} else {
-				return label2.compareTo(label1);
-			}
-		}
+		return new LabelColumnComparator(this.tv, column, columnIndex);
 	}
 
 	private void initializeResultMessages() {
