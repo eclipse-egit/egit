@@ -16,6 +16,24 @@
       "revId": "ef45ec14aec9f9f17f9644ba80d8837fbde56dd2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73589bc5_b50d4bcc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-09-20T04:11:19Z",
+      "side": 0,
+      "message": "This code is now placed at the very start of the show method, since this check is shared by the implementation for the multiple checkout.",
+      "parentUuid": "e8df420f_50a3f08f",
+      "revId": "ef45ec14aec9f9f17f9644ba80d8837fbde56dd2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }

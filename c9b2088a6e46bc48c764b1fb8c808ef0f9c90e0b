@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee541af2_f2652a82",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-09-20T04:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4aa277d_6c93974b",
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "245cbd9a_f40c2dbe",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2018-09-18T09:31:37Z",
       "side": 1,
       "message": "gitRepo",
+      "range": {
+        "startLine": 194,
+        "startChar": 5,
+        "endLine": 194,
+        "endChar": 31
+      },
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ef0a8e6_849976dc",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-09-20T04:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "245cbd9a_f40c2dbe",
       "range": {
         "startLine": 194,
         "startChar": 5,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "1e78b24b_3b0facf3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-09-20T04:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c73ed89_ca84c3b9",
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bfc15f9_9a191f50",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
         "patchSetId": 1
@@ -70,6 +130,30 @@
       "writtenOn": "2018-09-18T09:31:37Z",
       "side": 1,
       "message": "Could use a lambda.",
+      "range": {
+        "startLine": 163,
+        "startChar": 52,
+        "endLine": 168,
+        "endChar": 4
+      },
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c853b5d_18f954d9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-09-20T04:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bfc15f9_9a191f50",
       "range": {
         "startLine": 163,
         "startChar": 52,
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "996439b3_1324b44e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-09-20T04:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2c37640_c29cc349",
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cec3a1d_bd8964b6",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/MultiBranchOperationResultDialog.java",
         "patchSetId": 1
@@ -110,6 +212,24 @@
       "writtenOn": "2018-09-18T09:31:37Z",
       "side": 1,
       "message": "Since you do override this with a TableLayout below anyway it\u0027s not necessary to set a GridLayout on the main Composite.",
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a181c4cd_ae2b1810",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/MultiBranchOperationResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-09-20T04:11:19Z",
+      "side": 1,
+      "message": "I removed both actually. On line ~145, I override the GridDataFactory as well",
+      "parentUuid": "5cec3a1d_bd8964b6",
       "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "35db0ca7_519de07d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/MultiBranchOperationResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-09-20T04:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "907bb63f_8a9147f8",
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97ab16ca_60c89239",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/MultiBranchOperationResultDialog.java",
         "patchSetId": 1
@@ -144,6 +282,24 @@
       "writtenOn": "2018-09-18T09:31:37Z",
       "side": 1,
       "message": "Remove these commented lines.",
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a1de015_6dbce61d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/MultiBranchOperationResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-09-20T04:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97ab16ca_60c89239",
       "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "7553d8f7_d169b191",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/MultiBranchOperationResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-09-20T04:11:19Z",
+      "side": 1,
+      "message": "You are absolutely right! Removed the conditional.",
+      "parentUuid": "b83d4d21_b26f49c2",
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "089dfcc0_4a25796b",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/MultiBranchOperationResultDialog.java",
         "patchSetId": 1
@@ -178,6 +352,30 @@
       "writtenOn": "2018-09-18T09:31:37Z",
       "side": 1,
       "message": "Really? Should be 1, I guess.",
+      "range": {
+        "startLine": 152,
+        "startChar": 24,
+        "endLine": 152,
+        "endChar": 25
+      },
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2db425b7_d1a07efe",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/MultiBranchOperationResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-09-20T04:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "089dfcc0_4a25796b",
       "range": {
         "startLine": 152,
         "startChar": 24,
@@ -224,6 +422,24 @@
     },
     {
       "key": {
+        "uuid": "68f75b1c_be1c5fb8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/MultiBranchOperationResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-09-20T04:11:19Z",
+      "side": 1,
+      "message": "Damn, I must call the feds now. Don\u0027t leave the country",
+      "parentUuid": "fc9f7269_bc749676",
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "777c2aee_03bcebf5",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/MultiBranchOperationResultDialog.java",
         "patchSetId": 1
@@ -235,6 +451,24 @@
       "writtenOn": "2018-09-18T14:52:35Z",
       "side": 1,
       "message": "This class is copied from the MultiPullResultDialog. Please factor it out into a general utility class. I think you only need to pass in the TableViewer in the constructor; then this can be a separate class.",
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "caaf2f99_57030655",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/MultiBranchOperationResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-09-20T04:11:19Z",
+      "side": 1,
+      "message": "Created a class called LabelColumnComparator, I hope it is similar to what you had in mind.",
+      "parentUuid": "777c2aee_03bcebf5",
       "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -264,6 +498,30 @@
     },
     {
       "key": {
+        "uuid": "4b3f2fbd_87a51298",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1593,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-09-20T04:11:19Z",
+      "side": 1,
+      "message": "Can\u0027t argue with that, ehehe. Sounds better indeed.",
+      "parentUuid": "d23f8313_64facbe6",
+      "range": {
+        "startLine": 1593,
+        "startChar": 71,
+        "endLine": 1593,
+        "endChar": 77
+      },
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5c4ba98_c0ed3c00",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 1
@@ -275,6 +533,30 @@
       "writtenOn": "2018-09-18T09:31:37Z",
       "side": 1,
       "message": "checked out",
+      "range": {
+        "startLine": 1594,
+        "startChar": 86,
+        "endLine": 1594,
+        "endChar": 94
+      },
+      "revId": "c9b2088a6e46bc48c764b1fb8c808ef0f9c90e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ac6a447_39a71891",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1594,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-09-20T04:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5c4ba98_c0ed3c00",
       "range": {
         "startLine": 1594,
         "startChar": 86,
