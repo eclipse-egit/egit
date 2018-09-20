@@ -14,7 +14,12 @@
 package org.eclipse.egit.ui.internal.branch;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
@@ -34,7 +39,6 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.branch.BranchProjectTracker;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.NonDeletedFilesDialog;
 import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
@@ -57,17 +61,34 @@ import org.eclipse.ui.PlatformUI;
  */
 public class BranchOperationUI {
 
-	private final Repository repository;
+	private final Repository[] repositories;
 
 	private String target;
+
+	private boolean isSingleRepositoryOperation;
 
 	/**
 	 * In the case of checkout conflicts, a dialog is shown to let the user
 	 * stash, reset or commit. After that, checkout is tried again. The second
 	 * time we do checkout, we don't want to ask any questions we already asked
 	 * the first time, so this will be false then.
+	 *
+	 * This behavior is disabled when checking out multiple repositories at once
 	 */
 	private final boolean showQuestionsBeforeCheckout;
+
+	/**
+	 * Create an operation for checking out a branch on multiple repositories
+	 *
+	 * @param repositories
+	 * @param target
+	 *            a valid {@link Ref} name or commit id
+	 * @return the {@link BranchOperationUI}
+	 */
+	public static BranchOperationUI checkout(Repository[] repositories,
+			String target) {
+		return new BranchOperationUI(repositories, target, true);
+	}
 
 	/**
 	 * Create an operation for checking out a branch
@@ -79,7 +100,22 @@ public class BranchOperationUI {
 	 */
 	public static BranchOperationUI checkout(Repository repository,
 			String target) {
-		return new BranchOperationUI(repository, target, true);
+		return checkout(repository, target, true);
+	}
+
+	/**
+	 * Create an operation for checking out a branch
+	 *
+	 * @param repository
+	 * @param target
+	 *            a valid {@link Ref} name or commit id
+	 * @param showQuestionsBeforeCheckout
+	 * @return the {@link BranchOperationUI}
+	 */
+	public static BranchOperationUI checkout(Repository repository,
+			String target, boolean showQuestionsBeforeCheckout) {
+		return new BranchOperationUI(new Repository[] { repository }, target,
+				showQuestionsBeforeCheckout);
 	}
 
 	/**
@@ -93,54 +129,70 @@ public class BranchOperationUI {
 	}
 
 	/**
-	 * @param repository
+	 * @param repositories
 	 * @param target
 	 * @param showQuestionsBeforeCheckout
 	 */
-	private BranchOperationUI(Repository repository, String target,
+	private BranchOperationUI(Repository[] repositories, String target,
 			boolean showQuestionsBeforeCheckout) {
-		this.repository = repository;
+		this.repositories = repositories;
 		this.target = target;
-		this.showQuestionsBeforeCheckout = showQuestionsBeforeCheckout;
+		/*
+		 * We do not have support for CreateBranchWizards when performing
+		 * checkout on multiple repositories at once, thus, the
+		 * showQuestionsBeforeCheckout is forced to false in this case
+		 */
+		this.isSingleRepositoryOperation = repositories.length == 1;
+		this.showQuestionsBeforeCheckout = isSingleRepositoryOperation
+				? showQuestionsBeforeCheckout
+				: false;
 	}
 
 	private String confirmTarget(IProgressMonitor monitor) {
-		if (target != null) {
-			if (!repository.getRepositoryState().canCheckout()) {
-				PlatformUI.getWorkbench().getDisplay()
-						.asyncExec(new Runnable() {
-							@Override
-							public void run() {
-								MessageDialog.openError(getShell(),
-										UIText.BranchAction_cannotCheckout,
-										NLS.bind(
-												UIText.BranchAction_repositoryState,
-												repository.getRepositoryState()
-														.getDescription()));
-							}
-						});
-				return null;
-			}
 
-			if (LaunchFinder.shouldCancelBecauseOfRunningLaunches(repository,
-					monitor)) {
-				return null;
-			}
-
-			askForTargetIfNecessary();
+		if (target == null) {
+			return null;
 		}
+
+		Optional<Repository> invalidRepo = Stream.of(repositories) //
+				.filter(r -> !r.getRepositoryState().canCheckout()) //
+				.findFirst();
+
+		if (invalidRepo.isPresent()) {
+			PlatformUI.getWorkbench().getDisplay()
+					.asyncExec(() -> showRepositoryInInvalidStateForCheckout(
+							invalidRepo.get()));
+			return null;
+		}
+
+		Collection<Repository> repos = Arrays.asList(repositories);
+		if (LaunchFinder.shouldCancelBecauseOfRunningLaunches(repos, monitor)) {
+			return null;
+		}
+
+		askForTargetIfNecessary();
 		return target;
 	}
 
+	private void showRepositoryInInvalidStateForCheckout(Repository repo) {
+		String repoName = Activator.getDefault().getRepositoryUtil()
+				.getRepositoryName(repo);
+		String description = repo.getRepositoryState().getDescription();
+		String message = NLS.bind(UIText.BranchAction_repositoryState, repoName,
+				description);
+
+		MessageDialog.openError(getShell(), UIText.BranchAction_cannotCheckout,
+				message);
+	}
+
 	private void doCheckout(BranchOperation bop, boolean restore,
-			IProgressMonitor monitor)
-			throws CoreException {
+			IProgressMonitor monitor) throws CoreException {
 		SubMonitor progress = SubMonitor.convert(monitor, restore ? 10 : 1);
 		if (!restore) {
 			bop.execute(progress.newChild(1));
 		} else {
 			final BranchProjectTracker tracker = new BranchProjectTracker(
-					repository);
+					repositories);
 			ProjectTrackerMemento snapshot = tracker.snapshot();
 			bop.execute(progress.newChild(7));
 			tracker.save(snapshot);
@@ -162,14 +214,16 @@ public class BranchOperationUI {
 	 * Starts the operation asynchronously
 	 */
 	public void start() {
+
+		if (repositories == null || repositories.length == 0) {
+			return;
+		}
+
 		target = confirmTarget(new NullProgressMonitor());
 		if (target == null) {
 			return;
 		}
-		String repoName = Activator.getDefault().getRepositoryUtil()
-				.getRepositoryName(repository);
-		String jobname = NLS.bind(UIText.BranchAction_checkingOut, repoName,
-				target);
+		String jobname = getJobName(repositories, target);
 		boolean restore = Activator.getDefault().getPreferenceStore()
 				.getBoolean(UIPreferences.CHECKOUT_PROJECT_RESTORE);
 		final CheckoutJob job = new CheckoutJob(jobname, restore);
@@ -181,6 +235,17 @@ public class BranchOperationUI {
 			}
 		});
 		job.schedule();
+	}
+
+	private static String getJobName(Repository[] repos, String target) {
+
+		if (repos.length > 1) {
+			return NLS.bind(UIText.BranchAction_checkingOutMultiple, target);
+        }
+
+		String repoName = Activator.getDefault().getRepositoryUtil()
+				.getRepositoryName(repos[0]);
+		return NLS.bind(UIText.BranchAction_checkingOut, repoName, target);
 	}
 
 	private class CheckoutJob extends Job {
@@ -196,18 +261,29 @@ public class BranchOperationUI {
 
 		@Override
 		public IStatus run(IProgressMonitor monitor) {
-			bop = new BranchOperation(repository, target, !restore);
+			bop = new BranchOperation(repositories, target, !restore);
 			try {
 				doCheckout(bop, restore, monitor);
 			} catch (CoreException e) {
-				switch (bop.getResult().getStatus()) {
-				case CONFLICTS:
-				case NONDELETED:
-					break;
-				default:
-					return Activator.createErrorStatus(
-							UIText.BranchAction_branchFailed, e);
+
+				/*
+				 * For a checkout operation with multiple repositories we can
+				 * handle any error status by displaying all of them in a table.
+				 * For a single repository, though, we will stick to using a
+				 * simple message in case of an unexpected exception.
+				 */
+				if (!isSingleRepositoryOperation)
+					return Status.OK_STATUS;
+
+				CheckoutResult result = bop.getResult(repositories[0]);
+
+				if (result.getStatus() == CheckoutResult.Status.CONFLICTS || //
+						result.getStatus() == CheckoutResult.Status.NONDELETED) {
+					return Status.OK_STATUS;
 				}
+
+				return Activator
+						.createErrorStatus(UIText.BranchAction_branchFailed, e);
 			} finally {
 				GitLightweightDecorator.refresh();
 				monitor.done();
@@ -223,8 +299,8 @@ public class BranchOperationUI {
 		}
 
 		@NonNull
-		public CheckoutResult getCheckoutResult() {
-			return bop.getResult();
+		public Map<Repository, CheckoutResult> getCheckoutResult() {
+			return bop.getResults();
 		}
 	}
 
@@ -243,19 +319,25 @@ public class BranchOperationUI {
 		}
 		final boolean restore = Activator.getDefault().getPreferenceStore()
 				.getBoolean(UIPreferences.CHECKOUT_PROJECT_RESTORE);
-		BranchOperation bop = new BranchOperation(repository, target, !restore);
+		BranchOperation bop = new BranchOperation(repositories, target,
+				!restore);
 		doCheckout(bop, restore, progress.newChild(80));
-		show(bop.getResult());
+		show(bop.getResults());
 	}
 
 	private void askForTargetIfNecessary() {
-		if (target != null && showQuestionsBeforeCheckout) {
-			if (shouldShowCheckoutRemoteTrackingDialog(target))
-				target = getTargetWithCheckoutRemoteTrackingDialog();
+
+		if (target == null || //
+				!showQuestionsBeforeCheckout || //
+				!shouldShowCheckoutRemoteTrackingDialog(target)) {
+			return;
 		}
+
+		target = getTargetWithCheckoutRemoteTrackingDialog(repositories[0]);
 	}
 
-	private static boolean shouldShowCheckoutRemoteTrackingDialog(String refName) {
+	private static boolean shouldShowCheckoutRemoteTrackingDialog(
+			String refName) {
 		boolean isRemoteTrackingBranch = refName != null
 				&& refName.startsWith(Constants.R_REMOTES);
 		if (isRemoteTrackingBranch) {
@@ -272,32 +354,29 @@ public class BranchOperationUI {
 		}
 	}
 
-	private String getTargetWithCheckoutRemoteTrackingDialog() {
+	private String getTargetWithCheckoutRemoteTrackingDialog(Repository repo) {
 		final String[] dialogResult = new String[1];
-		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				dialogResult[0] = getTargetWithCheckoutRemoteTrackingDialogInUI();
-			}
-		});
+		PlatformUI.getWorkbench().getDisplay().syncExec(
+				() -> dialogResult[0] = getTargetWithCheckoutRemoteTrackingDialogInUI(
+						repo));
+
 		return dialogResult[0];
 	}
 
-	private String getTargetWithCheckoutRemoteTrackingDialogInUI() {
+	private String getTargetWithCheckoutRemoteTrackingDialogInUI(
+			Repository repo) {
 		String[] buttons = new String[] {
 				UIText.BranchOperationUI_CheckoutRemoteTrackingAsLocal,
 				UIText.BranchOperationUI_CheckoutRemoteTrackingCommit,
 				IDialogConstants.CANCEL_LABEL };
-		MessageDialog questionDialog = new MessageDialog(
-				getShell(),
-				UIText.BranchOperationUI_CheckoutRemoteTrackingTitle,
-				null,
+		MessageDialog questionDialog = new MessageDialog(getShell(),
+				UIText.BranchOperationUI_CheckoutRemoteTrackingTitle, null,
 				UIText.BranchOperationUI_CheckoutRemoteTrackingQuestion,
 				MessageDialog.QUESTION, buttons, 0);
 		int result = questionDialog.open();
 		if (result == 0) {
 			// Check out as new local branch
-			CreateBranchWizard wizard = new CreateBranchWizard(repository,
+			CreateBranchWizard wizard = new CreateBranchWizard(repo,
 					target);
 			WizardDialog createBranchDialog = new WizardDialog(getShell(),
 					wizard);
@@ -317,30 +396,60 @@ public class BranchOperationUI {
 	}
 
 	/**
-	 * @param result
-	 *            the result to show
+	 * @param results
 	 */
-	private void show(final @NonNull CheckoutResult result) {
+	private void show(final @NonNull Map<Repository, CheckoutResult> results) {
+
+		if (allBranchOperationsSucceeded(results)) {
+
+			if (anyRepositoryIsInDetachedHeadState(results)) {
+				showDetachedHeadWarning();
+			}
+			return;
+		}
+
+		if (this.isSingleRepositoryOperation) {
+			Repository repo = repositories[0];
+			CheckoutResult result = results.get(repo);
+			handleSingleRepositoryCheckoutOperationResult(repo,
+					result);
+			return;
+		}
+
+		handleMultipleRepositoryCheckoutError(results);
+	}
+
+	private boolean allBranchOperationsSucceeded(
+			final @NonNull Map<Repository, CheckoutResult> results)
+	{
+		return results.values().stream()
+				.allMatch(r -> r.getStatus() == CheckoutResult.Status.OK);
+	}
+
+	private boolean anyRepositoryIsInDetachedHeadState(
+			final @NonNull Map<Repository, CheckoutResult> results) {
+		return results.keySet().stream()
+				.anyMatch(RepositoryUtil::isDetachedHead);
+	}
+
+	private void handleSingleRepositoryCheckoutOperationResult(Repository repository,
+			CheckoutResult result) {
+
 		if (result.getStatus() == CheckoutResult.Status.CONFLICTS) {
-			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					Shell shell = PlatformUI.getWorkbench()
-							.getActiveWorkbenchWindow().getShell();
+			PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+				Shell shell = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getShell();
 					CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
-							shell,
-							UIText.BranchResultDialog_CheckoutConflictsTitle,
-							NLS.bind(
-									UIText.BranchResultDialog_CheckoutConflictsMessage,
-									Repository.shortenRefName(target)),
-							repository, result.getConflictList());
-					cleanupUncomittedChangesDialog.open();
-					if (cleanupUncomittedChangesDialog.shouldContinue()) {
-						BranchOperationUI op = new BranchOperationUI(repository,
-								target, false);
-						op.start();
+						shell, UIText.BranchResultDialog_CheckoutConflictsTitle,
+						NLS.bind(
+								UIText.BranchResultDialog_CheckoutConflictsMessage,
+								Repository.shortenRefName(target)),
+						repository, result.getConflictList());
+				cleanupUncomittedChangesDialog.open();
+				if (cleanupUncomittedChangesDialog.shouldContinue()) {
+					BranchOperationUI.checkout(repository, target, false)
+							.start();
 					}
-				}
 			});
 		} else if (result.getStatus() == CheckoutResult.Status.NONDELETED) {
 			// double-check if the files are still there
@@ -351,31 +460,51 @@ public class BranchOperationUI {
 					show = true;
 					break;
 				}
+
 			if (!show)
 				return;
-			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-				@Override
-				public void run() {
+
+			PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
 					Shell shell = PlatformUI.getWorkbench()
 							.getActiveWorkbenchWindow().getShell();
-					new NonDeletedFilesDialog(shell, repository, result
-							.getUndeletedList()).open();
-				}
+					new NonDeletedFilesDialog(shell, repository,
+							result.getUndeletedList()).open();
 			});
-		} else if (result.getStatus() == CheckoutResult.Status.OK) {
-			if (RepositoryUtil.isDetachedHead(repository))
-				showDetachedHeadWarning();
+		} else {
+
+			String repoName = Activator.getDefault().getRepositoryUtil()
+					.getRepositoryName(repository);
+			String message = NLS.bind(
+					UIText.BranchOperationUI_CheckoutError_DialogMessage,
+					repoName, target);
+			PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+				Shell shell = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getShell();
+				MessageDialog.openError(shell,
+						UIText.BranchOperationUI_CheckoutError_DialogTitle,
+						message);
+			});
 		}
 	}
 
+	private void handleMultipleRepositoryCheckoutError(
+			Map<Repository, CheckoutResult> results) {
+
+		PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+			Shell shell = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getShell();
+				new MultiBranchOperationResultDialog(shell, results).open();
+			}
+		);
+	}
+
 	private void showDetachedHeadWarning() {
-		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-			@Override
-			public void run() {
+		PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
 				IPreferenceStore store = Activator.getDefault()
 						.getPreferenceStore();
 
-				if (store.getBoolean(UIPreferences.SHOW_DETACHED_HEAD_WARNING)) {
+				if (store
+						.getBoolean(UIPreferences.SHOW_DETACHED_HEAD_WARNING)) {
 					String toggleMessage = UIText.BranchResultDialog_DetachedHeadWarningDontShowAgain;
 
 					MessageDialogWithToggle dialog = new MessageDialogWithToggle(
@@ -384,16 +513,14 @@ public class BranchOperationUI {
 							UIText.BranchOperationUI_DetachedHeadTitle, null,
 							UIText.BranchOperationUI_DetachedHeadMessage,
 							MessageDialog.INFORMATION,
-							new String[] { IDialogConstants.CLOSE_LABEL },
-							0, toggleMessage, false);
+							new String[] { IDialogConstants.CLOSE_LABEL }, 0,
+							toggleMessage, false);
 					dialog.open();
 					if (dialog.getToggleState()) {
 						store.setValue(UIPreferences.SHOW_DETACHED_HEAD_WARNING,
 								false);
 					}
 				}
-			}
 		});
 	}
-
 }

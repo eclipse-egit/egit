@@ -19,7 +19,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
@@ -59,7 +61,16 @@ class BranchProjectTracker {
 
 	private static final String REPO_ROOT = "/"; //$NON-NLS-1$
 
-	private final Repository repository;
+	private final Repository[] repositories;
+
+	/**
+	 * Create tracker for repositories
+	 *
+	 * @param repositories
+	 */
+	public BranchProjectTracker(final Repository[] repositories) {
+		this.repositories = repositories;
+	}
 
 	/**
 	 * Create tracker for repository
@@ -67,12 +78,12 @@ class BranchProjectTracker {
 	 * @param repository
 	 */
 	public BranchProjectTracker(final Repository repository) {
-		this.repository = repository;
+		this.repositories = new Repository[] { repository };
 	}
 
-	private String getBranch() {
+	private String getBranch(Repository repo) {
 		try {
-			return repository.getBranch();
+			return repo.getBranch();
 		} catch (IOException e) {
 			return null;
 		}
@@ -91,40 +102,40 @@ class BranchProjectTracker {
 
 		ProjectTrackerMemento memento = new ProjectTrackerMemento();
 
-		ProjectTrackerPreferenceSnapshot snapshot = takeSnapshot();
-		if (snapshot != null) {
-			memento.addSnapshot(snapshot);
-		}
+		Stream.of(repositories) //
+				.map(this::takeSnapshot) //
+				.filter(Objects::nonNull) //
+				.forEach(x -> memento.addSnapshot(x));
 
 		return memento;
 	}
 
-	private ProjectTrackerPreferenceSnapshot takeSnapshot() {
+	private ProjectTrackerPreferenceSnapshot takeSnapshot(Repository repo) {
 
-		String branch = getBranch();
+		String branch = getBranch(repo);
 		if (StringUtils.isEmptyOrNull(branch))
 			return null;
 
-		List<String> projectPaths = getAssociatedProjectsPaths();
+		List<String> projectPaths = getAssociatedProjectsPaths(repo);
 		if (projectPaths.isEmpty()) {
 			return null;
 		}
 
-		return new ProjectTrackerPreferenceSnapshot(repository, branch,
+		return new ProjectTrackerPreferenceSnapshot(repo, branch,
 				projectPaths);
 	}
 
 	@NonNull
-	private List<String> getAssociatedProjectsPaths() {
+	private List<String> getAssociatedProjectsPaths(Repository repo) {
 
-		IProject[] projects = getValidOpenProjects();
+		IProject[] projects = getValidOpenProjects(repo);
 		if (projects == null) {
 			return Collections.emptyList();
 		}
 
 		List<String> projectPaths = new ArrayList<>();
 
-		final String workDir = repository.getWorkTree().getAbsolutePath();
+		final String workDir = repo.getWorkTree().getAbsolutePath();
 		for (IProject project : projects) {
 			IPath path = project.getLocation();
 			if (path == null) {
@@ -146,9 +157,9 @@ class BranchProjectTracker {
 		return projectPaths;
 	}
 
-	private IProject[] getValidOpenProjects() {
+	private IProject[] getValidOpenProjects(Repository repo) {
 		try {
-			return ProjectUtil.getValidOpenProjects(repository);
+			return ProjectUtil.getValidOpenProjects(repo);
 		} catch (CoreException e) {
 			return null;
 		}
@@ -185,26 +196,31 @@ class BranchProjectTracker {
 	 * @param monitor
 	 */
 	public void restore(final IProgressMonitor monitor) {
-		String branch = getBranch();
-		if (branch != null) {
-			restore(branch, monitor);
+
+		for (Repository repo : repositories) {
+			String branch = getBranch(repo);
+			if (branch != null) {
+				restore(repo, branch, monitor);
+			}
 		}
 	}
 
 	/**
 	 * Restore projects associated with the given branch to the workspace
 	 *
+	 * @param repo
 	 * @param branch
 	 * @param monitor
 	 */
-	public void restore(final String branch, final IProgressMonitor monitor) {
+	public void restore(Repository repo, final String branch,
+			final IProgressMonitor monitor) {
 		List<String> paths = ProjectTrackerPreferenceHelper
-				.restoreFromPreferences(repository, branch);
+				.restoreFromPreferences(repo, branch);
 		if (paths.size() == 0)
 			return;
 
 		Set<ProjectRecord> records = new LinkedHashSet<>();
-		File parent = repository.getWorkTree();
+		File parent = repo.getWorkTree();
 		for (String path : paths) {
 			File root;
 			if (!REPO_ROOT.equals(path)) {

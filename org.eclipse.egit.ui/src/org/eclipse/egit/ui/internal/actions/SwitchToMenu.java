@@ -20,9 +20,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Stream;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
@@ -266,16 +266,9 @@ public class SwitchToMenu extends ContributionItem implements
 		final MenuItem item = new MenuItem(menu, SWT.PUSH);
 		item.setText(shortName);
 
-		boolean allRepositoriesCheckedOut = true;
-		Map<Repository, String> repoToFullNameMap = new HashMap<>();
-		for (Repository repository : repositories) {
-			Map<String, Ref> refs = repository.getRefDatabase()
-					.getRefs(Constants.R_HEADS);
-			String fullName = refs.get(shortName).getName();
-			repoToFullNameMap.put(repository, fullName);
-			allRepositoriesCheckedOut &= fullName
-					.equals(repository.getFullBranch());
-		}
+		boolean allRepositoriesCheckedOut = Stream.of(repositories) //
+				.allMatch(r -> shortName.equals(getBranch(r)));
+
 		if (allRepositoriesCheckedOut)
 			item.setImage(checkedOutImage);
 		else
@@ -286,13 +279,17 @@ public class SwitchToMenu extends ContributionItem implements
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
-				for (Entry<Repository, String> entry : repoToFullNameMap
-						.entrySet()) {
-					BranchOperationUI.checkout(entry.getKey(), entry.getValue())
-							.start();
-				}
+				BranchOperationUI.checkout(repositories, shortName).start();
 			}
 		});
+	}
+
+	private String getBranch(Repository repo) {
+		try {
+			return repo.getBranch();
+		} catch (IOException e) {
+			return ""; //$NON-NLS-1$
+		}
 	}
 
 	private Map<String, Ref> getMostActiveBranches(final Repository repository,
