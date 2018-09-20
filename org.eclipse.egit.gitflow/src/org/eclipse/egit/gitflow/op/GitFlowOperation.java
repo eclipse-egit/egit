@@ -36,6 +36,7 @@ import org.eclipse.jgit.api.CheckoutResult.Status;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.RevWalkUtils;
@@ -179,18 +180,18 @@ abstract public class GitFlowOperation implements IEGitOperation {
 			}
 			SubMonitor progress = SubMonitor.convert(monitor, 2);
 			boolean dontCloseProjects = false;
-			BranchOperation branchOperation = new BranchOperation(
-					repository.getRepository(), targetBranchName,
-					dontCloseProjects);
+			Repository gitRepo = repository.getRepository();
+			BranchOperation branchOperation = new BranchOperation(gitRepo,
+					targetBranchName, dontCloseProjects);
 			branchOperation.execute(progress.newChild(1));
-			Status status = branchOperation.getResult().getStatus();
+			Status status = branchOperation.getResult(gitRepo).getStatus();
 			if (!CheckoutResult.Status.OK.equals(status)) {
 				throw new CoreException(error(NLS.bind(
 						CoreText.GitFlowOperation_unableToCheckout, branchName,
 						status.toString())));
 			}
-			MergeOperation mergeOperation = new MergeOperation(
-					repository.getRepository(), branchName);
+			MergeOperation mergeOperation = new MergeOperation(gitRepo,
+					branchName);
 			mergeOperation.setSquash(squash);
 			if (squash) {
 				mergeOperation.setCommit(true);
