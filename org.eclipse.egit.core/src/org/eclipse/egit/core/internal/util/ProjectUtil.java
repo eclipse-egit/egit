@@ -318,10 +318,9 @@ public class ProjectUtil {
 	 * @param fileList
 	 *            the list of files/directories to lookup
 	 * @return valid projects containing one of the paths
-	 * @throws CoreException
 	 */
 	public static IProject[] getProjectsContaining(Repository repository,
-			Collection<String> fileList) throws CoreException {
+			Collection<String> fileList) {
 		if (repository == null || repository.isBare()) {
 			return new IProject[0];
 		}
