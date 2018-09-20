@@ -30,6 +30,7 @@ import org.eclipse.jgit.api.CheckoutResult.Status;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.osgi.util.NLS;
 
@@ -95,10 +96,11 @@ public final class FeatureTrackOperation extends AbstractFeatureOperation {
 					BranchRebaseMode.NONE);
 			createLocalBranchOperation.execute(progress.newChild(1));
 
-			BranchOperation branchOperation = new BranchOperation(
-					repository.getRepository(), newLocalBranch);
+			Repository gitRepo = repository.getRepository();
+			BranchOperation branchOperation = new BranchOperation(gitRepo,
+					newLocalBranch);
 			branchOperation.execute(progress.newChild(1));
-			CheckoutResult result = branchOperation.getResult();
+			CheckoutResult result = branchOperation.getResult(gitRepo);
 			if (!Status.OK.equals(result.getStatus())) {
 				String errorMessage = NLS.bind(
 						CoreText.FeatureTrackOperation_checkoutReturned,
