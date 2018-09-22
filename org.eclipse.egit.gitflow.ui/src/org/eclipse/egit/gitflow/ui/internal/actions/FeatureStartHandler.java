@@ -19,6 +19,8 @@ import org.eclipse.egit.gitflow.op.FeatureStartOperation;
 import org.eclipse.egit.gitflow.ui.internal.JobFamilies;
 import org.eclipse.egit.gitflow.ui.internal.UIText;
 import org.eclipse.egit.gitflow.ui.internal.validation.FeatureNameValidator;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -44,8 +46,10 @@ public class FeatureStartHandler extends AbstractHandler {
 		}
 
 		final String featureName = inputDialog.getValue();
+		int timeout = Activator.getDefault().getPreferenceStore()
+				.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 		FeatureStartOperation featureStartOperation = new FeatureStartOperation(
-				gfRepo, featureName);
+				gfRepo, featureName, timeout);
 		JobUtil.scheduleUserWorkspaceJob(featureStartOperation,
 				UIText.FeatureStartHandler_startingNewFeature,
 				JobFamilies.GITFLOW_FAMILY);

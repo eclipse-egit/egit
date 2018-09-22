@@ -11,9 +11,12 @@
 package org.eclipse.egit.gitflow.op;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URISyntaxException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.gitflow.Activator;
 import org.eclipse.egit.gitflow.GitFlowConfig;
@@ -28,18 +31,49 @@ import org.eclipse.osgi.util.NLS;
  * git flow feature start
  */
 public final class FeatureStartOperation extends AbstractFeatureOperation {
+
+	private int timeoutInSeconds;
+
+	/**
+	 * @param repository
+	 * @param featureName
+	 * @param timeout
+	 *            number of seconds to wait (with no data transfer occurring)
+	 *            before aborting an IO read or write operation with this
+	 *            remote.
+	 * @since 5.2
+	 */
+	public FeatureStartOperation(GitFlowRepository repository,
+			String featureName, int timeout) {
+		super(repository, featureName);
+		this.timeoutInSeconds = timeout;
+	}
+
 	/**
 	 * @param repository
 	 * @param featureName
 	 */
 	public FeatureStartOperation(GitFlowRepository repository,
 			String featureName) {
-		super(repository, featureName);
+		this(repository, featureName, -1);
 	}
 
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
+		SubMonitor progress = SubMonitor.convert(monitor, 2);
 		GitFlowConfig config = repository.getConfig();
+		if (config.isFetchOnFeatureStart()) {
+			try {
+				fetch(progress.newChild(1), timeoutInSeconds);
+			} catch (InvocationTargetException e) {
+				throw new CoreException(Activator.error(e));
+			} catch (URISyntaxException e) {
+				// TODO: remove as soon as useless throws clause is removed from
+				// fetch(..)
+				throw new CoreException(Activator.error(e));
+			}
+		}
+		progress.setWorkRemaining(1);
 		handleDivergingDevelop(config);
 
 		String branchName = config.getFeatureBranchName(featureName);
@@ -47,7 +81,7 @@ public final class FeatureStartOperation extends AbstractFeatureOperation {
 		if (head == null) {
 			throw new IllegalStateException(NLS.bind(CoreText.StartOperation_unableToFindCommitFor, config.getDevelop()));
 		}
-		start(monitor, branchName, head);
+		start(progress.newChild(1), branchName, head);
 	}
 
 	private void handleDivergingDevelop(GitFlowConfig config)
