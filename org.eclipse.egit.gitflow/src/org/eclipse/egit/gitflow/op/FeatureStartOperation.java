@@ -11,9 +11,11 @@
 package org.eclipse.egit.gitflow.op;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.gitflow.Activator;
 import org.eclipse.egit.gitflow.GitFlowConfig;
@@ -28,18 +30,41 @@ import org.eclipse.osgi.util.NLS;
  * git flow feature start
  */
 public final class FeatureStartOperation extends AbstractFeatureOperation {
+
+	private int timeout;
+
+	/**
+	 * @param repository
+	 * @param featureName
+	 * @param timeout
+	 * @since 5.2
+	 */
+	public FeatureStartOperation(GitFlowRepository repository,
+			String featureName, int timeout) {
+		super(repository, featureName);
+		this.timeout = timeout;
+	}
+
 	/**
 	 * @param repository
 	 * @param featureName
 	 */
 	public FeatureStartOperation(GitFlowRepository repository,
 			String featureName) {
-		super(repository, featureName);
+		this(repository, featureName, -1);
 	}
 
 	@Override
 	public void execute(IProgressMonitor monitor) throws CoreException {
+		SubMonitor progress = SubMonitor.convert(monitor, 2);
 		GitFlowConfig config = repository.getConfig();
+		if (config.isFetchOnFeatureStart()) {
+			try {
+				fetch(progress.newChild(1), timeout);
+			} catch (InvocationTargetException e) {
+				throw new CoreException(Activator.error(e));
+			}
+		}
 		handleDivergingDevelop(config);
 
 		String branchName = config.getFeatureBranchName(featureName);
