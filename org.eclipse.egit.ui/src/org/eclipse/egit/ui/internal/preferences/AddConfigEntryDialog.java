@@ -82,9 +82,9 @@ public class AddConfigEntryDialog extends TitleAreaDialog {
 		Composite main = new Composite(titleParent, SWT.NONE);
 		main.setLayout(new GridLayout(2, false));
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
-		Label keylLabel = new Label(main, SWT.NONE);
-		keylLabel.setText(UIText.AddConfigEntryDialog_KeyLabel);
-		keylLabel.setToolTipText(UIText.AddConfigEntryDialog_ConfigKeyTooltip);
+		Label keyLabel = new Label(main, SWT.NONE);
+		keyLabel.setText(UIText.AddConfigEntryDialog_KeyLabel);
+		keyLabel.setToolTipText(UIText.AddConfigEntryDialog_ConfigKeyTooltip);
 		keyText = new Text(main, SWT.BORDER);
 		if (suggestedKey != null) {
 			keyText.setText(trimKey(suggestedKey));

@@ -37,7 +37,7 @@ import org.eclipse.jgit.revwalk.filter.RevFilter;
 public class CommitUtil {
 
 	private CommitUtil() {
-		// non instanciable utility class
+		// non instantiable utility class
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class CommitUtil {
 	 * @return a new list containing the sorted commits
 	 */
 	public static List<RevCommit> sortCommits(Collection<RevCommit> commits) {
-		Map<RevCommit, RevCommit> parentToChild = new HashMap<RevCommit, RevCommit>();
+		Map<RevCommit, RevCommit> parentToChild = new HashMap<>();
 		RevCommit firstCommit = null;
 		for (RevCommit commit : commits) {
 			RevCommit parentCommit = commit.getParent(0);
@@ -57,7 +57,7 @@ public class CommitUtil {
 				firstCommit = commit;
 		}
 
-		List<RevCommit> sortedCommits = new ArrayList<RevCommit>();
+		List<RevCommit> sortedCommits = new ArrayList<>();
 		sortedCommits.add(firstCommit);
 		RevCommit parentCommit = firstCommit;
 		for (;;) {

@@ -35,7 +35,7 @@ import org.eclipse.jgit.treewalk.filter.TreeFilter;
 public class RevUtils {
 
 	private RevUtils() {
-		// non instanciable utility class
+		// non instantiable utility class
 	}
 
 	/**
