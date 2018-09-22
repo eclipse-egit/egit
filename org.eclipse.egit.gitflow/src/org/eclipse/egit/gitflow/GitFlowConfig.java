@@ -69,6 +69,12 @@ public class GitFlowConfig {
 	/** Key for .git/config */
 	public static final String MERGE_KEY = "merge"; //$NON-NLS-1$
 
+	/** Key for .git/config */
+	public static final String FEATURE_START_FETCH_KEY = "fetch"; //$NON-NLS-1$
+
+	/** Name of .git/config sub section. */
+	public static final String FEATURE_START_SUBSECTION = "feature.start"; //$NON-NLS-1$
+
 	private Repository repository;
 
 	/**
@@ -308,5 +314,33 @@ public class GitFlowConfig {
 		StoredConfig config = repository.getConfig();
 		return config.getString(BRANCH_SECTION,
 				getFeatureBranchName(featureName), REMOTE_KEY);
+	}
+
+	/**
+	 * @param isFetchOnFeatureStart
+	 *            Whether or not to fetch from upstream before feature branch is
+	 *            created.
+	 * @throws IOException
+	 *
+	 * @since 5.2
+	 */
+	public void setFetchOnFeatureStart(boolean isFetchOnFeatureStart)
+			throws IOException {
+		StoredConfig config = repository.getConfig();
+		config.setBoolean(GITFLOW_SECTION, FEATURE_START_SUBSECTION, FEATURE_START_FETCH_KEY,
+				isFetchOnFeatureStart);
+		config.save();
+	}
+
+	/**
+	 * @return Whether or not the to fetch from upstream before feature branch
+	 *         is created.
+	 *
+	 * @since 5.2
+	 */
+	public boolean isFetchOnFeatureStart() {
+		StoredConfig config = repository.getConfig();
+		return config.getBoolean(GITFLOW_SECTION, FEATURE_START_SUBSECTION,
+				FEATURE_START_FETCH_KEY, false);
 	}
 }
