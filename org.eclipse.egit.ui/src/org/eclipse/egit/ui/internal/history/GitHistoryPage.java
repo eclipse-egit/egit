@@ -709,7 +709,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		public String toString() {
 			StringBuilder builder = new StringBuilder("Path: "); //$NON-NLS-1$
 			builder.append(getPath());
-			builder.append("regular: "); //$NON-NLS-1$
+			builder.append(", regular: "); //$NON-NLS-1$
 			builder.append(isRegularFile());
 
 			return builder.toString();
