@@ -53,13 +53,19 @@ public class UnmergedBranchDialog<T> extends MessageDialog {
 	@Override
 	protected Control createCustomArea(Composite parent) {
 		Composite area = new Composite(parent, SWT.NONE);
-		area.setLayoutData(new GridData(GridData.FILL_BOTH));
 		area.setLayout(new FillLayout());
 
 		TableViewer branchesList = new TableViewer(area);
 		branchesList.setContentProvider(ArrayContentProvider.getInstance());
 		branchesList.setLabelProvider(new GitLabelProvider());
 		branchesList.setInput(nodes);
+
+		// restrict height to 20 items
+		GridData layoutData = new GridData(GridData.FILL_BOTH);
+		layoutData.heightHint = Math.min(20, nodes.size() + 1)
+				* branchesList.getTable().getItemHeight();
+		area.setLayoutData(layoutData);
+
 		return area;
 	}
 
