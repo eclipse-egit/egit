@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "718a0fa4_e9f617b4",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-09-24T23:20:17Z",
+      "side": 1,
+      "message": "why don\u0027t you initialise intersection already in line 223 ?",
+      "revId": "dbeb2de95d409c3ae6f944a4fedef0ee0baf9449",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
