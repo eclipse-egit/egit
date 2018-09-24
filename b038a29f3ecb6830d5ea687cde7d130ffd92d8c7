@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83b9f169_c56b2239",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-09-24T23:28:13Z",
+      "side": 1,
+      "message": "I am not convinced, having 8 classes in a package is no clutter and if they are all in the same package we don\u0027t need to declare ProjectTrackerMemento public",
+      "revId": "b038a29f3ecb6830d5ea687cde7d130ffd92d8c7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
