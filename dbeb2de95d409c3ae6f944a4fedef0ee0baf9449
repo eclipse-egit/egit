@@ -16,6 +16,24 @@
       "revId": "dbeb2de95d409c3ae6f944a4fedef0ee0baf9449",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "628c0233_68dd31f8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-09-25T02:09:52Z",
+      "side": 1,
+      "message": "I use the null check to verify whether it is the first pass or not on the for loop. This let me add all the elements to the set, if it is the first pass, or take only the intersection (via retainAll) if it is not.",
+      "parentUuid": "718a0fa4_e9f617b4",
+      "revId": "dbeb2de95d409c3ae6f944a4fedef0ee0baf9449",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
