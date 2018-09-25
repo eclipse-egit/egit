@@ -34,6 +34,24 @@
       "revId": "dbeb2de95d409c3ae6f944a4fedef0ee0baf9449",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf88c4ee_923723bc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-09-25T06:56:51Z",
+      "side": 1,
+      "message": "isn\u0027t this simpler and avoids a nullable local variable and an if statement?\n\n \t\tSet\u003cString\u003e intersection \u003d new TreeSet\u003c\u003e(\n\t\t\t\t\t\tCommonUtils.STRING_ASCENDING_COMPARATOR);\n\t\tintersection.addAll(refs.keySet());\n\t\tfor (Map\u003cString, Ref\u003e refs : refMapping) {\n\t\t\tintersection.retainAll(refs.keySet());\n\t\t}\n\t\treturn intersection;",
+      "parentUuid": "628c0233_68dd31f8",
+      "revId": "dbeb2de95d409c3ae6f944a4fedef0ee0baf9449",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
