@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1767e670_7aa9770c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-09-25T02:27:44Z",
+      "side": 1,
+      "message": "Add return or else we would handle the results twice for single repository checkout operations",
+      "range": {
+        "startLine": 417,
+        "startChar": 3,
+        "endLine": 417,
+        "endChar": 9
+      },
+      "revId": "f466060cecd1f09e883531197ffcd7d45b7d9dcb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4daaa00a_cf2db8c0",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-09-25T02:27:44Z",
+      "side": 1,
+      "message": "We didn\u0027t need this check before because these cases that fall under this else clause were handled by throwing CoreException\u0027s from BranchOperation layer. Now that we supress the exceptions so that we can display them agreggated in the case of a multiple checkout operation, we have to handle it here.",
+      "range": {
+        "startLine": 476,
+        "startChar": 9,
+        "endLine": 476,
+        "endChar": 10
+      },
+      "revId": "f466060cecd1f09e883531197ffcd7d45b7d9dcb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
