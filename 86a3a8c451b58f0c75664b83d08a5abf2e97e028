@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca6d21ec_b19d079f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-09-26T12:20:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6f9e386_f8b5abdc",
+      "range": {
+        "startLine": 15,
+        "startChar": 70,
+        "endLine": 15,
+        "endChar": 71
+      },
+      "revId": "86a3a8c451b58f0c75664b83d08a5abf2e97e028",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fc61452_d684ddf2",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2018-09-23T08:09:19Z",
       "side": 1,
       "message": "its",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 4
+      },
+      "revId": "86a3a8c451b58f0c75664b83d08a5abf2e97e028",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c5f4c62_19a2f8ec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-09-26T12:20:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fc61452_d684ddf2",
       "range": {
         "startLine": 16,
         "startChar": 0,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "116bc294_b0d87447",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/FetchChangeFromGerritCommand.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-09-26T12:20:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54285704_db5748ea",
+      "revId": "86a3a8c451b58f0c75664b83d08a5abf2e97e028",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5208c71b_15b35983",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
         "patchSetId": 6
@@ -76,6 +142,24 @@
       "writtenOn": "2018-09-23T08:09:19Z",
       "side": 1,
       "message": "why do we also consider push URIs ? This is fetch from gerrit ...",
+      "revId": "86a3a8c451b58f0c75664b83d08a5abf2e97e028",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a41f2e5_b443f2f6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-09-26T12:20:35Z",
+      "side": 1,
+      "message": "As I haven\u0027t touched this part (just indented the lines), I can\u0027t tell why this was added.",
+      "parentUuid": "5208c71b_15b35983",
       "revId": "86a3a8c451b58f0c75664b83d08a5abf2e97e028",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "801f1b07_7349f129",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-09-26T12:20:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ed54fd8_ec329b54",
+      "range": {
+        "startLine": 564,
+        "startChar": 38,
+        "endLine": 566,
+        "endChar": 21
+      },
+      "revId": "86a3a8c451b58f0c75664b83d08a5abf2e97e028",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a540ee63_faf8a13a",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
         "patchSetId": 6
@@ -116,6 +224,24 @@
       "writtenOn": "2018-09-23T08:09:19Z",
       "side": 1,
       "message": "why do you remove the import ?\nhow is this related to this change ?",
+      "revId": "86a3a8c451b58f0c75664b83d08a5abf2e97e028",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14a59bfa_4fffd352",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1376,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-09-26T12:20:35Z",
+      "side": 1,
+      "message": "It was removed when I tried saving the file the cleanup actions ran over it. When I then tried to revert it, it gave me errors.\n\nIts reverted now again.",
+      "parentUuid": "a540ee63_faf8a13a",
       "revId": "86a3a8c451b58f0c75664b83d08a5abf2e97e028",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "8338edba_2561228c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangeWizard.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-09-26T12:20:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "945df59d_a15bad1c",
+      "range": {
+        "startLine": 45,
+        "startChar": 32,
+        "endLine": 45,
+        "endChar": 53
+      },
+      "revId": "86a3a8c451b58f0c75664b83d08a5abf2e97e028",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9fe903f_1d1737de",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangeWizard.java",
         "patchSetId": 6
@@ -156,6 +306,24 @@
       "writtenOn": "2018-09-23T08:09:19Z",
       "side": 1,
       "message": "How does replacing a NPE with an AssertionException help ?\n\nI\u0027d rather try to annotate the method\u0027s parameter with @NonNull and watch out for \"Null type safety\" warnings in Eclipse and fix them.",
+      "revId": "86a3a8c451b58f0c75664b83d08a5abf2e97e028",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f2d0e2a_66aa9d36",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangeWizard.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-09-26T12:20:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9fe903f_1d1737de",
       "revId": "86a3a8c451b58f0c75664b83d08a5abf2e97e028",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -185,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "1fd68364_c098c92c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangeWizard.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-09-26T12:20:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ad66af1_9defc6c2",
+      "range": {
+        "startLine": 55,
+        "startChar": 32,
+        "endLine": 55,
+        "endChar": 53
+      },
+      "revId": "86a3a8c451b58f0c75664b83d08a5abf2e97e028",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a9147f9_45f7804b",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangeWizard.java",
         "patchSetId": 6
@@ -196,6 +388,24 @@
       "writtenOn": "2018-09-23T08:09:19Z",
       "side": 1,
       "message": "@NonNull ?",
+      "revId": "86a3a8c451b58f0c75664b83d08a5abf2e97e028",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3149282f_c9eaacec",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangeWizard.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-09-26T12:20:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a9147f9_45f7804b",
       "revId": "86a3a8c451b58f0c75664b83d08a5abf2e97e028",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -225,6 +435,30 @@
     },
     {
       "key": {
+        "uuid": "c8dbbd2c_c3836bdc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangeWizard.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-09-26T12:20:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2934f59_72508204",
+      "range": {
+        "startLine": 83,
+        "startChar": 27,
+        "endLine": 83,
+        "endChar": 48
+      },
+      "revId": "86a3a8c451b58f0c75664b83d08a5abf2e97e028",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dc1af18_3c4df8ec",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 6
@@ -236,6 +470,30 @@
       "writtenOn": "2018-09-23T08:09:19Z",
       "side": 1,
       "message": "remove this if you don\u0027t give the repository name anymore",
+      "range": {
+        "startLine": 996,
+        "startChar": 59,
+        "endLine": 996,
+        "endChar": 74
+      },
+      "revId": "86a3a8c451b58f0c75664b83d08a5abf2e97e028",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3de2373_39e7595d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-09-26T12:20:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dc1af18_3c4df8ec",
       "range": {
         "startLine": 996,
         "startChar": 59,

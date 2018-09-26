@@ -16,6 +16,24 @@
       "revId": "dcd36536f35c6ea3046b5d8bc7fe9e209a7b59dc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16b3eb9d_ee82c23d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-09-26T12:20:35Z",
+      "side": 0,
+      "message": "We are always reevaluating which repository should be selected. That\u0027s why I removed this part (it wasn\u0027t used anymore). See L510 for the current state.",
+      "parentUuid": "92dbf33b_fc92fe71",
+      "revId": "dcd36536f35c6ea3046b5d8bc7fe9e209a7b59dc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
