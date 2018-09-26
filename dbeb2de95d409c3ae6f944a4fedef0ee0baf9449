@@ -52,6 +52,24 @@
       "revId": "dbeb2de95d409c3ae6f944a4fedef0ee0baf9449",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a828fc15_95446504",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-09-26T03:36:25Z",
+      "side": 1,
+      "message": "That seems simpler indeed, but I couldn\u0027t see where to get the first reference to `refs` to jump-start the intersection (addAll) set without adding extra ifs. I tried coming up with a solution using Java 8. How do you feel about this one:\n\nprivate Set\u003cString\u003e getBranchNameIntersection(\n\t\tList\u003cMap\u003cString, Ref\u003e\u003e refMapping) {\n\tSet\u003cString\u003e identity \u003d new TreeSet\u003c\u003e(\n\t\t\tCommonUtils.STRING_ASCENDING_COMPARATOR);\n\tidentity.addAll(refMapping.stream() //\n\t\t\t.map(e -\u003e e.keySet()) //\n\t\t\t.findFirst() //\n\t\t\t.orElse(Collections.emptySet()) //\n\t);\n\n\tSet\u003cString\u003e intersection \u003d refMapping.stream() //\n\t\t\t.skip(1) // Used as the identity\n\t\t\t.map(Map::keySet) //\n\t\t\t.reduce(identity, (acc, elem) -\u003e {\n\t\t\t\tacc.retainAll(elem);\n\t\t\t\treturn acc;\n\t\t\t});\n\treturn intersection;\n}",
+      "parentUuid": "cf88c4ee_923723bc",
+      "revId": "dbeb2de95d409c3ae6f944a4fedef0ee0baf9449",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
