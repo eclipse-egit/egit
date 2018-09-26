@@ -283,8 +283,10 @@ class CommitGraphTable {
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				ISelection s = event.getSelection();
-				if (s.isEmpty() || !(s instanceof IStructuredSelection))
+				if (s.isEmpty() || !(s instanceof IStructuredSelection)) {
+					copy.setEnabled(false);
 					return;
+				}
 				final IStructuredSelection iss = (IStructuredSelection) s;
 				commitToShow = (PlotCommit<?>) iss.getFirstElement();
 
