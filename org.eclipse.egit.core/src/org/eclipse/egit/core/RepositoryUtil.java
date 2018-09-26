@@ -184,7 +184,7 @@ public class RepositoryUtil {
 	 * <li>Tags take precedence over branches</li>
 	 * <li>Local branches take preference over remote branches</li>
 	 * <li>Newer references take precedence over older ones where time stamps
-	 * are available. Use commiter time stamp from commit if no stamp can be
+	 * are available. Use committer time stamp from commit if no stamp can be
 	 * found on the tag</li>
 	 * <li>If there are still ambiguities, the reference name with the highest
 	 * lexicographic value will be returned</li>
@@ -416,7 +416,7 @@ public class RepositoryUtil {
 		synchronized (prefs) {
 			dirString = prefs.get(PREFS_DIRECTORIES_REL, ""); //$NON-NLS-1$
 			if (dirString.equals("")) { //$NON-NLS-1$
-				dirs = migrateAbolutePaths();
+				dirs = migrateAbsolutePaths();
 			} else {
 				dirs = toDirSet(dirString);
 			}
@@ -431,7 +431,7 @@ public class RepositoryUtil {
 	 *
 	 * @return set of absolute paths of all configured git repositories
 	 */
-	private Set<String> migrateAbolutePaths() {
+	private Set<String> migrateAbsolutePaths() {
 		String dirString;
 		Set<String> dirs;
 		dirString = prefs.get(PREFS_DIRECTORIES, ""); //$NON-NLS-1$
