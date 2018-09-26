@@ -283,8 +283,10 @@ class CommitGraphTable {
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				ISelection s = event.getSelection();
-				if (s.isEmpty() || !(s instanceof IStructuredSelection))
+				if (s.isEmpty() || !(s instanceof IStructuredSelection)) {
+					copy.setEnabled(false);
 					return;
+				}
 				final IStructuredSelection iss = (IStructuredSelection) s;
 				commitToShow = (PlotCommit<?>) iss.getFirstElement();
 
@@ -355,12 +357,17 @@ class CommitGraphTable {
 			}
 		});
 
-		menuMgr.add(new Separator(IWorkbenchActionConstants.HISTORY_GROUP));
-		menuMgr.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-		menuMgr.add(new Separator());
-		menuMgr.add(copy);
 		Control c = getTable();
-		menuMgr.addMenuListener(manager -> c.setFocus());
+		menuMgr.setRemoveAllWhenShown(true);
+		menuMgr.addMenuListener(manager -> {
+			c.setFocus();
+			menuMgr.add(new Separator(IWorkbenchActionConstants.HISTORY_GROUP));
+			menuMgr.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+			if (copy.isEnabled()) {
+				menuMgr.add(new Separator());
+				menuMgr.add(copy);
+			}
+		});
 		c.setMenu(menuMgr.createContextMenu(c));
 	}
 
