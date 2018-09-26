@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f193ff20_5bd035e2",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/FetchChangeFromGerritCommand.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-26T15:37:32Z",
+      "side": 1,
+      "message": "Why can\u0027t it? What if the active editor is for a file that is not in any git repository?",
+      "revId": "34143b9075262b8acc17da7233d03e0e100c9b65",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e20ee82_69ecf554",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-26T15:37:32Z",
+      "side": 1,
+      "message": "Previously, if the clipboard contained a git fetch command as provided by Gerrit (top right, \"Download\", on a change page), the dialog would pre-select that URI. I think by removing this defaultUri this functionality is no longer available. (Didn\u0027t try the change yet, though.)",
+      "revId": "34143b9075262b8acc17da7233d03e0e100c9b65",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83ce7295_19a2b4b6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-26T15:37:32Z",
+      "side": 1,
+      "message": "How does this perform? This runs though all configs of all repositories. I typically have some 20+ repositories in my git repo view. I\u0027m not convinced this is a good idea.",
+      "revId": "34143b9075262b8acc17da7233d03e0e100c9b65",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
