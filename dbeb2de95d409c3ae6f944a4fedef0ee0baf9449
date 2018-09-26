@@ -88,6 +88,24 @@
       "revId": "dbeb2de95d409c3ae6f944a4fedef0ee0baf9449",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b244523_5c0454cb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-26T15:59:54Z",
+      "side": 1,
+      "message": "If you want to get the if out of the loop, good old iterator() should be good enough:\n\n  Iterator\u003cMap\u003cString, Ref\u003e\u003e iterator \u003d refMappings.iterator();\n  if (!iterator.hasNext()) {\n    return Collections.emptySet();\n  }\n  Set\u003cString\u003e intersection \u003d new TreeSet\u003c\u003e(\n    CommonUtils.STRING_ASCENDING_COMPARATOR);\n  intersection.addAll(iterator.next().keySet());\n  iterator.forEachRemaining(map -\u003e intersection.retainAll(map.keySet()));\n  return intersection;\n  \nOr am I missing something, too?",
+      "parentUuid": "0db6d448_d9181b69",
+      "revId": "dbeb2de95d409c3ae6f944a4fedef0ee0baf9449",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
