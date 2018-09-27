@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "082a883d_0a43b23b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-27T14:08:43Z",
+      "side": 1,
+      "message": "Also change this to\n\n  Control c \u003d getTable();\n  menuMgr.setRemoveAllWhenShown(true);\n  menuMgr.addMenuListener(manager -\u003e {\n    c.setFocus();\n    menuMgr.add(new Separator(IWorkbenchActionConstants.HISTORY_GROUP));\n    menuMgr.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));\n    if (copy.isEnabled()) {\n      menuMgr.add(new Separator());\n      menuMgr.add(copy);\n    }\n  });",
+      "range": {
+        "startLine": 360,
+        "startChar": 0,
+        "endLine": 365,
+        "endChar": 51
+      },
+      "revId": "277d8a12dd2ba80ce602af1b1488853ce83d38e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
