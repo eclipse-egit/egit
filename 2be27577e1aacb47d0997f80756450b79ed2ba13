@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8437d016_663f980a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-27T13:31:38Z",
+      "side": 1,
+      "message": "This does not match the indentation in the table header.",
+      "revId": "2be27577e1aacb47d0997f80756450b79ed2ba13",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4e0ba31_21326a63",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-27T13:31:38Z",
+      "side": 1,
+      "message": "Why the heck are we painting all columns ourselves? We only need to draw column 1 containing the graphical commit tree.\n\nThis suggests a nice two-liner to fix this: replace above by\n\n  event.index \u003d\u003d 1\n\nand...",
+      "range": {
+        "startLine": 529,
+        "startChar": 8,
+        "endLine": 529,
+        "endChar": 44
+      },
+      "revId": "2be27577e1aacb47d0997f80756450b79ed2ba13",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1feb4345_5953dc89",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-27T13:31:38Z",
+      "side": 1,
+      "message": "... change this to\n\n  if (event.index \u003d\u003d 1) {\n    doPaint(event);\n  }",
+      "range": {
+        "startLine": 537,
+        "startChar": 4,
+        "endLine": 537,
+        "endChar": 19
+      },
+      "revId": "2be27577e1aacb47d0997f80756450b79ed2ba13",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
