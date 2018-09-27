@@ -106,6 +106,24 @@
       "revId": "dbeb2de95d409c3ae6f944a4fedef0ee0baf9449",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37498b77_8738ece1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-09-27T03:02:49Z",
+      "side": 1,
+      "message": "Nope, it worked and looks really neat. I uploaded a new patch using this version. Thanks.",
+      "parentUuid": "6b244523_5c0454cb",
+      "revId": "dbeb2de95d409c3ae6f944a4fedef0ee0baf9449",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
