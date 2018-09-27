@@ -125,6 +125,8 @@ class CommitGraphTable {
 
 	private static final String LINESEP = System.getProperty("line.separator"); //$NON-NLS-1$
 
+	private static final int TEXT_INDENTATION = 2;
+
 	private final Composite tableContainer;
 
 	private final TableViewer table;
@@ -570,9 +572,19 @@ class CommitGraphTable {
 		lbl = (ITableLabelProvider) table.getLabelProvider();
 		txt = lbl.getColumnText(c, event.index);
 
+		TableColumn column = table.getTable().getColumn(event.index);
+
 		final Point textsz = event.gc.textExtent(txt);
 		final int texty = (event.height - textsz.y) / 2;
-		event.gc.drawString(txt, event.x, event.y + texty, true);
+
+		int textx;
+		if (column.getAlignment() == SWT.RIGHT) {
+			int columnWidth = column.getWidth();
+			textx = (columnWidth - textsz.x) - TEXT_INDENTATION;
+		} else {
+			textx = TEXT_INDENTATION;
+		}
+		event.gc.drawString(txt, event.x + textx, event.y + texty, true);
 	}
 
 	/**
