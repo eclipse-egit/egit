@@ -16,6 +16,24 @@
       "revId": "6c019fd194a83e1c488195f809e1892216ce744c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "831b1c01_06923676",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-09-28T08:44:06Z",
+      "side": 1,
+      "message": "Done\n\nI should have read your comment more carefully, instead of just replacing the complete block with your suggestion. Sorry.",
+      "parentUuid": "0dfb2a97_01273988",
+      "revId": "6c019fd194a83e1c488195f809e1892216ce744c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
