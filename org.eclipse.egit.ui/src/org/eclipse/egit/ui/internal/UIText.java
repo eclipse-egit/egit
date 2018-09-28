@@ -4043,6 +4043,7 @@ public class UIText extends NLS {
 	/** */
 	public static String GitSelectRepositoryPage_PleaseSelectMessage;
 
+
 	/** */
 	public static String GitSelectWizardPage_ImportAsGeneralButton;
 
@@ -4057,6 +4058,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitSelectWizardPage_UseNewProjectsWizardButton;
+
+	/** */
+	public static String GerritSelectRepositoryPage_PageTitle;
 
 	/** */
 	public static String MergeAction_CannotMerge;
@@ -5607,12 +5611,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitModelSynchronize_fetchGitDataJobName;
-
-	/** */
-	public static String FetchChangeFromGerritCommand_noRepositorySelectedTitle;
-
-	/** */
-	public static String FetchChangeFromGerritCommand_noRepositorySelectedMessage;
 
 	/** */
 	public static String RebasePulldownAction_Continue;

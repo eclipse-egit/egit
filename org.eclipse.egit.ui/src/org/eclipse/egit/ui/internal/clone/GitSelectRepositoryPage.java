@@ -29,8 +29,8 @@ import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
-import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider;
 import org.eclipse.egit.ui.internal.repository.RepositorySearchWizard;
+import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.dialogs.Dialog;
@@ -167,33 +167,6 @@ public class GitSelectRepositoryPage extends WizardPage {
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(tb);
 		GridDataFactory.fillDefaults().grab(false, true).applyTo(tb);
 
-		addRepo = new Button(tb, SWT.PUSH);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL,
-				SWT.BEGINNING).applyTo(addRepo);
-		addRepo.setText(UIText.GitSelectRepositoryPage_AddButton);
-		addRepo.setToolTipText(UIText.GitSelectRepositoryPage_AddTooltip);
-		addRepo.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				List<String> configuredDirs = util.getConfiguredRepositories();
-				RepositorySearchWizard wizard = new RepositorySearchWizard(
-						configuredDirs, allowBare);
-				WizardDialog dlg = new WizardDialog(getShell(), wizard);
-				if (dlg.open() == Window.OK
-						&& !wizard.getDirectories().isEmpty()) {
-					Set<String> dirs = wizard.getDirectories();
-					for (String dir : dirs) {
-						File gitDir = FileUtils.canonicalize(new File(dir));
-						GerritUtil.tryToAutoConfigureForGerrit(gitDir);
-						util.addConfiguredRepository(gitDir);
-					}
-					checkPage();
-				}
-			}
-
-		});
-
 		if (!allowBare) {
 			bareMsg = new Composite(main, SWT.NONE);
 			bareMsg.setLayout(new RowLayout());
@@ -225,7 +198,9 @@ public class GitSelectRepositoryPage extends WizardPage {
 			}
 		});
 
-		tv.setInput(util.getConfiguredRepositories());
+		createAddRepositoryButton(tb);
+
+		tv.setInput(getInitialRepositories());
 
 		configChangeListener = new IPreferenceChangeListener() {
 			@Override
@@ -249,6 +224,41 @@ public class GitSelectRepositoryPage extends WizardPage {
 		Dialog.applyDialogFont(main);
 		setControl(main);
 
+	}
+
+	/**
+	 * Creates the addRepo button
+	 *
+	 * @param tb
+	 *            - the parent @{link Composite}
+	 */
+	protected void createAddRepositoryButton(Composite tb) {
+		addRepo = new Button(tb, SWT.PUSH);
+		GridDataFactory.fillDefaults().grab(true, false)
+				.align(SWT.FILL, SWT.BEGINNING).applyTo(addRepo);
+		addRepo.setText(UIText.GitSelectRepositoryPage_AddButton);
+		addRepo.setToolTipText(UIText.GitSelectRepositoryPage_AddTooltip);
+		addRepo.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				List<String> configuredDirs = util.getConfiguredRepositories();
+				RepositorySearchWizard wizard = new RepositorySearchWizard(
+						configuredDirs, allowBare);
+				WizardDialog dlg = new WizardDialog(getShell(), wizard);
+				if (dlg.open() == Window.OK
+						&& !wizard.getDirectories().isEmpty()) {
+					Set<String> dirs = wizard.getDirectories();
+					for (String dir : dirs) {
+						File gitDir = FileUtils.canonicalize(new File(dir));
+						GerritUtil.tryToAutoConfigureForGerrit(gitDir);
+						util.addConfiguredRepository(gitDir);
+					}
+					checkPage();
+				}
+			}
+
+		});
 	}
 
 	@Override
@@ -279,7 +289,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 
 	private void refreshRepositoryList() {
 		List<?> dirsBefore = (List<?>) tv.getInput();
-		List<String> dirsAfter = util.getConfiguredRepositories();
+		List<String> dirsAfter = getInitialRepositories();
 		if (dirsBefore == null) {
 			dirsBefore = Collections.emptyList();
 		}
@@ -336,5 +346,12 @@ public class GitSelectRepositoryPage extends WizardPage {
 		super.dispose();
 		util.getPreferences().removePreferenceChangeListener(
 				configChangeListener);
+	}
+
+	/**
+	 * @return List of all repositories that should be considered in the page
+	 */
+	protected List<String> getInitialRepositories() {
+		return util.getConfiguredRepositories();
 	}
 }
