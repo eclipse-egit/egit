@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96447b93_7de9d9e9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/FetchChangeFromGerritCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-28T09:14:29Z",
+      "side": 1,
+      "message": "We\u0027ll have to think carefully about this. This would also include submodule repos. Which may be fine, but I\u0027m not sure.\n\nI suggest for now to use simply RepositoryUtil.getConfiguredRepositories(). Which is a list of strings, but the RepositoriesViewContentProvider can handle that. The RepositoryUtil can be gotten from the EGit UI Activator.",
+      "revId": "0e74299dea767760c81175ad4d3f038fead3475d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "38e2e9cb_0f0d5afa",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/FetchChangeFromGerritCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-28T09:14:29Z",
+      "side": 1,
+      "message": "If you want only the configured Gerrit repos something like the following should work:\n\n  RepositoryUtil util \u003d Activator.getDefault().getRepositoryUtil();\n  List\u003cString\u003e configuredRepos \u003d util.getConfiguredRepositories();\n  List\u003cRepository\u003e gerritRepos \u003d configuredRepos.stream().map(name -\u003e {\n    File gitDir \u003d new File(name);\n    if (gitDir.exists()) {\n      Repository repo \u003d repositoryCache.lookupRepository(gitDir);\n      if (ResourcePropertyTester.hasGerritConfiguration(repo)) {\n        return repo;\n      }\n    }\n    return null;\n  }).filter(r -\u003e r !\u003d null).collect(Collectors.toList());\n\nYes, that will still query all repos up front. But at least it\u0027ll occur only in this special case. Normally there _is_ a repo defined in the event when this command is invoked.\n\nBut if done here it\u0027ll block the UI. So use a Wizard with a single GitSelectRepositoryPage and having a progress bar, and run this in a modal context.\n\nYou will have to adapt the GitSelectRepositoryPage to be able to configure which repositories should be shown. Maybe add a protected getInitialRepositories() operation, then use a subclass here in which you override this. Use the this.getWizard().getContainer().run() inside the GitSelectRepositoryPage() to call that.",
+      "revId": "0e74299dea767760c81175ad4d3f038fead3475d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9865d395_7b8c2c52",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/FetchChangeFromGerritCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-28T09:14:29Z",
+      "side": 1,
+      "message": "I think you should be able to use RepositoriesViewContentProvider and a RepositoryTreeNodeLabelProvider here. See GitSelectRepositoryPage for inspiration. Probably means that you can\u0027t use a ElementListSelectionDialog, though.\n\nBut if you use a wizard with a GitSelectRepositoryPage this problem will disappear.",
+      "range": {
+        "startLine": 46,
+        "startChar": 16,
+        "endLine": 46,
+        "endChar": 49
+      },
+      "revId": "0e74299dea767760c81175ad4d3f038fead3475d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e82c4c38_1ee7ce43",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/FetchChangeFromGerritCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-28T09:14:29Z",
+      "side": 1,
+      "message": "RepositoryUtil.getRepositoryName(repository)",
+      "revId": "0e74299dea767760c81175ad4d3f038fead3475d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
