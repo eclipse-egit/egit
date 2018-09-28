@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dfb2a97_01273988",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-28T08:25:51Z",
+      "side": 1,
+      "message": "You lost\n\n  c.setMenu(menuMgr.createContextMenu(c));\n\nhere. (After the lambda.)",
+      "revId": "6c019fd194a83e1c488195f809e1892216ce744c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
