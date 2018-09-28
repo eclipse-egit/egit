@@ -14,12 +14,16 @@ package org.eclipse.egit.ui.internal.commands.shared;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.NonBlockingWizardDialog;
 import org.eclipse.egit.ui.internal.fetch.FetchGerritChangeWizard;
-import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -31,13 +35,27 @@ public class FetchChangeFromGerritCommand extends AbstractSharedCommandHandler {
 		Repository repository = getRepository(event);
 		if (repository == null) {
 			Shell shell = getShell(event);
-			MessageDialog
-					.openInformation(
-							shell,
-							UIText.FetchChangeFromGerritCommand_noRepositorySelectedTitle,
-							UIText.FetchChangeFromGerritCommand_noRepositorySelectedMessage);
+			RepositoryCache repositoryCache = Activator.getDefault()
+					.getRepositoryCache();
+			Repository[] repositories = repositoryCache.getAllRepositories();
+			// This should only show gerrit configured repositories.
+			// But there is no way to retrieve all gerrit configured
+			// repositories (AFAICS)
 
-			return null;
+			ElementListSelectionDialog repositorySelectionDialog = new ElementListSelectionDialog(
+					shell, new NoRepositorySelectedLabelProvider());
+			repositorySelectionDialog.setElements(repositories);
+
+			repositorySelectionDialog.setTitle(
+					UIText.FetchChangeFromGerritCommand_noRepositorySelectedTitle);
+
+			if (repositorySelectionDialog.open() != Window.OK) {
+				return null;
+			} else {
+				repository = (Repository) repositorySelectionDialog
+						.getResult()[0]; // Not the best solution I suppose. Any
+											// thoughts on this?
+			}
 		}
 
 		FetchGerritChangeWizard wiz = new FetchGerritChangeWizard(repository);
@@ -46,5 +64,20 @@ public class FetchChangeFromGerritCommand extends AbstractSharedCommandHandler {
 		dlg.setHelpAvailable(false);
 		dlg.open();
 		return null;
+	}
+
+	class NoRepositorySelectedLabelProvider extends LabelProvider {
+		@Override
+		public String getText(Object element) {
+			if (element instanceof Repository) {
+
+				Repository repository = (Repository) element;
+				// I couldn't figure out how to get the correct name of a
+				// repository.
+				// Like "egit" or "jgit".
+				return repository.toString();
+			}
+			return super.getText(element);
+		}
 	}
 }
