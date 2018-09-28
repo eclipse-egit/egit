@@ -29,8 +29,8 @@ import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
-import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider;
 import org.eclipse.egit.ui.internal.repository.RepositorySearchWizard;
+import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.dialogs.Dialog;
@@ -72,6 +72,8 @@ public class GitSelectRepositoryPage extends WizardPage {
 
 	private final boolean allowBare;
 
+	private final boolean allowAdd;
+
 	private TreeViewer tv;
 
 	private Button addRepo;
@@ -85,7 +87,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 	 * repositories to be selected.
 	 */
 	public GitSelectRepositoryPage() {
-		this(true);
+		this(true, true);
 	}
 
 	/**
@@ -95,11 +97,24 @@ public class GitSelectRepositoryPage extends WizardPage {
 	 *            whether bare repositories shall be shown
 	 */
 	public GitSelectRepositoryPage(boolean allowBare) {
+		this(allowBare, true);
+	}
+
+	/**
+	 * Creates a new {@link GitSelectRepositoryPage}
+	 *
+	 * @param allowBare
+	 *            - whether bare repositories shall be shown
+	 * @param allowAdd
+	 *            - whether the dialog should show an add button
+	 */
+	public GitSelectRepositoryPage(boolean allowBare, boolean allowAdd) {
 		super(GitSelectRepositoryPage.class.getName());
 		setTitle(UIText.GitSelectRepositoryPage_PageTitle);
 		setDescription(UIText.GitSelectRepositoryPage_PageMessage);
 		util = Activator.getDefault().getRepositoryUtil();
 		this.allowBare = allowBare;
+		this.allowAdd = allowAdd;
 	}
 
 	/**
@@ -117,7 +132,9 @@ public class GitSelectRepositoryPage extends WizardPage {
 	public void createControl(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);
 
-		GridLayoutFactory.fillDefaults().numColumns(2).margins(0, 0).applyTo(
+		GridLayoutFactory.fillDefaults().numColumns(allowAdd ? 2 : 1)
+				.margins(0, 0)
+				.applyTo(
 				main);
 
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
@@ -163,36 +180,6 @@ public class GitSelectRepositoryPage extends WizardPage {
 		});
 		tv.setLabelProvider(new RepositoryTreeNodeLabelProvider());
 
-		Composite tb = new Composite(main, SWT.NONE);
-		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(tb);
-		GridDataFactory.fillDefaults().grab(false, true).applyTo(tb);
-
-		addRepo = new Button(tb, SWT.PUSH);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL,
-				SWT.BEGINNING).applyTo(addRepo);
-		addRepo.setText(UIText.GitSelectRepositoryPage_AddButton);
-		addRepo.setToolTipText(UIText.GitSelectRepositoryPage_AddTooltip);
-		addRepo.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				List<String> configuredDirs = util.getConfiguredRepositories();
-				RepositorySearchWizard wizard = new RepositorySearchWizard(
-						configuredDirs, allowBare);
-				WizardDialog dlg = new WizardDialog(getShell(), wizard);
-				if (dlg.open() == Window.OK
-						&& !wizard.getDirectories().isEmpty()) {
-					Set<String> dirs = wizard.getDirectories();
-					for (String dir : dirs) {
-						File gitDir = FileUtils.canonicalize(new File(dir));
-						GerritUtil.tryToAutoConfigureForGerrit(gitDir);
-						util.addConfiguredRepository(gitDir);
-					}
-					checkPage();
-				}
-			}
-
-		});
 
 		if (!allowBare) {
 			bareMsg = new Composite(main, SWT.NONE);
@@ -225,7 +212,42 @@ public class GitSelectRepositoryPage extends WizardPage {
 			}
 		});
 
-		tv.setInput(util.getConfiguredRepositories());
+		if (allowAdd) {
+
+			Composite tb = new Composite(main, SWT.NONE);
+			GridLayoutFactory.fillDefaults().numColumns(1).applyTo(tb);
+			GridDataFactory.fillDefaults().grab(false, true).applyTo(tb);
+
+			addRepo = new Button(tb, SWT.PUSH);
+			GridDataFactory.fillDefaults().grab(true, false)
+					.align(SWT.FILL, SWT.BEGINNING).applyTo(addRepo);
+			addRepo.setText(UIText.GitSelectRepositoryPage_AddButton);
+			addRepo.setToolTipText(UIText.GitSelectRepositoryPage_AddTooltip);
+			addRepo.addSelectionListener(new SelectionAdapter() {
+
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					List<String> configuredDirs = util
+							.getConfiguredRepositories();
+					RepositorySearchWizard wizard = new RepositorySearchWizard(
+							configuredDirs, allowBare);
+					WizardDialog dlg = new WizardDialog(getShell(), wizard);
+					if (dlg.open() == Window.OK
+							&& !wizard.getDirectories().isEmpty()) {
+						Set<String> dirs = wizard.getDirectories();
+						for (String dir : dirs) {
+							File gitDir = FileUtils.canonicalize(new File(dir));
+							GerritUtil.tryToAutoConfigureForGerrit(gitDir);
+							util.addConfiguredRepository(gitDir);
+						}
+						checkPage();
+					}
+				}
+
+			});
+		}
+
+		tv.setInput(getInitialRepositories());
 
 		configChangeListener = new IPreferenceChangeListener() {
 			@Override
@@ -279,7 +301,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 
 	private void refreshRepositoryList() {
 		List<?> dirsBefore = (List<?>) tv.getInput();
-		List<String> dirsAfter = util.getConfiguredRepositories();
+		List<String> dirsAfter = getInitialRepositories();
 		if (dirsBefore == null) {
 			dirsBefore = Collections.emptyList();
 		}
@@ -336,5 +358,12 @@ public class GitSelectRepositoryPage extends WizardPage {
 		super.dispose();
 		util.getPreferences().removePreferenceChangeListener(
 				configChangeListener);
+	}
+
+	/**
+	 * @return List of all repositories that should be considered in the page
+	 */
+	protected List<String> getInitialRepositories() {
+		return util.getConfiguredRepositories();
 	}
 }
