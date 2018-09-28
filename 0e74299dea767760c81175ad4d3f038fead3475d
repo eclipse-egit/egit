@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "d53e81ed_78b62092",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/FetchChangeFromGerritCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-09-28T10:18:49Z",
+      "side": 1,
+      "message": "\u003e But if done here it\u0027ll block the UI. ...\n \u003e ...\n \u003e Use the this.getWizard().getContainer().run()\n \u003e inside the GitSelectRepositoryPage() to call that.\n\nForget that for now. Let\u0027s just do it synchronously in createControl() and see how it behaves. If we do get UI freeze warnings from it, I can still make this asynchronous later.",
+      "parentUuid": "38e2e9cb_0f0d5afa",
+      "revId": "0e74299dea767760c81175ad4d3f038fead3475d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9865d395_7b8c2c52",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/FetchChangeFromGerritCommand.java",
         "patchSetId": 9
