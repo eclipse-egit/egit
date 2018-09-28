@@ -34,6 +34,9 @@ import org.eclipse.jface.util.Policy;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.util.StringUtils;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.ISources;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
@@ -52,6 +55,13 @@ public class CommonUtils {
 	 */
 	private static final Pattern FOOTER_PATTERN = Pattern
 			.compile("(?:\n(?:[A-Za-z0-9-]+:[^\n]*))+\\s*$"); //$NON-NLS-1$
+
+	/**
+	 * Minimum inset to draw table column text without shortening on Windows.
+	 * The code of {@link Table} suggests 4, but that lead to shortening of
+	 * text.
+	 */
+	private static final int TABLE_INSET = 5;
 
 	private CommonUtils() {
 		// non-instantiable utility class
@@ -289,5 +299,25 @@ public class CommonUtils {
 		}
 
 		return StringUtils.join(names, ", ", " & "); //$NON-NLS-1$ //$NON-NLS-2$
+	}
+
+	/**
+	 * @param control
+	 *            SWT table
+	 * @param columnHeading
+	 *            column heading
+	 * @return column width for a table column of the given table to fit a git
+	 *         commit SHA1
+	 */
+	public static int getCommitIdColumnWidth(Control control,
+			String columnHeading) {
+		GC gc = new GC(control.getDisplay());
+		try {
+			gc.setFont(control.getFont());
+			return Math.max(gc.stringExtent("bbbbbbb").x, //$NON-NLS-1$
+					gc.stringExtent(columnHeading).x) + 2 * TABLE_INSET;
+		} finally {
+			gc.dispose();
+		}
 	}
 }
