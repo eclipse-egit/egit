@@ -97,7 +97,6 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -776,15 +775,8 @@ public class RebaseInteractiveView extends ViewPart implements
 		});
 
 		TreeViewerColumn commitIDColumn = createColumn(headings[3]);
-		int minWidth;
-		GC gc = new GC(planTreeViewer.getControl().getDisplay());
-		try {
-			gc.setFont(planTreeViewer.getControl().getFont());
-			minWidth = Math.max(gc.stringExtent("0000000").x, //$NON-NLS-1$
-					gc.stringExtent(headings[3]).x) + 10;
-		} finally {
-			gc.dispose();
-		}
+		int minWidth = CommonUtils.getCommitIdColumnWidth(
+				planTreeViewer.getControl(), headings[3]);
 		layout.setColumnData(commitIDColumn.getColumn(),
 				new ColumnPixelData(minWidth));
 		commitIDColumn.setLabelProvider(new HighlightingColumnLabelProvider() {

@@ -61,7 +61,6 @@ import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -88,8 +87,6 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -478,14 +475,8 @@ class CommitGraphTable {
 		final TableColumn commitId = new TableColumn(rawTable, SWT.NONE);
 		commitId.setResizable(true);
 		commitId.setText(UIText.CommitGraphTable_CommitId);
-		int minWidth;
-		GC gc = new GC(rawTable.getDisplay());
-		try {
-			gc.setFont(rawTable.getFont());
-			minWidth = gc.stringExtent("0000000").x + 5; //$NON-NLS-1$
-		} finally {
-			gc.dispose();
-		}
+		int minWidth = CommonUtils.getCommitIdColumnWidth(rawTable,
+				UIText.CommitGraphTable_CommitId);
 		columnLayouts[0] = new ColumnPixelData(minWidth, false);
 		tableLayout.setColumnData(commitId, columnLayouts[0]);
 
@@ -531,15 +522,18 @@ class CommitGraphTable {
 		rawTable.addListener(SWT.EraseItem, new Listener() {
 			@Override
 			public void handleEvent(final Event event) {
-				if (0 <= event.index && event.index <= 5)
+				if (event.index == 1) {
 					event.detail &= ~SWT.FOREGROUND;
+				}
 			}
 		});
 
 		rawTable.addListener(SWT.PaintItem, new Listener() {
 			@Override
 			public void handleEvent(final Event event) {
-				doPaint(event);
+				if (event.index == 1) {
+					doPaint(event);
+				}
 			}
 		});
 	}
@@ -566,20 +560,7 @@ class CommitGraphTable {
 			event.gc.setFont(nFont);
 		}
 
-		if (event.index == 1) {
-			renderer.paint(event, input == null ? null : input.getHead());
-			return;
-		}
-
-		final ITableLabelProvider lbl;
-		final String txt;
-
-		lbl = (ITableLabelProvider) table.getLabelProvider();
-		txt = lbl.getColumnText(c, event.index);
-
-		final Point textsz = event.gc.textExtent(txt);
-		final int texty = (event.height - textsz.y) / 2;
-		event.gc.drawString(txt, event.x, event.y + texty, true);
+		renderer.paint(event, input == null ? null : input.getHead());
 	}
 
 	/**
