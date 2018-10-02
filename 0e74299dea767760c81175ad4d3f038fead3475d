@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "59dc466f_8e3c0cc9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/FetchChangeFromGerritCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-10-02T13:43:28Z",
+      "side": 1,
+      "message": "\u003e You will have to adapt the GitSelectRepositoryPage to be able to configure which repositories should be shown. Maybe add a protected getInitialRepositories() operation, then use a subclass here in which you \n\nI\u0027m not sure what you mean by this. \n\nI would add another class that extends GitSelectRepositoryPage and have it act as the window that shows the possible gerrit repositories. Is this correct this far?",
+      "parentUuid": "d53e81ed_78b62092",
+      "revId": "0e74299dea767760c81175ad4d3f038fead3475d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9865d395_7b8c2c52",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/FetchChangeFromGerritCommand.java",
         "patchSetId": 9
