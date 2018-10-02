@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "7451dd3c_73b7984f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/FetchChangeFromGerritCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-02T13:51:48Z",
+      "side": 1,
+      "message": "Well, yes. GitSelectRepositoryPage already does most of what you need. It just does a bit too much: it is hard-wird to show _all_ configured repos, not just the Gerrit repos, and it has an \"Add...\" button plus listener logic to update the list if a repo has been added.\n\nSo your subclass would need to override at least that hard-wired loading of all configured repos. For that, I proposed adding a getInitialRepositories() method in GitSelectRepositoriesPage, and then override that in your subclass here to just load the Gerrit repos.",
+      "parentUuid": "59dc466f_8e3c0cc9",
+      "revId": "0e74299dea767760c81175ad4d3f038fead3475d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9865d395_7b8c2c52",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/FetchChangeFromGerritCommand.java",
         "patchSetId": 9
