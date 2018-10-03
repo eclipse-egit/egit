@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b549bf9_ddf5f25b",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/GitFlowConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-10-03T13:21:16Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 322,
+        "startChar": 30,
+        "endLine": 322,
+        "endChar": 33
+      },
+      "revId": "bb53e2c06c0e302d8972ec2b594fdcd4bdb9aba7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cb05841_90fa3ac1",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/GitFlowConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-10-03T13:21:16Z",
+      "side": 1,
+      "message": "why not config.getBoolean(...) directly?",
+      "range": {
+        "startLine": 344,
+        "startChar": 2,
+        "endLine": 347,
+        "endChar": 45
+      },
+      "revId": "bb53e2c06c0e302d8972ec2b594fdcd4bdb9aba7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06ef2808_2c7ba657",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/FeatureStartOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-10-03T13:21:16Z",
+      "side": 1,
+      "message": "you should unify the progress monitor directly after the if branch. See https://help.eclipse.org/kepler/index.jsp?topic\u003d%2Forg.eclipse.platform.doc.isv%2Freference%2Fapi%2Forg%2Feclipse%2Fcore%2Fruntime%2FSubMonitor.html, section \"Example Branches\", which uses progress.setWorkRemaining() to make the remaining progress behave the same, independent of whether the if branch was taken.",
+      "range": {
+        "startLine": 68,
+        "startChar": 1,
+        "endLine": 68,
+        "endChar": 2
+      },
+      "revId": "bb53e2c06c0e302d8972ec2b594fdcd4bdb9aba7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
