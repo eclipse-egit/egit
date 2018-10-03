@@ -166,6 +166,24 @@
       "revId": "bb53e2c06c0e302d8972ec2b594fdcd4bdb9aba7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c803d199_bb4a1ae5",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-03T21:26:02Z",
+      "side": 1,
+      "message": "This has nothing to do with mixing EGit and Egit-Gitflow versions. You can\u0027t, anyway, since we have tight version constraints among our bundles. This is about downstream users of this public API. Downstream users will have to change their code (remove their catching or propagation of the exception).\n\nThe change is still binary compatible, though. I don\u0027t know if it would be OK to do this if only the minor version increases.",
+      "parentUuid": "728d11d6_c5a45cef",
+      "revId": "bb53e2c06c0e302d8972ec2b594fdcd4bdb9aba7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
