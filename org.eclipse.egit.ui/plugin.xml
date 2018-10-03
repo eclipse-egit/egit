@@ -93,6 +93,13 @@
             </adapter>
          </factory>
          <factory
+               adaptableType="org.eclipse.core.runtime.Path"
+               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+            <adapter
+                  type="org.eclipse.team.ui.history.IHistoryPageSource">
+            </adapter>
+         </factory>
+         <factory
                adaptableType="org.eclipse.ui.IWorkingSet"
                class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
             <adapter type="org.eclipse.team.ui.history.IHistoryPageSource" />

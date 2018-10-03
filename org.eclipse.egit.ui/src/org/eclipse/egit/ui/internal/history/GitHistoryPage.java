@@ -880,6 +880,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		if (object instanceof RepositoryTreeNode)
 			return true;
 
+		if (object instanceof Path) {
+			return true;
+		}
+
 		IResource resource = AdapterUtils.adaptToAnyResource(object);
 		if (resource != null && typeOk(resource))
 			return true;
@@ -1881,6 +1885,14 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				}
 			} else if (o instanceof HistoryPageInput) {
 				input = (HistoryPageInput) o;
+			} else if (o instanceof Path) {
+				Path path = (Path) o;
+				RepositoryMapping mapping = RepositoryMapping.getMapping(path);
+				if (mapping != null) {
+					repo = mapping.getRepository();
+					input = new HistoryPageInput(repo,
+							new File[] { path.toFile() });
+				}
 			} else {
 				IResource resource = AdapterUtils.adaptToAnyResource(o);
 				if (resource != null) {
