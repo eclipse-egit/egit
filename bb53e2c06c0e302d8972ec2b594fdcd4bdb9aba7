@@ -148,6 +148,24 @@
       "revId": "bb53e2c06c0e302d8972ec2b594fdcd4bdb9aba7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "728d11d6_c5a45cef",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-10-03T18:22:30Z",
+      "side": 1,
+      "message": "Is this really a problem in practice? In the case of egit/jgit all the bundles get the same new version number with each release. So if gitflow 5.2 requires egit 5.2, a normal installation should be fine. Only if someone explicitly uses gitflow 5.1 with egit.core 5.2 (or vice versa), a problem appears, right? Or am I missing something entirely?",
+      "parentUuid": "490b2883_77ec2fd5",
+      "revId": "bb53e2c06c0e302d8972ec2b594fdcd4bdb9aba7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
