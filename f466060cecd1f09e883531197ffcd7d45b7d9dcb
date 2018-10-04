@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "97bb79e9_d8394ad5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-04T10:50:47Z",
+      "side": 1,
+      "message": "Perhaps an if-else would be clearer then?",
+      "parentUuid": "1767e670_7aa9770c",
+      "range": {
+        "startLine": 417,
+        "startChar": 3,
+        "endLine": 417,
+        "endChar": 9
+      },
+      "revId": "f466060cecd1f09e883531197ffcd7d45b7d9dcb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4daaa00a_cf2db8c0",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
         "patchSetId": 3
