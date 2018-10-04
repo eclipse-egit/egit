@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5441afc8_d813f517",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchProjectTracker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-04T10:31:43Z",
+      "side": 1,
+      "message": "What about projectPaths.isEmpty()? Maybe use\n\n  @NonNull List\u003cString\u003e getAssociatedProjectsPaths()\n\nreturning Collections.emptyList() instead of null and then test here for projectPaths.isEmpty().",
+      "revId": "94739ae46b4056822ee45611fd4d58a39b718a03",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa96df92_3d331b71",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/ProjectTrackerMemento.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-04T10:31:43Z",
+      "side": 1,
+      "message": "Why not\n\n  private final Collection\u003cProjectTrackerPreferenceSnapshot\u003e snapshots \u003d new ArrayList\u003c\u003e();\n\nand delete the constructor?",
+      "revId": "94739ae46b4056822ee45611fd4d58a39b718a03",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "901880b8_bd9a6ecd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/ProjectTrackerPreferenceHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-04T10:31:43Z",
+      "side": 1,
+      "message": "Please remove this unnecessary line with trailing whitespace.",
+      "revId": "94739ae46b4056822ee45611fd4d58a39b718a03",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d47f824d_2a8f2098",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/ProjectTrackerPreferenceHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-04T10:31:43Z",
+      "side": 1,
+      "message": "Please check the formatting of the javadoc here. I think you\u0027ll need \u003cp\u003e\u003c/p\u003e to get the desired layout when JDT displays this.",
+      "revId": "94739ae46b4056822ee45611fd4d58a39b718a03",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc7b9b4a_9aedb04e",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/ProjectTrackerPreferenceHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-04T10:31:43Z",
+      "side": 1,
+      "message": "Not needed.",
+      "range": {
+        "startLine": 129,
+        "startChar": 22,
+        "endLine": 129,
+        "endChar": 30
+      },
+      "revId": "94739ae46b4056822ee45611fd4d58a39b718a03",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20384299_0166644b",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/ProjectTrackerPreferenceHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-04T10:31:43Z",
+      "side": 1,
+      "message": "Not needed.",
+      "range": {
+        "startLine": 133,
+        "startChar": 22,
+        "endLine": 133,
+        "endChar": 30
+      },
+      "revId": "94739ae46b4056822ee45611fd4d58a39b718a03",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
