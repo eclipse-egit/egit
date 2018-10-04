@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abbfb655_e604c934",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-04T10:50:47Z",
+      "side": 1,
+      "message": "Strange indentation, please fix.",
+      "revId": "a92ee224a251a53d1757829e118d570ed7d36ca8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "901cc989_0a21beb3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-04T10:50:47Z",
+      "side": 1,
+      "message": "How about\n\n  results.values().stream().allMatch(...)\n\n?",
+      "range": {
+        "startLine": 426,
+        "startChar": 9,
+        "endLine": 428,
+        "endChar": 13
+      },
+      "revId": "a92ee224a251a53d1757829e118d570ed7d36ca8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "85fd1399_c9cb0e13",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-04T10:50:47Z",
+      "side": 1,
+      "message": "Same here:\n\n  results.keySet().stream().anyMatch(...)",
+      "range": {
+        "startLine": 433,
+        "startChar": 9,
+        "endLine": 435,
+        "endChar": 13
+      },
+      "revId": "a92ee224a251a53d1757829e118d570ed7d36ca8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
