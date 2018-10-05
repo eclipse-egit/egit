@@ -34,6 +34,24 @@
       "revId": "c317bdf34ec4288474f9a25e86d8899d2fefde9a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ed5b586_a93a5698",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-05T15:58:11Z",
+      "side": 1,
+      "message": "\u003e Do you think we should hard-code the setting on Windows to switch\n \u003e off mmap\u0027ing and disable the field editor on the preference page?\n\nI\u0027m no expert on Windows or on mmap. Whence my question. If it should never be enabled on Windows, I wouldn\u0027t give the option to switch it on at all... if there are circumstances under which it may make sense for a user to switch this on on Windows, then yes, give him the option, but then we need to explain better under which circumstances this can be safely done.\n\nRemains the question of what to do if someone has it switched on right now and we remove the switch in the preference page. There will be no clear way to switch it off anymore... unless we always force it to off on Windows.\n\nBut as I said: I don\u0027t know what needs to be done, but I find the tooltip text not exactly helpful. Most people won\u0027t know what a packfile is, or what not being able to delete one implies. (For instance, does this cause trouble with GC?)",
+      "parentUuid": "189ec29e_e9eb0d3a",
+      "revId": "c317bdf34ec4288474f9a25e86d8899d2fefde9a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
