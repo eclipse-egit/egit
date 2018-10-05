@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.gitflow.GitFlowRepository;
 import org.eclipse.jgit.api.CheckoutResult;
+import org.eclipse.jgit.lib.Repository;
 
 /**
  * git flow feature checkout
@@ -36,10 +37,11 @@ public final class FeatureCheckoutOperation extends AbstractFeatureOperation {
 		String branchName = repository.getConfig().getFeatureBranchName(featureName);
 
 		boolean dontCloseProjects = false;
+		Repository gitRepo = repository.getRepository();
 		BranchOperation branchOperation = new BranchOperation(
-				repository.getRepository(), branchName, dontCloseProjects);
+				gitRepo, branchName, dontCloseProjects);
 		branchOperation.execute(monitor);
-		result = branchOperation.getResult();
+		result = branchOperation.getResult(gitRepo);
 	}
 
 	/**

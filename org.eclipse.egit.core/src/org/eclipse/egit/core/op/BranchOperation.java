@@ -19,9 +19,12 @@ import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Stream;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
@@ -33,7 +36,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.job.RuleUtil;
@@ -64,11 +66,13 @@ import org.eclipse.osgi.util.NLS;
  * This class implements checkouts of a specific revision. A check is made that
  * this can be done without data loss.
  */
-public class BranchOperation extends BaseOperation {
+public class BranchOperation implements IEGitOperation {
 
 	private final String target;
 
-	private @NonNull CheckoutResult result = CheckoutResult.NOT_TRIED_RESULT;
+	private Repository[] repositories;
+
+	private @NonNull Map<Repository, CheckoutResult> results = new HashMap<>();
 
 	private boolean delete;
 
@@ -94,7 +98,18 @@ public class BranchOperation extends BaseOperation {
 	 *            them
 	 */
 	public BranchOperation(Repository repository, String target, boolean delete) {
-		super(repository);
+		this(new Repository[] { repository }, target, delete);
+	}
+
+	/**
+	 *
+	 * @param repositories
+	 * @param target
+	 * @param delete
+	 */
+	public BranchOperation(Repository[] repositories, String target,
+			boolean delete) {
+		this.repositories = repositories;
 		this.target = target;
 		this.delete = delete;
 	}
@@ -106,11 +121,28 @@ public class BranchOperation extends BaseOperation {
 			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
 				SubMonitor progress = SubMonitor.convert(pm, 4);
-				preExecute(progress.newChild(1));
 
-				closeProjectsMissingAfterCheckout(progress);
 
-				try (Git git = new Git(repository)) {
+				for (Repository repository : repositories) {
+
+					CheckoutResult result = checkoutRepository(repository,
+							progress);
+
+					if (result.getStatus() == Status.NONDELETED) {
+						retryDelete(repository, result.getUndeletedList());
+					}
+
+					results.put(repository, result);
+				}
+				refreshAffectedProjects(progress);
+			}
+
+			public CheckoutResult checkoutRepository(Repository repo,
+					SubMonitor progress) throws CoreException {
+
+				closeProjectsMissingAfterCheckout(repo, progress);
+
+				try (Git git = new Git(repo)) {
 					CheckoutCommand co = git.checkout().setProgressMonitor(
 							new EclipseGitProgressTransformer(
 									progress.newChild(1)));
@@ -118,30 +150,23 @@ public class BranchOperation extends BaseOperation {
 
 					try {
 						co.call();
+						// The below exceptions are handled by the
+						// CheckoutCommand's result status which is returned
 					} catch (CheckoutConflictException e) {
-						return;
+						// ignore
 					} catch (JGitInternalException e) {
-						throw new CoreException(
-								Activator.error(e.getMessage(), e));
+						// ignore
 					} catch (GitAPIException e) {
-						throw new CoreException(
-								Activator.error(e.getMessage(), e));
-					} finally {
-						result = co.getResult();
+						// ignore
 					}
-					if (result.getStatus() == Status.NONDELETED) {
-						retryDelete(result.getUndeletedList());
-					}
-					refreshAffectedProjects(progress);
-
-					postExecute(progress.newChild(1));
+					return co.getResult();
 				}
 			}
 
-			private void closeProjectsMissingAfterCheckout(SubMonitor progress)
+			private void closeProjectsMissingAfterCheckout(Repository repo,
+					SubMonitor progress)
 					throws CoreException {
-				IProject[] missing = getMissingProjects(target, ProjectUtil
-						.getValidOpenProjects(repository));
+				IProject[] missing = getMissingProjects(repo, target);
 
 				progress.setTaskName(NLS.bind(
 						CoreText.BranchOperation_performingBranch, target));
@@ -161,14 +186,36 @@ public class BranchOperation extends BaseOperation {
 
 			private void refreshAffectedProjects(SubMonitor progress)
 					throws CoreException {
+
+				IProject[] refreshProjects = results.entrySet().stream() //
+					.map(this::getAffectedProjects) //
+					.flatMap(arr -> Stream.of(arr)) //
+					.distinct()
+					.toArray(IProject[]::new);
+
+				ProjectUtil.refreshValidProjects(refreshProjects, delete,
+						progress.newChild(1));
+			}
+
+			private IProject[] getAffectedProjects(
+					Entry<Repository, CheckoutResult> entry)
+			{
+				CheckoutResult result = entry.getValue();
+
+				if (result.getStatus() != Status.OK
+						&& result.getStatus() != Status.NONDELETED) {
+					// the checkout did not succeed
+					return new IProject[0];
+				}
+
+				Repository repo = entry.getKey();
 				List<String> pathsToHandle = new ArrayList<>();
 				pathsToHandle.addAll(result.getModifiedList());
 				pathsToHandle.addAll(result.getRemovedList());
 				pathsToHandle.addAll(result.getConflictList());
 				IProject[] refreshProjects = ProjectUtil
-						.getProjectsContaining(repository, pathsToHandle);
-				ProjectUtil.refreshValidProjects(refreshProjects, delete,
-						progress.newChild(1));
+						.getProjectsContaining(repo, pathsToHandle);
+				return refreshProjects;
 			}
 		};
 		// lock workspace to protect working tree changes
@@ -178,24 +225,32 @@ public class BranchOperation extends BaseOperation {
 
 	@Override
 	public ISchedulingRule getSchedulingRule() {
-		return RuleUtil.getRule(repository);
+		return RuleUtil.getRuleForRepositories(Arrays.asList(repositories));
 	}
 
 	/**
 	 * @return the result of the operation
 	 */
 	@NonNull
-	public CheckoutResult getResult() {
-		return result;
+	public Map<Repository, CheckoutResult> getResults() {
+		return results;
 	}
 
-	void retryDelete(List<String> pathList) {
+	/**
+	 * @param repo
+	 * @return return the result specific to a repository
+	 */
+	public CheckoutResult getResult(Repository repo) {
+		return results.get(repo);
+	}
+
+	void retryDelete(Repository repo, List<String> pathList) {
 		// try to delete, but for a short time only
 		long startTime = System.currentTimeMillis();
 		for (String path : pathList) {
 			if (System.currentTimeMillis() - startTime > 1000)
 				break;
-			File fileToDelete = new File(repository.getWorkTree(), path);
+			File fileToDelete = new File(repo.getWorkTree(), path);
 			if (fileToDelete.exists())
 				try {
 					// Only files should be passed here, thus
@@ -213,13 +268,15 @@ public class BranchOperation extends BaseOperation {
 	 * Compute the current projects that will be missing after the given branch
 	 * is checked out
 	 *
+	 * @param repository
 	 * @param branch
-	 * @param currentProjects
 	 * @return non-null but possibly empty array of missing projects
+	 * @throws CoreException
 	 */
-	private IProject[] getMissingProjects(String branch,
-			IProject[] currentProjects) {
-		if (delete || currentProjects.length == 0)
+	private IProject[] getMissingProjects(Repository repository,
+			String branch) throws CoreException {
+		IProject[] openProjects = ProjectUtil.getValidOpenProjects(repository);
+		if (delete || openProjects.length == 0)
 			return new IProject[0];
 
 		ObjectId targetTreeId;
@@ -234,7 +291,7 @@ public class BranchOperation extends BaseOperation {
 			return new IProject[0];
 
 		Map<File, IProject> locations = new HashMap<>();
-		for (IProject project : currentProjects) {
+		for (IProject project : openProjects) {
 			IPath location = project.getLocation();
 			if (location == null)
 				continue;

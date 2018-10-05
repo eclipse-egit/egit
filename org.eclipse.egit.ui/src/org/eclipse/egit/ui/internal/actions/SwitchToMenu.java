@@ -14,11 +14,15 @@
 package org.eclipse.egit.ui.internal.actions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.TreeMap;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Stream;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
@@ -90,13 +94,39 @@ public class SwitchToMenu extends ContributionItem implements
 		if (handlerService == null)
 			return;
 
-		Repository repository = SelectionUtils
-				.getRepository(handlerService.getCurrentState());
-		if (repository != null)
-			createDynamicMenu(menu, repository);
+		Repository[] repositories = SelectionUtils
+				.getRepositories(handlerService.getCurrentState());
+
+		if (repositories.length > 0) {
+			createDynamicMenu(menu, repositories);
+		}
 	}
 
-	private void createDynamicMenu(Menu menu, final Repository repository) {
+	private void createDynamicMenu(Menu menu, final Repository[] repositories) {
+
+		if (!isMultipleSelection(repositories))
+		{
+			createNewBranchMenuItem(menu, repositories[0]);
+			createSeparator(menu);
+		}
+
+		int itemCount = createMostActiveBranchesMenuItems(menu, repositories);
+
+		if (!isMultipleSelection(repositories) && itemCount > 0) {
+			createSeparator(menu);
+			createOtherMenuItem(menu, repositories[0]);
+		}
+
+		if (itemCount == 0 && isMultipleSelection(repositories)) {
+			/*
+			 * If the menu would be empty, add a disabled menuItem to inform the
+			 * user that no common branches among the selection were found
+			 */
+			createDisabledMenu(menu, UIText.SwitchToMenu_NoCommonBranchesFound);
+		}
+	}
+
+	private void createNewBranchMenuItem(Menu menu, Repository repository) {
 		MenuItem newBranch = new MenuItem(menu, SWT.PUSH);
 		newBranch.setText(UIText.SwitchToMenu_NewBranchMenuLabel);
 		newBranch.setImage(newBranchImage);
@@ -130,112 +160,171 @@ public class SwitchToMenu extends ContributionItem implements
 				dlg.open();
 			}
 		});
-		createSeparator(menu);
+
+	}
+
+	private int createMostActiveBranchesMenuItems(Menu menu, Repository[] repositories)
+	{
+		int itemCount = 0;
 		try {
-			String currentBranch = repository.getFullBranch();
-			Map<String, Ref> localBranches = repository.getRefDatabase().getRefs(
-					Constants.R_HEADS);
-			TreeMap<String, Ref> sortedRefs = new TreeMap<>(
-					CommonUtils.STRING_ASCENDING_COMPARATOR);
+			List<Map<String, Ref>> activeBranches = new ArrayList<>();
 
-			// Add the MAX_NUM_MENU_ENTRIES most recently used branches first
-			ReflogReader reflogReader = repository.getReflogReader(
-					Constants.HEAD);
-			List<ReflogEntry> reflogEntries;
-			if (reflogReader == null) {
-				reflogEntries = Collections.emptyList();
-			} else {
-				reflogEntries = reflogReader.getReverseEntries();
-			}
-			for (ReflogEntry entry : reflogEntries) {
-				CheckoutEntry checkout = entry.parseCheckout();
-				if (checkout != null) {
-					Ref ref = localBranches.get(checkout.getFromBranch());
-					if (ref != null)
-						if (sortedRefs.size() < MAX_NUM_MENU_ENTRIES)
-							sortedRefs.put(checkout.getFromBranch(), ref);
-					ref = localBranches.get(checkout.getToBranch());
-					if (ref != null)
-						if (sortedRefs.size() < MAX_NUM_MENU_ENTRIES)
-							sortedRefs.put(checkout.getToBranch(), ref);
-				}
+			for (Repository repository : repositories) {
+				Map<String, Ref> branchRefMapping = getMostActiveBranches(
+						repository, MAX_NUM_MENU_ENTRIES);
+				activeBranches.add(branchRefMapping);
 			}
 
-			// Add the recently used branches to the menu, in alphabetical order
-			int itemCount = 0;
-			for (final Entry<String, Ref> entry : sortedRefs.entrySet()) {
+			Set<String> activeBranchIntersection = getBranchNameIntersection(activeBranches);
+			for (String branchName : activeBranchIntersection) {
 				itemCount++;
-				final String shortName = entry.getKey();
-				final String fullName = entry.getValue().getName();
-				createMenuItem(menu, repository, currentBranch, fullName, shortName);
-				// Do not duplicate branch names
-				localBranches.remove(shortName);
+				createMenuItemMultiple(menu, repositories,
+						branchName);
 			}
 
-			if (itemCount < MAX_NUM_MENU_ENTRIES) {
-				// A separator between recently used branches and local branches is
-				// nice but only if we have both recently used branches and other
-				// local branches
-				if (itemCount > 0 && localBranches.size() > 0)
-					createSeparator(menu);
-
-				// Now add more other branches if we have only a few branch switches
-				// Sort the remaining local branches
-				sortedRefs.clear();
-				sortedRefs.putAll(localBranches);
-				for (final Entry<String, Ref> entry : sortedRefs.entrySet()) {
-					itemCount++;
-					// protect ourselves against a huge sub-menu
-					if (itemCount > MAX_NUM_MENU_ENTRIES)
-						break;
-					final String fullName = entry.getValue().getName();
-					final String shortName = entry.getKey();
-					createMenuItem(menu, repository, currentBranch, fullName, shortName);
-				}
+			if (itemCount >= MAX_NUM_MENU_ENTRIES) {
+				return itemCount;
 			}
-			if (itemCount > 0)
+
+			List<Map<String, Ref>> localBranchMapping = new ArrayList<>();
+			for (Repository repository : repositories) {
+				Map<String, Ref> localBranches = repository.getRefDatabase()
+						.getRefs(Constants.R_HEADS);
+				localBranchMapping.add(localBranches);
+			}
+
+			// A separator between recently used branches and local branches is
+			// nice but only if we have both recently used branches and other
+			// local branches
+			Set<String> localBranchNameIntersection = getBranchNameIntersection(
+					localBranchMapping);
+			localBranchNameIntersection.removeAll(activeBranchIntersection);
+			if (itemCount > 0 && !localBranchNameIntersection.isEmpty()) {
 				createSeparator(menu);
-			MenuItem others = new MenuItem(menu, SWT.PUSH);
-			others.setText(UIText.SwitchToMenu_OtherMenuLabel);
-			others.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					CheckoutDialog dialog = new CheckoutDialog(
-							e.display.getActiveShell(), repository);
-					if (dialog.open() == Window.OK) {
-						BranchOperationUI
-								.checkout(repository, dialog.getRefName())
-								.start();
-					}
+			}
 
+			for (String localBranchName : localBranchNameIntersection) {
+				itemCount++;
+				if (itemCount > MAX_NUM_MENU_ENTRIES) {
+					break;
 				}
-			});
-		} catch (IOException e) {
+
+				createMenuItemMultiple(menu, repositories, localBranchName);
+			}
+		}
+		catch (IOException e) {
 			Activator.handleError(e.getMessage(), e, true);
 		}
+
+		return itemCount;
+	}
+
+	private Set<String> getBranchNameIntersection(
+			List<Map<String, Ref>> refMapping) {
+		Iterator<Map<String, Ref>> iterator = refMapping.iterator();
+		if (!iterator.hasNext()) {
+			return Collections.emptySet();
+		}
+
+		Set<String> intersection = new TreeSet<>(
+				CommonUtils.STRING_ASCENDING_COMPARATOR);
+		intersection.addAll(iterator.next().keySet());
+		iterator.forEachRemaining(map -> intersection.retainAll(map.keySet()));
+		return intersection;
+	}
+
+	private void createOtherMenuItem(Menu menu, Repository repository) {
+		MenuItem others = new MenuItem(menu, SWT.PUSH);
+		others.setText(UIText.SwitchToMenu_OtherMenuLabel);
+		others.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				CheckoutDialog dialog = new CheckoutDialog(
+						e.display.getActiveShell(), repository);
+				if (dialog.open() == Window.OK) {
+					BranchOperationUI.checkout(repository, dialog.getRefName())
+							.start();
+				}
+
+			}
+		});
+	}
+
+	private void createDisabledMenu(Menu menu, String text) {
+		MenuItem disabled = new MenuItem(menu, SWT.PUSH);
+		disabled.setText(text);
+		disabled.setImage(branchImage);
+		disabled.setEnabled(false);
 	}
 
 	private static MenuItem createSeparator(Menu menu) {
 		return new MenuItem(menu, SWT.SEPARATOR);
 	}
 
-	private void createMenuItem(Menu menu, final Repository repository,
-			String currentBranch, final String fullName, String shortName) {
+	private void createMenuItemMultiple(Menu menu, final Repository[] repositories, String shortName) throws IOException {
+
 		final MenuItem item = new MenuItem(menu, SWT.PUSH);
 		item.setText(shortName);
-		boolean checkedOut = currentBranch.equals(fullName);
-		if (checkedOut)
+
+		boolean allRepositoriesCheckedOut = Stream.of(repositories) //
+				.allMatch(r -> shortName.equals(getBranch(r)));
+
+		if (allRepositoriesCheckedOut)
 			item.setImage(checkedOutImage);
 		else
 			item.setImage(branchImage);
-		item.setEnabled(!checkedOut);
+		item.setEnabled(!allRepositoriesCheckedOut);
+
 		item.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				BranchOperationUI.checkout(repository, fullName)
-						.start();
+
+				BranchOperationUI.checkout(repositories, shortName).start();
 			}
 		});
+	}
+
+	private String getBranch(Repository repo) {
+		try {
+			return repo.getBranch();
+		} catch (IOException e) {
+			return ""; //$NON-NLS-1$
+		}
+	}
+
+	private Map<String, Ref> getMostActiveBranches(final Repository repository,
+			int maximumBranchCount) throws IOException {
+		Map<String, Ref> localBranches = repository.getRefDatabase()
+				.getRefs(Constants.R_HEADS);
+		Map<String, Ref> activeRefs = new HashMap<>();
+
+		ReflogReader reflogReader = repository.getReflogReader(Constants.HEAD);
+		List<ReflogEntry> reflogEntries;
+		if (reflogReader == null) {
+			return Collections.emptyMap();
+		}
+
+		reflogEntries = reflogReader.getReverseEntries();
+
+		for (ReflogEntry entry : reflogEntries) {
+			CheckoutEntry checkout = entry.parseCheckout();
+			if (checkout != null) {
+				Ref ref = localBranches.get(checkout.getFromBranch());
+				if (ref != null)
+					if (activeRefs.size() < maximumBranchCount)
+						activeRefs.put(checkout.getFromBranch(), ref);
+				ref = localBranches.get(checkout.getToBranch());
+				if (ref != null)
+					if (activeRefs.size() < maximumBranchCount)
+						activeRefs.put(checkout.getToBranch(), ref);
+			}
+		}
+
+		return activeRefs;
+	}
+
+	private boolean isMultipleSelection(Repository[] repositories) {
+		return repositories.length > 1;
 	}
 
 	@Override
