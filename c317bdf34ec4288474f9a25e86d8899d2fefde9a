@@ -16,6 +16,24 @@
       "revId": "c317bdf34ec4288474f9a25e86d8899d2fefde9a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "189ec29e_e9eb0d3a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-10-05T14:42:08Z",
+      "side": 1,
+      "message": "This option was always configurable, that\u0027s why I just reverted the change of default which I implemented in March.\nBack then I had changed the default to avoid that EGit has to allocate this cache on the heap.\n\nDo you think we should hard-code the setting on Windows to switch off mmap\u0027ing and disable the field editor on the preference page?",
+      "parentUuid": "9c022e8c_b0767b6d",
+      "revId": "c317bdf34ec4288474f9a25e86d8899d2fefde9a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
