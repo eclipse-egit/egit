@@ -62,7 +62,7 @@ public class CommonUtils {
 	 * numerous order (also known as natural order), case insensitive.
 	 *
 	 * The comparator is guaranteed to return a non-zero value if
-	 * string1.equals(String2) returns false
+	 * {@code string1.equals(string2)} returns {@code false}.
 	 */
 	public static final Comparator<String> STRING_ASCENDING_COMPARATOR = new Comparator<String>() {
 		@Override
@@ -232,7 +232,7 @@ public class CommonUtils {
 	/**
 	 * Assuming that the string {@code commitMessage} is a commit message,
 	 * returns the offset in the string of the footer of the commit message, if
-	 * one can found, or -1 otherwise.
+	 * one can be found, or -1 otherwise.
 	 * <p>
 	 * A footer of a commit message is defined to be the non-empty lines
 	 * following the last empty line in the commit message if they have the
@@ -277,7 +277,7 @@ public class CommonUtils {
 	 *
 	 * @param resources
 	 *            the collection of {@link IResource}s.
-	 * @return A comma separated list the resource names. The last element is
+	 * @return A comma separated list of the resource names. The last element is
 	 *         separated with an ampersand.
 	 */
 	public static String getResourceNames(Iterable<IResource> resources) {
