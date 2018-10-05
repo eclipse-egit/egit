@@ -14,12 +14,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- *
  * An opaque class that can be retrieved by
  * {@link BranchProjectTracker#snapshot()} and later saved by calling
  * {@link BranchProjectTracker#save(ProjectTrackerMemento)}. For more
  * information, look at the docs for {{@link BranchProjectTracker}
- *
  */
 class ProjectTrackerMemento {
 

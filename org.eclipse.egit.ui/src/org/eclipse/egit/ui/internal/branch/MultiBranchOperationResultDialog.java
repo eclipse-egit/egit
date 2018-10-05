@@ -55,6 +55,7 @@ public class MultiBranchOperationResultDialog extends TitleAreaDialog {
 			.getRepositoryUtil();
 
 	private EnumMap<CheckoutResult.Status, String> resultMessages;
+
 	/**
 	 * @param parentShell
 	 * @param results
@@ -71,18 +72,12 @@ public class MultiBranchOperationResultDialog extends TitleAreaDialog {
 	}
 
 	@Override
-	public void create() {
-		super.create();
-	}
-
-	@Override
 	protected Control createDialogArea(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);
 		tv = new TableViewer(main, SWT.MULTI | SWT.FULL_SELECTION | SWT.BORDER);
 		tv.setContentProvider(ArrayContentProvider.getInstance());
 		TableColumnLayout layout = new TableColumnLayout();
 		main.setLayout(layout);
-
 
 		Table table = tv.getTable();
 		TableViewerColumn tc = new TableViewerColumn(tv, SWT.NONE);
@@ -107,7 +102,6 @@ public class MultiBranchOperationResultDialog extends TitleAreaDialog {
 
 			@Override
 			public Image getImage(Object element) {
-
 				@SuppressWarnings("unchecked")
 				Entry<Repository, CheckoutResult> item = (Entry<Repository, CheckoutResult>) element;
 
@@ -181,6 +175,6 @@ public class MultiBranchOperationResultDialog extends TitleAreaDialog {
 	}
 
 	private String getMessageForStatus(CheckoutResult.Status status) {
-		return this.resultMessages.getOrDefault(status, "");//$NON-NLS-1$
+		return this.resultMessages.getOrDefault(status, ""); //$NON-NLS-1$
 	}
 }
