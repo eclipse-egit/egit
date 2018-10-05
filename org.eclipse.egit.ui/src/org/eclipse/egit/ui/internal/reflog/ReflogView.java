@@ -249,11 +249,6 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 				return null;
 			}
 
-			@Override
-			public Image getImage(Object element) {
-				return null;
-			}
-
 		});
 
 		TreeViewerColumn messageColumn = createColumn(layout,
@@ -300,6 +295,8 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 					return (Image) resourceManager.get(UIIcons.CHERRY_PICK);
 				if (comment.startsWith("Branch: renamed ")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.EDITCONFIG);
+				if (comment.startsWith("reset")) //$NON-NLS-1$
+					return (Image) resourceManager.get(UIIcons.RESET);
 				return null;
 			}
 
