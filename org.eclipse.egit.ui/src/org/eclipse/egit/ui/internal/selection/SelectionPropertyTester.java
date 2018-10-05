@@ -131,8 +131,8 @@ public class SelectionPropertyTester extends PropertyTester {
 			Collection<?> collection, Object[] args) {
 		IStructuredSelection selection = getStructuredSelection(collection);
 		IResource[] resources = SelectionUtils.getSelectedResources(selection);
-		Set<Repository> repos = Stream.of(resources) //
-				.map(SelectionPropertyTester::getRepositoryOfMapping) //
+		Set<Repository> repos = Stream.of(resources)
+				.map(SelectionPropertyTester::getRepositoryOfMapping)
 				.collect(Collectors.toSet());
 		return testMultipleRepositoryProperties(repos, args);
 	}

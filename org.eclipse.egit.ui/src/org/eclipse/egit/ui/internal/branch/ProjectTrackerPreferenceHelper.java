@@ -32,12 +32,10 @@ import org.eclipse.ui.XMLMemento;
  * {@link BranchProjectTracker} from knowing where these associations are being
  * saved. For this particular case at a {@link IPreferenceStore} using
  * {@link XMLMemento}.
- *
  * <p>
  * The usual location for the file is at:
  * .metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.egit.ui.prefs
  * </p>
- *
  * <p>
  * An example entry would be: {@code
  * //BranchProjectTracker__/absolute/path/to/git/repository/.git_BranchName=<?xml
@@ -59,22 +57,18 @@ class ProjectTrackerPreferenceHelper {
 	 * @param projects
 	 */
 	static void saveToPreferences(Repository repo, String branch,
-			List<String> projects)
-	{
+			List<String> projects) {
 		XMLMemento preferencesMemento = createXMLMemento(projects);
 		String preferenceKey = getPreferenceKey(repo, branch);
 		saveToPreferenceStore(preferenceKey, preferencesMemento);
 	}
 
 	private static XMLMemento createXMLMemento(List<String> projectPaths) {
-
 		XMLMemento memento = XMLMemento.createWriteRoot(KEY_PROJECTS);
-
 		projectPaths.forEach(path -> {
 			IMemento child = memento.createChild(KEY_PROJECT);
 			child.putTextData(path);
 		});
-
 		return memento;
 	}
 
@@ -92,8 +86,7 @@ class ProjectTrackerPreferenceHelper {
 				+ branch;
 	}
 
-	private static void saveToPreferenceStore(String key, XMLMemento content)
-	{
+	private static void saveToPreferenceStore(String key, XMLMemento content) {
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 		StringWriter writer = new StringWriter();
 		try {
@@ -114,14 +107,13 @@ class ProjectTrackerPreferenceHelper {
 	 */
 	static List<String> restoreFromPreferences(Repository repo,
 			String branch) {
-
 		String key = getPreferenceKey(repo, branch);
 		String value = Activator.getDefault().getPreferenceStore()
 				.getString(key);
 
-		if (value.length() == 0)
+		if (value.isEmpty()) {
 			return Collections.emptyList();
-
+		}
 		XMLMemento memento;
 		try {
 			memento = XMLMemento.createReadRoot(new StringReader(value));
@@ -130,12 +122,12 @@ class ProjectTrackerPreferenceHelper {
 			return Collections.emptyList();
 		}
 		IMemento[] children = memento.getChildren(KEY_PROJECT);
-		if (children.length == 0)
+		if (children.length == 0) {
 			return Collections.emptyList();
-
-		List<String> projectPaths = Stream.of(children) //
-				.map(child -> child.getTextData()) //
-				.filter(x -> !StringUtils.isEmptyOrNull(x)) //
+		}
+		List<String> projectPaths = Stream.of(children)
+				.map(child -> child.getTextData())
+				.filter(x -> !StringUtils.isEmptyOrNull(x))
 				.collect(Collectors.toList());
 		return projectPaths;
 	}

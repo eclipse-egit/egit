@@ -72,13 +72,15 @@ public class BranchOperationUI {
 	 * stash, reset or commit. After that, checkout is tried again. The second
 	 * time we do checkout, we don't want to ask any questions we already asked
 	 * the first time, so this will be false then.
-	 *
-	 * This behavior is disabled when checking out multiple repositories at once
+	 * <p>
+	 * This behavior is disabled when checking out multiple repositories at
+	 * once.
+	 * </p>
 	 */
 	private final boolean showQuestionsBeforeCheckout;
 
 	/**
-	 * Create an operation for checking out a branch on multiple repositories
+	 * Create an operation for checking out a branch on multiple repositories.
 	 *
 	 * @param repositories
 	 * @param target
@@ -149,14 +151,11 @@ public class BranchOperationUI {
 	}
 
 	private String confirmTarget(IProgressMonitor monitor) {
-
 		if (target == null) {
 			return null;
 		}
-
-		Optional<Repository> invalidRepo = Stream.of(repositories) //
-				.filter(r -> !r.getRepositoryState().canCheckout()) //
-				.findFirst();
+		Optional<Repository> invalidRepo = Stream.of(repositories)
+				.filter(r -> !r.getRepositoryState().canCheckout()).findFirst();
 
 		if (invalidRepo.isPresent()) {
 			PlatformUI.getWorkbench().getDisplay()
@@ -214,11 +213,9 @@ public class BranchOperationUI {
 	 * Starts the operation asynchronously
 	 */
 	public void start() {
-
 		if (repositories == null || repositories.length == 0) {
 			return;
 		}
-
 		target = confirmTarget(new NullProgressMonitor());
 		if (target == null) {
 			return;
@@ -238,11 +235,9 @@ public class BranchOperationUI {
 	}
 
 	private static String getJobName(Repository[] repos, String target) {
-
 		if (repos.length > 1) {
 			return NLS.bind(UIText.BranchAction_checkingOutMultiple, target);
-        }
-
+		}
 		String repoName = Activator.getDefault().getRepositoryUtil()
 				.getRepositoryName(repos[0]);
 		return NLS.bind(UIText.BranchAction_checkingOut, repoName, target);
@@ -265,19 +260,18 @@ public class BranchOperationUI {
 			try {
 				doCheckout(bop, restore, monitor);
 			} catch (CoreException e) {
-
 				/*
 				 * For a checkout operation with multiple repositories we can
 				 * handle any error status by displaying all of them in a table.
 				 * For a single repository, though, we will stick to using a
 				 * simple message in case of an unexpected exception.
 				 */
-				if (!isSingleRepositoryOperation)
+				if (!isSingleRepositoryOperation) {
 					return Status.OK_STATUS;
-
+				}
 				CheckoutResult result = bop.getResult(repositories[0]);
 
-				if (result.getStatus() == CheckoutResult.Status.CONFLICTS || //
+				if (result.getStatus() == CheckoutResult.Status.CONFLICTS ||
 						result.getStatus() == CheckoutResult.Status.NONDELETED) {
 					return Status.OK_STATUS;
 				}
@@ -293,9 +287,8 @@ public class BranchOperationUI {
 
 		@Override
 		public boolean belongsTo(Object family) {
-			if (JobFamilies.CHECKOUT.equals(family))
-				return true;
-			return super.belongsTo(family);
+			return JobFamilies.CHECKOUT.equals(family)
+					|| super.belongsTo(family);
 		}
 
 		@NonNull
@@ -326,13 +319,10 @@ public class BranchOperationUI {
 	}
 
 	private void askForTargetIfNecessary() {
-
-		if (target == null || //
-				!showQuestionsBeforeCheckout || //
-				!shouldShowCheckoutRemoteTrackingDialog(target)) {
+		if (target == null || !showQuestionsBeforeCheckout
+				|| !shouldShowCheckoutRemoteTrackingDialog(target)) {
 			return;
 		}
-
 		target = getTargetWithCheckoutRemoteTrackingDialog(repositories[0]);
 	}
 
@@ -399,29 +389,24 @@ public class BranchOperationUI {
 	 * @param results
 	 */
 	private void show(final @NonNull Map<Repository, CheckoutResult> results) {
-
 		if (allBranchOperationsSucceeded(results)) {
-
 			if (anyRepositoryIsInDetachedHeadState(results)) {
 				showDetachedHeadWarning();
 			}
 			return;
 		}
-
 		if (this.isSingleRepositoryOperation) {
 			Repository repo = repositories[0];
 			CheckoutResult result = results.get(repo);
 			handleSingleRepositoryCheckoutOperationResult(repo,
 					result);
-			return;
+		} else {
+			handleMultipleRepositoryCheckoutError(results);
 		}
-
-		handleMultipleRepositoryCheckoutError(results);
 	}
 
 	private boolean allBranchOperationsSucceeded(
-			final @NonNull Map<Repository, CheckoutResult> results)
-	{
+			@NonNull Map<Repository, CheckoutResult> results) {
 		return results.values().stream()
 				.allMatch(r -> r.getStatus() == CheckoutResult.Status.OK);
 	}
@@ -432,14 +417,14 @@ public class BranchOperationUI {
 				.anyMatch(RepositoryUtil::isDetachedHead);
 	}
 
-	private void handleSingleRepositoryCheckoutOperationResult(Repository repository,
-			CheckoutResult result) {
+	private void handleSingleRepositoryCheckoutOperationResult(
+			Repository repository, CheckoutResult result) {
 
 		if (result.getStatus() == CheckoutResult.Status.CONFLICTS) {
 			PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
 				Shell shell = PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getShell();
-					CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
+				CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
 						shell, UIText.BranchResultDialog_CheckoutConflictsTitle,
 						NLS.bind(
 								UIText.BranchResultDialog_CheckoutConflictsMessage,
@@ -449,7 +434,7 @@ public class BranchOperationUI {
 				if (cleanupUncomittedChangesDialog.shouldContinue()) {
 					BranchOperationUI.checkout(repository, target, false)
 							.start();
-					}
+				}
 			});
 		} else if (result.getStatus() == CheckoutResult.Status.NONDELETED) {
 			// double-check if the files are still there
@@ -461,17 +446,16 @@ public class BranchOperationUI {
 					break;
 				}
 
-			if (!show)
+			if (!show) {
 				return;
-
+			}
 			PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
-					Shell shell = PlatformUI.getWorkbench()
-							.getActiveWorkbenchWindow().getShell();
-					new NonDeletedFilesDialog(shell, repository,
-							result.getUndeletedList()).open();
+				Shell shell = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getShell();
+				new NonDeletedFilesDialog(shell, repository,
+						result.getUndeletedList()).open();
 			});
 		} else {
-
 			String repoName = Activator.getDefault().getRepositoryUtil()
 					.getRepositoryName(repository);
 			String message = NLS.bind(
@@ -489,7 +473,6 @@ public class BranchOperationUI {
 
 	private void handleMultipleRepositoryCheckoutError(
 			Map<Repository, CheckoutResult> results) {
-
 		PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
 			Shell shell = PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getShell();
@@ -500,27 +483,26 @@ public class BranchOperationUI {
 
 	private void showDetachedHeadWarning() {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
-				IPreferenceStore store = Activator.getDefault()
-						.getPreferenceStore();
+			IPreferenceStore store = Activator.getDefault()
+					.getPreferenceStore();
 
-				if (store
-						.getBoolean(UIPreferences.SHOW_DETACHED_HEAD_WARNING)) {
-					String toggleMessage = UIText.BranchResultDialog_DetachedHeadWarningDontShowAgain;
+			if (store.getBoolean(UIPreferences.SHOW_DETACHED_HEAD_WARNING)) {
+				String toggleMessage = UIText.BranchResultDialog_DetachedHeadWarningDontShowAgain;
 
-					MessageDialogWithToggle dialog = new MessageDialogWithToggle(
-							PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-									.getShell(),
-							UIText.BranchOperationUI_DetachedHeadTitle, null,
-							UIText.BranchOperationUI_DetachedHeadMessage,
-							MessageDialog.INFORMATION,
-							new String[] { IDialogConstants.CLOSE_LABEL }, 0,
-							toggleMessage, false);
-					dialog.open();
-					if (dialog.getToggleState()) {
-						store.setValue(UIPreferences.SHOW_DETACHED_HEAD_WARNING,
-								false);
-					}
+				MessageDialogWithToggle dialog = new MessageDialogWithToggle(
+						PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+								.getShell(),
+						UIText.BranchOperationUI_DetachedHeadTitle, null,
+						UIText.BranchOperationUI_DetachedHeadMessage,
+						MessageDialog.INFORMATION,
+						new String[] { IDialogConstants.CLOSE_LABEL }, 0,
+						toggleMessage, false);
+				dialog.open();
+				if (dialog.getToggleState()) {
+					store.setValue(UIPreferences.SHOW_DETACHED_HEAD_WARNING,
+							false);
 				}
+			}
 		});
 	}
 }

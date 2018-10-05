@@ -43,19 +43,18 @@ import org.eclipse.jgit.util.StringUtils;
  * A unique preference is set for each repository/branch combination that is
  * persisted that includes information to be able to restore projects when the
  * branch is later checked out.
- *
+ * </p>
  * <p>
  * The workflow is as follows:
- * <p>
- * 1. Call {@link #snapshot()} to get the current projects for the currently
- * checked out branch
- * <p>
- * 2. Call {@link #save(ProjectTrackerMemento)} after the new branch has been
- * successfully checked out with the memento returned from step 1
- * <p>
- * 3. Call {@link #restore(IProgressMonitor)} to restore the projects for the
- * newly checked out branch
- *
+ * </p>
+ * <ol>
+ * <li>Call {@link #snapshot()} to get the current projects for the currently
+ * checked out branch</li>
+ * <li>Call {@link #save(ProjectTrackerMemento)} after the new branch has been
+ * successfully checked out with the memento returned from step 1</li>
+ * <li>Call {@link #restore(IProgressMonitor)} to restore the projects for the
+ * newly checked out branch</li>
+ * </ol>
  */
 class BranchProjectTracker {
 
@@ -99,40 +98,31 @@ class BranchProjectTracker {
 	 * @return memento
 	 */
 	public ProjectTrackerMemento snapshot() {
-
 		ProjectTrackerMemento memento = new ProjectTrackerMemento();
-
-		Stream.of(repositories) //
-				.map(this::takeSnapshot) //
-				.filter(Objects::nonNull) //
+		Stream.of(repositories).map(this::takeSnapshot).filter(Objects::nonNull)
 				.forEach(x -> memento.addSnapshot(x));
-
 		return memento;
 	}
 
 	private ProjectTrackerPreferenceSnapshot takeSnapshot(Repository repo) {
-
 		String branch = getBranch(repo);
-		if (StringUtils.isEmptyOrNull(branch))
+		if (StringUtils.isEmptyOrNull(branch)) {
 			return null;
-
+		}
 		List<String> projectPaths = getAssociatedProjectsPaths(repo);
 		if (projectPaths.isEmpty()) {
 			return null;
 		}
-
 		return new ProjectTrackerPreferenceSnapshot(repo, branch,
 				projectPaths);
 	}
 
 	@NonNull
 	private List<String> getAssociatedProjectsPaths(Repository repo) {
-
 		IProject[] projects = getValidOpenProjects(repo);
 		if (projects == null) {
 			return Collections.emptyList();
 		}
-
 		List<String> projectPaths = new ArrayList<>();
 
 		final String workDir = repo.getWorkTree().getAbsolutePath();
@@ -174,14 +164,12 @@ class BranchProjectTracker {
 	 * @return this tracker
 	 */
 	public BranchProjectTracker save(ProjectTrackerMemento snapshot) {
-
 		snapshot.getSnapshots().stream()
 				.forEach(BranchProjectTracker::savePreference);
 		return this;
 	}
 
 	private static void savePreference(ProjectTrackerPreferenceSnapshot snapshot) {
-
 		Repository repo = snapshot.getRepository();
 		String branch = snapshot.getBranch();
 		List<String> projects = snapshot.getAssociatedProjects();
@@ -196,7 +184,6 @@ class BranchProjectTracker {
 	 * @param monitor
 	 */
 	public void restore(final IProgressMonitor monitor) {
-
 		for (Repository repo : repositories) {
 			String branch = getBranch(repo);
 			if (branch != null) {
@@ -216,9 +203,9 @@ class BranchProjectTracker {
 			final IProgressMonitor monitor) {
 		List<String> paths = ProjectTrackerPreferenceHelper
 				.restoreFromPreferences(repo, branch);
-		if (paths.size() == 0)
+		if (paths.isEmpty()) {
 			return;
-
+		}
 		Set<ProjectRecord> records = new LinkedHashSet<>();
 		File parent = repo.getWorkTree();
 		for (String path : paths) {

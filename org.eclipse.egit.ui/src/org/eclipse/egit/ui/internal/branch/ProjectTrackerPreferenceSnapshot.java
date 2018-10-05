@@ -23,7 +23,9 @@ import org.eclipse.jgit.lib.Repository;
 class ProjectTrackerPreferenceSnapshot {
 
 	private Repository repo;
+
 	private String branch;
+
 	private List<String> associatedProjects;
 
 	/**

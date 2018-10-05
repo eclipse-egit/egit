@@ -104,8 +104,7 @@ public class SwitchToMenu extends ContributionItem implements
 
 	private void createDynamicMenu(Menu menu, final Repository[] repositories) {
 
-		if (!isMultipleSelection(repositories))
-		{
+		if (!isMultipleSelection(repositories)) {
 			createNewBranchMenuItem(menu, repositories[0]);
 			createSeparator(menu);
 		}
@@ -118,10 +117,8 @@ public class SwitchToMenu extends ContributionItem implements
 		}
 
 		if (itemCount == 0 && isMultipleSelection(repositories)) {
-			/*
-			 * If the menu would be empty, add a disabled menuItem to inform the
-			 * user that no common branches among the selection were found
-			 */
+			// If the menu would be empty, add a disabled menuItem to inform the
+			// user that no common branches among the selection were found
 			createDisabledMenu(menu, UIText.SwitchToMenu_NoCommonBranchesFound);
 		}
 	}
@@ -163,8 +160,8 @@ public class SwitchToMenu extends ContributionItem implements
 
 	}
 
-	private int createMostActiveBranchesMenuItems(Menu menu, Repository[] repositories)
-	{
+	private int createMostActiveBranchesMenuItems(Menu menu,
+			Repository[] repositories) {
 		int itemCount = 0;
 		try {
 			List<Map<String, Ref>> activeBranches = new ArrayList<>();
@@ -175,11 +172,11 @@ public class SwitchToMenu extends ContributionItem implements
 				activeBranches.add(branchRefMapping);
 			}
 
-			Set<String> activeBranchIntersection = getBranchNameIntersection(activeBranches);
+			Set<String> activeBranchIntersection = getBranchNameIntersection(
+					activeBranches);
 			for (String branchName : activeBranchIntersection) {
 				itemCount++;
-				createMenuItemMultiple(menu, repositories,
-						branchName);
+				createMenuItemMultiple(menu, repositories, branchName);
 			}
 
 			if (itemCount >= MAX_NUM_MENU_ENTRIES) {
@@ -211,8 +208,7 @@ public class SwitchToMenu extends ContributionItem implements
 
 				createMenuItemMultiple(menu, repositories, localBranchName);
 			}
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			Activator.handleError(e.getMessage(), e, true);
 		}
 
@@ -261,24 +257,25 @@ public class SwitchToMenu extends ContributionItem implements
 		return new MenuItem(menu, SWT.SEPARATOR);
 	}
 
-	private void createMenuItemMultiple(Menu menu, final Repository[] repositories, String shortName) throws IOException {
+	private void createMenuItemMultiple(Menu menu, Repository[] repositories,
+			String shortName) {
 
-		final MenuItem item = new MenuItem(menu, SWT.PUSH);
+		MenuItem item = new MenuItem(menu, SWT.PUSH);
 		item.setText(shortName);
 
-		boolean allRepositoriesCheckedOut = Stream.of(repositories) //
+		boolean allRepositoriesCheckedOut = Stream.of(repositories)
 				.allMatch(r -> shortName.equals(getBranch(r)));
 
-		if (allRepositoriesCheckedOut)
+		if (allRepositoriesCheckedOut) {
 			item.setImage(checkedOutImage);
-		else
+		} else {
 			item.setImage(branchImage);
+		}
 		item.setEnabled(!allRepositoriesCheckedOut);
 
 		item.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
 				BranchOperationUI.checkout(repositories, shortName).start();
 			}
 		});
@@ -310,13 +307,13 @@ public class SwitchToMenu extends ContributionItem implements
 			CheckoutEntry checkout = entry.parseCheckout();
 			if (checkout != null) {
 				Ref ref = localBranches.get(checkout.getFromBranch());
-				if (ref != null)
-					if (activeRefs.size() < maximumBranchCount)
-						activeRefs.put(checkout.getFromBranch(), ref);
+				if (ref != null && activeRefs.size() < maximumBranchCount) {
+					activeRefs.put(checkout.getFromBranch(), ref);
+				}
 				ref = localBranches.get(checkout.getToBranch());
-				if (ref != null)
-					if (activeRefs.size() < maximumBranchCount)
-						activeRefs.put(checkout.getToBranch(), ref);
+				if (ref != null && activeRefs.size() < maximumBranchCount) {
+					activeRefs.put(checkout.getToBranch(), ref);
+				}
 			}
 		}
 

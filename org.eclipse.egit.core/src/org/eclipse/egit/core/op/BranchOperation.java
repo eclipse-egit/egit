@@ -45,7 +45,6 @@ import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.CheckoutResult;
 import org.eclipse.jgit.api.CheckoutResult.Status;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.CheckoutConflictException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.Constants;
@@ -121,17 +120,12 @@ public class BranchOperation implements IEGitOperation {
 			@Override
 			public void run(IProgressMonitor pm) throws CoreException {
 				SubMonitor progress = SubMonitor.convert(pm, 4);
-
-
 				for (Repository repository : repositories) {
-
 					CheckoutResult result = checkoutRepository(repository,
 							progress);
-
 					if (result.getStatus() == Status.NONDELETED) {
 						retryDelete(repository, result.getUndeletedList());
 					}
-
 					results.put(repository, result);
 				}
 				refreshAffectedProjects(progress);
@@ -139,25 +133,17 @@ public class BranchOperation implements IEGitOperation {
 
 			public CheckoutResult checkoutRepository(Repository repo,
 					SubMonitor progress) throws CoreException {
-
 				closeProjectsMissingAfterCheckout(repo, progress);
-
 				try (Git git = new Git(repo)) {
 					CheckoutCommand co = git.checkout().setProgressMonitor(
 							new EclipseGitProgressTransformer(
 									progress.newChild(1)));
 					co.setName(target);
-
 					try {
 						co.call();
-						// The below exceptions are handled by the
-						// CheckoutCommand's result status which is returned
-					} catch (CheckoutConflictException e) {
-						// ignore
-					} catch (JGitInternalException e) {
-						// ignore
-					} catch (GitAPIException e) {
-						// ignore
+					} catch (JGitInternalException | GitAPIException e) {
+						// Result status, which is returned below, accounts
+						// for these.
 					}
 					return co.getResult();
 				}
@@ -186,20 +172,17 @@ public class BranchOperation implements IEGitOperation {
 
 			private void refreshAffectedProjects(SubMonitor progress)
 					throws CoreException {
-
-				IProject[] refreshProjects = results.entrySet().stream() //
-					.map(this::getAffectedProjects) //
-					.flatMap(arr -> Stream.of(arr)) //
-					.distinct()
-					.toArray(IProject[]::new);
+				IProject[] refreshProjects = results.entrySet().stream()
+						.map(this::getAffectedProjects)
+						.flatMap(arr -> Stream.of(arr)).distinct()
+						.toArray(IProject[]::new);
 
 				ProjectUtil.refreshValidProjects(refreshProjects, delete,
 						progress.newChild(1));
 			}
 
 			private IProject[] getAffectedProjects(
-					Entry<Repository, CheckoutResult> entry)
-			{
+					Entry<Repository, CheckoutResult> entry) {
 				CheckoutResult result = entry.getValue();
 
 				if (result.getStatus() != Status.OK
@@ -248,19 +231,22 @@ public class BranchOperation implements IEGitOperation {
 		// try to delete, but for a short time only
 		long startTime = System.currentTimeMillis();
 		for (String path : pathList) {
-			if (System.currentTimeMillis() - startTime > 1000)
+			if (System.currentTimeMillis() - startTime > 1000) {
 				break;
+			}
 			File fileToDelete = new File(repo.getWorkTree(), path);
-			if (fileToDelete.exists())
+			if (fileToDelete.exists()) {
 				try {
 					// Only files should be passed here, thus
 					// we ignore attempt to delete submodules when
 					// we switch to a branch without a submodule
-					if (!fileToDelete.isFile())
+					if (!fileToDelete.isFile()) {
 						FileUtils.delete(fileToDelete, FileUtils.RETRY);
+					}
 				} catch (IOException e) {
 					// ignore here
 				}
+			}
 		}
 	}
 
@@ -276,9 +262,9 @@ public class BranchOperation implements IEGitOperation {
 	private IProject[] getMissingProjects(Repository repository,
 			String branch) throws CoreException {
 		IProject[] openProjects = ProjectUtil.getValidOpenProjects(repository);
-		if (delete || openProjects.length == 0)
+		if (delete || openProjects.length == 0) {
 			return new IProject[0];
-
+		}
 		ObjectId targetTreeId;
 		ObjectId currentTreeId;
 		try {
@@ -287,14 +273,15 @@ public class BranchOperation implements IEGitOperation {
 		} catch (IOException e) {
 			return new IProject[0];
 		}
-		if (targetTreeId == null || currentTreeId == null)
+		if (targetTreeId == null || currentTreeId == null) {
 			return new IProject[0];
-
+		}
 		Map<File, IProject> locations = new HashMap<>();
 		for (IProject project : openProjects) {
 			IPath location = project.getLocation();
-			if (location == null)
+			if (location == null) {
 				continue;
+			}
 			location = location
 					.append(IProjectDescription.DESCRIPTION_FILE_NAME);
 			locations.put(location.toFile(), project);
@@ -313,20 +300,21 @@ public class BranchOperation implements IEGitOperation {
 			while (walk.next()) {
 				AbstractTreeIterator targetIter = walk.getTree(0,
 						AbstractTreeIterator.class);
-				if (targetIter != null)
+				if (targetIter != null) {
 					continue;
-
+				}
 				AbstractTreeIterator currentIter = walk.getTree(1,
 						AbstractTreeIterator.class);
 				AbstractTreeIterator workingIter = walk.getTree(2,
 						AbstractTreeIterator.class);
-				if (currentIter == null || workingIter == null)
+				if (currentIter == null || workingIter == null) {
 					continue;
-
+				}
 				IProject project = locations.get(new File(root, walk
 						.getPathString()));
-				if (project != null)
+				if (project != null) {
 					toBeClosed.add(project);
+				}
 			}
 		} catch (IOException e) {
 			return new IProject[0];
