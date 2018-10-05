@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
@@ -80,9 +81,10 @@ public class ReplaceWithOursTheirsMenu extends CompoundContributionItem
 				.splitPathsByRepository(Arrays.asList(locations));
 		if (pathsByRepository.size() == 1) {
 
-			Repository repository = pathsByRepository.keySet().iterator()
-					.next();
-			Collection<String> paths = pathsByRepository.get(repository);
+			Entry<Repository, Collection<String>> entry = pathsByRepository
+					.entrySet().iterator().next();
+			Repository repository = entry.getKey();
+			Collection<String> paths = entry.getValue();
 			if (paths.size() == 1) {
 				String path = paths.iterator().next();
 				items.addAll(createSpecificOursTheirsItems(repository, path));

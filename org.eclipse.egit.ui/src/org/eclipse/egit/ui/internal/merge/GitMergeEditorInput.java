@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.CompareEditorInput;
@@ -145,9 +146,10 @@ public class GitMergeEditorInput extends CompareEditorInput {
 						new IllegalStateException(
 								UIText.RepositoryAction_multiRepoSelection));
 			}
-			Repository repo = pathsByRepository.keySet().iterator().next();
-			List<String> filterPaths = new ArrayList<>(
-					pathsByRepository.get(repo));
+			Entry<Repository, Collection<String>> entry = pathsByRepository
+					.entrySet().iterator().next();
+			Repository repo = entry.getKey();
+			List<String> filterPaths = new ArrayList<>(entry.getValue());
 
 			if (monitor.isCanceled())
 				throw new InterruptedException();

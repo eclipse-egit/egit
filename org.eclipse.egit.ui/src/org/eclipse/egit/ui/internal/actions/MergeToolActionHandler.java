@@ -16,6 +16,7 @@ package org.eclipse.egit.ui.internal.actions;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.compare.CompareEditorInput;
@@ -64,13 +65,13 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 		Map<Repository, Collection<String>> pathsByRepository = ResourceUtil
 				.splitPathsByRepository(Arrays.asList(paths));
 
-		Set<Repository> repos = pathsByRepository.keySet();
-
-		if (repos.size() != 1)
+		if (pathsByRepository.size() != 1)
 			return false;
 
-		Repository repo = repos.iterator().next();
-		Collection<String> selectedRepoPaths = pathsByRepository.get(repo);
+		Entry<Repository, Collection<String>> pathsEntry = pathsByRepository
+				.entrySet().iterator().next();
+		Repository repo = pathsEntry.getKey();
+		Collection<String> selectedRepoPaths = pathsEntry.getValue();
 		if (selectedRepoPaths.isEmpty())
 			return false;
 

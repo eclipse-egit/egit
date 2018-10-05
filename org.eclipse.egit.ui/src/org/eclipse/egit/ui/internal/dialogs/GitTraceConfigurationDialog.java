@@ -452,8 +452,7 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 						checkedKeys.add(((OptionNode) checked).getOption());
 				}
 
-				for (PluginNode plugin : optionsMap.keySet()) {
-					Properties props = optionsMap.get(plugin);
+				for (Properties props : optionsMap.values()) {
 					for (Object keyObject : props.keySet()) {
 						String key = (String) keyObject;
 						boolean isOn = options.getBooleanOption(key, false);
