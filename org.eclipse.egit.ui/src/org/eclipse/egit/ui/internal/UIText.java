@@ -3106,6 +3106,9 @@ public class UIText extends NLS {
 	public static String WindowCachePreferencePage_deltaBaseCacheLimit;
 
 	/** */
+	public static String WindowCachePreferencePage_mmapToolTipOnWindows;
+
+	/** */
 	public static String WindowCachePreferencePage_packedGitMMAP;
 
 	/** */
