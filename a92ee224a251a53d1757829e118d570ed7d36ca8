@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09d224ec_0dc44e8c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-10-05T03:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abbfb655_e604c934",
+      "revId": "a92ee224a251a53d1757829e118d570ed7d36ca8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "901cc989_0a21beb3",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "60cafc7d_3faf4c11",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-10-05T03:26:31Z",
+      "side": 1,
+      "message": "Beautiful!",
+      "parentUuid": "901cc989_0a21beb3",
+      "range": {
+        "startLine": 426,
+        "startChar": 9,
+        "endLine": 428,
+        "endChar": 13
+      },
+      "revId": "a92ee224a251a53d1757829e118d570ed7d36ca8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85fd1399_c9cb0e13",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
         "patchSetId": 4
@@ -53,6 +95,30 @@
       "writtenOn": "2018-10-04T10:50:47Z",
       "side": 1,
       "message": "Same here:\n\n  results.keySet().stream().anyMatch(...)",
+      "range": {
+        "startLine": 433,
+        "startChar": 9,
+        "endLine": 435,
+        "endChar": 13
+      },
+      "revId": "a92ee224a251a53d1757829e118d570ed7d36ca8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b7b4c21_1c01980a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 202697
+      },
+      "writtenOn": "2018-10-05T03:26:31Z",
+      "side": 1,
+      "message": "Likewise",
+      "parentUuid": "85fd1399_c9cb0e13",
       "range": {
         "startLine": 433,
         "startChar": 9,
