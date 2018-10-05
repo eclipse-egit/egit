@@ -17,6 +17,7 @@ import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
@@ -63,9 +64,13 @@ public class WindowCachePreferencePage extends FieldEditorPreferencePage
 				UIText.WindowCachePreferencePage_streamFileThreshold,
 				getFieldEditorParent(), 10 * MB, 1 * GB));
 
-		addField(new BooleanFieldEditor(GitCorePreferences.core_packedGitMMAP,
-				UIText.WindowCachePreferencePage_packedGitMMAP,
-				getFieldEditorParent()));
+		if (!SystemReader.getInstance().isWindows()) {
+			BooleanFieldEditor mmapEditor = new BooleanFieldEditor(
+					GitCorePreferences.core_packedGitMMAP,
+					UIText.WindowCachePreferencePage_packedGitMMAP,
+					getFieldEditorParent());
+			addField(mmapEditor);
+		}
 	}
 
 	@Override
