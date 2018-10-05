@@ -231,7 +231,7 @@ public class StagedChangeCacheTest extends AbstractCacheTest {
 	}
 
 	@Test
-	public void shouldListTwoWorkspaceChagneInFolder() throws Exception {
+	public void shouldListTwoWorkspaceChangesInFolder() throws Exception {
 		// given
 		try (Git git = new Git(db)) {
 			writeTrashFile(db, "folder/a.txt", "trash");
