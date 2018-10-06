@@ -210,7 +210,7 @@ public class WorkingTreeChangeCacheTest extends AbstractCacheTest {
 	}
 
 	@Test
-	public void shouldListTwoWorkspaceChagneInFolder() throws Exception {
+	public void shouldListTwoWorkspaceChangesInFolder() throws Exception {
 		// given
 		writeTrashFile(db, "folder/a.txt", "trash");
 		writeTrashFile(db, "folder/b.txt", "trash");
@@ -231,7 +231,7 @@ public class WorkingTreeChangeCacheTest extends AbstractCacheTest {
 	}
 
 	@Test
-	public void shouldNotListIgnorefFile() throws Exception {
+	public void shouldNotListIgnoredFile() throws Exception {
 		// given
 		writeTrashFile(db, "a.txt", "content");
 		writeTrashFile(db, ".gitignore", "a.txt");
