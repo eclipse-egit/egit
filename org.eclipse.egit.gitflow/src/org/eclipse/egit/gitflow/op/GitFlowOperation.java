@@ -15,7 +15,6 @@ import static org.eclipse.jgit.api.MergeCommand.FastForwardMode.NO_FF;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -269,13 +268,12 @@ abstract public class GitFlowOperation implements IEGitOperation {
 	 * @param timeout
 	 *            timeout in seconds
 	 * @return result of fetching from remote
-	 * @throws URISyntaxException
 	 * @throws InvocationTargetException
 	 *
 	 * @since 4.2
 	 */
 	protected FetchResult fetch(IProgressMonitor monitor, int timeout)
-			throws URISyntaxException, InvocationTargetException {
+			throws InvocationTargetException {
 		RemoteConfig config = repository.getConfig().getDefaultRemoteConfig();
 		FetchOperation fetchOperation = new FetchOperation(
 				repository.getRepository(), config, timeout, false);
