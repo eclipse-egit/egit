@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dab667f8_1af11cc7",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/FeatureStartHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-10-06T11:56:20Z",
+      "side": 1,
+      "message": "Good point. I have made that mistake in the past, and now just copied it. Hence, I\u0027m creating a separate commit, rebasing this one. See I990e8b6482c3cc5fd157724e355e4f4c03e7a217",
+      "parentUuid": "c8c5be72_9be4ea1a",
+      "revId": "bb53e2c06c0e302d8972ec2b594fdcd4bdb9aba7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b549bf9_ddf5f25b",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/GitFlowConfig.java",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2018-10-03T13:21:16Z",
       "side": 1,
       "message": "remove",
+      "range": {
+        "startLine": 322,
+        "startChar": 30,
+        "endLine": 322,
+        "endChar": 33
+      },
+      "revId": "bb53e2c06c0e302d8972ec2b594fdcd4bdb9aba7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62539399_5739c337",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/GitFlowConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-10-06T11:56:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b549bf9_ddf5f25b",
       "range": {
         "startLine": 322,
         "startChar": 30,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "e9e05ea1_6fb91136",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/GitFlowConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-10-06T11:56:20Z",
+      "side": 1,
+      "message": "Good point.\nDone.",
+      "parentUuid": "9cb05841_90fa3ac1",
+      "range": {
+        "startLine": 344,
+        "startChar": 2,
+        "endLine": 347,
+        "endChar": 45
+      },
+      "revId": "bb53e2c06c0e302d8972ec2b594fdcd4bdb9aba7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f589d9e_83e9ca0a",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/FeatureStartOperation.java",
         "patchSetId": 1
@@ -76,6 +142,30 @@
       "writtenOn": "2018-10-03T13:46:23Z",
       "side": 1,
       "message": "Document the time unit and allowed range. Seconds? Milliseconds? What if \u003c 0? What if \u003d\u003d 0?",
+      "range": {
+        "startLine": 39,
+        "startChar": 11,
+        "endLine": 39,
+        "endChar": 18
+      },
+      "revId": "bb53e2c06c0e302d8972ec2b594fdcd4bdb9aba7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02ba81cd_05345547",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/FeatureStartOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-10-06T11:56:20Z",
+      "side": 1,
+      "message": "I copied the JavaDoc from org.eclipse.jgit.transport.Transport.setTimeout(int). Additional details regarding special values could be found in the implementation for com.jcraft.jsch.Request.request(Session, Channel).\n\nI see that as a user of this API, I would want to find this information directly in the JavaDoc here. However, what promises can I make, if this value is passed through several layers, many of which do not make promises regarding the semantics either?\nI feel like making no promise here is safer than one that may be misleading because any lower level might change its implementation.\nI could add this information, though, if I can back it up with JUnits. Though, if we want to do it like this, I think we should start with EGit core API, which is arguably more important.",
+      "parentUuid": "8f589d9e_83e9ca0a",
       "range": {
         "startLine": 39,
         "startChar": 11,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "c04be554_04943cf3",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/FeatureStartOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-10-06T11:56:20Z",
+      "side": 1,
+      "message": "Thanks for the link! Haven\u0027t worked with the progress API in a while.\nDone.",
+      "parentUuid": "06ef2808_2c7ba657",
+      "range": {
+        "startLine": 68,
+        "startChar": 1,
+        "endLine": 68,
+        "endChar": 2
+      },
+      "revId": "bb53e2c06c0e302d8972ec2b594fdcd4bdb9aba7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6de91ddd_db8c376b",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/FeatureStartOperation.java",
         "patchSetId": 1
@@ -122,6 +236,30 @@
       "writtenOn": "2018-10-03T13:46:23Z",
       "side": 1,
       "message": "progress.newChild(1)",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 15
+      },
+      "revId": "bb53e2c06c0e302d8972ec2b594fdcd4bdb9aba7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c980a89b_6dda6fca",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/FeatureStartOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-10-06T11:56:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6de91ddd_db8c376b",
       "range": {
         "startLine": 75,
         "startChar": 8,
@@ -181,6 +319,24 @@
       "side": 1,
       "message": "This has nothing to do with mixing EGit and Egit-Gitflow versions. You can\u0027t, anyway, since we have tight version constraints among our bundles. This is about downstream users of this public API. Downstream users will have to change their code (remove their catching or propagation of the exception).\n\nThe change is still binary compatible, though. I don\u0027t know if it would be OK to do this if only the minor version increases.",
       "parentUuid": "728d11d6_c5a45cef",
+      "revId": "bb53e2c06c0e302d8972ec2b594fdcd4bdb9aba7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d19c8e6_27159696",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/op/GitFlowOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-10-06T11:56:20Z",
+      "side": 1,
+      "message": "Thanks for the link. Good to have as a checklist.\nI moved this change to a separate commit. See I54f309075f0243dbb41c8320e1089606bba5c942\nAs it is a source compatibility issue, I assume it can be merged once we bump versions to 5.3. Correct?\nDone.",
+      "parentUuid": "490b2883_77ec2fd5",
       "revId": "bb53e2c06c0e302d8972ec2b594fdcd4bdb9aba7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
