@@ -12,7 +12,6 @@ package org.eclipse.egit.gitflow.op;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -66,10 +65,6 @@ public final class FeatureStartOperation extends AbstractFeatureOperation {
 			try {
 				fetch(progress.newChild(1), timeoutInSeconds);
 			} catch (InvocationTargetException e) {
-				throw new CoreException(Activator.error(e));
-			} catch (URISyntaxException e) {
-				// TODO: remove as soon as useless throws clause is removed from
-				// fetch(..)
 				throw new CoreException(Activator.error(e));
 			}
 		}

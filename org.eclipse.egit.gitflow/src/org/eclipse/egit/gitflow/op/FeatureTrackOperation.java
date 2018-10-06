@@ -16,7 +16,6 @@ import static org.eclipse.jgit.lib.Constants.R_REMOTES;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -117,8 +116,6 @@ public final class FeatureTrackOperation extends AbstractFeatureOperation {
 						CoreText.FeatureTrackOperation_unableToStoreGitConfig,
 						e));
 			}
-		} catch (URISyntaxException e) {
-			throw new CoreException(error(e.getMessage(), e));
 		} catch (InvocationTargetException e) {
 			Throwable targetException = e.getTargetException();
 			throw new CoreException(error(targetException.getMessage(),
