@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.WeakHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.commands.IStateListener;
 import org.eclipse.core.commands.State;
@@ -72,6 +73,7 @@ import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagsNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchHierarchyCommand;
+import org.eclipse.egit.ui.internal.repository.tree.command.ToggleRepositoryViewFilterCommand;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.api.Git;
@@ -97,19 +99,30 @@ import org.eclipse.ui.commands.ICommandService;
 /**
  * Content Provider for the Git Repositories View
  */
-public class RepositoriesViewContentProvider implements ITreeContentProvider,
-		IStateListener {
+public class RepositoriesViewContentProvider implements ITreeContentProvider {
 
 	private static final Object[] NO_CHILDREN = new Object[0];
 
 	private final RepositoryCache repositoryCache = org.eclipse.egit.core.Activator
 			.getDefault().getRepositoryCache();
 
-	private final State commandState;
+	private final Map<State, IStateListener> stateListeners = new HashMap<>();
 
-	private boolean branchHierarchyMode = false;
+	private AtomicBoolean branchHierarchyMode = new AtomicBoolean(false);
 
 	private boolean showUnbornHead = false;
+
+	private AtomicBoolean showTags = new AtomicBoolean(true);
+
+	private AtomicBoolean showRefs = new AtomicBoolean(true);
+
+	private AtomicBoolean showRemotes = new AtomicBoolean(true);
+
+	private AtomicBoolean showWorkingTree = new AtomicBoolean(true);
+
+	private AtomicBoolean showStashes = new AtomicBoolean(true);
+
+	private AtomicBoolean showSubmudules = new AtomicBoolean(true);
 
 	private Map<Repository, Map<String, Ref>> branchRefs = new WeakHashMap<>();
 
@@ -133,13 +146,46 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		super();
 		this.showUnbornHead = showUnbornHead;
 		ICommandService srv = CommonUtils.getService(PlatformUI.getWorkbench(), ICommandService.class);
-		commandState = srv.getCommand(
-				ToggleBranchHierarchyCommand.ID)
+		initToggleStateListener(srv, ToggleBranchHierarchyCommand.ID,
+				branchHierarchyMode);
+		initToggleStateListener(srv,
+				ToggleRepositoryViewFilterCommand.TOGGLE_TAGS_ID, showTags);
+		initToggleStateListener(srv,
+				ToggleRepositoryViewFilterCommand.TOGGLE_REFS_ID, showRefs);
+		initToggleStateListener(srv,
+				ToggleRepositoryViewFilterCommand.TOGGLE_REMOTES_ID,
+				showRemotes);
+		initToggleStateListener(srv,
+				ToggleRepositoryViewFilterCommand.TOGGLE_WORKTREE_ID,
+				showWorkingTree);
+		initToggleStateListener(srv,
+				ToggleRepositoryViewFilterCommand.TOGGLE_STASHES_ID,
+				showStashes);
+		initToggleStateListener(srv,
+				ToggleRepositoryViewFilterCommand.TOGGLE_SUBMODULES_ID,
+				showSubmudules);
+	}
+
+	private void initToggleStateListener(ICommandService service,
+			String commandId, final AtomicBoolean valueToUpdate) {
+		// all commands share the same toggle state ID
+		State togglestate = service.getCommand(commandId)
 				.getState(ToggleBranchHierarchyCommand.TOGGLE_STATE);
-		commandState.addListener(this);
+		IStateListener listener = new IStateListener() {
+
+			@Override
+			public void handleStateChange(State state, Object oldValue) {
+				updateToggle(state, valueToUpdate);
+			}
+		};
+		updateToggle(togglestate, valueToUpdate);
+		togglestate.addListener(listener);
+		stateListeners.put(togglestate, listener);
+	}
+
+	private void updateToggle(State state, AtomicBoolean valueToUpdate) {
 		try {
-			this.branchHierarchyMode = ((Boolean) commandState.getValue())
-					.booleanValue();
+			valueToUpdate.set(((Boolean) state.getValue()).booleanValue());
 		} catch (Exception e) {
 			Activator.handleError(e.getMessage(), e, false);
 		}
@@ -186,7 +232,9 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 
 	@Override
 	public void dispose() {
-		commandState.removeListener(this);
+		for (Entry<State, IStateListener> entry : stateListeners.entrySet()) {
+			entry.getKey().removeListener(entry.getValue());
+		}
 		for (ListenerHandle handle : refsChangedListeners.values())
 			handle.remove();
 		refsChangedListeners.clear();
@@ -269,15 +317,21 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		case REPO: {
 			List<RepositoryTreeNode<? extends Object>> nodeList = new ArrayList<>();
 			nodeList.add(new BranchesNode(node, repo));
-			nodeList.add(new TagsNode(node, repo));
-			nodeList.add(new AdditionalRefsNode(node, repo));
+			if (showTags.get()) {
+				nodeList.add(new TagsNode(node, repo));
+			}
+			if (showRefs.get()) {
+				nodeList.add(new AdditionalRefsNode(node, repo));
+			}
 			final boolean bare = repo.isBare();
-			if (!bare)
+			if (!bare && showWorkingTree.get())
 				nodeList.add(new WorkingDirNode(node, repo));
-			nodeList.add(new RemotesNode(node, repo));
-			if(!bare && hasStashedCommits(repo))
+			if (showRemotes.get()) {
+				nodeList.add(new RemotesNode(node, repo));
+			}
+			if (!bare && hasStashedCommits(repo) && showStashes.get())
 				nodeList.add(new StashNode(node, repo));
-			if (!bare && hasConfiguredSubmodules(repo))
+			if (!bare && hasConfiguredSubmodules(repo) && showSubmudules.get())
 				nodeList.add(new SubmodulesNode(node, repo));
 
 			return nodeList.toArray();
@@ -391,7 +445,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 
 	private Object[] getBranchChildren(RepositoryTreeNode node, Repository repo,
 			String prefix) {
-		if (branchHierarchyMode) {
+		if (branchHierarchyMode.get()) {
 			return getBranchHierarchyChildren(
 					new BranchHierarchyNode(node, repo, new Path(prefix)), repo,
 					node);
@@ -586,16 +640,6 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		}
 	}
 
-	@Override
-	public void handleStateChange(State state, Object oldValue) {
-		try {
-			this.branchHierarchyMode = ((Boolean) state.getValue())
-					.booleanValue();
-		} catch (Exception e) {
-			Activator.handleError(e.getMessage(), e, false);
-		}
-	}
-
 	private synchronized Map<String, Ref> getRefs(final Repository repo, final String prefix) throws IOException {
 		Map<String, Ref> allRefs = branchRefs.get(repo);
 		if (allRefs == null) {
@@ -668,6 +712,6 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 	 *         layout; {@code false} otherwise
 	 */
 	public boolean isHierarchical() {
-		return branchHierarchyMode;
+		return branchHierarchyMode.get();
 	}
 }

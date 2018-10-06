@@ -5054,6 +5054,46 @@
                label="%BranchCommit.label"
                style="toggle">
          </command>
+         <separator
+               name="org.eclipse.egit.ui.separatorRepoViewFilter"
+               visible="true">
+         </separator>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesToggleShowTags"
+               helpContextId="TODO - Show Tags"
+               style="toggle"
+               tooltip="%RepoViewToggleShowTags.tooltip">
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesToggleShowRefs"
+               helpContextId="TODO - Show Refs"
+               style="toggle"
+               tooltip="%RepoViewToggleShowRefs.tooltip">
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesToggleShowRemotes"
+               helpContextId="TODO - Show Remotes"
+               style="toggle"
+               tooltip="%RepoViewToggleShowRemotes.tooltip">
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesToggleShowWorktree"
+               helpContextId="TODO - Show Working Tree"
+               style="toggle"
+               tooltip="%RepoViewToggleShowWorkree.tooltip">
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesToggleShowStashes"
+               helpContextId="TODO - Show Stashes"
+               style="toggle"
+               tooltip="%RepoViewToggleShowStashes.tooltip">
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesToggleShowSubmodules"
+               helpContextId="TODO - Show Submodules"
+               style="toggle"
+               tooltip="%RepoViewToggleShowSubmodules.tooltip">
+         </command>
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
@@ -6032,6 +6072,66 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ToggleRepositoryViewFilterCommand"
+            id="org.eclipse.egit.ui.RepositoriesToggleShowTags"
+            name="%RepoViewToggleShowTags.name">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:true"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ToggleRepositoryViewFilterCommand"
+            id="org.eclipse.egit.ui.RepositoriesToggleShowRefs"
+            name="%RepoViewToggleShowRefs.name">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:true"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ToggleRepositoryViewFilterCommand"
+            id="org.eclipse.egit.ui.RepositoriesToggleShowRemotes"
+            name="%RepoViewToggleShowRemotes.name">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:true"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ToggleRepositoryViewFilterCommand"
+            id="org.eclipse.egit.ui.RepositoriesToggleShowWorktree"
+            name="%RepoViewToggleShowWorktree.name">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:true"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ToggleRepositoryViewFilterCommand"
+            id="org.eclipse.egit.ui.RepositoriesToggleShowStashes"
+            name="%RepoViewToggleShowStashes.name">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:true"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ToggleRepositoryViewFilterCommand"
+            id="org.eclipse.egit.ui.RepositoriesToggleShowSubmodules"
+            name="%RepoViewToggleShowSubmodules.name">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:true"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.AbortRebase"
             name="%AbortRebaseCommand.name">
       </command>
@@ -6217,6 +6317,30 @@
       <image
             commandId="org.eclipse.egit.ui.RepositoriesToggleBranchHierarchy"
             icon="icons/elcl16/hierarchicalLayout.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesToggleShowTags"
+            icon="icons/obj16/tags.png">
+      </image>
+      <!--image
+            commandId="org.eclipse.egit.ui.RepositoriesToggleShowRefs"
+            icon="icons.full/obj16/fldr_obj.png">
+      </image-->
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesToggleShowRemotes"
+            icon="icons/obj16/remote_entry_tbl.png">
+      </image>
+      <!--image
+            commandId="org.eclipse.egit.ui.RepositoriesToggleShowWorktree"
+            icon="icons.full/obj16/fldr_obj.png">
+      </image-->
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesToggleShowStashes"
+            icon="icons/obj16/stash.png">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesToggleShowSubmodules"
+            icon="icons/obj16/submodules.png">
       </image>
        <image
             commandId="org.eclipse.egit.ui.RepositoriesToggleBranchCommit"
