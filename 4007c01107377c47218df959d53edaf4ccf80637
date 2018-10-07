@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab8cf1c8_0939f373",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/HeaderText.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-10-07T10:30:43Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be worth creating a LocalResourceManager in this class as well, to avoid creating duplicate instances of the icon for each editor?",
+      "range": {
+        "startLine": 144,
+        "startChar": 37,
+        "endLine": 144,
+        "endChar": 48
+      },
+      "revId": "4007c01107377c47218df959d53edaf4ccf80637",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
