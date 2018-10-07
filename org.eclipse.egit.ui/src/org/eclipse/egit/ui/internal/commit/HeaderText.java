@@ -17,6 +17,7 @@ import java.lang.reflect.Field;
 
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.ClipboardUtils;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.TextViewer;
@@ -140,6 +141,9 @@ public class HeaderText {
 
 		final MenuItem copySHA1MenuItem = new MenuItem(menu, SWT.PUSH);
 		copySHA1MenuItem.setText(UIText.Header_contextMenu_copy_SHA1);
+		Image shaImage = UIIcons.ELCL16_ID.createImage();
+		copySHA1MenuItem.setImage(shaImage);
+		UIUtils.hookDisposal(styledText, shaImage);
 		final Shell shell = styledText.getShell();
 		copySHA1MenuItem.addSelectionListener(new SelectionAdapter() {
 			@Override
