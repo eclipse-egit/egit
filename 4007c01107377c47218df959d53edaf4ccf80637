@@ -22,6 +22,30 @@
       "revId": "4007c01107377c47218df959d53edaf4ccf80637",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51f3cae5_15f9e69f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/HeaderText.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-10-07T11:28:03Z",
+      "side": 1,
+      "message": "That sounds perfectly reasonable (and I was not even aware of this aspect of creating many images). However, for using a LocalResourceManager I would need some hook to dispose that, right? This class is not derived from controls or widgets, therefore there is no dispose() method. I guess that\u0027s the reason why another image is also registered via the utility class in line 103.\n\nIf you have some advice how to use a LocalResourceManager under those circumstances, I\u0027m happy to change the code. I just don\u0027t know how to make it work.",
+      "parentUuid": "ab8cf1c8_0939f373",
+      "range": {
+        "startLine": 144,
+        "startChar": 37,
+        "endLine": 144,
+        "endChar": 48
+      },
+      "revId": "4007c01107377c47218df959d53edaf4ccf80637",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
