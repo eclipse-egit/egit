@@ -1,4 +1,3 @@
-#Tue Jul 19 03:32:07 CEST 2011
 compilers.f.unresolved-features=1
 compilers.f.unresolved-plugins=1
 compilers.incompatible-environment=1
@@ -19,7 +18,9 @@ compilers.p.missing-version-export-package=2
 compilers.p.missing-version-import-package=2
 compilers.p.missing-version-require-bundle=2
 compilers.p.no-required-att=0
+compilers.p.no.automatic.module=1
 compilers.p.not-externalized-att=2
+compilers.p.service.component.without.lazyactivation=1
 compilers.p.unknown-attribute=1
 compilers.p.unknown-class=1
 compilers.p.unknown-element=1
