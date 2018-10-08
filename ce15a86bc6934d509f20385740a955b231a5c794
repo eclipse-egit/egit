@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e847fa7b_1036b2b3",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitCorePreferenceInitializer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2018-10-08T06:33:51Z",
+      "side": 1,
+      "message": "See https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d539789#c10\n\nProbably we want to keep \"false\" by default for all platforms.",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "ce15a86bc6934d509f20385740a955b231a5c794",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
