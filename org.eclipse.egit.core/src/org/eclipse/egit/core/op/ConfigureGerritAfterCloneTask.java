@@ -65,15 +65,18 @@ public class ConfigureGerritAfterCloneTask implements PostCloneTask {
 	 * Gerrit 2.11 gerrit version ssh command</a>
 	 * </p>
 	 * <p>
-	 * We match the whole reply from Gerrit's sshd (as opposed to a prefix match
-	 * for "gerrit version") just in case a non-Gerrit has the great idea to
-	 * return an error message like "gerrit version: unknown command" or some
-	 * such on its stdout...
+	 * We match (nearly) the whole reply from Gerrit's sshd (as opposed to a
+	 * prefix match for "gerrit version") just in case a non-Gerrit has the
+	 * great idea to return an error message like "gerrit version: unknown
+	 * command" or some such on its stdout...
 	 * </p>
+	 * Trailing output after the actual version number is ignored to catch all
+	 * different kinds of things that GIT may append to the version (-dirty,
+	 * etc.).
 	 */
 	private static final Pattern GERRIT_SSHD_REPLY = Pattern
 			.compile(GERRIT_SSHD_VERSION_API
-					+ "\\s+(?:\\d+(?:\\.\\d+)+|.+-\\d+-g[0-9a-fA-F]{7,})"); //$NON-NLS-1$
+					+ "\\s+(?:\\d+(?:\\.\\d+)+|.+-\\d+-.*)"); //$NON-NLS-1$
 
 	/**
 	 * To prevent against Cross Site Script Inclusion (XSSI) attacks, the Gerrit
@@ -211,9 +214,6 @@ public class ConfigureGerritAfterCloneTask implements PostCloneTask {
 				}
 			}
 		} else if (SSH.equals(s)) {
-			if (u.getPort() < 0) {
-				return false;
-			}
 			URIish sshUri = u.setPath(""); //$NON-NLS-1$
 			try {
 				String result = SshSupport.runSshCommand(sshUri,
