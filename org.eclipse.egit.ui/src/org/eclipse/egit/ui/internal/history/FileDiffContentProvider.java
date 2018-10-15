@@ -195,15 +195,20 @@ public class FileDiffContentProvider implements IStructuredContentProvider {
 				return Status.CANCEL_STATUS;
 			}
 			diff = loadJob.getDiffs();
-			viewer.refresh();
-			FileDiff interesting = getFirstInterestingElement();
-			if (interesting != null) {
-				if (currentInput.isSelectMarked()) {
-					viewer.setSelection(new StructuredSelection(interesting),
-							true);
-				} else {
-					viewer.reveal(interesting);
+			try {
+				control.setRedraw(false);
+				viewer.refresh();
+				FileDiff interesting = getFirstInterestingElement();
+				if (interesting != null) {
+					if (currentInput.isSelectMarked()) {
+						viewer.setSelection(
+								new StructuredSelection(interesting), true);
+					} else {
+						viewer.reveal(interesting);
+					}
 				}
+			} finally {
+				control.setRedraw(true);
 			}
 			return Status.OK_STATUS;
 		}
