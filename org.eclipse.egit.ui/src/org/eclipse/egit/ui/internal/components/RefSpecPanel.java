@@ -54,6 +54,7 @@ import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.FetchConnection;
 import org.eclipse.jgit.transport.RefSpec;
@@ -389,8 +390,14 @@ public class RefSpecPanel {
 		} catch (IOException e) {
 			Activator.logError("Couldn't read HEAD from local repository", e); //$NON-NLS-1$
 		}
+		List<Ref> refs;
+		try {
+			refs = localDb.getRefDatabase().getRefsByPrefix(RefDatabase.ALL);
+		} catch (IOException e) {
+			refs = Collections.emptyList();
+		}
 		final List<RefContentProposal> localProposals = createContentProposals(
-				localDb.getAllRefs().values(), HEAD);
+				refs, HEAD);
 		localProposalProvider.setProposals(localProposals);
 		localRefNames = new HashSet<>();
 		for (final RefContentProposal ref : localProposals)

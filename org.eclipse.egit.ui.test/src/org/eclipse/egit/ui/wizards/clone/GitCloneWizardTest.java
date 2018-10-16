@@ -26,6 +26,7 @@ import org.eclipse.egit.ui.common.RepoRemoteBranchesPage;
 import org.eclipse.egit.ui.common.WorkingCopyPage;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.osgi.util.NLS;
@@ -259,11 +260,12 @@ public class GitCloneWizardTest extends GitCloneWizardTestBase {
 		// A well known tag
 		assertNotNull(repository.resolve(Constants.R_TAGS + SampleTestRepository.v2_0_name).name());
 		// lots of refs
-		assertTrue(repository.getAllRefs().size() >= 4);
+		assertTrue(repository.getRefDatabase().getRefsByPrefix(RefDatabase.ALL)
+				.size() >= 4);
 		bot.button("Cancel").click();
 	}
 
-	// TODO network timeouts seem to be longer on cental EGit build
+	// TODO network timeouts seem to be longer on central EGit build
 	// Test is ignored to fix the build
 	@Ignore
 	@Test
@@ -280,7 +282,7 @@ public class GitCloneWizardTest extends GitCloneWizardTestBase {
 		remoteBranches.cancel();
 	}
 
-	// TODO network timeouts seem to be longer on cental EGit build
+	// TODO network timeouts seem to be longer on central EGit build
 	// Test is ignored to fix the build
 	@Ignore
 	@Test
