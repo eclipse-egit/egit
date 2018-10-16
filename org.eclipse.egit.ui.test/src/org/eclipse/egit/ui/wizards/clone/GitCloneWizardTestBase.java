@@ -31,6 +31,7 @@ import org.eclipse.equinox.internal.security.storage.friends.IStorageConstants;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.util.FileUtils;
@@ -86,7 +87,8 @@ public abstract class GitCloneWizardTestBase extends LocalRepositoryTestCase {
 		assertNotNull(repository.resolve(
 				Constants.R_TAGS + SampleTestRepository.v1_0_name).name());
 		// lots of refs
-		int refs = repository.getAllRefs().size();
+		int refs = repository.getRefDatabase().getRefsByPrefix(RefDatabase.ALL)
+				.size();
 		assertTrue(refs >= 4);
 		// and a known file in the working dir
 		assertTrue(new File(destinationRepo, SampleTestRepository.A_txt_name)
