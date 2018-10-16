@@ -30,6 +30,7 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.resource.JFaceColors;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -48,7 +49,7 @@ import org.eclipse.ui.forms.widgets.Hyperlink;
 
 /**
  * Property page to be shown in project properties, if project is shared using
- * git provider. Currently there aren't any modifiable element.
+ * git provider. Currently there aren't any modifiable elements.
  */
 public class GitProjectPropertyPage extends PropertyPage {
 
@@ -116,7 +117,8 @@ public class GitProjectPropertyPage extends PropertyPage {
 				.resolve(repository.getFullBranch());
 		if (objectId == null) {
 			Text headLabel = createLabeledReadOnlyText(composite, UIText.GitProjectPropertyPage_LabelId);
-			if (repository.getAllRefs().size() == 0)
+			if (repository.getRefDatabase().getRefsByPrefix(RefDatabase.ALL)
+					.isEmpty())
 				headLabel.setText(UIText.GitProjectPropertyPage_ValueEmptyRepository);
 			else
 				headLabel.setText(UIText.GitProjectPropertyPage_ValueUnbornBranch);

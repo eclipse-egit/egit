@@ -50,6 +50,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
@@ -207,22 +208,32 @@ class GitSynchronizeWizardPage extends WizardPage {
 			@Override
 			protected CellEditor getCellEditor(Object element) {
 				Repository repo = (Repository) element;
-				List<String> refs = new LinkedList<>(repo.getAllRefs()
-						.keySet());
+				List<String> refNames = new LinkedList<>();
+				List<Ref> refs;
+				try {
+					refs = repo.getRefDatabase()
+							.getRefsByPrefix(RefDatabase.ALL);
+				} catch (IOException e) {
+					refs = Collections.emptyList();
+				}
+				for (Ref ref : refs) {
+					refNames.add(ref.getName());
+				}
 
 				List<Ref> additionalRefs;
 				try {
 					additionalRefs = repo.getRefDatabase().getAdditionalRefs();
 				} catch (IOException e) {
-					additionalRefs = null;
+					additionalRefs = Collections.emptyList();
 				}
-				if (additionalRefs != null)
-					for (Ref ref : additionalRefs)
-						refs.add(ref.getName());
+				for (Ref ref : additionalRefs) {
+					refNames.add(ref.getName());
+				}
 
-				Collections.sort(refs, CommonUtils.STRING_ASCENDING_COMPARATOR);
+				Collections.sort(refNames,
+						CommonUtils.STRING_ASCENDING_COMPARATOR);
 
-				branchesEditor.setItems(refs.toArray(new String[0]));
+				branchesEditor.setItems(refNames.toArray(new String[0]));
 
 				return branchesEditor;
 			}
