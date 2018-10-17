@@ -50,7 +50,6 @@ public class TaskReferenceFactory implements IAdapterFactory {
 	private static final String BUGTRACK_URL = "url"; //$NON-NLS-1$
 
 	@Override
-	@SuppressWarnings({ "rawtypes" })
 	public Class[] getAdapterList() {
 		final Class[] c = new Class[ADAPTER_TYPES.length];
 		System.arraycopy(ADAPTER_TYPES, 0, c, 0, c.length);
@@ -58,7 +57,6 @@ public class TaskReferenceFactory implements IAdapterFactory {
 	}
 
 	@Override
-	@SuppressWarnings("rawtypes")
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
 		if (!AbstractTaskReference.class.equals(adapterType))
 			return null;
