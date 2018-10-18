@@ -54,6 +54,7 @@ public class RepositoryStatisticsPage extends PropertyPage {
 
 	@Override
 	protected Control createContents(Composite parent) {
+		noDefaultAndApplyButton();
 		Table table = new Table(parent, SWT.MULTI | SWT.BORDER
 				| SWT.FULL_SELECTION);
 		String[] titles = { UIText.RepositoryStatistics_Description,
