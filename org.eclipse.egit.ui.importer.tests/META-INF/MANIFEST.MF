@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %plugin_name
 Automatic-Module-Name: org.eclipse.egit.ui.importer.tests
 Bundle-SymbolicName: org.eclipse.egit.ui.importer.tests
-Bundle-Version: 5.1.3.qualifier
+Bundle-Version: 5.1.3.201810200350-r
 Bundle-Vendor: %provider_name
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Localization: plugin

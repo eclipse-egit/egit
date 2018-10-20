@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: GitFlow Test
 Automatic-Module-Name: org.eclipse.egit.gitflow.test
 Bundle-SymbolicName: org.eclipse.egit.gitflow.test;singleton:=true
-Bundle-Version: 5.1.3.qualifier
+Bundle-Version: 5.1.3.201810200350-r
 Fragment-Host: org.eclipse.egit.gitflow
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.eclipse.egit.core;version="[5.1.3,5.2.0)",

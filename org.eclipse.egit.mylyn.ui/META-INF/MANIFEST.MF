@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Automatic-Module-Name: org.eclipse.egit.mylyn.ui
 Bundle-SymbolicName: org.eclipse.egit.mylyn.ui;singleton:=true
-Bundle-Version: 5.1.3.qualifier
+Bundle-Version: 5.1.3.201810200350-r
 Bundle-Activator: org.eclipse.egit.internal.mylyn.ui.EGitMylynUI
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.jface,
