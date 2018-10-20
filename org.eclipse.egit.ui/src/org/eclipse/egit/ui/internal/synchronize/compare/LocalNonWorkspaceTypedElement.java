@@ -20,6 +20,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Collections;
 
@@ -189,7 +190,8 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 				try {
 					java.nio.file.Path fp = file.toPath();
 					if (Files.isSymbolicLink(fp)) {
-						String sp = new String(getContent(), Constants.CHARSET)
+						String sp = new String(getContent(),
+								StandardCharsets.UTF_8)
 								.trim();
 						if (sp.indexOf('\n') > 0) {
 							sp = sp.substring(0, sp.indexOf('\n')).trim();
