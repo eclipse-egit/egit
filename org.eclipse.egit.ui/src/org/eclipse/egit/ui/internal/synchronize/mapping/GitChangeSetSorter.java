@@ -31,6 +31,9 @@ import org.eclipse.jface.viewers.ViewerSorter;
  * alphabetical order.
  *
  */
+// TODO extend ViewerComparator as soon as minimum platform version is 4.7
+// (Oxygen)
+@SuppressWarnings("deprecation") // used as navigator commonSorter extension
 public class GitChangeSetSorter extends ViewerSorter {
 
 	@Override
