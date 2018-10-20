@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0e1035d_05855bd7",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/actions/StartDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-10-20T13:55:21Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "0b30b089331b7f7c7425ea3626dde42f64db48ce",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cb19ed5_0d580caf",
+        "filename": "org.eclipse.egit.gitflow.ui/src/org/eclipse/egit/gitflow/ui/internal/dialogs/InitDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-10-20T13:55:21Z",
+      "side": 1,
+      "message": "I think this comment is not necessary",
+      "revId": "0b30b089331b7f7c7425ea3626dde42f64db48ce",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "265ba655_d3e57d42",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/gitflow/AbstractFeatureFinishHandlerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-10-20T13:55:21Z",
+      "side": 1,
+      "message": "use the constant like in the other tests ? then changing the corresponding property value doesn\u0027t break tests",
+      "revId": "0b30b089331b7f7c7425ea3626dde42f64db48ce",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c85fd5b_126e8fa3",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/prefpages/configuration/GlobalConfigurationPageTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-10-20T13:55:21Z",
+      "side": 1,
+      "message": "please avoid combining unrelated changes in the same commit",
+      "revId": "0b30b089331b7f7c7425ea3626dde42f64db48ce",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
