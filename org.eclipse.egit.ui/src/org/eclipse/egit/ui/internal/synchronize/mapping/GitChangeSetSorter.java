@@ -31,6 +31,7 @@ import org.eclipse.jface.viewers.ViewerSorter;
  * alphabetical order.
  *
  */
+@SuppressWarnings("deprecation") // used as navigator commonSorter extension
 public class GitChangeSetSorter extends ViewerSorter {
 
 	@Override
