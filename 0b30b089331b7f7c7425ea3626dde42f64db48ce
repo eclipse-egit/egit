@@ -162,6 +162,24 @@
       "revId": "0b30b089331b7f7c7425ea3626dde42f64db48ce",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf3f8437_293959e8",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/prefpages/configuration/GlobalConfigurationPageTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-10-20T14:42:20Z",
+      "side": 1,
+      "message": "no the save action is good, just create another change for this. \n\nIf we combine unrelated changes in the same commit it\u0027s hard to understand the purpose and impact of a change. Also reverting one of them or cherry-picking it to another branch would require manual work then.",
+      "parentUuid": "1c11b3a8_4efcd1d8",
+      "revId": "0b30b089331b7f7c7425ea3626dde42f64db48ce",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
