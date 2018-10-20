@@ -36,6 +36,8 @@ public class GitCorePreferenceInitializer extends AbstractPreferenceInitializer 
 
 		String defaultRepoDir = RepositoryUtil.getDefaultDefaultRepositoryDir();
 		p.put(GitCorePreferences.core_defaultRepositoryDir, defaultRepoDir);
+
+		p.put(GitCorePreferences.core_sshClient, "jsch"); //$NON-NLS-1$
 	}
 
 }
