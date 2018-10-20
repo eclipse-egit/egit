@@ -86,6 +86,7 @@ public class LogicalLineNumberRulerColumn extends LineNumberRulerColumn {
 	 * @return true
 	 * @see <a href="https://bugs.eclipse.org/516322">Bug 516322</a>
 	 */
+	@Override
 	protected boolean internalSupportsZoomedPaint() {
 		return true;
 	}
@@ -98,6 +99,7 @@ public class LogicalLineNumberRulerColumn extends LineNumberRulerColumn {
 	 *            the zoom level to use for drawing operations
 	 * @see <a href="https://bugs.eclipse.org/516322">Bug 516322</a>
 	 */
+	@Override
 	protected void internalSetZoom(int zoomLevel) {
 		this.zoom = zoomLevel;
 	}
