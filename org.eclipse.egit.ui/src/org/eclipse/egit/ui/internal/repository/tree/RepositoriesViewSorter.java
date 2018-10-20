@@ -19,6 +19,7 @@ import org.eclipse.jface.viewers.Viewer;
 /**
  * Sorter for the Git Repositories View.
  */
+@SuppressWarnings("deprecation") // used as navigator commonSorter extension
 public class RepositoriesViewSorter extends
 		org.eclipse.jface.viewers.ViewerSorter {
 
