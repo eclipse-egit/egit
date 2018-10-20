@@ -15,7 +15,6 @@ package org.eclipse.egit.core;
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.jgit.util.SystemReader;
 
 /** Initializes plugin preferences with default values. */
 public class GitCorePreferenceInitializer extends AbstractPreferenceInitializer {
@@ -27,8 +26,7 @@ public class GitCorePreferenceInitializer extends AbstractPreferenceInitializer 
 
 		p.putInt(GitCorePreferences.core_packedGitWindowSize, 8 * 1024);
 		p.putInt(GitCorePreferences.core_packedGitLimit, 10 * MB);
-		p.putBoolean(GitCorePreferences.core_packedGitMMAP,
-				!SystemReader.getInstance().isWindows());
+		p.putBoolean(GitCorePreferences.core_packedGitMMAP, false);
 		p.putInt(GitCorePreferences.core_deltaBaseCacheLimit, 10 * MB);
 		p.putInt(GitCorePreferences.core_streamFileThreshold, 50 * MB);
 		p.putBoolean(GitCorePreferences.core_autoShareProjects, true);
