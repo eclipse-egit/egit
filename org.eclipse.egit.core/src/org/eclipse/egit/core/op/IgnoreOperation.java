@@ -19,9 +19,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -328,7 +328,7 @@ public class IgnoreOperation implements IEGitOperation {
 
 			FileOutputStream os = new FileOutputStream(gitIgnore, true);
 			try {
-				os.write(ignoreLine.getBytes(Constants.CHARACTER_ENCODING));
+				os.write(ignoreLine.getBytes(StandardCharsets.UTF_8));
 			} finally {
 				os.close();
 			}
@@ -339,10 +339,9 @@ public class IgnoreOperation implements IEGitOperation {
 		}
 	}
 
-	private ByteArrayInputStream asStream(String entry)
-			throws UnsupportedEncodingException {
+	private ByteArrayInputStream asStream(String entry) {
 		return new ByteArrayInputStream(
-				entry.getBytes(Constants.CHARACTER_ENCODING));
+				entry.getBytes(StandardCharsets.UTF_8));
 	}
 
 	private ISchedulingRule calcSchedulingRule() {

@@ -285,6 +285,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		testUtils.deleteTempDirs();
 	}
 
+	@SuppressWarnings("deprecation")
 	protected void clearAllConfiguredRepositories() throws Exception {
 		IEclipsePreferences prefs = Activator.getDefault().getRepositoryUtil()
 				.getPreferences();
