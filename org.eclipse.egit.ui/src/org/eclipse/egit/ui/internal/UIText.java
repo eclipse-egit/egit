@@ -715,6 +715,12 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_SecureStoreUseByDefault;
 
 	/** */
+	public static String GitPreferenceRoot_SshClient_Jsch_Label;
+
+	/** */
+	public static String GitPreferenceRoot_SshClient_Apache_Label;
+
+	/** */
 	public static String GitPreferenceRoot_useLogicalModel;
 
 	/** */
@@ -4863,6 +4869,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitPreferenceRoot_MaxPullThreadsCountTooltip;
+
+	/** */
+	public static String RemoteConnectionPreferencePage_SshClientLabel;
 
 	/** */
 	public static String RemoteConnectionPreferencePage_TimeoutLabel;
