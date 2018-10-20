@@ -52,9 +52,12 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.internal.CoreText;
+import org.eclipse.egit.core.internal.EGitSshdSessionFactory;
 import org.eclipse.egit.core.internal.ReportingTypedConfigGetter;
+import org.eclipse.egit.core.internal.SshPreferencesMirror;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
@@ -71,6 +74,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
 import org.eclipse.jgit.transport.SshSessionFactory;
+import org.eclipse.jgit.transport.sshd.SshdSessionFactory;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.jsch.core.IJSchService;
@@ -80,12 +84,18 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.RepositoryProvider;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * The plugin class for the org.eclipse.egit.core plugin. This
  * is a singleton class.
  */
 public class Activator extends Plugin implements DebugOptionsListener {
+
+	private enum SshClientType {
+		JSCH, APACHE
+	}
+
 	private static Activator plugin;
 	private static String pluginId;
 	private RepositoryCache repositoryCache;
@@ -96,6 +106,8 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	private IResourceChangeListener preDeleteProjectListener;
 	private IgnoreDerivedResources ignoreDerivedResourcesListener;
 	private MergeStrategyRegistryListener mergeStrategyRegistryListener;
+	private IPreferenceChangeListener sshClientChangeListener;
+	private ServiceTracker<IProxyService, IProxyService> proxyServiceTracker;
 
 	/**
 	 * @return the singleton {@link Activator}
@@ -181,10 +193,10 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	public void start(final BundleContext context) throws Exception {
 
 		super.start(context);
+		pluginId = context.getBundle().getSymbolicName();
 
 		SystemReader.setInstance(
 				new EclipseSystemReader(SystemReader.getInstance()));
-		pluginId = context.getBundle().getSymbolicName();
 
 		Config.setTypedConfigGetter(new ReportingTypedConfigGetter());
 		// we want to be notified about debug options changes
@@ -193,8 +205,19 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		context.registerService(DebugOptionsListener.class.getName(), this,
 				props);
 
+		SshPreferencesMirror.INSTANCE.start();
+		proxyServiceTracker = new ServiceTracker<>(context,
+				IProxyService.class.getName(), null);
+		proxyServiceTracker.open();
 		setupSSH(context);
-		setupProxy(context);
+		sshClientChangeListener = event -> {
+			if (GitCorePreferences.core_sshClient.equals(event.getKey())) {
+				setupSSH(getBundle().getBundleContext());
+			}
+		};
+		InstanceScope.INSTANCE.getNode(pluginId)
+				.addPreferenceChangeListener(sshClientChangeListener);
+		setupProxy();
 
 		repositoryCache = new RepositoryCache();
 		indexDiffCache = new IndexDiffCache();
@@ -218,25 +241,49 @@ public class Activator extends Plugin implements DebugOptionsListener {
 
 	@SuppressWarnings("unchecked")
 	private void setupSSH(final BundleContext context) {
-		final ServiceReference ssh;
-
-		ssh = context.getServiceReference(IJSchService.class.getName());
-		if (ssh != null) {
-			SshSessionFactory.setInstance(new EclipseSshSessionFactory(
-					(IJSchService) context.getService(ssh)));
+		String sshClient = Platform.getPreferencesService().getString(pluginId,
+				GitCorePreferences.core_sshClient, "jsch", null); //$NON-NLS-1$
+		SshSessionFactory previous = SshSessionFactory.getInstance();
+		if (SshClientType.APACHE.name().equalsIgnoreCase(sshClient)) {
+			if (previous instanceof EGitSshdSessionFactory) {
+				return;
+			}
+			logInfo(CoreText.Activator_SshClientUsingApache);
+			SshSessionFactory.setInstance(new EGitSshdSessionFactory());
+		} else {
+			if (previous instanceof EclipseSshSessionFactory) {
+				return;
+			}
+			if (!SshClientType.JSCH.name().equalsIgnoreCase(sshClient)) {
+				logWarning(
+						MessageFormat.format(
+								CoreText.Activator_SshClientUnknown, sshClient),
+						null);
+			}
+			ServiceReference ssh = context
+					.getServiceReference(IJSchService.class.getName());
+			if (ssh != null) {
+				SshSessionFactory.setInstance(new EclipseSshSessionFactory(
+						(IJSchService) context.getService(ssh)));
+			} else {
+				// Should never happen
+				logWarning(CoreText.Activator_SshClientNoJsch, null);
+				if (previous instanceof EGitSshdSessionFactory) {
+					return;
+				}
+				SshSessionFactory.setInstance(new EGitSshdSessionFactory());
+			}
+		}
+		if (previous instanceof SshdSessionFactory) {
+			((SshdSessionFactory) previous).close();
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	private void setupProxy(final BundleContext context) {
-		final ServiceReference proxy;
-
-		proxy = context.getServiceReference(IProxyService.class.getName());
+	private void setupProxy() {
+		IProxyService proxy = getProxyService();
 		if (proxy != null) {
-			ProxySelector.setDefault(new EclipseProxySelector(
-					(IProxyService) context.getService(proxy)));
-			Authenticator.setDefault(new EclipseAuthenticator(
-					(IProxyService) context.getService(proxy)));
+			ProxySelector.setDefault(new EclipseProxySelector(proxy));
+			Authenticator.setDefault(new EclipseAuthenticator(proxy));
 		}
 	}
 
@@ -386,8 +433,31 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		return secureStore;
 	}
 
+	/**
+	 * Obtains the {@link IProxyService}.
+	 *
+	 * @return the {@link IProxyService} or {@code null} if none is available.
+	 */
+	public IProxyService getProxyService() {
+		return proxyServiceTracker.getService();
+	}
+
 	@Override
 	public void stop(final BundleContext context) throws Exception {
+		SshPreferencesMirror.INSTANCE.stop();
+		if (sshClientChangeListener != null) {
+			InstanceScope.INSTANCE.getNode(pluginId)
+					.removePreferenceChangeListener(sshClientChangeListener);
+			sshClientChangeListener = null;
+		}
+		SshSessionFactory current = SshSessionFactory.getInstance();
+		if (current instanceof SshdSessionFactory) {
+			((SshdSessionFactory) current).close();
+		}
+		if (proxyServiceTracker != null) {
+			proxyServiceTracker.close();
+			proxyServiceTracker = null;
+		}
 		if (mergeStrategyRegistryListener != null) {
 			Platform.getExtensionRegistry()
 					.removeListener(mergeStrategyRegistryListener);

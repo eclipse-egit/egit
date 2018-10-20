@@ -31,7 +31,7 @@
     <p2MirrorsURL>http://www.eclipse.org/downloads/download.php?file=${PUBLISH_FOLDER}&amp;format=xml</p2MirrorsURL>
     <p2StatsURL>http://download.eclipse.org/stats/egit/${project.artifactId}</p2StatsURL>
     <!-- At the moment, this list of features needs to be maintained manually. -->
-    <statsTrackedArtifacts>org.eclipse.jgit.feature,org.eclipse.jgit.source.feature,org.eclipse.jgit.pgm.feature,org.eclipse.jgit.pgm.source.feature,org.eclipse.jgit.http.apache.feature,org.eclipse.egit.feature,org.eclipse.egit.gitflow.feature,org.eclipse.egit.mylyn.feature,org.eclipse.egit.source.feature</statsTrackedArtifacts>
+    <statsTrackedArtifacts>org.eclipse.jgit.feature,org.eclipse.jgit.source.feature,org.eclipse.jgit.pgm.feature,org.eclipse.jgit.pgm.source.feature,org.eclipse.jgit.http.apache.feature,org.eclipse.jgit.ssh.apache.feature,org.eclipse.egit.feature,org.eclipse.egit.gitflow.feature,org.eclipse.egit.mylyn.feature,org.eclipse.egit.source.feature</statsTrackedArtifacts>
   </properties>
 
   <profiles>
