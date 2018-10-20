@@ -3,14 +3,14 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %fragment_name
 Automatic-Module-Name: org.eclipse.egit.ui.smartimport
 Bundle-SymbolicName: org.eclipse.egit.ui.smartimport;singleton:=true
-Fragment-Host: org.eclipse.egit.ui;bundle-version="[5.1.3,5.2.0)"
-Bundle-Version: 5.1.3.201810200350-r
+Fragment-Host: org.eclipse.egit.ui;bundle-version="[5.1.4,5.2.0)"
+Bundle-Version: 5.1.4.qualifier
 Bundle-Vendor: %provider_name
 Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.ide;bundle-version="3.12.0"
 Bundle-Localization: fragment
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.eclipse.egit.ui.internal.clone;version="5.1.3";x-internal:=true;
+Export-Package: org.eclipse.egit.ui.internal.clone;version="5.1.4";x-internal:=true;
  uses:="org.eclipse.ui,
   org.eclipse.jface.wizard,
   org.eclipse.jface.viewers"
