@@ -54,6 +54,8 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 
 	private final static String[][] MERGE_MODE_NAMES_AND_VALUES = new String[3][2];
 
+	private final static String[][] SSH_CLIENT_NAMES_AND_VALUES = new String[2][2];
+
 	private final static boolean HAS_DEBUG_UI = hasDebugUiBundle();
 
 	static {
@@ -63,6 +65,11 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 		MERGE_MODE_NAMES_AND_VALUES[1][1] = "1";//$NON-NLS-1$
 		MERGE_MODE_NAMES_AND_VALUES[2][0] = UIText.GitPreferenceRoot_MergeMode_2_Label;
 		MERGE_MODE_NAMES_AND_VALUES[2][1] = "2"; //$NON-NLS-1$
+
+		SSH_CLIENT_NAMES_AND_VALUES[0][0] = UIText.GitPreferenceRoot_SshClient_Jsch_Label;
+		SSH_CLIENT_NAMES_AND_VALUES[0][1] = "jsch"; //$NON-NLS-1$
+		SSH_CLIENT_NAMES_AND_VALUES[1][0] = UIText.GitPreferenceRoot_SshClient_Apache_Label;
+		SSH_CLIENT_NAMES_AND_VALUES[1][1] = "apache"; //$NON-NLS-1$
 	}
 
 	/**
@@ -206,6 +213,18 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 		timeoutEditor.getLabelControl(remoteConnectionsGroup).setToolTipText(
 				UIText.RemoteConnectionPreferencePage_ZeroValueTooltip);
 		addField(timeoutEditor);
+		ComboFieldEditor sshClient = new ComboFieldEditor(
+				GitCorePreferences.core_sshClient,
+				UIText.RemoteConnectionPreferencePage_SshClientLabel,
+				SSH_CLIENT_NAMES_AND_VALUES, remoteConnectionsGroup) {
+
+			@Override
+			public IPreferenceStore getPreferenceStore() {
+				return getSecondaryPreferenceStore();
+			}
+
+		};
+		addField(sshClient);
 		updateMargins(remoteConnectionsGroup);
 
 		Group repoChangeScannerGroup = new Group(main, SWT.SHADOW_ETCHED_IN);

@@ -50,7 +50,9 @@ public class EGitCredentialsProvider extends CredentialsProvider {
 	 */
 	public EGitCredentialsProvider(String user, String password) {
 		this.user = user;
-		this.password = password;
+		// If the password is empty try secure store or ask the user
+		this.password = password != null && password.isEmpty() ? null
+				: password;
 	}
 
 	@Override
