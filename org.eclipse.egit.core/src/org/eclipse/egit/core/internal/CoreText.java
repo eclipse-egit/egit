@@ -52,6 +52,15 @@ public class CoreText extends NLS {
 	public static String Activator_ReconfigureWindowCacheError;
 
 	/** */
+	public static String Activator_SshClientNoJsch;
+
+	/** */
+	public static String Activator_SshClientUnknown;
+
+	/** */
+	public static String Activator_SshClientUsingApache;
+
+	/** */
 	public static String AssumeUnchangedOperation_adding;
 
 	/** */
@@ -503,6 +512,12 @@ public class CoreText extends NLS {
 
 	/** */
 	public static String ReportingTypedConfigGetter_invalidConfigWithLocationIgnored;
+
+	/** */
+	public static String SshPreferencesMirror_invalidDirectory;
+
+	/** */
+	public static String SshPreferencesMirror_invalidKeyFile;
 
 	static {
 		initializeMessages(BUNDLE_NAME,	CoreText.class);
