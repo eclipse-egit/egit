@@ -180,6 +180,24 @@
       "revId": "0b30b089331b7f7c7425ea3626dde42f64db48ce",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a89d06f4_203ed86d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/prefpages/configuration/GlobalConfigurationPageTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-10-20T14:56:58Z",
+      "side": 1,
+      "message": "Agreed. I wouldn\u0027t remove the save action, though I believe its current configuration creates an unnecessary obstacle. But if it works as intended, I can adapt my workflow to avoid mixing in such changes.",
+      "parentUuid": "bf3f8437_293959e8",
+      "revId": "0b30b089331b7f7c7425ea3626dde42f64db48ce",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
