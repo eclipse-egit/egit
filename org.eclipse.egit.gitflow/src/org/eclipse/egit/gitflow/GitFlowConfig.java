@@ -69,10 +69,18 @@ public class GitFlowConfig {
 	/** Key for .git/config */
 	public static final String MERGE_KEY = "merge"; //$NON-NLS-1$
 
-	/** Key for .git/config */
+	/**
+	 * Key for .git/config
+	 *
+	 * @since 5.2
+	 */
 	public static final String FEATURE_START_FETCH_KEY = "fetch"; //$NON-NLS-1$
 
-	/** Name of .git/config sub section. */
+	/**
+	 * Name of .git/config sub section.
+	 *
+	 * @since 5.2
+	 */
 	public static final String FEATURE_START_SUBSECTION = "feature.start"; //$NON-NLS-1$
 
 	private Repository repository;
