@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09c5e62d_32198000",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-10-21T10:55:56Z",
+      "side": 0,
+      "message": "* removing this annotation yields the warning (I used egit-4.9-staging.target):\n\nType safety: The return type Class[] for getAdapterList() from the type TaskReferenceFactory needs unchecked conversion to conform to Class\u003c?\u003e[] from the type IAdapterFactory\n\n* using @SuppressWarnings(\"unchecked\") would silence the warning",
+      "revId": "02174c850d2a8b6ccd8d406ee1e79684e7833cbf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3794973_58ef6c29",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-10-21T10:55:56Z",
+      "side": 0,
+      "message": "same here",
+      "revId": "02174c850d2a8b6ccd8d406ee1e79684e7833cbf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
