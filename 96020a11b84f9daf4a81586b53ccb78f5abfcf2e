@@ -22,6 +22,30 @@
       "revId": "96020a11b84f9daf4a81586b53ccb78f5abfcf2e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8ffdfc7_9057bdd8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-10-21T04:50:42Z",
+      "side": 1,
+      "message": "Because \n* that\u0027s how I do it my day job\n* I consider removing technical debt as releng work\n* there is no better keyword in the contributor guide keyword list\n\nI know you give this feedback in the interest of clean commit messages and a readable project history, but you probably cannot imagine how much demotivation comes with that on my side. I feel like I get such feedback mainly on trivial changes (regarding functionality), where I\u0027m cleaning up code of other developers, that should have been cleaned up before it was committed (i.e. when the warnings were introduced). It\u0027s like collecting trash on a public place, and still being criticized for not doing it right. :(",
+      "parentUuid": "7900bcd7_7726432d",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "96020a11b84f9daf4a81586b53ccb78f5abfcf2e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
