@@ -32,6 +32,7 @@ public class FeatureStartOperationTest extends AbstractFeatureOperationTest {
 				repository.getFullBranch());
 	}
 
+	@Test
 	public void testFeatureStartOnMaster() throws Exception {
 		Repository repository = testRepository.getRepository();
 		GitFlowRepository gfRepo = init("testFeatureStartOnMaster\n\nfirst commit\n");
@@ -41,5 +42,8 @@ public class FeatureStartOperationTest extends AbstractFeatureOperationTest {
 		branchOperation.execute(null);
 
 		new FeatureStartOperation(gfRepo, MY_FEATURE).execute(null);
+
+		assertEquals(gfRepo.getConfig().getFullFeatureBranchName(MY_FEATURE),
+				repository.getFullBranch());
 	}
 }
