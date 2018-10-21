@@ -20,7 +20,7 @@ import org.eclipse.jface.viewers.Viewer;
  * Sorter for the Git Repositories View.
  */
 public class RepositoriesViewSorter extends
-		org.eclipse.jface.viewers.ViewerSorter {
+		org.eclipse.jface.viewers.ViewerComparator {
 
 	/**
 	 * Default constructor
