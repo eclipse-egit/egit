@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db4c3fb8_72565c35",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIText.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 4046,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-10-22T14:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7e6154f_d6efa898",
+      "revId": "ea47a69fe3657799a26a496194ee4662c14797b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f172dbe_5790ebc3",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/gerrit/GerritSelectRepositoryPage.java",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2018-10-22T13:51:52Z",
       "side": 1,
       "message": "Missing license header.",
+      "revId": "ea47a69fe3657799a26a496194ee4662c14797b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df10c035_896b1cfb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/gerrit/GerritSelectRepositoryPage.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-10-22T14:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f172dbe_5790ebc3",
       "revId": "ea47a69fe3657799a26a496194ee4662c14797b3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "c72a6088_1c972cff",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/gerrit/GerritSelectRepositoryPage.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-10-22T14:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4104af20_709eb4c9",
+      "range": {
+        "startLine": 47,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 6
+      },
+      "revId": "ea47a69fe3657799a26a496194ee4662c14797b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "706777aa_c23445d1",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/gerrit/GerritSelectRepositoryPage.java",
         "patchSetId": 13
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "943d61c6_df01439a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/gerrit/GerritSelectRepositoryPage.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-10-22T14:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "706777aa_c23445d1",
+      "revId": "ea47a69fe3657799a26a496194ee4662c14797b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1b14cd8_dfcc7842",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/gerrit/GerritSelectRepositoryPage.java",
         "patchSetId": 13
@@ -87,6 +165,30 @@
       "writtenOn": "2018-10-22T14:02:12Z",
       "side": 1,
       "message": "Don\u0027t need this, we return null anyway in line 59.",
+      "range": {
+        "startLine": 56,
+        "startChar": 5,
+        "endLine": 56,
+        "endChar": 16
+      },
+      "revId": "ea47a69fe3657799a26a496194ee4662c14797b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33daaf4e_cb654f84",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/gerrit/GerritSelectRepositoryPage.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-10-22T14:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1b14cd8_dfcc7842",
       "range": {
         "startLine": 56,
         "startChar": 5,
