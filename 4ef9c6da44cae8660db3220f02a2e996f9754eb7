@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "c7a6405b_c5625498",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/gerrit/GerritSelectRepositoryPage.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-10-22T14:29:38Z",
+      "side": 1,
+      "message": "\u003e Activator.getDefault().logWarning(e.getLocalizedMessage(), e);\n\nThat gives me a warning because logWarning is a static member of the Activator class. I just left out the getDefault() part.",
+      "parentUuid": "c87253a7_15c9c33d",
+      "range": {
+        "startLine": 46,
+        "startChar": 5,
+        "endLine": 46,
+        "endChar": 25
+      },
+      "revId": "4ef9c6da44cae8660db3220f02a2e996f9754eb7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64e646db_8062a48d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/gerrit/GerritSelectRepositoryPage.java",
         "patchSetId": 12
