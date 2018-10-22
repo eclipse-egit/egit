@@ -22,6 +22,30 @@
       "revId": "56b8057429b2ff49c6733ae52819b017f250d01b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "103574ce_001e02ce",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/gerrit/GerritSelectRepositoryPage.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-10-22T15:19:18Z",
+      "side": 1,
+      "message": "Alright, had a talk with Lars. I adjusted it according to his suggestions.",
+      "parentUuid": "946befdc_9a9621fb",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 34
+      },
+      "revId": "56b8057429b2ff49c6733ae52819b017f250d01b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
