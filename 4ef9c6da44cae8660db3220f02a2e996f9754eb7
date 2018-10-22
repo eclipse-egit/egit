@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c87253a7_15c9c33d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/gerrit/GerritSelectRepositoryPage.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-22T13:51:52Z",
+      "side": 1,
+      "message": "Yes, good enough. \n\n  Activator.getDefault().logWarning(e.getLocalizedMessage(), e);",
+      "parentUuid": "4eb0cd3b_01e58eff",
+      "range": {
+        "startLine": 46,
+        "startChar": 5,
+        "endLine": 46,
+        "endChar": 25
+      },
+      "revId": "4ef9c6da44cae8660db3220f02a2e996f9754eb7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64e646db_8062a48d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/gerrit/GerritSelectRepositoryPage.java",
         "patchSetId": 12
