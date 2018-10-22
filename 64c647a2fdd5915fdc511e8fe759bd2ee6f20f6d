@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b392246_ccb4e9e3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/sharing/ExistingOrNewPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-22T15:10:20Z",
+      "side": 1,
+      "message": "This isn\u0027t needed then anymore. We break already in line 605 in this case.",
+      "range": {
+        "startLine": 608,
+        "startChar": 5,
+        "endLine": 610,
+        "endChar": 12
+      },
+      "revId": "64c647a2fdd5915fdc511e8fe759bd2ee6f20f6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
