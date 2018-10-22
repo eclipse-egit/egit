@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7e6154f_d6efa898",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/UIText.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 4046,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-22T13:51:52Z",
+      "side": 1,
+      "message": "Stray empty line.",
+      "revId": "ea47a69fe3657799a26a496194ee4662c14797b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f172dbe_5790ebc3",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/gerrit/GerritSelectRepositoryPage.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-22T13:51:52Z",
+      "side": 1,
+      "message": "Missing license header.",
+      "revId": "ea47a69fe3657799a26a496194ee4662c14797b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
