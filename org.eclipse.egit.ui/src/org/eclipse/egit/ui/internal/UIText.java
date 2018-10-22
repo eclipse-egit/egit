@@ -349,9 +349,6 @@ public class UIText extends NLS {
 	public static String ExistingOrNewPage_InternalModeCheckbox;
 
 	/** */
-	public static String ExistingOrNewPage_NestedProjectErrorMessage;
-
-	/** */
 	public static String ExistingOrNewPage_NewLocationTargetHeader;
 
 	/** */
