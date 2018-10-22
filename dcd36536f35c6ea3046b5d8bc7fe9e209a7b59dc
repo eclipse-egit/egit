@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d792907_eb856f2d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/FetchChangeFromGerritCommand.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-10-22T13:22:05Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "661e7290_ef610d48",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 70
+      },
+      "revId": "dcd36536f35c6ea3046b5d8bc7fe9e209a7b59dc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92dbf33b_fc92fe71",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
         "patchSetId": 6
