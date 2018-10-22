@@ -33,6 +33,69 @@
       "revId": "ea47a69fe3657799a26a496194ee4662c14797b3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4104af20_709eb4c9",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/gerrit/GerritSelectRepositoryPage.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-22T14:02:12Z",
+      "side": 1,
+      "message": "Could just do\n\n  if (repo !\u003d null \u0026\u0026 ResourcePropertyTester.hasGerritConfiguration(repo)) {\n    return name;\n  }\n\nWhen we fall out of the try-catch, we return null anyway.",
+      "range": {
+        "startLine": 47,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 6
+      },
+      "revId": "ea47a69fe3657799a26a496194ee4662c14797b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "706777aa_c23445d1",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/gerrit/GerritSelectRepositoryPage.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-22T14:02:12Z",
+      "side": 1,
+      "message": "Must\u0027ve been looking at the wrong file version when I commented on this. Just remove the TODO, and use e.getLocalizedMessage(), then this is fine.",
+      "revId": "ea47a69fe3657799a26a496194ee4662c14797b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1b14cd8_dfcc7842",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/gerrit/GerritSelectRepositoryPage.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-22T14:02:12Z",
+      "side": 1,
+      "message": "Don\u0027t need this, we return null anyway in line 59.",
+      "range": {
+        "startLine": 56,
+        "startChar": 5,
+        "endLine": 56,
+        "endChar": 16
+      },
+      "revId": "ea47a69fe3657799a26a496194ee4662c14797b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
