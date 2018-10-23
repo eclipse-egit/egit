@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Shell;
  * A {@link WizardDialog} that can prevent making the dialog smaller than the
  * size needed to show the starting page.
  */
-public class MinimumSizeWizardDialog extends WizardDialog {
+public class MinimumSizeWizardDialog extends FinishableWizardDialog {
 
 	private final boolean restrictResize;
 

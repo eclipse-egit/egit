@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.internal.commands.shared;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.dialogs.MinimumSizeWizardDialog;
 import org.eclipse.egit.ui.internal.dialogs.NonBlockingWizardDialog;
 import org.eclipse.egit.ui.internal.fetch.FetchGerritChangeWizard;
 import org.eclipse.egit.ui.internal.gerrit.GerritSelectRepositoryPage;
@@ -54,7 +55,8 @@ public class FetchChangeFromGerritCommand extends AbstractSharedCommandHandler {
 			};
 			wizard.addPage(page);
 			wizard.setWindowTitle(UIText.GerritSelectRepositoryPage_PageTitle);
-			WizardDialog wizardDialog = new WizardDialog(shell, wizard) {
+			WizardDialog wizardDialog = new MinimumSizeWizardDialog(shell,
+					wizard) {
 				@Override
 				protected Button createButton(Composite parent, int id,
 						String label, boolean defaultButton) {

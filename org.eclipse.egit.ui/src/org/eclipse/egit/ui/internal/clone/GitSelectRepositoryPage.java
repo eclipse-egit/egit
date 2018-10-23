@@ -28,6 +28,7 @@ import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.gerrit.GerritUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.dialogs.FinishableWizardDialog;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
 import org.eclipse.egit.ui.internal.repository.RepositorySearchWizard;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNodeLabelProvider;
@@ -46,6 +47,8 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.IWizardContainer;
+import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Repository;
@@ -177,7 +180,30 @@ public class GitSelectRepositoryPage extends WizardPage {
 			}
 		});
 		tv.setLabelProvider(new RepositoryTreeNodeLabelProvider());
+		tv.addSelectionChangedListener(new ISelectionChangedListener() {
 
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				checkPage();
+			}
+		});
+
+		tv.addDoubleClickListener(new IDoubleClickListener() {
+
+			@Override
+			public void doubleClick(DoubleClickEvent event) {
+				checkPage();
+				if (isPageComplete()) {
+					IWizardContainer container = getContainer();
+					IWizardPage next = getNextPage();
+					if (next != null) {
+						container.showPage(next);
+					} else if (container instanceof FinishableWizardDialog) {
+						((FinishableWizardDialog) container).finish();
+					}
+				}
+			}
+		});
 
 		if (!allowBare) {
 			bareMsg = new Composite(main, SWT.NONE);
@@ -192,26 +218,8 @@ public class GitSelectRepositoryPage extends WizardPage {
 					UIText.GitSelectRepositoryPage_BareRepositoriesHidden);
 			bareMsg.setVisible(false);
 		}
-		tv.addSelectionChangedListener(new ISelectionChangedListener() {
-
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-				checkPage();
-			}
-		});
-
-		tv.addDoubleClickListener(new IDoubleClickListener() {
-
-			@Override
-			public void doubleClick(DoubleClickEvent event) {
-				checkPage();
-				if (isPageComplete())
-					getContainer().showPage(getNextPage());
-			}
-		});
 
 		if (allowAdd) {
-
 			Composite tb = new Composite(main, SWT.NONE);
 			GridLayoutFactory.fillDefaults().numColumns(1).applyTo(tb);
 			GridDataFactory.fillDefaults().grab(false, true).applyTo(tb);
