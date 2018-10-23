@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "049ee29b_35914252",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/LogicalLineNumberRulerColumn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-23T10:15:34Z",
+      "side": 1,
+      "message": "Works only for Eclipse \u003e\u003d Oxygen, as the comments say. We also can\u0027t suppress the warnings, since that would cause warnings about unnecessary @SuppressWarnings when compiling against a target platform \u003e\u003d 4.7.",
+      "revId": "6e453d2062b8830e50744b7ed9c5ee4f3b128891",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
