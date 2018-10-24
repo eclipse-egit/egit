@@ -107,9 +107,9 @@ public class GitSelectRepositoryPage extends WizardPage {
 	 * Creates a new {@link GitSelectRepositoryPage}
 	 *
 	 * @param allowBare
-	 *            - whether bare repositories shall be shown
+	 *            whether bare repositories shall be shown
 	 * @param allowAdd
-	 *            - whether the dialog should show an add button
+	 *            whether the dialog should show an add button
 	 */
 	public GitSelectRepositoryPage(boolean allowBare, boolean allowAdd) {
 		super(GitSelectRepositoryPage.class.getName());
@@ -205,20 +205,6 @@ public class GitSelectRepositoryPage extends WizardPage {
 			}
 		});
 
-		if (!allowBare) {
-			bareMsg = new Composite(main, SWT.NONE);
-			bareMsg.setLayout(new RowLayout());
-			bareMsg.setLayoutData(
-					GridDataFactory.fillDefaults().grab(true, false).create());
-			Label imageLabel = new Label(bareMsg, SWT.NONE);
-			imageLabel.setImage(
-					JFaceResources.getImage(Dialog.DLG_IMG_MESSAGE_INFO));
-			Label textLabel = new Label(bareMsg, SWT.WRAP);
-			textLabel.setText(
-					UIText.GitSelectRepositoryPage_BareRepositoriesHidden);
-			bareMsg.setVisible(false);
-		}
-
 		if (allowAdd) {
 			Composite tb = new Composite(main, SWT.NONE);
 			GridLayoutFactory.fillDefaults().numColumns(1).applyTo(tb);
@@ -251,6 +237,20 @@ public class GitSelectRepositoryPage extends WizardPage {
 				}
 
 			});
+		}
+
+		if (!allowBare) {
+			bareMsg = new Composite(main, SWT.NONE);
+			bareMsg.setLayout(new RowLayout());
+			bareMsg.setLayoutData(
+					GridDataFactory.fillDefaults().grab(true, false).create());
+			Label imageLabel = new Label(bareMsg, SWT.NONE);
+			imageLabel.setImage(
+					JFaceResources.getImage(Dialog.DLG_IMG_MESSAGE_INFO));
+			Label textLabel = new Label(bareMsg, SWT.WRAP);
+			textLabel.setText(
+					UIText.GitSelectRepositoryPage_BareRepositoriesHidden);
+			bareMsg.setVisible(false);
 		}
 
 		tv.setInput(getInitialRepositories());
