@@ -42,7 +42,9 @@ public class SmartImportGitWizard extends AbstractGitCloneWizard
 		implements IImportWizard, IPageChangedListener {
 
 	private SmartImportWizard easymportWizard;
-	private GitSelectRepositoryPage selectRepoPage = new GitSelectRepositoryPage();
+
+	private GitSelectRepositoryPage selectRepoPage = new GitSelectRepositoryPage(
+			false);
 
 	/**
 	 * Constructor
