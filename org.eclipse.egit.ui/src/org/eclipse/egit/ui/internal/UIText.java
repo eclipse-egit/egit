@@ -91,6 +91,9 @@ public class UIText extends NLS {
 	public static String Activator_setupFocusListener;
 
 	/** */
+	public static String Activator_setupJdtTemplateResolver;
+
+	/** */
 	public static String AddCommand_AddButtonLabel;
 
 	/** */
