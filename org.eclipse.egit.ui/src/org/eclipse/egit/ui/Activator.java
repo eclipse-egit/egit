@@ -46,6 +46,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
@@ -348,21 +349,29 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	}
 
 	private void registerTemplateVariableResolvers() {
-		if (hasJavaPlugin()) {
-			final ContextTypeRegistry codeTemplateContextRegistry = JavaPlugin
-					.getDefault().getCodeTemplateContextRegistry();
-			final Iterator<?> ctIter = codeTemplateContextRegistry
-					.contextTypes();
-
-			while (ctIter.hasNext()) {
-				final TemplateContextType contextType = (TemplateContextType) ctIter
-						.next();
-				contextType
-						.addResolver(new GitTemplateVariableResolver(
-								"git_config", //$NON-NLS-1$
-								UIText.GitTemplateVariableResolver_GitConfigDescription));
-			}
+		if (!hasJavaPlugin()) {
+			return;
 		}
+		Job job = new Job(UIText.Activator_setupJdtTemplateResolver) {
+
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				final ContextTypeRegistry codeTemplateContextRegistry = JavaPlugin
+						.getDefault().getCodeTemplateContextRegistry();
+				final Iterator<?> ctIter = codeTemplateContextRegistry
+						.contextTypes();
+
+				while (ctIter.hasNext()) {
+					final TemplateContextType contextType = (TemplateContextType) ctIter
+							.next();
+					contextType.addResolver(new GitTemplateVariableResolver(
+							"git_config", //$NON-NLS-1$
+							UIText.GitTemplateVariableResolver_GitConfigDescription));
+				}
+				return Status.OK_STATUS;
+			}
+		};
+		job.schedule();
 	}
 
 	/**
@@ -1133,10 +1142,6 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	 * @return true if the Java Plugin is loaded
 	 */
 	public static final boolean hasJavaPlugin() {
-		try {
-			return Class.forName("org.eclipse.jdt.internal.ui.JavaPlugin") != null; //$NON-NLS-1$
-		} catch (ClassNotFoundException e) {
-			return false;
-		}
+		return Platform.getBundle("org.eclipse.jdt.ui") != null; //$NON-NLS-1$
 	}
 }
