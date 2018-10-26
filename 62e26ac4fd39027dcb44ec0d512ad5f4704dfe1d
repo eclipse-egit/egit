@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "2262ddf9_8317a7c6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2018-10-26T11:40:40Z",
+      "side": 1,
+      "message": "Regarding \"what is the problem here\" and one line change.\n\nThe code is called by bundle start() method. The start() javadoc is clear: \"This method is intended to perform simple initialization of the plug-in environment. The platform may terminate initializers that do not complete in a timely fashion.\" \n\nIn the practice this means: \"we will kill you after 5 seconds\".\n\nSo it is always a good idea to move *longer* things required to be triggered in start() in a job, which will not be cancelled after 5 seconds.\n\nHere the one line change only prevents the Class.forName() call but does not prevent the code following to continue initialize JDT UI in the context of the start() call, with the danger to be terminated at any time.\n\nTherefore the few extra lines above to move the access to JDT UI code in a dedicated UI job - if we have luck, JDT UI is already there. If not, it will trigger JDT UI init as before, but now *not* in the context of *this* bundle start() method, reducing the time needed for *this* activation chain.",
+      "parentUuid": "5d7903fb_a0d0233c",
+      "revId": "62e26ac4fd39027dcb44ec0d512ad5f4704dfe1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04c167b8_da9060e5",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 2
