@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "3c0f5e60_0a63e381",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-26T11:56:32Z",
+      "side": 1,
+      "message": "OK, so you\u0027re not trying to prevent that EGit UI does cause JDT UI bundle start (if JDT isn\u0027t started yet), but you just want to happen that JDT UI bundle start not synchronously withing EGit UI start.\n\nIn that case this change is OK, and there\u0027s no need for BundleTracker/BundleListener.\n\nI didn\u0027t understand that from the commit message. Please clarify that in the commit message. (And use a shorter first line in the commit message.)",
+      "parentUuid": "2262ddf9_8317a7c6",
+      "revId": "62e26ac4fd39027dcb44ec0d512ad5f4704dfe1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04c167b8_da9060e5",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 2
