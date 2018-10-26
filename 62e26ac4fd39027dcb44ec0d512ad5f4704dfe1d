@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "54aec292_565236a8",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 17
+      },
+      "writtenOn": "2018-10-26T09:42:03Z",
+      "side": 1,
+      "message": "Two questions:\n1) is UI thread really necessary here?\n2) I think a better solution would be a BundleTracker, i.e. register and watch for JDT start/stop.",
+      "revId": "62e26ac4fd39027dcb44ec0d512ad5f4704dfe1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7475693f_1a94577f",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
         "patchSetId": 2
@@ -13,6 +30,23 @@
       "writtenOn": "2018-10-26T09:35:00Z",
       "side": 1,
       "message": "This one looks good to me. Not sure how lines 359ff relates to JDT activation. Maybe a cleanup.",
+      "revId": "62e26ac4fd39027dcb44ec0d512ad5f4704dfe1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04c167b8_da9060e5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 17
+      },
+      "writtenOn": "2018-10-26T09:42:03Z",
+      "side": 1,
+      "message": "That message looks a bit technical to me. Maybe \"Adding/removing/initializing support for Java templates\"?",
       "revId": "62e26ac4fd39027dcb44ec0d512ad5f4704dfe1d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
