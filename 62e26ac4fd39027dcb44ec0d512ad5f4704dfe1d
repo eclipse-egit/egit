@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "5d7903fb_a0d0233c",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-26T11:23:37Z",
+      "side": 1,
+      "message": "This bit is good. But the above... I don\u0027t know. In an IDE that does have JDT UI at all, JDT UI is going to be initialized very early anyway due to commands and stuff in plugin.xml via createExecutableExtension. No EGit involved there. It would be possible to avoid the job by using a BundleListener on the BundleContext that would run the template variable resolver setup code when JDT UI enters STARTED. (Similar to Gunnar\u0027s BundleTracker suggestion, but a BundleTracker tracks _all_ bundles. Not sure we\u0027d want that.)\n\nBut I guess we\u0027d only see any effects on IDEs that don\u0027t include JDT UI at all, or in which no Plugin/Java perspective etc. is active and there are no Java sources at all. Maybe a CDT Eclipse if someone installed JDT in it...\n\nWhat exactly is the problem here? The exception logged from Class.forName() is nicely handled with this one-line change.",
+      "parentUuid": "8c0e0c24_e86505df",
+      "revId": "62e26ac4fd39027dcb44ec0d512ad5f4704dfe1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04c167b8_da9060e5",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
         "patchSetId": 2
