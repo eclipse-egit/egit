@@ -29,7 +29,7 @@ public interface IRepositoryServerProvider {
 	/**
 	 * @return List of server infos
 	 * @throws NoRepositoryServerInfoException
-	 *             if an error occured when constructing a
+	 *             if an error occurred when constructing a
 	 *             {@code RepositoryServerInfo} object
 	 */
 	public Collection<RepositoryServerInfo> getRepositoryServerInfos() throws NoRepositoryServerInfoException;
