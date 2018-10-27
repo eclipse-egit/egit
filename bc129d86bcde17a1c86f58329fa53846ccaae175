@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "157bce03_d987ea63",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-10-27T19:22:34Z",
+      "side": 1,
+      "message": "I suggest to add these lines, since this job shouldn\u0027t be visible in the progress view:\n\n   job.setSystem(true);\n   job.setUser(false);\n\nAt least most the other jobs in egit which initialize views, load some data from the repository etc. all do the same.",
+      "range": {
+        "startLine": 376,
+        "startChar": 0,
+        "endLine": 376,
+        "endChar": 2
+      },
+      "revId": "bc129d86bcde17a1c86f58329fa53846ccaae175",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
