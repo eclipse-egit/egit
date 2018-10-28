@@ -12,11 +12,11 @@
  *    Laurent Delaigue (Obeo) - use of preferred merge strategy
  *    Stephan Hackstedt - bug 477695
  *    Mickael Istria (Red Hat Inc.) - [485124] Introduce PullReferenceConfig
+ *    Karsten Thoms (itemis) - [540548] Parallelize pull jobs per repository 
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -29,9 +29,11 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CoreText;
@@ -118,11 +120,81 @@ public class PullOperation implements IEGitOperation {
 		}
 	}
 
+	private final class PullJob extends Job {
+		private final Repository repository;
+		private final PullReferenceConfig config;
+
+		private PullJob(Repository repository,
+				PullReferenceConfig config) {
+			super(getPullTaskName(repository, config));
+			this.repository = repository;
+			this.config = config;
+			setRule(RuleUtil.getRule(repository));
+		}
+
+		@Override
+		public IStatus run(IProgressMonitor mymonitor) {
+			PullResult pullResult = null;
+			try (Git git = new Git(repository)) {
+				PullCommand pull = git.pull();
+				SubMonitor monitor = SubMonitor.convert(mymonitor, 4);
+				pull.setProgressMonitor(new EclipseGitProgressTransformer(
+						mymonitor));
+				pull.setTimeout(timeout);
+				pull.setCredentialsProvider(credentialsProvider);
+				if (config != null) {
+					if (config.getRemote() != null) {
+						pull.setRemote(config.getRemote());
+					}
+					if (config.getReference() != null) {
+						pull.setRemoteBranchName(config.getReference());
+					}
+					pull.setRebase(config.getUpstreamConfig());
+				}
+				MergeStrategy strategy = Activator.getDefault()
+						.getPreferredMergeStrategy();
+				if (strategy != null) {
+					pull.setStrategy(strategy);
+				}
+				pullResult = pull.call();
+				monitor.worked(3);
+				synchronized (results) {
+					results.put(repository, pullResult);
+				}
+				IProject[] projects = ProjectUtil
+						.getValidOpenProjects(repository);
+				ProjectUtil.refreshValidProjects(projects, mymonitor);
+				monitor.worked(1);
+				return Status.OK_STATUS;
+			} catch (DetachedHeadException e) {
+				return Activator.error(
+						CoreText.PullOperation_DetachedHeadMessage, e);
+			} catch (InvalidConfigurationException e) {
+				return Activator
+						.error(CoreText.PullOperation_PullNotConfiguredMessage,
+								e);
+			} catch (GitAPIException | CoreException e) {
+				return Activator.error(e.getMessage(), e);
+			} catch (JGitInternalException e) {
+				Throwable cause = e.getCause();
+				if (cause == null || !(cause instanceof TransportException))
+					cause = e;
+				return Activator.error(cause.getMessage(), cause);
+			}
+		}
+
+		@Override
+		public boolean belongsTo(Object family) {
+			return PullOperation.class.getSimpleName()
+					.equals(family);
+		}
+	}
+
 	private final Repository[] repositories;
 
 	private Map<Repository, PullReferenceConfig> configs;
 
-	private final Map<Repository, Object> results = new LinkedHashMap<Repository, Object>();
+	private final Map<Repository, PullResult> results = new LinkedHashMap<>();
 
 	private final int timeout;
 
@@ -163,71 +235,24 @@ public class PullOperation implements IEGitOperation {
 		SubMonitor totalProgress = SubMonitor.convert(m,
 				NLS.bind(CoreText.PullOperation_TaskName,
 						Integer.valueOf(repositories.length)),
-				1);
+				repositories.length);
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 			@Override
 			public void run(IProgressMonitor mymonitor) throws CoreException {
 				if (mymonitor.isCanceled())
 					throw new CoreException(Status.CANCEL_STATUS);
 				SubMonitor progress = SubMonitor.convert(mymonitor,
-						repositories.length * 2);
+						repositories.length);
 				for (int i = 0; i < repositories.length; i++) {
-					Repository repository = repositories[i];
-					IProject[] validProjects = ProjectUtil.getValidOpenProjects(repository);
-					PullResult pullResult = null;
-					try (Git git = new Git(repository)) {
-						PullCommand pull = git.pull();
-						SubMonitor newChild = progress.newChild(1,
-								SubMonitor.SUPPRESS_NONE);
-						pull.setProgressMonitor(new EclipseGitProgressTransformer(
-										newChild));
-						pull.setTimeout(timeout);
-						pull.setCredentialsProvider(credentialsProvider);
-						PullReferenceConfig config = configs.get(repository);
-						newChild.setTaskName(
-								getPullTaskName(repository, config));
-						if (config != null) {
-							if (config.getRemote() != null) {
-								pull.setRemote(config.getRemote());
-							}
-							if (config.getReference() != null) {
-								pull.setRemoteBranchName(config.getReference());
-							}
-							pull.setRebase(config.getUpstreamConfig());
-						}
-						MergeStrategy strategy = Activator.getDefault()
-								.getPreferredMergeStrategy();
-						if (strategy != null) {
-							pull.setStrategy(strategy);
-						}
-						pullResult = pull.call();
-						results.put(repository, pullResult);
-					} catch (DetachedHeadException e) {
-						results.put(repository, Activator.error(
-								CoreText.PullOperation_DetachedHeadMessage, e));
-					} catch (InvalidConfigurationException e) {
-						IStatus error = Activator
-								.error(CoreText.PullOperation_PullNotConfiguredMessage,
-										e);
-						results.put(repository, error);
-					} catch (GitAPIException e) {
-						results.put(repository,
-								Activator.error(e.getMessage(), e));
-					} catch (JGitInternalException e) {
-						Throwable cause = e.getCause();
-						if (cause == null || !(cause instanceof TransportException))
-							cause = e;
-						results.put(repository,
-								Activator.error(cause.getMessage(), cause));
-					} finally {
-						if (refreshNeeded(pullResult)) {
-							ProjectUtil.refreshValidProjects(validProjects,
-									progress.newChild(1,
-											SubMonitor.SUPPRESS_NONE));
-						} else {
-							progress.worked(1);
-						}
-					}
+					new PullJob(repositories[i], configs.get(repositories[i]))
+						.schedule();
+				}
+
+				try {
+					Job.getJobManager().join(
+							PullOperation.class.getSimpleName(), progress);
+				} catch (OperationCanceledException | InterruptedException e) {
+					throw new CoreException(Status.CANCEL_STATUS);
 				}
 			}
 		};
@@ -295,13 +320,13 @@ public class PullOperation implements IEGitOperation {
 	/**
 	 * @return the results, or an empty Map if this has not been executed
 	 */
-	public Map<Repository, Object> getResults() {
+	public Map<Repository, PullResult> getResults() {
 		return this.results;
 	}
 
 	@Override
 	public ISchedulingRule getSchedulingRule() {
-		return RuleUtil.getRuleForRepositories(Arrays.asList(repositories));
+		return null;
 	}
 
 	/**
