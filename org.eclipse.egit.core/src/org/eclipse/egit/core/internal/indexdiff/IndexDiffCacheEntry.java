@@ -34,7 +34,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
@@ -478,13 +477,19 @@ public class IndexDiffCacheEntry {
 		// branch switch).
 		// The index diff calculation jobs do not lock the workspace
 		// during execution to avoid blocking the workspace.
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		Repository repository = getRepository();
+		ISchedulingRule rule;
+		if (repository == null) {
+			rule = ResourcesPlugin.getWorkspace().getRoot();
+		} else {
+			rule = RuleUtil.getRule(repository);
+		}
 		try {
-			Job.getJobManager().beginRule(root, monitor);
+			Job.getJobManager().beginRule(rule, monitor);
 		} catch (OperationCanceledException e) {
 			return;
 		} finally {
-			Job.getJobManager().endRule(root);
+			Job.getJobManager().endRule(rule);
 		}
 	}
 
