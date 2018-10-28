@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c896ec_00733bce",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-28T20:53:12Z",
+      "side": 1,
+      "message": "Missing curly braces here and below in other ifs.",
+      "revId": "fd1464b099f6ce836a6eda31bfc7f93aba111d6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "040427b9_df168e9f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-28T20:53:12Z",
+      "side": 1,
+      "message": "Use Activator.error, passing null as exception. More below.",
+      "range": {
+        "startLine": 154,
+        "startChar": 10,
+        "endLine": 154,
+        "endChar": 26
+      },
+      "revId": "fd1464b099f6ce836a6eda31bfc7f93aba111d6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa3f06ac_a16cf5a4",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-28T20:53:12Z",
+      "side": 1,
+      "message": "Use MessageFormat.format instead.",
+      "range": {
+        "startLine": 154,
+        "startChar": 53,
+        "endLine": 154,
+        "endChar": 61
+      },
+      "revId": "fd1464b099f6ce836a6eda31bfc7f93aba111d6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
