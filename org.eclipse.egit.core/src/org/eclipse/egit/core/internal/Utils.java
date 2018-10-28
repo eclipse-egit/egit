@@ -10,11 +10,21 @@
  *******************************************************************************/
 package org.eclipse.egit.core.internal;
 
+import static java.util.stream.Collectors.joining;
+import static org.eclipse.core.runtime.Status.OK_STATUS;
+
+import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Collection;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.jgit.annotations.NonNull;
+import org.eclipse.jgit.errors.RevisionSyntaxException;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.RefDatabase;
+import org.eclipse.jgit.lib.Repository;
 
 /**
  * Utility class
@@ -113,5 +123,71 @@ public class Utils {
 					new IllegalStateException());
 			return null;
 		}
+	}
+
+	/**
+	 * Validates a given ref name, including testing whether a ref with that
+	 * name already exists, or if the name conflicts with an already existing
+	 * ref.
+	 *
+	 * @param refNameInput
+	 *            Short ref name.
+	 * @param repo
+	 *            Repository {@code refNameInput} should be tested against.
+	 * @param refPrefix
+	 *            The ref namespace (refs/heads/, refs/tags, ...). Must end with
+	 *            a slash. If empty, {@code refNameInput} must be a full ref
+	 *            name.
+	 * @param errorOnEmptyName
+	 *            Whether or not to treat an empty {@code refNameInput} as
+	 *            erroneous.
+	 *
+	 * @return {@link org.eclipse.core.runtime.Status#OK_STATUS} in case of
+	 *         successful validation, or an error status with respective error
+	 *         message.
+	 */
+	@NonNull
+	public static IStatus validateNewRefName(String refNameInput,
+			@NonNull Repository repo, @NonNull String refPrefix,
+			final boolean errorOnEmptyName) {
+		if (refNameInput == null || refNameInput.isEmpty()) {
+			if (errorOnEmptyName) {
+				return Activator.error(
+						CoreText.ValidationUtils_PleaseEnterNameMessage, null);
+			} else {
+				// ignore this
+				return OK_STATUS;
+			}
+		}
+		String testFor = refPrefix + refNameInput;
+		if (!Repository.isValidRefName(testFor)) {
+			return Activator.error(MessageFormat.format(
+					CoreText.ValidationUtils_InvalidRefNameMessage, testFor),
+					null);
+		}
+		try {
+			if (repo.resolve(testFor) != null) {
+				return Activator.error(MessageFormat.format(
+						CoreText.ValidationUtils_RefAlreadyExistsMessage,
+						testFor), null);
+			}
+			RefDatabase refDatabase = repo.getRefDatabase();
+			Collection<String> conflictingNames = refDatabase
+					.getConflictingNames(testFor);
+			if (!conflictingNames.isEmpty()) {
+				String joined = conflictingNames.stream().sorted()
+						.collect(joining(", ")); //$NON-NLS-1$
+				return Activator.error(MessageFormat.format(
+						CoreText.ValidationUtils_RefNameConflictsWithExistingMessage,
+						joined), null);
+			}
+		} catch (IOException e) {
+			return Activator.error(e.getMessage(), e);
+		} catch (RevisionSyntaxException e) {
+			String m = MessageFormat
+					.format(CoreText.ValidationUtils_InvalidRevision, testFor);
+			return Activator.error(m, e);
+		}
+		return OK_STATUS;
 	}
 }
