@@ -25,6 +25,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.commands.State;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.ui.Activator;
@@ -322,7 +323,7 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		newBranchNameText.setText("invalid~name");
 
 		renameDialog.bot().text(" " + // the text is now in the error message, and the MessageAreaDialog seems to add a space
-				NLS.bind(UIText.ValidationUtils_InvalidRefNameMessage,
+				NLS.bind(CoreText.ValidationUtils_InvalidRefNameMessage,
 						"refs/heads/invalid~name"));
 		assertFalse(renameDialog.bot()
 				.button(UIText.RenameBranchDialog_RenameButtonLabel)
