@@ -5162,24 +5162,6 @@ public class UIText extends NLS {
 	public static String SwitchToMenu_OtherMenuLabel;
 
 	/** */
-	public static String ValidationUtils_CanNotResolveRefMessage;
-
-	/** */
-	public static String ValidationUtils_InvalidRefNameMessage;
-
-	/** */
-	public static String ValidationUtils_InvalidRevision;
-
-	/** */
-	public static String ValidationUtils_RefAlreadyExistsMessage;
-
-	/** */
-	public static String ValidationUtils_RefNameConflictsWithExistingMessage;
-
-	/** */
-	public static String ValidationUtils_PleaseEnterNameMessage;
-
-	/** */
 	public static String GitMergeEditorInput_CalculatingDiffTaskName;
 
 	/** */
