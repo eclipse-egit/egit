@@ -95,6 +95,24 @@
     },
     {
       "key": {
+        "uuid": "bf2a2531_f7005a3b",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-10-28T22:18:49Z",
+      "side": 1,
+      "message": "I think we should respect core.ignorecase here. \n\nNative git probes the filesystem on git init and git clone to auto-detect this configuration parameter by asking the filesystem if the file with name \"CoNfIg\" exists in the git repository which is the case if the filesystem is case-insensitive",
+      "parentUuid": "39481fa8_42b8996a",
+      "revId": "62201177b05f077fc182a9fb4bacc9c8e2a6d3bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "939c656d_5729448b",
         "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
         "patchSetId": 2
