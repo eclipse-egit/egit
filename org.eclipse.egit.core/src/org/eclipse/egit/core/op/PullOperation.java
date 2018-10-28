@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
@@ -32,6 +33,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CoreText;
@@ -122,7 +125,7 @@ public class PullOperation implements IEGitOperation {
 
 	private Map<Repository, PullReferenceConfig> configs;
 
-	private final Map<Repository, Object> results = new LinkedHashMap<Repository, Object>();
+	private final Map<Repository, Object> results = new LinkedHashMap<>();
 
 	private final int timeout;
 
@@ -163,79 +166,105 @@ public class PullOperation implements IEGitOperation {
 		SubMonitor totalProgress = SubMonitor.convert(m,
 				NLS.bind(CoreText.PullOperation_TaskName,
 						Integer.valueOf(repositories.length)),
-				1);
+				repositories.length + 1);
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 			@Override
 			public void run(IProgressMonitor mymonitor) throws CoreException {
 				if (mymonitor.isCanceled())
 					throw new CoreException(Status.CANCEL_STATUS);
 				SubMonitor progress = SubMonitor.convert(mymonitor,
-						repositories.length * 2);
+						repositories.length );
+				Job[] pullJobs = new Job[repositories.length];
 				for (int i = 0; i < repositories.length; i++) {
 					Repository repository = repositories[i];
-					IProject[] validProjects = ProjectUtil.getValidOpenProjects(repository);
-					PullResult pullResult = null;
 					try (Git git = new Git(repository)) {
-						PullCommand pull = git.pull();
-						SubMonitor newChild = progress.newChild(1,
-								SubMonitor.SUPPRESS_NONE);
-						pull.setProgressMonitor(new EclipseGitProgressTransformer(
-										newChild));
-						pull.setTimeout(timeout);
-						pull.setCredentialsProvider(credentialsProvider);
 						PullReferenceConfig config = configs.get(repository);
-						newChild.setTaskName(
-								getPullTaskName(repository, config));
-						if (config != null) {
-							if (config.getRemote() != null) {
-								pull.setRemote(config.getRemote());
+						Job pullJob = Job.create(getPullTaskName(repository, config), monitor -> {
+							PullCommand pull = git.pull();
+							PullResult pullResult = null;
+							try {
+								pull.setProgressMonitor(new EclipseGitProgressTransformer(
+														monitor));
+								pull.setTimeout(timeout);
+								pull.setCredentialsProvider(credentialsProvider);
+								if (config != null) {
+									if (config.getRemote() != null) {
+										pull.setRemote(config.getRemote());
+									}
+									if (config.getReference() != null) {
+										pull.setRemoteBranchName(config.getReference());
+									}
+									pull.setRebase(config.getUpstreamConfig());
+								}
+								MergeStrategy strategy = Activator.getDefault()
+										.getPreferredMergeStrategy();
+								if (strategy != null) {
+									pull.setStrategy(strategy);
+								}
+								pullResult = pull.call();
+								synchronized (results) {
+									results.put(repository, pullResult);
+								}
+							} catch (DetachedHeadException e) {
+								results.put(repository, Activator.error(
+										CoreText.PullOperation_DetachedHeadMessage, e));
+							} catch (InvalidConfigurationException e) {
+								IStatus error = Activator
+										.error(CoreText.PullOperation_PullNotConfiguredMessage,
+												e);
+								results.put(repository, error);
+							} catch (GitAPIException e) {
+								results.put(repository,
+										Activator.error(e.getMessage(), e));
+							} catch (JGitInternalException e) {
+								Throwable cause = e.getCause();
+								if (cause == null || !(cause instanceof TransportException))
+									cause = e;
+								results.put(repository,
+										Activator.error(cause.getMessage(), cause));
 							}
-							if (config.getReference() != null) {
-								pull.setRemoteBranchName(config.getReference());
+						});
+
+						pullJobs[i] = pullJob;
+						pullJob.addJobChangeListener(new JobChangeAdapter() {
+							@Override
+							public void done(
+									org.eclipse.core.runtime.jobs.IJobChangeEvent event) {
+								progress.worked(1);
 							}
-							pull.setRebase(config.getUpstreamConfig());
-						}
-						MergeStrategy strategy = Activator.getDefault()
-								.getPreferredMergeStrategy();
-						if (strategy != null) {
-							pull.setStrategy(strategy);
-						}
-						pullResult = pull.call();
-						results.put(repository, pullResult);
-					} catch (DetachedHeadException e) {
-						results.put(repository, Activator.error(
-								CoreText.PullOperation_DetachedHeadMessage, e));
-					} catch (InvalidConfigurationException e) {
-						IStatus error = Activator
-								.error(CoreText.PullOperation_PullNotConfiguredMessage,
-										e);
-						results.put(repository, error);
-					} catch (GitAPIException e) {
-						results.put(repository,
-								Activator.error(e.getMessage(), e));
-					} catch (JGitInternalException e) {
-						Throwable cause = e.getCause();
-						if (cause == null || !(cause instanceof TransportException))
-							cause = e;
-						results.put(repository,
-								Activator.error(cause.getMessage(), cause));
-					} finally {
-						if (refreshNeeded(pullResult)) {
-							ProjectUtil.refreshValidProjects(validProjects,
-									progress.newChild(1,
-											SubMonitor.SUPPRESS_NONE));
-						} else {
-							progress.worked(1);
-						}
+						});
+						pullJob.schedule();
 					}
 				}
+				for (int i = 0; i < pullJobs.length; i++) {
+					Job job = pullJobs[i];
+					try {
+						job.join();
+					} catch (InterruptedException e) {
+						throw new CoreException(Status.CANCEL_STATUS);
+					}
+				}
+				
+				Set<IProject> projectsToRefresh = results.entrySet().stream()
+						.filter(e -> e.getValue() instanceof PullResult && refreshNeeded((PullResult)e.getValue()))
+						.flatMap(e -> {
+							try {
+								return Arrays.stream(ProjectUtil.getValidOpenProjects(e.getKey()));
+							} catch (CoreException ex) {
+								throw new RuntimeException(ex);
+							}
+						})
+						.collect(Collectors.toSet());
+				
+				ProjectUtil.refreshValidProjects(projectsToRefresh.toArray(new IProject[projectsToRefresh.size()]), progress);
+				progress.worked(1);
 			}
 		};
 		// lock workspace to protect working tree changes
 		ResourcesPlugin.getWorkspace().run(action, getSchedulingRule(),
 				IWorkspace.AVOID_UPDATE, totalProgress);
 	}
-
+	
 	static String getPullTaskName(Repository repo,
 			PullReferenceConfig rc) {
 
