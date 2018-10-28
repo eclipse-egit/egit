@@ -69,4 +69,9 @@ public class GitCorePreferences {
 	 * if {@code true} file moves are automatically staged by GitMoveDeleteHook
 	 */
 	public static final String core_autoStageMoves = "core_auto_stage_moves"; //$NON-NLS-1$
+
+	/**
+	 * Max number of simultaneous pull jobs, default is one.
+	 */
+	public static final String core_maxPullThreadsCount = "core_max_pull_threads_count"; //$NON-NLS-1$
 }

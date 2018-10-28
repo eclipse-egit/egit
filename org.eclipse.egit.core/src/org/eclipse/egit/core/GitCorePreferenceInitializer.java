@@ -36,6 +36,7 @@ public class GitCorePreferenceInitializer extends AbstractPreferenceInitializer 
 
 		String defaultRepoDir = RepositoryUtil.getDefaultDefaultRepositoryDir();
 		p.put(GitCorePreferences.core_defaultRepositoryDir, defaultRepoDir);
+		p.putInt(GitCorePreferences.core_maxPullThreadsCount, 1);
 	}
 
 }
