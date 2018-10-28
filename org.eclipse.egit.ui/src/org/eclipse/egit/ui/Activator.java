@@ -191,9 +191,25 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	public static void handleIssue(int severity, String message, Throwable throwable,
 			boolean show) {
 		IStatus status = toStatus(severity, message, throwable);
+		handleStatus(status, show);
+	}
+
+	/**
+	 * Handle a status. The status is logged. If <code>show</code> is
+	 * <code>true</code> the issue is shown to the user.
+	 *
+	 * @param status
+	 *            Status to be handled.
+	 *
+	 * @param show
+	 *            Whether or not to show the issue to the user.
+	 * @since 5.2
+	 */
+	public static void handleStatus(IStatus status, boolean show) {
 		int style = StatusManager.LOG;
-		if (show)
+		if (show) {
 			style |= StatusManager.SHOW;
+		}
 		StatusManager.getManager().handle(status, style);
 	}
 
