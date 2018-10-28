@@ -34,7 +34,6 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.op.PullOperation;
 import org.eclipse.egit.core.op.PullOperation.PullReferenceConfig;
 import org.eclipse.egit.ui.Activator;
@@ -152,7 +151,6 @@ public class PullOperationUI extends JobChangeAdapter {
 				return super.belongsTo(family);
 			}
 		};
-		job.setRule(RuleUtil.getRuleForRepositories(Arrays.asList(repositories)));
 		job.setUser(true);
 		job.addJobChangeListener(jobChangeListener);
 		job.schedule();
