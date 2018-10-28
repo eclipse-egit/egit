@@ -4859,6 +4859,12 @@ public class UIText extends NLS {
 	public static String OpenWorkingFileAction_openWorkingFileShellTitle;
 
 	/** */
+	public static String GitPreferenceRoot_MaxPullThreadsCount;
+
+	/** */
+	public static String GitPreferenceRoot_MaxPullThreadsCountTooltip;
+
+	/** */
 	public static String RemoteConnectionPreferencePage_TimeoutLabel;
 
 	/** */
