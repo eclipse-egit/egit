@@ -148,13 +148,6 @@ public class GitFlowRepositoryTest extends AbstractDualRepositoryTestCase {
 		Repository repository = repository1.getRepository();
 		GitFlowRepository gfRepo = new GitFlowRepository(repository);
 
-		InitParameters initParameters = new InitParameters();
-		initParameters.setDevelop(DEVELOP);
-		initParameters.setMaster(GitFlowDefaults.MASTER);
-		initParameters.setFeature(FEATURE_PREFIX);
-		initParameters.setRelease(RELEASE_PREFIX);
-		initParameters.setHotfix(HOTFIX_PREFIX);
-		initParameters.setVersionTag(VERSION_TAG);
 		repository1.checkoutBranch(gfRepo.getConfig().getDevelop());
 
 		RevCommit developBranchCommit = repository1.commit("develop branch commit");
