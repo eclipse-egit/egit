@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7c8bbb0_7ff12407",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-10-28T22:27:40Z",
+      "side": 1,
+      "message": "performs",
+      "range": {
+        "startLine": 9,
+        "startChar": 49,
+        "endLine": 9,
+        "endChar": 58
+      },
+      "revId": "7ba6afc0bcbde405220543a0437f95a502ececab",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1c92868_8c4ed605",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-10-28T22:27:40Z",
+      "side": 1,
+      "message": "style nit: remove trailing whitespace, also below",
+      "revId": "7ba6afc0bcbde405220543a0437f95a502ececab",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2da9a730_bb6c8724",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-10-28T22:27:40Z",
+      "side": 1,
+      "message": "style nit: line is too wide",
+      "revId": "7ba6afc0bcbde405220543a0437f95a502ececab",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75fa7c1d_894f9630",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-10-28T22:27:40Z",
+      "side": 1,
+      "message": "style nit: line is too wide",
+      "revId": "7ba6afc0bcbde405220543a0437f95a502ececab",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
