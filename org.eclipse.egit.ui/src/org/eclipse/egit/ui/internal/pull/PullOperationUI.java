@@ -24,7 +24,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -34,7 +33,6 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.op.PullOperation;
 import org.eclipse.egit.core.op.PullOperation.PullReferenceConfig;
 import org.eclipse.egit.ui.Activator;
@@ -134,12 +132,13 @@ public class PullOperationUI extends JobChangeAdapter {
 			}
 			jobName = NLS.bind(UIText.PullOperationUI_PullingTaskName,
 					shortBranchName, repoName);
-		} else
+		} else {
 			jobName = UIText.PullOperationUI_PullingMultipleTaskName;
-		Job job = new WorkspaceJob(jobName) {
+		}
+		Job job = new Job(jobName) {
 
 			@Override
-			public IStatus runInWorkspace(IProgressMonitor monitor) {
+			public IStatus run(IProgressMonitor monitor) {
 				execute(monitor, false);
 				// we always return OK and handle display of errors on our own
 				return Status.OK_STATUS;
@@ -147,12 +146,9 @@ public class PullOperationUI extends JobChangeAdapter {
 
 			@Override
 			public boolean belongsTo(Object family) {
-				if (JobFamilies.PULL.equals(family))
-					return true;
-				return super.belongsTo(family);
+				return JobFamilies.PULL.equals(family);
 			}
 		};
-		job.setRule(RuleUtil.getRuleForRepositories(Arrays.asList(repositories)));
 		job.setUser(true);
 		job.addJobChangeListener(jobChangeListener);
 		job.schedule();

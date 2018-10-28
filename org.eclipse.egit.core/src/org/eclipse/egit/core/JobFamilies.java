@@ -22,6 +22,11 @@ public class JobFamilies {
 	public static final Object REPOSITORY_CHANGED = new Object();
 
 	/**
+	 * Job family for Pull jobs
+	 */
+	public static final Object PULL = new Object();
+
+	/**
 	 * Job family for Index Diff Cache update
 	 */
 	public static final Object INDEX_DIFF_CACHE_UPDATE = new Object();
