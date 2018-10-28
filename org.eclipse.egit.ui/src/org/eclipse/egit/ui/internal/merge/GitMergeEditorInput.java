@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
+import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.internal.storage.WorkingTreeFileRevision;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
@@ -174,7 +175,7 @@ public class GitMergeEditorInput extends CompareEditorInput {
 				ObjectId mergeHead = repo.resolve(target);
 				if (mergeHead == null)
 					throw new IOException(NLS.bind(
-							UIText.ValidationUtils_CanNotResolveRefMessage,
+							CoreText.ValidationUtils_CanNotResolveRefMessage,
 							target));
 				rightCommit = rw.parseCommit(mergeHead);
 			} catch (IOException e) {
@@ -188,7 +189,7 @@ public class GitMergeEditorInput extends CompareEditorInput {
 				ObjectId head = repo.resolve(Constants.HEAD);
 				if (head == null)
 					throw new IOException(NLS.bind(
-							UIText.ValidationUtils_CanNotResolveRefMessage,
+							CoreText.ValidationUtils_CanNotResolveRefMessage,
 							Constants.HEAD));
 				headCommit = rw.parseCommit(head);
 			} catch (IOException e) {
