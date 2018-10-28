@@ -217,6 +217,24 @@
       "revId": "62201177b05f077fc182a9fb4bacc9c8e2a6d3bb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ccdaba4e_8dbb718a",
+        "filename": "org.eclipse.egit.gitflow/src/org/eclipse/egit/gitflow/BranchNameValidator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-10-28T17:02:08Z",
+      "side": 1,
+      "message": "Refactored ValidationUtils here: 131561",
+      "parentUuid": "8b16f87a_c60f0e2a",
+      "revId": "62201177b05f077fc182a9fb4bacc9c8e2a6d3bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
