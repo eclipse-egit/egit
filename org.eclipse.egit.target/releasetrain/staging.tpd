@@ -1,6 +1,6 @@
 target "staging" with source configurePhase
 
-location "http://download.eclipse.org/staging/2018-09/" {
+location "http://download.eclipse.org/staging/2018-12/" {
 	// Eclipse platform
 	org.eclipse.sdk.ide lazy
 	org.eclipse.ecf.core.feature.feature.group lazy
