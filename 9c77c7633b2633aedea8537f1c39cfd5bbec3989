@@ -16,6 +16,24 @@
       "revId": "9c77c7633b2633aedea8537f1c39cfd5bbec3989",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3182263d_5e99d777",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-29T08:43:03Z",
+      "side": 1,
+      "message": "Actually I think this could be simplified using a CopyOnWriteArrayList for listeners, and then using SafeRunner.run() here. Same in IndexDiffCacheEntry.",
+      "parentUuid": "345dc019_bab82db6",
+      "revId": "9c77c7633b2633aedea8537f1c39cfd5bbec3989",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
