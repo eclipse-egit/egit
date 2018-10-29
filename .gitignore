@@ -1,2 +1,6 @@
 target
 .metadata
+
+# ignore settings of some Eclipse plug-ins
+org.moreunit.prefs
+
