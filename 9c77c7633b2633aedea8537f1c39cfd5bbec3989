@@ -34,6 +34,24 @@
       "revId": "9c77c7633b2633aedea8537f1c39cfd5bbec3989",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "671bd93d_5ad64f0e",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-10-29T17:59:51Z",
+      "side": 1,
+      "message": "I understand the CopyOnWriteList to simplify the copy-and-iterate to a simple iterate. For the SafeRunner, do you mean to basically not provide a logging message, and just let the exception itself be logged by the runner? I have seen some places doing it like this in egit.\n\nIf that understanding is right, I will create another change with that refactoring and rebase this one onto it.",
+      "parentUuid": "3182263d_5e99d777",
+      "revId": "9c77c7633b2633aedea8537f1c39cfd5bbec3989",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
