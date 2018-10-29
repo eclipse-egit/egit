@@ -52,6 +52,24 @@
       "revId": "9c77c7633b2633aedea8537f1c39cfd5bbec3989",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b60d0821_903f6d43",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-29T19:23:33Z",
+      "side": 1,
+      "message": "That\u0027s exactly what I meant. I see no need to provide a translation for what is really a technical internal error the user cannot do anything about. Besides, the code will become much simpler.\n\nSafeRunner will also log the exception, and that\u0027s all that counts here. If I get a localized exception message in Japanese in the log or in an AERI report for this, it won\u0027t help me one yota. And it won\u0027t help the (Japanese :-)) user either since he\u0027s unlikely to know what an IndexDiffChangedListener is, and anyway the stack trace will show the IndexDiffCacheEntry, so we\u0027ll know where this comes from.",
+      "parentUuid": "671bd93d_5ad64f0e",
+      "revId": "9c77c7633b2633aedea8537f1c39cfd5bbec3989",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
