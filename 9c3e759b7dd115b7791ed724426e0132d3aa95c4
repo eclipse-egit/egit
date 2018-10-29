@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87c8efcd_3bc86b7f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-29T07:20:59Z",
+      "side": 1,
+      "message": "Once you\u0027ve converted to a SubMonitor, you shouldn\u0027t operate on the original converted monitor anymore.",
+      "revId": "9c3e759b7dd115b7791ed724426e0132d3aa95c4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "625ac466_234899b9",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-29T07:20:59Z",
+      "side": 1,
+      "message": "monitor.newChild(3)",
+      "range": {
+        "startLine": 142,
+        "startChar": 6,
+        "endLine": 142,
+        "endChar": 15
+      },
+      "revId": "9c3e759b7dd115b7791ed724426e0132d3aa95c4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "931ffe39_5a3d8432",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-29T07:20:59Z",
+      "side": 1,
+      "message": "remove this",
+      "range": {
+        "startLine": 160,
+        "startChar": 4,
+        "endLine": 160,
+        "endChar": 22
+      },
+      "revId": "9c3e759b7dd115b7791ed724426e0132d3aa95c4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bad495d5_400c54ad",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-29T07:20:59Z",
+      "side": 1,
+      "message": "monitor.newChild(1)",
+      "range": {
+        "startLine": 166,
+        "startChar": 47,
+        "endLine": 166,
+        "endChar": 56
+      },
+      "revId": "9c3e759b7dd115b7791ed724426e0132d3aa95c4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "505fc125_d9ed3e3c",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-29T07:20:59Z",
+      "side": 1,
+      "message": "remove this",
+      "range": {
+        "startLine": 167,
+        "startChar": 4,
+        "endLine": 167,
+        "endChar": 21
+      },
+      "revId": "9c3e759b7dd115b7791ed724426e0132d3aa95c4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "468b9f12_41d4e298",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-29T07:20:59Z",
+      "side": 1,
+      "message": "Does this need a\n\n  finally {\n    mymonitor.done();\n  }\n\nhere? SubMonitors don\u0027t need the done(), but IIRC the top-level IProgressMonitors the framework passes into Job.run() need one.",
+      "revId": "9c3e759b7dd115b7791ed724426e0132d3aa95c4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
