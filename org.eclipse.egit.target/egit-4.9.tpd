@@ -1,0 +1,6 @@
+target "egit-4.9" with source configurePhase
+
+include "projects/jetty-9.4.11.tpd"
+include "projects/swtbot-snapshot.tpd"
+include "orbit/R20180905201904-2018-09.tpd"
+include "releasetrain/4.9-2018-09.tpd"
