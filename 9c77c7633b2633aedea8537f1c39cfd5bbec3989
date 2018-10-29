@@ -70,6 +70,24 @@
       "revId": "9c77c7633b2633aedea8537f1c39cfd5bbec3989",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee1506f5_0bfebd10",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-10-29T23:03:34Z",
+      "side": 1,
+      "message": "ok, agreed for errors which just get logged",
+      "parentUuid": "b60d0821_903f6d43",
+      "revId": "9c77c7633b2633aedea8537f1c39cfd5bbec3989",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
