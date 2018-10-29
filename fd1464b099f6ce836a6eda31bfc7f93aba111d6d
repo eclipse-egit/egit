@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9cc7a541_438d80f8",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-10-29T08:49:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7c896ec_00733bce",
+      "revId": "fd1464b099f6ce836a6eda31bfc7f93aba111d6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "040427b9_df168e9f",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
         "patchSetId": 2
@@ -53,6 +71,54 @@
       "writtenOn": "2018-10-28T20:53:12Z",
       "side": 1,
       "message": "Use MessageFormat.format instead.",
+      "range": {
+        "startLine": 154,
+        "startChar": 53,
+        "endLine": 154,
+        "endChar": 61
+      },
+      "revId": "fd1464b099f6ce836a6eda31bfc7f93aba111d6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0d9fec1_efb73b0d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-10-29T08:49:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "040427b9_df168e9f",
+      "range": {
+        "startLine": 154,
+        "startChar": 10,
+        "endLine": 154,
+        "endChar": 26
+      },
+      "revId": "fd1464b099f6ce836a6eda31bfc7f93aba111d6d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b19b949_23e85f10",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-10-29T08:49:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa3f06ac_a16cf5a4",
       "range": {
         "startLine": 154,
         "startChar": 53,
