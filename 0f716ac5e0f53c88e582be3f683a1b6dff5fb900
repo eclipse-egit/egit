@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "915fd729_e8487b0f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-29T23:06:28Z",
+      "side": 1,
+      "message": "The EGit/JGit-wide convention for these is to format as\n\n  @NonNull\n  public static IStatus validateNewRefName(....)",
+      "revId": "0f716ac5e0f53c88e582be3f683a1b6dff5fb900",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "231fb6f5_e4d4b274",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-29T23:06:28Z",
+      "side": 1,
+      "message": "Strange formatting. Remove the \"final\" modifiers, then it should format as\n\n  @NonNull Repository repo, @NonNull String refPrefix,\n  boolean errorOnEmptyName) {\n\nNote that refPrefix also must be @NonNull (or the code must handle the case of it being null).",
+      "revId": "0f716ac5e0f53c88e582be3f683a1b6dff5fb900",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19286fff_63b0366a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ValidationUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-29T23:06:28Z",
+      "side": 1,
+      "message": "We\u0027re in UI here, so this should be ui?",
+      "range": {
+        "startLine": 17,
+        "startChar": 24,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "0f716ac5e0f53c88e582be3f683a1b6dff5fb900",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd3ad565_6aa2e275",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ValidationUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-29T23:06:28Z",
+      "side": 1,
+      "message": "We already have a Status here. I\u0027d rather add a new Activator.handleIssue(IStatus status, boolean show) and call it here as Activator.handleIssue(validationStatus, false);",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "0f716ac5e0f53c88e582be3f683a1b6dff5fb900",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
