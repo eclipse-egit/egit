@@ -167,11 +167,11 @@ public class UIPreferences {
 	public static final String DEFAULT_CHANGESET_FORMAT = "[{author}] ({date}) {short_message}"; //$NON-NLS-1$
 
 	/** interval in seconds to check for repositories index changes */
-	public static final String REFESH_INDEX_INTERVAL = "refesh_index_interval"; //$NON-NLS-1$
+	public static final String REFRESH_INDEX_INTERVAL = "refesh_index_interval"; //$NON-NLS-1$
 	/** */
-	public static final String REFESH_ON_INDEX_CHANGE = "refesh_on_index_change"; //$NON-NLS-1$
+	public static final String REFRESH_ON_INDEX_CHANGE = "refesh_on_index_change"; //$NON-NLS-1$
 	/** */
-	public static final String REFESH_ONLY_WHEN_ACTIVE = "refesh_only_when_active"; //$NON-NLS-1$
+	public static final String REFRESH_ONLY_WHEN_ACTIVE = "refesh_only_when_active"; //$NON-NLS-1$
 	/** */
 	public static final String REMOTE_CONNECTION_TIMEOUT = "remote_connection_timeout"; //$NON-NLS-1$
 
