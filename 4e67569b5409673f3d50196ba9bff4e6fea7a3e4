@@ -22,6 +22,30 @@
       "revId": "4e67569b5409673f3d50196ba9bff4e6fea7a3e4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dbd3d5d_e4221c67",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-30T07:16:00Z",
+      "side": 1,
+      "message": "Darn, I had overlooked that. Might be worth creating\n\n  package org.eclipse.egit.core.internal;\n  \n  public final class SafeRunnable {\n  \n    public static void run(Runner code) {\n      SafeRunner.run(code);\n    }\n  \n    @FunctionalInterface\n    public interface Runner extends ISafeRunnable {\n\n      @Override\n      default void handleException(Throwable exception) {\n        // logged by SafeRunner\n      }\n    }\n  }\n\nThen we could do here simply\n\n  SafeRunnable.run(() -\u003e listener.indexDiffChanged(repository, indexDiffData));",
+      "parentUuid": "743c7766_57e835f8",
+      "range": {
+        "startLine": 284,
+        "startChar": 4,
+        "endLine": 287,
+        "endChar": 5
+      },
+      "revId": "4e67569b5409673f3d50196ba9bff4e6fea7a3e4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
