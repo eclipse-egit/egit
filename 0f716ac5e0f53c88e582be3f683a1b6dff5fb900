@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5364823_294c169b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-10-30T07:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "915fd729_e8487b0f",
+      "revId": "0f716ac5e0f53c88e582be3f683a1b6dff5fb900",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "231fb6f5_e4d4b274",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-10-29T23:06:28Z",
       "side": 1,
       "message": "Strange formatting. Remove the \"final\" modifiers, then it should format as\n\n  @NonNull Repository repo, @NonNull String refPrefix,\n  boolean errorOnEmptyName) {\n\nNote that refPrefix also must be @NonNull (or the code must handle the case of it being null).",
+      "revId": "0f716ac5e0f53c88e582be3f683a1b6dff5fb900",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8573a193_3257e3e0",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-10-30T07:17:07Z",
+      "side": 1,
+      "message": "Done. Seems a bit drastic just to get the formatting right, though.",
+      "parentUuid": "231fb6f5_e4d4b274",
       "revId": "0f716ac5e0f53c88e582be3f683a1b6dff5fb900",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "6fb2e8d1_e978c7c5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ValidationUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-10-30T07:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19286fff_63b0366a",
+      "range": {
+        "startLine": 17,
+        "startChar": 24,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "0f716ac5e0f53c88e582be3f683a1b6dff5fb900",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd3ad565_6aa2e275",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ValidationUtils.java",
         "patchSetId": 4
@@ -70,6 +130,30 @@
       "writtenOn": "2018-10-29T23:06:28Z",
       "side": 1,
       "message": "We already have a Status here. I\u0027d rather add a new Activator.handleIssue(IStatus status, boolean show) and call it here as Activator.handleIssue(validationStatus, false);",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "0f716ac5e0f53c88e582be3f683a1b6dff5fb900",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d6d68bb_ffedbbc7",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ValidationUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1638
+      },
+      "writtenOn": "2018-10-30T07:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd3ad565_6aa2e275",
       "range": {
         "startLine": 45,
         "startChar": 5,
