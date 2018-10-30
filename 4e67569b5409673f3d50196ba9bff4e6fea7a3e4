@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "743c7766_57e835f8",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-10-30T06:37:26Z",
+      "side": 1,
+      "message": "note for reviewers: this empty method is necessary here, since the abstract class SafeRunnable is located in JFace, and we therefore cannot use it (as otherwise done in our UI plugin).",
+      "range": {
+        "startLine": 284,
+        "startChar": 4,
+        "endLine": 287,
+        "endChar": 5
+      },
+      "revId": "4e67569b5409673f3d50196ba9bff4e6fea7a3e4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
