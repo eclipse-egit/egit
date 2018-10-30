@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8763cfc1_be1a35b6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/SafeRunnable.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-30T19:33:08Z",
+      "side": 1,
+      "message": "Missing license header.",
+      "revId": "4e49b14fa8da601dfe6c2ba40804bc2d50279446",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2abd35ed_8d26ef76",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/SafeRunnable.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-30T19:33:08Z",
+      "side": 1,
+      "message": "Since this needs to be touched again, let\u0027s also add\n\n  private SafeRunnable() {\n    // No instantiation of utility class\n  }",
+      "revId": "4e49b14fa8da601dfe6c2ba40804bc2d50279446",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
