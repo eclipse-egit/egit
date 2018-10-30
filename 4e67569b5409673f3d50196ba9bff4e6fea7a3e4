@@ -46,6 +46,30 @@
       "revId": "4e67569b5409673f3d50196ba9bff4e6fea7a3e4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31aadece_e9d70303",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-10-30T18:58:00Z",
+      "side": 1,
+      "message": "Nice trick with the derived interface implementing some methods to make it a functional interface. Have to remember that for other projects.",
+      "parentUuid": "8dbd3d5d_e4221c67",
+      "range": {
+        "startLine": 284,
+        "startChar": 4,
+        "endLine": 287,
+        "endChar": 5
+      },
+      "revId": "4e67569b5409673f3d50196ba9bff4e6fea7a3e4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
