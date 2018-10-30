@@ -806,7 +806,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		@Override
 		public void onWorkingTreeModified(WorkingTreeModifiedEvent event) {
 			if (Activator.getDefault().getPreferenceStore()
-					.getBoolean(UIPreferences.REFESH_ON_INDEX_CHANGE)) {
+					.getBoolean(UIPreferences.REFRESH_ON_INDEX_CHANGE)) {
 				mayTriggerRefresh(event);
 			}
 		}
@@ -842,7 +842,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 				}
 			}
 			if (!Activator.getDefault().getPreferenceStore()
-					.getBoolean(UIPreferences.REFESH_ONLY_WHEN_ACTIVE)
+					.getBoolean(UIPreferences.REFRESH_ONLY_WHEN_ACTIVE)
 					|| isActive()) {
 				triggerRefresh();
 			}
@@ -974,7 +974,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 			// may happen. Don't scan when inactive depending on the user's
 			// choice.
 			if (getDefault().getPreferenceStore()
-					.getBoolean(UIPreferences.REFESH_ONLY_WHEN_ACTIVE)
+					.getBoolean(UIPreferences.REFRESH_ONLY_WHEN_ACTIVE)
 					&& !isActive()) {
 				monitor.done();
 				return Status.OK_STATUS;
@@ -1037,7 +1037,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 
 		@Override
 		public void propertyChange(PropertyChangeEvent event) {
-			if (!UIPreferences.REFESH_INDEX_INTERVAL
+			if (!UIPreferences.REFRESH_INDEX_INTERVAL
 					.equals(event.getProperty())) {
 				return;
 			}
@@ -1057,7 +1057,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		 */
 		private static int getRefreshIndexInterval() {
 			return 1000 * getDefault().getPreferenceStore()
-					.getInt(UIPreferences.REFESH_INDEX_INTERVAL);
+					.getInt(UIPreferences.REFRESH_INDEX_INTERVAL);
 		}
 	}
 

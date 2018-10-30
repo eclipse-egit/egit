@@ -215,13 +215,13 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 				.setText(UIText.GitPreferenceRoot_RepoChangeScannerGroupHeader);
 
 		IntegerFieldEditor intervalField = new IntegerFieldEditor(
-				UIPreferences.REFESH_INDEX_INTERVAL,
+				UIPreferences.REFRESH_INDEX_INTERVAL,
 				UIText.RefreshPreferencesPage_RefreshIndexInterval,
 				repoChangeScannerGroup);
 		intervalField.getLabelControl(repoChangeScannerGroup).setToolTipText(
 				UIText.RefreshPreferencesPage_RefreshIndexIntervalTooltip);
 		addField(intervalField);
-		addField(new BooleanFieldEditor(UIPreferences.REFESH_ON_INDEX_CHANGE,
+		addField(new BooleanFieldEditor(UIPreferences.REFRESH_ON_INDEX_CHANGE,
 				UIText.RefreshPreferencesPage_RefreshWhenIndexChange,
 				repoChangeScannerGroup) {
 			@Override
@@ -229,7 +229,7 @@ public class GitPreferenceRoot extends DoublePreferencesPreferencePage
 				return 2;
 			}
 		});
-		addField(new BooleanFieldEditor(UIPreferences.REFESH_ONLY_WHEN_ACTIVE,
+		addField(new BooleanFieldEditor(UIPreferences.REFRESH_ONLY_WHEN_ACTIVE,
 				UIText.RefreshPreferencesPage_RefreshOnlyWhenActive,
 				repoChangeScannerGroup) {
 			@Override
