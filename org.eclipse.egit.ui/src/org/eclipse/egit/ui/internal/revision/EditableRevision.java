@@ -20,10 +20,9 @@ import org.eclipse.compare.IEditableContent;
 import org.eclipse.compare.ISharedDocumentAdapter;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.SafeRunner;
+import org.eclipse.egit.core.internal.SafeRunnable;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.internal.ui.synchronize.EditableSharedDocumentAdapter;
@@ -81,16 +80,8 @@ public class EditableRevision extends FileRevisionTypedElement implements
 						Object[] listeners= fListenerList.getListeners();
 						for (int i= 0; i < listeners.length; i++) {
 							final IContentChangeListener contentChangeListener = (IContentChangeListener)listeners[i];
-							SafeRunner.run(new ISafeRunnable() {
-								@Override
-								public void run() throws Exception {
-									(contentChangeListener).contentChanged(element);
-								}
-								@Override
-								public void handleException(Throwable exception) {
-									// Logged by safe runner
-								}
-							});
+						SafeRunnable.run(() -> (contentChangeListener)
+								.contentChanged(element));
 						}
 					}
 				};

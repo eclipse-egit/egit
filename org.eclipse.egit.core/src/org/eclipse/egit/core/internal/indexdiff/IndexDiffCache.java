@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.core.filebuffers.FileBuffers;
 import org.eclipse.core.filebuffers.IFileBuffer;
@@ -34,6 +35,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.core.internal.SafeRunnable;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Constants;
@@ -46,9 +48,9 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class IndexDiffCache {
 
-	private Map<File, IndexDiffCacheEntry> entries = new HashMap<File, IndexDiffCacheEntry>();
+	private Map<File, IndexDiffCacheEntry> entries = new HashMap<>();
 
-	private Set<IndexDiffChangedListener> listeners = new HashSet<IndexDiffChangedListener>();
+	private CopyOnWriteArrayList<IndexDiffChangedListener> listeners = new CopyOnWriteArrayList<>();
 
 	private IndexDiffChangedListener globalListener;
 
@@ -249,18 +251,14 @@ public class IndexDiffCache {
 	 * @param listener
 	 */
 	public void addIndexDiffChangedListener(IndexDiffChangedListener listener) {
-		synchronized (listeners) {
-			listeners.add(listener);
-		}
+		listeners.addIfAbsent(listener);
 	}
 
 	/**
 	 * @param listener
 	 */
 	public void removeIndexDiffChangedListener(IndexDiffChangedListener listener) {
-		synchronized (listeners) {
-			listeners.remove(listener);
-		}
+		listeners.remove(listener);
 	}
 
 	private void createGlobalListener() {
@@ -275,18 +273,9 @@ public class IndexDiffCache {
 
 	private void notifyListeners(Repository repository,
 			IndexDiffData indexDiffData) {
-		IndexDiffChangedListener[] tmpListeners;
-		synchronized (listeners) {
-			tmpListeners = listeners
-					.toArray(new IndexDiffChangedListener[0]);
-		}
-		for (int i = 0; i < tmpListeners.length; i++) {
-			try {
-				tmpListeners[i].indexDiffChanged(repository, indexDiffData);
-			} catch (RuntimeException e) {
-				Activator.logError(
-						"Exception occured in an IndexDiffChangedListener", e); //$NON-NLS-1$
-			}
+		for (IndexDiffChangedListener listener : listeners) {
+			SafeRunnable.run(
+					() -> listener.indexDiffChanged(repository, indexDiffData));
 		}
 	}
 
