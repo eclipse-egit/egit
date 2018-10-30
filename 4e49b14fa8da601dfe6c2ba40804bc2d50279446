@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "28393dbe_ad1fea26",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/SafeRunnable.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-10-30T19:50:15Z",
+      "side": 1,
+      "message": "Good catch. Is there any tooling for automating these, which I\u0027m not aware of? (up to now I have mostly changed existing files and not added new ones). Maybe we should change the respective Eclipse preference via Oomph setup? (but that would require overwriting all templates, since that preference is one huge XML string of all templates).\n\nAnd I\u0027m not even sure how to correctly list the author(s) in this case. Since both you and me worked on the initial version of this class already, would you typically add multiple people or basically always start with a single author (will do that for simplicity now)?",
+      "parentUuid": "8763cfc1_be1a35b6",
+      "revId": "4e49b14fa8da601dfe6c2ba40804bc2d50279446",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2abd35ed_8d26ef76",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/SafeRunnable.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-10-30T19:33:08Z",
       "side": 1,
       "message": "Since this needs to be touched again, let\u0027s also add\n\n  private SafeRunnable() {\n    // No instantiation of utility class\n  }",
+      "revId": "4e49b14fa8da601dfe6c2ba40804bc2d50279446",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48f493b1_e96e527b",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/SafeRunnable.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-10-30T19:50:15Z",
+      "side": 1,
+      "message": "Seems I have been relying on Sonarlint/Checkstyle to detect that for normal utils classes, and both are not triggered in this case...",
+      "parentUuid": "2abd35ed_8d26ef76",
       "revId": "4e49b14fa8da601dfe6c2ba40804bc2d50279446",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
