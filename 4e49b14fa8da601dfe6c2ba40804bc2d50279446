@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "77075e75_a2683dc1",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/SafeRunnable.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-10-30T20:18:49Z",
+      "side": 1,
+      "message": "See https://www.eclipse.org/forums/index.php/t/67220/ . You have to have \"Generate comments\" checked when you use the \"New Class\" (or Interface, or ...) wizard. Don\u0027t know if there\u0027s a preference somewhere to have that on by default.\n\nIt\u0027s not used in EGit/JGit. But it might perhaps be possible to create reasonable templates for EGit and JGit. For the file header we could try using\n\n  Copyright (C) ${year} ${name:git_config(user.name)} \u003c${email:git_config(user.email)}\u003e\n\nOne author is fine by me.",
+      "parentUuid": "28393dbe_ad1fea26",
+      "revId": "4e49b14fa8da601dfe6c2ba40804bc2d50279446",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2abd35ed_8d26ef76",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/SafeRunnable.java",
         "patchSetId": 2
