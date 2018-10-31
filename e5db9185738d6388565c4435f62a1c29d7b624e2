@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea05f5dd_3b787909",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/ConfigureGerritAfterCloneMatcherTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2018-10-31T07:31:28Z",
+      "side": 1,
+      "message": "I obviously cannot do more elaborate tests on test repositories, as I cannot start a real gerrit server in the unit tests :) So this is the best in testing we can get...",
+      "revId": "e5db9185738d6388565c4435f62a1c29d7b624e2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
