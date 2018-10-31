@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
-<!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="egit-4.5" sequenceNumber="1536523196">
+<!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
+<target name="egit-4.5" sequenceNumber="1541022858">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.jetty.client" version="9.4.11.v20180605"/>
@@ -81,7 +81,13 @@
       <unit id="org.tukaani.xz.source" version="1.6.0.v20170629-1752"/>
       <unit id="com.jcraft.jzlib" version="1.1.1.v201205102305"/>
       <unit id="com.jcraft.jzlib.source" version="1.1.1.v201205102305"/>
-      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180905201904/repository"/>
+      <unit id="net.i2p.crypto.eddsa" version="0.3.0.v20181031-0007"/>
+      <unit id="net.i2p.crypto.eddsa.source" version="0.3.0.v20181031-0007"/>
+      <unit id="org.apache.sshd.core" version="2.0.0.v20181026-1233"/>
+      <unit id="org.apache.sshd.core.source" version="2.0.0.v20181026-1233"/>
+      <unit id="org.apache.sshd.sftp" version="2.0.0.v20181026-1233"/>
+      <unit id="org.apache.sshd.sftp.source" version="2.0.0.v20181026-1233"/>
+      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/S20181031145145/repository"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.sdk.ide" version="0.0.0"/>
