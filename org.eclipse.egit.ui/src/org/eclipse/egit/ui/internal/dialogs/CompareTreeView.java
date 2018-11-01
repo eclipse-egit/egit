@@ -233,7 +233,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 				UIText.CompareTreeView_ExpandAllTooltip) {
 			@Override
 			public void run() {
-				tree.expandAll();
+				UIUtils.expandAll(tree);
 			}
 		};
 		expandAllAction.setImageDescriptor(UIIcons.EXPAND_ALL);
@@ -243,7 +243,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 				UIText.CompareTreeView_CollapseAllTooltip) {
 			@Override
 			public void run() {
-				tree.collapseAll();
+				UIUtils.collapseAll(tree);
 			}
 		};
 		collapseAllAction.setImageDescriptor(UIIcons.COLLAPSEALL);
