@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "953570d5_135f48cf",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-11-01T19:28:34Z",
+      "side": 1,
+      "message": "add a TODO that we can remove these helper methods as soon as our minimum supported platform version is using org.eclipse.jface 3.14 which introduced the method\n\n public void expandAll(boolean disableRedraw)",
+      "revId": "5f91a680aa142ac1b10d48e16bbe9972aa7b9523",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
