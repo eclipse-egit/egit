@@ -1523,7 +1523,7 @@ public class StagingView extends ViewPart
 				IAction.AS_PUSH_BUTTON) {
 			@Override
 			public void run() {
-				unstagedViewer.expandAll();
+				UIUtils.expandAll(unstagedViewer);
 				enableAutoExpand(unstagedViewer);
 			}
 		};
@@ -1534,7 +1534,7 @@ public class StagingView extends ViewPart
 				IAction.AS_PUSH_BUTTON) {
 			@Override
 			public void run() {
-				unstagedViewer.collapseAll();
+				UIUtils.collapseAll(unstagedViewer);
 				disableAutoExpand(unstagedViewer);
 			}
 		};
@@ -1582,7 +1582,7 @@ public class StagingView extends ViewPart
 				IAction.AS_PUSH_BUTTON) {
 			@Override
 			public void run() {
-				stagedViewer.expandAll();
+				UIUtils.expandAll(stagedViewer);
 				enableAutoExpand(stagedViewer);
 			}
 		};
@@ -1593,7 +1593,7 @@ public class StagingView extends ViewPart
 				IAction.AS_PUSH_BUTTON) {
 			@Override
 			public void run() {
-				stagedViewer.collapseAll();
+				UIUtils.collapseAll(stagedViewer);
 				disableAutoExpand(stagedViewer);
 			}
 		};

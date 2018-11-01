@@ -63,7 +63,7 @@ public class NonDeletedFilesTree extends TreeViewer {
 		setContentProvider(cp);
 		setLabelProvider(new FileTreeLabelProvider());
 		setInput(this.filePaths);
-		expandAll();
+		UIUtils.expandAll(this);
 
 		final ToolBar dropDownBar = new ToolBar(main, SWT.FLAT | SWT.RIGHT);
 		GridDataFactory.swtDefaults().align(SWT.BEGINNING, SWT.BEGINNING)
@@ -103,7 +103,7 @@ public class NonDeletedFilesTree extends TreeViewer {
 				if (showRepoRelative.getSelection()) {
 					cp.setMode(Mode.REPO_RELATIVE_PATHS);
 					setInput(getInput());
-					expandAll();
+					UIUtils.expandAll(NonDeletedFilesTree.this);
 				}
 			}
 		});
@@ -116,7 +116,7 @@ public class NonDeletedFilesTree extends TreeViewer {
 				if (showFull.getSelection()) {
 					cp.setMode(Mode.FULL_PATHS);
 					setInput(getInput());
-					expandAll();
+					UIUtils.expandAll(NonDeletedFilesTree.this);
 				}
 			}
 		});
@@ -129,7 +129,7 @@ public class NonDeletedFilesTree extends TreeViewer {
 				if (showResource.getSelection()) {
 					cp.setMode(Mode.RESOURCE_PATHS);
 					setInput(getInput());
-					expandAll();
+					UIUtils.expandAll(NonDeletedFilesTree.this);
 				}
 			}
 		});

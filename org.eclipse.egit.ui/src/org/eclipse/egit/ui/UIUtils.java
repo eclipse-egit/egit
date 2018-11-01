@@ -743,7 +743,7 @@ public class UIUtils {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				viewer.collapseAll();
+				UIUtils.collapseAll(viewer);
 			}
 
 		});
@@ -757,7 +757,7 @@ public class UIUtils {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				viewer.expandAll();
+				UIUtils.expandAll(viewer);
 			}
 
 		});
@@ -1011,6 +1011,39 @@ public class UIUtils {
 					? (ISelection) selectionObject
 					: StructuredSelection.EMPTY;
 			selectionListener.selectionChanged(part, selection);
+		}
+	}
+
+	/**
+	 * Expand all tree nodes while disabling redraw.
+	 *
+	 * @param viewer
+	 *            tree viewer
+	 */
+	public static void expandAll(AbstractTreeViewer viewer) {
+		// TODO: When 4.8 becomes the minimum target (including jface 3.14),
+		// then this method can be replaced by
+		// AbstractTreeViewer.expandAll(boolean)
+		viewer.getControl().setRedraw(false);
+		try {
+			viewer.expandAll();
+		} finally {
+			viewer.getControl().setRedraw(true);
+		}
+	}
+
+	/**
+	 * Collapse all tree nodes while disabling redraw.
+	 *
+	 * @param viewer
+	 *            tree viewer
+	 */
+	public static void collapseAll(AbstractTreeViewer viewer) {
+		viewer.getControl().setRedraw(false);
+		try {
+			viewer.collapseAll();
+		} finally {
+			viewer.getControl().setRedraw(true);
 		}
 	}
 }
