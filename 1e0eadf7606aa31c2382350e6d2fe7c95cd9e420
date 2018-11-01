@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67570f63_998f23dd",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2018-11-01T17:07:30Z",
+      "side": 1,
+      "message": "Note: I\u0027ve limited the number of parallel pulls by the CPU count, as a \"conservative\" value. I think this is OK, but we can go higher or create a preference here, I think the limiting factor is network and disk I/O, not CPU.",
+      "range": {
+        "startLine": 242,
+        "startChar": 6,
+        "endLine": 242,
+        "endChar": 16
+      },
+      "revId": "1e0eadf7606aa31c2382350e6d2fe7c95cd9e420",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
