@@ -14,6 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.compare.structuremergeviewer.IDiffElement;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
@@ -40,9 +41,7 @@ public class ExpandAllModelAction extends SynchronizeModelAction {
 					|| !(viewer instanceof AbstractTreeViewer)) {
 				return;
 			}
-			viewer.getControl().setRedraw(false);
-			((AbstractTreeViewer) viewer).expandAll();
-			viewer.getControl().setRedraw(true);
+			UIUtils.expandAll(((AbstractTreeViewer) viewer));
 		}
 	}
 

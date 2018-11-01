@@ -1,5 +1,7 @@
 target "egit-4.8" with source configurePhase
 
+// TODO: When this becomes the minimum target, please rework org.eclipse.egit.ui.UIUtils.expandAll(AbstractTreeViewer).
+
 include "projects/jetty-9.4.11.tpd"
 include "projects/swtbot-snapshot.tpd"
 include "orbit/I20181102163257-2018-12.tpd"
