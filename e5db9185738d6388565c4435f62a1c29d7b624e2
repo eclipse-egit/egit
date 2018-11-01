@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4ded7aea_244a4739",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/ConfigureGerritAfterCloneMatcherTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-11-01T19:57:00Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "e5db9185738d6388565c4435f62a1c29d7b624e2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea05f5dd_3b787909",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/ConfigureGerritAfterCloneMatcherTest.java",
         "patchSetId": 5
@@ -13,6 +30,23 @@
       "writtenOn": "2018-10-31T07:31:28Z",
       "side": 1,
       "message": "I obviously cannot do more elaborate tests on test repositories, as I cannot start a real gerrit server in the unit tests :) So this is the best in testing we can get...",
+      "revId": "e5db9185738d6388565c4435f62a1c29d7b624e2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e822a2fb_f8e9f799",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-11-01T19:57:00Z",
+      "side": 1,
+      "message": "if you move the test to package org.eclipse.egit.core.op this method doesn\u0027t need to be public",
       "revId": "e5db9185738d6388565c4435f62a1c29d7b624e2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
