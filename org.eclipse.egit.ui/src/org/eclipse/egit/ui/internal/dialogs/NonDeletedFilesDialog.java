@@ -21,6 +21,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -101,7 +102,7 @@ public class NonDeletedFilesDialog extends MessageDialog {
 			filePaths.clear();
 			filePaths.addAll(newPaths);
 			tree.setInput(filePaths);
-			tree.expandAll();
+			UIUtils.expandAll(tree);
 			if (refresh) {
 				try {
 					ResourcesPlugin.getWorkspace().getRoot().refreshLocal(
