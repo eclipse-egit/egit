@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68c98dd0_16b206c0",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/ConfigureGerritAfterCloneMatcherTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-11-01T20:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ded7aea_244a4739",
+      "revId": "e5db9185738d6388565c4435f62a1c29d7b624e2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea05f5dd_3b787909",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/ConfigureGerritAfterCloneMatcherTest.java",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5bfdea32_b0ecf365",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/ConfigureGerritAfterCloneMatcherTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-11-01T20:58:36Z",
+      "side": 1,
+      "message": "I think these tests are sufficient",
+      "parentUuid": "ea05f5dd_3b787909",
+      "revId": "e5db9185738d6388565c4435f62a1c29d7b624e2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e822a2fb_f8e9f799",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2018-11-01T19:57:00Z",
       "side": 1,
       "message": "if you move the test to package org.eclipse.egit.core.op this method doesn\u0027t need to be public",
+      "revId": "e5db9185738d6388565c4435f62a1c29d7b624e2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2cf354a_9b25468a",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConfigureGerritAfterCloneTask.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2018-11-01T20:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e822a2fb_f8e9f799",
       "revId": "e5db9185738d6388565c4435f62a1c29d7b624e2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
