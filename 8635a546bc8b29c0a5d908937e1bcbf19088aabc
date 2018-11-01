@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8711cf74_6cfef9d4",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2018-11-01T19:51:41Z",
+      "side": 1,
+      "message": "One can read it as \"workspace lock on related projects\", so I left it as is.",
+      "parentUuid": "2808fdf5_92d1ca10",
+      "range": {
+        "startLine": 476,
+        "startChar": 14,
+        "endLine": 476,
+        "endChar": 34
+      },
+      "revId": "8635a546bc8b29c0a5d908937e1bcbf19088aabc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31c748d6_46cade5d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2018-11-01T19:48:40Z",
       "side": 1,
       "message": "why does this now return null ?",
+      "revId": "8635a546bc8b29c0a5d908937e1bcbf19088aabc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b605075_89eb77b3",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2018-11-01T19:51:41Z",
+      "side": 1,
+      "message": "The one big rule not used anymore for the current operation, so null rule as no rule.",
+      "parentUuid": "31c748d6_46cade5d",
       "revId": "8635a546bc8b29c0a5d908937e1bcbf19088aabc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
