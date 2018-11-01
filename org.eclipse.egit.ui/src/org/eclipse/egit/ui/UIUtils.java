@@ -742,7 +742,7 @@ public class UIUtils {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				viewer.collapseAll();
+				UIUtils.collapseAll(viewer);
 			}
 
 		});
@@ -756,7 +756,7 @@ public class UIUtils {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				viewer.expandAll();
+				UIUtils.expandAll(viewer);
 			}
 
 		});
@@ -1007,6 +1007,36 @@ public class UIUtils {
 			ISelection selection = (ISelection) selectionObject;
 			if (!selection.isEmpty())
 				selectionListener.selectionChanged(part, selection);
+		}
+	}
+
+	/**
+	 * Expand all tree nodes while disabling redraw.
+	 *
+	 * @param viewer
+	 *            tree viewer
+	 */
+	public static void expandAll(AbstractTreeViewer viewer) {
+		viewer.getControl().setRedraw(false);
+		try {
+			viewer.expandAll();
+		} finally {
+			viewer.getControl().setRedraw(true);
+		}
+	}
+
+	/**
+	 * Collapse all tree nodes while disabling redraw.
+	 *
+	 * @param viewer
+	 *            tree viewer
+	 */
+	public static void collapseAll(AbstractTreeViewer viewer) {
+		viewer.getControl().setRedraw(false);
+		try {
+			viewer.collapseAll();
+		} finally {
+			viewer.getControl().setRedraw(true);
 		}
 	}
 }
