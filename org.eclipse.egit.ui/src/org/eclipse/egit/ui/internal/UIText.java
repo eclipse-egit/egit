@@ -259,10 +259,7 @@ public class UIText extends NLS {
 	public static String GenerateHistoryJob_errorComputingHistory;
 
 	/** */
-	public static String GenerateHistoryJob_taskFoundMultipleCommits;
-
-	/** */
-	public static String GenerateHistoryJob_taskFoundSingleCommit;
+	public static String GenerateHistoryJob_taskFoundCommits;
 
 	/** */
 	public static String GerritConfigurationPage_BranchTooltipHover;
