@@ -2166,8 +2166,9 @@ public class StagingView extends ViewPart
 	private IAction createSelectionPathCopyAction(final TreeViewer viewer) {
 		IStructuredSelection selection = (IStructuredSelection) viewer
 				.getSelection();
-		String copyPathActionText = (selection.size() <= 1) ? UIText.StagingView_CopyPath
-						: UIText.StagingView_CopyPaths;
+		String copyPathActionText = MessageFormat.format(
+				UIText.StagingView_CopyPaths,
+				Integer.valueOf(selection.size()));
 		IAction copyAction = ActionUtils.createGlobalAction(ActionFactory.COPY,
 				() -> copyPathOfSelectionToClipboard(viewer));
 		copyAction.setText(copyPathActionText);
