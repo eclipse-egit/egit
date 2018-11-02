@@ -86,6 +86,7 @@ import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.OpenAndLinkWithEditorHelper;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
@@ -403,6 +404,30 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		menuManager.add(resetManager);
 
 		getSite().registerContextMenu(POPUP_MENU_ID, menuManager, refLogTableTreeViewer);
+
+		showInitialSelection();
+	}
+
+	/**
+	 * try to automatically show a repository when opening the view
+	 */
+	private void showInitialSelection() {
+		IWorkbenchWindow window = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow();
+		if (window == null) {
+			return;
+		}
+		IEditorPart editor = window.getActivePage().getActiveEditor();
+		if (editor != null) {
+			IEditorInput input = editor.getEditorInput();
+			if (input instanceof IFileEditorInput)
+				reactOnSelection(new StructuredSelection(
+						((IFileEditorInput) input).getFile()));
+		} else {
+			IStructuredSelection selection = (IStructuredSelection) window
+					.getSelectionService().getSelection();
+			reactOnSelection(selection);
+		}
 	}
 
 	@Override
