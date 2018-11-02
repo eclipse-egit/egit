@@ -17,6 +17,7 @@
 package org.eclipse.egit.core.op;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -60,7 +61,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.transport.CredentialsProvider;
-import org.eclipse.osgi.util.NLS;
 
 /**
  * Wraps the JGit API {@link PullCommand} into an operation
@@ -167,7 +167,7 @@ public class PullOperation implements IEGitOperation {
 							CoreText.OperationAlreadyExecuted));
 		}
 		int workers = repositories.length;
-		String taskName = NLS.bind(CoreText.PullOperation_TaskName,
+		String taskName = MessageFormat.format(CoreText.PullOperation_TaskName,
 				Integer.valueOf(workers));
 
 		int maxThreads = getMaxPullThreadsCount();
