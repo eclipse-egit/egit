@@ -17,6 +17,7 @@ package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -338,7 +339,7 @@ public class RemoveCommand extends
 	private boolean confirmProjectDeletion(List<IProject> projectsToDelete,
 			ExecutionEvent event) throws OperationCanceledException {
 
-		String message = NLS.bind(
+		String message = MessageFormat.format(
 				UIText.RepositoriesView_ConfirmProjectDeletion_Question,
 				projectsToDelete.size());
 		MessageDialog dlg = new MessageDialog(getShell(event),
