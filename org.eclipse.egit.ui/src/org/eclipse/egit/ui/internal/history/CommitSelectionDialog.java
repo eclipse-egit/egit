@@ -12,6 +12,7 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +52,6 @@ import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.OrTreeFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -194,8 +194,7 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 										if (monitor.isCanceled()
 												|| oldsz == allCommits.size())
 											break;
-										String taskName = NLS
-												.bind(
+										String taskName = MessageFormat.format(
 														UIText.CommitSelectionDialog_FoundCommitsMessage,
 														Integer
 																.valueOf(allCommits
@@ -236,7 +235,7 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 	}
 
 	private void updateUi() {
-		setTitle(NLS.bind(UIText.CommitSelectionDialog_DialogTitle,
+		setTitle(MessageFormat.format(UIText.CommitSelectionDialog_DialogTitle,
 				Integer.valueOf(allCommits.size()),
 				GitLabels.getPlainShortLabel(repository)));
 		setMessage(UIText.CommitSelectionDialog_DialogMessage);
