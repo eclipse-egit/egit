@@ -16,6 +16,7 @@
 package org.eclipse.egit.core.op;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -57,7 +58,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.transport.CredentialsProvider;
-import org.eclipse.osgi.util.NLS;
 
 /**
  * Wraps the JGit API {@link PullCommand} into an operation
@@ -122,7 +122,7 @@ public class PullOperation implements IEGitOperation {
 
 	private Map<Repository, PullReferenceConfig> configs;
 
-	private final Map<Repository, Object> results = new LinkedHashMap<Repository, Object>();
+	private final Map<Repository, Object> results = new LinkedHashMap<>();
 
 	private final int timeout;
 
@@ -161,7 +161,7 @@ public class PullOperation implements IEGitOperation {
 			throw new CoreException(new Status(IStatus.ERROR, Activator
 					.getPluginId(), CoreText.OperationAlreadyExecuted));
 		SubMonitor totalProgress = SubMonitor.convert(m,
-				NLS.bind(CoreText.PullOperation_TaskName,
+				MessageFormat.format(CoreText.PullOperation_TaskName,
 						Integer.valueOf(repositories.length)),
 				1);
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
