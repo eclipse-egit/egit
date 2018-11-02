@@ -119,12 +119,9 @@ class GenerateHistoryJob extends Job {
 						incomplete = true;
 						break;
 					}
-					if (loadedCommits.size() != 1)
-						monitor.setTaskName(MessageFormat
-								.format(UIText.GenerateHistoryJob_taskFoundMultipleCommits,
-										Integer.valueOf(loadedCommits.size())));
-					else
-						monitor.setTaskName(UIText.GenerateHistoryJob_taskFoundSingleCommit);
+					monitor.setTaskName(MessageFormat.format(
+							UIText.GenerateHistoryJob_taskFoundCommits,
+							Integer.valueOf(loadedCommits.size())));
 				}
 			} catch (IOException e) {
 				status = new Status(IStatus.ERROR, Activator.getPluginId(),
