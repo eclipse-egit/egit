@@ -16,6 +16,24 @@
       "revId": "5f91a680aa142ac1b10d48e16bbe9972aa7b9523",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09e31ec8_ea9c1a14",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-03T09:39:50Z",
+      "side": 1,
+      "message": "Done. Thanks for the tip, wasn\u0027t aware of that method yet.",
+      "parentUuid": "953570d5_135f48cf",
+      "revId": "5f91a680aa142ac1b10d48e16bbe9972aa7b9523",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
