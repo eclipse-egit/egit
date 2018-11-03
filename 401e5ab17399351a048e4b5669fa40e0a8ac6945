@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e4b95f9_35deb5cc",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-03T14:49:47Z",
+      "side": 1,
+      "message": "In the old implementation, projects were always refreshed, even in case of the pull operation throwing an exception. Now projects are not refreshed anymore in case of exception.\n\nCan we have the situation that a pull operation has modified _some_ files on disk and then throws an exception? If so, there is now a difference in what the user sees after the operation.",
+      "range": {
+        "startLine": 242,
+        "startChar": 4,
+        "endLine": 246,
+        "endChar": 28
+      },
+      "revId": "401e5ab17399351a048e4b5669fa40e0a8ac6945",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04ab9102_87540a44",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitPreferenceRoot.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-03T14:49:47Z",
+      "side": 1,
+      "message": "I\u0027m slightly confused. I thought a secondary preference store is used for preferences that can be re-defined on project level? Or am I completely wrong with that? Nevertheless I don\u0027t get why we have a very small number of egit preferences using this secondary store. I would expect all of them to use the normal store.",
+      "range": {
+        "startLine": 192,
+        "startChar": 3,
+        "endLine": 195,
+        "endChar": 4
+      },
+      "revId": "401e5ab17399351a048e4b5669fa40e0a8ac6945",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
