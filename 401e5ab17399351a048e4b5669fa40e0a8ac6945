@@ -93,6 +93,30 @@
       "revId": "401e5ab17399351a048e4b5669fa40e0a8ac6945",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3f385aa_64e8c7fd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitPreferenceRoot.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-03T14:57:17Z",
+      "side": 1,
+      "message": "No, that\u0027s not the purpose. The preference page framework supports out of the box only preference pages that display/modify preferences from one plug-in; the one returned by doGetPreferenceStore(). That\u0027s the UI preferences here.\n\nBut EGit has a number of preference pages that contain preferences from both UI and core. That\u0027s why this \"secondary\" preference store was introduced. Here, it returns the CORE preferences for those items that should be stored in/read from there.\n\nSee I68ac0f6807bcae10d598e8e090cee48d2c8ac830 .",
+      "parentUuid": "04ab9102_87540a44",
+      "range": {
+        "startLine": 192,
+        "startChar": 3,
+        "endLine": 195,
+        "endChar": 4
+      },
+      "revId": "401e5ab17399351a048e4b5669fa40e0a8ac6945",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
