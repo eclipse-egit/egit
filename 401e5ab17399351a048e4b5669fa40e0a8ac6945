@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad01eafa_d7405823",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2018-11-03T14:54:35Z",
+      "side": 1,
+      "message": "refreshNeeded only returns false in two cases where refresh is really not needed, the code seem to be safe here",
+      "parentUuid": "3e4b95f9_35deb5cc",
+      "range": {
+        "startLine": 242,
+        "startChar": 4,
+        "endLine": 246,
+        "endChar": 28
+      },
+      "revId": "401e5ab17399351a048e4b5669fa40e0a8ac6945",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04ab9102_87540a44",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitPreferenceRoot.java",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2018-11-03T14:49:47Z",
       "side": 1,
       "message": "I\u0027m slightly confused. I thought a secondary preference store is used for preferences that can be re-defined on project level? Or am I completely wrong with that? Nevertheless I don\u0027t get why we have a very small number of egit preferences using this secondary store. I would expect all of them to use the normal store.",
+      "range": {
+        "startLine": 192,
+        "startChar": 3,
+        "endLine": 195,
+        "endChar": 4
+      },
+      "revId": "401e5ab17399351a048e4b5669fa40e0a8ac6945",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3dacee20_9b63fb17",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitPreferenceRoot.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2018-11-03T14:54:35Z",
+      "side": 1,
+      "message": "There are two plugins involved - egit.core and egit.ui. The page itself is from UI plugin, but we also want change core values here, therefore two stores and different values saved in different stores.",
+      "parentUuid": "04ab9102_87540a44",
       "range": {
         "startLine": 192,
         "startChar": 3,
