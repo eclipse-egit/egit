@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f6ceeb26_a7e62906",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2018-11-03T08:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce3748e7_86234141",
+      "range": {
+        "startLine": 217,
+        "startChar": 4,
+        "endLine": 219,
+        "endChar": 24
+      },
+      "revId": "242b4fe32afad5eff07dfa9a13575b267e54080b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89034327_574f4112",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "293ff33c_8b366e1f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2018-11-03T08:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89034327_574f4112",
+      "range": {
+        "startLine": 242,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 24
+      },
+      "revId": "242b4fe32afad5eff07dfa9a13575b267e54080b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cea5a2b9_f26bb6d4",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
         "patchSetId": 6
@@ -59,6 +107,24 @@
       "writtenOn": "2018-11-03T08:39:39Z",
       "side": 1,
       "message": "Missing curly braces.",
+      "revId": "242b4fe32afad5eff07dfa9a13575b267e54080b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aead803b_eca8b684",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2018-11-03T08:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cea5a2b9_f26bb6d4",
       "revId": "242b4fe32afad5eff07dfa9a13575b267e54080b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
