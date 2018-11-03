@@ -134,6 +134,7 @@ import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.util.Util;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.ContentViewer;
@@ -910,6 +911,11 @@ public class StagingView extends ViewPart
 			if (hasSelection != stageAction.isEnabled()) {
 				stageAction.setEnabled(hasSelection);
 				unstagedToolBarManager.update(true);
+			}
+			if (Util.isWindows()) {
+				// on Windows some SWT bug avoids repainting the non selected
+				// elements correctly, see bug 533555
+				unstagedViewer.getControl().redraw();
 			}
 		});
 		Composite rebaseAndCommitComposite = toolkit.createComposite(mainSashForm);
