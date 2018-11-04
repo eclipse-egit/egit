@@ -59,15 +59,20 @@ public final class ActionUtils {
 				action.run();
 			}
 		};
-		result.setActionDefinitionId(factory.getCommandId());
-		result.setId(factory.getId());
+		result.setActionDefinitionId(template.getActionDefinitionId());
+		result.setId(template.getId());
+		result.setImageDescriptor(template.getImageDescriptor());
+		result.setDisabledImageDescriptor(
+				template.getDisabledImageDescriptor());
 		template.dispose();
 		return result;
 	}
 
 	/**
-	 * Create an {@link IAction} taking the text, id, and action definition id
-	 * from the given {@link ActionFactory}.
+	 * Create an {@link UpdateableAction} taking the text, id, and action
+	 * definition id from the given {@link ActionFactory}. The using code of
+	 * such an action is responsible for calling {@link IUpdate#update()
+	 * update()} on the action when its enablement should be updated.
 	 *
 	 * @param factory
 	 *            from which the new {@link IAction} shall be derived
@@ -75,13 +80,13 @@ public final class ActionUtils {
 	 *            to execute
 	 * @param enabled
 	 *            to obtain the action's enablement
-	 * @return the new {@link IAction}
+	 * @return the new {@link UpdateableAction}
 	 */
-	public static IAction createGlobalAction(ActionFactory factory,
+	public static UpdateableAction createGlobalAction(ActionFactory factory,
 			final Runnable action, final BooleanSupplier enabled) {
 		IWorkbenchAction template = factory
 				.create(PlatformUI.getWorkbench().getActiveWorkbenchWindow());
-		IAction result = new Action(template.getText()) {
+		UpdateableAction result = new UpdateableAction(template.getText()) {
 
 			@Override
 			public void run() {
@@ -89,12 +94,16 @@ public final class ActionUtils {
 			}
 
 			@Override
-			public boolean isEnabled() {
-				return enabled.getAsBoolean();
+			public void update() {
+				setEnabled(enabled.getAsBoolean());
 			}
 		};
-		result.setActionDefinitionId(factory.getCommandId());
-		result.setId(factory.getId());
+		result.setActionDefinitionId(template.getActionDefinitionId());
+		result.setId(template.getId());
+		result.setImageDescriptor(template.getImageDescriptor());
+		result.setDisabledImageDescriptor(
+				template.getDisabledImageDescriptor());
+		result.update();
 		template.dispose();
 		return result;
 	}
@@ -199,5 +208,21 @@ public final class ActionUtils {
 	 */
 	public static void setGlobalActions(Control control, IAction... actions) {
 		setGlobalActions(control, Arrays.asList(actions));
+	}
+
+	/**
+	 * An {@link Action} that is updateable via {@link IUpdate}.
+	 */
+	public static abstract class UpdateableAction extends Action
+			implements IUpdate {
+
+		/**
+		 * Creates a new {@link UpdateableAction} with the given text.
+		 *
+		 * @param text
+		 */
+		public UpdateableAction(String text) {
+			super(text);
+		}
 	}
 }
