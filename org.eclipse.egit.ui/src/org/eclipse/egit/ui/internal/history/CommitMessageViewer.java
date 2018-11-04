@@ -34,8 +34,8 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.actions.BooleanPrefAction;
 import org.eclipse.egit.ui.internal.dialogs.HyperlinkSourceViewer;
 import org.eclipse.egit.ui.internal.history.FormatJob.FormatResult;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.JFaceResources;
@@ -153,19 +153,6 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 		PlatformUI.getWorkbench().getThemeManager()
 				.addPropertyChangeListener(themeListener);
 
-		// global action handlers for select all and copy
-		final IAction selectAll = ActionUtils.createGlobalAction(
-				ActionFactory.SELECT_ALL,
-				() -> doOperation(ITextOperationTarget.SELECT_ALL),
-				() -> canDoOperation(ITextOperationTarget.SELECT_ALL));
-		final IAction copy = ActionUtils.createGlobalAction(ActionFactory.COPY,
-				() -> doOperation(ITextOperationTarget.COPY),
-				() -> canDoOperation(ITextOperationTarget.COPY));
-		ActionUtils.setGlobalActions(getControl(), copy, selectAll);
-		final MenuManager mgr = new MenuManager();
-		Control c = getControl();
-		c.setMenu(mgr.createContextMenu(c));
-
 		IPersistentPreferenceStore pstore = (IPersistentPreferenceStore) store;
 
 		showBranchSequencePrefAction = new BooleanPrefAction(pstore,
@@ -176,8 +163,6 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 				// nothing, just toggle
 			}
 		};
-		mgr.add(showBranchSequencePrefAction);
-
 		showTagSequencePrefAction = new BooleanPrefAction(pstore,
 				UIPreferences.HISTORY_SHOW_TAG_SEQUENCE,
 				UIText.ResourceHistory_ShowTagSequence) {
@@ -186,8 +171,6 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 				// nothing, just toggle
 			}
 		};
-		mgr.add(showTagSequencePrefAction);
-
 		wrapCommentsPrefAction = new BooleanPrefAction(pstore,
 				UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP,
 				UIText.ResourceHistory_toggleCommentWrap) {
@@ -196,8 +179,6 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 				// nothing, just toggle
 			}
 		};
-		mgr.add(wrapCommentsPrefAction);
-
 		fillParagraphsPrefAction = new BooleanPrefAction(pstore,
 				UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL,
 				UIText.ResourceHistory_toggleCommentFill) {
@@ -206,8 +187,35 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 				// nothing, just toggle
 			}
 		};
-		mgr.add(fillParagraphsPrefAction);
 
+		// global action handlers for select all and copy
+		final ActionUtils.UpdateableAction selectAll = ActionUtils
+				.createGlobalAction(ActionFactory.SELECT_ALL,
+				() -> doOperation(ITextOperationTarget.SELECT_ALL),
+				() -> canDoOperation(ITextOperationTarget.SELECT_ALL));
+		final ActionUtils.UpdateableAction copy = ActionUtils
+				.createGlobalAction(ActionFactory.COPY,
+				() -> doOperation(ITextOperationTarget.COPY),
+				() -> canDoOperation(ITextOperationTarget.COPY));
+		ActionUtils.setGlobalActions(getControl(), copy, selectAll);
+		addSelectionChangedListener(event -> {
+			selectAll.update();
+			copy.update();
+		});
+		final MenuManager mgr = new MenuManager();
+		mgr.setRemoveAllWhenShown(true);
+		mgr.addMenuListener(manager -> {
+			mgr.add(selectAll);
+			mgr.add(copy);
+			mgr.add(new Separator());
+			mgr.add(showBranchSequencePrefAction);
+			mgr.add(showTagSequencePrefAction);
+			mgr.add(wrapCommentsPrefAction);
+			mgr.add(fillParagraphsPrefAction);
+		});
+
+		Control c = getControl();
+		c.setMenu(mgr.createContextMenu(c));
 	}
 
 	void addDoneListenerToFormatJob() {
