@@ -19,22 +19,26 @@ import java.util.WeakHashMap;
 import org.eclipse.egit.ui.internal.GitLabels;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.jface.viewers.DecoratingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
-import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.ui.IMemento;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
+import org.eclipse.ui.navigator.ICommonContentExtensionSite;
+import org.eclipse.ui.navigator.ICommonLabelProvider;
 
 /**
  * A decorating label provider for repository tree nodes.
  */
 public class RepositoryTreeNodeLabelProvider
 		extends DecoratingStyledCellLabelProvider
-		implements ILabelProvider, IStyledLabelProvider {
+		implements ICommonLabelProvider, IStyledLabelProvider {
 
 	private final WorkbenchLabelProvider labelProvider;
 
@@ -122,5 +126,34 @@ public class RepositoryTreeNodeLabelProvider
 			return GitLabels.getRefDescription(ref);
 		}
 		return null;
+	}
+
+	@Override
+	public void restoreState(IMemento memento) {
+		// empty
+	}
+
+	@Override
+	public void saveState(IMemento memento) {
+		// empty
+	}
+
+	@Override
+	public String getDescription(Object element) {
+		StringBuilder result = new StringBuilder(getText(element));
+		if (element instanceof RepositoryTreeNode) {
+			if (((RepositoryTreeNode) element)
+					.getType() != RepositoryTreeNodeType.REPO) {
+				Repository repo = ((RepositoryTreeNode) element)
+						.getRepository();
+				result.append(" - ").append(GitLabels.getPlainShortLabel(repo)); //$NON-NLS-1$
+			}
+		}
+		return result.toString();
+	}
+
+	@Override
+	public void init(ICommonContentExtensionSite config) {
+		// empty
 	}
 }
