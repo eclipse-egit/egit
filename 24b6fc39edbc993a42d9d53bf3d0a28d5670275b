@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28a3e457_e64c9f76",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-04T09:16:26Z",
+      "side": 1,
+      "message": "I\u0027m not happy myself about this duplicated code. Does someone know how to make the menu dynamically check the state of the existing copy action (line 197)?",
+      "range": {
+        "startLine": 205,
+        "startChar": 3,
+        "endLine": 208,
+        "endChar": 54
+      },
+      "revId": "24b6fc39edbc993a42d9d53bf3d0a28d5670275b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
