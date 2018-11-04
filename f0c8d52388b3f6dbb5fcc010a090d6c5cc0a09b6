@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b604160c_83f30dea",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitCorePreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-04T15:48:22Z",
+      "side": 1,
+      "message": "Right now this is only for pulls, agreed. But how about doing similar optimizations fro fetch, branch switch, push?\n\nWould we want to have separate preferences? Probably not. So could we maybe call this constant \"core_maxGitOperationThreadsCount\", and the pref key \"core_max_git_operation_threads_count\"? Would be mighty strange if we did the same for push in the future and then ended up using a pref key that says it was for pulls...\n\nOr did you foresee using different preferences for different operations?",
+      "revId": "f0c8d52388b3f6dbb5fcc010a090d6c5cc0a09b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2fb67dfa_f99a72f6",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-04T15:48:22Z",
+      "side": 1,
+      "message": "This is not needed. instanceof will be false for a null argument.",
+      "range": {
+        "startLine": 262,
+        "startChar": 8,
+        "endLine": 262,
+        "endChar": 25
+      },
+      "revId": "f0c8d52388b3f6dbb5fcc010a090d6c5cc0a09b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
