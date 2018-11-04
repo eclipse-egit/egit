@@ -99,6 +99,7 @@ import org.eclipse.jgit.events.IndexChangedListener;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -1053,5 +1054,46 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 						.setLabelDecorator(null);
 			}
 		}
+	}
+
+	/**
+	 * Select and reveal a branch node.
+	 *
+	 * @param repository
+	 *            repository
+	 * @param refName
+	 *            ref name
+	 */
+	public void selectRevealRef(Repository repository, String refName) {
+		RepositoryTreeNode branchesNode = getRepositoryChildNode(repository,
+				RepositoryTreeNodeType.BRANCHES);
+		ITreeContentProvider cp = (ITreeContentProvider) getCommonViewer()
+				.getContentProvider();
+
+		RepositoryTreeNode refNode = findRefNodeRecursive(cp, branchesNode,
+				refName);
+		if (refNode != null) {
+			selectReveal(new StructuredSelection(refNode));
+		}
+	}
+
+	private RepositoryTreeNode findRefNodeRecursive(ITreeContentProvider cp,
+			RepositoryTreeNode currentNode, String refName) {
+		for (Object child : cp.getChildren(currentNode)) {
+			RepositoryTreeNode childNode = (RepositoryTreeNode) child;
+			if (childNode.getType() == RepositoryTreeNodeType.REF) {
+				Ref ref = (Ref) childNode.getObject();
+				if (ref.getName().equals(refName)) {
+					return childNode;
+				}
+			} else {
+				RepositoryTreeNode result = findRefNodeRecursive(cp, childNode,
+						refName);
+				if (result != null) {
+					return result;
+				}
+			}
+		}
+		return null;
 	}
 }

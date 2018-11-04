@@ -18,7 +18,10 @@ import java.util.List;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.internal.dialogs.BranchRenameDialog;
+import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -32,7 +35,15 @@ public class RenameBranchCommand extends
 		RefNode refNode = nodes.get(0);
 
 		Shell shell = getShell(event);
-		new BranchRenameDialog(shell, refNode.getRepository(), refNode.getObject()).open();
+		Repository repository = refNode.getRepository();
+		BranchRenameDialog branchRenameDialog = new BranchRenameDialog(shell,
+				repository, refNode.getObject());
+		branchRenameDialog.open();
+		String newName = branchRenameDialog.getNewName();
+		if (newName != null) {
+			RepositoriesView repoView = getView(event);
+			repoView.selectRevealRef(repository, Constants.R_HEADS + newName);
+		}
 		return null;
 	}
 }
