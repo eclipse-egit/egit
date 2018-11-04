@@ -989,8 +989,8 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 		}
 	}
 
-	private RepositoryTreeNode getNodeForPath(Repository repository, String repoRelativePath) {
-		RepositoryTreeNode currentNode = null;
+	private RepositoryTreeNode getRepositoryChildNode(Repository repository,
+			RepositoryTreeNodeType type) {
 		ITreeContentProvider cp = (ITreeContentProvider) getCommonViewer()
 				.getContentProvider();
 		for (Object repo : cp.getElements(getCommonViewer().getInput())) {
@@ -1000,18 +1000,25 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 					((Repository) node.getObject()).getDirectory())) {
 				for (Object child : cp.getChildren(node)) {
 					RepositoryTreeNode childNode = (RepositoryTreeNode) child;
-					if (childNode.getType() == RepositoryTreeNodeType.WORKINGDIR) {
-						currentNode = childNode;
-						break;
+					if (childNode.getType() == type) {
+						return childNode;
 					}
 				}
-				break;
 			}
 		}
+		return null;
+	}
 
+	private RepositoryTreeNode getNodeForPath(Repository repository,
+			String repoRelativePath) {
+		RepositoryTreeNode currentNode = getRepositoryChildNode(repository,
+				RepositoryTreeNodeType.WORKINGDIR);
+
+		ITreeContentProvider cp = (ITreeContentProvider) getCommonViewer()
+				.getContentProvider();
 		IPath relPath = new Path(repoRelativePath);
 
-		for (String segment : relPath.segments())
+		for (String segment : relPath.segments()) {
 			for (Object child : cp.getChildren(currentNode)) {
 				@SuppressWarnings("unchecked")
 				RepositoryTreeNode<File> childNode = (RepositoryTreeNode<File>) child;
@@ -1020,7 +1027,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 					break;
 				}
 			}
-
+		}
 		return currentNode;
 	}
 
