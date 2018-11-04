@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e39623ac_032c5e1f",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitCorePreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2018-11-04T16:13:25Z",
+      "side": 1,
+      "message": "I think fetch is the only we can share this preference with, so we can rename it to core_max_fetch_threads_count.\n\nShould we, or can we keep \"pull\" for fetch too?\n\nFor the rest - I think branch switching happens locally and different threads would make sense here too, but I haven\u0027t ever a need for that. If we add this, this would be interesting how fast it works in general. Right now I\u0027m running pull option with value of 50 to pull all repos I have in once. For branches, disk IO is the bottle neck, having 50 there would be an overkill I guess.\n\nFor the \"push\" one usually don\u0027t work on so many repositories anyway, so multi-push is not something useful, so we also do not offer this for multiple repositories.",
+      "parentUuid": "b604160c_83f30dea",
+      "revId": "f0c8d52388b3f6dbb5fcc010a090d6c5cc0a09b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fb67dfa_f99a72f6",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
         "patchSetId": 9
@@ -30,6 +48,30 @@
       "writtenOn": "2018-11-04T15:48:22Z",
       "side": 1,
       "message": "This is not needed. instanceof will be false for a null argument.",
+      "range": {
+        "startLine": 262,
+        "startChar": 8,
+        "endLine": 262,
+        "endChar": 25
+      },
+      "revId": "f0c8d52388b3f6dbb5fcc010a090d6c5cc0a09b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5efcc1e5_fef0785d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1179
+      },
+      "writtenOn": "2018-11-04T16:13:25Z",
+      "side": 1,
+      "message": "Was part of the old code base, haven\u0027t noticed this until now :-).",
+      "parentUuid": "2fb67dfa_f99a72f6",
       "range": {
         "startLine": 262,
         "startChar": 8,
