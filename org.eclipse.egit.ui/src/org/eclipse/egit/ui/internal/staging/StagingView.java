@@ -134,6 +134,7 @@ import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.util.Util;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.ContentViewer;
@@ -911,6 +912,7 @@ public class StagingView extends ViewPart
 				stageAction.setEnabled(hasSelection);
 				unstagedToolBarManager.update(true);
 			}
+			workaroundMissingSwtRefresh(unstagedViewer);
 		});
 		Composite rebaseAndCommitComposite = toolkit.createComposite(mainSashForm);
 		rebaseAndCommitComposite.setLayout(GridLayoutFactory.fillDefaults().create());
@@ -1185,6 +1187,7 @@ public class StagingView extends ViewPart
 				unstageAction.setEnabled(hasSelection);
 				stagedToolBarManager.update(true);
 			}
+			workaroundMissingSwtRefresh(stagedViewer);
 		});
 
 		selectionChangedListener = new ISelectionListener() {
@@ -1319,6 +1322,19 @@ public class StagingView extends ViewPart
 			// that the view is busy (e.g. reload() will trigger this job in
 			// background!).
 			service.showBusyForFamily(org.eclipse.egit.core.JobFamilies.INDEX_DIFF_CACHE_UPDATE);
+	}
+
+	/**
+	 * On Windows some SWT bug avoids repainting the non selected elements
+	 * correctly, see bugzilla 533555.
+	 *
+	 * @param viewer
+	 *            tree viewer
+	 */
+	private void workaroundMissingSwtRefresh(TreeViewer viewer) {
+		if (Util.isWindows()) {
+			viewer.getControl().redraw();
+		}
 	}
 
 	private boolean commitAndPushEnabled(boolean commitEnabled) {
