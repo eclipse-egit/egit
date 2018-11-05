@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "075c4131_e345e48a",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/uitext.properties",
+        "patchSetId": 4
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-05T09:06:58Z",
+      "side": 1,
+      "message": "\"them\" is false for singular",
+      "range": {
+        "startLine": 1311,
+        "startChar": 175,
+        "endLine": 1311,
+        "endChar": 182
+      },
+      "revId": "4b4afc37d03a91129b2dff635754bb9bbaac3914",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
