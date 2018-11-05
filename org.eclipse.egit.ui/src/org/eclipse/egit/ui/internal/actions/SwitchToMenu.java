@@ -105,8 +105,11 @@ public class SwitchToMenu extends ContributionItem implements
 	private void createDynamicMenu(Menu menu, final Repository[] repositories) {
 
 		if (!isMultipleSelection(repositories)) {
-			createNewBranchMenuItem(menu, repositories[0]);
-			createSeparator(menu);
+			Repository repository = repositories[0];
+			createNewBranchMenuItem(menu, repository);
+			if (hasBranches(repository)) {
+				createSeparator(menu);
+			}
 		}
 
 		int itemCount = createMostActiveBranchesMenuItems(menu, repositories);
@@ -120,6 +123,16 @@ public class SwitchToMenu extends ContributionItem implements
 			// If the menu would be empty, add a disabled menuItem to inform the
 			// user that no common branches among the selection were found
 			createDisabledMenu(menu, UIText.SwitchToMenu_NoCommonBranchesFound);
+		}
+	}
+
+	private boolean hasBranches(Repository repository) {
+		try {
+			return !repository.getRefDatabase().getRefs(Constants.R_HEADS)
+					.isEmpty();
+		} catch (IOException e) {
+			Activator.handleError(e.getMessage(), e, true);
+			return false;
 		}
 	}
 
