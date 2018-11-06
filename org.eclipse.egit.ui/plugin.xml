@@ -478,10 +478,7 @@
             class="org.eclipse.egit.ui.internal.preferences.GitPreferenceRoot"
             id="org.eclipse.egit.ui.GitPreferences">
          <keywordReference
-               id="org.eclipse.egit.ui.keyword.git">
-         </keywordReference>
-         <keywordReference
-               id="org.eclipse.egit.ui.keyword.refresh">
+               id="org.eclipse.egit.ui.GitPreferences">
          </keywordReference>
       </page>
       <page name="%GitPreferences_ProjectPreferencePage_name"
@@ -489,7 +486,7 @@
             class="org.eclipse.egit.ui.internal.preferences.ProjectsPreferencePage"
 	        id="org.eclipse.egit.ui.internal.preferences.ProjectsPreferencePage" >
 	    <keywordReference
-		  id="org.eclipse.egit.ui.keyword.git">
+		  id="org.eclipse.egit.ui.internal.preferences.ProjectsPreferencePage">
 	    </keywordReference>
       </page>
       <page name="%GitPreferences_WindowCachePreferencePage_name"
@@ -497,7 +494,7 @@
             class="org.eclipse.egit.ui.internal.preferences.WindowCachePreferencePage"
 	    id="org.eclipse.egit.ui.internal.preferences.WindowCachePreferencePage" >
 	    <keywordReference
-		  id="org.eclipse.egit.ui.keyword.git">
+		  id="org.eclipse.egit.ui.internal.preferences.WindowCachePreferencePage">
 	    </keywordReference>
       </page>
       <page name="%GitPreferences_DateFormatPreferencePage_name"
@@ -505,10 +502,7 @@
             class="org.eclipse.egit.ui.internal.preferences.DateFormatPreferencePage"
 	    id="org.eclipse.egit.ui.internal.preferences.DateFormatPreferencePage" >
 	    <keywordReference
-		  id="org.eclipse.egit.ui.keyword.git">
-	    </keywordReference>
-	    <keywordReference
-		  id="org.eclipse.egit.ui.keyword.date">
+		  id="org.eclipse.egit.ui.internal.preferences.DateFormatPreferencePage">
 	    </keywordReference>
       </page>
 	  <page name="%GitPreferences_DecoratorPreferencePage_name"
@@ -516,7 +510,7 @@
             class="org.eclipse.egit.ui.internal.preferences.GitDecoratorPreferencePage"
 	    id="org.eclipse.egit.ui.internal.preferences.GitDecoratorPreferencePage" >
 	    <keywordReference
-		  id="org.eclipse.egit.ui.keyword.git">
+		  id="org.eclipse.egit.ui.internal.preferences.GitDecoratorPreferencePage">
 	    </keywordReference>
       </page>
       <page
@@ -525,7 +519,7 @@
          id="org.eclipse.egit.ui.internal.preferences.GlobalConfigurationPreferencePage"
          name="%ConfigurationPage.name">
       <keywordReference
-            id="org.eclipse.egit.ui.keyword.git">
+            id="org.eclipse.egit.ui.internal.preferences.GlobalConfigurationPreferencePage">
       </keywordReference>
       </page>
       <page
@@ -534,7 +528,7 @@
             id="org.eclipse.egit.ui.internal.preferences.CommittingPreferencePage"
             name="%GitPreferences_CommittingPreferencePage_name">
          <keywordReference
-               id="org.eclipse.egit.ui.keyword.git">
+               id="org.eclipse.egit.ui.internal.preferences.CommittingPreferencePage">
          </keywordReference>
       </page>
       <page
@@ -543,7 +537,7 @@
             id="org.eclipse.egit.ui.internal.preferences.StagingViewPreferencePage"
             name="%GitPreferences_StagingViewPreferencePage_name">
          <keywordReference
-               id="org.eclipse.egit.ui.keyword.git">
+               id="org.eclipse.egit.ui.internal.preferences.StagingViewPreferencePage">
          </keywordReference>
       </page>
       <page
@@ -552,7 +546,7 @@
             id="org.eclipse.egit.ui.internal.preferences.DialogsPreferencePage"
             name="%DialogsPreferencePage.name">
          <keywordReference
-               id="org.eclipse.egit.ui.keyword.git">
+               id="org.eclipse.egit.ui.internal.preferences.DialogsPreferencePage">
          </keywordReference>
       </page>
       <page
@@ -561,7 +555,7 @@
             id="org.eclipse.egit.ui.internal.preferences.SynchronizePreferencePage"
             name="%SynchronizePreferencePage.name">
          <keywordReference
-               id="org.eclipse.egit.ui.keyword.git">
+               id="org.eclipse.egit.ui.internal.preferences.SynchronizePreferencePage">
          </keywordReference>
       </page>
       <page
@@ -570,7 +564,7 @@
             id="org.eclipse.egit.ui.internal.preferences.HistoryPreferencePage"
             name="%HistoryPreferencePage.name">
          <keywordReference
-               id="org.eclipse.egit.ui.keyword.git">
+               id="org.eclipse.egit.ui.internal.preferences.HistoryPreferencePage">
          </keywordReference>
       </page>
       <page
@@ -579,10 +573,7 @@
             id="org.eclipse.egit.ui.internal.preferences.HistoryColumnsPreferencePage"
             name="%HistoryColumnsPreferencePage.name">
          <keywordReference
-               id="org.eclipse.egit.ui.keyword.git">
-         </keywordReference>
-         <keywordReference
-               id="org.eclipse.egit.ui.keyword.history">
+               id="org.eclipse.egit.ui.internal.preferences.HistoryColumnsPreferencePage">
          </keywordReference>
       </page>
    </extension>
@@ -621,20 +612,52 @@
 
    <extension point="org.eclipse.ui.keywords">
       <keyword
-            id="org.eclipse.egit.ui.keyword.git"
-            label="%GitKeyword_label">
+            id="org.eclipse.egit.ui.GitPreferences"
+            label="%GitPreferences_keywords">
       </keyword>
       <keyword
-            id="org.eclipse.egit.ui.keyword.refresh"
-            label="%GitKeyword_Refresh_label">
+            id="org.eclipse.egit.ui.internal.preferences.ProjectsPreferencePage"
+            label="%ProjectsPreferencePage_keywords">
       </keyword>
       <keyword
-            id="org.eclipse.egit.ui.keyword.date"
-            label="%GitKeyword_Date_label">
+            id="org.eclipse.egit.ui.internal.preferences.WindowCachePreferencePage"
+            label="%WindowCachePreferencePage_keywords">
       </keyword>
       <keyword
-            id="org.eclipse.egit.ui.keyword.history"
-            label="%GitKeyword_History_label">
+            id="org.eclipse.egit.ui.internal.preferences.DateFormatPreferencePage"
+            label="%DateFormatPreferencePage_keywords">
+      </keyword>
+      <keyword
+            id="org.eclipse.egit.ui.internal.preferences.GitDecoratorPreferencePage"
+            label="%GitDecoratorPreferencePage_keywords">
+      </keyword>
+      <keyword
+            id="org.eclipse.egit.ui.internal.preferences.GlobalConfigurationPreferencePage"
+            label="%GlobalConfigurationPreferencePage_keywords">
+      </keyword>
+      <keyword
+            id="org.eclipse.egit.ui.internal.preferences.CommittingPreferencePage"
+            label="%CommittingPreferencePage_keywords">
+      </keyword>
+      <keyword
+            id="org.eclipse.egit.ui.internal.preferences.StagingViewPreferencePage"
+            label="%StagingViewPreferencePage_keywords">
+      </keyword>
+      <keyword
+            id="org.eclipse.egit.ui.internal.preferences.DialogsPreferencePage"
+            label="%DialogsPreferencePage_keywords">
+      </keyword>
+      <keyword
+            id="org.eclipse.egit.ui.internal.preferences.SynchronizePreferencePage"
+            label="%SynchronizePreferencePage_keywords">
+      </keyword>
+      <keyword
+            id="org.eclipse.egit.ui.internal.preferences.HistoryPreferencePage"
+            label="%HistoryPreferencePage_keywords">
+      </keyword>
+      <keyword
+            id="org.eclipse.egit.ui.internal.preferences.HistoryColumnsPreferencePage"
+            label="%HistoryColumnsPreferencePage_keywords">
       </keyword>
    </extension>
 
