@@ -474,4 +474,9 @@ public class GitMergeEditorInput extends CompareEditorInput {
 			end--;
 		return RawParseUtils.decode(content, 0, end);
 	}
+
+	@Override
+	public boolean canRunAsJob() {
+		return true;
+	}
 }
