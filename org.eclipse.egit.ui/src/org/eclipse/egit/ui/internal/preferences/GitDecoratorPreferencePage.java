@@ -49,11 +49,14 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.DecorationOverlayIcon;
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.window.Window;
@@ -103,7 +106,19 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 	private boolean tabsInitialized;
 
-	private final static String SAMPLE_COMMIT_MESSAGE = "Commit message text"; //$NON-NLS-1$
+	private static final int UNTRACKED = (1 << 0);
+
+	private static final int IGNORED = (1 << 1);
+
+	private static final int DIRTY = (1 << 2);
+
+	private static final int CONFLICTS = (1 << 3);
+
+	private static final int ASSUME_UNCHANGED = (1 << 4);
+
+	private static final int SUBMODULE = (1 << 5);
+
+	private static final String SAMPLE_COMMIT_MESSAGE = "Commit message text"; //$NON-NLS-1$
 
 	private static final Collection PREVIEW_FILESYSTEM_ROOT;
 
@@ -123,45 +138,62 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 	static {
 		final PreviewResource project = new PreviewResource(
-				"Project", IResource.PROJECT, "repository" + '|' + RepositoryState.MERGING.getDescription(), "master", "↑2 ↓1", true, false, true, StagingState.NOT_STAGED, false, false); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				"Project", IResource.PROJECT, //$NON-NLS-1$
+				"repository" + '|' + RepositoryState.MERGING.getDescription(), //$NON-NLS-1$
+				"master", "↑2 ↓1", DIRTY, StagingState.NOT_STAGED); //$NON-NLS-1$ //$NON-NLS-2$
 		final ArrayList<PreviewResource> children = new ArrayList<>();
 
 		children
 				.add(new PreviewResource(
-						"folder", IResource.FOLDER, "repository", null, null, true, false, true, StagingState.NOT_STAGED, false, false)); //$NON-NLS-1$ //$NON-NLS-2$
+						"folder", IResource.FOLDER, "repository", null, null, //$NON-NLS-1$ //$NON-NLS-2$
+						DIRTY, StagingState.NOT_STAGED));
 		children
 				.add(new PreviewResource(
-						"submodule", IResource.FOLDER, "submodule", "master 5bef90d", null, true, false, true, StagingState.NOT_STAGED, false, false));  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						"submodule", IResource.FOLDER, "submodule", //$NON-NLS-1$ //$NON-NLS-2$
+						"master 5bef90d", null, DIRTY | SUBMODULE, //$NON-NLS-1$
+						StagingState.NOT_STAGED));
 		children
 				.add(new PreviewResource(
-						"tracked.txt", IResource.FILE, "repository", null, null, true, false, false, StagingState.NOT_STAGED, false, false)); //$NON-NLS-1$ //$NON-NLS-2$
+						"tracked.txt", IResource.FILE, "repository", null, null, //$NON-NLS-1$ //$NON-NLS-2$
+						0, StagingState.NOT_STAGED));
 		children
 				.add(new PreviewResource(
-						"untracked.txt", IResource.FILE, "repository", null, null, false, false, false, StagingState.NOT_STAGED, false, false)); //$NON-NLS-1$ //$NON-NLS-2$
+						"untracked.txt", IResource.FILE, "repository", null, //$NON-NLS-1$ //$NON-NLS-2$
+						null, UNTRACKED, StagingState.NOT_STAGED));
 		children
 				.add(new PreviewResource(
-						"ignored.txt", IResource.FILE, "repository", null, null, false, true, false, StagingState.NOT_STAGED, false, false)); //$NON-NLS-1$ //$NON-NLS-2$
+						"ignored.txt", IResource.FILE, "repository", null, null, //$NON-NLS-1$ //$NON-NLS-2$
+						IGNORED, StagingState.NOT_STAGED));
 		children
 				.add(new PreviewResource(
-						"dirty.txt", IResource.FILE, "repository", null, null, true, false, true, StagingState.NOT_STAGED, false, false)); //$NON-NLS-1$ //$NON-NLS-2$
+						"dirty.txt", IResource.FILE, "repository", null, null, //$NON-NLS-1$ //$NON-NLS-2$
+						DIRTY, StagingState.NOT_STAGED));
 		children
 				.add(new PreviewResource(
-						"staged.txt", IResource.FILE, "repository", null, null, true, false, false, StagingState.MODIFIED, false, false)); //$NON-NLS-1$ //$NON-NLS-2$
+						"staged.txt", IResource.FILE, "repository", null, null, //$NON-NLS-1$ //$NON-NLS-2$
+						0, StagingState.MODIFIED));
 		children
 				.add(new PreviewResource(
-						"partially-staged.txt", IResource.FILE, "repository", null, null, true, false, true, StagingState.MODIFIED, false, false)); //$NON-NLS-1$ //$NON-NLS-2$
+						"partially-staged.txt", IResource.FILE, "repository", //$NON-NLS-1$ //$NON-NLS-2$
+						null, null, DIRTY, StagingState.MODIFIED));
 		children
 				.add(new PreviewResource(
-						"added.txt", IResource.FILE, "repository", null, null, true, false, false, StagingState.ADDED, false, false)); //$NON-NLS-1$ //$NON-NLS-2$
+						"added.txt", IResource.FILE, "repository", null, null, //$NON-NLS-1$ //$NON-NLS-2$
+						0, StagingState.ADDED));
 		children
 				.add(new PreviewResource(
-						"removed.txt", IResource.FILE, "repository", null, null, true, false, false, StagingState.REMOVED, false, false)); //$NON-NLS-1$ //$NON-NLS-2$
+						"removed.txt", IResource.FILE, "repository", null, null, //$NON-NLS-1$ //$NON-NLS-2$
+						0, StagingState.REMOVED));
 		children
 				.add(new PreviewResource(
-						"conflict.txt", IResource.FILE, "repository", null, null, true, false, true, StagingState.NOT_STAGED, true, false)); //$NON-NLS-1$ //$NON-NLS-2$
+						"conflict.txt", IResource.FILE, "repository", null, //$NON-NLS-1$ //$NON-NLS-2$
+						null, DIRTY | CONFLICTS,
+						StagingState.NOT_STAGED));
 		children
 				.add(new PreviewResource(
-						"assume-unchanged.txt", IResource.FILE, "repository", null, null, true, false, false, StagingState.NOT_STAGED, false, true)); //$NON-NLS-1$ //$NON-NLS-2$
+						"assume-unchanged.txt", IResource.FILE, "repository", //$NON-NLS-1$ //$NON-NLS-2$
+						null, null, ASSUME_UNCHANGED,
+						StagingState.NOT_STAGED));
 		project.children = children;
 		PREVIEW_FILESYSTEM_ROOT = Collections.singleton(project);
 
@@ -915,7 +947,8 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 			reloadDecorationHelper();
 
 			fViewer.setContentProvider(this);
-			fViewer.setLabelProvider(new ResLabelProvider());
+			fViewer.setLabelProvider(new DelegatingStyledCellLabelProvider(
+					new ResLabelProvider()));
 			fViewer.setInput(PREVIEW_FILESYSTEM_ROOT);
 			fViewer.expandAll();
 			fHelper = new DecorationHelper(new PreferenceStore());
@@ -977,20 +1010,28 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 			return decoration;
 		}
 
-		private class ResLabelProvider extends LabelProvider {
+		private class ResLabelProvider extends LabelProvider
+				implements IStyledLabelProvider {
 
 			@Override
 			public String getText(Object element) {
-				final DecorationResult decoration = getDecoration(element);
-				final StringBuilder buffer = new StringBuilder();
-				final String prefix = decoration.getPrefix();
-				if (prefix != null)
-					buffer.append(prefix);
-				buffer.append(((PreviewResource) element).getName());
-				final String suffix = decoration.getSuffix();
-				if (suffix != null)
-					buffer.append(suffix);
-				return buffer.toString();
+				return getStyledText(element).getString();
+			}
+
+			@Override
+			public StyledString getStyledText(Object element) {
+				StyledString result = new StyledString();
+				DecorationResult decoration = getDecoration(element);
+				String extra = decoration.getPrefix();
+				if (extra != null) {
+					result.append(extra, StyledString.DECORATIONS_STYLER);
+				}
+				result.append(((PreviewResource) element).getName());
+				extra = decoration.getSuffix();
+				if (extra != null) {
+					result.append(extra, StyledString.DECORATIONS_STYLER);
+				}
+				return result;
 			}
 
 			@Override
@@ -1056,9 +1097,8 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		private Collection children;
 
 		public PreviewResource(String name, int type, String repositoryName,
-				String branch, String branchStatus, boolean tracked,
-				boolean ignored, boolean dirty, @NonNull StagingState staged,
-				boolean conflicts, boolean assumeUnchanged) {
+				String branch, String branchStatus, int flags,
+				@NonNull StagingState staged) {
 
 			super(null);
 			this.name = name;
@@ -1068,12 +1108,13 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 			this.branchStatus = branchStatus;
 			this.type = type;
 			this.children = Collections.EMPTY_LIST;
-			setTracked(tracked);
-			setIgnored(ignored);
-			setDirty(dirty);
+			setTracked((flags & UNTRACKED) == 0);
+			setIgnored((flags & IGNORED) != 0);
+			setDirty((flags & DIRTY) != 0);
 			setStagingState(staged);
-			setConflicts(conflicts);
-			setAssumeUnchanged(assumeUnchanged);
+			setConflicts((flags & CONFLICTS) != 0);
+			setAssumeUnchanged((flags & ASSUME_UNCHANGED) != 0);
+			setIsRepositoryContainer((flags & SUBMODULE) != 0);
 		}
 
 		@Override
