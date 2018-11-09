@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e655b2df_446519a6",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/reflog/ReflogView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-09T19:46:12Z",
+      "side": 1,
+      "message": "This doesn\u0027t work if the editor has a file open that is not in the workspace. Don\u0027t we have something somewhere (SelectionUtils?) that would make this work also in that case?",
+      "range": {
+        "startLine": 423,
+        "startChar": 3,
+        "endLine": 423,
+        "endChar": 41
+      },
+      "revId": "bc4d971689559cae07856784190fa1fd9abb707e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
