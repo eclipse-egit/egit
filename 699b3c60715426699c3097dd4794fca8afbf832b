@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "660cd9b9_3d853cdc",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-09T20:16:48Z",
+      "side": 1,
+      "message": "That doesn\u0027t look correct. Should be currentNode?",
+      "range": {
+        "startLine": 1023,
+        "startChar": 38,
+        "endLine": 1023,
+        "endChar": 52
+      },
+      "revId": "699b3c60715426699c3097dd4794fca8afbf832b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
