@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4868dfa2_7818922f",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-10T09:23:04Z",
+      "side": 1,
+      "message": "And jface 3.14 is available as of which Eclipse version?",
+      "revId": "29c79b9bdae88d328ab9725215c185005006390d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
