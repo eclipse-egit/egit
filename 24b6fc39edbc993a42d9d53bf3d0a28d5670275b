@@ -22,6 +22,30 @@
       "revId": "24b6fc39edbc993a42d9d53bf3d0a28d5670275b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59b3b330_e6a89fee",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-10T16:47:58Z",
+      "side": 1,
+      "message": "See PS 2. Had to fix a bug in ActionUtils (I suspected long ago that this enablement wouldn\u0027t work, but we never ran into such a case -- until now).",
+      "parentUuid": "28a3e457_e64c9f76",
+      "range": {
+        "startLine": 205,
+        "startChar": 3,
+        "endLine": 208,
+        "endChar": 54
+      },
+      "revId": "24b6fc39edbc993a42d9d53bf3d0a28d5670275b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
