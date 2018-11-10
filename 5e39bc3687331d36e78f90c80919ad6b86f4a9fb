@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "30b74713_aa12be23",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1772,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-10T18:11:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "007164c8_98499c01",
+      "range": {
+        "startLine": 1772,
+        "startChar": 21,
+        "endLine": 1772,
+        "endChar": 31
+      },
+      "revId": "5e39bc3687331d36e78f90c80919ad6b86f4a9fb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33dfe626_84c53901",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-06-30T11:35:43Z",
       "side": 1,
       "message": "GitHistoryPage.super.getInput()? Perhaps not necessary... but should be checked.",
+      "range": {
+        "startLine": 2178,
+        "startChar": 33,
+        "endLine": 2178,
+        "endChar": 43
+      },
+      "revId": "5e39bc3687331d36e78f90c80919ad6b86f4a9fb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31ab3db5_f261c793",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2178,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-10T18:11:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33dfe626_84c53901",
       "range": {
         "startLine": 2178,
         "startChar": 33,
