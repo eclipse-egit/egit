@@ -80,7 +80,6 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchActionConstants;
@@ -364,9 +363,10 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 					ISelection selection) {
 				if (part instanceof IEditorPart) {
 					IEditorInput input = ((IEditorPart) part).getEditorInput();
-					if (input instanceof IFileEditorInput)
-						reactOnSelection(new StructuredSelection(
-								((IFileEditorInput) input).getFile()));
+					Repository repository = AdapterUtils.adapt(input,
+							Repository.class);
+					if (repository != null)
+						reactOnSelection(new StructuredSelection(repository));
 				} else
 					reactOnSelection(selection);
 			}
@@ -418,17 +418,8 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 			return;
 		}
 		IEditorPart editor = window.getActivePage().getActiveEditor();
-		if (editor != null) {
-			IEditorInput input = editor.getEditorInput();
-			Repository repository = AdapterUtils.adapt(input, Repository.class);
-			if (repository != null) {
-				reactOnSelection(new StructuredSelection(repository));
-			}
-		} else {
-			IStructuredSelection selection = (IStructuredSelection) window
-					.getSelectionService().getSelection();
-			reactOnSelection(selection);
-		}
+		selectionChangedListener.selectionChanged(editor,
+				window.getSelectionService().getSelection());
 	}
 
 	@Override
