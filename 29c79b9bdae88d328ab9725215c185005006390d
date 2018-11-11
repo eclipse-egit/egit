@@ -16,6 +16,24 @@
       "revId": "29c79b9bdae88d328ab9725215c185005006390d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f63451f7_24967fd5",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-11T07:38:04Z",
+      "side": 1,
+      "message": "Actually I did not know myself before. But now both the code and the target definition point to it. :)",
+      "parentUuid": "4868dfa2_7818922f",
+      "revId": "29c79b9bdae88d328ab9725215c185005006390d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
