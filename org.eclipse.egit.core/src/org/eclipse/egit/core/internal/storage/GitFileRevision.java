@@ -18,13 +18,13 @@ import java.net.URISyntaxException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.team.core.history.IFileRevision;
-import org.eclipse.team.core.history.provider.FileRevision;
 import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.team.core.history.IFileRevision;
+import org.eclipse.team.core.history.provider.FileRevision;
 
 /**
  * A Git related {@link IFileRevision}. It references a version and a resource,
@@ -113,6 +113,13 @@ public abstract class GitFileRevision extends FileRevision {
 			throws CoreException {
 		return this;
 	}
+
+	/**
+	 * Retrieves the {@link Repository} this file revision comes from.
+	 *
+	 * @return the {@link Repository}
+	 */
+	public abstract Repository getRepository();
 
 	@Override
 	public URI getURI() {

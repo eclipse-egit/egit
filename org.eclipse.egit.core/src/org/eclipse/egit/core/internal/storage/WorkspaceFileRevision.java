@@ -16,6 +16,8 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.core.history.IFileRevision;
 
 /** An {@link IFileRevision} for the current version in the workspace. */
@@ -58,5 +60,10 @@ public class WorkspaceFileRevision extends GitFileRevision {
 	@Override
 	public String getContentIdentifier() {
 		return WORKSPACE;
+	}
+
+	@Override
+	public Repository getRepository() {
+		return ResourceUtil.getRepository(rsrc);
 	}
 }

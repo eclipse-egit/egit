@@ -49,6 +49,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.team.core.history.IFileRevision;
@@ -367,6 +368,8 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 	public Object getAdapter(Class adapter) {
 		if (adapter == IFile.class || adapter == IResource.class) {
 			return getResource();
+		} else if (adapter == Repository.class && left != null) {
+			return AdapterUtils.adapt(left, Repository.class);
 		}
 		return super.getAdapter(adapter);
 	}

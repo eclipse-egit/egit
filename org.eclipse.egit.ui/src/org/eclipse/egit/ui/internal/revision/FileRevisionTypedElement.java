@@ -21,7 +21,9 @@ import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.ui.internal.PreferenceBasedDateFormatter;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.IEditorInput;
 
@@ -52,6 +54,18 @@ public class FileRevisionTypedElement extends StorageTypedElement {
 	@Override
 	public String getName() {
 		return fileRevision.getName();
+	}
+
+	@Override
+	public Object getAdapter(Class adapter) {
+		Object result = super.getAdapter(adapter);
+		if (result != null && adapter.isInstance(result)) {
+			return result;
+		}
+		if (adapter == Repository.class) {
+			return AdapterUtils.adapt(fileRevision, Repository.class);
+		}
+		return null;
 	}
 
 	@Override

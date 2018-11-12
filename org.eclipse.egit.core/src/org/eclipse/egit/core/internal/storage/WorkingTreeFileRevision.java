@@ -21,6 +21,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.core.history.IFileRevision;
 
 /** An {@link IFileRevision} for the current version in the working tree */
@@ -96,4 +98,9 @@ public class WorkingTreeFileRevision extends GitFileRevision {
 		return WORKING_TREE;
 	}
 
+	@Override
+	public Repository getRepository() {
+		return ResourceUtil
+				.getRepository(Path.fromOSString(file.getAbsolutePath()));
+	}
 }
