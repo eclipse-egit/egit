@@ -55,6 +55,7 @@ import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.lib.Ref;
@@ -999,14 +1000,17 @@ public class UIUtils {
 		// being shown.Getting the active part through the active workbench
 		// window returned null in that case.
 		Object partObject = state.getVariable(ISources.ACTIVE_PART_NAME);
+		if (!(partObject instanceof IWorkbenchPart)) {
+			partObject = state.getVariable(ISources.ACTIVE_EDITOR_NAME);
+		}
 		Object selectionObject = state
 				.getVariable(ISources.ACTIVE_CURRENT_SELECTION_NAME);
-		if (partObject instanceof IWorkbenchPart
-				&& selectionObject instanceof ISelection) {
+		if (partObject instanceof IWorkbenchPart) {
 			IWorkbenchPart part = (IWorkbenchPart) partObject;
-			ISelection selection = (ISelection) selectionObject;
-			if (!selection.isEmpty())
-				selectionListener.selectionChanged(part, selection);
+			ISelection selection = selectionObject instanceof ISelection
+					? (ISelection) selectionObject
+					: StructuredSelection.EMPTY;
+			selectionListener.selectionChanged(part, selection);
 		}
 	}
 }
