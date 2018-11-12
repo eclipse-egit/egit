@@ -205,8 +205,8 @@ class CommitMessageViewer extends HyperlinkSourceViewer {
 		final MenuManager mgr = new MenuManager();
 		mgr.setRemoveAllWhenShown(true);
 		mgr.addMenuListener(manager -> {
-			mgr.add(selectAll);
 			mgr.add(copy);
+			mgr.add(selectAll);
 			mgr.add(new Separator());
 			mgr.add(showBranchSequencePrefAction);
 			mgr.add(showTagSequencePrefAction);

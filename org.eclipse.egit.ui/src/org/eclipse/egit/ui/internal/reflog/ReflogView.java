@@ -85,7 +85,6 @@ import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.OpenAndLinkWithEditorHelper;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
@@ -361,14 +360,19 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 			@Override
 			public void selectionChanged(IWorkbenchPart part,
 					ISelection selection) {
+				if (part == ReflogView.this) {
+					return;
+				}
 				if (part instanceof IEditorPart) {
 					IEditorInput input = ((IEditorPart) part).getEditorInput();
 					Repository repository = AdapterUtils.adapt(input,
 							Repository.class);
-					if (repository != null)
+					if (repository != null) {
 						reactOnSelection(new StructuredSelection(repository));
-				} else
+					}
+				} else {
 					reactOnSelection(selection);
+				}
 			}
 		};
 
@@ -404,22 +408,6 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 		menuManager.add(resetManager);
 
 		getSite().registerContextMenu(POPUP_MENU_ID, menuManager, refLogTableTreeViewer);
-
-		showInitialSelection();
-	}
-
-	/**
-	 * try to automatically show a repository when opening the view
-	 */
-	private void showInitialSelection() {
-		IWorkbenchWindow window = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow();
-		if (window == null) {
-			return;
-		}
-		IEditorPart editor = window.getActivePage().getActiveEditor();
-		selectionChangedListener.selectionChanged(editor,
-				window.getSelectionService().getSelection());
 	}
 
 	@Override
@@ -601,8 +589,22 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 			Object currentInput = refLogTableTreeViewer.getInput();
 			if (currentInput instanceof ReflogInput) {
 				ReflogInput oldInput = (ReflogInput) currentInput;
-				refLogTableTreeViewer.setInput(new ReflogInput(
-						oldInput.getRepository(), oldInput.getRef()));
+				Repository repo = oldInput.getRepository();
+				if (repo.getDirectory()
+						.equals(event.getRepository().getDirectory())) {
+					try {
+						if (repo.findRef(oldInput.getRef()) != null) {
+							refLogTableTreeViewer.setInput(
+									new ReflogInput(oldInput.getRepository(),
+											oldInput.getRef()));
+							return;
+						}
+					} catch (IOException e) {
+						// Ignore here
+					}
+					// Fall back to HEAD
+					showReflogFor(repo);
+				}
 			}
 		});
 	}

@@ -213,18 +213,14 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
-import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
-import org.eclipse.ui.IURIEditorInput;
-import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
@@ -267,8 +263,6 @@ public class StagingView extends ViewPart
 	private static final String HORIZONTAL_SASH_FORM_WEIGHT = "HORIZONTAL_SASH_FORM_WEIGHT"; //$NON-NLS-1$
 
 	private static final String STAGING_SASH_FORM_WEIGHT = "STAGING_SASH_FORM_WEIGHT"; //$NON-NLS-1$
-
-	private ISelection initialSelection;
 
 	private FormToolkit toolkit;
 
@@ -762,14 +756,6 @@ public class StagingView extends ViewPart
 		return (Image) this.resources.get(descriptor);
 	}
 
-	@Override
-	public void init(IViewSite site, IMemento viewMemento)
-			throws PartInitException {
-		super.init(site, viewMemento);
-		this.initialSelection = site.getWorkbenchWindow().getSelectionService()
-				.getSelection();
-	}
-
 	private void createPersonLabel(Composite parent, ImageDescriptor image,
 			String text) {
 		Label imageLabel = new Label(parent, SWT.NONE);
@@ -1194,12 +1180,18 @@ public class StagingView extends ViewPart
 			@Override
 			public void selectionChanged(IWorkbenchPart part,
 					ISelection selection) {
-				if (part == getSite().getPart()) {
+				if (part == StagingView.this) {
 					return;
 				}
-				// don't accept text selection, only structural one
-				if (selection instanceof StructuredSelection) {
-					reactOnSelection((StructuredSelection) selection);
+				if (part instanceof IEditorPart) {
+					IEditorInput input = ((IEditorPart) part).getEditorInput();
+					Repository repository = AdapterUtils.adapt(input,
+							Repository.class);
+					if (repository != null) {
+						reactOnSelection(new StructuredSelection(repository));
+					}
+				} else {
+					reactOnSelection(selection);
 				}
 			}
 		};
@@ -1281,16 +1273,17 @@ public class StagingView extends ViewPart
 			}
 		});
 
-		// react on selection changes
 		IWorkbenchPartSite site = getSite();
+		// Use current selection to populate staging view
+		UIUtils.notifySelectionChangedWithCurrentSelection(
+				selectionChangedListener, site);
+
+		// react on selection changes
 		ISelectionService srv = CommonUtils.getService(site, ISelectionService.class);
 		srv.addPostSelectionListener(selectionChangedListener);
 		CommonUtils.getService(site, IPartService.class).addPartListener(
 				partListener);
 
-		// Use current selection to populate staging view
-		UIUtils.notifySelectionChangedWithCurrentSelection(
-				selectionChangedListener, site);
 
 		site.setSelectionProvider(new RepositorySelectionProvider(
 				new MultiViewerSelectionProvider(unstagedViewer, stagedViewer),
@@ -1313,7 +1306,6 @@ public class StagingView extends ViewPart
 		stagedViewer.addFilter(filter);
 
 		restoreSashFormWeights();
-		reactOnInitialSelection();
 
 		IWorkbenchSiteProgressService service = CommonUtils.getService(
 				getSite(), IWorkbenchSiteProgressService.class);
@@ -1445,19 +1437,6 @@ public class StagingView extends ViewPart
 		return ints;
 	}
 
-	private void reactOnInitialSelection() {
-		StructuredSelection sel = null;
-		if (initialSelection instanceof StructuredSelection) {
-			sel = (StructuredSelection) initialSelection;
-		} else if (initialSelection != null && !initialSelection.isEmpty()) {
-			sel = getSelectionOfActiveEditor();
-		}
-		if (sel != null) {
-			reactOnSelection(sel);
-		}
-		initialSelection = null;
-	}
-
 	private StructuredSelection getSelectionOfActiveEditor() {
 		IEditorPart activeEditor = getSite().getPage().getActiveEditor();
 		if (activeEditor == null) {
@@ -1473,7 +1452,9 @@ public class StagingView extends ViewPart
 			if (resource != null) {
 				sel = new StructuredSelection(resource);
 			} else {
-				Repository repository = getRepository((IEditorPart) part);
+				Repository repository = AdapterUtils.adapt(
+						((IEditorPart) part).getEditorInput(),
+						Repository.class);
 				if (repository != null) {
 					sel = new StructuredSelection(repository);
 				}
@@ -1485,15 +1466,6 @@ public class StagingView extends ViewPart
 			}
 		}
 		return sel;
-	}
-
-	@Nullable
-	private static Repository getRepository(IEditorPart part) {
-		IEditorInput input = part.getEditorInput();
-		if (!(input instanceof IURIEditorInput)) {
-			return null;
-		}
-		return AdapterUtils.adapt(input, Repository.class);
 	}
 
 	private static IResource getResource(IEditorPart part) {
@@ -1846,6 +1818,16 @@ public class StagingView extends ViewPart
 			@Override
 			public void apply(boolean value) {
 				reactOnSelection = value;
+				if (value && currentRepository == null) {
+					if (lastSelection != null) {
+						reactOnSelection(lastSelection);
+					} else {
+						ISelection selection = getSelectionOfActiveEditor();
+						if (selection != null) {
+							reactOnSelection(selection);
+						}
+					}
+				}
 			}
 		};
 		linkSelectionAction.setImageDescriptor(UIIcons.ELCL16_SYNCED);
@@ -3302,7 +3284,11 @@ public class StagingView extends ViewPart
 		return !isDisposed() && !isViewHidden && reactOnSelection;
 	}
 
-	private void reactOnSelection(StructuredSelection selection) {
+	private void reactOnSelection(ISelection sel) {
+		if (!(sel instanceof StructuredSelection)) {
+			return;
+		}
+		StructuredSelection selection = (StructuredSelection) sel;
 		if (selection.size() != 1 || isDisposed()) {
 			return;
 		}
