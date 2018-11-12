@@ -589,8 +589,22 @@ public class ReflogView extends ViewPart implements RefsChangedListener, IShowIn
 			Object currentInput = refLogTableTreeViewer.getInput();
 			if (currentInput instanceof ReflogInput) {
 				ReflogInput oldInput = (ReflogInput) currentInput;
-				refLogTableTreeViewer.setInput(new ReflogInput(
-						oldInput.getRepository(), oldInput.getRef()));
+				Repository repo = oldInput.getRepository();
+				if (repo.getDirectory()
+						.equals(event.getRepository().getDirectory())) {
+					try {
+						if (repo.findRef(oldInput.getRef()) != null) {
+							refLogTableTreeViewer.setInput(
+									new ReflogInput(oldInput.getRepository(),
+											oldInput.getRef()));
+							return;
+						}
+					} catch (IOException e) {
+						// Ignore here
+					}
+					// Fall back to HEAD
+					showReflogFor(repo);
+				}
 			}
 		});
 	}
