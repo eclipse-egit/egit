@@ -100,6 +100,6 @@ public class RepositoryCacheTest extends GitTestCase {
 
 		// assert that we don't get confused by nesting repositories
 		assertEquals(repository, cache.getRepository(a));
-		assertEquals(repository2.repository, cache.getRepository(b));
+		assertEquals(repository2.getRepository(), cache.getRepository(b));
 	}
 }

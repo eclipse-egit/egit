@@ -214,7 +214,7 @@ public class LinkedResourcesTest {
 						.getLocation(), IResource.ALLOW_MISSING_LOCAL, null);
 		// Test iterator
 		WorkingTreeIterator iterator = IteratorService
-				.createInitialIterator(repository1.repository);
+				.createInitialIterator(repository1.getRepository());
 		assertTrue(iterator instanceof FileTreeIterator);
 		while (!iterator.eof()) {
 			assertFalse(iterator.getEntryPathString().startsWith("link2"));
