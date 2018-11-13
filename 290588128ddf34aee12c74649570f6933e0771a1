@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "dbe1cb62_22ecb096",
+        "filename": "org.eclipse.egit.core.junit/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-13T20:47:26Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "range": {
+        "startLine": 18,
+        "startChar": 1,
+        "endLine": 18,
+        "endChar": 30
+      },
+      "revId": "290588128ddf34aee12c74649570f6933e0771a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ac9cf59_3fae2ee5",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-13T20:47:26Z",
+      "side": 1,
+      "message": "Add here org.eclipse.egit.junit",
+      "revId": "290588128ddf34aee12c74649570f6933e0771a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ddd88842_d6a4f27b",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-13T20:47:26Z",
+      "side": 1,
+      "message": "Here, too.",
+      "revId": "290588128ddf34aee12c74649570f6933e0771a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca3f9bda_d2401a2c",
         "filename": "pom.xml",
         "patchSetId": 2
