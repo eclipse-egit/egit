@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca3f9bda_d2401a2c",
+        "filename": "pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-13T20:43:29Z",
+      "side": 1,
+      "message": "Must be built before gitflow.test. Move that one down.",
+      "revId": "290588128ddf34aee12c74649570f6933e0771a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
