@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71ae4587_48178547",
+        "filename": "org.eclipse.egit.target/egit-4.8.tpd",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-13T09:54:04Z",
+      "side": 1,
+      "message": "Do we really want to start doing this? Until now we just placed TODOs in the code, with mention of the minimum Eclipse version for the refactoring. If we list them all here, we have another file where we may frequently get merge conflicts...",
+      "revId": "4688fb890027f93ac4925539865f0d36649bb0d9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70d0abf7_0cbc7a79",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/NonDeletedFilesTree.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-13T09:54:04Z",
+      "side": 1,
+      "message": "Just \"this\"?",
+      "range": {
+        "startLine": 66,
+        "startChar": 20,
+        "endLine": 66,
+        "endChar": 44
+      },
+      "revId": "4688fb890027f93ac4925539865f0d36649bb0d9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
