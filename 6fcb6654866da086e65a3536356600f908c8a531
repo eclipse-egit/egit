@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "99800314_16bc88df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-14T16:16:56Z",
+      "side": 1,
+      "message": "Where? I don\u0027t see this done in this change, and once the \"split package\" imports are gone, I have no problems in my workspace.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "6fcb6654866da086e65a3536356600f908c8a531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d58a60d_b11ce84b",
         "filename": "org.eclipse.egit.core.junit/.gitignore",
         "patchSetId": 3
