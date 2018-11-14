@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d58a60d_b11ce84b",
+        "filename": "org.eclipse.egit.core.junit/.gitignore",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-14T08:47:19Z",
+      "side": 1,
+      "message": "/target ?",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 6
+      },
+      "revId": "6fcb6654866da086e65a3536356600f908c8a531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67d20bde_56d9430e",
+        "filename": "org.eclipse.egit.core.junit/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-14T08:47:19Z",
+      "side": 1,
+      "message": "Can we use a plugin.properties as we normally do, please?",
+      "range": {
+        "startLine": 3,
+        "startChar": 13,
+        "endLine": 3,
+        "endChar": 31
+      },
+      "revId": "6fcb6654866da086e65a3536356600f908c8a531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c04bbe8_456dd5de",
+        "filename": "org.eclipse.egit.core.test/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-14T08:47:19Z",
+      "side": 1,
+      "message": "Should be [5.2.0,5.3.0)",
+      "range": {
+        "startLine": 17,
+        "startChar": 45,
+        "endLine": 17,
+        "endChar": 50
+      },
+      "revId": "6fcb6654866da086e65a3536356600f908c8a531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b6f9e89_f9ce25b2",
+        "filename": "org.eclipse.egit.gitflow.test/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-14T08:47:19Z",
+      "side": 1,
+      "message": "Should be [5.2.0,5.3.0)",
+      "range": {
+        "startLine": 16,
+        "startChar": 45,
+        "endLine": 16,
+        "endChar": 50
+      },
+      "revId": "6fcb6654866da086e65a3536356600f908c8a531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31614a42_ed67995b",
+        "filename": "org.eclipse.egit.ui.test/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-14T08:47:19Z",
+      "side": 1,
+      "message": "Should be [5.2.0,5.3.0)",
+      "range": {
+        "startLine": 19,
+        "startChar": 45,
+        "endLine": 19,
+        "endChar": 50
+      },
+      "revId": "6fcb6654866da086e65a3536356600f908c8a531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
