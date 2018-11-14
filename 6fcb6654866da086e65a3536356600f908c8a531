@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "125b6d1a_e8959419",
+        "filename": "org.eclipse.egit.core.junit/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-14T08:59:45Z",
+      "side": 1,
+      "message": "Should be [5.2.0,5.3.0) throughout.",
+      "range": {
+        "startLine": 16,
+        "startChar": 31,
+        "endLine": 16,
+        "endChar": 36
+      },
+      "revId": "6fcb6654866da086e65a3536356600f908c8a531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c04bbe8_456dd5de",
         "filename": "org.eclipse.egit.core.test/META-INF/MANIFEST.MF",
         "patchSetId": 3
@@ -64,6 +87,52 @@
         "startChar": 45,
         "endLine": 17,
         "endChar": 50
+      },
+      "revId": "6fcb6654866da086e65a3536356600f908c8a531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65aeb618_eeb53547",
+        "filename": "org.eclipse.egit.core.test/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-14T08:59:45Z",
+      "side": 1,
+      "message": "Not needed anymore? The stuff we exported this for has been moved to the new junit bundle. Exporting it here makes org.eclipse.egit.core.test a split package.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 58
+      },
+      "revId": "6fcb6654866da086e65a3536356600f908c8a531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3136923_74e5e9c1",
+        "filename": "org.eclipse.egit.gitflow.test/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-14T08:59:45Z",
+      "side": 1,
+      "message": "Remove this. It\u0027s redundant to the require-bundle of the new junit bundle, and causes the API restriction errors.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 52
       },
       "revId": "6fcb6654866da086e65a3536356600f908c8a531",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
@@ -110,6 +179,29 @@
         "startChar": 45,
         "endLine": 19,
         "endChar": 50
+      },
+      "revId": "6fcb6654866da086e65a3536356600f908c8a531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09cea36c_2fd969bd",
+        "filename": "org.eclipse.egit.ui.test/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-14T08:59:45Z",
+      "side": 1,
+      "message": "Remove this.",
+      "range": {
+        "startLine": 21,
+        "startChar": 1,
+        "endLine": 21,
+        "endChar": 52
       },
       "revId": "6fcb6654866da086e65a3536356600f908c8a531",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
