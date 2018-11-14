@@ -168,6 +168,24 @@
       "revId": "290588128ddf34aee12c74649570f6933e0771a1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "825f0715_db4c546d",
+        "filename": "pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-14T08:47:19Z",
+      "side": 1,
+      "message": "Yes, right. Got confused. But I seem to have a blackout: where exactly is the dependency defined that would allow maven to determine the build order of these modules correctly? I don\u0027t see a \u003cdependency\u003e element in the gitflow.test pom.xml...",
+      "parentUuid": "519a1226_f946de2d",
+      "revId": "290588128ddf34aee12c74649570f6933e0771a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
