@@ -16,6 +16,24 @@
       "revId": "40eb7776a976fd30765415edc60011ccdab82fbc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56cc48f3_922b4987",
+        "filename": "org.eclipse.egit.core.junit/src/org/eclipse/egit/core/test/TestRepository.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-14T06:39:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6111c24e_8f4c6687",
+      "revId": "40eb7776a976fd30765415edc60011ccdab82fbc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
