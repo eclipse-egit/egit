@@ -171,7 +171,7 @@ public class PullOperation implements IEGitOperation {
 				Integer.valueOf(workers));
 
 		int maxThreads = getMaxPullThreadsCount();
-		JobGroup jobGroup = new JobGroup(taskName, maxThreads, workers);
+		JobGroup jobGroup = new PullJobGroup(taskName, maxThreads, workers);
 
 		SubMonitor progress = SubMonitor.convert(m, workers);
 		for (Repository repository : repositories) {
@@ -198,6 +198,24 @@ public class PullOperation implements IEGitOperation {
 				Activator.getPluginId(), key,
 				defaultValue, null);
 		return Math.max(defaultValue, value);
+	}
+
+	/**
+	 * JobGroup for multiple pulls.
+	 */
+	private static class PullJobGroup extends JobGroup {
+		public PullJobGroup(String name, int maxThreads, int initialJobCount) {
+			super(name, maxThreads, initialJobCount);
+		}
+
+		/**
+		 * Always continue processing all other pulls
+		 */
+		@Override
+		protected boolean shouldCancel(IStatus lastCompletedJobResult,
+				int numberOfFailedJobs, int numberOfCancelledJobs) {
+			return false;
+		}
 	}
 
 	private final class PullJob extends Job {
