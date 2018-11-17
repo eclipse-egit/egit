@@ -352,6 +352,12 @@ public class UIIcons {
 	/** {@link #BRANCH} overlaid with {@link #OVR_CHECKEDOUT}. */
 	public final static ImageDescriptor CHECKED_OUT_BRANCH;
 
+	/** Ignore icon */
+	public final static ImageDescriptor IGNORE;
+
+	/** go to input icon */
+	public final static ImageDescriptor GOTO_INPUT;
+
 	/** base URL */
 	public final static URL base;
 
@@ -469,6 +475,8 @@ public class UIIcons {
 		UNSTAGE_ALL = map("elcl16/unstage_all.png"); //$NON-NLS-1$
 		ASSUME_UNCHANGED = map("obj16/assume_unchanged.png"); //$NON-NLS-1$
 		UNTRACK = map("obj16/untrack.png"); //$NON-NLS-1$
+		IGNORE = map("obj16/ignore.png"); //$NON-NLS-1$
+		GOTO_INPUT = map("elcl16/goto_input.png"); //$NON-NLS-1$
 		CHECKED_OUT_BRANCH = new DecorationOverlayDescriptor(BRANCH,
 				OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
 
