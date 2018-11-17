@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bbc14967_91e61c92",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-17T08:31:33Z",
+      "side": 1,
+      "message": "Right 2 times. :)\n\nI missed committing them in this change, and with your help on the package imports those 805 errors are gone.",
+      "parentUuid": "99800314_16bc88df",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "6fcb6654866da086e65a3536356600f908c8a531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d58a60d_b11ce84b",
         "filename": "org.eclipse.egit.core.junit/.gitignore",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-11-14T08:47:19Z",
       "side": 1,
       "message": "/target ?",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 6
+      },
+      "revId": "6fcb6654866da086e65a3536356600f908c8a531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "759dd1a0_79bd37a8",
+        "filename": "org.eclipse.egit.core.junit/.gitignore",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-17T08:31:33Z",
+      "side": 1,
+      "message": "Deleted and created separate change to cleanup gitignores.",
+      "parentUuid": "0d58a60d_b11ce84b",
       "range": {
         "startLine": 2,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a8a14694_eca4bcdd",
+        "filename": "org.eclipse.egit.core.junit/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-17T08:31:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67d20bde_56d9430e",
+      "range": {
+        "startLine": 3,
+        "startChar": 13,
+        "endLine": 3,
+        "endChar": 31
+      },
+      "revId": "6fcb6654866da086e65a3536356600f908c8a531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "125b6d1a_e8959419",
         "filename": "org.eclipse.egit.core.junit/META-INF/MANIFEST.MF",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2018-11-14T08:59:45Z",
       "side": 1,
       "message": "Should be [5.2.0,5.3.0) throughout.",
+      "range": {
+        "startLine": 16,
+        "startChar": 31,
+        "endLine": 16,
+        "endChar": 36
+      },
+      "revId": "6fcb6654866da086e65a3536356600f908c8a531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa70b8a6_b5ee2dc5",
+        "filename": "org.eclipse.egit.core.junit/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-17T08:31:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "125b6d1a_e8959419",
       "range": {
         "startLine": 16,
         "startChar": 31,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "bb7cfc8a_a5a40e24",
+        "filename": "org.eclipse.egit.core.test/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-17T08:31:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c04bbe8_456dd5de",
+      "range": {
+        "startLine": 17,
+        "startChar": 45,
+        "endLine": 17,
+        "endChar": 50
+      },
+      "revId": "6fcb6654866da086e65a3536356600f908c8a531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65aeb618_eeb53547",
         "filename": "org.eclipse.egit.core.test/META-INF/MANIFEST.MF",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2018-11-14T08:59:45Z",
       "side": 1,
       "message": "Not needed anymore? The stuff we exported this for has been moved to the new junit bundle. Exporting it here makes org.eclipse.egit.core.test a split package.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 58
+      },
+      "revId": "6fcb6654866da086e65a3536356600f908c8a531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8b4e06b_1205f363",
+        "filename": "org.eclipse.egit.core.test/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-17T08:31:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65aeb618_eeb53547",
       "range": {
         "startLine": 32,
         "startChar": 0,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "6e5b333e_c1fc190d",
+        "filename": "org.eclipse.egit.gitflow.test/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-17T08:31:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3136923_74e5e9c1",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 52
+      },
+      "revId": "6fcb6654866da086e65a3536356600f908c8a531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b6f9e89_f9ce25b2",
         "filename": "org.eclipse.egit.gitflow.test/META-INF/MANIFEST.MF",
         "patchSetId": 3
@@ -174,6 +342,30 @@
       "writtenOn": "2018-11-14T08:47:19Z",
       "side": 1,
       "message": "Should be [5.2.0,5.3.0)",
+      "range": {
+        "startLine": 16,
+        "startChar": 45,
+        "endLine": 16,
+        "endChar": 50
+      },
+      "revId": "6fcb6654866da086e65a3536356600f908c8a531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b4b9bf2_15b10a20",
+        "filename": "org.eclipse.egit.gitflow.test/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-17T08:31:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b6f9e89_f9ce25b2",
       "range": {
         "startLine": 16,
         "startChar": 45,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "93d61ada_a7d153d5",
+        "filename": "org.eclipse.egit.ui.test/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-17T08:31:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31614a42_ed67995b",
+      "range": {
+        "startLine": 19,
+        "startChar": 45,
+        "endLine": 19,
+        "endChar": 50
+      },
+      "revId": "6fcb6654866da086e65a3536356600f908c8a531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09cea36c_2fd969bd",
         "filename": "org.eclipse.egit.ui.test/META-INF/MANIFEST.MF",
         "patchSetId": 3
@@ -220,6 +436,30 @@
       "writtenOn": "2018-11-14T08:59:45Z",
       "side": 1,
       "message": "Remove this.",
+      "range": {
+        "startLine": 21,
+        "startChar": 1,
+        "endLine": 21,
+        "endChar": 52
+      },
+      "revId": "6fcb6654866da086e65a3536356600f908c8a531",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e5e6ded_4ca8436b",
+        "filename": "org.eclipse.egit.ui.test/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-17T08:31:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09cea36c_2fd969bd",
       "range": {
         "startLine": 21,
         "startChar": 1,
