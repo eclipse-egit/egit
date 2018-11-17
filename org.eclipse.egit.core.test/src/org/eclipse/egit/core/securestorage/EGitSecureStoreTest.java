@@ -39,6 +39,8 @@ public class EGitSecureStoreTest {
 
 	EGitSecureStore store;
 
+	private PBEKeySpec keySpec;
+
 	@Before
 	public void setUp() throws Exception {
 		setupNewSecureStore();
@@ -48,6 +50,7 @@ public class EGitSecureStoreTest {
 	@After
 	public void tearDown() throws Exception {
 		secureStoreForTest.flush();
+		keySpec.clearPassword();
 	}
 
 	@Test
@@ -201,9 +204,9 @@ public class EGitSecureStoreTest {
 
 	private void setupNewSecureStore() throws IOException,
 			MalformedURLException {
-		HashMap<String, Object> options = new HashMap<String, Object>();
-		options.put(IProviderHints.DEFAULT_PASSWORD, new PBEKeySpec(
-				"masterpass".toCharArray()));
+		HashMap<String, Object> options = new HashMap<>();
+		keySpec = new PBEKeySpec("masterpass".toCharArray());
+		options.put(IProviderHints.DEFAULT_PASSWORD, keySpec);
 		String secureStorePath = ResourcesPlugin.getWorkspace().getRoot()
 				.getLocation().append("testSecureStore").toOSString();
 		File file = new File(secureStorePath);
