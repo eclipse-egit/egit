@@ -16,6 +16,24 @@
       "revId": "f2f121992400baca79e44ab30d013ef2c0351dbe",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "74724c34_6cdf144a",
+        "filename": "org.eclipse.egit.ui/icons/elcl16/goto_input.png",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-17T12:47:26Z",
+      "side": 1,
+      "message": "Why would we need this here? It\u0027s available as SVG in platform.images as https://git.eclipse.org/r/plugins/gitiles/platform/eclipse.platform.images/+/master/org.eclipse.images/eclipse-svg/org.eclipse.jdt.ui/icons/full/elcl16/goto_input.svg\n\nI don\u0027t see any other svg (except the egit logo)",
+      "parentUuid": "517c1823_dd5574ff",
+      "revId": "f2f121992400baca79e44ab30d013ef2c0351dbe",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
