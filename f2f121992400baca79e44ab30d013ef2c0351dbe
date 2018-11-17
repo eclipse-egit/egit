@@ -34,6 +34,24 @@
       "revId": "f2f121992400baca79e44ab30d013ef2c0351dbe",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f114882a_deb582b9",
+        "filename": "org.eclipse.egit.ui/icons/elcl16/goto_input.png",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-17T16:22:11Z",
+      "side": 1,
+      "message": "1. We have all SVGs for our icons under /.icons (outside of the projects).\n2. I want the SVGs for our pngs in the egit repo. The eclipse.platform.images files sometimes change, sometimes are inconsistent, and sometimes do not correspond to what is actually included in the plugins. Compare bug 536498.\n3. If we don\u0027t have them, we have to hunt for them when an icon needs to be updated.\n4. I believe when someone clones the egit (and jgit) repo he should have all sources. PNGs are actually derived artifacts, the sources are SVGs. I think we should have all our sources in our repo. \n5. The original idea was that we could even generate the PNGs automatically during the build.",
+      "parentUuid": "74724c34_6cdf144a",
+      "revId": "f2f121992400baca79e44ab30d013ef2c0351dbe",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
