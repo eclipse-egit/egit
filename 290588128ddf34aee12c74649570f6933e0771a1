@@ -186,6 +186,24 @@
       "revId": "290588128ddf34aee12c74649570f6933e0771a1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fca52a10_82cde8e8",
+        "filename": "pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-17T08:31:33Z",
+      "side": 1,
+      "message": "Tycho respects the bundle requirements from manifest.mf. You only need plain maven extra requirements when there is an implicit dependency.",
+      "parentUuid": "825f0715_db4c546d",
+      "revId": "290588128ddf34aee12c74649570f6933e0771a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
