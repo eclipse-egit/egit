@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "517c1823_dd5574ff",
+        "filename": "org.eclipse.egit.ui/icons/elcl16/goto_input.png",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-17T11:18:18Z",
+      "side": 1,
+      "message": "We need the SVG for this.",
+      "revId": "f2f121992400baca79e44ab30d013ef2c0351dbe",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
