@@ -16,6 +16,24 @@
       "revId": "757d7b15d69770aaf950852e97251e99edf994de",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe99a9c8_e847e36c",
+        "filename": "icons/org.eclipse.egit.ui/icons/elcl16/goto_input.svg",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-18T20:51:41Z",
+      "side": 1,
+      "message": "BTW, when you copy it from somewhere else, add an XML comment in the file saying where it came from. See for instance trash.svg for an example.",
+      "parentUuid": "9423d274_1e548d21",
+      "revId": "757d7b15d69770aaf950852e97251e99edf994de",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
