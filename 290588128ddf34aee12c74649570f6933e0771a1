@@ -204,6 +204,24 @@
       "revId": "290588128ddf34aee12c74649570f6933e0771a1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3bcacf78_b3cdfc85",
+        "filename": "pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-18T20:55:40Z",
+      "side": 1,
+      "message": "Eh, right. Been dealing too much with JGit\u0027s maven builds. (And its bazel builds...)",
+      "parentUuid": "fca52a10_82cde8e8",
+      "revId": "290588128ddf34aee12c74649570f6933e0771a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
