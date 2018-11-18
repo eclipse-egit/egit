@@ -5821,6 +5821,9 @@ public class UIText extends NLS {
 	/** */
 	public static String ProjectUtils_Invalid_ProjectFile;
 
+	/** */
+	public static String ShowInSystemExplorerActionHandler_JobTitle;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
