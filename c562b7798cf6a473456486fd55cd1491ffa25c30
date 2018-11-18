@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bdd8f2c_bee511e4",
+        "filename": "org.eclipse.egit.core.junit/bundle.properties",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-18T20:55:40Z",
+      "side": 1,
+      "message": "In other bundles, this is called plugin.properties. Why is it different here?",
+      "revId": "c562b7798cf6a473456486fd55cd1491ffa25c30",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
