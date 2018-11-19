@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4a02b1b_98d7cded",
+        "filename": "org.eclipse.egit.target/egit-4.8.tpd",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-19T06:14:01Z",
+      "side": 1,
+      "message": "I just think that the chance for noticing the TODO is higher here than in the Java code. I don\u0027t expect any merge conflicts due to that line. Nevertheless, I\u0027ve removed it again.",
+      "parentUuid": "71ae4587_48178547",
+      "revId": "4688fb890027f93ac4925539865f0d36649bb0d9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70d0abf7_0cbc7a79",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/NonDeletedFilesTree.java",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2018-11-13T09:54:04Z",
       "side": 1,
       "message": "Just \"this\"?",
+      "range": {
+        "startLine": 66,
+        "startChar": 20,
+        "endLine": 66,
+        "endChar": 44
+      },
+      "revId": "4688fb890027f93ac4925539865f0d36649bb0d9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "351a045c_e558bcbb",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/NonDeletedFilesTree.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-19T06:14:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70d0abf7_0cbc7a79",
       "range": {
         "startLine": 66,
         "startChar": 20,
