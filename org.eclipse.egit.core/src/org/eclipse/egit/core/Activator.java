@@ -135,9 +135,25 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	}
 
 	/**
+	 * Utility to create a cancel status for this plug-in.
+	 *
+	 * @param message
+	 *            User comprehensible message
+	 * @param thr
+	 *            cause
+	 * @return an initialized cancel status
+	 */
+	public static IStatus cancel(final String message, final Throwable thr) {
+		return new Status(IStatus.CANCEL, getPluginId(), 0, message, thr);
+	}
+
+	/**
 	 * Utility method to log errors in the Egit plugin.
-	 * @param message User comprehensible message
-	 * @param thr The exception through which we noticed the error
+	 * 
+	 * @param message
+	 *            User comprehensible message
+	 * @param thr
+	 *            The exception through which we noticed the error
 	 */
 	public static void logError(final String message, final Throwable thr) {
 		getDefault().getLog().log(error(message, thr));

@@ -185,9 +185,9 @@ public class PullOperation implements IEGitOperation {
 			jobGroup.join(noTimeout, progress);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
-			throw new CoreException(Status.CANCEL_STATUS);
+			throw new CoreException(Activator.cancel(e.getMessage(), e));
 		} catch (OperationCanceledException e) {
-			throw new CoreException(Status.CANCEL_STATUS);
+			throw new CoreException(Activator.cancel(e.getMessage(), e));
 		}
 	}
 
