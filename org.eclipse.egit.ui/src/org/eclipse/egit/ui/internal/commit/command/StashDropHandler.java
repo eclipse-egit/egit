@@ -29,7 +29,9 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.handler.SelectionHandler;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
@@ -132,8 +134,13 @@ public class StashDropHandler extends SelectionHandler {
 				String message = MessageFormat.format(
 						UIText.StashDropCommand_confirmSingle,
 						Integer.toString(stashIndex));
-				confirmed.set(MessageDialog.openConfirm(shell,
-						UIText.StashDropCommand_confirmTitle, message));
+				String[] buttonLabels = { UIText.StashDropCommand_buttonDelete,
+						IDialogConstants.CANCEL_LABEL };
+
+				MessageDialog confirmDialog = new MessageDialog(shell,
+						UIText.StashDropCommand_confirmTitle, null, message,
+						MessageDialog.CONFIRM, buttonLabels, 0);
+				confirmed.set(confirmDialog.open() == Window.OK);
 			}
 		});
 		return confirmed.get();
