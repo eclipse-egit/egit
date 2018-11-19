@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab9fd1e7_4fce8dcd",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/StashDropCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 153910
+      },
+      "writtenOn": "2018-11-19T14:02:11Z",
+      "side": 1,
+      "message": "This is not a good place for this class, but I couldn\u0027t find a better place for it as the other place where it is used is in another package. Is there some kind of \"util\" package this could fit in?",
+      "range": {
+        "startLine": 181,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 69
+      },
+      "revId": "c655b8ff6eeb34fb0322e93e2af345097bcd078c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
