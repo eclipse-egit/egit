@@ -5630,6 +5630,9 @@ public class UIText extends NLS {
 	public static String StashDropCommand_jobTitle;
 
 	/** */
+	public static String StashDropCommand_buttonDelete;
+
+	/** */
 	public static String StashesMenu_StashChangesActionText;
 
 	/** */

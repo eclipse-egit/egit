@@ -31,7 +31,9 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitEditorInput;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.widgets.Display;
@@ -75,8 +77,14 @@ public class StashDropCommand extends
 							UIText.StashDropCommand_confirmSingle,
 							Integer.toString(nodes.get(0).getIndex()));
 
-				confirmed.set(MessageDialog.openConfirm(shell,
-						UIText.StashDropCommand_confirmTitle, message));
+				String[] buttonLabels = { UIText.StashDropCommand_buttonDelete,
+						IDialogConstants.CANCEL_LABEL };
+
+				MessageDialog confirmDialog = new MessageDialog(shell,
+						UIText.StashDropCommand_confirmTitle, null, message,
+						MessageDialog.CONFIRM, buttonLabels, 0);
+
+				confirmed.set(confirmDialog.open() == Window.OK);
 			}
 		});
 		if (!confirmed.get())
