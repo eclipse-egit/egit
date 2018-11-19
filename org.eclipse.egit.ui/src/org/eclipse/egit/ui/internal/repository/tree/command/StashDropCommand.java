@@ -31,9 +31,12 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitEditorInput;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
@@ -75,8 +78,8 @@ public class StashDropCommand extends
 							UIText.StashDropCommand_confirmSingle,
 							Integer.toString(nodes.get(0).getIndex()));
 
-				confirmed.set(MessageDialog.openConfirm(shell,
-						UIText.StashDropCommand_confirmTitle, message));
+				confirmed.set(new ConfirmDeleteStashDialog(shell, message)
+						.open() == Window.OK);
 			}
 		});
 		if (!confirmed.get())
@@ -169,5 +172,33 @@ public class StashDropCommand extends
 				.getSchedulingRule());
 		job.schedule();
 		return null;
+	}
+
+	/**
+	 * A {@link MessageDialog} that uses "delete" instead of "OK" as the
+	 * confirmations button label
+	 */
+	public static class ConfirmDeleteStashDialog extends MessageDialog {
+
+		/**
+		 * @param parentShell
+		 *            - The Parent Shell
+		 * @param message
+		 *            - The message the dialog should show
+		 */
+		public ConfirmDeleteStashDialog(Shell parentShell, String message) {
+			super(parentShell, UIText.StashDropCommand_confirmTitle, null,
+					message,
+					MessageDialog.CONFIRM, 0);
+		}
+
+		@Override
+		protected void createButtonsForButtonBar(Composite parent) {
+			createButton(parent, IDialogConstants.OK_ID,
+					UIText.StashDropCommand_buttonDelete, true);
+			createButton(parent, IDialogConstants.CANCEL_ID,
+					IDialogConstants.CANCEL_LABEL, false);
+		}
+
 	}
 }
