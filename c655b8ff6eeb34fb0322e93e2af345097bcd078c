@@ -22,6 +22,30 @@
       "revId": "c655b8ff6eeb34fb0322e93e2af345097bcd078c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1630e09_a50d1423",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/StashDropCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-19T14:12:08Z",
+      "side": 1,
+      "message": "You don\u0027t need this class at all. Just use the following constructor:\n\n  public MessageDialog(Shell parentShell, String dialogTitle, Image dialogTitleImage, String dialogMessage,\n      int dialogImageType, String[] dialogButtonLabels, int defaultIndex)\n\nDo not use the other constructor (with the varags); it doesn\u0027t exist on older Eclipses.",
+      "parentUuid": "ab9fd1e7_4fce8dcd",
+      "range": {
+        "startLine": 181,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 69
+      },
+      "revId": "c655b8ff6eeb34fb0322e93e2af345097bcd078c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
