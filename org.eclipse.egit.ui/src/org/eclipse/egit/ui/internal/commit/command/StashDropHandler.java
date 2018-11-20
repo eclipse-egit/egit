@@ -60,7 +60,7 @@ public class StashDropHandler extends SelectionHandler {
 		final Shell parent = getPart(event).getSite().getShell();
 		final int stashIndex = getStashIndex(repo, commit.getId());
 
-		if (!confirmStashDrop(parent, stashIndex))
+		if (!confirmStashDrop(parent, stashIndex, commit.getShortMessage()))
 			return null;
 
 		final StashDropOperation op = new StashDropOperation(repo, stashIndex);
@@ -125,7 +125,8 @@ public class StashDropHandler extends SelectionHandler {
 		}
 	}
 
-	private boolean confirmStashDrop(final Shell shell, final int stashIndex) {
+	private boolean confirmStashDrop(final Shell shell, final int stashIndex,
+			String commitMessage) {
 		final AtomicBoolean confirmed = new AtomicBoolean(false);
 
 		shell.getDisplay().syncExec(new Runnable() {
@@ -133,7 +134,7 @@ public class StashDropHandler extends SelectionHandler {
 			public void run() {
 				String message = MessageFormat.format(
 						UIText.StashDropCommand_confirmSingle,
-						Integer.toString(stashIndex));
+						Integer.toString(stashIndex), commitMessage);
 				String[] buttonLabels = { UIText.StashDropCommand_buttonDelete,
 						IDialogConstants.CANCEL_LABEL };
 
