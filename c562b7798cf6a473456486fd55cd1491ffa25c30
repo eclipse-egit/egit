@@ -16,6 +16,24 @@
       "revId": "c562b7798cf6a473456486fd55cd1491ffa25c30",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4088124e_0c3a9480",
+        "filename": "org.eclipse.egit.core.junit/bundle.properties",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-20T13:16:08Z",
+      "side": 1,
+      "message": "Not sure. I used the wizard for creating the new plugin, so maybe there is a general setting (like eclipse version compatibility), which influenced this.\n\nDone.",
+      "parentUuid": "2bdd8f2c_bee511e4",
+      "revId": "c562b7798cf6a473456486fd55cd1491ffa25c30",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
