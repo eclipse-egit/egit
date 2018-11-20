@@ -67,15 +67,18 @@ public class StashDropCommand extends
 
 			@Override
 			public void run() {
-				String message;
-				if (nodes.size() > 1)
+				final String message;
+				if (nodes.size() > 1) {
 					message = MessageFormat.format(
 							UIText.StashDropCommand_confirmMultiple,
 							Integer.toString(nodes.size()));
-				else
+				} else {
+					StashedCommitNode commit = nodes.get(0);
 					message = MessageFormat.format(
 							UIText.StashDropCommand_confirmSingle,
-							Integer.toString(nodes.get(0).getIndex()));
+							Integer.toString(commit.getIndex()),
+							commit.getObject().getShortMessage());
+				}
 
 				String[] buttonLabels = { UIText.StashDropCommand_buttonDelete,
 						IDialogConstants.CANCEL_LABEL };
