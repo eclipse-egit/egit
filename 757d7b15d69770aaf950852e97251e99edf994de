@@ -34,6 +34,24 @@
       "revId": "757d7b15d69770aaf950852e97251e99edf994de",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f462ce0_37a7c616",
+        "filename": "icons/org.eclipse.egit.ui/icons/elcl16/goto_input.svg",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-20T13:39:20Z",
+      "side": 1,
+      "message": "Sorry. I should have checked the file again after downloading from the embedded gitile server in gerrit.\n\nAdded comment to point to the original source.",
+      "parentUuid": "9423d274_1e548d21",
+      "revId": "757d7b15d69770aaf950852e97251e99edf994de",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
