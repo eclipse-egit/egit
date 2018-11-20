@@ -2802,7 +2802,8 @@ public class StagingView extends ViewPart
 
 				if (!folderSelected) {
 					Action openWorkingTreeVersion = new Action(
-							UIText.CommitFileDiffViewer_OpenWorkingTreeVersionInEditorMenuLabel) {
+							UIText.CommitFileDiffViewer_OpenWorkingTreeVersionInEditorMenuLabel,
+							UIIcons.GOTO_INPUT) {
 						@Override
 						public void run() {
 							openSelectionInEditor(fileSelection);
@@ -2814,7 +2815,8 @@ public class StagingView extends ViewPart
 					String label = stagingEntryList.get(0).isStaged()
 									? UIText.CommitFileDiffViewer_CompareWorkingDirectoryMenuLabel
 									: UIText.StagingView_CompareWithIndexMenuLabel;
-					Action openCompareWithIndex = new Action(label) {
+					Action openCompareWithIndex = new Action(label,
+							UIIcons.ELCL16_COMPARE_VIEW) {
 						@Override
 						public void run() {
 							runCommand(ActionCommands.COMPARE_WITH_INDEX_ACTION,
@@ -3125,7 +3127,7 @@ public class StagingView extends ViewPart
 		private final IStructuredSelection selection;
 
 		IgnoreAction(IStructuredSelection selection) {
-			super(UIText.StagingView_IgnoreItemMenuLabel);
+			super(UIText.StagingView_IgnoreItemMenuLabel, UIIcons.IGNORE);
 			this.selection = selection;
 		}
 
