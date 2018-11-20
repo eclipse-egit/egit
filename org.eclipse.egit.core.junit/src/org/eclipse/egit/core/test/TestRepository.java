@@ -69,9 +69,9 @@ import org.eclipse.jgit.util.FileUtils;
  */
 public class TestRepository {
 
-	Repository repository;
+	protected Repository repository;
 
-	String workdirPrefix;
+	protected String workdirPrefix;
 
 	/**
 	 * Creates a new test repository
