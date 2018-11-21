@@ -52,12 +52,12 @@
         <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
-    <iu id='org.objenesis' name='org.objenesis' version='1.0.0.v201105211943'>
+    <iu id='org.objenesis' name='org.objenesis' version='2.6.0.v20180420-1519'>
       <repositories size='1'>
         <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
     </iu>
-    <iu id='org.mockito' name='Java Mocking and Stubbing Framework' version='1.8.4.v201303031500'>
+    <iu id='org.mockito' name='Java Mocking and Stubbing Framework' version='2.13.0.v20180426-1843'>
       <repositories size='1'>
         <repository location='http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/'/>
       </repositories>
