@@ -2826,8 +2826,6 @@ public class StagingView extends ViewPart
 					menuMgr.add(openCompareWithIndex);
 				}
 
-				menuMgr.add(createSelectionPathCopyAction(treeViewer));
-
 				Set<StagingEntry.Action> availableActions = getAvailableActions(fileSelection);
 
 				boolean addReplaceWithFileInGitIndex = availableActions.contains(StagingEntry.Action.REPLACE_WITH_FILE_IN_GIT_INDEX);
@@ -2932,6 +2930,7 @@ public class StagingView extends ViewPart
 				}
 				menuMgr.add(new Separator());
 				menuMgr.add(createShowInMenu());
+				menuMgr.add(createSelectionPathCopyAction(treeViewer));
 			}
 		});
 
