@@ -34,6 +34,10 @@ import org.eclipse.swt.widgets.Text;
  */
 class LoginDialog extends Dialog {
 
+	private final URIish uri;
+
+	private final boolean changeCredentials;
+
 	private Text user;
 
 	private Text password;
@@ -44,18 +48,19 @@ class LoginDialog extends Dialog {
 
 	private boolean storeInSecureStore;
 
-	private final URIish uri;
-
 	private boolean isUserSet;
-
-	private boolean changeCredentials = false;
 
 	private String oldUser;
 
 	LoginDialog(Shell shell, URIish uri) {
+		this(shell, uri, false);
+	}
+
+	LoginDialog(Shell shell, URIish uri, boolean changeCrendentials) {
 		super(shell);
 		this.uri = uri;
-		isUserSet = uri.getUser() != null && uri.getUser().length() > 0;
+		this.changeCredentials = changeCrendentials;
+		isUserSet = uri.getUser() != null && !uri.getUser().isEmpty();
 	}
 
 	@Override
@@ -124,10 +129,6 @@ class LoginDialog extends Dialog {
 		super.okPressed();
 	}
 
-	void setChangeCredentials(boolean changeCredentials) {
-		this.changeCredentials = changeCredentials;
-	}
-
 	public void setOldUser(String oldUser) {
 		this.oldUser = oldUser;
 	}
@@ -135,7 +136,9 @@ class LoginDialog extends Dialog {
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		createButton(parent, IDialogConstants.OK_ID,
-				UIText.LoginDialog_ButtonOK, true);
+				changeCredentials ? UIText.LoginDialog_ButtonSave
+						: UIText.LoginDialog_ButtonLogin,
+				true);
 		createButton(parent, IDialogConstants.CANCEL_ID,
 				IDialogConstants.CANCEL_LABEL, false);
 	}
