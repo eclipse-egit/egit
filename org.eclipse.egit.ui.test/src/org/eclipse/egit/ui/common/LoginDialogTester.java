@@ -21,7 +21,7 @@ public class LoginDialogTester {
 		bot.textWithLabel(UIText.LoginDialog_user).setText(user);
 		bot.textWithLabel(UIText.LoginDialog_password).setText(password);
 		bot.checkBoxWithLabel(UIText.LoginDialog_storeInSecureStore).deselect();
-		bot.button(UIText.LoginDialog_ButtonOK).click();
+		bot.button(UIText.LoginDialog_ButtonLogin).click();
 	}
 
 }

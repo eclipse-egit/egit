@@ -4793,7 +4793,10 @@ public class UIText extends NLS {
 	public static String LoginDialog_user;
 
 	/** */
-	public static String LoginDialog_ButtonOK;
+	public static String LoginDialog_ButtonLogin;
+
+	/** */
+	public static String LoginDialog_ButtonSave;
 
 	/** */
 	public static String NewRemoteDialog_ConfigurationMessage;

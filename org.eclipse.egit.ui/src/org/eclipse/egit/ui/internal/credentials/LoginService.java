@@ -53,8 +53,7 @@ public class LoginService {
 	 */
 	public static UserPasswordCredentials changeCredentials(Shell parent,
 			URIish uri) {
-		LoginDialog dialog = new LoginDialog(parent, uri);
-		dialog.setChangeCredentials(true);
+		LoginDialog dialog = new LoginDialog(parent, uri, true);
 		UserPasswordCredentials oldCredentials = SecureStoreUtils
 				.getCredentials(uri);
 		if (oldCredentials != null)
