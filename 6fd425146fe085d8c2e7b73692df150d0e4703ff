@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a9e7c05_ee676aaa",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2018-11-22T06:58:40Z",
+      "side": 1,
+      "message": "should be 2.13.0 now after the target upgrade",
+      "revId": "6fd425146fe085d8c2e7b73692df150d0e4703ff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
