@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a99dbe00_d6e15c3a",
+        "filename": "org.eclipse.egit.core.test/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-25T20:07:03Z",
+      "side": 1,
+      "message": "Done in https://git.eclipse.org/r/#/c/133036/",
+      "parentUuid": "d81ccc94_14bd4d63",
+      "range": {
+        "startLine": 32,
+        "startChar": 1,
+        "endLine": 32,
+        "endChar": 20
+      },
+      "revId": "a665ba9c13852195ff566e65612d13df84328eaf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1c0d9fa_1728e92e",
         "filename": "org.eclipse.egit.ui.test/META-INF/MANIFEST.MF",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-11-25T19:42:15Z",
       "side": 1,
       "message": "Ditto.",
+      "range": {
+        "startLine": 54,
+        "startChar": 1,
+        "endLine": 54,
+        "endChar": 20
+      },
+      "revId": "a665ba9c13852195ff566e65612d13df84328eaf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a08ba18_a931bb17",
+        "filename": "org.eclipse.egit.ui.test/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2018-11-25T20:07:03Z",
+      "side": 1,
+      "message": "Done in https://git.eclipse.org/r/#/c/133036/",
+      "parentUuid": "b1c0d9fa_1728e92e",
       "range": {
         "startLine": 54,
         "startChar": 1,
