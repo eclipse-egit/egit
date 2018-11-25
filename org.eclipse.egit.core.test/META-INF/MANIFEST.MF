@@ -29,6 +29,5 @@ Import-Package: net.bytebuddy;version="[1.7.9,2.0.0)",
  org.eclipse.jgit.util;version="[5.2.0,5.3.0)",
  org.mockito;version="[2.13.0,3.0.0)",
  org.mockito.junit;version="[2.13.0,3.0.0)",
- org.mockito.runners;version="[2.13.0,3.0.0)",
  org.mockito.stubbing;version="[2.13.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

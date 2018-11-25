@@ -51,6 +51,5 @@ Import-Package: net.bytebuddy;version="[1.7.9,2.0.0)",
  org.junit.runner;version="[4.7.0,5.0.0)",
  org.mockito;version="[2.13.0,3.0.0)",
  org.mockito.junit;version="[2.13.0,3.0.0)",
- org.mockito.runners;version="[2.13.0,3.0.0)",
  org.mockito.stubbing;version="[2.13.0,3.0.0)",
  org.osgi.framework;version="[1.4.0,2.0.0)"
