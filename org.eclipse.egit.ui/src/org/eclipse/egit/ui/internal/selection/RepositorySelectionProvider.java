@@ -12,7 +12,6 @@ package org.eclipse.egit.ui.internal.selection;
 
 import java.util.function.Supplier;
 
-import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.jface.viewers.IPostSelectionProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -66,7 +65,7 @@ public class RepositorySelectionProvider extends AbstractSelectionProvider {
 			Repository repository = repositoryProvider.get();
 			if (repository != null) {
 				return new StructuredSelection(
-						new RepositoryNode(null, repository));
+						new RepositoryVirtualNode(null, repository));
 			}
 		}
 		return selection;

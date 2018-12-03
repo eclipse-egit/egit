@@ -19,7 +19,6 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.net.proxy.IProxyData;
@@ -66,11 +65,9 @@ public class EGitSshdSessionFactory extends SshdSessionFactory {
 	protected List<Path> getDefaultIdentities(@NonNull File sshDir) {
 		List<Path> defaultKeys = SshPreferencesMirror.INSTANCE
 				.getDefaultIdentities(sshDir);
-		if (defaultKeys == null) {
-			// None configured
-			return Collections.emptyList();
-		} else if (defaultKeys.isEmpty()) {
-			// Something configured, but invalid: use default
+		if (defaultKeys == null || defaultKeys.isEmpty()) {
+			// None configured, or something configured, but invalid: use
+			// default
 			return super.getDefaultIdentities(sshDir);
 		}
 		return defaultKeys;

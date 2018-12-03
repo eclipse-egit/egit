@@ -1224,16 +1224,19 @@
                         value="1">
                   </count>
                   <iterate>
-                     <and>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
+                     </instanceof>
+                     <not>
                         <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
+                              value="org.eclipse.egit.ui.internal.selection.RepositoryVirtualNode">
                         </instanceof>
-                        <not>
-                           <test
-                                 property="GitRepository.isBare">
-                           </test>
-                        </not>
-                     </and>
+                     </not>
+                     <not>
+                        <test
+                              property="GitRepository.isBare">
+                        </test>
+                     </not>
                   </iterate>
                </and>
             </or>
@@ -1331,6 +1334,11 @@
                   <instanceof
                         value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
                   </instanceof>
+                  <not>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.selection.RepositoryVirtualNode">
+                     </instanceof>
+                  </not>
                </iterate>
             </or>
          </activeWhen>
@@ -1350,16 +1358,19 @@
                         value="1">
                   </count>
                   <iterate>
-                     <and>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
+                     </instanceof>
+                     <not>
                         <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
+                              value="org.eclipse.egit.ui.internal.selection.RepositoryVirtualNode">
                         </instanceof>
-                        <not>
-                           <test
-                                 property="GitRepository.isBare">
-                           </test>
-                        </not>
-                     </and>
+                     </not>
+                     <not>
+                        <test
+                              property="GitRepository.isBare">
+                        </test>
+                     </not>
                   </iterate>
                </and>
             </or>
@@ -1782,13 +1793,16 @@
                <count
                      value="1">
                </count>
-               <and>
-                  <iterate>
+               <iterate>
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
+                  </instanceof>
+                  <not>
                      <instanceof
-                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
+                           value="org.eclipse.egit.ui.internal.selection.RepositoryVirtualNode">
                      </instanceof>
-                  </iterate>
-               </and>
+                  </not>
+               </iterate>
             </and>
          </activeWhen>
       </handler>
@@ -1809,37 +1823,38 @@
                class="org.eclipse.egit.ui.internal.repository.tree.command.SynchronizeCommand">
          </class>
          <activeWhen>
-	         <or>
-	            <and>
-	               <count
-	                     value="1">
-	               </count>
-	               <and>
-	                  <iterate>
-	                     <instanceof
-	                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
-	                     </instanceof>
-	                  </iterate>
-	               </and>
-	            </and>
-	            <and>
+            <or>
+               <and>
                   <count
-                        value="2">
+                        value="1">
                   </count>
                   <iterate>
-                     <and>
-                        <or>
-                           <instanceof
-                                 value="org.eclipse.egit.ui.internal.repository.tree.TagNode">
-                           </instanceof>
-                           <instanceof
-                                 value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
-                           </instanceof>
-                        </or>
-                     </and>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
+                     </instanceof>
+                     <not>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.selection.RepositoryVirtualNode">
+                        </instanceof>
+                     </not>
                   </iterate>
                </and>
-	         </or>
+               <and>
+                 <count
+                       value="2">
+                 </count>
+                 <iterate>
+                    <or>
+                       <instanceof
+                             value="org.eclipse.egit.ui.internal.repository.tree.TagNode">
+                       </instanceof>
+                       <instanceof
+                             value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+                       </instanceof>
+                    </or>
+                 </iterate>
+              </and>
+           </or>
          </activeWhen>
       </handler>
       <handler
@@ -1863,13 +1878,16 @@
                <count
                      value="1">
                </count>
-               <and>
-                  <iterate>
+               <iterate>
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
+                  </instanceof>
+                  <not>
                      <instanceof
-                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
+                           value="org.eclipse.egit.ui.internal.selection.RepositoryVirtualNode">
                      </instanceof>
-                  </iterate>
-               </and>
+                  </not>
+               </iterate>
             </and>
          </activeWhen>
       </handler>

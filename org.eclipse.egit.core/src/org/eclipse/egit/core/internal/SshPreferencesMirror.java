@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -42,6 +43,8 @@ public class SshPreferencesMirror {
 	// reconfigure ongoing ssh sessions. Our session factory simply gets the
 	// current values whenever a new session is started.
 
+	private static final String PREFERENCES_NODE = "org.eclipse.jsch.core"; //$NON-NLS-1$
+
 	/** The singleton instance of the {@link SshPreferencesMirror}. */
 	public static final SshPreferencesMirror INSTANCE = new SshPreferencesMirror();
 
@@ -61,11 +64,10 @@ public class SshPreferencesMirror {
 
 	/** Starts mirroring the ssh preferences. */
 	public void start() {
-		preferences = InstanceScope.INSTANCE.getNode("org.eclipse.jsch.core"); //$NON-NLS-1$
-		if (preferences == null) {
-			return;
+		preferences = InstanceScope.INSTANCE.getNode(PREFERENCES_NODE);
+		if (preferences != null) {
+			preferences.addPreferenceChangeListener(listener);
 		}
-		preferences.addPreferenceChangeListener(listener);
 		reloadPreferences();
 	}
 
@@ -85,8 +87,8 @@ public class SshPreferencesMirror {
 	}
 
 	private String get(@NonNull String key) {
-		IEclipsePreferences pref = preferences;
-		return pref == null ? null : pref.get(key, null);
+		return Platform.getPreferencesService().getString(PREFERENCES_NODE, key,
+				null, null);
 	}
 
 	private void setSshDirectory() {
