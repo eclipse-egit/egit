@@ -166,7 +166,7 @@ public class Utils {
 					null);
 		}
 		try {
-			if (repo.resolve(testFor) != null) {
+			if (repo.exactRef(testFor) != null) {
 				return Activator.error(MessageFormat.format(
 						CoreText.ValidationUtils_RefAlreadyExistsMessage,
 						testFor), null);
