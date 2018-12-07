@@ -358,6 +358,9 @@ public class UIIcons {
 	/** go to input icon */
 	public final static ImageDescriptor GOTO_INPUT;
 
+	/** Icon for "sign with GPG" */
+	public final static ImageDescriptor SIGN_COMMIT;
+
 	/** base URL */
 	public final static URL base;
 
@@ -479,7 +482,7 @@ public class UIIcons {
 		GOTO_INPUT = map("elcl16/goto_input.png"); //$NON-NLS-1$
 		CHECKED_OUT_BRANCH = new DecorationOverlayDescriptor(BRANCH,
 				OVR_CHECKEDOUT, IDecoration.TOP_LEFT);
-
+		SIGN_COMMIT = map("obj16/sign-commit.png"); //$NON-NLS-1$
 		IProgressService service = PlatformUI.getWorkbench()
 				.getProgressService();
 
