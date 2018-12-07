@@ -2392,6 +2392,9 @@ public class UIText extends NLS {
 	public static String CommitDialog_SelectForCommit;
 
 	/** */
+	public static String CommitDialog_SignCommit;
+
+	/** */
 	public static String CommitDialog_ShowUntrackedFiles;
 
 	/** */
@@ -5403,6 +5406,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String StagingView_Add_Signed_Off_By;
+
+	/** */
+	public static String StagingView_Sign_Commit;
 
 	/** */
 	public static String StagingView_Add_Change_ID;
