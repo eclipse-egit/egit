@@ -36,6 +36,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.api.errors.AbortedByHookException;
+import org.eclipse.jgit.api.errors.CanceledException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
@@ -107,14 +108,15 @@ public class CommitJob extends Job {
 			if (e.getCause() instanceof JGitInternalException) {
 				return Activator.createErrorStatus(e.getLocalizedMessage(),
 						e.getCause());
-			}
-			if (e.getCause() instanceof AbortedByHookException) {
+			} else if (e.getCause() instanceof AbortedByHookException) {
 				showAbortedByHook(e.getCause());
 				return Status.CANCEL_STATUS;
-			} else {
-				return Activator.createErrorStatus(
-						UIText.CommitAction_CommittingFailed, e);
+			} else if (e.getCause() instanceof CanceledException) {
+				return Status.CANCEL_STATUS;
 			}
+
+			return Activator
+					.createErrorStatus(UIText.CommitAction_CommittingFailed, e);
 		} finally {
 			GitLightweightDecorator.refresh();
 		}

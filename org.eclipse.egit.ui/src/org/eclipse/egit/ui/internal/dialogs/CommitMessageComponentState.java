@@ -29,6 +29,8 @@ public class CommitMessageComponentState {
 	private boolean amend;
 	private ObjectId headCommit;
 
+	private boolean sign;
+
 	/**
 	 * @return commit message
 	 */
@@ -97,6 +99,20 @@ public class CommitMessageComponentState {
 	 */
 	public void setAmend(boolean amend) {
 		this.amend = amend;
+	}
+
+	/**
+	 * @return sign
+	 */
+	public boolean getSign() {
+		return sign;
+	}
+
+	/**
+	 * @param sign
+	 */
+	public void setSign(boolean sign) {
+		this.sign = sign;
 	}
 
 	/**

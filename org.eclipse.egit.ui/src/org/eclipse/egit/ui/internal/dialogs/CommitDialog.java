@@ -359,6 +359,8 @@ public class CommitDialog extends TitleAreaDialog {
 
 	ToolItem signedOffItem;
 
+	ToolItem signCommitItem;
+
 	ToolItem changeIdItem;
 
 	ToolItem showUntrackedItem;
@@ -403,6 +405,8 @@ public class CommitDialog extends TitleAreaDialog {
 	private Repository repository;
 
 	private boolean isPushRequested = false;
+
+	private boolean signCommit = false;
 
 	/**
 	 * @param parentShell
@@ -549,6 +553,13 @@ public class CommitDialog extends TitleAreaDialog {
 	 */
 	public void setAllowToChangeSelection(boolean allowToChangeSelection) {
 		this.allowToChangeSelection = allowToChangeSelection;
+	}
+
+	/**
+	 * @return signCommit
+	 */
+	public boolean isSignCommit() {
+		return signCommit;
 	}
 
 	/**
@@ -1071,6 +1082,13 @@ public class CommitDialog extends TitleAreaDialog {
 		UIUtils.hookDisposal(signedOffItem, signedOffImage);
 		signedOffItem.setImage(signedOffImage);
 
+		signCommitItem = new ToolItem(messageToolbar, SWT.CHECK);
+
+		signCommitItem.setToolTipText(UIText.CommitDialog_SignCommit);
+		Image signCommitImage = UIIcons.SIGN_COMMIT.createImage();
+		UIUtils.hookDisposal(signCommitItem, signCommitImage);
+		signCommitItem.setImage(signCommitImage);
+
 		changeIdItem = new ToolItem(messageToolbar, SWT.CHECK);
 		Image changeIdImage = UIIcons.GERRIT.createImage();
 		UIUtils.hookDisposal(changeIdItem, changeIdImage);
@@ -1087,6 +1105,11 @@ public class CommitDialog extends TitleAreaDialog {
 			@Override
 			public void updateChangeIdToggleSelection(boolean selection) {
 				changeIdItem.setSelection(selection);
+			}
+
+			@Override
+			public void updateSignCommitToggleSelection(boolean selection) {
+				signCommitItem.setSelection(selection);
 			}
 
 			@Override
@@ -1129,6 +1152,14 @@ public class CommitDialog extends TitleAreaDialog {
 				commitMessageComponent
 						.setSignedOffButtonSelection(signedOffItem
 								.getSelection());
+			}
+		});
+
+		signCommitItem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				commitMessageComponent.setSignCommitButtonSelection(
+						signCommitItem.getSelection());
 			}
 		});
 
@@ -1391,6 +1422,7 @@ public class CommitDialog extends TitleAreaDialog {
 		author = commitMessageComponent.getAuthor();
 		committer = commitMessageComponent.getCommitter();
 		createChangeId = changeIdItem.getSelection();
+		signCommit = commitMessageComponent.isSignCommit();
 
 		IDialogSettings settings = org.eclipse.egit.ui.Activator
 			.getDefault().getDialogSettings();
