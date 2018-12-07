@@ -232,6 +232,9 @@ public class UIIcons {
 	/** Signed Off By icon */
 	public final static ImageDescriptor SIGNED_OFF;
 
+	/** Signed Off By icon */
+	public final static ImageDescriptor SIGN_COMMIT;
+
 	/** Check all icon */
 	public final static ImageDescriptor CHECK_ALL;
 
@@ -442,6 +445,7 @@ public class UIIcons {
 		EXPAND_ALL = map("elcl16/expandall.png"); //$NON-NLS-1$
 		CHECKOUT = map("obj16/checkout.png"); //$NON-NLS-1$
 		SIGNED_OFF = map("obj16/signed-off.png"); //$NON-NLS-1$
+		SIGN_COMMIT = map("obj16/sign-commit.png"); //$NON-NLS-1$
 		CHECK_ALL = map("obj16/check_all.png"); //$NON-NLS-1$
 		UNCHECK_ALL = map("obj16/uncheck_all.png"); //$NON-NLS-1$
 		AMEND_COMMIT = map("obj16/commit_amend.png"); //$NON-NLS-1$

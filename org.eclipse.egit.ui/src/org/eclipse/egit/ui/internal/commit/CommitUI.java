@@ -201,6 +201,8 @@ public class CommitUI  {
 		}
 		if (commitDialog.isAmending())
 			commitOperation.setAmending(true);
+		commitOperation.setSign(
+				commitDialog.isSignCommit() ? Boolean.TRUE : Boolean.FALSE);
 
 		final boolean gerritMode = commitDialog.getCreateChangeId();
 
